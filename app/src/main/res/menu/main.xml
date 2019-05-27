@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item
+    android:id="@+id/home"
+    android:icon="@drawable/ic_action_home"
+    android:title="@string/home"
+    android:checkable="true"/>
+
+  <item
+    android:id="@+id/about"
+    android:icon="@drawable/ic_action_info"
+    android:title="@string/about"
+    android:checkable="true"/>
+
+  <item
+    android:id="@+id/report_issue"
+    android:icon="@drawable/ic_action_report"
+    android:title="@string/report_issue"
+    android:checkable="true"/>
+
+</menu>
