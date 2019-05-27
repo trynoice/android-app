@@ -1,0 +1,27 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+  compileSdkVersion 28
+  defaultConfig {
+    applicationId "com.github.ashutoshgngwr.noice"
+    minSdkVersion 21
+    targetSdkVersion 28
+    versionCode 1
+    versionName "0.0.1"
+  }
+  buildTypes {
+    release {
+      shrinkResources true
+      minifyEnabled true
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+  }
+}
+
+dependencies {
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+  implementation 'androidx.core:core-ktx:1.0.2'
+  implementation 'androidx.appcompat:appcompat:1.0.2'
+}
