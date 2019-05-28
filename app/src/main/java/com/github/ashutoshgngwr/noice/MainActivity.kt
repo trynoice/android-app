@@ -31,9 +31,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // setup listener for navigation item clicks
     navigation_drawer.setNavigationItemSelectedListener(this)
 
-    // initially set home fragment
-    navigation_drawer.setCheckedItem(R.id.home)
-    setFragment(homeFragment)
+    // set home fragment when activity is created initially
+    if (savedInstanceState == null) {
+      navigation_drawer.setCheckedItem(R.id.home)
+      setFragment(homeFragment)
+    }
   }
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
