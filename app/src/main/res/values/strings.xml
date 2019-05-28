@@ -1,6 +1,16 @@
 <resources>
-  <string name="app_name">Noice</string>
+  <string name="app_name" translatable="false">Noice</string>
   <string name="home">Home</string>
   <string name="about">About</string>
   <string name="report_issue">Report Issues</string>
+  <string name="sound_leaves_1">Breeze through leaves</string>
+  <string name="sound_leaves_2">Leaves russle on tree</string>
+  <string name="sound_rain_1">Light rain</string>
+  <string name="sound_rain_2">Big rain drops</string>
+  <string name="sound_rain_3">Moderate rain</string>
+  <string name="sound_thunder_1">Distant thunder</string>
+  <string name="sound_thunder_2">Rolling thunder</string>
+  <string name="sound_thunder_3">Thunder crack</string>
+  <string name="sound_wind_2">Soft wind</string>
+  <string name="sound_wind_1">Calm wind</string>
 </resources>
