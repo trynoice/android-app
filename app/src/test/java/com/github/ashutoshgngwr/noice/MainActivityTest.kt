@@ -62,6 +62,14 @@ class MainActivityTest {
   }
 
   @Test
+  fun `drawer - correct navigation item should be checked after pressing back`() {
+    mainActivity.onNavigationItemSelected(RoboMenuItem(R.id.about))
+    mainActivity.onBackPressed()
+
+    assert(mainActivity.navigation_drawer.checkedItem?.itemId == R.id.home)
+  }
+
+  @Test
   fun `navigation - should exit on pressing back button after launch`() {
     mainActivity.onBackPressed()
     assert(mainActivity.isFinishing)
@@ -72,10 +80,9 @@ class MainActivityTest {
     assert(
       mainActivity
         .supportFragmentManager
-        .popBackStackImmediate(
-          HomeFragment::class.java.simpleName,
-          FragmentManager.POP_BACK_STACK_INCLUSIVE
-        )
+        .getBackStackEntryAt(mainActivity.supportFragmentManager.backStackEntryCount - 1)
+        .name
+        == HomeFragment::class.java.simpleName
     )
   }
 
@@ -104,11 +111,6 @@ class MainActivityTest {
         .popBackStackImmediate(
           AboutFragment::class.java.simpleName,
           FragmentManager.POP_BACK_STACK_INCLUSIVE
-        ) && mainActivity
-        .supportFragmentManager
-        .popBackStackImmediate(
-          HomeFragment::class.java.simpleName,
-          FragmentManager.POP_BACK_STACK_INCLUSIVE
         )
     )
   }
@@ -119,17 +121,11 @@ class MainActivityTest {
     mainActivity.onBackPressed()
 
     assert(
-      !mainActivity
+      mainActivity
         .supportFragmentManager
-        .popBackStackImmediate(
-          AboutFragment::class.java.simpleName,
-          FragmentManager.POP_BACK_STACK_INCLUSIVE
-        ) && mainActivity
-        .supportFragmentManager
-        .popBackStackImmediate(
-          HomeFragment::class.java.simpleName,
-          FragmentManager.POP_BACK_STACK_INCLUSIVE
-        )
+        .getBackStackEntryAt(mainActivity.supportFragmentManager.backStackEntryCount - 1)
+        .name
+        == HomeFragment::class.java.simpleName
     )
   }
 }

@@ -31,9 +31,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // setup listener for navigation item clicks
     navigation_drawer.setNavigationItemSelectedListener(this)
 
+    // bind navigation drawer menu items checked state with fragment back stack
+    supportFragmentManager.addOnBackStackChangedListener {
+
+      when (
+        supportFragmentManager
+          .getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1)
+          .name
+        ) {
+        homeFragment.javaClass.simpleName -> navigation_drawer.setCheckedItem(R.id.home)
+        aboutFragment.javaClass.simpleName -> navigation_drawer.setCheckedItem(R.id.about)
+      }
+    }
+
     // set home fragment when activity is created initially
     if (savedInstanceState == null) {
-      navigation_drawer.setCheckedItem(R.id.home)
       setFragment(homeFragment)
     }
   }
@@ -86,7 +98,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
           R.anim.enter_left,
           R.anim.exit_right
         )
-        .replace(R.id.fragment_container, fragment, tag)
+        .replace(R.id.fragment_container, fragment)
         .addToBackStack(tag)
         .commit()
     }
