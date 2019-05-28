@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_margin="10dp"
+  app:cardCornerRadius="7dp"
+  app:cardElevation="3dp"
+  app:contentPadding="15dp">
+
+  <!-- Lot of linear layouts because performance -->
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageButton
+      style="@style/Widget.AppCompat.ImageButton"
+      android:id="@+id/button_play"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:padding="10dp"
+      android:background="@android:drawable/list_selector_background"
+      android:src="@drawable/ic_action_play"
+      android:tint="@color/colorAccent"
+      android:contentDescription="@string/play_pause"/>
+
+    <View
+      android:layout_width="15dp"
+      android:layout_height="1dp"/>
+
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:orientation="vertical">
+
+      <TextView
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:ellipsize="end"/>
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_stat_volume"
+          android:tint="@color/colorAccent"
+          android:contentDescription="@string/volume"/>
+
+        <SeekBar
+          android:id="@+id/seekbar_volume"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:max="20"
+          android:layout_weight="1"/>
+
+      </LinearLayout>
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+
+      <LinearLayout
+        android:id="@+id/layout_time_period"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <!-- to create padding after volume seek layout -->
+        <View
+          android:layout_width="1dp"
+          android:layout_height="5dp"/>
+
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_stat_time_period"
+          android:tint="@color/colorAccent"
+          android:contentDescription="@string/repeat_time_period"/>
+
+        <SeekBar
+          android:id="@+id/seekbar_time_period"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:max="240"/>
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</androidx.cardview.widget.CardView>

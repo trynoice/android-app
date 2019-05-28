@@ -13,4 +13,7 @@
   <string name="sound_thunder_3">Thunder crack</string>
   <string name="sound_wind_2">Soft wind</string>
   <string name="sound_wind_1">Calm wind</string>
+  <string name="repeat_time_period">Repeat time period</string>
+  <string name="volume">Sound volume</string>
+  <string name="play_pause">play or pause</string>
 </resources>

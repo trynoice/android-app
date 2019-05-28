@@ -7,6 +7,10 @@ import com.github.ashutoshgngwr.noice.R
 class Sound private constructor(val resId: Int, val titleResId: Int) {
 
   companion object {
+    const val VOL_MAX = 20.0F
+    const val TIME_PERIOD_MIN = 60
+    const val TIME_PERIOD_MAX = 300
+
     val SOUND_LIBRARY: SparseArray<Sound> = SparseArray()
 
     init {
@@ -25,6 +29,9 @@ class Sound private constructor(val resId: Int, val titleResId: Int) {
 
   var streamId = 0
   var isLoopable = true
+  var volume = 4
+  var isPlaying = false
+  var timePeriod = TIME_PERIOD_MIN
 
   private constructor(resId: Int, titleResId: Int, isLoopable: Boolean) : this(resId, titleResId) {
     this.isLoopable = isLoopable

@@ -17,6 +17,6 @@
     android:id="@+id/report_issue"
     android:icon="@drawable/ic_action_report"
     android:title="@string/report_issue"
-    android:checkable="true"/>
+    android:checkable="false"/>
 
 </menu>
