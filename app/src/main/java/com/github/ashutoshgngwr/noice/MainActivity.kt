@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
-import com.github.ashutoshgngwr.noice.fragment.HomeFragment
+import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
   private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
-  private val homeFragment = HomeFragment()
+  private val soundLibraryFragment = SoundLibraryFragment()
   private val aboutFragment = AboutFragment()
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,17 +44,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
           .getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1)
           .name
         ) {
-        homeFragment.javaClass.simpleName ->
-          navigation_drawer.setCheckedItem(R.id.home)
+        soundLibraryFragment.javaClass.simpleName ->
+          navigation_drawer.setCheckedItem(R.id.library)
 
         aboutFragment.javaClass.simpleName ->
           navigation_drawer.setCheckedItem(R.id.about)
       }
     }
 
-    // set home fragment when activity is created initially
+    // set sound library fragment when activity is created initially
     if (savedInstanceState == null) {
-      setFragment(homeFragment)
+      setFragment(soundLibraryFragment)
     }
   }
 
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
-      R.id.home -> setFragment(homeFragment)
+      R.id.library -> setFragment(soundLibraryFragment)
       R.id.about -> setFragment(aboutFragment)
     }
 

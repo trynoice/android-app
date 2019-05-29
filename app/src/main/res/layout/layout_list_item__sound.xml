@@ -4,7 +4,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:layout_margin="10dp"
+  android:layout_margin="7dp"
   app:cardCornerRadius="7dp"
   app:cardElevation="3dp"
   app:contentPadding="15dp">
@@ -21,20 +21,16 @@
       android:id="@+id/button_play"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:padding="10dp"
       android:background="@android:drawable/list_selector_background"
       android:src="@drawable/ic_action_play"
       android:tint="@color/colorAccent"
       android:contentDescription="@string/play_pause"/>
 
-    <View
-      android:layout_width="15dp"
-      android:layout_height="1dp"/>
-
     <LinearLayout
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_weight="1"
+      android:layout_marginStart="15dp"
       android:orientation="vertical">
 
       <TextView
@@ -45,13 +41,10 @@
         android:singleLine="true"
         android:ellipsize="end"/>
 
-      <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"/>
-
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -71,22 +64,14 @@
 
       </LinearLayout>
 
-      <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"/>
-
       <LinearLayout
         android:id="@+id/layout_time_period"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:visibility="gone">
-
-        <!-- to create padding after volume seek layout -->
-        <View
-          android:layout_width="1dp"
-          android:layout_height="5dp"/>
 
         <ImageView
           android:layout_width="wrap_content"

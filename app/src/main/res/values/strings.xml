@@ -1,6 +1,6 @@
 <resources>
   <string name="app_name" translatable="false">Noice</string>
-  <string name="home">Home</string>
+  <string name="library">Library</string>
   <string name="about">About</string>
   <string name="report_issue">Report Issues</string>
   <string name="sound_leaves_1">Breeze through leaves</string>

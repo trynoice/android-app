@@ -3,7 +3,7 @@ package com.github.ashutoshgngwr.noice
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentManager
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
-import com.github.ashutoshgngwr.noice.fragment.HomeFragment
+import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.junit.Before
 import org.junit.Test
@@ -57,8 +57,8 @@ class MainActivityTest {
   }
 
   @Test
-  fun `drawer - home navigation item should be checked at start`() {
-    assert(mainActivity.navigation_drawer.checkedItem?.itemId == R.id.home)
+  fun `drawer - sound library navigation item should be checked at start`() {
+    assert(mainActivity.navigation_drawer.checkedItem?.itemId == R.id.library)
   }
 
   @Test
@@ -66,7 +66,7 @@ class MainActivityTest {
     mainActivity.onNavigationItemSelected(RoboMenuItem(R.id.about))
     mainActivity.onBackPressed()
 
-    assert(mainActivity.navigation_drawer.checkedItem?.itemId == R.id.home)
+    assert(mainActivity.navigation_drawer.checkedItem?.itemId == R.id.library)
   }
 
   @Test
@@ -76,13 +76,13 @@ class MainActivityTest {
   }
 
   @Test
-  fun `navigation - home should be visible at start`() {
+  fun `navigation - sound library should be visible at start`() {
     assert(
       mainActivity
         .supportFragmentManager
         .getBackStackEntryAt(mainActivity.supportFragmentManager.backStackEntryCount - 1)
         .name
-        == HomeFragment::class.java.simpleName
+        == SoundLibraryFragment::class.java.simpleName
     )
   }
 
@@ -101,9 +101,9 @@ class MainActivityTest {
   }
 
   @Test
-  fun `navigation - about should not be in the stack if returned to home`() {
+  fun `navigation - about should not be in the stack if returned to sound library`() {
     mainActivity.onNavigationItemSelected(RoboMenuItem(R.id.about))
-    mainActivity.onNavigationItemSelected(RoboMenuItem(R.id.home))
+    mainActivity.onNavigationItemSelected(RoboMenuItem(R.id.library))
 
     assert(
       !mainActivity
@@ -116,7 +116,7 @@ class MainActivityTest {
   }
 
   @Test
-  fun `navigation - home should be visible on pressing back at about`() {
+  fun `navigation - sound library should be visible on pressing back at about`() {
     mainActivity.onNavigationItemSelected(RoboMenuItem(R.id.about))
     mainActivity.onBackPressed()
 
@@ -125,7 +125,7 @@ class MainActivityTest {
         .supportFragmentManager
         .getBackStackEntryAt(mainActivity.supportFragmentManager.backStackEntryCount - 1)
         .name
-        == HomeFragment::class.java.simpleName
+        == SoundLibraryFragment::class.java.simpleName
     )
   }
 }

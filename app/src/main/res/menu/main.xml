@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
   <item
-    android:id="@+id/home"
-    android:icon="@drawable/ic_action_home"
-    android:title="@string/home"
+    android:id="@+id/library"
+    android:icon="@drawable/ic_action_library"
+    android:title="@string/library"
     android:checkable="true"/>
 
   <item
