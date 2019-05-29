@@ -23,7 +23,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     setContentView(R.layout.activity_main)
 
     // setup toolbar to display animated drawer toggle button
-    actionBarDrawerToggle = ActionBarDrawerToggle(this, layout_main, R.string.home, R.string.home)
+    actionBarDrawerToggle = ActionBarDrawerToggle(
+      this,
+      layout_main,
+      R.string.open_drawer,
+      R.string.close_drawer
+    )
+
     layout_main.addDrawerListener(actionBarDrawerToggle)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
     actionBarDrawerToggle.syncState()
@@ -33,14 +39,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // bind navigation drawer menu items checked state with fragment back stack
     supportFragmentManager.addOnBackStackChangedListener {
-
       when (
         supportFragmentManager
           .getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1)
           .name
         ) {
-        homeFragment.javaClass.simpleName -> navigation_drawer.setCheckedItem(R.id.home)
-        aboutFragment.javaClass.simpleName -> navigation_drawer.setCheckedItem(R.id.about)
+        homeFragment.javaClass.simpleName ->
+          navigation_drawer.setCheckedItem(R.id.home)
+
+        aboutFragment.javaClass.simpleName ->
+          navigation_drawer.setCheckedItem(R.id.about)
       }
     }
 
