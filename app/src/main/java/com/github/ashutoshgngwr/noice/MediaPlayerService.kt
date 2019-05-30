@@ -53,6 +53,7 @@ class MediaPlayerService : Service() {
       }
 
       RC_STOP_SERVICE -> {
+        mSoundManager.stop()
         stopForeground(true)
       }
     }
@@ -77,22 +78,23 @@ class MediaPlayerService : Service() {
           PendingIntent.FLAG_UPDATE_CURRENT
         )
       )
+      .addAction(
+        R.drawable.ic_stat_close,
+        getString(R.string.stop),
+        createPlaybackControlPendingIntent(RC_STOP_SERVICE)
+      )
 
     if (mSoundManager.isPlaying) {
       notificationBuilder.addAction(
-        NotificationCompat.Action(
-          R.drawable.ic_stat_pause,
-          getString(R.string.play_pause),
-          createPlaybackControlPendingIntent(RC_STOP_PLAYBACK)
-        )
+        R.drawable.ic_stat_pause,
+        getString(R.string.pause),
+        createPlaybackControlPendingIntent(RC_STOP_PLAYBACK)
       )
     } else {
       notificationBuilder.addAction(
-        NotificationCompat.Action(
-          R.drawable.ic_stat_play,
-          getString(R.string.play_pause),
-          createPlaybackControlPendingIntent(RC_START_PLAYBACK)
-        )
+        R.drawable.ic_stat_play,
+        getString(R.string.play),
+        createPlaybackControlPendingIntent(RC_START_PLAYBACK)
       )
     }
 

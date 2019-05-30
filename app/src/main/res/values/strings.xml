@@ -20,4 +20,7 @@
   <string name="close_drawer">Close navigation drawer</string>
   <string name="notification_channel_default__name">Media Playback</string>
   <string name="notification_channel_default__description">Media playback controls</string>
+  <string name="pause">Pause</string>
+  <string name="play">Play</string>
+  <string name="stop">Stop</string>
 </resources>

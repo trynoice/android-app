@@ -14,7 +14,7 @@ import kotlin.random.Random
 
 class SoundManager(mediaPlayerService: Context) {
 
-  class PlayBack(val sound: SoundLibraryFragment.Sound, val streamId: Int) {
+  class Playback(val sound: SoundLibraryFragment.Sound, val streamId: Int) {
     var volume: Float = 0.2f
     var timePeriod: Int = 60
     var isPlaying: Boolean = false
@@ -32,7 +32,7 @@ class SoundManager(mediaPlayerService: Context) {
     .build()
 
   private val mHandler = Handler()
-  private val playbacks = SparseArray<PlayBack>()
+  private val playbacks = SparseArray<Playback>()
   private val randomPlaybackCallbacks = SparseArray<Runnable>()
   private var playbackListener: OnPlaybackStateChangeListener? = null
 
@@ -40,7 +40,7 @@ class SoundManager(mediaPlayerService: Context) {
 
   init {
     for (sound in LIBRARY.valueIterator()) {
-      playbacks[sound.resId] = PlayBack(
+      playbacks[sound.resId] = Playback(
         sound,
         mSoundPool.load(mediaPlayerService, sound.resId, 1)
       )
@@ -85,23 +85,37 @@ class SoundManager(mediaPlayerService: Context) {
     notifyPlaybackStateChange()
   }
 
-  fun stop(soundResId: Int) {
-    val playback = playbacks[soundResId]
-
+  private fun stop(playback: Playback) {
     playback.isPlaying = false
     mSoundPool.stop(playback.streamId)
 
     if (!playback.sound.isLoopable) {
-      mHandler.removeCallbacks(randomPlaybackCallbacks[soundResId])
-      randomPlaybackCallbacks.delete(soundResId)
+      mHandler.removeCallbacks(randomPlaybackCallbacks[playback.sound.resId])
+      randomPlaybackCallbacks.delete(playback.sound.resId)
     }
+  }
 
+  fun stop(soundResId: Int) {
+    stop(playbacks[soundResId])
+
+    // see if all playbacks are stopped
     var isPlaying = false
     for (p in playbacks.valueIterator()) {
       isPlaying = isPlaying || p.isPlaying
     }
 
     this.isPlaying = this.isPlaying && isPlaying
+    notifyPlaybackStateChange()
+  }
+
+  fun stop() {
+    isPlaying = false
+    for (playback in playbacks.valueIterator()) {
+      if (playback.isPlaying) {
+        stop(playback)
+      }
+    }
+
     notifyPlaybackStateChange()
   }
 
