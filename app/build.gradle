@@ -38,6 +38,7 @@ dependencies {
   implementation 'androidx.core:core-ktx:1.0.2'
   implementation 'androidx.appcompat:appcompat:1.0.2'
   implementation 'com.google.android.material:material:1.1.0-alpha06'
+  implementation 'androidx.media:media:1.0.1'
 
   testImplementation 'junit:junit:4.12'
   testImplementation 'org.robolectric:robolectric:4.2'

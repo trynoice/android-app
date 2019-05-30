@@ -1,6 +1,12 @@
 package com.github.ashutoshgngwr.noice
 
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
+import android.media.AudioManager
 import android.os.Bundle
+import android.os.IBinder
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,10 +19,33 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+  var mSoundManager: SoundManager? = null
+
   private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
   private val soundLibraryFragment = SoundLibraryFragment()
   private val aboutFragment = AboutFragment()
+
+  private val mServiceConnection = object : ServiceConnection {
+    override fun onServiceDisconnected(name: ComponentName?) {
+      mSoundManager?.setOnPlaybackStateChangeListener(null)
+      mSoundManager = null
+    }
+
+    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+      mSoundManager = (service as MediaPlayerService.PlaybackBinder).getSoundManager()
+      mSoundManager?.setOnPlaybackStateChangeListener(
+        object : SoundManager.OnPlaybackStateChangeListener {
+          override fun onPlaybackStateChanged() {
+            soundLibraryFragment.recyclerView.adapter?.notifyDataSetChanged()
+          }
+        }
+      )
+
+      // once service is connected, update playback state in UI
+      soundLibraryFragment.recyclerView.adapter?.notifyDataSetChanged()
+    }
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -56,6 +85,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     if (savedInstanceState == null) {
       setFragment(soundLibraryFragment)
     }
+
+    // volume control to type "media"
+    volumeControlStream = AudioManager.STREAM_MUSIC
+  }
+
+  override fun onStart() {
+    super.onStart()
+    bindService(
+      Intent(this, MediaPlayerService::class.java),
+      mServiceConnection,
+      Context.BIND_AUTO_CREATE
+    )
+  }
+
+  override fun onStop() {
+    super.onStop()
+    unbindService(mServiceConnection)
   }
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
