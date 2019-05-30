@@ -21,7 +21,8 @@
       android:id="@+id/button_play"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:background="@android:drawable/list_selector_background"
+      android:padding="5dp"
+      android:background="?android:selectableItemBackgroundBorderless"
       android:src="@drawable/ic_action_play"
       android:tint="@color/colorAccent"
       android:contentDescription="@string/play_pause"/>
