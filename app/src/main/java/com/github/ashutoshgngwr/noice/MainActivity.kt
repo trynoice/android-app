@@ -10,6 +10,7 @@ import android.os.IBinder
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
@@ -38,6 +39,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         object : SoundManager.OnPlaybackStateChangeListener {
           override fun onPlaybackStateChanged() {
             soundLibraryFragment.recyclerView.adapter?.notifyDataSetChanged()
+
+            // bring bound service to foreground if not already done
+            // also create/update media player notification, duh!
+            // See MediaPlayerService#onStartCommand()
+            ContextCompat.startForegroundService(
+              this@MainActivity,
+              Intent(this@MainActivity, MediaPlayerService::class.java)
+                .putExtra("action", MediaPlayerService.RC_UPDATE_NOTIFICATION)
+            )
           }
         }
       )

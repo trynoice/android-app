@@ -1,20 +1,17 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import androidx.core.content.ContextCompat
 import androidx.core.util.set
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.MainActivity
-import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment.Sound.Companion.LIBRARY
 import kotlinx.android.synthetic.main.layout_list_item__sound.view.*
@@ -80,15 +77,6 @@ class SoundLibraryFragment : Fragment() {
             soundManager.play(soundResId)
             view.button_play.setImageResource(R.drawable.ic_action_stop)
           }
-
-          // bring bound service to foreground
-          // also create/update media player notification, duh!
-          // See MediaPlayerService#onStartCommand()
-          ContextCompat.startForegroundService(
-            context,
-            Intent(context, MediaPlayerService::class.java)
-              .putExtra("action", MediaPlayerService.RC_UPDATE_NOTIFICATION)
-          )
         }
       }
     }

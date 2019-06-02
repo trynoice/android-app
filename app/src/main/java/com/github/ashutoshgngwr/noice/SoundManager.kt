@@ -14,9 +14,10 @@ import kotlin.random.Random
 
 class SoundManager(mediaPlayerService: Context) {
 
-  class Playback(val sound: SoundLibraryFragment.Sound, val streamId: Int) {
+  class Playback(val sound: SoundLibraryFragment.Sound, val soundId: Int) {
     var volume: Float = 0.2f
     var timePeriod: Int = 60
+    var streamId: Int = 0
     var isPlaying: Boolean = false
   }
 
@@ -32,8 +33,9 @@ class SoundManager(mediaPlayerService: Context) {
     .build()
 
   private val mHandler = Handler()
-  private val playbacks = SparseArray<Playback>()
-  private val randomPlaybackCallbacks = SparseArray<Runnable>()
+  private val playbacks = SparseArray<Playback>(LIBRARY.size())
+  private val randomPlaybackCallbacks = SparseArray<Runnable>(LIBRARY.size())
+  private val pauseState = ArrayList<Int>(LIBRARY.size())
   private var playbackListener: OnPlaybackStateChangeListener? = null
 
   var isPlaying: Boolean = false
@@ -47,14 +49,13 @@ class SoundManager(mediaPlayerService: Context) {
     }
   }
 
-  fun play(soundResId: Int) {
+  private fun play(playback: Playback) {
     isPlaying = true
-    val playback = playbacks[soundResId]
     playback.isPlaying = true
 
     if (playback.sound.isLoopable) {
-      mSoundPool.play(
-        playback.streamId,
+      playback.streamId = mSoundPool.play(
+        playback.soundId,
         playback.volume,
         playback.volume,
         1,
@@ -63,11 +64,11 @@ class SoundManager(mediaPlayerService: Context) {
       )
     } else {
       // non-loopable sounds should be played at random intervals in defined period
-      randomPlaybackCallbacks[soundResId] = object : Runnable {
+      randomPlaybackCallbacks[playback.sound.resId] = object : Runnable {
         override fun run() {
           if (isPlaying) {
-            mSoundPool.play(
-              playback.streamId,
+            playback.streamId = mSoundPool.play(
+              playback.soundId,
               playback.volume,
               playback.volume,
               1,
@@ -79,15 +80,19 @@ class SoundManager(mediaPlayerService: Context) {
           mHandler.postDelayed(this, Random.nextLong() % (playback.timePeriod * 1000))
         }
       }
-      randomPlaybackCallbacks[soundResId].run()
+      randomPlaybackCallbacks[playback.sound.resId].run()
     }
+  }
 
+  fun play(soundResId: Int) {
+    play(playbacks[soundResId])
     notifyPlaybackStateChange()
   }
 
   private fun stop(playback: Playback) {
-    playback.isPlaying = false
     mSoundPool.stop(playback.streamId)
+    playback.isPlaying = false
+    playback.streamId = 0
 
     if (!playback.sound.isLoopable) {
       mHandler.removeCallbacks(randomPlaybackCallbacks[playback.sound.resId])
@@ -121,13 +126,26 @@ class SoundManager(mediaPlayerService: Context) {
 
   fun pausePlayback() {
     isPlaying = false
-    mSoundPool.autoPause()
+    pauseState.clear()
+
+    for (playback in playbacks.valueIterator()) {
+      if (playback.isPlaying) {
+        pauseState.add(playback.sound.resId)
+        stop(playback)
+      }
+    }
+
     notifyPlaybackStateChange()
   }
 
   fun resumePlayback() {
     isPlaying = true
-    mSoundPool.autoResume()
+
+    for (soundResId in pauseState) {
+      play(playbacks[soundResId])
+    }
+
+    pauseState.clear()
     notifyPlaybackStateChange()
   }
 
