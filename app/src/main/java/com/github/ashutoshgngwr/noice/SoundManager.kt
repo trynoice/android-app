@@ -181,6 +181,10 @@ class SoundManager(mediaPlayerService: Context) {
     this.playbackListener = listener
   }
 
+  fun isPaused(): Boolean {
+    return pauseState.isNotEmpty()
+  }
+
   private fun notifyPlaybackStateChange() {
     playbackListener?.onPlaybackStateChanged()
   }

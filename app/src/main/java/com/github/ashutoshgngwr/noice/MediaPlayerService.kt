@@ -90,7 +90,7 @@ class MediaPlayerService : Service() {
         getString(R.string.pause),
         createPlaybackControlPendingIntent(RC_STOP_PLAYBACK)
       )
-    } else {
+    } else if (mSoundManager.isPaused()) {
       notificationBuilder.addAction(
         R.drawable.ic_stat_play,
         getString(R.string.play),
