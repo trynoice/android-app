@@ -121,6 +121,7 @@ class SoundManager(mediaPlayerService: Context) {
       }
     }
 
+    pauseState.clear()
     notifyPlaybackStateChange()
   }
 

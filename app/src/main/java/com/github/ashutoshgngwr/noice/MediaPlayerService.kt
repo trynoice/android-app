@@ -40,21 +40,22 @@ class MediaPlayerService : Service() {
     when (intent?.getIntExtra("action", 0)) {
       RC_START_PLAYBACK -> {
         mSoundManager.resumePlayback()
-        startForeground(FOREGROUND_ID, updateNotification())
       }
 
       RC_STOP_PLAYBACK -> {
         mSoundManager.pausePlayback()
-        startForeground(FOREGROUND_ID, updateNotification())
       }
 
       RC_UPDATE_NOTIFICATION -> {
-        startForeground(FOREGROUND_ID, updateNotification())
+        if (mSoundManager.isPlaying || mSoundManager.isPaused()) {
+          startForeground(FOREGROUND_ID, updateNotification())
+        } else {
+          stopForeground(true)
+        }
       }
 
       RC_STOP_SERVICE -> {
         mSoundManager.stop()
-        stopForeground(true)
       }
     }
 
