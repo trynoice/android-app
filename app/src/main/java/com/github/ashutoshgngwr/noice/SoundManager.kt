@@ -12,7 +12,7 @@ import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment.Sound.Companion.LIBRARY
 import kotlin.random.Random
 
-class SoundManager(mediaPlayerService: Context) {
+class SoundManager(mediaPlayerService: Context) : AudioManager.OnAudioFocusChangeListener {
 
   class Playback(val sound: SoundLibraryFragment.Sound, val soundId: Int) {
     var volume: Float = 0.2f
@@ -41,11 +41,34 @@ class SoundManager(mediaPlayerService: Context) {
   var isPlaying: Boolean = false
 
   init {
+    val audioManager = mediaPlayerService.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
+    @Suppress("DEPRECATION")
+    audioManager.requestAudioFocus(
+      this,
+      AudioManager.STREAM_MUSIC,
+      AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
+    )
+
     for (sound in LIBRARY.valueIterator()) {
       playbacks[sound.resId] = Playback(
         sound,
         mSoundPool.load(mediaPlayerService, sound.resId, 1)
       )
+    }
+  }
+
+  override fun onAudioFocusChange(focusChange: Int) {
+    when (focusChange) {
+      AudioManager.AUDIOFOCUS_LOSS -> {
+        pausePlayback()
+      }
+      AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
+        pausePlayback()
+      }
+      AudioManager.AUDIOFOCUS_GAIN -> {
+        resumePlayback()
+      }
     }
   }
 
