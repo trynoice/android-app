@@ -1,0 +1,32 @@
+language: android
+jdk: oraclejdk8
+
+android:
+  components:
+    - build-tools-28.0.3
+    - android-28
+    - extra-android-m2repository
+    - extra-google-m2repository
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
+
+stages:
+  - test
+  # - build
+  # - deploy
+
+jobs:
+  include:
+    - stage: test
+      env:
+        - COVERAGE_REPORT=app/build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml
+      script: ./gradlew testDebugUnitTestCoverage
+      after_success: bash <(curl -s https://codecov.io/bash) -f "$COVERAGE_REPORT"
