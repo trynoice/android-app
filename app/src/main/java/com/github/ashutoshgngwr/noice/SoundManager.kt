@@ -9,6 +9,7 @@ import android.media.AudioManager
 import android.media.SoundPool
 import android.os.Handler
 import android.util.SparseArray
+import androidx.annotation.VisibleForTesting
 import androidx.core.util.set
 import androidx.core.util.valueIterator
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
@@ -24,7 +25,8 @@ class SoundManager(private val context: Context) : AudioManager.OnAudioFocusChan
     var isPlaying: Boolean = false
   }
 
-  private val mSoundPool = SoundPool.Builder()
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  val mSoundPool: SoundPool = SoundPool.Builder()
     .setAudioAttributes(
       AudioAttributes.Builder()
         .setContentType(AudioAttributes.CONTENT_TYPE_MOVIE)
@@ -50,6 +52,7 @@ class SoundManager(private val context: Context) : AudioManager.OnAudioFocusChan
   }
 
   var isPlaying: Boolean = false
+    private set
 
   init {
     @Suppress("DEPRECATION")
@@ -186,8 +189,6 @@ class SoundManager(private val context: Context) : AudioManager.OnAudioFocusChan
   }
 
   fun resumePlayback() {
-    isPlaying = true
-
     for (soundResId in pauseState) {
       play(playbacks[soundResId])
     }
