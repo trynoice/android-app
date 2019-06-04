@@ -23,7 +23,7 @@ import com.github.ashutoshgngwr.noice.SoundManager
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment.Sound.Companion.LIBRARY
 import kotlinx.android.synthetic.main.layout_list_item__sound.view.*
 
-class SoundLibraryFragment : Fragment() {
+class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
 
   companion object {
     const val TAG: String = "SoundLibraryFragment"
@@ -35,30 +35,14 @@ class SoundLibraryFragment : Fragment() {
   private val mServiceConnection = object : ServiceConnection {
     override fun onServiceDisconnected(name: ComponentName?) {
       Log.d(TAG, "MediaPlayerService disconnected")
-      mSoundManager?.setOnPlaybackStateChangeListener(null)
+      mSoundManager?.removeOnPlaybackStateChangeListener(this@SoundLibraryFragment)
       mSoundManager = null
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
       Log.d(TAG, "MediaPlayerService connected")
       mSoundManager = (service as MediaPlayerService.PlaybackBinder).getSoundManager()
-      mSoundManager?.setOnPlaybackStateChangeListener(
-        object : SoundManager.OnPlaybackStateChangeListener {
-          override fun onPlaybackStateChanged() {
-            Log.d(TAG, "Playback state changed. Refreshing UI...")
-            mRecyclerView?.adapter?.notifyDataSetChanged()
-
-            // bring bound service to foreground if not already done
-            // also create/update media player notification, duh!
-            // See MediaPlayerService#onStartCommand()
-            ContextCompat.startForegroundService(
-              context!!,
-              Intent(context, MediaPlayerService::class.java)
-                .putExtra("action", MediaPlayerService.RC_UPDATE_NOTIFICATION)
-            )
-          }
-        }
-      )
+      mSoundManager?.addOnPlaybackStateChangeListener(this@SoundLibraryFragment)
 
       // once service is connected, update playback state in UI
       mRecyclerView?.adapter?.notifyDataSetChanged()
@@ -95,6 +79,17 @@ class SoundLibraryFragment : Fragment() {
     // call it when service is intentionally unbound.
     mServiceConnection.onServiceDisconnected(null)
     super.onPause()
+  }
+
+  override fun onPlaybackStateChanged() {
+    Log.d(TAG, "Playback state changed. Refreshing UI...")
+    mRecyclerView?.adapter?.notifyDataSetChanged()
+
+    // bring service to foreground if not done already
+    ContextCompat.startForegroundService(
+      context!!,
+      Intent(context, MediaPlayerService::class.java)
+    )
   }
 
   inner class ListAdapter(private val context: Context) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {

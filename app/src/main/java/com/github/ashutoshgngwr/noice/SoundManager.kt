@@ -39,7 +39,7 @@ class SoundManager(private val context: Context) : AudioManager.OnAudioFocusChan
   private val playbacks = SparseArray<Playback>(LIBRARY.size())
   private val randomPlaybackCallbacks = SparseArray<Runnable>(LIBRARY.size())
   private val pauseState = ArrayList<Int>(LIBRARY.size())
-  private var playbackListener: OnPlaybackStateChangeListener? = null
+  private var playbackListeners = ArrayList<OnPlaybackStateChangeListener>()
   private var audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
   private val becomingNoisyReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -226,10 +226,15 @@ class SoundManager(private val context: Context) : AudioManager.OnAudioFocusChan
     audioManager.abandonAudioFocus(this)
 
     context.unregisterReceiver(becomingNoisyReceiver)
+    notifyPlaybackStateChange()
   }
 
-  fun setOnPlaybackStateChangeListener(listener: OnPlaybackStateChangeListener?) {
-    this.playbackListener = listener
+  fun addOnPlaybackStateChangeListener(listener: OnPlaybackStateChangeListener) {
+    playbackListeners.add(listener)
+  }
+
+  fun removeOnPlaybackStateChangeListener(listener: OnPlaybackStateChangeListener) {
+    playbackListeners.remove(listener)
   }
 
   fun isPaused(): Boolean {
@@ -237,7 +242,9 @@ class SoundManager(private val context: Context) : AudioManager.OnAudioFocusChan
   }
 
   private fun notifyPlaybackStateChange() {
-    playbackListener?.onPlaybackStateChanged()
+    for (listener in playbackListeners) {
+      listener.onPlaybackStateChanged()
+    }
   }
 
   interface OnPlaybackStateChangeListener {

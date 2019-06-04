@@ -7,7 +7,7 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 
-class MediaPlayerService : Service() {
+class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener {
 
   companion object {
     const val FOREGROUND_ID = 0x29
@@ -15,7 +15,6 @@ class MediaPlayerService : Service() {
     const val RC_START_PLAYBACK = 0x27
     const val RC_STOP_PLAYBACK = 0x26
     const val RC_STOP_SERVICE = 0x25
-    const val RC_UPDATE_NOTIFICATION = 0x24
 
     const val NOTIFICATION_CHANNEL_ID = "com.github.ashutoshgngwr.noice.default"
   }
@@ -33,6 +32,7 @@ class MediaPlayerService : Service() {
   override fun onCreate() {
     super.onCreate()
     mSoundManager = SoundManager(this)
+    mSoundManager.addOnPlaybackStateChangeListener(this)
     createNotificationChannel()
   }
 
@@ -46,14 +46,6 @@ class MediaPlayerService : Service() {
         mSoundManager.pausePlayback()
       }
 
-      RC_UPDATE_NOTIFICATION -> {
-        if (mSoundManager.isPlaying || mSoundManager.isPaused()) {
-          startForeground(FOREGROUND_ID, updateNotification())
-        } else {
-          stopForeground(true)
-        }
-      }
-
       RC_STOP_SERVICE -> {
         mSoundManager.stop()
       }
@@ -64,7 +56,16 @@ class MediaPlayerService : Service() {
 
   override fun onDestroy() {
     super.onDestroy()
+    mSoundManager.removeOnPlaybackStateChangeListener(this)
     mSoundManager.release()
+  }
+
+  override fun onPlaybackStateChanged() {
+    if (mSoundManager.isPlaying || mSoundManager.isPaused()) {
+      startForeground(FOREGROUND_ID, updateNotification())
+    } else {
+      stopForeground(true)
+    }
   }
 
   private fun updateNotification(): Notification {
