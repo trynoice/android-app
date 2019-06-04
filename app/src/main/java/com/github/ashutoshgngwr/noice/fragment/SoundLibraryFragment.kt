@@ -138,16 +138,23 @@ class SoundLibraryFragment : Fragment() {
       val LIBRARY: SparseArray<Sound> = SparseArray()
 
       init {
-        LIBRARY[R.raw.leaves_1] = Sound(R.raw.leaves_1, R.string.sound_leaves_1)
-        LIBRARY[R.raw.leaves_2] = Sound(R.raw.leaves_2, R.string.sound_leaves_2)
-        LIBRARY[R.raw.rain_1] = Sound(R.raw.rain_1, R.string.sound_rain_1)
-        LIBRARY[R.raw.rain_2] = Sound(R.raw.rain_2, R.string.sound_rain_2)
-        LIBRARY[R.raw.rain_3] = Sound(R.raw.rain_3, R.string.sound_rain_3)
-        LIBRARY[R.raw.thunder_1] = Sound(R.raw.thunder_1, R.string.sound_thunder_1, false)
-        LIBRARY[R.raw.thunder_2] = Sound(R.raw.thunder_2, R.string.sound_thunder_2, false)
-        LIBRARY[R.raw.thunder_3] = Sound(R.raw.thunder_3, R.string.sound_thunder_3, false)
-        LIBRARY[R.raw.wind_1] = Sound(R.raw.wind_1, R.string.sound_wind_1)
-        LIBRARY[R.raw.wind_2] = Sound(R.raw.wind_2, R.string.sound_wind_2)
+        LIBRARY[R.raw.birds] = Sound(R.raw.birds, R.string.birds, false)
+        LIBRARY[R.raw.bonfire] = Sound(R.raw.bonfire, R.string.bonfire)
+        LIBRARY[R.raw.coffee_shop] = Sound(R.raw.coffee_shop, R.string.coffee_shop)
+        LIBRARY[R.raw.distant_thunder] = Sound(R.raw.distant_thunder, R.string.distant_thunder, false)
+        LIBRARY[R.raw.heavy_rain] = Sound(R.raw.heavy_rain, R.string.heavy_rain)
+        LIBRARY[R.raw.light_rain] = Sound(R.raw.light_rain, R.string.light_rain)
+        LIBRARY[R.raw.moderate_rain] = Sound(R.raw.moderate_rain, R.string.moderate_rain)
+        LIBRARY[R.raw.moving_train] = Sound(R.raw.moving_train, R.string.moving_train)
+        LIBRARY[R.raw.night] = Sound(R.raw.night, R.string.night)
+        LIBRARY[R.raw.rolling_thunder] = Sound(R.raw.rolling_thunder, R.string.rolling_thunder, false)
+        LIBRARY[R.raw.seaside] = Sound(R.raw.seaside, R.string.seaside)
+        LIBRARY[R.raw.soft_wind] = Sound(R.raw.soft_wind, R.string.soft_wind)
+        LIBRARY[R.raw.thunder_crack] = Sound(R.raw.thunder_crack, R.string.thunder_crack, false)
+        LIBRARY[R.raw.train_horn] = Sound(R.raw.train_horn, R.string.train_horn, false)
+        LIBRARY[R.raw.water_stream] = Sound(R.raw.water_stream, R.string.water_stream)
+        LIBRARY[R.raw.wind_chimes_of_shells] = Sound(R.raw.wind_chimes_of_shells, R.string.wind_in_chimes_of_shells)
+        LIBRARY[R.raw.wind_in_palm_trees] = Sound(R.raw.wind_in_palm_trees, R.string.wind_in_palm_trees)
       }
     }
   }
