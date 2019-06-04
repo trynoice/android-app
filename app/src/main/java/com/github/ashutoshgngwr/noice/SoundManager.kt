@@ -114,7 +114,8 @@ class SoundManager(private val context: Context) : AudioManager.OnAudioFocusChan
             )
           }
 
-          mHandler.postDelayed(this, Random.nextLong() % (playback.timePeriod * 1000))
+          // min delay = 10 secs, max delay = 10 + user defined timePeriod
+          mHandler.postDelayed(this, (10 + (Random.nextLong() % playback.timePeriod)) * 1000)
         }
       }
       randomPlaybackCallbacks[playback.sound.resId].run()
