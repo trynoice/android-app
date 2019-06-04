@@ -1,31 +1,68 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
+import android.util.Log
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.core.content.ContextCompat
 import androidx.core.util.set
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.github.ashutoshgngwr.noice.MainActivity
+import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.SoundManager
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment.Sound.Companion.LIBRARY
 import kotlinx.android.synthetic.main.layout_list_item__sound.view.*
 
 class SoundLibraryFragment : Fragment() {
 
-  lateinit var recyclerView: RecyclerView
+  companion object {
+    const val TAG: String = "SoundLibraryFragment"
+  }
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    recyclerView = RecyclerView(context!!)
-    recyclerView.setHasFixedSize(true)
-    recyclerView.layoutManager = LinearLayoutManager(context)
-    recyclerView.adapter = ListAdapter(context!!)
+  private var mSoundManager: SoundManager? = null
+  private var mRecyclerView: RecyclerView? = null
+
+  private val mServiceConnection = object : ServiceConnection {
+    override fun onServiceDisconnected(name: ComponentName?) {
+      Log.d(TAG, "MediaPlayerService disconnected")
+      mSoundManager?.setOnPlaybackStateChangeListener(null)
+      mSoundManager = null
+    }
+
+    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+      Log.d(TAG, "MediaPlayerService connected")
+      mSoundManager = (service as MediaPlayerService.PlaybackBinder).getSoundManager()
+      mSoundManager?.setOnPlaybackStateChangeListener(
+        object : SoundManager.OnPlaybackStateChangeListener {
+          override fun onPlaybackStateChanged() {
+            Log.d(TAG, "Playback state changed. Refreshing UI...")
+            mRecyclerView?.adapter?.notifyDataSetChanged()
+
+            // bring bound service to foreground if not already done
+            // also create/update media player notification, duh!
+            // See MediaPlayerService#onStartCommand()
+            ContextCompat.startForegroundService(
+              context!!,
+              Intent(context, MediaPlayerService::class.java)
+                .putExtra("action", MediaPlayerService.RC_UPDATE_NOTIFICATION)
+            )
+          }
+        }
+      )
+
+      // once service is connected, update playback state in UI
+      mRecyclerView?.adapter?.notifyDataSetChanged()
+    }
   }
 
   override fun onCreateView(
@@ -33,7 +70,31 @@ class SoundLibraryFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    return recyclerView
+    if (mRecyclerView == null) {
+      mRecyclerView = RecyclerView(context!!)
+      mRecyclerView?.setHasFixedSize(true)
+      mRecyclerView?.layoutManager = LinearLayoutManager(context)
+      mRecyclerView?.adapter = ListAdapter(context!!)
+    }
+    return mRecyclerView
+  }
+
+  override fun onResume() {
+    super.onResume()
+    context?.bindService(
+      Intent(context, MediaPlayerService::class.java),
+      mServiceConnection,
+      Context.BIND_AUTO_CREATE
+    )
+  }
+
+  override fun onPause() {
+    context?.unbindService(mServiceConnection)
+
+    // manually call onServiceDisconnected because framework does not
+    // call it when service is intentionally unbound.
+    mServiceConnection.onServiceDisconnected(null)
+    super.onPause()
   }
 
   inner class ListAdapter(private val context: Context) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
@@ -45,15 +106,17 @@ class SoundLibraryFragment : Fragment() {
         val seekBarChangeListener = object : SeekBar.OnSeekBarChangeListener {
 
           override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            // return if mSoundManager is null
+            mSoundManager ?: return
+
             val soundResId = LIBRARY.valueAt(adapterPosition).resId
-            val soundManager = (activity as MainActivity).mSoundManager ?: return
             when (seekBar?.id) {
               R.id.seekbar_volume -> {
-                soundManager.setVolume(soundResId, progress)
+                mSoundManager?.setVolume(soundResId, progress)
               }
 
               R.id.seekbar_time_period -> {
-                soundManager.setTimePeriod(soundResId, progress)
+                mSoundManager?.setTimePeriod(soundResId, progress)
               }
             }
           }
@@ -67,14 +130,16 @@ class SoundLibraryFragment : Fragment() {
         view.seekbar_time_period.setOnSeekBarChangeListener(seekBarChangeListener)
 
         view.button_play.setOnClickListener {
-          val soundManager = (activity as MainActivity).mSoundManager ?: return@setOnClickListener
+          // return if mSoundManager is null
+          mSoundManager ?: return@setOnClickListener
+
           val soundResId = LIBRARY.valueAt(adapterPosition).resId
 
-          if (soundManager.isPlaying(soundResId)) {
-            soundManager.stop(soundResId)
+          if (mSoundManager!!.isPlaying(soundResId)) {
+            mSoundManager?.stop(soundResId)
             view.button_play.setImageResource(R.drawable.ic_action_play)
           } else {
-            soundManager.play(soundResId)
+            mSoundManager?.play(soundResId)
             view.button_play.setImageResource(R.drawable.ic_action_stop)
           }
         }
@@ -94,15 +159,14 @@ class SoundLibraryFragment : Fragment() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-      val soundManager = (activity as MainActivity).mSoundManager
       val sound = LIBRARY.valueAt(position)
 
       holder.itemView.title.text = context.getString(sound.titleResId)
 
-      if (soundManager != null) {
-        holder.itemView.seekbar_volume.progress = soundManager.getVolume(sound.resId)
+      if (mSoundManager != null) {
+        holder.itemView.seekbar_volume.progress = mSoundManager!!.getVolume(sound.resId)
 
-        if (soundManager.isPlaying(sound.resId)) {
+        if (mSoundManager!!.isPlaying(sound.resId)) {
           holder.itemView.button_play.setImageResource(R.drawable.ic_action_stop)
         } else {
           holder.itemView.button_play.setImageResource(R.drawable.ic_action_play)
@@ -116,8 +180,8 @@ class SoundLibraryFragment : Fragment() {
       } else {
         holder.itemView.layout_time_period.visibility = View.VISIBLE
 
-        if (soundManager != null) {
-          holder.itemView.seekbar_time_period.progress = soundManager.getTimePeriod(sound.resId)
+        if (mSoundManager != null) {
+          holder.itemView.seekbar_time_period.progress = mSoundManager!!.getTimePeriod(sound.resId)
         } else {
           holder.itemView.seekbar_time_period.progress = 60
         }

@@ -226,7 +226,6 @@ class SoundManager(private val context: Context) : AudioManager.OnAudioFocusChan
     audioManager.abandonAudioFocus(this)
 
     context.unregisterReceiver(becomingNoisyReceiver)
-    notifyPlaybackStateChange()
   }
 
   fun setOnPlaybackStateChangeListener(listener: OnPlaybackStateChangeListener?) {
