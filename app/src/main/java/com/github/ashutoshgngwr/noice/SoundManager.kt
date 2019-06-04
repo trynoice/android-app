@@ -1,6 +1,9 @@
 package com.github.ashutoshgngwr.noice
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.SoundPool
@@ -12,7 +15,7 @@ import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment.Sound.Companion.LIBRARY
 import kotlin.random.Random
 
-class SoundManager(mediaPlayerService: Context) : AudioManager.OnAudioFocusChangeListener {
+class SoundManager(private val context: Context) : AudioManager.OnAudioFocusChangeListener {
 
   class Playback(val sound: SoundLibraryFragment.Sound, val soundId: Int) {
     var volume: Float = 0.2f
@@ -37,12 +40,18 @@ class SoundManager(mediaPlayerService: Context) : AudioManager.OnAudioFocusChang
   private val randomPlaybackCallbacks = SparseArray<Runnable>(LIBRARY.size())
   private val pauseState = ArrayList<Int>(LIBRARY.size())
   private var playbackListener: OnPlaybackStateChangeListener? = null
+  private var audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+  private val becomingNoisyReceiver = object : BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent?) {
+      if (intent?.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
+        pausePlayback()
+      }
+    }
+  }
 
   var isPlaying: Boolean = false
 
   init {
-    val audioManager = mediaPlayerService.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-
     @Suppress("DEPRECATION")
     audioManager.requestAudioFocus(
       this,
@@ -53,9 +62,14 @@ class SoundManager(mediaPlayerService: Context) : AudioManager.OnAudioFocusChang
     for (sound in LIBRARY.valueIterator()) {
       playbacks[sound.resId] = Playback(
         sound,
-        mSoundPool.load(mediaPlayerService, sound.resId, 1)
+        mSoundPool.load(context, sound.resId, 1)
       )
     }
+
+    context.registerReceiver(
+      becomingNoisyReceiver,
+      IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
+    )
   }
 
   override fun onAudioFocusChange(focusChange: Int) {
@@ -137,6 +151,10 @@ class SoundManager(mediaPlayerService: Context) : AudioManager.OnAudioFocusChang
   }
 
   fun stop() {
+    if (!isPlaying) {
+      return
+    }
+
     isPlaying = false
     for (playback in playbacks.valueIterator()) {
       if (playback.isPlaying) {
@@ -149,6 +167,10 @@ class SoundManager(mediaPlayerService: Context) : AudioManager.OnAudioFocusChang
   }
 
   fun pausePlayback() {
+    if (!isPlaying) {
+      return
+    }
+
     isPlaying = false
     pauseState.clear()
 
@@ -198,6 +220,11 @@ class SoundManager(mediaPlayerService: Context) : AudioManager.OnAudioFocusChang
   fun release() {
     isPlaying = false
     mSoundPool.release()
+
+    @Suppress("DEPRECATION")
+    audioManager.abandonAudioFocus(this)
+
+    context.unregisterReceiver(becomingNoisyReceiver)
     notifyPlaybackStateChange()
   }
 
