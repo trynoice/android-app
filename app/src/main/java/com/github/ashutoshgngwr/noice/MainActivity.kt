@@ -1,7 +1,11 @@
 package com.github.ashutoshgngwr.noice
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.media.AudioManager
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +17,10 @@ import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+  companion object {
+    private const val TAG = "MainActivity"
+  }
 
   private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
@@ -70,8 +78,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
-      R.id.library -> setFragment(soundLibraryFragment)
-      R.id.about -> setFragment(aboutFragment)
+      R.id.library -> {
+        setFragment(soundLibraryFragment)
+      }
+      R.id.about -> {
+        setFragment(aboutFragment)
+      }
+      R.id.report_issue -> {
+        startActivity(
+          Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(getString(R.string.app_issues_url))
+          )
+        )
+      }
+      R.id.rate_on_play_store -> {
+        try {
+          startActivity(
+            Intent(
+              Intent.ACTION_VIEW,
+              Uri.parse("market://details?id=$packageName")
+            ).addFlags(
+              Intent.FLAG_ACTIVITY_NO_HISTORY
+                or Intent.FLAG_ACTIVITY_NEW_DOCUMENT
+                or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+            )
+          )
+        } catch (e: ActivityNotFoundException) {
+          Log.i(TAG, "Play store is not installed on the device", e)
+        }
+      }
     }
 
     layout_main.closeDrawer(GravityCompat.START)

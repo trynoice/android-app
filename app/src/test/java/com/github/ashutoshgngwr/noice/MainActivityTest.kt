@@ -1,5 +1,7 @@
 package com.github.ashutoshgngwr.noice
 
+import android.content.Intent
+import android.net.Uri
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentManager
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
@@ -10,6 +12,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.fakes.RoboMenuItem
 
 @RunWith(RobolectricTestRunner::class)
@@ -127,5 +130,27 @@ class MainActivityTest {
         .name
         == SoundLibraryFragment::class.java.simpleName
     )
+  }
+
+  @Test
+  fun `navigation - should send correct intent on clicking report issues`() {
+    val expectedIntent = Intent(
+      Intent.ACTION_VIEW,
+      Uri.parse(mainActivity.getString(R.string.app_issues_url))
+    )
+
+    mainActivity.onNavigationItemSelected(RoboMenuItem(R.id.report_issue))
+    assert(expectedIntent.filterEquals(shadowOf(mainActivity).peekNextStartedActivity()))
+  }
+
+  @Test
+  fun `navigation - should send correct intent on clicking rate on play store`() {
+    val expectedIntent = Intent(
+      Intent.ACTION_VIEW,
+      Uri.parse("market://details?id=${mainActivity.packageName}")
+    )
+
+    mainActivity.onNavigationItemSelected(RoboMenuItem(R.id.rate_on_play_store))
+    assert(expectedIntent.filterEquals(shadowOf(mainActivity).peekNextStartedActivity()))
   }
 }
