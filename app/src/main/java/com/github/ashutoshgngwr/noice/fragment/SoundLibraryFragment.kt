@@ -54,6 +54,15 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
     }
   }
 
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    context?.bindService(
+      Intent(context, MediaPlayerService::class.java),
+      mServiceConnection,
+      Context.BIND_AUTO_CREATE
+    )
+  }
+
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
@@ -68,22 +77,13 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
     return mRecyclerView
   }
 
-  override fun onResume() {
-    super.onResume()
-    context?.bindService(
-      Intent(context, MediaPlayerService::class.java),
-      mServiceConnection,
-      Context.BIND_AUTO_CREATE
-    )
-  }
-
-  override fun onPause() {
+  override fun onDestroy() {
     context?.unbindService(mServiceConnection)
 
     // manually call onServiceDisconnected because framework does not
     // call it when service is intentionally unbound.
     mServiceConnection.onServiceDisconnected(null)
-    super.onPause()
+    super.onDestroy()
   }
 
   override fun onPlaybackStateChanged() {
