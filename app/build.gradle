@@ -39,6 +39,7 @@ dependencies {
   implementation 'androidx.appcompat:appcompat:1.0.2'
   implementation 'com.google.android.material:material:1.1.0-alpha07'
   implementation 'androidx.media:media:1.0.1'
+  implementation 'com.github.medyo:android-about-page:1.2.5'
 
   testImplementation 'junit:junit:4.12'
   testImplementation 'org.robolectric:robolectric:4.2'

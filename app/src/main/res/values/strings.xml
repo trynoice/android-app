@@ -30,4 +30,68 @@
   <string name="water_stream">Water stream</string>
   <string name="wind_in_palm_trees">Wind in Palm trees</string>
   <string name="wind_in_chimes_of_shells">Wind in chimes of shells</string>
+  <string name="app_description">A minimal ad-free realistic background noise generator</string>
+  <string name="app_copyright" translatable="false">2019 Ashutosh Gangwar</string>
+  <string name="app_license_url" translatable="false">
+    https://github.com/ashutoshgngwr/noice/blob/master/LICENSE
+  </string>
+  <string name="app_website" translatable="false">https://ashutoshgngwr.github.io/noice</string>
+  <string name="app_playstore" translatable="false">com.github.ashutoshgngwr.noice</string>
+  <string name="app_github" translatable="false">ashutoshgngwr/noice</string>
+  <string name="connect_with_author">Connect with Author</string>
+  <string name="author_email" translatable="false">ashutoshgngwr@gmail.com</string>
+  <string name="about__email">Email</string>
+  <string name="author_social_handle" translatable="false">ashutoshgngwr</string>
+  <string name="about__github">Github</string>
+  <string name="about__instagram">Instagram</string>
+  <string name="about__twitter">Twitter</string>
+  <string name="credits">Credits</string>
+  <string name="credits__app_icon">white noise icon by Juraj Sedlák</string>
+  <string name="credits__app_icon_url" translatable="false">
+    https://thenounproject.com/term/white-noise/1287855/
+  </string>
+  <string name="credits__sound_birds">Forest bird loop by VKProduktion</string>
+  <string name="credits__sound_birds_url" translatable="false">https://freesound.org/s/223449/</string>
+  <string name="credits__sound_bonfire">Bonfire CU with hiss by surrey_film</string>
+  <string name="credits__sound_bonfire_url" translatable="false">https://freesound.org/s/86342/</string>
+  <string name="credits__sound_coffee_shop">Cafe 1 by Rylius</string>
+  <string name="credits__sound_coffee_shop_url" translatable="false">https://freesound.org/s/165280/</string>
+  <string name="credits__sound_distant_thunder">Distant Thunder from YouTube Audio Library</string>
+  <string name="credits__sound_distant_thunder_url" translatable="false">
+    https://www.youtube.com/audiolibrary_download?vid=c661c0547daf6af7
+  </string>
+  <string name="credits__sound_heavy_rain">Rain heavy loopable by svampen</string>
+  <string name="credits__sound_heavy_rain_url" translatable="false">https://freesound.org/s/334149/</string>
+  <string name="credits__sound_light_rain">Short rain loop by dmk67</string>
+  <string name="credits__sound_light_rain_url" translatable="false">https://freesound.org/s/392980/</string>
+  <string name="credits__sound_moderate_rain">Ambiance heavy rain loop by D W</string>
+  <string name="credits__sound_moderate_rain_url" translatable="false">https://freesound.org/s/136971/</string>
+  <string name="credits__sound_moving_train">Train Loop 07 by debsound</string>
+  <string name="credits__sound_moving_train_url" translatable="false">https://freesound.org/s/354062/</string>
+  <string name="credits__sound_night">Atmosphere with crickets and dogs at night by jmbphilmes</string>
+  <string name="credits__sound_night_url" translatable="false">https://freesound.org/s/242546/</string>
+  <string name="credits__sound_rolling_thunder">Rolling thunder from YouTube Audio Library</string>
+  <string name="credits__sound_rolling_thunder_url" translatable="false">
+    https://www.youtube.com/audiolibrary_download?vid=5f4a1b5b9c7f5d1f
+  </string>
+  <string name="credits__sound_seaside">Seaside waves by foongaz</string>
+  <string name="credits__sound_seaside_url" translatable="false">https://freesound.org/s/253287/</string>
+  <string name="credits__sound_soft_wind">Wind from YouTube Audio Library</string>
+  <string name="credits__sound_soft_wind_url" translatable="false">
+    https://www.youtube.com/audiolibrary_download?vid=e7334011b49fb938
+  </string>
+  <string name="credits__sound_thunder_crack">Thunder crack from YouTube Audio Library</string>
+  <string name="credits__sound_thunder_crack_url" translatable="false">
+    https://www.youtube.com/audiolibrary_download?vid=e4b6c4fa94a94535
+  </string>
+  <string name="credits__sound_train_horn">Rocky mtns train horn by polymorpheva</string>
+  <string name="credits__sound_train_horn_url" translatable="false">https://freesound.org/s/91558/</string>
+  <string name="credits__sound_water_stream">Stream, Running Water | Aviemore Scotland by BurghRecords</string>
+  <string name="credits__sound_water_stream_url" translatable="false">https://freesound.org/s/415151/</string>
+  <string name="credits__sound_wind_chimes_of_shells">Wind chimes of shells from YouTube Audio Library</string>
+  <string name="credits__sound_wind_chimes_of_shells_url" translatable="false">
+    https://www.youtube.com/audiolibrary_download?vid=b604ba49f305d739
+  </string>
+  <string name="credits__sound_wind_in_palm_trees">Palm trees in the wind by StrangeAcoustics</string>
+  <string name="credits__sound_wind_in_palm_trees_url" translatable="false">https://freesound.org/s/346106/</string>
 </resources>
