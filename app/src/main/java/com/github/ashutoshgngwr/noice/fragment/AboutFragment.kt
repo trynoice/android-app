@@ -186,10 +186,6 @@ class AboutFragment : Fragment() {
   private fun createElement(titleResId: Int, iconId: Int, urlResId: Int): Element {
     return Element(getString(titleResId), iconId)
       .setOnClickListener {
-        if (urlResId == 0) {
-          return@setOnClickListener
-        }
-
         context?.startActivity(
           Intent(
             Intent.ACTION_VIEW,
