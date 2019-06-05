@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.util.set
 import androidx.fragment.app.Fragment
@@ -30,7 +31,9 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
   }
 
   private var mSoundManager: SoundManager? = null
-  private var mRecyclerView: RecyclerView? = null
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  var mRecyclerView: RecyclerView? = null
 
   private val mServiceConnection = object : ServiceConnection {
     override fun onServiceDisconnected(name: ComponentName?) {
@@ -40,6 +43,8 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+      service ?: return
+
       Log.d(TAG, "MediaPlayerService connected")
       mSoundManager = (service as MediaPlayerService.PlaybackBinder).getSoundManager()
       mSoundManager?.addOnPlaybackStateChangeListener(this@SoundLibraryFragment)
@@ -56,9 +61,9 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
   ): View? {
     if (mRecyclerView == null) {
       mRecyclerView = RecyclerView(context!!)
-      mRecyclerView?.setHasFixedSize(true)
-      mRecyclerView?.layoutManager = LinearLayoutManager(context)
-      mRecyclerView?.adapter = ListAdapter(context!!)
+      mRecyclerView!!.setHasFixedSize(true)
+      mRecyclerView!!.layoutManager = LinearLayoutManager(context)
+      mRecyclerView!!.adapter = ListAdapter(context!!)
     }
     return mRecyclerView
   }
