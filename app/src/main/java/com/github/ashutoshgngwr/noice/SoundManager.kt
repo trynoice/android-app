@@ -155,10 +155,6 @@ class SoundManager(private val context: Context) : AudioManager.OnAudioFocusChan
   }
 
   fun stop() {
-    if (!isPlaying) {
-      return
-    }
-
     isPlaying = false
     for (playback in playbacks.valueIterator()) {
       if (playback.isPlaying) {

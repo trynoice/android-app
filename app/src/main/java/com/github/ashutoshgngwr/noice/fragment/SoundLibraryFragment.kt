@@ -91,10 +91,12 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
     mRecyclerView?.adapter?.notifyDataSetChanged()
 
     // bring service to foreground if not done already
-    ContextCompat.startForegroundService(
-      context!!,
-      Intent(context, MediaPlayerService::class.java)
-    )
+    if (mSoundManager?.isPlaying == true || mSoundManager?.isPaused() == true) {
+      ContextCompat.startForegroundService(
+        context!!,
+        Intent(context, MediaPlayerService::class.java)
+      )
+    }
   }
 
   inner class ListAdapter(private val context: Context) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
