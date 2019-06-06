@@ -1,8 +1,0 @@
-<resources>
-
-  <!-- AboutPage dependency is forcing day-night mode which is messing with windowBackground -->
-  <style name="AboutTheme" parent="AppTheme">
-    <item name="android:background">@color/colorBackground</item>
-  </style>
-
-</resources>

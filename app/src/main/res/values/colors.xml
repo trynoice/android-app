@@ -5,4 +5,5 @@
   <color name="colorAccent">#1eb980</color>
   <color name="colorBackground">#373740</color>
   <color name="colorCardBackground">#33333d</color>
+  <color name="about_background_color">#373740</color>
 </resources>
