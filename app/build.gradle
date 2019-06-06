@@ -14,8 +14,18 @@ android {
     versionName "0.0.1"
   }
 
+  signingConfigs {
+    release {
+      storeFile file('../keystore.jks')
+      keyAlias "$System.env.KEY_ALIAS"
+      storePassword "$System.env.STORE_PASSWORD"
+      keyPassword "$System.env.KEY_PASSWORD"
+    }
+  }
+
   buildTypes {
     debug {
+      applicationIdSuffix '.debug'
       testCoverageEnabled true
     }
 
@@ -23,6 +33,7 @@ android {
       shrinkResources true
       minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+      signingConfig = signingConfigs.release
     }
   }
 
