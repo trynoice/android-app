@@ -30,7 +30,7 @@
   <string name="water_stream">Water stream</string>
   <string name="wind_in_palm_trees">Wind in Palm trees</string>
   <string name="wind_in_chimes_of_shells">Wind in chimes of shells</string>
-  <string name="app_description">A minimal ad-free realistic background noise generator</string>
+  <string name="app_description">Relax and boost productivity with a minimal background noise generator</string>
   <string name="app_copyright" translatable="false">2019 Ashutosh Gangwar</string>
   <string name="app_license_url" translatable="false">
     https://github.com/ashutoshgngwr/noice/blob/master/LICENSE

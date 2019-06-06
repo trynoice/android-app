@@ -21,7 +21,7 @@ class AboutFragment : Fragment() {
     val context = ContextThemeWrapper(this.context, R.style.AboutTheme)
 
     return AboutPage(context).run {
-      setImage(R.mipmap.ic_launcher)
+      setImage(R.drawable.app_banner)
       setDescription(getString(R.string.app_description))
       addItem(getVersionElement())
       addItem(createElement(R.string.app_copyright, R.drawable.ic_stat_copyright, R.string.app_license_url))
