@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.R
 import mehdi.sakout.aboutpage.AboutPage
@@ -15,7 +16,10 @@ import mehdi.sakout.aboutpage.Element
 class AboutFragment : Fragment() {
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+    // force night mode and use custom theme with correct color values
+    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+    val context = ContextThemeWrapper(this.context, R.style.AboutTheme)
+
     return AboutPage(context).run {
       setImage(R.mipmap.ic_launcher)
       setDescription(getString(R.string.app_description))
