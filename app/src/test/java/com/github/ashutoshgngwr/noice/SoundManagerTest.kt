@@ -1,11 +1,13 @@
 package com.github.ashutoshgngwr.noice
 
+import android.media.AudioAttributes
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadow.api.Shadow
 import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowSoundPool
 
@@ -17,7 +19,7 @@ class SoundManagerTest {
 
   @Before
   fun setup() {
-    mSoundManager = SoundManager(RuntimeEnvironment.systemContext)
+    mSoundManager = SoundManager(RuntimeEnvironment.systemContext, Shadow.newInstanceOf(AudioAttributes::class.java))
     mSoundPool = shadowOf(mSoundManager.mSoundPool)
   }
 
@@ -44,6 +46,22 @@ class SoundManagerTest {
       mSoundPool.wasResourcePlayed(R.raw.train_horn)
         && mSoundManager.isPlaying(R.raw.train_horn)
     )
+  }
+
+  @Test
+  fun `should add newly played sounds to pause state if playback is paused`() {
+    mSoundManager.play(R.raw.moving_train)
+    assert(mSoundManager.isPlaying && !mSoundManager.isPaused())
+
+    mSoundManager.pausePlayback()
+    mSoundManager.play(R.raw.water_stream)
+    mSoundManager.play(R.raw.moving_train) // playing twice shouldn't affect pause state
+    assert(!mSoundManager.isPlaying && mSoundManager.isPaused())
+
+    mSoundPool.clearPlayed()
+    mSoundManager.resumePlayback()
+    assert(mSoundManager.isPlaying && !mSoundManager.isPaused())
+    assert(mSoundPool.wasResourcePlayed(R.raw.moving_train) && mSoundPool.wasResourcePlayed(R.raw.water_stream))
   }
 
   @Test
@@ -80,8 +98,8 @@ class SoundManagerTest {
 
   @Test
   fun `should stop playback`() {
-    // stop without playback state should have no effect
-    mSoundManager.stop()
+    // stopPlayback without playback state should have no effect
+    mSoundManager.stopPlayback()
     assert(!mSoundManager.isPlaying && !mSoundManager.isPaused())
 
     mSoundManager.play(R.raw.train_horn)
@@ -93,7 +111,7 @@ class SoundManagerTest {
 
     mSoundPool.clearPlayed()
 
-    mSoundManager.stop()
+    mSoundManager.stopPlayback()
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     assert(
       !mSoundPool.wasResourcePlayed(R.raw.train_horn)
@@ -196,7 +214,7 @@ class SoundManagerTest {
         && mSoundManager.isPlaying(R.raw.train_horn)
     )
 
-    mSoundManager.stop()
+    mSoundManager.stopPlayback()
     assert(!mSoundManager.isPlaying(R.raw.train_horn))
   }
 

@@ -22,6 +22,7 @@ import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.SoundManager
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment.Sound.Companion.LIBRARY
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.layout_list_item__sound.view.*
 
 class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
@@ -143,6 +144,16 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
           } else {
             mSoundManager?.play(soundResId)
             view.button_play.setImageResource(R.drawable.ic_action_stop)
+
+            // notify user that sound will be played when playback is resumed.
+            if (mSoundManager!!.isPaused()) {
+              @Suppress("DEPRECATION")
+              Snackbar
+                .make(mRecyclerView as View, R.string.playback_is_pause, Snackbar.LENGTH_LONG)
+                .setBackgroundTint(context.resources.getColor(R.color.colorPrimary))
+                .setAction(R.string.dismiss) { }
+                .show()
+            }
           }
         }
       }

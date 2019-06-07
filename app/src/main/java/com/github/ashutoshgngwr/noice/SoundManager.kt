@@ -2,7 +2,6 @@ package com.github.ashutoshgngwr.noice
 
 import android.content.Context
 import android.media.AudioAttributes
-import android.media.AudioManager
 import android.media.SoundPool
 import android.os.Handler
 import android.util.SparseArray
@@ -13,7 +12,7 @@ import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment.Sound.Companion.LIBRARY
 import kotlin.random.Random
 
-class SoundManager(context: Context) {
+class SoundManager(context: Context, audioAttributes: AudioAttributes) {
 
   class Playback(val sound: SoundLibraryFragment.Sound, val soundId: Int) {
     var volume: Float = 0.2f
@@ -24,13 +23,7 @@ class SoundManager(context: Context) {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   val mSoundPool: SoundPool = SoundPool.Builder()
-    .setAudioAttributes(
-      AudioAttributes.Builder()
-        .setContentType(AudioAttributes.CONTENT_TYPE_MOVIE)
-        .setLegacyStreamType(AudioManager.STREAM_MUSIC)
-        .setUsage(AudioAttributes.USAGE_GAME)
-        .build()
-    )
+    .setAudioAttributes(audioAttributes)
     .setMaxStreams(LIBRARY.size())
     .build()
 
@@ -38,7 +31,7 @@ class SoundManager(context: Context) {
   private val playbacks = SparseArray<Playback>(LIBRARY.size())
   private val randomPlaybackCallbacks = SparseArray<Runnable>(LIBRARY.size())
   private val pauseState = ArrayList<Int>(LIBRARY.size())
-  private var playbackListeners = ArrayList<OnPlaybackStateChangeListener>()
+  private val playbackListeners = ArrayList<OnPlaybackStateChangeListener>()
 
   var isPlaying: Boolean = false
     private set
@@ -53,6 +46,15 @@ class SoundManager(context: Context) {
   }
 
   private fun play(playback: Playback) {
+    if (!isPlaying && isPaused()) {
+      if (!pauseState.contains(playback.sound.resId)) {
+        pauseState.add(playback.sound.resId)
+      }
+      // UI should notify user that playback is pause,
+      // and sound will be played when it is resumed.
+      return
+    }
+
     isPlaying = true
     playback.isPlaying = true
 
@@ -117,7 +119,7 @@ class SoundManager(context: Context) {
     notifyPlaybackStateChange()
   }
 
-  fun stop() {
+  fun stopPlayback() {
     isPlaying = false
     for (playback in playbacks.valueIterator()) {
       if (playback.isPlaying) {
@@ -148,6 +150,12 @@ class SoundManager(context: Context) {
   }
 
   fun resumePlayback() {
+    if (pauseState.isEmpty()) {
+      return
+    }
+
+    isPlaying = true
+
     for (soundResId in pauseState) {
       play(playbacks[soundResId])
     }

@@ -95,4 +95,6 @@
   <string name="credits__sound_wind_in_palm_trees">Palm trees in the wind by StrangeAcoustics</string>
   <string name="credits__sound_wind_in_palm_trees_url" translatable="false">https://freesound.org/s/346106/</string>
   <string name="app_issues_url" translatable="false">https://github.com/ashutoshgngwr/noice/issues</string>
+  <string name="playback_is_pause">Playback is paused! Sound will be played when playback is resumed.</string>
+  <string name="dismiss">Dismiss</string>
 </resources>
