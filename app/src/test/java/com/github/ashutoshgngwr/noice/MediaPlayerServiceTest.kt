@@ -1,11 +1,13 @@
 package com.github.ashutoshgngwr.noice
 
 import android.content.Intent
+import android.media.AudioManager
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ServiceController
 import org.robolectric.shadow.api.Shadow
@@ -156,6 +158,57 @@ class MediaPlayerServiceTest {
     serviceController.startCommand(0, 0)
     assert(!binder.getSoundManager().isPlaying)
     assert(shadowOf(serviceController.get()).isForegroundStopped)
+  }
+
+  @Test
+  fun `should pause playback on receiving becoming noisy broadcast`() {
+    val binder = serviceController
+      .get()
+      .onBind(Shadow.newInstanceOf(Intent::class.java)) as MediaPlayerService.PlaybackBinder
+
+    val mSoundPoolShadow = shadowOf(binder.getSoundManager().mSoundPool)
+    binder.getSoundManager().play(R.raw.train_horn)
+    assert(
+      mSoundPoolShadow.wasResourcePlayed(R.raw.train_horn)
+        && binder.getSoundManager().isPlaying
+    )
+
+    mSoundPoolShadow.clearPlayed()
+    RuntimeEnvironment
+      .systemContext
+      .sendBroadcast(Intent(AudioManager.ACTION_AUDIO_BECOMING_NOISY))
+
+    assert(
+      !mSoundPoolShadow.wasResourcePlayed(R.raw.train_horn)
+        && binder.getSoundManager().isPaused()
+    )
+  }
+
+  @Test
+  fun `should handle audio focus changes`() {
+    val binder = serviceController
+      .get()
+      .onBind(Shadow.newInstanceOf(Intent::class.java)) as MediaPlayerService.PlaybackBinder
+
+    val mSoundPoolShadow = shadowOf(binder.getSoundManager().mSoundPool)
+    binder.getSoundManager().play(R.raw.moving_train)
+    assert(
+      mSoundPoolShadow.wasResourcePlayed(R.raw.moving_train)
+        && binder.getSoundManager().isPlaying
+    )
+
+    serviceController.get().onAudioFocusChange(AudioManager.AUDIOFOCUS_LOSS)
+    assert(binder.getSoundManager().isPaused())
+
+    mSoundPoolShadow.clearPlayed()
+    serviceController.get().onAudioFocusChange(AudioManager.AUDIOFOCUS_GAIN)
+    assert(
+      mSoundPoolShadow.wasResourcePlayed(R.raw.moving_train)
+        && binder.getSoundManager().isPlaying
+    )
+
+    serviceController.get().onAudioFocusChange(AudioManager.AUDIOFOCUS_LOSS_TRANSIENT)
+    assert(binder.getSoundManager().isPaused())
   }
 
   @Test

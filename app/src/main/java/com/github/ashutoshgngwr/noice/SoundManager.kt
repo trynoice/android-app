@@ -1,9 +1,6 @@
 package com.github.ashutoshgngwr.noice
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.SoundPool
@@ -16,7 +13,7 @@ import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment.Sound.Companion.LIBRARY
 import kotlin.random.Random
 
-class SoundManager(private val context: Context) : AudioManager.OnAudioFocusChangeListener {
+class SoundManager(context: Context) {
 
   class Playback(val sound: SoundLibraryFragment.Sound, val soundId: Int) {
     var volume: Float = 0.2f
@@ -42,50 +39,16 @@ class SoundManager(private val context: Context) : AudioManager.OnAudioFocusChan
   private val randomPlaybackCallbacks = SparseArray<Runnable>(LIBRARY.size())
   private val pauseState = ArrayList<Int>(LIBRARY.size())
   private var playbackListeners = ArrayList<OnPlaybackStateChangeListener>()
-  private var audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-  private val becomingNoisyReceiver = object : BroadcastReceiver() {
-    override fun onReceive(context: Context?, intent: Intent?) {
-      if (intent?.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
-        pausePlayback()
-      }
-    }
-  }
 
   var isPlaying: Boolean = false
     private set
 
   init {
-    @Suppress("DEPRECATION")
-    audioManager.requestAudioFocus(
-      this,
-      AudioManager.STREAM_MUSIC,
-      AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
-    )
-
     for (sound in LIBRARY.valueIterator()) {
       playbacks[sound.resId] = Playback(
         sound,
         mSoundPool.load(context, sound.resId, 1)
       )
-    }
-
-    context.registerReceiver(
-      becomingNoisyReceiver,
-      IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
-    )
-  }
-
-  override fun onAudioFocusChange(focusChange: Int) {
-    when (focusChange) {
-      AudioManager.AUDIOFOCUS_LOSS -> {
-        pausePlayback()
-      }
-      AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
-        pausePlayback()
-      }
-      AudioManager.AUDIOFOCUS_GAIN -> {
-        resumePlayback()
-      }
     }
   }
 
@@ -218,11 +181,6 @@ class SoundManager(private val context: Context) : AudioManager.OnAudioFocusChan
   fun release() {
     isPlaying = false
     mSoundPool.release()
-
-    @Suppress("DEPRECATION")
-    audioManager.abandonAudioFocus(this)
-
-    context.unregisterReceiver(becomingNoisyReceiver)
     notifyPlaybackStateChange()
   }
 

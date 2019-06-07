@@ -1,7 +1,5 @@
 package com.github.ashutoshgngwr.noice
 
-import android.content.Intent
-import android.media.AudioManager
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -216,46 +214,5 @@ class SoundManagerTest {
 
     mSoundManager.setTimePeriod(R.raw.train_horn, 120)
     assert(mSoundManager.getTimePeriod(R.raw.train_horn) == 120)
-  }
-
-  @Test
-  fun `should pause playback on receiving becoming noisy broadcast`() {
-    mSoundManager.play(R.raw.train_horn)
-    assert(
-      mSoundPool.wasResourcePlayed(R.raw.train_horn)
-        && mSoundManager.isPlaying
-    )
-
-    mSoundPool.clearPlayed()
-    RuntimeEnvironment
-      .systemContext
-      .sendBroadcast(Intent(AudioManager.ACTION_AUDIO_BECOMING_NOISY))
-
-    assert(
-      !mSoundPool.wasResourcePlayed(R.raw.train_horn)
-        && mSoundManager.isPaused()
-    )
-  }
-
-  @Test
-  fun `should handle audio focus changes`() {
-    mSoundManager.play(R.raw.moving_train)
-    assert(
-      mSoundPool.wasResourcePlayed(R.raw.moving_train)
-        && mSoundManager.isPlaying
-    )
-
-    mSoundManager.onAudioFocusChange(AudioManager.AUDIOFOCUS_LOSS)
-    assert(mSoundManager.isPaused())
-
-    mSoundPool.clearPlayed()
-    mSoundManager.onAudioFocusChange(AudioManager.AUDIOFOCUS_GAIN)
-    assert(
-      mSoundPool.wasResourcePlayed(R.raw.moving_train)
-        && mSoundManager.isPlaying
-    )
-
-    mSoundManager.onAudioFocusChange(AudioManager.AUDIOFOCUS_LOSS_TRANSIENT)
-    assert(mSoundManager.isPaused())
   }
 }

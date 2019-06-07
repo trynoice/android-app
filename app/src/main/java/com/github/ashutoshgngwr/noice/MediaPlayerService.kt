@@ -1,13 +1,18 @@
 package com.github.ashutoshgngwr.noice
 
 import android.app.*
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.media.AudioManager
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 
-class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener {
+class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener,
+  AudioManager.OnAudioFocusChangeListener {
 
   companion object {
     const val FOREGROUND_ID = 0x29
@@ -19,7 +24,16 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
     const val NOTIFICATION_CHANNEL_ID = "com.github.ashutoshgngwr.noice.default"
   }
 
+  private lateinit var mAudioManager: AudioManager
   private lateinit var mSoundManager: SoundManager
+
+  private val becomingNoisyReceiver = object : BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent?) {
+      if (intent?.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
+        mSoundManager.pausePlayback()
+      }
+    }
+  }
 
   inner class PlaybackBinder : Binder() {
     fun getSoundManager(): SoundManager = this@MediaPlayerService.mSoundManager
@@ -31,6 +45,7 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
 
   override fun onCreate() {
     super.onCreate()
+    mAudioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
     mSoundManager = SoundManager(this)
     mSoundManager.addOnPlaybackStateChangeListener(this)
     createNotificationChannel()
@@ -60,11 +75,47 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
     mSoundManager.release()
   }
 
+  @Suppress("DEPRECATION")
   override fun onPlaybackStateChanged() {
     if (mSoundManager.isPlaying || mSoundManager.isPaused()) {
       startForeground(FOREGROUND_ID, updateNotification())
     } else {
       stopForeground(true)
+    }
+
+    if (mSoundManager.isPlaying) {
+      // playback started, request audio focus
+      mAudioManager.requestAudioFocus(
+        this,
+        AudioManager.STREAM_MUSIC,
+        AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
+      )
+
+      // register becoming noisy receiver to detect audio output config changes
+      registerReceiver(
+        becomingNoisyReceiver,
+        IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
+      )
+    } else {
+      // release audio focus
+      mAudioManager.abandonAudioFocus(this)
+
+      // unregister receiver
+      unregisterReceiver(becomingNoisyReceiver)
+    }
+  }
+
+  override fun onAudioFocusChange(focusChange: Int) {
+    when (focusChange) {
+      AudioManager.AUDIOFOCUS_LOSS -> {
+        mSoundManager.pausePlayback()
+      }
+      AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
+        mSoundManager.pausePlayback()
+      }
+      AudioManager.AUDIOFOCUS_GAIN -> {
+        mSoundManager.resumePlayback()
+      }
     }
   }
 
