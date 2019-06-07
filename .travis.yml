@@ -1,5 +1,6 @@
 language: android
 jdk: oraclejdk8
+sudo: required
 
 android:
   components:
@@ -20,8 +21,8 @@ cache:
 
 stages:
   - test
-  # - build
-  # - deploy
+  - name: deploy
+    if: tag IS present
 
 jobs:
   include:
@@ -30,3 +31,20 @@ jobs:
         - COVERAGE_REPORT=app/build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml
       script: ./gradlew testDebugUnitTestCoverage
       after_success: bash <(curl -s https://codecov.io/bash) -f "$COVERAGE_REPORT"
+    - stage: deploy
+      env:
+        - secure: "Om5/jAc2a/paKPtYosO++UMi0gWC6F5BuHftxWMYaeYQbK3Y07r8K+OmvfzXq+rWtiiuK3fOaDjZGciI4zmx9U5cLgdfTFSUqqKkrvDeP9YgOJ5Etn5a0ody2IdfqHeuSOrr3FLnEna58IunMhicC/F8b5x6aRvksuHypU2YN4u5vaDILXIzIJfD9s7xW71h4+G+Z7EZNNvtbp9SakA/2uJMLJYeLdFyDOPuhDpgLnMW44cQQRPDHBANpcix3tml4eF1x5AuNHYvTbZkmvDsK4juHPD6kZn7yoXf0A5nOrF50/zxOqgHPtFtfAd0K7QkZqjx+80GfGj9P9RKRkikKWI8/OLekIyfuL/y373iqGyz0MnVlA5eIvz1FHBaG5boA11KmIvtpk3ElZLH2/KTQ3m7n7KarB9rAjh4H09/OzgrQeAA2Ep7pIO6zbubpT/b4mYqM8CAwJGE0IVCnABfgbH3K3xNiRYkkLHwJDQwzCU3sqOIOt+ePnZJo09s3TcyBIobyfSh/DguLKIv6VPirptWI+Kk+dCthaWw9FAoOMWh96b++qNWhzaYE4XTTN0V7Di34j/e6wJxRw0G8gZvZbRKGIRheeASJj1+82mopOhKK+42h+VFNogK7BPpt1D0UzjY97+vq7U41/D72Y1wgyR3DOhQRLLbbPJ1n8NUowE="
+        - secure: "n0RqFiI1F4f7NPOvjK8Ghj+fJiDOxSCH1N3Tt9Usp4sBBacaXS9lI3alplQZiXMqLZLWQHYhInBz4hIPBFUyQgardx1JVWXiu0WQ40DU/Tq5ljz+KJ9ToC+IMcxzZase6imKGNU4N1CbSKlFi1wZpMjvvp1NdGtCcgYQhFszcfDOr2erEGr+U3ZqFsOEJ9x5vwJXSjog5XUgPYtoenfOQtNUSXWZPfylnET3MVpskDVZ2iXtryDYKd5PCXCdgJ/FkVY2ap3njP3vYWQ3OEWe64q6mK0IEjuRdBPllJuePOiD4bK6/q9PRr3xyjjfNShNsgBbJapaY6LzE6gJF/wG7CJa9jxSicONiDiSFBHbD6RGzjyeBp+O8CPiGVzoMFtbQYBc9gIe13uUy+y9M1gPS8rdNaMN4R8VXiV1qDBX5SRJn9bVj/S8igDHuwvYDIRYrDFejHDOk6hCS/tKb6pwoVNy1z1qDB6Qvl4bS5Z1HlipKhxM7xnkMKVwhrrRoUaFxqyh3+iRtyNuCNYcImkcR6gNoaTDJs5hM0ZTw++Oa/QUeGlIcm3g5GvlW8LabPlcLVWJAyqDxQgJwRhie9f+iITRZTtdGMxgA+jz7G6nJcMk7OBGUMJ9tN/uHx8bwSggpco+VnDjINnJDHliriHk/drqBa7b7wY/xIyOXEigNRY="
+        - secure: "WoqEzeeN8G9hEEuKlIeMiM7tVc7fPrAEIAp8bK2aN9qpA/nJWgU/FhzvODAE4rue0LJTWk74nfJbENPHFUL9cCQA0WscJbVTzuxTXQruyn32dXh2XGbuLHQeVc43PQna/lk8b7EwwgwvqD1lU1fA70TfT85Q54ZTyQAE4WRN+WQ3bAZCW6VjQSBz4Tb8xIH7VFzRFEFLR58wqFf3bMJ6rehS5xarR4UBI6siHfBD79ICyvYbuyPQo3y5hvv2WOrBA6L/9VJAOfY3PjItVX+kHDfRKKLdGlBX88zfpUzw9Eqivii6W7igt8wGs7U81JVbsXRZmvr55hvnRPrwW0+WlzmtqIlpcU04qVwOU1KkbawM3t/eS0e7qiXk1CK0rPRbAKfOGbrSagfvv/aTNovlN3G60emafPip+5TNYGFQOAA3LI59INp9QfUT7PcIe6bt8MlgE+JQRxHDjzGoZm74pjmj3Z09SVmxkrNhY/VzasWy87pAgtXuJaN/Z2W/XQ/2BS/O2UezrL5HV0UHP6mOeclb3lSEdm3x1vrH/3NRby6h01TQbh6jliPwzqvxUPH7lqJLO73H0WobclD/IQTkvobhf0UPsX4oWzQ+bLe/D19R2DL7o6twlvGpMhXsD90JYYM75bY9brMCQtgT4XX5Gwi/dtZeNY+fpNJcMfVo7NQ="
+      before_install:
+        - openssl aes-256-cbc -K $encrypted_00dbe7dde1b1_key -iv $encrypted_00dbe7dde1b1_iv -in secrets.tar.enc -out secrets.tar -d
+        - tar xvf secrets.tar
+        - gem update --system
+        - gem install bundler
+      install:
+        - bundle install
+      before_script:
+        - export TRACK=beta
+        - if [ -z "$(echo $TRAVIS_TAG | grep -P '^\d+\.\d+\.\d+-\w+$')" ]; then export TRACK=production; fi
+      script: bundle exec fastlane $TRACK
+      after_script: rm keystore.jks service-account-key.json secrets.tar
