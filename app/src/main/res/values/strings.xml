@@ -44,15 +44,14 @@
   <string name="about__email">Email</string>
   <string name="author_social_handle" translatable="false">ashutoshgngwr</string>
   <string name="about__github">Github</string>
-  <string name="about__instagram">Instagram</string>
   <string name="about__twitter">Twitter</string>
   <string name="credits">Credits</string>
   <string name="credits__app_icon">white noise icon by Juraj Sedlák</string>
   <string name="credits__app_icon_url" translatable="false">
     https://thenounproject.com/term/white-noise/1287855/
   </string>
-  <string name="credits__sound_birds">Forest bird loop by VKProduktion</string>
-  <string name="credits__sound_birds_url" translatable="false">https://freesound.org/s/223449/</string>
+  <string name="credits__sound_birds">Birds by Julien Nicolas</string>
+  <string name="credits__sound_birds_url" translatable="false">https://freesound.org/s/243459/</string>
   <string name="credits__sound_bonfire">Bonfire CU with hiss by surrey_film</string>
   <string name="credits__sound_bonfire_url" translatable="false">https://freesound.org/s/86342/</string>
   <string name="credits__sound_coffee_shop">Cafe 1 by Rylius</string>
@@ -67,10 +66,12 @@
   <string name="credits__sound_light_rain_url" translatable="false">https://freesound.org/s/392980/</string>
   <string name="credits__sound_moderate_rain">Ambiance heavy rain loop by D W</string>
   <string name="credits__sound_moderate_rain_url" translatable="false">https://freesound.org/s/136971/</string>
+  <string name="credits__morning_in_a_village">Village jungle morning by aurelien.leveque</string>
+  <string name="credits__morning_in_a_village_url" translatable="false">https://freesound.org/s/417635/</string>
   <string name="credits__sound_moving_train">Train Loop 07 by debsound</string>
   <string name="credits__sound_moving_train_url" translatable="false">https://freesound.org/s/354062/</string>
-  <string name="credits__sound_night">Atmosphere with crickets and dogs at night by jmbphilmes</string>
-  <string name="credits__sound_night_url" translatable="false">https://freesound.org/s/242546/</string>
+  <string name="credits__sound_night">Jungle choco by jaime_enrique</string>
+  <string name="credits__sound_night_url" translatable="false">https://freesound.org/s/424763/</string>
   <string name="credits__sound_rolling_thunder">Rolling thunder from YouTube Audio Library</string>
   <string name="credits__sound_rolling_thunder_url" translatable="false">
     https://www.youtube.com/audiolibrary_download?vid=5f4a1b5b9c7f5d1f

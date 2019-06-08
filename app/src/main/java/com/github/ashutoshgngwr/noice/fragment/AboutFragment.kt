@@ -30,7 +30,6 @@ class AboutFragment : Fragment() {
       addEmail(getString(R.string.author_email), getString(R.string.about__email))
       addGitHub(getString(R.string.author_social_handle), getString(R.string.about__github))
       addTwitter(getString(R.string.author_social_handle), getString(R.string.about__twitter))
-      addInstagram(getString(R.string.author_social_handle), getString(R.string.about__instagram))
       addGroup(getString(R.string.credits))
       addItem(
         createElement(
@@ -93,6 +92,14 @@ class AboutFragment : Fragment() {
           R.string.credits__sound_moderate_rain,
           R.drawable.ic_stat_sound,
           R.string.credits__sound_moderate_rain_url
+        )
+      )
+
+      addItem(
+        createElement(
+          R.string.credits__morning_in_a_village,
+          R.drawable.ic_stat_sound,
+          R.string.credits__morning_in_a_village_url
         )
       )
 
