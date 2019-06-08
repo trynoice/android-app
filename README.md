@@ -14,7 +14,7 @@
 
 ## Features
 
-- 17 recorded noises
+- 18 recorded noises
 - Make customised mix
 - Play alongside other music players
 - Individual volume control for each noise source
@@ -29,6 +29,12 @@
 ## Contributing
 
 We welcome contributions of all kinds and sizes. This includes everything from simple bug reports to large features.
+
+### Adding sounds
+
+Android [SoundPool](https://developer.android.com/reference/android/media/SoundPool) has strict limitations on sound size. Please use < 10 seconds sounds at 32 kHz sample rate or < 15 seconds at 22 kHz. Test all sound changes to make sure if it is played correctly. Sounds might be chopped off if memory limits are exceeded.
+
+Lower sample rates will allow longer playbacks but it is not recommended.
 
 ### Workflow
 
