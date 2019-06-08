@@ -215,13 +215,14 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
       val LIBRARY: SparseArray<Sound> = SparseArray()
 
       init {
-        LIBRARY[R.raw.birds] = Sound(R.raw.birds, R.string.birds, false)
+        LIBRARY[R.raw.birds] = Sound(R.raw.birds, R.string.birds)
         LIBRARY[R.raw.bonfire] = Sound(R.raw.bonfire, R.string.bonfire)
         LIBRARY[R.raw.coffee_shop] = Sound(R.raw.coffee_shop, R.string.coffee_shop)
         LIBRARY[R.raw.distant_thunder] = Sound(R.raw.distant_thunder, R.string.distant_thunder, false)
         LIBRARY[R.raw.heavy_rain] = Sound(R.raw.heavy_rain, R.string.heavy_rain)
         LIBRARY[R.raw.light_rain] = Sound(R.raw.light_rain, R.string.light_rain)
         LIBRARY[R.raw.moderate_rain] = Sound(R.raw.moderate_rain, R.string.moderate_rain)
+        LIBRARY[R.raw.morning_in_a_village] = Sound(R.raw.morning_in_a_village, R.string.morning_in_a_village)
         LIBRARY[R.raw.moving_train] = Sound(R.raw.moving_train, R.string.moving_train)
         LIBRARY[R.raw.night] = Sound(R.raw.night, R.string.night)
         LIBRARY[R.raw.rolling_thunder] = Sound(R.raw.rolling_thunder, R.string.rolling_thunder, false)
