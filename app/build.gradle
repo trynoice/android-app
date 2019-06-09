@@ -54,5 +54,5 @@ dependencies {
 
   testImplementation 'junit:junit:4.12'
   testImplementation 'org.robolectric:robolectric:4.2'
-  debugImplementation 'androidx.fragment:fragment-testing:1.1.0-alpha09'
+  debugImplementation 'androidx.fragment:fragment-testing:1.1.0-beta01'
 }
