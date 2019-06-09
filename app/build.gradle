@@ -53,6 +53,6 @@ dependencies {
   implementation 'com.github.medyo:android-about-page:1.2.5'
 
   testImplementation 'junit:junit:4.12'
-  testImplementation 'org.robolectric:robolectric:4.2'
+  testImplementation 'org.robolectric:robolectric:4.3'
   debugImplementation 'androidx.fragment:fragment-testing:1.1.0-beta01'
 }
