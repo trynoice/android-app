@@ -87,16 +87,23 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
     super.onDestroy()
   }
 
-  override fun onPlaybackStateChanged() {
-    Log.d(TAG, "Playback state changed. Refreshing UI...")
-    mRecyclerView?.adapter?.notifyDataSetChanged()
-
-    // bring service to foreground if not done already
-    if (mSoundManager?.isPlaying == true || mSoundManager?.isPaused() == true) {
+  override fun onPlaybackStateChanged(playbackState: Int) {
+    if (playbackState == SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED) {
+      Log.d(TAG, "Playback started! Bring media player service to foreground...")
       ContextCompat.startForegroundService(
         context!!,
         Intent(context, MediaPlayerService::class.java)
       )
+    }
+
+    when (playbackState) {
+      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED,
+      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_PAUSED,
+      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_RESUMED,
+      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED -> {
+        Log.d(TAG, "Playback state changed. Refreshing sound list...")
+        mRecyclerView?.adapter?.notifyDataSetChanged()
+      }
     }
   }
 

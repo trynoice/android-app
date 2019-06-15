@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.fragment
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.FragmentScenario.launchInContainer
 import androidx.lifecycle.Lifecycle
+import com.github.ashutoshgngwr.noice.SoundManager
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -36,7 +37,7 @@ class SoundLibraryFragmentTest {
       .moveToState(Lifecycle.State.CREATED)
       .onFragment { fragment ->
         shadowOf(fragment.mRecyclerView).setDidRequestLayout(false)
-        fragment.onPlaybackStateChanged()
+        fragment.onPlaybackStateChanged(SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED)
         assert(shadowOf(fragment.mRecyclerView).didRequestLayout())
       }
   }

@@ -91,8 +91,15 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
   }
 
   fun play(soundResId: Int) {
+    val wasPlaying = isPlaying
     play(playbacks[soundResId])
-    notifyPlaybackStateChange()
+    notifyPlaybackStateChange(
+      if (wasPlaying) {
+        OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED
+      } else {
+        OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED
+      }
+    )
   }
 
   private fun stop(playback: Playback) {
@@ -116,7 +123,13 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
     }
 
     this.isPlaying = this.isPlaying && isPlaying
-    notifyPlaybackStateChange()
+    notifyPlaybackStateChange(
+      if (isPlaying) {
+        OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED
+      } else {
+        OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED
+      }
+    )
   }
 
   fun stopPlayback() {
@@ -128,7 +141,7 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
     }
 
     pauseState.clear()
-    notifyPlaybackStateChange()
+    notifyPlaybackStateChange(OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED)
   }
 
   fun pausePlayback() {
@@ -146,7 +159,7 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
       }
     }
 
-    notifyPlaybackStateChange()
+    notifyPlaybackStateChange(OnPlaybackStateChangeListener.STATE_PLAYBACK_PAUSED)
   }
 
   fun resumePlayback() {
@@ -161,7 +174,7 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
     }
 
     pauseState.clear()
-    notifyPlaybackStateChange()
+    notifyPlaybackStateChange(OnPlaybackStateChangeListener.STATE_PLAYBACK_RESUMED)
   }
 
   fun isPlaying(soundResId: Int): Boolean {
@@ -176,6 +189,7 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
     val playback = playbacks[soundResId]
     playback.volume = volume / 20.0f
     mSoundPool.setVolume(playback.streamId, playback.volume, playback.volume)
+    notifyPlaybackStateChange(OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED)
   }
 
   fun getTimePeriod(soundResId: Int): Int {
@@ -184,12 +198,13 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
 
   fun setTimePeriod(soundResId: Int, timePeriod: Int) {
     playbacks[soundResId].timePeriod = timePeriod
+    notifyPlaybackStateChange(OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED)
   }
 
   fun release() {
     isPlaying = false
     mSoundPool.release()
-    notifyPlaybackStateChange()
+    notifyPlaybackStateChange(OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED)
   }
 
   fun addOnPlaybackStateChangeListener(listener: OnPlaybackStateChangeListener) {
@@ -204,13 +219,22 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
     return pauseState.isNotEmpty()
   }
 
-  private fun notifyPlaybackStateChange() {
+  private fun notifyPlaybackStateChange(playbackState: Int) {
     for (listener in playbackListeners) {
-      listener.onPlaybackStateChanged()
+      listener.onPlaybackStateChanged(playbackState)
     }
   }
 
   interface OnPlaybackStateChangeListener {
-    fun onPlaybackStateChanged()
+
+    companion object {
+      const val STATE_PLAYBACK_STARTED = 0x0
+      const val STATE_PLAYBACK_STOPPED = 0x1
+      const val STATE_PLAYBACK_PAUSED = 0x2
+      const val STATE_PLAYBACK_RESUMED = 0x3
+      const val STATE_PLAYBACK_UPDATED = 0x4
+    }
+
+    fun onPlaybackStateChanged(playbackState: Int)
   }
 }

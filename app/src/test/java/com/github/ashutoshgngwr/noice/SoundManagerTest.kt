@@ -179,7 +179,7 @@ class SoundManagerTest {
     var isCalled = false
     mSoundManager.addOnPlaybackStateChangeListener(
       object : SoundManager.OnPlaybackStateChangeListener {
-        override fun onPlaybackStateChanged() {
+        override fun onPlaybackStateChanged(playbackState: Int) {
           isCalled = true
         }
       }
@@ -193,7 +193,7 @@ class SoundManagerTest {
   fun `should not notify removed playback listeners of changes`() {
     var isCalled = false
     val playbackListener = object : SoundManager.OnPlaybackStateChangeListener {
-      override fun onPlaybackStateChanged() {
+      override fun onPlaybackStateChanged(playbackState: Int) {
         isCalled = true
       }
     }
