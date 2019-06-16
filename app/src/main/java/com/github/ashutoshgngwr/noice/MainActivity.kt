@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
+import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,9 +24,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   }
 
   private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-
-  private val soundLibraryFragment = SoundLibraryFragment()
-  private val aboutFragment = AboutFragment()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -53,17 +51,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
           .getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1)
           .name
         ) {
-        soundLibraryFragment.javaClass.simpleName ->
+        SoundLibraryFragment::class.java.simpleName ->
           navigation_drawer.setCheckedItem(R.id.library)
 
-        aboutFragment.javaClass.simpleName ->
+        AboutFragment::class.java.simpleName ->
           navigation_drawer.setCheckedItem(R.id.about)
       }
     }
 
     // set sound library fragment when activity is created initially
     if (savedInstanceState == null) {
-      setFragment(soundLibraryFragment)
+      setFragment(SoundLibraryFragment::class.java)
     }
 
     // volume control to type "media"
@@ -79,10 +77,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.library -> {
-        setFragment(soundLibraryFragment)
+        setFragment(SoundLibraryFragment::class.java)
+      }
+      R.id.saved_presets -> {
+        setFragment(PresetFragment::class.java)
       }
       R.id.about -> {
-        setFragment(aboutFragment)
+        setFragment(AboutFragment::class.java)
       }
       R.id.report_issue -> {
         startActivity(
@@ -127,8 +128,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
   }
 
-  private fun setFragment(fragment: Fragment) {
-    val tag = fragment.javaClass.simpleName
+  private fun <T : Fragment> setFragment(fragmentClass: Class<T>) {
+    val tag = fragmentClass.simpleName
 
     // show fragment if it isn't present in back stack.
     // if it is present, pop back stack to bring it to front
@@ -146,7 +147,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
           R.anim.enter_left,
           R.anim.exit_right
         )
-        .replace(R.id.fragment_container, fragment)
+        .replace(R.id.fragment_container, fragmentClass.newInstance())
         .addToBackStack(tag)
         .commit()
     }

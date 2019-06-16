@@ -97,6 +97,17 @@
   <string name="credits__sound_wind_in_palm_trees">Palm trees in the wind by StrangeAcoustics</string>
   <string name="credits__sound_wind_in_palm_trees_url" translatable="false">https://freesound.org/s/346106/</string>
   <string name="app_issues_url" translatable="false">https://github.com/ashutoshgngwr/noice/issues</string>
-  <string name="playback_is_pause">Playback is paused! Sound will be played when playback is resumed.</string>
+  <string name="playback_is_paused">Playback is paused! Sound will be played when playback is resumed.</string>
   <string name="dismiss">Dismiss</string>
+  <string name="save_preset">Save Preset</string>
+  <string name="name">Name</string>
+  <string name="save">Save</string>
+  <string name="cancel">Cancel</string>
+  <string name="preset_name_cannot_be_empty">Preset name cannot be empty!</string>
+  <string name="preset_saved">Preset saved!</string>
+  <string name="saved_presets">Saved Presets</string>
+  <string name="delete_preset">Delete Preset</string>
+  <string name="preset_delete_confirmation">Confirm delete %s?</string>
+  <string name="delete">Delete</string>
+  <string name="preset_deleted">Preset deleted!</string>
 </resources>

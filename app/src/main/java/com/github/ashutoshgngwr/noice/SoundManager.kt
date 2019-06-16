@@ -4,10 +4,8 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.SoundPool
 import android.os.Handler
-import android.util.SparseArray
 import androidx.annotation.VisibleForTesting
-import androidx.core.util.set
-import androidx.core.util.valueIterator
+import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment.Sound.Companion.LIBRARY
 import kotlin.random.Random
@@ -24,21 +22,21 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   val mSoundPool: SoundPool = SoundPool.Builder()
     .setAudioAttributes(audioAttributes)
-    .setMaxStreams(LIBRARY.size())
+    .setMaxStreams(LIBRARY.size)
     .build()
 
   private val mHandler = Handler()
-  private val playbacks = SparseArray<Playback>(LIBRARY.size())
-  private val randomPlaybackCallbacks = SparseArray<Runnable>(LIBRARY.size())
-  private val pauseState = ArrayList<Int>(LIBRARY.size())
+  private val playbacks = HashMap<String, Playback>(LIBRARY.size)
+  private val randomPlaybackCallbacks = HashMap<String, Runnable>(LIBRARY.size)
+  private val pauseState = ArrayList<String>(LIBRARY.size)
   private val playbackListeners = ArrayList<OnPlaybackStateChangeListener>()
 
   var isPlaying: Boolean = false
     private set
 
   init {
-    for (sound in LIBRARY.valueIterator()) {
-      playbacks[sound.resId] = Playback(
+    for (sound in LIBRARY) {
+      playbacks[sound.key] = Playback(
         sound,
         mSoundPool.load(context, sound.resId, 1)
       )
@@ -47,8 +45,8 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
 
   private fun play(playback: Playback) {
     if (!isPlaying && isPaused()) {
-      if (!pauseState.contains(playback.sound.resId)) {
-        pauseState.add(playback.sound.resId)
+      if (!pauseState.contains(playback.sound.key)) {
+        pauseState.add(playback.sound.key)
       }
       // UI should notify user that playback is pause,
       // and sound will be played when it is resumed.
@@ -69,7 +67,7 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
       )
     } else {
       // non-loopable sounds should be played at random intervals in defined period
-      randomPlaybackCallbacks[playback.sound.resId] = object : Runnable {
+      randomPlaybackCallbacks[playback.sound.key] = object : Runnable {
         override fun run() {
           if (isPlaying) {
             playback.streamId = mSoundPool.play(
@@ -82,17 +80,17 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
             )
           }
 
-          // min delay = 10 secs, max delay = 10 + user defined timePeriod
-          mHandler.postDelayed(this, (10 + (Random.nextLong() % playback.timePeriod)) * 1000)
+          // min delay = 15 secs, max delay = 15 + user defined timePeriod
+          mHandler.postDelayed(this, (15 + (Random.nextLong() % playback.timePeriod)) * 1000)
         }
       }
-      randomPlaybackCallbacks[playback.sound.resId].run()
+      randomPlaybackCallbacks[playback.sound.key]!!.run()
     }
   }
 
-  fun play(soundResId: Int) {
+  fun play(soundKey: String) {
     val wasPlaying = isPlaying
-    play(playbacks[soundResId])
+    play(playbacks[soundKey]!!)
     notifyPlaybackStateChange(
       if (wasPlaying) {
         OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED
@@ -108,23 +106,23 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
     playback.streamId = 0
 
     if (!playback.sound.isLoopable) {
-      mHandler.removeCallbacks(randomPlaybackCallbacks[playback.sound.resId])
-      randomPlaybackCallbacks.delete(playback.sound.resId)
+      mHandler.removeCallbacks(randomPlaybackCallbacks[playback.sound.key])
+      randomPlaybackCallbacks.remove(playback.sound.key)
     }
   }
 
-  fun stop(soundResId: Int) {
-    stop(playbacks[soundResId])
+  fun stop(soundKey: String) {
+    stop(playbacks[soundKey]!!)
 
     // see if all playbacks are stopped
     var isPlaying = false
-    for (p in playbacks.valueIterator()) {
+    for (p in playbacks.values) {
       isPlaying = isPlaying || p.isPlaying
     }
 
     this.isPlaying = this.isPlaying && isPlaying
     notifyPlaybackStateChange(
-      if (isPlaying) {
+      if (this.isPlaying) {
         OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED
       } else {
         OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED
@@ -134,7 +132,7 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
 
   fun stopPlayback() {
     isPlaying = false
-    for (playback in playbacks.valueIterator()) {
+    for (playback in playbacks.values) {
       if (playback.isPlaying) {
         stop(playback)
       }
@@ -152,9 +150,9 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
     isPlaying = false
     pauseState.clear()
 
-    for (playback in playbacks.valueIterator()) {
+    for (playback in playbacks.values) {
       if (playback.isPlaying) {
-        pauseState.add(playback.sound.resId)
+        pauseState.add(playback.sound.key)
         stop(playback)
       }
     }
@@ -169,35 +167,35 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
 
     isPlaying = true
 
-    for (soundResId in pauseState) {
-      play(playbacks[soundResId])
+    for (soundKey in pauseState) {
+      play(playbacks[soundKey]!!)
     }
 
     pauseState.clear()
     notifyPlaybackStateChange(OnPlaybackStateChangeListener.STATE_PLAYBACK_RESUMED)
   }
 
-  fun isPlaying(soundResId: Int): Boolean {
-    return isPlaying && playbacks[soundResId].isPlaying
+  fun isPlaying(soundKey: String): Boolean {
+    return isPlaying && playbacks[soundKey]!!.isPlaying
   }
 
-  fun getVolume(soundResId: Int): Int {
-    return Math.round(playbacks[soundResId].volume * 20)
+  fun getVolume(soundKey: String): Int {
+    return Math.round(playbacks[soundKey]!!.volume * 20)
   }
 
-  fun setVolume(soundResId: Int, volume: Int) {
-    val playback = playbacks[soundResId]
+  fun setVolume(soundKey: String, volume: Int) {
+    val playback = playbacks[soundKey]!!
     playback.volume = volume / 20.0f
     mSoundPool.setVolume(playback.streamId, playback.volume, playback.volume)
     notifyPlaybackStateChange(OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED)
   }
 
-  fun getTimePeriod(soundResId: Int): Int {
-    return playbacks[soundResId].timePeriod
+  fun getTimePeriod(soundKey: String): Int {
+    return playbacks[soundKey]!!.timePeriod
   }
 
-  fun setTimePeriod(soundResId: Int, timePeriod: Int) {
-    playbacks[soundResId].timePeriod = timePeriod
+  fun setTimePeriod(soundKey: String, timePeriod: Int) {
+    playbacks[soundKey]!!.timePeriod = timePeriod
     notifyPlaybackStateChange(OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED)
   }
 
@@ -217,6 +215,36 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
 
   fun isPaused(): Boolean {
     return pauseState.isNotEmpty()
+  }
+
+  fun getCurrentPreset(): PresetFragment.Preset? {
+    if (!isPlaying) {
+      return null
+    }
+
+    val presetPlaybackStates = ArrayList<PresetFragment.Preset.PresetPlaybackState>()
+    for (p in playbacks.values) {
+      if (p.isPlaying) {
+        presetPlaybackStates.add(
+          PresetFragment.Preset.PresetPlaybackState(p.sound.key, p.volume, p.timePeriod)
+        )
+      }
+    }
+
+    return PresetFragment.Preset("", presetPlaybackStates.toTypedArray())
+  }
+
+  fun playPreset(preset: PresetFragment.Preset) {
+    stopPlayback()
+
+    for (playbackState in preset.playbackStates) {
+      val playback = playbacks[playbackState.soundKey]!!
+      playback.volume = playbackState.volume
+      playback.timePeriod = playbackState.timePeriod
+      play(playback)
+    }
+
+    notifyPlaybackStateChange(OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED)
   }
 
   private fun notifyPlaybackStateChange(playbackState: Int) {

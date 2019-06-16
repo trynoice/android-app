@@ -25,9 +25,8 @@ class SoundLibraryFragmentTest {
     fragmentScenario
       .moveToState(Lifecycle.State.CREATED)
       .onFragment { fragment ->
-        assert(fragment.mRecyclerView != null)
-        assert(fragment.mRecyclerView!!.adapter != null)
-        assert(fragment.mRecyclerView!!.adapter!!.itemCount == SoundLibraryFragment.Sound.LIBRARY.size())
+        assert(fragment.mRecyclerView.adapter != null)
+        assert(fragment.mRecyclerView.adapter!!.itemCount == SoundLibraryFragment.Sound.LIBRARY.size)
       }
   }
 
