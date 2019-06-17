@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.fragment
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.FragmentScenario.launchInContainer
 import androidx.lifecycle.Lifecycle
+import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.SoundManager
 import org.junit.Before
 import org.junit.Test
@@ -17,7 +18,7 @@ class SoundLibraryFragmentTest {
 
   @Before
   fun setup() {
-    fragmentScenario = launchInContainer(SoundLibraryFragment::class.java)
+    fragmentScenario = launchInContainer(SoundLibraryFragment::class.java, null, R.style.AppTheme, null)
   }
 
   @Test

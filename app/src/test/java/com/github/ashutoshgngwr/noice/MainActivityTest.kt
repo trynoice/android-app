@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentManager
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
+import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.junit.Before
@@ -92,12 +93,24 @@ class MainActivityTest {
   @Test
   fun `navigation - about should be visible after clicking about in drawer`() {
     mainActivity.onNavigationItemSelected(RoboMenuItem(R.id.about))
-
     assert(
       mainActivity
         .supportFragmentManager
         .popBackStackImmediate(
           AboutFragment::class.java.simpleName,
+          FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
+    )
+  }
+
+  @Test
+  fun `navigation - preset list should be visible after clicking saved presets in drawer`() {
+    mainActivity.onNavigationItemSelected(RoboMenuItem(R.id.saved_presets))
+    assert(
+      mainActivity
+        .supportFragmentManager
+        .popBackStackImmediate(
+          PresetFragment::class.java.simpleName,
           FragmentManager.POP_BACK_STACK_INCLUSIVE
         )
     )

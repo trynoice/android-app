@@ -36,13 +36,13 @@ class MediaPlayerServiceTest {
 
   @Test
   fun `should come to foreground on media playback`() {
-    binder.getSoundManager().play(R.raw.moving_train)
+    binder.getSoundManager().play("moving_train")
     assert(shadowOf(serviceController.get()).lastForegroundNotificationId == MediaPlayerService.FOREGROUND_ID)
   }
 
   @Test
   fun `should not be in foreground if playback is stopped`() {
-    binder.getSoundManager().play(R.raw.moving_train)
+    binder.getSoundManager().play("moving_train")
     binder.getSoundManager().stopPlayback()
 
     assert(shadowOf(serviceController.get()).isForegroundStopped)
@@ -50,7 +50,7 @@ class MediaPlayerServiceTest {
 
   @Test
   fun `should send pause playback intent on notification pause action click`() {
-    binder.getSoundManager().play(R.raw.moving_train)
+    binder.getSoundManager().play("moving_train")
 
     val contentIntent = shadowOf(
       shadowOf(serviceController.get())
@@ -64,7 +64,7 @@ class MediaPlayerServiceTest {
 
   @Test
   fun `should send resume playback intent on notification play action click`() {
-    binder.getSoundManager().play(R.raw.moving_train)
+    binder.getSoundManager().play("moving_train")
     binder.getSoundManager().pausePlayback()
 
     val contentIntent = shadowOf(
@@ -79,7 +79,7 @@ class MediaPlayerServiceTest {
 
   @Test
   fun `should send stop service intent on notification stop action click`() {
-    binder.getSoundManager().play(R.raw.moving_train)
+    binder.getSoundManager().play("moving_train")
 
     val contentIntent = shadowOf(
       shadowOf(serviceController.get())
@@ -102,7 +102,7 @@ class MediaPlayerServiceTest {
     val binder = serviceController.get()
       .onBind(Shadow.newInstanceOf(Intent::class.java)) as MediaPlayerService.PlaybackBinder
 
-    binder.getSoundManager().play(R.raw.moving_train)
+    binder.getSoundManager().play("moving_train")
     binder.getSoundManager().pausePlayback()
     serviceController.startCommand(0, 0)
     assert(!binder.getSoundManager().isPaused() && binder.getSoundManager().isPlaying)
@@ -119,7 +119,7 @@ class MediaPlayerServiceTest {
     val binder = serviceController.get()
       .onBind(Shadow.newInstanceOf(Intent::class.java)) as MediaPlayerService.PlaybackBinder
 
-    binder.getSoundManager().play(R.raw.moving_train)
+    binder.getSoundManager().play("moving_train")
     serviceController.startCommand(0, 0)
     assert(binder.getSoundManager().isPaused() && !binder.getSoundManager().isPlaying)
   }
@@ -135,7 +135,7 @@ class MediaPlayerServiceTest {
     val binder = serviceController.get()
       .onBind(Shadow.newInstanceOf(Intent::class.java)) as MediaPlayerService.PlaybackBinder
 
-    binder.getSoundManager().play(R.raw.moving_train)
+    binder.getSoundManager().play("moving_train")
     serviceController.startCommand(0, 0)
     assert(!binder.getSoundManager().isPlaying)
     assert(shadowOf(serviceController.get()).isForegroundStopped)
@@ -144,7 +144,7 @@ class MediaPlayerServiceTest {
   @Test
   fun `should pause playback on receiving becoming noisy broadcast`() {
     val mSoundPoolShadow = shadowOf(binder.getSoundManager().mSoundPool)
-    binder.getSoundManager().play(R.raw.train_horn)
+    binder.getSoundManager().play("train_horn")
     assert(
       mSoundPoolShadow.wasResourcePlayed(R.raw.train_horn)
         && binder.getSoundManager().isPlaying
@@ -174,7 +174,7 @@ class MediaPlayerServiceTest {
 
   @Test
   fun `should stop playback on audio focus request failure`() {
-    binder.getSoundManager().play(R.raw.moving_train)
+    binder.getSoundManager().play("moving_train")
     assert(binder.getSoundManager().isPlaying)
 
     serviceController.get().handleAudioFocusRequestResult(AudioManager.AUDIOFOCUS_REQUEST_FAILED)
@@ -185,7 +185,7 @@ class MediaPlayerServiceTest {
   @Config(sdk = [23, 28])
   fun `should start delayed playback on getting focus after a focus request is delayed`() {
     val mSoundPoolShadow = shadowOf(binder.getSoundManager().mSoundPool)
-    binder.getSoundManager().play(R.raw.moving_train)
+    binder.getSoundManager().play("moving_train")
     mSoundPoolShadow.clearPlayed()
     serviceController.get().handleAudioFocusRequestResult(AudioManager.AUDIOFOCUS_REQUEST_DELAYED)
     serviceController.get().onAudioFocusChange(AudioManager.AUDIOFOCUS_GAIN)
@@ -199,7 +199,7 @@ class MediaPlayerServiceTest {
   @Config(sdk = [23, 28])
   fun `should pause playback on permanent audio focus loss`() {
     val mSoundPoolShadow = shadowOf(binder.getSoundManager().mSoundPool)
-    binder.getSoundManager().play(R.raw.moving_train)
+    binder.getSoundManager().play("moving_train")
     assert(
       mSoundPoolShadow.wasResourcePlayed(R.raw.moving_train)
         && binder.getSoundManager().isPlaying
@@ -215,7 +215,7 @@ class MediaPlayerServiceTest {
   @Test
   @Config(sdk = [23, 28])
   fun `should resume playback after getting back audio focus`() {
-    binder.getSoundManager().play(R.raw.moving_train)
+    binder.getSoundManager().play("moving_train")
     serviceController.get().onAudioFocusChange(AudioManager.AUDIOFOCUS_LOSS_TRANSIENT)
     assert(binder.getSoundManager().isPaused())
 
@@ -231,7 +231,7 @@ class MediaPlayerServiceTest {
   @Test
   @Config(sdk = [23, 28])
   fun `should pause playback on temporarily losing focus`() {
-    binder.getSoundManager().play(R.raw.moving_train)
+    binder.getSoundManager().play("moving_train")
     serviceController.get().onAudioFocusChange(AudioManager.AUDIOFOCUS_LOSS_TRANSIENT)
     assert(binder.getSoundManager().isPaused())
   }
