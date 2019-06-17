@@ -123,13 +123,14 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
             setMessage(getString(R.string.preset_delete_confirmation, dataSet[adapterPosition].name))
             setNegativeButton(R.string.cancel, null)
             setPositiveButton(R.string.delete) { _: DialogInterface, _: Int ->
-              if (dataSet[adapterPosition] == mSoundManager?.getCurrentPreset()) {
-                mSoundManager?.stopPlayback()
+              val preset = dataSet.removeAt(adapterPosition)
+              Preset.writeAllToUserPreferences(context, dataSet.toTypedArray())
+              if (preset == mSoundManager?.getCurrentPreset()) {
+                mSoundManager?.stopPlayback() // will notifyDataSetChanged()
+              } else {
+                notifyDataSetChanged() // otherwise explicitly
               }
 
-              dataSet.removeAt(adapterPosition)
-              Preset.writeAllToUserPreferences(context, dataSet.toTypedArray())
-              notifyDataSetChanged()
               @Suppress("DEPRECATION")
               Snackbar.make(mRecyclerView, R.string.preset_deleted, Snackbar.LENGTH_LONG)
                 .setBackgroundTint(resources.getColor(R.color.colorPrimary))
