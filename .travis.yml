@@ -48,3 +48,6 @@ jobs:
         - if [ -z "$(echo $TRAVIS_TAG | grep -P '^\d+\.\d+\.\d+-\w+$')" ]; then export TRACK=production; fi
       script: bundle exec fastlane $TRACK
       after_script: rm keystore.jks service-account-key.json secrets.tar
+
+notifications:
+  email: false
