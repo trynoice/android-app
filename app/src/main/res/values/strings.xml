@@ -110,5 +110,5 @@
   <string name="preset_delete_confirmation">Confirm delete %s?</string>
   <string name="delete">Delete</string>
   <string name="preset_deleted">Preset deleted!</string>
-  <string name="you_have_not_saved_any_presets_yet">You haven\'t saved any presets yet!</string>
+  <string name="nothing_saved_yet">Nothing saved yet!</string>
 </resources>

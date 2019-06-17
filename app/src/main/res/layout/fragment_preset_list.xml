@@ -18,16 +18,17 @@
     <ImageView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:tint="@color/colorPrimary"
+      android:layout_marginBottom="10dp"
+      android:tint="@color/colorHint"
       android:src="@drawable/ic_warning"
-      android:contentDescription="@string/you_have_not_saved_any_presets_yet"/>
+      android:contentDescription="@string/nothing_saved_yet"/>
 
     <TextView
       style="@style/TextAppearance.AppCompat.Title.Inverse"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textColor="@color/colorPrimary"
-      android:text="@string/you_have_not_saved_any_presets_yet"/>
+      android:textColor="@color/colorHint"
+      android:text="@string/nothing_saved_yet"/>
 
   </LinearLayout>
 
