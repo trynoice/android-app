@@ -30,7 +30,7 @@
       android:maxLines="1"
       android:inputType="text"
       android:hint="@string/name"
-      android:textAppearance="@style/TextAppearance.AppCompat.Subhead.Inverse"
+      android:textColor="@android:color/white"
       android:importantForAutofill="no"
       tools:targetApi="o"/>
 
