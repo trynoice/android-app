@@ -10,13 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.SoundManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.fragment_preset_list.view.*
 import kotlinx.android.synthetic.main.layout_list_item__preset.view.*
 
 class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
@@ -47,6 +47,16 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
     }
   }
 
+  private val mAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
+    override fun onChanged() {
+      if (mRecyclerView.adapter!!.itemCount > 0) {
+        requireView().indicator_list_empty.visibility = View.GONE
+      } else {
+        requireView().indicator_list_empty.visibility = View.VISIBLE
+      }
+    }
+  }
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     context?.bindService(
@@ -57,18 +67,23 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    mRecyclerView = RecyclerView(context!!)
-    mRecyclerView.setHasFixedSize(true)
-    mRecyclerView.layoutManager = LinearLayoutManager(context)
-    return mRecyclerView
+    return inflater.inflate(R.layout.fragment_preset_list, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    mRecyclerView = view.list_presets
+    mRecyclerView.setHasFixedSize(true)
     mRecyclerView.adapter = PresetListAdapter(context!!)
+    mRecyclerView.adapter?.registerAdapterDataObserver(mAdapterDataObserver)
   }
 
   override fun onPlaybackStateChanged(playbackState: Int) {
     mRecyclerView.adapter?.notifyDataSetChanged()
+  }
+
+  override fun onDestroyView() {
+    mRecyclerView.adapter?.unregisterAdapterDataObserver(mAdapterDataObserver)
+    super.onDestroyView()
   }
 
   override fun onDestroy() {
