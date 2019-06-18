@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -28,7 +29,8 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
   private var mSoundManager: SoundManager? = null
   private lateinit var mRecyclerView: RecyclerView
 
-  private val mServiceConnection = object : ServiceConnection {
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  val mServiceConnection = object : ServiceConnection {
     override fun onServiceDisconnected(name: ComponentName?) {
       Log.d(TAG, "MediaPlayerService disconnected")
       mSoundManager?.removeOnPlaybackStateChangeListener(this@PresetFragment)
@@ -40,7 +42,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
 
       Log.d(SoundLibraryFragment.TAG, "MediaPlayerService connected")
       mSoundManager = (service as MediaPlayerService.PlaybackBinder).getSoundManager()
-      mSoundManager?.addOnPlaybackStateChangeListener(this@PresetFragment)
+      mSoundManager!!.addOnPlaybackStateChangeListener(this@PresetFragment)
 
       // once service is connected, update playback state in UI
       mRecyclerView.adapter?.notifyDataSetChanged()
@@ -59,7 +61,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    context?.bindService(
+    context!!.bindService(
       Intent(context, MediaPlayerService::class.java),
       mServiceConnection,
       Context.BIND_AUTO_CREATE

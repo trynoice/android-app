@@ -9,7 +9,9 @@ import com.github.ashutoshgngwr.noice.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.dialog_save_preset.view.*
 
-class SavePresetDialogFragment(private val preset: PresetFragment.Preset) : BottomSheetDialogFragment() {
+class SavePresetDialogFragment : BottomSheetDialogFragment() {
+
+  lateinit var preset: PresetFragment.Preset
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     return inflater.inflate(R.layout.dialog_save_preset, container, false)

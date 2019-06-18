@@ -87,9 +87,10 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
       true
     }
     mSavePresetButton.setOnClickListener {
-      SavePresetDialogFragment(mSoundManager?.getCurrentPreset()!!).run {
+      SavePresetDialogFragment::class.java.newInstance().run {
+        preset = mSoundManager?.getCurrentPreset()!!
         setTargetFragment(this@SoundLibraryFragment, RC_SAVE_PRESET_DIALOG)
-        show(this@SoundLibraryFragment.requireFragmentManager(), javaClass.simpleName)
+        show(this@SoundLibraryFragment.requireFragmentManager(), this.javaClass.simpleName)
       }
     }
   }

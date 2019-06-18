@@ -13,6 +13,7 @@
     android:layout_margin="16dp"
     android:orientation="vertical"
     android:gravity="center"
+    android:visibility="gone"
     tools:ignore="UseCompoundDrawables"><!-- not using compound drawables because tint is available API > 23 -->
 
     <ImageView
