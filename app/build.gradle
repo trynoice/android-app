@@ -48,11 +48,20 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
   implementation 'androidx.core:core-ktx:1.0.2'
   implementation 'androidx.appcompat:appcompat:1.0.2'
-  implementation 'com.google.android.material:material:1.1.0-alpha07'
   implementation 'androidx.media:media:1.0.1'
+  implementation 'com.google.android.material:material:1.1.0-alpha07'
+  implementation 'com.google.code.gson:gson:2.8.5'
   implementation 'com.github.medyo:android-about-page:1.2.5'
 
   testImplementation 'junit:junit:4.12'
+  testImplementation 'androidx.test.ext:junit:1.1.1'
+  testImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+  testImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+  testImplementation 'androidx.test:rules:1.2.0'
   testImplementation 'org.robolectric:robolectric:4.3'
+
+  testAnnotationProcessor 'com.google.auto.service:auto-service:1.0-rc4'
+
+  debugImplementation 'androidx.test:core:1.2.0'
   debugImplementation 'androidx.fragment:fragment-testing:1.1.0-beta01'
 }

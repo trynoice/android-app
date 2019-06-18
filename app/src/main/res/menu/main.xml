@@ -8,6 +8,12 @@
     android:checkable="true"/>
 
   <item
+    android:id="@+id/saved_presets"
+    android:icon="@drawable/ic_action_saved_presets"
+    android:title="@string/saved_presets"
+    android:checkable="true"/>
+
+  <item
     android:id="@+id/about"
     android:icon="@drawable/ic_action_info"
     android:title="@string/about"

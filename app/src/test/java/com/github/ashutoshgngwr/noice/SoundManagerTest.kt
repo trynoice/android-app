@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice
 
 import android.media.AudioAttributes
+import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,18 +26,18 @@ class SoundManagerTest {
 
   @Test
   fun `should play loopable sound`() {
-    mSoundManager.play(R.raw.moving_train)
+    mSoundManager.play("moving_train")
     assert(mSoundManager.isPlaying && !mSoundManager.isPaused())
     assert(mSoundPool.wasResourcePlayed(R.raw.moving_train))
   }
 
   @Test
   fun `should play non-loopable sound`() {
-    mSoundManager.play(R.raw.train_horn)
+    mSoundManager.play("train_horn")
     assert(mSoundManager.isPlaying && !mSoundManager.isPaused())
     assert(
       mSoundPool.wasResourcePlayed(R.raw.train_horn)
-        && mSoundManager.isPlaying(R.raw.train_horn)
+        && mSoundManager.isPlaying("train_horn")
     )
 
     mSoundPool.clearPlayed()
@@ -44,18 +45,18 @@ class SoundManagerTest {
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     assert(
       mSoundPool.wasResourcePlayed(R.raw.train_horn)
-        && mSoundManager.isPlaying(R.raw.train_horn)
+        && mSoundManager.isPlaying("train_horn")
     )
   }
 
   @Test
   fun `should add newly played sounds to pause state if playback is paused`() {
-    mSoundManager.play(R.raw.moving_train)
+    mSoundManager.play("moving_train")
     assert(mSoundManager.isPlaying && !mSoundManager.isPaused())
 
     mSoundManager.pausePlayback()
-    mSoundManager.play(R.raw.water_stream)
-    mSoundManager.play(R.raw.moving_train) // playing twice shouldn't affect pause state
+    mSoundManager.play("water_stream")
+    mSoundManager.play("moving_train") // playing twice shouldn't affect pause state
     assert(!mSoundManager.isPlaying && mSoundManager.isPaused())
 
     mSoundPool.clearPlayed()
@@ -66,14 +67,14 @@ class SoundManagerTest {
 
   @Test
   fun `should stop loopable sounds`() {
-    mSoundManager.play(R.raw.moving_train)
-    mSoundManager.play(R.raw.water_stream)
+    mSoundManager.play("moving_train")
+    mSoundManager.play("water_stream")
     assert(mSoundPool.wasResourcePlayed(R.raw.moving_train))
 
     mSoundPool.clearPlayed()
 
-    mSoundManager.stop(R.raw.moving_train)
-    mSoundManager.stop(R.raw.water_stream)
+    mSoundManager.stop("moving_train")
+    mSoundManager.stop("water_stream")
     assert(
       !mSoundPool.wasResourcePlayed(R.raw.moving_train)
         && !mSoundPool.wasResourcePlayed(R.raw.water_stream)
@@ -83,15 +84,15 @@ class SoundManagerTest {
   @Test
   fun `should stop non-loopable sound`() {
     // stopping a stopped sound should have no effect
-    mSoundManager.stop(R.raw.train_horn)
-    assert(!mSoundManager.isPlaying(R.raw.train_horn))
+    mSoundManager.stop("train_horn")
+    assert(!mSoundManager.isPlaying("train_horn"))
 
-    mSoundManager.play(R.raw.train_horn)
+    mSoundManager.play("train_horn")
     assert(mSoundPool.wasResourcePlayed(R.raw.train_horn))
 
     mSoundPool.clearPlayed()
 
-    mSoundManager.stop(R.raw.train_horn)
+    mSoundManager.stop("train_horn")
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     assert(!mSoundPool.wasResourcePlayed(R.raw.train_horn))
   }
@@ -102,8 +103,8 @@ class SoundManagerTest {
     mSoundManager.stopPlayback()
     assert(!mSoundManager.isPlaying && !mSoundManager.isPaused())
 
-    mSoundManager.play(R.raw.train_horn)
-    mSoundManager.play(R.raw.moving_train)
+    mSoundManager.play("train_horn")
+    mSoundManager.play("moving_train")
     assert(
       mSoundPool.wasResourcePlayed(R.raw.train_horn)
         && mSoundPool.wasResourcePlayed(R.raw.moving_train)
@@ -125,8 +126,8 @@ class SoundManagerTest {
     mSoundManager.pausePlayback()
     assert(!mSoundManager.isPlaying)
 
-    mSoundManager.play(R.raw.train_horn)
-    mSoundManager.play(R.raw.moving_train)
+    mSoundManager.play("train_horn")
+    mSoundManager.play("moving_train")
     assert(
       mSoundPool.wasResourcePlayed(R.raw.train_horn)
         && mSoundPool.wasResourcePlayed(R.raw.moving_train)
@@ -149,8 +150,8 @@ class SoundManagerTest {
     mSoundManager.resumePlayback()
     assert(!mSoundManager.isPlaying)
 
-    mSoundManager.play(R.raw.train_horn)
-    mSoundManager.play(R.raw.moving_train)
+    mSoundManager.play("train_horn")
+    mSoundManager.play("moving_train")
     assert(
       mSoundPool.wasResourcePlayed(R.raw.train_horn)
         && mSoundPool.wasResourcePlayed(R.raw.moving_train)
@@ -179,13 +180,13 @@ class SoundManagerTest {
     var isCalled = false
     mSoundManager.addOnPlaybackStateChangeListener(
       object : SoundManager.OnPlaybackStateChangeListener {
-        override fun onPlaybackStateChanged() {
+        override fun onPlaybackStateChanged(playbackState: Int) {
           isCalled = true
         }
       }
     )
 
-    mSoundManager.play(R.raw.train_horn)
+    mSoundManager.play("train_horn")
     assert(isCalled)
   }
 
@@ -193,44 +194,80 @@ class SoundManagerTest {
   fun `should not notify removed playback listeners of changes`() {
     var isCalled = false
     val playbackListener = object : SoundManager.OnPlaybackStateChangeListener {
-      override fun onPlaybackStateChanged() {
+      override fun onPlaybackStateChanged(playbackState: Int) {
         isCalled = true
       }
     }
 
     mSoundManager.addOnPlaybackStateChangeListener(playbackListener)
     mSoundManager.removeOnPlaybackStateChangeListener(playbackListener)
-    mSoundManager.play(R.raw.train_horn)
+    mSoundManager.play("train_horn")
     assert(!isCalled)
   }
 
   @Test
   fun `should get playing state of a sound`() {
-    assert(!mSoundManager.isPlaying(R.raw.train_horn))
+    assert(!mSoundManager.isPlaying("train_horn"))
 
-    mSoundManager.play(R.raw.train_horn)
+    mSoundManager.play("train_horn")
     assert(
       mSoundPool.wasResourcePlayed(R.raw.train_horn)
-        && mSoundManager.isPlaying(R.raw.train_horn)
+        && mSoundManager.isPlaying("train_horn")
     )
 
     mSoundManager.stopPlayback()
-    assert(!mSoundManager.isPlaying(R.raw.train_horn))
+    assert(!mSoundManager.isPlaying("train_horn"))
   }
 
   @Test
   fun `should get and set volume`() {
-    assert(mSoundManager.getVolume(R.raw.train_horn) == 4)
+    assert(mSoundManager.getVolume("train_horn") == 4)
 
-    mSoundManager.setVolume(R.raw.train_horn, 15)
-    assert(mSoundManager.getVolume(R.raw.train_horn) == 15)
+    mSoundManager.setVolume("train_horn", 15)
+    assert(mSoundManager.getVolume("train_horn") == 15)
   }
 
   @Test
   fun `should get and set time period`() {
-    assert(mSoundManager.getTimePeriod(R.raw.train_horn) == 60)
+    assert(mSoundManager.getTimePeriod("train_horn") == 60)
 
-    mSoundManager.setTimePeriod(R.raw.train_horn, 120)
-    assert(mSoundManager.getTimePeriod(R.raw.train_horn) == 120)
+    mSoundManager.setTimePeriod("train_horn", 120)
+    assert(mSoundManager.getTimePeriod("train_horn") == 120)
+  }
+
+  @Test
+  fun `should return null preset if playback is paused or stopped`() {
+    assert(!mSoundManager.isPlaying && mSoundManager.getCurrentPreset() == null)
+    mSoundManager.play("moving_train")
+    mSoundManager.pausePlayback()
+    assert(mSoundPool.wasResourcePlayed(R.raw.moving_train) && mSoundManager.getCurrentPreset() == null)
+  }
+
+  @Test
+  fun `should return current preset if playback is on`() {
+    mSoundManager.play("moving_train")
+    mSoundManager.play("train_horn")
+    assert(mSoundPool.wasResourcePlayed(R.raw.moving_train) && mSoundPool.wasResourcePlayed(R.raw.train_horn))
+
+    val preset = mSoundManager.getCurrentPreset()!!
+    assert(preset.playbackStates.size == 2)
+    assert(
+      preset.playbackStates.contains(PresetFragment.Preset.PresetPlaybackState("moving_train", 0.2f, 60))
+        && preset.playbackStates.contains(PresetFragment.Preset.PresetPlaybackState("train_horn", 0.2f, 60))
+    )
+  }
+
+  @Test
+  fun `should correctly play given preset`() {
+    mSoundManager.playPreset(
+      PresetFragment.Preset(
+        "random", arrayOf(
+          PresetFragment.Preset.PresetPlaybackState("train_horn", 0.2f, 60),
+          PresetFragment.Preset.PresetPlaybackState("water_stream", 0.2f, 60)
+        )
+      )
+    )
+
+    assert(mSoundPool.wasResourcePlayed(R.raw.train_horn) && mSoundPool.wasResourcePlayed(R.raw.water_stream))
   }
 }

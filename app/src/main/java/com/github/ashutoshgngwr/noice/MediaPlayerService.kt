@@ -115,17 +115,22 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
     mSoundManager.release()
   }
 
-  override fun onPlaybackStateChanged() {
-    if (mSoundManager.isPlaying || mSoundManager.isPaused()) {
-      Log.d(TAG, "Playback is 'not' stopped! Update notification accordingly...")
-      startForeground(FOREGROUND_ID, updateNotification())
-    } else {
-      Log.d(TAG, "Playback stopped! Remove service from foreground....")
-      stopForeground(true)
+  override fun onPlaybackStateChanged(playbackState: Int) {
+    when (playbackState) {
+      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED -> {
+        Log.d(TAG, "Playback stopped! Remove service from foreground....")
+        stopForeground(true)
+      }
+      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED,
+      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_PAUSED,
+      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_RESUMED -> {
+        Log.d(TAG, "Playback is not in stopped state! Update notification...")
+        startForeground(FOREGROUND_ID, updateNotification())
+      }
     }
 
-    if (mSoundManager.isPlaying) {
-      Log.d(TAG, "Playback is playing! Request audio focus in-case we don't have it...")
+    if (playbackState == SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED) {
+      Log.d(TAG, "Playback started! Request audio focus in-case we don't have it...")
       handleAudioFocusRequestResult(
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
           @Suppress("DEPRECATION")
@@ -138,8 +143,8 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
           mAudioManager.requestAudioFocus(mAudioFocusRequest!!)
         }
       )
-    } else if (!playbackDelayed && !mSoundManager.isPaused()) {
-      Log.d(TAG, "Playback is neither playing, delayed or paused; abandon audio focus...")
+    } else if (!playbackDelayed && playbackState == SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED) {
+      Log.d(TAG, "Playback is neither delayed nor paused or playing; abandon audio focus...")
       if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
         @Suppress("DEPRECATION")
         mAudioManager.abandonAudioFocus(this)
