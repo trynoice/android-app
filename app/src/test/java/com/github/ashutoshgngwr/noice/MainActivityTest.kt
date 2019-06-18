@@ -166,4 +166,12 @@ class MainActivityTest {
     mainActivity.onNavigationItemSelected(RoboMenuItem(R.id.rate_on_play_store))
     assert(expectedIntent.filterEquals(shadowOf(mainActivity).peekNextStartedActivity()))
   }
+
+  @Test
+  fun `should not add a new instance for visible fragment on clicking its navigation item`() {
+    mainActivity.onNavigationItemSelected(RoboMenuItem(R.id.about))
+    assert(mainActivity.supportFragmentManager.backStackEntryCount == 2)
+    mainActivity.onNavigationItemSelected(RoboMenuItem(R.id.about))
+    assert(mainActivity.supportFragmentManager.backStackEntryCount == 2)
+  }
 }

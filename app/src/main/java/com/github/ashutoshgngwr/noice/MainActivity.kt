@@ -147,7 +147,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
           R.anim.enter_left,
           R.anim.exit_right
         )
-        .replace(R.id.fragment_container, fragmentClass.newInstance())
+        .replace(R.id.fragment_container, fragmentClass.newInstance(), tag)
         .addToBackStack(tag)
         .commit()
     }
