@@ -111,6 +111,23 @@ class MediaPlayerServiceTest {
   }
 
   @Test
+  fun `should not resume playback on receiving start playback intent if focus request was delayed`() {
+    serviceController = Robolectric.buildService(
+      MediaPlayerService::class.java,
+      Shadow.newInstanceOf(Intent::class.java)
+        .putExtra("action", MediaPlayerService.RC_START_PLAYBACK)
+    ).create()
+
+    val binder = serviceController.get()
+      .onBind(Shadow.newInstanceOf(Intent::class.java)) as MediaPlayerService.PlaybackBinder
+
+    binder.getSoundManager().play(LIBRARY[0].key)
+    serviceController.get().handleAudioFocusRequestResult(AudioManager.AUDIOFOCUS_REQUEST_DELAYED)
+    serviceController.startCommand(0, 0)
+    assert(binder.getSoundManager().isPaused() && !binder.getSoundManager().isPlaying)
+  }
+
+  @Test
   fun `should pause playback on receiving stop playback intent`() {
     serviceController = Robolectric.buildService(
       MediaPlayerService::class.java,
@@ -202,7 +219,7 @@ class MediaPlayerServiceTest {
 
   @Test
   @Config(sdk = [23, 28])
-  fun `should pause playback on permanent audio focus loss`() {
+  fun `should stop playback on permanent audio focus loss`() {
     val mSoundPoolShadow = shadowOf(binder.getSoundManager().mSoundPool)
     binder.getSoundManager().play(LIBRARY[0].key)
     assert(
@@ -211,10 +228,7 @@ class MediaPlayerServiceTest {
     )
 
     serviceController.get().onAudioFocusChange(AudioManager.AUDIOFOCUS_LOSS)
-    assert(binder.getSoundManager().isPaused())
-
-    // and finally stop playback to increase coverage..? :D
-    binder.getSoundManager().stopPlayback()
+    assert(!binder.getSoundManager().isPlaying && !binder.getSoundManager().isPaused())
   }
 
   @Test

@@ -35,6 +35,7 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
   private lateinit var mAudioManager: AudioManager
   private lateinit var mSoundManager: SoundManager
 
+  private var hasAudioFocus = false
   private var playbackDelayed = false
   private var resumeOnFocusGain = false
 
@@ -91,7 +92,9 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     when (intent?.getIntExtra("action", 0)) {
       RC_START_PLAYBACK -> {
-        mSoundManager.resumePlayback()
+        if (hasAudioFocus) {
+          mSoundManager.resumePlayback()
+        }
       }
 
       RC_STOP_PLAYBACK -> {
@@ -148,6 +151,7 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
     when (focusChange) {
       AudioManager.AUDIOFOCUS_GAIN -> {
         Log.d(TAG, "Gained audio focus...")
+        hasAudioFocus = true
         if (playbackDelayed || resumeOnFocusGain) {
           Log.d(TAG, "Resume playback after audio focus gain...")
           playbackDelayed = false
@@ -156,13 +160,15 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
         }
       }
       AudioManager.AUDIOFOCUS_LOSS -> {
-        Log.d(TAG, "Permanently lost audio focus! Pause playback...")
+        Log.d(TAG, "Permanently lost audio focus! Stop playback...")
+        hasAudioFocus = false
         resumeOnFocusGain = false
         playbackDelayed = false
-        mSoundManager.pausePlayback()
+        mSoundManager.stopPlayback()
       }
       AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
         Log.d(TAG, "Temporarily lost audio focus! Pause playback...")
+        hasAudioFocus = false
         resumeOnFocusGain = true
         playbackDelayed = false
         mSoundManager.pausePlayback()
@@ -191,11 +197,16 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
       AudioManager.AUDIOFOCUS_REQUEST_DELAYED -> {
         Log.d(TAG, "Audio focus request was delayed! Pause playback for now.")
         playbackDelayed = true
+        hasAudioFocus = false
         mSoundManager.pausePlayback()
       }
       AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
         Log.d(TAG, "Failed to get audio focus! Stop playback...")
+        hasAudioFocus = false
         mSoundManager.stopPlayback()
+      }
+      AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
+        hasAudioFocus = true
       }
     }
   }
