@@ -84,7 +84,10 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
           mHandler.postDelayed(this, (15 + (Random.nextLong() % playback.timePeriod)) * 1000)
         }
       }
-      randomPlaybackCallbacks[playback.sound.key]!!.run()
+      mHandler.postDelayed(
+        randomPlaybackCallbacks[playback.sound.key],
+        (15 + (Random.nextLong() % playback.timePeriod)) * 1000
+      )
     }
   }
 

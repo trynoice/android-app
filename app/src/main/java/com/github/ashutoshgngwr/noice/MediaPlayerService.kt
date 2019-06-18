@@ -131,25 +131,15 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
 
     if (playbackState == SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED) {
       Log.d(TAG, "Playback started! Request audio focus in-case we don't have it...")
-      handleAudioFocusRequestResult(
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-          @Suppress("DEPRECATION")
-          mAudioManager.requestAudioFocus(
-            this,
-            AudioManager.STREAM_MUSIC,
-            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
-          )
-        } else {
-          mAudioManager.requestAudioFocus(mAudioFocusRequest!!)
-        }
-      )
+      handleAudioFocusRequestResult(createAudioFocusRequest())
     } else if (!playbackDelayed && playbackState == SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED) {
       Log.d(TAG, "Playback is neither delayed nor paused or playing; abandon audio focus...")
       if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
         @Suppress("DEPRECATION")
         mAudioManager.abandonAudioFocus(this)
       } else {
-        mAudioManager.abandonAudioFocusRequest(mAudioFocusRequest!!)
+        mAudioFocusRequest ?: return
+        mAudioManager.abandonAudioFocusRequest(mAudioFocusRequest)
       }
     }
   }
@@ -177,6 +167,20 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
         playbackDelayed = false
         mSoundManager.pausePlayback()
       }
+    }
+  }
+
+  private fun createAudioFocusRequest(): Int {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+      @Suppress("DEPRECATION")
+      return mAudioManager.requestAudioFocus(
+        this,
+        AudioManager.STREAM_MUSIC,
+        AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
+      )
+    } else {
+      mAudioFocusRequest ?: return AudioManager.AUDIOFOCUS_REQUEST_FAILED
+      return mAudioManager.requestAudioFocus(mAudioFocusRequest)
     }
   }
 
@@ -243,7 +247,7 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
       channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
       channel.setShowBadge(false)
 
-      val notificationManager = getSystemService(NotificationManager::class.java)!!
+      val notificationManager = getSystemService(NotificationManager::class.java)
       notificationManager.createNotificationChannel(channel)
     }
   }

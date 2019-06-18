@@ -2,6 +2,8 @@ package com.github.ashutoshgngwr.noice
 
 import android.media.AudioAttributes
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
+import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
+import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment.Sound.Companion.LIBRARY
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,86 +17,84 @@ import org.robolectric.shadows.ShadowSoundPool
 @RunWith(RobolectricTestRunner::class)
 class SoundManagerTest {
 
-  private lateinit var mSoundPool: ShadowSoundPool
+  private lateinit var mSoundPoolShadow: ShadowSoundPool
   private lateinit var mSoundManager: SoundManager
 
   @Before
   fun setup() {
     mSoundManager = SoundManager(RuntimeEnvironment.systemContext, Shadow.newInstanceOf(AudioAttributes::class.java))
-    mSoundPool = shadowOf(mSoundManager.mSoundPool)
+    mSoundPoolShadow = shadowOf(mSoundManager.mSoundPool)
   }
 
   @Test
   fun `should play loopable sound`() {
-    mSoundManager.play("moving_train")
+    mSoundManager.play(LIBRARY[0].key)
     assert(mSoundManager.isPlaying && !mSoundManager.isPaused())
-    assert(mSoundPool.wasResourcePlayed(R.raw.moving_train))
+    assert(mSoundPoolShadow.wasResourcePlayed(LIBRARY[0].resId))
   }
 
   @Test
   fun `should play non-loopable sound`() {
-    mSoundManager.play("train_horn")
+    mSoundManager.play(LIBRARY[3].key)
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     assert(mSoundManager.isPlaying && !mSoundManager.isPaused())
-    assert(
-      mSoundPool.wasResourcePlayed(R.raw.train_horn)
-        && mSoundManager.isPlaying("train_horn")
-    )
+    assert(mSoundPoolShadow.wasResourcePlayed(LIBRARY[3].resId) && mSoundManager.isPlaying(LIBRARY[3].key))
 
-    mSoundPool.clearPlayed()
-
+    mSoundPoolShadow.clearPlayed()
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     assert(
-      mSoundPool.wasResourcePlayed(R.raw.train_horn)
-        && mSoundManager.isPlaying("train_horn")
+      mSoundPoolShadow.wasResourcePlayed(LIBRARY[3].resId)
+        && mSoundManager.isPlaying(LIBRARY[3].key)
     )
   }
 
   @Test
   fun `should add newly played sounds to pause state if playback is paused`() {
-    mSoundManager.play("moving_train")
+    mSoundManager.play(LIBRARY[0].key)
     assert(mSoundManager.isPlaying && !mSoundManager.isPaused())
 
     mSoundManager.pausePlayback()
-    mSoundManager.play("water_stream")
-    mSoundManager.play("moving_train") // playing twice shouldn't affect pause state
+    mSoundManager.play(LIBRARY[1].key)
+    mSoundManager.play(LIBRARY[0].key) // playing twice shouldn't affect pause state
     assert(!mSoundManager.isPlaying && mSoundManager.isPaused())
 
-    mSoundPool.clearPlayed()
+    mSoundPoolShadow.clearPlayed()
     mSoundManager.resumePlayback()
     assert(mSoundManager.isPlaying && !mSoundManager.isPaused())
-    assert(mSoundPool.wasResourcePlayed(R.raw.moving_train) && mSoundPool.wasResourcePlayed(R.raw.water_stream))
+    assert(mSoundPoolShadow.wasResourcePlayed(LIBRARY[0].resId) && mSoundPoolShadow.wasResourcePlayed(LIBRARY[1].resId))
   }
 
   @Test
   fun `should stop loopable sounds`() {
-    mSoundManager.play("moving_train")
-    mSoundManager.play("water_stream")
-    assert(mSoundPool.wasResourcePlayed(R.raw.moving_train))
+    mSoundManager.play(LIBRARY[0].key)
+    mSoundManager.play(LIBRARY[1].key)
+    assert(mSoundPoolShadow.wasResourcePlayed(LIBRARY[0].resId) && mSoundPoolShadow.wasResourcePlayed(LIBRARY[1].resId))
 
-    mSoundPool.clearPlayed()
+    mSoundPoolShadow.clearPlayed()
 
-    mSoundManager.stop("moving_train")
-    mSoundManager.stop("water_stream")
+    mSoundManager.stop(LIBRARY[0].key)
+    mSoundManager.stop(LIBRARY[1].key)
     assert(
-      !mSoundPool.wasResourcePlayed(R.raw.moving_train)
-        && !mSoundPool.wasResourcePlayed(R.raw.water_stream)
+      !mSoundPoolShadow.wasResourcePlayed(LIBRARY[0].resId)
+        && !mSoundPoolShadow.wasResourcePlayed(LIBRARY[1].resId)
     )
   }
 
   @Test
   fun `should stop non-loopable sound`() {
     // stopping a stopped sound should have no effect
-    mSoundManager.stop("train_horn")
-    assert(!mSoundManager.isPlaying("train_horn"))
+    mSoundManager.stop(LIBRARY[3].key)
+    assert(!mSoundManager.isPlaying(LIBRARY[3].key))
 
-    mSoundManager.play("train_horn")
-    assert(mSoundPool.wasResourcePlayed(R.raw.train_horn))
-
-    mSoundPool.clearPlayed()
-
-    mSoundManager.stop("train_horn")
+    mSoundManager.play(LIBRARY[3].key)
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
-    assert(!mSoundPool.wasResourcePlayed(R.raw.train_horn))
+    assert(mSoundPoolShadow.wasResourcePlayed(LIBRARY[3].resId))
+
+    mSoundPoolShadow.clearPlayed()
+
+    mSoundManager.stop(LIBRARY[3].key)
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+    assert(!mSoundPoolShadow.wasResourcePlayed(LIBRARY[3].resId))
   }
 
   @Test
@@ -103,20 +103,20 @@ class SoundManagerTest {
     mSoundManager.stopPlayback()
     assert(!mSoundManager.isPlaying && !mSoundManager.isPaused())
 
-    mSoundManager.play("train_horn")
-    mSoundManager.play("moving_train")
+    mSoundManager.play(LIBRARY[3].key)
+    mSoundManager.play(LIBRARY[0].key)
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     assert(
-      mSoundPool.wasResourcePlayed(R.raw.train_horn)
-        && mSoundPool.wasResourcePlayed(R.raw.moving_train)
+      mSoundPoolShadow.wasResourcePlayed(LIBRARY[3].resId)
+        && mSoundPoolShadow.wasResourcePlayed(LIBRARY[0].resId)
     )
 
-    mSoundPool.clearPlayed()
-
+    mSoundPoolShadow.clearPlayed()
     mSoundManager.stopPlayback()
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     assert(
-      !mSoundPool.wasResourcePlayed(R.raw.train_horn)
-        && !mSoundPool.wasResourcePlayed(R.raw.moving_train)
+      !mSoundPoolShadow.wasResourcePlayed(LIBRARY[3].resId)
+        && !mSoundPoolShadow.wasResourcePlayed(LIBRARY[0].resId)
     )
   }
 
@@ -126,20 +126,20 @@ class SoundManagerTest {
     mSoundManager.pausePlayback()
     assert(!mSoundManager.isPlaying)
 
-    mSoundManager.play("train_horn")
-    mSoundManager.play("moving_train")
+    mSoundManager.play(LIBRARY[3].key)
+    mSoundManager.play(LIBRARY[0].key)
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     assert(
-      mSoundPool.wasResourcePlayed(R.raw.train_horn)
-        && mSoundPool.wasResourcePlayed(R.raw.moving_train)
+      mSoundPoolShadow.wasResourcePlayed(LIBRARY[3].resId)
+        && mSoundPoolShadow.wasResourcePlayed(LIBRARY[0].resId)
     )
 
-    mSoundPool.clearPlayed()
-
+    mSoundPoolShadow.clearPlayed()
     mSoundManager.pausePlayback()
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     assert(
-      !mSoundPool.wasResourcePlayed(R.raw.train_horn)
-        && !mSoundPool.wasResourcePlayed(R.raw.moving_train)
+      !mSoundPoolShadow.wasResourcePlayed(LIBRARY[3].resId)
+        && !mSoundPoolShadow.wasResourcePlayed(LIBRARY[0].resId)
         && mSoundManager.isPaused()
     )
   }
@@ -150,27 +150,29 @@ class SoundManagerTest {
     mSoundManager.resumePlayback()
     assert(!mSoundManager.isPlaying)
 
-    mSoundManager.play("train_horn")
-    mSoundManager.play("moving_train")
+    mSoundManager.play(LIBRARY[3].key)
+    mSoundManager.play(LIBRARY[0].key)
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     assert(
-      mSoundPool.wasResourcePlayed(R.raw.train_horn)
-        && mSoundPool.wasResourcePlayed(R.raw.moving_train)
+      mSoundPoolShadow.wasResourcePlayed(LIBRARY[3].resId)
+        && mSoundPoolShadow.wasResourcePlayed(LIBRARY[0].resId)
     )
 
-    mSoundPool.clearPlayed()
+    mSoundPoolShadow.clearPlayed()
 
     mSoundManager.pausePlayback()
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     assert(
-      !mSoundPool.wasResourcePlayed(R.raw.train_horn)
-        && !mSoundPool.wasResourcePlayed(R.raw.moving_train)
+      !mSoundPoolShadow.wasResourcePlayed(LIBRARY[3].resId)
+        && !mSoundPoolShadow.wasResourcePlayed(LIBRARY[0].resId)
         && mSoundManager.isPaused()
     )
 
     mSoundManager.resumePlayback()
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     assert(
-      mSoundPool.wasResourcePlayed(R.raw.train_horn)
-        && mSoundPool.wasResourcePlayed(R.raw.moving_train)
+      mSoundPoolShadow.wasResourcePlayed(LIBRARY[3].resId)
+        && mSoundPoolShadow.wasResourcePlayed(LIBRARY[0].resId)
         && !mSoundManager.isPaused()
     )
   }
@@ -186,7 +188,7 @@ class SoundManagerTest {
       }
     )
 
-    mSoundManager.play("train_horn")
+    mSoundManager.play(LIBRARY[3].key)
     assert(isCalled)
   }
 
@@ -201,59 +203,62 @@ class SoundManagerTest {
 
     mSoundManager.addOnPlaybackStateChangeListener(playbackListener)
     mSoundManager.removeOnPlaybackStateChangeListener(playbackListener)
-    mSoundManager.play("train_horn")
+    mSoundManager.play(LIBRARY[3].key)
     assert(!isCalled)
   }
 
   @Test
   fun `should get playing state of a sound`() {
-    assert(!mSoundManager.isPlaying("train_horn"))
+    assert(!mSoundManager.isPlaying(LIBRARY[3].key))
 
-    mSoundManager.play("train_horn")
+    mSoundManager.play(LIBRARY[3].key)
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     assert(
-      mSoundPool.wasResourcePlayed(R.raw.train_horn)
-        && mSoundManager.isPlaying("train_horn")
+      mSoundPoolShadow.wasResourcePlayed(LIBRARY[3].resId)
+        && mSoundManager.isPlaying(LIBRARY[3].key)
     )
 
     mSoundManager.stopPlayback()
-    assert(!mSoundManager.isPlaying("train_horn"))
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+    assert(!mSoundManager.isPlaying(LIBRARY[3].key))
   }
 
   @Test
   fun `should get and set volume`() {
-    assert(mSoundManager.getVolume("train_horn") == 4)
+    assert(mSoundManager.getVolume(LIBRARY[3].key) == SoundLibraryFragment.Sound.DEFAULT_VOLUME)
 
-    mSoundManager.setVolume("train_horn", 15)
-    assert(mSoundManager.getVolume("train_horn") == 15)
+    mSoundManager.setVolume(LIBRARY[3].key, 15)
+    assert(mSoundManager.getVolume(LIBRARY[3].key) == 15)
   }
 
   @Test
   fun `should get and set time period`() {
-    assert(mSoundManager.getTimePeriod("train_horn") == 60)
+    assert(mSoundManager.getTimePeriod(LIBRARY[3].key) == SoundLibraryFragment.Sound.DEFAULT_TIME_PERIOD)
 
-    mSoundManager.setTimePeriod("train_horn", 120)
-    assert(mSoundManager.getTimePeriod("train_horn") == 120)
+    mSoundManager.setTimePeriod(LIBRARY[3].key, 120)
+    assert(mSoundManager.getTimePeriod(LIBRARY[3].key) == 120)
   }
 
   @Test
   fun `should return null preset if playback is paused or stopped`() {
     assert(!mSoundManager.isPlaying && mSoundManager.getCurrentPreset() == null)
-    mSoundManager.play("moving_train")
+    mSoundManager.play(LIBRARY[0].key)
     mSoundManager.pausePlayback()
-    assert(mSoundPool.wasResourcePlayed(R.raw.moving_train) && mSoundManager.getCurrentPreset() == null)
+    assert(mSoundPoolShadow.wasResourcePlayed(LIBRARY[0].resId) && mSoundManager.getCurrentPreset() == null)
   }
 
   @Test
   fun `should return current preset if playback is on`() {
-    mSoundManager.play("moving_train")
-    mSoundManager.play("train_horn")
-    assert(mSoundPool.wasResourcePlayed(R.raw.moving_train) && mSoundPool.wasResourcePlayed(R.raw.train_horn))
+    mSoundManager.play(LIBRARY[0].key)
+    mSoundManager.play(LIBRARY[3].key)
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+    assert(mSoundPoolShadow.wasResourcePlayed(LIBRARY[0].resId) && mSoundPoolShadow.wasResourcePlayed(LIBRARY[3].resId))
 
     val preset = mSoundManager.getCurrentPreset()!!
     assert(preset.playbackStates.size == 2)
     assert(
-      preset.playbackStates.contains(PresetFragment.Preset.PresetPlaybackState("moving_train", 0.2f, 60))
-        && preset.playbackStates.contains(PresetFragment.Preset.PresetPlaybackState("train_horn", 0.2f, 60))
+      preset.playbackStates.contains(PresetFragment.Preset.PresetPlaybackState(LIBRARY[0].key, 0.2f, 60))
+        && preset.playbackStates.contains(PresetFragment.Preset.PresetPlaybackState(LIBRARY[3].key, 0.2f, 60))
     )
   }
 
@@ -262,12 +267,13 @@ class SoundManagerTest {
     mSoundManager.playPreset(
       PresetFragment.Preset(
         "random", arrayOf(
-          PresetFragment.Preset.PresetPlaybackState("train_horn", 0.2f, 60),
-          PresetFragment.Preset.PresetPlaybackState("water_stream", 0.2f, 60)
+          PresetFragment.Preset.PresetPlaybackState(LIBRARY[0].key, 0.2f, 60),
+          PresetFragment.Preset.PresetPlaybackState(LIBRARY[3].key, 0.2f, 60)
         )
       )
     )
 
-    assert(mSoundPool.wasResourcePlayed(R.raw.train_horn) && mSoundPool.wasResourcePlayed(R.raw.water_stream))
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+    assert(mSoundPoolShadow.wasResourcePlayed(LIBRARY[0].resId) && mSoundPoolShadow.wasResourcePlayed(LIBRARY[3].resId))
   }
 }

@@ -54,7 +54,7 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
 
       Log.d(TAG, "MediaPlayerService connected")
       mSoundManager = (service as MediaPlayerService.PlaybackBinder).getSoundManager()
-      mSoundManager!!.addOnPlaybackStateChangeListener(this@SoundLibraryFragment)
+      mSoundManager?.addOnPlaybackStateChangeListener(this@SoundLibraryFragment)
 
       // once service is connected, update playback state in UI
       mRecyclerView.adapter?.notifyDataSetChanged()
@@ -63,7 +63,7 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    context!!.bindService(
+    requireContext().bindService(
       Intent(context, MediaPlayerService::class.java),
       mServiceConnection,
       Context.BIND_AUTO_CREATE
@@ -81,11 +81,11 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     mRecyclerView = view.list_sound
     mRecyclerView.setHasFixedSize(true)
-    mRecyclerView.adapter = SoundListAdapter(context!!)
+    mRecyclerView.adapter = SoundListAdapter(requireContext())
     mSavePresetButton = view.fab_save_preset
     mSavePresetButton.setOnClickListener {
       SavePresetDialogFragment::class.java.newInstance().run {
-        preset = mSoundManager?.getCurrentPreset()!!
+        preset = mSoundManager?.getCurrentPreset() ?: return@run
         setTargetFragment(this@SoundLibraryFragment, RC_SAVE_PRESET_DIALOG)
         show(this@SoundLibraryFragment.requireFragmentManager(), this.javaClass.simpleName)
       }
@@ -100,7 +100,7 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
   }
 
   override fun onDestroy() {
-    context?.unbindService(mServiceConnection)
+    requireContext().unbindService(mServiceConnection)
 
     // manually call onServiceDisconnected because framework does not
     // call it when service is intentionally unbound.
@@ -112,7 +112,7 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
     if (playbackState == SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED) {
       Log.d(TAG, "Playback started! Bring media player service to foreground...")
       ContextCompat.startForegroundService(
-        context!!,
+        requireContext(),
         Intent(context, MediaPlayerService::class.java)
       )
     }
@@ -135,7 +135,7 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
       SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED -> {
         Log.d(TAG, "Current playback preset updated!")
         val preset = mSoundManager?.getCurrentPreset()
-        if (preset == null || PresetFragment.Preset.readAllFromUserPreferences(context!!).contains(preset)) {
+        if (preset == null || PresetFragment.Preset.readAllFromUserPreferences(requireContext()).contains(preset)) {
           mSavePresetButton.hide()
         } else {
           mSavePresetButton.show()
@@ -172,8 +172,8 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
       val sound = LIBRARY[position]
 
       holder.itemView.title.text = context.getString(sound.titleResId)
-      holder.itemView.seekbar_volume.progress = 4
-      holder.itemView.seekbar_time_period.progress = 60
+      holder.itemView.seekbar_volume.progress = Sound.DEFAULT_VOLUME
+      holder.itemView.seekbar_time_period.progress = Sound.DEFAULT_TIME_PERIOD
 
       val soundManager = mSoundManager ?: return
       holder.itemView.seekbar_volume.progress = soundManager.getVolume(sound.key)
@@ -187,7 +187,7 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
         holder.itemView.layout_time_period.visibility = View.GONE
       } else {
         holder.itemView.layout_time_period.visibility = View.VISIBLE
-        holder.itemView.seekbar_time_period.progress = mSoundManager!!.getTimePeriod(sound.key)
+        holder.itemView.seekbar_time_period.progress = soundManager.getTimePeriod(sound.key)
       }
     }
 
@@ -255,7 +255,8 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
     }
 
     companion object {
-
+      const val DEFAULT_VOLUME = 4
+      const val DEFAULT_TIME_PERIOD = 60
       val LIBRARY = arrayOf(
         Sound(R.raw.birds, R.string.birds, "birds"),
         Sound(R.raw.bonfire, R.string.bonfire, "bonfire"),

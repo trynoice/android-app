@@ -28,7 +28,7 @@ class SavePresetDialogFragment : BottomSheetDialogFragment() {
         view.layout_edit_name.error = getString(R.string.preset_name_cannot_be_empty)
       } else {
         preset.name = name
-        PresetFragment.Preset.appendToUserPreferences(context!!, preset)
+        PresetFragment.Preset.appendToUserPreferences(requireContext(), preset)
         targetFragment!!.onActivityResult(targetRequestCode, Activity.RESULT_OK, null)
         dismiss()
       }

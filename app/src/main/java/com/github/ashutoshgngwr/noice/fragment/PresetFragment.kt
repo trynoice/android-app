@@ -42,7 +42,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
 
       Log.d(SoundLibraryFragment.TAG, "MediaPlayerService connected")
       mSoundManager = (service as MediaPlayerService.PlaybackBinder).getSoundManager()
-      mSoundManager!!.addOnPlaybackStateChangeListener(this@PresetFragment)
+      mSoundManager?.addOnPlaybackStateChangeListener(this@PresetFragment)
 
       // once service is connected, update playback state in UI
       mRecyclerView.adapter?.notifyDataSetChanged()
@@ -51,7 +51,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
 
   private val mAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
     override fun onChanged() {
-      if (mRecyclerView.adapter!!.itemCount > 0) {
+      if (mRecyclerView.adapter?.itemCount ?: 0 > 0) {
         requireView().indicator_list_empty.visibility = View.GONE
       } else {
         requireView().indicator_list_empty.visibility = View.VISIBLE
@@ -61,7 +61,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    context!!.bindService(
+    requireContext().bindService(
       Intent(context, MediaPlayerService::class.java),
       mServiceConnection,
       Context.BIND_AUTO_CREATE
@@ -75,7 +75,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     mRecyclerView = view.list_presets
     mRecyclerView.setHasFixedSize(true)
-    mRecyclerView.adapter = PresetListAdapter(context!!)
+    mRecyclerView.adapter = PresetListAdapter(requireContext())
     mRecyclerView.adapter?.registerAdapterDataObserver(mAdapterDataObserver)
   }
 
@@ -89,7 +89,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
   }
 
   override fun onDestroy() {
-    context?.unbindService(mServiceConnection)
+    requireContext().unbindService(mServiceConnection)
 
     // manually call onServiceDisconnected because framework does not
     // call it when service is intentionally unbound.
@@ -100,7 +100,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
   inner class PresetListAdapter(context: Context) : RecyclerView.Adapter<PresetListAdapter.ViewHolder>() {
 
     private val layoutInflater = LayoutInflater.from(context)
-    private val dataSet = mutableListOf(*Preset.readAllFromUserPreferences(context))
+    private val dataSet = ArrayList(Preset.readAllFromUserPreferences(context).asList())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
       return ViewHolder(layoutInflater.inflate(R.layout.layout_list_item__preset, parent, false))
@@ -126,17 +126,17 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
       init {
         itemView.button_play.setOnClickListener {
           mSoundManager ?: return@setOnClickListener
-          if (dataSet[adapterPosition] == mSoundManager!!.getCurrentPreset()) {
+          if (dataSet[adapterPosition] == mSoundManager?.getCurrentPreset()) {
             itemView.button_play.setImageResource(R.drawable.ic_action_play)
-            mSoundManager!!.stopPlayback()
+            mSoundManager?.stopPlayback()
           } else {
             itemView.button_play.setImageResource(R.drawable.ic_action_stop)
-            mSoundManager!!.playPreset(dataSet[adapterPosition])
+            mSoundManager?.playPreset(dataSet[adapterPosition])
           }
         }
 
         itemView.button_delete.setOnClickListener {
-          AlertDialog.Builder(context!!).run {
+          AlertDialog.Builder(requireContext()).run {
             setMessage(getString(R.string.preset_delete_confirmation, dataSet[adapterPosition].name))
             setNegativeButton(R.string.cancel, null)
             setPositiveButton(R.string.delete) { _: DialogInterface, _: Int ->
@@ -188,7 +188,9 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
       }
 
       fun appendToUserPreferences(context: Context, preset: Preset) {
-        writeAllToUserPreferences(context, arrayOf(preset, *readAllFromUserPreferences(context)))
+        val presetList = ArrayList(readAllFromUserPreferences(context).asList())
+        presetList.add(preset)
+        writeAllToUserPreferences(context, presetList.toTypedArray())
       }
     }
 
