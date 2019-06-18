@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/ashutoshgngwr/noice.svg?branch=master)](https://travis-ci.org/ashutoshgngwr/noice)
 [![codecov](https://codecov.io/gh/ashutoshgngwr/noice/branch/master/graph/badge.svg)](https://codecov.io/gh/ashutoshgngwr/noice)
-[![GitHub tag](https://img.shields.io/github/tag/ashutoshgngwr/noice.svg)](https://GitHub.com/ashutoshgngwr/noice/tags/)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0f13df40999b40579b6f312878e16dac)](https://www.codacy.com/app/ashutoshgngwr/noice?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ashutoshgngwr/noice&amp;utm_campaign=Badge_Grade)
+[![GitHub tag](https://img.shields.io/github/tag-date/ashutoshgngwr/noice.svg?color=orange&label=release)](https://GitHub.com/ashutoshgngwr/noice/tags/)
 [![Releases](https://img.shields.io/badge/android-5.0%2B-blue.svg)][google-play-link]
 [![GitHub license](https://img.shields.io/github/license/ashutoshgngwr/noice.svg)](https://github.com/ashutoshgngwr/noice/blob/master/LICENSE)
 
