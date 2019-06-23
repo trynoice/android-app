@@ -77,6 +77,9 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
     mRecyclerView.setHasFixedSize(true)
     mRecyclerView.adapter = PresetListAdapter(requireContext())
     mRecyclerView.adapter?.registerAdapterDataObserver(mAdapterDataObserver)
+
+    // manually call AdapterDataObserver#onChanged()
+    mAdapterDataObserver.onChanged()
   }
 
   override fun onPlaybackStateChanged(playbackState: Int) {
