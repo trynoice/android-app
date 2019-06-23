@@ -92,7 +92,7 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     when (intent?.getIntExtra("action", 0)) {
       RC_START_PLAYBACK -> {
-        if (hasAudioFocus) {
+        if (!playbackDelayed && !resumeOnFocusGain) {
           mSoundManager.resumePlayback()
         }
       }
@@ -132,17 +132,27 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
       }
     }
 
-    if (playbackState == SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED) {
-      Log.d(TAG, "Playback started! Request audio focus in-case we don't have it...")
-      handleAudioFocusRequestResult(createAudioFocusRequest())
-    } else if (!playbackDelayed && playbackState == SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED) {
-      Log.d(TAG, "Playback is neither delayed nor paused or playing; abandon audio focus...")
-      if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-        @Suppress("DEPRECATION")
-        mAudioManager.abandonAudioFocus(this)
-      } else {
-        mAudioFocusRequest ?: return
-        mAudioManager.abandonAudioFocusRequest(mAudioFocusRequest)
+    when (playbackState) {
+      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED,
+      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_RESUMED -> {
+        if (!hasAudioFocus && !playbackDelayed) {
+          Log.d(TAG, "Playback started or resumed! Request audio focus, we don't have it...")
+          handleAudioFocusRequestResult(createAudioFocusRequest())
+        }
+      }
+      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_PAUSED,
+      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED -> {
+        if (hasAudioFocus && !playbackDelayed) {
+          Log.d(TAG, "Playback is paused or stopped; Abandon audio focus...")
+          hasAudioFocus = false
+          if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            @Suppress("DEPRECATION")
+            mAudioManager.abandonAudioFocus(this)
+          } else {
+            mAudioFocusRequest ?: return
+            mAudioManager.abandonAudioFocusRequest(mAudioFocusRequest)
+          }
+        }
       }
     }
   }
@@ -164,7 +174,7 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
         hasAudioFocus = false
         resumeOnFocusGain = false
         playbackDelayed = false
-        mSoundManager.stopPlayback()
+        mSoundManager.pausePlayback()
       }
       AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
         Log.d(TAG, "Temporarily lost audio focus! Pause playback...")

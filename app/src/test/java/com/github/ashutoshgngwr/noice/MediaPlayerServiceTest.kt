@@ -219,7 +219,7 @@ class MediaPlayerServiceTest {
 
   @Test
   @Config(sdk = [23, 28])
-  fun `should stop playback on permanent audio focus loss`() {
+  fun `should pause playback on permanent audio focus loss`() {
     val mSoundPoolShadow = shadowOf(binder.getSoundManager().mSoundPool)
     binder.getSoundManager().play(LIBRARY[0].key)
     assert(
@@ -228,7 +228,7 @@ class MediaPlayerServiceTest {
     )
 
     serviceController.get().onAudioFocusChange(AudioManager.AUDIOFOCUS_LOSS)
-    assert(!binder.getSoundManager().isPlaying && !binder.getSoundManager().isPaused())
+    assert(!binder.getSoundManager().isPlaying && binder.getSoundManager().isPaused())
   }
 
   @Test
