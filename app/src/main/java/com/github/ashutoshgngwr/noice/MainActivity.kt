@@ -51,11 +51,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
           .getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1)
           .name
         ) {
-        SoundLibraryFragment::class.java.simpleName ->
+        SoundLibraryFragment::class.java.simpleName -> {
           navigation_drawer.setCheckedItem(R.id.library)
-
-        AboutFragment::class.java.simpleName ->
+        }
+        PresetFragment::class.java.simpleName -> {
+          navigation_drawer.setCheckedItem(R.id.saved_presets)
+        }
+        AboutFragment::class.java.simpleName -> {
           navigation_drawer.setCheckedItem(R.id.about)
+        }
       }
     }
 

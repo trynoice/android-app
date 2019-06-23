@@ -67,9 +67,13 @@ class MainActivityTest {
 
   @Test
   fun `drawer - correct navigation item should be checked after pressing back`() {
+    mainActivity.onNavigationItemSelected(RoboMenuItem(R.id.saved_presets))
     mainActivity.onNavigationItemSelected(RoboMenuItem(R.id.about))
-    mainActivity.onBackPressed()
 
+    assert(mainActivity.navigation_drawer.checkedItem?.itemId == R.id.about)
+    mainActivity.onBackPressed()
+    assert(mainActivity.navigation_drawer.checkedItem?.itemId == R.id.saved_presets)
+    mainActivity.onBackPressed()
     assert(mainActivity.navigation_drawer.checkedItem?.itemId == R.id.library)
   }
 
