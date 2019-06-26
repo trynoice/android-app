@@ -45,7 +45,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
       mSoundManager?.addOnPlaybackStateChangeListener(this@PresetFragment)
 
       // once service is connected, update playback state in UI
-      mRecyclerView.adapter?.notifyDataSetChanged()
+      (mRecyclerView.adapter as PresetListAdapter).onPlaybackStateChanged()
     }
   }
 
@@ -83,7 +83,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
   }
 
   override fun onPlaybackStateChanged(playbackState: Int) {
-    mRecyclerView.adapter?.notifyDataSetChanged()
+    (mRecyclerView.adapter as PresetListAdapter).onPlaybackStateChanged()
   }
 
   override fun onDestroyView() {
@@ -122,6 +122,15 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
           R.drawable.ic_action_play
         }
       )
+    }
+
+    fun onPlaybackStateChanged() {
+      val currentPreset = mSoundManager?.getCurrentPreset()
+      dataSet.sortWith(
+        compareByDescending<Preset> { it == currentPreset }
+          .thenBy { it.name }
+      )
+      notifyItemRangeChanged(0, dataSet.size)
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

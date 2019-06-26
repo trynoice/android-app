@@ -8,6 +8,7 @@ import androidx.annotation.VisibleForTesting
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment.Sound.Companion.LIBRARY
+import kotlin.math.roundToInt
 import kotlin.random.Random
 
 class SoundManager(context: Context, audioAttributes: AudioAttributes) {
@@ -183,14 +184,14 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
   }
 
   fun getVolume(soundKey: String): Int {
-    return Math.round(playbacks[soundKey]!!.volume * 20)
+    return (playbacks[soundKey]!!.volume * 20).roundToInt()
   }
 
   fun setVolume(soundKey: String, volume: Int) {
     val playback = playbacks[soundKey]!!
     playback.volume = volume / 20.0f
     mSoundPool.setVolume(playback.streamId, playback.volume, playback.volume)
-    notifyPlaybackStateChange(OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED)
+    notifyPlaybackStateChange(OnPlaybackStateChangeListener.STATE_PLAYBACK_SETTINGS_UPDATED)
   }
 
   fun getTimePeriod(soundKey: String): Int {
@@ -199,7 +200,7 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
 
   fun setTimePeriod(soundKey: String, timePeriod: Int) {
     playbacks[soundKey]!!.timePeriod = timePeriod
-    notifyPlaybackStateChange(OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED)
+    notifyPlaybackStateChange(OnPlaybackStateChangeListener.STATE_PLAYBACK_SETTINGS_UPDATED)
   }
 
   fun release() {
@@ -264,6 +265,7 @@ class SoundManager(context: Context, audioAttributes: AudioAttributes) {
       const val STATE_PLAYBACK_PAUSED = 0x2
       const val STATE_PLAYBACK_RESUMED = 0x3
       const val STATE_PLAYBACK_UPDATED = 0x4
+      const val STATE_PLAYBACK_SETTINGS_UPDATED = 0x5
     }
 
     fun onPlaybackStateChanged(playbackState: Int)
