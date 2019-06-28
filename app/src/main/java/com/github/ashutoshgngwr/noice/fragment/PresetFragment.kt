@@ -41,11 +41,17 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
       service ?: return
 
       Log.d(SoundLibraryFragment.TAG, "MediaPlayerService connected")
-      mSoundManager = (service as MediaPlayerService.PlaybackBinder).getSoundManager()
-      mSoundManager?.addOnPlaybackStateChangeListener(this@PresetFragment)
+      if (service is MediaPlayerService.PlaybackBinder) {
+        mSoundManager = service.getSoundManager().apply {
+          addOnPlaybackStateChangeListener(this@PresetFragment)
+        }
+      }
 
-      // once service is connected, update playback state in UI
-      (mRecyclerView.adapter as PresetListAdapter).onPlaybackStateChanged()
+      mRecyclerView.adapter.apply {
+        if (this is PresetListAdapter) {
+          this.onPlaybackStateChanged()
+        }
+      }
     }
   }
 
@@ -83,7 +89,11 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
   }
 
   override fun onPlaybackStateChanged(playbackState: Int) {
-    (mRecyclerView.adapter as PresetListAdapter).onPlaybackStateChanged()
+    mRecyclerView.adapter.apply {
+      if (this is PresetListAdapter) {
+        this.onPlaybackStateChanged()
+      }
+    }
   }
 
   override fun onDestroyView() {

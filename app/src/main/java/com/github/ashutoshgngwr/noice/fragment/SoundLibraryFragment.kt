@@ -53,11 +53,18 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
       service ?: return
 
       Log.d(TAG, "MediaPlayerService connected")
-      mSoundManager = (service as MediaPlayerService.PlaybackBinder).getSoundManager()
-      mSoundManager?.addOnPlaybackStateChangeListener(this@SoundLibraryFragment)
+      if (service is MediaPlayerService.PlaybackBinder) {
+        mSoundManager = service.getSoundManager().apply {
+          addOnPlaybackStateChangeListener(this@SoundLibraryFragment)
+        }
+      }
 
       // once service is connected, update playback state in UI
-      (mRecyclerView.adapter as SoundListAdapter).onPlaybackStateChanged()
+      mRecyclerView.adapter.apply {
+        if (this is SoundListAdapter) {
+          this.onPlaybackStateChanged()
+        }
+      }
     }
   }
 
@@ -125,7 +132,11 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
       SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED,
       SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED -> {
         Log.d(TAG, "Playback state changed. Refreshing sound list...")
-        (mRecyclerView.adapter as SoundListAdapter).onPlaybackStateChanged()
+        mRecyclerView.adapter.apply {
+          if (this is SoundListAdapter) {
+            this.onPlaybackStateChanged()
+          }
+        }
       }
     }
 
