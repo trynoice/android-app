@@ -53,11 +53,18 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
       service ?: return
 
       Log.d(TAG, "MediaPlayerService connected")
-      mSoundManager = (service as MediaPlayerService.PlaybackBinder).getSoundManager()
-      mSoundManager?.addOnPlaybackStateChangeListener(this@SoundLibraryFragment)
+      if (service is MediaPlayerService.PlaybackBinder) {
+        mSoundManager = service.getSoundManager().apply {
+          addOnPlaybackStateChangeListener(this@SoundLibraryFragment)
+        }
+      }
 
       // once service is connected, update playback state in UI
-      mRecyclerView.adapter?.notifyDataSetChanged()
+      mRecyclerView.adapter.apply {
+        if (this is SoundListAdapter) {
+          this.onPlaybackStateChanged()
+        }
+      }
     }
   }
 
@@ -122,9 +129,14 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
       SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED,
       SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_PAUSED,
       SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_RESUMED,
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED -> {
+      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED,
+      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED -> {
         Log.d(TAG, "Playback state changed. Refreshing sound list...")
-        mRecyclerView.adapter?.notifyDataSetChanged()
+        mRecyclerView.adapter.apply {
+          if (this is SoundListAdapter) {
+            this.onPlaybackStateChanged()
+          }
+        }
       }
     }
 
@@ -132,10 +144,11 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
     when (playbackState) {
       SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED,
       SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_RESUMED,
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED -> {
+      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED,
+      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_SETTINGS_UPDATED -> {
         Log.d(TAG, "Current playback preset updated!")
         val preset = mSoundManager?.getCurrentPreset()
-        if (preset == null || PresetFragment.Preset.readAllFromUserPreferences(requireContext()).contains(preset)) {
+        if (PresetFragment.Preset.readAllFromUserPreferences(requireContext()).contains(preset)) {
           mSavePresetButton.hide()
         } else {
           mSavePresetButton.show()
@@ -191,6 +204,14 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
       }
     }
 
+    fun onPlaybackStateChanged() {
+      LIBRARY.sortWith(
+        compareByDescending<Sound> { mSoundManager?.isPlaying(it.key) }
+          .thenBy { it.key }
+      )
+      notifyItemRangeChanged(0, LIBRARY.size)
+    }
+
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
       init {
@@ -232,10 +253,8 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
 
           if (soundManager.isPlaying(soundKey)) {
             soundManager.stop(soundKey)
-            view.button_play.setImageResource(R.drawable.ic_action_play)
           } else {
             soundManager.play(soundKey)
-            view.button_play.setImageResource(R.drawable.ic_action_stop)
             // if playback is paused, notify user that sound will be played when playback is resumed.
             if (soundManager.isPaused()) {
               showMessage(R.string.playback_is_paused)

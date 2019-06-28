@@ -41,11 +41,17 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
       service ?: return
 
       Log.d(SoundLibraryFragment.TAG, "MediaPlayerService connected")
-      mSoundManager = (service as MediaPlayerService.PlaybackBinder).getSoundManager()
-      mSoundManager?.addOnPlaybackStateChangeListener(this@PresetFragment)
+      if (service is MediaPlayerService.PlaybackBinder) {
+        mSoundManager = service.getSoundManager().apply {
+          addOnPlaybackStateChangeListener(this@PresetFragment)
+        }
+      }
 
-      // once service is connected, update playback state in UI
-      mRecyclerView.adapter?.notifyDataSetChanged()
+      mRecyclerView.adapter.apply {
+        if (this is PresetListAdapter) {
+          this.onPlaybackStateChanged()
+        }
+      }
     }
   }
 
@@ -83,7 +89,11 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
   }
 
   override fun onPlaybackStateChanged(playbackState: Int) {
-    mRecyclerView.adapter?.notifyDataSetChanged()
+    mRecyclerView.adapter.apply {
+      if (this is PresetListAdapter) {
+        this.onPlaybackStateChanged()
+      }
+    }
   }
 
   override fun onDestroyView() {
@@ -124,6 +134,19 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
       )
     }
 
+    fun onPlaybackStateChanged() {
+      val currentPreset = mSoundManager?.getCurrentPreset()
+      dataSet.sortWith(
+        compareByDescending<Preset> { it == currentPreset }
+          .thenBy { it.name }
+      )
+      if (dataSet.isEmpty()) {
+        notifyDataSetChanged()
+      } else {
+        notifyItemRangeChanged(0, dataSet.size)
+      }
+    }
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
       init {
@@ -146,9 +169,9 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
               val preset = dataSet.removeAt(adapterPosition)
               Preset.writeAllToUserPreferences(context, dataSet.toTypedArray())
               if (preset == mSoundManager?.getCurrentPreset()) {
-                mSoundManager?.stopPlayback() // will notifyDataSetChanged()
+                mSoundManager?.stopPlayback() // will onPlaybackStateChanged()
               } else {
-                notifyDataSetChanged() // otherwise explicitly
+                onPlaybackStateChanged() // otherwise explicitly
               }
 
               @Suppress("DEPRECATION")

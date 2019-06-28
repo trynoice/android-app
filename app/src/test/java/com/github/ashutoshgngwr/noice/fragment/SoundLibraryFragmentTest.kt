@@ -94,7 +94,8 @@ class SoundLibraryFragmentTest {
       )
     )
 
-    assert(shadowOf(mSoundManager.mSoundPool).wasResourcePlayed(LIBRARY[1].resId))
+    // because list will reorder
+    assert(shadowOf(mSoundManager.mSoundPool).wasResourcePlayed(LIBRARY[0].resId))
   }
 
   @Test
