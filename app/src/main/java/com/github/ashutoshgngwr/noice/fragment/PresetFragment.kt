@@ -130,7 +130,11 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
         compareByDescending<Preset> { it == currentPreset }
           .thenBy { it.name }
       )
-      notifyItemRangeChanged(0, dataSet.size)
+      if (dataSet.isEmpty()) {
+        notifyDataSetChanged()
+      } else {
+        notifyItemRangeChanged(0, dataSet.size)
+      }
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -155,9 +159,9 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
               val preset = dataSet.removeAt(adapterPosition)
               Preset.writeAllToUserPreferences(context, dataSet.toTypedArray())
               if (preset == mSoundManager?.getCurrentPreset()) {
-                mSoundManager?.stopPlayback() // will notifyDataSetChanged()
+                mSoundManager?.stopPlayback() // will onPlaybackStateChanged()
               } else {
-                notifyDataSetChanged() // otherwise explicitly
+                onPlaybackStateChanged() // otherwise explicitly
               }
 
               @Suppress("DEPRECATION")
