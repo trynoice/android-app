@@ -40,7 +40,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
       service ?: return
 
-      Log.d(SoundLibraryFragment.TAG, "MediaPlayerService connected")
+      Log.d(TAG, "MediaPlayerService connected")
       if (service is MediaPlayerService.PlaybackBinder) {
         mSoundManager = service.getSoundManager().apply {
           addOnPlaybackStateChangeListener(this@PresetFragment)
