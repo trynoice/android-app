@@ -67,9 +67,6 @@ class AboutFragment : Fragment() {
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    // force night mode and use custom theme with correct color values
-    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
     return AboutPage(context).run {
       setImage(R.drawable.app_banner)
       setDescription(getString(R.string.app_description))

@@ -86,9 +86,11 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    mRecyclerView = view.list_sound
-    mRecyclerView.setHasFixedSize(true)
-    mRecyclerView.adapter = SoundListAdapter(requireContext())
+    mRecyclerView = view.list_sound.apply {
+      setHasFixedSize(true)
+      adapter = SoundListAdapter(requireContext())
+    }
+
     mSavePresetButton = view.fab_save_preset
     mSavePresetButton.setOnClickListener {
       SavePresetDialogFragment::class.java.newInstance().run {
