@@ -27,7 +27,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
   }
 
   private var mSoundManager: SoundManager? = null
-  private lateinit var mRecyclerView: RecyclerView
+  private var mRecyclerView: RecyclerView? = null
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   val mServiceConnection = object : ServiceConnection {
@@ -47,7 +47,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
         }
       }
 
-      mRecyclerView.adapter.apply {
+      mRecyclerView?.adapter.apply {
         if (this is PresetListAdapter) {
           this.onPlaybackStateChanged()
         }
@@ -57,7 +57,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
 
   private val mAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
     override fun onChanged() {
-      if (mRecyclerView.adapter?.itemCount ?: 0 > 0) {
+      if (mRecyclerView?.adapter?.itemCount ?: 0 > 0) {
         requireView().indicator_list_empty.visibility = View.GONE
       } else {
         requireView().indicator_list_empty.visibility = View.VISIBLE
@@ -91,7 +91,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
   }
 
   override fun onPlaybackStateChanged(playbackState: Int) {
-    mRecyclerView.adapter.apply {
+    mRecyclerView?.adapter.apply {
       if (this is PresetListAdapter) {
         this.onPlaybackStateChanged()
       }
@@ -99,7 +99,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
   }
 
   override fun onDestroyView() {
-    mRecyclerView.adapter?.unregisterAdapterDataObserver(mAdapterDataObserver)
+    mRecyclerView?.adapter?.unregisterAdapterDataObserver(mAdapterDataObserver)
     super.onDestroyView()
   }
 
@@ -177,7 +177,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
               }
 
               @Suppress("DEPRECATION")
-              Snackbar.make(mRecyclerView, R.string.preset_deleted, Snackbar.LENGTH_LONG)
+              Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
                 .setBackgroundTint(resources.getColor(R.color.colorPrimary))
                 .setAction(R.string.dismiss) { }
                 .show()
