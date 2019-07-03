@@ -37,7 +37,7 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
   private var mSoundManager: SoundManager? = null
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  lateinit var mRecyclerView: RecyclerView
+  var mRecyclerView: RecyclerView? = null
 
   private lateinit var mSavePresetButton: FloatingActionButton
 
@@ -60,7 +60,7 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
       }
 
       // once service is connected, update playback state in UI
-      mRecyclerView.adapter.apply {
+      mRecyclerView?.adapter.apply {
         if (this is SoundListAdapter) {
           this.onPlaybackStateChanged()
         }
@@ -134,7 +134,7 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
       SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED,
       SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED -> {
         Log.d(TAG, "Playback state changed. Refreshing sound list...")
-        mRecyclerView.adapter.apply {
+        mRecyclerView?.adapter.apply {
           if (this is SoundListAdapter) {
             this.onPlaybackStateChanged()
           }
