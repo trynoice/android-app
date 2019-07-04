@@ -142,6 +142,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
         compareByDescending<Preset> { it == currentPreset }
           .thenBy { it.name }
       )
+
       if (dataSet.isEmpty()) {
         notifyDataSetChanged()
       } else {
@@ -170,10 +171,16 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
             setPositiveButton(R.string.delete) { _: DialogInterface, _: Int ->
               val preset = dataSet.removeAt(adapterPosition)
               Preset.writeAllToUserPreferences(context, dataSet.toTypedArray())
+
+              // notify adapter of item remove before stopping playback
+              notifyItemRemoved(adapterPosition)
+
+              // then stop playback if recently deleted preset was playing
+              // notifyDataSetChanged() is needed to notify AdapterDataObserver
               if (preset == mSoundManager?.getCurrentPreset()) {
-                mSoundManager?.stopPlayback() // will onPlaybackStateChanged()
+                mSoundManager?.stopPlayback() // will notifyDataSetChanged()
               } else {
-                onPlaybackStateChanged() // otherwise explicitly
+                notifyDataSetChanged() // or call it explicitly
               }
 
               @Suppress("DEPRECATION")
