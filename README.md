@@ -13,7 +13,8 @@ Noice is an app that allows you to create your own set of background sounds by m
 
 ## Download
 
-[![Get it on Google Play](https://i.imgur.com/g9vve1f.png)][google-play-link]
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="100">][f-droid-link]
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="100">][google-play-link]
 
 ## Features
 
@@ -66,3 +67,4 @@ Noice does not collect any kind of data from users. Heck, it doesn't even connec
 [MIT](LICENSE)
 
 [google-play-link]: https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice
+[f-droid-link]: https://f-droid.org/app/com.github.ashutoshgngwr.noice
