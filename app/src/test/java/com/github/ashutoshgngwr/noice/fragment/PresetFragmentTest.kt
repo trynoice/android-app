@@ -23,10 +23,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
 import org.robolectric.shadow.api.Shadow
 import org.robolectric.shadows.ShadowAlertDialog
 
 @RunWith(AndroidJUnit4::class)
+@Config(sdk = [21, 28])
 class PresetFragmentTest {
 
   private lateinit var mFragmentScenario: FragmentScenario<PresetFragment>
@@ -112,10 +114,11 @@ class PresetFragmentTest {
   }
 
   @RunWith(AndroidJUnit4::class)
+  @Config(sdk = [21, 28])
   class PresetTest {
 
     @Test
-    fun `should be able to save presets user preferences`() {
+    fun `should be able to save presets in user preferences`() {
       val preset = PresetFragment.Preset(
         "foo", arrayOf(PresetFragment.Preset.PresetPlaybackState(LIBRARY[0].key, 0.4f, 123))
       )

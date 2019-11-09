@@ -16,6 +16,7 @@ import org.robolectric.shadow.api.Shadow
 import org.robolectric.shadows.ShadowLooper
 
 @RunWith(RobolectricTestRunner::class)
+@Config(sdk = [21, 28])
 class MediaPlayerServiceTest {
 
   private lateinit var serviceController: ServiceController<MediaPlayerService>
@@ -204,7 +205,6 @@ class MediaPlayerServiceTest {
   }
 
   @Test
-  @Config(sdk = [23, 28])
   fun `should start delayed playback on getting focus after a focus request is delayed`() {
     val mSoundPoolShadow = shadowOf(binder.getSoundManager().mSoundPool)
     binder.getSoundManager().play(LIBRARY[0].key)
@@ -218,7 +218,6 @@ class MediaPlayerServiceTest {
   }
 
   @Test
-  @Config(sdk = [23, 28])
   fun `should pause playback on permanent audio focus loss`() {
     val mSoundPoolShadow = shadowOf(binder.getSoundManager().mSoundPool)
     binder.getSoundManager().play(LIBRARY[0].key)
@@ -232,7 +231,6 @@ class MediaPlayerServiceTest {
   }
 
   @Test
-  @Config(sdk = [23, 28])
   fun `should resume playback after getting back audio focus`() {
     binder.getSoundManager().play(LIBRARY[0].key)
     serviceController.get().onAudioFocusChange(AudioManager.AUDIOFOCUS_LOSS_TRANSIENT)
@@ -248,7 +246,6 @@ class MediaPlayerServiceTest {
   }
 
   @Test
-  @Config(sdk = [23, 28])
   fun `should pause playback on temporarily losing focus`() {
     binder.getSoundManager().play(LIBRARY[0].key)
     serviceController.get().onAudioFocusChange(AudioManager.AUDIOFOCUS_LOSS_TRANSIENT)

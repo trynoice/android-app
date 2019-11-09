@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     volumeControlStream = AudioManager.STREAM_MUSIC
   }
 
-  override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
     if (actionBarDrawerToggle.onOptionsItemSelected(item))
       return true
     return super.onOptionsItemSelected(item)
