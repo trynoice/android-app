@@ -54,6 +54,8 @@ jobs:
       install:
         - bundle install
       before_script:
+        - yes | sdkmanager --update
+        - yes | sdkmanager --licenses
         - export TRACK=beta
         - if [ -z "$(echo $TRAVIS_TAG | grep -P '^\d+\.\d+\.\d+-\w+$')" ]; then export TRACK=production; fi
       script: bundle exec fastlane $TRACK
