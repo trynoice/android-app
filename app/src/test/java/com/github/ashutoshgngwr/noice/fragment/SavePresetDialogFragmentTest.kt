@@ -18,8 +18,10 @@ import kotlinx.android.synthetic.main.dialog_save_preset.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
+@Config(sdk = [21, 28])
 class SavePresetDialogFragmentTest {
 
   private lateinit var mFragmentScenario: FragmentScenario<SavePresetDialogFragment>
