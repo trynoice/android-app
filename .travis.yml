@@ -5,10 +5,16 @@ sudo: required
 
 android:
   components:
-    - build-tools-28.0.3
-    - android-28
+    - tools
+    - platform-tools
+    - build-tools-29.0.2
+    - android-29
     - extra-android-m2repository
     - extra-google-m2repository
+  licenses:
+    - android-sdk-preview-license-.+
+    - android-sdk-license-.+
+    - google-gdk-license-.+
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -30,6 +36,9 @@ jobs:
     - stage: test
       env:
         - COVERAGE_REPORT=app/build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml
+      before_script: # to avoid issues with travis' license acceptance.
+        - yes | sdkmanager --update
+        - yes | sdkmanager --licenses
       script: ./gradlew testDebugUnitTestCoverage
       after_success: bash <(curl -s https://codecov.io/bash) -f "$COVERAGE_REPORT"
     - stage: deploy
