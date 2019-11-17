@@ -10,8 +10,8 @@ android {
     applicationId "com.github.ashutoshgngwr.noice"
     minSdkVersion 21
     targetSdkVersion 29
-    versionCode 12
-    versionName "0.2.7"
+    versionCode 13
+    versionName "0.2.8"
   }
 
   signingConfigs {
