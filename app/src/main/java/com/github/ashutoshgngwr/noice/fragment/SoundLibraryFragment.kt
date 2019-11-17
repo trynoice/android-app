@@ -26,6 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_sound_list.view.*
 import kotlinx.android.synthetic.main.layout_list_item__sound.view.*
+import kotlin.math.max
 
 class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
 
@@ -234,7 +235,8 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
               }
 
               R.id.seekbar_time_period -> {
-                soundManager.setTimePeriod(soundKey, progress)
+                // max(1, progress) because 0 will give us math error in SoundManager
+                soundManager.setTimePeriod(soundKey, max(1, progress))
               }
             }
           }
