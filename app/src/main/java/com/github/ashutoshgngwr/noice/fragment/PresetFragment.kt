@@ -1,63 +1,36 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.content.*
+import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
-import android.os.IBinder
-import android.preference.PreferenceManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
-import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.SoundManager
+import com.github.ashutoshgngwr.noice.sound.Playback
+import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.annotations.Expose
 import kotlinx.android.synthetic.main.fragment_preset_list.view.*
 import kotlinx.android.synthetic.main.layout_list_item__preset.view.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
-class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
+class PresetFragment : Fragment() {
 
-  companion object {
-    const val TAG = "PresetFragment"
-  }
-
-  private var mSoundManager: SoundManager? = null
+  private var activePreset: Preset? = null
   private var mRecyclerView: RecyclerView? = null
-
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  val mServiceConnection = object : ServiceConnection {
-    override fun onServiceDisconnected(name: ComponentName?) {
-      Log.d(TAG, "MediaPlayerService disconnected")
-      mSoundManager?.removeOnPlaybackStateChangeListener(this@PresetFragment)
-      mSoundManager = null
-    }
-
-    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-      service ?: return
-
-      Log.d(TAG, "MediaPlayerService connected")
-      if (service is MediaPlayerService.PlaybackBinder) {
-        mSoundManager = service.getSoundManager().apply {
-          addOnPlaybackStateChangeListener(this@PresetFragment)
-        }
-      }
-
-      mRecyclerView?.adapter.apply {
-        if (this is PresetListAdapter) {
-          this.onPlaybackStateChanged()
-        }
-      }
-    }
-  }
+  private val eventBus = EventBus.getDefault()
 
   private val mAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
     override fun onChanged() {
-      if (mRecyclerView?.adapter?.itemCount ?: 0 > 0) {
+      if (requireNotNull(requireNotNull(mRecyclerView).adapter).itemCount > 0) {
         requireView().indicator_list_empty.visibility = View.GONE
       } else {
         requireView().indicator_list_empty.visibility = View.VISIBLE
@@ -65,16 +38,11 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
     }
   }
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    requireContext().bindService(
-      Intent(context, MediaPlayerService::class.java),
-      mServiceConnection,
-      Context.BIND_AUTO_CREATE
-    )
-  }
-
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
     return inflater.inflate(R.layout.fragment_preset_list, container, false)
   }
 
@@ -86,36 +54,30 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
       }
     }
 
+    eventBus.register(this)
     // manually call AdapterDataObserver#onChanged()
     mAdapterDataObserver.onChanged()
   }
 
-  override fun onPlaybackStateChanged(playbackState: Int) {
-    mRecyclerView?.adapter.apply {
-      if (this is PresetListAdapter) {
-        this.onPlaybackStateChanged()
-      }
-    }
-  }
-
   override fun onDestroyView() {
-    mRecyclerView?.adapter?.unregisterAdapterDataObserver(mAdapterDataObserver)
+    eventBus.unregister(this)
+    requireNotNull(requireNotNull(mRecyclerView).adapter)
+      .unregisterAdapterDataObserver(mAdapterDataObserver)
+
     super.onDestroyView()
   }
 
-  override fun onDestroy() {
-    requireContext().unbindService(mServiceConnection)
-
-    // manually call onServiceDisconnected because framework does not
-    // call it when service is intentionally unbound.
-    mServiceConnection.onServiceDisconnected(null)
-    super.onDestroy()
+  @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+  fun onPlaybackUpdate(playbacks: HashMap<String, Playback>) {
+    activePreset = Preset("", playbacks.values.toTypedArray())
+    requireNotNull(requireNotNull(mRecyclerView).adapter).notifyDataSetChanged()
   }
 
-  inner class PresetListAdapter(context: Context) : RecyclerView.Adapter<PresetListAdapter.ViewHolder>() {
+  inner class PresetListAdapter(context: Context) :
+    RecyclerView.Adapter<PresetListAdapter.ViewHolder>() {
 
     private val layoutInflater = LayoutInflater.from(context)
-    private val dataSet = ArrayList(Preset.readAllFromUserPreferences(context).asList())
+    private val dataSet = Preset.readAllFromUserPreferences(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
       return ViewHolder(layoutInflater.inflate(R.layout.layout_list_item__preset, parent, false))
@@ -128,7 +90,7 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
       holder.itemView.title.text = dataSet[position].name
       holder.itemView.button_play.setImageResource(
-        if (dataSet[position] == mSoundManager?.getCurrentPreset()) {
+        if (dataSet[position] == activePreset) {
           R.drawable.ic_action_stop
         } else {
           R.drawable.ic_action_play
@@ -136,49 +98,42 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
       )
     }
 
-    fun onPlaybackStateChanged() {
-      val currentPreset = mSoundManager?.getCurrentPreset()
-      dataSet.sortWith(
-        compareByDescending<Preset> { it == currentPreset }
-          .thenBy { it.name }
-      )
-
-      if (dataSet.isEmpty()) {
-        notifyDataSetChanged()
-      } else {
-        notifyItemRangeChanged(0, dataSet.size)
-      }
-    }
-
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
       init {
         itemView.button_play.setOnClickListener {
-          mSoundManager ?: return@setOnClickListener
-          if (dataSet[adapterPosition] == mSoundManager?.getCurrentPreset()) {
+          if (dataSet[adapterPosition] == activePreset) {
             itemView.button_play.setImageResource(R.drawable.ic_action_play)
-            mSoundManager?.stopPlayback()
+            eventBus.post(PlaybackControlEvents.StopPlaybackEvent(null))
           } else {
             itemView.button_play.setImageResource(R.drawable.ic_action_stop)
-            mSoundManager?.playPreset(dataSet[adapterPosition])
+            for (p in dataSet[adapterPosition].playbacks) {
+              eventBus.post(PlaybackControlEvents.StartPlaybackEvent(p.soundKey))
+              eventBus.post(PlaybackControlEvents.UpdatePlaybackEvent(p))
+            }
           }
         }
 
         itemView.button_delete.setOnClickListener {
           AlertDialog.Builder(requireContext()).run {
-            setMessage(getString(R.string.preset_delete_confirmation, dataSet[adapterPosition].name))
+            setMessage(
+              getString(
+                R.string.preset_delete_confirmation,
+                dataSet[adapterPosition].name
+              )
+            )
             setNegativeButton(R.string.cancel, null)
             setPositiveButton(R.string.delete) { _: DialogInterface, _: Int ->
               val preset = dataSet.removeAt(adapterPosition)
-              Preset.writeAllToUserPreferences(context, dataSet.toTypedArray())
+              Preset.writeAllToUserPreferences(context, dataSet)
 
               // notify adapter of item remove before stopping playback
               notifyItemRemoved(adapterPosition)
 
               // then stop playback if recently deleted preset was playing
               // notifyDataSetChanged() is needed to notify AdapterDataObserver
-              if (preset == mSoundManager?.getCurrentPreset()) {
-                mSoundManager?.stopPlayback() // will notifyDataSetChanged()
+              if (preset == activePreset) {
+                eventBus.post(PlaybackControlEvents.StopPlaybackEvent(null)) // will notifyDataSetChanged()
               } else {
                 notifyDataSetChanged() // or call it explicitly
               }
@@ -196,36 +151,45 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
     }
   }
 
-  data class Preset(var name: String, val playbackStates: Array<PresetPlaybackState>) {
-
-    data class PresetPlaybackState(val soundKey: String, val volume: Float, val timePeriod: Int)
+  data class Preset(@Expose var name: String, @Expose val playbacks: Array<Playback>) {
 
     init {
-      playbackStates.sortBy { T -> T.soundKey }
+      playbacks.sortBy { T -> T.soundKey }
     }
 
     companion object {
-      fun readAllFromUserPreferences(context: Context): Array<Preset> {
-        Gson().also { gson ->
-          return gson.fromJson(
-            PreferenceManager.getDefaultSharedPreferences(context).getString("presets", "[]"),
-            Array<Preset>::class.java
-          )
-        }
+      fun readAllFromUserPreferences(context: Context): ArrayList<Preset> {
+        GsonBuilder()
+          .excludeFieldsWithoutExposeAnnotation()
+          .create()
+          .also {
+            return ArrayList(
+              it.fromJson(
+                PreferenceManager.getDefaultSharedPreferences(context).getString("presets", "[]"),
+                Array<Preset>::class.java
+              ).asList()
+            )
+          }
       }
 
-      fun writeAllToUserPreferences(context: Context, presets: Array<Preset>) {
-        PreferenceManager.getDefaultSharedPreferences(context).also { sharedPreferences ->
-          sharedPreferences.edit()
-            .putString("presets", Gson().toJson(presets))
-            .apply()
-        }
+      fun writeAllToUserPreferences(context: Context, presets: ArrayList<Preset>) {
+        GsonBuilder()
+          .excludeFieldsWithoutExposeAnnotation()
+          .create()
+          .also { gson ->
+            PreferenceManager.getDefaultSharedPreferences(context).also { sharedPreferences ->
+              sharedPreferences.edit()
+                .putString("presets", gson.toJson(presets.toTypedArray()))
+                .apply()
+            }
+          }
       }
 
       fun appendToUserPreferences(context: Context, preset: Preset) {
-        val presetList = ArrayList(readAllFromUserPreferences(context).asList())
-        presetList.add(preset)
-        writeAllToUserPreferences(context, presetList.toTypedArray())
+        readAllFromUserPreferences(context).also {
+          it.add(preset)
+          writeAllToUserPreferences(context, it)
+        }
       }
     }
 
@@ -240,17 +204,13 @@ class PresetFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
 
       // name need not be equal. playbackStates should be
       other as Preset
-      if (!playbackStates.contentEquals(other.playbackStates)) {
-        return false
-      }
-
-      return true
+      return playbacks.contentEquals(other.playbacks)
     }
 
     override fun hashCode(): Int {
       // auto-generated
       var result = name.hashCode()
-      result = 31 * result + playbackStates.contentHashCode()
+      result = 31 * result + playbacks.contentHashCode()
       return result
     }
   }

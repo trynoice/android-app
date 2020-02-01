@@ -5,13 +5,15 @@ import android.content.res.AssetManager
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Handler
+import com.google.gson.annotations.Expose
+import kotlin.random.Random.Default.nextInt
 
 /**
  * Playback manages playback of a single [Sound]. It holds reference to underlying
  * [MediaPlayer][android.media.MediaPlayer] instance along with playback information such
  * as isPlaying, volume and timePeriod.
  */
-final class Playback(
+class Playback(
   context: Context,
   sound: Sound,
   sessionId: Int,
@@ -19,19 +21,25 @@ final class Playback(
 ) : Runnable {
 
   companion object {
-    const val DEFAULT_VOLUME = 4.0f
-    const val MAX_VOLUME = 20.0f
-    const val DEFAULT_TIME_PERIOD = 60
-    const val MINIMUM_TIME_PERIOD = 20
+    const val DEFAULT_VOLUME = 4
+    const val MAX_VOLUME = 20
+    const val DEFAULT_TIME_PERIOD = 30
+    const val MIN_TIME_PERIOD = 30
+    const val MAX_TIME_PERIOD = 300
   }
 
+  @Expose
   var volume = DEFAULT_VOLUME
     private set
 
-  var timePeriod = DEFAULT_TIME_PERIOD - MINIMUM_TIME_PERIOD
+  @Expose
+  var timePeriod = DEFAULT_TIME_PERIOD
 
   var isPlaying = false
     private set
+
+  @Expose
+  val soundKey = sound.key
 
   private val mediaPlayer = createMediaPlayer(context.assets, sessionId, audioAttributes, sound)
   private val handler = Handler()
@@ -45,14 +53,14 @@ final class Playback(
     audioAttributes: AudioAttributes,
     sound: Sound
   ): MediaPlayer {
-    assetManager.openFd(sound.key).use { afd ->
+    assetManager.openFd(String.format("%s.mp3", sound.key)).use { afd ->
       return MediaPlayer()
         .apply {
           isLooping = sound.isLoopable
           audioSessionId = sessionId
           setAudioAttributes(audioAttributes)
           setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
-          setVolume(volume / MAX_VOLUME, volume / MAX_VOLUME)
+          setVolume(volume.toFloat() / MAX_VOLUME, volume.toFloat() / MAX_VOLUME)
           prepare()
         }
     }
@@ -62,15 +70,15 @@ final class Playback(
    * Sets the volume for the playback. It also sets the volume of the underlying
    * [MediaPlayer][android.media.MediaPlayer] instance.
    */
-  fun setVolume(volume: Float) {
+  fun setVolume(volume: Int) {
     this.volume = volume
-    mediaPlayer.setVolume(volume / MAX_VOLUME, volume / MAX_VOLUME)
+    mediaPlayer.setVolume(volume.toFloat() / MAX_VOLUME, volume.toFloat() / MAX_VOLUME)
   }
 
   /**
    * Starts playing the sound. If the sound is not loopable, it also schedules a delayed
    * task to replay the sound. Delay period is randomised with guaranteed
-   * [MINIMUM_TIME_PERIOD][MINIMUM_TIME_PERIOD].
+   * [MIN_TIME_PERIOD][MIN_TIME_PERIOD].
    */
   fun play() {
     isPlaying = true
@@ -90,7 +98,7 @@ final class Playback(
     }
 
     mediaPlayer.start()
-    handler.postDelayed(this, timePeriod * 1000L)
+    handler.postDelayed(this, (MIN_TIME_PERIOD + nextInt(0, timePeriod)) * 1000L)
   }
 
   /**
@@ -99,11 +107,44 @@ final class Playback(
   fun stop() {
     isPlaying = false
     if (mediaPlayer.isPlaying) {
-      mediaPlayer.stop()
+      mediaPlayer.pause()
     }
 
-    if (mediaPlayer.isLooping) {
+    if (!mediaPlayer.isLooping) {
       handler.removeCallbacks(this)
     }
+  }
+
+  /**
+   * Releases resources used by underlying [MediaPlayer][android.media.MediaPlayer] instance.
+   */
+  fun release() {
+    mediaPlayer.stop()
+    mediaPlayer.release()
+  }
+
+  /**
+   * Custom implementation of equals is required for comparing playback states
+   * in comparing saved Presets
+   */
+  override fun equals(other: Any?): Boolean {
+    if (this === other) {
+      return true
+    }
+
+    if (javaClass != other?.javaClass) {
+      return false
+    }
+
+    other as Playback
+    return soundKey == other.soundKey || volume == other.volume || timePeriod == other.timePeriod
+  }
+
+  override fun hashCode(): Int {
+    // auto-generated
+    var result = volume
+    result = 31 * result + timePeriod
+    result = 31 * result + soundKey.hashCode()
+    return result
   }
 }
