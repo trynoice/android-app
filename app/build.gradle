@@ -72,5 +72,5 @@ dependencies {
   testAnnotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
 
   debugImplementation 'androidx.test:core:1.2.0'
-  debugImplementation 'androidx.fragment:fragment-testing:1.2.0'
+  debugImplementation 'androidx.fragment:fragment-testing:1.2.1'
 }
