@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
 import com.github.ashutoshgngwr.noice.sound.PlaybackManager
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -18,13 +19,13 @@ import org.greenrobot.eventbus.ThreadMode
 class MediaPlayerService : Service() {
 
   companion object {
-    const val TAG = "MediaPlayerService"
+    private val TAG = MediaPlayerService::class.java.simpleName
 
     const val FOREGROUND_ID = 0x29
     const val RC_MAIN_ACTIVITY = 0x28
     const val RC_START_PLAYBACK = 0x27
-    const val RC_STOP_PLAYBACK = 0x26
-    const val RC_STOP_SERVICE = 0x25
+    const val RC_PAUSE_PLAYBACK = 0x26
+    const val RC_STOP_PLAYBACK = 0x25
 
     const val NOTIFICATION_CHANNEL_ID = "com.github.ashutoshgngwr.noice.default"
   }
@@ -32,9 +33,9 @@ class MediaPlayerService : Service() {
   private lateinit var playbackManager: PlaybackManager
   private val becomingNoisyReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-      if (intent?.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY && playbackManager.isPlaying()) {
+      if (intent?.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
         Log.i(TAG, "Becoming noisy... Pause playback!")
-        playbackManager.pauseAll()
+        EventBus.getDefault().post(PlaybackControlEvents.PausePlaybackEvent())
       }
     }
   }
@@ -61,15 +62,15 @@ class MediaPlayerService : Service() {
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     when (intent?.getIntExtra("action", 0)) {
       RC_START_PLAYBACK -> {
-        playbackManager.resumeAll()
+        EventBus.getDefault().post(PlaybackControlEvents.StartPlaybackEvent())
+      }
+
+      RC_PAUSE_PLAYBACK -> {
+        EventBus.getDefault().post(PlaybackControlEvents.PausePlaybackEvent())
       }
 
       RC_STOP_PLAYBACK -> {
-        playbackManager.pauseAll()
-      }
-
-      RC_STOP_SERVICE -> {
-        playbackManager.stopAll()
+        EventBus.getDefault().post(PlaybackControlEvents.StopPlaybackEvent())
       }
     }
 
@@ -87,7 +88,7 @@ class MediaPlayerService : Service() {
   }
 
   @Subscribe(threadMode = ThreadMode.MAIN)
-  fun onPlaybackUpdate(ignored: PlaybackManager.UpdateEvent) {
+  fun onPlaybackUpdate(event: PlaybackManager.UpdateEvent) {
     val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
       .setContentTitle(getString(R.string.app_name))
       .setShowWhen(false)
@@ -102,10 +103,10 @@ class MediaPlayerService : Service() {
       .addAction(
         R.drawable.ic_stat_close,
         getString(R.string.stop),
-        createPlaybackControlPendingIntent(RC_STOP_SERVICE)
+        createPlaybackControlPendingIntent(RC_STOP_PLAYBACK)
       )
 
-    if (playbackManager.isPaused()) {
+    if (event.state == PlaybackManager.State.PAUSED) {
       notificationBuilder.addAction(
         R.drawable.ic_stat_play,
         getString(R.string.play),
@@ -115,16 +116,16 @@ class MediaPlayerService : Service() {
       notificationBuilder.addAction(
         R.drawable.ic_stat_pause,
         getString(R.string.pause),
-        createPlaybackControlPendingIntent(RC_STOP_PLAYBACK)
+        createPlaybackControlPendingIntent(RC_PAUSE_PLAYBACK)
       )
     }
 
     // isPlaying returns true if Playback is paused but not stopped.
-    if (!playbackManager.isPlaying()) {
+    if (event.state == PlaybackManager.State.STOPPED) {
       stopForeground(true)
     } else {
       startForeground(FOREGROUND_ID, notificationBuilder.build())
-      if (playbackManager.isPaused()) {
+      if (event.state == PlaybackManager.State.PAUSED) {
         stopForeground(false)
       }
     }

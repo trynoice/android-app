@@ -10,7 +10,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
@@ -77,7 +76,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     volumeControlStream = AudioManager.STREAM_MUSIC
 
     // start the media player service
-    ContextCompat.startForegroundService(this, Intent(this, MediaPlayerService::class.java))
+    startService(Intent(this, MediaPlayerService::class.java))
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

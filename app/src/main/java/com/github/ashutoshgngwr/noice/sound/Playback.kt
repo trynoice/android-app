@@ -5,6 +5,8 @@ import android.content.res.AssetManager
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Handler
+import androidx.annotation.VisibleForTesting
+import androidx.media.AudioAttributesCompat
 import com.google.gson.annotations.Expose
 import kotlin.random.Random.Default.nextInt
 
@@ -17,15 +19,15 @@ class Playback(
   context: Context,
   sound: Sound,
   sessionId: Int,
-  audioAttributes: AudioAttributes
+  audioAttributes: AudioAttributesCompat
 ) : Runnable {
 
   companion object {
     const val DEFAULT_VOLUME = 4
     const val MAX_VOLUME = 20
     const val DEFAULT_TIME_PERIOD = 30
-    const val MIN_TIME_PERIOD = 30
-    const val MAX_TIME_PERIOD = 300
+    private const val MIN_TIME_PERIOD = 30
+    const val MAX_TIME_PERIOD = 240
   }
 
   @Expose
@@ -41,28 +43,28 @@ class Playback(
   @Expose
   val soundKey = sound.key
 
-  private val mediaPlayer = createMediaPlayer(context.assets, sessionId, audioAttributes, sound)
-  private val handler = Handler()
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  val mediaPlayer = createMediaPlayer(context.assets, sessionId, audioAttributes, sound)
 
-  /**
-   * Initializes a [MediaPlayer][android.media.MediaPlayer] object with the passed arguments.
-   */
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  val handler = Handler()
+
+  // initializes a MediaPlayer object with the passed arguments.
   private fun createMediaPlayer(
     assetManager: AssetManager,
     sessionId: Int,
-    audioAttributes: AudioAttributes,
+    audioAttributes: AudioAttributesCompat,
     sound: Sound
   ): MediaPlayer {
-    assetManager.openFd(String.format("%s.mp3", sound.key)).use { afd ->
-      return MediaPlayer()
-        .apply {
-          isLooping = sound.isLoopable
-          audioSessionId = sessionId
-          setAudioAttributes(audioAttributes)
-          setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
-          setVolume(volume.toFloat() / MAX_VOLUME, volume.toFloat() / MAX_VOLUME)
-          prepare()
-        }
+    return MediaPlayer().apply {
+      isLooping = sound.isLoopable
+      audioSessionId = sessionId
+      setAudioAttributes(audioAttributes.unwrap() as AudioAttributes)
+      setVolume(volume.toFloat() / MAX_VOLUME, volume.toFloat() / MAX_VOLUME)
+      assetManager.openFd("${sound.key}.mp3").use {
+        setDataSource(it.fileDescriptor, it.startOffset, it.length)
+        prepare()
+      }
     }
   }
 
@@ -119,7 +121,7 @@ class Playback(
    * Releases resources used by underlying [MediaPlayer][android.media.MediaPlayer] instance.
    */
   fun release() {
-    mediaPlayer.stop()
+    stop()
     mediaPlayer.release()
   }
 
@@ -137,11 +139,13 @@ class Playback(
     }
 
     other as Playback
-    return soundKey == other.soundKey || volume == other.volume || timePeriod == other.timePeriod
+    return soundKey == other.soundKey && volume == other.volume && timePeriod == other.timePeriod
   }
 
+  /**
+   * auto-generated
+   */
   override fun hashCode(): Int {
-    // auto-generated
     var result = volume
     result = 31 * result + timePeriod
     result = 31 * result + soundKey.hashCode()

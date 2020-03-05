@@ -1,7 +1,6 @@
 package com.github.ashutoshgngwr.noice.sound
 
 import android.content.Context
-import android.media.AudioAttributes
 import android.media.AudioManager
 import android.os.Handler
 import android.util.Log
@@ -11,13 +10,27 @@ import androidx.media.AudioManagerCompat
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
+/**
+ * [PlaybackManager] is responsible for managing playback end-to-end for all sounds.
+ * Its subscribes to [PlaybackControlEvents] to allow clients to control playback.
+ * It also manages Android's audio focus implicitly.
+ */
 class PlaybackManager(private val context: Context) :
   AudioManager.OnAudioFocusChangeListener {
 
-  class UpdateEvent
+  /**
+   * [PlaybackManager] publishes an [UpdateEvent] every time there is update in the
+   * status of an underlying playbacks. It is a light weight alternative to subscribing to a list
+   * (map) all playbacks which is also published along with it.
+   */
+  data class UpdateEvent(val state: State)
+
+  enum class State {
+    PLAYING, PAUSED, STOPPED
+  }
 
   companion object {
-    val TAG = PlaybackManager::javaClass.name
+    private val TAG = PlaybackManager::javaClass.name
   }
 
   private var isPaused = false
@@ -26,7 +39,7 @@ class PlaybackManager(private val context: Context) :
   private var resumeOnFocusGain = false
 
   private val playbacks = HashMap<String, Playback>(Sound.LIBRARY.size)
-  private val eventBus = EventBus.getDefault()
+  private var eventBus = EventBus.getDefault()
   private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
   private val audioSessionId = audioManager.generateAudioSessionId()
   private val audioAttributes = AudioAttributesCompat.Builder()
@@ -46,6 +59,7 @@ class PlaybackManager(private val context: Context) :
     eventBus.register(this)
   }
 
+  // implements audio focus change listener
   override fun onAudioFocusChange(focusChange: Int) {
     when (focusChange) {
       AudioManager.AUDIOFOCUS_GAIN -> {
@@ -75,6 +89,7 @@ class PlaybackManager(private val context: Context) :
     }
   }
 
+  // creates audio focus request and handles its response
   private fun requestAudioFocus() {
     if (hasAudioFocus) {
       return
@@ -87,29 +102,39 @@ class PlaybackManager(private val context: Context) :
         Log.d(TAG, "Audio focus request was delayed! Pause playback for now.")
         playbackDelayed = true
         hasAudioFocus = false
+        resumeOnFocusGain = false
         pauseAll()
       }
       AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
         Log.d(TAG, "Failed to get audio focus! Stop playback...")
         hasAudioFocus = false
-        stopAll()
+        playbackDelayed = false
+        resumeOnFocusGain = false
+        pauseAll()
       }
       AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
         hasAudioFocus = true
+        playbackDelayed = false
+        resumeOnFocusGain = false
         resumeAll()
       }
     }
   }
 
+  // publishes update events for clients.
   private fun notifyChanges() {
     eventBus.postSticky(playbacks)
-    eventBus.post(UpdateEvent())
+    eventBus.post(UpdateEvent(getState()))
   }
 
+  // initializes Playback for a sound
   private fun createPlayback(sound: Sound): Playback {
-    return Playback(context, sound, audioSessionId, audioAttributes.unwrap() as AudioAttributes)
+    return Playback(context, sound, audioSessionId, audioAttributes)
   }
 
+  // starts playing a sound. It also creates an audio focus request if we don't have it.
+  // Playback won't start immediately if audio focus is not present. We always ensure that we
+  // have audio focus before starting the playback.
   private fun play(sound: Sound) {
     if (!playbacks.containsKey(sound.key)) {
       playbacks[sound.key] = createPlayback(sound)
@@ -131,6 +156,7 @@ class PlaybackManager(private val context: Context) :
     requireNotNull(playbacks[sound.key]).play()
   }
 
+  // stops a playback and releases its resources.
   private fun stop(sound: Sound) {
     requireNotNull(playbacks[sound.key]).apply {
       stop()
@@ -141,6 +167,29 @@ class PlaybackManager(private val context: Context) :
     notifyChanges()
   }
 
+  // stops all playbacks without removing their states
+  private fun pauseAll() {
+    isPaused = true
+    playbacks.values.forEach {
+      it.stop()
+    }
+
+    notifyChanges()
+  }
+
+  // resumes all playbacks from saved state
+  private fun resumeAll() {
+    isPaused = false
+    playbacks.values.forEach {
+      it.play()
+    }
+
+    notifyChanges()
+  }
+
+  /**
+   * Subscriber for the [StartPlaybackEvent][PlaybackControlEvents.StartPlaybackEvent].
+   */
   @Subscribe
   fun startPlayback(event: PlaybackControlEvents.StartPlaybackEvent) {
     if (event.soundKey == null) {
@@ -150,6 +199,9 @@ class PlaybackManager(private val context: Context) :
     }
   }
 
+  /**
+   * Subscriber for the [StopPlaybackEvent][PlaybackControlEvents.StopPlaybackEvent].
+   */
   @Subscribe
   fun stopPlayback(event: PlaybackControlEvents.StopPlaybackEvent) {
     if (event.soundKey == null) {
@@ -159,6 +211,17 @@ class PlaybackManager(private val context: Context) :
     }
   }
 
+  /**
+   * Subscriber for the [PausePlaybackEvent][PlaybackControlEvents.PausePlaybackEvent].
+   */
+  @Subscribe
+  fun pausePlayback(@Suppress("UnusedParameters") ignored: PlaybackControlEvents.PausePlaybackEvent) {
+    pauseAll()
+  }
+
+  /**
+   * Subscriber for the [UpdatePlaybackEvent][PlaybackControlEvents.UpdatePlaybackEvent].
+   */
   @Subscribe
   fun updatePlayback(event: PlaybackControlEvents.UpdatePlaybackEvent) {
     if (!playbacks.containsKey(event.playback.soundKey)) {
@@ -171,9 +234,12 @@ class PlaybackManager(private val context: Context) :
     }
   }
 
-  fun stopAll() {
+  /**
+   * Stops all playbacks and releases underlying resources.
+   */
+  private fun stopAll() {
+    isPaused = false
     playbacks.values.forEach {
-      it.stop()
       it.release()
     }
 
@@ -181,30 +247,19 @@ class PlaybackManager(private val context: Context) :
     notifyChanges()
   }
 
-  fun pauseAll() {
-    isPaused = true
-    playbacks.values.forEach {
-      it.stop()
+  /**
+   * Returns the current state of the playback manager as one of
+   * [State.PLAYING], [State.PAUSED] or [State.STOPPED].
+   */
+  private fun getState(): State {
+    if (playbacks.isEmpty()) {
+      return State.STOPPED
     }
 
-    notifyChanges()
-  }
-
-  fun resumeAll() {
-    isPaused = false
-    playbacks.values.forEach {
-      it.play()
+    if (isPaused) {
+      return State.PAUSED
     }
 
-    notifyChanges()
-  }
-
-  fun isPaused(): Boolean {
-    // at least one scheduled playback should exist for manager to be in paused state
-    return isPaused && playbacks.size > 0
-  }
-
-  fun isPlaying(): Boolean {
-    return playbacks.isNotEmpty()
+    return State.PLAYING
   }
 }

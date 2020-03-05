@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
@@ -24,9 +25,11 @@ import org.greenrobot.eventbus.ThreadMode
 
 class PresetFragment : Fragment() {
 
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  var mRecyclerView: RecyclerView? = null
+
   private var activePreset: Preset? = null
-  private var mRecyclerView: RecyclerView? = null
-  private val eventBus = EventBus.getDefault()
+  private var eventBus = EventBus.getDefault()
 
   private val mAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
     override fun onChanged() {
@@ -77,7 +80,9 @@ class PresetFragment : Fragment() {
     RecyclerView.Adapter<PresetListAdapter.ViewHolder>() {
 
     private val layoutInflater = LayoutInflater.from(context)
-    private val dataSet = Preset.readAllFromUserPreferences(context)
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val dataSet = Preset.readAllFromUserPreferences(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
       return ViewHolder(layoutInflater.inflate(R.layout.layout_list_item__preset, parent, false))
@@ -102,9 +107,9 @@ class PresetFragment : Fragment() {
 
       init {
         itemView.button_play.setOnClickListener {
+          eventBus.post(PlaybackControlEvents.StopPlaybackEvent())
           if (dataSet[adapterPosition] == activePreset) {
             itemView.button_play.setImageResource(R.drawable.ic_action_play)
-            eventBus.post(PlaybackControlEvents.StopPlaybackEvent(null))
           } else {
             itemView.button_play.setImageResource(R.drawable.ic_action_stop)
             for (p in dataSet[adapterPosition].playbacks) {
@@ -133,7 +138,7 @@ class PresetFragment : Fragment() {
               // then stop playback if recently deleted preset was playing
               // notifyDataSetChanged() is needed to notify AdapterDataObserver
               if (preset == activePreset) {
-                eventBus.post(PlaybackControlEvents.StopPlaybackEvent(null)) // will notifyDataSetChanged()
+                eventBus.post(PlaybackControlEvents.StopPlaybackEvent()) // will notifyDataSetChanged()
               } else {
                 notifyDataSetChanged() // or call it explicitly
               }

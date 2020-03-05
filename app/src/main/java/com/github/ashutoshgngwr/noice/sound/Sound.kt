@@ -14,9 +14,15 @@ class Sound private constructor(
   val isLoopable: Boolean
 ) {
 
+  /**
+   * The simplified version of the constructor to initialize looping sounds.
+   */
   private constructor(key: String, @StringRes titleResId: Int) : this(key, titleResId, true)
 
   companion object {
+    /**
+     * Static sound library with various effects. key is used to lookup the file in assets.
+     */
     val LIBRARY = mapOf(
       "birds" to Sound("birds", R.string.birds),
       "bonfire" to Sound("bonfire", R.string.bonfire),

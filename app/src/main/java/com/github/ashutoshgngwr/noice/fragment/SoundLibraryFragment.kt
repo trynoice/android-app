@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.annotation.StringRes
-import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.R
@@ -30,8 +29,7 @@ class SoundLibraryFragment : Fragment() {
     const val RC_SAVE_PRESET_DIALOG = 0x922
   }
 
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  var mRecyclerView: RecyclerView? = null
+  private var mRecyclerView: RecyclerView? = null
   private lateinit var mSavePresetButton: FloatingActionButton
   private var eventBus = EventBus.getDefault()
   private var playbacks = emptyMap<String, Playback>()
@@ -188,7 +186,6 @@ class SoundLibraryFragment : Fragment() {
         view.seekbar_time_period.setOnSeekBarChangeListener(seekBarChangeListener)
 
         view.button_play.setOnClickListener {
-          // return if mSoundManager is null
           val soundKey = dataSet[adapterPosition].key
 
           if (playbacks.containsKey(soundKey)) {
