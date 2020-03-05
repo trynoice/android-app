@@ -1,20 +1,46 @@
-language: android
-dist: trusty
-jdk: oraclejdk8
-sudo: required
+os: linux
+dist: bionic
+arch: amd64
+language: java
+jdk: openjdk8
+addons:
+  apt:
+    packages:
+      - wget
+      - unzip
+      - qemu-kvm
+      - libvirt-bin
+      - ubuntu-vm-builder
+      - bridge-utils
+      - adb
 
-android:
-  components:
-    - tools
-    - platform-tools
-    - build-tools-29.0.2
-    - android-29
-    - extra-android-m2repository
-    - extra-google-m2repository
-  licenses:
-    - android-sdk-preview-license-.+
-    - android-sdk-license-.+
-    - google-gdk-license-.+
+env:
+  global:
+    - COMPILE_SDK="29"
+    - BUILD_TOOLS="29.0.3"
+    - SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip"
+    - ANDROID_HOME="$HOME/android-sdk"
+    - PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/tools/bin:$ANDROID_HOME/tools:$PATH"
+  matrix:
+    - TEST_PLATFORM=android-21
+    - TEST_PLATFORM=android-23
+    - TEST_PLATFORM=android-24
+    - TEST_PLATFORM=android-26
+    - TEST_PLATFORM=android-28
+    - TEST_PLATFORM=android-29
+
+before_install:
+  - sudo adduser $USER libvirt
+  - sudo adduser $USER kvm
+  - sudo chown $USER /dev/kvm
+  - wget -qO tools.zip "$SDK_TOOLS_URL"
+  - unzip -d "$ANDROID_HOME" tools.zip
+  - rm tools.zip
+
+install:
+  # see this https://stackoverflow.com/questions/60440509 to comprehend the '--sdk_root'
+  - echo y | sdkmanager --sdk_root="$ANDROID_HOME" "tools" > /dev/null
+  - echo y | sdkmanager "platform-tools" "emulator" "platforms;android-$COMPILE_SDK" "build-tools;$BUILD_TOOLS" > /dev/null
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -27,20 +53,27 @@ cache:
     - $HOME/.android/build-cache
 
 stages:
-  - test
+  - name: test
   - name: deploy
     if: tag IS present
 
+before_script:
+  - echo y | sdkmanager "system-images;$TEST_PLATFORM;google_apis;x86_64" > /dev/null
+  - echo no | avdmanager create avd -f -n "$TEST_PLATFORM" -k "system-images;$TEST_PLATFORM;google_apis;x86_64"
+  - emulator -avd "$TEST_PLATFORM" -no-audio -no-snapshot -no-window -camera-back none -camera-front none &
+  - adb wait-for-device
+script: ./gradlew connectedDebugAndroidTest
+after_script: []
+after_success: bash <(curl -s https://codecov.io/bash) -f "$COVERAGE_REPORT"
+
 jobs:
+  fast_finish: true
+  allow_failures:
+    - env: TEST_PLATFORM=android-23
+    - env: TEST_PLATFORM=android-24
+    - env: TEST_PLATFORM=android-26
+    - env: TEST_PLATFORM=android-28
   include:
-    - stage: test
-      env:
-        - COVERAGE_REPORT=app/build/reports/jacoco/testDebugUnitTestCoverage/testDebugUnitTestCoverage.xml
-      before_script: # to avoid issues with travis' license acceptance.
-        - yes | sdkmanager --update
-        - yes | sdkmanager --licenses
-      script: ./gradlew testDebugUnitTestCoverage
-      after_success: bash <(curl -s https://codecov.io/bash) -f "$COVERAGE_REPORT"
     - stage: deploy
       env:
         - secure: "Om5/jAc2a/paKPtYosO++UMi0gWC6F5BuHftxWMYaeYQbK3Y07r8K+OmvfzXq+rWtiiuK3fOaDjZGciI4zmx9U5cLgdfTFSUqqKkrvDeP9YgOJ5Etn5a0ody2IdfqHeuSOrr3FLnEna58IunMhicC/F8b5x6aRvksuHypU2YN4u5vaDILXIzIJfD9s7xW71h4+G+Z7EZNNvtbp9SakA/2uJMLJYeLdFyDOPuhDpgLnMW44cQQRPDHBANpcix3tml4eF1x5AuNHYvTbZkmvDsK4juHPD6kZn7yoXf0A5nOrF50/zxOqgHPtFtfAd0K7QkZqjx+80GfGj9P9RKRkikKWI8/OLekIyfuL/y373iqGyz0MnVlA5eIvz1FHBaG5boA11KmIvtpk3ElZLH2/KTQ3m7n7KarB9rAjh4H09/OzgrQeAA2Ep7pIO6zbubpT/b4mYqM8CAwJGE0IVCnABfgbH3K3xNiRYkkLHwJDQwzCU3sqOIOt+ePnZJo09s3TcyBIobyfSh/DguLKIv6VPirptWI+Kk+dCthaWw9FAoOMWh96b++qNWhzaYE4XTTN0V7Di34j/e6wJxRw0G8gZvZbRKGIRheeASJj1+82mopOhKK+42h+VFNogK7BPpt1D0UzjY97+vq7U41/D72Y1wgyR3DOhQRLLbbPJ1n8NUowE="
@@ -54,8 +87,6 @@ jobs:
       install:
         - bundle install
       before_script:
-        - yes | sdkmanager --update
-        - yes | sdkmanager --licenses
         - export TRACK=beta
         - if [ -z "$(echo $TRAVIS_TAG | grep -P '^\d+\.\d+\.\d+-\w+$')" ]; then export TRACK=production; fi
       script: bundle exec fastlane $TRACK
