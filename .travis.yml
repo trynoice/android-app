@@ -12,7 +12,6 @@ addons:
       - libvirt-bin
       - ubuntu-vm-builder
       - bridge-utils
-      - adb
 
 env:
   global:
@@ -20,7 +19,7 @@ env:
     - BUILD_TOOLS="29.0.3"
     - SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip"
     - ANDROID_HOME="$HOME/android-sdk"
-    - PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/tools/bin:$ANDROID_HOME/tools:$PATH"
+    - PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/tools:$PATH"
   matrix:
     - TEST_PLATFORM=android-21
     - TEST_PLATFORM=android-23
@@ -57,13 +56,18 @@ stages:
     if: tag IS present
 
 before_script:
-  - echo y | sdkmanager "system-images;$TEST_PLATFORM;google_apis;x86_64" > /dev/null
-  - echo no | avdmanager create avd -f -n "$TEST_PLATFORM" -k "system-images;$TEST_PLATFORM;google_apis;x86_64" -c 500M
+  - echo y | sdkmanager "system-images;$TEST_PLATFORM;google_apis;x86" > /dev/null
+  - echo no | avdmanager create avd -f -n "$TEST_PLATFORM" -k "system-images;$TEST_PLATFORM;google_apis;x86" -c 500M
   - emulator -avd "$TEST_PLATFORM" -memory 4096 -no-audio -no-snapshot -no-window -camera-back none -camera-front none &
-  - adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done'
-  - adb shell settings put global window_animation_scale 0.0
-  - adb shell settings put global transition_animation_scale 0.0
-  - adb shell settings put global animator_duration_scale 0.0
+  - >- # ensures that animations are disabled on the device and device is always awake.
+      adb wait-for-device shell '
+        while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;
+        settings put global window_animation_scale 0.0;
+        settings put global transition_animation_scale 0.0;
+        settings put global animator_duration_scale 0.0;
+        svc power stayon true;
+        input keyevent KEYCODE_WAKEUP;
+      '
 
 script: ./gradlew connectedDebugAndroidTest
 after_success: bash <(curl -s https://codecov.io/bash) -f "$COVERAGE_REPORT"
