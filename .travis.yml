@@ -69,7 +69,7 @@ before_script:
         input keyevent KEYCODE_WAKEUP;
       '
 
-script: ./gradlew connectedDebugAndroidTest
+script: ./gradlew connectedAndroidTest
 after_success: bash <(curl -s https://codecov.io/bash) -f "$COVERAGE_REPORT"
 
 jobs:
