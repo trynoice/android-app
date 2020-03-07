@@ -30,7 +30,6 @@ env:
     - TEST_PLATFORM=android-29
 
 before_install:
-  - sudo adduser $USER libvirt
   - sudo adduser $USER kvm
   - sudo chown $USER /dev/kvm
   - wget -qO tools.zip "$SDK_TOOLS_URL"
@@ -59,9 +58,9 @@ stages:
 
 before_script:
   - echo y | sdkmanager "system-images;$TEST_PLATFORM;google_apis;x86_64" > /dev/null
-  - echo no | avdmanager create avd -f -n "$TEST_PLATFORM" -k "system-images;$TEST_PLATFORM;google_apis;x86_64"
-  - emulator -avd "$TEST_PLATFORM" -no-audio -no-snapshot -no-window -camera-back none -camera-front none &
-  - adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
+  - echo no | avdmanager create avd -f -n "$TEST_PLATFORM" -k "system-images;$TEST_PLATFORM;google_apis;x86_64" -c 500M
+  - emulator -avd "$TEST_PLATFORM" -memory 4096 -no-audio -no-snapshot -no-window -camera-back none -camera-front none &
+  - adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done'
   - adb shell settings put global window_animation_scale 0.0
   - adb shell settings put global transition_animation_scale 0.0
   - adb shell settings put global animator_duration_scale 0.0
