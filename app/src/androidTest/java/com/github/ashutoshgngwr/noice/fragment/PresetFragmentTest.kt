@@ -48,10 +48,12 @@ class PresetFragmentTest {
 
   @After
   fun teardown() {
-    fragmentScenario.onFragment {
-      // clear any preferences saved by the tests
-      PreferenceManager.getDefaultSharedPreferences(it.requireContext())
-        .edit().clear().commit()
+    if (::fragmentScenario.isInitialized) {
+      fragmentScenario.onFragment {
+        // clear any preferences saved by the tests
+        PreferenceManager.getDefaultSharedPreferences(it.requireContext())
+          .edit().clear().commit()
+      }
     }
   }
 

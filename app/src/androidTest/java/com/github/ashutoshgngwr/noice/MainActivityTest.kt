@@ -11,9 +11,9 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.contrib.DrawerMatchers.isClosed
 import androidx.test.espresso.contrib.NavigationViewActions
+import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.filterEquals
-import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -21,17 +21,15 @@ import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.lang.Thread.sleep
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
-
-  @get:Rule
-  val intentsTestRule: IntentsTestRule<MainActivity> = IntentsTestRule(MainActivity::class.java)
 
   private lateinit var activityScenario: ActivityScenario<MainActivity>
 
@@ -92,6 +90,7 @@ class MainActivityTest {
 
   @Test
   fun testReportIssuesMenuItem() {
+    Intents.init()
     onView(withId(R.id.layout_main))
       .check(matches(isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
@@ -110,10 +109,13 @@ class MainActivityTest {
         )
       )
     )
+
+    Intents.release()
   }
 
   @Test
   fun testRateOnPlayStoreMenuItem() {
+    Intents.init()
     onView(withId(R.id.layout_main))
       .check(matches(isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
@@ -129,6 +131,8 @@ class MainActivityTest {
         )
       )
     )
+
+    Intents.release()
   }
 
   @Test
@@ -137,6 +141,7 @@ class MainActivityTest {
       .check(matches(isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
     onView(withId(R.id.navigation_drawer)).perform(NavigationViewActions.navigateTo(R.id.saved_presets))
+    sleep(1000L) // tests fail complaining drawer is open. let it close..? (doesn't happen always! :/)
 
     onView(withId(R.id.layout_main))
       .check(matches(isClosed(Gravity.START)))
@@ -198,6 +203,7 @@ class MainActivityTest {
       assertEquals(2, it.supportFragmentManager.backStackEntryCount)
     }
 
+    sleep(1000L) // tests fail complaining drawer is open. (don't fail always but sometimes it can make you question your entire life.)
     // reopen nav drawer
     onView(withId(R.id.layout_main))
       .check(matches(isClosed(Gravity.START)))

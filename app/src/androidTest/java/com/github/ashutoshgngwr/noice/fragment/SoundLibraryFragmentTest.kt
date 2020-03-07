@@ -27,6 +27,7 @@ import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.instanceOf
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -102,10 +103,17 @@ class SoundLibraryFragmentTest {
     fragmentScenario = launchFragmentInContainer<SoundLibraryFragment>(null, R.style.AppTheme, null)
     fragmentScenario.onFragment {
       fragment = it
-      PreferenceManager.getDefaultSharedPreferences(it.requireContext()).edit().clear().commit()
     }
 
     MockitoAnnotations.initMocks(this)
+  }
+
+  @After
+  fun teardown() {
+    fragmentScenario.onFragment {
+      PreferenceManager.getDefaultSharedPreferences(it.requireContext())
+        .edit().clear().commit()
+    }
   }
 
   @Test
