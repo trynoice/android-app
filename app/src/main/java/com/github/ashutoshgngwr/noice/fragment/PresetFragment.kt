@@ -107,6 +107,12 @@ class PresetFragment : Fragment() {
 
       init {
         itemView.button_play.setOnClickListener {
+          // publishing StopPlaybackEvent will cause PlaybackManager to send back State update
+          // This will call notifyDataSetChanged() on adapter causing adapter position to be
+          // negative. assigning adapterPosition to a different variable isn't helping here.
+          // I guess its safe to avoid receiving any events during following logic.
+          // Unsubscribe temporarily. Lets hope this doesn't have any significant side-effects. :p
+          eventBus.unregister(this@PresetFragment)
           eventBus.post(PlaybackControlEvents.StopPlaybackEvent())
           if (dataSet[adapterPosition] == activePreset) {
             itemView.button_play.setImageResource(R.drawable.ic_action_play)
@@ -117,6 +123,7 @@ class PresetFragment : Fragment() {
               eventBus.post(PlaybackControlEvents.UpdatePlaybackEvent(p))
             }
           }
+          eventBus.register(this@PresetFragment)
         }
 
         itemView.button_delete.setOnClickListener {
