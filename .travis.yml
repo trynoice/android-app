@@ -58,7 +58,7 @@ stages:
 before_script:
   - echo y | sdkmanager "system-images;$TEST_PLATFORM;google_apis;x86" > /dev/null
   - echo no | avdmanager create avd -f -n "$TEST_PLATFORM" -k "system-images;$TEST_PLATFORM;google_apis;x86" -c 500M
-  - emulator -avd "$TEST_PLATFORM" -memory 4096 -no-audio -no-snapshot -no-window -camera-back none -camera-front none &
+  - emulator -avd "$TEST_PLATFORM" -memory 4096 -no-boot-anim -no-audio -no-snapshot -no-window -camera-back none -camera-front none &
   - >- # ensures that animations are disabled on the device and device is always awake.
       adb wait-for-device shell '
         while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;
