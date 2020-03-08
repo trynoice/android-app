@@ -174,6 +174,7 @@ class PlaybackManager(private val context: Context) :
       it.stop()
     }
 
+    AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
     notifyChanges()
   }
 
@@ -181,7 +182,7 @@ class PlaybackManager(private val context: Context) :
   private fun resumeAll() {
     isPaused = false
     playbacks.values.forEach {
-      it.play()
+      play(requireNotNull(Sound.LIBRARY[it.soundKey]))
     }
 
     notifyChanges()
@@ -244,6 +245,7 @@ class PlaybackManager(private val context: Context) :
     }
 
     playbacks.clear()
+    AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
     notifyChanges()
   }
 
