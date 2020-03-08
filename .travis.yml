@@ -70,7 +70,7 @@ before_script:
       '
 
 script: ./gradlew connectedAndroidTest
-after_success: bash <(curl -s https://codecov.io/bash) -f "$COVERAGE_REPORT"
+after_success: bash <(curl -s https://codecov.io/bash)
 
 jobs:
   fast_finish: true
