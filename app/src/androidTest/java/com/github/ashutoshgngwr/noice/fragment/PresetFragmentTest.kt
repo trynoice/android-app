@@ -181,7 +181,7 @@ class PresetFragmentTest {
       // save preset to user preferences
       val preset = PresetFragment.Preset("test", arrayOf(playback))
       PresetFragment.Preset.appendToUserPreferences(ctx, preset)
-      assertEquals(playback, PresetFragment.Preset.readAllFromUserPreferences(ctx)[0].playbacks[0])
+      assertEquals(playback, PresetFragment.Preset.readAllFromUserPreferences(ctx)[0].playbackStates[0])
     }
   }
 }

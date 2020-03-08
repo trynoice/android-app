@@ -83,8 +83,7 @@ class SavePresetDialogFragmentTest {
   fun testSaveButton_onInvalidUserInput() {
     val dummyFragment = object : Fragment() {
       override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        assertEquals(0xff, requestCode)
-        assertNotEquals(Activity.RESULT_OK, resultCode)
+        fail()
       }
     }
 

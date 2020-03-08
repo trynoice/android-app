@@ -112,7 +112,7 @@ class PresetFragment : Fragment() {
             itemView.button_play.setImageResource(R.drawable.ic_action_play)
           } else {
             itemView.button_play.setImageResource(R.drawable.ic_action_stop)
-            for (p in dataSet[adapterPosition].playbacks) {
+            for (p in dataSet[adapterPosition].playbackStates) {
               eventBus.post(PlaybackControlEvents.StartPlaybackEvent(p.soundKey))
               eventBus.post(PlaybackControlEvents.UpdatePlaybackEvent(p))
             }
@@ -156,10 +156,10 @@ class PresetFragment : Fragment() {
     }
   }
 
-  data class Preset(@Expose var name: String, @Expose val playbacks: Array<Playback>) {
+  data class Preset(@Expose var name: String, @Expose val playbackStates: Array<Playback>) {
 
     init {
-      playbacks.sortBy { T -> T.soundKey }
+      playbackStates.sortBy { T -> T.soundKey }
     }
 
     companion object {
@@ -209,13 +209,13 @@ class PresetFragment : Fragment() {
 
       // name need not be equal. playbackStates should be
       other as Preset
-      return playbacks.contentEquals(other.playbacks)
+      return playbackStates.contentEquals(other.playbackStates)
     }
 
     override fun hashCode(): Int {
       // auto-generated
       var result = name.hashCode()
-      result = 31 * result + playbacks.contentHashCode()
+      result = 31 * result + playbackStates.contentHashCode()
       return result
     }
   }
