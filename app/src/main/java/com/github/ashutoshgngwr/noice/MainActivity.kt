@@ -74,6 +74,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // volume control to type "media"
     volumeControlStream = AudioManager.STREAM_MUSIC
+
+    // start the media player service
+    startService(Intent(this, MediaPlayerService::class.java))
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

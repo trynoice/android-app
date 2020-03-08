@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply from: 'jacoco.gradle'
 
 android {
   compileSdkVersion 29
@@ -12,6 +11,7 @@ android {
     targetSdkVersion 29
     versionCode 13
     versionName "0.2.8"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
 
   signingConfigs {
@@ -32,14 +32,8 @@ android {
     release {
       shrinkResources true
       minifyEnabled true
-      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'progaurd-rules.pro'
       signingConfig = signingConfigs.release
-    }
-  }
-
-  testOptions {
-    unitTests {
-      includeAndroidResources true
     }
   }
 
@@ -58,19 +52,21 @@ dependencies {
   implementation 'androidx.core:core-ktx:1.2.0'
   implementation 'androidx.appcompat:appcompat:1.1.0'
   implementation 'androidx.media:media:1.1.0'
-  implementation 'com.google.android.material:material:1.2.0-alpha05'
+  implementation 'androidx.preference:preference:1.1.0'
+  implementation 'com.google.android.material:material:1.1.0'
   implementation 'com.google.code.gson:gson:2.8.6'
   implementation 'com.github.medyo:android-about-page:1.2.5'
+  implementation 'org.greenrobot:eventbus:3.1.1'
 
-  testImplementation 'junit:junit:4.13'
-  testImplementation 'androidx.test.ext:junit:1.1.1'
-  testImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-  testImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
-  testImplementation 'androidx.test:rules:1.2.0'
-  testImplementation 'org.robolectric:robolectric:4.3.1'
+  androidTestImplementation 'junit:junit:4.13'
+  androidTestImplementation 'androidx.test:core:1.2.0'
+  androidTestImplementation 'androidx.test:runner:1.2.0'
+  androidTestImplementation 'androidx.test:rules:1.2.0'
+  androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+  androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+  androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+  androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
+  androidTestImplementation 'org.mockito:mockito-android:3.3.0'
 
-  testAnnotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
-
-  debugImplementation 'androidx.test:core:1.2.0'
   debugImplementation 'androidx.fragment:fragment-testing:1.2.2'
 }

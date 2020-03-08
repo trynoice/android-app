@@ -1,81 +1,55 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.app.Activity
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
 import android.os.Bundle
-import android.os.IBinder
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import androidx.annotation.RawRes
 import androidx.annotation.StringRes
-import androidx.annotation.VisibleForTesting
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.SoundManager
-import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment.Sound.Companion.LIBRARY
+import com.github.ashutoshgngwr.noice.sound.Playback
+import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
+import com.github.ashutoshgngwr.noice.sound.Sound
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_sound_list.view.*
 import kotlinx.android.synthetic.main.layout_list_item__sound.view.*
-import kotlin.math.max
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
-class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListener {
+class SoundLibraryFragment : Fragment() {
 
   companion object {
-    const val TAG: String = "SoundLibraryFragment"
     const val RC_SAVE_PRESET_DIALOG = 0x922
   }
 
-  private var mSoundManager: SoundManager? = null
-
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  var mRecyclerView: RecyclerView? = null
-
+  private var mRecyclerView: RecyclerView? = null
   private lateinit var mSavePresetButton: FloatingActionButton
+  private var eventBus = EventBus.getDefault()
+  private var playbacks = emptyMap<String, Playback>()
 
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  val mServiceConnection = object : ServiceConnection {
-    override fun onServiceDisconnected(name: ComponentName?) {
-      Log.d(TAG, "MediaPlayerService disconnected")
-      mSoundManager?.removeOnPlaybackStateChangeListener(this@SoundLibraryFragment)
-      mSoundManager = null
+  @Subscribe(sticky = true, threadMode = ThreadMode.ASYNC)
+  fun onPlaybackUpdate(playbacks: HashMap<String, Playback>) {
+    this.playbacks = playbacks
+    var showSavePresetFAB: Boolean
+    PresetFragment.Preset.readAllFromUserPreferences(requireContext()).also {
+      showSavePresetFAB = !it.contains(PresetFragment.Preset("", playbacks.values.toTypedArray()))
     }
 
-    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-      service ?: return
-
-      Log.d(TAG, "MediaPlayerService connected")
-      if (service is MediaPlayerService.PlaybackBinder) {
-        mSoundManager = service.getSoundManager().apply {
-          addOnPlaybackStateChangeListener(this@SoundLibraryFragment)
-        }
-      }
-
-      // once service is connected, update playback state in UI
-      mRecyclerView?.adapter.apply {
-        if (this is SoundListAdapter) {
-          this.onPlaybackStateChanged()
-        }
+    requireView().post {
+      requireNotNull(requireNotNull(mRecyclerView).adapter).notifyDataSetChanged()
+      if (showSavePresetFAB && playbacks.isNotEmpty()) {
+        mSavePresetButton.show()
+      } else {
+        mSavePresetButton.hide()
       }
     }
-  }
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    requireContext().bindService(
-      Intent(context, MediaPlayerService::class.java),
-      mServiceConnection,
-      Context.BIND_AUTO_CREATE
-    )
   }
 
   override fun onCreateView(
@@ -95,11 +69,16 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
     mSavePresetButton = view.fab_save_preset
     mSavePresetButton.setOnClickListener {
       SavePresetDialogFragment::class.java.newInstance().run {
-        preset = mSoundManager?.getCurrentPreset() ?: return@run
+        preset = PresetFragment.Preset("", playbacks.values.toTypedArray())
         setTargetFragment(this@SoundLibraryFragment, RC_SAVE_PRESET_DIALOG)
-        show(this@SoundLibraryFragment.requireFragmentManager(), this.javaClass.simpleName)
+        show(
+          this@SoundLibraryFragment.requireActivity().supportFragmentManager,
+          this.javaClass.simpleName
+        )
       }
     }
+
+    eventBus.register(this)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -109,59 +88,9 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
     }
   }
 
-  override fun onDestroy() {
-    requireContext().unbindService(mServiceConnection)
-
-    // manually call onServiceDisconnected because framework does not
-    // call it when service is intentionally unbound.
-    mServiceConnection.onServiceDisconnected(null)
-    super.onDestroy()
-  }
-
-  override fun onPlaybackStateChanged(playbackState: Int) {
-    if (playbackState == SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED) {
-      Log.d(TAG, "Playback started! Bring media player service to foreground...")
-      ContextCompat.startForegroundService(
-        requireContext(),
-        Intent(context, MediaPlayerService::class.java)
-      )
-    }
-
-    // refresh sound list
-    when (playbackState) {
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED,
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_PAUSED,
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_RESUMED,
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED,
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED -> {
-        Log.d(TAG, "Playback state changed. Refreshing sound list...")
-        mRecyclerView?.adapter.apply {
-          if (this is SoundListAdapter) {
-            this.onPlaybackStateChanged()
-          }
-        }
-      }
-    }
-
-    // hide or show save preset button based on current preset
-    when (playbackState) {
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED,
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_RESUMED,
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_UPDATED,
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_SETTINGS_UPDATED -> {
-        Log.d(TAG, "Current playback preset updated!")
-        val preset = mSoundManager?.getCurrentPreset()
-        if (PresetFragment.Preset.readAllFromUserPreferences(requireContext()).contains(preset)) {
-          mSavePresetButton.hide()
-        } else {
-          mSavePresetButton.show()
-        }
-      }
-      else -> {
-        Log.d(TAG, "Playback is either paused or stopped! Hide save preset button...")
-        mSavePresetButton.hide()
-      }
-    }
+  override fun onDestroyView() {
+    eventBus.unregister(this)
+    super.onDestroyView()
   }
 
   @Suppress("DEPRECATION")
@@ -172,47 +101,50 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
       .show()
   }
 
-  inner class SoundListAdapter(private val context: Context) : RecyclerView.Adapter<SoundListAdapter.ViewHolder>() {
+  inner class SoundListAdapter(private val context: Context) :
+    RecyclerView.Adapter<SoundListAdapter.ViewHolder>() {
 
     private val layoutInflater = LayoutInflater.from(context)
+    private val dataSet = Sound.LIBRARY.values.toTypedArray()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
       return ViewHolder(layoutInflater.inflate(R.layout.layout_list_item__sound, parent, false))
     }
 
     override fun getItemCount(): Int {
-      return LIBRARY.size
+      return dataSet.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-      val sound = LIBRARY[position]
+      val sound = dataSet[position]
 
       holder.itemView.title.text = context.getString(sound.titleResId)
-      holder.itemView.seekbar_volume.progress = Sound.DEFAULT_VOLUME
-      holder.itemView.seekbar_time_period.progress = Sound.DEFAULT_TIME_PERIOD
-
-      val soundManager = mSoundManager ?: return
-      holder.itemView.seekbar_volume.progress = soundManager.getVolume(sound.key)
-      if (soundManager.isPlaying(sound.key)) {
-        holder.itemView.button_play.setImageResource(R.drawable.ic_action_stop)
+      if (playbacks.containsKey(sound.key)) {
+        val playback = requireNotNull(playbacks[sound.key])
+        holder.itemView.seekbar_volume.progress = playback.volume
+        holder.itemView.seekbar_time_period.progress = playback.timePeriod
+        holder.itemView.seekbar_volume.isEnabled = true
+        holder.itemView.seekbar_time_period.isEnabled = true
+        holder.itemView.button_play.setImageResource(
+          if (playback.isPlaying) {
+            R.drawable.ic_action_stop
+          } else {
+            R.drawable.ic_action_stop
+          }
+        )
       } else {
+        holder.itemView.seekbar_volume.progress = Playback.DEFAULT_VOLUME
+        holder.itemView.seekbar_time_period.progress = Playback.DEFAULT_TIME_PERIOD
+        holder.itemView.seekbar_volume.isEnabled = false
+        holder.itemView.seekbar_time_period.isEnabled = false
         holder.itemView.button_play.setImageResource(R.drawable.ic_action_play)
       }
 
-      if (sound.isLoopable) {
-        holder.itemView.layout_time_period.visibility = View.GONE
+      holder.itemView.layout_time_period.visibility = (if (sound.isLoopable) {
+        View.GONE
       } else {
-        holder.itemView.layout_time_period.visibility = View.VISIBLE
-        holder.itemView.seekbar_time_period.progress = soundManager.getTimePeriod(sound.key)
-      }
-    }
-
-    fun onPlaybackStateChanged() {
-      LIBRARY.sortWith(
-        compareByDescending<Sound> { mSoundManager?.isPlaying(it.key) }
-          .thenBy { it.key }
-      )
-      notifyItemRangeChanged(0, LIBRARY.size)
+        View.VISIBLE
+      })
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -222,23 +154,25 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
         val seekBarChangeListener = object : SeekBar.OnSeekBarChangeListener {
 
           override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            // return if mSoundManager is null
-            val soundManager = mSoundManager ?: return
             if (!fromUser) {
               return
             }
 
-            val soundKey = LIBRARY[adapterPosition].key
-            when (seekBar?.id) {
+            val playback = playbacks[dataSet[adapterPosition].key] ?: return
+            when (requireNotNull(seekBar).id) {
               R.id.seekbar_volume -> {
-                soundManager.setVolume(soundKey, progress)
+                playback.setVolume(progress)
               }
 
               R.id.seekbar_time_period -> {
-                // max(1, progress) because 0 will give us math error in SoundManager
-                soundManager.setTimePeriod(soundKey, max(1, progress))
+                // manually ensure minimum time period to be 1 since ProgressBar#min was introduced
+                // in API 26. Our min API version is 21.
+                playback.timePeriod = maxOf(1, progress)
               }
             }
+
+            // publish update event
+            eventBus.post(PlaybackControlEvents.UpdatePlaybackEvent(playback))
           }
 
           override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -246,60 +180,21 @@ class SoundLibraryFragment : Fragment(), SoundManager.OnPlaybackStateChangeListe
 
         }
 
+        view.seekbar_volume.max = Playback.MAX_VOLUME
         view.seekbar_volume.setOnSeekBarChangeListener(seekBarChangeListener)
+        view.seekbar_time_period.max = Playback.MAX_TIME_PERIOD
         view.seekbar_time_period.setOnSeekBarChangeListener(seekBarChangeListener)
 
         view.button_play.setOnClickListener {
-          // return if mSoundManager is null
-          val soundManager = mSoundManager ?: return@setOnClickListener
+          val soundKey = dataSet[adapterPosition].key
 
-          val soundKey = LIBRARY[adapterPosition].key
-
-          if (soundManager.isPlaying(soundKey)) {
-            soundManager.stop(soundKey)
+          if (playbacks.containsKey(soundKey)) {
+            eventBus.post(PlaybackControlEvents.StopPlaybackEvent(soundKey))
           } else {
-            soundManager.play(soundKey)
-            // if playback is paused, notify user that sound will be played when playback is resumed.
-            if (soundManager.isPaused()) {
-              showMessage(R.string.playback_is_paused)
-            }
+            eventBus.post(PlaybackControlEvents.StartPlaybackEvent(soundKey))
           }
         }
       }
-    }
-  }
-
-  class Sound private constructor(@RawRes val resId: Int, @StringRes val titleResId: Int, val key: String) {
-
-    var isLoopable = true
-
-    constructor(resId: Int, titleResId: Int, isLoopable: Boolean, key: String) : this(resId, titleResId, key) {
-      this.isLoopable = isLoopable
-    }
-
-    companion object {
-      const val DEFAULT_VOLUME = 4
-      const val DEFAULT_TIME_PERIOD = 60
-      val LIBRARY = arrayOf(
-        Sound(R.raw.birds, R.string.birds, "birds"),
-        Sound(R.raw.bonfire, R.string.bonfire, "bonfire"),
-        Sound(R.raw.coffee_shop, R.string.coffee_shop, "coffee_shop"),
-        Sound(R.raw.distant_thunder, R.string.distant_thunder, false, "distant_thunder"),
-        Sound(R.raw.heavy_rain, R.string.heavy_rain, "heavy_rain"),
-        Sound(R.raw.light_rain, R.string.light_rain, "light_rain"),
-        Sound(R.raw.moderate_rain, R.string.moderate_rain, "moderate_rain"),
-        Sound(R.raw.morning_in_a_village, R.string.morning_in_a_village, "morning_in_a_village"),
-        Sound(R.raw.moving_train, R.string.moving_train, "moving_train"),
-        Sound(R.raw.night, R.string.night, "night"),
-        Sound(R.raw.rolling_thunder, R.string.rolling_thunder, false, "rolling_thunder"),
-        Sound(R.raw.seaside, R.string.seaside, "seaside"),
-        Sound(R.raw.soft_wind, R.string.soft_wind, "soft_wind"),
-        Sound(R.raw.thunder_crack, R.string.thunder_crack, false, "thunder_crack"),
-        Sound(R.raw.train_horn, R.string.train_horn, false, "train_horn"),
-        Sound(R.raw.water_stream, R.string.water_stream, "water_stream"),
-        Sound(R.raw.wind_chimes_of_shells, R.string.wind_in_chimes_of_shells, "wind_in_chimes_of_shells"),
-        Sound(R.raw.wind_in_palm_trees, R.string.wind_in_palm_trees, "wind_in_palm_trees")
-      )
     }
   }
 }

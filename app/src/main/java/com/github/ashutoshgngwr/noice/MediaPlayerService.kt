@@ -5,104 +5,72 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.media.AudioAttributes
-import android.media.AudioFocusRequest
 import android.media.AudioManager
-import android.os.Binder
 import android.os.Build
-import android.os.Handler
 import android.os.IBinder
 import android.util.Log
-import androidx.annotation.RequiresApi
-import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
+import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
+import com.github.ashutoshgngwr.noice.sound.PlaybackManager
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
-class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener,
-  AudioManager.OnAudioFocusChangeListener {
+class MediaPlayerService : Service() {
 
   companion object {
-    const val TAG = "MediaPlayerService"
+    private val TAG = MediaPlayerService::class.java.simpleName
 
     const val FOREGROUND_ID = 0x29
     const val RC_MAIN_ACTIVITY = 0x28
     const val RC_START_PLAYBACK = 0x27
-    const val RC_STOP_PLAYBACK = 0x26
-    const val RC_STOP_SERVICE = 0x25
+    const val RC_PAUSE_PLAYBACK = 0x26
+    const val RC_STOP_PLAYBACK = 0x25
 
     const val NOTIFICATION_CHANNEL_ID = "com.github.ashutoshgngwr.noice.default"
   }
 
-  private lateinit var mAudioManager: AudioManager
-  private lateinit var mSoundManager: SoundManager
-
-  private var hasAudioFocus = false
-  private var playbackDelayed = false
-  private var resumeOnFocusGain = false
-
-  private val mAudioAttributes = AudioAttributes.Builder()
-    .setContentType(AudioAttributes.CONTENT_TYPE_MOVIE)
-    .setLegacyStreamType(AudioManager.STREAM_MUSIC)
-    .setUsage(AudioAttributes.USAGE_GAME)
-    .build()
-
-  @RequiresApi(Build.VERSION_CODES.O)
-  private val mAudioFocusRequest =
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-      null
-    } else {
-      AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
-        .setAudioAttributes(mAudioAttributes)
-        .setAcceptsDelayedFocusGain(true)
-        .setOnAudioFocusChangeListener(this, Handler())
-        .setWillPauseWhenDucked(false)
-        .build()
-    }
-
+  private lateinit var playbackManager: PlaybackManager
   private val becomingNoisyReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-      if (intent?.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY && mSoundManager.isPlaying) {
+      if (intent?.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
         Log.i(TAG, "Becoming noisy... Pause playback!")
-        mSoundManager.pausePlayback()
+        EventBus.getDefault().post(PlaybackControlEvents.PausePlaybackEvent())
       }
     }
   }
 
-  inner class PlaybackBinder : Binder() {
-    fun getSoundManager(): SoundManager = this@MediaPlayerService.mSoundManager
-  }
-
   override fun onBind(intent: Intent?): IBinder? {
-    return PlaybackBinder()
+    return null
   }
 
   override fun onCreate() {
     super.onCreate()
-    mAudioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-    mSoundManager = SoundManager(this, mAudioAttributes)
-    mSoundManager.addOnPlaybackStateChangeListener(this)
     createNotificationChannel()
+    playbackManager = PlaybackManager(this)
 
     // register becoming noisy receiver to detect audio output config changes
     registerReceiver(
       becomingNoisyReceiver,
       IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
     )
+
+    // subscribe to Playback events
+    EventBus.getDefault().register(this)
   }
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     when (intent?.getIntExtra("action", 0)) {
       RC_START_PLAYBACK -> {
-        if (!playbackDelayed && !resumeOnFocusGain) {
-          mSoundManager.resumePlayback()
-        }
+        EventBus.getDefault().post(PlaybackControlEvents.StartPlaybackEvent())
+      }
+
+      RC_PAUSE_PLAYBACK -> {
+        EventBus.getDefault().post(PlaybackControlEvents.PausePlaybackEvent())
       }
 
       RC_STOP_PLAYBACK -> {
-        mSoundManager.pausePlayback()
-      }
-
-      RC_STOP_SERVICE -> {
-        mSoundManager.stopPlayback()
+        EventBus.getDefault().post(PlaybackControlEvents.StopPlaybackEvent())
       }
     }
 
@@ -114,114 +82,13 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
 
     // unregister receiver and listener. release sound pool resources
     unregisterReceiver(becomingNoisyReceiver)
-    mSoundManager.removeOnPlaybackStateChangeListener(this)
-    mSoundManager.release()
+
+    // unsubscribe to Playback events
+    EventBus.getDefault().unregister(this)
   }
 
-  override fun onPlaybackStateChanged(playbackState: Int) {
-    when (playbackState) {
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED -> {
-        Log.d(TAG, "Playback stopped! Remove service from foreground....")
-        stopForeground(true)
-      }
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED,
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_PAUSED,
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_RESUMED -> {
-        Log.d(TAG, "Playback is not in stopped state! Update notification...")
-        startForeground(FOREGROUND_ID, updateNotification())
-      }
-    }
-
-    when (playbackState) {
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STARTED,
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_RESUMED -> {
-        if (!hasAudioFocus && !playbackDelayed) {
-          Log.d(TAG, "Playback started or resumed! Request audio focus, we don't have it...")
-          handleAudioFocusRequestResult(createAudioFocusRequest())
-        }
-      }
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_PAUSED,
-      SoundManager.OnPlaybackStateChangeListener.STATE_PLAYBACK_STOPPED -> {
-        if (hasAudioFocus && !playbackDelayed) {
-          Log.d(TAG, "Playback is paused or stopped; Abandon audio focus...")
-          hasAudioFocus = false
-          if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            @Suppress("DEPRECATION")
-            mAudioManager.abandonAudioFocus(this)
-          } else {
-            mAudioFocusRequest ?: return
-            mAudioManager.abandonAudioFocusRequest(mAudioFocusRequest)
-          }
-        }
-      }
-    }
-  }
-
-  override fun onAudioFocusChange(focusChange: Int) {
-    when (focusChange) {
-      AudioManager.AUDIOFOCUS_GAIN -> {
-        Log.d(TAG, "Gained audio focus...")
-        hasAudioFocus = true
-        if (playbackDelayed || resumeOnFocusGain) {
-          Log.d(TAG, "Resume playback after audio focus gain...")
-          playbackDelayed = false
-          resumeOnFocusGain = false
-          mSoundManager.resumePlayback()
-        }
-      }
-      AudioManager.AUDIOFOCUS_LOSS -> {
-        Log.d(TAG, "Permanently lost audio focus! Stop playback...")
-        hasAudioFocus = false
-        resumeOnFocusGain = false
-        playbackDelayed = false
-        mSoundManager.pausePlayback()
-      }
-      AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
-        Log.d(TAG, "Temporarily lost audio focus! Pause playback...")
-        hasAudioFocus = false
-        resumeOnFocusGain = true
-        playbackDelayed = false
-        mSoundManager.pausePlayback()
-      }
-    }
-  }
-
-  private fun createAudioFocusRequest(): Int {
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-      @Suppress("DEPRECATION")
-      return mAudioManager.requestAudioFocus(
-        this,
-        AudioManager.STREAM_MUSIC,
-        AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
-      )
-    } else {
-      mAudioFocusRequest ?: return AudioManager.AUDIOFOCUS_REQUEST_FAILED
-      return mAudioManager.requestAudioFocus(mAudioFocusRequest)
-    }
-  }
-
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  fun handleAudioFocusRequestResult(result: Int) {
-    Log.d(TAG, "AudioFocusRequest result: $result")
-    when (result) {
-      AudioManager.AUDIOFOCUS_REQUEST_DELAYED -> {
-        Log.d(TAG, "Audio focus request was delayed! Pause playback for now.")
-        playbackDelayed = true
-        hasAudioFocus = false
-        mSoundManager.pausePlayback()
-      }
-      AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
-        Log.d(TAG, "Failed to get audio focus! Stop playback...")
-        hasAudioFocus = false
-        mSoundManager.stopPlayback()
-      }
-      AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
-        hasAudioFocus = true
-      }
-    }
-  }
-
-  private fun updateNotification(): Notification {
+  @Subscribe(threadMode = ThreadMode.MAIN)
+  fun onPlaybackUpdate(event: PlaybackManager.UpdateEvent) {
     val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
       .setContentTitle(getString(R.string.app_name))
       .setShowWhen(false)
@@ -236,24 +103,32 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
       .addAction(
         R.drawable.ic_stat_close,
         getString(R.string.stop),
-        createPlaybackControlPendingIntent(RC_STOP_SERVICE)
-      )
-
-    if (mSoundManager.isPlaying) {
-      notificationBuilder.addAction(
-        R.drawable.ic_stat_pause,
-        getString(R.string.pause),
         createPlaybackControlPendingIntent(RC_STOP_PLAYBACK)
       )
-    } else if (mSoundManager.isPaused()) {
+
+    if (event.state == PlaybackManager.State.PAUSED) {
       notificationBuilder.addAction(
         R.drawable.ic_stat_play,
         getString(R.string.play),
         createPlaybackControlPendingIntent(RC_START_PLAYBACK)
       )
+    } else {
+      notificationBuilder.addAction(
+        R.drawable.ic_stat_pause,
+        getString(R.string.pause),
+        createPlaybackControlPendingIntent(RC_PAUSE_PLAYBACK)
+      )
     }
 
-    return notificationBuilder.build()
+    // isPlaying returns true if Playback is paused but not stopped.
+    if (event.state == PlaybackManager.State.STOPPED) {
+      stopForeground(true)
+    } else {
+      startForeground(FOREGROUND_ID, notificationBuilder.build())
+      if (event.state == PlaybackManager.State.PAUSED) {
+        stopForeground(false)
+      }
+    }
   }
 
   private fun createNotificationChannel() {
@@ -267,9 +142,8 @@ class MediaPlayerService : Service(), SoundManager.OnPlaybackStateChangeListener
       channel.description = getString(R.string.notification_channel_default__description)
       channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
       channel.setShowBadge(false)
-
-      val notificationManager = getSystemService(NotificationManager::class.java)
-      notificationManager.createNotificationChannel(channel)
+      (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
+        .createNotificationChannel(channel)
     }
   }
 

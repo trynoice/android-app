@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-  xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
@@ -18,30 +17,30 @@
     android:orientation="horizontal">
 
     <ImageButton
-      style="@style/Widget.AppCompat.ImageButton"
       android:id="@+id/button_play"
+      style="@style/Widget.AppCompat.ImageButton"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:padding="5dp"
       android:background="?android:selectableItemBackgroundBorderless"
+      android:contentDescription="@string/play_pause"
+      android:padding="5dp"
       android:src="@drawable/ic_action_play"
-      android:tint="@color/colorAccent"
-      android:contentDescription="@string/play_pause"/>
+      android:tint="@color/colorAccent" />
 
     <LinearLayout
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_weight="1"
       android:layout_marginStart="15dp"
+      android:layout_weight="1"
       android:orientation="vertical">
 
       <TextView
-        style="@style/TextAppearance.AppCompat.Subhead"
         android:id="@+id/title"
+        style="@style/TextAppearance.AppCompat.Subhead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:ellipsize="end"/>
+        android:ellipsize="end"
+        android:singleLine="true" />
 
       <LinearLayout
         android:layout_width="match_parent"
@@ -53,16 +52,15 @@
         <ImageView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:contentDescription="@string/volume"
           android:src="@drawable/ic_stat_volume"
-          android:tint="@color/colorAccent"
-          android:contentDescription="@string/volume"/>
+          android:tint="@color/colorAccent" />
 
         <SeekBar
           android:id="@+id/seekbar_volume"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:max="20"
-          android:layout_weight="1"/>
+          android:layout_weight="1" />
 
       </LinearLayout>
 
@@ -78,16 +76,15 @@
         <ImageView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:contentDescription="@string/repeat_time_period"
           android:src="@drawable/ic_stat_time_period"
-          android:tint="@color/colorAccent"
-          android:contentDescription="@string/repeat_time_period"/>
+          android:tint="@color/colorAccent" />
 
         <SeekBar
           android:id="@+id/seekbar_time_period"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:max="240"/>
+          android:layout_weight="1" />
 
       </LinearLayout>
 
