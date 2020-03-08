@@ -21,10 +21,10 @@ env:
     - ANDROID_HOME="$HOME/android-sdk"
     - PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/tools:$PATH"
   matrix:
-    - TEST_PLATFORM=android-21
+    - TEST_PLATFORM=android-22
     - TEST_PLATFORM=android-23
-    - TEST_PLATFORM=android-24
-    - TEST_PLATFORM=android-26
+    - TEST_PLATFORM=android-25
+    - TEST_PLATFORM=android-27
     - TEST_PLATFORM=android-28
     - TEST_PLATFORM=android-29
 
