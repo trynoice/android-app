@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+      style="@style/TextAppearance.AppCompat.Title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="20dp"
+      android:text="@string/sleep_timer" />
+
+    <TimePicker
+      android:id="@+id/time_picker"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:timePickerMode="clock" />
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="20dp"
+      android:orientation="horizontal">
+
+      <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_schedule"
+        style="@style/TextAppearance.AppCompat.Widget.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/schedule" />
+
+      <View
+        android:layout_width="20dp"
+        android:layout_height="1dp" />
+
+      <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_reset"
+        style="@style/TextAppearance.AppCompat.Widget.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/reset" />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</ScrollView>

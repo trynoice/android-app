@@ -7,9 +7,12 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.media.AudioManager
 import android.os.Build
+import android.os.Handler
 import android.os.IBinder
+import android.os.SystemClock
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.github.ashutoshgngwr.noice.fragment.SleepTimerFragment
 import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
 import com.github.ashutoshgngwr.noice.sound.PlaybackManager
 import org.greenrobot.eventbus.EventBus
@@ -31,6 +34,11 @@ class MediaPlayerService : Service() {
   }
 
   private lateinit var playbackManager: PlaybackManager
+  private lateinit var handler: Handler // needed in scheduleAutoStop for register callback
+  private val autoStopCallback = Runnable {
+    EventBus.getDefault().post(PlaybackControlEvents.StopPlaybackEvent())
+  }
+
   private val becomingNoisyReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
       if (intent?.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
@@ -48,6 +56,7 @@ class MediaPlayerService : Service() {
     super.onCreate()
     createNotificationChannel()
     playbackManager = PlaybackManager(this)
+    handler = Handler()
 
     // register becoming noisy receiver to detect audio output config changes
     registerReceiver(
@@ -85,6 +94,9 @@ class MediaPlayerService : Service() {
 
     // unsubscribe to Playback events
     EventBus.getDefault().unregister(this)
+
+    // unregister auto stop callbacks, if any
+    handler.removeCallbacks(autoStopCallback)
   }
 
   @Subscribe(threadMode = ThreadMode.MAIN)
@@ -130,6 +142,15 @@ class MediaPlayerService : Service() {
       }
     }
   }
+
+  @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+  fun scheduleAutoStop(event: SleepTimerFragment.ScheduleAutoSleepEvent) {
+    handler.removeCallbacks(autoStopCallback)
+    if (event.atUptimeMillis > SystemClock.uptimeMillis()) {
+      handler.postAtTime(autoStopCallback, event.atUptimeMillis)
+    }
+  }
+
 
   private fun createNotificationChannel() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
