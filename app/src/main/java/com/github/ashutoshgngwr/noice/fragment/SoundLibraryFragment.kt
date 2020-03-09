@@ -30,7 +30,7 @@ class SoundLibraryFragment : Fragment() {
   }
 
   private var mRecyclerView: RecyclerView? = null
-  private lateinit var mSavePresetButton: FloatingActionButton
+  private var mSavePresetButton: FloatingActionButton? = null
   private var eventBus = EventBus.getDefault()
   private var playbacks = emptyMap<String, Playback>()
 
@@ -42,12 +42,17 @@ class SoundLibraryFragment : Fragment() {
       showSavePresetFAB = !it.contains(PresetFragment.Preset("", playbacks.values.toTypedArray()))
     }
 
-    requireView().post {
-      requireNotNull(requireNotNull(mRecyclerView).adapter).notifyDataSetChanged()
-      if (showSavePresetFAB && playbacks.isNotEmpty()) {
-        mSavePresetButton.show()
-      } else {
-        mSavePresetButton.hide()
+    view?.post {
+      if (mRecyclerView != null) {
+        requireNotNull(requireNotNull(mRecyclerView).adapter).notifyDataSetChanged()
+      }
+
+      if (mSavePresetButton != null) {
+        if (showSavePresetFAB && playbacks.isNotEmpty()) {
+          requireNotNull(mSavePresetButton).show()
+        } else {
+          requireNotNull(mSavePresetButton).hide()
+        }
       }
     }
   }
@@ -67,14 +72,11 @@ class SoundLibraryFragment : Fragment() {
     }
 
     mSavePresetButton = view.fab_save_preset
-    mSavePresetButton.setOnClickListener {
-      SavePresetDialogFragment::class.java.newInstance().run {
-        preset = PresetFragment.Preset("", playbacks.values.toTypedArray())
-        setTargetFragment(this@SoundLibraryFragment, RC_SAVE_PRESET_DIALOG)
-        show(
-          this@SoundLibraryFragment.requireActivity().supportFragmentManager,
-          this.javaClass.simpleName
-        )
+    requireNotNull(mSavePresetButton).setOnClickListener {
+      SavePresetDialogFragment::class.java.newInstance().let {
+        it.preset = PresetFragment.Preset("", playbacks.values.toTypedArray())
+        it.setTargetFragment(this, RC_SAVE_PRESET_DIALOG)
+        it.show(parentFragmentManager, it.javaClass.simpleName)
       }
     }
 
@@ -84,7 +86,9 @@ class SoundLibraryFragment : Fragment() {
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     if (requestCode == RC_SAVE_PRESET_DIALOG && resultCode == Activity.RESULT_OK) {
       showMessage(R.string.preset_saved)
-      mSavePresetButton.hide()
+      if (mSavePresetButton != null) {
+        requireNotNull(mSavePresetButton).hide()
+      }
     }
   }
 
