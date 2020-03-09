@@ -111,4 +111,10 @@
   <string name="delete">Delete</string>
   <string name="preset_deleted">Preset deleted!</string>
   <string name="nothing_saved_yet">Nothing saved yet!</string>
+  <string name="sleep_timer">Sleep Timer</string>
+  <string name="schedule">Schedule</string>
+  <string name="reset">Reset</string>
+  <string name="auto_sleep_schedule_error">Unable to schedule auto sleep timer!</string>
+  <string name="auto_sleep_schedule_success">Scheduled auto sleep timer!</string>
+  <string name="auto_sleep_schedule_cancelled">Auto sleep timer cancelled!</string>
 </resources>

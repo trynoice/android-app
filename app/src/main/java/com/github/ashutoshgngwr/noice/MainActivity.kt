@@ -14,6 +14,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
+import com.github.ashutoshgngwr.noice.fragment.SleepTimerFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -92,6 +93,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       }
       R.id.saved_presets -> {
         setFragment(PresetFragment::class.java)
+      }
+      R.id.sleep_timer -> {
+        setFragment(SleepTimerFragment::class.java)
       }
       R.id.about -> {
         setFragment(AboutFragment::class.java)
