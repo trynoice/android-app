@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import androidx.fragment.app.testing.FragmentScenario
@@ -12,12 +13,11 @@ import androidx.test.espresso.contrib.PickerActions.setTime
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.R
-import kotlinx.android.synthetic.main.fragment_sleep_timer.*
 import kotlinx.android.synthetic.main.fragment_sleep_timer.view.*
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -57,10 +57,7 @@ class SleepTimerFragmentTest {
 
   @Test
   fun testScheduleButton_withValidInput() {
-    fragmentScenario.onFragment {
-      it.requireView().time_picker.minute = 1
-    }
-
+    onView(withId(R.id.time_picker)).perform(setTime(1, 1))
     onView(withId(R.id.button_schedule)).perform(scrollTo(), click())
     onView(withText(R.string.auto_sleep_schedule_success)).check(matches(isDisplayed()))
     verify(eventBus, atMost(1))
@@ -91,7 +88,11 @@ class SleepTimerFragmentTest {
 
     onView(withId(R.id.button_reset)).check(matches(isEnabled()))
     fragmentScenario.onFragment {
-      assertTrue(it.time_picker.minute > 0)
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        assertNotEquals(0, it.requireView().time_picker.minute)
+      } else {
+        assertNotEquals(0, it.requireView().time_picker.currentMinute)
+      }
     }
   }
 
@@ -103,7 +104,13 @@ class SleepTimerFragmentTest {
 
     onView(withId(R.id.button_reset)).check(matches(not(isEnabled())))
     fragmentScenario.onFragment {
-      assertEquals(0, it.time_picker.minute)
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        assertEquals(0, it.requireView().time_picker.hour)
+        assertEquals(0, it.requireView().time_picker.minute)
+      } else {
+        assertEquals(0, it.requireView().time_picker.currentHour)
+        assertEquals(0, it.requireView().time_picker.currentMinute)
+      }
     }
   }
 
