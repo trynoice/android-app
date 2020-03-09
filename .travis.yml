@@ -76,8 +76,8 @@ jobs:
   fast_finish: true
   allow_failures:
     - env: TEST_PLATFORM=android-23
-    - env: TEST_PLATFORM=android-24
-    - env: TEST_PLATFORM=android-26
+    - env: TEST_PLATFORM=android-25
+    - env: TEST_PLATFORM=android-27
     - env: TEST_PLATFORM=android-28
   include:
     - stage: deploy
