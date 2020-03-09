@@ -25,6 +25,9 @@ class SleepTimerFragment : Fragment() {
   data class ScheduleAutoSleepEvent(val atUptimeMillis: Long)
 
   private val eventBus = EventBus.getDefault()
+  private val timerExpiredCallback = Runnable {
+    onScheduleAutoSleep(ScheduleAutoSleepEvent(0))
+  }
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -109,6 +112,9 @@ class SleepTimerFragment : Fragment() {
     if (remainingMillis > 0) {
       hour = (remainingMillis / 3600000).toInt()
       minute = floor((remainingMillis % 3600000).toFloat() / 60000).toInt()
+
+      // schedule a callback to refresh views when timer expires
+      requireView().postDelayed(timerExpiredCallback, remainingMillis)
     }
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -123,6 +129,7 @@ class SleepTimerFragment : Fragment() {
   }
 
   override fun onDestroyView() {
+    requireView().removeCallbacks(timerExpiredCallback)
     eventBus.unregister(this)
     super.onDestroyView()
   }
