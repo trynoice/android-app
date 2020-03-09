@@ -24,7 +24,7 @@ class SleepTimerFragment : Fragment() {
 
   data class ScheduleAutoSleepEvent(val atUptimeMillis: Long)
 
-  private val eventBus = EventBus.getDefault()
+  private var eventBus = EventBus.getDefault()
   private val timerExpiredCallback = Runnable {
     onScheduleAutoSleep(ScheduleAutoSleepEvent(0))
   }
@@ -85,13 +85,12 @@ class SleepTimerFragment : Fragment() {
       if (hours == 0 && minutes == 0) {
         Snackbar.make(requireView(), R.string.auto_sleep_schedule_error, Snackbar.LENGTH_SHORT)
           .show()
-        return@setOnClickListener
+      } else {
+        val millis = SystemClock.uptimeMillis() + hours * 3600000 + minutes * 60000
+        eventBus.postSticky(ScheduleAutoSleepEvent(millis))
+        Snackbar.make(requireView(), R.string.auto_sleep_schedule_success, Snackbar.LENGTH_SHORT)
+          .show()
       }
-
-      val millis = SystemClock.uptimeMillis() + hours * 3600000 + minutes * 60000
-      eventBus.postSticky(ScheduleAutoSleepEvent(millis))
-      Snackbar.make(requireView(), R.string.auto_sleep_schedule_success, Snackbar.LENGTH_SHORT)
-        .show()
     }
 
     view.button_reset.setOnClickListener {
