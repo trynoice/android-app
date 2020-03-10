@@ -66,7 +66,7 @@ dependencies {
   androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
   androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
   androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
-  androidTestImplementation 'org.mockito:mockito-android:3.3.0'
+  androidTestImplementation 'org.mockito:mockito-android:3.3.1'
 
   debugImplementation 'androidx.fragment:fragment-testing:1.2.2'
 }
