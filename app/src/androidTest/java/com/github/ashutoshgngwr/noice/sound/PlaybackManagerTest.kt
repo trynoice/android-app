@@ -66,6 +66,12 @@ class PlaybackManagerTest {
     // reset invocations
     reset(eventBus)
 
+    // try updating playback settings. this doesn't publish any update events so verifying these
+    // calls in the pause playback section
+    playback.setVolume(Playback.MAX_VOLUME)
+    playback.timePeriod = Playback.MAX_TIME_PERIOD
+    playbackManager.updatePlayback(PlaybackControlEvents.UpdatePlaybackEvent(playback))
+
     // playback manager should indicate playing paused after pausing
     playbackManager.pausePlayback(PlaybackControlEvents.PausePlaybackEvent())
     verify(eventBus, atLeastOnce()).post(PlaybackManager.UpdateEvent(PlaybackManager.State.PAUSED))
@@ -75,6 +81,8 @@ class PlaybackManagerTest {
     assertFalse(playback.isPlaying)
     playback = playbackStateCaptor.value["rolling_thunder"] as Playback
     assertFalse(playback.isPlaying)
+    assertEquals(Playback.MAX_VOLUME, playback.volume)
+    assertEquals(Playback.MAX_TIME_PERIOD, playback.timePeriod)
     // reset invocations
     reset(eventBus)
 
