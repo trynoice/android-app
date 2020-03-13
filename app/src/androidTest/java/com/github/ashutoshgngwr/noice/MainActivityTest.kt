@@ -21,7 +21,6 @@ import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test

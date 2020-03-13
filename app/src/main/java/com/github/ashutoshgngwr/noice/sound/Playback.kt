@@ -1,12 +1,16 @@
 package com.github.ashutoshgngwr.noice.sound
 
 import android.content.Context
-import android.content.res.AssetManager
-import android.media.AudioAttributes
-import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Handler
 import androidx.annotation.VisibleForTesting
 import androidx.media.AudioAttributesCompat
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.audio.AudioAttributes
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.upstream.AssetDataSource
+import com.google.android.exoplayer2.upstream.DataSource
 import com.google.gson.annotations.Expose
 import kotlin.random.Random.Default.nextInt
 
@@ -18,7 +22,6 @@ import kotlin.random.Random.Default.nextInt
 class Playback(
   context: Context,
   sound: Sound,
-  sessionId: Int,
   audioAttributes: AudioAttributesCompat
 ) : Runnable {
 
@@ -44,28 +47,41 @@ class Playback(
   val soundKey = sound.key
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  val mediaPlayer = createMediaPlayer(context.assets, sessionId, audioAttributes, sound)
+  val player = createPlayer(context, audioAttributes, sound)
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   val handler = Handler()
 
   // initializes a MediaPlayer object with the passed arguments.
-  private fun createMediaPlayer(
-    assetManager: AssetManager,
-    sessionId: Int,
+  private fun createPlayer(
+    context: Context,
     audioAttributes: AudioAttributesCompat,
     sound: Sound
-  ): MediaPlayer {
-    return MediaPlayer().apply {
-      isLooping = sound.isLoopable
-      audioSessionId = sessionId
-      setAudioAttributes(audioAttributes.unwrap() as AudioAttributes)
-      setVolume(volume.toFloat() / MAX_VOLUME, volume.toFloat() / MAX_VOLUME)
-      assetManager.openFd("${sound.key}.mp3").use {
-        setDataSource(it.fileDescriptor, it.startOffset, it.length)
-        prepare()
+  ): SimpleExoPlayer {
+    return SimpleExoPlayer.Builder(context)
+      .build()
+      .apply {
+        volume = DEFAULT_VOLUME.toFloat() / MAX_VOLUME
+        repeatMode = if (sound.isLoopable) {
+          ExoPlayer.REPEAT_MODE_ONE
+        } else {
+          ExoPlayer.REPEAT_MODE_OFF
+        }
+
+        setAudioAttributes(
+          AudioAttributes.Builder()
+            .setContentType(audioAttributes.contentType)
+            .setFlags(audioAttributes.flags)
+            .setUsage(audioAttributes.usage)
+            .build(),
+          false
+        )
+
+        prepare(
+          ProgressiveMediaSource.Factory(DataSource.Factory { AssetDataSource(context) })
+            .createMediaSource(Uri.parse("asset:///${sound.key}.mp3"))
+        )
       }
-    }
   }
 
   /**
@@ -74,7 +90,7 @@ class Playback(
    */
   fun setVolume(volume: Int) {
     this.volume = volume
-    mediaPlayer.setVolume(volume.toFloat() / MAX_VOLUME, volume.toFloat() / MAX_VOLUME)
+    player.volume = volume.toFloat() / MAX_VOLUME
   }
 
   /**
@@ -84,8 +100,8 @@ class Playback(
    */
   fun play() {
     isPlaying = true
-    if (mediaPlayer.isLooping) {
-      mediaPlayer.start()
+    if (player.repeatMode == ExoPlayer.REPEAT_MODE_ONE) {
+      player.playWhenReady = true
     } else {
       run()
     }
@@ -99,7 +115,8 @@ class Playback(
       return
     }
 
-    mediaPlayer.start()
+    player.seekTo(0)
+    player.playWhenReady = true
     handler.postDelayed(this, (MIN_TIME_PERIOD + nextInt(0, timePeriod)) * 1000L)
   }
 
@@ -108,11 +125,9 @@ class Playback(
    */
   fun stop() {
     isPlaying = false
-    if (mediaPlayer.isPlaying) {
-      mediaPlayer.pause()
-    }
+    player.playWhenReady = false
 
-    if (!mediaPlayer.isLooping) {
+    if (player.repeatMode == ExoPlayer.REPEAT_MODE_OFF) {
       handler.removeCallbacks(this)
     }
   }
@@ -122,7 +137,7 @@ class Playback(
    */
   fun release() {
     stop()
-    mediaPlayer.release()
+    player.release()
   }
 
   /**
