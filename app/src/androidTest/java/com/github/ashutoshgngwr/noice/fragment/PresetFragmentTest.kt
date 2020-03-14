@@ -69,7 +69,6 @@ class PresetFragmentTest {
         "birds" to Playback(
           it.requireContext(),
           requireNotNull(Sound.LIBRARY["birds"]),
-          123,
           AudioAttributesCompat.Builder().build()
         )
       )
@@ -91,7 +90,6 @@ class PresetFragmentTest {
       playback = Playback(
         it.requireContext(),
         requireNotNull(Sound.LIBRARY["birds"]),
-        123,
         AudioAttributesCompat.Builder().build()
       )
 
@@ -116,7 +114,6 @@ class PresetFragmentTest {
       val playback = Playback(
         it.requireContext(),
         requireNotNull(Sound.LIBRARY["birds"]),
-        123,
         AudioAttributesCompat.Builder().build()
       )
 
@@ -139,7 +136,6 @@ class PresetFragmentTest {
       val playback = Playback(
         it.requireContext(),
         requireNotNull(Sound.LIBRARY["birds"]),
-        123,
         AudioAttributesCompat.Builder().build()
       )
 
@@ -176,12 +172,15 @@ class PresetFragmentTest {
     fun testSavePresets() {
       val ctx = InstrumentationRegistry.getInstrumentation().targetContext
       val playback = Playback(
-        ctx, requireNotNull(Sound.LIBRARY["birds"]), 123, AudioAttributesCompat.Builder().build()
+        ctx, requireNotNull(Sound.LIBRARY["birds"]), AudioAttributesCompat.Builder().build()
       )
       // save preset to user preferences
       val preset = PresetFragment.Preset("test", arrayOf(playback))
       PresetFragment.Preset.appendToUserPreferences(ctx, preset)
-      assertEquals(playback, PresetFragment.Preset.readAllFromUserPreferences(ctx)[0].playbackStates[0])
+      assertEquals(
+        playback,
+        PresetFragment.Preset.readAllFromUserPreferences(ctx)[0].playbackStates[0]
+      )
     }
   }
 }

@@ -149,7 +149,6 @@ class SoundLibraryFragmentTest {
           "birds" to Playback(
             InstrumentationRegistry.getInstrumentation().targetContext,
             requireNotNull(Sound.LIBRARY["birds"]),
-            123,
             AudioAttributesCompat.Builder().build()
           )
         )
@@ -175,7 +174,6 @@ class SoundLibraryFragmentTest {
       fakePlayback = Playback(
         InstrumentationRegistry.getInstrumentation().targetContext,
         requireNotNull(Sound.LIBRARY["birds"]),
-        123,
         AudioAttributesCompat.Builder().build()
       )
 
@@ -201,7 +199,6 @@ class SoundLibraryFragmentTest {
       fakePlayback = Playback(
         InstrumentationRegistry.getInstrumentation().targetContext,
         requireNotNull(Sound.LIBRARY["rolling_thunder"]),
-        123,
         AudioAttributesCompat.Builder().build()
       )
 
@@ -247,13 +244,11 @@ class SoundLibraryFragmentTest {
           "birds" to Playback(
             InstrumentationRegistry.getInstrumentation().targetContext,
             requireNotNull(Sound.LIBRARY["birds"]),
-            123,
             AudioAttributesCompat.Builder().build()
           ),
           "rolling_thunder" to Playback(
             InstrumentationRegistry.getInstrumentation().targetContext,
             requireNotNull(Sound.LIBRARY["rolling_thunder"]),
-            123,
             AudioAttributesCompat.Builder().build()
           )
         )
@@ -274,13 +269,11 @@ class SoundLibraryFragmentTest {
         "birds" to Playback(
           InstrumentationRegistry.getInstrumentation().targetContext,
           requireNotNull(Sound.LIBRARY["birds"]),
-          123,
           AudioAttributesCompat.Builder().build()
         ),
         "rolling_thunder" to Playback(
           InstrumentationRegistry.getInstrumentation().targetContext,
           requireNotNull(Sound.LIBRARY["rolling_thunder"]),
-          123,
           AudioAttributesCompat.Builder().build()
         )
       )
@@ -302,7 +295,6 @@ class SoundLibraryFragmentTest {
         "birds" to Playback(
           InstrumentationRegistry.getInstrumentation().targetContext,
           requireNotNull(Sound.LIBRARY["birds"]),
-          123,
           AudioAttributesCompat.Builder().build()
         )
       )

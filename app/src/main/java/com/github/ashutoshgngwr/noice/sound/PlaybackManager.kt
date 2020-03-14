@@ -9,6 +9,7 @@ import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * [PlaybackManager] is responsible for managing playback end-to-end for all sounds.
@@ -41,7 +42,6 @@ class PlaybackManager(private val context: Context) :
   private val playbacks = HashMap<String, Playback>(Sound.LIBRARY.size)
   private var eventBus = EventBus.getDefault()
   private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-  private val audioSessionId = audioManager.generateAudioSessionId()
   private val audioAttributes = AudioAttributesCompat.Builder()
     .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)
     .setUsage(AudioAttributesCompat.USAGE_GAME)
@@ -127,17 +127,12 @@ class PlaybackManager(private val context: Context) :
     eventBus.post(UpdateEvent(getState()))
   }
 
-  // initializes Playback for a sound
-  private fun createPlayback(sound: Sound): Playback {
-    return Playback(context, sound, audioSessionId, audioAttributes)
-  }
-
   // starts playing a sound. It also creates an audio focus request if we don't have it.
   // Playback won't start immediately if audio focus is not present. We always ensure that we
   // have audio focus before starting the playback.
   private fun play(sound: Sound) {
     if (!playbacks.containsKey(sound.key)) {
-      playbacks[sound.key] = createPlayback(sound)
+      playbacks[sound.key] = Playback(context, sound, audioAttributes)
     }
 
     // notify updates before any returns happen
@@ -191,7 +186,7 @@ class PlaybackManager(private val context: Context) :
   /**
    * Subscriber for the [StartPlaybackEvent][PlaybackControlEvents.StartPlaybackEvent].
    */
-  @Subscribe
+  @Subscribe(threadMode = ThreadMode.MAIN)
   fun startPlayback(event: PlaybackControlEvents.StartPlaybackEvent) {
     if (event.soundKey == null) {
       resumeAll()
@@ -203,7 +198,7 @@ class PlaybackManager(private val context: Context) :
   /**
    * Subscriber for the [StopPlaybackEvent][PlaybackControlEvents.StopPlaybackEvent].
    */
-  @Subscribe
+  @Subscribe(threadMode = ThreadMode.MAIN)
   fun stopPlayback(event: PlaybackControlEvents.StopPlaybackEvent) {
     if (event.soundKey == null) {
       stopAll()
@@ -215,7 +210,7 @@ class PlaybackManager(private val context: Context) :
   /**
    * Subscriber for the [PausePlaybackEvent][PlaybackControlEvents.PausePlaybackEvent].
    */
-  @Subscribe
+  @Subscribe(threadMode = ThreadMode.MAIN)
   fun pausePlayback(@Suppress("UnusedParameters") ignored: PlaybackControlEvents.PausePlaybackEvent) {
     pauseAll()
   }
@@ -223,7 +218,7 @@ class PlaybackManager(private val context: Context) :
   /**
    * Subscriber for the [UpdatePlaybackEvent][PlaybackControlEvents.UpdatePlaybackEvent].
    */
-  @Subscribe
+  @Subscribe(threadMode = ThreadMode.MAIN)
   fun updatePlayback(event: PlaybackControlEvents.UpdatePlaybackEvent) {
     if (!playbacks.containsKey(event.playback.soundKey)) {
       return

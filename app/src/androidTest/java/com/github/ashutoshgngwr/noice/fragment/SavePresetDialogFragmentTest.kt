@@ -67,7 +67,6 @@ class SavePresetDialogFragmentTest {
           Playback(
             InstrumentationRegistry.getInstrumentation().targetContext,
             requireNotNull(Sound.LIBRARY["birds"]),
-            0x92,
             AudioAttributesCompat.Builder().build()
           )
         )
@@ -96,7 +95,6 @@ class SavePresetDialogFragmentTest {
           Playback(
             InstrumentationRegistry.getInstrumentation().targetContext,
             requireNotNull(Sound.LIBRARY["birds"]),
-            0x92,
             AudioAttributesCompat.Builder().build()
           )
         )
