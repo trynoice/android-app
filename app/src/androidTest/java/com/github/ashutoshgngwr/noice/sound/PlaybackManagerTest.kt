@@ -118,6 +118,6 @@ class PlaybackManagerTest {
 
     // test permanent loss of focus
     playbackManager.onAudioFocusChange(AudioManager.AUDIOFOCUS_LOSS)
-    verify(eventBus, atLeastOnce()).post(PlaybackManager.UpdateEvent(PlaybackManager.State.STOPPED))
+    verify(eventBus, atLeastOnce()).post(PlaybackManager.UpdateEvent(PlaybackManager.State.PAUSED))
   }
 }
