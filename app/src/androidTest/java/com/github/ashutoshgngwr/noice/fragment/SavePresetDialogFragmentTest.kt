@@ -101,6 +101,7 @@ class SavePresetDialogFragmentTest {
       )
     }
 
+    InstrumentationRegistry.getInstrumentation().waitForIdleSync()
     onView(withId(R.id.button_save)).perform(click())
     // assert that error view exists
     onView(withChild(withId(R.id.layout_edit_name)))

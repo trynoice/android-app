@@ -75,9 +75,9 @@ class PlaybackManager(private val context: Context) :
       AudioManager.AUDIOFOCUS_LOSS -> {
         Log.d(TAG, "Permanently lost audio focus! Stop playback...")
         hasAudioFocus = false
-        resumeOnFocusGain = false
+        resumeOnFocusGain = true
         playbackDelayed = false
-        stopAll()
+        pauseAll()
       }
       AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
         Log.d(TAG, "Temporarily lost audio focus! Pause playback...")
@@ -137,9 +137,9 @@ class PlaybackManager(private val context: Context) :
 
     // notify updates before any returns happen
     notifyChanges()
-    if (playbackDelayed || resumeOnFocusGain) {
-      // If playback is paused, add this sound to playbacks and it will be played whenever the
-      // playback is resumed.
+    if (playbackDelayed) {
+      // If audio focus is delayed, add this sound to playbacks and it will be played whenever the
+      // we get audio focus.
       return
     }
 
