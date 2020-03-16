@@ -50,26 +50,26 @@
   <string name="credits__app_icon_url" translatable="false">
     https://thenounproject.com/term/white-noise/1287855/
   </string>
-  <string name="credits__sound_birds">Birds by Julien Nicolas</string>
-  <string name="credits__sound_birds_url" translatable="false">https://freesound.org/s/243459/</string>
-  <string name="credits__sound_bonfire">Bonfire CU with hiss by surrey_film</string>
-  <string name="credits__sound_bonfire_url" translatable="false">https://freesound.org/s/86342/</string>
-  <string name="credits__sound_coffee_shop">Cafe 1 by Rylius</string>
-  <string name="credits__sound_coffee_shop_url" translatable="false">https://freesound.org/s/165280/</string>
+  <string name="credits__sound_birds">Spring Birds Raw (New Jersey) by hargissssound</string>
+  <string name="credits__sound_birds_url" translatable="false">https://freesound.org/s/345851/</string>
+  <string name="credits__sound_bonfire">Bonfire by amether</string>
+  <string name="credits__sound_bonfire_url" translatable="false">https://freesound.org/s/189237/</string>
+  <string name="credits__sound_coffee_shop">Coffee Shop from YouTube Audio Library</string>
+  <string name="credits__sound_coffee_shop_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=5362e38433223367</string>
   <string name="credits__sound_distant_thunder">Distant Thunder from YouTube Audio Library</string>
   <string name="credits__sound_distant_thunder_url" translatable="false">
     https://www.youtube.com/audiolibrary_download?vid=c661c0547daf6af7
   </string>
-  <string name="credits__sound_heavy_rain">Rain heavy loopable by svampen</string>
-  <string name="credits__sound_heavy_rain_url" translatable="false">https://freesound.org/s/334149/</string>
-  <string name="credits__sound_light_rain">Short rain loop by dmk67</string>
-  <string name="credits__sound_light_rain_url" translatable="false">https://freesound.org/s/392980/</string>
-  <string name="credits__sound_moderate_rain">Ambiance heavy rain loop by D W</string>
-  <string name="credits__sound_moderate_rain_url" translatable="false">https://freesound.org/s/136971/</string>
+  <string name="credits__sound_heavy_rain">Heavy rain (thunderstorm) from YouTube Audio Library</string>
+  <string name="credits__sound_heavy_rain_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=85220b39abbc1421</string>
+  <string name="credits__sound_light_rain">Light rain (on roof) from YouTube Audio Library</string>
+  <string name="credits__sound_light_rain_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=f0eff544b6f1e0d0</string>
+  <string name="credits__sound_moderate_rain">Moderate rain (thunderstorm) from YouTube Audio Library</string>
+  <string name="credits__sound_moderate_rain_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=85220b39abbc1421</string>
   <string name="credits__morning_in_a_village">Village jungle morning by aurelien.leveque</string>
   <string name="credits__morning_in_a_village_url" translatable="false">https://freesound.org/s/417635/</string>
-  <string name="credits__sound_moving_train">Train Loop 07 by debsound</string>
-  <string name="credits__sound_moving_train_url" translatable="false">https://freesound.org/s/354062/</string>
+  <string name="credits__sound_moving_train">Train Wheels Ride outside Thailand by YOH</string>
+  <string name="credits__sound_moving_train_url" translatable="false">https://freesound.org/s/170866/</string>
   <string name="credits__sound_night">Jungle choco by jaime_enrique</string>
   <string name="credits__sound_night_url" translatable="false">https://freesound.org/s/424763/</string>
   <string name="credits__sound_rolling_thunder">Rolling thunder from YouTube Audio Library</string>
@@ -86,8 +86,8 @@
   <string name="credits__sound_thunder_crack_url" translatable="false">
     https://www.youtube.com/audiolibrary_download?vid=e4b6c4fa94a94535
   </string>
-  <string name="credits__sound_train_horn">Rocky mtns train horn by polymorpheva</string>
-  <string name="credits__sound_train_horn_url" translatable="false">https://freesound.org/s/91558/</string>
+  <string name="credits__sound_train_horn">Train horn by CouleurCasquette</string>
+  <string name="credits__sound_train_horn_url" translatable="false">https://freesound.org/s/248229/</string>
   <string name="credits__sound_water_stream">Stream, Running Water | Aviemore Scotland by BurghRecords</string>
   <string name="credits__sound_water_stream_url" translatable="false">https://freesound.org/s/415151/</string>
   <string name="credits__sound_wind_chimes_of_shells">Wind chimes of shells from YouTube Audio Library</string>
