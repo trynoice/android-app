@@ -76,7 +76,7 @@ class SoundLibraryFragment : Fragment() {
       SavePresetDialogFragment::class.java.newInstance().let {
         it.preset = PresetFragment.Preset("", playbacks.values.toTypedArray())
         it.setTargetFragment(this, RC_SAVE_PRESET_DIALOG)
-        it.show(parentFragmentManager, it.javaClass.simpleName)
+        it.show(requireActivity().supportFragmentManager, it.javaClass.simpleName)
       }
     }
 
