@@ -149,6 +149,10 @@ class MainActivityTest {
 
     activityScenario.onActivity {
       it.onBackPressed()
+    }
+
+    InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+    activityScenario.onActivity {
       assertEquals(
         PresetFragment::class.java.simpleName,
         it.supportFragmentManager
@@ -157,6 +161,10 @@ class MainActivityTest {
       )
 
       it.onBackPressed()
+    }
+
+    InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+    activityScenario.onActivity {
       assertEquals(
         SoundLibraryFragment::class.java.simpleName,
         it.supportFragmentManager
