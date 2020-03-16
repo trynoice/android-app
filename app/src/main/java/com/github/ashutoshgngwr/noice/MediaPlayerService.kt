@@ -137,9 +137,6 @@ class MediaPlayerService : Service() {
       stopForeground(true)
     } else {
       startForeground(FOREGROUND_ID, notificationBuilder.build())
-      if (event.state == PlaybackManager.State.PAUSED) {
-        stopForeground(false)
-      }
     }
   }
 
