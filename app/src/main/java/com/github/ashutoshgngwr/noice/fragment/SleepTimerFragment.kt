@@ -42,6 +42,7 @@ class SleepTimerFragment : Fragment() {
 
   @Suppress("DEPRECATION")
   override fun onSaveInstanceState(outState: Bundle) {
+    view ?: return
     val timePicker = requireView().time_picker
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
       outState.putInt(KEY_HOUR, timePicker.hour)
