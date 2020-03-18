@@ -8,10 +8,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SleepTimerFragment
@@ -23,14 +25,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
   companion object {
     private const val TAG = "MainActivity"
+    private const val PREF_APP_THEME = "app_theme"
+    private const val APP_THEME_LIGHT = 0
+    private const val APP_THEME_DARK = 1
+    private const val APP_THEME_SYSTEM_DEFAULT = 2
   }
 
   private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    // force night mode and use custom theme with correct color values
-    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+    AppCompatDelegate.setDefaultNightMode(getNightModeFromPrefs())
 
     setContentView(R.layout.activity_main)
 
@@ -97,6 +102,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       R.id.sleep_timer -> {
         setFragment(SleepTimerFragment::class.java)
       }
+      R.id.app_theme -> {
+        AlertDialog.Builder(this)
+          .setSingleChoiceItems(R.array.app_themes, getAppTheme()) { dialog, which ->
+            dialog.dismiss()
+            setAppTheme(which)
+          }
+          .setTitle(R.string.app_theme)
+          .show()
+      }
       R.id.about -> {
         setFragment(AboutFragment::class.java)
       }
@@ -141,6 +155,42 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         finish()
       }
     }
+  }
+
+  /**
+   * Gets user setting for app theme and converts it into its corresponding value from
+   * array ([AppCompatDelegate.MODE_NIGHT_NO], [AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM],
+   * [AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM]).
+   */
+  private fun getNightModeFromPrefs(): Int {
+    return when (getAppTheme()) {
+      APP_THEME_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+      APP_THEME_DARK -> AppCompatDelegate.MODE_NIGHT_YES
+      APP_THEME_SYSTEM_DEFAULT -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+      else -> AppCompatDelegate.MODE_NIGHT_UNSPECIFIED
+    }
+  }
+
+  /**
+   * Gets user setting for current app theme.
+   * Returns one of [APP_THEME_LIGHT], [APP_THEME_DARK] or [APP_THEME_SYSTEM_DEFAULT]
+   */
+  private fun getAppTheme(): Int {
+    return PreferenceManager.getDefaultSharedPreferences(this)
+      .getInt(PREF_APP_THEME, APP_THEME_SYSTEM_DEFAULT)
+  }
+
+  /**
+   * Sets user setting for current app theme.
+   * @param newTheme should be one of [APP_THEME_LIGHT], [APP_THEME_DARK] or [APP_THEME_SYSTEM_DEFAULT]
+   */
+  private fun setAppTheme(newTheme: Int) {
+    PreferenceManager.getDefaultSharedPreferences(this)
+      .edit()
+      .putInt(PREF_APP_THEME, newTheme)
+      .apply()
+
+    recreate()
   }
 
   private fun <T : Fragment> setFragment(fragmentClass: Class<T>) {

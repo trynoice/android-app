@@ -117,4 +117,10 @@
   <string name="auto_sleep_schedule_error">Auto sleep timer can not be set to 00:00!</string>
   <string name="auto_sleep_schedule_success">Scheduled auto sleep timer!</string>
   <string name="auto_sleep_schedule_cancelled">Auto sleep timer cancelled!</string>
+  <string name="app_theme">Theme</string>
+  <string-array name="app_themes">
+    <item>Light</item>
+    <item>Dark</item>
+    <item>System default</item>
+  </string-array>
 </resources>
