@@ -65,6 +65,14 @@ Small pull requests for things like typos, bug fixes, etc are always welcome.
 - Include tests when adding new features.
 - When fixing bugs, start with adding a test that highlights how the current behavior is broken. This is not mandatory since it is not always possible/approachable.
 
+### Releases
+
+Noice uses [Travis CI](https://travis-ci.org) for automatically building and pushing releases to Google Play store. All releases happen in two stages.
+
+- First, a candidate release is pushed to beta track on Google Play Store. Git tags for these are marked with format `0.0.0-rc`.
+- After ample time, release candidates are released to public track on Google Play Store. Git tags for these are marked with format `0.0.0`.
+- F-Droid releases are automatically picked by its builder based on the latest tag. See [metadata](https://gitlab.com/fdroid/fdroiddata/-/blob/master/metadata/com.github.ashutoshgngwr.noice.yml) for more information.
+
 ## Privacy Policy
 
 Noice does not collect any kind of data from users. Heck, it doesn't even connect to the Internet.
