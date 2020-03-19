@@ -3,10 +3,12 @@ package com.github.ashutoshgngwr.noice
 import android.content.Intent
 import android.net.Uri
 import android.view.Gravity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.contrib.DrawerMatchers.isClosed
@@ -14,7 +16,8 @@ import androidx.test.espresso.contrib.NavigationViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.filterEquals
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.RootMatchers.isDialog
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
@@ -65,6 +68,37 @@ class MainActivityTest {
       )
 
       assertEquals(R.id.saved_presets, it.navigation_drawer.checkedItem?.itemId)
+    }
+  }
+
+  @Test
+  fun testThemeMenuItem() {
+    val nightModes = arrayOf(
+      AppCompatDelegate.MODE_NIGHT_NO,
+      AppCompatDelegate.MODE_NIGHT_YES,
+      AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+    )
+
+    val themes = InstrumentationRegistry.getInstrumentation()
+      .targetContext
+      .resources
+      .getStringArray(R.array.app_themes)
+
+    for (i in themes.indices) {
+      onView(withId(R.id.layout_main))
+        .check(matches(isClosed(Gravity.START)))
+        .perform(DrawerActions.open(Gravity.START))
+
+      onView(withId(R.id.navigation_drawer))
+        .perform(NavigationViewActions.navigateTo(R.id.app_theme))
+
+      onView(withText(themes[i]))
+        .inRoot(isDialog())
+        .check(matches(isDisplayed()))
+        .perform(click())
+
+      InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+      assertEquals(nightModes[i], AppCompatDelegate.getDefaultNightMode())
     }
   }
 
