@@ -69,5 +69,5 @@ dependencies {
   androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
   androidTestImplementation 'org.mockito:mockito-android:3.3.3'
 
-  debugImplementation 'androidx.fragment:fragment-testing:1.2.2'
+  debugImplementation 'androidx.fragment:fragment-testing:1.2.3'
 }
