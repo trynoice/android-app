@@ -211,7 +211,7 @@ class PlaybackManager(private val context: Context) :
    * Subscriber for the [PausePlaybackEvent][PlaybackControlEvents.PausePlaybackEvent].
    */
   @Subscribe(threadMode = ThreadMode.MAIN)
-  fun pausePlayback(@Suppress("UnusedParameters") ignored: PlaybackControlEvents.PausePlaybackEvent) {
+  fun pausePlayback(@Suppress("UNUSED_PARAMETER") ignored: PlaybackControlEvents.PausePlaybackEvent) {
     pauseAll()
   }
 
