@@ -20,6 +20,12 @@
     android:checkable="true" />
 
   <item
+    android:id="@+id/app_theme"
+    android:icon="@drawable/ic_action_theme"
+    android:title="@string/app_theme"
+    android:checkable="false" />
+
+  <item
     android:id="@+id/about"
     android:icon="@drawable/ic_action_info"
     android:title="@string/about"
