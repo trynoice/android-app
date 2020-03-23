@@ -38,6 +38,7 @@ class AboutFragment : Fragment() {
       ),
       arrayOf(R.string.credits__sound_moving_train, R.drawable.ic_stat_sound, R.string.credits__sound_moving_train_url),
       arrayOf(R.string.credits__sound_night, R.drawable.ic_stat_sound, R.string.credits__sound_night_url),
+      arrayOf(R.string.credits__sound_office, R.drawable.ic_stat_sound, R.string.credits__sound_office_url),
       arrayOf(
         R.string.credits__sound_rolling_thunder,
         R.drawable.ic_stat_sound,

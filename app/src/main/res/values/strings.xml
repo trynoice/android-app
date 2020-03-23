@@ -23,6 +23,7 @@
   <string name="morning_in_a_village">Morning in a village</string>
   <string name="moving_train">Moving train</string>
   <string name="night">Night</string>
+  <string name="office">Office</string>
   <string name="rolling_thunder">Rolling thunder</string>
   <string name="seaside">Seaside</string>
   <string name="soft_wind">Soft wind</string>
@@ -72,6 +73,8 @@
   <string name="credits__sound_moving_train_url" translatable="false">https://freesound.org/s/170866/</string>
   <string name="credits__sound_night">Jungle choco by jaime_enrique</string>
   <string name="credits__sound_night_url" translatable="false">https://freesound.org/s/424763/</string>
+  <string name="credits__sound_office">Office ambiance by Nightwatcher98</string>
+  <string name="credits__sound_office_url" translatable="false">https://freesound.org/s/407292/</string>
   <string name="credits__sound_rolling_thunder">Rolling thunder from YouTube Audio Library</string>
   <string name="credits__sound_rolling_thunder_url" translatable="false">
     https://www.youtube.com/audiolibrary_download?vid=5f4a1b5b9c7f5d1f

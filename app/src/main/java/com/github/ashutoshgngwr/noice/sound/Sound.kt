@@ -34,6 +34,7 @@ class Sound private constructor(
       "morning_in_a_village" to Sound("morning_in_a_village", R.string.morning_in_a_village),
       "moving_train" to Sound("moving_train", R.string.moving_train),
       "night" to Sound("night", R.string.night),
+      "office" to Sound("office", R.string.office),
       "rolling_thunder" to Sound("rolling_thunder", R.string.rolling_thunder, false),
       "seaside" to Sound("seaside", R.string.seaside),
       "soft_wind" to Sound("soft_wind", R.string.soft_wind),
