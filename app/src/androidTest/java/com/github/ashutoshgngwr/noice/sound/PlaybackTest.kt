@@ -5,6 +5,7 @@ import androidx.media.AudioAttributesCompat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.android.exoplayer2.ExoPlayer
+import com.google.gson.GsonBuilder
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -119,5 +120,23 @@ class PlaybackTest {
     assertFalse(requireNotNull(p).player.playWhenReady)
     // should remove itself as a callback from the handler
     assertFalse(requireNotNull(p).handler.hasCallbacks(requireNotNull(p)))
+  }
+
+  @Test
+  fun testJsonSerializationDeserialization() {
+    val gson = GsonBuilder()
+      .excludeFieldsWithoutExposeAnnotation()
+      .create()
+
+    InstrumentationRegistry.getInstrumentation().runOnMainSync {
+      val p = Playback(context, nonLoopingSound, audioAttributes)
+      p.timePeriod = 120
+      p.setVolume(14)
+
+      val json = gson.toJson(p)
+      val anotherP = gson.fromJson(json, Playback::class.java)
+      assertEquals(p.volume, anotherP.volume)
+      assertEquals(p.timePeriod, anotherP.timePeriod)
+    }
   }
 }
