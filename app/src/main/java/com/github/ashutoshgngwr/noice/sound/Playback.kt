@@ -11,7 +11,10 @@ import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.AssetDataSource
 import com.google.android.exoplayer2.upstream.DataSource
+import com.google.gson.*
 import com.google.gson.annotations.Expose
+import com.google.gson.annotations.JsonAdapter
+import java.lang.reflect.Type
 import kotlin.random.Random.Default.nextInt
 
 /**
@@ -33,7 +36,43 @@ class Playback(
     const val MAX_TIME_PERIOD = 240
   }
 
+  /**
+   * VolumeSerializer is a fix for maintaining backward compatibility with versions older than
+   * 0.3.0. Volume was written as a Float to persistent storage in older versions.
+   * Switching to Integer in newer version was causing crash if the user had any saved presets.
+   */
+  private inner class VolumeSerializer : JsonSerializer<Int>, JsonDeserializer<Int> {
+    override fun serialize(
+      src: Int?,
+      typeOfSrc: Type?,
+      context: JsonSerializationContext?
+    ): JsonElement {
+      return JsonPrimitive(
+        if (src == null) {
+          (DEFAULT_VOLUME.toFloat() / MAX_VOLUME)
+        } else {
+          src.toFloat() / MAX_VOLUME
+        }
+      )
+    }
+
+    override fun deserialize(
+      json: JsonElement?,
+      typeOfT: Type?,
+      context: JsonDeserializationContext?
+    ): Int {
+      return if (json == null) {
+        DEFAULT_VOLUME
+      } else {
+        (json.asFloat * MAX_VOLUME).toInt()
+      }
+    }
+
+  }
+
+
   @Expose
+  @JsonAdapter(value = VolumeSerializer::class)
   var volume = DEFAULT_VOLUME
     private set
 
