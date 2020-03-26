@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="library">लाइब्रेरी</string>
+  <string name="about">ऐप के बारे में</string>
+  <string name="report_issue">समस्या की सूचना दें</string>
+  <string name="repeat_time_period">दोहराने की समय अवधि</string>
+  <string name="volume">ध्वनि की मात्रा</string>
+  <string name="play_pause">बजाएं या रोकें</string>
+  <string name="open_drawer">मार्गदर्शक ड्रॉवर खोलें</string>
+  <string name="close_drawer">मार्गदर्शक ड्रॉवर बंद करें</string>
+  <string name="notification_channel_default__name">मीडिया प्लेबैक</string>
+  <string name="notification_channel_default__description">मीडिया प्लेबैक नियंत्रण</string>
+  <string name="pause">रोकें</string>
+  <string name="play">बजाएं</string>
+  <string name="stop">बंद करे</string>
+  <string name="birds">पक्षी</string>
+  <string name="bonfire">होलिका</string>
+  <string name="coffee_shop">काफी की दूकान</string>
+  <string name="distant_thunder">दूरी पर गड़गड़ाहट</string>
+  <string name="heavy_rain">भारी वर्षा</string>
+  <string name="light_rain">हलकी बारिश</string>
+  <string name="moderate_rain">औसत दर्जे की वर्षा</string>
+  <string name="morning_in_a_village">एक गांव में सुबह</string>
+  <string name="moving_train">चलती ट्रेन</string>
+  <string name="night">रात</string>
+  <string name="office">कार्यालय</string>
+  <string name="rolling_thunder">घूमती गड़गड़ाहट</string>
+  <string name="seaside">समुंदर के किनारे</string>
+  <string name="soft_wind">शीतल हवा</string>
+  <string name="thunder_crack">बिजली के कड़कने की आवाज़</string>
+  <string name="train_horn">ट्रेन हॉर्न</string>
+  <string name="water_stream">पानी की धारा</string>
+  <string name="wind_in_palm_trees">खजूर के पेड़ में पवन</string>
+  <string name="wind_in_chimes_of_shells">गोले की झंकार में हवा</string>
+  <string name="app_description">कम से कम पृष्ठभूमि शोर के साथ, उत्पादकता और विश्राम को बढ़ावा दे।</string>
+  <string name="connect_with_author">रचयिता से जुड़े</string>
+  <string name="about__email">ईमेल</string>
+  <string name="about__github">गिटहब</string>
+  <string name="about__twitter">ट्विटर</string>
+  <string name="credits">श्रेय</string>
+  <string name="dismiss">खारिज</string>
+  <string name="save_preset">प्रीसेट सहेजें</string>
+  <string name="name">नाम</string>
+  <string name="save">सहेजें</string>
+  <string name="cancel">रद्द करें</string>
+  <string name="preset_name_cannot_be_empty">प्रीसेट नाम खाली नहीं हो सकता है!</string>
+  <string name="preset_saved">प्रीसेट सहेजा गया!</string>
+  <string name="saved_presets">सहेजे गए प्रीसेट</string>
+  <string name="delete_preset">प्रीसेट हटाएं</string>
+  <string name="preset_delete_confirmation">%s को हटाने की पुष्टि करें?</string>
+  <string name="delete">हटाएं</string>
+  <string name="preset_deleted">प्रीसेट को हटा दिया गया है!</string>
+  <string name="nothing_saved_yet">अभी तक कुछ भी नहीं सहेजा गया है!</string>
+  <string name="sleep_timer">स्लीप टाइमर</string>
+  <string name="schedule">अनुसूचित करें</string>
+  <string name="reset">रद्द करें</string>
+  <string name="auto_sleep_schedule_error">ऑटो स्लीप टाइमर 00:00 पर सेट नहीं किया जा सकता है!</string>
+  <string name="auto_sleep_schedule_success">ऑटो स्लीप टाइमर अनुसूचित हो गया है!</string>
+  <string name="auto_sleep_schedule_cancelled">ऑटो स्लीप टाइमर रद्द हो गया है!</string>
+  <string name="app_theme">दिखावट</string>
+  <string-array name="app_themes">
+    <item>हल्का रंग</item>
+    <item>गहरा रंग</item>
+    <item>सिस्टम डिफ़ॉल्ट</item>
+  </string-array>
+</resources>
+
