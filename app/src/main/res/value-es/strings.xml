@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="library">Librería</string>
+  <string name="about">Acerca de</string>
+  <string name="report_issue">Reportar Errores</string>
+  <string name="repeat_time_period">Periodo de repetición</string>
+  <string name="volume">Volumen de sonido</string>
+  <string name="play_pause">Reproducir o pausar</string>
+  <string name="open_drawer">Abrir el menú de navegación</string>
+  <string name="close_drawer">Cerrar el menú de navegación</string>
+  <string name="notification_channel_default__name">Reproducción de medios</string>
+  <string name="notification_channel_default__description">Controles de reproducción</string>
+  <string name="pause">Pausa</string>
+  <string name="play">Reproducir</string>
+  <string name="stop">Detener</string>
+  <string name="birds">Pajaros</string>
+  <string name="bonfire">Fogata</string>
+  <string name="coffee_shop">Cafetería</string>
+  <string name="distant_thunder">Trueno distante</string>
+  <string name="heavy_rain">Lluvia fuerte</string>
+  <string name="light_rain">Lluvia suave</string>
+  <string name="moderate_rain">Lluevia moderada</string>
+  <string name="morning_in_a_village">Mañana en un pueblo</string>
+  <string name="moving_train">Tren en movimiento</string>
+  <string name="night">Noche</string>
+  <string name="office">Oficina</string>
+  <string name="rolling_thunder">Truenos rodantes</string>
+  <string name="seaside">Orilla del mar</string>
+  <string name="soft_wind">Viento suave</string>
+  <string name="thunder_crack">Rugido de truenos</string>
+  <string name="train_horn">Bocina de tren</string>
+  <string name="water_stream">Corriente de agua</string>
+  <string name="wind_in_palm_trees">Viento en las palmeras</string>
+  <string name="wind_in_chimes_of_shells">Viento en los timbales</string>
+  <string name="app_description">Relajese y aumente su productividad con sonidos de fondo</string>
+  <string name="connect_with_author">Contactar al Autor</string>
+  <string name="about__email">Correo</string>
+  <string name="credits">Créditos</string>
+  <string name="dismiss">Descartar</string>
+  <string name="save_preset">Guardar Preajuste</string>
+  <string name="name">Nombre</string>
+  <string name="save">Guardar</string>
+  <string name="cancel">Cancelar</string>
+  <string name="preset_name_cannot_be_empty">El nombre del preajuste no puede estar vacío</string>
+  <string name="preset_saved">¡Preajuste guardado!</string>
+  <string name="saved_presets">Preajustes Guardados</string>
+  <string name="delete_preset">Borrar Preajuste</string>
+  <string name="preset_delete_confirmation">¿Confirma borrar %s?</string>
+  <string name="delete">Borrar</string>
+  <string name="preset_deleted">¡Preajuste borrado!</string>
+  <string name="nothing_saved_yet">¡Nada ha sido guardado aún!</string>
+  <string name="sleep_timer">Temporizador</string>
+  <string name="schedule">Agenda</string>
+  <string name="reset">Reiniciar</string>
+  <string name="auto_sleep_schedule_error">!El temporizador no puede configurarse a las 00:00!</string>
+  <string name="auto_sleep_schedule_success">¡Temporizador agendado!</string>
+  <string name="auto_sleep_schedule_cancelled">¡Temporizador cancelado!</string>
+  <string name="app_theme">Tema</string>
+  <string-array name="app_themes">
+    <item>Claro</item>
+    <item>Oscuro</item>
+    <item>Por defecto del sistema</item>
+  </string-array>
+</resources>
+
