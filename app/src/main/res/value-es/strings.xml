@@ -10,7 +10,7 @@
   <string name="close_drawer">Cerrar el menú de navegación</string>
   <string name="notification_channel_default__name">Reproducción de medios</string>
   <string name="notification_channel_default__description">Controles de reproducción</string>
-  <string name="pause">Pausa</string>
+  <string name="pause">Pausar</string>
   <string name="play">Reproducir</string>
   <string name="stop">Detener</string>
   <string name="birds">Pajaros</string>
