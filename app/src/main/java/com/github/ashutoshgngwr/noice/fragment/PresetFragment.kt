@@ -17,6 +17,7 @@ import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.synthetic.main.fragment_preset_list.view.*
 import kotlinx.android.synthetic.main.layout_list_item__preset.view.*
 import org.greenrobot.eventbus.EventBus
@@ -163,7 +164,12 @@ class PresetFragment : Fragment() {
     }
   }
 
-  data class Preset(@Expose var name: String, @Expose val playbackStates: Array<Playback>) {
+  // curious about the weird serialized names? see https://github.com/ashutoshgngwr/noice/issues/110
+  // and https://github.com/ashutoshgngwr/noice/pulls/117
+  data class Preset(
+    @Expose @SerializedName("a") var name: String,
+    @Expose @SerializedName("b") val playbackStates: Array<Playback>
+  ) {
 
     init {
       playbackStates.sortBy { T -> T.soundKey }

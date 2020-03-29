@@ -14,6 +14,7 @@ import com.google.android.exoplayer2.upstream.DataSource
 import com.google.gson.*
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.JsonAdapter
+import com.google.gson.annotations.SerializedName
 import java.lang.reflect.Type
 import kotlin.random.Random.Default.nextInt
 
@@ -70,19 +71,23 @@ class Playback(
 
   }
 
-
+  // curious about the weird serialized names? see https://github.com/ashutoshgngwr/noice/issues/110
+  // and https://github.com/ashutoshgngwr/noice/pulls/117
   @Expose
+  @SerializedName("b")
   @JsonAdapter(value = VolumeSerializer::class)
   var volume = DEFAULT_VOLUME
     private set
 
   @Expose
+  @SerializedName("c")
   var timePeriod = DEFAULT_TIME_PERIOD
 
   var isPlaying = false
     private set
 
   @Expose
+  @SerializedName("a")
   val soundKey = sound.key
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
