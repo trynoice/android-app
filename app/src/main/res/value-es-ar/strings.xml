@@ -13,7 +13,7 @@
   <string name="pause">Pausar</string>
   <string name="play">Reproducir</string>
   <string name="stop">Detener</string>
-  <string name="birds">Pajaros</string>
+  <string name="birds">Pájaros</string>
   <string name="bonfire">Fogata</string>
   <string name="coffee_shop">Cafetería</string>
   <string name="distant_thunder">Trueno distante</string>
@@ -50,7 +50,7 @@
   <string name="preset_deleted">¡Preajuste borrado!</string>
   <string name="nothing_saved_yet">¡Nada ha sido guardado aún!</string>
   <string name="sleep_timer">Temporizador</string>
-  <string name="schedule">Agenda</string>
+  <string name="schedule">Agendar</string>
   <string name="reset">Reiniciar</string>
   <string name="auto_sleep_schedule_error">!El temporizador no puede configurarse a las 00:00!</string>
   <string name="auto_sleep_schedule_success">¡Temporizador agendado!</string>
