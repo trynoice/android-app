@@ -100,6 +100,8 @@
   </string>
   <string name="credits__sound_wind_in_palm_trees" translatable="false">Palm trees in the wind by StrangeAcoustics</string>
   <string name="credits__sound_wind_in_palm_trees_url" translatable="false">https://freesound.org/s/346106/</string>
+  <string name="credits__translation_argentinian_spanish" translatable="false">Argentinian spanish translation by Enchufadoo</string>
+  <string name="credits__translation_argentinian_spanish_url" translatable="false">https://github.com/Enchufadoo</string>
   <string name="app_issues_url" translatable="false">https://github.com/ashutoshgngwr/noice/issues</string>
   <string name="dismiss">Dismiss</string>
   <string name="save_preset">Save Preset</string>

@@ -62,6 +62,11 @@ class AboutFragment : Fragment() {
         R.string.credits__sound_wind_in_palm_trees,
         R.drawable.ic_stat_sound,
         R.string.credits__sound_wind_in_palm_trees_url
+      ),
+      arrayOf(
+        R.string.credits__translation_argentinian_spanish,
+        R.drawable.ic_stat_translation,
+        R.string.credits__translation_argentinian_spanish_url
       )
     )
   }
