@@ -31,10 +31,7 @@ default_platform(:android)
   lane :production do
     upload_to_play_store(
       track: 'beta',
-      track_promote_to: 'production',
-      skip_upload_metadata: true,
-      skip_upload_images: true,
-      skip_upload_screenshots: true
+      track_promote_to: 'production'
     )
   end
 

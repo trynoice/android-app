@@ -1,4 +1,4 @@
-# ![Feature graphic](graphics/feature.png)
+# ![Feature graphic](fastlane/metadata/android/en-US/images/featureGraphic.png)
 
 [![Build Status](https://travis-ci.org/ashutoshgngwr/noice.svg?branch=master)](https://travis-ci.org/ashutoshgngwr/noice)
 [![codecov](https://codecov.io/gh/ashutoshgngwr/noice/branch/master/graph/badge.svg)](https://codecov.io/gh/ashutoshgngwr/noice)
@@ -28,10 +28,10 @@ Noice is an app that allows you to create your own set of background sounds by m
 
 ## Screenshots
 
-![Screenshot 1](graphics/screen-1.png)
-![Screenshot 2](graphics/screen-2.png)
-![Screenshot 3](graphics/screen-3.png)
-![Screenshot 4](graphics/screen-4.png)
+|                                                                                      |                                                                                      |                                                                                      |                                                                                      |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| ![Screenshot 1](fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png) | ![Screenshot 2](fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png) | ![Screenshot 3](fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png) | ![Screenshot 4](fastlane/metadata/android/en-US/images/phoneScreenshots/7_en-US.png) |
+| ![Screenshot 5](fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png) | ![Screenshot 6](fastlane/metadata/android/en-US/images/phoneScreenshots/5_en-US.png) | ![Screenshot 7](fastlane/metadata/android/en-US/images/phoneScreenshots/6_en-US.png) |                                                                                      |
 
 ## Contributing
 
