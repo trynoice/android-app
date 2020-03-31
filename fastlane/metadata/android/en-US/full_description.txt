@@ -1,0 +1,22 @@
+For a lot of people, a little background noise is helpful to calm down and focus. In some cases, it's also a boost to productivity. Background noise (ambience) can also help minimize the effects of stress.
+
+Noice is an app that allows you to create a customised ambience using clips from environmental noise sources. Create your perfect surroundings by combining different sounds to drown out distractions so you can focus on your work, or generate serene, peaceful environments that encourage you to fall asleep.
+
+<b>Features</b>
+- 19 recorded noises
+- Make customised mix
+- Save your favorite mixes
+- Auto sleep timer
+- Play alongside other music players
+- Individual volume control for each noise source
+- Offline playback
+- Light and dark app theme variants
+
+<b>Noise library</b>
+- Forest set (birds, bonfire, night, wind, palm trees, etc.)
+- Monsoon set (rain, thunders)
+- Teleportation set (coffee shop, office, moving train, seaside, riverbank, etc.)
+
+
+Noice is free and open-source software.
+https://github.com/ashutoshgngwr/noice
