@@ -1,6 +1,6 @@
 # ![Feature graphic](fastlane/metadata/android/en-US/images/featureGraphic.png)
 
-[![Build Status](https://travis-ci.org/ashutoshgngwr/noice.svg?branch=master)](https://travis-ci.org/ashutoshgngwr/noice)
+[![Build Status](https://travis-ci.com/ashutoshgngwr/noice.svg?branch=master)](https://travis-ci.com/ashutoshgngwr/noice)
 [![codecov](https://codecov.io/gh/ashutoshgngwr/noice/branch/master/graph/badge.svg)](https://codecov.io/gh/ashutoshgngwr/noice)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/67635a43989c4dbcb6c3472375dc1e5f)](https://www.codacy.com/manual/ashutoshgngwr/noice?utm_source=github.com&utm_medium=referral&utm_content=ashutoshgngwr/noice&utm_campaign=Badge_Grade)
 [![GitHub tag](https://img.shields.io/github/tag-date/ashutoshgngwr/noice.svg?color=orange&label=release)](https://GitHub.com/ashutoshgngwr/noice/tags/)
@@ -18,7 +18,7 @@ Noice is an app that allows you to create your own set of background sounds by m
 
 ## Features
 
-- 18 recorded noises
+- 19 recorded noises
 - Auto sleep timer
 - Make customised mix
 - Save your favorite mixes
@@ -67,7 +67,7 @@ Small pull requests for things like typos, bug fixes, etc are always welcome.
 
 ### Releases
 
-Noice uses [Travis CI](https://travis-ci.org) for automatically building and pushing releases to Google Play store. All releases happen in two stages.
+Noice uses [Travis CI](https://travis-ci.com/github/ashutoshgngwr/noice) for automatically building and pushing releases to Google Play store. All releases happen in two stages.
 
 - First, a candidate release is pushed to beta track on Google Play Store. Git tags for these are marked with format `0.0.0-rc`.
 - After ample time, release candidates are released to public track on Google Play Store. Git tags for these are marked with format `0.0.0`.
