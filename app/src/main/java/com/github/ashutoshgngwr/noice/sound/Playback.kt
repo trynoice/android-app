@@ -35,6 +35,8 @@ class Playback(
     const val DEFAULT_TIME_PERIOD = 30
     private const val MIN_TIME_PERIOD = 30
     const val MAX_TIME_PERIOD = 240
+    private const val TRANSITION_VOLUME_STEP = 0.01f // player's volume. not playback's
+    private const val TRANSITION_STEP_DELAY = 25L
   }
 
   /**
@@ -96,6 +98,8 @@ class Playback(
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   val handler = Handler()
 
+  private var isTransitioning = false
+
   // initializes a MediaPlayer object with the passed arguments.
   private fun createPlayer(
     context: Context,
@@ -128,13 +132,26 @@ class Playback(
       }
   }
 
+  private fun fadeIn() {
+    if (player.volume >= volume.toFloat() / MAX_VOLUME) {
+      isTransitioning = false
+      return
+    }
+
+    isTransitioning = true
+    player.volume += TRANSITION_VOLUME_STEP
+    handler.postDelayed(this::fadeIn, TRANSITION_STEP_DELAY)
+  }
+
   /**
    * Sets the volume for the playback. It also sets the volume of the underlying
    * [MediaPlayer][android.media.MediaPlayer] instance.
    */
   fun setVolume(volume: Int) {
     this.volume = volume
-    player.volume = volume.toFloat() / MAX_VOLUME
+    if (!isTransitioning) {
+      player.volume = volume.toFloat() / MAX_VOLUME
+    }
   }
 
   /**
@@ -145,7 +162,9 @@ class Playback(
   fun play() {
     isPlaying = true
     if (player.repeatMode == ExoPlayer.REPEAT_MODE_ONE) {
+      player.volume = 0f
       player.playWhenReady = true
+      fadeIn()
     } else {
       run()
     }
