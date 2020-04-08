@@ -154,7 +154,6 @@ class PlaybackManager(private val context: Context) :
   // stops a playback and releases its resources.
   private fun stop(sound: Sound) {
     requireNotNull(playbacks[sound.key]).apply {
-      stop()
       release()
     }
 
