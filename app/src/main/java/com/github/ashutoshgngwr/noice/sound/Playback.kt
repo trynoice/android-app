@@ -35,6 +35,8 @@ class Playback(
     const val DEFAULT_TIME_PERIOD = 30
     private const val MIN_TIME_PERIOD = 30
     const val MAX_TIME_PERIOD = 240
+    private const val TRANSITION_VOLUME_STEP = 0.01f // player's volume. not playback's
+    private const val TRANSITION_STEP_DELAY = 25L
   }
 
   /**
@@ -96,6 +98,10 @@ class Playback(
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   val handler = Handler()
 
+  // indicates whether playback is in fading in/out state. This is used in setVolume() to offload
+  // setting the player's volume to the transition effect during a transition.
+  private var isTransitioning = false
+
   // initializes a MediaPlayer object with the passed arguments.
   private fun createPlayer(
     context: Context,
@@ -129,12 +135,48 @@ class Playback(
   }
 
   /**
+   * Increases the volume of the [player] instance until it reaches the defined [volume].
+   * Volume is increased in steps of [TRANSITION_VOLUME_STEP] with [TRANSITION_STEP_DELAY].
+   */
+  private fun fadeIn() {
+    if (player.volume >= volume.toFloat() / MAX_VOLUME) {
+      isTransitioning = false
+      player.volume = volume.toFloat() / MAX_VOLUME
+      return
+    }
+
+    isTransitioning = true
+    player.volume += TRANSITION_VOLUME_STEP
+    handler.postDelayed(this::fadeIn, TRANSITION_STEP_DELAY)
+  }
+
+  /**
+   * Decreases the volume of the [player] instance until it reaches 0.
+   * Volume is decreased in steps of [TRANSITION_VOLUME_STEP] * 2 with [TRANSITION_STEP_DELAY] / 2.
+   */
+  private fun fadeOut() {
+    if (player.volume <= 0) {
+      isTransitioning = false
+      player.volume = 0f
+      player.playWhenReady = false
+      player.release()
+      return
+    }
+
+    isTransitioning = true
+    player.volume -= TRANSITION_VOLUME_STEP * 2
+    handler.postDelayed(this::fadeOut, TRANSITION_STEP_DELAY / 2)
+  }
+
+  /**
    * Sets the volume for the playback. It also sets the volume of the underlying
    * [MediaPlayer][android.media.MediaPlayer] instance.
    */
   fun setVolume(volume: Int) {
     this.volume = volume
-    player.volume = volume.toFloat() / MAX_VOLUME
+    if (!isTransitioning) {
+      player.volume = volume.toFloat() / MAX_VOLUME
+    }
   }
 
   /**
@@ -145,7 +187,9 @@ class Playback(
   fun play() {
     isPlaying = true
     if (player.repeatMode == ExoPlayer.REPEAT_MODE_ONE) {
+      player.volume = 0f
       player.playWhenReady = true
+      fadeIn()
     } else {
       run()
     }
@@ -166,10 +210,18 @@ class Playback(
 
   /**
    * Stops the playback. If the sound is non-loopable, it also removes the randomised play callback.
+   *
+   * @param fadeOut: If true, playback stops with the fade-out transition and underlying player
+   * resources are released. If false, player resources must be manually released by calling
+   * [release()][release].
    */
-  fun stop() {
+  fun stop(fadeOut: Boolean) {
     isPlaying = false
-    player.playWhenReady = false
+    if (fadeOut && player.playWhenReady) {
+      fadeOut()
+    } else {
+      player.playWhenReady = false
+    }
 
     if (player.repeatMode == ExoPlayer.REPEAT_MODE_OFF) {
       handler.removeCallbacks(this)
@@ -180,7 +232,6 @@ class Playback(
    * Releases resources used by underlying [MediaPlayer][android.media.MediaPlayer] instance.
    */
   fun release() {
-    stop()
     player.release()
   }
 
