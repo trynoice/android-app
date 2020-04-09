@@ -15,6 +15,7 @@
   <string name="stop">बंद करे</string>
   <string name="birds">पक्षी</string>
   <string name="bonfire">होलिका</string>
+  <string name="brownian_noise">ब्राउनियन नॉइज़</string>
   <string name="coffee_shop">काफी की दूकान</string>
   <string name="distant_thunder">दूरी पर गड़गड़ाहट</string>
   <string name="heavy_rain">भारी वर्षा</string>
@@ -24,12 +25,14 @@
   <string name="moving_train">चलती ट्रेन</string>
   <string name="night">रात</string>
   <string name="office">कार्यालय</string>
+  <string name="pink_noise">पिंक नॉइज़</string>
   <string name="rolling_thunder">घूमती गड़गड़ाहट</string>
   <string name="seaside">समुंदर के किनारे</string>
   <string name="soft_wind">शीतल हवा</string>
   <string name="thunder_crack">बिजली के कड़कने की आवाज़</string>
   <string name="train_horn">ट्रेन हॉर्न</string>
   <string name="water_stream">पानी की धारा</string>
+  <string name="white_noise">वाइट नॉइज़</string>
   <string name="wind_in_palm_trees">खजूर के पेड़ में पवन</string>
   <string name="wind_in_chimes_of_shells">गोले की झंकार में हवा</string>
   <string name="app_description">कम से कम पृष्ठभूमि शोर के साथ, उत्पादकता और विश्राम को बढ़ावा दे।</string>
