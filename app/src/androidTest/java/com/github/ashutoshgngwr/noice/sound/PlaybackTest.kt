@@ -126,25 +126,26 @@ class PlaybackTest {
   @Test
   fun testFadeInOutTransitions() {
     var p: Playback? = null
-    val defaultVolume = Playback.DEFAULT_VOLUME.toFloat() / Playback.MAX_VOLUME
     InstrumentationRegistry.getInstrumentation().runOnMainSync {
       p = Playback(context, loopingSound, audioAttributes)
       requireNotNull(p).play()
-      assertNotEquals(defaultVolume, requireNotNull(p).player.volume)
+      val actualVolume = (requireNotNull(p).player.volume * Playback.MAX_VOLUME).toInt()
+      assertNotEquals(Playback.DEFAULT_VOLUME, actualVolume)
     }
 
     // wait for fade-in to finish
-    sleep(600L)
-    assertEquals(defaultVolume, requireNotNull(p).player.volume)
+    sleep(1000L)
+    val actualVolume = (requireNotNull(p).player.volume * Playback.MAX_VOLUME).toInt()
+    assertEquals(Playback.DEFAULT_VOLUME, actualVolume)
 
     InstrumentationRegistry.getInstrumentation().runOnMainSync {
       requireNotNull(p).stop(true)
-      assertNotEquals(0f, requireNotNull(p).player.volume)
+      assertNotEquals(0, (requireNotNull(p).player.volume * Playback.MAX_VOLUME).toInt())
     }
 
     // wait for fade-out to finish
-    sleep(600L)
-    assertEquals(0f, requireNotNull(p).player.volume)
+    sleep(1000L)
+    assertEquals(0, (requireNotNull(p).player.volume * Playback.MAX_VOLUME).toInt())
   }
 
   @Test
