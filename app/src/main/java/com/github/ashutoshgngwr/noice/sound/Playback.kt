@@ -135,12 +135,27 @@ class Playback(
   private fun fadeIn() {
     if (player.volume >= volume.toFloat() / MAX_VOLUME) {
       isTransitioning = false
+      player.volume = volume.toFloat() / MAX_VOLUME
       return
     }
 
     isTransitioning = true
     player.volume += TRANSITION_VOLUME_STEP
     handler.postDelayed(this::fadeIn, TRANSITION_STEP_DELAY)
+  }
+
+  private fun fadeOut() {
+    if (player.volume <= 0) {
+      isTransitioning = false
+      player.volume = 0f
+      player.playWhenReady = false
+      player.release()
+      return
+    }
+
+    isTransitioning = true
+    player.volume -= TRANSITION_VOLUME_STEP * 2
+    handler.postDelayed(this::fadeOut, TRANSITION_STEP_DELAY / 2)
   }
 
   /**
@@ -186,9 +201,13 @@ class Playback(
   /**
    * Stops the playback. If the sound is non-loopable, it also removes the randomised play callback.
    */
-  fun stop() {
+  fun stop(fadeOut: Boolean) {
     isPlaying = false
-    player.playWhenReady = false
+    if (fadeOut && player.playWhenReady) {
+      fadeOut()
+    } else {
+      player.playWhenReady = false
+    }
 
     if (player.repeatMode == ExoPlayer.REPEAT_MODE_OFF) {
       handler.removeCallbacks(this)
@@ -199,7 +218,6 @@ class Playback(
    * Releases resources used by underlying [MediaPlayer][android.media.MediaPlayer] instance.
    */
   fun release() {
-    stop()
     player.release()
   }
 

@@ -10,6 +10,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.lang.Thread.sleep
 
 
 @RunWith(AndroidJUnit4::class)
@@ -89,7 +90,7 @@ class PlaybackTest {
     assertTrue(requireNotNull(p).player.playWhenReady)
 
     InstrumentationRegistry.getInstrumentation().runOnMainSync {
-      requireNotNull(p).stop()
+      requireNotNull(p).stop(false)
     }
 
     // should stop
@@ -112,7 +113,7 @@ class PlaybackTest {
     assertTrue(requireNotNull(p).handler.hasCallbacks(requireNotNull(p)))
 
     InstrumentationRegistry.getInstrumentation().runOnMainSync {
-      requireNotNull(p).stop()
+      requireNotNull(p).stop(false)
     }
 
     // should stop
@@ -120,6 +121,30 @@ class PlaybackTest {
     assertFalse(requireNotNull(p).player.playWhenReady)
     // should remove itself as a callback from the handler
     assertFalse(requireNotNull(p).handler.hasCallbacks(requireNotNull(p)))
+  }
+
+  @Test
+  fun testFadeInOutTransitions() {
+    var p: Playback? = null
+    val defaultVolume = Playback.DEFAULT_VOLUME.toFloat() / Playback.MAX_VOLUME
+    InstrumentationRegistry.getInstrumentation().runOnMainSync {
+      p = Playback(context, loopingSound, audioAttributes)
+      requireNotNull(p).play()
+      assertNotEquals(defaultVolume, requireNotNull(p).player.volume)
+    }
+
+    // wait for fade-in to finish
+    sleep(600L)
+    assertEquals(defaultVolume, requireNotNull(p).player.volume)
+
+    InstrumentationRegistry.getInstrumentation().runOnMainSync {
+      requireNotNull(p).stop(true)
+      assertNotEquals(0f, requireNotNull(p).player.volume)
+    }
+
+    // wait for fade-out to finish
+    sleep(600L)
+    assertEquals(0f, requireNotNull(p).player.volume)
   }
 
   @Test

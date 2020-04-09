@@ -154,7 +154,7 @@ class PlaybackManager(private val context: Context) :
   // stops a playback and releases its resources.
   private fun stop(sound: Sound) {
     requireNotNull(playbacks[sound.key]).apply {
-      release()
+      stop(true)
     }
 
     playbacks.remove(sound.key)
@@ -165,7 +165,7 @@ class PlaybackManager(private val context: Context) :
   private fun pauseAll() {
     isPaused = true
     playbacks.values.forEach {
-      it.stop()
+      it.stop(false)
     }
 
     AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
@@ -235,6 +235,7 @@ class PlaybackManager(private val context: Context) :
   private fun stopAll() {
     isPaused = false
     playbacks.values.forEach {
+      it.stop(false)
       it.release()
     }
 
