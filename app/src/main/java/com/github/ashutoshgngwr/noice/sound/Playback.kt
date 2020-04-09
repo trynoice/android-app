@@ -98,6 +98,8 @@ class Playback(
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   val handler = Handler()
 
+  // indicates whether playback is in fading in/out state. This is used in setVolume() to offload
+  // setting the player's volume to the transition effect during a transition.
   private var isTransitioning = false
 
   // initializes a MediaPlayer object with the passed arguments.
@@ -132,6 +134,10 @@ class Playback(
       }
   }
 
+  /**
+   * Increases the volume of the [player] instance until it reaches the defined [volume].
+   * Volume is increased in steps of [TRANSITION_VOLUME_STEP] with [TRANSITION_STEP_DELAY].
+   */
   private fun fadeIn() {
     if (player.volume >= volume.toFloat() / MAX_VOLUME) {
       isTransitioning = false
@@ -144,6 +150,10 @@ class Playback(
     handler.postDelayed(this::fadeIn, TRANSITION_STEP_DELAY)
   }
 
+  /**
+   * Decreases the volume of the [player] instance until it reaches 0.
+   * Volume is decreased in steps of [TRANSITION_VOLUME_STEP] * 2 with [TRANSITION_STEP_DELAY] / 2.
+   */
   private fun fadeOut() {
     if (player.volume <= 0) {
       isTransitioning = false
@@ -200,6 +210,10 @@ class Playback(
 
   /**
    * Stops the playback. If the sound is non-loopable, it also removes the randomised play callback.
+   *
+   * @param fadeOut: If true, playback stops with the fade-out transition and underlying player
+   * resources are released. If false, player resources must be manually released by calling
+   * [release()][release].
    */
   fun stop(fadeOut: Boolean) {
     isPlaying = false
