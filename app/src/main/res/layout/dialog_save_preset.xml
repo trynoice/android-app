@@ -12,7 +12,7 @@
   app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
   <TextView
-    style="@style/TextAppearance.AppCompat.Title.Inverse"
+    style="@style/TextAppearance.AppCompat.Headline"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="@string/save_preset"/>
@@ -31,7 +31,6 @@
       android:maxLines="1"
       android:inputType="text"
       android:hint="@string/name"
-      android:textColor="@android:color/white"
       android:importantForAutofill="no"
       tools:targetApi="o"/>
 
