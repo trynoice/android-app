@@ -5,6 +5,12 @@
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:windowBackground">@color/colorBackground</item>
+    <item name="alertDialogTheme">@style/AppAlertDialogTheme</item>
+  </style>
+
+  <style name="AppAlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+    <item name="android:windowBackground">@color/colorBackground</item>
+    <item name="colorAccent">@color/colorAccent</item>
   </style>
 
 </resources>
