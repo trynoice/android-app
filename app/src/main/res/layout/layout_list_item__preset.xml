@@ -44,6 +44,7 @@
       android:layout_height="wrap_content"
       android:background="?android:selectableItemBackgroundBorderless"
       android:src="@drawable/ic_action_delete"
+      android:tint="@color/colorAccent"
       android:contentDescription="@string/delete_preset"/>
 
   </LinearLayout>
