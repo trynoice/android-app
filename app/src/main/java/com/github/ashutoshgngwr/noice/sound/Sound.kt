@@ -26,6 +26,7 @@ class Sound private constructor(
     val LIBRARY = mapOf(
       "birds" to Sound("birds", R.string.birds),
       "bonfire" to Sound("bonfire", R.string.bonfire),
+      "brownian_noise" to Sound("brownian_noise", R.string.brownian_noise),
       "coffee_shop" to Sound("coffee_shop", R.string.coffee_shop),
       "distant_thunder" to Sound("distant_thunder", R.string.distant_thunder, false),
       "heavy_rain" to Sound("heavy_rain", R.string.heavy_rain),
@@ -35,12 +36,14 @@ class Sound private constructor(
       "moving_train" to Sound("moving_train", R.string.moving_train),
       "night" to Sound("night", R.string.night),
       "office" to Sound("office", R.string.office),
+      "pink_noise" to Sound("pink_noise", R.string.pink_noise),
       "rolling_thunder" to Sound("rolling_thunder", R.string.rolling_thunder, false),
       "seaside" to Sound("seaside", R.string.seaside),
       "soft_wind" to Sound("soft_wind", R.string.soft_wind),
       "thunder_crack" to Sound("thunder_crack", R.string.thunder_crack, false),
       "train_horn" to Sound("train_horn", R.string.train_horn, false),
       "water_stream" to Sound("water_stream", R.string.water_stream),
+      "white_noise" to Sound("white_noise", R.string.white_noise),
       "wind_chimes_of_shells" to Sound("wind_chimes_of_shells", R.string.wind_in_chimes_of_shells),
       "wind_in_palm_trees" to Sound("wind_in_palm_trees", R.string.wind_in_palm_trees)
     )

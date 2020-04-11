@@ -16,6 +16,7 @@
   <string name="stop">Stop</string>
   <string name="birds">Birds</string>
   <string name="bonfire">Bonfire</string>
+  <string name="brownian_noise">Brownian Noise</string>
   <string name="coffee_shop">Coffee shop</string>
   <string name="distant_thunder">Distant thunder</string>
   <string name="heavy_rain">Heavy rain</string>
@@ -25,12 +26,14 @@
   <string name="moving_train">Moving train</string>
   <string name="night">Night</string>
   <string name="office">Office</string>
+  <string name="pink_noise">Pink Noise</string>
   <string name="rolling_thunder">Rolling thunder</string>
   <string name="seaside">Seaside</string>
   <string name="soft_wind">Soft wind</string>
   <string name="thunder_crack">Thunder crack</string>
   <string name="train_horn">Train horn</string>
   <string name="water_stream">Water stream</string>
+  <string name="white_noise">White noise</string>
   <string name="wind_in_palm_trees">Wind in Palm trees</string>
   <string name="wind_in_chimes_of_shells">Wind in chimes of shells</string>
   <string name="app_description">Relax and boost productivity with minimal background noise</string>
