@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.view.ContextThemeWrapper
 import com.github.ashutoshgngwr.noice.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.dialog_save_preset.view.*
@@ -19,7 +20,11 @@ class SavePresetDialogFragment : BottomSheetDialogFragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    return inflater.inflate(R.layout.dialog_save_preset, container, false)
+    // see https://github.com/material-components/material-components-android/issues/99
+    val ctxWrapper = ContextThemeWrapper(requireContext(), R.style.AppTheme)
+    return inflater
+      .cloneInContext(ctxWrapper)
+      .inflate(R.layout.dialog_save_preset, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
