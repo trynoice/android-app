@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="library">Библиотека звуков</string>
+  <string name="about">О приложении</string>
+  <string name="report_issue">Сообщить о проблеме</string>
+  <string name="repeat_time_period">Период повтора</string>
+  <string name="volume">Громкость</string>
+  <string name="play_pause">Воспроизвести или остановить</string>
+  <string name="open_drawer">Открыть меню</string>
+  <string name="close_drawer">Закрыть меню</string>
+  <string name="notification_channel_default__name">Воспроизведение звуков</string>
+  <string name="notification_channel_default__description">Регуляторы воспроизведения</string>
+  <string name="pause">Пауза</string>
+  <string name="play">Воспроизведение</string>
+  <string name="stop">Стоп</string>
+  <string name="birds">Птицы</string>
+  <string name="bonfire">Костёр</string>
+  <string name="brownian_noise">Броуновский шум</string>
+  <string name="coffee_shop">Кофейня</string>
+  <string name="distant_thunder">Далекий гром</string>
+  <string name="heavy_rain">Ливень</string>
+  <string name="light_rain">Небольшой дождь</string>
+  <string name="moderate_rain">Умеренный дождь</string>
+  <string name="morning_in_a_village">Утро в деревне</string>
+  <string name="moving_train">Движение поезда</string>
+  <string name="night">Ночь</string>
+  <string name="office">Офис</string>
+  <string name="pink_noise">Розовый шум</string>
+  <string name="rolling_thunder">Раскаты грома</string>
+  <string name="seaside">Прибой</string>
+  <string name="soft_wind">Легкий ветер</string>
+  <string name="thunder_crack">Удар грома</string>
+  <string name="train_horn">Гудок паровоза</string>
+  <string name="water_stream">Поток воды</string>
+  <string name="white_noise">Белый шум</string>
+  <string name="wind_in_palm_trees">Шум деревьев</string>
+  <string name="wind_in_chimes_of_shells">Фурин</string>
+  <string name="app_description">Расслабьтесь и повысьте производительность с помощью фоновых звуков</string>
+  <string name="connect_with_author">Связаться с автором</string>
+  <string name="credits">Ресурсы</string>
+  <string name="dismiss">Отменить</string>
+  <string name="save_preset">Сохранить пресет</string>
+  <string name="name">Название</string>
+  <string name="save">Сохранить</string>
+  <string name="cancel">Отмена</string>
+  <string name="preset_name_cannot_be_empty">Название пресета не может быть пустым!</string>
+  <string name="preset_saved">Пресет сохранен!</string>
+  <string name="saved_presets">Сохраненные пресеты</string>
+  <string name="delete_preset">Удалить пресет</string>
+  <string name="preset_delete_confirmation">Подтвердите удаление %s?</string>
+  <string name="delete">Увалить</string>
+  <string name="preset_deleted">Пресет удален!</string>
+  <string name="nothing_saved_yet">Пока пресетов нет!</string>
+  <string name="sleep_timer">Таймер</string>
+  <string name="schedule">Расписание</string>
+  <string name="reset">Сброс</string>
+  <string name="auto_sleep_schedule_error">Таймер автоотключения не может быть установлен на 00:00!</string>
+  <string name="auto_sleep_schedule_success">Таймер автоотключения установлен!</string>
+  <string name="auto_sleep_schedule_cancelled">Таймер автоотключения отменен!</string>
+  <string name="app_theme">Тема</string>
+  <string-array name="app_themes">
+    <item>Светлая</item>
+    <item>Темная</item>
+    <item>Системная тема</item>
+  </string-array>
+</resources>
