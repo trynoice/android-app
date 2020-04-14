@@ -16,6 +16,8 @@ class AboutFragment : Fragment() {
   companion object {
     private val ITEMS = arrayOf(
       arrayOf(R.string.credits__app_icon, R.drawable.ic_stat_media_player, R.string.credits__app_icon_url),
+      arrayOf(R.string.credits__sound_airplane_inflight, R.drawable.ic_stat_media_player, R.string.credits__sound_airplane_inflight_url),
+      arrayOf(R.string.credits__sound_airplane_seatbelt_beeps, R.drawable.ic_stat_media_player, R.string.credits__sound_airplane_seatbelt_beeps_url),
       arrayOf(R.string.credits__sound_birds, R.drawable.ic_stat_sound, R.string.credits__sound_birds_url),
       arrayOf(R.string.credits__sound_bonfire, R.drawable.ic_stat_sound, R.string.credits__sound_bonfire_url),
       arrayOf(R.string.credits__sound_coffee_shop, R.drawable.ic_stat_sound, R.string.credits__sound_coffee_shop_url),

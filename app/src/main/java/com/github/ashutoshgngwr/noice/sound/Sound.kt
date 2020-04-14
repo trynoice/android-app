@@ -24,6 +24,12 @@ class Sound private constructor(
      * Static sound library with various effects. key is used to lookup the file in assets.
      */
     val LIBRARY = mapOf(
+      "airplane_inflight" to Sound("airplane_inflight", R.string.airplane_inflight),
+      "airplane_seatbelt_beeps" to Sound(
+        "airplane_seatbelt_beeps",
+        R.string.airplane_seatbelt_beeps,
+        false
+      ),
       "birds" to Sound("birds", R.string.birds),
       "bonfire" to Sound("bonfire", R.string.bonfire),
       "brownian_noise" to Sound("brownian_noise", R.string.brownian_noise),
