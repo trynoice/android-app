@@ -14,6 +14,8 @@
   <string name="pause">Pause</string>
   <string name="play">Play</string>
   <string name="stop">Stop</string>
+  <string name="airplane_inflight">Airplane in-flight</string>
+  <string name="airplane_seatbelt_beeps">Airplane seat-belt beeps</string>
   <string name="birds">Birds</string>
   <string name="bonfire">Bonfire</string>
   <string name="brownian_noise">Brownian Noise</string>
@@ -55,6 +57,10 @@
   <string name="credits__app_icon_url" translatable="false">
     https://thenounproject.com/term/white-noise/1287855/
   </string>
+  <string name="credits__sound_airplane_inflight" translatable="false">In-flight Ambience Boeing 737-838 by digifishmusic</string>
+  <string name="credits__sound_airplane_inflight_url" translatable="false">https://freesound.org/s/47254/</string>
+  <string name="credits__sound_airplane_seatbelt_beeps" translatable="false">Seat belt beeps by nachosose</string>
+  <string name="credits__sound_airplane_seatbelt_beeps_url" translatable="false">https://freesound.org/s/244583/</string>
   <string name="credits__sound_birds" translatable="false">Spring Birds Raw (New Jersey) by hargissssound</string>
   <string name="credits__sound_birds_url" translatable="false">https://freesound.org/s/345851/</string>
   <string name="credits__sound_bonfire" translatable="false">Bonfire by amether</string>
