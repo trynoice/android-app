@@ -1,0 +1,9 @@
+- Added fade in/out effects for playbacks
+- Added airplane sounds to the library
+- Added raw noise to the library (white, pink & brownian)
+- Added russian translations
+- Fixed spanish translations not showing up
+- Fixed appearance consistency across theme variants
+
+We're continuously working to make Noice better and useful. Please turn on updates to never miss a thing!
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG
