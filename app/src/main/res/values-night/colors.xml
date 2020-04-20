@@ -4,4 +4,5 @@
   <color name="colorCardBackground">#33333d</color>
   <color name="about_background_color">#373740</color>
   <color name="colorHint">#828297</color>
+  <color name="colorNavigationViewText">@android:color/primary_text_dark</color>
 </resources>
