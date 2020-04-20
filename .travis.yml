@@ -40,24 +40,14 @@ install:
   - echo y | sdkmanager --sdk_root="$ANDROID_HOME" "tools" > /dev/null
   - echo y | sdkmanager "platform-tools" "emulator" "platforms;android-$COMPILE_SDK" "build-tools;$BUILD_TOOLS" > /dev/null
 
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
-
-cache:
-  directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-    - $HOME/.android/build-cache
-
 stages:
   - name: test
   - name: deploy
     if: tag IS present
 
 before_script:
-  - echo y | sdkmanager "system-images;$TEST_PLATFORM;google_apis;x86" > /dev/null
-  - echo no | avdmanager create avd -f -n "$TEST_PLATFORM" -k "system-images;$TEST_PLATFORM;google_apis;x86" -c 500M
+  - echo y | sdkmanager "system-images;$TEST_PLATFORM;default;x86" > /dev/null
+  - echo no | avdmanager create avd -f -n "$TEST_PLATFORM" -k "system-images;$TEST_PLATFORM;default;x86" -c 500M
   - emulator -avd "$TEST_PLATFORM" -memory 4096 -no-boot-anim -no-audio -no-snapshot -no-window -camera-back none -camera-front none &
   - >- # ensures that animations are disabled on the device and device is always awake.
       adb wait-for-device shell '
