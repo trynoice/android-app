@@ -7,4 +7,5 @@
   <color name="colorCardBackground">#f1f5f4</color>
   <color name="about_background_color">#f8fAf9</color>
   <color name="colorHint">#7d7d68</color>
+  <color name="colorNavigationViewText">@android:color/primary_text_light</color>
 </resources>
