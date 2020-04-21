@@ -1,0 +1,2 @@
+Wir arbeiten ständig an der Verbesserung von Noice. Bitte aktiviere die automatischen Updates, damit dir nichts entgeht!
+Ein detailiertes Änderungsprotokoll findest du unter https://ashutoshgngwr.github.io/noice/CHANGELOG
