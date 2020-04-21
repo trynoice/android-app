@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name" translatable="false">Noice</string>
   <string name="library">Sammlung</string>
   <string name="about">Über</string>
   <string name="report_issue">Fehler melden</string>
@@ -39,83 +38,10 @@
   <string name="wind_in_palm_trees">Wind in Palmen</string>
   <string name="wind_in_chimes_of_shells">Wind in Glockenspiel aus Muscheln</string>
   <string name="app_description">Entspannung und Produktivitätssteigerung durch minimale Hintergrundgeräusche</string>
-  <string name="app_copyright" translatable="false">2019 Ashutosh Gangwar</string>
-  <string name="app_license_url" translatable="false">
-    https://github.com/ashutoshgngwr/noice/blob/master/LICENSE
-  </string>
-  <string name="app_website" translatable="false">https://ashutoshgngwr.github.io/noice</string>
-  <string name="app_playstore" translatable="false">com.github.ashutoshgngwr.noice</string>
-  <string name="app_github" translatable="false">ashutoshgngwr/noice</string>
-  <string name="connect_with_author">Autor kontaktieren</string>
-  <string name="author_email" translatable="false">ashutoshgngwr@gmail.com</string>
   <string name="about__email">E-Mail</string>
-  <string name="author_social_handle" translatable="false">ashutoshgngwr</string>
   <string name="about__github">Github</string>
   <string name="about__twitter">Twitter</string>
   <string name="credits">Danksagungen</string>
-  <string name="credits__app_icon" translatable="false">white noise icon by Juraj Sedlák</string>
-  <string name="credits__app_icon_url" translatable="false">
-    https://thenounproject.com/term/white-noise/1287855/
-  </string>
-  <string name="credits__sound_airplane_inflight" translatable="false">In-flight Ambience Boeing 737-838 by digifishmusic</string>
-  <string name="credits__sound_airplane_inflight_url" translatable="false">https://freesound.org/s/47254/</string>
-  <string name="credits__sound_airplane_seatbelt_beeps" translatable="false">Seat belt beeps by nachosose</string>
-  <string name="credits__sound_airplane_seatbelt_beeps_url" translatable="false">https://freesound.org/s/244583/</string>
-  <string name="credits__sound_birds" translatable="false">Spring Birds Raw (New Jersey) by hargissssound</string>
-  <string name="credits__sound_birds_url" translatable="false">https://freesound.org/s/345851/</string>
-  <string name="credits__sound_bonfire" translatable="false">Bonfire by amether</string>
-  <string name="credits__sound_bonfire_url" translatable="false">https://freesound.org/s/189237/</string>
-  <string name="credits__sound_coffee_shop" translatable="false">School Canteen Atmosphere (Coffee shop) by slag777</string>
-  <string name="credits__sound_coffee_shop_url" translatable="false">https://freesound.org/s/167057/</string>
-  <string name="credits__sound_distant_thunder" translatable="false">Distant Thunder from YouTube Audio Library</string>
-  <string name="credits__sound_distant_thunder_url" translatable="false">
-    https://www.youtube.com/audiolibrary_download?vid=c661c0547daf6af7
-  </string>
-  <string name="credits__sound_heavy_rain" translatable="false">Heavy rain (thunderstorm) from YouTube Audio Library</string>
-  <string name="credits__sound_heavy_rain_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=85220b39abbc1421</string>
-  <string name="credits__sound_light_rain" translatable="false">Light rain (on roof) from YouTube Audio Library</string>
-  <string name="credits__sound_light_rain_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=f0eff544b6f1e0d0</string>
-  <string name="credits__sound_moderate_rain" translatable="false">Moderate rain (thunderstorm) from YouTube Audio Library</string>
-  <string name="credits__sound_moderate_rain_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=85220b39abbc1421</string>
-  <string name="credits__morning_in_a_village" translatable="false">Village jungle morning by aurelien.leveque</string>
-  <string name="credits__morning_in_a_village_url" translatable="false">https://freesound.org/s/417635/</string>
-  <string name="credits__sound_moving_train" translatable="false">Train Wheels Ride outside Thailand by YOH</string>
-  <string name="credits__sound_moving_train_url" translatable="false">https://freesound.org/s/170866/</string>
-  <string name="credits__sound_night" translatable="false">Jungle choco by jaime_enrique</string>
-  <string name="credits__sound_night_url" translatable="false">https://freesound.org/s/424763/</string>
-  <string name="credits__sound_office" translatable="false">Office ambiance by Nightwatcher98</string>
-  <string name="credits__sound_office_url" translatable="false">https://freesound.org/s/407292/</string>
-  <string name="credits__sound_rolling_thunder" translatable="false">Rolling thunder from YouTube Audio Library</string>
-  <string name="credits__sound_rolling_thunder_url" translatable="false">
-    https://www.youtube.com/audiolibrary_download?vid=5f4a1b5b9c7f5d1f
-  </string>
-  <string name="credits__sound_seaside" translatable="false">Seaside waves by foongaz</string>
-  <string name="credits__sound_seaside_url" translatable="false">https://freesound.org/s/253287/</string>
-  <string name="credits__sound_soft_wind" translatable="false">Wind from YouTube Audio Library</string>
-  <string name="credits__sound_soft_wind_url" translatable="false">
-    https://www.youtube.com/audiolibrary_download?vid=e7334011b49fb938
-  </string>
-  <string name="credits__sound_thunder_crack" translatable="false">Thunder crack from YouTube Audio Library</string>
-  <string name="credits__sound_thunder_crack_url" translatable="false">
-    https://www.youtube.com/audiolibrary_download?vid=e4b6c4fa94a94535
-  </string>
-  <string name="credits__sound_train_horn" translatable="false">Train horn by CouleurCasquette</string>
-  <string name="credits__sound_train_horn_url" translatable="false">https://freesound.org/s/248229/</string>
-  <string name="credits__sound_water_stream" translatable="false">Stream, Running Water | Aviemore Scotland by BurghRecords</string>
-  <string name="credits__sound_water_stream_url" translatable="false">https://freesound.org/s/415151/</string>
-  <string name="credits__sound_wind_chimes_of_shells" translatable="false">Wind chimes of shells from YouTube Audio Library</string>
-  <string name="credits__sound_wind_chimes_of_shells_url" translatable="false">
-    https://www.youtube.com/audiolibrary_download?vid=b604ba49f305d739
-  </string>
-  <string name="credits__sound_wind_in_palm_trees" translatable="false">Palm trees in the wind by StrangeAcoustics</string>
-  <string name="credits__sound_wind_in_palm_trees_url" translatable="false">https://freesound.org/s/346106/</string>
-  <string name="credits__translation_argentinian_spanish" translatable="false">Argentinian spanish translation by Enchufadoo</string>
-  <string name="credits__translation_argentinian_spanish_url" translatable="false">https://github.com/Enchufadoo</string>
-  <string name="credits__translation_russian" translatable="false">Russian translation by yamaks2306</string>
-  <string name="credits__translation_russian_url" translatable="false">https://github.com/yamaks2306</string>
-  <string name="credits__translation_german" translatable="false">German translation by Steffen Schultz</string>
-  <string name="credits__translation_german_url" translatable="false">https://github.com/schulle4u</string>
-  <string name="app_issues_url" translatable="false">https://github.com/ashutoshgngwr/noice/issues</string>
   <string name="dismiss">Ausblenden</string>
   <string name="save_preset">Voreinstellung speichern</string>
   <string name="name">Name</string>
