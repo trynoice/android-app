@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name" translatable="false">Noice</string>
-  <string name="library">Library</string>
-  <string name="about">About</string>
-  <string name="report_issue">Report Issues</string>
-  <string name="repeat_time_period">Repeat time period</string>
-  <string name="volume">Sound volume</string>
-  <string name="play_pause">play or pause</string>
-  <string name="open_drawer">Open navigation drawer</string>
-  <string name="close_drawer">Close navigation drawer</string>
-  <string name="notification_channel_default__name">Media Playback</string>
-  <string name="notification_channel_default__description">Media playback controls</string>
+  <string name="library">Sammlung</string>
+  <string name="about">Über</string>
+  <string name="report_issue">Fehler melden</string>
+  <string name="repeat_time_period">Wiederholungen</string>
+  <string name="volume">Lautstärke</string>
+  <string name="play_pause">Abspielen oder pausieren</string>
+  <string name="open_drawer">Navigationsleiste öffnen</string>
+  <string name="close_drawer">Navigationsleiste schließen</string>
+  <string name="notification_channel_default__name">Medienwiedergabe</string>
+  <string name="notification_channel_default__description">Steuerung der Medienwiedergabe</string>
   <string name="pause">Pause</string>
-  <string name="play">Play</string>
+  <string name="play">Abspielen</string>
   <string name="stop">Stop</string>
-  <string name="airplane_inflight">Airplane in-flight</string>
-  <string name="airplane_seatbelt_beeps">Airplane seat-belt beeps</string>
-  <string name="birds">Birds</string>
-  <string name="bonfire">Bonfire</string>
-  <string name="brownian_noise">Brownian Noise</string>
-  <string name="coffee_shop">Coffee shop</string>
-  <string name="distant_thunder">Distant thunder</string>
-  <string name="heavy_rain">Heavy rain</string>
-  <string name="light_rain">Light rain</string>
-  <string name="moderate_rain">Moderate rain</string>
-  <string name="morning_in_a_village">Morning in a village</string>
-  <string name="moving_train">Moving train</string>
-  <string name="night">Night</string>
-  <string name="office">Office</string>
-  <string name="pink_noise">Pink Noise</string>
-  <string name="rolling_thunder">Rolling thunder</string>
-  <string name="seaside">Seaside</string>
-  <string name="soft_wind">Soft wind</string>
-  <string name="thunder_crack">Thunder crack</string>
-  <string name="train_horn">Train horn</string>
-  <string name="water_stream">Water stream</string>
-  <string name="white_noise">White noise</string>
-  <string name="wind_in_palm_trees">Wind in Palm trees</string>
-  <string name="wind_in_chimes_of_shells">Wind in chimes of shells</string>
-  <string name="app_description">Relax and boost productivity with minimal background noise</string>
+  <string name="airplane_inflight">Im Flugzeug</string>
+  <string name="airplane_seatbelt_beeps">Flugzeug-Anschnallsignal</string>
+  <string name="birds">Vögel</string>
+  <string name="bonfire">Lagerfeuer</string>
+  <string name="brownian_noise">Braunes Rauschen</string>
+  <string name="coffee_shop">Coffee-Shop</string>
+  <string name="distant_thunder">Fernes Gewitter</string>
+  <string name="heavy_rain">Starker Regen</string>
+  <string name="light_rain">Leichter Regen</string>
+  <string name="moderate_rain">Milder Regen</string>
+  <string name="morning_in_a_village">Dörfliche Morgenstimmung</string>
+  <string name="moving_train">Fahrender Zug</string>
+  <string name="night">Nacht</string>
+  <string name="office">Büro</string>
+  <string name="pink_noise">Rosa Rauschen</string>
+  <string name="rolling_thunder">Rollender Donner</string>
+  <string name="seaside">Am Meer</string>
+  <string name="soft_wind">Leichter Wind</string>
+  <string name="thunder_crack">Donnerschlag</string>
+  <string name="train_horn">Zugsignal</string>
+  <string name="water_stream">Wasserlauf</string>
+  <string name="white_noise">Weißes Rauschen</string>
+  <string name="wind_in_palm_trees">Wind in Palmen</string>
+  <string name="wind_in_chimes_of_shells">Wind in Glockenspiel aus Muscheln</string>
+  <string name="app_description">Entspannung und Produktivitätssteigerung durch minimale Hintergrundgeräusche</string>
   <string name="app_copyright" translatable="false">2019 Ashutosh Gangwar</string>
   <string name="app_license_url" translatable="false">
     https://github.com/ashutoshgngwr/noice/blob/master/LICENSE
@@ -46,13 +46,13 @@
   <string name="app_website" translatable="false">https://ashutoshgngwr.github.io/noice</string>
   <string name="app_playstore" translatable="false">com.github.ashutoshgngwr.noice</string>
   <string name="app_github" translatable="false">ashutoshgngwr/noice</string>
-  <string name="connect_with_author">Connect with Author</string>
+  <string name="connect_with_author">Autor kontaktieren</string>
   <string name="author_email" translatable="false">ashutoshgngwr@gmail.com</string>
-  <string name="about__email">Email</string>
+  <string name="about__email">E-Mail</string>
   <string name="author_social_handle" translatable="false">ashutoshgngwr</string>
   <string name="about__github">Github</string>
   <string name="about__twitter">Twitter</string>
-  <string name="credits">Credits</string>
+  <string name="credits">Danksagungen</string>
   <string name="credits__app_icon" translatable="false">white noise icon by Juraj Sedlák</string>
   <string name="credits__app_icon_url" translatable="false">
     https://thenounproject.com/term/white-noise/1287855/
@@ -116,29 +116,29 @@
   <string name="credits__translation_german" translatable="false">German translation by Steffen Schultz</string>
   <string name="credits__translation_german_url" translatable="false">https://github.com/schulle4u</string>
   <string name="app_issues_url" translatable="false">https://github.com/ashutoshgngwr/noice/issues</string>
-  <string name="dismiss">Dismiss</string>
-  <string name="save_preset">Save Preset</string>
+  <string name="dismiss">Ausblenden</string>
+  <string name="save_preset">Voreinstellung speichern</string>
   <string name="name">Name</string>
-  <string name="save">Save</string>
-  <string name="cancel">Cancel</string>
-  <string name="preset_name_cannot_be_empty">Preset name cannot be empty!</string>
-  <string name="preset_saved">Preset saved!</string>
-  <string name="saved_presets">Saved Presets</string>
-  <string name="delete_preset">Delete Preset</string>
-  <string name="preset_delete_confirmation">Confirm delete %s?</string>
-  <string name="delete">Delete</string>
-  <string name="preset_deleted">Preset deleted!</string>
-  <string name="nothing_saved_yet">Nothing saved yet!</string>
-  <string name="sleep_timer">Sleep Timer</string>
-  <string name="schedule">Schedule</string>
-  <string name="reset">Reset</string>
-  <string name="auto_sleep_schedule_error">Auto sleep timer can not be set to 00:00!</string>
-  <string name="auto_sleep_schedule_success">Scheduled auto sleep timer!</string>
-  <string name="auto_sleep_schedule_cancelled">Auto sleep timer cancelled!</string>
+  <string name="save">Speichern</string>
+  <string name="cancel">Abbrechen</string>
+  <string name="preset_name_cannot_be_empty">Der Voreinstellungsname darf nicht leer sein!</string>
+  <string name="preset_saved">Voreinstellung gespeichert!</string>
+  <string name="saved_presets">Gespeicherte Voreinstellungen</string>
+  <string name="delete_preset">Voreinstellung löschen</string>
+  <string name="preset_delete_confirmation">%s löschen?</string>
+  <string name="delete">Löschen</string>
+  <string name="preset_deleted">Voreinstellung gelöscht!</string>
+  <string name="nothing_saved_yet">Noch nichts gespeichert!</string>
+  <string name="sleep_timer">Einschlaftimer</string>
+  <string name="schedule">Planen</string>
+  <string name="reset">Zurücksetzen</string>
+  <string name="auto_sleep_schedule_error">Der automatische Schlaftimer kann nicht auf 00:00 festgelegt werden!</string>
+  <string name="auto_sleep_schedule_success">Automatischer Schlaftimer eingerichtet!</string>
+  <string name="auto_sleep_schedule_cancelled">Automatischer Schlaftimer abgebrochen!</string>
   <string name="app_theme">Theme</string>
   <string-array name="app_themes">
-    <item>Light</item>
-    <item>Dark</item>
-    <item>System default</item>
+    <item>Hell</item>
+    <item>Dunkel</item>
+    <item>Systemstandard</item>
   </string-array>
 </resources>
