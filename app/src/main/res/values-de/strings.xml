@@ -4,9 +4,9 @@
   <string name="library">Sammlung</string>
   <string name="about">Über</string>
   <string name="report_issue">Fehler melden</string>
-  <string name="repeat_time_period">Wiederholungen</string>
+  <string name="repeat_time_period">Wiederholungszeit</string>
   <string name="volume">Lautstärke</string>
-  <string name="play_pause">Abspielen oder pausieren</string>
+  <string name="play_pause">Abspielen / pausieren</string>
   <string name="open_drawer">Navigationsleiste öffnen</string>
   <string name="close_drawer">Navigationsleiste schließen</string>
   <string name="notification_channel_default__name">Medienwiedergabe</string>
@@ -19,8 +19,8 @@
   <string name="birds">Vögel</string>
   <string name="bonfire">Lagerfeuer</string>
   <string name="brownian_noise">Braunes Rauschen</string>
-  <string name="coffee_shop">Coffee-Shop</string>
-  <string name="distant_thunder">Fernes Gewitter</string>
+  <string name="coffee_shop">Kaffeehaus</string>
+  <string name="distant_thunder">Ferner Donner</string>
   <string name="heavy_rain">Starker Regen</string>
   <string name="light_rain">Leichter Regen</string>
   <string name="moderate_rain">Milder Regen</string>
