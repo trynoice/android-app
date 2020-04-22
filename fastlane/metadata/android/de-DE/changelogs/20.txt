@@ -1,9 +1,0 @@
-- Ein- und Ausblendeffekte für die Wiedergabe hinzugefügt
-- Flugzeug-Sounds zur Sammlung hinzugefügt
-- Weißes, rosa und braunes Rauschen zur Sammlung hinzugefügt
-- Russische Übersetzung hinzugefügt
-- Fehler beim Anzeigen der spanischen Übersetzung behoben
-- Probleme mit der Erscheinungs-Konsistenz in den Themes behoben
-
-Wir arbeiten ständig an der Verbesserung von Noice. Bitte aktiviere die automatischen Updates, damit dir nichts entgeht!
-Siehe detailiertes Änderungsprotokoll auf https://ashutoshgngwr.github.io/noice/CHANGELOG
