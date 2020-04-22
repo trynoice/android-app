@@ -74,6 +74,11 @@ class AboutFragment : Fragment() {
         R.string.credits__translation_russian,
         R.drawable.ic_stat_translation,
         R.string.credits__translation_russian_url
+      ),
+      arrayOf(
+        R.string.credits__translation_german,
+        R.drawable.ic_stat_translation,
+        R.string.credits__translation_german_url
       )
     )
   }

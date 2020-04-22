@@ -1,0 +1,22 @@
+Vielen Menschen helfen dezemte Hintergrundgeräusche, sich zu beruhigen und zu fokussieren. In manchen Fällen kann dadurch sogar die Produktivität gesteigert werden. Hintergrundgeräusche können auch Stresseffekte minimieren. 
+
+Die App Noice erlaubt es dir, deine eigene Geräuschumgebung mit Clips aus diversen Quellen für Umgebungsgeräusche zu erstellen. Kombiniere verschiedene Klänge zu einer perfekten Umgebung, die dir ein ablenkungsfreies Arbeiten ermöglicht oder generiere ruhige, friedvolle Umgebungen zum Einschlafen. 
+
+<b>Funktionen</b>
+- 24 Geräuschaufnahmen
+- Erstelle einen benutzerdefinierten Mix
+- Speichere deine Lieblingsmixe
+- Automatischer Schlaftimer
+- Neben anderen Musikplayern abspielbar
+- Individuelle Lautstärke für jede Geräuschquelle
+- Offline-Wiedergabe
+- Helles und dunkles App-Theme
+
+<b>Geräuschesammlung</b>
+- Wald-Set (Vögel, Lagerfeuer, Nacht, Wind, Palmen, etc.)
+- Monsun-Set (Regen, Donner)
+- Teleportierungs-Set (Kaffeehaus, Büro, fahrender Zug, im Flugzeug, am Meer, Flussufer, etc.)
+- Rauschen (weiß, rosa und braun)
+
+Noice ist freie und quelloffene Software.
+https://github.com/ashutoshgngwr/noice
