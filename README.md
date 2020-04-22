@@ -18,7 +18,7 @@ Noice is an app that allows you to create your own set of background sounds by m
 
 ## Features
 
-- 19 recorded noises
+- 24 recorded noises
 - Auto sleep timer
 - Make customised mix
 - Save your favorite mixes
@@ -35,43 +35,7 @@ Noice is an app that allows you to create your own set of background sounds by m
 
 ## Contributing
 
-We welcome contributions of all kinds and sizes. This includes everything from simple bug reports to large features.
-
-### Adding sounds
-
-Feel free to add more sounds to Noice taking the following under consideration.
-
-- Looping sounds should be at least 30 seconds and at most 2 minutes long. These are not hard limits but the goal should be to minimize the ease of recognizing recurring patterns in loops.
-- All sounds should be encoded to `mp3` format with the following configuration. I use [Audacity](https://www.audacityteam.org/) for editing audio.
-  - **Sample rate**: 44.1 kHz
-  - **Bitrate mode**: Preset
-  - **Quality**: Standard, 170-210 kbps
-  - **Variable Speed**: Fast
-  - **Channel Mode**: Stereo
-
-### Workflow
-
-We love GitHub issues!
-
-For small feature requests, an issue first proposing it for discussion or demo implementation in a PR suffice.
-
-For big feature requests, please open an issue to avoid wasting time on a feature that might need reworking.
-
-Small pull requests for things like typos, bug fixes, etc are always welcome.
-
-### DOs
-
-- Let Android Studio do the code formatting.
-- Include tests when adding new features.
-- When fixing bugs, start with adding a test that highlights how the current behavior is broken. This is not mandatory since it is not always possible/approachable.
-
-### Releases
-
-Noice uses [Travis CI](https://travis-ci.com/github/ashutoshgngwr/noice) for automatically building and pushing releases to Google Play store. All releases happen in two stages.
-
-- First, a candidate release is pushed to beta track on Google Play Store. Git tags for these are marked with format `0.0.0-rc`.
-- After ample time, release candidates are released to public track on Google Play Store. Git tags for these are marked with format `0.0.0`.
-- F-Droid releases are automatically picked by its builder based on the latest tag. See [metadata](https://gitlab.com/fdroid/fdroiddata/-/blob/master/metadata/com.github.ashutoshgngwr.noice.yml) for more information.
+We welcome contributions of all kinds and sizes. This includes everything from simple bug reports to large features. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## Privacy Policy
 
