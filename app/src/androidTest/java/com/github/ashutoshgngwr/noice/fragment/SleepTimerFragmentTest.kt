@@ -40,7 +40,7 @@ class SleepTimerFragmentTest {
 
   @Before
   fun setup() {
-    fragmentScenario = launchFragmentInContainer<SleepTimerFragment>(null, R.style.AppTheme)
+    fragmentScenario = launchFragmentInContainer<SleepTimerFragment>(null, R.style.Theme_App)
     fragmentScenario.onFragment {
       fragment = it
     }

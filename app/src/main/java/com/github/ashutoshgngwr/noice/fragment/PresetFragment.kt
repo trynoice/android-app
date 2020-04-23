@@ -7,13 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.sound.Playback
 import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
@@ -128,7 +128,7 @@ class PresetFragment : Fragment() {
         }
 
         itemView.button_delete.setOnClickListener {
-          AlertDialog.Builder(requireContext()).run {
+          MaterialAlertDialogBuilder(requireContext()).run {
             setMessage(
               getString(
                 R.string.preset_delete_confirmation,
@@ -151,9 +151,7 @@ class PresetFragment : Fragment() {
                 notifyDataSetChanged() // or call it explicitly
               }
 
-              @Suppress("DEPRECATION")
               Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
-                .setBackgroundTint(resources.getColor(R.color.colorPrimary))
                 .setAction(R.string.dismiss) { }
                 .show()
             }

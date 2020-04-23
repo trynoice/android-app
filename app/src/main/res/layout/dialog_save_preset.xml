@@ -8,16 +8,17 @@
   android:layout_height="wrap_content"
   android:padding="16dp"
   android:orientation="vertical"
-  android:background="@color/colorBackground"
+  android:background="?android:attr/colorBackground"
   app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
   <TextView
-    style="@style/TextAppearance.AppCompat.Headline"
+    style="@style/TextAppearance.MaterialComponents.Headline5"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="@string/save_preset"/>
 
   <com.google.android.material.textfield.TextInputLayout
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
     android:id="@+id/layout_edit_name"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -44,14 +45,14 @@
     android:gravity="end|center_vertical">
 
     <Button
-      style="@style/Widget.AppCompat.Button.Borderless.Colored"
+      style="@style/Widget.MaterialComponents.Button.TextButton"
       android:id="@+id/button_cancel"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/cancel"/>
 
     <Button
-      style="@style/Widget.AppCompat.Button.Borderless.Colored"
+      style="@style/Widget.MaterialComponents.Button.TextButton"
       android:id="@+id/button_save"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

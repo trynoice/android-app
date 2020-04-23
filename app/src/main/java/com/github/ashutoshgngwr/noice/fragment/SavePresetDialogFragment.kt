@@ -21,7 +21,8 @@ class SavePresetDialogFragment : BottomSheetDialogFragment() {
     savedInstanceState: Bundle?
   ): View? {
     // see https://github.com/material-components/material-components-android/issues/99
-    val ctxWrapper = ContextThemeWrapper(requireContext(), R.style.AppTheme)
+    // Also this is just needed to use the global background color '?android:attr/colorBackground'
+    val ctxWrapper = ContextThemeWrapper(requireContext(), R.style.Theme_App)
     return inflater
       .cloneInContext(ctxWrapper)
       .inflate(R.layout.dialog_save_preset, container, false)
