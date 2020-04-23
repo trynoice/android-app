@@ -11,8 +11,8 @@
     android:paddingTop="20dp"
     android:paddingBottom="20dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
-      style="@style/TextAppearance.AppCompat.Title"
+    <TextView
+      style="@style/TextAppearance.MaterialComponents.Headline4"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="20dp"
@@ -31,9 +31,9 @@
       android:layout_margin="20dp"
       android:orientation="horizontal">
 
-      <androidx.appcompat.widget.AppCompatButton
+      <Button
         android:id="@+id/button_schedule"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/schedule" />
@@ -42,9 +42,9 @@
         android:layout_width="20dp"
         android:layout_height="1dp" />
 
-      <androidx.appcompat.widget.AppCompatButton
+      <Button
         android:id="@+id/button_reset"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="false"

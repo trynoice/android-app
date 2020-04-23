@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.cardview.widget.CardView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  style="@style/Widget.App.CardView"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:layout_margin="7dp"
-  app:cardBackgroundColor="@color/colorCardBackground"
-  app:cardCornerRadius="7dp"
-  app:cardElevation="3dp"
-  app:contentPadding="15dp">
+  android:layout_height="wrap_content">
 
   <!-- Lot of linear layouts because performance -->
   <LinearLayout
@@ -25,7 +21,7 @@
       android:contentDescription="@string/play_pause"
       android:padding="5dp"
       android:src="@drawable/ic_action_play"
-      android:tint="@color/colorAccent" />
+      android:tint="?attr/colorAccent" />
 
     <LinearLayout
       android:layout_width="0dp"
@@ -36,7 +32,7 @@
 
       <TextView
         android:id="@+id/title"
-        style="@style/TextAppearance.AppCompat.Subhead"
+        style="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -54,13 +50,13 @@
           android:layout_height="wrap_content"
           android:contentDescription="@string/volume"
           android:src="@drawable/ic_stat_volume"
-          android:tint="@color/colorAccent" />
+          android:tint="?attr/colorAccent" />
 
         <SeekBar
           android:id="@+id/seekbar_volume"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_weight="1" />
+          android:layout_weight="1"/>
 
       </LinearLayout>
 
@@ -78,7 +74,7 @@
           android:layout_height="wrap_content"
           android:contentDescription="@string/repeat_time_period"
           android:src="@drawable/ic_stat_time_period"
-          android:tint="@color/colorAccent" />
+          android:tint="?attr/colorAccent" />
 
         <SeekBar
           android:id="@+id/seekbar_time_period"

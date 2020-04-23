@@ -29,7 +29,7 @@ class SavePresetDialogFragmentTest {
 
   @Before
   fun setup() {
-    fragmentScenario = launchFragmentInContainer<SavePresetDialogFragment>(null, R.style.AppTheme)
+    fragmentScenario = launchFragmentInContainer<SavePresetDialogFragment>(null, R.style.Theme_App)
   }
 
   @Test

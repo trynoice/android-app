@@ -97,11 +97,10 @@ class SoundLibraryFragment : Fragment() {
     super.onDestroyView()
   }
 
-  @Suppress("DEPRECATION")
-  fun showMessage(@StringRes messageId: Int) {
+  @Suppress("SameParameterValue")
+  private fun showMessage(@StringRes messageId: Int) {
     Snackbar.make(requireView(), messageId, Snackbar.LENGTH_LONG)
       .setAction(R.string.dismiss) { }
-      .setBackgroundTint(resources.getColor(R.color.colorPrimary))
       .show()
   }
 

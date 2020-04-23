@@ -100,7 +100,7 @@ class SoundLibraryFragmentTest {
 
   @Before
   fun setup() {
-    fragmentScenario = launchFragmentInContainer<SoundLibraryFragment>(null, R.style.AppTheme, null)
+    fragmentScenario = launchFragmentInContainer<SoundLibraryFragment>(null, R.style.Theme_App, null)
     fragmentScenario.onFragment {
       fragment = it
     }

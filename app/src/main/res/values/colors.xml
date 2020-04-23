@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#27272f</color>
-  <color name="colorPrimaryDark">#000000</color>
+  <color name="colorPrimary">#1eb980</color>
+  <color name="colorPrimaryDark">#1d1d23</color>
   <color name="colorAccent">#1eb980</color>
+  <color name="colorActionBar">#2b2b34</color>
   <color name="colorBackground">#f8fAf9</color>
-  <color name="colorCardBackground">#f1f5f4</color>
-  <color name="about_background_color">#f8fAf9</color>
+  <color name="colorCardBackground">#fdfdfd</color>
   <color name="colorHint">#7d7d68</color>
-  <color name="colorNavigationViewText">@android:color/primary_text_light</color>
+  <!-- Following is needed because AboutPage doesn't have any way to define custom style.
+  This is supposed to override its default background color -->
+  <color name="about_background_color">@color/colorBackground</color>
 </resources>

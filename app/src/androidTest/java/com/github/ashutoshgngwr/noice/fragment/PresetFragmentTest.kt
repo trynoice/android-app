@@ -40,7 +40,7 @@ class PresetFragmentTest {
 
   @Before
   fun setup() {
-    fragmentScenario = launchFragmentInContainer<PresetFragment>(null, R.style.AppTheme)
+    fragmentScenario = launchFragmentInContainer<PresetFragment>(null, R.style.Theme_App)
       .onFragment { fragment = it }
 
     MockitoAnnotations.initMocks(this)
