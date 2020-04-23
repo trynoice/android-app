@@ -67,6 +67,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         PresetFragment::class.java.simpleName -> {
           navigation_drawer.setCheckedItem(R.id.saved_presets)
         }
+        SleepTimerFragment::class.java.simpleName -> {
+          navigation_drawer.setCheckedItem(R.id.sleep_timer)
+        }
         AboutFragment::class.java.simpleName -> {
           navigation_drawer.setCheckedItem(R.id.about)
         }
