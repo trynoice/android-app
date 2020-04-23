@@ -1,0 +1,5 @@
+- Added German translations
+- Minor UI improvements
+- Fixed minor bugs
+
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG
