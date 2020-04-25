@@ -189,12 +189,12 @@ class SoundLibraryFragment : Fragment() {
         view.seekbar_time_period.setOnSeekBarChangeListener(seekBarChangeListener)
 
         view.button_play.setOnClickListener {
-          val soundKey = dataSet[adapterPosition].key
+          val sound = dataSet.getOrNull(adapterPosition) ?: return@setOnClickListener
 
-          if (playbacks.containsKey(soundKey)) {
-            eventBus.post(PlaybackControlEvents.StopPlaybackEvent(soundKey))
+          if (playbacks.containsKey(sound.key)) {
+            eventBus.post(PlaybackControlEvents.StopPlaybackEvent(sound.key))
           } else {
-            eventBus.post(PlaybackControlEvents.StartPlaybackEvent(soundKey))
+            eventBus.post(PlaybackControlEvents.StartPlaybackEvent(sound.key))
           }
         }
       }
