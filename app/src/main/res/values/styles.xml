@@ -32,4 +32,12 @@
     <item name="contentPadding">10dp</item>
   </style>
 
+  <style name="TextAppearance.App.CountdownTextView" parent="TextAppearance.MaterialComponents.Headline2">
+    <item name="android:textColor">?attr/colorAccent</item>
+  </style>
+
+  <style name="TextAppearance.App.CountdownTextView.Disabled">
+    <item name="android:textColor">@color/material_on_background_disabled</item>
+  </style>
+
 </resources>
