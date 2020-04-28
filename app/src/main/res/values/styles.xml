@@ -40,4 +40,12 @@
     <item name="android:textColor">@color/material_on_background_disabled</item>
   </style>
 
+  <style name="Widget.App.Button.AddTime" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+    <item name="android:layout_columnWeight">1</item>
+    <item name="android:layout_gravity">center</item>
+    <item name="android:padding">12dp</item>
+    <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline5</item>
+    <item name="icon">@drawable/ic_action_add</item>
+  </style>
+
 </resources>
