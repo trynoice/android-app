@@ -7,6 +7,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.MainActivity
+import org.hamcrest.Matchers.not
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -42,7 +43,7 @@ class CountdownTextViewTest {
       view.startCountdown(3661000L)
     }
 
-    onView(withId(view.id)).check(matches(withText("01h 01m 01s")))
+    onView(withId(view.id)).check(matches(not(withText("00h 00m 00s"))))
   }
 
   @Test
