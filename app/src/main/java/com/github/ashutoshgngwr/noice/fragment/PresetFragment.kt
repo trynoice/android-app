@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
@@ -127,36 +128,50 @@ class PresetFragment : Fragment() {
           eventBus.register(this@PresetFragment)
         }
 
-        itemView.button_delete.setOnClickListener {
-          MaterialAlertDialogBuilder(requireContext()).run {
-            setMessage(
-              getString(
-                R.string.preset_delete_confirmation,
-                dataSet[adapterPosition].name
-              )
-            )
-            setNegativeButton(R.string.cancel, null)
-            setPositiveButton(R.string.delete) { _: DialogInterface, _: Int ->
-              val preset = dataSet.removeAt(adapterPosition)
-              Preset.writeAllToUserPreferences(context, dataSet)
-
-              // notify adapter of item remove before stopping playback
-              notifyItemRemoved(adapterPosition)
-
-              // then stop playback if recently deleted preset was playing
-              // notifyDataSetChanged() is needed to notify AdapterDataObserver
-              if (preset == activePreset) {
-                eventBus.post(PlaybackControlEvents.StopPlaybackEvent()) // will notifyDataSetChanged()
-              } else {
-                notifyDataSetChanged() // or call it explicitly
-              }
-
-              Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
-                .setAction(R.string.dismiss) { }
-                .show()
-            }
-            show()
+        val onMenuItemClickListener = PopupMenu.OnMenuItemClickListener {
+          when (it.itemId) {
+            R.id.action_delete -> showDeletePresetConfirmation()
           }
+
+          true
+        }
+
+        itemView.button_menu.setOnClickListener {
+          PopupMenu(requireContext(), itemView.button_menu).let {
+            it.inflate(R.menu.preset)
+            it.setOnMenuItemClickListener(onMenuItemClickListener)
+            it.show()
+          }
+        }
+      }
+
+      private fun showDeletePresetConfirmation() {
+        MaterialAlertDialogBuilder(requireContext()).run {
+          setMessage(
+            getString(
+              R.string.preset_delete_confirmation,
+              dataSet[adapterPosition].name
+            )
+          )
+          setNegativeButton(R.string.cancel, null)
+          setPositiveButton(R.string.delete) { _: DialogInterface, _: Int ->
+            val preset = dataSet.removeAt(adapterPosition)
+            Preset.writeAllToUserPreferences(requireContext(), dataSet)
+            notifyItemRemoved(adapterPosition)
+
+            // then stop playback if recently deleted preset was playing
+            // notifyDataSetChanged() is needed to notify AdapterDataObserver
+            if (preset == activePreset) {
+              eventBus.post(PlaybackControlEvents.StopPlaybackEvent()) // will notifyDataSetChanged()
+            } else {
+              notifyDataSetChanged() // or call it explicitly
+            }
+
+            Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
+              .setAction(R.string.dismiss) { }
+              .show()
+          }
+          show()
         }
       }
     }

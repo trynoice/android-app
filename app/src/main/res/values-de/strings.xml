@@ -51,7 +51,6 @@
   <string name="preset_name_cannot_be_empty">Der Voreinstellungsname darf nicht leer sein!</string>
   <string name="preset_saved">Voreinstellung gespeichert!</string>
   <string name="saved_presets">Gespeicherte Voreinstellungen</string>
-  <string name="delete_preset">Voreinstellung löschen</string>
   <string name="preset_delete_confirmation">%s löschen?</string>
   <string name="delete">Löschen</string>
   <string name="preset_deleted">Voreinstellung gelöscht!</string>

@@ -124,7 +124,6 @@
   <string name="preset_name_cannot_be_empty">Preset name cannot be empty!</string>
   <string name="preset_saved">Preset saved!</string>
   <string name="saved_presets">Saved Presets</string>
-  <string name="delete_preset">Delete Preset</string>
   <string name="preset_delete_confirmation">Confirm delete %s?</string>
   <string name="delete">Delete</string>
   <string name="preset_deleted">Preset deleted!</string>
@@ -136,6 +135,7 @@
   <string name="auto_sleep_schedule_success">Scheduled auto sleep timer!</string>
   <string name="auto_sleep_schedule_cancelled">Auto sleep timer cancelled!</string>
   <string name="app_theme">Theme</string>
+  <string name="open_context_menu">Open context menu</string>
   <string-array name="app_themes">
     <item>Light</item>
     <item>Dark</item>

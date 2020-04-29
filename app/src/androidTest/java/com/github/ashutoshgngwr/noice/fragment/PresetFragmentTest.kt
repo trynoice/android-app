@@ -131,7 +131,7 @@ class PresetFragmentTest {
   }
 
   @Test
-  fun testRecyclerViewItem_deleteButton() {
+  fun testRecyclerViewItem_deleteOption() {
     fragmentScenario.onFragment {
       val playback = Playback(
         it.requireContext(),
@@ -147,10 +147,11 @@ class PresetFragmentTest {
       it.onPlaybackUpdate(hashMapOf("birds" to playback))
     }
 
-    onView(withId(R.id.button_delete)).perform(click())
-    onView(withText(R.string.delete)).perform(click())
+    onView(withId(R.id.button_menu)).perform(click()) // open context menu
+    onView(withText(R.string.delete)).perform(click()) // select delete option
+    onView(withText(R.string.delete)).perform(click()) // click delete button in confirmation dialog
 
-    onView(withId(R.id.button_delete)).check(doesNotExist())
+    onView(withText("test")).check(doesNotExist())
     verify(eventBus, atMostOnce()).post(any())
     verify(eventBus).post(PlaybackControlEvents.StopPlaybackEvent())
   }

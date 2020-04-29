@@ -9,6 +9,7 @@
     <item name="actionBarTheme">@style/ThemeOverlay.App.Dark.ActionBar</item>
     <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton</item>
     <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.Dialog.Alert</item>
+    <item name="popupMenuStyle">@style/Widget.App.PopupMenu</item>
   </style>
 
   <style name="ThemeOverlay.App.Dark.ActionBar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
@@ -30,6 +31,10 @@
     <item name="cardCornerRadius">7dp</item>
     <item name="cardElevation">3dp</item>
     <item name="contentPadding">10dp</item>
+  </style>
+
+  <style name="Widget.App.PopupMenu" parent="Widget.MaterialComponents.PopupMenu">
+    <item name="android:popupBackground">@drawable/popup_menu_bg</item>
   </style>
 
 </resources>

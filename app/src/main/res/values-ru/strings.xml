@@ -46,7 +46,6 @@
   <string name="preset_name_cannot_be_empty">Название пресета не может быть пустым!</string>
   <string name="preset_saved">Пресет сохранен!</string>
   <string name="saved_presets">Сохраненные пресеты</string>
-  <string name="delete_preset">Удалить пресет</string>
   <string name="preset_delete_confirmation">Подтвердите удаление %s?</string>
   <string name="delete">Увалить</string>
   <string name="preset_deleted">Пресет удален!</string>

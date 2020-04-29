@@ -44,7 +44,6 @@
   <string name="preset_name_cannot_be_empty">El nombre del preajuste no puede estar vacío</string>
   <string name="preset_saved">¡Preajuste guardado!</string>
   <string name="saved_presets">Preajustes Guardados</string>
-  <string name="delete_preset">Borrar Preajuste</string>
   <string name="preset_delete_confirmation">¿Confirma borrar %s?</string>
   <string name="delete">Borrar</string>
   <string name="preset_deleted">¡Preajuste borrado!</string>

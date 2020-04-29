@@ -2,6 +2,7 @@
 <resources>
   <color name="colorBackground">#3f3f4d</color>
   <color name="colorCardBackground">#3c3c48</color>
+  <color name="colorPopupBackground">#32323d</color>
   <color name="colorHint">#828297</color>
   <!-- Following is needed because AboutPage doesn't have any way to define custom style.
   This is supposed to override its default background color -->
