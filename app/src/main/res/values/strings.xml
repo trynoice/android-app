@@ -115,6 +115,8 @@
   <string name="credits__translation_russian_url" translatable="false">https://github.com/yamaks2306</string>
   <string name="credits__translation_german" translatable="false">German translation by Steffen Schultz</string>
   <string name="credits__translation_german_url" translatable="false">https://github.com/schulle4u</string>
+  <string name="credits__translation_italian" translatable="false">Italian translation by Sebastian Scaramuzza</string>
+  <string name="credits__translation_italian_url" translatable="false">https://sebastianscaramuzza.com</string>
   <string name="app_issues_url" translatable="false">https://github.com/ashutoshgngwr/noice/issues</string>
   <string name="dismiss">Dismiss</string>
   <string name="save_preset">Save Preset</string>
