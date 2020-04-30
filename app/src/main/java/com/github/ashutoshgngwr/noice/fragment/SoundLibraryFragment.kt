@@ -1,8 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -73,23 +71,22 @@ class SoundLibraryFragment : Fragment() {
 
     mSavePresetButton = view.fab_save_preset
     requireNotNull(mSavePresetButton).setOnClickListener {
-      SavePresetDialogFragment::class.java.newInstance().let {
-        it.preset = PresetFragment.Preset("", playbacks.values.toTypedArray())
-        it.setTargetFragment(this, RC_SAVE_PRESET_DIALOG)
-        it.show(requireActivity().supportFragmentManager, it.javaClass.simpleName)
+      DialogFragment().show(requireActivity().supportFragmentManager) {
+        title(R.string.save_preset)
+        input(hintRes = R.string.name, errorRes = R.string.preset_name_cannot_be_empty)
+        negativeButton(R.string.cancel)
+        positiveButton(R.string.save) {
+          val preset = PresetFragment.Preset(getInputText(), playbacks.values.toTypedArray())
+          PresetFragment.Preset.appendToUserPreferences(requireContext(), preset)
+          showMessage(R.string.preset_saved)
+          if (mSavePresetButton != null) {
+            requireNotNull(mSavePresetButton).hide()
+          }
+        }
       }
     }
 
     eventBus.register(this)
-  }
-
-  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    if (requestCode == RC_SAVE_PRESET_DIALOG && resultCode == Activity.RESULT_OK) {
-      showMessage(R.string.preset_saved)
-      if (mSavePresetButton != null) {
-        requireNotNull(mSavePresetButton).hide()
-      }
-    }
   }
 
   override fun onDestroyView() {

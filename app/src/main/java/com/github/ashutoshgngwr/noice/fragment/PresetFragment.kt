@@ -1,7 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.sound.Playback
 import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
@@ -146,15 +144,11 @@ class PresetFragment : Fragment() {
       }
 
       private fun showDeletePresetConfirmation() {
-        MaterialAlertDialogBuilder(requireContext()).run {
-          setMessage(
-            getString(
-              R.string.preset_delete_confirmation,
-              dataSet[adapterPosition].name
-            )
-          )
-          setNegativeButton(R.string.cancel, null)
-          setPositiveButton(R.string.delete) { _: DialogInterface, _: Int ->
+        DialogFragment().show(requireActivity().supportFragmentManager) {
+          title(R.string.delete)
+          message(R.string.preset_delete_confirmation, dataSet[adapterPosition].name)
+          negativeButton(R.string.cancel)
+          positiveButton(R.string.delete) {
             val preset = dataSet.removeAt(adapterPosition)
             Preset.writeAllToUserPreferences(requireContext(), dataSet)
             notifyItemRemoved(adapterPosition)
@@ -171,7 +165,6 @@ class PresetFragment : Fragment() {
               .setAction(R.string.dismiss) { }
               .show()
           }
-          show()
         }
       }
     }
