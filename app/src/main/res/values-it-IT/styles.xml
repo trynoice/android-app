@@ -1,0 +1,35 @@
+<resources>
+
+  <style name="Theme.App" parent="Theme.MaterialComponents.DayNight">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:colorBackground">@color/colorBackground</item>
+    <item name="actionBarStyle">@style/Widget.MaterialComponents.ActionBar.Solid</item>
+    <item name="actionBarTheme">@style/ThemeOverlay.App.Dark.ActionBar</item>
+    <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton</item>
+    <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.Dialog.Alert</item>
+  </style>
+
+  <style name="ThemeOverlay.App.Dark.ActionBar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
+    <item name="colorPrimary">@color/colorActionBar</item>
+  </style>
+
+  <style name="Widget.App.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+    <item name="tint">@android:color/primary_text_dark</item>
+    <item name="backgroundTint">?attr/colorAccent</item>
+  </style>
+
+  <style name="ThemeOverlay.App.Dialog.Alert" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+    <item name="colorSurface">@color/colorCardBackground</item>
+  </style>
+
+  <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
+    <item name="android:layout_margin">7dp</item>
+    <item name="cardBackgroundColor">@color/colorCardBackground</item>
+    <item name="cardCornerRadius">7dp</item>
+    <item name="cardElevation">3dp</item>
+    <item name="contentPadding">10dp</item>
+  </style>
+
+</resources>

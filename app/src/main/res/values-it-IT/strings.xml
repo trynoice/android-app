@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name" translatable="false">Noice</string>
+  <string name="library">Libreria</string>
+  <string name="about">A proposito di</string>
+  <string name="report_issue">Riporta errore</string>
+  <string name="repeat_time_period">Periodo di ripetizione</string>
+  <string name="volume">Volume del suono</string>
+  <string name="play_pause">riproduci o pausa</string>
+  <string name="open_drawer">Apri menu' di navigazione</string>
+  <string name="close_drawer">Chiudi menu di navigazione</string>
+  <string name="notification_channel_default__name">Riproduzione dei media</string>
+  <string name="notification_channel_default__description">Controlli di riproduzione</string>
+  <string name="pause">Pausa</string>
+  <string name="play">Riproduci</string>
+  <string name="stop">Ferma</string>
+  <string name="airplane_inflight">Aereo in volo</string>
+  <string name="airplane_seatbelt_beeps">Bip cinture di sicurezza in aereo</string>
+  <string name="birds">Uccelli</string>
+  <string name="bonfire">Falo'</string>
+  <string name="brownian_noise">Rumore marrone</string>
+  <string name="coffee_shop">Caffetteria</string>
+  <string name="distant_thunder">Tuono distante</string>
+  <string name="heavy_rain">Pioggia forte</string>
+  <string name="light_rain">Pioggia leggera</string>
+  <string name="moderate_rain">Pioggia moderata</string>
+  <string name="morning_in_a_village">Mattino in un villaggio</string>
+  <string name="moving_train">Treno in movimento</string>
+  <string name="night">Notte</string>
+  <string name="office">Ufficio</string>
+  <string name="pink_noise">Rumore Rosa</string>
+  <string name="rolling_thunder">Rombo di tuono</string>
+  <string name="seaside">Litorale</string>
+  <string name="soft_wind">Vento leggero</string>
+  <string name="thunder_crack">Scarica di fulmine</string>
+  <string name="train_horn">Fischio di treno</string>
+  <string name="water_stream">Flusso d'acqua</string>
+  <string name="white_noise">Rumore bianco</string>
+  <string name="wind_in_palm_trees">Vento tra le palme</string>
+  <string name="wind_in_chimes_of_shells">Vento tra le conciglie</string>
+  <string name="app_description">Rilassati e incrementa la produttivita' con rumori di fondo minimali</string>
+  <string name="app_copyright" translatable="false">2019 Ashutosh Gangwar</string>
+  <string name="app_license_url" translatable="false">
+    https://github.com/ashutoshgngwr/noice/blob/master/LICENSE
+  </string>
+  <string name="app_website" translatable="false">https://ashutoshgngwr.github.io/noice</string>
+  <string name="app_playstore" translatable="false">com.github.ashutoshgngwr.noice</string>
+  <string name="app_github" translatable="false">ashutoshgngwr/noice</string>
+  <string name="connect_with_author">Connettiti con l'Autore</string>
+  <string name="author_email" translatable="false">ashutoshgngwr@gmail.com</string>
+  <string name="about__email">Email</string>
+  <string name="author_social_handle" translatable="false">ashutoshgngwr</string>
+  <string name="about__github">Github</string>
+  <string name="about__twitter">Twitter</string>
+  <string name="credits">Crediti</string>
+  <string name="credits__app_icon" translatable="false">icona rumore bianco di Juraj Sedlák</string>
+  <string name="credits__app_icon_url" translatable="false">
+    https://thenounproject.com/term/white-noise/1287855/
+  </string>
+  <string name="credits__sound_airplane_inflight" translatable="false">Atmosfera volo Boing 737-838 di digifishmusic</string>
+  <string name="credits__sound_airplane_inflight_url" translatable="false">https://freesound.org/s/47254/</string>
+  <string name="credits__sound_airplane_seatbelt_beeps" translatable="false">Bip cinture di sicurezza by nachosose</string>
+  <string name="credits__sound_airplane_seatbelt_beeps_url" translatable="false">https://freesound.org/s/244583/</string>
+  <string name="credits__sound_birds" translatable="false">Uccelli in primavera (New Jersey) di hargissssound</string>
+  <string name="credits__sound_birds_url" translatable="false">https://freesound.org/s/345851/</string>
+  <string name="credits__sound_bonfire" translatable="false">Falo' di amether</string>
+  <string name="credits__sound_bonfire_url" translatable="false">https://freesound.org/s/189237/</string>
+  <string name="credits__sound_coffee_shop" translatable="false">Atmosfera Mensa di Scuola (Caffetteria) di slag777</string>
+  <string name="credits__sound_coffee_shop_url" translatable="false">https://freesound.org/s/167057/</string>
+  <string name="credits__sound_distant_thunder" translatable="false">Tuono a distanza da Libreria Audio YouTube</string>
+  <string name="credits__sound_distant_thunder_url" translatable="false">
+    https://www.youtube.com/audiolibrary_download?vid=c661c0547daf6af7
+  </string>
+  <string name="credits__sound_heavy_rain" translatable="false">Pioggia forte (temporale) da Libreria Audio YouTube</string>
+  <string name="credits__sound_heavy_rain_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=85220b39abbc1421</string>
+  <string name="credits__sound_light_rain" translatable="false">Pioggia leggera (sul tetto) da Libreria Audio YouTube</string>
+  <string name="credits__sound_light_rain_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=f0eff544b6f1e0d0</string>
+  <string name="credits__sound_moderate_rain" translatable="false">Pioggia moderata (temporale) da Libreria Audio YouTube</string>
+  <string name="credits__sound_moderate_rain_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=85220b39abbc1421</string>
+  <string name="credits__morning_in_a_village" translatable="false">Mattino in villaggio della giungla di aurelien.leveque</string>
+  <string name="credits__morning_in_a_village_url" translatable="false">https://freesound.org/s/417635/</string>
+  <string name="credits__sound_moving_train" translatable="false">Ruote di treno in movimento fuori Thailandia di YOH</string>
+  <string name="credits__sound_moving_train_url" translatable="false">https://freesound.org/s/170866/</string>
+  <string name="credits__sound_night" translatable="false">Giungla choco di jaime_enrique</string>
+  <string name="credits__sound_night_url" translatable="false">https://freesound.org/s/424763/</string>
+  <string name="credits__sound_office" translatable="false">Ambiente ufficio di Nightwatcher98</string>
+  <string name="credits__sound_office_url" translatable="false">https://freesound.org/s/407292/</string>
+  <string name="credits__sound_rolling_thunder" translatable="false">Rombo di tuono da Libreria Audio YouTube</string>
+  <string name="credits__sound_rolling_thunder_url" translatable="false">
+    https://www.youtube.com/audiolibrary_download?vid=5f4a1b5b9c7f5d1f
+  </string>
+  <string name="credits__sound_seaside" translatable="false">Onde del mare di foongaz</string>
+  <string name="credits__sound_seaside_url" translatable="false">https://freesound.org/s/253287/</string>
+  <string name="credits__sound_soft_wind" translatable="false">Vento da Libreria Audio YouTube</string>
+  <string name="credits__sound_soft_wind_url" translatable="false">
+    https://www.youtube.com/audiolibrary_download?vid=e7334011b49fb938
+  </string>
+  <string name="credits__sound_thunder_crack" translatable="false">Scarica di fulmine da Libreria Audio YouTube</string>
+  <string name="credits__sound_thunder_crack_url" translatable="false">
+    https://www.youtube.com/audiolibrary_download?vid=e4b6c4fa94a94535
+  </string>
+  <string name="credits__sound_train_horn" translatable="false">Fischio del treno di CouleurCasquette</string>
+  <string name="credits__sound_train_horn_url" translatable="false">https://freesound.org/s/248229/</string>
+  <string name="credits__sound_water_stream" translatable="false">Flusso, Acqua Corrente | Aviemore Scotland di BurghRecords</string>
+  <string name="credits__sound_water_stream_url" translatable="false">https://freesound.org/s/415151/</string>
+  <string name="credits__sound_wind_chimes_of_shells" translatable="false">Vento tra conciglie da Libreria Audio YouTube</string>
+  <string name="credits__sound_wind_chimes_of_shells_url" translatable="false">
+    https://www.youtube.com/audiolibrary_download?vid=b604ba49f305d739
+  </string>
+  <string name="credits__sound_wind_in_palm_trees" translatable="false">Palme al vento di StrangeAcoustics</string>
+  <string name="credits__sound_wind_in_palm_trees_url" translatable="false">https://freesound.org/s/346106/</string>
+  <string name="credits__translation_argentinian_spanish" translatable="false">Traduzione spangolo Argentino di Enchufadoo</string>
+  <string name="credits__translation_argentinian_spanish_url" translatable="false">https://github.com/Enchufadoo</string>
+  <string name="credits__translation_russian" translatable="false">Traduzione in russo di yamaks2306</string>
+  <string name="credits__translation_russian_url" translatable="false">https://github.com/yamaks2306</string>
+  <string name="credits__translation_german" translatable="false">Traduzione in tedesco di Steffen Schultz</string>
+  <string name="credits__translation_german_url" translatable="false">https://github.com/schulle4u</string>
+  <string name="credits__translation_italian" translatable="false">Traduzione in italiano di Sebastian Scaramuzza</string>
+  <string name="credits__translation_italian_url" translatable="false">https://sebastianscaramuzza.com</string>
+  <string name="app_issues_url" translatable="false">https://github.com/ashutoshgngwr/noice/issues</string>
+  <string name="dismiss">Annulla</string>
+  <string name="save_preset">Salva preimpostazione</string>
+  <string name="name">Nome</string>
+  <string name="save">Salva</string>
+  <string name="cancel">Annulla</string>
+  <string name="preset_name_cannot_be_empty">Il nome della preimpostazione non puo' essere vuoto!</string>
+  <string name="preset_saved">Preimpostazione salvata!</string>
+  <string name="saved_presets">Preimpostazioni salvate</string>
+  <string name="delete_preset">Rimovu preimpostazione</string>
+  <string name="preset_delete_confirmation">Confermi rimozione di %s?</string>
+  <string name="delete">Rimuovi</string>
+  <string name="preset_deleted">Preimpostazione rimossa!</string>
+  <string name="nothing_saved_yet">Niente ancora salvato!</string>
+  <string name="sleep_timer">Timer di spegnimento </string>
+  <string name="schedule">Pianifica</string>
+  <string name="reset">Ripristina</string>
+  <string name="auto_sleep_schedule_error">Il timer di spegnimento non puo' essere impostato alle 00:00!</string>
+  <string name="auto_sleep_schedule_success">Timer di spegnimento impostato!</string>
+  <string name="auto_sleep_schedule_cancelled">Timer di spegnimento rimosso!</string>
+  <string name="app_theme">Tema</string>
+  <string-array name="app_themes">
+    <item>Chiaro</item>
+    <item>Scuro</item>
+    <item>Predefinito del sistema</item>
+  </string-array>
+</resources>
