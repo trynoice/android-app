@@ -130,12 +130,15 @@
   <string name="preset_deleted">Preset deleted!</string>
   <string name="nothing_saved_yet">Nothing saved yet!</string>
   <string name="sleep_timer">Sleep Timer</string>
-  <string name="schedule">Schedule</string>
   <string name="reset">Reset</string>
-  <string name="auto_sleep_schedule_error">Auto sleep timer can not be set to 00:00!</string>
-  <string name="auto_sleep_schedule_success">Scheduled auto sleep timer!</string>
   <string name="auto_sleep_schedule_cancelled">Auto sleep timer cancelled!</string>
   <string name="app_theme">Theme</string>
+  <string name="plus1m" translatable="false">1m</string>
+  <string name="plus5m" translatable="false">5m</string>
+  <string name="plus30m" translatable="false">30m</string>
+  <string name="plus1h" translatable="false">1h</string>
+  <string name="plus4h" translatable="false">4h</string>
+  <string name="plus8h" translatable="false">8h</string>
   <string-array name="app_themes">
     <item>Light</item>
     <item>Dark</item>

@@ -1,7 +1,5 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.os.Build
-import android.os.Bundle
 import android.os.SystemClock
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -9,19 +7,17 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.PickerActions.setTime
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.R
 import kotlinx.android.synthetic.main.fragment_sleep_timer.view.*
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.not
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentCaptor
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.*
@@ -49,20 +45,93 @@ class SleepTimerFragmentTest {
   }
 
   @Test
-  fun testScheduleButton_withInvalidInput() {
-    onView(withId(R.id.button_schedule)).perform(scrollTo(), click())
-    onView(withText(R.string.auto_sleep_schedule_error)).check(matches(isDisplayed()))
-    verify(eventBus, atMost(0)).postSticky(any())
+  fun testAddTimeButton_onSleepPreScheduled() {
+    val sleepTime = SystemClock.uptimeMillis() + 60 * 1000L
+    `when`(eventBus.getStickyEvent(SleepTimerFragment.ScheduleAutoSleepEvent::class.java))
+      .thenReturn(SleepTimerFragment.ScheduleAutoSleepEvent(sleepTime))
+
+    onView(withId(R.id.button_1m)).perform(click())
+    val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
+    verify(eventBus, atMostOnce()).postSticky(captor.capture())
+
+    // won't get exact duration back. Need to ensure its in the expected range.
+    val remainingSleepDurationMillis = captor.value.atUptimeMillis - SystemClock.uptimeMillis()
+    assertTrue(remainingSleepDurationMillis > 110 * 1000L)
+    assertTrue(remainingSleepDurationMillis <= 120 * 1000L)
   }
 
   @Test
-  fun testScheduleButton_withValidInput() {
-    onView(withId(R.id.time_picker)).perform(setTime(1, 1))
-    onView(withId(R.id.button_schedule)).perform(scrollTo(), click())
-    onView(withText(R.string.auto_sleep_schedule_success)).check(matches(isDisplayed()))
-    verify(eventBus, atMost(1))
-      .postSticky(any())
+  fun testAddTimeButton_1m() {
+    onView(withId(R.id.button_1m)).perform(click())
+    val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
+    verify(eventBus, atMostOnce()).postSticky(captor.capture())
+
+    // won't get exact duration back. Need to ensure its in the expected range.
+    val remainingSleepDurationMillis = captor.value.atUptimeMillis - SystemClock.uptimeMillis()
+    assertTrue(remainingSleepDurationMillis > 50 * 1000L)
+    assertTrue(remainingSleepDurationMillis <= 60 * 1000L)
   }
+
+  @Test
+  fun testAddTimeButton_5m() {
+    onView(withId(R.id.button_5m)).perform(click())
+    val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
+    verify(eventBus, atMostOnce()).postSticky(captor.capture())
+
+    // won't get exact duration back. Need to ensure its in the expected range.
+    val remainingSleepDurationMillis = captor.value.atUptimeMillis - SystemClock.uptimeMillis()
+    assertTrue(remainingSleepDurationMillis > 290 * 1000L)
+    assertTrue(remainingSleepDurationMillis <= 300 * 1000L)
+  }
+
+  @Test
+  fun testAddTimeButton_30m() {
+    onView(withId(R.id.button_30m)).perform(click())
+    val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
+    verify(eventBus, atMostOnce()).postSticky(captor.capture())
+
+    // won't get exact duration back. Need to ensure its in the expected range.
+    val remainingSleepDurationMillis = captor.value.atUptimeMillis - SystemClock.uptimeMillis()
+    assertTrue(remainingSleepDurationMillis > 1790 * 1000L)
+    assertTrue(remainingSleepDurationMillis <= 1800 * 1000L)
+  }
+
+  @Test
+  fun testAddTimeButton_1h() {
+    onView(withId(R.id.button_1h)).perform(click())
+    val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
+    verify(eventBus, atMostOnce()).postSticky(captor.capture())
+
+    // won't get exact duration back. Need to ensure its in the expected range.
+    val remainingSleepDurationMillis = captor.value.atUptimeMillis - SystemClock.uptimeMillis()
+    assertTrue(remainingSleepDurationMillis > 3590 * 1000L)
+    assertTrue(remainingSleepDurationMillis <= 3600 * 1000L)
+  }
+
+  @Test
+  fun testAddTimeButton_4h() {
+    onView(withId(R.id.button_4h)).perform(click())
+    val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
+    verify(eventBus, atMostOnce()).postSticky(captor.capture())
+
+    // won't get exact duration back. Need to ensure its in the expected range.
+    val remainingSleepDurationMillis = captor.value.atUptimeMillis - SystemClock.uptimeMillis()
+    assertTrue(remainingSleepDurationMillis > 3 * 3600 * 1000L)
+    assertTrue(remainingSleepDurationMillis <= 4 * 3600 * 1000L)
+  }
+
+  @Test
+  fun testAddTimeButton_8h() {
+    onView(withId(R.id.button_8h)).perform(click())
+    val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
+    verify(eventBus, atMostOnce()).postSticky(captor.capture())
+
+    // won't get exact duration back. Need to ensure its in the expected range.
+    val remainingSleepDurationMillis = captor.value.atUptimeMillis - SystemClock.uptimeMillis()
+    assertTrue(remainingSleepDurationMillis > 7 * 3600 * 1000L)
+    assertTrue(remainingSleepDurationMillis <= 8 * 3600 * 1000L)
+  }
+
 
   @Test
   fun testResetButton_shouldNotBeEnabledByDefault() {
@@ -87,13 +156,7 @@ class SleepTimerFragmentTest {
     }
 
     onView(withId(R.id.button_reset)).check(matches(isEnabled()))
-    fragmentScenario.onFragment {
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        assertNotEquals(0, it.requireView().time_picker.minute)
-      } else {
-        assertNotEquals(0, it.requireView().time_picker.currentMinute)
-      }
-    }
+    onView(withId(R.id.countdown_view)).check(matches(not(withText("00h 00m 00s"))))
   }
 
   @Test
@@ -103,24 +166,6 @@ class SleepTimerFragmentTest {
     }
 
     onView(withId(R.id.button_reset)).check(matches(not(isEnabled())))
-    fragmentScenario.onFragment {
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        assertEquals(0, it.requireView().time_picker.hour)
-        assertEquals(0, it.requireView().time_picker.minute)
-      } else {
-        assertEquals(0, it.requireView().time_picker.currentHour)
-        assertEquals(0, it.requireView().time_picker.currentMinute)
-      }
-    }
-  }
-
-  @Test
-  fun testOnSaveInstanceState() {
-    onView(withId(R.id.time_picker)).perform(setTime(1, 1))
-
-    val outState = Bundle()
-    fragmentScenario.onFragment { it.onSaveInstanceState(outState) }
-    assertEquals(1, outState.getInt("hour"))
-    assertEquals(1, outState.getInt("minute"))
+    onView(withId(R.id.countdown_view)).check(matches(withText("00h 00m 00s")))
   }
 }

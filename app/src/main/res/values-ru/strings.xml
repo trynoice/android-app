@@ -52,10 +52,7 @@
   <string name="preset_deleted">Пресет удален!</string>
   <string name="nothing_saved_yet">Пока пресетов нет!</string>
   <string name="sleep_timer">Таймер</string>
-  <string name="schedule">Расписание</string>
   <string name="reset">Сброс</string>
-  <string name="auto_sleep_schedule_error">Таймер автоотключения не может быть установлен на 00:00!</string>
-  <string name="auto_sleep_schedule_success">Таймер автоотключения установлен!</string>
   <string name="auto_sleep_schedule_cancelled">Таймер автоотключения отменен!</string>
   <string name="app_theme">Тема</string>
   <string-array name="app_themes">

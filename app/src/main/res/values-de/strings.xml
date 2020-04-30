@@ -57,10 +57,7 @@
   <string name="preset_deleted">Voreinstellung gelöscht!</string>
   <string name="nothing_saved_yet">Noch nichts gespeichert!</string>
   <string name="sleep_timer">Einschlaftimer</string>
-  <string name="schedule">Planen</string>
   <string name="reset">Zurücksetzen</string>
-  <string name="auto_sleep_schedule_error">Der automatische Schlaftimer kann nicht auf 00:00 festgelegt werden!</string>
-  <string name="auto_sleep_schedule_success">Automatischer Schlaftimer eingerichtet!</string>
   <string name="auto_sleep_schedule_cancelled">Automatischer Schlaftimer abgebrochen!</string>
   <string name="app_theme">Theme</string>
   <string-array name="app_themes">
