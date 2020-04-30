@@ -7,7 +7,6 @@
   <color name="colorBackground">#f8fAf9</color>
   <color name="colorCardBackground">#fdfdfd</color>
   <color name="colorPopupBackground">#fefefe</color>
-  <color name="colorHint">#7d7d68</color>
   <!-- Following is needed because AboutPage doesn't have any way to define custom style.
   This is supposed to override its default background color -->
   <color name="about_background_color">@color/colorBackground</color>
