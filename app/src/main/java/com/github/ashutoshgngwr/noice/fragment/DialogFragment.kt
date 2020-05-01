@@ -111,6 +111,7 @@ class DialogFragment : BottomSheetDialogFragment() {
     validator: (String) -> Boolean = { it.isNotBlank() },
     @StringRes errorRes: Int = 0
   ) {
+    requireView().positive.isEnabled = false
     layoutInflater.inflate(R.layout.fragment_dialog__text_input, requireView().content, false)
       .apply {
         textInputLayout.hint = getString(hintRes)
