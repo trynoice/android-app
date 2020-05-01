@@ -1,5 +1,0 @@
-- Aggiunta traduzione Tedesco
-- Minori migliore UI
-- Corretto bugs minori
-
-Vedi il changelog dettagliato su: https://ashutoshgngwr.github.io/noice/CHANGELOG

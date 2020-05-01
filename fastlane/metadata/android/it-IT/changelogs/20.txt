@@ -1,9 +1,0 @@
-- aggiunto effetti dissolvenza entrata/uscita per le riproduzioni
-- aggiunto suoni di aeroplano tra le riproduzioni
-- aggiunto suoni grezzi alla libreria (bianco, rosa e marrone)
-- aggiunto traduzioni in russo
-- corretto traduzioni in spagnolo non visibili
-- corretta consistenza aspetto dei temi tra la varianti
-
-lavoriamo continuamente per rendere Noice migliore ed utile. Per favore, attiva gli aggiornamenti per non perdere nulla!
-vedi il changelog dettagliato su: https://ashutoshgngwr.github.io/noice/changelog
