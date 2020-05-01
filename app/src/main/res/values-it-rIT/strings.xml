@@ -51,7 +51,7 @@
   <string name="preset_name_cannot_be_empty">Il nome della preimpostazione non può essere vuoto!</string>
   <string name="preset_saved">Preimpostazione salvata!</string>
   <string name="saved_presets">Preimpostazioni salvate</string>
-  <string name="delete_preset">Rimovi preimpostazione</string>
+  <string name="delete_preset">Rimuovi preimpostazione</string>
   <string name="preset_delete_confirmation">Confermi rimozione di %s?</string>
   <string name="delete">Rimuovi</string>
   <string name="preset_deleted">Preimpostazione rimossa!</string>
