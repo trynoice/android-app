@@ -49,10 +49,7 @@
   <string name="preset_deleted">¡Preajuste borrado!</string>
   <string name="nothing_saved_yet">¡Nada ha sido guardado aún!</string>
   <string name="sleep_timer">Temporizador</string>
-  <string name="schedule">Agendar</string>
   <string name="reset">Reiniciar</string>
-  <string name="auto_sleep_schedule_error">!El temporizador no puede configurarse a las 00:00!</string>
-  <string name="auto_sleep_schedule_success">¡Temporizador agendado!</string>
   <string name="auto_sleep_schedule_cancelled">¡Temporizador cancelado!</string>
   <string name="app_theme">Tema</string>
   <string-array name="app_themes">

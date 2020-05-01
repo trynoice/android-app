@@ -18,39 +18,60 @@
       android:layout_margin="20dp"
       android:text="@string/sleep_timer" />
 
-    <TimePicker
-      android:id="@+id/time_picker"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:timePickerMode="clock" />
-
-    <LinearLayout
+    <com.github.ashutoshgngwr.noice.widget.CountdownTextView
+      android:id="@+id/countdown_view"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_margin="20dp"
-      android:orientation="horizontal">
+      android:layout_margin="10dp" />
+
+    <GridLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="10dp"
+      android:columnCount="3"
+      android:rowCount="2"
+      android:useDefaultMargins="true">
 
       <Button
-        android:id="@+id/button_schedule"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/schedule" />
-
-      <View
-        android:layout_width="20dp"
-        android:layout_height="1dp" />
+        android:id="@+id/button_1m"
+        style="@style/Widget.App.Button.AddTime"
+        android:text="@string/plus1m" />
 
       <Button
-        android:id="@+id/button_reset"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:text="@string/reset" />
+        android:id="@+id/button_5m"
+        style="@style/Widget.App.Button.AddTime"
+        android:text="@string/plus5m" />
 
-    </LinearLayout>
+      <Button
+        android:id="@+id/button_30m"
+        style="@style/Widget.App.Button.AddTime"
+        android:text="@string/plus30m" />
+
+      <Button
+        android:id="@+id/button_1h"
+        style="@style/Widget.App.Button.AddTime"
+        android:text="@string/plus1h" />
+
+      <Button
+        android:id="@+id/button_4h"
+        style="@style/Widget.App.Button.AddTime"
+        android:text="@string/plus4h" />
+
+      <Button
+        android:id="@+id/button_8h"
+        style="@style/Widget.App.Button.AddTime"
+        android:text="@string/plus8h" />
+
+    </GridLayout>
+
+    <Button
+      android:id="@+id/button_reset"
+      style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="10dp"
+      android:enabled="false"
+      android:text="@string/reset" />
 
   </LinearLayout>
 
