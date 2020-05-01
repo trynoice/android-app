@@ -37,7 +37,7 @@
   <string name="white_noise">Rumore bianco</string>
   <string name="wind_in_palm_trees">Vento tra le palme</string>
   <string name="wind_in_chimes_of_shells">Vento tra le conciglie</string>
-  <string name="app_description">Rilassati ed incrementa la produttività con rumori di fondo minimali</string>
+  <string name="app_description">Rilassati e migliora la produttività con rumori di fondo minimali</string>
   <string name="connect_with_author">Connettiti con l'Autore</string>
   <string name="about__email">Email</string>
   <string name="about__github">Github</string>
@@ -51,7 +51,7 @@
   <string name="preset_name_cannot_be_empty">Il nome della preimpostazione non può essere vuoto!</string>
   <string name="preset_saved">Preimpostazione salvata!</string>
   <string name="saved_presets">Preimpostazioni salvate</string>
-  <string name="delete_preset">Rimovu preimpostazione</string>
+  <string name="delete_preset">Rimovi preimpostazione</string>
   <string name="preset_delete_confirmation">Confermi rimozione di %s?</string>
   <string name="delete">Rimuovi</string>
   <string name="preset_deleted">Preimpostazione rimossa!</string>
@@ -59,7 +59,7 @@
   <string name="sleep_timer">Timer di spegnimento </string>
   <string name="schedule">Pianifica</string>
   <string name="reset">Ripristina</string>
-  <string name="auto_sleep_schedule_error">Il timer di spegnimento non può essere impostato alle 00:00!</string>
+  <string name="auto_sleep_schedule_error">Il timer di spegnimento non può essere impostato su 00:00!</string>
   <string name="auto_sleep_schedule_success">Timer di spegnimento impostato!</string>
   <string name="auto_sleep_schedule_cancelled">Timer di spegnimento rimosso!</string>
   <string name="app_theme">Tema</string>
