@@ -15,7 +15,7 @@ Noice è un'app che ti permette di creare atmosfere personalizzate usando clips 
 <b>Libreria Rumori</b>
 - Serie bosco (uccelli, falò, notte, vento, palme, ecc...)
 - Serie monsone (pioggia, fulmini)
-- Serie teletrasporto (caffetteria, ufficio, treno in movimento, in volo, litorale, sponda del fiume, ecc...)
+- Serie teletrasporto (caffetteria, ufficio, treno in movimento, aereo in volo, litorale, sponda del fiume, ecc...)
 - Rumori grezzi (bianco, rosa, marrone)
 
 Noise è un programma libero ed open-source.
