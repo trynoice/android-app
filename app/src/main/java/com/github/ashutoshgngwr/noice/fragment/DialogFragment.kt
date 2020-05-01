@@ -1,6 +1,5 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.util.TypedValue
@@ -13,6 +12,7 @@ import android.widget.ListView
 import androidx.annotation.ArrayRes
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
+import androidx.core.widget.TextViewCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentManager
 import com.github.ashutoshgngwr.noice.R
@@ -121,13 +121,7 @@ class DialogFragment : BottomSheetDialogFragment() {
     addContentView(
       MaterialTextView(requireContext()).apply {
         val textAppearance = android.R.attr.textAppearance.resolveAttributeValue()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-          setTextAppearance(textAppearance)
-        } else {
-          @Suppress("DEPRECATION")
-          setTextAppearance(textAppearance)
-        }
-
+        TextViewCompat.setTextAppearance(this, textAppearance)
         text = getString(resId, *formatArgs)
       }
     )
