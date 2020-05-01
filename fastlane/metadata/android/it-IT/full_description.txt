@@ -1,6 +1,6 @@
 Per molte persone, un lieve suono di sottofondo è utile per calmarsi e focalizzarsi. In alcuni casi, incrementa la produttività. I rumori di sottofondo (ambientali) posso anche a minimizzare gli effetti dello stress.
 
-Noice è un'app che ti permette di creare atmosfere personalizzate usando clips da sorgenti di rumore ambientale. Crea il tuo ambiente perfetto combinando differenti suoni per ridurre le distrazioni cosi' che tu possa focalizzarti sul tuo lavoro, o per generare ambientazioni serene e pacifiche che concilino il sonno.
+Noice è un'app che ti permette di creare atmosfere personalizzate usando clips da sorgenti di rumore ambientale. Crea il tuo ambiente perfetto combinando differenti suoni per ridurre le distrazioni così che tu possa focalizzarti sul tuo lavoro, o per generare ambientazioni serene e pacifiche che concilino il sonno.
 
 <b>Caratteristiche</b>
 - 24 rumori registrati
