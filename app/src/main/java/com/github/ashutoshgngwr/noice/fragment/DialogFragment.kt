@@ -31,6 +31,9 @@ import kotlinx.android.synthetic.main.fragment_dialog__text_input.view.*
  */
 class DialogFragment : BottomSheetDialogFragment() {
 
+  /**
+   * A lambda for calling functions to configure the dialog, passed while invoking [show].
+   */
   private var displayOptions: DialogFragment.() -> Unit = { }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,10 +53,17 @@ class DialogFragment : BottomSheetDialogFragment() {
     displayOptions()
   }
 
+  /**
+   * Adds given [View] to the [R.id.content] layout in the dialog
+   */
   private fun addContentView(view: View) {
     requireView().content.addView(view)
   }
 
+  /**
+   * Configures the given button [R.id.positive] or [R.id.negative] with the given text resId and
+   * the onClick listener
+   */
   private fun setButton(@IdRes which: Int, @StringRes resId: Int, onClick: () -> Unit) {
     val button = requireView().findViewById<Button>(which)
     button.visibility = View.VISIBLE
@@ -64,29 +74,49 @@ class DialogFragment : BottomSheetDialogFragment() {
     }
   }
 
+  /**
+   * An extension on the attribute resource [R.attr] for resolving its value as set in the current
+   * theme.
+   */
   private fun @receiver:androidx.annotation.AttrRes Int.resolveAttributeValue(): Int {
     val value = TypedValue()
     requireNotNull(dialog).context.theme.resolveAttribute(this, value, true)
     return value.data
   }
 
+  /**
+   * Sets the title of the dialog
+   */
   fun title(@StringRes resId: Int) {
     requireView().title.text = getString(resId)
   }
 
+  /**
+   * Configures the positive button of the dialog. Wrapper around [setButton]
+   */
   fun positiveButton(@StringRes resId: Int, onClick: () -> Unit = { }) {
     setButton(R.id.positive, resId, onClick)
   }
 
+  /**
+   * Configures the negative button of the dialog. Wrapper around [setButton]
+   */
   fun negativeButton(@StringRes resId: Int, onClick: () -> Unit = { }) {
     setButton(R.id.negative, resId, onClick)
   }
 
+  /**
+   * shows the dialog and schedules the passed `options` lambda to be invoked in [onViewCreated]
+   */
   fun show(fragmentManager: FragmentManager, options: DialogFragment.() -> Unit = { }) {
     displayOptions = options
     show(fragmentManager, javaClass.simpleName)
   }
 
+  /**
+   * Creates a [MaterialTextView] with given string resource and adds it to [R.id.content] layout
+   * in the dialog
+   */
   fun message(@StringRes resId: Int, vararg formatArgs: Any) {
     addContentView(
       MaterialTextView(requireContext()).apply {
@@ -103,6 +133,14 @@ class DialogFragment : BottomSheetDialogFragment() {
     )
   }
 
+  /**
+   * Creates a [com.google.android.material.textfield.TextInputLayout] with given configuration
+   * and adds it to [R.id.content] layout
+   *
+   * @param preFillValue value to pre-fill in the text field
+   * @param type input type
+   * @param validator a validation function that is called on text every time it is changed.
+   */
   fun input(
     @StringRes hintRes: Int = 0,
     preFillValue: CharSequence = "",
@@ -132,10 +170,25 @@ class DialogFragment : BottomSheetDialogFragment() {
       }
   }
 
+  /**
+   * returns the text in the text field added using [input]. don't know what it'll do if called
+   * without invoking [input] \o/
+   */
   fun getInputText(): String {
     return requireView().editText.text.toString()
   }
 
+  /**
+   * creates a single choice list in the dialog with given configuration.
+   * Creating this control removes the button panel. Dialog is dismissed when user
+   * selects an item from the list.
+   *
+   * TODO(whenever-needed): handle scrolling for long lists (bottom sheet intercepts touch events now).
+   * currently the only usage involves displaying a 3 item list.
+   *
+   * @param currentChoice must be >= -1 and < arraySize
+   * @param onItemSelected listener invoked when a choice is selected by the user
+   */
   fun singleChoiceItems(
     @ArrayRes itemsRes: Int,
     currentChoice: Int = -1,
