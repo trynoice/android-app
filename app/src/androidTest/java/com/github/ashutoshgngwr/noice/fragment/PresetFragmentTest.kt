@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.widget.Button
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.media.AudioAttributesCompat
@@ -17,6 +18,8 @@ import com.github.ashutoshgngwr.noice.sound.Playback
 import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
 import com.github.ashutoshgngwr.noice.sound.Sound
 import org.greenrobot.eventbus.EventBus
+import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.instanceOf
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -131,7 +134,7 @@ class PresetFragmentTest {
   }
 
   @Test
-  fun testRecyclerViewItem_deleteButton() {
+  fun testRecyclerViewItem_deleteOption() {
     fragmentScenario.onFragment {
       val playback = Playback(
         it.requireContext(),
@@ -147,10 +150,12 @@ class PresetFragmentTest {
       it.onPlaybackUpdate(hashMapOf("birds" to playback))
     }
 
-    onView(withId(R.id.button_delete)).perform(click())
-    onView(withText(R.string.delete)).perform(click())
+    onView(withId(R.id.button_menu)).perform(click()) // open context menu
+    onView(withText(R.string.delete)).perform(click()) // select delete option
+    onView(allOf(instanceOf(Button::class.java), withText(R.string.delete)))
+      .perform(click()) // click delete button in confirmation dialog
 
-    onView(withId(R.id.button_delete)).check(doesNotExist())
+    onView(withText("test")).check(doesNotExist())
     verify(eventBus, atMostOnce()).post(any())
     verify(eventBus).post(PlaybackControlEvents.StopPlaybackEvent())
   }

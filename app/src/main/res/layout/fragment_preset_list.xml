@@ -13,14 +13,15 @@
     android:layout_margin="16dp"
     android:orientation="vertical"
     android:gravity="center"
-    android:visibility="gone"
+    android:visibility="visible"
     tools:ignore="UseCompoundDrawables"><!-- not using compound drawables because tint is available API > 23 -->
 
     <ImageView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginBottom="10dp"
-      android:tint="@color/colorHint"
+      android:tint="@color/material_on_background_disabled"
+      android:tintMode="src_in"
       android:src="@drawable/ic_warning"
       android:contentDescription="@string/nothing_saved_yet"/>
 
@@ -28,7 +29,7 @@
       style="@style/TextAppearance.AppCompat.Title.Inverse"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textColor="@color/colorHint"
+      android:textColor="@color/material_on_background_disabled"
       android:text="@string/nothing_saved_yet"/>
 
   </LinearLayout>
