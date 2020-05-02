@@ -141,6 +141,7 @@
   <string name="plus1h" translatable="false">1h</string>
   <string name="plus4h" translatable="false">4h</string>
   <string name="plus8h" translatable="false">8h</string>
+  <string name="rename">Rename</string>
   <string-array name="app_themes">
     <item>Light</item>
     <item>Dark</item>
