@@ -9,6 +9,7 @@ import androidx.preference.PreferenceManager
 import androidx.test.annotation.UiThreadTest
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -138,6 +139,23 @@ class PresetFragmentTest {
 
     // should publish a stop playback event if preset was playing
     verify(eventBus, atMostOnce()).post(PlaybackControlEvents.StopPlaybackEvent())
+  }
+
+  @Test
+  fun testRecyclerViewItem_renameOption() {
+    onView(withId(R.id.button_menu)).perform(click()) // open context menu
+    onView(withText(R.string.rename)).perform(click()) // select rename option
+    onView(withId(R.id.editText))
+      .check(matches(isDisplayed())) // check if the rename dialog was displayed
+      .perform(replaceText("test-renamed")) // replace text in input field
+
+    onView(allOf(instanceOf(Button::class.java), withText(R.string.save)))
+      .perform(click()) // click on positive button
+
+    PresetFragment.Preset.readAllFromUserPreferences(getContext()).let {
+      assertEquals(1, it.size)
+      assertEquals("test-renamed", it[0].name)
+    }
   }
 
   @RunWith(AndroidJUnit4::class)

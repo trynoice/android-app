@@ -129,6 +129,7 @@ class PresetFragment : Fragment() {
         val onMenuItemClickListener = PopupMenu.OnMenuItemClickListener {
           when (it.itemId) {
             R.id.action_delete -> showDeletePresetConfirmation()
+            R.id.action_rename -> showRenamePresetInput()
           }
 
           true
@@ -139,6 +140,23 @@ class PresetFragment : Fragment() {
             it.inflate(R.menu.preset)
             it.setOnMenuItemClickListener(onMenuItemClickListener)
             it.show()
+          }
+        }
+      }
+
+      private fun showRenamePresetInput() {
+        DialogFragment().show(requireActivity().supportFragmentManager) {
+          title(R.string.rename)
+          input(
+            hintRes = R.string.name,
+            preFillValue = dataSet[adapterPosition].name,
+            errorRes = R.string.preset_name_cannot_be_empty
+          )
+          negativeButton(R.string.cancel)
+          positiveButton(R.string.save) {
+            dataSet[adapterPosition].name = getInputText()
+            Preset.writeAllToUserPreferences(requireContext(), dataSet)
+            notifyItemChanged(adapterPosition)
           }
         }
       }
