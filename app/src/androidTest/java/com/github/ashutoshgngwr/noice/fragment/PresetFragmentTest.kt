@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.content.Context
 import android.widget.Button
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -27,7 +28,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.atMostOnce
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
 @RunWith(AndroidJUnit4::class)
@@ -39,115 +41,94 @@ class PresetFragmentTest {
   @InjectMocks
   private lateinit var fragment: PresetFragment
 
+  private lateinit var preset: PresetFragment.Preset
   private lateinit var fragmentScenario: FragmentScenario<PresetFragment>
+
+  private fun getContext(): Context {
+    return InstrumentationRegistry.getInstrumentation().targetContext
+  }
 
   @Before
   fun setup() {
-    fragmentScenario = launchFragmentInContainer<PresetFragment>(null, R.style.Theme_App)
-      .onFragment { fragment = it }
+    InstrumentationRegistry.getInstrumentation().runOnMainSync {
+      preset = PresetFragment.Preset(
+        "test", arrayOf(
+          Playback(
+            getContext(),
+            requireNotNull(Sound.LIBRARY["birds"]),
+            AudioAttributesCompat.Builder().build()
+          )
+        )
+      )
 
+      PresetFragment.Preset.appendToUserPreferences(getContext(), preset)
+    }
+
+    fragmentScenario = launchFragmentInContainer<PresetFragment>(null, R.style.Theme_App)
+    fragmentScenario.onFragment { fragment = it }
     MockitoAnnotations.initMocks(this)
   }
 
   @After
   fun teardown() {
-    if (::fragmentScenario.isInitialized) {
-      fragmentScenario.onFragment {
-        // clear any preferences saved by the tests
-        PreferenceManager.getDefaultSharedPreferences(it.requireContext())
-          .edit().clear().commit()
-      }
-    }
+    PreferenceManager.getDefaultSharedPreferences(getContext())
+      .edit().clear().commit()
   }
 
   @Test
-  fun testInitialLayout_withNoSavedPresets() {
-    onView(withId(R.id.indicator_list_empty)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-  }
+  fun testInitialLayout() {
+    onView(withId(R.id.indicator_list_empty))
+      .check(matches(withEffectiveVisibility(Visibility.GONE)))
 
-  @Test
-  fun testInitialLayout_withSavedPresets() {
-    fragmentScenario.onFragment {
-      val playbacks = hashMapOf(
-        "birds" to Playback(
-          it.requireContext(),
-          requireNotNull(Sound.LIBRARY["birds"]),
-          AudioAttributesCompat.Builder().build()
-        )
-      )
-
-      // save preset to user preferences
-      val preset = PresetFragment.Preset("test", playbacks.values.toTypedArray())
-      PresetFragment.Preset.appendToUserPreferences(it.requireContext(), preset)
-    }
+    PreferenceManager.getDefaultSharedPreferences(getContext())
+      .edit().clear().commit()
 
     fragmentScenario.recreate()
-
-    onView(withId(R.id.indicator_list_empty)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+    onView(withId(R.id.indicator_list_empty))
+      .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
   }
 
   @Test
   fun testRecyclerViewItem_playButton() {
-    var playback: Playback? = null
-    fragmentScenario.onFragment {
-      playback = Playback(
-        it.requireContext(),
-        requireNotNull(Sound.LIBRARY["birds"]),
-        AudioAttributesCompat.Builder().build()
-      )
-
-      // save preset to user preferences
-      val preset = PresetFragment.Preset("test", arrayOf(requireNotNull(playback)))
-      (requireNotNull(it.mRecyclerView).adapter as PresetFragment.PresetListAdapter)
-        .dataSet.add(preset)
-      requireNotNull(requireNotNull(it.mRecyclerView).adapter).notifyDataSetChanged()
-    }
-
     onView(withId(R.id.button_play)).perform(click())
 
-    verify(eventBus, atMost(3)).post(any())
-    verify(eventBus).post(PlaybackControlEvents.StopPlaybackEvent())
-    verify(eventBus).post(PlaybackControlEvents.StartPlaybackEvent("birds"))
-    verify(eventBus).post(PlaybackControlEvents.UpdatePlaybackEvent(requireNotNull(playback)))
+    val expectedPlayback = preset.playbackStates[0]
+    verify(eventBus, atMostOnce()).post(PlaybackControlEvents.StopPlaybackEvent())
+    verify(eventBus, atMostOnce()).post(PlaybackControlEvents.UpdatePlaybackEvent(expectedPlayback))
+    verify(eventBus, atMostOnce())
+      .post(PlaybackControlEvents.StartPlaybackEvent(expectedPlayback.soundKey))
   }
 
   @Test
   fun testRecyclerViewItem_stopButton() {
     fragmentScenario.onFragment {
-      val playback = Playback(
-        it.requireContext(),
-        requireNotNull(Sound.LIBRARY["birds"]),
-        AudioAttributesCompat.Builder().build()
-      )
-
-      // save preset to user preferences
-      val preset = PresetFragment.Preset("test", arrayOf(playback))
-      (requireNotNull(it.mRecyclerView).adapter as PresetFragment.PresetListAdapter)
-        .dataSet.add(preset)
-      requireNotNull(requireNotNull(it.mRecyclerView).adapter).notifyDataSetChanged()
-      it.onPlaybackUpdate(hashMapOf("birds" to playback))
+      it.onPlaybackUpdate(hashMapOf<String, Playback>().also { playbacks ->
+        preset.playbackStates.forEach { p -> playbacks[p.soundKey] = p }
+      })
     }
 
     onView(withId(R.id.button_play)).perform(click())
-    verify(eventBus, atMostOnce()).post(any())
-    verify(eventBus).post(PlaybackControlEvents.StopPlaybackEvent())
+    verify(eventBus, atMostOnce()).post(PlaybackControlEvents.StopPlaybackEvent())
   }
 
   @Test
   fun testRecyclerViewItem_deleteOption() {
-    fragmentScenario.onFragment {
-      val playback = Playback(
-        it.requireContext(),
-        requireNotNull(Sound.LIBRARY["birds"]),
-        AudioAttributesCompat.Builder().build()
-      )
+    onView(withId(R.id.button_menu)).perform(click()) // open context menu
+    onView(withText(R.string.delete)).perform(click()) // select delete option
+    onView(allOf(instanceOf(Button::class.java), withText(R.string.delete)))
+      .perform(click()) // click delete button in confirmation dialog
 
-      // save preset to user preferences
-      val preset = PresetFragment.Preset("test", arrayOf(playback))
-      (requireNotNull(it.mRecyclerView).adapter as PresetFragment.PresetListAdapter)
-        .dataSet.add(preset)
-      requireNotNull(requireNotNull(it.mRecyclerView).adapter).notifyDataSetChanged()
-      it.onPlaybackUpdate(hashMapOf("birds" to playback))
+    onView(withText(preset.name)).check(doesNotExist())
+    assertEquals(0, PresetFragment.Preset.readAllFromUserPreferences(getContext()).size)
+  }
+
+  @Test
+  fun testRecyclerViewItem_deleteOption_onPresetPlaying() {
+    // pretend that the stuff is playing
+    fragmentScenario.onFragment {
+      it.onPlaybackUpdate(hashMapOf<String, Playback>().also { playbacks ->
+        preset.playbackStates.forEach { p -> playbacks[p.soundKey] = p }
+      })
     }
 
     onView(withId(R.id.button_menu)).perform(click()) // open context menu
@@ -155,9 +136,8 @@ class PresetFragmentTest {
     onView(allOf(instanceOf(Button::class.java), withText(R.string.delete)))
       .perform(click()) // click delete button in confirmation dialog
 
-    onView(withText("test")).check(doesNotExist())
-    verify(eventBus, atMostOnce()).post(any())
-    verify(eventBus).post(PlaybackControlEvents.StopPlaybackEvent())
+    // should publish a stop playback event if preset was playing
+    verify(eventBus, atMostOnce()).post(PlaybackControlEvents.StopPlaybackEvent())
   }
 
   @RunWith(AndroidJUnit4::class)
