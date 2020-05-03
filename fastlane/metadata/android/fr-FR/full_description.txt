@@ -1,0 +1,21 @@
+Pour beaucoup de personnes, utiliser une ambiance légère permet de rester calme et se concentrer, parfois cela augmente aussi la productivité ou diminue le stress.
+
+Noice est une application qui permet de créer des ambiances personnalisées à partir de plusieurs sons pré-enregistrés. Créez un environnement parfait en les combinant pour vous concentrer sur votre travail ou vous relaxer avant de dormir.
+
+<b>Fonctionnalités</b>
+- 24 ambiances sonores
+- Créez et sauvegardez vos mixes personnalisés
+- Minuteur pour accompagner le sommeil
+- Peut accompagner d'autres pistes sonores
+- Volume indépendant pour chaque son
+- Écoute hors connexion
+- Thèmes clair et sombre
+
+<b>Bibliothèque d'ambiances</b>
+- Nature (oiseaux, feu, nuit, bord de mer, palmiers, etc.)
+- Météo (pluie, orage, vent, etc.)
+- Urbain (café, bureau, train, avion, etc.)
+- Bruits colorés (blanc, rose, rouge)
+
+Noice est une application gratuite et open source.
+https://github.com/ashutoshgngwr/noice
