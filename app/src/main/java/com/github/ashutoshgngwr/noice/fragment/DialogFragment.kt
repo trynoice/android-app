@@ -191,7 +191,7 @@ class DialogFragment : BottomSheetDialogFragment() {
     val items = requireContext().resources.getStringArray(itemsRes)
     require(currentChoice >= -1 && currentChoice < items.size)
     addContentView(
-      ListView(requireContext(), null, android.R.attr.listViewStyle).apply {
+      ListView(requireContext(), null, android.R.attr.listViewStyle.resolveAttributeValue()).apply {
         id = android.R.id.list
         dividerHeight = 0
         choiceMode = ListView.CHOICE_MODE_SINGLE
