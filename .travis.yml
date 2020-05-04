@@ -3,6 +3,10 @@ dist: bionic
 arch: amd64
 language: java
 jdk: openjdk8
+branches:
+  only:
+    - master
+
 addons:
   apt:
     packages:
@@ -50,14 +54,14 @@ before_script:
   - echo no | avdmanager create avd -f -n "$TEST_PLATFORM" -k "system-images;$TEST_PLATFORM;default;x86" -c 500M
   - emulator -avd "$TEST_PLATFORM" -memory 4096 -no-boot-anim -no-audio -no-snapshot -no-window -camera-back none -camera-front none &
   - >- # ensures that animations are disabled on the device and device is always awake.
-      adb wait-for-device shell '
-        while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;
-        settings put global window_animation_scale 0.0;
-        settings put global transition_animation_scale 0.0;
-        settings put global animator_duration_scale 0.0;
-        svc power stayon true;
-        input keyevent KEYCODE_WAKEUP;
-      '
+    adb wait-for-device shell '
+      while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;
+      settings put global window_animation_scale 0.0;
+      settings put global transition_animation_scale 0.0;
+      settings put global animator_duration_scale 0.0;
+      svc power stayon true;
+      input keyevent KEYCODE_WAKEUP;
+    '
 
 script: ./gradlew connectedAndroidTest
 after_success: bash <(curl -s https://codecov.io/bash)
