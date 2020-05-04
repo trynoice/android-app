@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-  xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
   style="@style/Widget.App.CardView"
   android:layout_width="match_parent"
   android:layout_height="wrap_content">
@@ -19,7 +18,7 @@
       android:background="?android:selectableItemBackgroundBorderless"
       android:src="@drawable/ic_action_play"
       android:tint="?attr/colorAccent"
-      android:contentDescription="@string/play_pause"/>
+      android:contentDescription="@string/play_pause" />
 
     <TextView
       android:id="@+id/title"
@@ -40,7 +39,7 @@
       android:background="?android:selectableItemBackgroundBorderless"
       android:src="@drawable/ic_action_expand"
       android:tint="?attr/colorOnSurface"
-      android:contentDescription="@string/open_context_menu"/>
+      android:contentDescription="@string/open_context_menu" />
 
   </LinearLayout>
 
