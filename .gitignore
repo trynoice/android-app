@@ -11,3 +11,7 @@
 /build
 /captures
 .externalNativeBuild
+.netlify
+cast-receiver/node_modules
+cast-receiver/.cache
+cast-receiver/dist

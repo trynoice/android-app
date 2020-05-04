@@ -1,0 +1,29 @@
+{
+  "name": "noice-cast-receiver",
+  "description": "CAF custom receiver implementation for playing Noice on Cast enabled devices",
+  "repository": "git@github.com:ashutoshgngwr/noice.git",
+  "author": "Ashutosh Gangwar <ashutoshgngwr@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"yarn:watch-ts\" \"yarn:serve\"",
+    "watch-ts": "tsc --noEmit --watch src/index.ts",
+    "serve": "parcel --log-level none index.html",
+    "build": "parcel build index.html",
+    "lint": "eslint . --ext .ts"
+  },
+  "devDependencies": {
+    "@types/chromecast-caf-receiver": "^5.0.4",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "concurrently": "^5.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^2.0.5",
+    "typescript": "^3.8.3"
+  },
+  "alias": {
+    "noice": "./src"
+  }
+}

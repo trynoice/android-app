@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "typeRoots": ["./node_modules/@types"],
+    "baseUrl": "./src",
+    "paths": {
+      "noice/*": ["./*"]
+    }
+  },
+  "include": ["src/**/*"]
+}
