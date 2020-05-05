@@ -83,4 +83,5 @@
   <string name="plus1h" translatable="false">1h</string>
   <string name="plus4h" translatable="false">4h</string>
   <string name="plus8h" translatable="false">8h</string>
+  <string name="cast_namespace__default" translatable="false">urn:x-cast:com.github.ashutoshgngwr.noice</string>
 </resources>

@@ -6,14 +6,19 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
+import androidx.mediarouter.app.MediaRouteActionProvider
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.fragment.*
+import com.google.android.gms.cast.framework.CastButtonFactory
+import com.google.android.gms.cast.framework.CastContext
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -30,6 +35,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    // because cast context is lazy initialized, cast menu item wouldn't show up until
+    // re-resuming the activity. adding this to prevent that.
+    CastContext.getSharedInstance(this)
     super.onCreate(savedInstanceState)
     AppCompatDelegate.setDefaultNightMode(getNightModeFromPrefs())
 
@@ -82,6 +90,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // start the media player service
     startService(Intent(this, MediaPlayerService::class.java))
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    super.onCreateOptionsMenu(menu)
+    menu.add(R.string.cast_media).also {
+      it.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+      MenuItemCompat.setActionProvider(it, MediaRouteActionProvider(this))
+      CastButtonFactory.setUpMediaRouteButton(this, menu, it.itemId)
+    }
+
+    return true
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
