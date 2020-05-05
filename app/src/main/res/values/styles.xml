@@ -42,7 +42,6 @@
     <item name="buttonStyle">@style/Widget.MaterialComponents.Button.TextButton.Dialog</item>
     <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
     <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
-    <item name="android:listViewStyle">@style/Widget.AppCompat.ListView</item>
   </style>
 
   <style name="Widget.App.BottomSheet.Modal" parent="Widget.Design.BottomSheet.Modal">
