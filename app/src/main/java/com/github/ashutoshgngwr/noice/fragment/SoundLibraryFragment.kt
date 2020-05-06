@@ -23,10 +23,6 @@ import org.greenrobot.eventbus.ThreadMode
 
 class SoundLibraryFragment : Fragment() {
 
-  companion object {
-    const val RC_SAVE_PRESET_DIALOG = 0x922
-  }
-
   private var mRecyclerView: RecyclerView? = null
   private var mSavePresetButton: FloatingActionButton? = null
   private var eventBus = EventBus.getDefault()
