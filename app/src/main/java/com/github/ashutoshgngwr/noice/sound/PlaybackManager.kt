@@ -7,6 +7,11 @@ import android.util.Log
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
+import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.cast.CastSessionManagerListener
+import com.github.ashutoshgngwr.noice.sound.player.SoundPlayerFactory
+import com.google.android.gms.cast.framework.CastContext
+import com.google.android.gms.cast.framework.CastSession
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -55,8 +60,36 @@ class PlaybackManager(private val context: Context) :
     .setWillPauseWhenDucked(false)
     .build()
 
+  private var playerFactory = SoundPlayerFactory.newLocalPlayerFactory(context, audioAttributes)
+  private val castSessionManagerListener = object : CastSessionManagerListener() {
+    override fun onSessionStarted(session: CastSession, sessionId: String) {
+      playerFactory = SoundPlayerFactory.newCastPlayerFactory(
+        session,
+        context.getString(R.string.cast_namespace__default)
+      )
+      reloadPlaybacks()
+    }
+
+    override fun onSessionEnded(session: CastSession, error: Int) {
+      playerFactory = SoundPlayerFactory.newLocalPlayerFactory(context, audioAttributes)
+      reloadPlaybacks()
+    }
+
+    override fun onSessionResumed(session: CastSession, wasSuspended: Boolean) {
+      playerFactory = SoundPlayerFactory.newCastPlayerFactory(
+        session,
+        context.getString(R.string.cast_namespace__default)
+      )
+      reloadPlaybacks()
+    }
+  }
+
   init {
     eventBus.register(this)
+    CastContext.getSharedInstance(context).sessionManager.addSessionManagerListener(
+      castSessionManagerListener,
+      CastSession::class.java
+    )
   }
 
   // implements audio focus change listener
@@ -132,7 +165,7 @@ class PlaybackManager(private val context: Context) :
   // have audio focus before starting the playback.
   private fun play(sound: Sound) {
     if (!playbacks.containsKey(sound.key)) {
-      playbacks[sound.key] = Playback(context, sound, audioAttributes)
+      playbacks[sound.key] = Playback(sound, playerFactory)
     }
 
     // notify updates before any returns happen
@@ -154,7 +187,7 @@ class PlaybackManager(private val context: Context) :
   // stops a playback and releases its resources.
   private fun stop(sound: Sound) {
     requireNotNull(playbacks[sound.key]).apply {
-      stop(true)
+      stop()
     }
 
     playbacks.remove(sound.key)
@@ -165,7 +198,7 @@ class PlaybackManager(private val context: Context) :
   private fun pauseAll() {
     isPaused = true
     playbacks.values.forEach {
-      it.stop(false)
+      it.pause()
     }
 
     AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
@@ -235,8 +268,7 @@ class PlaybackManager(private val context: Context) :
   private fun stopAll() {
     isPaused = false
     playbacks.values.forEach {
-      it.stop(false)
-      it.release()
+      it.stop()
     }
 
     playbacks.clear()
@@ -258,5 +290,24 @@ class PlaybackManager(private val context: Context) :
     }
 
     return State.PLAYING
+  }
+
+  /**
+   * attempts to recreate underlying player for playbacks using the [playerFactory]
+   */
+  private fun reloadPlaybacks() {
+    playbacks.values.forEach { it.recreatePlayerWithFactory(playerFactory) }
+  }
+
+  /**
+   * performs cleanup. must be called when final cleanup is required for the instance
+   */
+  fun release() {
+    stopAll()
+    eventBus.unregister(this)
+    CastContext.getSharedInstance(context).sessionManager.removeSessionManagerListener(
+      castSessionManagerListener,
+      CastSession::class.java
+    )
   }
 }

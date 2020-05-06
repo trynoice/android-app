@@ -1,16 +1,7 @@
 package com.github.ashutoshgngwr.noice.sound
 
-import android.content.Context
-import android.net.Uri
 import android.os.Handler
-import androidx.annotation.VisibleForTesting
-import androidx.media.AudioAttributesCompat
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.audio.AudioAttributes
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.upstream.AssetDataSource
-import com.google.android.exoplayer2.upstream.DataSource
+import com.github.ashutoshgngwr.noice.sound.player.SoundPlayerFactory
 import com.google.gson.*
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.JsonAdapter
@@ -20,14 +11,10 @@ import kotlin.random.Random.Default.nextInt
 
 /**
  * Playback manages playback of a single [Sound]. It holds reference to underlying
- * [MediaPlayer][android.media.MediaPlayer] instance along with playback information such
- * as isPlaying, volume and timePeriod.
+ * [SoundPlayer][com.github.ashutoshgngwr.noice.sound.player.SoundPlayer] instance
+ * along with playback information such as [isPlaying], [volume] and [timePeriod].
  */
-class Playback(
-  context: Context,
-  sound: Sound,
-  audioAttributes: AudioAttributesCompat
-) : Runnable {
+class Playback(private val sound: Sound, soundPlayerFactory: SoundPlayerFactory) : Runnable {
 
   companion object {
     const val DEFAULT_VOLUME = 4
@@ -35,8 +22,6 @@ class Playback(
     const val DEFAULT_TIME_PERIOD = 30
     private const val MIN_TIME_PERIOD = 30
     const val MAX_TIME_PERIOD = 240
-    private const val TRANSITION_VOLUME_STEP = 0.01f // player's volume. not playback's
-    private const val TRANSITION_STEP_DELAY = 25L
   }
 
   /**
@@ -92,91 +77,19 @@ class Playback(
   @SerializedName("a")
   val soundKey = sound.key
 
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  val player = createPlayer(context, audioAttributes, sound)
-
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  val handler = Handler()
-
-  // indicates whether playback is in fading in/out state. This is used in setVolume() to offload
-  // setting the player's volume to the transition effect during a transition.
-  private var isTransitioning = false
-
-  // initializes a MediaPlayer object with the passed arguments.
-  private fun createPlayer(
-    context: Context,
-    audioAttributes: AudioAttributesCompat,
-    sound: Sound
-  ): SimpleExoPlayer {
-    return SimpleExoPlayer.Builder(context)
-      .build()
-      .apply {
-        volume = DEFAULT_VOLUME.toFloat() / MAX_VOLUME
-        repeatMode = if (sound.isLoopable) {
-          ExoPlayer.REPEAT_MODE_ONE
-        } else {
-          ExoPlayer.REPEAT_MODE_OFF
-        }
-
-        setAudioAttributes(
-          AudioAttributes.Builder()
-            .setContentType(audioAttributes.contentType)
-            .setFlags(audioAttributes.flags)
-            .setUsage(audioAttributes.usage)
-            .build(),
-          false
-        )
-
-        prepare(
-          ProgressiveMediaSource.Factory(DataSource.Factory { AssetDataSource(context) })
-            .createMediaSource(Uri.parse("asset:///${sound.key}.mp3"))
-        )
-      }
+  private var player = soundPlayerFactory.newPlayer(sound).also {
+    it.setVolume(volume.toFloat() / MAX_VOLUME)
   }
 
-  /**
-   * Increases the volume of the [player] instance until it reaches the defined [volume].
-   * Volume is increased in steps of [TRANSITION_VOLUME_STEP] with [TRANSITION_STEP_DELAY].
-   */
-  private fun fadeIn() {
-    if (player.volume >= volume.toFloat() / MAX_VOLUME) {
-      isTransitioning = false
-      player.volume = volume.toFloat() / MAX_VOLUME
-      return
-    }
-
-    isTransitioning = true
-    player.volume += TRANSITION_VOLUME_STEP
-    handler.postDelayed(this::fadeIn, TRANSITION_STEP_DELAY)
-  }
-
-  /**
-   * Decreases the volume of the [player] instance until it reaches 0.
-   * Volume is decreased in steps of [TRANSITION_VOLUME_STEP] * 2 with [TRANSITION_STEP_DELAY] / 2.
-   */
-  private fun fadeOut() {
-    if (player.volume <= 0) {
-      isTransitioning = false
-      player.volume = 0f
-      player.playWhenReady = false
-      player.release()
-      return
-    }
-
-    isTransitioning = true
-    player.volume -= TRANSITION_VOLUME_STEP * 2
-    handler.postDelayed(this::fadeOut, TRANSITION_STEP_DELAY / 2)
-  }
+  private val handler = Handler()
 
   /**
    * Sets the volume for the playback. It also sets the volume of the underlying
-   * [MediaPlayer][android.media.MediaPlayer] instance.
+   * [SoundPlayer][com.github.ashutoshgngwr.noice.sound.player.SoundPlayer] instance.
    */
   fun setVolume(volume: Int) {
     this.volume = volume
-    if (!isTransitioning) {
-      player.volume = volume.toFloat() / MAX_VOLUME
-    }
+    this.player.setVolume(volume.toFloat() / MAX_VOLUME)
   }
 
   /**
@@ -186,10 +99,8 @@ class Playback(
    */
   fun play() {
     isPlaying = true
-    if (player.repeatMode == ExoPlayer.REPEAT_MODE_ONE) {
-      player.volume = 0f
-      player.playWhenReady = true
-      fadeIn()
+    if (sound.isLoopable) {
+      player.play()
     } else {
       run()
     }
@@ -203,36 +114,46 @@ class Playback(
       return
     }
 
-    player.seekTo(0)
-    player.playWhenReady = true
+    player.play()
     handler.postDelayed(this, (MIN_TIME_PERIOD + nextInt(0, timePeriod)) * 1000L)
   }
 
   /**
-   * Stops the playback. If the sound is non-loopable, it also removes the randomised play callback.
-   *
-   * @param fadeOut: If true, playback stops with the fade-out transition and underlying player
-   * resources are released. If false, player resources must be manually released by calling
-   * [release()][release].
+   * Stops the playback without releasing the underlying media resource.
+   * If the sound is non-loopable, it also removes the randomised play callback.
    */
-  fun stop(fadeOut: Boolean) {
+  fun pause() {
     isPlaying = false
-    if (fadeOut && player.playWhenReady) {
-      fadeOut()
-    } else {
-      player.playWhenReady = false
-    }
-
-    if (player.repeatMode == ExoPlayer.REPEAT_MODE_OFF) {
+    player.pause()
+    if (sound.isLoopable) {
       handler.removeCallbacks(this)
     }
   }
 
   /**
-   * Releases resources used by underlying [MediaPlayer][android.media.MediaPlayer] instance.
+   * Stops the playback and releases the underlying media resource.
+   * If the sound is non-loopable, it also removes the randomised play callback.
    */
-  fun release() {
-    player.release()
+  fun stop() {
+    isPlaying = false
+    player.stop()
+    if (sound.isLoopable) {
+      handler.removeCallbacks(this)
+    }
+  }
+
+  /**
+   * recreates the underlying [SoundPlayer][com.github.ashutoshgngwr.noice.sound.player.SoundPlayer]
+   * using the provided [SoundPlayerFactory].
+   */
+  fun recreatePlayerWithFactory(factory: SoundPlayerFactory) {
+    // pause then stop just to prevent the fade-out transition from LocalSoundPlayer
+    player.pause()
+    player.stop()
+    player = factory.newPlayer(sound).also {
+      it.setVolume(volume.toFloat() / MAX_VOLUME)
+      it.play()
+    }
   }
 
   /**

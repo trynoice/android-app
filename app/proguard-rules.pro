@@ -26,3 +26,13 @@
 -keepclassmembers,allowobfuscation class * {
   @com.google.gson.annotations.SerializedName <fields>;
 }
+
+# keep fields annotated with Expose
+-keepclassmembers class * {
+  @com.google.gson.annotations.Expose <fields>;
+}
+
+# keep enum fields for CastMediaPlayer.State
+-keepclassmembers enum com.github.ashutoshgngwr.noice.sound.player.CastMediaPlayer$State {
+  <fields>;
+}

@@ -88,6 +88,7 @@ class MediaPlayerService : Service() {
 
   override fun onDestroy() {
     super.onDestroy()
+    playbackManager.release()
 
     // unregister receiver and listener. release sound pool resources
     unregisterReceiver(becomingNoisyReceiver)
