@@ -88,7 +88,7 @@
     <item name="colorAccent">@color/colorAccent</item>
     <item name="colorBackgroundFloating">@color/colorPopupBackground</item>
     <item name="mediaRouteButtonStyle">@style/Widget.MediaRouter.MediaRouteButton</item>
-    <item name="mediaRouteControlPanelThemeOverlay">@style/ThemeOverlay.MediaRouter.Dark</item>
+    <item name="mediaRouteControlPanelThemeOverlay">@style/ThemeOverlay.MediaRouter.Light</item>
   </style>
 
 </resources>
