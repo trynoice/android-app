@@ -10,9 +10,9 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.sound.Playback
-import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
@@ -71,8 +71,8 @@ class PresetFragment : Fragment() {
   }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-  fun onPlaybackUpdate(playbacks: HashMap<String, Playback>) {
-    activePreset = Preset("", playbacks.values.toTypedArray())
+  fun onPlaybackUpdate(event: MediaPlayerService.OnPlaybackManagerUpdateEvent) {
+    activePreset = Preset("", event.playbacks.values.toTypedArray())
     requireNotNull(requireNotNull(mRecyclerView).adapter).notifyDataSetChanged()
   }
 
@@ -113,14 +113,15 @@ class PresetFragment : Fragment() {
           // I guess its safe to avoid receiving any events during following logic.
           // Unsubscribe temporarily. Lets hope this doesn't have any significant side-effects. :p
           eventBus.unregister(this@PresetFragment)
-          eventBus.post(PlaybackControlEvents.StopPlaybackEvent())
+          eventBus.post(MediaPlayerService.StopPlaybackEvent())
           if (dataSet[adapterPosition] == activePreset) {
             itemView.button_play.setImageResource(R.drawable.ic_action_play)
           } else {
             itemView.button_play.setImageResource(R.drawable.ic_action_stop)
             for (p in dataSet[adapterPosition].playbackStates) {
-              eventBus.post(PlaybackControlEvents.StartPlaybackEvent(p.soundKey))
-              eventBus.post(PlaybackControlEvents.UpdatePlaybackEvent(p))
+              eventBus.post(MediaPlayerService.StartPlaybackEvent(p.soundKey))
+              MediaPlayerService.UpdatePlaybackPropertiesEvent(p.soundKey, p.volume, p.timePeriod)
+                .also { eventBus.post(it) }
             }
           }
           eventBus.register(this@PresetFragment)
@@ -174,7 +175,7 @@ class PresetFragment : Fragment() {
             // then stop playback if recently deleted preset was playing
             // notifyDataSetChanged() is needed to notify AdapterDataObserver
             if (preset == activePreset) {
-              eventBus.post(PlaybackControlEvents.StopPlaybackEvent()) // will notifyDataSetChanged()
+              eventBus.post(MediaPlayerService.StopPlaybackEvent()) // will notifyDataSetChanged()
             } else {
               notifyDataSetChanged() // or call it explicitly
             }

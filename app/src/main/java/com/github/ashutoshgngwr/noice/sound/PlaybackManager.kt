@@ -12,24 +12,14 @@ import com.github.ashutoshgngwr.noice.cast.CastSessionManagerListener
 import com.github.ashutoshgngwr.noice.sound.player.SoundPlayerFactory
 import com.google.android.gms.cast.framework.CastContext
 import com.google.android.gms.cast.framework.CastSession
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 /**
  * [PlaybackManager] is responsible for managing playback end-to-end for all sounds.
- * Its subscribes to [PlaybackControlEvents] to allow clients to control playback.
- * It also manages Android's audio focus implicitly.
+ * It manages Android's audio focus implicitly. It also manages Playback routing to
+ * cast enabled devices on-demand.
  */
 class PlaybackManager(private val context: Context) :
   AudioManager.OnAudioFocusChangeListener {
-
-  /**
-   * [PlaybackManager] publishes an [UpdateEvent] every time there is update in the
-   * status of an underlying playbacks. It is a light weight alternative to subscribing to a list
-   * (map) all playbacks which is also published along with it.
-   */
-  data class UpdateEvent(val state: State)
 
   enum class State {
     PLAYING, PAUSED, STOPPED
@@ -39,13 +29,13 @@ class PlaybackManager(private val context: Context) :
     private val TAG = PlaybackManager::javaClass.name
   }
 
-  private var isPaused = false
+  var state = State.STOPPED
   private var hasAudioFocus = false
   private var playbackDelayed = false
   private var resumeOnFocusGain = false
+  private var onPlaybackUpdateListener = { }
 
-  private val playbacks = HashMap<String, Playback>(Sound.LIBRARY.size)
-  private var eventBus = EventBus.getDefault()
+  val playbacks = HashMap<String, Playback>(Sound.LIBRARY.size)
   private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
   private val audioAttributes = AudioAttributesCompat.Builder()
     .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)
@@ -85,7 +75,6 @@ class PlaybackManager(private val context: Context) :
   }
 
   init {
-    eventBus.register(this)
     CastContext.getSharedInstance(context).sessionManager.addSessionManagerListener(
       castSessionManagerListener,
       CastSession::class.java
@@ -102,7 +91,7 @@ class PlaybackManager(private val context: Context) :
           Log.d(TAG, "Resume playback after audio focus gain...")
           playbackDelayed = false
           resumeOnFocusGain = false
-          resumeAll()
+          resume()
         }
       }
       AudioManager.AUDIOFOCUS_LOSS -> {
@@ -110,14 +99,14 @@ class PlaybackManager(private val context: Context) :
         hasAudioFocus = false
         resumeOnFocusGain = true
         playbackDelayed = false
-        pauseAll()
+        pause()
       }
       AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
         Log.d(TAG, "Temporarily lost audio focus! Pause playback...")
         hasAudioFocus = false
         resumeOnFocusGain = true
         playbackDelayed = false
-        pauseAll()
+        pause()
       }
     }
   }
@@ -136,137 +125,75 @@ class PlaybackManager(private val context: Context) :
         playbackDelayed = true
         hasAudioFocus = false
         resumeOnFocusGain = false
-        pauseAll()
+        pause()
       }
       AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
         Log.d(TAG, "Failed to get audio focus! Stop playback...")
         hasAudioFocus = false
         playbackDelayed = false
         resumeOnFocusGain = false
-        pauseAll()
+        pause()
       }
       AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
         hasAudioFocus = true
         playbackDelayed = false
         resumeOnFocusGain = false
-        resumeAll()
+        resume()
       }
     }
   }
 
-  // publishes update events for clients.
-  private fun notifyChanges() {
-    eventBus.postSticky(playbacks)
-    eventBus.post(UpdateEvent(getState()))
-  }
-
-  // starts playing a sound. It also creates an audio focus request if we don't have it.
-  // Playback won't start immediately if audio focus is not present. We always ensure that we
-  // have audio focus before starting the playback.
-  private fun play(sound: Sound) {
+  /**
+   * starts playing a sound. It also creates an audio focus request if we don't have it.
+   * Playback won't start immediately if audio focus is not present. We always ensure that we
+   * have audio focus before starting the playback.
+   */
+  fun play(sound: Sound) {
     if (!playbacks.containsKey(sound.key)) {
       playbacks[sound.key] = Playback(sound, playerFactory)
     }
 
-    // notify updates before any returns happen
-    notifyChanges()
-    if (playbackDelayed) {
+    if (playbackDelayed || !hasAudioFocus) {
+      if (!hasAudioFocus) {
+        requestAudioFocus()
+      }
+
       // If audio focus is delayed, add this sound to playbacks and it will be played whenever the
       // we get audio focus.
+      state = State.PAUSED
+      notifyChanges()
       return
     }
 
-    if (!hasAudioFocus) {
-      requestAudioFocus()
-      return
-    }
-
+    state = State.PLAYING
     requireNotNull(playbacks[sound.key]).play()
+    notifyChanges()
+
   }
 
-  // stops a playback and releases its resources.
-  private fun stop(sound: Sound) {
+  /**
+   * Stops a playback and releases underlying resources. It abandons focus if all playbacks are
+   * stopped.
+   */
+  fun stop(sound: Sound) {
     requireNotNull(playbacks[sound.key]).apply {
       stop()
     }
 
     playbacks.remove(sound.key)
-    notifyChanges()
-  }
-
-  // stops all playbacks without removing their states
-  private fun pauseAll() {
-    isPaused = true
-    playbacks.values.forEach {
-      it.pause()
-    }
-
-    AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
-    notifyChanges()
-  }
-
-  // resumes all playbacks from saved state
-  private fun resumeAll() {
-    isPaused = false
-    playbacks.values.forEach {
-      play(requireNotNull(Sound.LIBRARY[it.soundKey]))
+    if (playbacks.isEmpty()) {
+      state = State.STOPPED
+      AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
     }
 
     notifyChanges()
   }
 
   /**
-   * Subscriber for the [StartPlaybackEvent][PlaybackControlEvents.StartPlaybackEvent].
+   * Stops all playbacks and releases underlying resources. Also abandon the audio focus.
    */
-  @Subscribe(threadMode = ThreadMode.MAIN)
-  fun startPlayback(event: PlaybackControlEvents.StartPlaybackEvent) {
-    if (event.soundKey == null) {
-      resumeAll()
-    } else {
-      play(requireNotNull(Sound.LIBRARY[event.soundKey]))
-    }
-  }
-
-  /**
-   * Subscriber for the [StopPlaybackEvent][PlaybackControlEvents.StopPlaybackEvent].
-   */
-  @Subscribe(threadMode = ThreadMode.MAIN)
-  fun stopPlayback(event: PlaybackControlEvents.StopPlaybackEvent) {
-    if (event.soundKey == null) {
-      stopAll()
-    } else {
-      stop(requireNotNull(Sound.LIBRARY[event.soundKey]))
-    }
-  }
-
-  /**
-   * Subscriber for the [PausePlaybackEvent][PlaybackControlEvents.PausePlaybackEvent].
-   */
-  @Subscribe(threadMode = ThreadMode.MAIN)
-  fun pausePlayback(@Suppress("UNUSED_PARAMETER") ignored: PlaybackControlEvents.PausePlaybackEvent) {
-    pauseAll()
-  }
-
-  /**
-   * Subscriber for the [UpdatePlaybackEvent][PlaybackControlEvents.UpdatePlaybackEvent].
-   */
-  @Subscribe(threadMode = ThreadMode.MAIN)
-  fun updatePlayback(event: PlaybackControlEvents.UpdatePlaybackEvent) {
-    if (!playbacks.containsKey(event.playback.soundKey)) {
-      return
-    }
-
-    requireNotNull(playbacks[event.playback.soundKey]).also {
-      it.timePeriod = event.playback.timePeriod
-      it.setVolume(event.playback.volume)
-    }
-  }
-
-  /**
-   * Stops all playbacks and releases underlying resources.
-   */
-  private fun stopAll() {
-    isPaused = false
+  fun stop() {
+    state = State.STOPPED
     playbacks.values.forEach {
       it.stop()
     }
@@ -277,37 +204,83 @@ class PlaybackManager(private val context: Context) :
   }
 
   /**
-   * Returns the current state of the playback manager as one of
-   * [State.PLAYING], [State.PAUSED] or [State.STOPPED].
+   * Stops all playbacks but maintains their state so that these can be resumed at a later stage.
+   * It abandons audio focus.
    */
-  private fun getState(): State {
-    if (playbacks.isEmpty()) {
-      return State.STOPPED
+  fun pause() {
+    state = State.PAUSED
+    playbacks.values.forEach {
+      it.pause()
     }
 
-    if (isPaused) {
-      return State.PAUSED
-    }
-
-    return State.PLAYING
+    AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
+    notifyChanges()
   }
 
   /**
-   * attempts to recreate underlying player for playbacks using the [playerFactory]
+   * Resumes all playbacks from the saved state. It requests
+   */
+  fun resume() {
+    playbacks.values.forEach {
+      play(Sound.get(it.soundKey))
+    }
+
+    notifyChanges()
+  }
+
+  /**
+   * Sets the volume for the [Playback] with given key.
+   * @param soundKey identifier for the [Playback]. If playback is not found, no action is taken
+   * @param volume updated volume for the [Playback]
+   */
+  fun setVolume(soundKey: String, volume: Int) {
+    if (!playbacks.containsKey(soundKey)) {
+      return
+    }
+
+    requireNotNull(playbacks[soundKey]).setVolume(volume)
+  }
+
+  /**
+   * Sets the time period for the [Playback] with given key
+   * @param soundKey identifier for the [Playback]. If playback is not found, no action is taken
+   * @param timePeriod updated time period for the [Playback]
+   */
+  fun setTimePeriod(soundKey: String, timePeriod: Int) {
+    if (!playbacks.containsKey(soundKey)) {
+      return
+    }
+
+    requireNotNull(playbacks[soundKey]).timePeriod = timePeriod
+  }
+
+  /**
+   * Attempts to recreate underlying player for playbacks using the [playerFactory]
    */
   private fun reloadPlaybacks() {
     playbacks.values.forEach { it.recreatePlayerWithFactory(playerFactory) }
   }
 
   /**
-   * performs cleanup. must be called when final cleanup is required for the instance
+   * Performs cleanup. must be called when final cleanup is required for the instance
    */
-  fun release() {
-    stopAll()
-    eventBus.unregister(this)
+  fun cleanup() {
+    stop()
     CastContext.getSharedInstance(context).sessionManager.removeSessionManagerListener(
       castSessionManagerListener,
       CastSession::class.java
     )
+  }
+
+  /**
+   * Allows clients to subscribe for changes in [Playbacks][Playback]
+   * @param listener a lambda that is called on every update
+   */
+  fun setOnPlaybackUpdateListener(listener: () -> Unit) {
+    onPlaybackUpdateListener = listener
+  }
+
+  private fun notifyChanges() {
+    onPlaybackUpdateListener()
   }
 }

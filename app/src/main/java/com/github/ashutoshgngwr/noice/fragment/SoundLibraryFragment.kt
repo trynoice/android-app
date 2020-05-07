@@ -9,9 +9,10 @@ import android.widget.SeekBar
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.sound.Playback
-import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
+import com.github.ashutoshgngwr.noice.sound.PlaybackManager
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -33,8 +34,8 @@ class SoundLibraryFragment : Fragment() {
   private var playbacks = emptyMap<String, Playback>()
 
   @Subscribe(sticky = true, threadMode = ThreadMode.ASYNC)
-  fun onPlaybackUpdate(playbacks: HashMap<String, Playback>) {
-    this.playbacks = playbacks
+  fun onPlaybackUpdate(event: MediaPlayerService.OnPlaybackManagerUpdateEvent) {
+    this.playbacks = event.playbacks
     var showSavePresetFAB: Boolean
     PresetFragment.Preset.readAllFromUserPreferences(requireContext()).also {
       showSavePresetFAB = !it.contains(PresetFragment.Preset("", playbacks.values.toTypedArray()))
@@ -46,7 +47,7 @@ class SoundLibraryFragment : Fragment() {
       }
 
       if (mSavePresetButton != null) {
-        if (showSavePresetFAB && playbacks.isNotEmpty()) {
+        if (showSavePresetFAB && event.state == PlaybackManager.State.PLAYING) {
           requireNotNull(mSavePresetButton).show()
         } else {
           requireNotNull(mSavePresetButton).hide()
@@ -172,7 +173,13 @@ class SoundLibraryFragment : Fragment() {
             }
 
             // publish update event
-            eventBus.post(PlaybackControlEvents.UpdatePlaybackEvent(playback))
+            eventBus.post(
+              MediaPlayerService.UpdatePlaybackPropertiesEvent(
+                playback.soundKey,
+                playback.volume,
+                playback.timePeriod
+              )
+            )
           }
 
           override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -189,9 +196,9 @@ class SoundLibraryFragment : Fragment() {
           val sound = dataSet.getOrNull(adapterPosition) ?: return@setOnClickListener
 
           if (playbacks.containsKey(sound.key)) {
-            eventBus.post(PlaybackControlEvents.StopPlaybackEvent(sound.key))
+            eventBus.post(MediaPlayerService.StopPlaybackEvent(sound.key))
           } else {
-            eventBus.post(PlaybackControlEvents.StartPlaybackEvent(sound.key))
+            eventBus.post(MediaPlayerService.StartPlaybackEvent(sound.key))
           }
         }
       }

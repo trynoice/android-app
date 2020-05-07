@@ -53,5 +53,10 @@ class Sound private constructor(
       "wind_chimes_of_shells" to Sound("wind_chimes_of_shells", R.string.wind_in_chimes_of_shells),
       "wind_in_palm_trees" to Sound("wind_in_palm_trees", R.string.wind_in_palm_trees)
     )
+
+    /**
+     * A helper function to keep it lean
+     */
+    fun get(key: String) = requireNotNull(LIBRARY[key])
   }
 }
