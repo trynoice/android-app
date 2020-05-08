@@ -54,6 +54,8 @@ class AboutFragment : Fragment() {
         R.string.credits__sound_thunder_crack_url
       ),
       arrayOf(R.string.credits__sound_train_horn, R.drawable.ic_stat_sound, R.string.credits__sound_train_horn_url),
+      arrayOf(R.string.credits__sound_water_hose, R.drawable.ic_stat_sound, R.string.credits__sound_water_hose_url),
+      arrayOf(R.string.credits__sound_water_hosing, R.drawable.ic_stat_sound, R.string.credits__sound_water_hosing_url),
       arrayOf(R.string.credits__sound_water_stream, R.drawable.ic_stat_sound, R.string.credits__sound_water_stream_url),
       arrayOf(
         R.string.credits__sound_wind_chimes_of_shells,
