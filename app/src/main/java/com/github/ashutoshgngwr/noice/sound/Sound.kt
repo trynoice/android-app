@@ -48,6 +48,8 @@ class Sound private constructor(
       "soft_wind" to Sound("soft_wind", R.string.soft_wind),
       "thunder_crack" to Sound("thunder_crack", R.string.thunder_crack, false),
       "train_horn" to Sound("train_horn", R.string.train_horn, false),
+      "water_hitting" to Sound("water_hitting", R.string.water_hitting, isLoopable = false),
+      "water_hose" to Sound("water_hose", R.string.water_hose),
       "water_stream" to Sound("water_stream", R.string.water_stream),
       "white_noise" to Sound("white_noise", R.string.white_noise),
       "wind_chimes_of_shells" to Sound("wind_chimes_of_shells", R.string.wind_in_chimes_of_shells),

@@ -34,6 +34,8 @@
   <string name="soft_wind">Soft wind</string>
   <string name="thunder_crack">Thunder crack</string>
   <string name="train_horn">Train horn</string>
+  <string name="water_hitting">Water hitting a surface</string>
+  <string name="water_hose">Water hose</string>
   <string name="water_stream">Water stream</string>
   <string name="white_noise">White noise</string>
   <string name="wind_in_palm_trees">Wind in Palm trees</string>
@@ -101,6 +103,10 @@
   </string>
   <string name="credits__sound_train_horn" translatable="false">Train horn by CouleurCasquette</string>
   <string name="credits__sound_train_horn_url" translatable="false">https://freesound.org/s/248229/</string>
+  <string name="credits__sound_water_hitting" translatable="false">Water hose spraying aginst wood (1) by Glitchmachines</string>
+  <string name="credits__sound_water_hitting_url" translatable="false">https://www.soundsnap.com/hosewood1_wav</string>
+  <string name="credits__sound_water_hose" translatable="false">Spraying water from a hose in a wide fan by SFX Bible</string>
+  <string name="credits__sound_water_hose_url" translatable="false">https://www.soundsnap.com/node/53530</string>
   <string name="credits__sound_water_stream" translatable="false">Stream, Running Water | Aviemore Scotland by BurghRecords</string>
   <string name="credits__sound_water_stream_url" translatable="false">https://freesound.org/s/415151/</string>
   <string name="credits__sound_wind_chimes_of_shells" translatable="false">Wind chimes of shells from YouTube Audio Library</string>
