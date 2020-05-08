@@ -33,8 +33,8 @@
   <string name="soft_wind">Leichter Wind</string>
   <string name="thunder_crack">Donnerschlag</string>
   <string name="train_horn">Zugsignal</string>
-  <string name="water_hitting">Aufprallendes Wasser</string>
   <string name="water_hose">Wasserschlauch</string>
+  <string name="water_hosing">Bewässern</string>
   <string name="water_stream">Wasserlauf</string>
   <string name="white_noise">Weißes Rauschen</string>
   <string name="wind_in_palm_trees">Wind in Palmen</string>
