@@ -8,7 +8,8 @@
     <item name="actionBarStyle">@style/Widget.MaterialComponents.ActionBar.Solid</item>
     <item name="actionBarTheme">@style/ThemeOverlay.App.Dark.ActionBar</item>
     <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton</item>
-    <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.Dialog.Alert</item>
+    <item name="popupMenuStyle">@style/Widget.App.PopupMenu</item>
+    <item name="bottomSheetDialogTheme">@style/Theme.App.BottomSheetDialog</item>
   </style>
 
   <style name="ThemeOverlay.App.Dark.ActionBar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
@@ -20,16 +21,59 @@
     <item name="backgroundTint">?attr/colorAccent</item>
   </style>
 
-  <style name="ThemeOverlay.App.Dialog.Alert" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
-    <item name="colorSurface">@color/colorCardBackground</item>
-  </style>
-
   <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
     <item name="android:layout_margin">7dp</item>
     <item name="cardBackgroundColor">@color/colorCardBackground</item>
     <item name="cardCornerRadius">7dp</item>
     <item name="cardElevation">3dp</item>
     <item name="contentPadding">10dp</item>
+  </style>
+
+  <style name="Widget.App.PopupMenu" parent="Widget.MaterialComponents.PopupMenu">
+    <item name="android:popupBackground">@drawable/popup_menu_bg</item>
+  </style>
+
+  <style name="Theme.App.BottomSheetDialog" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
+    <item name="android:colorBackground">@color/colorPopupBackground</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="bottomSheetStyle">@style/Widget.App.BottomSheet.Modal</item>
+    <!-- following attributes are mostly unnecessary with current values. just for reference -->
+    <item name="titleTextAppearance">@style/TextAppearance.App.BottomSheetDialog.Title</item>
+    <item name="buttonStyle">@style/Widget.MaterialComponents.Button.TextButton.Dialog</item>
+    <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
+    <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+  </style>
+
+  <style name="Widget.App.BottomSheet.Modal" parent="Widget.Design.BottomSheet.Modal">
+    <item name="shapeAppearance">@style/ShapeAppearance.App.BottomSheetDialog</item>
+  </style>
+
+  <style name="ShapeAppearance.App.BottomSheetDialog" parent="">
+    <item name="cornerFamily">rounded</item>
+    <item name="cornerSizeTopRight">8dp</item>
+    <item name="cornerSizeTopLeft">8dp</item>
+    <item name="cornerSizeBottomRight">0dp</item>
+    <item name="cornerSizeBottomLeft">0dp</item>
+  </style>
+
+  <style name="TextAppearance.App.BottomSheetDialog.Title" parent="TextAppearance.MaterialComponents.Headline4">
+    <item name="android:textSize">28sp</item>
+  </style>
+
+  <style name="TextAppearance.App.CountdownTextView" parent="TextAppearance.MaterialComponents.Headline2">
+    <item name="android:textColor">?attr/colorAccent</item>
+  </style>
+
+  <style name="TextAppearance.App.CountdownTextView.Disabled">
+    <item name="android:textColor">@color/material_on_background_disabled</item>
+  </style>
+
+  <style name="Widget.App.Button.AddTime" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+    <item name="android:layout_columnWeight">1</item>
+    <item name="android:layout_gravity">center</item>
+    <item name="android:padding">12dp</item>
+    <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline5</item>
+    <item name="icon">@drawable/ic_action_add</item>
   </style>
 
 </resources>

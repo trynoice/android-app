@@ -1,19 +1,18 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.sound.Playback
 import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
@@ -127,35 +126,62 @@ class PresetFragment : Fragment() {
           eventBus.register(this@PresetFragment)
         }
 
-        itemView.button_delete.setOnClickListener {
-          MaterialAlertDialogBuilder(requireContext()).run {
-            setMessage(
-              getString(
-                R.string.preset_delete_confirmation,
-                dataSet[adapterPosition].name
-              )
-            )
-            setNegativeButton(R.string.cancel, null)
-            setPositiveButton(R.string.delete) { _: DialogInterface, _: Int ->
-              val preset = dataSet.removeAt(adapterPosition)
-              Preset.writeAllToUserPreferences(context, dataSet)
+        val onMenuItemClickListener = PopupMenu.OnMenuItemClickListener {
+          when (it.itemId) {
+            R.id.action_delete -> showDeletePresetConfirmation()
+            R.id.action_rename -> showRenamePresetInput()
+          }
 
-              // notify adapter of item remove before stopping playback
-              notifyItemRemoved(adapterPosition)
+          true
+        }
 
-              // then stop playback if recently deleted preset was playing
-              // notifyDataSetChanged() is needed to notify AdapterDataObserver
-              if (preset == activePreset) {
-                eventBus.post(PlaybackControlEvents.StopPlaybackEvent()) // will notifyDataSetChanged()
-              } else {
-                notifyDataSetChanged() // or call it explicitly
-              }
+        itemView.button_menu.setOnClickListener {
+          PopupMenu(requireContext(), itemView.button_menu).let {
+            it.inflate(R.menu.preset)
+            it.setOnMenuItemClickListener(onMenuItemClickListener)
+            it.show()
+          }
+        }
+      }
 
-              Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
-                .setAction(R.string.dismiss) { }
-                .show()
+      private fun showRenamePresetInput() {
+        DialogFragment().show(requireActivity().supportFragmentManager) {
+          title(R.string.rename)
+          input(
+            hintRes = R.string.name,
+            preFillValue = dataSet[adapterPosition].name,
+            errorRes = R.string.preset_name_cannot_be_empty
+          )
+          negativeButton(R.string.cancel)
+          positiveButton(R.string.save) {
+            dataSet[adapterPosition].name = getInputText()
+            Preset.writeAllToUserPreferences(requireContext(), dataSet)
+            notifyItemChanged(adapterPosition)
+          }
+        }
+      }
+
+      private fun showDeletePresetConfirmation() {
+        DialogFragment().show(requireActivity().supportFragmentManager) {
+          title(R.string.delete)
+          message(R.string.preset_delete_confirmation, dataSet[adapterPosition].name)
+          negativeButton(R.string.cancel)
+          positiveButton(R.string.delete) {
+            val preset = dataSet.removeAt(adapterPosition)
+            Preset.writeAllToUserPreferences(requireContext(), dataSet)
+            notifyItemRemoved(adapterPosition)
+
+            // then stop playback if recently deleted preset was playing
+            // notifyDataSetChanged() is needed to notify AdapterDataObserver
+            if (preset == activePreset) {
+              eventBus.post(PlaybackControlEvents.StopPlaybackEvent()) // will notifyDataSetChanged()
+            } else {
+              notifyDataSetChanged() // or call it explicitly
             }
-            show()
+
+            Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
+              .setAction(R.string.dismiss) { }
+              .show()
           }
         }
       }

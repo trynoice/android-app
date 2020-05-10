@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="library">Bibliothèque</string>
+  <string name="about">À propos</string>
+  <string name="report_issue">Rapporter un problème</string>
+  <string name="repeat_time_period">Fréquence</string>
+  <string name="volume">Volume</string>
+  <string name="play_pause">Lecture ou pause</string>
+  <string name="open_drawer">Ouvrir navigation</string>
+  <string name="close_drawer">Fermer navigation</string>
+  <string name="notification_channel_default__name">Lecture audio</string>
+  <string name="notification_channel_default__description">Contrôles de lecture</string>
+  <string name="pause">Pause</string>
+  <string name="play">Lecture</string>
+  <string name="stop">Stop</string>
+  <string name="airplane_inflight">Avion en vol</string>
+  <string name="airplane_seatbelt_beeps">Bip de ceintures d\'avion</string>
+  <string name="birds">Oiseaux</string>
+  <string name="bonfire">Feu de bois</string>
+  <string name="brownian_noise">Bruit rouge</string>
+  <string name="coffee_shop">Café</string>
+  <string name="distant_thunder">Tonnerre distant</string>
+  <string name="heavy_rain">Forte pluie</string>
+  <string name="light_rain">Pluie légère</string>
+  <string name="moderate_rain">Pluie modérée</string>
+  <string name="morning_in_a_village">Matinée dans un village</string>
+  <string name="moving_train">Train</string>
+  <string name="night">Nuit</string>
+  <string name="office">Bureau</string>
+  <string name="pink_noise">Bruit rose</string>
+  <string name="rolling_thunder">Roulement de tonnerre</string>
+  <string name="seaside">Bord de mer</string>
+  <string name="soft_wind">Vent doux</string>
+  <string name="thunder_crack">Coup de tonnerre</string>
+  <string name="train_horn">Sifflet de train</string>
+  <string name="water_stream">Ruisseau</string>
+  <string name="white_noise">Bruit blanc</string>
+  <string name="wind_in_palm_trees">Palmiers</string>
+  <string name="wind_in_chimes_of_shells">Carillons</string>
+  <string name="app_description">Relaxation, concentration et productivité avec une ambiance sonore minimaliste</string>
+  <string name="connect_with_author">Entrer en contact avec l\'auteur</string>
+  <string name="about__email">E-mail</string>
+  <string name="about__github">Github</string>
+  <string name="about__twitter">Twitter</string>
+  <string name="credits">Crédits</string>
+  <string name="dismiss">Rejeter</string>
+  <string name="save_preset">Sauvegarder le réglage</string>
+  <string name="name">Nom</string>
+  <string name="save">Sauvegarder</string>
+  <string name="cancel">Annuler</string>
+  <string name="preset_name_cannot_be_empty">Le nom du réglage ne peut pas être vide !</string>
+  <string name="preset_saved">Réglage sauvegardé !</string>
+  <string name="saved_presets">Réglages sauvegardés</string>
+  <string name="preset_delete_confirmation">Confirmer la suppression de %s ?</string>
+  <string name="delete">Supprimer</string>
+  <string name="preset_deleted">Réglage supprimé !</string>
+  <string name="nothing_saved_yet">Aucun réglage sauvegardé !</string>
+  <string name="sleep_timer">Minuterie</string>
+  <string name="reset">Réinitialiser</string>
+  <string name="auto_sleep_schedule_cancelled">Minuterie annulée !</string>
+  <string name="app_theme">Thème</string>
+  <string name="open_context_menu">Menu contextuel</string>
+  <string-array name="app_themes">
+    <item>Clair</item>
+    <item>Sombre</item>
+    <item>Système</item>
+  </string-array>
+</resources>

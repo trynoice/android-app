@@ -1,6 +1,5 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.app.Activity
 import android.view.View
 import android.widget.SeekBar
 import androidx.annotation.IdRes
@@ -13,7 +12,7 @@ import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.MotionEvents
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
+import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -100,7 +99,7 @@ class SoundLibraryFragmentTest {
 
   @Before
   fun setup() {
-    fragmentScenario = launchFragmentInContainer<SoundLibraryFragment>(null, R.style.Theme_App, null)
+    fragmentScenario = launchFragmentInContainer<SoundLibraryFragment>(null, R.style.Theme_App)
     fragmentScenario.onFragment {
       fragment = it
     }
@@ -289,7 +288,7 @@ class SoundLibraryFragmentTest {
   }
 
   @Test
-  fun testSavePresetButton_onClick() {
+  fun testSavePresetButton_onClickAndBeyond() {
     fragmentScenario.onFragment {
       val playbacks = hashMapOf(
         "birds" to Playback(
@@ -306,19 +305,15 @@ class SoundLibraryFragmentTest {
       .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
       .perform(click())
 
-    onView(allOf(withId(R.id.layout_main), hasDescendant(withId(R.id.edit_name))))
+    onView(allOf(withId(R.id.title), withText(R.string.save_preset)))
       .check(matches(isDisplayed()))
-  }
 
-  @Test
-  fun testSavePresetButton_onActivityResult() {
-    onView(withId(com.google.android.material.R.id.snackbar_text))
-      .check(doesNotExist())
+    onView(withId(R.id.editText))
+      .check(matches(isDisplayed()))
+      .perform(replaceText("test"))
 
-    fragmentScenario.onFragment {
-      it.onActivityResult(SoundLibraryFragment.RC_SAVE_PRESET_DIALOG, Activity.RESULT_OK, null)
-    }
-
+    onView(allOf(withId(R.id.positive), withText(R.string.save))).perform(click())
+    InstrumentationRegistry.getInstrumentation().waitForIdleSync()
     onView(withId(com.google.android.material.R.id.snackbar_text))
       .check(matches(withText(R.string.preset_saved)))
   }

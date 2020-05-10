@@ -5,13 +5,13 @@
     android:id="@+id/library"
     android:icon="@drawable/ic_action_library"
     android:title="@string/library"
-    android:checkable="true"/>
+    android:checkable="true" />
 
   <item
     android:id="@+id/saved_presets"
     android:icon="@drawable/ic_action_saved_presets"
     android:title="@string/saved_presets"
-    android:checkable="true"/>
+    android:checkable="true" />
 
   <item
     android:id="@+id/sleep_timer"
@@ -29,18 +29,18 @@
     android:id="@+id/about"
     android:icon="@drawable/ic_action_info"
     android:title="@string/about"
-    android:checkable="true"/>
+    android:checkable="true" />
 
   <item
     android:id="@+id/report_issue"
     android:icon="@drawable/ic_action_report"
     android:title="@string/report_issue"
-    android:checkable="false"/>
+    android:checkable="false" />
 
   <item
     android:id="@+id/rate_on_play_store"
     android:icon="@drawable/about_icon_google_play"
     android:title="@string/about_play_store"
-    android:checkable="false"/>
+    android:checkable="false" />
 
 </menu>

@@ -49,16 +49,12 @@
   <string name="preset_name_cannot_be_empty">प्रीसेट नाम खाली नहीं हो सकता है!</string>
   <string name="preset_saved">प्रीसेट सहेजा गया!</string>
   <string name="saved_presets">सहेजे गए प्रीसेट</string>
-  <string name="delete_preset">प्रीसेट हटाएं</string>
   <string name="preset_delete_confirmation">%s को हटाने की पुष्टि करें?</string>
   <string name="delete">हटाएं</string>
   <string name="preset_deleted">प्रीसेट को हटा दिया गया है!</string>
   <string name="nothing_saved_yet">अभी तक कुछ भी नहीं सहेजा गया है!</string>
   <string name="sleep_timer">स्लीप टाइमर</string>
-  <string name="schedule">अनुसूचित करें</string>
   <string name="reset">रद्द करें</string>
-  <string name="auto_sleep_schedule_error">ऑटो स्लीप टाइमर 00:00 पर सेट नहीं किया जा सकता है!</string>
-  <string name="auto_sleep_schedule_success">ऑटो स्लीप टाइमर अनुसूचित हो गया है!</string>
   <string name="auto_sleep_schedule_cancelled">ऑटो स्लीप टाइमर रद्द हो गया है!</string>
   <string name="app_theme">दिखावट</string>
   <string-array name="app_themes">

@@ -1,0 +1,7 @@
+- Added rename option to Preset list
+- Added italian translations
+- Added adaptive launcher icons
+- Redesign interface for setting sleep timer
+- Minor bug fixes and UI improvements
+
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG

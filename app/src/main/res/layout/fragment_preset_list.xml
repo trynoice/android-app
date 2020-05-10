@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
@@ -13,23 +12,24 @@
     android:layout_margin="16dp"
     android:orientation="vertical"
     android:gravity="center"
-    android:visibility="gone"
+    android:visibility="visible"
     tools:ignore="UseCompoundDrawables"><!-- not using compound drawables because tint is available API > 23 -->
 
     <ImageView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginBottom="10dp"
-      android:tint="@color/colorHint"
+      android:tint="@color/material_on_background_disabled"
+      android:tintMode="src_in"
       android:src="@drawable/ic_warning"
-      android:contentDescription="@string/nothing_saved_yet"/>
+      android:contentDescription="@string/nothing_saved_yet" />
 
     <TextView
       style="@style/TextAppearance.AppCompat.Title.Inverse"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textColor="@color/colorHint"
-      android:text="@string/nothing_saved_yet"/>
+      android:textColor="@color/material_on_background_disabled"
+      android:text="@string/nothing_saved_yet" />
 
   </LinearLayout>
 
@@ -37,6 +37,6 @@
     android:id="@+id/list_presets"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </FrameLayout>

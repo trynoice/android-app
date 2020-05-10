@@ -13,11 +13,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-import com.github.ashutoshgngwr.noice.fragment.AboutFragment
-import com.github.ashutoshgngwr.noice.fragment.PresetFragment
-import com.github.ashutoshgngwr.noice.fragment.SleepTimerFragment
-import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.github.ashutoshgngwr.noice.fragment.*
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -106,13 +102,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setFragment(SleepTimerFragment::class.java)
       }
       R.id.app_theme -> {
-        MaterialAlertDialogBuilder(this)
-          .setSingleChoiceItems(R.array.app_themes, getAppTheme()) { dialog, which ->
-            dialog.dismiss()
-            setAppTheme(which)
-          }
-          .setTitle(R.string.app_theme)
-          .show()
+        DialogFragment().show(supportFragmentManager) {
+          title(R.string.app_theme)
+          singleChoiceItems(
+            itemsRes = R.array.app_themes,
+            currentChoice = getAppTheme(),
+            onItemSelected = { setAppTheme(it) }
+          )
+        }
       }
       R.id.about -> {
         setFragment(AboutFragment::class.java)
