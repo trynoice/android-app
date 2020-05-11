@@ -152,7 +152,9 @@ class Playback(private val sound: Sound, soundPlayerFactory: SoundPlayerFactory)
     player.stop()
     player = factory.newPlayer(sound).also {
       it.setVolume(volume.toFloat() / MAX_VOLUME)
-      it.play()
+      if (isPlaying && sound.isLoopable) { // because non looping will automatically play on scheduled callback.
+        it.play()
+      }
     }
   }
 

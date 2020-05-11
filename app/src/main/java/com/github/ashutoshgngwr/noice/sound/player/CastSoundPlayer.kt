@@ -12,64 +12,57 @@ import com.google.gson.annotations.Expose
 class CastSoundPlayer(
   private val session: CastSession,
   private val namespace: String,
-  sound: Sound
+  private val sound: Sound
 ) : SoundPlayer() {
 
-  /**
-   * [State] denotes all possible states that [CastSoundPlayer] can be in at any given instant.
-   * This enum is private to CastSoundPlayer but its visibility is public because Gson needs to
-   * access it.
-   */
-  enum class State {
-    PLAYING, PAUSED, STOPPED
+  companion object {
+    private const val ACTION_PLAY = "play"
+    private const val ACTION_PAUSE = "pause"
+    private const val ACTION_STOP = "stop"
   }
 
-  @Expose
-  @Suppress("unused")
-  val soundKey = sound.key
+  private data class PlayerEvent(
+    @Expose val soundKey: String,
+    @Expose val isLooping: Boolean,
+    @Expose val volume: Float,
+    @Expose val action: String?
+  )
 
-  @Expose
-  @Suppress("unused")
-  val isLooping = sound.isLoopable
-
-  @Expose
   var volume: Float = 0.0f
     private set
-
-  @Expose
-  var state = State.STOPPED
 
   private val gson = GsonBuilder()
     .excludeFieldsWithoutExposeAnnotation()
     .create()
 
   override fun setVolume(volume: Float) {
-    this.volume = volume
-
-    // since volume update will only take effect during the PLAYING state, it would be
-    // redundant to send updates for others. Once the player comes back to PLAYING state
-    // the volume will be updated along with state update.
-    if (state == State.PLAYING) {
-      notifyChanges()
+    if (this.volume == volume) {
+      return
     }
+
+    this.volume = volume
+    notifyChanges(null)
   }
 
   override fun play() {
-    this.state = State.PLAYING
-    notifyChanges()
+    notifyChanges(ACTION_PLAY)
   }
 
   override fun pause() {
-    this.state = State.PAUSED
-    notifyChanges()
+    notifyChanges(ACTION_PAUSE)
   }
 
   override fun stop() {
-    this.state = State.STOPPED
-    notifyChanges()
+    notifyChanges(ACTION_STOP)
   }
 
-  private fun notifyChanges() {
-    session.sendMessage(namespace, gson.toJson(this))
+  private fun notifyChanges(action: String?) {
+    session.sendMessage(
+      namespace, gson.toJson(
+        PlayerEvent(
+          sound.key, sound.isLoopable, volume, action
+        )
+      )
+    )
   }
 }
