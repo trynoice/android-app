@@ -50,10 +50,12 @@ class PlaybackManager(private val context: Context) :
     .setWillPauseWhenDucked(false)
     .build()
 
-  private var playerFactory = SoundPlayerFactory.newLocalPlayerFactory(context, audioAttributes)
+  private var playerFactory: SoundPlayerFactory =
+    SoundPlayerFactory.LocalSoundPlayerFactory(context, audioAttributes)
+
   private val castSessionManagerListener = object : CastSessionManagerListener() {
     override fun onSessionStarted(session: CastSession, sessionId: String) {
-      playerFactory = SoundPlayerFactory.newCastPlayerFactory(
+      playerFactory = SoundPlayerFactory.CastSoundPlayerFactory(
         session,
         context.getString(R.string.cast_namespace__default)
       )
@@ -61,12 +63,19 @@ class PlaybackManager(private val context: Context) :
     }
 
     override fun onSessionEnded(session: CastSession, error: Int) {
-      playerFactory = SoundPlayerFactory.newLocalPlayerFactory(context, audioAttributes)
+      // onSessionEnded gets called when restarting the activity. So need to ensure that we're not
+      // recreating the LocalPlayerFactory again because it will cause playbacks to restarts which
+      // means glitches in playback.
+      if (playerFactory is SoundPlayerFactory.LocalSoundPlayerFactory) {
+        return
+      }
+
+      playerFactory = SoundPlayerFactory.LocalSoundPlayerFactory(context, audioAttributes)
       reloadPlaybacks()
     }
 
     override fun onSessionResumed(session: CastSession, wasSuspended: Boolean) {
-      playerFactory = SoundPlayerFactory.newCastPlayerFactory(
+      playerFactory = SoundPlayerFactory.CastSoundPlayerFactory(
         session,
         context.getString(R.string.cast_namespace__default)
       )

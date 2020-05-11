@@ -16,7 +16,11 @@ interface SoundPlayerFactory {
    */
   fun newPlayer(sound: Sound): SoundPlayer
 
-  private class LocalSoundPlayerFactory(
+  /**
+   * A [SoundPlayerFactory] for creating [SoundPlayer] instances that play media locally using
+   * [SimpleExoPlayer][com.google.android.exoplayer2.SimpleExoPlayer] instances.
+   */
+  class LocalSoundPlayerFactory internal constructor(
     private val context: Context,
     private val audioAttributesCompat: AudioAttributesCompat
   ) : SoundPlayerFactory {
@@ -25,7 +29,11 @@ interface SoundPlayerFactory {
     }
   }
 
-  private class CastSoundPlayerFactory(
+  /**
+   * A [SoundPlayerFactory] for creating [SoundPlayer] instances that cast media using the Google
+   * Cast application framework.
+   */
+  class CastSoundPlayerFactory internal constructor(
     private val session: CastSession,
     private val namespace: String
   ) : SoundPlayerFactory {
@@ -33,24 +41,5 @@ interface SoundPlayerFactory {
       return CastSoundPlayer(session, namespace, sound)
     }
 
-  }
-
-  companion object {
-    /**
-     * Create a new [SoundPlayerFactory] for creating [LocalSoundPlayer] instances.
-     */
-    fun newLocalPlayerFactory(
-      context: Context,
-      audioAttributes: AudioAttributesCompat
-    ): SoundPlayerFactory {
-      return LocalSoundPlayerFactory(context, audioAttributes)
-    }
-
-    /**
-     * Create a new [SoundPlayerFactory] for creating [CastSoundPlayer] instances.
-     */
-    fun newCastPlayerFactory(session: CastSession, namespace: String): SoundPlayerFactory {
-      return CastSoundPlayerFactory(session, namespace)
-    }
   }
 }
