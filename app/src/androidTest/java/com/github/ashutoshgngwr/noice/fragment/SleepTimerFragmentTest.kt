@@ -50,7 +50,7 @@ class SleepTimerFragmentTest {
     `when`(eventBus.getStickyEvent(SleepTimerFragment.ScheduleAutoSleepEvent::class.java))
       .thenReturn(SleepTimerFragment.ScheduleAutoSleepEvent(sleepTime))
 
-    onView(withId(R.id.button_1m)).perform(click())
+    onView(withId(R.id.button_1m)).perform(scrollTo(), click())
     val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
     verify(eventBus, atMostOnce()).postSticky(captor.capture())
 
@@ -62,7 +62,7 @@ class SleepTimerFragmentTest {
 
   @Test
   fun testAddTimeButton_1m() {
-    onView(withId(R.id.button_1m)).perform(click())
+    onView(withId(R.id.button_1m)).perform(scrollTo(), click())
     val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
     verify(eventBus, atMostOnce()).postSticky(captor.capture())
 
@@ -74,7 +74,7 @@ class SleepTimerFragmentTest {
 
   @Test
   fun testAddTimeButton_5m() {
-    onView(withId(R.id.button_5m)).perform(click())
+    onView(withId(R.id.button_5m)).perform(scrollTo(), click())
     val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
     verify(eventBus, atMostOnce()).postSticky(captor.capture())
 
@@ -86,7 +86,7 @@ class SleepTimerFragmentTest {
 
   @Test
   fun testAddTimeButton_30m() {
-    onView(withId(R.id.button_30m)).perform(click())
+    onView(withId(R.id.button_30m)).perform(scrollTo(), click())
     val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
     verify(eventBus, atMostOnce()).postSticky(captor.capture())
 
@@ -98,7 +98,7 @@ class SleepTimerFragmentTest {
 
   @Test
   fun testAddTimeButton_1h() {
-    onView(withId(R.id.button_1h)).perform(click())
+    onView(withId(R.id.button_1h)).perform(scrollTo(), click())
     val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
     verify(eventBus, atMostOnce()).postSticky(captor.capture())
 
@@ -110,7 +110,7 @@ class SleepTimerFragmentTest {
 
   @Test
   fun testAddTimeButton_4h() {
-    onView(withId(R.id.button_4h)).perform(click())
+    onView(withId(R.id.button_4h)).perform(scrollTo(), click())
     val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
     verify(eventBus, atMostOnce()).postSticky(captor.capture())
 
@@ -122,7 +122,7 @@ class SleepTimerFragmentTest {
 
   @Test
   fun testAddTimeButton_8h() {
-    onView(withId(R.id.button_8h)).perform(click())
+    onView(withId(R.id.button_8h)).perform(scrollTo(), click())
     val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
     verify(eventBus, atMostOnce()).postSticky(captor.capture())
 

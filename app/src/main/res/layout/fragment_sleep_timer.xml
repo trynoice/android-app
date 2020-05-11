@@ -8,22 +8,29 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp">
+    android:padding="20dp">
 
     <TextView
-      style="@style/TextAppearance.MaterialComponents.Headline4"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="20dp"
       android:gravity="center"
-      android:text="@string/sleep_timer" />
+      android:text="@string/sleep_timer"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
 
     <com.github.ashutoshgngwr.noice.widget.CountdownTextView
       android:id="@+id/countdown_view"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="10dp" />
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="20dp"
+      android:gravity="center"
+      android:text="@string/sleep_timer_description"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
     <GridLayout
       android:layout_width="match_parent"
