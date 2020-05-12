@@ -9,6 +9,7 @@ window.addEventListener("load", () => {
   opts.customNamespaces[NAMESPACE] = cast.framework.system.MessageType.JSON;
   const ctx = cast.framework.CastReceiverContext.getInstance();
   const manager = new PlayerManager();
+  manager.onIdleTimeout(() => ctx.stop());
   ctx.addCustomMessageListener(
     NAMESPACE,
     (event: cast.framework.system.Event) => {

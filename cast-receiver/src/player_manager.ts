@@ -1,5 +1,6 @@
 import { Howl } from "howler";
 import SoundLibrary from "noice/library";
+import IdleTimeoutHandler from "noice/idle_timeout_handler";
 
 interface PlayerEvent {
   soundKey: string;
@@ -25,8 +26,14 @@ export default class PlayerManager {
   private readonly ACTION_PAUSE = "pause";
   private readonly ACTION_STOP = "stop";
 
-  private players: PlayerMap = {};
+  private readonly IDLE_TIMEOUT = 300 * 1000;
 
+  private players: PlayerMap = {};
+  private idleTimeoutHandler = new IdleTimeoutHandler(this.IDLE_TIMEOUT);
+
+  constructor() {
+    this.idleTimeoutHandler.start();
+  }
 
   private createPlayer(soundKey: string, isLooping: boolean): Howl {
     return new Howl({
@@ -85,13 +92,19 @@ export default class PlayerManager {
     switch (event.action) {
       case this.ACTION_PLAY:
         this.play(event.soundKey);
+        this.idleTimeoutHandler.stop();
         break;
       case this.ACTION_PAUSE:
         this.pause(event.soundKey);
         break;
       case this.ACTION_STOP:
         this.stop(event.soundKey);
+        if (isEmptyMap(this.players)) this.idleTimeoutHandler.start();
         break;
     }
+  }
+
+  onIdleTimeout(f: () => void): void {
+    this.idleTimeoutHandler.onTimeout(f);
   }
 }
