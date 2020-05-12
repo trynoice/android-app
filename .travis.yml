@@ -6,6 +6,7 @@ jdk: openjdk8
 branches:
   only:
     - master
+    - /^\d+\.\d+\.\d+(-\w+)?$/
 
 addons:
   apt:
