@@ -10,6 +10,7 @@
     <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton</item>
     <item name="popupMenuStyle">@style/Widget.App.PopupMenu</item>
     <item name="bottomSheetDialogTheme">@style/Theme.App.BottomSheetDialog</item>
+    <item name="android:statusBarColor">@color/colorStatusBar</item>
   </style>
 
   <style name="ThemeOverlay.App.Dark.ActionBar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
