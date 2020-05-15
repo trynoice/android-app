@@ -2,7 +2,6 @@ package com.github.ashutoshgngwr.noice
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -84,9 +83,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     if (savedInstanceState == null) {
       setFragment(SoundLibraryFragment::class.java)
     }
-
-    // volume control to type "media"
-    volumeControlStream = AudioManager.STREAM_MUSIC
 
     // start the media player service
     startService(Intent(this, MediaPlayerService::class.java))

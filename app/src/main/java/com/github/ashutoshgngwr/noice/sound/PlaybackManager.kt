@@ -3,12 +3,17 @@ package com.github.ashutoshgngwr.noice.sound
 import android.content.Context
 import android.media.AudioManager
 import android.os.Handler
+import android.support.v4.media.MediaMetadataCompat
+import android.support.v4.media.session.MediaSessionCompat
+import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
+import androidx.mediarouter.media.MediaRouter
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.cast.CastSessionManagerListener
+import com.github.ashutoshgngwr.noice.cast.CastVolumeProvider
 import com.github.ashutoshgngwr.noice.sound.player.SoundPlayerFactory
 import com.google.android.gms.cast.framework.CastContext
 import com.google.android.gms.cast.framework.CastSession
@@ -53,14 +58,47 @@ class PlaybackManager(private val context: Context) :
   private var playerFactory: SoundPlayerFactory =
     SoundPlayerFactory.LocalSoundPlayerFactory(context, audioAttributes)
 
+  private val playbackStateBuilder = PlaybackStateCompat.Builder()
+    .setActions(
+      PlaybackStateCompat.ACTION_PLAY_PAUSE
+        and PlaybackStateCompat.ACTION_PAUSE
+        and PlaybackStateCompat.ACTION_STOP
+    )
+
+  val mediaSession = MediaSessionCompat(context, context.packageName).also {
+    it.setMetadata(
+      MediaMetadataCompat.Builder()
+        .putString(MediaMetadataCompat.METADATA_KEY_TITLE, context.getString(R.string.app_name))
+        .build()
+    )
+
+    it.setCallback(object : MediaSessionCompat.Callback() {
+      override fun onPlay() = resume()
+      override fun onStop() = stop()
+      override fun onPause() = pause()
+    })
+
+    it.setPlaybackToLocal(AudioManager.STREAM_MUSIC)
+    it.setPlaybackState(playbackStateBuilder.build())
+    it.isActive = true
+  }
+
   private val castSessionManagerListener = object : CastSessionManagerListener() {
-    override fun onSessionStarted(session: CastSession, sessionId: String) {
+    fun switchToRemotePlayback(session: CastSession) {
       playerFactory = SoundPlayerFactory.CastSoundPlayerFactory(
         session,
         context.getString(R.string.cast_namespace__default)
       )
       reloadPlaybacks()
+      mediaSession.setPlaybackToRemote(CastVolumeProvider(session))
+      AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
     }
+
+    override fun onSessionStarted(session: CastSession, sessionId: String) =
+      switchToRemotePlayback(session)
+
+    override fun onSessionResumed(session: CastSession, wasSuspended: Boolean) =
+      switchToRemotePlayback(session)
 
     override fun onSessionEnded(session: CastSession, error: Int) {
       // onSessionEnded gets called when restarting the activity. So need to ensure that we're not
@@ -71,19 +109,14 @@ class PlaybackManager(private val context: Context) :
       }
 
       playerFactory = SoundPlayerFactory.LocalSoundPlayerFactory(context, audioAttributes)
-      reloadPlaybacks()
-    }
-
-    override fun onSessionResumed(session: CastSession, wasSuspended: Boolean) {
-      playerFactory = SoundPlayerFactory.CastSoundPlayerFactory(
-        session,
-        context.getString(R.string.cast_namespace__default)
-      )
+      requestAudioFocus()
+      mediaSession.setPlaybackToLocal(AudioManager.STREAM_MUSIC)
       reloadPlaybacks()
     }
   }
 
   init {
+    MediaRouter.getInstance(context).setMediaSessionCompat(mediaSession)
     CastContext.getSharedInstance(context).sessionManager.addSessionManagerListener(
       castSessionManagerListener,
       CastSession::class.java
@@ -275,6 +308,7 @@ class PlaybackManager(private val context: Context) :
    */
   fun cleanup() {
     stop()
+    mediaSession.release()
     CastContext.getSharedInstance(context).sessionManager.removeSessionManagerListener(
       castSessionManagerListener,
       CastSession::class.java
@@ -290,6 +324,30 @@ class PlaybackManager(private val context: Context) :
   }
 
   private fun notifyChanges() {
+    when (state) {
+      State.PLAYING -> playbackStateBuilder.setState(
+        PlaybackStateCompat.STATE_PLAYING,
+        PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
+        1f
+      )
+
+
+      State.PAUSED -> playbackStateBuilder.setState(
+        PlaybackStateCompat.STATE_PAUSED,
+        PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
+        0f
+      )
+
+
+      State.STOPPED -> playbackStateBuilder.setState(
+        PlaybackStateCompat.STATE_STOPPED,
+        PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
+        0f
+      )
+
+    }
+
+    mediaSession.setPlaybackState(playbackStateBuilder.build())
     onPlaybackUpdateListener()
   }
 }
