@@ -195,11 +195,7 @@ class PlaybackManager(private val context: Context) :
       playbacks[sound.key] = Playback(sound, playerFactory)
     }
 
-    if (playbackDelayed || !hasAudioFocus) {
-      if (!hasAudioFocus) {
-        requestAudioFocus()
-      }
-
+    if (playbackDelayed) {
       // If audio focus is delayed, add this sound to playbacks and it will be played whenever the
       // we get audio focus.
       state = State.PAUSED
@@ -207,10 +203,16 @@ class PlaybackManager(private val context: Context) :
       return
     }
 
+    if (!hasAudioFocus) {
+      // if doesn't have audio focus, request and return because a successful audio focus request
+      // will start playback.
+      requestAudioFocus()
+      return
+    }
+
     state = State.PLAYING
     requireNotNull(playbacks[sound.key]).play()
     notifyChanges()
-
   }
 
   /**

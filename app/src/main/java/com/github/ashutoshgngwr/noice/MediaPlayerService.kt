@@ -101,7 +101,12 @@ class MediaPlayerService : Service() {
   }
 
   private val onPlaybackUpdateListener = {
-    eventBus.postSticky(OnPlaybackManagerUpdateEvent(playbackManager.state, playbackManager.playbacks))
+    eventBus.postSticky(
+      OnPlaybackManagerUpdateEvent(
+        playbackManager.state,
+        playbackManager.playbacks
+      )
+    )
 
     // isPlaying returns true if Playback is paused but not stopped.
     if (playbackManager.state == PlaybackManager.State.STOPPED) {
