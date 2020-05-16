@@ -6,10 +6,10 @@
   <string name="repeat_time_period">Período até repetir som</string>
   <string name="volume">Volume do som</string>
   <string name="play_pause">tocar ou pausar som</string>
-  <string name="open_drawer">Open navigation drawer</string>
-  <string name="close_drawer">Close navigation drawer</string>
-  <string name="notification_channel_default__name">Media Playback</string>
-  <string name="notification_channel_default__description">Media playback controls</string>
+  <string name="open_drawer">Abrir menu de navegação</string>
+  <string name="close_drawer">Fechar menu de navegação</string>
+  <string name="notification_channel_default__name">Reprodução de audio</string>
+  <string name="notification_channel_default__description">Controles de audio</string>
   <string name="pause">Pausar</string>
   <string name="play">Tocar</string>
   <string name="stop">Parar</string>
