@@ -16,6 +16,7 @@ class CastSoundPlayer(
 ) : SoundPlayer() {
 
   companion object {
+    private const val ACTION_CREATE = "create"
     private const val ACTION_PLAY = "play"
     private const val ACTION_PAUSE = "pause"
     private const val ACTION_STOP = "stop"
@@ -34,6 +35,10 @@ class CastSoundPlayer(
   private val gson = GsonBuilder()
     .excludeFieldsWithoutExposeAnnotation()
     .create()
+
+  init {
+    notifyChanges(ACTION_CREATE)
+  }
 
   override fun setVolume(volume: Float) {
     if (this.volume == volume) {
