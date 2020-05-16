@@ -6,10 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.AudioManager
-import android.os.Build
-import android.os.Handler
-import android.os.IBinder
-import android.os.SystemClock
+import android.os.*
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.github.ashutoshgngwr.noice.sound.Playback
@@ -18,6 +15,7 @@ import com.github.ashutoshgngwr.noice.sound.Sound
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.concurrent.TimeUnit
 
 class MediaPlayerService : Service() {
 
@@ -75,18 +73,20 @@ class MediaPlayerService : Service() {
   companion object {
     private val TAG = MediaPlayerService::class.java.simpleName
 
-    const val FOREGROUND_ID = 0x29
-    const val RC_MAIN_ACTIVITY = 0x28
-    const val RC_START_PLAYBACK = 0x27
-    const val RC_PAUSE_PLAYBACK = 0x26
-    const val RC_STOP_PLAYBACK = 0x25
+    private const val FOREGROUND_ID = 0x29
+    private const val RC_MAIN_ACTIVITY = 0x28
+    private const val RC_START_PLAYBACK = 0x27
+    private const val RC_PAUSE_PLAYBACK = 0x26
+    private const val RC_STOP_PLAYBACK = 0x25
+    private val WAKELOCK_TIMEOUT = TimeUnit.DAYS.toMillis(1)
 
-    const val NOTIFICATION_CHANNEL_ID = "com.github.ashutoshgngwr.noice.default"
+    private const val NOTIFICATION_CHANNEL_ID = "com.github.ashutoshgngwr.noice.default"
   }
 
   private val playbackManager by lazy { PlaybackManager(this) }
   private val handler = Handler() // needed in scheduleAutoStop for register callback
   private val eventBus = EventBus.getDefault()
+  private lateinit var wakeLock: PowerManager.WakeLock
   private val autoStopCallback = Runnable {
     playbackManager.stop()
   }
@@ -111,8 +111,10 @@ class MediaPlayerService : Service() {
     // isPlaying returns true if Playback is paused but not stopped.
     if (playbackManager.state == PlaybackManager.State.STOPPED) {
       stopForeground(true)
+      wakeLock.release()
     } else {
       startForeground(FOREGROUND_ID, createNotification())
+      wakeLock.acquire(WAKELOCK_TIMEOUT)
     }
   }
 
@@ -168,6 +170,12 @@ class MediaPlayerService : Service() {
 
   override fun onCreate() {
     super.onCreate()
+    wakeLock = (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
+      newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, packageName).apply {
+        setReferenceCounted(false)
+      }
+    }
+
     playbackManager.setOnPlaybackUpdateListener(onPlaybackUpdateListener)
     createNotificationChannel()
 
@@ -227,6 +235,9 @@ class MediaPlayerService : Service() {
 
     // unregister auto stop callbacks, if any
     handler.removeCallbacks(autoStopCallback)
+
+    // ensure wake lock is released
+    wakeLock.release()
   }
 
   /**
