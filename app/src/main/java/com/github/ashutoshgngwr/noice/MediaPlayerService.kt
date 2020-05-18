@@ -252,7 +252,7 @@ class MediaPlayerService : Service() {
    * Subscriber for the [ResumePlaybackEvent].
    */
   @Subscribe(threadMode = ThreadMode.MAIN)
-  fun resumePlayback(event: ResumePlaybackEvent) {
+  fun resumePlayback(@Suppress("UNUSED_PARAMETER") event: ResumePlaybackEvent) {
     playbackManager.resume()
   }
 
@@ -260,7 +260,7 @@ class MediaPlayerService : Service() {
    * Subscriber for the [PausePlaybackEvent].
    */
   @Subscribe(threadMode = ThreadMode.MAIN)
-  fun pausePlayback(event: PausePlaybackEvent) {
+  fun pausePlayback(@Suppress("UNUSED_PARAMETER") event: PausePlaybackEvent) {
     playbackManager.pause()
   }
 
