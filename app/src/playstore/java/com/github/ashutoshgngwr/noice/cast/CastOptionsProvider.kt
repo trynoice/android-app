@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice.cast
 
 import android.content.Context
+import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.google.android.gms.cast.framework.CastOptions
 import com.google.android.gms.cast.framework.OptionsProvider
@@ -11,8 +12,17 @@ class CastOptionsProvider : OptionsProvider {
 
   override fun getCastOptions(context: Context): CastOptions {
     return CastOptions.Builder().run {
-      // `cast_app_id` is declared in 'app/build.gradle'
-      setReceiverApplicationId(context.getString(R.string.cast_app_id))
+      setReceiverApplicationId(
+        context.getString(
+          @Suppress("ConstantConditionIf")
+          if (BuildConfig.DEBUG) {
+            R.string.cast_app_id__debug
+          } else {
+            R.string.cast_app_id__release
+          }
+        )
+      )
+
       setStopReceiverApplicationWhenEndingSession(true)
       setCastMediaOptions(
         CastMediaOptions.Builder()

@@ -27,7 +27,6 @@ android {
     debug {
       applicationIdSuffix '.debug'
       testCoverageEnabled true
-      resValue 'string', 'cast_app_id', 'EB68E994'
     }
 
     release {
@@ -35,7 +34,19 @@ android {
       minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
       signingConfig = signingConfigs.release
-      resValue 'string', 'cast_app_id', 'E421E43B'
+    }
+  }
+
+  flavorDimensions 'distribution_channel'
+  productFlavors {
+    fdroid {
+      dimension 'distribution_channel'
+      buildConfigField 'boolean', 'IS_PLAY_STORE_BUILD', 'false'
+    }
+
+    playstore {
+      dimension 'distribution_channel'
+      buildConfigField 'boolean', 'IS_PLAY_STORE_BUILD', 'true'
     }
   }
 
@@ -57,11 +68,12 @@ dependencies {
   implementation 'androidx.preference:preference:1.1.1'
   implementation 'com.github.medyo:android-about-page:1.2.5'
   implementation 'com.google.android.exoplayer:exoplayer-core:2.11.4'
-  implementation 'com.google.android.gms:play-services-cast-framework:18.1.0'
   implementation 'com.google.android.material:material:1.1.0'
   implementation 'com.google.code.gson:gson:2.8.6'
   implementation 'org.greenrobot:eventbus:3.1.1'
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  playstoreImplementation 'com.google.android.gms:play-services-cast-framework:18.1.0'
 
   androidTestImplementation 'androidx.test:core:1.2.0'
   androidTestImplementation 'androidx.test:rules:1.2.0'

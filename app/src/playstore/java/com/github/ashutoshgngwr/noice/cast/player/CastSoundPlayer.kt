@@ -1,6 +1,7 @@
-package com.github.ashutoshgngwr.noice.sound.player
+package com.github.ashutoshgngwr.noice.cast.player
 
 import com.github.ashutoshgngwr.noice.sound.Sound
+import com.github.ashutoshgngwr.noice.sound.player.SoundPlayer
 import com.google.android.gms.cast.framework.CastSession
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose

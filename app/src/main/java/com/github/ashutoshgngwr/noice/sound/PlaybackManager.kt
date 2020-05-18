@@ -12,11 +12,8 @@ import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
 import androidx.mediarouter.media.MediaRouter
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.cast.CastSessionManagerListener
-import com.github.ashutoshgngwr.noice.cast.CastVolumeProvider
+import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.sound.player.SoundPlayerFactory
-import com.google.android.gms.cast.framework.CastContext
-import com.google.android.gms.cast.framework.CastSession
 
 /**
  * [PlaybackManager] is responsible for managing playback end-to-end for all sounds.
@@ -65,7 +62,7 @@ class PlaybackManager(private val context: Context) :
         and PlaybackStateCompat.ACTION_STOP
     )
 
-  val mediaSession = MediaSessionCompat(context, context.packageName).also {
+  private val mediaSession = MediaSessionCompat(context, context.packageName).also {
     it.setMetadata(
       MediaMetadataCompat.Builder()
         .putString(MediaMetadataCompat.METADATA_KEY_TITLE, context.getString(R.string.app_name))
@@ -83,44 +80,27 @@ class PlaybackManager(private val context: Context) :
     it.isActive = true
   }
 
-  private val castSessionManagerListener = object : CastSessionManagerListener() {
-    fun switchToRemotePlayback(session: CastSession) {
-      playerFactory = SoundPlayerFactory.CastSoundPlayerFactory(
-        session,
-        context.getString(R.string.cast_namespace__default)
-      )
+  private val castAPIWrapper = CastAPIWrapper(context).apply {
+    onSessionBegin {
+      playerFactory = newCastPlayerFactory()
       reloadPlaybacks()
-      mediaSession.setPlaybackToRemote(CastVolumeProvider(session))
-      AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
+      mediaSession.setPlaybackToRemote(newCastVolumeProvider())
     }
 
-    override fun onSessionStarted(session: CastSession, sessionId: String) =
-      switchToRemotePlayback(session)
-
-    override fun onSessionResumed(session: CastSession, wasSuspended: Boolean) =
-      switchToRemotePlayback(session)
-
-    override fun onSessionEnded(session: CastSession, error: Int) {
+    onSessionEnd {
       // onSessionEnded gets called when restarting the activity. So need to ensure that we're not
       // recreating the LocalPlayerFactory again because it will cause playbacks to restarts which
       // means glitches in playback.
-      if (playerFactory is SoundPlayerFactory.LocalSoundPlayerFactory) {
-        return
+      if (playerFactory !is SoundPlayerFactory.LocalSoundPlayerFactory) {
+        playerFactory = SoundPlayerFactory.LocalSoundPlayerFactory(context, audioAttributes)
+        mediaSession.setPlaybackToLocal(AudioManager.STREAM_MUSIC)
+        reloadPlaybacks()
       }
-
-      playerFactory = SoundPlayerFactory.LocalSoundPlayerFactory(context, audioAttributes)
-      requestAudioFocus()
-      mediaSession.setPlaybackToLocal(AudioManager.STREAM_MUSIC)
-      reloadPlaybacks()
     }
   }
 
   init {
     MediaRouter.getInstance(context).setMediaSessionCompat(mediaSession)
-    CastContext.getSharedInstance(context).sessionManager.addSessionManagerListener(
-      castSessionManagerListener,
-      CastSession::class.java
-    )
   }
 
   // implements audio focus change listener
@@ -311,10 +291,7 @@ class PlaybackManager(private val context: Context) :
   fun cleanup() {
     stop()
     mediaSession.release()
-    CastContext.getSharedInstance(context).sessionManager.removeSessionManagerListener(
-      castSessionManagerListener,
-      CastSession::class.java
-    )
+    castAPIWrapper.clearSessionCallbacks()
   }
 
   /**
