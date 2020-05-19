@@ -50,7 +50,7 @@ class Sound private constructor(
       "train_horn" to Sound("train_horn", R.string.train_horn, false),
       "water_stream" to Sound("water_stream", R.string.water_stream),
       "white_noise" to Sound("white_noise", R.string.white_noise),
-      "wind_in_chimes_of_shells" to Sound("wind_in_chimes_of_shells", R.string.wind_in_chimes_of_shells),
+      "wind_chimes_of_shells" to Sound("wind_chimes_of_shells", R.string.wind_in_chimes_of_shells),
       "wind_in_palm_trees" to Sound("wind_in_palm_trees", R.string.wind_in_palm_trees)
     )
   }
