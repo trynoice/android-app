@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="library">Biblioteca de Sons</string>
+  <string name="about">Saiba mais</string>
+  <string name="report_issue">Informar sobre problema</string>
+  <string name="repeat_time_period">Período até repetir som</string>
+  <string name="volume">Volume do som</string>
+  <string name="play_pause">tocar ou pausar som</string>
+  <string name="open_drawer">Abrir menu de navegação</string>
+  <string name="close_drawer">Fechar menu de navegação</string>
+  <string name="notification_channel_default__name">Reprodução de audio</string>
+  <string name="notification_channel_default__description">Controles de audio</string>
+  <string name="pause">Pausar</string>
+  <string name="play">Tocar</string>
+  <string name="stop">Parar</string>
+  <string name="airplane_inflight">Avião voando</string>
+  <string name="airplane_seatbelt_beeps">Cinto de segurança de avião</string>
+  <string name="birds">Pássaros</string>
+  <string name="bonfire">Fogueira</string>
+  <string name="brownian_noise">Ruído vermelho (Browniano)</string>
+  <string name="coffee_shop">Cafeteria</string>
+  <string name="distant_thunder">Trovoadas distantes</string>
+  <string name="heavy_rain">Chuva intensa</string>
+  <string name="light_rain">Chuva leve</string>
+  <string name="moderate_rain">Chuva moderada</string>
+  <string name="morning_in_a_village">Manhã em um vilarejo</string>
+  <string name="moving_train">Trem</string>
+  <string name="night">Sons noturnos</string>
+  <string name="office">Em um escritório</string>
+  <string name="pink_noise">Ruído rosa</string>
+  <string name="rolling_thunder">Trovoada iminente</string>
+  <string name="seaside">Beira-mar</string>
+  <string name="soft_wind">Vento leve</string>
+  <string name="thunder_crack">Trovoada forte</string>
+  <string name="train_horn">Sirene de trem</string>
+  <string name="water_stream">Água em correnteza</string>
+  <string name="white_noise">Ruído branco</string>
+  <string name="wind_in_palm_trees">Vento contra folhagem de palmeiras</string>
+  <string name="wind_in_chimes_of_shells">Vento contra sininhos</string>
+  <string name="app_description">Melhore sua produtividade e relaxe com um pouquinho de barulho</string>
+  <string name="connect_with_author">Fale com o Autor</string>
+  <string name="about__email">E-mail</string>
+  <string name="about__github">Github</string>
+  <string name="about__twitter">Twitter</string>
+  <string name="credits">Créditos</string>
+  <string name="dismiss">Dispensar</string>
+  <string name="save_preset">Salvar ajustes</string>
+  <string name="name">Nome</string>
+  <string name="save">Salvar</string>
+  <string name="cancel">Cancelar</string>
+  <string name="preset_name_cannot_be_empty">Um ajuste não pode ter seu nome vazio!</string>
+  <string name="preset_saved">Ajuste salvo!</string>
+  <string name="saved_presets">Ajustes salvos</string>
+  <string name="preset_delete_confirmation">Deseja mesmo remover \"%s\"?</string>
+  <string name="delete">Remover</string>
+  <string name="preset_deleted">Ajuste removido!</string>
+  <string name="nothing_saved_yet">Nada foi salvo ainda!</string>
+  <string name="sleep_timer">Timer do Sono</string>
+  <string name="sleep_timer_description">Assim que o timer acabar, Noice vai parar de tocar qualquer som. Use os botões abaixo para ajustar o tempo.</string>
+  <string name="reset">Parar</string>
+  <string name="auto_sleep_schedule_cancelled">Timer foi cancelado!</string>
+  <string name="app_theme">Tema</string>
+  <string name="open_context_menu">Abrir menu</string>
+  <string name="rename">Renomear</string>
+  <string-array name="app_themes">
+    <item>Claro</item>
+    <item>Escuro</item>
+    <item>Padrão do sistema</item>
+  </string-array>
+</resources>
