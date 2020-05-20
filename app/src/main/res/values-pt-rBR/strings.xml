@@ -17,7 +17,7 @@
   <string name="airplane_seatbelt_beeps">Anúncio em avião</string>
   <string name="birds">Pássaros</string>
   <string name="bonfire">Fogueira</string>
-  <string name="brownian_noise">Ruído vermelho (Brownian)</string>
+  <string name="brownian_noise">Ruído vermelho (Browniano)</string>
   <string name="coffee_shop">Cafeteria</string>
   <string name="distant_thunder">Trovoadas distantes</string>
   <string name="heavy_rain">Chuva intensa</string>
@@ -42,7 +42,7 @@
   <string name="about__email">E-mail</string>
   <string name="about__github">Github</string>
   <string name="about__twitter">Twitter</string>
-  <string name="credits">Creditos</string>
+  <string name="credits">Créditos</string>
   <string name="dismiss">Dispensar</string>
   <string name="save_preset">Salvar ajustes</string>
   <string name="name">Nome</string>
