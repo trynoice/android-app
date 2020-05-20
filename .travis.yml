@@ -1,8 +1,7 @@
 os: linux
 dist: bionic
 arch: amd64
-language: java
-jdk: openjdk8
+language: minimal
 branches:
   only:
     - master
@@ -17,13 +16,16 @@ addons:
       - libvirt-bin
       - ubuntu-vm-builder
       - bridge-utils
+      - openjdk-8-jdk
 
 env:
   global:
     - COMPILE_SDK="29"
     - BUILD_TOOLS="29.0.3"
     - SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip"
+    - JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
     - ANDROID_HOME="$HOME/android-sdk"
+    - PATH="$JAVA_HOME/bin:$PATH"
     - PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/tools:$PATH"
   matrix:
     - TEST_PLATFORM=android-22
@@ -36,6 +38,7 @@ env:
 before_install:
   - sudo adduser $USER kvm
   - sudo chown $USER /dev/kvm
+  - java -Xmx32m -version
   - wget -qO tools.zip "$SDK_TOOLS_URL"
   - unzip -d "$ANDROID_HOME" tools.zip
   - rm tools.zip
