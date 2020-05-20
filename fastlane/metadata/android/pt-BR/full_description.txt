@@ -18,5 +18,5 @@ Noice é um aplicativo que lhe permite simular seu próprio "ambiente sonoro" us
 - Sons de lugares (escritório, trem, cafeteria, avião...)
 - Ruído em cores (ruído branco, rosa, vermelho)
 
-Noice é um aplicativo gratuito e de código-aberto.
+Noice é um aplicativo livre e de código aberto.
 https://github.com/ashutoshgngwr/noice
