@@ -39,9 +39,9 @@
   <string name="wind_in_chimes_of_shells">Vento contra sininhos</string>
   <string name="app_description">Melhore sua produtividade e relaxe com um pouquinho de barulho</string>
   <string name="connect_with_author">Fale com o Autor</string>
-  <string name="about__email">por Email</string>
-  <string name="about__github">por Github</string>
-  <string name="about__twitter">por Twitter</string>
+  <string name="about__email">E-mail</string>
+  <string name="about__github">Github</string>
+  <string name="about__twitter">Twitter</string>
   <string name="credits">Creditos</string>
   <string name="dismiss">Dispensar</string>
   <string name="save_preset">Salvar ajustes</string>
