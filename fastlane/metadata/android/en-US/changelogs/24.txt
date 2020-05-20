@@ -1,0 +1,6 @@
+- Remove cracking noise from heavy rain sound
+- Fix play buttons in UI not responding
+- Fix dark theme (now 35% more dark)
+- Fix app banner in About section
+
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG
