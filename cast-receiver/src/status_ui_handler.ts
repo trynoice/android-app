@@ -1,6 +1,11 @@
 import { PlayerStatusEventType } from "noice/types";
 import { Icons } from "noice/library";
 
+/**
+ * StatusUIHandler is responsible for managing status UI of the application.
+ * It implements a callback for subscribing to the PlayerManager events (binding
+ * in index.ts) and updates the div container (passed as a constructor argument).
+ */
 export default class StatusUIHandler {
   private static readonly READY_TO_CAST_MSG = "Ready to cast";
   private static readonly LOADING_OPACITY = 0.5;
@@ -27,6 +32,10 @@ export default class StatusUIHandler {
     return template.content.firstChild as HTMLElement;
   }
 
+  /**
+   * Puts the ready to cast message on status display. If status display is already
+   * showing ready to cast message, the method does nothing.
+   */
   showIdleStatus(): void {
     if (this.isShowingIdleStatus() === true) {
       return;
@@ -47,9 +56,15 @@ export default class StatusUIHandler {
     this.container.innerHTML = "";
   }
 
+  /**
+   * Implements the callback for the PlayerManager events. Based on the events, it
+   * manipulates the status display for each sound by adding its icon and using
+   * opacity to show their playback states.
+   * @param type event type
+   * @param soundKey sound for which the event occurred
+   */
   handlePlayerStatusEvent(type: PlayerStatusEventType, soundKey: string): void {
     let icon: HTMLElement = this.container.querySelector(`#${soundKey}`);
-
     if (type === PlayerStatusEventType.Removed) {
       if (icon) {
         this.container.removeChild(icon);

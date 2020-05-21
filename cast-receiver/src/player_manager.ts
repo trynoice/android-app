@@ -7,6 +7,13 @@ import {
   PlayerStatusEventType,
 } from "noice/types";
 
+/**
+ * PlayerManager manages various player instances for all the sounds.
+ * It also implements a callback for subscribing to sender application
+ * messagees (bindings in index.ts). Based on these messages, it loads
+ * various sounds and controls their playback. It also keeps track of
+ * idle status and runs an idle timer that runs out on 5m of inactivity.
+ */
 export default class PlayerManager {
   private static readonly IDLE_TIMEOUT = 300 * 1000;
 
@@ -23,6 +30,9 @@ export default class PlayerManager {
     this.startIdleTimer();
   }
 
+  /**
+   * check if any player instance is present. Paused state isn't considered idle.
+   */
   private isIdle(): boolean {
     for (const key in this.players) {
       if (key) return false;
@@ -30,6 +40,10 @@ export default class PlayerManager {
     return true;
   }
 
+  /**
+   * Calls the onIdle callback and starts a timer that invokes onIdleTimeout
+   * callback when finished.
+   */
   private startIdleTimer(): void {
     this.stopIdleTimer();
     this.idleTimer = window.setTimeout(() => {
@@ -63,6 +77,11 @@ export default class PlayerManager {
     });
   }
 
+  /**
+   * start playback for a player. It waits for the Howl instance to be ready
+   * and sound to be loaded before starting playback. It invokes the onPlayerStatus
+   * callback when the player actually starts.
+   */
   private play(soundKey: string): void {
     const player = this.players[soundKey];
     if (player.playing() === false) {
@@ -71,6 +90,8 @@ export default class PlayerManager {
           this.onPlayerStatusCallback(PlayerStatusEventType.Started, soundKey);
         }
 
+        // fade-in only looping sounds because non-looping sounds need to maintain
+        // their abruptness thingy.
         if (player.loop()) {
           player.fade(0, player.volume(), 1500);
         }
@@ -87,6 +108,10 @@ export default class PlayerManager {
     }
   }
 
+  /**
+   * Stops a given player if it is playing. It also releases the underlying
+   * resources regardless of the player's playing state.
+   */
   private stop(soundKey: string): void {
     const player = this.players[soundKey];
     delete this.players[soundKey];
@@ -115,6 +140,11 @@ export default class PlayerManager {
     }
   }
 
+  /**
+   * Implements the callback to handle messages received from the Sender application.
+   * Based on the action taken, PlayerManager invokes an appropriate callback registered
+   * to it via on* methods.
+   */
   handlePlayerEvent(event: PlayerEvent): void {
     if (event.soundKey in this.players === false) {
       if (event.action === undefined || event.action === null) {
@@ -163,14 +193,24 @@ export default class PlayerManager {
     }
   }
 
+  /**
+   * Registers a callback to notify when status of an underlying
+   * sound player instance changes.
+   */
   onPlayerStatus(f: (type: PlayerStatusEventType, key: string) => void): void {
     this.onPlayerStatusCallback = f;
   }
 
+  /**
+   * Registers a callback to notify when PlayerManager becomes idle.
+   */
   onIdle(f: () => void): void {
     this.onIdleCallback = f;
   }
 
+  /**
+   * Registers a callback to notify when PlayerManager's idle timer has timed out.
+   */
   onIdleTimeout(f: () => void): void {
     this.onIdleTimeoutCallback = f;
   }
