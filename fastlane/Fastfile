@@ -16,24 +16,18 @@
 default_platform(:android)
 
   platform :android do
-  desc "Deploy a new beta version to the Google Play"
-  lane :beta do
-    gradle(task: "clean bundleRelease")
+  desc "Validate metadata with Google Play"
+  lane :validate do
     upload_to_play_store(
-      track: 'beta',
-      skip_upload_metadata: true,
-      skip_upload_images: true,
-      skip_upload_screenshots: true
+      validate_only: true,
+      skip_upload_changelogs: true
     )
   end
 
-  desc "Deploy a new production version to the Google Play"
-  lane :production do
-    upload_to_play_store(
-      track: 'beta',
-      track_promote_to: 'production',
-      skip_upload_changelogs: true
-    )
+  desc "Deploy a new version to the beta track on the Google Play"
+  lane :beta do
+    gradle(task: "clean bundleRelease")
+    upload_to_play_store(track: 'beta')
   end
 
 end

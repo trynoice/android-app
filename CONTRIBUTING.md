@@ -63,23 +63,29 @@ changes is necessary to prepare a new release.
 ### Play Store
 
 Noice uses [Travis CI](https://travis-ci.com/github/ashutoshgngwr/noice) for automatically
-building and pushing releases to Google Play store. All releases happen in two stages.
+building and pushing releases to Google Play store. ~~All releases happen in two stages.~~
 
-- First, a candidate release is pushed to the beta track on the Play Store. Git tags for
+- ~~First, a candidate release is pushed to the beta track on the Play Store. Git tags for
   these are marked with format `0.0.0-rc`. This job pushes the new binary and its changelog
-  to the Play Store.
-- After ample time, the release candidates are promoted to production track on the Play
+  to the Play Store.~~
+- ~~After ample time, the release candidates are promoted to production track on the Play
   Store. Git tags for these are marked with format `0.0.0`. This job promotes the latest
   beta release to the production track on the Play Store. It also updates the Fastlane metadata
-  in the Play Store listing.
+  in the Play Store listing.~~
+- All releases tagged in Git repository are pushed to beta track on the Play Store. After ample
+  time, a release is manually promoted to production track for general availability.
+- In case a feature is merged into the master branch and a patch release needs to be created for
+  the latest public release, create a temporary branch with pattern `Major.Minor.x` e.g., `1.1.x`.
+  Tag any further patch releases to a commit in this branch. Before next _non-patch_ release, the
+  temporary branch can be merged into master.
 
-_**Note:** A beta release should be followed by its production release. If a new beta release
+~~_**Note:** A beta release should be followed by its production release. If a new beta release
 is created before the production release of the last beta release, the last beta release must
-be manually promoted to the production track from the Play Console._
+be manually promoted to the production track from the Play Console._~~
 
 ### F-Droid
 
-F-Droid releases are picked by its builder based on the latest tag. F-Droid doesn't pick
-the beta releases.
+F-Droid releases are picked by its builder based on the latest tag. ~~F-Droid doesn't pick
+the beta releases.~~
 See [the metadata file](https://gitlab.com/fdroid/fdroiddata/-/blob/master/metadata/com.github.ashutoshgngwr.noice.yml)
 for more information.
