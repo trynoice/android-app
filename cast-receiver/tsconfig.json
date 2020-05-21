@@ -4,7 +4,8 @@
     "baseUrl": "./src",
     "paths": {
       "noice/*": ["./*"]
-    }
+    },
+    "lib": ["ES2015", "DOM"]
   },
   "include": ["src/**/*"]
 }

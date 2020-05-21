@@ -1,0 +1,67 @@
+@import "normalize.css/normalize";
+@import "typography";
+@import "colors";
+
+body {
+  align-items: center;
+  background: $background;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+#content {
+  .vspacer-3rem {
+    width: 100%;
+    height: 5rem;
+  }
+
+  .vspacer-5rem {
+    width: 100%;
+    height: 5rem;
+  }
+
+  header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    #logo img {
+      filter: invert(91%) sepia(95%) saturate(4%) hue-rotate(235deg)
+        brightness(109%) contrast(98%);
+      margin: 0 2rem 0 0;
+      max-width: 7rem;
+    }
+  }
+
+  #status {
+    font-size: 0; /* to remove that whitespace because of inline-block*/
+    margin: auto;
+    max-height: 13.5rem;
+    max-width: 45rem;
+    min-height: 13.5rem;
+    max-width: 45rem;
+    text-align: center;
+
+    svg.sound {
+      display: inline-block;
+      width: 3rem;
+      height: 3rem;
+      margin: 0.75rem;
+    }
+
+    #ready-to-cast {
+      display: inline-flex;
+      align-items: center;
+      svg {
+        width: 3rem;
+        height: 3rem;
+        margin-right: 1rem;
+      }
+    }
+  }
+}

@@ -1,47 +1,64 @@
 import { Howl } from "howler";
-import SoundLibrary from "noice/library";
-import IdleTimeoutHandler from "noice/idle_timeout_handler";
-
-interface PlayerEvent {
-  soundKey: string;
-  isLooping: boolean;
-  action?: string;
-  volume: number;
-}
-
-interface PlayerMap {
-  [key: string]: Howl;
-}
-
-function isEmptyMap(map): boolean {
-  for (const key in map) {
-    if (key) return false;
-  }
-
-  return true;
-}
+import { Sounds } from "noice/library";
+import {
+  PlayerMap,
+  PlayerEvent,
+  PlayerAction,
+  PlayerStatusEventType,
+} from "noice/types";
 
 export default class PlayerManager {
-  private readonly ACTION_PLAY = "play";
-  private readonly ACTION_PAUSE = "pause";
-  private readonly ACTION_STOP = "stop";
-
-  private readonly IDLE_TIMEOUT = 300 * 1000;
+  private static readonly IDLE_TIMEOUT = 300 * 1000;
 
   private players: PlayerMap = {};
-  private idleTimeoutHandler = new IdleTimeoutHandler(this.IDLE_TIMEOUT);
+  private idleTimer: number;
+  private onIdleTimeoutCallback?: () => void;
+  private onIdleCallback?: () => void;
+  private onPlayerStatusCallback?: (
+    type: PlayerStatusEventType,
+    soundKey: string
+  ) => void;
 
   constructor() {
-    this.idleTimeoutHandler.start();
+    this.startIdleTimer();
   }
 
-  private createPlayer(soundKey: string, isLooping: boolean): Howl {
+  private isIdle(): boolean {
+    for (const key in this.players) {
+      if (key) return false;
+    }
+    return true;
+  }
+
+  private startIdleTimer(): void {
+    this.stopIdleTimer();
+    this.idleTimer = window.setTimeout(() => {
+      if (this.onIdleTimeoutCallback) {
+        this.onIdleTimeoutCallback();
+      }
+    }, PlayerManager.IDLE_TIMEOUT);
+
+    if (this.onIdleCallback) {
+      this.onIdleCallback();
+    }
+  }
+
+  private stopIdleTimer(): void {
+    window.clearTimeout(this.idleTimer);
+  }
+
+  private createPlayer(
+    soundKey: string,
+    isLooping: boolean,
+    volume: number
+  ): Howl {
     return new Howl({
-      src: SoundLibrary[soundKey],
+      src: Sounds[soundKey],
       autoplay: false,
       html5: false,
       loop: isLooping,
       pool: 1,
+      volume: volume,
       preload: true,
     });
   }
@@ -49,16 +66,24 @@ export default class PlayerManager {
   private play(soundKey: string): void {
     const player = this.players[soundKey];
     if (player.playing() === false) {
+      player.once("play", (): void => {
+        if (this.onPlayerStatusCallback) {
+          this.onPlayerStatusCallback(PlayerStatusEventType.Started, soundKey);
+        }
+
+        if (player.loop()) {
+          player.fade(0, player.volume(), 1500);
+        }
+      });
+
       player.play();
-      if (player.loop()) {
-        player.fade(0, player.volume(), 1500);
-      }
     }
   }
 
   private pause(soundKey: string): void {
-    if (this.players[soundKey].playing()) {
-      this.players[soundKey].pause();
+    this.players[soundKey].pause();
+    if (this.onPlayerStatusCallback) {
+      this.onPlayerStatusCallback(PlayerStatusEventType.Paused, soundKey);
     }
   }
 
@@ -66,13 +91,27 @@ export default class PlayerManager {
     const player = this.players[soundKey];
     delete this.players[soundKey];
     if (player.playing()) {
-      player.fade(player.volume(), 0, 1000);
+      player.fade(player.volume(), 0, 750);
       player.once("fade", () => {
         player.stop();
         player.unload();
       });
     } else {
+      player.stop();
       player.unload();
+    }
+
+    if (this.onPlayerStatusCallback) {
+      this.onPlayerStatusCallback(PlayerStatusEventType.Removed, soundKey);
+    }
+  }
+
+  private setVolume(soundKey: string, volume: number): void {
+    const player = this.players[soundKey];
+    if (player.playing()) {
+      player.fade(player.volume(), volume, 500);
+    } else {
+      player.volume(volume);
     }
   }
 
@@ -82,29 +121,57 @@ export default class PlayerManager {
         return;
       }
 
+      if (event.action !== PlayerAction.Create) {
+        // shouldn't be here?
+        return;
+      }
+
+      if (this.isIdle() === true) {
+        this.stopIdleTimer();
+      }
+
       this.players[event.soundKey] = this.createPlayer(
         event.soundKey,
-        event.isLooping
+        event.isLooping,
+        event.volume
       );
+
+      if (this.onPlayerStatusCallback) {
+        this.onPlayerStatusCallback(
+          PlayerStatusEventType.Added,
+          event.soundKey
+        );
+      }
+
+      return;
     }
 
-    this.players[event.soundKey].volume(event.volume);
+    this.setVolume(event.soundKey, event.volume);
     switch (event.action) {
-      case this.ACTION_PLAY:
+      case PlayerAction.Play:
         this.play(event.soundKey);
-        this.idleTimeoutHandler.stop();
         break;
-      case this.ACTION_PAUSE:
+      case PlayerAction.Pause:
         this.pause(event.soundKey);
         break;
-      case this.ACTION_STOP:
+      case PlayerAction.Stop:
         this.stop(event.soundKey);
-        if (isEmptyMap(this.players)) this.idleTimeoutHandler.start();
+        if (this.isIdle() === true) {
+          this.startIdleTimer();
+        }
         break;
     }
   }
 
+  onPlayerStatus(f: (type: PlayerStatusEventType, key: string) => void): void {
+    this.onPlayerStatusCallback = f;
+  }
+
+  onIdle(f: () => void): void {
+    this.onIdleCallback = f;
+  }
+
   onIdleTimeout(f: () => void): void {
-    this.idleTimeoutHandler.onTimeout(f);
+    this.onIdleTimeoutCallback = f;
   }
 }
