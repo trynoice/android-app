@@ -171,8 +171,9 @@ class SoundLibraryFragment : Fragment() {
           eventBus.post(PlaybackControlEvents.UpdatePlaybackEvent(playback))
         }
 
-        override fun onStartTrackingTouch(seekBar: SeekBar?) = Unit
-        override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
+        // unsubscribe from events during the seek action or it will cause adapter to refresh.
+        override fun onStartTrackingTouch(seekBar: SeekBar?) = unregisterFromEventBus()
+        override fun onStopTrackingTouch(seekBar: SeekBar?) = registerOnEventBus()
       }
 
       view.seekbar_volume.max = Playback.MAX_VOLUME
