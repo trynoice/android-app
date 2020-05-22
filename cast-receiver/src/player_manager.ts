@@ -16,6 +16,9 @@ import {
  */
 export default class PlayerManager {
   private static readonly IDLE_TIMEOUT = 300 * 1000;
+  private static readonly FADE_IN_DURATION = 1500;
+  private static readonly FADE_OUT_DURATION = 750;
+  private static readonly FADE_VOLUME_DURATION = 750;
 
   private players: PlayerMap = {};
   private idleTimer: number;
@@ -93,7 +96,7 @@ export default class PlayerManager {
         // fade-in only looping sounds because non-looping sounds need to maintain
         // their abruptness thingy.
         if (player.loop()) {
-          player.fade(0, player.volume(), 1500);
+          player.fade(0, player.volume(), PlayerManager.FADE_IN_DURATION);
         }
       });
 
@@ -116,7 +119,7 @@ export default class PlayerManager {
     const player = this.players[soundKey];
     delete this.players[soundKey];
     if (player.playing()) {
-      player.fade(player.volume(), 0, 750);
+      player.fade(player.volume(), 0, PlayerManager.FADE_OUT_DURATION);
       player.once("fade", () => {
         player.stop();
         player.unload();
@@ -134,7 +137,7 @@ export default class PlayerManager {
   private setVolume(soundKey: string, volume: number): void {
     const player = this.players[soundKey];
     if (player.playing()) {
-      player.fade(player.volume(), volume, 500);
+      player.fade(player.volume(), volume, PlayerManager.FADE_VOLUME_DURATION);
     } else {
       player.volume(volume);
     }

@@ -17,19 +17,25 @@ export default class StatusUIHandler {
 
   constructor(statusContainer: HTMLDivElement) {
     this.container = statusContainer;
-    this.readyToCastElement = document.createElement("span");
-    this.readyToCastElement.classList.add("caption");
-    this.readyToCastElement.id = "ready-to-cast";
-    this.readyToCastElement.appendChild(this.createIcon("cast"));
-    this.readyToCastElement.appendChild(
-      document.createTextNode(StatusUIHandler.READY_TO_CAST_MSG)
-    );
+    this.readyToCastElement = this.createReadyToCastElement();
   }
 
   private createIcon(id: string): HTMLElement {
     const template = document.createElement("template");
     template.innerHTML = `<svg id="${id}" class="sound"><use xlink:href="${Icons[id]}" /><svg>`;
     return template.content.firstChild as HTMLElement;
+  }
+
+  private createReadyToCastElement(): HTMLSpanElement {
+    const element = document.createElement("span");
+    element.classList.add("caption");
+    element.id = "ready-to-cast";
+    element.appendChild(this.createIcon("cast"));
+    element.appendChild(
+      document.createTextNode(StatusUIHandler.READY_TO_CAST_MSG)
+    );
+
+    return element;
   }
 
   /**
