@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
@@ -25,15 +24,15 @@ import org.greenrobot.eventbus.ThreadMode
 
 class PresetFragment : Fragment() {
 
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  var mRecyclerView: RecyclerView? = null
-
+  private var mRecyclerView: RecyclerView? = null
+  private var dataSet = ArrayList<Preset>()
   private var activePreset: Preset? = null
   private var eventBus = EventBus.getDefault()
+  private lateinit var adapter: PresetListAdapter
 
   private val mAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
     override fun onChanged() {
-      if (requireNotNull(requireNotNull(mRecyclerView).adapter).itemCount > 0) {
+      if (adapter.itemCount > 0) {
         requireView().indicator_list_empty.visibility = View.GONE
       } else {
         requireView().indicator_list_empty.visibility = View.VISIBLE
@@ -50,39 +49,48 @@ class PresetFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    mRecyclerView = view.list_presets.apply {
-      setHasFixedSize(true)
-      adapter = PresetListAdapter(requireContext()).apply {
-        registerAdapterDataObserver(mAdapterDataObserver)
-      }
+    dataSet.addAll(Preset.readAllFromUserPreferences(requireContext()))
+    adapter = PresetListAdapter(requireContext()).apply {
+      registerAdapterDataObserver(mAdapterDataObserver)
     }
 
-    eventBus.register(this)
-    // manually call AdapterDataObserver#onChanged()
-    mAdapterDataObserver.onChanged()
+    mRecyclerView = view.list_presets.also {
+      it.setHasFixedSize(true)
+      it.adapter = adapter
+    }
+
+    registerOnEventBus()
+    mAdapterDataObserver.onChanged() // since observer is not called by adapter on initialization
   }
 
   override fun onDestroyView() {
-    eventBus.unregister(this)
-    requireNotNull(requireNotNull(mRecyclerView).adapter)
-      .unregisterAdapterDataObserver(mAdapterDataObserver)
-
+    unregisterFromEventBus()
+    adapter.unregisterAdapterDataObserver(mAdapterDataObserver)
     super.onDestroyView()
+  }
+
+  /*
+    registerOnEventBus and unregisterFromEventBus are helper functions to avoid labelled
+    expressions warning (lint warning in Detekt)
+   */
+
+  private fun registerOnEventBus() {
+    eventBus.register(this)
+  }
+
+  private fun unregisterFromEventBus() {
+    eventBus.unregister(this)
   }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
   fun onPlaybackUpdate(playbacks: HashMap<String, Playback>) {
     activePreset = Preset("", playbacks.values.toTypedArray())
-    requireNotNull(requireNotNull(mRecyclerView).adapter).notifyDataSetChanged()
+    adapter.notifyDataSetChanged()
   }
 
-  inner class PresetListAdapter(context: Context) :
-    RecyclerView.Adapter<PresetListAdapter.ViewHolder>() {
+  inner class PresetListAdapter(context: Context) : RecyclerView.Adapter<ViewHolder>() {
 
     private val layoutInflater = LayoutInflater.from(context)
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val dataSet = Preset.readAllFromUserPreferences(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
       return ViewHolder(layoutInflater.inflate(R.layout.layout_list_item__preset, parent, false))
@@ -102,87 +110,83 @@ class PresetFragment : Fragment() {
         }
       )
     }
+  }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+  inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-      init {
-        itemView.button_play.setOnClickListener {
-          // publishing StopPlaybackEvent will cause PlaybackManager to send back State update
-          // This will call notifyDataSetChanged() on adapter causing adapter position to be
-          // negative. assigning adapterPosition to a different variable isn't helping here.
-          // I guess its safe to avoid receiving any events during following logic.
-          // Unsubscribe temporarily. Lets hope this doesn't have any significant side-effects. :p
-          eventBus.unregister(this@PresetFragment)
-          eventBus.post(PlaybackControlEvents.StopPlaybackEvent())
-          if (dataSet[adapterPosition] == activePreset) {
-            itemView.button_play.setImageResource(R.drawable.ic_action_play)
-          } else {
-            itemView.button_play.setImageResource(R.drawable.ic_action_stop)
-            for (p in dataSet[adapterPosition].playbackStates) {
-              eventBus.post(PlaybackControlEvents.StartPlaybackEvent(p.soundKey))
-              eventBus.post(PlaybackControlEvents.UpdatePlaybackEvent(p))
-            }
-          }
-          eventBus.register(this@PresetFragment)
-        }
-
-        val onMenuItemClickListener = PopupMenu.OnMenuItemClickListener {
-          when (it.itemId) {
-            R.id.action_delete -> showDeletePresetConfirmation()
-            R.id.action_rename -> showRenamePresetInput()
-          }
-
-          true
-        }
-
-        itemView.button_menu.setOnClickListener {
-          PopupMenu(requireContext(), itemView.button_menu).let {
-            it.inflate(R.menu.preset)
-            it.setOnMenuItemClickListener(onMenuItemClickListener)
-            it.show()
+    init {
+      itemView.button_play.setOnClickListener {
+        // publishing StopPlaybackEvent will cause PlaybackManager to send back State update
+        // This will call notifyDataSetChanged() on adapter causing adapter position to be
+        // negative. assigning adapterPosition to a different variable isn't helping here.
+        // I guess its safe to avoid receiving any events during following logic.
+        // Unsubscribe temporarily. Lets hope this doesn't have any significant side-effects. :p
+        unregisterFromEventBus()
+        eventBus.post(PlaybackControlEvents.StopPlaybackEvent())
+        if (dataSet[adapterPosition] == activePreset) {
+          itemView.button_play.setImageResource(R.drawable.ic_action_play)
+        } else {
+          itemView.button_play.setImageResource(R.drawable.ic_action_stop)
+          for (p in dataSet[adapterPosition].playbackStates) {
+            eventBus.post(PlaybackControlEvents.StartPlaybackEvent(p.soundKey))
+            eventBus.post(PlaybackControlEvents.UpdatePlaybackEvent(p))
           }
         }
+        registerOnEventBus()
       }
 
-      private fun showRenamePresetInput() {
-        DialogFragment().show(requireActivity().supportFragmentManager) {
-          title(R.string.rename)
-          input(
-            hintRes = R.string.name,
-            preFillValue = dataSet[adapterPosition].name,
-            errorRes = R.string.preset_name_cannot_be_empty
-          )
-          negativeButton(R.string.cancel)
-          positiveButton(R.string.save) {
-            dataSet[adapterPosition].name = getInputText()
-            Preset.writeAllToUserPreferences(requireContext(), dataSet)
-            notifyItemChanged(adapterPosition)
-          }
+      val onMenuItemClickListener = PopupMenu.OnMenuItemClickListener {
+        when (it.itemId) {
+          R.id.action_delete -> showDeletePresetConfirmation()
+          R.id.action_rename -> showRenamePresetInput()
         }
+
+        true
       }
 
-      private fun showDeletePresetConfirmation() {
-        DialogFragment().show(requireActivity().supportFragmentManager) {
-          title(R.string.delete)
-          message(R.string.preset_delete_confirmation, dataSet[adapterPosition].name)
-          negativeButton(R.string.cancel)
-          positiveButton(R.string.delete) {
-            val preset = dataSet.removeAt(adapterPosition)
-            Preset.writeAllToUserPreferences(requireContext(), dataSet)
-            notifyItemRemoved(adapterPosition)
+      itemView.button_menu.setOnClickListener {
+        PopupMenu(requireContext(), itemView.button_menu).let {
+          it.inflate(R.menu.preset)
+          it.setOnMenuItemClickListener(onMenuItemClickListener)
+          it.show()
+        }
+      }
+    }
 
-            // then stop playback if recently deleted preset was playing
-            // notifyDataSetChanged() is needed to notify AdapterDataObserver
-            if (preset == activePreset) {
-              eventBus.post(PlaybackControlEvents.StopPlaybackEvent()) // will notifyDataSetChanged()
-            } else {
-              notifyDataSetChanged() // or call it explicitly
-            }
+    private fun showRenamePresetInput() {
+      DialogFragment().show(requireActivity().supportFragmentManager) {
+        title(R.string.rename)
+        input(
+          hintRes = R.string.name,
+          preFillValue = dataSet[adapterPosition].name,
+          errorRes = R.string.preset_name_cannot_be_empty
+        )
+        negativeButton(R.string.cancel)
+        positiveButton(R.string.save) {
+          dataSet[adapterPosition].name = getInputText()
+          Preset.writeAllToUserPreferences(requireContext(), dataSet)
+          adapter.notifyItemChanged(adapterPosition)
+        }
+      }
+    }
 
-            Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
-              .setAction(R.string.dismiss) { }
-              .show()
+    private fun showDeletePresetConfirmation() {
+      DialogFragment().show(requireActivity().supportFragmentManager) {
+        title(R.string.delete)
+        message(R.string.preset_delete_confirmation, dataSet[adapterPosition].name)
+        negativeButton(R.string.cancel)
+        positiveButton(R.string.delete) {
+          val preset = dataSet.removeAt(adapterPosition)
+          Preset.writeAllToUserPreferences(requireContext(), dataSet)
+          // then stop playback if recently deleted preset was playing
+          if (preset == activePreset) {
+            eventBus.post(PlaybackControlEvents.StopPlaybackEvent())
           }
+
+          adapter.notifyDataSetChanged()
+          Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
+            .setAction(R.string.dismiss) { }
+            .show()
         }
       }
     }
