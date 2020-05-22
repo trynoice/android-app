@@ -100,6 +100,7 @@ jobs:
         - TEST_PLATFORM="fastlane-metadata"
       install: skip
       script: bundle exec fastlane validate
+      if: env(TRAVIS_PULL_REQUEST) = false # because secrets are not available on fork branches
     - <<: *fastlane-config
       stage: deploy
       script: bundle exec fastlane beta
