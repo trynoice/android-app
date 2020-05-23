@@ -52,7 +52,6 @@
   <string name="preset_delete_confirmation">%s को हटाने की पुष्टि करें?</string>
   <string name="delete">हटाएं</string>
   <string name="preset_deleted">प्रीसेट को हटा दिया गया है!</string>
-  <string name="nothing_saved_yet">अभी तक कुछ भी नहीं सहेजा गया है!</string>
   <string name="sleep_timer">स्लीप टाइमर</string>
   <string name="reset">रद्द करें</string>
   <string name="auto_sleep_schedule_cancelled">ऑटो स्लीप टाइमर रद्द हो गया है!</string>
