@@ -154,8 +154,13 @@ class AboutFragment : Fragment() {
         R.string.credits__translation_brazilian_portuguese,
         R.drawable.ic_stat_translation,
         R.string.credits__translation_brazilian_portuguese_url
-      )
-    )
+      ),
+      arrayOf(
+        R.string.credits__translation_swedish,
+        R.drawable.ic_stat_translation,
+        R.string.credits__translation_swedish_url
+      ) 
+   )
   }
 
   override fun onCreateView(
