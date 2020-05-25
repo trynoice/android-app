@@ -15,3 +15,4 @@
 cast-receiver/node_modules
 cast-receiver/.cache
 cast-receiver/dist
+cast-receiver/coverage

@@ -2,9 +2,6 @@
   "compilerOptions": {
     "typeRoots": ["./node_modules/@types"],
     "baseUrl": "./src",
-    "paths": {
-      "noice/*": ["./*"]
-    },
     "lib": ["ES2015", "DOM"]
   },
   "include": ["src/**/*"]

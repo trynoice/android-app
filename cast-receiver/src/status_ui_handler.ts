@@ -1,5 +1,5 @@
-import { PlayerStatusEventType } from "noice/types";
-import { Icons } from "noice/library";
+import { PlayerStatusEventType } from "./types";
+import { Icons } from "./library";
 
 /**
  * StatusUIHandler is responsible for managing status UI of the application.
@@ -8,9 +8,11 @@ import { Icons } from "noice/library";
  */
 export default class StatusUIHandler {
   private static readonly READY_TO_CAST_MSG = "Ready to cast";
-  private static readonly LOADING_OPACITY = 0.5;
-  private static readonly PAUSED_OPACITY = 0.65;
-  private static readonly NORMAL_OPACITY = 0.9;
+
+  static readonly READY_TO_CAST_ID = "ready-to-cast";
+  static readonly LOADING_OPACITY = 0.5;
+  static readonly PAUSED_OPACITY = 0.65;
+  static readonly NORMAL_OPACITY = 0.9;
 
   private container: HTMLDivElement;
   private readyToCastElement: HTMLSpanElement;
@@ -29,7 +31,7 @@ export default class StatusUIHandler {
   private createReadyToCastElement(): HTMLSpanElement {
     const element = document.createElement("span");
     element.classList.add("caption");
-    element.id = "ready-to-cast";
+    element.id = StatusUIHandler.READY_TO_CAST_ID;
     element.appendChild(this.createIcon("cast"));
     element.appendChild(
       document.createTextNode(StatusUIHandler.READY_TO_CAST_MSG)

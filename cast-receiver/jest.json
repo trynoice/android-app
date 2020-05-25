@@ -1,0 +1,9 @@
+{
+  "verbose": true,
+  "clearMocks": true,
+  "collectCoverage": true,
+  "coverageDirectory": "coverage",
+  "moduleNameMapper": {
+    "^\\./library$": "./library.mock"
+  }
+}

@@ -1,6 +1,6 @@
-import PlayerManager from "noice/player_manager";
-import StatusUIHandler from "noice/status_ui_handler";
-import { PlayerStatusEventType } from "noice/types";
+import PlayerManager from "./player_manager";
+import StatusUIHandler from "./status_ui_handler";
+import { PlayerStatusEventType } from "./types";
 
 const NAMESPACE = "urn:x-cast:com.github.ashutoshgngwr.noice";
 

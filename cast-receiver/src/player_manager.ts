@@ -1,11 +1,11 @@
 import { Howl } from "howler";
-import { Sounds } from "noice/library";
+import { Sounds } from "./library";
 import {
   PlayerMap,
   PlayerEvent,
   PlayerAction,
   PlayerStatusEventType,
-} from "noice/types";
+} from "./types";
 
 /**
  * PlayerManager manages various player instances for all the sounds.
