@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="library">Biblioteca</string>
+  <string name="about">Acerca de</string>
+  <string name="report_issue">Reportar Errores</string>
+  <string name="repeat_time_period">Periodo de repetición</string>
+  <string name="volume">Volumen del sonido</string>
+  <string name="play_pause">Reproducir o pausar</string>
+  <string name="open_drawer">Abrir menú de navegación</string>
+  <string name="close_drawer">Cerrar menú de navegación</string>
+  <string name="notification_channel_default__name">Reproducción de medios</string>
+  <string name="notification_channel_default__description">Controles de reproducción de medios</string>
+  <string name="pause">Pausar</string>
+  <string name="play">Reproducir</string>
+  <string name="stop">Detener</string>
+  <string name="airplane_inflight">Avión en vuelo</string>
+  <string name="airplane_seatbelt_beeps">Señal cinturón del avión</string>
+  <string name="birds">Pájaros</string>
+  <string name="bonfire">Fogata</string>
+  <string name="brownian_noise">Ruido marrón</string>
+  <string name="coffee_shop">Cafetería</string>
+  <string name="distant_thunder">Truenos distantes</string>
+  <string name="heavy_rain">Lluvia fuerte</string>
+  <string name="light_rain">Lluvia suave</string>
+  <string name="moderate_rain">Lluvia moderada</string>
+  <string name="morning_in_a_village">Una mañana en un pueblo</string>
+  <string name="moving_train">Tren en movimiento</string>
+  <string name="night">Noche</string>
+  <string name="office">Oficina</string>
+  <string name="pink_noise">Ruido rosa</string>
+  <string name="rolling_thunder">Trueno rodado</string>
+  <string name="seaside">Orilla del mar</string>
+  <string name="soft_wind">Viento suave</string>
+  <string name="thunder_crack">Rugido de truenos</string>
+  <string name="train_horn">Bocina de tren</string>
+  <string name="water_stream">Corriente de agua</string>
+  <string name="white_noise">Ruido blanco</string>
+  <string name="wind_in_palm_trees">Viento en las palmeras</string>
+  <string name="wind_in_chimes_of_shells">Viento en sonajero de conchas</string>
+  <string name="app_description">Relájate y aumenta la productividad con un mínimo ruido de fondo</string>
+  <string name="connect_with_author">Contactar al Autor</string>
+  <string name="about__email">Correo</string>
+  <string name="about__github">Github</string>
+  <string name="about__twitter">Twitter</string>
+  <string name="credits">Créditos</string>
+  <string name="dismiss">Descartar</string>
+  <string name="save_preset">Guardar Preset</string>
+  <string name="name">Nombre</string>
+  <string name="save">Guardar</string>
+  <string name="cancel">Cancelar</string>
+  <string name="preset_name_cannot_be_empty">¡El nombre del Preset no puede estar vacío!</string>
+  <string name="preset_saved">¡Preset guardado!</string>
+  <string name="saved_presets">Presets Guardados</string>
+  <string name="preset_delete_confirmation">¿Confirma borrar %s?</string>
+  <string name="delete">Borrar</string>
+  <string name="preset_deleted">¡Preset borrado!</string>
+  <string name="preset_info">Información sobre los presets</string>
+  <string name="preset_info__description">
+    Los presets no son otra cosa que un conjunto de sonidos configurados a tu gusto y que sirve para aplicar y reproducir, con un simple clic, la lista de sonidos configurados previamente.
+    Si aún no has creado ningún preset. Ve a la biblioteca y reproduce los sonidos.
+    Luego haga clic en el botón Guardar que aparece en la esquina inferior de la pantalla.
+  </string>
+  <string name="sleep_timer">Temporizador</string>
+  <string name="sleep_timer_description">Noice se apagará solo cuando el temporizador termine. Use los botones de abajo para añadir tiempo e iniciar el temporizador.</string>
+  <string name="reset">Reiniciar</string>
+  <string name="auto_sleep_schedule_cancelled">¡Temporizador cancelado!</string>
+  <string name="app_theme">Tema</string>
+  <string name="open_context_menu">Abrir menú contextual</string>
+  <string name="rename">Renombrar</string>
+  <string-array name="app_themes">
+    <item>Claro</item>
+    <item>Oscuro</item>
+    <item>Por defecto del sistema</item>
+  </string-array>
+</resources>
