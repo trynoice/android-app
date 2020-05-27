@@ -160,7 +160,7 @@ class AboutFragment : Fragment() {
         R.drawable.ic_stat_translation,
         R.string.credits__translation_swedish_url
       ) 
-   )
+    )
   }
 
   override fun onCreateView(
