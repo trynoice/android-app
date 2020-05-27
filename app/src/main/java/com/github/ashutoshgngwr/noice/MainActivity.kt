@@ -1,9 +1,12 @@
 package com.github.ashutoshgngwr.noice
 
+import android.app.ActivityManager
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.media.AudioManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -84,7 +87,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   override fun onResume() {
     super.onResume()
     // start the media player service
-    startService(Intent(this, MediaPlayerService::class.java))
+    // workaround for Android 9+. See https://github.com/ashutoshgngwr/noice/issues/179
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+      (getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).also {
+        val importance = it.runningAppProcesses.firstOrNull()?.importance
+          ?: ActivityManager.RunningAppProcessInfo.IMPORTANCE_GONE
+
+        if (importance <= ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+          startService(Intent(this, MediaPlayerService::class.java))
+        }
+      }
+    } else {
+      startService(Intent(this, MediaPlayerService::class.java))
+    }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
