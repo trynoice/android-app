@@ -35,8 +35,8 @@
   <string name="train_horn">Bocina de tren</string>
   <string name="water_stream">Corriente de agua</string>
   <string name="white_noise">Ruido blanco</string>
-  <string name="wind_in_palm_trees">Movimiento palmeras</string>
-  <string name="wind_in_chimes_of_shells">Movimiento sonajero de conchas</string>
+  <string name="wind_in_palm_trees">Brisa palmeras</string>
+  <string name="wind_in_chimes_of_shells">Brisa sonajero de viento</string>
   <string name="app_description">Relájate y aumenta la productividad con un mínimo ruido de fondo</string>
   <string name="connect_with_author">Contactar al Autor</string>
   <string name="about__email">Correo</string>
