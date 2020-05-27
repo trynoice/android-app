@@ -54,7 +54,6 @@
   <string name="preset_delete_confirmation">Confirmer la suppression de %s ?</string>
   <string name="delete">Supprimer</string>
   <string name="preset_deleted">Réglage supprimé !</string>
-  <string name="nothing_saved_yet">Aucun réglage sauvegardé !</string>
   <string name="sleep_timer">Minuterie</string>
   <string name="reset">Réinitialiser</string>
   <string name="auto_sleep_schedule_cancelled">Minuterie annulée !</string>

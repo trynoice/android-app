@@ -54,7 +54,6 @@
   <string name="preset_delete_confirmation">Deseja mesmo remover \"%s\"?</string>
   <string name="delete">Remover</string>
   <string name="preset_deleted">Ajuste removido!</string>
-  <string name="nothing_saved_yet">Nada foi salvo ainda!</string>
   <string name="sleep_timer">Timer do Sono</string>
   <string name="sleep_timer_description">Assim que o timer acabar, Noice vai parar de tocar qualquer som. Use os botões abaixo para ajustar o tempo.</string>
   <string name="reset">Parar</string>
