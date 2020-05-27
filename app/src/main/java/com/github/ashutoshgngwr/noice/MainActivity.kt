@@ -143,7 +143,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       }
     }
 
-    layout_main.closeDrawer(GravityCompat.START)
+    // hack to avoid stuttering in animations
+    layout_main.postDelayed({
+      layout_main.closeDrawer(GravityCompat.START)
+    }, 150)
+
     return true
   }
 
