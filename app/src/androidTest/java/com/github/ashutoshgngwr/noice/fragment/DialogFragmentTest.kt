@@ -153,11 +153,12 @@ class DialogFragmentTest {
       .targetContext
       .resources
       .getStringArray(R.array.app_themes)
-
     activityScenario.onActivity {
       dialogFragment.show(it.supportFragmentManager) {
+        dialogIdlingResource.increment()
         singleChoiceItems(R.array.app_themes, currentChoice = selectedItem) { choice ->
           selectedItem = choice
+          dialogIdlingResource.decrement()
         }
       }
     }
@@ -170,6 +171,8 @@ class DialogFragmentTest {
     onView(allOf(isDescendantOfA(withId(android.R.id.list)), withText(items[1])))
       .perform(click())
 
+    IdlingRegistry.getInstance().register(dialogIdlingResource)
+    onView(withId(android.R.id.list)).check(doesNotExist())
     assertEquals(1, selectedItem)
   }
 }
