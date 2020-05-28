@@ -54,7 +54,6 @@
   <string name="preset_delete_confirmation">Vill du ta bort %s?</string>
   <string name="delete">Ta bort</string>
   <string name="preset_deleted">Kombination borttagen!</string>
-  <string name="nothing_saved_yet">Ingenting sparat än!</string>
   <string name="sleep_timer">Timer för nedstängning</string>
   <string name="sleep_timer_description">Noice kommer att stänga av sig själv när timern avslutats. Välj tid för att starta timern.</string>
   <string name="reset">Starta om</string>

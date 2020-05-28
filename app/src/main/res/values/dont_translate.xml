@@ -78,6 +78,8 @@
   <string name="credits__translation_french_url" translatable="false">https://github.com/Eki474</string>
   <string name="credits__translation_brazilian_portuguese" translatable="false">Portuguese (Brazil) translation by Vinny</string>
   <string name="credits__translation_brazilian_portuguese_url" translatable="false">https://github.com/CebolaBros64</string>
+  <string name="credits__translation_swedish" translatable="false">Swedish translation by Ricky Lindén</string>
+  <string name="credits__translation_swedish_url" translatable="false">https://github.com/sherpashrapnel</string>
   <string name="app_issues_url" translatable="false">https://github.com/ashutoshgngwr/noice/issues</string>
   <string name="plus1m" translatable="false">1m</string>
   <string name="plus5m" translatable="false">5m</string>
