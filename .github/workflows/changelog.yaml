@@ -1,0 +1,34 @@
+name: Changelog
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+
+# generate and push changelogs to master only
+jobs:
+  generate:
+    name: Generate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+          fetch-depth: 0
+      - name: Generate changelog
+        run: >-
+          yarn global add auto-changelog;
+          $(yarn global bin)/auto-changelog --template keepachangelog
+      - name: Commit changelog
+        run: >-
+          git config --local user.email "noreply@github.com";
+          git config --local user.name "GitHub";
+          if [ -n "$(git diff CHANGELOG.md)" ]; then
+            git add CHANGELOG.md;
+            git commit -m "chore(project): update CHANGELOG.md" \
+              --author "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>";
+          fi
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

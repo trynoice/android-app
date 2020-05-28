@@ -16,11 +16,16 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## Android
-### android validate
+### android validate_metadata
 ```
-fastlane android validate
+fastlane android validate_metadata
 ```
-Validate metadata with Google Play
+Validate (upload dry run) metadata with Google Play Store
+### android upload_metadata
+```
+fastlane android upload_metadata
+```
+Upload metadata to Google Play Store
 ### android beta
 ```
 fastlane android beta

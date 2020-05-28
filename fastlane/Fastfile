@@ -16,10 +16,17 @@
 default_platform(:android)
 
   platform :android do
-  desc "Validate metadata with Google Play"
-  lane :validate do
+  desc "Validate (upload dry run) metadata with Google Play Store"
+  lane :validate_metadata do
     upload_to_play_store(
       validate_only: true,
+      skip_upload_changelogs: true
+    )
+  end
+
+  desc "Upload metadata to Google Play Store"
+  lane :upload_metadata do
+    upload_to_play_store(
       skip_upload_changelogs: true
     )
   end
@@ -27,7 +34,12 @@ default_platform(:android)
   desc "Deploy a new version to the beta track on the Google Play"
   lane :beta do
     gradle(task: "clean bundleRelease")
-    upload_to_play_store(track: 'beta')
+    upload_to_play_store(
+      track: 'beta',
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
   end
 
 end

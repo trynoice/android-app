@@ -1,0 +1,94 @@
+name: Android
+on:
+  push:
+    branches:
+      - master
+      - "[0-9]+.[0-9]+.x"
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+    paths-ignore:
+      - "fastlane/**"
+      - "*.md"
+  pull_request:
+    branches:
+      - master
+      - "[0-9]+.[0-9]+.x"
+    paths-ignore:
+      - "fastlane/**"
+      - "*.md"
+
+env:
+  GRADLE_HOME: ${{ github.workspace }}/gradle-home
+
+jobs:
+  assemble:
+    name: Assemble
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+      - uses: gradle/wrapper-validation-action@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 10
+      - uses: actions/cache@v1
+        with:
+          path: ${{ env.GRADLE_HOME }}/caches
+          key: gradle-${{ hashFiles('**/*.gradle*') }}-${{ github.sha }}
+          restore-keys: |
+            gradle-${{ hashFiles('**/*.gradle*') }}-
+      - run: ./gradlew --no-daemon --build-cache assembleDebug
+
+  ui-tests:
+    name: UI tests
+    needs: assemble
+    runs-on: macos-latest
+    timeout-minutes: 20
+    strategy:
+      matrix:
+        # test on minimum supported and last three version
+        android: [21, 27, 28, 29]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v1
+        with:
+          path: ${{ env.GRADLE_HOME }}/caches
+          key: gradle-${{ hashFiles('**/*.gradle*') }}-${{ github.sha }}
+          restore-keys: |
+            gradle-${{ hashFiles('**/*.gradle*') }}-
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.android }}
+          script: ./gradlew --no-daemon --build-cache connectedCheck
+          emulator-options: >-
+            -no-boot-anim -no-audio -no-snapshot -no-window -camera-back none
+            -camera-front none -gpu swiftshader_indirect
+      - uses: codecov/codecov-action@v1
+        with:
+          flags: android,ui-tests
+
+  play-store-release: # not using cache action for releases
+    name: Play Store Release
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    needs: ui-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 10
+      - run: >-
+          echo "$SERVICE_ACCOUNT_KEY" > service-account-key.json;
+          echo "$JKS_STORE" | base64 --decode > keystore.jks;
+        env:
+          SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+          JKS_STORE: ${{ secrets.JKS_STORE }}
+      - run: bundle install && bundle exec fastlane beta
+        env:
+          STORE_PASSWORD: ${{ secrets.JKS_STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.JKS_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.JKS_ALIAS_PASSWORD }}
+      - if: ${{ always() }}
+        run: rm -f service-account-key.json keystore.jks
