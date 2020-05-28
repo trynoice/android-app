@@ -3,16 +3,20 @@ package com.github.ashutoshgngwr.noice
 import android.content.Intent
 import android.net.Uri
 import android.view.Gravity
+import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.contrib.DrawerMatchers.isClosed
 import androidx.test.espresso.contrib.NavigationViewActions
+import androidx.test.espresso.idling.CountingIdlingResource
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.filterEquals
@@ -97,7 +101,7 @@ class MainActivityTest {
         .check(matches(isDisplayed()))
         .perform(click())
 
-      InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+      onView(withId(R.id.layout_main)).check(matches(isDisplayed())) // wait for activity to recreate
       assertEquals(nightModes[i], AppCompatDelegate.getDefaultNightMode())
     }
   }
@@ -170,23 +174,38 @@ class MainActivityTest {
 
   @Test
   fun testBackNavigation() {
+    val drawerIdlingResource = CountingIdlingResource("CloseNavigationDrawer")
+    activityScenario.onActivity {
+      it.layout_main.addDrawerListener(object : DrawerLayout.DrawerListener {
+        override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit
+        override fun onDrawerClosed(drawerView: View) = Unit
+        override fun onDrawerOpened(drawerView: View) = Unit
+        override fun onDrawerStateChanged(newState: Int) {
+          if (newState == DrawerLayout.STATE_IDLE) {
+            drawerIdlingResource.decrement()
+          } else {
+            drawerIdlingResource.increment()
+          }
+        }
+      })
+    }
+
+    IdlingRegistry.getInstance().register(drawerIdlingResource)
     onView(withId(R.id.layout_main))
       .check(matches(isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
     onView(withId(R.id.navigation_drawer)).perform(NavigationViewActions.navigateTo(R.id.saved_presets))
-    sleep(1000L) // tests fail complaining drawer is open. let it close..? (doesn't happen always! :/)
 
     onView(withId(R.id.layout_main))
       .check(matches(isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
     onView(withId(R.id.navigation_drawer)).perform(NavigationViewActions.navigateTo(R.id.about))
 
+    onView(withId(R.id.layout_main)).check(matches(isClosed(Gravity.START)))
+    IdlingRegistry.getInstance().unregister(drawerIdlingResource)
+
     activityScenario.onActivity {
       it.onBackPressed()
-    }
-
-    InstrumentationRegistry.getInstrumentation().waitForIdleSync()
-    activityScenario.onActivity {
       assertEquals(
         PresetFragment::class.java.simpleName,
         it.supportFragmentManager
@@ -195,10 +214,6 @@ class MainActivityTest {
       )
 
       it.onBackPressed()
-    }
-
-    InstrumentationRegistry.getInstrumentation().waitForIdleSync()
-    activityScenario.onActivity {
       assertEquals(
         SoundLibraryFragment::class.java.simpleName,
         it.supportFragmentManager

@@ -227,6 +227,8 @@ class PlaybackManager(private val context: Context) :
       it.timePeriod = event.playback.timePeriod
       it.setVolume(event.playback.volume)
     }
+
+    notifyChanges()
   }
 
   /**

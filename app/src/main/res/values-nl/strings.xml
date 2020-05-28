@@ -54,7 +54,6 @@
   <string name="preset_delete_confirmation">Weet je zeker dat je %s wilt verwijderen?</string>
   <string name="delete">Verwijderen</string>
   <string name="preset_deleted">De voorinstelling is verwijderd!</string>
-  <string name="nothing_saved_yet">Je hebt nog niks opgeslagen!</string>
   <string name="sleep_timer">Slaaptimer</string>
   <string name="sleep_timer_description">Na afloop van de timer wordt Noice afgesloten. Gebruik onderstaande knoppen om tijd toe te voegen en de timer te starten.</string>
   <string name="reset">Standaardwaarden</string>

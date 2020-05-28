@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.R
@@ -27,6 +26,9 @@ class SoundLibraryFragment : Fragment() {
   private var mSavePresetButton: FloatingActionButton? = null
   private var eventBus = EventBus.getDefault()
   private var playbacks = emptyMap<String, Playback>()
+  private lateinit var adapter: SoundListAdapter
+
+  private val dataSet = Sound.LIBRARY.values.toTypedArray()
 
   @Subscribe(sticky = true, threadMode = ThreadMode.ASYNC)
   fun onPlaybackUpdate(playbacks: HashMap<String, Playback>) {
@@ -37,16 +39,11 @@ class SoundLibraryFragment : Fragment() {
     }
 
     view?.post {
-      if (mRecyclerView != null) {
-        requireNotNull(requireNotNull(mRecyclerView).adapter).notifyDataSetChanged()
-      }
-
-      if (mSavePresetButton != null) {
-        if (showSavePresetFAB && playbacks.isNotEmpty()) {
-          requireNotNull(mSavePresetButton).show()
-        } else {
-          requireNotNull(mSavePresetButton).hide()
-        }
+      adapter.notifyDataSetChanged()
+      if (showSavePresetFAB && playbacks.isNotEmpty()) {
+        mSavePresetButton?.show()
+      } else {
+        mSavePresetButton?.hide()
       }
     }
   }
@@ -60,9 +57,10 @@ class SoundLibraryFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    mRecyclerView = view.list_sound.apply {
-      setHasFixedSize(true)
-      adapter = SoundListAdapter(requireContext())
+    adapter = SoundListAdapter(requireContext())
+    mRecyclerView = view.list_sound.also {
+      it.setHasFixedSize(true)
+      it.adapter = adapter
     }
 
     mSavePresetButton = view.fab_save_preset
@@ -74,34 +72,42 @@ class SoundLibraryFragment : Fragment() {
         positiveButton(R.string.save) {
           val preset = PresetFragment.Preset(getInputText(), playbacks.values.toTypedArray())
           PresetFragment.Preset.appendToUserPreferences(requireContext(), preset)
-          showMessage(R.string.preset_saved)
-          if (mSavePresetButton != null) {
-            requireNotNull(mSavePresetButton).hide()
-          }
+          mSavePresetButton?.hide()
+          showPresetSavedMessage()
         }
       }
     }
 
-    eventBus.register(this)
+    registerOnEventBus()
   }
 
   override fun onDestroyView() {
-    eventBus.unregister(this)
+    unregisterFromEventBus()
     super.onDestroyView()
   }
 
-  @Suppress("SameParameterValue")
-  private fun showMessage(@StringRes messageId: Int) {
-    Snackbar.make(requireView(), messageId, Snackbar.LENGTH_LONG)
+  /*
+    showPresetSavedMessage, registerOnEventBus and unregisterFromEventBus are helper functions
+    to avoid labelled expressions warning (lint warning in Detekt)
+   */
+
+  private fun showPresetSavedMessage() {
+    Snackbar.make(requireView(), R.string.preset_saved, Snackbar.LENGTH_LONG)
       .setAction(R.string.dismiss) { }
       .show()
   }
 
-  inner class SoundListAdapter(private val context: Context) :
-    RecyclerView.Adapter<SoundListAdapter.ViewHolder>() {
+  private fun registerOnEventBus() {
+    eventBus.register(this)
+  }
+
+  private fun unregisterFromEventBus() {
+    eventBus.unregister(this)
+  }
+
+  inner class SoundListAdapter(private val context: Context) : RecyclerView.Adapter<ViewHolder>() {
 
     private val layoutInflater = LayoutInflater.from(context)
-    private val dataSet = Sound.LIBRARY.values.toTypedArray()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
       return ViewHolder(layoutInflater.inflate(R.layout.layout_list_item__sound, parent, false))
@@ -113,7 +119,6 @@ class SoundLibraryFragment : Fragment() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
       val sound = dataSet[position]
-
       holder.itemView.title.text = context.getString(sound.titleResId)
       if (playbacks.containsKey(sound.key)) {
         val playback = requireNotNull(playbacks[sound.key])
@@ -121,13 +126,7 @@ class SoundLibraryFragment : Fragment() {
         holder.itemView.seekbar_time_period.progress = playback.timePeriod
         holder.itemView.seekbar_volume.isEnabled = true
         holder.itemView.seekbar_time_period.isEnabled = true
-        holder.itemView.button_play.setImageResource(
-          if (playback.isPlaying) {
-            R.drawable.ic_action_stop
-          } else {
-            R.drawable.ic_action_stop
-          }
-        )
+        holder.itemView.button_play.setImageResource(R.drawable.ic_action_stop)
       } else {
         holder.itemView.seekbar_volume.progress = Playback.DEFAULT_VOLUME
         holder.itemView.seekbar_time_period.progress = Playback.DEFAULT_TIME_PERIOD
@@ -142,53 +141,51 @@ class SoundLibraryFragment : Fragment() {
         View.VISIBLE
       })
     }
+  }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+  inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-      init {
-        // set listeners in holders to avoid object recreation on view recycle
-        val seekBarChangeListener = object : SeekBar.OnSeekBarChangeListener {
+    init {
+      // set listeners in holders to avoid object recreation on view recycle
+      val seekBarChangeListener = object : SeekBar.OnSeekBarChangeListener {
 
-          override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            if (!fromUser) {
-              return
-            }
-
-            val playback = playbacks[dataSet[adapterPosition].key] ?: return
-            when (requireNotNull(seekBar).id) {
-              R.id.seekbar_volume -> {
-                playback.setVolume(progress)
-              }
-
-              R.id.seekbar_time_period -> {
-                // manually ensure minimum time period to be 1 since ProgressBar#min was introduced
-                // in API 26. Our min API version is 21.
-                playback.timePeriod = maxOf(1, progress)
-              }
-            }
-
-            // publish update event
-            eventBus.post(PlaybackControlEvents.UpdatePlaybackEvent(playback))
+        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+          if (!fromUser) {
+            return
           }
 
-          override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-          override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+          val playback = playbacks[dataSet[adapterPosition].key] ?: return
+          when (requireNotNull(seekBar).id) {
+            R.id.seekbar_volume -> {
+              playback.setVolume(progress)
+            }
 
+            R.id.seekbar_time_period -> {
+              // manually ensure minimum time period to be 1 since ProgressBar#min was introduced
+              // in API 26. Our min API version is 21.
+              playback.timePeriod = maxOf(1, progress)
+            }
+          }
+
+          // publish update event
+          eventBus.post(PlaybackControlEvents.UpdatePlaybackEvent(playback))
         }
 
-        view.seekbar_volume.max = Playback.MAX_VOLUME
-        view.seekbar_volume.setOnSeekBarChangeListener(seekBarChangeListener)
-        view.seekbar_time_period.max = Playback.MAX_TIME_PERIOD
-        view.seekbar_time_period.setOnSeekBarChangeListener(seekBarChangeListener)
+        // unsubscribe from events during the seek action or it will cause adapter to refresh.
+        override fun onStartTrackingTouch(seekBar: SeekBar?) = unregisterFromEventBus()
+        override fun onStopTrackingTouch(seekBar: SeekBar?) = registerOnEventBus()
+      }
 
-        view.button_play.setOnClickListener {
-          val sound = dataSet.getOrNull(adapterPosition) ?: return@setOnClickListener
-
-          if (playbacks.containsKey(sound.key)) {
-            eventBus.post(PlaybackControlEvents.StopPlaybackEvent(sound.key))
-          } else {
-            eventBus.post(PlaybackControlEvents.StartPlaybackEvent(sound.key))
-          }
+      view.seekbar_volume.max = Playback.MAX_VOLUME
+      view.seekbar_volume.setOnSeekBarChangeListener(seekBarChangeListener)
+      view.seekbar_time_period.max = Playback.MAX_TIME_PERIOD
+      view.seekbar_time_period.setOnSeekBarChangeListener(seekBarChangeListener)
+      view.button_play.setOnClickListener {
+        val sound = dataSet.getOrNull(adapterPosition) ?: return@setOnClickListener
+        if (playbacks.containsKey(sound.key)) {
+          eventBus.post(PlaybackControlEvents.StopPlaybackEvent(sound.key))
+        } else {
+          eventBus.post(PlaybackControlEvents.StartPlaybackEvent(sound.key))
         }
       }
     }

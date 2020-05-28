@@ -24,8 +24,7 @@ import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
 import com.github.ashutoshgngwr.noice.sound.Sound
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers.allOf
-import org.hamcrest.Matchers.instanceOf
+import org.hamcrest.Matchers.*
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -36,6 +35,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.reset
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
+import java.lang.Thread.sleep
 
 @RunWith(AndroidJUnit4::class)
 class SoundLibraryFragmentTest {
@@ -119,7 +119,7 @@ class SoundLibraryFragmentTest {
   fun testRecyclerViewItem_playButton() {
     onView(withId(R.id.list_sound))
       .perform(
-        RecyclerViewActions.actionOnItem<SoundLibraryFragment.SoundListAdapter.ViewHolder>(
+        RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
           hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
           clickOn(R.id.button_play)
         )
@@ -130,7 +130,7 @@ class SoundLibraryFragmentTest {
 
     onView(withId(R.id.list_sound))
       .perform(
-        RecyclerViewActions.actionOnItem<SoundLibraryFragment.SoundListAdapter.ViewHolder>(
+        RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
           hasDescendant(allOf(withId(R.id.title), withText(R.string.train_horn))),
           clickOn(R.id.button_play)
         )
@@ -157,7 +157,7 @@ class SoundLibraryFragmentTest {
     // stop the fake playback and see if it actually works.
     onView(withId(R.id.list_sound))
       .perform(
-        RecyclerViewActions.actionOnItem<SoundLibraryFragment.SoundListAdapter.ViewHolder>(
+        RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
           hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
           clickOn(R.id.button_play)
         )
@@ -181,7 +181,7 @@ class SoundLibraryFragmentTest {
 
     onView(withId(R.id.list_sound))
       .perform(
-        RecyclerViewActions.actionOnItem<SoundLibraryFragment.SoundListAdapter.ViewHolder>(
+        RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
           hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
           seekProgress(R.id.seekbar_volume, Playback.MAX_VOLUME)
         )
@@ -207,10 +207,10 @@ class SoundLibraryFragmentTest {
     // min time period should be 1 in any case
     onView(withId(R.id.list_sound))
       .perform(
-        RecyclerViewActions.scrollTo<SoundLibraryFragment.SoundListAdapter.ViewHolder>(
+        RecyclerViewActions.scrollTo<SoundLibraryFragment.ViewHolder>(
           hasDescendant(allOf(withId(R.id.title), withText(R.string.rolling_thunder)))
         ),
-        RecyclerViewActions.actionOnItem<SoundLibraryFragment.SoundListAdapter.ViewHolder>(
+        RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
           hasDescendant(allOf(withId(R.id.title), withText(R.string.rolling_thunder))),
           seekProgress(R.id.seekbar_time_period, 0)
         )
@@ -222,7 +222,7 @@ class SoundLibraryFragmentTest {
 
     onView(withId(R.id.list_sound))
       .perform(
-        RecyclerViewActions.actionOnItem<SoundLibraryFragment.SoundListAdapter.ViewHolder>(
+        RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
           hasDescendant(allOf(withId(R.id.title), withText(R.string.rolling_thunder))),
           seekProgress(R.id.seekbar_time_period, Playback.MAX_TIME_PERIOD)
         )
@@ -313,7 +313,7 @@ class SoundLibraryFragmentTest {
       .perform(replaceText("test"))
 
     onView(allOf(withId(R.id.positive), withText(R.string.save))).perform(click())
-    InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+    onView(withId(R.id.fab_save_preset)).check(matches(not(isDisplayed())))
     onView(withId(com.google.android.material.R.id.snackbar_text))
       .check(matches(withText(R.string.preset_saved)))
   }

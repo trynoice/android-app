@@ -104,7 +104,7 @@ class MediaPlayerService : Service() {
     val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
       .setContentTitle(getString(R.string.app_name))
       .setShowWhen(false)
-      .setSmallIcon(R.drawable.ic_stat_media_player)
+      .setSmallIcon(R.drawable.ic_launcher_24dp)
       .setContentIntent(
         PendingIntent.getActivity(
           this, RC_MAIN_ACTIVITY,
@@ -113,20 +113,20 @@ class MediaPlayerService : Service() {
         )
       )
       .addAction(
-        R.drawable.ic_stat_close,
+        R.drawable.ic_noti_close,
         getString(R.string.stop),
         createPlaybackControlPendingIntent(RC_STOP_PLAYBACK)
       )
 
     if (event.state == PlaybackManager.State.PAUSED) {
       notificationBuilder.addAction(
-        R.drawable.ic_stat_play,
+        R.drawable.ic_noti_play,
         getString(R.string.play),
         createPlaybackControlPendingIntent(RC_START_PLAYBACK)
       )
     } else {
       notificationBuilder.addAction(
-        R.drawable.ic_stat_pause,
+        R.drawable.ic_noti_pause,
         getString(R.string.pause),
         createPlaybackControlPendingIntent(RC_PAUSE_PLAYBACK)
       )
