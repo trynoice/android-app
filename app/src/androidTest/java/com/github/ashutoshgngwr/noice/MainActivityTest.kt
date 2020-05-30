@@ -29,12 +29,17 @@ import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.lang.Thread.sleep
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
+
+  @Rule
+  @JvmField
+  val retryTestRule = RetryTestRule(5)
 
   private lateinit var activityScenario: ActivityScenario<MainActivity>
 

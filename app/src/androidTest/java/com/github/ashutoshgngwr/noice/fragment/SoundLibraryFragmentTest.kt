@@ -19,6 +19,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.sound.Playback
 import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
 import com.github.ashutoshgngwr.noice.sound.Sound
@@ -28,6 +29,7 @@ import org.hamcrest.Matchers.*
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
@@ -39,6 +41,10 @@ import java.lang.Thread.sleep
 
 @RunWith(AndroidJUnit4::class)
 class SoundLibraryFragmentTest {
+
+  @Rule
+  @JvmField
+  val retryTestRule = RetryTestRule(5)
 
   @Mock
   private lateinit var eventBus: EventBus

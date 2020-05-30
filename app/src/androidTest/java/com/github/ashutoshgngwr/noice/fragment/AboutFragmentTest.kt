@@ -14,12 +14,18 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.RetryTestRule
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class AboutFragmentTest {
+
+  @Rule
+  @JvmField
+  val retryTestRule = RetryTestRule(5)
 
   private lateinit var fragmentScenario: FragmentScenario<AboutFragment>
 

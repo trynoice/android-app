@@ -10,11 +10,13 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.RetryTestRule
 import kotlinx.android.synthetic.main.fragment_sleep_timer.view.*
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentCaptor
@@ -25,6 +27,10 @@ import org.mockito.MockitoAnnotations
 
 @RunWith(AndroidJUnit4::class)
 class SleepTimerFragmentTest {
+
+  @Rule
+  @JvmField
+  val retryTestRule = RetryTestRule(5)
 
   @Mock
   private lateinit var eventBus: EventBus
