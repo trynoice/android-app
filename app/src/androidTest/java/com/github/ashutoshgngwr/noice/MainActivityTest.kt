@@ -3,7 +3,6 @@ package com.github.ashutoshgngwr.noice
 import android.content.Intent
 import android.net.Uri
 import android.view.Gravity
-import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
@@ -176,14 +175,12 @@ class MainActivityTest {
   fun testBackNavigation() {
     val drawerIdlingResource = CountingIdlingResource("CloseNavigationDrawer")
     activityScenario.onActivity {
-      it.layout_main.addDrawerListener(object : DrawerLayout.DrawerListener {
-        override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit
-        override fun onDrawerClosed(drawerView: View) = Unit
-        override fun onDrawerOpened(drawerView: View) = Unit
+      it.layout_main.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
         override fun onDrawerStateChanged(newState: Int) {
+          // this only works because we're never in dragging state. otherwise, this would fail.
           if (newState == DrawerLayout.STATE_IDLE) {
             drawerIdlingResource.decrement()
-          } else {
+          } else if (newState == DrawerLayout.STATE_SETTLING) {
             drawerIdlingResource.increment()
           }
         }
