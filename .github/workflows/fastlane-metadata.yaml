@@ -25,12 +25,10 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ashutoshgngwr/validate-fastlane-supply-metadata@v1
 
-  # following job will only do a dry run if the push event is not from a tag.
-  # If a tag was pushed, changes will be uploaded.
   play-store-upload:
     name: Play Store Upload
     needs: validate
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && contains(github.ref , 'refs/tags/')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -38,10 +36,6 @@ jobs:
       - run: echo "$SERVICE_ACCOUNT_KEY" > service-account-key.json
         env:
           SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-      - run: bundle install
-      - if: ${{ !contains(github.ref , 'refs/tags/') }}
-        run: bundle exec fastlane validate_metadata
-      - if: ${{ contains(github.ref , 'refs/tags/') }}
-        run: bundle exec fastlane upload_metadata
+      - run: bundle install && bundle exec fastlane upload_metadata
       - if: ${{ always() }}
         run: rm -f service-account-key.json
