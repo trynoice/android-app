@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.sound
+package com.github.ashutoshgngwr.noice.sound.player
 
 import android.content.Context
 import android.media.AudioManager
@@ -13,14 +13,16 @@ import androidx.media.AudioManagerCompat
 import androidx.mediarouter.media.MediaRouter
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
-import com.github.ashutoshgngwr.noice.sound.player.SoundPlayerFactory
+import com.github.ashutoshgngwr.noice.sound.Sound
+import com.github.ashutoshgngwr.noice.sound.player.adapter.LocalPlayerAdapterFactory
+import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
 
 /**
- * [PlaybackManager] is responsible for managing playback end-to-end for all sounds.
+ * [PlayerManager] is responsible for managing [Player]s end-to-end for all sounds.
  * It manages Android's audio focus implicitly. It also manages Playback routing to
  * cast enabled devices on-demand.
  */
-class PlaybackManager(private val context: Context) :
+class PlayerManager(private val context: Context) :
   AudioManager.OnAudioFocusChangeListener {
 
   enum class State {
@@ -28,16 +30,16 @@ class PlaybackManager(private val context: Context) :
   }
 
   companion object {
-    private val TAG = PlaybackManager::javaClass.name
+    private val TAG = PlayerManager::javaClass.name
   }
 
   var state = State.STOPPED
   private var hasAudioFocus = false
   private var playbackDelayed = false
   private var resumeOnFocusGain = false
-  private var onPlaybackUpdateListener = { }
+  private var onPlayerUpdateListener = { }
 
-  val playbacks = HashMap<String, Playback>(Sound.LIBRARY.size)
+  val players = HashMap<String, Player>(Sound.LIBRARY.size)
   private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
   private val audioAttributes = AudioAttributesCompat.Builder()
     .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)
@@ -52,8 +54,8 @@ class PlaybackManager(private val context: Context) :
     .setWillPauseWhenDucked(false)
     .build()
 
-  private var playerFactory: SoundPlayerFactory =
-    SoundPlayerFactory.LocalSoundPlayerFactory(context, audioAttributes)
+  private var playerAdapterFactory: PlayerAdapterFactory =
+    LocalPlayerAdapterFactory(context, audioAttributes)
 
   private val playbackStateBuilder = PlaybackStateCompat.Builder()
     .setActions(
@@ -80,21 +82,23 @@ class PlaybackManager(private val context: Context) :
     it.isActive = true
   }
 
-  private val castAPIWrapper = CastAPIWrapper(context).apply {
+  private val castAPIWrapper = CastAPIWrapper(context, true).apply {
     onSessionBegin {
-      playerFactory = newCastPlayerFactory()
-      reloadPlaybacks()
+      Log.d(TAG, "starting cast session")
+      playerAdapterFactory = newCastPlayerAdapterFactory()
+      recreatePlayerAdapters()
       mediaSession.setPlaybackToRemote(newCastVolumeProvider())
     }
 
     onSessionEnd {
       // onSessionEnded gets called when restarting the activity. So need to ensure that we're not
-      // recreating the LocalPlayerFactory again because it will cause playbacks to restarts which
-      // means glitches in playback.
-      if (playerFactory !is SoundPlayerFactory.LocalSoundPlayerFactory) {
-        playerFactory = SoundPlayerFactory.LocalSoundPlayerFactory(context, audioAttributes)
+      // recreating the LocalPlayerAdapterFactory again because it will cause [PlayerAdapter]s to be
+      // recreated resulting glitches in playback.
+      if (playerAdapterFactory !is LocalPlayerAdapterFactory) {
+        Log.d(TAG, "ending cast session")
+        playerAdapterFactory = LocalPlayerAdapterFactory(context, audioAttributes)
         mediaSession.setPlaybackToLocal(AudioManager.STREAM_MUSIC)
-        reloadPlaybacks()
+        recreatePlayerAdapters()
       }
     }
   }
@@ -171,12 +175,12 @@ class PlaybackManager(private val context: Context) :
    * have audio focus before starting the playback.
    */
   fun play(sound: Sound) {
-    if (!playbacks.containsKey(sound.key)) {
-      playbacks[sound.key] = Playback(sound, playerFactory)
+    if (!players.containsKey(sound.key)) {
+      players[sound.key] = Player(sound, playerAdapterFactory)
     }
 
     if (playbackDelayed) {
-      // If audio focus is delayed, add this sound to playbacks and it will be played whenever the
+      // If audio focus is delayed, add this sound to players and it will be played whenever the
       // we get audio focus.
       state = State.PAUSED
       notifyChanges()
@@ -185,27 +189,24 @@ class PlaybackManager(private val context: Context) :
 
     if (!hasAudioFocus) {
       // if doesn't have audio focus, request and return because a successful audio focus request
-      // will start playback.
+      // will start the player.
       requestAudioFocus()
       return
     }
 
     state = State.PLAYING
-    requireNotNull(playbacks[sound.key]).play()
+    requireNotNull(players[sound.key]).play()
     notifyChanges()
   }
 
   /**
-   * Stops a playback and releases underlying resources. It abandons focus if all playbacks are
+   * Stops a [Player] and releases underlying resources. It abandons focus if all [Player]s are
    * stopped.
    */
   fun stop(sound: Sound) {
-    requireNotNull(playbacks[sound.key]).apply {
-      stop()
-    }
-
-    playbacks.remove(sound.key)
-    if (playbacks.isEmpty()) {
+    requireNotNull(players[sound.key]).apply { stop() }
+    players.remove(sound.key)
+    if (players.isEmpty()) {
       state = State.STOPPED
       AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
     }
@@ -214,75 +215,67 @@ class PlaybackManager(private val context: Context) :
   }
 
   /**
-   * Stops all playbacks and releases underlying resources. Also abandon the audio focus.
+   * Stops all [Player]s and releases underlying resources. Also abandon the audio focus.
    */
   fun stop() {
     state = State.STOPPED
-    playbacks.values.forEach {
-      it.stop()
-    }
-
-    playbacks.clear()
+    players.values.forEach { it.stop() }
+    players.clear()
     AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
     notifyChanges()
   }
 
   /**
-   * Stops all playbacks but maintains their state so that these can be resumed at a later stage.
+   * Stops all [Player]s but maintains their state so that these can be resumed at a later stage.
    * It abandons audio focus.
    */
   fun pause() {
     state = State.PAUSED
-    playbacks.values.forEach {
-      it.pause()
-    }
-
+    players.values.forEach { it.pause() }
     AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
     notifyChanges()
   }
 
   /**
-   * Resumes all playbacks from the saved state. It requests
+   * Resumes all [Player]s from the saved state. It requests
    */
   fun resume() {
-    playbacks.values.forEach {
-      play(Sound.get(it.soundKey))
-    }
-
+    players.values.forEach { play(Sound.get(it.soundKey)) }
     notifyChanges()
   }
 
   /**
-   * Sets the volume for the [Playback] with given key.
-   * @param soundKey identifier for the [Playback]. If playback is not found, no action is taken
-   * @param volume updated volume for the [Playback]
+   * Sets the volume for the [Player] with given key.
+   * @param soundKey identifier for the [Player]. If [Player] is not found, no action is taken
+   * @param volume updated volume for the [Player]
    */
   fun setVolume(soundKey: String, volume: Int) {
-    if (!playbacks.containsKey(soundKey)) {
+    if (!players.containsKey(soundKey)) {
       return
     }
 
-    requireNotNull(playbacks[soundKey]).setVolume(volume)
+    requireNotNull(players[soundKey]).setVolume(volume)
   }
 
   /**
-   * Sets the time period for the [Playback] with given key
-   * @param soundKey identifier for the [Playback]. If playback is not found, no action is taken
-   * @param timePeriod updated time period for the [Playback]
+   * Sets the time period for the [Player] with given key
+   * @param soundKey identifier for the [Player]. If [Player] is not found, no action is taken
+   * @param timePeriod updated time period for the [Player]
    */
   fun setTimePeriod(soundKey: String, timePeriod: Int) {
-    if (!playbacks.containsKey(soundKey)) {
+    if (!players.containsKey(soundKey)) {
       return
     }
 
-    requireNotNull(playbacks[soundKey]).timePeriod = timePeriod
+    requireNotNull(players[soundKey]).timePeriod = timePeriod
   }
 
   /**
-   * Attempts to recreate underlying player for playbacks using the [playerFactory]
+   * Attempts to recreate the [PlayerAdapterFactory] for all [Player]s using the current
+   * [PlayerAdapterFactory] instance
    */
-  private fun reloadPlaybacks() {
-    playbacks.values.forEach { it.recreatePlayerWithFactory(playerFactory) }
+  private fun recreatePlayerAdapters() {
+    players.values.forEach { it.recreatePlayerAdapter(playerAdapterFactory) }
   }
 
   /**
@@ -295,11 +288,11 @@ class PlaybackManager(private val context: Context) :
   }
 
   /**
-   * Allows clients to subscribe for changes in [Playbacks][Playback]
+   * Allows clients to subscribe for changes in [Player]s
    * @param listener a lambda that is called on every update
    */
-  fun setOnPlaybackUpdateListener(listener: () -> Unit) {
-    onPlaybackUpdateListener = listener
+  fun setOnPlayerUpdateListener(listener: () -> Unit) {
+    onPlayerUpdateListener = listener
   }
 
   private fun notifyChanges() {
@@ -327,6 +320,6 @@ class PlaybackManager(private val context: Context) :
     }
 
     mediaSession.setPlaybackState(playbackStateBuilder.build())
-    onPlaybackUpdateListener()
+    onPlayerUpdateListener()
   }
 }

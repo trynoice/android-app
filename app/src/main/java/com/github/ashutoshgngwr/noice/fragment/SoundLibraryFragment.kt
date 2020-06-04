@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.sound.Playback
-import com.github.ashutoshgngwr.noice.sound.PlaybackManager
 import com.github.ashutoshgngwr.noice.sound.Sound
+import com.github.ashutoshgngwr.noice.sound.player.Player
+import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_sound_list.view.*
@@ -31,11 +31,11 @@ class SoundLibraryFragment : Fragment() {
   private var mRecyclerView: RecyclerView? = null
   private var mSavePresetButton: FloatingActionButton? = null
   private var eventBus = EventBus.getDefault()
-  private var playbacks = emptyMap<String, Playback>()
+  private var playbacks = emptyMap<String, Player>()
 
   @Subscribe(sticky = true, threadMode = ThreadMode.ASYNC)
-  fun onPlaybackUpdate(event: MediaPlayerService.OnPlaybackManagerUpdateEvent) {
-    this.playbacks = event.playbacks
+  fun onPlaybackUpdate(event: MediaPlayerService.OnPlayerManagerUpdateEvent) {
+    this.playbacks = event.players
     var showSavePresetFAB: Boolean
     PresetFragment.Preset.readAllFromUserPreferences(requireContext()).also {
       showSavePresetFAB = !it.contains(PresetFragment.Preset("", playbacks.values.toTypedArray()))
@@ -47,7 +47,7 @@ class SoundLibraryFragment : Fragment() {
       }
 
       if (mSavePresetButton != null) {
-        if (showSavePresetFAB && event.state == PlaybackManager.State.PLAYING) {
+        if (showSavePresetFAB && event.state == PlayerManager.State.PLAYING) {
           requireNotNull(mSavePresetButton).show()
         } else {
           requireNotNull(mSavePresetButton).hide()
@@ -134,8 +134,8 @@ class SoundLibraryFragment : Fragment() {
           }
         )
       } else {
-        holder.itemView.seekbar_volume.progress = Playback.DEFAULT_VOLUME
-        holder.itemView.seekbar_time_period.progress = Playback.DEFAULT_TIME_PERIOD
+        holder.itemView.seekbar_volume.progress = Player.DEFAULT_VOLUME
+        holder.itemView.seekbar_time_period.progress = Player.DEFAULT_TIME_PERIOD
         holder.itemView.seekbar_volume.isEnabled = false
         holder.itemView.seekbar_time_period.isEnabled = false
         holder.itemView.button_play.setImageResource(R.drawable.ic_action_play)
@@ -171,15 +171,6 @@ class SoundLibraryFragment : Fragment() {
                 playback.timePeriod = maxOf(1, progress)
               }
             }
-
-            // publish update event
-            eventBus.post(
-              MediaPlayerService.UpdatePlaybackPropertiesEvent(
-                playback.soundKey,
-                playback.volume,
-                playback.timePeriod
-              )
-            )
           }
 
           override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -187,18 +178,18 @@ class SoundLibraryFragment : Fragment() {
 
         }
 
-        view.seekbar_volume.max = Playback.MAX_VOLUME
+        view.seekbar_volume.max = Player.MAX_VOLUME
         view.seekbar_volume.setOnSeekBarChangeListener(seekBarChangeListener)
-        view.seekbar_time_period.max = Playback.MAX_TIME_PERIOD
+        view.seekbar_time_period.max = Player.MAX_TIME_PERIOD
         view.seekbar_time_period.setOnSeekBarChangeListener(seekBarChangeListener)
 
         view.button_play.setOnClickListener {
           val sound = dataSet.getOrNull(adapterPosition) ?: return@setOnClickListener
 
           if (playbacks.containsKey(sound.key)) {
-            eventBus.post(MediaPlayerService.StopPlaybackEvent(sound.key))
+            eventBus.post(MediaPlayerService.StopPlayerEvent(sound.key))
           } else {
-            eventBus.post(MediaPlayerService.StartPlaybackEvent(sound.key))
+            eventBus.post(MediaPlayerService.StartPlayerEvent(sound.key))
           }
         }
       }

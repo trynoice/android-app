@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_dialog__text_input.view.*
 /**
  * A generic implementation with extensions for use-case specific designs.
  * API inspired by https://github.com/afollestad/material-dialogs but not using it
- * due to its reliance on old AppCompat API. I tried to make material-dialogs
+ * due to its reliance on the old AppCompat API. I tried to make material-dialogs
  * work but it was bringing appearance inconsistencies and was generally rigid in
  * terms of styling.
  */

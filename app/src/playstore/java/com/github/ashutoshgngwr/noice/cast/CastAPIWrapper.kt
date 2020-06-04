@@ -8,8 +8,8 @@ import androidx.core.view.MenuItemCompat
 import androidx.media.VolumeProviderCompat
 import androidx.mediarouter.app.MediaRouteActionProvider
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.cast.player.CastSoundPlayerFactory
-import com.github.ashutoshgngwr.noice.sound.player.SoundPlayerFactory
+import com.github.ashutoshgngwr.noice.cast.player.adapter.CastPlayerAdapterFactory
+import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
 import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
 import com.google.android.gms.cast.framework.CastSession
@@ -19,7 +19,7 @@ import com.google.android.gms.cast.framework.CastSession
  * This is required to ensure that F-Droid flavor can be built without requiring GMS Cast framework
  * as a dependency.
  */
-class CastAPIWrapper(val context: Context) {
+class CastAPIWrapper(val context: Context, registerSessionCallbacks: Boolean) {
 
   private val castContext = CastContext.getSharedInstance(context)
   private var sessionBeginCallback = { }
@@ -35,12 +35,17 @@ class CastAPIWrapper(val context: Context) {
   }
 
   init {
-    castContext.sessionManager.addSessionManagerListener(
-      castSessionManagerListener,
-      CastSession::class.java
-    )
+    if (registerSessionCallbacks) {
+      castContext.sessionManager.addSessionManagerListener(
+        castSessionManagerListener,
+        CastSession::class.java
+      )
+    }
   }
 
+  /**
+   * Sets up the cast media menu item on the given menu with given title resource.
+   */
   fun setUpMenuItem(menu: Menu, @StringRes titleResId: Int): MenuItem? =
     menu.add(titleResId).also {
       it.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
@@ -48,23 +53,40 @@ class CastAPIWrapper(val context: Context) {
       CastButtonFactory.setUpMediaRouteButton(context, menu, it.itemId)
     }
 
-  fun newCastPlayerFactory(): SoundPlayerFactory =
-    CastSoundPlayerFactory(
+  /**
+   * Initializes a new [CastPlayerAdapterFactory] instance and returns it as [PlayerAdapterFactory]
+   */
+  fun newCastPlayerAdapterFactory(): PlayerAdapterFactory =
+    CastPlayerAdapterFactory(
       castContext.sessionManager.currentCastSession,
       context.getString(R.string.cast_namespace__default)
     )
 
+  /**
+   * Creates a new [VolumeProviderCompat] instance that can be used with
+   * [android.support.v4.media.session.MediaSessionCompat.setPlaybackToRemote].
+   */
   fun newCastVolumeProvider(): VolumeProviderCompat =
     CastVolumeProvider(castContext.sessionManager.currentCastSession)
 
+  /**
+   * Sets a convenience lambda that is called in session started and resumed callbacks.
+   */
   fun onSessionBegin(callback: () -> Unit) {
     this.sessionBeginCallback = callback
   }
 
+  /**
+   * Sets a convenience lambda that is called in session ended callbacks
+   */
   fun onSessionEnd(callback: () -> Unit) {
     this.sessionEndCallback = callback
   }
 
+  /**
+   * Removes the [CastSessionManagerListener] that is registered in when [CastAPIWrapper] instance
+   * is created.
+   */
   fun clearSessionCallbacks() {
     castContext.sessionManager.removeSessionManagerListener(
       castSessionManagerListener,

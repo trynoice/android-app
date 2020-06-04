@@ -1,20 +1,20 @@
-package com.github.ashutoshgngwr.noice.cast.player
+package com.github.ashutoshgngwr.noice.cast.player.adapter
 
 import com.github.ashutoshgngwr.noice.sound.Sound
-import com.github.ashutoshgngwr.noice.sound.player.SoundPlayer
+import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapter
 import com.google.android.gms.cast.framework.CastSession
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
 
 /**
- * [CastSoundPlayer] implements [SoundPlayer] that sends the control events
+ * [CastPlayerAdapter] implements [PlayerAdapter] that sends the control events
  * to the cast receiver application.
  */
-class CastSoundPlayer(
+class CastPlayerAdapter(
   private val session: CastSession,
   private val namespace: String,
   private val sound: Sound
-) : SoundPlayer() {
+) : PlayerAdapter {
 
   companion object {
     private const val ACTION_CREATE = "create"

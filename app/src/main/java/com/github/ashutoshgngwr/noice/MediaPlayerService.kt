@@ -9,9 +9,9 @@ import android.media.AudioManager
 import android.os.*
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.github.ashutoshgngwr.noice.sound.Playback
-import com.github.ashutoshgngwr.noice.sound.PlaybackManager
 import com.github.ashutoshgngwr.noice.sound.Sound
+import com.github.ashutoshgngwr.noice.sound.player.Player
+import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -20,46 +20,40 @@ import java.util.concurrent.TimeUnit
 class MediaPlayerService : Service() {
 
   /**
-   * [MediaPlayerService] subscribes to these events for starting new playbacks.
+   * [MediaPlayerService] subscribes to these events for starting new players.
    */
-  data class StartPlaybackEvent(val soundKey: String)
+  data class StartPlayerEvent(val soundKey: String, val volume: Int?, val timePeriod: Int?) {
+    constructor(soundKey: String) : this(soundKey, null, null)
+  }
 
   /**
-   * [MediaPlayerService] subscribes to these events for resuming all paused playbacks.
+   * [MediaPlayerService] subscribes to these events for stopping players.
+   */
+  data class StopPlayerEvent(val soundKey: String)
+
+  /**
+   * [MediaPlayerService] subscribes to these events for resuming all paused players.
    */
   class ResumePlaybackEvent
 
   /**
-   * [MediaPlayerService] subscribes to these events for pausing all playbacks.
+   * [MediaPlayerService] subscribes to these events for pausing all players.
    */
   class PausePlaybackEvent
 
   /**
-   * [MediaPlayerService] subscribes to these events for stopping playbacks.
+   * [MediaPlayerService] subscribes to these events for stopping all players.
    */
-  data class StopPlaybackEvent(val soundKey: String?) {
-    constructor() : this(null)
-  }
+  class StopPlaybackEvent
+
 
   /**
-   * [MediaPlayerService] subscribes to these events for updating properties of an ongoing playback.
-   * @param soundKey for identifying a playback
-   * @param volume will set the playback volume to this
-   * @param timePeriod will set the playback timePeriod to this
+   * [MediaPlayerService] publishes [OnPlayerManagerUpdateEvent] whenever there's an update to
+   * [PlayerManager].
    */
-  data class UpdatePlaybackPropertiesEvent(
-    val soundKey: String,
-    val volume: Int,
-    val timePeriod: Int
-  )
-
-  /**
-   * [MediaPlayerService] publishes OnPlaybackManagerUpdateEvent whenever there's an update to
-   * [PlaybackManager].
-   */
-  data class OnPlaybackManagerUpdateEvent(
-    val state: PlaybackManager.State,
-    val playbacks: HashMap<String, Playback>
+  data class OnPlayerManagerUpdateEvent(
+    val state: PlayerManager.State,
+    val players: HashMap<String, Player>
   )
 
   /**
@@ -83,33 +77,27 @@ class MediaPlayerService : Service() {
     private const val NOTIFICATION_CHANNEL_ID = "com.github.ashutoshgngwr.noice.default"
   }
 
-  private val playbackManager by lazy { PlaybackManager(this) }
+  private val playerManager by lazy { PlayerManager(this) }
   private val handler = Handler() // needed in scheduleAutoStop for register callback
   private val eventBus = EventBus.getDefault()
   private lateinit var wakeLock: PowerManager.WakeLock
   private val autoStopCallback = Runnable {
-    playbackManager.stop()
+    stopPlayback(StopPlaybackEvent())
   }
 
   private val becomingNoisyReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
       if (intent?.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
         Log.i(TAG, "Becoming noisy... Pause playback!")
-        playbackManager.pause()
+        pausePlayback(PausePlaybackEvent())
       }
     }
   }
 
-  private val onPlaybackUpdateListener = {
-    eventBus.postSticky(
-      OnPlaybackManagerUpdateEvent(
-        playbackManager.state,
-        playbackManager.playbacks
-      )
-    )
+  private val onPlayerUpdateListener = {
+    eventBus.postSticky(OnPlayerManagerUpdateEvent(playerManager.state, playerManager.players))
 
-    // isPlaying returns true if Playback is paused but not stopped.
-    if (playbackManager.state == PlaybackManager.State.STOPPED) {
+    if (playerManager.state == PlayerManager.State.STOPPED) {
       stopForeground(true)
       wakeLock.release()
     } else {
@@ -136,7 +124,7 @@ class MediaPlayerService : Service() {
         createPlaybackControlPendingIntent(RC_STOP_PLAYBACK)
       )
 
-      if (playbackManager.state == PlaybackManager.State.PAUSED) {
+      if (playerManager.state == PlayerManager.State.PAUSED) {
         it.addAction(
           R.drawable.ic_stat_play,
           getString(R.string.play),
@@ -176,7 +164,7 @@ class MediaPlayerService : Service() {
       }
     }
 
-    playbackManager.setOnPlaybackUpdateListener(onPlaybackUpdateListener)
+    playerManager.setOnPlayerUpdateListener(onPlayerUpdateListener)
     createNotificationChannel()
 
     // register becoming noisy receiver to detect audio output config changes
@@ -208,15 +196,15 @@ class MediaPlayerService : Service() {
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     when (intent?.getIntExtra("action", 0)) {
       RC_START_PLAYBACK -> {
-        playbackManager.resume()
+        resumePlayback(ResumePlaybackEvent())
       }
 
       RC_PAUSE_PLAYBACK -> {
-        playbackManager.pause()
+        pausePlayback(PausePlaybackEvent())
       }
 
       RC_STOP_PLAYBACK -> {
-        playbackManager.stop()
+        stopPlayback(StopPlaybackEvent())
       }
     }
 
@@ -225,7 +213,7 @@ class MediaPlayerService : Service() {
 
   override fun onDestroy() {
     super.onDestroy()
-    playbackManager.cleanup()
+    playerManager.cleanup()
 
     // unregister receiver and listener. release sound pool resources
     unregisterReceiver(becomingNoisyReceiver)
@@ -241,11 +229,26 @@ class MediaPlayerService : Service() {
   }
 
   /**
-   * Subscriber for the [StartPlaybackEvent].
+   * Subscriber for the [StartPlayerEvent].
    */
   @Subscribe(threadMode = ThreadMode.MAIN)
-  fun startPlayback(event: StartPlaybackEvent) {
-    playbackManager.play(Sound.get(event.soundKey))
+  fun startPlayer(event: StartPlayerEvent) {
+    playerManager.play(Sound.get(event.soundKey))
+    if (event.volume != null) {
+      playerManager.setVolume(event.soundKey, event.volume)
+    }
+
+    if (event.timePeriod != null) {
+      playerManager.setTimePeriod(event.soundKey, event.timePeriod)
+    }
+  }
+
+  /**
+   * Subscriber for the [StopPlayerEvent].
+   */
+  @Subscribe(threadMode = ThreadMode.MAIN)
+  fun stopPlayer(event: StopPlayerEvent) {
+    playerManager.stop(Sound.get(event.soundKey))
   }
 
   /**
@@ -253,7 +256,7 @@ class MediaPlayerService : Service() {
    */
   @Subscribe(threadMode = ThreadMode.MAIN)
   fun resumePlayback(@Suppress("UNUSED_PARAMETER") event: ResumePlaybackEvent) {
-    playbackManager.resume()
+    playerManager.resume()
   }
 
   /**
@@ -261,28 +264,15 @@ class MediaPlayerService : Service() {
    */
   @Subscribe(threadMode = ThreadMode.MAIN)
   fun pausePlayback(@Suppress("UNUSED_PARAMETER") event: PausePlaybackEvent) {
-    playbackManager.pause()
+    playerManager.pause()
   }
 
   /**
    * Subscriber for the [StopPlaybackEvent].
    */
   @Subscribe(threadMode = ThreadMode.MAIN)
-  fun stopPlayback(event: StopPlaybackEvent) {
-    if (event.soundKey == null) {
-      playbackManager.stop()
-    } else {
-      playbackManager.stop(Sound.get(event.soundKey))
-    }
-  }
-
-  /**
-   * Subscriber for the [UpdatePlaybackPropertiesEvent].
-   */
-  @Subscribe(threadMode = ThreadMode.MAIN)
-  fun updatePlaybackProperties(event: UpdatePlaybackPropertiesEvent) {
-    playbackManager.setVolume(event.soundKey, event.volume)
-    playbackManager.setTimePeriod(event.soundKey, event.timePeriod)
+  fun stopPlayback(@Suppress("UNUSED_PARAMETER") event: StopPlaybackEvent) {
+    playerManager.stop()
   }
 
   /**

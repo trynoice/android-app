@@ -1,7 +1,9 @@
-package com.github.ashutoshgngwr.noice.sound
+package com.github.ashutoshgngwr.noice.sound.player
 
 import android.os.Handler
-import com.github.ashutoshgngwr.noice.sound.player.SoundPlayerFactory
+import com.github.ashutoshgngwr.noice.sound.Sound
+import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapter
+import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
 import com.google.gson.*
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.JsonAdapter
@@ -10,11 +12,10 @@ import java.lang.reflect.Type
 import kotlin.random.Random.Default.nextInt
 
 /**
- * Playback manages playback of a single [Sound]. It holds reference to underlying
- * [SoundPlayer][com.github.ashutoshgngwr.noice.sound.player.SoundPlayer] instance
- * along with playback information such as [isPlaying], [volume] and [timePeriod].
+ * [Player] manages playback of a single [Sound]. It [PlayerAdapter] instances to control media
+ * playback and keeps track of playback information such as [isPlaying], [volume] and [timePeriod].
  */
-class Playback(private val sound: Sound, soundPlayerFactory: SoundPlayerFactory) : Runnable {
+class Player(private val sound: Sound, playerAdapterFactory: PlayerAdapterFactory) {
 
   companion object {
     const val DEFAULT_VOLUME = 4
@@ -77,19 +78,18 @@ class Playback(private val sound: Sound, soundPlayerFactory: SoundPlayerFactory)
   @SerializedName("a")
   val soundKey = sound.key
 
-  private var player = soundPlayerFactory.newPlayer(sound).also {
+  private var playerAdapter = playerAdapterFactory.newPlayerAdapter(sound).also {
     it.setVolume(volume.toFloat() / MAX_VOLUME)
   }
 
   private val handler = Handler()
 
   /**
-   * Sets the volume for the playback. It also sets the volume of the underlying
-   * [SoundPlayer][com.github.ashutoshgngwr.noice.sound.player.SoundPlayer] instance.
+   * Sets the volume for the [Player] using current [PlayerAdapter].
    */
   fun setVolume(volume: Int) {
     this.volume = volume
-    this.player.setVolume(volume.toFloat() / MAX_VOLUME)
+    this.playerAdapter.setVolume(volume.toFloat() / MAX_VOLUME)
   }
 
   /**
@@ -100,57 +100,60 @@ class Playback(private val sound: Sound, soundPlayerFactory: SoundPlayerFactory)
   fun play() {
     isPlaying = true
     if (sound.isLoopable) {
-      player.play()
+      playerAdapter.play()
     } else {
-      run()
+      playAndRegisterDelayedCallback()
     }
   }
 
   /**
    * Implements the randomised play callback for non-looping sounds.
    */
-  override fun run() {
+  private fun playAndRegisterDelayedCallback() {
     if (!isPlaying) {
       return
     }
 
-    player.play()
-    handler.postDelayed(this, (MIN_TIME_PERIOD + nextInt(0, timePeriod)) * 1000L)
+    playerAdapter.play()
+    val delay = (MIN_TIME_PERIOD + nextInt(0, timePeriod)) * 1000L
+    handler.postDelayed(this::playAndRegisterDelayedCallback, delay)
   }
 
   /**
-   * Stops the playback without releasing the underlying media resource.
+   * Stops the [Player] without releasing the underlying media resource.
    * If the sound is non-loopable, it also removes the randomised play callback.
    */
   fun pause() {
     isPlaying = false
-    player.pause()
+    playerAdapter.pause()
     if (sound.isLoopable) {
-      handler.removeCallbacks(this)
+      handler.removeCallbacks(this::playAndRegisterDelayedCallback)
     }
   }
 
   /**
-   * Stops the playback and releases the underlying media resource.
+   * Stops the [Player] and releases the underlying media resource.
    * If the sound is non-loopable, it also removes the randomised play callback.
    */
   fun stop() {
     isPlaying = false
-    player.stop()
+    playerAdapter.stop()
     if (sound.isLoopable) {
-      handler.removeCallbacks(this)
+      handler.removeCallbacks(this::playAndRegisterDelayedCallback)
     }
   }
 
   /**
-   * recreates the underlying [SoundPlayer][com.github.ashutoshgngwr.noice.sound.player.SoundPlayer]
-   * using the provided [SoundPlayerFactory].
+   * setAdapter updates the [PlayerAdapter] used by the [Player] instance. All subsequent
+   * player control commands are sent to the new [PlayerAdapter]. It also sends setVolume command
+   * on the new [PlayerAdapter]. If [Player] is looping and playing, it also sends the play
+   * command on the new [PlayerAdapter].
    */
-  fun recreatePlayerWithFactory(factory: SoundPlayerFactory) {
+  fun recreatePlayerAdapter(playerAdapterFactory: PlayerAdapterFactory) {
     // pause then stop just to prevent the fade-out transition from LocalSoundPlayer
-    player.pause()
-    player.stop()
-    player = factory.newPlayer(sound).also {
+    playerAdapter.pause()
+    playerAdapter.stop()
+    playerAdapter = playerAdapterFactory.newPlayerAdapter(sound).also {
       it.setVolume(volume.toFloat() / MAX_VOLUME)
       if (isPlaying && sound.isLoopable) { // because non looping will automatically play on scheduled callback.
         it.play()
@@ -159,7 +162,7 @@ class Playback(private val sound: Sound, soundPlayerFactory: SoundPlayerFactory)
   }
 
   /**
-   * Custom implementation of equals is required for comparing playback states
+   * Custom implementation of equals is required for comparing [Player] states
    * in comparing saved Presets
    */
   override fun equals(other: Any?): Boolean {
@@ -171,7 +174,7 @@ class Playback(private val sound: Sound, soundPlayerFactory: SoundPlayerFactory)
       return false
     }
 
-    other as Playback
+    other as Player
     return soundKey == other.soundKey && volume == other.volume && timePeriod == other.timePeriod
   }
 

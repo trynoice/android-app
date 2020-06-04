@@ -12,7 +12,7 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.sound.Playback
+import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
@@ -25,8 +25,7 @@ import org.greenrobot.eventbus.ThreadMode
 
 class PresetFragment : Fragment() {
 
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  var mRecyclerView: RecyclerView? = null
+  private var mRecyclerView: RecyclerView? = null
 
   private var activePreset: Preset? = null
   private var eventBus = EventBus.getDefault()
@@ -71,8 +70,8 @@ class PresetFragment : Fragment() {
   }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-  fun onPlaybackUpdate(event: MediaPlayerService.OnPlaybackManagerUpdateEvent) {
-    activePreset = Preset("", event.playbacks.values.toTypedArray())
+  fun onPlaybackUpdate(event: MediaPlayerService.OnPlayerManagerUpdateEvent) {
+    activePreset = Preset("", event.players.values.toTypedArray())
     requireNotNull(requireNotNull(mRecyclerView).adapter).notifyDataSetChanged()
   }
 
@@ -119,9 +118,9 @@ class PresetFragment : Fragment() {
           } else {
             itemView.button_play.setImageResource(R.drawable.ic_action_stop)
             for (p in dataSet[adapterPosition].playbackStates) {
-              eventBus.post(MediaPlayerService.StartPlaybackEvent(p.soundKey))
-              MediaPlayerService.UpdatePlaybackPropertiesEvent(p.soundKey, p.volume, p.timePeriod)
-                .also { eventBus.post(it) }
+              MediaPlayerService.StartPlayerEvent(p.soundKey, p.volume, p.timePeriod).also {
+                eventBus.post(it)
+              }
             }
           }
           eventBus.register(this@PresetFragment)
@@ -193,7 +192,7 @@ class PresetFragment : Fragment() {
   // and https://github.com/ashutoshgngwr/noice/pulls/117
   data class Preset(
     @Expose @SerializedName("a") var name: String,
-    @Expose @SerializedName("b") val playbackStates: Array<Playback>
+    @Expose @SerializedName("b") val playbackStates: Array<Player>
   ) {
 
     init {

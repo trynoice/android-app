@@ -1,8 +1,9 @@
-package com.github.ashutoshgngwr.noice.sound.player
+package com.github.ashutoshgngwr.noice.sound.player.adapter
 
 import android.content.Context
 import android.net.Uri
 import android.os.CountDownTimer
+import androidx.annotation.VisibleForTesting
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.google.android.exoplayer2.ExoPlayer
@@ -14,21 +15,22 @@ import com.google.android.exoplayer2.upstream.DataSource
 import kotlin.math.ceil
 
 /**
- * [LocalSoundPlayer] implements [SoundPlayer] which plays the media locally
+ * [LocalPlayerAdapter] implements [PlayerAdapter] which plays the media locally
  * on device using the [SimpleExoPlayer] implementation.
  */
-class LocalSoundPlayer(context: Context, audioAttributes: AudioAttributesCompat, sound: Sound) :
-  SoundPlayer() {
+class LocalPlayerAdapter(context: Context, audioAttributes: AudioAttributesCompat, sound: Sound) :
+  PlayerAdapter {
 
   companion object {
     const val FADE_VOLUME_STEP = 0.02f
     const val FADE_DURATION = 1000L
   }
 
-  private val exoPlayer = initPlayer(context, sound, audioAttributes)
+  private var exoPlayer = initPlayer(context, sound, audioAttributes)
 
-  // global references are needed if volume is tweaked during an ongoing transition
-  private var transitionTicker: CountDownTimer? = null
+  // global reference is needed if volume is tweaked during an ongoing transition
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  var transitionTicker: CountDownTimer? = null
 
   private fun initPlayer(
     context: Context,
@@ -70,7 +72,7 @@ class LocalSoundPlayer(context: Context, audioAttributes: AudioAttributesCompat,
       return
     }
 
-    // an internal feature of the LocalPlayer is that it won't fade-in non-looping sounds
+    // an internal feature of the LocalPlayerAdapter is that it won't fade-in non-looping sounds
     if (exoPlayer.repeatMode == ExoPlayer.REPEAT_MODE_ONE) {
       exoPlayer.fade(1, FADE_DURATION)
     } else {
@@ -106,11 +108,12 @@ class LocalSoundPlayer(context: Context, audioAttributes: AudioAttributesCompat,
     callback: SimpleExoPlayer.() -> Unit = { }
   ) {
     if (sign < 0 && !playWhenReady) {
-      // special case where fade-out is requested but playback is not playing.
+      // edge case where fade-out is requested but playback is not playing.
+      callback()
       return
     }
 
-    val steps = ceil(volume / FADE_VOLUME_STEP).toInt()
+    val steps = 1 + ceil(volume / FADE_VOLUME_STEP).toInt()
     val period = duration / steps
     var to = 0.0f
     var from = 0.0f
