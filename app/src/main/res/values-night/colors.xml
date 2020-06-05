@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorBackground">#3f3f4d</color>
-  <color name="colorCardBackground">#3c3c48</color>
-  <color name="colorPopupBackground">#32323d</color>
+  <color name="colorBackground">#282832</color>
+  <color name="colorCardBackground">#23232d</color>
+  <color name="colorPopupBackground">#202028</color>
   <!-- Following is needed because AboutPage doesn't have any way to define custom style.
   This is supposed to override its default background color -->
   <color name="about_background_color">@color/colorBackground</color>

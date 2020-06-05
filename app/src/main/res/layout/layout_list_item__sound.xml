@@ -48,7 +48,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:contentDescription="@string/volume"
-          android:src="@drawable/ic_stat_volume"
+          android:src="@drawable/ic_action_volume"
           android:tint="?attr/colorAccent" />
 
         <SeekBar
@@ -72,7 +72,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:contentDescription="@string/repeat_time_period"
-          android:src="@drawable/ic_stat_time_period"
+          android:src="@drawable/ic_action_time_period"
           android:tint="?attr/colorAccent" />
 
         <SeekBar

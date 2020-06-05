@@ -1,0 +1,41 @@
+name: Fastlane Metadata
+on:
+  push:
+    branches:
+      - master
+      - "[0-9]+.[0-9]+.x"
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+    paths:
+      - "fastlane/**"
+      - ".github/workflows/**"
+  pull_request:
+    branches:
+      - master
+      - "[0-9]+.[0-9]+.x"
+    paths:
+      - "fastlane/**"
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ashutoshgngwr/validate-fastlane-supply-metadata@v1
+
+  play-store-upload:
+    name: Play Store Upload
+    needs: validate
+    if: github.event_name == 'push' && contains(github.ref , 'refs/tags/')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo "$SERVICE_ACCOUNT_KEY" > service-account-key.json
+        env:
+          SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+      - run: bundle install && bundle exec fastlane upload_metadata
+      - if: ${{ always() }}
+        run: rm -f service-account-key.json

@@ -204,7 +204,7 @@ class PlayerManager(private val context: Context) :
    * stopped.
    */
   fun stop(sound: Sound) {
-    requireNotNull(players[sound.key]).apply { stop() }
+    requireNotNull(players[sound.key]).stop()
     players.remove(sound.key)
     if (players.isEmpty()) {
       state = State.STOPPED

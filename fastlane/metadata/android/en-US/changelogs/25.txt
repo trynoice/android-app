@@ -1,0 +1,6 @@
+- Fixed crash on resuming app from background
+- Fixed save preset button not showing up sometimes
+- Fixed animation stuttering on browsing app screens
+- Minor UI/UX improvements
+
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG

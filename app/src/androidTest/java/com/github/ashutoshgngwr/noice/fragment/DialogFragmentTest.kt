@@ -15,6 +15,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.ashutoshgngwr.noice.MainActivity
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.google.android.material.textfield.TextInputLayout
 import org.hamcrest.Description
 import org.hamcrest.Matchers.allOf
@@ -23,12 +24,17 @@ import org.hamcrest.TypeSafeMatcher
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
 class DialogFragmentTest {
+
+  @Rule
+  @JvmField
+  val retryTestRule = RetryTestRule(5)
 
   private lateinit var activityScenario: ActivityScenario<MainActivity>
   private lateinit var dialogFragment: DialogFragment
@@ -153,11 +159,12 @@ class DialogFragmentTest {
       .targetContext
       .resources
       .getStringArray(R.array.app_themes)
-
     activityScenario.onActivity {
       dialogFragment.show(it.supportFragmentManager) {
+        dialogIdlingResource.increment()
         singleChoiceItems(R.array.app_themes, currentChoice = selectedItem) { choice ->
           selectedItem = choice
+          dialogIdlingResource.decrement()
         }
       }
     }
@@ -170,6 +177,8 @@ class DialogFragmentTest {
     onView(allOf(isDescendantOfA(withId(android.R.id.list)), withText(items[1])))
       .perform(click())
 
+    IdlingRegistry.getInstance().register(dialogIdlingResource)
+    onView(withId(android.R.id.list)).check(doesNotExist())
     assertEquals(1, selectedItem)
   }
 }

@@ -16,16 +16,16 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## Android
+### android upload_metadata
+```
+fastlane android upload_metadata
+```
+Upload metadata to Google Play Store
 ### android beta
 ```
 fastlane android beta
 ```
-Deploy a new beta version to the Google Play
-### android production
-```
-fastlane android production
-```
-Deploy a new production version to the Google Play
+Deploy a new version to the beta track on the Google Play
 
 ----
 

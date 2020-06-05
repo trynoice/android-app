@@ -1,0 +1,4 @@
+- Added French translations
+- Minor bug fixes
+
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG
