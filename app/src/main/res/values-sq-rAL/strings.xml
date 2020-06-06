@@ -6,9 +6,9 @@
   <string name="repeat_time_period">Periudha kohore e përsëritjes</string>
   <string name="volume">Volumi i zerit</string>
   <string name="play_pause">Luaj ose pauzë</string>
-  <string name="open_drawer">Vizato sirtar e hapur</string>
+  <string name="open_drawer">Hap sirtarin e lundrimit</string>
   <string name="close_drawer">Mbyll sirtarin e lundrimit</string>
-  <string name="notification_channel_default__name">Rishikim i medias</string>
+  <string name="notification_channel_default__name">Ridëgjim i medias</string>
   <string name="notification_channel_default__description">Kontrollet e riprodhimit të mediave</string>
   <string name="pause">Pauzë</string>
   <string name="play">Luaj</string>
