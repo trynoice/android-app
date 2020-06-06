@@ -4,11 +4,6 @@ import android.os.Handler
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapter
 import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
-import com.google.gson.*
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.JsonAdapter
-import com.google.gson.annotations.SerializedName
-import java.lang.reflect.Type
 import kotlin.random.Random.Default.nextInt
 
 /**
@@ -25,59 +20,14 @@ class Player(private val sound: Sound, playerAdapterFactory: PlayerAdapterFactor
     const val MAX_TIME_PERIOD = 240
   }
 
-  /**
-   * VolumeSerializer is a fix for maintaining backward compatibility with versions older than
-   * 0.3.0. Volume was written as a Float to persistent storage in older versions.
-   * Switching to Integer in newer version was causing crash if the user had any saved presets.
-   */
-  private inner class VolumeSerializer : JsonSerializer<Int>, JsonDeserializer<Int> {
-    override fun serialize(
-      src: Int?,
-      typeOfSrc: Type?,
-      context: JsonSerializationContext?
-    ): JsonElement {
-      return JsonPrimitive(
-        if (src == null) {
-          (DEFAULT_VOLUME.toFloat() / MAX_VOLUME)
-        } else {
-          src.toFloat() / MAX_VOLUME
-        }
-      )
-    }
-
-    override fun deserialize(
-      json: JsonElement?,
-      typeOfT: Type?,
-      context: JsonDeserializationContext?
-    ): Int {
-      return if (json == null) {
-        DEFAULT_VOLUME
-      } else {
-        (json.asFloat * MAX_VOLUME).toInt()
-      }
-    }
-
-  }
-
-  // curious about the weird serialized names? see https://github.com/ashutoshgngwr/noice/issues/110
-  // and https://github.com/ashutoshgngwr/noice/pulls/117
-  @Expose
-  @SerializedName("b")
-  @JsonAdapter(value = VolumeSerializer::class)
   var volume = DEFAULT_VOLUME
     private set
 
-  @Expose
-  @SerializedName("c")
   var timePeriod = DEFAULT_TIME_PERIOD
 
-  var isPlaying = false
-    private set
-
-  @Expose
-  @SerializedName("a")
   val soundKey = sound.key
 
+  private var isPlaying = false
   private var playerAdapter = playerAdapterFactory.newPlayerAdapter(sound).also {
     it.setVolume(volume.toFloat() / MAX_VOLUME)
   }
@@ -159,32 +109,5 @@ class Player(private val sound: Sound, playerAdapterFactory: PlayerAdapterFactor
         it.play()
       }
     }
-  }
-
-  /**
-   * Custom implementation of equals is required for comparing [Player] states
-   * in comparing saved Presets
-   */
-  override fun equals(other: Any?): Boolean {
-    if (this === other) {
-      return true
-    }
-
-    if (javaClass != other?.javaClass) {
-      return false
-    }
-
-    other as Player
-    return soundKey == other.soundKey && volume == other.volume && timePeriod == other.timePeriod
-  }
-
-  /**
-   * auto-generated
-   */
-  override fun hashCode(): Int {
-    var result = volume
-    result = 31 * result + timePeriod
-    result = 31 * result + soundKey.hashCode()
-    return result
   }
 }

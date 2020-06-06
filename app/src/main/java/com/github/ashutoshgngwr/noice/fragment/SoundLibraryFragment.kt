@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
@@ -35,8 +36,8 @@ class SoundLibraryFragment : Fragment() {
   fun onPlayerManagerUpdate(event: MediaPlayerService.OnPlayerManagerUpdateEvent) {
     this.players = event.players
     var showSavePresetFAB: Boolean
-    PresetFragment.Preset.readAllFromUserPreferences(requireContext()).also {
-      showSavePresetFAB = !it.contains(PresetFragment.Preset("", players.values.toTypedArray()))
+    Preset.readAllFromUserPreferences(requireContext()).also {
+      showSavePresetFAB = !it.contains(Preset.from("", players.values))
     }
 
     view?.post {
@@ -73,8 +74,8 @@ class SoundLibraryFragment : Fragment() {
         input(hintRes = R.string.name, errorRes = R.string.preset_name_cannot_be_empty)
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
-          val preset = PresetFragment.Preset(getInputText(), players.values.toTypedArray())
-          PresetFragment.Preset.appendToUserPreferences(requireContext(), preset)
+          val preset = Preset.from(getInputText(), players.values)
+          Preset.appendToUserPreferences(requireContext(), preset)
           mSavePresetButton?.hide()
           showPresetSavedMessage()
         }
