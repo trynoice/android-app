@@ -65,7 +65,7 @@
   <string name="auto_sleep_schedule_cancelled">Koha automatike e gjumit u anullu!</string>
   <string name="app_theme">Tema</string>
   <string name="open_context_menu">Menu e hapur e kontekstit</string>
-  <string name="rename">riemërtoj</string>
+  <string name="rename">Riemërtoj</string>
   <string-array name="app_themes">
     <item>E çelët</item>
     <item>E errët</item>
