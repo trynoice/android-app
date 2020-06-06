@@ -1,0 +1,22 @@
+Për shumë njerëz, një zhurmë e vogël në sfond është e dobishme për t'u qetësuar dhe përqendruar. Në disa raste, është gjithashtu një nxitje për produktivitetin. Zhurma në sfond (ambienti) gjithashtu mund të ndihmojë në minimizimin e efekteve të stresit.
+
+Noice është një aplikacion që ju lejon të krijoni një ambient të personalizuar duke përdorur klip nga burime mjedisore të zhurmës. Krijoni rrethinën tuaj të përsosur duke kombinuar tinguj të ndryshëm për të mbytur shpërqendrimet, në mënyrë që të përqendroheni në punën tuaj, ose të krijoni ambiente të qeta dhe paqësore që ju inkurajojnë të bini në gjumë.
+
+<b>Karakteristika</b>
+- 24 zhurma të regjistruara
+- Make customised mix
+- Bëni përzierje të personalizuar
+- Koha automatike e gjumit
+- Luaj njekosiht me aplikacione e tjerë të muzikës
+- Kontrolli individual i zërit për secilin burim zhurme
+- Rishikim offline
+- Variante të çelëta dhe të errëta të temave të aplikacionit
+
+<b>Libraria e zhurmës</b>
+- Vend pylli (zogj, zjarr, natë, erë, palma, etj.)
+- Stinë me shira (rain, thunders)
+- Set Teleportimi (kafene, zyrë, tren lëvizës, gjatë fluturimit, bregdetar, breg lumi, etj.)
+- Zhurma e papërpunuar (e bardhë, rozë, kafe)
+
+Zhurma është softuer falas dhe me burim të hapur.
+https://github.com/ashutoshgngwr/noice
