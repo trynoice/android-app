@@ -26,7 +26,7 @@ class LocalPlayerAdapter(context: Context, audioAttributes: AudioAttributesCompa
     const val FADE_DURATION = 1000L
   }
 
-  private var exoPlayer = initPlayer(context, sound, audioAttributes)
+  private val exoPlayer = initPlayer(context, sound, audioAttributes)
 
   // global reference is needed if volume is tweaked during an ongoing transition
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
