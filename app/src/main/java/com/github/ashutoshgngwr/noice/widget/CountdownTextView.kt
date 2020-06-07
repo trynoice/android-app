@@ -73,7 +73,7 @@ class CountdownTextView : MaterialTextView {
    */
   private fun updateCountdownWithCallbacks() {
     updateCountdown()
-    if (isAttachedToWindow && SystemClock.uptimeMillis() < countdownUntilMillis) {
+    if (SystemClock.uptimeMillis() < countdownUntilMillis) {
       postDelayed(this::updateCountdownWithCallbacks, UPDATE_INTERVAL)
     }
   }
