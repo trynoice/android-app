@@ -60,13 +60,15 @@ class PresetFragmentTest {
   )
 
   // returned when Preset.readAllFromUserPreferences() is called
-  private val mockPreset = mockk<Preset>(relaxed = true) {
-    every { name } returns "test"
-    every { playerStates } returns expectedPlayerStates
-  }
+  private lateinit var mockPreset: Preset
 
   @Before
   fun setup() {
+    mockPreset = mockk(relaxed = true) {
+      every { name } returns "test"
+      every { playerStates } returns expectedPlayerStates
+    }
+
     mockkObject(Preset.Companion)
     every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(mockPreset)
     fragmentScenario = launchFragmentInContainer<PresetFragment>(null, R.style.Theme_App)
