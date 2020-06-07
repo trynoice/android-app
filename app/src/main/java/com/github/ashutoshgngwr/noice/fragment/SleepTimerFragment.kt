@@ -16,7 +16,7 @@ import org.greenrobot.eventbus.ThreadMode
 
 class SleepTimerFragment : Fragment() {
 
-  private var eventBus = EventBus.getDefault()
+  private val eventBus = EventBus.getDefault()
 
   private val addToSleepDurationButtonClickListener = View.OnClickListener {
     val timeToAdd = 1000L * 60L * when (it.id) {

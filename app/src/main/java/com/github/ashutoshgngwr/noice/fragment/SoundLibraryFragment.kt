@@ -27,9 +27,9 @@ class SoundLibraryFragment : Fragment() {
   private var mRecyclerView: RecyclerView? = null
   private var mSavePresetButton: FloatingActionButton? = null
   private var adapter: SoundListAdapter? = null
-  private var eventBus = EventBus.getDefault()
   private var players = emptyMap<String, Player>()
 
+  private val eventBus = EventBus.getDefault()
   private val dataSet = Sound.LIBRARY.values.toTypedArray()
 
   @Subscribe(sticky = true, threadMode = ThreadMode.ASYNC)
@@ -139,11 +139,11 @@ class SoundLibraryFragment : Fragment() {
         holder.itemView.button_play.setImageResource(R.drawable.ic_action_play)
       }
 
-      holder.itemView.layout_time_period.visibility = (if (sound.isLoopable) {
+      holder.itemView.layout_time_period.visibility = if (sound.isLoopable) {
         View.GONE
       } else {
         View.VISIBLE
-      })
+      }
     }
   }
 
@@ -153,13 +153,13 @@ class SoundLibraryFragment : Fragment() {
       // set listeners in holders to avoid object recreation on view recycle
       val seekBarChangeListener = object : SeekBar.OnSeekBarChangeListener {
 
-        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+        override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
           if (!fromUser) {
             return
           }
 
           val playback = players[dataSet[adapterPosition].key] ?: return
-          when (requireNotNull(seekBar).id) {
+          when (seekBar.id) {
             R.id.seekbar_volume -> {
               playback.setVolume(progress)
             }

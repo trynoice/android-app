@@ -255,6 +255,7 @@ class PlayerManager(private val context: Context) :
     }
 
     requireNotNull(players[soundKey]).setVolume(volume)
+    notifyChanges()
   }
 
   /**
@@ -268,6 +269,7 @@ class PlayerManager(private val context: Context) :
     }
 
     requireNotNull(players[soundKey]).timePeriod = timePeriod
+    notifyChanges()
   }
 
   /**

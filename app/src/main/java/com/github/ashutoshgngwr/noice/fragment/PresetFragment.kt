@@ -21,12 +21,11 @@ import org.greenrobot.eventbus.ThreadMode
 class PresetFragment : Fragment() {
 
   private var mRecyclerView: RecyclerView? = null
-
-  private var dataSet = ArrayList<Preset>()
   private var activePreset: Preset? = null
-  private var eventBus = EventBus.getDefault()
   private lateinit var adapter: PresetListAdapter
 
+  private val dataSet = ArrayList<Preset>()
+  private val eventBus = EventBus.getDefault()
   private val mAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
     override fun onChanged() {
       if (adapter.itemCount > 0) {

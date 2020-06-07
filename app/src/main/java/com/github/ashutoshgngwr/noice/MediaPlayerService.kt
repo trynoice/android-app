@@ -53,7 +53,7 @@ class MediaPlayerService : Service() {
    */
   data class OnPlayerManagerUpdateEvent(
     val state: PlayerManager.State,
-    val players: HashMap<String, Player>
+    val players: Map<String, Player>
   )
 
   /**

@@ -1,43 +1,33 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.view.View
-import android.widget.SeekBar
-import androidx.annotation.IdRes
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.media.AudioAttributesCompat
-import androidx.preference.PreferenceManager
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.UiController
-import androidx.test.espresso.ViewAction
-import androidx.test.espresso.action.MotionEvents
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
+import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
-import com.github.ashutoshgngwr.noice.sound.Playback
-import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
-import com.github.ashutoshgngwr.noice.sound.Sound
+import com.github.ashutoshgngwr.noice.ViewActionsX
+import com.github.ashutoshgngwr.noice.sound.Preset
+import com.github.ashutoshgngwr.noice.sound.player.Player
+import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
+import io.mockk.*
+import io.mockk.impl.annotations.InjectMockKs
+import io.mockk.impl.annotations.RelaxedMockK
 import org.greenrobot.eventbus.EventBus
-import org.hamcrest.Matcher
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.not
 import org.junit.After
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.InjectMocks
-import org.mockito.Mock
-import org.mockito.Mockito.reset
-import org.mockito.Mockito.verify
-import org.mockito.MockitoAnnotations
-import java.lang.Thread.sleep
+import kotlin.random.Random
 
 @RunWith(AndroidJUnit4::class)
 class SoundLibraryFragmentTest {
@@ -46,265 +36,172 @@ class SoundLibraryFragmentTest {
   @JvmField
   val retryTestRule = RetryTestRule(5)
 
-  @Mock
+  @RelaxedMockK
   private lateinit var eventBus: EventBus
 
-  @InjectMocks
+  @InjectMockKs(injectImmutable = true, overrideValues = true)
   private lateinit var fragment: SoundLibraryFragment
   private lateinit var fragmentScenario: FragmentScenario<SoundLibraryFragment>
-
-
-  private fun clickOn(@Suppress("SameParameterValue") @IdRes buttonId: Int): ViewAction {
-    return object : ViewAction {
-      override fun getDescription() = "Click on view with specified id"
-
-      override fun getConstraints() = null
-
-      override fun perform(uiController: UiController?, view: View?) {
-        view!!.findViewById<View>(buttonId)!!.performClick()
-      }
-    }
-  }
-
-  private fun seekProgress(@IdRes seekBarId: Int, progress: Int): ViewAction {
-    return object : ViewAction {
-      override fun getDescription(): String {
-        return "Emulate user input on a seek bar"
-      }
-
-      override fun getConstraints(): Matcher<View> {
-        return instanceOf(SeekBar::class.java)
-      }
-
-      override fun perform(uiController: UiController?, view: View?) {
-        requireNotNull(uiController)
-
-        // TODO: following is a buggy implementation of emulating a touch input on a SeekBar.
-        // The MotionEvent starts and ends at the incorrect positions.
-        // To debug, turn on 'Show taps' and 'Pointer location' in developer options of the device.
-        val seekBar = requireNotNull(view).findViewById<SeekBar>(seekBarId)
-        val location = intArrayOf(0, 0)
-        seekBar.getLocationOnScreen(location)
-        val xOffset = location[0].toFloat() + seekBar.paddingStart
-        val xStart = ((seekBar.progress.toFloat() / seekBar.max) * seekBar.width) + xOffset
-        val x = ((progress.toFloat() / seekBar.max) * seekBar.width) + xOffset
-        val y = location[1] + seekBar.paddingTop + (seekBar.height.toFloat() / 2)
-        val startCoordinates = floatArrayOf(xStart, y)
-        val endCoordinates = floatArrayOf(x, y)
-        val precision = floatArrayOf(1f, 1f)
-
-        // Send down event, pause, and send up
-        val down = MotionEvents.sendDown(uiController, startCoordinates, precision).down
-        uiController.loopMainThreadForAtLeast(100)
-        MotionEvents.sendMovement(uiController, down, endCoordinates)
-        uiController.loopMainThreadForAtLeast(100)
-        MotionEvents.sendUp(uiController, down, endCoordinates)
-      }
-    }
-  }
 
   @Before
   fun setup() {
     fragmentScenario = launchFragmentInContainer<SoundLibraryFragment>(null, R.style.Theme_App)
-    fragmentScenario.onFragment {
-      fragment = it
-    }
-
-    MockitoAnnotations.initMocks(this)
-  }
-
-  @After
-  fun teardown() {
-    fragmentScenario.onFragment {
-      PreferenceManager.getDefaultSharedPreferences(it.requireContext())
-        .edit().clear().commit()
-    }
+    fragmentScenario.onFragment { fragment = it } // just for mock injection
+    MockKAnnotations.init(this)
   }
 
   @Test
   fun testRecyclerViewItem_playButton() {
-    onView(withId(R.id.list_sound))
-      .perform(
-        RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
-          hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-          clickOn(R.id.button_play)
-        )
+    onView(withId(R.id.list_sound)).perform(
+      RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+        hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
+        ViewActionsX.clickOn(R.id.button_play)
       )
+    )
 
-    verify(eventBus).post(PlaybackControlEvents.StartPlaybackEvent("birds"))
-    reset(eventBus)
-
-    onView(withId(R.id.list_sound))
-      .perform(
-        RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
-          hasDescendant(allOf(withId(R.id.title), withText(R.string.train_horn))),
-          clickOn(R.id.button_play)
-        )
-      )
-
-    verify(eventBus).post(PlaybackControlEvents.StartPlaybackEvent("train_horn"))
+    verify(exactly = 1) { eventBus.post(MediaPlayerService.StartPlayerEvent("birds")) }
+    confirmVerified(eventBus)
   }
 
   @Test
   fun testRecyclerViewItem_stopButton() {
-    // play april fools joke on the fragment with a fake playback.
-    fragmentScenario.onFragment {
-      it.onPlaybackUpdate(
-        hashMapOf(
-          "birds" to Playback(
-            InstrumentationRegistry.getInstrumentation().targetContext,
-            requireNotNull(Sound.LIBRARY["birds"]),
-            AudioAttributesCompat.Builder().build()
-          )
-        )
-      )
+    val mockUpdateEvent = mockk<MediaPlayerService.OnPlayerManagerUpdateEvent>(relaxed = true) {
+      every { players } returns hashMapOf("birds" to mockk(relaxed = true))
     }
 
-    // stop the fake playback and see if it actually works.
-    onView(withId(R.id.list_sound))
-      .perform(
-        RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
-          hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-          clickOn(R.id.button_play)
-        )
+    fragmentScenario.onFragment { it.onPlayerManagerUpdate(mockUpdateEvent) }
+    onView(withId(R.id.list_sound)).perform(
+      RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+        hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
+        ViewActionsX.clickOn(R.id.button_play)
       )
+    )
 
-    verify(eventBus).post(PlaybackControlEvents.StopPlaybackEvent("birds"))
+    verify(exactly = 1) { eventBus.post(MediaPlayerService.StopPlayerEvent("birds")) }
   }
 
   @Test
   fun testRecyclerViewItem_volumeSeekBar() {
-    var fakePlayback: Playback? = null
-    fragmentScenario.onFragment {
-      fakePlayback = Playback(
-        InstrumentationRegistry.getInstrumentation().targetContext,
-        requireNotNull(Sound.LIBRARY["birds"]),
-        AudioAttributesCompat.Builder().build()
-      )
-
-      it.onPlaybackUpdate(hashMapOf("birds" to requireNotNull(fakePlayback)))
+    val mockPlayer = mockk<Player>(relaxed = true) {
+      every { volume } returns Player.DEFAULT_VOLUME
     }
 
-    onView(withId(R.id.list_sound))
-      .perform(
+    val mockUpdateEvent = mockk<MediaPlayerService.OnPlayerManagerUpdateEvent>(relaxed = true) {
+      every { players } returns hashMapOf("birds" to mockPlayer)
+    }
+
+    fragmentScenario.onFragment { it.onPlayerManagerUpdate(mockUpdateEvent) }
+    val expectedVolumes = arrayOf(0, Player.MAX_VOLUME, Random.nextInt(1, Player.MAX_VOLUME))
+    for (expectedVolume in expectedVolumes) {
+      onView(withId(R.id.list_sound)).perform(
         RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
           hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-          seekProgress(R.id.seekbar_volume, Playback.MAX_VOLUME)
+          ViewActionsX.seekProgress(R.id.seekbar_volume, expectedVolume)
         )
       )
 
-    verify(eventBus).post(PlaybackControlEvents.UpdatePlaybackEvent(requireNotNull(fakePlayback)))
-    assertEquals(Playback.MAX_VOLUME, requireNotNull(fakePlayback).volume)
+      verify(exactly = 1) { mockPlayer.setVolume(expectedVolume) }
+    }
   }
 
   @Test
   fun testRecyclerViewItem_timePeriodSeekBar() {
-    var fakePlayback: Playback? = null
-    fragmentScenario.onFragment {
-      fakePlayback = Playback(
-        InstrumentationRegistry.getInstrumentation().targetContext,
-        requireNotNull(Sound.LIBRARY["rolling_thunder"]),
-        AudioAttributesCompat.Builder().build()
-      )
-
-      it.onPlaybackUpdate(hashMapOf("rolling_thunder" to requireNotNull(fakePlayback)))
+    val mockPlayer = mockk<Player>(relaxed = true) {
+      every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
     }
 
-    // min time period should be 1 in any case
-    onView(withId(R.id.list_sound))
-      .perform(
-        RecyclerViewActions.scrollTo<SoundLibraryFragment.ViewHolder>(
-          hasDescendant(allOf(withId(R.id.title), withText(R.string.rolling_thunder)))
-        ),
-        RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
-          hasDescendant(allOf(withId(R.id.title), withText(R.string.rolling_thunder))),
-          seekProgress(R.id.seekbar_time_period, 0)
+    val mockUpdateEvent = mockk<MediaPlayerService.OnPlayerManagerUpdateEvent>(relaxed = true) {
+      every { players } returns hashMapOf("rolling_thunder" to mockPlayer)
+    }
+
+    fragmentScenario.onFragment { it.onPlayerManagerUpdate(mockUpdateEvent) }
+    val expectedTimePeriods =
+      arrayOf(1, Player.MAX_TIME_PERIOD, Random.nextInt(2, Player.MAX_TIME_PERIOD))
+
+    for (expectedTimePeriod in expectedTimePeriods) {
+      onView(withId(R.id.list_sound))
+        .perform(
+          RecyclerViewActions.scrollTo<SoundLibraryFragment.ViewHolder>(
+            hasDescendant(allOf(withId(R.id.title), withText(R.string.rolling_thunder)))
+          ),
+          RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+            hasDescendant(allOf(withId(R.id.title), withText(R.string.rolling_thunder))),
+            ViewActionsX.seekProgress(R.id.seekbar_time_period, expectedTimePeriod)
+          )
         )
-      )
 
-    assertEquals(1, requireNotNull(fakePlayback).timePeriod)
-    verify(eventBus).post(PlaybackControlEvents.UpdatePlaybackEvent(requireNotNull(fakePlayback)))
-    reset(eventBus)
+      verify(exactly = 1) { mockPlayer.timePeriod = expectedTimePeriod }
+    }
+  }
 
-    onView(withId(R.id.list_sound))
-      .perform(
-        RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
-          hasDescendant(allOf(withId(R.id.title), withText(R.string.rolling_thunder))),
-          seekProgress(R.id.seekbar_time_period, Playback.MAX_TIME_PERIOD)
-        )
-      )
+  @Test
+  fun testSavePresetButton_onTogglingPlayback() {
+    onView(withId(R.id.fab_save_preset)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+    fragmentScenario.onFragment {
+      it.onPlayerManagerUpdate(mockk(relaxed = true) {
+        every { state } returns PlayerManager.State.PLAYING
+      })
+    }
 
-    verify(eventBus).post(PlaybackControlEvents.UpdatePlaybackEvent(requireNotNull(fakePlayback)))
-    assertEquals(Playback.MAX_TIME_PERIOD, requireNotNull(fakePlayback).timePeriod)
+    onView(withId(R.id.fab_save_preset)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+    fragmentScenario.onFragment {
+      it.onPlayerManagerUpdate(mockk(relaxed = true) {
+        every { state } returns PlayerManager.State.STOPPED
+      })
+    }
+
+    onView(withId(R.id.fab_save_preset)).check(matches(withEffectiveVisibility(Visibility.GONE)))
   }
 
   @Test
   fun testSavePresetButton_onUnknownPresetPlayback() {
-    onView(withId(R.id.fab_save_preset)).check(matches(withEffectiveVisibility(Visibility.GONE)))
-
-    // play a sound
     fragmentScenario.onFragment {
-      it.onPlaybackUpdate(
-        hashMapOf(
-          "birds" to Playback(
-            InstrumentationRegistry.getInstrumentation().targetContext,
-            requireNotNull(Sound.LIBRARY["birds"]),
-            AudioAttributesCompat.Builder().build()
-          ),
-          "rolling_thunder" to Playback(
-            InstrumentationRegistry.getInstrumentation().targetContext,
-            requireNotNull(Sound.LIBRARY["rolling_thunder"]),
-            AudioAttributesCompat.Builder().build()
-          )
-        )
-      )
+      it.onPlayerManagerUpdate(mockk(relaxed = true) {
+        every { state } returns PlayerManager.State.PLAYING
+        every { players } returns mockk(relaxed = true)
+      })
     }
 
-    // save preset should become visible
     onView(withId(R.id.fab_save_preset)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
   }
 
   @Test
   fun testSavePresetButton_onKnownPresetPlayback() {
-    onView(withId(R.id.fab_save_preset)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+    val mockPlayers: Map<String, Player> = hashMapOf(
+      "birds" to mockk(relaxed = true),
+      "rolling_thunder" to mockk(relaxed = true)
+    )
 
-    // play a sound
-    fragmentScenario.onFragment {
-      val playbacks = hashMapOf(
-        "birds" to Playback(
-          InstrumentationRegistry.getInstrumentation().targetContext,
-          requireNotNull(Sound.LIBRARY["birds"]),
-          AudioAttributesCompat.Builder().build()
-        ),
-        "rolling_thunder" to Playback(
-          InstrumentationRegistry.getInstrumentation().targetContext,
-          requireNotNull(Sound.LIBRARY["rolling_thunder"]),
-          AudioAttributesCompat.Builder().build()
-        )
-      )
-
-      // save preset to user preferences
-      val preset = PresetFragment.Preset("test", playbacks.values.toTypedArray())
-      PresetFragment.Preset.appendToUserPreferences(it.requireContext(), preset)
-      // deliver playback update
-      it.onPlaybackUpdate(playbacks)
+    val preset = Preset.from("test", mockPlayers.values)
+    mockkObject(Preset.Companion)
+    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(preset)
+    every { Preset.from("", mockPlayers.values) } returns preset
+    fragmentScenario.onFragment { fragment ->
+      fragment.onPlayerManagerUpdate(mockk(relaxed = true) {
+        every { state } returns PlayerManager.State.PLAYING
+        every { players } returns mockPlayers
+      })
     }
 
     onView(withId(R.id.fab_save_preset)).check(matches(withEffectiveVisibility(Visibility.GONE)))
   }
 
   @Test
-  fun testSavePresetButton_onClickAndBeyond() {
-    fragmentScenario.onFragment {
-      val playbacks = hashMapOf(
-        "birds" to Playback(
-          InstrumentationRegistry.getInstrumentation().targetContext,
-          requireNotNull(Sound.LIBRARY["birds"]),
-          AudioAttributesCompat.Builder().build()
-        )
-      )
+  fun testSavePresetButton_onClick() {
+    val mockPlayers: Map<String, Player> = hashMapOf(
+      "birds" to mockk(relaxed = true),
+      "rolling_thunder" to mockk(relaxed = true)
+    )
 
-      it.onPlaybackUpdate(playbacks)
+    val preset = Preset.from("test", mockPlayers.values)
+    mockkObject(Preset.Companion)
+    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf()
+    every { Preset.from("", mockPlayers.values) } returns preset
+    fragmentScenario.onFragment { fragment ->
+      fragment.onPlayerManagerUpdate(mockk(relaxed = true) {
+        every { state } returns PlayerManager.State.PLAYING
+        every { players } returns mockPlayers
+      })
     }
 
     onView(withId(R.id.fab_save_preset))
@@ -322,5 +219,7 @@ class SoundLibraryFragmentTest {
     onView(withId(R.id.fab_save_preset)).check(matches(not(isDisplayed())))
     onView(withId(com.google.android.material.R.id.snackbar_text))
       .check(matches(withText(R.string.preset_saved)))
+
+    verify { Preset.appendToUserPreferences(any(), preset) }
   }
 }
