@@ -14,6 +14,8 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import io.mockk.*
 import io.mockk.impl.annotations.InjectMockKs
+import io.mockk.impl.annotations.InjectionLookupType
+import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.android.synthetic.main.fragment_sleep_timer.view.*
 import org.greenrobot.eventbus.EventBus
@@ -34,7 +36,7 @@ class SleepTimerFragmentTest {
   @RelaxedMockK
   private lateinit var eventBus: EventBus
 
-  @InjectMockKs(injectImmutable = true, overrideValues = true)
+  @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
   private lateinit var fragment: SleepTimerFragment
 
   private lateinit var fragmentScenario: FragmentScenario<SleepTimerFragment>

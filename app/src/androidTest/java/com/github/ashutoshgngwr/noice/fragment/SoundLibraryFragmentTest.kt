@@ -18,6 +18,8 @@ import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import io.mockk.*
 import io.mockk.impl.annotations.InjectMockKs
+import io.mockk.impl.annotations.InjectionLookupType
+import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.impl.annotations.RelaxedMockK
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.allOf
@@ -39,7 +41,7 @@ class SoundLibraryFragmentTest {
   @RelaxedMockK
   private lateinit var eventBus: EventBus
 
-  @InjectMockKs(injectImmutable = true, overrideValues = true)
+  @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
   private lateinit var fragment: SoundLibraryFragment
   private lateinit var fragmentScenario: FragmentScenario<SoundLibraryFragment>
 

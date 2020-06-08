@@ -7,6 +7,8 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
+import io.mockk.impl.annotations.InjectionLookupType
+import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.mockk
 import io.mockk.verify
@@ -24,7 +26,7 @@ class LocalPlayerAdapterTest {
   @RelaxedMockK
   private lateinit var exoPlayer: SimpleExoPlayer
 
-  @InjectMockKs(injectImmutable = true, overrideValues = true)
+  @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
   private lateinit var playerAdapter: LocalPlayerAdapter
 
   @Before

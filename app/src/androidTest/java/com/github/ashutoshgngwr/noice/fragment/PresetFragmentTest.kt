@@ -21,6 +21,7 @@ import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import io.mockk.*
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.InjectionLookupType
+import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.impl.annotations.RelaxedMockK
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.allOf
@@ -41,11 +42,7 @@ class PresetFragmentTest {
   @RelaxedMockK
   private lateinit var eventBus: EventBus
 
-  @InjectMockKs(
-    injectImmutable = true,
-    overrideValues = true,
-    lookupType = InjectionLookupType.BY_NAME
-  )
+  @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
   private lateinit var fragment: PresetFragment
 
   private lateinit var fragmentScenario: FragmentScenario<PresetFragment>

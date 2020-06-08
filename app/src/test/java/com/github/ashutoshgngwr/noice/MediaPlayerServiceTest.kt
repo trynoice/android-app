@@ -6,8 +6,8 @@ import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import io.mockk.*
-import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.InjectionLookupType
+import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.impl.annotations.RelaxedMockK
 import org.greenrobot.eventbus.EventBus
 import org.junit.Assert.*
@@ -29,11 +29,7 @@ class MediaPlayerServiceTest {
   @RelaxedMockK
   private lateinit var playerManager: PlayerManager
 
-  @InjectMockKs(
-    injectImmutable = true,
-    overrideValues = true,
-    lookupType = InjectionLookupType.BY_NAME
-  )
+  @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
   private lateinit var service: MediaPlayerService
 
   private lateinit var serviceController: ServiceController<MediaPlayerService>

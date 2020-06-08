@@ -1,6 +1,6 @@
-package com.github.ashutoshgngwr.noice.sound
+package com.github.ashutoshgngwr.noice.sound.player
 
-import com.github.ashutoshgngwr.noice.sound.player.Player
+import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapter
 import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
 import io.mockk.*
