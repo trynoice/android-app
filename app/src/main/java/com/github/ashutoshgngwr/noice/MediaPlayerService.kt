@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.media.AudioManager
 import android.os.*
 import android.util.Log
+import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.Player
@@ -67,29 +68,34 @@ class MediaPlayerService : Service() {
   companion object {
     private val TAG = MediaPlayerService::class.java.simpleName
 
+    private const val NOTIFICATION_CHANNEL_ID = "com.github.ashutoshgngwr.noice.default"
     private const val FOREGROUND_ID = 0x29
     private const val RC_MAIN_ACTIVITY = 0x28
-    private const val RC_START_PLAYBACK = 0x27
-    private const val RC_PAUSE_PLAYBACK = 0x26
-    private const val RC_STOP_PLAYBACK = 0x25
     private val WAKELOCK_TIMEOUT = TimeUnit.DAYS.toMillis(1)
 
-    private const val NOTIFICATION_CHANNEL_ID = "com.github.ashutoshgngwr.noice.default"
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    const val RC_START_PLAYBACK = 0x27
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    const val RC_PAUSE_PLAYBACK = 0x26
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    const val RC_STOP_PLAYBACK = 0x25
   }
 
-  private val playerManager by lazy { PlayerManager(this) }
   private val handler = Handler() // needed in scheduleAutoStop for register callback
   private val eventBus = EventBus.getDefault()
+  private lateinit var playerManager: PlayerManager
   private lateinit var wakeLock: PowerManager.WakeLock
   private val autoStopCallback = Runnable {
-    stopPlayback(StopPlaybackEvent())
+    playerManager.stop()
   }
 
   private val becomingNoisyReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
       if (intent?.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
         Log.i(TAG, "Becoming noisy... Pause playback!")
-        pausePlayback(PausePlaybackEvent())
+        playerManager.pause()
       }
     }
   }
@@ -164,6 +170,13 @@ class MediaPlayerService : Service() {
       }
     }
 
+    // condition needed because Mockk is not able to mock the object initialization.
+    // so in order to mock PlayerManager, we inject it with Mockk and avoid calling
+    // onCreate whenever we can.
+    if (!this::playerManager.isInitialized) {
+      playerManager = PlayerManager(this)
+    }
+
     playerManager.setOnPlayerUpdateListener(onPlayerUpdateListener)
     createNotificationChannel()
 
@@ -196,15 +209,15 @@ class MediaPlayerService : Service() {
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     when (intent?.getIntExtra("action", 0)) {
       RC_START_PLAYBACK -> {
-        resumePlayback(ResumePlaybackEvent())
+        playerManager.resume()
       }
 
       RC_PAUSE_PLAYBACK -> {
-        pausePlayback(PausePlaybackEvent())
+        playerManager.pause()
       }
 
       RC_STOP_PLAYBACK -> {
-        stopPlayback(StopPlaybackEvent())
+        playerManager.stop()
       }
     }
 
