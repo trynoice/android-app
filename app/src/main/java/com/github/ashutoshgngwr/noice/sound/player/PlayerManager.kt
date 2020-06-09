@@ -34,6 +34,8 @@ class PlayerManager(private val context: Context) :
   }
 
   var state = State.STOPPED
+    private set
+
   private var hasAudioFocus = false
   private var playbackDelayed = false
   private var resumeOnFocusGain = false
@@ -204,8 +206,11 @@ class PlayerManager(private val context: Context) :
    * stopped.
    */
   fun stop(sound: Sound) {
-    requireNotNull(players[sound.key]).stop()
-    players.remove(sound.key)
+    players[sound.key]?.also {
+      it.stop()
+      players.remove(it.soundKey)
+    }
+
     if (players.isEmpty()) {
       state = State.STOPPED
       AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
@@ -237,10 +242,17 @@ class PlayerManager(private val context: Context) :
   }
 
   /**
-   * Resumes all [Player]s from the saved state. It requests
+   * Resumes all [Player]s from the saved state. It requests AudioFocus if not already present.
    */
   fun resume() {
-    players.values.forEach { play(Sound.get(it.soundKey)) }
+    if (hasAudioFocus) {
+      state = State.PLAYING
+      players.values.forEach { it.play() }
+    } else if (!playbackDelayed) {
+      // request audio focus only if audio focus is not delayed from any previous requests
+      requestAudioFocus()
+    }
+
     notifyChanges()
   }
 
