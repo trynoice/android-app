@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.cast
 
+import androidx.annotation.VisibleForTesting
 import androidx.media.VolumeProviderCompat
 import com.google.android.gms.cast.framework.CastSession
 import kotlin.math.round
@@ -13,7 +14,9 @@ class CastVolumeProvider(private val session: CastSession) :
   VolumeProviderCompat(VOLUME_CONTROL_ABSOLUTE, MAX_VOLUME, multiply(session.volume)) {
 
   companion object {
-    private const val MAX_VOLUME = 15
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    const val MAX_VOLUME = 15
+
     private fun multiply(volume: Double): Int {
       return round(volume * MAX_VOLUME).toInt()
     }
