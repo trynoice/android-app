@@ -81,6 +81,7 @@ dependencies {
 
   playstoreImplementation 'com.google.android.gms:play-services-cast-framework:18.1.0'
 
+  testImplementation 'androidx.test:core:1.2.0'
   testImplementation 'io.mockk:mockk:1.10.0'
   testImplementation 'junit:junit:4.13'
   testImplementation 'org.robolectric:robolectric:4.3.1'
