@@ -1,0 +1,62 @@
+// https://github.com/dampcake/Robolectric-JaCoCo-Sample/blob/master/jacoco.gradle
+
+apply plugin: 'jacoco'
+
+jacoco {
+  // https://bintray.com/bintray/jcenter/org.jacoco:org.jacoco.core
+  toolVersion = "0.8.5"
+}
+
+android {
+  testOptions {
+    unitTests.all {
+      jacoco {
+        includeNoLocationClasses = true
+        excludes = ['jdk.internal.*']
+      }
+    }
+  }
+}
+
+project.afterEvaluate {
+
+  android.applicationVariants.all { variant ->
+    def taskName = "test${variant.name.capitalize()}Coverage"
+    def testTask = "test${variant.name.capitalize()}UnitTest"
+    tasks.create(name: "${taskName}", type: JacocoReport, dependsOn: "${testTask}") {
+      group = "Reporting"
+      description = "Generate Jacoco coverage reports for the ${variant.name} build variant."
+
+      def sourceDirs = ['src/main/java'] + android.sourceSets[variant.name].java.srcDirs
+      def execDataFile = "${project.buildDir}/jacoco/${testTask}.exec"
+      def classFiles = fileTree(
+        dir: "${project.buildDir}/tmp/kotlin-classes/${variant.name}",
+        excludes: ['**/R.class',
+                   '**/R$*.class',
+                   '**/*$ViewInjector*.*',
+                   '**/*$ViewBinder*.*',
+                   '**/BuildConfig.*',
+                   '**/Manifest*.*']
+      )
+
+      sourceDirectories.setFrom(files(sourceDirs))
+      executionData.setFrom(files(execDataFile))
+      classDirectories.setFrom(classFiles)
+
+      reports {
+        xml.enabled = true
+        xml.destination file("${project.buildDir}/reports/jacoco/${taskName}/report.xml")
+        html.enabled = true
+      }
+    }
+  }
+
+  tasks.create(name: "testCoverage", type: JacocoReport) {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports for the all build variants."
+
+    android.applicationVariants.all { variant ->
+      dependsOn "test${variant.name.capitalize()}Coverage"
+    }
+  }
+}
