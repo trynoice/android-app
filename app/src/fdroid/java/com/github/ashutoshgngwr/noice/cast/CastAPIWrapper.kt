@@ -14,7 +14,14 @@ import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
  * as a dependency.
  */
 @Suppress("UNUSED_PARAMETER")
-class CastAPIWrapper(context: Context, registerSessionCallbacks: Boolean) {
+class CastAPIWrapper private constructor(context: Context, registerSessionCallbacks: Boolean) {
+
+  companion object {
+    // there is no way to mock constructor in tests so mocking Companion object instead
+    fun from(context: Context, registerSessionCallbacks: Boolean): CastAPIWrapper {
+      return CastAPIWrapper(context, registerSessionCallbacks)
+    }
+  }
 
   fun setUpMenuItem(menu: Menu, @StringRes titleResId: Int): MenuItem? = null
 

@@ -19,7 +19,14 @@ import com.google.android.gms.cast.framework.CastSession
  * This is required to ensure that F-Droid flavor can be built without requiring GMS Cast framework
  * as a dependency.
  */
-class CastAPIWrapper(val context: Context, registerSessionCallbacks: Boolean) {
+class CastAPIWrapper private constructor(val context: Context, registerSessionCallbacks: Boolean) {
+
+  companion object {
+    // there is no way to mock constructor in tests so mocking Companion object instead
+    fun from(context: Context, registerSessionCallbacks: Boolean): CastAPIWrapper {
+      return CastAPIWrapper(context, registerSessionCallbacks)
+    }
+  }
 
   private val castContext = CastContext.getSharedInstance(context)
   private var sessionBeginCallback = { }

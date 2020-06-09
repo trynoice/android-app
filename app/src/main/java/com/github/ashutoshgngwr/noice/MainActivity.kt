@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // because cast context is lazy initialized, cast menu item wouldn't show up until
     // re-resuming the activity. adding this to prevent that.
     // This should implicitly init CastContext.
-    castAPIWrapper = CastAPIWrapper(this, false)
+    castAPIWrapper = CastAPIWrapper.from(this, false)
     super.onCreate(savedInstanceState)
     AppCompatDelegate.setDefaultNightMode(getNightModeFromPrefs())
 

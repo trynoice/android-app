@@ -10,7 +10,6 @@ import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import io.mockk.*
 import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
-import io.mockk.impl.annotations.RelaxedMockK
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -23,8 +22,7 @@ import kotlin.random.Random
 @Config(shadows = [ShadowMediaSession::class, ShadowMediaSessionCompat::class])
 class PlayerManagerTest {
 
-  @RelaxedMockK
-  private lateinit var castAPIWrapper: CastAPIWrapper
+  private lateinit var mockCastAPIWrapper: CastAPIWrapper
 
   private lateinit var players: HashMap<String, Player>
 
@@ -33,6 +31,10 @@ class PlayerManagerTest {
 
   @Before
   fun setup() {
+    mockkObject(CastAPIWrapper.Companion)
+    mockCastAPIWrapper = mockk(relaxed = true)
+    every { CastAPIWrapper.from(any(), any()) } returns mockCastAPIWrapper
+
     // always have a fake player in manager's state
     players = hashMapOf("test" to mockk(relaxed = true) {
       every { soundKey } returns "test"
@@ -233,7 +235,7 @@ class PlayerManagerTest {
     assertEquals(0, playerManager.players.size)
     verify(exactly = 1) {
       // should clear session callbacks
-      castAPIWrapper.clearSessionCallbacks()
+      mockCastAPIWrapper.clearSessionCallbacks()
     }
   }
 }

@@ -84,7 +84,7 @@ class PlayerManager(private val context: Context) :
     it.isActive = true
   }
 
-  private val castAPIWrapper = CastAPIWrapper(context, true).apply {
+  private val castAPIWrapper = CastAPIWrapper.from(context, true).apply {
     onSessionBegin {
       Log.d(TAG, "starting cast session")
       playerAdapterFactory = newCastPlayerAdapterFactory()
