@@ -13,7 +13,6 @@ import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import io.mockk.*
-import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.impl.annotations.RelaxedMockK
