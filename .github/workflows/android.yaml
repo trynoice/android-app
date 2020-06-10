@@ -7,6 +7,7 @@ on:
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
     paths-ignore:
+      - "cast-receiver/**"
       - "fastlane/**"
       - "*.md"
   pull_request:
@@ -14,6 +15,7 @@ on:
       - master
       - "[0-9]+.[0-9]+.x"
     paths-ignore:
+      - "cast-receiver/**"
       - "fastlane/**"
       - "*.md"
 
