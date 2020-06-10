@@ -67,8 +67,7 @@ jobs:
     timeout-minutes: 20
     strategy:
       matrix:
-        # test on minimum supported and last three version
-        android: [21, 27, 28, 29]
+        android: [28, 29] # Mockk won't work below 28
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
@@ -82,6 +81,7 @@ jobs:
         with:
           api-level: ${{ matrix.android }}
           target: google_apis
+          arch: x86_64 # x86 is not available for android-29 with google_apis
           script: ./gradlew connectedCheck --no-daemon --stacktrace --gradle-user-home "$GRADLE_HOME"
           emulator-options: >-
             -no-boot-anim -no-audio -no-snapshot -no-window -camera-back none
