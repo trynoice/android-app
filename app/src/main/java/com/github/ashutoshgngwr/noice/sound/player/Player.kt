@@ -15,9 +15,9 @@ class Player(private val sound: Sound, playerAdapterFactory: PlayerAdapterFactor
   companion object {
     const val DEFAULT_VOLUME = 4
     const val MAX_VOLUME = 20
-    const val DEFAULT_TIME_PERIOD = 30
+    const val DEFAULT_TIME_PERIOD = 60
     private const val MIN_TIME_PERIOD = 30
-    const val MAX_TIME_PERIOD = 240
+    const val MAX_TIME_PERIOD = 300
   }
 
   var volume = DEFAULT_VOLUME
@@ -65,7 +65,7 @@ class Player(private val sound: Sound, playerAdapterFactory: PlayerAdapterFactor
     }
 
     playerAdapter.play()
-    val delay = (MIN_TIME_PERIOD + nextInt(0, timePeriod)) * 1000L
+    val delay = nextInt(MIN_TIME_PERIOD, 1 + timePeriod) * 1000L
     handler.postDelayed(this::playAndRegisterDelayedCallback, delay)
   }
 

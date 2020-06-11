@@ -125,9 +125,9 @@ class SoundLibraryFragment : Fragment() {
       val sound = dataSet[position]
       holder.itemView.title.text = context.getString(sound.titleResId)
       if (players.containsKey(sound.key)) {
-        val playback = requireNotNull(players[sound.key])
-        holder.itemView.seekbar_volume.progress = playback.volume
-        holder.itemView.seekbar_time_period.progress = playback.timePeriod
+        val player = requireNotNull(players[sound.key])
+        holder.itemView.seekbar_volume.progress = player.volume
+        holder.itemView.seekbar_time_period.progress = player.timePeriod
         holder.itemView.seekbar_volume.isEnabled = true
         holder.itemView.seekbar_time_period.isEnabled = true
         holder.itemView.button_play.setImageResource(R.drawable.ic_action_stop)
@@ -158,15 +158,15 @@ class SoundLibraryFragment : Fragment() {
             return
           }
 
-          val playback = players[dataSet[adapterPosition].key] ?: return
+          val player = players[dataSet[adapterPosition].key] ?: return
           when (seekBar.id) {
             R.id.seekbar_volume -> {
-              playback.setVolume(progress)
+              player.setVolume(progress)
             }
             R.id.seekbar_time_period -> {
               // manually ensure minimum time period to be 1 since ProgressBar#min was introduced
               // in API 26. Our min API version is 21.
-              playback.timePeriod = maxOf(1, progress)
+              player.timePeriod = maxOf(1, progress)
             }
           }
         }
