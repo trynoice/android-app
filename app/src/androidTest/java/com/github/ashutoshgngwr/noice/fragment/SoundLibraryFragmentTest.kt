@@ -115,8 +115,11 @@ class SoundLibraryFragmentTest {
     }
 
     fragmentScenario.onFragment { it.onPlayerManagerUpdate(mockUpdateEvent) }
-    val expectedTimePeriods =
-      arrayOf(1, Player.MAX_TIME_PERIOD, Random.nextInt(2, Player.MAX_TIME_PERIOD))
+    val expectedTimePeriods = arrayOf(
+      Player.MIN_TIME_PERIOD,
+      Player.MAX_TIME_PERIOD,
+      Random.nextInt(Player.MIN_TIME_PERIOD, Player.MAX_TIME_PERIOD)
+    )
 
     for (expectedTimePeriod in expectedTimePeriods) {
       onView(withId(R.id.list_sound))
@@ -126,7 +129,9 @@ class SoundLibraryFragmentTest {
           ),
           RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
             hasDescendant(allOf(withId(R.id.title), withText(R.string.rolling_thunder))),
-            ViewActionsX.seekProgress(R.id.seekbar_time_period, expectedTimePeriod)
+            ViewActionsX.seekProgress(
+              R.id.seekbar_time_period, expectedTimePeriod - Player.MIN_TIME_PERIOD
+            )
           )
         )
 

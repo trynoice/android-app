@@ -16,7 +16,7 @@ class Player(private val sound: Sound, playerAdapterFactory: PlayerAdapterFactor
     const val DEFAULT_VOLUME = 4
     const val MAX_VOLUME = 20
     const val DEFAULT_TIME_PERIOD = 60
-    private const val MIN_TIME_PERIOD = 30
+    const val MIN_TIME_PERIOD = 30
     const val MAX_TIME_PERIOD = 300
   }
 

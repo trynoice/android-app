@@ -164,9 +164,7 @@ class SoundLibraryFragment : Fragment() {
               player.setVolume(progress)
             }
             R.id.seekbar_time_period -> {
-              // manually ensure minimum time period to be 1 since ProgressBar#min was introduced
-              // in API 26. Our min API version is 21.
-              player.timePeriod = maxOf(1, progress)
+              player.timePeriod = Player.MIN_TIME_PERIOD + progress
             }
           }
         }
@@ -178,7 +176,7 @@ class SoundLibraryFragment : Fragment() {
 
       view.seekbar_volume.max = Player.MAX_VOLUME
       view.seekbar_volume.setOnSeekBarChangeListener(seekBarChangeListener)
-      view.seekbar_time_period.max = Player.MAX_TIME_PERIOD
+      view.seekbar_time_period.max = Player.MAX_TIME_PERIOD - Player.MIN_TIME_PERIOD
       view.seekbar_time_period.setOnSeekBarChangeListener(seekBarChangeListener)
       view.button_play.setOnClickListener {
         val sound = dataSet.getOrNull(adapterPosition) ?: return@setOnClickListener
