@@ -3,10 +3,12 @@ package com.github.ashutoshgngwr.noice.sound.player
 import android.media.AudioManager
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.media.AudioManagerCompat
+import androidx.media.VolumeProviderCompat
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.ShadowMediaSession
 import com.github.ashutoshgngwr.noice.ShadowMediaSessionCompat
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
+import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
 import io.mockk.*
 import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
@@ -237,5 +239,28 @@ class PlayerManagerTest {
       // should clear session callbacks
       mockCastAPIWrapper.clearSessionCallbacks()
     }
+  }
+
+  @Test
+  fun testPlayerAdapterFactorySwitchover() {
+    val beginCallbackSlot = slot<() -> Unit>()
+    val endCallbackSlot = slot<() -> Unit>()
+    verify(exactly = 1) {
+      mockCastAPIWrapper.onSessionBegin(capture(beginCallbackSlot))
+      mockCastAPIWrapper.onSessionEnd(capture(endCallbackSlot))
+    }
+
+    val mockPlayerAdapterFactory = mockk<PlayerAdapterFactory>(relaxed = true)
+    val spyVolumeProvider = spyk<VolumeProviderCompat>()
+    every { mockCastAPIWrapper.newCastPlayerAdapterFactory() } returns mockPlayerAdapterFactory
+    every { mockCastAPIWrapper.newCastVolumeProvider() } returns spyVolumeProvider
+    beginCallbackSlot.invoke() // invoke the session begin callback
+    verify(exactly = 1) { players.getValue("test").recreatePlayerAdapter(mockPlayerAdapterFactory) }
+    assertEquals(spyVolumeProvider, ShadowMediaSessionCompat.currentVolumeProvider)
+    clearMocks(mockPlayerAdapterFactory, players.getValue("test"))
+
+    endCallbackSlot.invoke()
+    verify(exactly = 1) { players.getValue("test").recreatePlayerAdapter(any()) }
+    verify { mockPlayerAdapterFactory wasNot called }
   }
 }
