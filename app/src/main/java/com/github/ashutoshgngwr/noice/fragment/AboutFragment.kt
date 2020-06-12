@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import mehdi.sakout.aboutpage.AboutPage
 import mehdi.sakout.aboutpage.Element
@@ -190,7 +191,11 @@ class AboutFragment : Fragment() {
         )
       )
       addWebsite(getString(R.string.app_website))
-      addPlayStore(getString(R.string.app_playstore))
+      @Suppress("ConstantConditionIf")
+      if (BuildConfig.IS_PLAY_STORE_BUILD) {
+        addPlayStore(requireContext().packageName)
+      }
+
       addGitHub(getString(R.string.app_github))
       addGroup(getString(R.string.connect_with_author))
       addEmail(getString(R.string.author_email), getString(R.string.about__email))

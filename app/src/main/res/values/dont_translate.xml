@@ -6,7 +6,6 @@
     https://github.com/ashutoshgngwr/noice/blob/master/LICENSE
   </string>
   <string name="app_website" translatable="false">https://ashutoshgngwr.github.io/noice</string>
-  <string name="app_playstore" translatable="false">com.github.ashutoshgngwr.noice</string>
   <string name="app_github" translatable="false">ashutoshgngwr/noice</string>
   <string name="author_email" translatable="false">ashutoshgngwr@gmail.com</string>
   <string name="author_social_handle" translatable="false">ashutoshgngwr</string>

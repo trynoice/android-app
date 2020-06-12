@@ -26,7 +26,12 @@ default_platform(:android)
 
   desc "Deploy a new version to the beta track on the Google Play"
   lane :beta do
-    gradle(task: "clean bundleRelease")
+    gradle(
+      task: "bundle",
+      flavor: "Playstore",
+      build_type: "Release",
+      print_command: true
+    )
     upload_to_play_store(
       track: 'beta',
       skip_upload_metadata: true,

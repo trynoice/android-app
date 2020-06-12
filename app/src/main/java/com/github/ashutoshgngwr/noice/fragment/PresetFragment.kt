@@ -7,15 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.sound.Playback
-import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
+import com.github.ashutoshgngwr.noice.sound.Preset
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.GsonBuilder
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.synthetic.main.fragment_preset_list.view.*
 import kotlinx.android.synthetic.main.layout_list_item__preset.view.*
 import org.greenrobot.eventbus.EventBus
@@ -25,11 +21,11 @@ import org.greenrobot.eventbus.ThreadMode
 class PresetFragment : Fragment() {
 
   private var mRecyclerView: RecyclerView? = null
-  private var dataSet = ArrayList<Preset>()
   private var activePreset: Preset? = null
-  private var eventBus = EventBus.getDefault()
   private lateinit var adapter: PresetListAdapter
 
+  private val dataSet = ArrayList<Preset>()
+  private val eventBus = EventBus.getDefault()
   private val mAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
     override fun onChanged() {
       if (adapter.itemCount > 0) {
@@ -83,8 +79,8 @@ class PresetFragment : Fragment() {
   }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-  fun onPlaybackUpdate(playbacks: HashMap<String, Playback>) {
-    activePreset = Preset("", playbacks.values.toTypedArray())
+  fun onPlayerManagerUpdate(event: MediaPlayerService.OnPlayerManagerUpdateEvent) {
+    activePreset = Preset.from("", event.players.values)
     adapter.notifyDataSetChanged()
   }
 
@@ -122,14 +118,15 @@ class PresetFragment : Fragment() {
         // I guess its safe to avoid receiving any events during following logic.
         // Unsubscribe temporarily. Lets hope this doesn't have any significant side-effects. :p
         unregisterFromEventBus()
-        eventBus.post(PlaybackControlEvents.StopPlaybackEvent())
+        eventBus.post(MediaPlayerService.StopPlaybackEvent())
         if (dataSet[adapterPosition] == activePreset) {
           itemView.button_play.setImageResource(R.drawable.ic_action_play)
         } else {
           itemView.button_play.setImageResource(R.drawable.ic_action_stop)
-          for (p in dataSet[adapterPosition].playbackStates) {
-            eventBus.post(PlaybackControlEvents.StartPlaybackEvent(p.soundKey))
-            eventBus.post(PlaybackControlEvents.UpdatePlaybackEvent(p))
+          for (p in dataSet[adapterPosition].playerStates) {
+            MediaPlayerService.StartPlayerEvent(p.soundKey, p.volume, p.timePeriod).also {
+              eventBus.post(it)
+            }
           }
         }
         registerOnEventBus()
@@ -180,84 +177,15 @@ class PresetFragment : Fragment() {
           Preset.writeAllToUserPreferences(requireContext(), dataSet)
           // then stop playback if recently deleted preset was playing
           if (preset == activePreset) {
-            eventBus.post(PlaybackControlEvents.StopPlaybackEvent())
+            eventBus.post(MediaPlayerService.StopPlaybackEvent())
           }
 
-          adapter.notifyDataSetChanged()
+          adapter.notifyItemRemoved(adapterPosition)
           Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
             .setAction(R.string.dismiss) { }
             .show()
         }
       }
-    }
-  }
-
-  // curious about the weird serialized names? see https://github.com/ashutoshgngwr/noice/issues/110
-  // and https://github.com/ashutoshgngwr/noice/pulls/117
-  data class Preset(
-    @Expose @SerializedName("a") var name: String,
-    @Expose @SerializedName("b") val playbackStates: Array<Playback>
-  ) {
-
-    init {
-      playbackStates.sortBy { T -> T.soundKey }
-    }
-
-    companion object {
-      fun readAllFromUserPreferences(context: Context): ArrayList<Preset> {
-        GsonBuilder()
-          .excludeFieldsWithoutExposeAnnotation()
-          .create()
-          .also {
-            return ArrayList(
-              it.fromJson(
-                PreferenceManager.getDefaultSharedPreferences(context).getString("presets", "[]"),
-                Array<Preset>::class.java
-              ).asList()
-            )
-          }
-      }
-
-      fun writeAllToUserPreferences(context: Context, presets: ArrayList<Preset>) {
-        GsonBuilder()
-          .excludeFieldsWithoutExposeAnnotation()
-          .create()
-          .also { gson ->
-            PreferenceManager.getDefaultSharedPreferences(context).also { sharedPreferences ->
-              sharedPreferences.edit()
-                .putString("presets", gson.toJson(presets.toTypedArray()))
-                .apply()
-            }
-          }
-      }
-
-      fun appendToUserPreferences(context: Context, preset: Preset) {
-        readAllFromUserPreferences(context).also {
-          it.add(preset)
-          writeAllToUserPreferences(context, it)
-        }
-      }
-    }
-
-    override fun equals(other: Any?): Boolean {
-      if (this === other) {
-        return true
-      }
-
-      if (javaClass != other?.javaClass) {
-        return false
-      }
-
-      // name need not be equal. playbackStates should be
-      other as Preset
-      return playbackStates.contentEquals(other.playbackStates)
-    }
-
-    override fun hashCode(): Int {
-      // auto-generated
-      var result = name.hashCode()
-      result = 31 * result + playbackStates.contentHashCode()
-      return result
     }
   }
 }

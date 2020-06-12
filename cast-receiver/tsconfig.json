@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "typeRoots": ["./node_modules/@types"],
+    "baseUrl": "./src",
+    "lib": ["ES2015", "DOM"]
+  },
+  "include": ["src/**/*"]
+}

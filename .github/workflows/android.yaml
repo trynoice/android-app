@@ -7,6 +7,7 @@ on:
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
     paths-ignore:
+      - "cast-receiver/**"
       - "fastlane/**"
       - "*.md"
   pull_request:
@@ -14,6 +15,7 @@ on:
       - master
       - "[0-9]+.[0-9]+.x"
     paths-ignore:
+      - "cast-receiver/**"
       - "fastlane/**"
       - "*.md"
 
@@ -39,6 +41,27 @@ jobs:
             gradle-${{ hashFiles('**/*.gradle*') }}-
       - run: ./gradlew assembleDebug --no-daemon --stacktrace --gradle-user-home "$GRADLE_HOME"
 
+  unit-tests:
+    name: Unit Tests
+    needs: assemble
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 10
+      - uses: actions/cache@v1
+        with:
+          path: ${{ env.GRADLE_HOME }}/caches
+          key: gradle-${{ hashFiles('**/*.gradle*') }}-${{ github.sha }}
+          restore-keys: |
+            gradle-${{ hashFiles('**/*.gradle*') }}-
+      - run: ./gradlew testCoverage --no-daemon --stacktrace --gradle-user-home "$GRADLE_HOME"
+      - uses: codecov/codecov-action@v1
+        with:
+          flags: android,unit_tests
+
   ui-tests:
     name: UI tests
     needs: assemble
@@ -46,8 +69,7 @@ jobs:
     timeout-minutes: 20
     strategy:
       matrix:
-        # test on minimum supported and last three version
-        android: [21, 27, 28, 29]
+        android: [28, 29] # Mockk won't work below 28
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
@@ -60,6 +82,8 @@ jobs:
       - uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.android }}
+          target: google_apis
+          arch: x86_64 # x86 is not available for android-28 with google_apis
           script: ./gradlew connectedCheck --no-daemon --stacktrace --gradle-user-home "$GRADLE_HOME"
           emulator-options: >-
             -no-boot-anim -no-audio -no-snapshot -no-window -camera-back none
@@ -71,7 +95,7 @@ jobs:
   play-store-release: # not using cache action for releases
     name: Play Store Release
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    needs: ui-tests
+    needs: [unit-tests, ui-tests]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

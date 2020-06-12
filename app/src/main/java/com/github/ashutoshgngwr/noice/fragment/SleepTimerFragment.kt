@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_sleep_timer.view.*
@@ -15,9 +16,7 @@ import org.greenrobot.eventbus.ThreadMode
 
 class SleepTimerFragment : Fragment() {
 
-  data class ScheduleAutoSleepEvent(val atUptimeMillis: Long)
-
-  private var eventBus = EventBus.getDefault()
+  private val eventBus = EventBus.getDefault()
 
   private val addToSleepDurationButtonClickListener = View.OnClickListener {
     val timeToAdd = 1000L * 60L * when (it.id) {
@@ -31,12 +30,12 @@ class SleepTimerFragment : Fragment() {
     }
 
     var currentDeadline = SystemClock.uptimeMillis()
-    val lastEvent = eventBus.getStickyEvent(ScheduleAutoSleepEvent::class.java)
+    val lastEvent = eventBus.getStickyEvent(MediaPlayerService.ScheduleAutoSleepEvent::class.java)
     if (lastEvent != null && lastEvent.atUptimeMillis > currentDeadline) {
       currentDeadline = lastEvent.atUptimeMillis
     }
 
-    eventBus.postSticky(ScheduleAutoSleepEvent(currentDeadline + timeToAdd))
+    eventBus.postSticky(MediaPlayerService.ScheduleAutoSleepEvent(currentDeadline + timeToAdd))
   }
 
   override fun onCreateView(
@@ -49,7 +48,7 @@ class SleepTimerFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     view.button_reset.setOnClickListener {
-      eventBus.postSticky(ScheduleAutoSleepEvent(0))
+      eventBus.postSticky(MediaPlayerService.ScheduleAutoSleepEvent(0))
       Snackbar.make(requireView(), R.string.auto_sleep_schedule_cancelled, Snackbar.LENGTH_SHORT)
         .show()
     }
@@ -65,7 +64,7 @@ class SleepTimerFragment : Fragment() {
   }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-  fun onScheduleAutoSleep(event: ScheduleAutoSleepEvent) {
+  fun onScheduleAutoSleep(event: MediaPlayerService.ScheduleAutoSleepEvent) {
     val remainingMillis = event.atUptimeMillis - SystemClock.uptimeMillis()
     requireView().button_reset.isEnabled = remainingMillis > 0
     requireView().countdown_view.startCountdown(remainingMillis)

@@ -4,11 +4,11 @@ import android.app.ActivityManager
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
+import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.fragment.*
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,8 +32,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   }
 
   private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+  private lateinit var castAPIWrapper: CastAPIWrapper
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    // because cast context is lazy initialized, cast menu item wouldn't show up until
+    // re-resuming the activity. adding this to prevent that.
+    // This should implicitly init CastContext.
+    castAPIWrapper = CastAPIWrapper.from(this, false)
     super.onCreate(savedInstanceState)
     AppCompatDelegate.setDefaultNightMode(getNightModeFromPrefs())
 
@@ -45,13 +51,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       R.string.open_drawer,
       R.string.close_drawer
     )
-
     layout_main.addDrawerListener(actionBarDrawerToggle)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
     actionBarDrawerToggle.syncState()
 
     // setup listener for navigation item clicks
     navigation_drawer.setNavigationItemSelectedListener(this)
+    navigation_drawer.menu.findItem(R.id.rate_on_play_store).isVisible =
+      BuildConfig.IS_PLAY_STORE_BUILD
 
     // bind navigation drawer menu items checked state with fragment back stack
     supportFragmentManager.addOnBackStackChangedListener {
@@ -79,9 +86,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     if (savedInstanceState == null) {
       setFragment(SoundLibraryFragment::class.java)
     }
-
-    // volume control to type "media"
-    volumeControlStream = AudioManager.STREAM_MUSIC
   }
 
   override fun onResume() {
@@ -100,6 +104,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     } else {
       startService(Intent(this, MediaPlayerService::class.java))
     }
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    super.onCreateOptionsMenu(menu)
+    castAPIWrapper.setUpMenuItem(menu, R.string.cast_media)
+    return true
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -159,10 +169,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     // hack to avoid stuttering in animations
-    layout_main.postDelayed({
-      layout_main.closeDrawer(GravityCompat.START)
-    }, 150)
-
+    layout_main.postDelayed({ layout_main.closeDrawer(GravityCompat.START) }, 150)
     return true
   }
 

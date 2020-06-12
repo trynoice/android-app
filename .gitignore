@@ -82,3 +82,10 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 lint/reports/
+
+# cast-receiver
+.netlify
+cast-receiver/node_modules
+cast-receiver/.cache
+cast-receiver/dist
+cast-receiver/coverage
