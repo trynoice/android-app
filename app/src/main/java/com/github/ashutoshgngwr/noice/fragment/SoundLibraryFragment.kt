@@ -127,13 +127,14 @@ class SoundLibraryFragment : Fragment() {
       if (players.containsKey(sound.key)) {
         val player = requireNotNull(players[sound.key])
         holder.itemView.seekbar_volume.progress = player.volume
-        holder.itemView.seekbar_time_period.progress = player.timePeriod
+        holder.itemView.seekbar_time_period.progress = player.timePeriod - Player.MIN_TIME_PERIOD
         holder.itemView.seekbar_volume.isEnabled = true
         holder.itemView.seekbar_time_period.isEnabled = true
         holder.itemView.button_play.setImageResource(R.drawable.ic_action_stop)
       } else {
         holder.itemView.seekbar_volume.progress = Player.DEFAULT_VOLUME
-        holder.itemView.seekbar_time_period.progress = Player.DEFAULT_TIME_PERIOD
+        holder.itemView.seekbar_time_period.progress =
+          Player.DEFAULT_TIME_PERIOD - Player.MIN_TIME_PERIOD
         holder.itemView.seekbar_volume.isEnabled = false
         holder.itemView.seekbar_time_period.isEnabled = false
         holder.itemView.button_play.setImageResource(R.drawable.ic_action_play)
