@@ -98,5 +98,5 @@ dependencies {
   androidTestImplementation 'io.mockk:mockk-android:1.10.0'
   androidTestImplementation 'junit:junit:4.13'
 
-  debugImplementation 'androidx.fragment:fragment-testing:1.2.4'
+  debugImplementation 'androidx.fragment:fragment-testing:1.2.5'
 }
