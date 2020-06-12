@@ -68,7 +68,7 @@ class LocalPlayerAdapter(context: Context, audioAttributes: AudioAttributesCompa
   }
 
   override fun play() {
-    if (exoPlayer.playWhenReady) {
+    if (exoPlayer.playWhenReady && exoPlayer.isPlaying) {
       return
     }
 
@@ -76,6 +76,7 @@ class LocalPlayerAdapter(context: Context, audioAttributes: AudioAttributesCompa
     if (exoPlayer.repeatMode == ExoPlayer.REPEAT_MODE_ONE) {
       exoPlayer.fade(1, FADE_DURATION)
     } else {
+      exoPlayer.seekTo(0)
       exoPlayer.playWhenReady = true
     }
   }
@@ -107,7 +108,7 @@ class LocalPlayerAdapter(context: Context, audioAttributes: AudioAttributesCompa
     duration: Long,
     callback: SimpleExoPlayer.() -> Unit = { }
   ) {
-    if (sign < 0 && !playWhenReady) {
+    if (sign < 0 && !isPlaying) {
       // edge case where fade-out is requested but playback is not playing.
       callback()
       return

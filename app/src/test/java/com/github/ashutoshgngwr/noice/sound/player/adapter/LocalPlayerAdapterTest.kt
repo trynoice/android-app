@@ -4,14 +4,10 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.SimpleExoPlayer
-import io.mockk.MockKAnnotations
-import io.mockk.every
-import io.mockk.impl.annotations.InjectMockKs
+import io.mockk.*
 import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.mockk
-import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -45,7 +41,7 @@ class LocalPlayerAdapterTest {
   @Test
   fun testPlay_onOngoingPlayback() {
     every { exoPlayer.playWhenReady } returns true
-
+    every { exoPlayer.isPlaying } returns true
     playerAdapter.play()
     verify(exactly = 0) { exoPlayer.playWhenReady = any() }
   }
@@ -53,7 +49,7 @@ class LocalPlayerAdapterTest {
   @Test
   fun testPlay_onStoppedPlayback_withLoopingSound() {
     // should fade in looping sounds
-    every { exoPlayer.playWhenReady } returns false
+    every { exoPlayer.isPlaying } returns false
     every { exoPlayer.repeatMode } returns ExoPlayer.REPEAT_MODE_ONE
     every { exoPlayer.volume } returns 1f
     playerAdapter.play()
@@ -73,10 +69,13 @@ class LocalPlayerAdapterTest {
   @Test
   fun testPlay_onStoppedPlayback_withNonLoopingSound() {
     // should start playback without fade
-    every { exoPlayer.playWhenReady } returns false
+    every { exoPlayer.isPlaying } returns false
     every { exoPlayer.repeatMode } returns ExoPlayer.REPEAT_MODE_OFF
     playerAdapter.play()
-    verify(exactly = 1) { exoPlayer.playWhenReady = true }
+    verifyOrder {
+      exoPlayer.seekTo(0)
+      exoPlayer.playWhenReady = true
+    }
   }
 
   @Test
@@ -95,6 +94,7 @@ class LocalPlayerAdapterTest {
   @Test
   fun testStop_onOngoingPlayback() {
     every { exoPlayer.playWhenReady } returns true
+    every { exoPlayer.isPlaying } returns true
     every { exoPlayer.volume } returns 1f
     playerAdapter.stop()
 

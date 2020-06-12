@@ -109,7 +109,7 @@ class PlayerTest {
 
     val adapter2 = mockk<PlayerAdapter>(relaxed = true)
     every { mockSound.isLoopable } returns false
-    mockk<PlayerAdapterFactory>() {
+    mockk<PlayerAdapterFactory> {
       every { newPlayerAdapter(any()) } returns adapter2
       player.recreatePlayerAdapter(this)
     }
@@ -136,7 +136,7 @@ class PlayerTest {
 
     val adapter2 = mockk<PlayerAdapter>(relaxed = true)
     every { mockSound.isLoopable } returns true
-    mockk<PlayerAdapterFactory>() {
+    mockk<PlayerAdapterFactory> {
       every { newPlayerAdapter(any()) } returns adapter2
       player.recreatePlayerAdapter(this)
     }

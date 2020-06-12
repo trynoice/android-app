@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice.sound.player
 
 import android.os.Handler
+import android.util.Log
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapter
 import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
@@ -13,6 +14,8 @@ import kotlin.random.Random.Default.nextInt
 class Player(private val sound: Sound, playerAdapterFactory: PlayerAdapterFactory) {
 
   companion object {
+    private val TAG = Player::class.simpleName
+
     const val DEFAULT_VOLUME = 4
     const val MAX_VOLUME = 20
     const val DEFAULT_TIME_PERIOD = 60
@@ -67,6 +70,7 @@ class Player(private val sound: Sound, playerAdapterFactory: PlayerAdapterFactor
     playerAdapter.play()
     val delay = nextInt(MIN_TIME_PERIOD, 1 + timePeriod) * 1000L
     handler.postDelayed(this::playAndRegisterDelayedCallback, delay)
+    Log.d(TAG, "scheduling delayed playback with ${delay}ms delay")
   }
 
   /**
