@@ -74,7 +74,7 @@ dependencies {
   implementation 'androidx.mediarouter:mediarouter:1.1.0'
   implementation 'androidx.preference:preference:1.1.1'
   implementation 'com.github.medyo:android-about-page:1.2.5'
-  implementation 'com.google.android.exoplayer:exoplayer-core:2.11.4'
+  implementation 'com.google.android.exoplayer:exoplayer-core:2.11.5'
   implementation 'com.google.android.material:material:1.1.0'
   implementation 'com.google.code.gson:gson:2.8.6'
   implementation 'org.greenrobot:eventbus:3.1.1'
