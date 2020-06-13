@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice
 
 import android.content.Intent
 import android.os.SystemClock
+import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
@@ -123,12 +124,8 @@ class MediaPlayerServiceTest {
     mockkObject(Sound.Companion)
 
     // start player event
-    service.startPlayer(MediaPlayerService.StartPlayerEvent("test", 10, 45))
-    verify(exactly = 1) {
-      playerManager.play("test")
-      playerManager.setVolume("test", 10)
-      playerManager.setTimePeriod("test", 45)
-    }
+    service.startPlayer(MediaPlayerService.StartPlayerEvent("test"))
+    verify(exactly = 1) { playerManager.play("test") }
 
     clearMocks(playerManager)
 
@@ -150,6 +147,12 @@ class MediaPlayerServiceTest {
     // stop playback event
     service.stopPlayback(MediaPlayerService.StopPlaybackEvent())
     verify(exactly = 1) { playerManager.stop() }
+    clearMocks(playerManager)
+
+    // play preset event
+    val preset = mockk<Preset>(relaxed = true)
+    service.playPreset(MediaPlayerService.PlayPresetEvent(preset))
+    verify(exactly = 1) { playerManager.playPreset(preset) }
   }
 
   @Test

@@ -10,6 +10,7 @@ import android.os.*
 import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
+import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import org.greenrobot.eventbus.EventBus
@@ -22,9 +23,7 @@ class MediaPlayerService : Service() {
   /**
    * [MediaPlayerService] subscribes to these events for starting new players.
    */
-  data class StartPlayerEvent(val soundKey: String, val volume: Int?, val timePeriod: Int?) {
-    constructor(soundKey: String) : this(soundKey, null, null)
-  }
+  data class StartPlayerEvent(val soundKey: String)
 
   /**
    * [MediaPlayerService] subscribes to these events for stopping players.
@@ -46,6 +45,11 @@ class MediaPlayerService : Service() {
    */
   class StopPlaybackEvent
 
+  /**
+   * [MediaPlayerService] subscribes to these events to offload playing of a [Preset] to the
+   * [PlayerManager]. [PlayerManager] is capable of efficiently switching over to any given [Preset].
+   */
+  data class PlayPresetEvent(val preset: Preset)
 
   /**
    * [MediaPlayerService] publishes [OnPlayerManagerUpdateEvent] whenever there's an update to
@@ -246,13 +250,6 @@ class MediaPlayerService : Service() {
   @Subscribe(threadMode = ThreadMode.MAIN)
   fun startPlayer(event: StartPlayerEvent) {
     playerManager.play(event.soundKey)
-    if (event.volume != null) {
-      playerManager.setVolume(event.soundKey, event.volume)
-    }
-
-    if (event.timePeriod != null) {
-      playerManager.setTimePeriod(event.soundKey, event.timePeriod)
-    }
   }
 
   /**
@@ -285,6 +282,14 @@ class MediaPlayerService : Service() {
   @Subscribe(threadMode = ThreadMode.MAIN)
   fun stopPlayback(@Suppress("UNUSED_PARAMETER") event: StopPlaybackEvent) {
     playerManager.stop()
+  }
+
+  /**
+   * Subscriber for the [PlayPresetEvent].
+   */
+  @Subscribe(threadMode = ThreadMode.MAIN)
+  fun playPreset(event: PlayPresetEvent) {
+    playerManager.playPreset(event.preset)
   }
 
   /**

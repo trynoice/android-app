@@ -46,15 +46,6 @@ class PresetFragmentTest {
 
   private lateinit var fragmentScenario: FragmentScenario<PresetFragment>
 
-  private val expectedPlayerStates = arrayOf(
-    Preset.PlayerState(
-      "test-1", Player.DEFAULT_VOLUME, Player.DEFAULT_TIME_PERIOD
-    ),
-    Preset.PlayerState(
-      "test-2", Player.MAX_VOLUME, Player.MAX_TIME_PERIOD
-    )
-  )
-
   // returned when Preset.readAllFromUserPreferences() is called
   private lateinit var mockPreset: Preset
 
@@ -62,7 +53,10 @@ class PresetFragmentTest {
   fun setup() {
     mockPreset = mockk(relaxed = true) {
       every { name } returns "test"
-      every { playerStates } returns expectedPlayerStates
+      every { playerStates } returns arrayOf(
+        Preset.PlayerState("test-1", Player.DEFAULT_VOLUME, Player.DEFAULT_TIME_PERIOD),
+        Preset.PlayerState("test-2", Player.MAX_VOLUME, Player.MAX_TIME_PERIOD)
+      )
     }
 
     mockkObject(Preset.Companion)
@@ -98,22 +92,9 @@ class PresetFragmentTest {
       )
     )
 
-    val eventSlots = mutableListOf<MediaPlayerService.StartPlayerEvent>()
-    verifySequence {
-      eventBus.unregister(any())
-      eventBus.post(ofType(MediaPlayerService.StopPlaybackEvent::class))
-      for (i in expectedPlayerStates.indices) {
-        eventBus.post(capture(eventSlots))
-      }
-
-      eventBus.register(any())
-    }
-
-    for (i in expectedPlayerStates.indices) {
-      assertEquals(expectedPlayerStates[i].soundKey, eventSlots[i].soundKey)
-      assertEquals(expectedPlayerStates[i].timePeriod, eventSlots[i].timePeriod)
-      assertEquals(expectedPlayerStates[i].volume, eventSlots[i].volume)
-    }
+    val eventSlot = slot<MediaPlayerService.PlayPresetEvent>()
+    verify(exactly = 1) { eventBus.post(capture(eventSlot)) }
+    assertEquals(mockPreset, eventSlot.captured.preset)
   }
 
   @Test
@@ -133,11 +114,7 @@ class PresetFragmentTest {
       )
     )
 
-    verifySequence {
-      eventBus.unregister(any())
-      eventBus.post(ofType(MediaPlayerService.StopPlaybackEvent::class))
-      eventBus.register(any())
-    }
+    verify(exactly = 1) { eventBus.post(ofType(MediaPlayerService.StopPlaybackEvent::class)) }
   }
 
   @Test

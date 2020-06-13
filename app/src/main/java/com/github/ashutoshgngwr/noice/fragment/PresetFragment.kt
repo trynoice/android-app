@@ -21,14 +21,14 @@ import org.greenrobot.eventbus.ThreadMode
 class PresetFragment : Fragment() {
 
   private var mRecyclerView: RecyclerView? = null
-  private var activePreset: Preset? = null
-  private lateinit var adapter: PresetListAdapter
+  private var adapter: PresetListAdapter? = null
+  private var activePresetPos = -1
 
   private val dataSet = ArrayList<Preset>()
   private val eventBus = EventBus.getDefault()
   private val mAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
     override fun onChanged() {
-      if (adapter.itemCount > 0) {
+      if (adapter?.itemCount ?: 0 > 0) {
         requireView().indicator_list_empty.visibility = View.GONE
       } else {
         requireView().indicator_list_empty.visibility = View.VISIBLE
@@ -55,33 +55,28 @@ class PresetFragment : Fragment() {
       it.adapter = adapter
     }
 
-    registerOnEventBus()
+    eventBus.register(this)
     mAdapterDataObserver.onChanged() // since observer is not called by adapter on initialization
   }
 
   override fun onDestroyView() {
-    unregisterFromEventBus()
-    adapter.unregisterAdapterDataObserver(mAdapterDataObserver)
-    super.onDestroyView()
-  }
-
-  /*
-    registerOnEventBus and unregisterFromEventBus are helper functions to avoid labelled
-    expressions warning (lint warning in Detekt)
-   */
-
-  private fun registerOnEventBus() {
-    eventBus.register(this)
-  }
-
-  private fun unregisterFromEventBus() {
     eventBus.unregister(this)
+    adapter?.unregisterAdapterDataObserver(mAdapterDataObserver)
+    super.onDestroyView()
   }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
   fun onPlayerManagerUpdate(event: MediaPlayerService.OnPlayerManagerUpdateEvent) {
-    activePreset = Preset.from("", event.players.values)
-    adapter.notifyDataSetChanged()
+    val oldPresetPos = activePresetPos
+    activePresetPos = Preset.from("", event.players.values).let { dataSet.indexOf(it) }
+
+    if (activePresetPos != oldPresetPos) {
+      adapter?.notifyItemChanged(oldPresetPos)
+
+      if (activePresetPos > -1) {
+        adapter?.notifyItemChanged(activePresetPos)
+      }
+    }
   }
 
   inner class PresetListAdapter(context: Context) : RecyclerView.Adapter<ViewHolder>() {
@@ -99,7 +94,7 @@ class PresetFragment : Fragment() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
       holder.itemView.title.text = dataSet[position].name
       holder.itemView.button_play.setImageResource(
-        if (dataSet[position] == activePreset) {
+        if (position == activePresetPos) {
           R.drawable.ic_action_stop
         } else {
           R.drawable.ic_action_play
@@ -112,24 +107,11 @@ class PresetFragment : Fragment() {
 
     init {
       itemView.button_play.setOnClickListener {
-        // publishing StopPlaybackEvent will cause PlaybackManager to send back State update
-        // This will call notifyDataSetChanged() on adapter causing adapter position to be
-        // negative. assigning adapterPosition to a different variable isn't helping here.
-        // I guess its safe to avoid receiving any events during following logic.
-        // Unsubscribe temporarily. Lets hope this doesn't have any significant side-effects. :p
-        unregisterFromEventBus()
-        eventBus.post(MediaPlayerService.StopPlaybackEvent())
-        if (dataSet[adapterPosition] == activePreset) {
-          itemView.button_play.setImageResource(R.drawable.ic_action_play)
+        if (adapterPosition != activePresetPos) {
+          eventBus.post(MediaPlayerService.PlayPresetEvent(dataSet[adapterPosition]))
         } else {
-          itemView.button_play.setImageResource(R.drawable.ic_action_stop)
-          for (p in dataSet[adapterPosition].playerStates) {
-            MediaPlayerService.StartPlayerEvent(p.soundKey, p.volume, p.timePeriod).also {
-              eventBus.post(it)
-            }
-          }
+          eventBus.post(MediaPlayerService.StopPlaybackEvent())
         }
-        registerOnEventBus()
       }
 
       val onMenuItemClickListener = PopupMenu.OnMenuItemClickListener {
@@ -162,7 +144,7 @@ class PresetFragment : Fragment() {
         positiveButton(R.string.save) {
           dataSet[adapterPosition].name = getInputText()
           Preset.writeAllToUserPreferences(requireContext(), dataSet)
-          adapter.notifyItemChanged(adapterPosition)
+          adapter?.notifyItemChanged(adapterPosition)
         }
       }
     }
@@ -173,14 +155,18 @@ class PresetFragment : Fragment() {
         message(R.string.preset_delete_confirmation, dataSet[adapterPosition].name)
         negativeButton(R.string.cancel)
         positiveButton(R.string.delete) {
-          val preset = dataSet.removeAt(adapterPosition)
+          dataSet.removeAt(adapterPosition)
           Preset.writeAllToUserPreferences(requireContext(), dataSet)
           // then stop playback if recently deleted preset was playing
-          if (preset == activePreset) {
+          if (adapterPosition == activePresetPos) {
             eventBus.post(MediaPlayerService.StopPlaybackEvent())
           }
 
-          adapter.notifyItemRemoved(adapterPosition)
+          if (adapterPosition < activePresetPos) {
+            activePresetPos -= 1 // account for recent deletion
+          }
+
+          adapter?.notifyItemRemoved(adapterPosition)
           Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
             .setAction(R.string.dismiss) { }
             .show()

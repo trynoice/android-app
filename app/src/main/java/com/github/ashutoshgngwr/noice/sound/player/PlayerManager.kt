@@ -13,6 +13,7 @@ import androidx.media.AudioManagerCompat
 import androidx.mediarouter.media.MediaRouter
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
+import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.adapter.LocalPlayerAdapterFactory
 import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
@@ -307,6 +308,37 @@ class PlayerManager(private val context: Context) :
     onPlayerUpdateListener = listener
   }
 
+  /**
+   * [playPreset] efficiently loads a given [Preset] to the [PlayerManager]. It attempts to re-use
+   * [Player] instances that are both present in its state and requested by [Preset]. It is also
+   * superior to calling [play] manually for each [Preset.PlayerState] since that would cause
+   * [PlayerManager] to invoke [onPlayerUpdateListener] with each [Preset.PlayerState]. This method
+   * ensures that [onPlayerUpdateListener] is invoked only once for any given [Preset].
+   */
+  fun playPreset(preset: Preset) {
+    // stop players that are not present in preset state
+    players.keys.subtract(preset.playerStates.map { it.soundKey }).forEach {
+      players.remove(it)?.stop()
+    }
+
+    // load states from Preset to manager's state
+    preset.playerStates.forEach {
+      val player: Player
+      if (players.contains(it.soundKey)) {
+        player = requireNotNull(players[it.soundKey])
+      } else {
+        player = Player(Sound.get(it.soundKey), playerAdapterFactory)
+        players[it.soundKey] = player
+      }
+
+      player.timePeriod = it.timePeriod
+      player.setVolume(it.volume)
+    }
+
+    // resume PlayerManager to gain audio focus and play everything
+    resume()
+  }
+
   private fun notifyChanges() {
     when (state) {
       State.PLAYING -> playbackStateBuilder.setState(
@@ -315,13 +347,11 @@ class PlayerManager(private val context: Context) :
         1f
       )
 
-
       State.PAUSED -> playbackStateBuilder.setState(
         PlaybackStateCompat.STATE_PAUSED,
         PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
         0f
       )
-
 
       State.STOPPED -> playbackStateBuilder.setState(
         PlaybackStateCompat.STATE_STOPPED,
