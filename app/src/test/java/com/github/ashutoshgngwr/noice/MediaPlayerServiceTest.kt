@@ -121,13 +121,11 @@ class MediaPlayerServiceTest {
   @Test
   fun testPlaybackEventSubscribers() {
     mockkObject(Sound.Companion)
-    val mockSound = mockk<Sound>(relaxed = true)
-    every { Sound.get("test") } returns mockSound
 
     // start player event
     service.startPlayer(MediaPlayerService.StartPlayerEvent("test", 10, 45))
     verify(exactly = 1) {
-      playerManager.play(mockSound)
+      playerManager.play("test")
       playerManager.setVolume("test", 10)
       playerManager.setTimePeriod("test", 45)
     }
@@ -136,7 +134,7 @@ class MediaPlayerServiceTest {
 
     // stop player event
     service.stopPlayer(MediaPlayerService.StopPlayerEvent("test"))
-    verify(exactly = 1) { playerManager.stop(mockSound) }
+    verify(exactly = 1) { playerManager.stop("test") }
     clearMocks(playerManager)
 
     // resume playback event

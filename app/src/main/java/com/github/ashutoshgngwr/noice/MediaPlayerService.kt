@@ -10,7 +10,6 @@ import android.os.*
 import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
-import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import org.greenrobot.eventbus.EventBus
@@ -246,7 +245,7 @@ class MediaPlayerService : Service() {
    */
   @Subscribe(threadMode = ThreadMode.MAIN)
   fun startPlayer(event: StartPlayerEvent) {
-    playerManager.play(Sound.get(event.soundKey))
+    playerManager.play(event.soundKey)
     if (event.volume != null) {
       playerManager.setVolume(event.soundKey, event.volume)
     }
@@ -261,7 +260,7 @@ class MediaPlayerService : Service() {
    */
   @Subscribe(threadMode = ThreadMode.MAIN)
   fun stopPlayer(event: StopPlayerEvent) {
-    playerManager.stop(Sound.get(event.soundKey))
+    playerManager.stop(event.soundKey)
   }
 
   /**

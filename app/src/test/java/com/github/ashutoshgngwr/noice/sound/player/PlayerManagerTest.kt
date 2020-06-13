@@ -73,10 +73,7 @@ class PlayerManagerTest {
       AudioManagerCompat.requestAudioFocus(any(), any())
     } returns AudioManager.AUDIOFOCUS_REQUEST_FAILED
 
-    playerManager.play(mockk(relaxed = true) {
-      every { key } returns "test"
-    })
-
+    playerManager.play("test")
     verify(exactly = 0) { players.getValue("test").play() }
     assertEquals(PlayerManager.State.PAUSED, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
@@ -89,10 +86,7 @@ class PlayerManagerTest {
       AudioManagerCompat.requestAudioFocus(any(), any())
     } returns AudioManager.AUDIOFOCUS_REQUEST_DELAYED
 
-    playerManager.play(mockk(relaxed = true) {
-      every { key } returns "test"
-    })
-
+    playerManager.play("test")
     verify(exactly = 0) { players.getValue("test").play() }
     assertEquals(PlayerManager.State.PAUSED, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
@@ -111,10 +105,7 @@ class PlayerManagerTest {
       AudioManagerCompat.requestAudioFocus(any(), any())
     } returns AudioManager.AUDIOFOCUS_REQUEST_GRANTED
 
-    playerManager.play(mockk(relaxed = true) {
-      every { key } returns "test"
-    })
-
+    playerManager.play("test")
     verify(exactly = 1) { players.getValue("test").play() }
     assertEquals(PlayerManager.State.PLAYING, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_PLAYING, ShadowMediaSessionCompat.getLastPlaybackState())
@@ -124,7 +115,7 @@ class PlayerManagerTest {
   fun testStopSound_whenSoundIsNotPlaying() {
     mockkStatic(AudioManagerCompat::class)
     // should do noop if player is not present in players state
-    playerManager.stop(mockk(relaxed = true))
+    playerManager.stop("test-x")  // stop something other than "test
     assertEquals(PlayerManager.State.STOPPED, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_STOPPED, ShadowMediaSessionCompat.getLastPlaybackState())
 
@@ -136,10 +127,7 @@ class PlayerManagerTest {
   fun testStopSound_whenSoundIsPlaying() {
     mockkStatic(AudioManagerCompat::class)
     val mockPlayer = players.getValue("test")
-    playerManager.stop(mockk(relaxed = true) {
-      every { key } returns "test"
-    })
-
+    playerManager.stop("test")
     verify(exactly = 1) { mockPlayer.stop() }
     assertEquals(PlayerManager.State.STOPPED, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_STOPPED, ShadowMediaSessionCompat.getLastPlaybackState())

@@ -176,9 +176,9 @@ class PlayerManager(private val context: Context) :
    * Playback won't start immediately if audio focus is not present. We always ensure that we
    * have audio focus before starting the playback.
    */
-  fun play(sound: Sound) {
-    if (!players.containsKey(sound.key)) {
-      players[sound.key] = Player(sound, playerAdapterFactory)
+  fun play(soundKey: String) {
+    if (!players.containsKey(soundKey)) {
+      players[soundKey] = Player(Sound.get(soundKey), playerAdapterFactory)
     }
 
     if (playbackDelayed) {
@@ -197,7 +197,7 @@ class PlayerManager(private val context: Context) :
     }
 
     state = State.PLAYING
-    requireNotNull(players[sound.key]).play()
+    requireNotNull(players[soundKey]).play()
     notifyChanges()
   }
 
@@ -205,8 +205,8 @@ class PlayerManager(private val context: Context) :
    * Stops a [Player] and releases underlying resources. It abandons focus if all [Player]s are
    * stopped.
    */
-  fun stop(sound: Sound) {
-    players[sound.key]?.also {
+  fun stop(soundKey: String) {
+    players[soundKey]?.also {
       it.stop()
       players.remove(it.soundKey)
     }
