@@ -170,7 +170,9 @@ class SoundLibraryFragment : Fragment() {
           }
         }
 
-        // unsubscribe from events during the seek action or it will cause adapter to refresh.
+        // unsubscribe from events during the seek action or it will cause adapter to refresh during
+        // the action causing adapterPosition to become -1 (POSITION_NONE). On resubscribing,
+        // this will also cause an update (#onPlayerManagerUpdate) since those events are sticky.
         override fun onStartTrackingTouch(seekBar: SeekBar?) = unregisterFromEventBus()
         override fun onStopTrackingTouch(seekBar: SeekBar?) = registerOnEventBus()
       }
