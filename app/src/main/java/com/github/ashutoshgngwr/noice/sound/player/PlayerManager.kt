@@ -13,6 +13,7 @@ import androidx.media.AudioManagerCompat
 import androidx.mediarouter.media.MediaRouter
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
+import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.adapter.LocalPlayerAdapterFactory
 import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
@@ -176,9 +177,9 @@ class PlayerManager(private val context: Context) :
    * Playback won't start immediately if audio focus is not present. We always ensure that we
    * have audio focus before starting the playback.
    */
-  fun play(sound: Sound) {
-    if (!players.containsKey(sound.key)) {
-      players[sound.key] = Player(sound, playerAdapterFactory)
+  fun play(soundKey: String) {
+    if (!players.containsKey(soundKey)) {
+      players[soundKey] = Player(Sound.get(soundKey), playerAdapterFactory)
     }
 
     if (playbackDelayed) {
@@ -197,7 +198,7 @@ class PlayerManager(private val context: Context) :
     }
 
     state = State.PLAYING
-    requireNotNull(players[sound.key]).play()
+    requireNotNull(players[soundKey]).play()
     notifyChanges()
   }
 
@@ -205,8 +206,8 @@ class PlayerManager(private val context: Context) :
    * Stops a [Player] and releases underlying resources. It abandons focus if all [Player]s are
    * stopped.
    */
-  fun stop(sound: Sound) {
-    players[sound.key]?.also {
+  fun stop(soundKey: String) {
+    players[soundKey]?.also {
       it.stop()
       players.remove(it.soundKey)
     }
@@ -267,7 +268,6 @@ class PlayerManager(private val context: Context) :
     }
 
     requireNotNull(players[soundKey]).setVolume(volume)
-    notifyChanges()
   }
 
   /**
@@ -281,7 +281,6 @@ class PlayerManager(private val context: Context) :
     }
 
     requireNotNull(players[soundKey]).timePeriod = timePeriod
-    notifyChanges()
   }
 
   /**
@@ -309,6 +308,37 @@ class PlayerManager(private val context: Context) :
     onPlayerUpdateListener = listener
   }
 
+  /**
+   * [playPreset] efficiently loads a given [Preset] to the [PlayerManager]. It attempts to re-use
+   * [Player] instances that are both present in its state and requested by [Preset]. It is also
+   * superior to calling [play] manually for each [Preset.PlayerState] since that would cause
+   * [PlayerManager] to invoke [onPlayerUpdateListener] with each [Preset.PlayerState]. This method
+   * ensures that [onPlayerUpdateListener] is invoked only once for any given [Preset].
+   */
+  fun playPreset(preset: Preset) {
+    // stop players that are not present in preset state
+    players.keys.subtract(preset.playerStates.map { it.soundKey }).forEach {
+      players.remove(it)?.stop()
+    }
+
+    // load states from Preset to manager's state
+    preset.playerStates.forEach {
+      val player: Player
+      if (players.contains(it.soundKey)) {
+        player = requireNotNull(players[it.soundKey])
+      } else {
+        player = Player(Sound.get(it.soundKey), playerAdapterFactory)
+        players[it.soundKey] = player
+      }
+
+      player.timePeriod = it.timePeriod
+      player.setVolume(it.volume)
+    }
+
+    // resume PlayerManager to gain audio focus and play everything
+    resume()
+  }
+
   private fun notifyChanges() {
     when (state) {
       State.PLAYING -> playbackStateBuilder.setState(
@@ -317,13 +347,11 @@ class PlayerManager(private val context: Context) :
         1f
       )
 
-
       State.PAUSED -> playbackStateBuilder.setState(
         PlaybackStateCompat.STATE_PAUSED,
         PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
         0f
       )
-
 
       State.STOPPED -> playbackStateBuilder.setState(
         PlaybackStateCompat.STATE_STOPPED,

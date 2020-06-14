@@ -11,16 +11,16 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <ImageButton
+    <androidx.appcompat.widget.AppCompatCheckBox
       android:id="@+id/button_play"
-      style="@style/Widget.AppCompat.ImageButton"
+      style="@style/Widget.AppCompat.CompoundButton.CheckBox"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_margin="5dp"
       android:background="?android:selectableItemBackgroundBorderless"
-      android:contentDescription="@string/play_pause"
-      android:padding="5dp"
-      android:src="@drawable/ic_action_play"
-      android:tint="?attr/colorAccent" />
+      android:button="@drawable/ic_action_play_stop_circled_toggle"
+      android:buttonTint="?attr/colorAccent"
+      android:contentDescription="@string/play_pause" />
 
     <LinearLayout
       android:layout_width="0dp"

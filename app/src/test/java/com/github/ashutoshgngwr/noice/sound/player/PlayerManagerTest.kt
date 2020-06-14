@@ -8,11 +8,13 @@ import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.ShadowMediaSession
 import com.github.ashutoshgngwr.noice.ShadowMediaSessionCompat
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
+import com.github.ashutoshgngwr.noice.sound.Preset
+import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
 import io.mockk.*
 import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -73,10 +75,7 @@ class PlayerManagerTest {
       AudioManagerCompat.requestAudioFocus(any(), any())
     } returns AudioManager.AUDIOFOCUS_REQUEST_FAILED
 
-    playerManager.play(mockk(relaxed = true) {
-      every { key } returns "test"
-    })
-
+    playerManager.play("test")
     verify(exactly = 0) { players.getValue("test").play() }
     assertEquals(PlayerManager.State.PAUSED, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
@@ -89,10 +88,7 @@ class PlayerManagerTest {
       AudioManagerCompat.requestAudioFocus(any(), any())
     } returns AudioManager.AUDIOFOCUS_REQUEST_DELAYED
 
-    playerManager.play(mockk(relaxed = true) {
-      every { key } returns "test"
-    })
-
+    playerManager.play("test")
     verify(exactly = 0) { players.getValue("test").play() }
     assertEquals(PlayerManager.State.PAUSED, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
@@ -111,10 +107,7 @@ class PlayerManagerTest {
       AudioManagerCompat.requestAudioFocus(any(), any())
     } returns AudioManager.AUDIOFOCUS_REQUEST_GRANTED
 
-    playerManager.play(mockk(relaxed = true) {
-      every { key } returns "test"
-    })
-
+    playerManager.play("test")
     verify(exactly = 1) { players.getValue("test").play() }
     assertEquals(PlayerManager.State.PLAYING, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_PLAYING, ShadowMediaSessionCompat.getLastPlaybackState())
@@ -124,7 +117,7 @@ class PlayerManagerTest {
   fun testStopSound_whenSoundIsNotPlaying() {
     mockkStatic(AudioManagerCompat::class)
     // should do noop if player is not present in players state
-    playerManager.stop(mockk(relaxed = true))
+    playerManager.stop("test-x")  // stop something other than "test
     assertEquals(PlayerManager.State.STOPPED, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_STOPPED, ShadowMediaSessionCompat.getLastPlaybackState())
 
@@ -136,10 +129,7 @@ class PlayerManagerTest {
   fun testStopSound_whenSoundIsPlaying() {
     mockkStatic(AudioManagerCompat::class)
     val mockPlayer = players.getValue("test")
-    playerManager.stop(mockk(relaxed = true) {
-      every { key } returns "test"
-    })
-
+    playerManager.stop("test")
     verify(exactly = 1) { mockPlayer.stop() }
     assertEquals(PlayerManager.State.STOPPED, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_STOPPED, ShadowMediaSessionCompat.getLastPlaybackState())
@@ -262,5 +252,23 @@ class PlayerManagerTest {
     endCallbackSlot.invoke()
     verify(exactly = 1) { players.getValue("test").recreatePlayerAdapter(any()) }
     verify { mockPlayerAdapterFactory wasNot called }
+  }
+
+  @Test
+  fun testPlayPreset() {
+    mockkObject(Sound.Companion)
+    every { Sound.get(any()) } returns mockk(relaxed = true) { every { isLoopable } returns true }
+    players["test-2"] = mockk(relaxed = true) { every { soundKey } returns "test-2" }
+    val mockPreset = mockk<Preset> {
+      every { playerStates } returns arrayOf(
+        mockk(relaxed = true) { every { soundKey } returns "test-2" },
+        mockk(relaxed = true) { every { soundKey } returns "test-3" }
+      )
+    }
+
+    playerManager.playPreset(mockPreset)
+    assertFalse(players.contains("test"))
+    assertTrue(players.contains("test-2"))
+    assertTrue(players.contains("test-3"))
   }
 }

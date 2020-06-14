@@ -123,21 +123,20 @@ class SoundLibraryFragment : Fragment() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
       val sound = dataSet[position]
+      val isPlaying = players.containsKey(sound.key)
       holder.itemView.title.text = context.getString(sound.titleResId)
-      if (players.containsKey(sound.key)) {
-        val player = requireNotNull(players[sound.key])
-        holder.itemView.seekbar_volume.progress = player.volume
-        holder.itemView.seekbar_time_period.progress = player.timePeriod - Player.MIN_TIME_PERIOD
-        holder.itemView.seekbar_volume.isEnabled = true
-        holder.itemView.seekbar_time_period.isEnabled = true
-        holder.itemView.button_play.setImageResource(R.drawable.ic_action_stop)
+      holder.itemView.seekbar_volume.isEnabled = isPlaying
+      holder.itemView.seekbar_time_period.isEnabled = isPlaying
+      holder.itemView.button_play.isChecked = isPlaying
+      if (isPlaying) {
+        requireNotNull(players[sound.key]).also {
+          holder.itemView.seekbar_volume.progress = it.volume
+          holder.itemView.seekbar_time_period.progress = it.timePeriod - Player.MIN_TIME_PERIOD
+        }
       } else {
         holder.itemView.seekbar_volume.progress = Player.DEFAULT_VOLUME
         holder.itemView.seekbar_time_period.progress =
           Player.DEFAULT_TIME_PERIOD - Player.MIN_TIME_PERIOD
-        holder.itemView.seekbar_volume.isEnabled = false
-        holder.itemView.seekbar_time_period.isEnabled = false
-        holder.itemView.button_play.setImageResource(R.drawable.ic_action_play)
       }
 
       holder.itemView.layout_time_period.visibility = if (sound.isLoopable) {
@@ -170,7 +169,9 @@ class SoundLibraryFragment : Fragment() {
           }
         }
 
-        // unsubscribe from events during the seek action or it will cause adapter to refresh.
+        // unsubscribe from events during the seek action or it will cause adapter to refresh during
+        // the action causing adapterPosition to become -1 (POSITION_NONE). On resubscribing,
+        // this will also cause an update (#onPlayerManagerUpdate) since those events are sticky.
         override fun onStartTrackingTouch(seekBar: SeekBar?) = unregisterFromEventBus()
         override fun onStopTrackingTouch(seekBar: SeekBar?) = registerOnEventBus()
       }
