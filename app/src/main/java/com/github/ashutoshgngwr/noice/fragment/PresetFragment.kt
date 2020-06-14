@@ -93,13 +93,7 @@ class PresetFragment : Fragment() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
       holder.itemView.title.text = dataSet[position].name
-      holder.itemView.button_play.setImageResource(
-        if (position == activePresetPos) {
-          R.drawable.ic_action_stop
-        } else {
-          R.drawable.ic_action_play
-        }
-      )
+      holder.itemView.button_play.isChecked = position == activePresetPos
     }
   }
 
