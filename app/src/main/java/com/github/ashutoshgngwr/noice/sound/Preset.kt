@@ -28,7 +28,7 @@ class Preset private constructor(
   data class PlayerState(
     @Expose @SerializedName("a") val soundKey: String,
     @Expose @SerializedName("b") @JsonAdapter(value = VolumeSerializer::class) val volume: Int,
-    @Expose @SerializedName("c") val timePeriod: Int
+    @Expose @SerializedName("c") @JsonAdapter(value = TimePeriodSerializer::class) val timePeriod: Int
   )
 
   /**
@@ -43,6 +43,27 @@ class Preset private constructor(
 
     override fun deserialize(json: JsonElement, type: Type, ctx: JsonDeserializationContext) =
       (json.asFloat * Player.MAX_VOLUME).toInt()
+
+  }
+
+  /**
+   * [TimePeriodSerializer] is a fix for for offset corrections introduced in the following commits.
+   * 1. https://github.com/ashutoshgngwr/noice/commit/b449ef643227b65685b71f7780a814c606e6abad
+   * 2. https://github.com/ashutoshgngwr/noice/commit/8ef502debd84aeadadaa665acd37c3cee592f521
+   * 3. https://github.com/ashutoshgngwr/noice/commit/11eb63ee22f3a03eca982cbd308f06ec164ab300#diff-db23b0e75244cdeb8ead7184bb06cb7cR15-R71
+   *
+   * Essentially it serializes the time period value as it would be seen on the SeekBar, i.e. in
+   * range [0, [Player.MAX_TIME_PERIOD] - [Player.MIN_TIME_PERIOD]]. On deserialization, it again
+   * corrects the offset to ensure that time period is in the range
+   * [[Player.MIN_TIME_PERIOD], [Player.MAX_TIME_PERIOD]].
+   */
+  private inner class TimePeriodSerializer : JsonSerializer<Int>, JsonDeserializer<Int> {
+
+    override fun serialize(src: Int, type: Type, ctx: JsonSerializationContext) =
+      JsonPrimitive(src - Player.MIN_TIME_PERIOD)
+
+    override fun deserialize(json: JsonElement, type: Type, ctx: JsonDeserializationContext) =
+      json.asInt + Player.MIN_TIME_PERIOD
 
   }
 
