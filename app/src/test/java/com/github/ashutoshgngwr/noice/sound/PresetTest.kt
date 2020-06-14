@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.sound
 
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.github.ashutoshgngwr.noice.sound.player.Player
 import io.mockk.*
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
@@ -82,7 +83,8 @@ class PresetTest {
     assertEquals("test", presets[0].name)
     assertEquals(1, presets[0].playerStates.size)
     assertEquals("test-1", presets[0].playerStates[0].soundKey)
-    assertEquals(30, presets[0].playerStates[0].timePeriod)
+    // returned time period should have correct offset
+    assertEquals(Player.MIN_TIME_PERIOD + 30, presets[0].playerStates[0].timePeriod)
     assertEquals(15, presets[0].playerStates[0].volume)
   }
 
@@ -114,7 +116,7 @@ class PresetTest {
         every { playerStates } returns arrayOf(mockk {
           every { soundKey } returns "test-1"
           every { volume } returns 15
-          every { timePeriod } returns 30
+          every { timePeriod } returns Player.MIN_TIME_PERIOD + 30
         })
       }
     ))
@@ -169,7 +171,7 @@ class PresetTest {
       every { playerStates } returns arrayOf(mockk {
         every { soundKey } returns "test-1"
         every { volume } returns 15
-        every { timePeriod } returns 30
+        every { timePeriod } returns Player.MIN_TIME_PERIOD + 30
       })
     })
 
