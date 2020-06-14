@@ -11,6 +11,7 @@ import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.contrib.DrawerMatchers.isClosed
@@ -26,13 +27,15 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
+import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
+import io.mockk.*
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.lang.Thread.sleep
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
@@ -261,10 +264,8 @@ class MainActivityTest {
       assertEquals(2, it.supportFragmentManager.backStackEntryCount)
     }
 
-    sleep(1000L) // tests fail complaining drawer is open. (don't fail always but sometimes it can make you question your entire life.)
     // reopen nav drawer
     onView(withId(R.id.layout_main))
-      .check(matches(isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
 
     // try to reselect the same nav item
@@ -273,5 +274,54 @@ class MainActivityTest {
       // back stack entry count should remain the same
       assertEquals(2, it.supportFragmentManager.backStackEntryCount)
     }
+  }
+
+  @Test
+  fun testPlayPauseToggleMenuItem() {
+    mockkStatic(EventBus::class)
+    val mockEventBus = mockk<EventBus>(relaxed = true)
+    every { EventBus.getDefault() } returns mockEventBus
+    activityScenario.recreate() // recreate to initialize with mock event bus
+
+    // shouldn't be displayed by default
+    onView(withId(R.id.action_play_pause_toggle)).check(doesNotExist())
+
+    // with ongoing playback
+    activityScenario.onActivity {
+      it.onPlayerManagerUpdate(mockk(relaxed = true) {
+        every { state } returns PlayerManager.State.PLAYING
+      })
+    }
+
+    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 100, 5)
+      .check(matches(isDisplayed()))
+      .perform(click())
+
+    verify(exactly = 1) { mockEventBus.post(ofType(MediaPlayerService.PausePlaybackEvent::class)) }
+    clearMocks(mockEventBus)
+
+    // with paused playback
+    activityScenario.onActivity {
+      it.onPlayerManagerUpdate(mockk(relaxed = true) {
+        every { state } returns PlayerManager.State.PAUSED
+      })
+    }
+
+    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 100, 5)
+      .check(matches(isDisplayed()))
+      .perform(click())
+
+    verify(exactly = 1) { mockEventBus.post(ofType(MediaPlayerService.ResumePlaybackEvent::class)) }
+    clearMocks(mockEventBus)
+
+    // with stopped playback
+    activityScenario.onActivity {
+      it.onPlayerManagerUpdate(mockk(relaxed = true) {
+        every { state } returns PlayerManager.State.STOPPED
+      })
+    }
+
+    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 100, 5)
+      .check(doesNotExist())
   }
 }

@@ -12,7 +12,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
-import com.github.ashutoshgngwr.noice.ViewActionsX
+import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
@@ -55,7 +55,7 @@ class SoundLibraryFragmentTest {
     onView(withId(R.id.list_sound)).perform(
       RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        ViewActionsX.clickOn(R.id.button_play)
+        EspressoX.clickOn(R.id.button_play)
       )
     )
 
@@ -73,7 +73,7 @@ class SoundLibraryFragmentTest {
     onView(withId(R.id.list_sound)).perform(
       RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        ViewActionsX.clickOn(R.id.button_play)
+        EspressoX.clickOn(R.id.button_play)
       )
     )
 
@@ -96,7 +96,7 @@ class SoundLibraryFragmentTest {
       onView(withId(R.id.list_sound)).perform(
         RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
           hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-          ViewActionsX.seekProgress(R.id.seekbar_volume, expectedVolume)
+          EspressoX.seekProgress(R.id.seekbar_volume, expectedVolume)
         )
       )
 
@@ -129,7 +129,7 @@ class SoundLibraryFragmentTest {
           ),
           RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
             hasDescendant(allOf(withId(R.id.title), withText(R.string.rolling_thunder))),
-            ViewActionsX.seekProgress(
+            EspressoX.seekProgress(
               R.id.seekbar_time_period, expectedTimePeriod - Player.MIN_TIME_PERIOD
             )
           )
