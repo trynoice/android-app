@@ -14,7 +14,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
-import com.github.ashutoshgngwr.noice.ViewActionsX
+import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
@@ -88,7 +88,7 @@ class PresetFragmentTest {
     onView(withId(R.id.list_presets)).perform(
       RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        ViewActionsX.clickOn(R.id.button_play)
+        EspressoX.clickOn(R.id.button_play)
       )
     )
 
@@ -110,7 +110,7 @@ class PresetFragmentTest {
     onView(withId(R.id.list_presets)).perform(
       RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        ViewActionsX.clickOn(R.id.button_play)
+        EspressoX.clickOn(R.id.button_play)
       )
     )
 
@@ -123,7 +123,7 @@ class PresetFragmentTest {
     onView(withId(R.id.list_presets)).perform(
       RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        ViewActionsX.clickOn(R.id.button_menu)
+        EspressoX.clickOn(R.id.button_menu)
       )
     )
 
@@ -151,7 +151,7 @@ class PresetFragmentTest {
     onView(withId(R.id.list_presets)).perform(
       RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        ViewActionsX.clickOn(R.id.button_menu)
+        EspressoX.clickOn(R.id.button_menu)
       )
     )
 
@@ -169,7 +169,7 @@ class PresetFragmentTest {
     onView(withId(R.id.list_presets)).perform(
       RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        ViewActionsX.clickOn(R.id.button_menu)
+        EspressoX.clickOn(R.id.button_menu)
       )
     )
 

@@ -4,6 +4,7 @@ import android.app.ActivityManager
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Animatable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -18,8 +19,12 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.fragment.*
+import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -33,6 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
   private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
   private lateinit var castAPIWrapper: CastAPIWrapper
+  private var playerManagerState = PlayerManager.State.STOPPED
 
   override fun onCreate(savedInstanceState: Bundle?) {
     // because cast context is lazy initialized, cast menu item wouldn't show up until
@@ -90,6 +96,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
   override fun onResume() {
     super.onResume()
+    EventBus.getDefault().register(this)
+
     // start the media player service
     // workaround for Android 9+. See https://github.com/ashutoshgngwr/noice/issues/179
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -106,9 +114,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
   }
 
+  override fun onPause() {
+    EventBus.getDefault().unregister(this)
+    super.onPause()
+  }
+
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     super.onCreateOptionsMenu(menu)
     castAPIWrapper.setUpMenuItem(menu, R.string.cast_media)
+    menu.add(0, R.id.action_play_pause_toggle, 0, R.string.play_pause).also {
+      it.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+      it.isVisible = PlayerManager.State.STOPPED != playerManagerState
+      if (PlayerManager.State.PLAYING == playerManagerState) {
+        it.setIcon(R.drawable.ic_action_play_to_pause)
+      } else {
+        it.setIcon(R.drawable.ic_action_pause_to_play)
+      }
+
+      (it.icon as Animatable).start()
+      it.setOnMenuItemClickListener {
+        val event: Any = if (PlayerManager.State.PLAYING == playerManagerState) {
+          MediaPlayerService.PausePlaybackEvent()
+        } else {
+          MediaPlayerService.ResumePlaybackEvent()
+        }
+
+        EventBus.getDefault().post(event)
+        true
+      }
+    }
+
     return true
   }
 
@@ -184,6 +219,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         finish()
       }
     }
+  }
+
+  @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+  fun onPlayerManagerUpdate(event: MediaPlayerService.OnPlayerManagerUpdateEvent) {
+    if (playerManagerState == event.state) {
+      return
+    }
+
+    playerManagerState = event.state
+    invalidateOptionsMenu()
   }
 
   /**

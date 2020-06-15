@@ -4,15 +4,14 @@ import android.view.View
 import androidx.annotation.StringRes
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.idling.CountingIdlingResource
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.MainActivity
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
@@ -21,7 +20,6 @@ import org.hamcrest.Description
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 import org.hamcrest.TypeSafeMatcher
-import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -38,7 +36,6 @@ class DialogFragmentTest {
 
   private lateinit var activityScenario: ActivityScenario<MainActivity>
   private lateinit var dialogFragment: DialogFragment
-  private lateinit var dialogIdlingResource: CountingIdlingResource
 
   private fun hasErrorText(@Suppress("SameParameterValue") @StringRes expectedErrorText: Int) =
     object : TypeSafeMatcher<View>() {
@@ -52,15 +49,8 @@ class DialogFragmentTest {
 
   @Before
   fun setup() {
-    dialogIdlingResource = CountingIdlingResource("OnDismiss", true)
     dialogFragment = DialogFragment()
     activityScenario = ActivityScenario.launch(MainActivity::class.java)
-  }
-
-  @After
-  fun teardown() {
-    // register locally, unregister globally. extra precautions
-    IdlingRegistry.getInstance().unregister(dialogIdlingResource)
   }
 
   @Test
@@ -79,16 +69,14 @@ class DialogFragmentTest {
   fun testPositiveButton() {
     activityScenario.onActivity {
       dialogFragment.show(it.supportFragmentManager) {
-        dialogIdlingResource.increment()
-        positiveButton(android.R.string.yes) { dialogIdlingResource.decrement() }
+        positiveButton(android.R.string.yes)
       }
     }
 
-    onView(withId(R.id.positive))
+    EspressoX.waitForView(withId(R.id.positive), 100, 5)
       .check(matches(withText(android.R.string.yes)))
       .perform(click())
 
-    IdlingRegistry.getInstance().register(dialogIdlingResource)
     onView(withId(R.id.positive)).check(doesNotExist())
   }
 
@@ -96,16 +84,14 @@ class DialogFragmentTest {
   fun testNegativeButton() {
     activityScenario.onActivity {
       dialogFragment.show(it.supportFragmentManager) {
-        dialogIdlingResource.increment()
-        negativeButton(android.R.string.no) { dialogIdlingResource.decrement() }
+        negativeButton(android.R.string.no)
       }
     }
 
-    onView(withId(R.id.negative))
+    EspressoX.waitForView(withId(R.id.negative), 100, 5)
       .check(matches(withText(android.R.string.no)))
       .perform(click())
 
-    IdlingRegistry.getInstance().register(dialogIdlingResource)
     onView(withId(R.id.negative)).check(doesNotExist())
   }
 
@@ -159,25 +145,23 @@ class DialogFragmentTest {
       .targetContext
       .resources
       .getStringArray(R.array.app_themes)
+
     activityScenario.onActivity {
       dialogFragment.show(it.supportFragmentManager) {
-        dialogIdlingResource.increment()
         singleChoiceItems(R.array.app_themes, currentChoice = selectedItem) { choice ->
           selectedItem = choice
-          dialogIdlingResource.decrement()
         }
       }
     }
 
     items.forEach {
-      onView(allOf(isDescendantOfA(withId(android.R.id.list)), withText(it)))
+      EspressoX.waitForView(allOf(isDescendantOfA(withId(android.R.id.list)), withText(it)), 100, 5)
         .check(matches(isDisplayed()))
     }
 
     onView(allOf(isDescendantOfA(withId(android.R.id.list)), withText(items[1])))
       .perform(click())
 
-    IdlingRegistry.getInstance().register(dialogIdlingResource)
     onView(withId(android.R.id.list)).check(doesNotExist())
     assertEquals(1, selectedItem)
   }
