@@ -15,7 +15,7 @@ import mehdi.sakout.aboutpage.Element
 class AboutFragment : Fragment() {
 
   companion object {
-    private val ITEMS = arrayOf(
+    private val CREDITS = arrayOf(
       arrayOf(
         R.string.credits__app_icon,
         R.drawable.ic_launcher_24dp,
@@ -125,50 +125,44 @@ class AboutFragment : Fragment() {
         R.string.credits__sound_wind_in_palm_trees,
         R.drawable.ic_about_sound,
         R.string.credits__sound_wind_in_palm_trees_url
-      ),
+      )
+    )
+
+    val TRANSLATIONS = arrayOf(
       arrayOf(
         R.string.credits__translation_es_ar_0,
-        R.drawable.ic_about_translation,
         R.string.credits__translation_es_ar_0__url
       ),
       arrayOf(
         R.string.credits__translation_ru_0,
-        R.drawable.ic_about_translation,
         R.string.credits__translation_ru_0__url
       ),
       arrayOf(
         R.string.credits__translation_de_0,
-        R.drawable.ic_about_translation,
         R.string.credits__translation_de_0__url
       ),
       arrayOf(
         R.string.credits__translation_it_it_0,
-        R.drawable.ic_about_translation,
         R.string.credits__translation_it_it_0__url
       ),
       arrayOf(
         R.string.credits__translation_fr_fr_0,
-        R.drawable.ic_about_translation,
         R.string.credits__translation_fr_fr_0__url
       ),
       arrayOf(
         R.string.credits__translation_pt_br_0,
-        R.drawable.ic_about_translation,
         R.string.credits__translation_pt_br_0__url
       ),
       arrayOf(
         R.string.credits__translation_es_es_0,
-        R.drawable.ic_about_translation,
         R.string.credits__translation_es_es_0__url
       ),
       arrayOf(
         R.string.credits__translation_sv_0,
-        R.drawable.ic_about_translation,
         R.string.credits__translation_sv_0__url
       ),
       arrayOf(
         R.string.credits__translation_sq_al_0,
-        R.drawable.ic_about_translation,
         R.string.credits__translation_sq_al_0__url
       )
     )
@@ -201,8 +195,13 @@ class AboutFragment : Fragment() {
       addEmail(getString(R.string.author_email), getString(R.string.about__email))
       addGitHub(getString(R.string.author_social_handle), getString(R.string.about__github))
       addTwitter(getString(R.string.author_social_handle), getString(R.string.about__twitter))
+      addGroup(getString(R.string.about__translations))
+      for (item in TRANSLATIONS) {
+        addItem(createElement(item[0], R.drawable.ic_about_translation, item[1]))
+      }
+
       addGroup(getString(R.string.credits))
-      for (item in ITEMS) {
+      for (item in CREDITS) {
         addItem(createElement(item[0], item[1], item[2]))
       }
 
