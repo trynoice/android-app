@@ -4,19 +4,16 @@ import android.content.Intent
 import android.net.Uri
 import android.view.Gravity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.contrib.DrawerMatchers.isClosed
 import androidx.test.espresso.contrib.NavigationViewActions
-import androidx.test.espresso.idling.CountingIdlingResource
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.filterEquals
@@ -31,6 +28,7 @@ import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import io.mockk.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
+import org.hamcrest.Matchers.allOf
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -181,33 +179,21 @@ class MainActivityTest {
 
   @Test
   fun testBackNavigation() {
-    val drawerIdlingResource = CountingIdlingResource("CloseNavigationDrawer")
-    activityScenario.onActivity {
-      it.layout_main.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
-        override fun onDrawerStateChanged(newState: Int) {
-          // this only works because we're never in dragging state. otherwise, this would fail.
-          if (newState == DrawerLayout.STATE_IDLE) {
-            drawerIdlingResource.decrement()
-          } else if (newState == DrawerLayout.STATE_SETTLING) {
-            drawerIdlingResource.increment()
-          }
-        }
-      })
-    }
-
-    IdlingRegistry.getInstance().register(drawerIdlingResource)
     onView(withId(R.id.layout_main))
       .check(matches(isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
-    onView(withId(R.id.navigation_drawer)).perform(NavigationViewActions.navigateTo(R.id.saved_presets))
 
-    onView(withId(R.id.layout_main))
-      .check(matches(isClosed(Gravity.START)))
+    onView(withId(R.id.navigation_drawer))
+      .perform(NavigationViewActions.navigateTo(R.id.saved_presets))
+
+    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)), 100, 5)
       .perform(DrawerActions.open(Gravity.START))
-    onView(withId(R.id.navigation_drawer)).perform(NavigationViewActions.navigateTo(R.id.about))
 
-    onView(withId(R.id.layout_main)).check(matches(isClosed(Gravity.START)))
-    IdlingRegistry.getInstance().unregister(drawerIdlingResource)
+    onView(withId(R.id.navigation_drawer))
+      .perform(NavigationViewActions.navigateTo(R.id.about))
+
+    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)), 100, 5)
+      .check(matches(isClosed(Gravity.START)))
 
     activityScenario.onActivity {
       it.onBackPressed()
@@ -264,8 +250,7 @@ class MainActivityTest {
       assertEquals(2, it.supportFragmentManager.backStackEntryCount)
     }
 
-    // reopen nav drawer
-    onView(withId(R.id.layout_main))
+    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)), 100, 5)
       .perform(DrawerActions.open(Gravity.START))
 
     // try to reselect the same nav item
