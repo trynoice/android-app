@@ -1,6 +1,19 @@
-# Contributing
+# Contributing <!-- omit in toc -->
 
-We welcome contributions of all kinds and sizes. This includes everything from simple bug reports to large features.
+We welcome contributions of all kinds and sizes. This includes everything from simple
+bug reports to large features.
+
+## Table of Contents <!-- omit in toc -->
+
+- [Workflow](#workflow)
+- [Getting started](#getting-started)
+- [Translations](#translations)
+- [Adding sounds](#adding-sounds)
+- [Best Practices](#best-practices)
+- [Guiding Principles](#guiding-principles)
+- [Releases](#releases)
+  - [Play Store](#play-store)
+  - [F-Droid](#f-droid)
 
 ## Workflow
 
@@ -14,10 +27,57 @@ We welcome contributions of all kinds and sizes. This includes everything from s
 ## Getting started
 
 1. Ensure that you have the latest Android SDK tools installed on your machine
-2. Fork the repository to create a copy in your GitHub account. The forked repository
+1. Fork the repository to create a copy in your GitHub account. The forked repository
    should be accessible at `https://github.com/<your-username>/noice`
-3. Clone the forked repository to your machine
-4. Open the existing project using Android Studio or any editor of your choice
+1. Clone the forked repository to your machine
+1. Open the existing project using Android Studio or any editor of your choice
+
+## Translations
+
+Noice is currently being maintained by a single developer. To avoid context switches, I
+have decided to accept translation contributions through GitHub only and will not be
+using a dedicated service for Translations, such as [Weblate.org](https://weblate.org/),
+in the foreseeable future.
+
+Adding translations to Noice is rather easy on GitHub as well
+
+1. Fork the repo
+1. To create and edit a `strings.xml` file, you should ideally be using Android Studio.
+   If you don't have Android Studio set up on your local machine, that's fine too.
+
+   - To create a new `strings.xml` file using Android Studio
+
+     1. Open the new file wizard under **File > New > Android resource file**
+     1. From the **Available qualifiers**, add **Locale** to the **Chosen qualifiers**
+     1. Select the correct language and region, and create the new `strings.xml` file
+
+   - Use [this list](https://github.com/championswimmer/android-locales) to find
+     the correct path for a new `strings.xml` file otherwise
+
+1. Translate all the strings in `values/strings.xml`
+1. If you're updating translations for an existing language, see
+   [this issue](https://github.com/ashutoshgngwr/noice/issues/108) where we keep
+   track of missing and potentially outdated translations.
+1. Translate the F-Droid and Play Store metadata. See
+   [docs](https://docs.fastlane.tools/actions/supply/#images-and-screenshots) and [an
+   example](https://github.com/ashutoshgngwr/noice/tree/master/fastlane/metadata/android/pt-BR)
+1. Add your name to the translation credits section in the
+   [`AboutFragment`](https://github.com/ashutoshgngwr/noice/blob/master/app/src/main/java/com/github/ashutoshgngwr/noice/fragment/AboutFragment.kt)
+
+   - Add the required strings to the [`values/dont_translate.xml`](https://github.com/ashutoshgngwr/noice/blob/master/app/src/main/res/values/dont_translate.xml).
+     See [example](https://github.com/ashutoshgngwr/noice/blob/9a4dce2330b3005acf88b4f6c95f9c4456766e75/app/src/main/res/values/dont_translate.xml#L68-L69)
+   - Add the required item to the `TRANSLATIONS` array in
+     [`AboutFragment`](https://github.com/ashutoshgngwr/noice/blob/master/app/src/main/java/com/github/ashutoshgngwr/noice/fragment/AboutFragment.kt).
+     See [example](https://github.com/ashutoshgngwr/noice/blob/9a4dce2330b3005acf88b4f6c95f9c4456766e75/app/src/main/java/com/github/ashutoshgngwr/noice/fragment/AboutFragment.kt#L132-L135)
+   - The naming convention for credit strings is as follows where the `index` is an integer denoting
+     the number of revisions for a particular locale. For new locales, the `index` is 0. For
+     existing locales, the `index` is its last value for that locale incremented by one.
+
+     1. `credits__translation_<language code>_<region, if any>_<index>`: for descriptions
+     2. `credits__translation_<language code>_<region, if any>_<index>__url`: for author's URL
+
+1. Create a Pull Request proposing the new changes. On creating the pull request, Noice will
+   run a set of GitHub actions that will check syntactical errors in the proposed changes.
 
 ## Adding sounds
 
@@ -62,30 +122,20 @@ changes is necessary to prepare a new release.
 
 ### Play Store
 
-Noice uses [Travis CI](https://travis-ci.com/github/ashutoshgngwr/noice) for automatically
-building and pushing releases to Google Play store. ~~All releases happen in two stages.~~
+Noice uses [GitHub actions](https://travis-ci.com/github/ashutoshgngwr/noice) to automatically
+build and push releases to Google Play store.
 
-- ~~First, a candidate release is pushed to the beta track on the Play Store. Git tags for
-  these are marked with format `0.0.0-rc`. This job pushes the new binary and its changelog
-  to the Play Store.~~
-- ~~After ample time, the release candidates are promoted to production track on the Play
-  Store. Git tags for these are marked with format `0.0.0`. This job promotes the latest
-  beta release to the production track on the Play Store. It also updates the Fastlane metadata
-  in the Play Store listing.~~
+- We have been strictly following [Semantic Versioning](https://semver.org) since 0.6.x
+- New translations are considered as a feature
 - All releases tagged in Git repository are pushed to beta track on the Play Store. After ample
-  time, a release is manually promoted to production track for general availability.
+  time, a release is manually promoted to the production track for general availability.
 - In case a feature is merged into the master branch and a patch release needs to be created for
   the latest public release, create a temporary branch with pattern `Major.Minor.x` e.g., `1.1.x`.
-  Tag any further patch releases to a commit in this branch. Before next _non-patch_ release, the
-  temporary branch can be merged into master.
-
-~~_**Note:** A beta release should be followed by its production release. If a new beta release
-is created before the production release of the last beta release, the last beta release must
-be manually promoted to the production track from the Play Console._~~
+  Tag any further patch releases to a commit in this branch. Before the next _non-patch_ release,
+  the temporary branch can be merged into master.
 
 ### F-Droid
 
-F-Droid releases are picked by its builder based on the latest tag. ~~F-Droid doesn't pick
-the beta releases.~~
-See [the metadata file](https://gitlab.com/fdroid/fdroiddata/-/blob/master/metadata/com.github.ashutoshgngwr.noice.yml)
+F-Droid releases are picked by its builder based on the latest tag. See
+[the metadata file](https://gitlab.com/fdroid/fdroiddata/-/blob/master/metadata/com.github.ashutoshgngwr.noice.yml)
 for more information.
