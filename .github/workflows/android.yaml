@@ -66,7 +66,7 @@ jobs:
     name: UI tests
     needs: assemble
     runs-on: macos-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     strategy:
       matrix:
         android: [28, 29] # Mockk won't work below 28
