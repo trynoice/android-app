@@ -87,7 +87,7 @@ jobs:
           script: ./gradlew connectedCheck --no-daemon --stacktrace --gradle-user-home "$GRADLE_HOME"
           emulator-options: >-
             -no-boot-anim -no-audio -no-snapshot -no-window -camera-back none
-            -camera-front none -gpu swiftshader_indirect
+            -camera-front none -gpu swiftshader_indirect -memory 3583
       - uses: codecov/codecov-action@v1
         with:
           flags: android,ui_tests
