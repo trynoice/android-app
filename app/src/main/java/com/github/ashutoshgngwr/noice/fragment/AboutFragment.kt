@@ -127,49 +127,49 @@ class AboutFragment : Fragment() {
         R.string.credits__sound_wind_in_palm_trees_url
       ),
       arrayOf(
-        R.string.credits__translation_argentinian_spanish,
+        R.string.credits__translation_es_ar_0,
         R.drawable.ic_about_translation,
-        R.string.credits__translation_argentinian_spanish_url
+        R.string.credits__translation_es_ar_0__url
       ),
       arrayOf(
-        R.string.credits__translation_russian,
+        R.string.credits__translation_ru_0,
         R.drawable.ic_about_translation,
-        R.string.credits__translation_russian_url
+        R.string.credits__translation_ru_0__url
       ),
       arrayOf(
-        R.string.credits__translation_german,
+        R.string.credits__translation_de_0,
         R.drawable.ic_about_translation,
-        R.string.credits__translation_german_url
+        R.string.credits__translation_de_0__url
       ),
       arrayOf(
-        R.string.credits__translation_italian,
+        R.string.credits__translation_it_it_0,
         R.drawable.ic_about_translation,
-        R.string.credits__translation_italian_url
+        R.string.credits__translation_it_it_0__url
       ),
       arrayOf(
-        R.string.credits__translation_french,
+        R.string.credits__translation_fr_fr_0,
         R.drawable.ic_about_translation,
-        R.string.credits__translation_french_url
+        R.string.credits__translation_fr_fr_0__url
       ),
       arrayOf(
-        R.string.credits__translation_brazilian_portuguese,
+        R.string.credits__translation_pt_br_0,
         R.drawable.ic_about_translation,
-        R.string.credits__translation_brazilian_portuguese_url
+        R.string.credits__translation_pt_br_0__url
       ),
       arrayOf(
-        R.string.credits__translation_spanish,
+        R.string.credits__translation_es_es_0,
         R.drawable.ic_about_translation,
-        R.string.credits__translation_spanish_url
+        R.string.credits__translation_es_es_0__url
       ),
       arrayOf(
-        R.string.credits__translation_swedish,
+        R.string.credits__translation_sv_0,
         R.drawable.ic_about_translation,
-        R.string.credits__translation_swedish_url
+        R.string.credits__translation_sv_0__url
       ),
       arrayOf(
-        R.string.credits__translation_albanian,
+        R.string.credits__translation_sq_al_0,
         R.drawable.ic_about_translation,
-        R.string.credits__translation_albanian_url
+        R.string.credits__translation_sq_al_0__url
       )
     )
   }
