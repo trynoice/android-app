@@ -67,7 +67,8 @@
   <string name="open_context_menu">Open context menu</string>
   <string name="rename">Rename</string>
   <string name="cast_media">Cast media to another device</string>
-  <string-array name="app_themes">
+    <string name="about__translations">Translations</string>
+    <string-array name="app_themes">
     <item>Light</item>
     <item>Dark</item>
     <item>System default</item>
