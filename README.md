@@ -1,8 +1,9 @@
 # ![Feature graphic](fastlane/metadata/android/en-US/images/featureGraphic.png)
 
 [![Android](https://github.com/ashutoshgngwr/noice/workflows/Android/badge.svg)](https://github.com/ashutoshgngwr/noice/actions?query=workflow%3AAndroid)
+[![Cast Receiver](https://github.com/ashutoshgngwr/noice/workflows/Cast%20Receiver/badge.svg)](https://github.com/ashutoshgngwr/noice/actions?query=workflow%3A%22Cast+Receiver%22)
 [![codecov](https://codecov.io/gh/ashutoshgngwr/noice/branch/master/graph/badge.svg)](https://codecov.io/gh/ashutoshgngwr/noice)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/67635a43989c4dbcb6c3472375dc1e5f)](https://www.codacy.com/manual/ashutoshgngwr/noice?utm_source=github.com&utm_medium=referral&utm_content=ashutoshgngwr/noice&utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/67635a43989c4dbcb6c3472375dc1e5f)](https://www.codacy.com/manual/ashutoshgngwr/noice)
 [![GitHub tag](https://img.shields.io/github/tag-date/ashutoshgngwr/noice.svg?color=orange&label=release)](https://GitHub.com/ashutoshgngwr/noice/tags/)
 [![Releases](https://img.shields.io/badge/android-5.0%2B-blue.svg)][google-play-link]
 [![GitHub license](https://img.shields.io/github/license/ashutoshgngwr/noice.svg)](https://github.com/ashutoshgngwr/noice/blob/master/LICENSE)

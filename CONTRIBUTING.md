@@ -122,10 +122,10 @@ changes is necessary to prepare a new release.
 
 ### Play Store
 
-Noice uses [GitHub actions](https://travis-ci.com/github/ashutoshgngwr/noice) to automatically
+Noice uses [GitHub actions](https://github.com/ashutoshgngwr/noice/actions) to automatically
 build and push releases to Google Play store.
 
-- We have been strictly following [Semantic Versioning](https://semver.org) since 0.6.x
+- We have been strictly following [Semantic Versioning](https://semver.org) since 0.4.x
 - New translations are considered as a feature
 - All releases tagged in Git repository are pushed to beta track on the Play Store. After ample
   time, a release is manually promoted to the production track for general availability.
