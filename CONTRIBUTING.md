@@ -56,7 +56,7 @@ Adding translations to Noice is rather easy on GitHub as well
 
 1. Translate all the strings in `values/strings.xml`
 1. If you're updating translations for an existing language, see
-   [this issue](https://github.com/ashutoshgngwr/noice/issues/108) where we keep
+   [this issue](https://github.com/ashutoshgngwr/noice/issues/200) where we keep
    track of missing and potentially outdated translations.
 1. Translate the F-Droid and Play Store metadata. See
    [docs](https://docs.fastlane.tools/actions/supply/#images-and-screenshots) and [an
