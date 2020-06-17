@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-  style="@style/Widget.App.CardView"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+  style="?attr/materialCardViewStyle"
   android:layout_width="match_parent"
   android:layout_height="wrap_content">
 
@@ -10,9 +10,9 @@
     android:orientation="horizontal"
     android:gravity="center_vertical">
 
-    <androidx.appcompat.widget.AppCompatCheckBox
+    <CheckBox
       android:id="@+id/button_play"
-      style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+      style="?attr/checkboxStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="5dp"
@@ -30,10 +30,10 @@
       android:layout_weight="1"
       android:singleLine="true"
       android:ellipsize="end"
-      android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+      android:textAppearance="?attr/textAppearanceSubtitle1" />
 
     <ImageButton
-      style="@style/Widget.AppCompat.ImageButton"
+      style="?attr/imageButtonStyle"
       android:id="@+id/button_menu"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -44,4 +44,4 @@
 
   </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

@@ -17,7 +17,7 @@
       android:layout_margin="20dp"
       android:gravity="center"
       android:text="@string/sleep_timer"
-      android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
+      android:textAppearance="?attr/textAppearanceHeadline4" />
 
     <com.github.ashutoshgngwr.noice.widget.CountdownTextView
       android:id="@+id/countdown_view"
@@ -32,7 +32,7 @@
       android:layout_margin="20dp"
       android:gravity="center"
       android:text="@string/sleep_timer_description"
-      android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+      android:textAppearance="?attr/textAppearanceBody1" />
 
     <com.github.ashutoshgngwr.noice.widget.DurationPicker
       android:id="@+id/duration_picker"

@@ -12,6 +12,7 @@
     <item name="bottomSheetDialogTheme">@style/Theme.App.BottomSheetDialog</item>
     <item name="mediaRouteTheme">@style/Theme.App.MediaRouter</item>
     <item name="android:statusBarColor">@color/colorStatusBar</item>
+    <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
   </style>
 
   <style name="ThemeOverlay.App.Dark.ActionBar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
