@@ -22,7 +22,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class SoundLibraryFragment : Fragment() {
+class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
 
   private var mRecyclerView: RecyclerView? = null
   private var mSavePresetButton: FloatingActionButton? = null
@@ -50,14 +50,6 @@ class SoundLibraryFragment : Fragment() {
         }
       }
     }
-  }
-
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.fragment_sound_list, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

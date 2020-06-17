@@ -2,9 +2,7 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import android.os.Bundle
 import android.os.SystemClock
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
@@ -14,17 +12,9 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class SleepTimerFragment : Fragment() {
+class SleepTimerFragment : Fragment(R.layout.fragment_sleep_timer) {
 
   private val eventBus = EventBus.getDefault()
-
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.fragment_sleep_timer, container, false)
-  }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     view.duration_picker.setResetButtonEnabled(false)
