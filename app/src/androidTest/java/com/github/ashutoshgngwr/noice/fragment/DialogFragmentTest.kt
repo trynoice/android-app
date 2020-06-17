@@ -10,7 +10,6 @@ import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.MainActivity
 import com.github.ashutoshgngwr.noice.R
@@ -141,14 +140,11 @@ class DialogFragmentTest {
   @Test
   fun testSingleChoiceList() {
     var selectedItem = 0
-    val items = InstrumentationRegistry.getInstrumentation()
-      .targetContext
-      .resources
-      .getStringArray(R.array.app_themes)
+    val items = arrayOf("test-0", "test-1", "test-2")
 
     activityScenario.onActivity {
       dialogFragment.show(it.supportFragmentManager) {
-        singleChoiceItems(R.array.app_themes, currentChoice = selectedItem) { choice ->
+        singleChoiceItems(items, currentChoice = selectedItem) { choice ->
           selectedItem = choice
         }
       }

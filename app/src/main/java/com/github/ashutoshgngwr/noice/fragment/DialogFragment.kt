@@ -184,11 +184,10 @@ class DialogFragment : BottomSheetDialogFragment() {
    * @param onItemSelected listener invoked when a choice is selected by the user
    */
   fun singleChoiceItems(
-    @ArrayRes itemsRes: Int,
+    items: Array<String>,
     currentChoice: Int = -1,
     onItemSelected: (Int) -> Unit = { }
   ) {
-    val items = requireContext().resources.getStringArray(itemsRes)
     require(currentChoice >= -1 && currentChoice < items.size)
     addContentView(
       ListView(requireContext()).apply {

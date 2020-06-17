@@ -168,7 +168,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         DialogFragment().show(supportFragmentManager) {
           title(R.string.app_theme)
           singleChoiceItems(
-            itemsRes = R.array.app_themes,
+            items = resources.getStringArray(R.array.app_themes),
             currentChoice = getAppTheme(),
             onItemSelected = { setAppTheme(it) }
           )
