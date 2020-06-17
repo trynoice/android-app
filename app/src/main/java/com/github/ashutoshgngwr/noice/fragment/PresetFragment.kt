@@ -26,34 +26,21 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
 
   private val dataSet = ArrayList<Preset>()
   private val eventBus = EventBus.getDefault()
-  private val mAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
-    override fun onChanged() {
-      if (adapter?.itemCount ?: 0 > 0) {
-        requireView().indicator_list_empty.visibility = View.GONE
-      } else {
-        requireView().indicator_list_empty.visibility = View.VISIBLE
-      }
-    }
-  }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     dataSet.addAll(Preset.readAllFromUserPreferences(requireContext()))
-    adapter = PresetListAdapter(requireContext()).apply {
-      registerAdapterDataObserver(mAdapterDataObserver)
-    }
-
+    adapter = PresetListAdapter(requireContext())
     mRecyclerView = view.list_presets.also {
       it.setHasFixedSize(true)
       it.adapter = adapter
     }
 
     eventBus.register(this)
-    mAdapterDataObserver.onChanged() // since observer is not called by adapter on initialization
+    updateEmptyListIndicatorVisibility()
   }
 
   override fun onDestroyView() {
     eventBus.unregister(this)
-    adapter?.unregisterAdapterDataObserver(mAdapterDataObserver)
     super.onDestroyView()
   }
 
@@ -68,6 +55,14 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
       if (activePresetPos > -1) {
         adapter?.notifyItemChanged(activePresetPos)
       }
+    }
+  }
+
+  private fun updateEmptyListIndicatorVisibility() {
+    if (adapter?.itemCount ?: 0 > 0) {
+      requireView().indicator_list_empty.visibility = View.GONE
+    } else {
+      requireView().indicator_list_empty.visibility = View.VISIBLE
     }
   }
 
@@ -153,6 +148,7 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
           }
 
           adapter?.notifyItemRemoved(adapterPosition)
+          updateEmptyListIndicatorVisibility()
           Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
             .setAction(R.string.dismiss) { }
             .show()
