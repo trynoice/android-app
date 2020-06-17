@@ -9,8 +9,10 @@ import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.MotionEvents
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.util.TreeIterables
+import com.github.ashutoshgngwr.noice.widget.DurationPicker
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
 
@@ -112,5 +114,31 @@ object EspressoX {
     }
 
     return onView(viewMatcher)
+  }
+
+  /**
+   * Returns a [ViewAction] that invokes [DurationPicker.onDurationAddedListener] with the given
+   * [durationSecs].
+   */
+  fun addDurationToPicker(durationSecs: Long): ViewAction {
+    return object : ViewAction {
+      override fun getDescription() = "add duration to a DurationPicker"
+      override fun getConstraints() = Matchers.instanceOf<View>(DurationPicker::class.java)
+
+      override fun perform(uiController: UiController, view: View) {
+        view as DurationPicker
+        view.invokeOnDurationAddedListener(durationSecs * 1000L)
+      }
+    }
+  }
+
+  /**
+   * Returns a [Matcher] that matches reset button of the [DurationPicker] view.
+   */
+  fun withDurationPickerResetButton(durationPickerMatcher: Matcher<View>): Matcher<View> {
+    return Matchers.allOf(
+      ViewMatchers.isDescendantOfA(durationPickerMatcher),
+      ViewMatchers.withId(R.id.button_reset)
+    )
   }
 }

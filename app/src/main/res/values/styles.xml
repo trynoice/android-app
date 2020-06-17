@@ -70,7 +70,7 @@
     <item name="android:textColor">@color/material_on_background_disabled</item>
   </style>
 
-  <style name="Widget.App.Button.AddTime" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+  <style name="Widget.App.DurationPicker.Button.AddTime" parent="Widget.MaterialComponents.Button.TextButton.Icon">
     <item name="android:layout_columnWeight">1</item>
     <item name="android:layout_gravity">center</item>
     <item name="android:padding">14dp</item>

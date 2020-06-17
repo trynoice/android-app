@@ -7,7 +7,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
-import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowLooper
 
 @RunWith(RobolectricTestRunner::class)
@@ -18,7 +17,6 @@ class CountdownTextViewTest {
   @Before
   fun setup() {
     view = CountdownTextView(RuntimeEnvironment.systemContext)
-    shadowOf(view).callOnAttachedToWindow()
   }
 
   @Test

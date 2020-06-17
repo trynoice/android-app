@@ -32,9 +32,7 @@ class CountdownTextView : MaterialTextView {
   constructor(@NonNull context: Context) : super(context)
   constructor(@NonNull context: Context, @Nullable attrs: AttributeSet) : super(context, attrs)
   constructor(@NonNull context: Context, @Nullable attrs: AttributeSet, defStyleAttr: Int) : super(
-    context,
-    attrs,
-    defStyleAttr
+    context, attrs, defStyleAttr
   )
 
   /**

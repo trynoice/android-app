@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:columnCount="3"
+  android:rowCount="3"
+  android:useDefaultMargins="true">
+
+  <Button
+    android:id="@+id/button_1m"
+    style="@style/Widget.App.DurationPicker.Button.AddTime"
+    android:text="@string/plus1m" />
+
+  <Button
+    android:id="@+id/button_5m"
+    style="@style/Widget.App.DurationPicker.Button.AddTime"
+    android:text="@string/plus5m" />
+
+  <Button
+    android:id="@+id/button_30m"
+    style="@style/Widget.App.DurationPicker.Button.AddTime"
+    android:text="@string/plus30m" />
+
+  <Button
+    android:id="@+id/button_1h"
+    style="@style/Widget.App.DurationPicker.Button.AddTime"
+    android:text="@string/plus1h" />
+
+  <Button
+    android:id="@+id/button_4h"
+    style="@style/Widget.App.DurationPicker.Button.AddTime"
+    android:text="@string/plus4h" />
+
+  <Button
+    android:id="@+id/button_8h"
+    style="@style/Widget.App.DurationPicker.Button.AddTime"
+    android:text="@string/plus8h" />
+
+  <Button
+    android:id="@+id/button_reset"
+    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_columnSpan="3"
+    android:layout_gravity="center"
+    android:layout_margin="10dp"
+    android:text="@string/reset" />
+
+</GridLayout>
