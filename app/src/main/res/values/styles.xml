@@ -13,6 +13,7 @@
     <item name="mediaRouteTheme">@style/Theme.App.MediaRouter</item>
     <item name="android:statusBarColor">@color/colorStatusBar</item>
     <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+    <item name="android:windowTranslucentNavigation">true</item>
   </style>
 
   <style name="ThemeOverlay.App.Dark.ActionBar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
