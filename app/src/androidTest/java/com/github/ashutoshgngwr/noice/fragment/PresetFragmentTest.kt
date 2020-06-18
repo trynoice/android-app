@@ -23,8 +23,7 @@ import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.impl.annotations.RelaxedMockK
 import org.greenrobot.eventbus.EventBus
-import org.hamcrest.Matchers.allOf
-import org.hamcrest.Matchers.instanceOf
+import org.hamcrest.Matchers.*
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -165,6 +164,12 @@ class PresetFragmentTest {
 
   @Test
   fun testRecyclerViewItem_renameOption() {
+    // if preset with given name already exists, save button should be disabled
+    val mockValidator = mockk<(String) -> Boolean>()
+    every { Preset.duplicateNameValidator(any()) } returns mockValidator
+    every { mockValidator.invoke("test-exists") } returns true
+    every { mockValidator.invoke("test-does-not-exists") } returns false
+
     // open context menu
     onView(withId(R.id.list_presets)).perform(
       RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
@@ -176,14 +181,22 @@ class PresetFragmentTest {
     onView(withText(R.string.rename)).perform(click()) // select rename option
     onView(withId(R.id.editText))
       .check(matches(isDisplayed())) // check if the rename dialog was displayed
-      .perform(replaceText("test-renamed")) // replace text in input field
+      .perform(replaceText("test-exists")) // replace text in input field
 
     onView(allOf(instanceOf(Button::class.java), withText(R.string.save)))
+      .check(matches(not(isEnabled())))
+
+    onView(withId(R.id.editText))
+      .check(matches(isDisplayed()))
+      .perform(replaceText("test-does-not-exists"))
+
+    onView(allOf(instanceOf(Button::class.java), withText(R.string.save)))
+      .check(matches(isEnabled()))
       .perform(click()) // click on positive button
 
     val presetsSlot = slot<List<Preset>>()
     verify(exactly = 1) {
-      mockPreset.name = "test-renamed"
+      mockPreset.name = "test-does-not-exists"
       Preset.writeAllToUserPreferences(any(), capture(presetsSlot))
     }
 

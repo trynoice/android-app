@@ -128,6 +128,16 @@ class Preset private constructor(
         writeAllToUserPreferences(context, listOf(*it, preset))
       }
     }
+
+    /**
+     * [duplicateNameValidator] returns a lambda function that can be used to check whether a preset
+     * with the given name exists in the persistent state. The lambda uses Preset names from an
+     * in-memory cached state. This state is initialized at the time of its creation.
+     */
+    fun duplicateNameValidator(context: Context): (String) -> Boolean {
+      val presetNames = readAllFromUserPreferences(context).map { it.name }.toHashSet()
+      return { it in presetNames }
+    }
   }
 
   init {

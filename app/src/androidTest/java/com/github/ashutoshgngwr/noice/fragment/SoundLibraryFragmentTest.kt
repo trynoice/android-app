@@ -9,10 +9,10 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
-import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
@@ -199,9 +199,14 @@ class SoundLibraryFragmentTest {
     )
 
     val preset = Preset.from("test", mockPlayers.values)
+    val mockValidator = mockk<(String) -> Boolean>()
+
     mockkObject(Preset.Companion)
-    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf()
     every { Preset.from("", mockPlayers.values) } returns preset
+    every { Preset.duplicateNameValidator(any()) } returns mockValidator
+    every { mockValidator.invoke("test-exists") } returns true
+    every { mockValidator.invoke("test-does-not-exists") } returns false
+
     fragmentScenario.onFragment { fragment ->
       fragment.onPlayerManagerUpdate(mockk(relaxed = true) {
         every { state } returns PlayerManager.State.PLAYING
@@ -216,11 +221,22 @@ class SoundLibraryFragmentTest {
     onView(allOf(withId(R.id.title), withText(R.string.save_preset)))
       .check(matches(isDisplayed()))
 
+    // should disable save button for duplicate names
     onView(withId(R.id.editText))
       .check(matches(isDisplayed()))
-      .perform(replaceText("test"))
+      .perform(replaceText("test-exists"))
 
-    onView(allOf(withId(R.id.positive), withText(R.string.save))).perform(click())
+    onView(allOf(withId(R.id.positive), withText(R.string.save)))
+      .check(matches(not(isEnabled())))
+
+    onView(withId(R.id.editText))
+      .check(matches(isDisplayed()))
+      .perform(replaceText("test-does-not-exists"))
+
+    onView(allOf(withId(R.id.positive), withText(R.string.save)))
+      .check(matches(isEnabled()))
+      .perform(click())
+
     onView(withId(R.id.fab_save_preset)).check(matches(not(isDisplayed())))
     onView(withId(com.google.android.material.R.id.snackbar_text))
       .check(matches(withText(R.string.preset_saved)))

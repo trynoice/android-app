@@ -115,12 +115,21 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
 
     private fun showRenamePresetInput() {
       DialogFragment().show(requireActivity().supportFragmentManager) {
+        val duplicateNameValidator = Preset.duplicateNameValidator(requireContext())
         title(R.string.rename)
         input(
           hintRes = R.string.name,
           preFillValue = dataSet[adapterPosition].name,
-          errorRes = R.string.preset_name_cannot_be_empty
+          validator = {
+            when {
+              it.isBlank() -> R.string.preset_name_cannot_be_empty
+              dataSet[adapterPosition].name == it -> 0 // no error if the name didn't change
+              duplicateNameValidator(it) -> R.string.preset_already_exists
+              else -> 0
+            }
+          }
         )
+
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
           dataSet[adapterPosition].name = getInputText()

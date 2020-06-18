@@ -4,8 +4,7 @@ import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import io.mockk.*
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -182,5 +181,26 @@ class PresetTest {
     }
 
     JSONAssert.assertEquals("[${presetJSON1}, ${presetJSON2}]", stringSlot.captured, false)
+  }
+
+  @Test
+  fun testDuplicateNameValidator() {
+    mockkStatic(PreferenceManager::class)
+    val mockPrefs = mockk<SharedPreferences>(relaxed = true)
+    every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
+    every { mockPrefs.getString("presets", any()) } returns "[{" +
+      "  \"a\":\"test\"," +
+      "  \"b\":[" +
+      "    {" +
+      "      \"a\":\"test-1\"," +
+      "      \"c\":30," +
+      "      \"b\":0.75" +
+      "    }" +
+      "  ]" +
+      "}]"
+
+    val validator = Preset.duplicateNameValidator(mockk())
+    assertTrue(validator.invoke("test"))
+    assertFalse(validator.invoke("test-invalid"))
   }
 }

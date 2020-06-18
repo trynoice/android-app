@@ -49,6 +49,7 @@
   <string name="save">Save</string>
   <string name="cancel">Cancel</string>
   <string name="preset_name_cannot_be_empty">Preset name cannot be empty!</string>
+  <string name="preset_already_exists">Preset with the given name already exists!</string>
   <string name="preset_saved">Preset saved!</string>
   <string name="saved_presets">Saved Presets</string>
   <string name="preset_delete_confirmation">Confirm delete %s?</string>

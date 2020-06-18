@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
-import androidx.annotation.ArrayRes
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.core.widget.TextViewCompat
@@ -133,15 +132,16 @@ class DialogFragment : BottomSheetDialogFragment() {
    *
    * @param preFillValue value to pre-fill in the text field
    * @param type input type
-   * @param validator a validation function that is called on text every time it is changed.
+   * @param validator a validation function that is called on text every time it is changed. It
+   * should return a String resource id to display it as an error. If no error is to be displayed,
+   * it should return 0.
    */
   fun input(
     @StringRes hintRes: Int = 0,
     preFillValue: CharSequence = "",
     type: Int = InputType.TYPE_CLASS_TEXT,
     singleLine: Boolean = true,
-    validator: (String) -> Boolean = { it.isNotBlank() },
-    @StringRes errorRes: Int = 0
+    validator: (String) -> Int = { 0 }
   ) {
     requireView().positive.isEnabled = false
     layoutInflater.inflate(R.layout.fragment_dialog__text_input, requireView().content, false)
@@ -151,12 +151,13 @@ class DialogFragment : BottomSheetDialogFragment() {
         editText.isSingleLine = singleLine
         editText.setText(preFillValue)
         editText.addTextChangedListener {
-          val valid = validator(it.toString())
-          requireView().positive.isEnabled = valid
-          textInputLayout.error = if (valid) {
-            null
+          val errResID = validator(it.toString())
+          if (errResID == 0) {
+            requireView().positive.isEnabled = true
+            textInputLayout.error = ""
           } else {
-            getString(errorRes)
+            requireView().positive.isEnabled = false
+            textInputLayout.error = getString(errResID)
           }
         }
 

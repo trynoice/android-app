@@ -15,6 +15,8 @@ import com.github.ashutoshgngwr.noice.MainActivity
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.google.android.material.textfield.TextInputLayout
+import io.mockk.every
+import io.mockk.mockk
 import org.hamcrest.Description
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
@@ -108,19 +110,22 @@ class DialogFragmentTest {
 
   @Test
   fun testTextInput() {
+    val mockValidator = mockk<(String) -> Int>()
+    every { mockValidator.invoke("invalid") } returns android.R.string.no
+    every { mockValidator.invoke("test") } returns 0
     activityScenario.onActivity {
       dialogFragment.show(it.supportFragmentManager) {
         input(
           hintRes = android.R.string.yes,
           preFillValue = "test",
-          errorRes = android.R.string.no
+          validator = mockValidator
         )
       }
     }
 
     onView(allOf(isDescendantOfA(withId(R.id.content)), withId(R.id.editText)))
       .check(matches(isDisplayed()))
-      .perform(replaceText("  "))
+      .perform(replaceText("invalid"))
 
     onView(withId(R.id.textInputLayout))
       .check(matches(hasErrorText(android.R.string.no)))

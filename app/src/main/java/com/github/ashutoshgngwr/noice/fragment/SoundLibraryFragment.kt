@@ -62,8 +62,16 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
     mSavePresetButton = view.fab_save_preset
     requireNotNull(mSavePresetButton).setOnClickListener {
       DialogFragment().show(requireActivity().supportFragmentManager) {
+        val duplicateNameValidator = Preset.duplicateNameValidator(requireContext())
         title(R.string.save_preset)
-        input(hintRes = R.string.name, errorRes = R.string.preset_name_cannot_be_empty)
+        input(hintRes = R.string.name, validator = {
+          when {
+            it.isBlank() -> R.string.preset_name_cannot_be_empty
+            duplicateNameValidator(it) -> R.string.preset_already_exists
+            else -> 0
+          }
+        })
+
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
           val preset = Preset.from(getInputText(), players.values)
