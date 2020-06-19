@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.InputType
 import android.util.TypedValue
@@ -178,9 +179,6 @@ class DialogFragment : BottomSheetDialogFragment() {
    * Creating this control removes the button panel. Dialog is dismissed when user
    * selects an item from the list.
    *
-   * TODO(whenever-needed): handle scrolling for long lists (bottom sheet intercepts touch events now).
-   * currently the only usage involves displaying a 3 item list.
-   *
    * @param currentChoice must be >= -1 and < arraySize
    * @param onItemSelected listener invoked when a choice is selected by the user
    */
@@ -190,6 +188,7 @@ class DialogFragment : BottomSheetDialogFragment() {
     onItemSelected: (Int) -> Unit = { }
   ) {
     require(currentChoice >= -1 && currentChoice < items.size)
+    setButton(R.id.positive, android.R.string.cancel) { }
     addContentView(
       ListView(requireContext()).apply {
         id = android.R.id.list
@@ -203,6 +202,11 @@ class DialogFragment : BottomSheetDialogFragment() {
         setOnItemClickListener { _, _, position, _ ->
           onItemSelected(position)
           dismiss()
+        }
+
+        setOnTouchListener @SuppressLint("ClickableViewAccessibility") { _, _ ->
+          parent.requestDisallowInterceptTouchEvent(canScrollList(-1))
+          false
         }
       }
     )
