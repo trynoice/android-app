@@ -114,7 +114,7 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
     }
 
     private fun showRenamePresetInput() {
-      DialogFragment().show(requireActivity().supportFragmentManager) {
+      DialogFragment().show(childFragmentManager) {
         val duplicateNameValidator = Preset.duplicateNameValidator(requireContext())
         title(R.string.rename)
         input(
