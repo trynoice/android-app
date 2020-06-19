@@ -2,7 +2,8 @@ package com.github.ashutoshgngwr.noice.sound
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.preference.PreferenceManager
+import com.github.ashutoshgngwr.noice.Utils.withDefaultSharedPreferences
+import com.github.ashutoshgngwr.noice.Utils.withGson
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.google.gson.*
 import com.google.gson.annotations.Expose
@@ -68,6 +69,8 @@ class Preset private constructor(
   }
 
   companion object {
+    private const val PREF_PRESETS = "presets"
+
     /**
      * [from] exposes the primary constructor of [Preset] class. It automatically infers the
      * [PlayerState]s from provided [Collection] of [Player] instances.
@@ -82,27 +85,13 @@ class Preset private constructor(
     }
 
     /**
-     * convenience method.
-     */
-    private fun getPreferences(context: Context) =
-      PreferenceManager.getDefaultSharedPreferences(context)
-
-    /**
-     * convenience method to add a fresh [Gson] instance to the context using a lambda.
-     */
-    private inline fun <T> withGson(crossinline f: (Gson) -> T) =
-      // returns the value returned by the lambda. Just testing Kotlin :p
-      GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().let { f(it) }
-
-    /**
      * [readAllFromUserPreferences] reads the serialized version of [Preset]s from the persistent
      * storage and returns an [ArrayList].
      */
     fun readAllFromUserPreferences(context: Context): Array<Preset> = withGson {
-      it.fromJson(
-        getPreferences(context).getString("presets", "[]"),
-        Array<Preset>::class.java
-      )
+      withDefaultSharedPreferences(context) { prefs ->
+        it.fromJson(prefs.getString(PREF_PRESETS, "[]"), Array<Preset>::class.java)
+      }
     }
 
     /**
@@ -110,10 +99,10 @@ class Preset private constructor(
      * given [ArrayList] in the persistent storage.
      */
     fun writeAllToUserPreferences(context: Context, presets: Collection<Preset>) {
-      withGson {
-        getPreferences(context).also { prefs ->
+      withDefaultSharedPreferences(context) { prefs ->
+        withGson {
           prefs.edit()
-            .putString("presets", it.toJson(presets))
+            .putString(PREF_PRESETS, it.toJson(presets))
             .apply()
         }
       }
@@ -137,6 +126,16 @@ class Preset private constructor(
     fun duplicateNameValidator(context: Context): (String) -> Boolean {
       val presetNames = readAllFromUserPreferences(context).map { it.name }.toHashSet()
       return { it in presetNames }
+    }
+
+    fun findByName(context: Context, name: String): Preset? {
+      readAllFromUserPreferences(context).forEach {
+        if (it.name == name) {
+          return it
+        }
+      }
+
+      return null
     }
   }
 

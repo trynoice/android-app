@@ -19,6 +19,10 @@ import kotlinx.android.synthetic.main.view_duration_picker.view.*
  */
 class DurationPicker : FrameLayout {
 
+  private val buttons by lazy {
+    arrayOf(button_1m, button_5m, button_30m, button_1h, button_4h, button_8h, button_reset)
+  }
+
   private var onDurationAddedListener: ((Long) -> Unit)? = null
 
   constructor(@NonNull context: Context) : super(context)
@@ -42,14 +46,8 @@ class DurationPicker : FrameLayout {
       }
 
       onDurationAddedListener?.invoke(timeToAdd)
-    }.also {
-      button_1m.setOnClickListener(it)
-      button_5m.setOnClickListener(it)
-      button_30m.setOnClickListener(it)
-      button_1h.setOnClickListener(it)
-      button_4h.setOnClickListener(it)
-      button_8h.setOnClickListener(it)
-      button_reset.setOnClickListener(it)
+    }.also { listener ->
+      buttons.forEach { it.setOnClickListener(listener) }
     }
   }
 
@@ -59,6 +57,11 @@ class DurationPicker : FrameLayout {
    */
   fun setOnDurationAddedListener(listener: ((Long) -> Unit)?) {
     this.onDurationAddedListener = listener
+  }
+
+
+  fun setControlsEnabled(enabled: Boolean) {
+    buttons.forEach { it.isEnabled = enabled }
   }
 
   /**

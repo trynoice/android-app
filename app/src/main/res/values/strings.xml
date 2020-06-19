@@ -60,15 +60,24 @@
     Then click on the Save button that appears on the bottom corner of the screen.
   </string>
   <string name="sleep_timer">Sleep Timer</string>
-  <string name="sleep_timer_description">Noice will shutdown itself when the timer ends. Use the buttons below to add time and start the timer.</string>
+  <string name="sleep_timer_description">
+    Noice will shutdown itself when the timer ends. Use the buttons below to add time and start
+    the timer.
+  </string>
   <string name="reset">Reset</string>
   <string name="auto_sleep_schedule_cancelled">Auto sleep timer cancelled!</string>
   <string name="app_theme">Theme</string>
   <string name="open_context_menu">Open context menu</string>
   <string name="rename">Rename</string>
   <string name="cast_media">Cast media to another device</string>
-    <string name="about__translations">Translations</string>
-    <string-array name="app_themes">
+  <string name="about__translations">Translations</string>
+  <string name="wake_up_timer">Wake-up Timer</string>
+  <string name="wake_up_timer_description">
+    Noice will start the selected preset when the timer ends. Use the buttons below to select a
+    preset and add the desired duration to start the wake-up timer.
+  </string>
+  <string name="select_preset">Select Preset</string>
+  <string-array name="app_themes">
     <item>Light</item>
     <item>Dark</item>
     <item>System default</item>

@@ -82,6 +82,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         SleepTimerFragment::class.java.simpleName -> {
           navigation_drawer.setCheckedItem(R.id.sleep_timer)
         }
+        WakeUpTimerFragment::class.java.simpleName -> {
+          navigation_drawer.setCheckedItem(R.id.wake_up_timer)
+        }
         AboutFragment::class.java.simpleName -> {
           navigation_drawer.setCheckedItem(R.id.about)
         }
@@ -163,6 +166,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       }
       R.id.sleep_timer -> {
         setFragment(SleepTimerFragment::class.java)
+      }
+      R.id.wake_up_timer -> {
+        setFragment(WakeUpTimerFragment::class.java)
       }
       R.id.app_theme -> {
         DialogFragment().show(supportFragmentManager) {
