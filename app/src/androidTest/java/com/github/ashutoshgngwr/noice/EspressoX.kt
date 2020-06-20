@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice
 import android.view.View
 import android.widget.SeekBar
 import androidx.annotation.IdRes
+import androidx.annotation.StringRes
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.UiController
@@ -13,8 +14,11 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.util.TreeIterables
 import com.github.ashutoshgngwr.noice.widget.DurationPicker
+import com.google.android.material.textfield.TextInputLayout
+import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
+import org.hamcrest.TypeSafeMatcher
 
 /**
  * [EspressoX] contains the custom extended util implementations for Espresso.
@@ -140,5 +144,19 @@ object EspressoX {
       ViewMatchers.isDescendantOfA(durationPickerMatcher),
       ViewMatchers.withId(R.id.button_reset)
     )
+  }
+
+  /**
+   * [withErrorText] matches [TextInputLayout]s using the provided error text.
+   */
+  fun withErrorText(@StringRes expectedErrorText: Int): Matcher<View> {
+    return object : TypeSafeMatcher<View>() {
+      override fun describeTo(description: Description?) = Unit
+      override fun matchesSafely(item: View?): Boolean {
+        if (item !is TextInputLayout) return false
+        val error = item.error ?: return false
+        return item.context.getString(expectedErrorText) == error.toString()
+      }
+    }
   }
 }
