@@ -33,13 +33,16 @@ class CountdownTextViewTest {
 
   @Test
   fun testWithNonZeroCountdown_textUntilExpiry() {
-    // this test case may fail in future if View's update interval changes from 1000L
     view.startCountdown(2000L)
     assertEquals("00h 00m 02s", view.text.toString())
 
+    // bad code ahead: execute delayed tasks twice for 1 sec lapse since CountdownTextView has a
+    // refresh interval set to 500ms.
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     assertEquals("00h 00m 01s", view.text.toString())
 
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     assertEquals("00h 00m 00s", view.text.toString())
   }

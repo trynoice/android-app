@@ -42,9 +42,8 @@ class SleepTimerFragmentTest {
   private lateinit var fragmentScenario: FragmentScenario<SleepTimerFragment>
   private lateinit var lastEvent: MediaPlayerService.ScheduleAutoSleepEvent
 
-  fun assertDurationInRange(expectedStartSecs: Long, expectedEndSecs: Long, actualMillis: Long) {
-    assertTrue(actualMillis >= expectedStartSecs * 1000L)
-    assertTrue(actualMillis <= expectedEndSecs * 1000L)
+  private fun assertDurationInRange(expectedStartSecs: Long, expectedEndSecs: Long, actualMillis: Long) {
+    assertTrue(actualMillis in expectedStartSecs * 1000L until expectedEndSecs * 1000L)
   }
 
   @Before

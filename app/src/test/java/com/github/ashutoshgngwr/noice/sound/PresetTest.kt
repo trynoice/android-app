@@ -203,4 +203,34 @@ class PresetTest {
     assertTrue(validator.invoke("test"))
     assertFalse(validator.invoke("test-invalid"))
   }
+
+  @Test
+  fun testFindByName() {
+    mockkStatic(PreferenceManager::class)
+    val mockPrefs = mockk<SharedPreferences>(relaxed = true)
+    every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
+    every { mockPrefs.getString("presets", any()) } returns "[{" +
+      "  \"a\":\"test-1\"," +
+      "  \"b\":[" +
+      "    {" +
+      "      \"a\":\"test-1\"," +
+      "      \"c\":30," +
+      "      \"b\":0.75" +
+      "    }" +
+      "  ]" +
+      "}," +
+      "{" +
+      "  \"a\":\"test-2\"," +
+      "  \"b\":[" +
+      "    {" +
+      "      \"a\":\"test-1\"," +
+      "      \"c\":30," +
+      "      \"b\":0.75" +
+      "    }" +
+      "  ]" +
+      "}]"
+
+    assertNull(Preset.findByName(mockk(), "test-0"))
+    assertNotNull(Preset.findByName(mockk(), "test-1"))
+  }
 }

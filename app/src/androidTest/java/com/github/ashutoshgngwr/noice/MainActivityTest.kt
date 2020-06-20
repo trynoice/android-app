@@ -21,9 +21,7 @@ import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.github.ashutoshgngwr.noice.fragment.AboutFragment
-import com.github.ashutoshgngwr.noice.fragment.PresetFragment
-import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
+import com.github.ashutoshgngwr.noice.fragment.*
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import io.mockk.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -77,6 +75,44 @@ class MainActivityTest {
       )
 
       assertEquals(R.id.saved_presets, it.navigation_drawer.checkedItem?.itemId)
+    }
+  }
+
+  @Test
+  fun testSleepTimerMenuItem() {
+    onView(withId(R.id.layout_main))
+      .check(matches(isClosed(Gravity.START)))
+      .perform(DrawerActions.open(Gravity.START))
+
+    onView(withId(R.id.navigation_drawer))
+      .perform(NavigationViewActions.navigateTo(R.id.sleep_timer))
+
+    activityScenario.onActivity {
+      assertEquals(
+        SleepTimerFragment::class.java.simpleName,
+        it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
+      )
+
+      assertEquals(R.id.sleep_timer, it.navigation_drawer.checkedItem?.itemId)
+    }
+  }
+
+  @Test
+  fun testWakeUpTimerMenuItem() {
+    onView(withId(R.id.layout_main))
+      .check(matches(isClosed(Gravity.START)))
+      .perform(DrawerActions.open(Gravity.START))
+
+    onView(withId(R.id.navigation_drawer))
+      .perform(NavigationViewActions.navigateTo(R.id.wake_up_timer))
+
+    activityScenario.onActivity {
+      assertEquals(
+        WakeUpTimerFragment::class.java.simpleName,
+        it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
+      )
+
+      assertEquals(R.id.wake_up_timer, it.navigation_drawer.checkedItem?.itemId)
     }
   }
 

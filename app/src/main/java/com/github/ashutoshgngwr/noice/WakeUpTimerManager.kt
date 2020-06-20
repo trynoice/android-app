@@ -50,10 +50,13 @@ object WakeUpTimerManager {
    * instance onto device storage to be able return it later upon querying.
    */
   fun set(context: Context, timer: Timer) {
+    if (timer.atMillis < System.currentTimeMillis()) {
+      return
+    }
+
     withDefaultSharedPreferences(context) { prefs ->
       withGson {
         prefs.edit().putString(PREF_WAKE_UP_TIMER, it.toJson(timer)).apply()
-
       }
 
       withAlarmManager(context) {
@@ -68,6 +71,10 @@ object WakeUpTimerManager {
    * [cancel] cancels the last scheduled timer.
    */
   fun cancel(context: Context) {
+    withDefaultSharedPreferences(context) {
+      it.edit().remove(PREF_WAKE_UP_TIMER).apply()
+    }
+
     withAlarmManager(context) {
       // don't need concrete timer value for cancelling the alarm.
       it.cancel(getPendingIntent(context, Timer("", 0)))

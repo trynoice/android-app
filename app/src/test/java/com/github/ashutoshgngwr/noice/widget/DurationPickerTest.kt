@@ -27,14 +27,32 @@ class DurationPickerTest {
   }
 
   @Test
-  fun testResetButton() {
+  fun testEnableDisableControls() {
     view.setResetButtonEnabled(true)
     assertTrue(view.button_reset.isEnabled)
 
     view.setResetButtonEnabled(false)
     assertFalse(view.button_reset.isEnabled)
 
-    view.setResetButtonEnabled(true)
+    val controlButtons = arrayOf(
+      view.button_1m,
+      view.button_5m,
+      view.button_30m,
+      view.button_1h,
+      view.button_4h,
+      view.button_8h,
+      view.button_reset
+    )
+
+    view.setControlsEnabled(false)
+    controlButtons.forEach { assertFalse(it.isEnabled) }
+
+    view.setControlsEnabled(true)
+    controlButtons.forEach { assertTrue(it.isEnabled) }
+  }
+
+  @Test
+  fun testResetButton() {
     view.button_reset.performClick()
     verify(exactly = 1) { onDurationAddedListener.invoke(less(0L)) }
   }

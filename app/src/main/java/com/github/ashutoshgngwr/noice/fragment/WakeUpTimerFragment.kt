@@ -25,6 +25,14 @@ class WakeUpTimerFragment : Fragment(R.layout.fragment_wake_up_timer) {
       selectedTime = timer?.atMillis ?: 0
     }
 
+    // check selectedPresetName exists in user preferences.
+    selectedPresetName?.also {
+      if (Preset.findByName(requireContext(), it) == null) {
+        selectedPresetName = null
+        selectedTime = 0
+      }
+    }
+
     notifyUpdate()
   }
 

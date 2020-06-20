@@ -59,8 +59,14 @@ class DurationPicker : FrameLayout {
     this.onDurationAddedListener = listener
   }
 
-
+  /**
+   * [setControlsEnabled] enables or disables all the buttons in the [DurationPicker] view.
+   * This includes enabling/disabling reset button.
+   *
+   * @see setResetButtonEnabled
+   */
   fun setControlsEnabled(enabled: Boolean) {
+    isEnabled = enabled
     buttons.forEach { it.isEnabled = enabled }
   }
 

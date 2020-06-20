@@ -128,6 +128,10 @@ class Preset private constructor(
       return { it in presetNames }
     }
 
+    /**
+     * [findByName] searches the given name in the persistent storage. Returns a [Preset] if it
+     * finds one with the given name. Returns null otherwise.
+     */
     fun findByName(context: Context, name: String): Preset? {
       readAllFromUserPreferences(context).forEach {
         if (it.name == name) {
