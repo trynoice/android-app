@@ -11,11 +11,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.annotation.IdRes
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.fragment.*
@@ -34,6 +34,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private const val APP_THEME_LIGHT = 0
     private const val APP_THEME_DARK = 1
     private const val APP_THEME_SYSTEM_DEFAULT = 2
+
+    private val NAVIGATED_FRAGMENTS = mapOf(
+      R.id.library to SoundLibraryFragment::class.java,
+      R.id.saved_presets to PresetFragment::class.java,
+      R.id.sleep_timer to SleepTimerFragment::class.java,
+      R.id.wake_up_timer to WakeUpTimerFragment::class.java,
+      R.id.about to AboutFragment::class.java
+    )
   }
 
   private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
@@ -68,32 +76,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // bind navigation drawer menu items checked state with fragment back stack
     supportFragmentManager.addOnBackStackChangedListener {
-      when (
-        supportFragmentManager
-          .getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1)
-          .name
-        ) {
-        SoundLibraryFragment::class.java.simpleName -> {
-          navigation_drawer.setCheckedItem(R.id.library)
-        }
-        PresetFragment::class.java.simpleName -> {
-          navigation_drawer.setCheckedItem(R.id.saved_presets)
-        }
-        SleepTimerFragment::class.java.simpleName -> {
-          navigation_drawer.setCheckedItem(R.id.sleep_timer)
-        }
-        WakeUpTimerFragment::class.java.simpleName -> {
-          navigation_drawer.setCheckedItem(R.id.wake_up_timer)
-        }
-        AboutFragment::class.java.simpleName -> {
-          navigation_drawer.setCheckedItem(R.id.about)
+      val index = supportFragmentManager.backStackEntryCount - 1
+      val currentFragmentName = supportFragmentManager.getBackStackEntryAt(index).name
+      NAVIGATED_FRAGMENTS.forEach {
+        if (it.value.simpleName == currentFragmentName) {
+          navigation_drawer.setCheckedItem(it.key)
         }
       }
     }
 
     // set sound library fragment when activity is created initially
     if (savedInstanceState == null) {
-      setFragment(SoundLibraryFragment::class.java)
+      setFragment(R.id.library)
     }
   }
 
@@ -158,18 +152,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
-      R.id.library -> {
-        setFragment(SoundLibraryFragment::class.java)
-      }
-      R.id.saved_presets -> {
-        setFragment(PresetFragment::class.java)
-      }
-      R.id.sleep_timer -> {
-        setFragment(SleepTimerFragment::class.java)
-      }
-      R.id.wake_up_timer -> {
-        setFragment(WakeUpTimerFragment::class.java)
-      }
+      in NAVIGATED_FRAGMENTS -> setFragment(item.itemId)
       R.id.app_theme -> {
         DialogFragment().show(supportFragmentManager) {
           title(R.string.app_theme)
@@ -179,9 +162,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             onItemSelected = { setAppTheme(it) }
           )
         }
-      }
-      R.id.about -> {
-        setFragment(AboutFragment::class.java)
       }
       R.id.report_issue -> {
         startActivity(
@@ -273,7 +253,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     recreate()
   }
 
-  private fun <T : Fragment> setFragment(fragmentClass: Class<T>) {
+  private fun setFragment(@IdRes navItemID: Int) {
+    val fragmentClass = NAVIGATED_FRAGMENTS[navItemID] ?: return
     val tag = fragmentClass.simpleName
 
     // show fragment if it isn't present in back stack.
