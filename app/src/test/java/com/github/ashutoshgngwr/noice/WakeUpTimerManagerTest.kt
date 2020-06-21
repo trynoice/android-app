@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice
 
 import android.app.AlarmManager
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.Utils.withGson
@@ -88,5 +89,23 @@ class WakeUpTimerManagerTest {
     val timer = WakeUpTimerManager.get(mockContext)
     assertEquals(1L, timer?.atMillis)
     assertEquals("test", timer?.presetName)
+  }
+
+  @Test
+  fun testBootReceiver_whenTimerIsPreScheduled() {
+    val expectedTime = System.currentTimeMillis() + 1000L
+    every {
+      mockPrefs.getString(any(), any())
+    } returns "{\"presetName\":\"test\", \"atMillis\": $expectedTime}"
+
+    WakeUpTimerManager.BootReceiver().onReceive(mockContext, Intent(Intent.ACTION_BOOT_COMPLETED))
+    assertEquals(expectedTime, shadowAlarmManager.nextScheduledAlarm.triggerAtTime)
+  }
+
+  @Test
+  fun testBootReceiver_whenTimeIsNotPreScheduled() {
+    every { mockPrefs.getString(any(), any()) } returns null
+    WakeUpTimerManager.BootReceiver().onReceive(mockContext, Intent(Intent.ACTION_BOOT_COMPLETED))
+    assertNull(shadowAlarmManager.nextScheduledAlarm)
   }
 }
