@@ -11,11 +11,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.annotation.IdRes
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.fragment.*
@@ -29,11 +29,27 @@ import org.greenrobot.eventbus.ThreadMode
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
   companion object {
+    /**
+     * [EXTRA_CURRENT_NAVIGATED_FRAGMENT] declares the key for intent extra value that is passed to
+     * [MainActivity] for setting the given fragment to the top. The required value for this extra
+     * should be an integer representing the menu item's id in the navigation view corresponding to
+     * the fragment being requested.
+     */
+    const val EXTRA_CURRENT_NAVIGATED_FRAGMENT = "current_fragment"
+
     private const val TAG = "MainActivity"
     private const val PREF_APP_THEME = "app_theme"
     private const val APP_THEME_LIGHT = 0
     private const val APP_THEME_DARK = 1
     private const val APP_THEME_SYSTEM_DEFAULT = 2
+
+    private val NAVIGATED_FRAGMENTS = mapOf(
+      R.id.library to SoundLibraryFragment::class.java,
+      R.id.saved_presets to PresetFragment::class.java,
+      R.id.sleep_timer to SleepTimerFragment::class.java,
+      R.id.wake_up_timer to WakeUpTimerFragment::class.java,
+      R.id.about to AboutFragment::class.java
+    )
   }
 
   private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
@@ -68,29 +84,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // bind navigation drawer menu items checked state with fragment back stack
     supportFragmentManager.addOnBackStackChangedListener {
-      when (
-        supportFragmentManager
-          .getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1)
-          .name
-        ) {
-        SoundLibraryFragment::class.java.simpleName -> {
-          navigation_drawer.setCheckedItem(R.id.library)
-        }
-        PresetFragment::class.java.simpleName -> {
-          navigation_drawer.setCheckedItem(R.id.saved_presets)
-        }
-        SleepTimerFragment::class.java.simpleName -> {
-          navigation_drawer.setCheckedItem(R.id.sleep_timer)
-        }
-        AboutFragment::class.java.simpleName -> {
-          navigation_drawer.setCheckedItem(R.id.about)
+      val index = supportFragmentManager.backStackEntryCount - 1
+      val currentFragmentName = supportFragmentManager.getBackStackEntryAt(index).name
+      NAVIGATED_FRAGMENTS.forEach {
+        if (it.value.simpleName == currentFragmentName) {
+          navigation_drawer.setCheckedItem(it.key)
         }
       }
     }
 
     // set sound library fragment when activity is created initially
     if (savedInstanceState == null) {
-      setFragment(SoundLibraryFragment::class.java)
+      setFragment(R.id.library)
+    }
+
+    if (intent.hasExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT)) {
+      setFragment(intent.getIntExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.library))
     }
   }
 
@@ -155,27 +164,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
-      R.id.library -> {
-        setFragment(SoundLibraryFragment::class.java)
-      }
-      R.id.saved_presets -> {
-        setFragment(PresetFragment::class.java)
-      }
-      R.id.sleep_timer -> {
-        setFragment(SleepTimerFragment::class.java)
-      }
+      in NAVIGATED_FRAGMENTS -> setFragment(item.itemId)
       R.id.app_theme -> {
         DialogFragment().show(supportFragmentManager) {
           title(R.string.app_theme)
           singleChoiceItems(
-            itemsRes = R.array.app_themes,
+            items = resources.getStringArray(R.array.app_themes),
             currentChoice = getAppTheme(),
             onItemSelected = { setAppTheme(it) }
           )
         }
-      }
-      R.id.about -> {
-        setFragment(AboutFragment::class.java)
       }
       R.id.report_issue -> {
         startActivity(
@@ -267,7 +265,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     recreate()
   }
 
-  private fun <T : Fragment> setFragment(fragmentClass: Class<T>) {
+  private fun setFragment(@IdRes navItemID: Int) {
+    val fragmentClass = NAVIGATED_FRAGMENTS[navItemID] ?: return
     val tag = fragmentClass.simpleName
 
     // show fragment if it isn't present in back stack.

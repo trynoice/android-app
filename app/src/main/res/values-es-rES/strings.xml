@@ -54,7 +54,6 @@
   <string name="preset_delete_confirmation">¿Estás seguro de borrar \"%s\"?</string>
   <string name="delete">Borrar</string>
   <string name="preset_deleted">¡Preset borrado!</string>
-  <string name="preset_info">Información sobre los presets</string>
   <string name="preset_info__description">
     Los presets no son otra cosa que un conjunto de sonidos configurados a tu gusto y que sirve para aplicar y reproducir, con un simple clic, la lista de sonidos configurados previamente.
     Si aún no has creado ningún preset. Ve a la biblioteca y reproduce los sonidos que quieras simultáneamente.

@@ -22,7 +22,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class SoundLibraryFragment : Fragment() {
+class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
 
   private var mRecyclerView: RecyclerView? = null
   private var mSavePresetButton: FloatingActionButton? = null
@@ -52,14 +52,6 @@ class SoundLibraryFragment : Fragment() {
     }
   }
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.fragment_sound_list, container, false)
-  }
-
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     adapter = SoundListAdapter(requireContext())
     mRecyclerView = view.list_sound.also {
@@ -69,9 +61,17 @@ class SoundLibraryFragment : Fragment() {
 
     mSavePresetButton = view.fab_save_preset
     requireNotNull(mSavePresetButton).setOnClickListener {
-      DialogFragment().show(requireActivity().supportFragmentManager) {
+      DialogFragment().show(childFragmentManager) {
+        val duplicateNameValidator = Preset.duplicateNameValidator(requireContext())
         title(R.string.save_preset)
-        input(hintRes = R.string.name, errorRes = R.string.preset_name_cannot_be_empty)
+        input(hintRes = R.string.name, validator = {
+          when {
+            it.isBlank() -> R.string.preset_name_cannot_be_empty
+            duplicateNameValidator(it) -> R.string.preset_already_exists
+            else -> 0
+          }
+        })
+
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
           val preset = Preset.from(getInputText(), players.values)

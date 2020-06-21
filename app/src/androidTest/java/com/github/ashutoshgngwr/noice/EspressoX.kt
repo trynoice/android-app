@@ -3,16 +3,22 @@ package com.github.ashutoshgngwr.noice
 import android.view.View
 import android.widget.SeekBar
 import androidx.annotation.IdRes
+import androidx.annotation.StringRes
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.MotionEvents
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.util.TreeIterables
+import com.github.ashutoshgngwr.noice.widget.DurationPicker
+import com.google.android.material.textfield.TextInputLayout
+import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
+import org.hamcrest.TypeSafeMatcher
 
 /**
  * [EspressoX] contains the custom extended util implementations for Espresso.
@@ -112,5 +118,45 @@ object EspressoX {
     }
 
     return onView(viewMatcher)
+  }
+
+  /**
+   * Returns a [ViewAction] that invokes [DurationPicker.onDurationAddedListener] with the given
+   * [durationSecs].
+   */
+  fun addDurationToPicker(durationSecs: Long): ViewAction {
+    return object : ViewAction {
+      override fun getDescription() = "add duration to a DurationPicker"
+      override fun getConstraints() = Matchers.instanceOf<View>(DurationPicker::class.java)
+
+      override fun perform(uiController: UiController, view: View) {
+        view as DurationPicker
+        view.invokeOnDurationAddedListener(durationSecs * 1000L)
+      }
+    }
+  }
+
+  /**
+   * Returns a [Matcher] that matches reset button of the [DurationPicker] view.
+   */
+  fun withDurationPickerResetButton(durationPickerMatcher: Matcher<View>): Matcher<View> {
+    return Matchers.allOf(
+      ViewMatchers.isDescendantOfA(durationPickerMatcher),
+      ViewMatchers.withId(R.id.button_reset)
+    )
+  }
+
+  /**
+   * [withErrorText] matches [TextInputLayout]s using the provided error text.
+   */
+  fun withErrorText(@StringRes expectedErrorText: Int): Matcher<View> {
+    return object : TypeSafeMatcher<View>() {
+      override fun describeTo(description: Description?) = Unit
+      override fun matchesSafely(item: View?): Boolean {
+        if (item !is TextInputLayout) return false
+        val error = item.error ?: return false
+        return item.context.getString(expectedErrorText) == error.toString()
+      }
+    }
   }
 }

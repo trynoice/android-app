@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.InputType
 import android.util.TypedValue
@@ -9,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
-import androidx.annotation.ArrayRes
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.core.widget.TextViewCompat
@@ -133,15 +133,16 @@ class DialogFragment : BottomSheetDialogFragment() {
    *
    * @param preFillValue value to pre-fill in the text field
    * @param type input type
-   * @param validator a validation function that is called on text every time it is changed.
+   * @param validator a validation function that is called on text every time it is changed. It
+   * should return a String resource id to display it as an error. If no error is to be displayed,
+   * it should return 0.
    */
   fun input(
     @StringRes hintRes: Int = 0,
     preFillValue: CharSequence = "",
     type: Int = InputType.TYPE_CLASS_TEXT,
     singleLine: Boolean = true,
-    validator: (String) -> Boolean = { it.isNotBlank() },
-    @StringRes errorRes: Int = 0
+    validator: (String) -> Int = { 0 }
   ) {
     requireView().positive.isEnabled = false
     layoutInflater.inflate(R.layout.fragment_dialog__text_input, requireView().content, false)
@@ -151,12 +152,13 @@ class DialogFragment : BottomSheetDialogFragment() {
         editText.isSingleLine = singleLine
         editText.setText(preFillValue)
         editText.addTextChangedListener {
-          val valid = validator(it.toString())
-          requireView().positive.isEnabled = valid
-          textInputLayout.error = if (valid) {
-            null
+          val errResID = validator(it.toString())
+          if (errResID == 0) {
+            requireView().positive.isEnabled = true
+            textInputLayout.error = ""
           } else {
-            getString(errorRes)
+            requireView().positive.isEnabled = false
+            textInputLayout.error = getString(errResID)
           }
         }
 
@@ -177,19 +179,16 @@ class DialogFragment : BottomSheetDialogFragment() {
    * Creating this control removes the button panel. Dialog is dismissed when user
    * selects an item from the list.
    *
-   * TODO(whenever-needed): handle scrolling for long lists (bottom sheet intercepts touch events now).
-   * currently the only usage involves displaying a 3 item list.
-   *
    * @param currentChoice must be >= -1 and < arraySize
    * @param onItemSelected listener invoked when a choice is selected by the user
    */
   fun singleChoiceItems(
-    @ArrayRes itemsRes: Int,
+    items: Array<String>,
     currentChoice: Int = -1,
     onItemSelected: (Int) -> Unit = { }
   ) {
-    val items = requireContext().resources.getStringArray(itemsRes)
     require(currentChoice >= -1 && currentChoice < items.size)
+    setButton(R.id.positive, android.R.string.cancel) { }
     addContentView(
       ListView(requireContext()).apply {
         id = android.R.id.list
@@ -203,6 +202,11 @@ class DialogFragment : BottomSheetDialogFragment() {
         setOnItemClickListener { _, _, position, _ ->
           onItemSelected(position)
           dismiss()
+        }
+
+        setOnTouchListener @SuppressLint("ClickableViewAccessibility") { _, _ ->
+          parent.requestDisallowInterceptTouchEvent(canScrollList(-1))
+          false
         }
       }
     )

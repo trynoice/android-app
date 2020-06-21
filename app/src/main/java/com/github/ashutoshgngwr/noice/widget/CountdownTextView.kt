@@ -26,15 +26,13 @@ class CountdownTextView : MaterialTextView {
     /**
      * time interval between each update to the view's content
      */
-    private const val UPDATE_INTERVAL = 1000L
+    private const val UPDATE_INTERVAL = 500L
   }
 
   constructor(@NonNull context: Context) : super(context)
   constructor(@NonNull context: Context, @Nullable attrs: AttributeSet) : super(context, attrs)
   constructor(@NonNull context: Context, @Nullable attrs: AttributeSet, defStyleAttr: Int) : super(
-    context,
-    attrs,
-    defStyleAttr
+    context, attrs, defStyleAttr
   )
 
   /**

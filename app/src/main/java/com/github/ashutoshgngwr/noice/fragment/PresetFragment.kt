@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_preset_list.view.*
@@ -18,7 +19,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class PresetFragment : Fragment() {
+class PresetFragment : Fragment(R.layout.fragment_preset_list) {
 
   private var mRecyclerView: RecyclerView? = null
   private var adapter: PresetListAdapter? = null
@@ -26,42 +27,21 @@ class PresetFragment : Fragment() {
 
   private val dataSet = ArrayList<Preset>()
   private val eventBus = EventBus.getDefault()
-  private val mAdapterDataObserver = object : RecyclerView.AdapterDataObserver() {
-    override fun onChanged() {
-      if (adapter?.itemCount ?: 0 > 0) {
-        requireView().indicator_list_empty.visibility = View.GONE
-      } else {
-        requireView().indicator_list_empty.visibility = View.VISIBLE
-      }
-    }
-  }
-
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.fragment_preset_list, container, false)
-  }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     dataSet.addAll(Preset.readAllFromUserPreferences(requireContext()))
-    adapter = PresetListAdapter(requireContext()).apply {
-      registerAdapterDataObserver(mAdapterDataObserver)
-    }
-
+    adapter = PresetListAdapter(requireContext())
     mRecyclerView = view.list_presets.also {
       it.setHasFixedSize(true)
       it.adapter = adapter
     }
 
     eventBus.register(this)
-    mAdapterDataObserver.onChanged() // since observer is not called by adapter on initialization
+    updateEmptyListIndicatorVisibility()
   }
 
   override fun onDestroyView() {
     eventBus.unregister(this)
-    adapter?.unregisterAdapterDataObserver(mAdapterDataObserver)
     super.onDestroyView()
   }
 
@@ -76,6 +56,14 @@ class PresetFragment : Fragment() {
       if (activePresetPos > -1) {
         adapter?.notifyItemChanged(activePresetPos)
       }
+    }
+  }
+
+  private fun updateEmptyListIndicatorVisibility() {
+    if (adapter?.itemCount ?: 0 > 0) {
+      requireView().indicator_list_empty.visibility = View.GONE
+    } else {
+      requireView().indicator_list_empty.visibility = View.VISIBLE
     }
   }
 
@@ -127,13 +115,22 @@ class PresetFragment : Fragment() {
     }
 
     private fun showRenamePresetInput() {
-      DialogFragment().show(requireActivity().supportFragmentManager) {
+      DialogFragment().show(childFragmentManager) {
+        val duplicateNameValidator = Preset.duplicateNameValidator(requireContext())
         title(R.string.rename)
         input(
           hintRes = R.string.name,
           preFillValue = dataSet[adapterPosition].name,
-          errorRes = R.string.preset_name_cannot_be_empty
+          validator = {
+            when {
+              it.isBlank() -> R.string.preset_name_cannot_be_empty
+              dataSet[adapterPosition].name == it -> 0 // no error if the name didn't change
+              duplicateNameValidator(it) -> R.string.preset_already_exists
+              else -> 0
+            }
+          }
         )
+
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
           dataSet[adapterPosition].name = getInputText()
@@ -149,7 +146,7 @@ class PresetFragment : Fragment() {
         message(R.string.preset_delete_confirmation, dataSet[adapterPosition].name)
         negativeButton(R.string.cancel)
         positiveButton(R.string.delete) {
-          dataSet.removeAt(adapterPosition)
+          val preset = dataSet.removeAt(adapterPosition)
           Preset.writeAllToUserPreferences(requireContext(), dataSet)
           // then stop playback if recently deleted preset was playing
           if (adapterPosition == activePresetPos) {
@@ -160,10 +157,23 @@ class PresetFragment : Fragment() {
             activePresetPos -= 1 // account for recent deletion
           }
 
+          cancelWakeUpTimerIfScheduled(preset.name)
           adapter?.notifyItemRemoved(adapterPosition)
+          updateEmptyListIndicatorVisibility()
           Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
             .setAction(R.string.dismiss) { }
             .show()
+        }
+      }
+    }
+
+    /**
+     * cancels the wake-up timer if it was scheduled with the given [presetName].
+     */
+    private fun cancelWakeUpTimerIfScheduled(presetName: String) {
+      WakeUpTimerManager.get(requireContext())?.also {
+        if (presetName == it.presetName) {
+          WakeUpTimerManager.cancel(requireContext())
         }
       }
     }

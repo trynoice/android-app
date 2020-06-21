@@ -54,7 +54,6 @@
   <string name="preset_delete_confirmation">Konfirmoni fshirjen %s?</string>
   <string name="delete">Fshij</string>
   <string name="preset_deleted">Paravendosja u fshih!</string>
-  <string name="preset_info">Informacion rreth Paravendosjeve</string>
   <string name="preset_info__description">
     Nuk keni krijuar ndonjë Paravendosje akoma. Për të krijuar një paravendosje, shkoni tek Libraria dhe luani tinguj.
      Pastaj klikoni në butonin Ruaj që shfaqet në këndin e poshtëm të ekranit.

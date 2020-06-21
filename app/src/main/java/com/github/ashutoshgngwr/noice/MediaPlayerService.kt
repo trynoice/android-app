@@ -77,13 +77,16 @@ class MediaPlayerService : Service() {
     private val WAKELOCK_TIMEOUT = TimeUnit.DAYS.toMillis(1)
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val RC_START_PLAYBACK = 0x27
+    const val ACTION_START_PLAYBACK = "start_playback"
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val RC_PAUSE_PLAYBACK = 0x26
+    const val ACTION_PAUSE_PLAYBACK = "pause_playback"
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val RC_STOP_PLAYBACK = 0x25
+    const val ACTION_STOP_PLAYBACK = "stop_playback"
+
+    const val ACTION_PLAY_PRESET = "play_preset"
+    const val EXTRA_PRESET_NAME = "preset_name"
   }
 
   private val handler = Handler() // needed in scheduleAutoStop for register callback
@@ -130,20 +133,20 @@ class MediaPlayerService : Service() {
       it.addAction(
         R.drawable.ic_noti_close,
         getString(R.string.stop),
-        createPlaybackControlPendingIntent(RC_STOP_PLAYBACK)
+        createPlaybackControlPendingIntent(0x12, ACTION_STOP_PLAYBACK)
       )
 
       if (playerManager.state == PlayerManager.State.PAUSED) {
         it.addAction(
           R.drawable.ic_noti_play,
           getString(R.string.play),
-          createPlaybackControlPendingIntent(RC_START_PLAYBACK)
+          createPlaybackControlPendingIntent(0x13, ACTION_START_PLAYBACK)
         )
       } else {
         it.addAction(
           R.drawable.ic_noti_pause,
           getString(R.string.pause),
-          createPlaybackControlPendingIntent(RC_PAUSE_PLAYBACK)
+          createPlaybackControlPendingIntent(0x14, ACTION_PAUSE_PLAYBACK)
         )
       }
 
@@ -151,12 +154,11 @@ class MediaPlayerService : Service() {
     }
   }
 
-  private fun createPlaybackControlPendingIntent(requestCode: Int): PendingIntent {
+  private fun createPlaybackControlPendingIntent(requestCode: Int, action: String): PendingIntent {
     return PendingIntent.getService(
       this,
       requestCode,
-      Intent(this, MediaPlayerService::class.java)
-        .putExtra("action", requestCode),
+      Intent(this, MediaPlayerService::class.java).also { it.action = action },
       PendingIntent.FLAG_UPDATE_CURRENT
     )
   }
@@ -210,17 +212,26 @@ class MediaPlayerService : Service() {
   }
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-    when (intent?.getIntExtra("action", 0)) {
-      RC_START_PLAYBACK -> {
+    when (intent?.action) {
+      ACTION_START_PLAYBACK -> {
         playerManager.resume()
       }
 
-      RC_PAUSE_PLAYBACK -> {
+      ACTION_PAUSE_PLAYBACK -> {
         playerManager.pause()
       }
 
-      RC_STOP_PLAYBACK -> {
+      ACTION_STOP_PLAYBACK -> {
         playerManager.stop()
+      }
+
+      ACTION_PLAY_PRESET -> {
+        intent.getStringExtra(EXTRA_PRESET_NAME)?.also {
+          Log.d(TAG, "starting preset $it")
+          Preset.findByName(this, it)?.also { preset ->
+            playerManager.playPreset(preset)
+          }
+        }
       }
     }
 

@@ -5,8 +5,10 @@ import android.net.Uri
 import android.view.Gravity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.launch
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
@@ -21,9 +23,7 @@ import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.github.ashutoshgngwr.noice.fragment.AboutFragment
-import com.github.ashutoshgngwr.noice.fragment.PresetFragment
-import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
+import com.github.ashutoshgngwr.noice.fragment.*
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import io.mockk.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -77,6 +77,44 @@ class MainActivityTest {
       )
 
       assertEquals(R.id.saved_presets, it.navigation_drawer.checkedItem?.itemId)
+    }
+  }
+
+  @Test
+  fun testSleepTimerMenuItem() {
+    onView(withId(R.id.layout_main))
+      .check(matches(isClosed(Gravity.START)))
+      .perform(DrawerActions.open(Gravity.START))
+
+    onView(withId(R.id.navigation_drawer))
+      .perform(NavigationViewActions.navigateTo(R.id.sleep_timer))
+
+    activityScenario.onActivity {
+      assertEquals(
+        SleepTimerFragment::class.java.simpleName,
+        it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
+      )
+
+      assertEquals(R.id.sleep_timer, it.navigation_drawer.checkedItem?.itemId)
+    }
+  }
+
+  @Test
+  fun testWakeUpTimerMenuItem() {
+    onView(withId(R.id.layout_main))
+      .check(matches(isClosed(Gravity.START)))
+      .perform(DrawerActions.open(Gravity.START))
+
+    onView(withId(R.id.navigation_drawer))
+      .perform(NavigationViewActions.navigateTo(R.id.wake_up_timer))
+
+    activityScenario.onActivity {
+      assertEquals(
+        WakeUpTimerFragment::class.java.simpleName,
+        it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
+      )
+
+      assertEquals(R.id.wake_up_timer, it.navigation_drawer.checkedItem?.itemId)
     }
   }
 
@@ -308,5 +346,24 @@ class MainActivityTest {
 
     EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 100, 5)
       .check(doesNotExist())
+  }
+
+  @Test
+  fun testNavigatedFragmentIntentExtra() {
+    activityScenario.moveToState(Lifecycle.State.DESTROYED)
+    activityScenario = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
+      .let {
+        it.putExtra(MainActivity.EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.about)
+        launch(it)
+      }
+
+    activityScenario.onActivity {
+      assertEquals(
+        AboutFragment::class.simpleName,
+        it.supportFragmentManager
+          .getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1)
+          .name
+      )
+    }
   }
 }

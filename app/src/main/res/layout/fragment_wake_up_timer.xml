@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
@@ -16,7 +17,7 @@
       android:layout_height="wrap_content"
       android:layout_margin="20dp"
       android:gravity="center"
-      android:text="@string/sleep_timer"
+      android:text="@string/wake_up_timer"
       android:textAppearance="?attr/textAppearanceHeadline4" />
 
     <com.github.ashutoshgngwr.noice.widget.CountdownTextView
@@ -31,14 +32,24 @@
       android:layout_height="wrap_content"
       android:layout_margin="20dp"
       android:gravity="center"
-      android:text="@string/sleep_timer_description"
+      android:text="@string/wake_up_timer_description"
       android:textAppearance="?attr/textAppearanceBody1" />
+
+    <Button
+      android:id="@+id/button_select_preset"
+      style="?attr/materialButtonOutlinedStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/select_preset"
+      app:drawableEndCompat="@drawable/ic_action_expand"
+      app:drawableTint="?attr/colorAccent" />
 
     <com.github.ashutoshgngwr.noice.widget.DurationPicker
       android:id="@+id/duration_picker"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_margin="10dp" />
+      android:layout_margin="10dp"
+      android:enabled="false" />
 
   </LinearLayout>
 

@@ -1,9 +1,9 @@
 package com.github.ashutoshgngwr.noice.cast.player.adapter
 
+import com.github.ashutoshgngwr.noice.Utils.withGson
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapter
 import com.google.android.gms.cast.framework.CastSession
-import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
 
 /**
@@ -33,9 +33,7 @@ class CastPlayerAdapter(
   var volume: Float = 0.0f
     private set
 
-  private val gson = GsonBuilder()
-    .excludeFieldsWithoutExposeAnnotation()
-    .create()
+  private val gson = withGson { it }
 
   init {
     notifyChanges(ACTION_CREATE)

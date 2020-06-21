@@ -92,30 +92,29 @@ class MediaPlayerServiceTest {
     verify { playerManager wasNot called }
 
     // send resume command
-    every {
-      mockServiceIntent.getIntExtra("action", any())
-    } returns MediaPlayerService.RC_START_PLAYBACK
-
+    every { mockServiceIntent.action } returns MediaPlayerService.ACTION_START_PLAYBACK
     serviceController.startCommand(0, 0)
 
     // send pause command
-    every {
-      mockServiceIntent.getIntExtra("action", any())
-    } returns MediaPlayerService.RC_PAUSE_PLAYBACK
-
+    every { mockServiceIntent.action } returns MediaPlayerService.ACTION_PAUSE_PLAYBACK
     serviceController.startCommand(0, 0)
 
     // send stop command
-    every {
-      mockServiceIntent.getIntExtra("action", any())
-    } returns MediaPlayerService.RC_STOP_PLAYBACK
+    every { mockServiceIntent.action } returns MediaPlayerService.ACTION_STOP_PLAYBACK
+    serviceController.startCommand(0, 0)
 
+    // send play preset command
+    mockkObject(Preset.Companion)
+    every { Preset.findByName(any(), "test") } returns mockk(relaxed = true)
+    every { mockServiceIntent.action } returns MediaPlayerService.ACTION_PLAY_PRESET
+    every { mockServiceIntent.getStringExtra(MediaPlayerService.EXTRA_PRESET_NAME) } returns "test"
     serviceController.startCommand(0, 0)
 
     verifySequence {
       playerManager.resume()
       playerManager.pause()
       playerManager.stop()
+      playerManager.playPreset(any())
     }
   }
 
