@@ -5,8 +5,10 @@ import android.net.Uri
 import android.view.Gravity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.launch
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
@@ -344,5 +346,24 @@ class MainActivityTest {
 
     EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 100, 5)
       .check(doesNotExist())
+  }
+
+  @Test
+  fun testNavigatedFragmentIntentExtra() {
+    activityScenario.moveToState(Lifecycle.State.DESTROYED)
+    activityScenario = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
+      .let {
+        it.putExtra(MainActivity.EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.about)
+        launch(it)
+      }
+
+    activityScenario.onActivity {
+      assertEquals(
+        AboutFragment::class.simpleName,
+        it.supportFragmentManager
+          .getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1)
+          .name
+      )
+    }
   }
 }

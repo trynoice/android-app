@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
 import com.github.ashutoshgngwr.noice.Utils.withDefaultSharedPreferences
 import com.github.ashutoshgngwr.noice.Utils.withGson
@@ -21,6 +20,7 @@ object WakeUpTimerManager {
 
   private const val PREF_WAKE_UP_TIMER = "wake_up_timer"
   private const val RC_WAKE_UP_TIMER = 0x39
+  private const val RC_MAIN_ACTIVITY = 0x40
 
   private inline fun <T> withAlarmManager(ctx: Context, crossinline block: (AlarmManager) -> T): T {
     return block.invoke(
@@ -28,22 +28,26 @@ object WakeUpTimerManager {
     )
   }
 
-  private fun getPendingIntentForService(context: Context, intent: Intent) =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+  private fun getPendingIntentForService(context: Context, presetName: String): PendingIntent {
+    val intent = Intent(context, MediaPlayerService::class.java).also {
+      it.action = MediaPlayerService.ACTION_PLAY_PRESET
+      it.putExtra(MediaPlayerService.EXTRA_PRESET_NAME, presetName)
+    }
+
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
       PendingIntent.getForegroundService(
         context, RC_WAKE_UP_TIMER, intent, PendingIntent.FLAG_UPDATE_CURRENT
       )
     } else {
       PendingIntent.getService(context, RC_WAKE_UP_TIMER, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
+  }
 
-  private fun getPendingIntent(context: Context, timer: Timer) =
-    Intent(context, MediaPlayerService::class.java)
-      .let {
-        it.action = MediaPlayerService.ACTION_PLAY_PRESET
-        it.putExtra(MediaPlayerService.EXTRA_PRESET_NAME, timer.presetName)
-        getPendingIntentForService(context, it)
-      }
+  private fun getPendingIntentForActivity(context: Context) =
+    Intent(context, MainActivity::class.java).let {
+      it.putExtra(MainActivity.EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.wake_up_timer)
+      PendingIntent.getActivity(context, RC_MAIN_ACTIVITY, it, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
 
   /**
    * [set] schedules the given [Timer] using Android's [AlarmManager]. It also persists the [Timer]
@@ -60,8 +64,9 @@ object WakeUpTimerManager {
       }
 
       withAlarmManager(context) {
-        AlarmManagerCompat.setExactAndAllowWhileIdle(
-          it, AlarmManager.RTC_WAKEUP, timer.atMillis, getPendingIntent(context, timer)
+        it.setAlarmClock(
+          AlarmManager.AlarmClockInfo(timer.atMillis, getPendingIntentForActivity(context)),
+          getPendingIntentForService(context, timer.presetName)
         )
       }
     }
@@ -77,7 +82,7 @@ object WakeUpTimerManager {
 
     withAlarmManager(context) {
       // don't need concrete timer value for cancelling the alarm.
-      it.cancel(getPendingIntent(context, Timer("", 0)))
+      it.cancel(getPendingIntentForService(context, ""))
     }
   }
 

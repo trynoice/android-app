@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_preset_list.view.*
@@ -145,7 +146,7 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
         message(R.string.preset_delete_confirmation, dataSet[adapterPosition].name)
         negativeButton(R.string.cancel)
         positiveButton(R.string.delete) {
-          dataSet.removeAt(adapterPosition)
+          val preset = dataSet.removeAt(adapterPosition)
           Preset.writeAllToUserPreferences(requireContext(), dataSet)
           // then stop playback if recently deleted preset was playing
           if (adapterPosition == activePresetPos) {
@@ -156,11 +157,23 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
             activePresetPos -= 1 // account for recent deletion
           }
 
+          cancelWakeUpTimerIfScheduled(preset.name)
           adapter?.notifyItemRemoved(adapterPosition)
           updateEmptyListIndicatorVisibility()
           Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
             .setAction(R.string.dismiss) { }
             .show()
+        }
+      }
+    }
+
+    /**
+     * cancels the wake-up timer if it was scheduled with the given [presetName].
+     */
+    private fun cancelWakeUpTimerIfScheduled(presetName: String) {
+      WakeUpTimerManager.get(requireContext())?.also {
+        if (presetName == it.presetName) {
+          WakeUpTimerManager.cancel(requireContext())
         }
       }
     }

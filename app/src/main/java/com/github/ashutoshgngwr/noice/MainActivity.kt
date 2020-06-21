@@ -29,6 +29,14 @@ import org.greenrobot.eventbus.ThreadMode
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
   companion object {
+    /**
+     * [EXTRA_CURRENT_NAVIGATED_FRAGMENT] declares the key for intent extra value that is passed to
+     * [MainActivity] for setting the given fragment to the top. The required value for this extra
+     * should be an integer representing the menu item's id in the navigation view corresponding to
+     * the fragment being requested.
+     */
+    const val EXTRA_CURRENT_NAVIGATED_FRAGMENT = "current_fragment"
+
     private const val TAG = "MainActivity"
     private const val PREF_APP_THEME = "app_theme"
     private const val APP_THEME_LIGHT = 0
@@ -88,6 +96,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // set sound library fragment when activity is created initially
     if (savedInstanceState == null) {
       setFragment(R.id.library)
+    }
+
+    if (intent.hasExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT)) {
+      setFragment(intent.getIntExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.library))
     }
   }
 
