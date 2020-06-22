@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="support_development__share_url" translatable="false">
+    https://f-droid.org/app/com.github.ashutoshgngwr.noice
+  </string>
+  <string name="support_development__donate_url" translatable="false">
+    https://opencollective.com/noice
+  </string>
+</resources>

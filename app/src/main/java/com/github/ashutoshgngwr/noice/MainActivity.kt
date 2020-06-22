@@ -48,7 +48,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       R.id.saved_presets to PresetFragment::class.java,
       R.id.sleep_timer to SleepTimerFragment::class.java,
       R.id.wake_up_timer to WakeUpTimerFragment::class.java,
-      R.id.about to AboutFragment::class.java
+      R.id.about to AboutFragment::class.java,
+      R.id.support_development to SupportDevelopmentFragment::class.java
     )
   }
 
