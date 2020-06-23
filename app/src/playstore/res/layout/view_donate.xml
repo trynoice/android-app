@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:columnCount="3"
+  android:rowCount="3"
+  android:useDefaultMargins="true">
+
+  <com.github.ashutoshgngwr.noice.widget.MarkdownTextView
+    android:layout_columnSpan="3"
+    android:layout_marginStart="0dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="0dp"
+    android:layout_marginBottom="10dp"
+    android:lineSpacingMultiplier="1.1"
+    android:text="@string/support_development__donate_google_play_description"
+    android:textAppearance="?attr/textAppearanceBody1" />
+
+  <Button
+    android:id="@+id/button_usd1"
+    style="@style/Widget.App.DonateView.DonateButton"
+    android:text="@string/support_development__donate_usd1" />
+
+  <Button
+    android:id="@+id/button_usd2"
+    style="@style/Widget.App.DonateView.DonateButton"
+    android:text="@string/support_development__donate_usd2" />
+
+  <Button
+    android:id="@+id/button_usd5"
+    style="@style/Widget.App.DonateView.DonateButton"
+    android:text="@string/support_development__donate_usd5" />
+
+  <Button
+    android:id="@+id/button_usd10"
+    style="@style/Widget.App.DonateView.DonateButton"
+    android:text="@string/support_development__donate_usd10" />
+
+  <Button
+    android:id="@+id/button_usd15"
+    style="@style/Widget.App.DonateView.DonateButton"
+    android:text="@string/support_development__donate_usd15" />
+
+  <Button
+    android:id="@+id/button_usd25"
+    style="@style/Widget.App.DonateView.DonateButton"
+    android:text="@string/support_development__donate_usd25" />
+
+</GridLayout>

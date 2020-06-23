@@ -13,6 +13,10 @@
   <string name="credits__app_icon_url" translatable="false">
     https://thenounproject.com/term/white-noise/1287855/
   </string>
+  <string name="credits__support_development_icon" translatable="false">Heart icon by Aybige</string>
+  <string name="credits__support_development_icon_url" translatable="false">
+    https://thenounproject.com/term/heart/1556514
+  </string>
   <string name="credits__sound_airplane_inflight" translatable="false">In-flight Ambience Boeing 737-838 by digifishmusic</string>
   <string name="credits__sound_airplane_inflight_url" translatable="false">https://freesound.org/s/47254/</string>
   <string name="credits__sound_airplane_seatbelt_beeps" translatable="false">Seat belt beeps by nachosose</string>

@@ -169,6 +169,25 @@ class MainActivityTest {
   }
 
   @Test
+  fun testSupportDevelopmentMenuItem() {
+    onView(withId(R.id.layout_main))
+      .check(matches(isClosed(Gravity.START)))
+      .perform(DrawerActions.open(Gravity.START))
+
+    onView(withId(R.id.navigation_drawer))
+      .perform(NavigationViewActions.navigateTo(R.id.support_development))
+
+    activityScenario.onActivity {
+      assertEquals(
+        SupportDevelopmentFragment::class.java.simpleName,
+        it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
+      )
+
+      assertEquals(R.id.support_development, it.navigation_drawer.checkedItem?.itemId)
+    }
+  }
+
+  @Test
   fun testReportIssuesMenuItem() {
     Intents.init()
     onView(withId(R.id.layout_main))

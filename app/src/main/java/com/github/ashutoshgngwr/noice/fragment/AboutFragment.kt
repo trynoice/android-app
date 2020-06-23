@@ -22,6 +22,11 @@ class AboutFragment : Fragment() {
         R.string.credits__app_icon_url
       ),
       arrayOf(
+        R.string.credits__support_development_icon,
+        R.drawable.ic_nav_support_development,
+        R.string.credits__support_development_icon_url
+      ),
+      arrayOf(
         R.string.credits__sound_airplane_inflight,
         R.drawable.ic_about_sound,
         R.string.credits__sound_airplane_inflight_url

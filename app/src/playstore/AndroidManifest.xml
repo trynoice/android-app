@@ -1,11 +1,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools">
 
+  <uses-permission android:name="com.android.vending.BILLING" />
+
   <application tools:ignore="AllowBackup">
 
     <meta-data
       android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
       android:value="com.github.ashutoshgngwr.noice.cast.CastOptionsProvider" />
+
+    <activity
+      android:name="com.github.ashutoshgngwr.noice.DonateActivity"
+      android:theme="@style/Theme.App.Translucent" />
 
   </application>
 
