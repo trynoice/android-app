@@ -77,6 +77,7 @@ class MainActivityTest {
       )
 
       assertEquals(R.id.saved_presets, it.navigation_drawer.checkedItem?.itemId)
+      assertEquals(it.getString(R.string.saved_presets), it.navigation_drawer.checkedItem?.title)
     }
   }
 
@@ -96,6 +97,7 @@ class MainActivityTest {
       )
 
       assertEquals(R.id.sleep_timer, it.navigation_drawer.checkedItem?.itemId)
+      assertEquals(it.getString(R.string.sleep_timer), it.navigation_drawer.checkedItem?.title)
     }
   }
 
@@ -115,6 +117,7 @@ class MainActivityTest {
       )
 
       assertEquals(R.id.wake_up_timer, it.navigation_drawer.checkedItem?.itemId)
+      assertEquals(it.getString(R.string.wake_up_timer), it.navigation_drawer.checkedItem?.title)
     }
   }
 
@@ -165,6 +168,7 @@ class MainActivityTest {
       )
 
       assertEquals(R.id.about, it.navigation_drawer.checkedItem?.itemId)
+      assertEquals(it.getString(R.string.about), it.navigation_drawer.checkedItem?.title)
     }
   }
 
@@ -184,6 +188,10 @@ class MainActivityTest {
       )
 
       assertEquals(R.id.support_development, it.navigation_drawer.checkedItem?.itemId)
+      assertEquals(
+        it.getString(R.string.support_development),
+        it.navigation_drawer.checkedItem?.title
+      )
     }
   }
 

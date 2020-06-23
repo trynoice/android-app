@@ -87,10 +87,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     supportFragmentManager.addOnBackStackChangedListener {
       val index = supportFragmentManager.backStackEntryCount - 1
       val currentFragmentName = supportFragmentManager.getBackStackEntryAt(index).name
-      NAVIGATED_FRAGMENTS.forEach {
-        if (it.value.simpleName == currentFragmentName) {
-          navigation_drawer.setCheckedItem(it.key)
+      for (item in NAVIGATED_FRAGMENTS) {
+        if (item.value.simpleName == currentFragmentName) {
+          navigation_drawer.setCheckedItem(item.key)
+          break
         }
+      }
+
+      if (R.id.library == navigation_drawer.checkedItem?.itemId) {
+        supportActionBar?.setTitle(R.string.app_name)
+      } else {
+        supportActionBar?.title = navigation_drawer.checkedItem?.title
       }
     }
 
