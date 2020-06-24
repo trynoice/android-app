@@ -100,5 +100,7 @@ dependencies {
   androidTestImplementation 'io.mockk:mockk-android:1.10.0'
   androidTestImplementation 'junit:junit:4.13'
 
+  androidTestPlaystoreImplementation 'tools.fastlane:screengrab:2.0.0'
+
   debugImplementation 'androidx.fragment:fragment-testing:1.2.5'
 }
