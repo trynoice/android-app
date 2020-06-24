@@ -104,6 +104,10 @@ class GenerateScreenshots {
   @Rule
   var activityRule = ActivityTestRule(MainActivity::class.java, true)
 
+  @Rule
+  @JvmField
+  val retryTestRule = RetryTestRule(5)
+
   @After
   fun after() {
     activityRule.run {
