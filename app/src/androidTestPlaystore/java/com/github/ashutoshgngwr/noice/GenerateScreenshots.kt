@@ -24,7 +24,9 @@ import io.mockk.mockk
 import org.hamcrest.Matchers.allOf
 import org.junit.*
 import org.junit.Assume.assumeNotNull
+import org.junit.rules.TestRule
 import org.junit.runner.RunWith
+import org.junit.runners.model.Statement
 import tools.fastlane.screengrab.Screengrab
 import tools.fastlane.screengrab.locale.LocaleTestRule
 
@@ -42,9 +44,6 @@ class GenerateScreenshots {
     @JvmStatic
     @BeforeClass
     fun setupAll() {
-      // Screengrab file passes the following launch argument. This test class won't run otherwise.
-      assumeNotNull(InstrumentationRegistry.getArguments().getString(IS_SCREENGRAB))
-
       // using mocks to save a few presets for screenshots
       Preset.writeAllToUserPreferences(
         ApplicationProvider.getApplicationContext(), arrayListOf(
@@ -107,6 +106,19 @@ class GenerateScreenshots {
   @Rule
   @JvmField
   val retryTestRule = RetryTestRule(5)
+
+  @Rule
+  @JvmField
+  val screenshotRule = TestRule { base, _ ->
+    object : Statement() {
+      override fun evaluate() {
+        // Screengrabfile passes the following launch argument. The tests in this call won't run
+        // otherwise.
+        assumeNotNull(InstrumentationRegistry.getArguments().getString(IS_SCREENGRAB))
+        base.evaluate()
+      }
+    }
+  }
 
   @After
   fun after() {
