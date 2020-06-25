@@ -10,14 +10,14 @@ import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.MotionEvents
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.isRoot
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.util.TreeIterables
 import com.github.ashutoshgngwr.noice.widget.DurationPicker
 import com.google.android.material.textfield.TextInputLayout
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.instanceOf
 import org.hamcrest.TypeSafeMatcher
 
 /**
@@ -31,7 +31,7 @@ object EspressoX {
   fun clickOn(@IdRes viewId: Int): ViewAction {
     return object : ViewAction {
       override fun getDescription() = "Click on view with specified id"
-      override fun getConstraints() = null
+      override fun getConstraints() = hasDescendant(withId(viewId))
 
       override fun perform(uiController: UiController, view: View) {
         view.findViewById<View>(viewId).also { it.performClick() }
@@ -40,12 +40,14 @@ object EspressoX {
   }
 
   /**
-   * [seekProgress] performs a seek action on a [SeekBar] with given [seekBarId].
+   * [seekProgress] performs a seek action on a [SeekBar] with given [seekBarId] inside currently
+   * matched view.
    */
   fun seekProgress(@IdRes seekBarId: Int, progress: Int): ViewAction {
     return object : ViewAction {
       override fun getDescription() = "Emulate user input on a seek bar"
-      override fun getConstraints() = Matchers.instanceOf<View>(SeekBar::class.java)
+      override fun getConstraints() =
+        hasDescendant(allOf(withId(seekBarId), instanceOf(SeekBar::class.java)))
 
       override fun perform(uiController: UiController, view: View) {
         val seekBar = view.findViewById<SeekBar>(seekBarId)
@@ -127,7 +129,7 @@ object EspressoX {
   fun addDurationToPicker(durationSecs: Long): ViewAction {
     return object : ViewAction {
       override fun getDescription() = "add duration to a DurationPicker"
-      override fun getConstraints() = Matchers.instanceOf<View>(DurationPicker::class.java)
+      override fun getConstraints() = instanceOf<View>(DurationPicker::class.java)
 
       override fun perform(uiController: UiController, view: View) {
         view as DurationPicker
@@ -140,10 +142,7 @@ object EspressoX {
    * Returns a [Matcher] that matches reset button of the [DurationPicker] view.
    */
   fun withDurationPickerResetButton(durationPickerMatcher: Matcher<View>): Matcher<View> {
-    return Matchers.allOf(
-      ViewMatchers.isDescendantOfA(durationPickerMatcher),
-      ViewMatchers.withId(R.id.button_reset)
-    )
+    return allOf(isDescendantOfA(durationPickerMatcher), withId(R.id.button_reset))
   }
 
   /**

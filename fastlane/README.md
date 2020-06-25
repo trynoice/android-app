@@ -26,6 +26,11 @@ Upload metadata to Google Play Store
 fastlane android beta
 ```
 Deploy a new version to the beta track on the Google Play
+### android generate_screenshots
+```
+fastlane android generate_screenshots
+```
+Generate screenshots of locales for which metadata exists
 
 ----
 

@@ -61,6 +61,13 @@ Adding translations to Noice is rather easy on GitHub as well
 1. Translate the F-Droid and Play Store metadata. See
    [docs](https://docs.fastlane.tools/actions/supply/#images-and-screenshots) and [an
    example](https://github.com/ashutoshgngwr/noice/tree/master/fastlane/metadata/android/pt-BR)
+
+   - Do not add screenshots. Screenshots are generated using Fastlane before creating
+     a release
+   - Do not add `icon` as it is untranslated
+   - You are free to create a `featureGraphic`. Its dimensions should be 1024wx500h and it
+     should be opaque
+
 1. Add your name to the translation credits section in the
    [`AboutFragment`](https://github.com/ashutoshgngwr/noice/blob/master/app/src/main/java/com/github/ashutoshgngwr/noice/fragment/AboutFragment.kt)
 
@@ -118,7 +125,8 @@ changes is necessary to prepare a new release.
 1. It must bump app version name and code in `app/build.gradle`
 2. It should add the release notes in `en-US` locale in the Fastlane metadata. Release notes are
    added to a new file at path `fastlane/metadata/android/en-US/changelogs/<version-code>.txt`
-3. It should update the app's descriptive assets (Fastlane metadata) if necessary.
+3. It should update the app's descriptive assets (Fastlane metadata) if required
+4. It should update generated screenshots if required (`fastlane generate_screenshots`)
 
 ### Play Store
 
