@@ -4,6 +4,7 @@ import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -139,7 +140,7 @@ class WakeUpTimerFragmentTest {
     clearMocks(WakeUpTimerManager)
     onView(EspressoX.withDurationPickerResetButton(withId(R.id.duration_picker)))
       .check(matches(isEnabled()))
-      .perform(click())
+      .perform(scrollTo(), click())
 
     verify(exactly = 1) { WakeUpTimerManager.cancel(any()) }
   }
