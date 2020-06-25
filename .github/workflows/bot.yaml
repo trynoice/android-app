@@ -1,4 +1,4 @@
-name: Changelog
+name: Bot
 on:
   push:
     tags:
@@ -6,8 +6,30 @@ on:
 
 # generate and push changelogs to master only
 jobs:
-  generate:
-    name: Generate
+  create-release:
+    name: Create GitHub Release
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: get_tag_message
+        run: >-
+          TAG_BODY="$(git tag  --list --format='%(contents:body)' ${{ github.ref }})";
+          TAG_BODY="${TAG_BODY//'%'/'%25'}";
+          TAG_BODY="${TAG_BODY//$'\n'/'%0A'}";
+          TAG_BODY="${TAG_BODY//$'\r'/'%0D'}";
+          echo "::set-output name=message::${TAG_BODY}";
+      - uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: v${{ github.ref }}
+          body: ${{ steps.get_tag_message.outputs.message }}
+          draft: false
+          prerelease: false
+  generate-changelog:
+    name: Generate Changelog
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
