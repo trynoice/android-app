@@ -4,6 +4,8 @@ Noice është një aplikacion që ju lejon të krijoni një ambient të personal
 
 <b>Karakteristika</b>
 - 24 zhurma të regjistruara
+- Google Cast (Chromecast) enabled <i>(eksperimentale, Play Store liron vetëm)</i>
+- Koha e zgjimit (Ora e alarmit) <i>(eksperimentale)</i>
 - Make customised mix
 - Bëni përzierje të personalizuar
 - Koha automatike e gjumit

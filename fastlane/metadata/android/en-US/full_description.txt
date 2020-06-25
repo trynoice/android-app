@@ -4,9 +4,11 @@ Noice is an app that allows you to create a customised ambience using clips from
 
 <b>Features</b>
 - 24 recorded noises
+- Google Cast (Chromecast) enabled <i>(experimental, Play Store release only)</i>
+- Auto sleep timer
+- Wake-up timer (Alarm Clock) <i>(experimental)</i>
 - Make customised mix
 - Save your favorite mixes
-- Auto sleep timer
 - Play alongside other music players
 - Individual volume control for each noise source
 - Offline playback
@@ -17,6 +19,14 @@ Noice is an app that allows you to create a customised ambience using clips from
 - Monsoon set (rain, thunders)
 - Teleportation set (coffee shop, office, moving train, in-flight, seaside, riverbank, etc.)
 - Raw noise (white, pink, brownian)
+
+<b>Permissions</b>
+- WAKE_LOCK: to keep device CPU awake during playback
+- FOREGROUND_SERVICE: to run the player process (different than UI)
+- RECEIVE_BOOT_COMPLETED: to ensure that wake-up timers persist across reboots
+- ACCESS_NETWORK_STATE: added by a dependency, currently not in use
+- INTERNET: to enable Chromecast and financial contributions
+- BILLING: to enable financial contributions for supporting development
 
 Noice is free and open-source software.
 https://github.com/ashutoshgngwr/noice

@@ -4,7 +4,9 @@ Noice è un'app che ti permette di creare atmosfere personalizzate usando clips 
 
 <b>Caratteristiche</b>
 - 24 rumori registrati
+- Google Cast (Chromecast) abilitato <i>(sperimentale, solo versione Play Store)</i>
 - Crea mix personalizzati
+- Timer sveglia (Sveglia) <i>(sperimentale)</i>
 - Salva i tuoi mix preferiti
 - Timer di spegnimento automatico
 - Funziona contemporanamente ad altri riproduttori musicali

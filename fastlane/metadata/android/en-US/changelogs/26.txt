@@ -1,0 +1,13 @@
+- Add Wake-up timer
+- Add experimental support for Chromecast (Play Store release only)
+- Add play-pause toggle to the titlebar
+- Add Brazillian Portuguese (pt-BR) translations
+- Add Dutch (nl) translations
+- Add Spanish (es-ES) translations
+- Add Swedish (sv) translations
+- Add Albanian (sq-AL) translations
+- Add interface to support development
+- Miscellaneous bug fixes & UI improvements
+- Update to privacy policy
+
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG

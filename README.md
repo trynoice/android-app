@@ -21,7 +21,9 @@ Noice is an app that allows you to create your own set of background sounds by m
 ## Features
 
 - 24 recorded noises
+- Google Cast (Chromecast) enabled
 - Auto sleep timer
+- Wake-up timer (Alarm Clock)
 - Make customised mix
 - Save your favorite mixes
 - Play alongside other music players
@@ -30,18 +32,18 @@ Noice is an app that allows you to create your own set of background sounds by m
 
 ## Screenshots
 
-|                                                                                      |                                                                                      |                                                                                      |                                                                                      |
-| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
-| ![Screenshot 1](fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png) | ![Screenshot 2](fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png) | ![Screenshot 3](fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png) | ![Screenshot 4](fastlane/metadata/android/en-US/images/phoneScreenshots/7_en-US.png) |
-| ![Screenshot 5](fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png) | ![Screenshot 6](fastlane/metadata/android/en-US/images/phoneScreenshots/5_en-US.png) | ![Screenshot 7](fastlane/metadata/android/en-US/images/phoneScreenshots/6_en-US.png) |                                                                                      |
+|                                                                                |                                                                                |                                                                                |                                                                                |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| ![Screenshot 1](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png) | ![Screenshot 2](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png) | ![Screenshot 3](fastlane/metadata/android/en-US/images/phoneScreenshots/3.png) | ![Screenshot 4](fastlane/metadata/android/en-US/images/phoneScreenshots/4.png) |
+| ![Screenshot 5](fastlane/metadata/android/en-US/images/phoneScreenshots/5.png) | ![Screenshot 6](fastlane/metadata/android/en-US/images/phoneScreenshots/6.png) | ![Screenshot 7](fastlane/metadata/android/en-US/images/phoneScreenshots/7.png) |                                                                                |
 
 ## Contributing
 
-We welcome contributions of all kinds and sizes. This includes everything from simple bug reports to large features. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+We welcome contributions of all kinds and sizes. It includes everything from simple bug reports to huge features. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## Privacy Policy
 
-Noice does not collect any kind of data from users. Heck, it doesn't even connect to the Internet.
+Noice does not collect any data from its users. Selected third-party services handle all payments supporting the development of this project. For policies related to payments, users should refer to the privacy policy of the payment service they have chosen to use.
 
 ## Financial Contributors
 

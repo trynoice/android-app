@@ -4,7 +4,9 @@ Die App Noice erlaubt es dir, deine eigene Geräuschumgebung mit Clips aus diver
 
 <b>Funktionen</b>
 - 24 Geräuschaufnahmen
+- Google Cast (Chromecast) aktiviert <i>(experimentell, nur im Play Store)</i>
 - Erstelle einen benutzerdefinierten Mix
+- Weck-Timer (Wecker) <i>(experimentell)</i>
 - Speichere deine Lieblingsmixe
 - Automatischer Schlaftimer
 - Neben anderen Musikplayern abspielbar

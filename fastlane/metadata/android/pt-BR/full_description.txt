@@ -4,7 +4,9 @@ Noice é um aplicativo que lhe permite simular seu próprio "ambiente sonoro" us
 
 <b>Funções</b>
 - 24 sons disponíveis
+- Google Cast (Chromecast) ativado <i>(experimental, apenas na versão Play Store)</i>
 - Misture e ajuste sons a gosto
+- Despertador (Despertador) <i>(experimental)</i>
 - Salve seus ajustes para uso futuro
 - Timer para uso no sono
 - Funciona em conjunto com qualquer aplicativo de música
