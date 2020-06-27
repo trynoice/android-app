@@ -15,8 +15,8 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.Sound
-import com.github.ashutoshgngwr.noice.sound.player.adapter.LocalPlayerAdapterFactory
-import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
+import com.github.ashutoshgngwr.noice.sound.player.strategy.LocalPlaybackStrategyFactory
+import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategyFactory
 
 /**
  * [PlayerManager] is responsible for managing [Player]s end-to-end for all sounds.
@@ -57,8 +57,8 @@ class PlayerManager(private val context: Context) :
     .setWillPauseWhenDucked(false)
     .build()
 
-  private var playerAdapterFactory: PlayerAdapterFactory =
-    LocalPlayerAdapterFactory(context, audioAttributes)
+  private var playbackStrategyFactory: PlaybackStrategyFactory =
+    LocalPlaybackStrategyFactory(context, audioAttributes)
 
   private val playbackStateBuilder = PlaybackStateCompat.Builder()
     .setActions(
@@ -88,20 +88,20 @@ class PlayerManager(private val context: Context) :
   private val castAPIWrapper = CastAPIWrapper.from(context, true).apply {
     onSessionBegin {
       Log.d(TAG, "starting cast session")
-      playerAdapterFactory = newCastPlayerAdapterFactory()
-      recreatePlayerAdapters()
+      playbackStrategyFactory = newCastPlaybackStrategyFactory()
+      updatePlaybackStrategies()
       mediaSession.setPlaybackToRemote(newCastVolumeProvider())
     }
 
     onSessionEnd {
       // onSessionEnded gets called when restarting the activity. So need to ensure that we're not
-      // recreating the LocalPlayerAdapterFactory again because it will cause [PlayerAdapter]s to be
+      // recreating the LocalPlaybackStrategyFactory again because it will cause [PlaybackStrategy]s to be
       // recreated resulting glitches in playback.
-      if (playerAdapterFactory !is LocalPlayerAdapterFactory) {
+      if (playbackStrategyFactory !is LocalPlaybackStrategyFactory) {
         Log.d(TAG, "ending cast session")
-        playerAdapterFactory = LocalPlayerAdapterFactory(context, audioAttributes)
+        playbackStrategyFactory = LocalPlaybackStrategyFactory(context, audioAttributes)
         mediaSession.setPlaybackToLocal(AudioManager.STREAM_MUSIC)
-        recreatePlayerAdapters()
+        updatePlaybackStrategies()
       }
     }
   }
@@ -179,7 +179,7 @@ class PlayerManager(private val context: Context) :
    */
   fun play(soundKey: String) {
     if (!players.containsKey(soundKey)) {
-      players[soundKey] = Player(Sound.get(soundKey), playerAdapterFactory)
+      players[soundKey] = Player(Sound.get(soundKey), playbackStrategyFactory)
     }
 
     if (playbackDelayed) {
@@ -284,11 +284,11 @@ class PlayerManager(private val context: Context) :
   }
 
   /**
-   * Attempts to recreate the [PlayerAdapterFactory] for all [Player]s using the current
-   * [PlayerAdapterFactory] instance
+   * Attempts to recreate the [PlaybackStrategyFactory] for all [Player]s using the current
+   * [PlaybackStrategyFactory] instance
    */
-  private fun recreatePlayerAdapters() {
-    players.values.forEach { it.recreatePlayerAdapter(playerAdapterFactory) }
+  private fun updatePlaybackStrategies() {
+    players.values.forEach { it.updatePlaybackStrategy(playbackStrategyFactory) }
   }
 
   /**
@@ -327,7 +327,7 @@ class PlayerManager(private val context: Context) :
       if (players.contains(it.soundKey)) {
         player = requireNotNull(players[it.soundKey])
       } else {
-        player = Player(Sound.get(it.soundKey), playerAdapterFactory)
+        player = Player(Sound.get(it.soundKey), playbackStrategyFactory)
         players[it.soundKey] = player
       }
 

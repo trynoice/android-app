@@ -10,7 +10,7 @@ import com.github.ashutoshgngwr.noice.ShadowMediaSessionCompat
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.Sound
-import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
+import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategyFactory
 import io.mockk.*
 import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
@@ -232,7 +232,7 @@ class PlayerManagerTest {
   }
 
   @Test
-  fun testPlayerAdapterFactorySwitchover() {
+  fun testUpdatePlaybackStrategies() {
     val beginCallbackSlot = slot<() -> Unit>()
     val endCallbackSlot = slot<() -> Unit>()
     verify(exactly = 1) {
@@ -240,18 +240,18 @@ class PlayerManagerTest {
       mockCastAPIWrapper.onSessionEnd(capture(endCallbackSlot))
     }
 
-    val mockPlayerAdapterFactory = mockk<PlayerAdapterFactory>(relaxed = true)
+    val mockPlaybackStrategy = mockk<PlaybackStrategyFactory>(relaxed = true)
     val spyVolumeProvider = spyk<VolumeProviderCompat>()
-    every { mockCastAPIWrapper.newCastPlayerAdapterFactory() } returns mockPlayerAdapterFactory
+    every { mockCastAPIWrapper.newCastPlaybackStrategyFactory() } returns mockPlaybackStrategy
     every { mockCastAPIWrapper.newCastVolumeProvider() } returns spyVolumeProvider
     beginCallbackSlot.invoke() // invoke the session begin callback
-    verify(exactly = 1) { players.getValue("test").recreatePlayerAdapter(mockPlayerAdapterFactory) }
+    verify(exactly = 1) { players.getValue("test").updatePlaybackStrategy(mockPlaybackStrategy) }
     assertEquals(spyVolumeProvider, ShadowMediaSessionCompat.currentVolumeProvider)
-    clearMocks(mockPlayerAdapterFactory, players.getValue("test"))
+    clearMocks(mockPlaybackStrategy, players.getValue("test"))
 
     endCallbackSlot.invoke()
-    verify(exactly = 1) { players.getValue("test").recreatePlayerAdapter(any()) }
-    verify { mockPlayerAdapterFactory wasNot called }
+    verify(exactly = 1) { players.getValue("test").updatePlaybackStrategy(any()) }
+    verify { mockPlaybackStrategy wasNot called }
   }
 
   @Test

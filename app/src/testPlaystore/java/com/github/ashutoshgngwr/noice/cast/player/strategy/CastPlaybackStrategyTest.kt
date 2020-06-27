@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.cast.player.adapter
+package com.github.ashutoshgngwr.noice.cast.player.strategy
 
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.google.android.gms.cast.framework.CastSession
@@ -12,7 +12,7 @@ import org.robolectric.RobolectricTestRunner
 import org.skyscreamer.jsonassert.JSONAssert
 
 @RunWith(RobolectricTestRunner::class)
-class CastPlayerAdapterTest {
+class CastPlaybackStrategyTest {
 
   private val namespace = "test"
 
@@ -21,7 +21,7 @@ class CastPlayerAdapterTest {
   private lateinit var sound: Sound
 
   @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
-  private lateinit var playerAdapter: CastPlayerAdapter
+  private lateinit var playbackStrategy: CastPlaybackStrategy
 
   private lateinit var jsonSlot: CapturingSlot<String>
 
@@ -55,7 +55,7 @@ class CastPlayerAdapterTest {
 
   @Test
   fun testSetVolume() {
-    playerAdapter.setVolume(1f)
+    playbackStrategy.setVolume(1f)
     val expectedJSON = "{" +
       "  \"soundKey\": \"test\"," +
       "  \"isLooping\": false," +
@@ -69,7 +69,7 @@ class CastPlayerAdapterTest {
   fun testPlay_withLoopingSound() {
     every { sound.isLoopable } returns true
 
-    playerAdapter.play()
+    playbackStrategy.play()
     val expectedJSON = "{" +
       "  \"soundKey\": \"test\"," +
       "  \"isLooping\": true," +
@@ -82,7 +82,7 @@ class CastPlayerAdapterTest {
 
   @Test
   fun testPlay_withNonLoopingSound() {
-    playerAdapter.play()
+    playbackStrategy.play()
     val expectedJSON = "{" +
       "  \"soundKey\": \"test\"," +
       "  \"isLooping\": false," +
@@ -95,7 +95,7 @@ class CastPlayerAdapterTest {
 
   @Test
   fun testPause() {
-    playerAdapter.pause()
+    playbackStrategy.pause()
     val expectedJSON = "{" +
       "  \"soundKey\": \"test\"," +
       "  \"isLooping\": false," +
@@ -108,7 +108,7 @@ class CastPlayerAdapterTest {
 
   @Test
   fun testStop() {
-    playerAdapter.stop()
+    playbackStrategy.stop()
     val expectedJSON = "{" +
       "  \"soundKey\": \"test\"," +
       "  \"isLooping\": false," +

@@ -1,10 +1,10 @@
-package com.github.ashutoshgngwr.noice.sound.player.adapter
+package com.github.ashutoshgngwr.noice.sound.player.strategy
 
 /**
- * [PlayerAdapter] interface is the generic type used by the SoundPlayer class to control the
+ * [PlaybackStrategy] interface is the generic type used by the SoundPlayer class to control the
  * underlying playback mechanism
  */
-interface PlayerAdapter {
+interface PlaybackStrategy {
   /**
    * sets the media volume.
    *

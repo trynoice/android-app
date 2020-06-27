@@ -5,7 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.StringRes
 import androidx.media.VolumeProviderCompat
-import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
+import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategyFactory
 
 /**
  * [CastAPIWrapper] wraps all API calls to GMS API and hides API specific classes from the caller.
@@ -25,8 +25,8 @@ class CastAPIWrapper private constructor(context: Context, registerSessionCallba
 
   fun setUpMenuItem(menu: Menu, @StringRes titleResId: Int): MenuItem? = null
 
-  fun newCastPlayerAdapterFactory(): PlayerAdapterFactory {
-    throw IllegalStateException("F-Droid build shouldn't attempt to create CastSoundPlayerFactory")
+  fun newCastPlaybackStrategyFactory(): PlaybackStrategyFactory {
+    throw IllegalStateException("F-Droid build shouldn't attempt to create CastPlaybackStrategyFactory")
   }
 
   fun newCastVolumeProvider(): VolumeProviderCompat {
