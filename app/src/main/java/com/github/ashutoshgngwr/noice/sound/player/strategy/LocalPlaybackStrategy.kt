@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.sound.player.adapter
+package com.github.ashutoshgngwr.noice.sound.player.strategy
 
 import android.content.Context
 import android.net.Uri
@@ -15,11 +15,11 @@ import com.google.android.exoplayer2.upstream.DataSource
 import kotlin.math.ceil
 
 /**
- * [LocalPlayerAdapter] implements [PlayerAdapter] which plays the media locally
+ * [LocalPlaybackStrategy] implements [PlaybackStrategy] which plays the media locally
  * on device using the [SimpleExoPlayer] implementation.
  */
-class LocalPlayerAdapter(context: Context, audioAttributes: AudioAttributesCompat, sound: Sound) :
-  PlayerAdapter {
+class LocalPlaybackStrategy(context: Context, audioAttributes: AudioAttributesCompat, sound: Sound) :
+  PlaybackStrategy {
 
   companion object {
     const val FADE_VOLUME_STEP = 0.02f
@@ -72,7 +72,7 @@ class LocalPlayerAdapter(context: Context, audioAttributes: AudioAttributesCompa
       return
     }
 
-    // an internal feature of the LocalPlayerAdapter is that it won't fade-in non-looping sounds
+    // an internal feature of the LocalPlaybackStrategy is that it won't fade-in non-looping sounds
     if (exoPlayer.repeatMode == ExoPlayer.REPEAT_MODE_ONE) {
       exoPlayer.fade(1, FADE_DURATION)
     } else {

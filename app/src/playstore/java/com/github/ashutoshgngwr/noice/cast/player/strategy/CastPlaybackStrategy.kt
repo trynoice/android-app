@@ -1,20 +1,20 @@
-package com.github.ashutoshgngwr.noice.cast.player.adapter
+package com.github.ashutoshgngwr.noice.cast.player.strategy
 
 import com.github.ashutoshgngwr.noice.Utils.withGson
 import com.github.ashutoshgngwr.noice.sound.Sound
-import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapter
+import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategy
 import com.google.android.gms.cast.framework.CastSession
 import com.google.gson.annotations.Expose
 
 /**
- * [CastPlayerAdapter] implements [PlayerAdapter] that sends the control events
+ * [CastPlaybackStrategy] implements [PlaybackStrategy] that sends the control events
  * to the cast receiver application.
  */
-class CastPlayerAdapter(
+class CastPlaybackStrategy(
   private val session: CastSession,
   private val namespace: String,
   private val sound: Sound
-) : PlayerAdapter {
+) : PlaybackStrategy {
 
   companion object {
     private const val ACTION_CREATE = "create"

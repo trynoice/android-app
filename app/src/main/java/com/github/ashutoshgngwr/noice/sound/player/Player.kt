@@ -3,15 +3,15 @@ package com.github.ashutoshgngwr.noice.sound.player
 import android.os.Handler
 import android.util.Log
 import com.github.ashutoshgngwr.noice.sound.Sound
-import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapter
-import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
+import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategy
+import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategyFactory
 import kotlin.random.Random.Default.nextInt
 
 /**
- * [Player] manages playback of a single [Sound]. It [PlayerAdapter] instances to control media
+ * [Player] manages playback of a single [Sound]. It [PlaybackStrategy] instances to control media
  * playback and keeps track of playback information such as [isPlaying], [volume] and [timePeriod].
  */
-class Player(private val sound: Sound, playerAdapterFactory: PlayerAdapterFactory) {
+class Player(private val sound: Sound, playbackStrategyFactory: PlaybackStrategyFactory) {
 
   companion object {
     private val TAG = Player::class.simpleName
@@ -31,18 +31,18 @@ class Player(private val sound: Sound, playerAdapterFactory: PlayerAdapterFactor
   val soundKey = sound.key
 
   private var isPlaying = false
-  private var playerAdapter = playerAdapterFactory.newPlayerAdapter(sound).also {
+  private var playbackStrategy = playbackStrategyFactory.newInstance(sound).also {
     it.setVolume(volume.toFloat() / MAX_VOLUME)
   }
 
   private val handler = Handler()
 
   /**
-   * Sets the volume for the [Player] using current [PlayerAdapter].
+   * Sets the volume for the [Player] using current [PlaybackStrategy].
    */
   fun setVolume(volume: Int) {
     this.volume = volume
-    this.playerAdapter.setVolume(volume.toFloat() / MAX_VOLUME)
+    this.playbackStrategy.setVolume(volume.toFloat() / MAX_VOLUME)
   }
 
   /**
@@ -53,7 +53,7 @@ class Player(private val sound: Sound, playerAdapterFactory: PlayerAdapterFactor
   fun play() {
     isPlaying = true
     if (sound.isLoopable) {
-      playerAdapter.play()
+      playbackStrategy.play()
     } else {
       playAndRegisterDelayedCallback()
     }
@@ -67,7 +67,7 @@ class Player(private val sound: Sound, playerAdapterFactory: PlayerAdapterFactor
       return
     }
 
-    playerAdapter.play()
+    playbackStrategy.play()
     val delay = nextInt(MIN_TIME_PERIOD, 1 + timePeriod) * 1000L
     handler.postDelayed(this::playAndRegisterDelayedCallback, delay)
     Log.d(TAG, "scheduling delayed playback with ${delay}ms delay")
@@ -79,7 +79,7 @@ class Player(private val sound: Sound, playerAdapterFactory: PlayerAdapterFactor
    */
   fun pause() {
     isPlaying = false
-    playerAdapter.pause()
+    playbackStrategy.pause()
     if (sound.isLoopable) {
       handler.removeCallbacks(this::playAndRegisterDelayedCallback)
     }
@@ -91,23 +91,23 @@ class Player(private val sound: Sound, playerAdapterFactory: PlayerAdapterFactor
    */
   fun stop() {
     isPlaying = false
-    playerAdapter.stop()
+    playbackStrategy.stop()
     if (sound.isLoopable) {
       handler.removeCallbacks(this::playAndRegisterDelayedCallback)
     }
   }
 
   /**
-   * setAdapter updates the [PlayerAdapter] used by the [Player] instance. All subsequent
-   * player control commands are sent to the new [PlayerAdapter]. It also sends setVolume command
-   * on the new [PlayerAdapter]. If [Player] is looping and playing, it also sends the play
-   * command on the new [PlayerAdapter].
+   * [updatePlaybackStrategy] updates the [PlaybackStrategy] used by the [Player] instance. All subsequent
+   * player control commands are sent to the new [PlaybackStrategy]. It also sends setVolume command
+   * on the new [PlaybackStrategy]. If [Player] is looping and playing, it also sends the play
+   * command on the new [PlaybackStrategy].
    */
-  fun recreatePlayerAdapter(playerAdapterFactory: PlayerAdapterFactory) {
+  fun updatePlaybackStrategy(playbackStrategyFactory: PlaybackStrategyFactory) {
     // pause then stop just to prevent the fade-out transition from LocalSoundPlayer
-    playerAdapter.pause()
-    playerAdapter.stop()
-    playerAdapter = playerAdapterFactory.newPlayerAdapter(sound).also {
+    playbackStrategy.pause()
+    playbackStrategy.stop()
+    playbackStrategy = playbackStrategyFactory.newInstance(sound).also {
       it.setVolume(volume.toFloat() / MAX_VOLUME)
       if (isPlaying && sound.isLoopable) { // because non looping will automatically play on scheduled callback.
         it.play()

@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.sound.player.adapter
+package com.github.ashutoshgngwr.noice.sound.player.strategy
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
@@ -17,24 +17,24 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 
 @RunWith(RobolectricTestRunner::class)
-class LocalPlayerAdapterTest {
+class LocalPlaybackStrategyTest {
 
   @RelaxedMockK
   private lateinit var exoPlayer: SimpleExoPlayer
 
   @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
-  private lateinit var playerAdapter: LocalPlayerAdapter
+  private lateinit var playbackStrategy: LocalPlaybackStrategy
 
   @Before
   fun setup() {
     val context: Context = ApplicationProvider.getApplicationContext()
-    playerAdapter = LocalPlayerAdapter(context, mockk(relaxed = true), mockk(relaxed = true))
+    playbackStrategy = LocalPlaybackStrategy(context, mockk(relaxed = true), mockk(relaxed = true))
     MockKAnnotations.init(this)
   }
 
   @Test
   fun testSetVolume() {
-    playerAdapter.setVolume(1f)
+    playbackStrategy.setVolume(1f)
     verify(exactly = 1) { exoPlayer.volume = 1f }
   }
 
@@ -42,7 +42,7 @@ class LocalPlayerAdapterTest {
   fun testPlay_onOngoingPlayback() {
     every { exoPlayer.playWhenReady } returns true
     every { exoPlayer.isPlaying } returns true
-    playerAdapter.play()
+    playbackStrategy.play()
     verify(exactly = 0) { exoPlayer.playWhenReady = any() }
   }
 
@@ -52,9 +52,9 @@ class LocalPlayerAdapterTest {
     every { exoPlayer.isPlaying } returns false
     every { exoPlayer.repeatMode } returns ExoPlayer.REPEAT_MODE_ONE
     every { exoPlayer.volume } returns 1f
-    playerAdapter.play()
+    playbackStrategy.play()
 
-    shadowOf(playerAdapter.transitionTicker).also {
+    shadowOf(playbackStrategy.transitionTicker).also {
       it.invokeTick(100)
       it.invokeFinish()
     }
@@ -71,7 +71,7 @@ class LocalPlayerAdapterTest {
     // should start playback without fade
     every { exoPlayer.isPlaying } returns false
     every { exoPlayer.repeatMode } returns ExoPlayer.REPEAT_MODE_OFF
-    playerAdapter.play()
+    playbackStrategy.play()
     verifyOrder {
       exoPlayer.seekTo(0)
       exoPlayer.playWhenReady = true
@@ -80,14 +80,14 @@ class LocalPlayerAdapterTest {
 
   @Test
   fun testPause() {
-    playerAdapter.pause()
+    playbackStrategy.pause()
     verify(exactly = 1) { exoPlayer.playWhenReady = false }
   }
 
   @Test
   fun testStop_withStoppedPlayback() {
     every { exoPlayer.playWhenReady } returns false
-    playerAdapter.stop()
+    playbackStrategy.stop()
     verify(exactly = 0) { exoPlayer.playWhenReady = any() }
   }
 
@@ -96,9 +96,9 @@ class LocalPlayerAdapterTest {
     every { exoPlayer.playWhenReady } returns true
     every { exoPlayer.isPlaying } returns true
     every { exoPlayer.volume } returns 1f
-    playerAdapter.stop()
+    playbackStrategy.stop()
 
-    shadowOf(playerAdapter.transitionTicker).also {
+    shadowOf(playbackStrategy.transitionTicker).also {
       it.invokeTick(100)
       it.invokeFinish()
     }

@@ -1,8 +1,8 @@
 package com.github.ashutoshgngwr.noice.sound.player
 
 import com.github.ashutoshgngwr.noice.sound.Sound
-import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapter
-import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
+import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategy
+import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategyFactory
 import io.mockk.*
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -15,25 +15,25 @@ import org.robolectric.shadows.ShadowLooper
 class PlayerTest {
 
   private lateinit var mockSound: Sound
-  private lateinit var mockPlayerAdapter: PlayerAdapter
+  private lateinit var mockPlaybackStrategy: PlaybackStrategy
   private lateinit var player: Player
 
   @Before
   fun setup() {
     mockSound = mockk(relaxed = true)
-    mockPlayerAdapter = mockk(relaxed = true)
+    mockPlaybackStrategy = mockk(relaxed = true)
     player = Player(mockSound, mockk {
-      every { newPlayerAdapter(any()) } returns mockPlayerAdapter
+      every { newInstance(any()) } returns mockPlaybackStrategy
     })
 
     // clear calls that may have been invoked during player initialization.
-    clearMocks(mockSound, mockPlayerAdapter)
+    clearMocks(mockSound, mockPlaybackStrategy)
   }
 
   @Test
   fun testSetVolume() {
     player.setVolume(16)
-    verify(exactly = 1) { mockPlayerAdapter.setVolume(16f / Player.MAX_VOLUME) }
+    verify(exactly = 1) { mockPlaybackStrategy.setVolume(16f / Player.MAX_VOLUME) }
     assertEquals(16, player.volume)
   }
 
@@ -41,7 +41,7 @@ class PlayerTest {
   fun testPlay_withLoopingSound() {
     every { mockSound.isLoopable } returns true
     player.play()
-    verify(exactly = 1) { mockPlayerAdapter.play() }
+    verify(exactly = 1) { mockPlaybackStrategy.play() }
   }
 
   @Test
@@ -49,104 +49,104 @@ class PlayerTest {
     every { mockSound.isLoopable } returns false
     player.play()
 
-    verify { mockPlayerAdapter.play() }
-    clearMocks(mockPlayerAdapter)
+    verify { mockPlaybackStrategy.play() }
+    clearMocks(mockPlaybackStrategy)
 
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks() // run the delayed callback
-    verify(exactly = 1) { mockPlayerAdapter.play() }
+    verify(exactly = 1) { mockPlaybackStrategy.play() }
   }
 
   @Test
   fun testPause_withLoopingSound() {
     every { mockSound.isLoopable } returns true
     player.pause()
-    verify(exactly = 1) { mockPlayerAdapter.pause() }
+    verify(exactly = 1) { mockPlaybackStrategy.pause() }
   }
 
   @Test
   fun testPause_withNonLoopingSound() {
     every { mockSound.isLoopable } returns false
     player.pause()
-    verify(exactly = 1) { mockPlayerAdapter.pause() }
+    verify(exactly = 1) { mockPlaybackStrategy.pause() }
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks() // try to invoke delayed play callback
-    verify(exactly = 0) { mockPlayerAdapter.play() } // need no more interactions
+    verify(exactly = 0) { mockPlaybackStrategy.play() } // need no more interactions
   }
 
   @Test
   fun testStop_withLoopingSound() {
     every { mockSound.isLoopable } returns true
     player.stop()
-    verify(exactly = 1) { mockPlayerAdapter.stop() }
+    verify(exactly = 1) { mockPlaybackStrategy.stop() }
   }
 
   @Test
   fun testStop_withNonLoopingSound() {
     every { mockSound.isLoopable } returns false
     player.stop()
-    verify(exactly = 1) { mockPlayerAdapter.stop() }
+    verify(exactly = 1) { mockPlaybackStrategy.stop() }
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks() // try to invoke delayed play callback
-    verify(exactly = 0) { mockPlayerAdapter.play() }
+    verify(exactly = 0) { mockPlaybackStrategy.play() }
   }
 
   @Test
-  fun testRecreatePlayerAdapter_onStoppedPlayback() {
-    val adapter2 = mockk<PlayerAdapter>(relaxed = true)
-    mockk<PlayerAdapterFactory> {
-      every { newPlayerAdapter(any()) } returns adapter2
-      player.recreatePlayerAdapter(this)
+  fun testUpdatePlayerStrategy_onStoppedPlayback() {
+    val strategy2 = mockk<PlaybackStrategy>(relaxed = true)
+    mockk<PlaybackStrategyFactory> {
+      every { newInstance(any()) } returns strategy2
+      player.updatePlaybackStrategy(this)
     }
 
     verifySequence {
-      mockPlayerAdapter.pause()
-      mockPlayerAdapter.stop()
-      adapter2.setVolume(any())
+      mockPlaybackStrategy.pause()
+      mockPlaybackStrategy.stop()
+      strategy2.setVolume(any())
     }
   }
 
   @Test
-  fun testRecreatePlayerAdapter_onOngoingPlayback_withNonLoopingSound() {
+  fun testUpdatePlayerStrategy_onOngoingPlayback_withNonLoopingSound() {
     player.play() // ensure that it is playing
 
-    val adapter2 = mockk<PlayerAdapter>(relaxed = true)
+    val strategy2 = mockk<PlaybackStrategy>(relaxed = true)
     every { mockSound.isLoopable } returns false
-    mockk<PlayerAdapterFactory> {
-      every { newPlayerAdapter(any()) } returns adapter2
-      player.recreatePlayerAdapter(this)
+    mockk<PlaybackStrategyFactory> {
+      every { newInstance(any()) } returns strategy2
+      player.updatePlaybackStrategy(this)
     }
 
     verifySequence {
-      mockPlayerAdapter.play() // from initial play call
-      mockPlayerAdapter.pause()
-      mockPlayerAdapter.stop()
-      adapter2.setVolume(any())
+      mockPlaybackStrategy.play() // from initial play call
+      mockPlaybackStrategy.pause()
+      mockPlaybackStrategy.stop()
+      strategy2.setVolume(any())
     }
 
-    clearMocks(adapter2) // clear previous calls
+    clearMocks(strategy2) // clear previous calls
 
     // play is called with delayed callback for non-looping sounds
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     verifySequence {
-      adapter2.play()
+      strategy2.play()
     }
   }
 
   @Test
-  fun testRecreatePlayerAdapter_onOngoingPlayback_withLoopingSound() {
+  fun testUpdatePlayerStrategy_onOngoingPlayback_withLoopingSound() {
     player.play() // ensure that it is playing
 
-    val adapter2 = mockk<PlayerAdapter>(relaxed = true)
+    val strategy2 = mockk<PlaybackStrategy>(relaxed = true)
     every { mockSound.isLoopable } returns true
-    mockk<PlayerAdapterFactory> {
-      every { newPlayerAdapter(any()) } returns adapter2
-      player.recreatePlayerAdapter(this)
+    mockk<PlaybackStrategyFactory> {
+      every { newInstance(any()) } returns strategy2
+      player.updatePlaybackStrategy(this)
     }
 
     verifySequence {
-      mockPlayerAdapter.play() // from initial play call
-      mockPlayerAdapter.pause()
-      mockPlayerAdapter.stop()
-      adapter2.setVolume(any())
-      adapter2.play()
+      mockPlaybackStrategy.play() // from initial play call
+      mockPlaybackStrategy.pause()
+      mockPlaybackStrategy.stop()
+      strategy2.setVolume(any())
+      strategy2.play()
     }
   }
 }

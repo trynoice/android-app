@@ -8,8 +8,8 @@ import androidx.core.view.MenuItemCompat
 import androidx.media.VolumeProviderCompat
 import androidx.mediarouter.app.MediaRouteActionProvider
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.cast.player.adapter.CastPlayerAdapterFactory
-import com.github.ashutoshgngwr.noice.sound.player.adapter.PlayerAdapterFactory
+import com.github.ashutoshgngwr.noice.cast.player.strategy.CastPlaybackStrategyFactory
+import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategyFactory
 import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
 import com.google.android.gms.cast.framework.CastSession
@@ -61,10 +61,11 @@ class CastAPIWrapper private constructor(val context: Context, registerSessionCa
     }
 
   /**
-   * Initializes a new [CastPlayerAdapterFactory] instance and returns it as [PlayerAdapterFactory]
+   * Initializes a new [CastPlaybackStrategyFactory] instance and returns it as
+   * [PlaybackStrategyFactory].
    */
-  fun newCastPlayerAdapterFactory(): PlayerAdapterFactory =
-    CastPlayerAdapterFactory(
+  fun newCastPlaybackStrategyFactory(): PlaybackStrategyFactory =
+    CastPlaybackStrategyFactory(
       castContext.sessionManager.currentCastSession,
       context.getString(R.string.cast_namespace__default)
     )
