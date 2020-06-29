@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.Gravity
@@ -234,7 +235,10 @@ class MainActivityTest {
       filterEquals(
         Intent(
           Intent.ACTION_VIEW,
-          Uri.parse("market://details?id=${InstrumentationRegistry.getInstrumentation().targetContext.packageName}")
+          Uri.parse(
+            ApplicationProvider.getApplicationContext<Context>()
+              .getString(R.string.rate_us_on_play_store_url)
+          )
         )
       )
     )

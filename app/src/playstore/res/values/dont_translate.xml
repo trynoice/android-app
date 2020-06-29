@@ -7,7 +7,7 @@
     MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkxR84yP6PFaAFqhgVtFzI4O1Ws/xFQjJOhKCCrnyfs59SXSLsSbWjdMikCB7xcJsSkhfsril5iK88UIKhBLUW3oe16LO7YMOS6xeH0s0LdxHnF1rdwr0WtFc41CjGFIMWFxkB27jft97Ycp72cASjmU3K/Jc0a2Qo3thrpZlJN+vwRzveaVUE73o/FyzdUqyu4e8IngKOXDqxkgz3XLmzTHsx6XmeLTQl1WFMhOi5FxoHD9AHVoyZzbkGCMdRJERvk+ziSXdGR9pRUtGVkv+h5v3fwfVqBYZC28TAz5w6wSRDFvUnIp52nQH52vdHf1mrwHbeniMUJzV5GoBaspTqQIDAQAB
   </string>
   <string name="support_development__share_url" translatable="false">
-    https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice
+    https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice&amp;referrer=utm_source%3DAndroid%2520Client%26utm_campaign%3DShare%2520With%2520Friends
   </string>
   <string name="support_development__donate_usd1" translatable="false">$1</string>
   <string name="support_development__donate_usd2" translatable="false">$2</string>

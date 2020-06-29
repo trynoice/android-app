@@ -59,5 +59,5 @@ Noice does not collect any data from its users. Selected third-party services ha
 
 [MIT](LICENSE)
 
-[google-play-link]: https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice
+[google-play-link]: https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice&referrer=utm_source%3DGitHub%26utm_campaign%3DREADME
 [f-droid-link]: https://f-droid.org/app/com.github.ashutoshgngwr.noice

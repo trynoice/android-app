@@ -1,14 +1,12 @@
 package com.github.ashutoshgngwr.noice
 
 import android.app.ActivityManager
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Animatable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.IdRes
@@ -192,20 +190,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
       }
       R.id.rate_on_play_store -> {
-        try {
-          startActivity(
-            Intent(
-              Intent.ACTION_VIEW,
-              Uri.parse("market://details?id=$packageName")
-            ).addFlags(
-              Intent.FLAG_ACTIVITY_NO_HISTORY
-                or Intent.FLAG_ACTIVITY_NEW_DOCUMENT
-                or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
-            )
-          )
-        } catch (e: ActivityNotFoundException) {
-          Log.i(TAG, "Play store is not installed on the device", e)
-        }
+        startActivity(
+          Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.rate_us_on_play_store_url)))
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
       }
     }
 

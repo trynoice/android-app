@@ -96,4 +96,7 @@
   <string name="plus1h" translatable="false">1h</string>
   <string name="plus4h" translatable="false">4h</string>
   <string name="plus8h" translatable="false">8h</string>
+  <string name="rate_us_on_play_store_url" translatable="false">
+    https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice&amp;referrer=utm_source%3DAndroid%2520Client%26utm_campaign%3DRate%2520Us%2520On%2520Play%2520Store
+  </string>
 </resources>
