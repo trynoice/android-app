@@ -2,6 +2,8 @@ package com.github.ashutoshgngwr.noice
 
 import android.content.Intent
 import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -15,12 +17,12 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
+import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.player.Player
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.*
 import org.hamcrest.Matchers.allOf
 import org.junit.*
 import org.junit.Assume.assumeNotNull
@@ -122,13 +124,26 @@ class GenerateScreenshots {
 
   @After
   fun after() {
-    activityRule.run {
-      activityRule.activity.stopService(Intent(activity, MediaPlayerService::class.java))
+    activityRule.runOnUiThread {
+      activityRule.activity.stopService(
+        Intent(activityRule.activity, MediaPlayerService::class.java)
+      )
     }
   }
 
   @Test
   fun soundLibrary() {
+    // add a fake Cast button since we can't make the real one appear on an emulator.
+    mockkObject(CastAPIWrapper.Companion)
+    every { CastAPIWrapper.from(any(), any()) } returns mockk(relaxed = true) {
+      every { setUpMenuItem(any(), any()) } answers {
+        firstArg<Menu>().add("fake-cast-button")
+          .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS)
+          .setIcon(R.drawable.cast_ic_notification_small_icon)
+      }
+    }
+
+    activityRule.runOnUiThread { activityRule.activity.recreate() }
     onView(withId(R.id.list_sound)).perform(
       actionOnItemAtPosition<SoundLibraryFragment.ViewHolder>(
         0, EspressoX.clickOn(R.id.button_play)
@@ -165,6 +180,7 @@ class GenerateScreenshots {
 
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("1")
+    unmockkObject(CastAPIWrapper.Companion)
   }
 
   @Test
