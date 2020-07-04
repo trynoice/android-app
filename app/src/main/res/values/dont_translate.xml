@@ -89,6 +89,8 @@
   <string name="credits__translation_sq_al_0__url" translatable="false">https://github.com/3rg1s</string>
   <string name="credits__translation_nl_0" translatable="false">Dutch translation by Heimen Stoffels</string>
   <string name="credits__translation_nl_0__url" translatable="false">https://github.com/Vistaus</string>
+  <string name="credits__translation_cs_0" translatable="false">Czech translation by tajnymag</string>
+  <string name="credits__translation_cs_0__url" translatable="false">https://github.com/Tajnymag</string>
   <string name="app_issues_url" translatable="false">https://github.com/ashutoshgngwr/noice/issues</string>
   <string name="plus1m" translatable="false">1m</string>
   <string name="plus5m" translatable="false">5m</string>
