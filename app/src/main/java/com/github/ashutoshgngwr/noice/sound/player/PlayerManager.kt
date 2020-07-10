@@ -7,6 +7,7 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
+import androidx.core.os.HandlerCompat
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
@@ -33,6 +34,7 @@ class PlayerManager(private val context: Context) :
 
   companion object {
     private val TAG = PlayerManager::javaClass.name
+    private val DELAYED_STOP_CALLBACK_TOKEN = "${PlayerManager::javaClass.name}.stop_callback"
   }
 
   var state = State.STOPPED
@@ -126,7 +128,7 @@ class PlayerManager(private val context: Context) :
         }
       }
       AudioManager.AUDIOFOCUS_LOSS -> {
-        Log.d(TAG, "Permanently lost audio focus! Stop playback...")
+        Log.d(TAG, "Permanently lost audio focus! pause and wait to stop playback...")
         hasAudioFocus = false
         resumeOnFocusGain = true
         playbackDelayed = false
@@ -243,9 +245,12 @@ class PlayerManager(private val context: Context) :
     notifyChanges()
   }
 
-  fun pauseAndWaitBeforeStop() {
+  private fun pauseAndWaitBeforeStop() {
     pause()
-    handler.postDelayed(this::stop, TimeUnit.MINUTES.toMillis(1))
+    Log.d(TAG, "scheduling pauseAndWaitBeforeStop callback")
+    HandlerCompat.postDelayed(
+      handler, this::stop, DELAYED_STOP_CALLBACK_TOKEN, TimeUnit.MINUTES.toMillis(1)
+    )
   }
 
   /**
@@ -253,7 +258,8 @@ class PlayerManager(private val context: Context) :
    */
   fun resume() {
     if (hasAudioFocus) {
-      handler.removeCallbacks(this::stop) // remove pauseAndWaitBeforeStop callbacks, if any
+      Log.d(TAG, "removing pauseAndWaitBeforeStop callback")
+      handler.removeCallbacksAndMessages(DELAYED_STOP_CALLBACK_TOKEN)
       state = State.PLAYING
       players.values.forEach { it.play() }
     } else if (!playbackDelayed) {

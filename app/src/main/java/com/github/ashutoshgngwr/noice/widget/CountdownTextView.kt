@@ -41,13 +41,28 @@ class CountdownTextView : MaterialTextView {
    */
   private var countdownUntilMillis = SystemClock.uptimeMillis()
 
+  /**
+   * Updates the view content and registers a delayed callback to itself for indefinitely refreshing
+   * the view content. Use [android.view.View.removeCallbacks] to remove the callback. If won't
+   * register itself as a delayed callback if countdown timer has finished or if the view is not
+   * attached to a window anymore.
+   */
+  private val updateCallback = object : Runnable {
+    override fun run() {
+      updateCountdown()
+      if (SystemClock.uptimeMillis() < countdownUntilMillis) {
+        postDelayed(this, UPDATE_INTERVAL)
+      }
+    }
+  }
+
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
-    updateCountdownWithCallbacks()
+    post(updateCallback)
   }
 
   override fun onDetachedFromWindow() {
-    removeCallbacks(this::updateCountdownWithCallbacks)
+    removeCallbacks(updateCallback)
     super.onDetachedFromWindow()
   }
 
@@ -58,22 +73,9 @@ class CountdownTextView : MaterialTextView {
    */
   fun startCountdown(millis: Long) {
     // remove any pre-registered callbacks. startCountdown() may be called multiple times.
-    removeCallbacks(this::updateCountdownWithCallbacks)
+    removeCallbacks(updateCallback)
     countdownUntilMillis = SystemClock.uptimeMillis() + millis
-    updateCountdownWithCallbacks()
-  }
-
-  /**
-   * Updates the view content and registers a delayed callback to itself for indefinitely refreshing
-   * the view content. Use [android.view.View.removeCallbacks] to remove the callback. If won't
-   * register itself as a delayed callback if countdown timer has finished or if the view is not
-   * attached to a window anymore.
-   */
-  private fun updateCountdownWithCallbacks() {
-    updateCountdown()
-    if (SystemClock.uptimeMillis() < countdownUntilMillis) {
-      postDelayed(this::updateCountdownWithCallbacks, UPDATE_INTERVAL)
-    }
+    post(updateCallback)
   }
 
   /**

@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.sound.player
 
 import android.os.Handler
 import android.util.Log
+import androidx.core.os.HandlerCompat
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategy
 import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategyFactory
@@ -15,6 +16,7 @@ class Player(private val sound: Sound, playbackStrategyFactory: PlaybackStrategy
 
   companion object {
     private val TAG = Player::class.simpleName
+    private val DELAYED_PLAYBACK_CALLBACK_TOKEN = "${Player::class.simpleName}.playback_callback"
 
     const val DEFAULT_VOLUME = 4
     const val MAX_VOLUME = 20
@@ -64,13 +66,16 @@ class Player(private val sound: Sound, playbackStrategyFactory: PlaybackStrategy
    */
   private fun playAndRegisterDelayedCallback() {
     if (!isPlaying) {
+      Log.d(TAG, "delayed callback invoked but not playing! won't perform playback.")
       return
     }
 
     playbackStrategy.play()
     val delay = nextInt(MIN_TIME_PERIOD, 1 + timePeriod) * 1000L
-    handler.postDelayed(this::playAndRegisterDelayedCallback, delay)
     Log.d(TAG, "scheduling delayed playback with ${delay}ms delay")
+    HandlerCompat.postDelayed(
+      handler, this::playAndRegisterDelayedCallback, DELAYED_PLAYBACK_CALLBACK_TOKEN, delay
+    )
   }
 
   /**
@@ -80,8 +85,8 @@ class Player(private val sound: Sound, playbackStrategyFactory: PlaybackStrategy
   fun pause() {
     isPlaying = false
     playbackStrategy.pause()
-    if (sound.isLoopable) {
-      handler.removeCallbacks(this::playAndRegisterDelayedCallback)
+    if (!sound.isLoopable) {
+      handler.removeCallbacksAndMessages(DELAYED_PLAYBACK_CALLBACK_TOKEN)
     }
   }
 
@@ -92,8 +97,8 @@ class Player(private val sound: Sound, playbackStrategyFactory: PlaybackStrategy
   fun stop() {
     isPlaying = false
     playbackStrategy.stop()
-    if (sound.isLoopable) {
-      handler.removeCallbacks(this::playAndRegisterDelayedCallback)
+    if (!sound.isLoopable) {
+      handler.removeCallbacksAndMessages(DELAYED_PLAYBACK_CALLBACK_TOKEN)
     }
   }
 
