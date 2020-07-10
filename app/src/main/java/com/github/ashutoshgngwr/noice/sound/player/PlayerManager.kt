@@ -17,6 +17,7 @@ import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.strategy.LocalPlaybackStrategyFactory
 import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategyFactory
+import java.util.concurrent.TimeUnit
 
 /**
  * [PlayerManager] is responsible for managing [Player]s end-to-end for all sounds.
@@ -43,6 +44,7 @@ class PlayerManager(private val context: Context) :
   private var onPlayerUpdateListener = { }
 
   val players = HashMap<String, Player>(Sound.LIBRARY.size)
+  private val handler = Handler()
   private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
   private val audioAttributes = AudioAttributesCompat.Builder()
     .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)
@@ -53,7 +55,7 @@ class PlayerManager(private val context: Context) :
   private val audioFocusRequest = AudioFocusRequestCompat
     .Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
     .setAudioAttributes(audioAttributes)
-    .setOnAudioFocusChangeListener(this, Handler())
+    .setOnAudioFocusChangeListener(this, handler)
     .setWillPauseWhenDucked(false)
     .build()
 
@@ -128,7 +130,7 @@ class PlayerManager(private val context: Context) :
         hasAudioFocus = false
         resumeOnFocusGain = true
         playbackDelayed = false
-        pause()
+        pauseAndWaitBeforeStop()
       }
       AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
         Log.d(TAG, "Temporarily lost audio focus! Pause playback...")
@@ -157,11 +159,11 @@ class PlayerManager(private val context: Context) :
         pause()
       }
       AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
-        Log.d(TAG, "Failed to get audio focus! Stop playback...")
+        Log.d(TAG, "Failed to get audio focus! Pause playback...")
         hasAudioFocus = false
         playbackDelayed = false
         resumeOnFocusGain = false
-        pause()
+        pauseAndWaitBeforeStop()
       }
       AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
         hasAudioFocus = true
@@ -238,8 +240,12 @@ class PlayerManager(private val context: Context) :
   fun pause() {
     state = State.PAUSED
     players.values.forEach { it.pause() }
-    AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
     notifyChanges()
+  }
+
+  fun pauseAndWaitBeforeStop() {
+    pause()
+    handler.postDelayed(this::stop, TimeUnit.MINUTES.toMillis(1))
   }
 
   /**
@@ -247,6 +253,7 @@ class PlayerManager(private val context: Context) :
    */
   fun resume() {
     if (hasAudioFocus) {
+      handler.removeCallbacks(this::stop) // remove pauseAndWaitBeforeStop callbacks, if any
       state = State.PLAYING
       players.values.forEach { it.play() }
     } else if (!playbackDelayed) {

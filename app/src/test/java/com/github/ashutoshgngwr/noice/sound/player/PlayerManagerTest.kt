@@ -154,17 +154,12 @@ class PlayerManagerTest {
 
   @Test
   fun testPausePlayback() {
-    mockkStatic(AudioManagerCompat::class)
     playerManager.pause()
 
     assertEquals(PlayerManager.State.PAUSED, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
     assertEquals(1, playerManager.players.size)
-    verify(exactly = 1) {
-      players.getValue("test").pause()
-      // should abandon audio focus
-      AudioManagerCompat.abandonAudioFocusRequest(any(), any())
-    }
+    verify(exactly = 1) { players.getValue("test").pause() }
   }
 
   @Test
