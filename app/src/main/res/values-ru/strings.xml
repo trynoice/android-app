@@ -13,6 +13,8 @@
   <string name="pause">Пауза</string>
   <string name="play">Воспроизведение</string>
   <string name="stop">Стоп</string>
+  <string name="airplane_inflight">Полёт в самолёте</string>
+  <string name="airplane_seatbelt_beeps">«Пристегните ремни!»</string>
   <string name="birds">Птицы</string>
   <string name="bonfire">Костёр</string>
   <string name="brownian_noise">Броуновский шум</string>
