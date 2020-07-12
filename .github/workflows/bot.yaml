@@ -12,9 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: git fetch --prune --unshallow --tags -f
       - id: get_tag_message
         run: >-
-          TAG_BODY="$(git tag  --list --format='%(contents:body)' ${GITHUB_REF//$'refs\/tags\/'/''})";
+          TAG_BODY="$(git tag  --list --format='%(contents:body)' ${GITHUB_REF/'refs/tags/'/''})";
           TAG_BODY="${TAG_BODY//'%'/'%25'}";
           TAG_BODY="${TAG_BODY//$'\n'/'%0A'}";
           TAG_BODY="${TAG_BODY//$'\r'/'%0D'}";
