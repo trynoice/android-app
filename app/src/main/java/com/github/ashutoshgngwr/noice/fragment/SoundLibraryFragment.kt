@@ -139,7 +139,7 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
           Player.DEFAULT_TIME_PERIOD - Player.MIN_TIME_PERIOD
       }
 
-      holder.itemView.layout_time_period.visibility = if (sound.isLoopable) {
+      holder.itemView.layout_time_period.visibility = if (sound.isLooping) {
         View.GONE
       } else {
         View.VISIBLE

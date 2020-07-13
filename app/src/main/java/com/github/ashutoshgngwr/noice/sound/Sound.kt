@@ -5,13 +5,14 @@ import com.github.ashutoshgngwr.noice.R
 
 /**
  *  A data class that holds reference to a sound effect's asset path, title
- *  resource id from android resources and whether or not is it loopable.
+ *  resource id from android resources and whether or not is it looping.
  *  It also declares a static instance 'LIBRARY' that defines the complete
  *  sound library supported by Noice.
  */
 class Sound private constructor(
-  val key: String, @StringRes val titleResId: Int,
-  val isLoopable: Boolean
+  val key: String,
+  @StringRes val titleResId: Int,
+  val isLooping: Boolean
 ) {
 
   /**

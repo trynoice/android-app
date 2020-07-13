@@ -252,7 +252,7 @@ class PlayerManagerTest {
   @Test
   fun testPlayPreset() {
     mockkObject(Sound.Companion)
-    every { Sound.get(any()) } returns mockk(relaxed = true) { every { isLoopable } returns true }
+    every { Sound.get(any()) } returns mockk(relaxed = true) { every { isLooping } returns true }
     players["test-2"] = mockk(relaxed = true) { every { soundKey } returns "test-2" }
     val mockPreset = mockk<Preset> {
       every { playerStates } returns arrayOf(

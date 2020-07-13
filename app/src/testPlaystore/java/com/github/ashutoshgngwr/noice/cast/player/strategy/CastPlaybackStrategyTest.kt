@@ -30,7 +30,7 @@ class CastPlaybackStrategyTest {
     jsonSlot = slot()
     sound = mockk(relaxed = true) {
       every { key } returns "test"
-      every { isLoopable } returns false
+      every { isLooping } returns false
     }
 
     session = mockk(relaxed = true) {
@@ -67,7 +67,7 @@ class CastPlaybackStrategyTest {
 
   @Test
   fun testPlay_withLoopingSound() {
-    every { sound.isLoopable } returns true
+    every { sound.isLooping } returns true
 
     playbackStrategy.play()
     val expectedJSON = "{" +

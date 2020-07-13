@@ -40,7 +40,7 @@ class LocalPlaybackStrategy(context: Context, audioAttributes: AudioAttributesCo
     return SimpleExoPlayer.Builder(context)
       .build()
       .apply {
-        repeatMode = if (sound.isLoopable) {
+        repeatMode = if (sound.isLooping) {
           ExoPlayer.REPEAT_MODE_ONE
         } else {
           ExoPlayer.REPEAT_MODE_OFF

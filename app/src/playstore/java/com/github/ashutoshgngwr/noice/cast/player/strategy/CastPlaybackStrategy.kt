@@ -62,7 +62,7 @@ class CastPlaybackStrategy(
 
   private fun notifyChanges(action: String?) {
     session.sendMessage(
-      namespace, gson.toJson(PlayerEvent(sound.key, sound.isLoopable, volume, action))
+      namespace, gson.toJson(PlayerEvent(sound.key, sound.isLooping, volume, action))
     )
   }
 }
