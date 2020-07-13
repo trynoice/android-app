@@ -108,6 +108,15 @@
   <string name="support_development__donate_thank_you_description">
     We wholeheartedly thank you for your generous contribution to the Noice project.
   </string>
+  <string name="sound_group__airplane">Airplane</string>
+  <string name="sound_group__jungle">Jungle</string>
+  <string name="sound_group__monsoon">Monsoon</string>
+  <string name="sound_group__public_gatherings">Public Gatherings</string>
+  <string name="sound_group__raw_noise">Raw Noise</string>
+  <string name="sound_group__times_of_day">Times of Day</string>
+  <string name="sound_group__train">Train</string>
+  <string name="sound_group__waterfront">Waterfront</string>
+  <string name="sound_group__wind">Wind</string>
   <string-array name="app_themes">
     <item>Light</item>
     <item>Dark</item>
