@@ -39,14 +39,14 @@ class PlayerTest {
 
   @Test
   fun testPlay_withLoopingSound() {
-    every { mockSound.isLoopable } returns true
+    every { mockSound.isLooping } returns true
     player.play()
     verify(exactly = 1) { mockPlaybackStrategy.play() }
   }
 
   @Test
   fun testPlay_withNonLoopingSound() {
-    every { mockSound.isLoopable } returns false
+    every { mockSound.isLooping } returns false
     player.play()
 
     verify { mockPlaybackStrategy.play() }
@@ -58,14 +58,14 @@ class PlayerTest {
 
   @Test
   fun testPause_withLoopingSound() {
-    every { mockSound.isLoopable } returns true
+    every { mockSound.isLooping } returns true
     player.pause()
     verify(exactly = 1) { mockPlaybackStrategy.pause() }
   }
 
   @Test
   fun testPause_withNonLoopingSound() {
-    every { mockSound.isLoopable } returns false
+    every { mockSound.isLooping } returns false
     player.pause()
     verify(exactly = 1) { mockPlaybackStrategy.pause() }
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks() // try to invoke delayed play callback
@@ -74,14 +74,14 @@ class PlayerTest {
 
   @Test
   fun testStop_withLoopingSound() {
-    every { mockSound.isLoopable } returns true
+    every { mockSound.isLooping } returns true
     player.stop()
     verify(exactly = 1) { mockPlaybackStrategy.stop() }
   }
 
   @Test
   fun testStop_withNonLoopingSound() {
-    every { mockSound.isLoopable } returns false
+    every { mockSound.isLooping } returns false
     player.stop()
     verify(exactly = 1) { mockPlaybackStrategy.stop() }
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks() // try to invoke delayed play callback
@@ -108,7 +108,7 @@ class PlayerTest {
     player.play() // ensure that it is playing
 
     val strategy2 = mockk<PlaybackStrategy>(relaxed = true)
-    every { mockSound.isLoopable } returns false
+    every { mockSound.isLooping } returns false
     mockk<PlaybackStrategyFactory> {
       every { newInstance(any()) } returns strategy2
       player.updatePlaybackStrategy(this)
@@ -135,7 +135,7 @@ class PlayerTest {
     player.play() // ensure that it is playing
 
     val strategy2 = mockk<PlaybackStrategy>(relaxed = true)
-    every { mockSound.isLoopable } returns true
+    every { mockSound.isLooping } returns true
     mockk<PlaybackStrategyFactory> {
       every { newInstance(any()) } returns strategy2
       player.updatePlaybackStrategy(this)

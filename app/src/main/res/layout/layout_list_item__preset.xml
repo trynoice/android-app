@@ -30,7 +30,7 @@
       android:layout_weight="1"
       android:singleLine="true"
       android:ellipsize="end"
-      android:textAppearance="?attr/textAppearanceSubtitle1" />
+      android:textAppearance="?attr/textAppearanceListItem" />
 
     <ImageButton
       style="?attr/imageButtonStyle"

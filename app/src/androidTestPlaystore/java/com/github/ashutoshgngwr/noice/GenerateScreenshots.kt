@@ -11,7 +11,9 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.contrib.DrawerMatchers
 import androidx.test.espresso.contrib.NavigationViewActions
+import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -22,7 +24,10 @@ import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.player.Player
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
 import org.hamcrest.Matchers.allOf
 import org.junit.*
 import org.junit.Assume.assumeNotNull
@@ -145,35 +150,44 @@ class GenerateScreenshots {
 
     activityRule.runOnUiThread { activityRule.activity.recreate() }
     onView(withId(R.id.list_sound)).perform(
-      actionOnItemAtPosition<SoundLibraryFragment.ViewHolder>(
-        0, EspressoX.clickOn(R.id.button_play)
+      actionOnItem<SoundLibraryFragment.ViewHolder>(
+        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.airplane_inflight))),
+        EspressoX.clickOn(R.id.button_play)
       )
     )
 
     onView(withId(R.id.list_sound)).perform(
-      actionOnItemAtPosition<SoundLibraryFragment.ViewHolder>(
-        0, EspressoX.seekProgress(R.id.seekbar_volume, Player.MAX_VOLUME - Player.DEFAULT_VOLUME)
+      actionOnItem<SoundLibraryFragment.ViewHolder>(
+        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.airplane_inflight))),
+        EspressoX.seekProgress(R.id.seekbar_volume, Player.MAX_VOLUME - Player.DEFAULT_VOLUME)
       )
     )
 
     onView(withId(R.id.list_sound)).perform(
-      actionOnItemAtPosition<SoundLibraryFragment.ViewHolder>(
-        1, EspressoX.clickOn(R.id.button_play)
+      actionOnItem<SoundLibraryFragment.ViewHolder>(
+        ViewMatchers.hasDescendant(
+          allOf(withId(R.id.title), withText(R.string.airplane_seatbelt_beeps))
+        ),
+        EspressoX.clickOn(R.id.button_play)
       )
     )
 
     onView(withId(R.id.list_sound)).perform(
-      actionOnItemAtPosition<SoundLibraryFragment.ViewHolder>(
-        1, EspressoX.seekProgress(R.id.seekbar_volume, Player.MAX_VOLUME)
+      actionOnItem<SoundLibraryFragment.ViewHolder>(
+        ViewMatchers.hasDescendant(
+          allOf(withId(R.id.title), withText(R.string.airplane_seatbelt_beeps))
+        ),
+        EspressoX.seekProgress(R.id.seekbar_volume, Player.MAX_VOLUME)
       )
     )
 
     onView(withId(R.id.list_sound)).perform(
-      actionOnItemAtPosition<SoundLibraryFragment.ViewHolder>(
-        1,
+      actionOnItem<SoundLibraryFragment.ViewHolder>(
+        ViewMatchers.hasDescendant(
+          allOf(withId(R.id.title), withText(R.string.airplane_seatbelt_beeps))
+        ),
         EspressoX.seekProgress(
-          R.id.seekbar_time_period,
-          Player.MAX_TIME_PERIOD - Player.MIN_TIME_PERIOD - 30
+          R.id.seekbar_time_period, Player.MAX_TIME_PERIOD - Player.MIN_TIME_PERIOD - 30
         )
       )
     )
@@ -204,8 +218,9 @@ class GenerateScreenshots {
   @Test
   fun sleepTimer() {
     onView(withId(R.id.list_sound)).perform(
-      actionOnItemAtPosition<SoundLibraryFragment.ViewHolder>(
-        0, EspressoX.clickOn(R.id.button_play)
+      actionOnItem<SoundLibraryFragment.ViewHolder>(
+        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
+        EspressoX.clickOn(R.id.button_play)
       )
     )
 

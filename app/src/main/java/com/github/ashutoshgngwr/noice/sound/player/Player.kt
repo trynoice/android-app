@@ -54,7 +54,7 @@ class Player(private val sound: Sound, playbackStrategyFactory: PlaybackStrategy
    */
   fun play() {
     isPlaying = true
-    if (sound.isLoopable) {
+    if (sound.isLooping) {
       playbackStrategy.play()
     } else {
       playAndRegisterDelayedCallback()
@@ -85,7 +85,7 @@ class Player(private val sound: Sound, playbackStrategyFactory: PlaybackStrategy
   fun pause() {
     isPlaying = false
     playbackStrategy.pause()
-    if (!sound.isLoopable) {
+    if (!sound.isLooping) {
       handler.removeCallbacksAndMessages(DELAYED_PLAYBACK_CALLBACK_TOKEN)
     }
   }
@@ -97,7 +97,7 @@ class Player(private val sound: Sound, playbackStrategyFactory: PlaybackStrategy
   fun stop() {
     isPlaying = false
     playbackStrategy.stop()
-    if (!sound.isLoopable) {
+    if (!sound.isLooping) {
       handler.removeCallbacksAndMessages(DELAYED_PLAYBACK_CALLBACK_TOKEN)
     }
   }
@@ -114,7 +114,7 @@ class Player(private val sound: Sound, playbackStrategyFactory: PlaybackStrategy
     playbackStrategy.stop()
     playbackStrategy = playbackStrategyFactory.newInstance(sound).also {
       it.setVolume(volume.toFloat() / MAX_VOLUME)
-      if (isPlaying && sound.isLoopable) { // because non looping will automatically play on scheduled callback.
+      if (isPlaying && sound.isLooping) { // because non looping will automatically play on scheduled callback.
         it.play()
       }
     }
