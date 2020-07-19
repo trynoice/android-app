@@ -12,18 +12,22 @@ import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.AssetDataSource
 import com.google.android.exoplayer2.upstream.DataSource
+import kotlin.math.abs
 import kotlin.math.ceil
 
 /**
  * [LocalPlaybackStrategy] implements [PlaybackStrategy] which plays the media locally
  * on device using the [SimpleExoPlayer] implementation.
  */
-class LocalPlaybackStrategy(context: Context, audioAttributes: AudioAttributesCompat, sound: Sound) :
-  PlaybackStrategy {
+class LocalPlaybackStrategy(
+  context: Context,
+  audioAttributes: AudioAttributesCompat,
+  sound: Sound
+) : PlaybackStrategy {
 
   companion object {
     const val FADE_VOLUME_STEP = 0.02f
-    const val FADE_DURATION = 1000L
+    const val FADE_DURATION = 750L
   }
 
   private val exoPlayer = initPlayer(context, sound, audioAttributes)
@@ -64,7 +68,7 @@ class LocalPlaybackStrategy(context: Context, audioAttributes: AudioAttributesCo
 
   override fun setVolume(volume: Float) {
     transitionTicker?.cancel()
-    exoPlayer.volume = volume
+    exoPlayer.fade(exoPlayer.volume, volume, FADE_DURATION)
   }
 
   override fun play() {
@@ -74,7 +78,8 @@ class LocalPlaybackStrategy(context: Context, audioAttributes: AudioAttributesCo
 
     // an internal feature of the LocalPlaybackStrategy is that it won't fade-in non-looping sounds
     if (exoPlayer.repeatMode == ExoPlayer.REPEAT_MODE_ONE) {
-      exoPlayer.fade(1, FADE_DURATION)
+      exoPlayer.playWhenReady = true
+      exoPlayer.fade(0f, exoPlayer.volume, FADE_DURATION)
     } else {
       exoPlayer.seekTo(0)
       exoPlayer.playWhenReady = true
@@ -90,7 +95,7 @@ class LocalPlaybackStrategy(context: Context, audioAttributes: AudioAttributesCo
       return
     }
 
-    exoPlayer.fade(-1, FADE_DURATION) {
+    exoPlayer.fade(exoPlayer.volume, 0f, FADE_DURATION) {
       playWhenReady = false
       release()
     }
@@ -99,37 +104,32 @@ class LocalPlaybackStrategy(context: Context, audioAttributes: AudioAttributesCo
   /**
    * an extension to [SimpleExoPlayer] for fade in and out effects
    *
-   * @param sign direction of fade. 1 for in, -1 for out
+   * @param fromVolume initial volume where the fade transition will start
+   * @param toVolume final volume where the fade transition will end
    * @param duration duration of fade in ms
    * @param callback callback when fade transition finishes
    */
   private fun SimpleExoPlayer.fade(
-    sign: Short,
+    fromVolume: Float,
+    toVolume: Float,
     duration: Long,
     callback: SimpleExoPlayer.() -> Unit = { }
   ) {
-    if (sign < 0 && !isPlaying) {
-      // edge case where fade-out is requested but playback is not playing.
-      callback()
+    if (!playWhenReady && !isPlaying) {
+      // edge case where fade is requested but playback is not playing.
+      volume = toVolume
+      callback.invoke(this)
       return
     }
 
-    val steps = 1 + ceil(volume / FADE_VOLUME_STEP).toInt()
+    val sign = if (toVolume > fromVolume) 1 else -1
+    val steps = 1 + ceil(abs(toVolume - fromVolume) / FADE_VOLUME_STEP).toInt()
     val period = duration / steps
-    var to = 0.0f
-    var from = 0.0f
-    if (sign < 0) {
-      from = volume
-    } else {
-      to = volume
-    }
-
-    volume = from
-    exoPlayer.playWhenReady = true
+    volume = fromVolume
     transitionTicker?.cancel()
     transitionTicker = object : CountDownTimer(FADE_DURATION, period) {
       override fun onFinish() {
-        volume = to
+        volume = toVolume
         transitionTicker = null
         callback()
       }
@@ -137,7 +137,6 @@ class LocalPlaybackStrategy(context: Context, audioAttributes: AudioAttributesCo
       override fun onTick(millisUntilFinished: Long) {
         volume += sign * FADE_VOLUME_STEP
       }
-
     }.also { it.start() }
   }
 }

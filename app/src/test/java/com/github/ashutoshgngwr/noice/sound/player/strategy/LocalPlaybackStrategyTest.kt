@@ -49,6 +49,7 @@ class LocalPlaybackStrategyTest {
   @Test
   fun testPlay_onStoppedPlayback_withLoopingSound() {
     // should fade in looping sounds
+    every { exoPlayer.playWhenReady } returns true
     every { exoPlayer.isPlaying } returns false
     every { exoPlayer.repeatMode } returns ExoPlayer.REPEAT_MODE_ONE
     every { exoPlayer.volume } returns 1f
