@@ -1,0 +1,8 @@
+- Enabled fade effects for sound volume adjustments
+- Fixed playback not resuming after short interruptions
+- Added categories in the sound library
+- Added Czech translations
+- Added Polish translations
+
+We're continuously working to make Noice better and useful. Please turn on updates to never miss a thing!
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG
