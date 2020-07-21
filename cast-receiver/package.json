@@ -17,7 +17,7 @@
   "devDependencies": {
     "@babel/core": "^7.10.5",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-env": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
     "@types/chromecast-caf-receiver": "^5.0.8",
     "@types/howler": "^2.2.1",
