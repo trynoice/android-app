@@ -181,6 +181,10 @@ class AboutFragment : Fragment() {
       arrayOf(
         R.string.credits__translation_pl_0,
         R.string.credits__translation_pl_0__url
+      ),
+      arrayOf(
+        R.string.credits__translation_de_1,
+        R.string.credits__translation_de_1__url
       )
     )
   }
