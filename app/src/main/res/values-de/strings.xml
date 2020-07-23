@@ -58,6 +58,66 @@
   <string name="reset">Zurücksetzen</string>
   <string name="auto_sleep_schedule_cancelled">Automatischer Schlaftimer abgebrochen!</string>
   <string name="app_theme">Theme</string>
+  <string name="cast_media">Übertrage das Medium auf ein anderes Gerät</string>
+  <string name="open_context_menu">Öffne das Context-Menü</string>
+  <string name="preset_already_exists">Eine Voreinstellung mit diesem Namen existiert bereits!</string>
+  <string name="preset_info__description">
+    Du hast bisher keine Voreinstellungen erstellt. Um eine Voreinstellung zu erstellen, gehe zur
+    Bibliothek und starte eine Audioausgabe. Im Anschluss kannst du den Speichern Knopf in der
+    unteren Ecke des Bildschirms anklicken.
+  </string>
+  <string name="rename">Umbenennen</string>
+  <string name="select_preset">Wähle eine Voreinstellung aus</string>
+  <string name="sleep_timer_description">
+    Noice schaltet sich automatisch nach Ablauf des Timers aus. Nutze die Knöpfe weiter unten, um
+    dem Timer Zeit hinzuzufügen oder abzuziehen.
+  </string>
+  <string name="sound_group__airplane">Flugzeug</string>
+  <string name="sound_group__jungle">Dschungel</string>
+  <string name="sound_group__monsoon">Monsun</string>
+  <string name="sound_group__public_gatherings">Öffentliches Zusammenkommen</string>
+  <string name="sound_group__raw_noise">Grobes Rausche</string>
+  <string name="sound_group__times_of_day">Tageszeiten</string>
+  <string name="sound_group__train">Zug</string>
+  <string name="sound_group__waterfront">Hafenviertel</string>
+  <string name="sound_group__wind">Wind</string>
+  <string name="support_development">Unterstütze die Entwicklung</string>
+  <string name="support_development__why">Warum solltest du unterstützen?</string>
+  <string name="support_development__why_description">
+    - Als eine Geste der Wertschätzung gegenüber dem Entwickler\n
+    - Um zukünftige Updates zu ermöglichen\n
+    - Um Noice für immer werbefrei zu halten\n
+    - Um uns zu erlauben, bestehende Funktionen zu verbessern und neue Funktionen hinzuzufügen\n
+  </string>
+  <string name="support_development__share">Mit Freunden teilen</string>
+  <string name="support_development__share_description">
+    Noice mit Freunden zu teilen ist fast genau so wichtig wie Geld zu spenden.\n
+    - Deine Freunde _könnten_ es gebrauchen\n
+    - Mehr Downloads ziehen mehr Beitragende an\n
+    - Mit mehr Downloads können wir Feedback aus vielen unterschiedlichen Perspektiven erhalten,
+      welches uns dabei hilft Noice noch besser zu machen\n
+  </string>
+  <string name="support_development__donate">Spenden</string>
+  <string name="support_development__donate_description">
+    Spenden helfen uns dabei\n
+    - in neue Funktionen zu investieren\n
+    - bessere Audiosamples zu kuratieren\n
+    - Kaffee zu kaufen\n
+  </string>
+  <string name="support_development__donate_google_play_description">
+    Deine Spende wird sicher über Google Play abgewickelt. Der Betrag wird in deine lokale Währung
+    umgewandelt. Je nach Land _können_ weitere Steuern zum Endbetrag hinzukommen.
+  </string>
+  <string name="support_development__donate_thank_you">Vielen Dank!</string>
+  <string name="support_development__donate_thank_you_description">
+    Wir danken dir von ganzem Herzen für deine großzügige Spende an das Noice-Projekt.
+  </string>
+  <string name="wake_up_timer">Aufwach-Timer</string>
+  <string name="wake_up_timer_description">
+    Noice startet die ausgewählte Voreinstellung wenn der Timer endet. Nutze die Knöpfe weiter unten,
+    um eine Voreinstellung auszusuchen und die gewünschte Länge bis zum Start des Aufwach-Timers
+    hinzuzufügen.
+  </string>
   <string-array name="app_themes">
     <item>Hell</item>
     <item>Dunkel</item>
