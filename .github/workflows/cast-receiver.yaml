@@ -18,6 +18,18 @@ on:
       - "cast-receiver/**"
 
 jobs:
+  build:
+    name: Parcel Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: "14"
+      - run: yarn && yarn build
+        working-directory: ./cast-receiver
+
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
@@ -36,7 +48,7 @@ jobs:
   deploy:
     name: Deploy
     if: github.event_name == 'push'
-    needs: unit-tests
+    needs: [build, unit-tests]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
