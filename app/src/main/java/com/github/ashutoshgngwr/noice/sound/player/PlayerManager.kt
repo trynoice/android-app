@@ -183,7 +183,7 @@ class PlayerManager(private val context: Context) :
    */
   fun play(soundKey: String) {
     if (!players.containsKey(soundKey)) {
-      players[soundKey] = Player(Sound.get(soundKey), playbackStrategyFactory)
+      players[soundKey] = Player(soundKey, playbackStrategyFactory)
     }
 
     if (playbackDelayed) {
@@ -340,7 +340,7 @@ class PlayerManager(private val context: Context) :
       if (players.contains(it.soundKey)) {
         player = requireNotNull(players[it.soundKey])
       } else {
-        player = Player(Sound.get(it.soundKey), playbackStrategyFactory)
+        player = Player(it.soundKey, playbackStrategyFactory)
         players[it.soundKey] = player
       }
 

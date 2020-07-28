@@ -29,7 +29,7 @@ class CastPlaybackStrategyTest {
   fun setup() {
     jsonSlot = slot()
     sound = mockk(relaxed = true) {
-      every { key } returns "test"
+      every { src } returns arrayOf("test")
       every { isLooping } returns false
     }
 

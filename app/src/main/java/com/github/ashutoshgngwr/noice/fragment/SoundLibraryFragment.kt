@@ -36,12 +36,16 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
   private val dataSet by lazy {
     arrayListOf<SoundListItem>().also { list ->
       var lastDisplayGroupResID = -1
-      val sounds = Sound.LIBRARY.values
-        .sortedWith(compareBy({ getString(it.displayGroupResID) }, { getString(it.titleResId) }))
+      val sounds = Sound.LIBRARY.toSortedMap(
+        compareBy(
+          { getString(Sound.get(it).displayGroupResID) },
+          { getString(Sound.get(it).titleResId) }
+        )
+      )
 
-      for (sound in sounds) {
-        if (lastDisplayGroupResID != sound.displayGroupResID) {
-          lastDisplayGroupResID = sound.displayGroupResID
+      sounds.forEach {
+        if (lastDisplayGroupResID != it.value.displayGroupResID) {
+          lastDisplayGroupResID = it.value.displayGroupResID
           list.add(
             SoundListItem(
               R.layout.layout_list_item__sound_group_title, getString(lastDisplayGroupResID)
@@ -49,7 +53,7 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
           )
         }
 
-        list.add(SoundListItem(R.layout.layout_list_item__sound, sound.key))
+        list.add(SoundListItem(R.layout.layout_list_item__sound, it.key))
       }
     }
   }
@@ -158,14 +162,15 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
         return
       }
 
-      val sound = Sound.get(dataSet[position].data)
-      val isPlaying = players.containsKey(sound.key)
+      val soundKey = dataSet[position].data
+      val sound = Sound.get(soundKey)
+      val isPlaying = players.containsKey(soundKey)
       holder.itemView.title.text = context.getString(sound.titleResId)
       holder.itemView.seekbar_volume.isEnabled = isPlaying
       holder.itemView.seekbar_time_period.isEnabled = isPlaying
       holder.itemView.button_play.isChecked = isPlaying
       if (isPlaying) {
-        requireNotNull(players[sound.key]).also {
+        requireNotNull(players[soundKey]).also {
           holder.itemView.seekbar_volume.progress = it.volume
           holder.itemView.seekbar_time_period.progress = it.timePeriod - Player.MIN_TIME_PERIOD
         }
