@@ -82,7 +82,7 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
   playstoreImplementation 'com.anjlab.android.iab.v3:library:1.1.0'
-  playstoreImplementation 'com.google.android.gms:play-services-cast-framework:18.1.0'
+  playstoreImplementation 'com.google.android.gms:play-services-cast-framework:19.0.0'
 
   testImplementation 'androidx.test:core:1.2.0'
   testImplementation 'io.mockk:mockk:1.10.0'
