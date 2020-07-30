@@ -25,11 +25,12 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
   private var adapter: PresetListAdapter? = null
   private var activePresetPos = -1
 
-  private val dataSet = ArrayList<Preset>()
   private val eventBus = EventBus.getDefault()
+  private val dataSet by lazy {
+    Preset.readAllFromUserPreferences(requireContext()).toMutableList()
+  }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    dataSet.addAll(Preset.readAllFromUserPreferences(requireContext()))
     adapter = PresetListAdapter(requireContext())
     mRecyclerView = view.list_presets.also {
       it.setHasFixedSize(true)
