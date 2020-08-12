@@ -77,7 +77,7 @@ dependencies {
   implementation 'com.google.android.exoplayer:exoplayer-core:2.11.7'
   implementation 'com.google.android.material:material:1.2.0'
   implementation 'com.google.code.gson:gson:2.8.6'
-  implementation 'io.noties.markwon:core:4.4.0'
+  implementation 'io.noties.markwon:core:4.5.0'
   implementation 'org.greenrobot:eventbus:3.1.1'
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
