@@ -14,7 +14,6 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import kotlin.math.abs
 import kotlin.math.ceil
-import kotlin.random.Random
 
 /**
  * [LocalPlaybackStrategy] implements [PlaybackStrategy] which plays the media locally
@@ -61,7 +60,7 @@ class LocalPlaybackStrategy(
         prepare(
           Util.getUserAgent(context, context.packageName).let { userAgent ->
             ProgressiveMediaSource.Factory(DefaultDataSourceFactory(context, userAgent))
-              .createMediaSource(Uri.parse("asset:///${src}.mp3"))
+              .createMediaSource(Uri.parse("asset:///$src"))
           }
         )
       }
