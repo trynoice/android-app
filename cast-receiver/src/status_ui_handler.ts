@@ -7,9 +7,11 @@ import { Icons } from "./library";
 export default class StatusUIHandler {
   static readonly IDLE_STATUS_ID = "idle";
   static readonly CASTING_STATUS_ID = "casting";
+  static readonly LOADER_STATUS_ID = "loader";
 
   private static readonly IDLE_STATUS_ICON = "cast";
   private static readonly CASTING_STATUS_ICON = "cast";
+  private static readonly LOADER_STATUS_ICON = "loader";
 
   private static readonly IDLE_STATUS_MSG = "Ready to cast";
   private static readonly CASTING_STATUS_MSG = "A device is casting";
@@ -34,6 +36,15 @@ export default class StatusUIHandler {
         StatusUIHandler.CASTING_STATUS_ID,
         StatusUIHandler.CASTING_STATUS_ICON,
         StatusUIHandler.CASTING_STATUS_MSG
+      )
+    );
+
+    this.statusElements.set(
+      StatusUIHandler.LOADER_STATUS_ID,
+      this.createStatusElement(
+        StatusUIHandler.LOADER_STATUS_ID,
+        StatusUIHandler.LOADER_STATUS_ICON,
+        ""
       )
     );
   }

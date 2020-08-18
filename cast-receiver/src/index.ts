@@ -30,6 +30,11 @@ function main(): void {
         uiHandler.enableStatus(StatusUIHandler.CASTING_STATUS_ID, true);
         break;
     }
+
+    uiHandler.enableStatus(
+      StatusUIHandler.LOADER_STATUS_ID,
+      event === PlayerManagerStatusEvent.Playing && manager.isBuffering()
+    );
   });
 
   ctx.addCustomMessageListener(

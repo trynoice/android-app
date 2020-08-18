@@ -20,6 +20,7 @@ export default class PlayerManager {
   private static readonly FADE_VOLUME_DURATION = 750;
 
   private players: Map<string, Howl> = new Map();
+  private bufferingState: Set<string> = new Set();
   private idleTimer: number;
   private onStatusUpdateCallback?: (status: PlayerManagerStatusEvent) => void;
 
@@ -56,6 +57,7 @@ export default class PlayerManager {
     isLooping: boolean,
     volume: number
   ): Howl {
+    this.bufferingState.add(soundKey);
     return new Howl({
       src: Sounds[soundKey.substring(0, soundKey.length - 4)],
       autoplay: false,
@@ -80,6 +82,7 @@ export default class PlayerManager {
     const player = this.players.get(soundKey);
     if (player.playing() === false) {
       player.once("play", (): void => {
+        this.bufferingState.delete(soundKey);
         this.notifyStatusUpdate(PlayerManagerStatusEvent.Playing);
         // fade-in only looping sounds because non-looping sounds need to maintain
         // their abruptness thingy.
@@ -114,6 +117,7 @@ export default class PlayerManager {
 
     const player = this.players.get(soundKey);
     this.players.delete(soundKey);
+    this.bufferingState.delete(soundKey);
     if (player.playing()) {
       player.fade(player.volume(), 0, PlayerManager.FADE_OUT_DURATION);
       player.once("fade", () => {
@@ -141,6 +145,10 @@ export default class PlayerManager {
     } else {
       player.volume(volume);
     }
+  }
+
+  isBuffering(): boolean {
+    return this.bufferingState.size > 0;
   }
 
   /**
