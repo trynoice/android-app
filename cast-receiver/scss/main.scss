@@ -47,21 +47,15 @@ body {
     min-width: 45rem;
     text-align: center;
 
-    svg.sound {
-      display: inline-block;
-      width: 3rem;
-      height: 3rem;
-      margin: 0.75rem;
-    }
-
-    #ready-to-cast {
+    .statusline {
       display: inline-flex;
       align-items: center;
 
       svg {
+        display: inline-block;
         width: 3rem;
         height: 3rem;
-        margin-right: 1rem;
+        margin: 0.75rem 1rem 0.75rem 0.75rem;
       }
     }
   }

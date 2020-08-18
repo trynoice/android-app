@@ -1,5 +1,3 @@
-import { Howl } from "howler";
-
 /**
  * PlayerAction declares action messages sent with a PlayerEvent by the sender
  * application to control a player instance.
@@ -12,31 +10,23 @@ export enum PlayerAction {
 }
 
 /**
- * A PlayerEvent is used to manipulate playback of a particular sound. These
+ * A PlayerControlEvent is used to manipulate playback of a particular sound. These
  * events are sent by the sender android application.
  */
-export interface PlayerEvent {
-  soundKey: string;
+export interface PlayerControlEvent {
+  src: string[];
   isLooping: boolean;
-  action?: string;
+  action?: PlayerAction;
   volume: number;
 }
 
 /**
- * An alias to ensure type safety
- */
-export interface PlayerMap {
-  [key: string]: Howl;
-}
-
-/**
- * PlayerStatusEventType declares the types of player status events emmitted by
+ * PlayerStatusEvent declares the types of player status events emitted by
  * the PlayerManager. These events are subscribed by the StatusUIHandler (bindings
  * are present in index.ts).
  */
-export enum PlayerStatusEventType {
-  Added = "playeradded",
-  Started = "playerstarted",
-  Paused = "playerpaused",
-  Removed = "playerremoved",
+export enum PlayerManagerStatusEvent {
+  Idle = "idle",
+  IdleTimedOut = "idletimedout",
+  Playing = "playing",
 }

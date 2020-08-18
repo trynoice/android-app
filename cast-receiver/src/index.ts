@@ -1,6 +1,6 @@
 import PlayerManager from "./player_manager";
 import StatusUIHandler from "./status_ui_handler";
-import { PlayerStatusEventType } from "./types";
+import { PlayerManagerStatusEvent } from "./types";
 
 const NAMESPACE = "urn:x-cast:com.github.ashutoshgngwr.noice";
 
@@ -15,13 +15,22 @@ function main(): void {
 
   const ctx = cast.framework.CastReceiverContext.getInstance();
   const manager = new PlayerManager();
-  manager.onIdleTimeout(() => ctx.stop());
-
   const uiHandler = new StatusUIHandler(document.querySelector("#status"));
-  manager.onIdle(() => uiHandler.showIdleStatus());
-  manager.onPlayerStatus((type: PlayerStatusEventType, soundKey: string) =>
-    uiHandler.handlePlayerStatusEvent(type, soundKey)
-  );
+  manager.onStatusUpdate((event: PlayerManagerStatusEvent) => {
+    switch (event) {
+      case PlayerManagerStatusEvent.Idle:
+        uiHandler.enableStatus(StatusUIHandler.IDLE_STATUS_ID, true);
+        uiHandler.enableStatus(StatusUIHandler.CASTING_STATUS_ID, false);
+        break;
+      case PlayerManagerStatusEvent.IdleTimedOut:
+        ctx.stop();
+        break;
+      default:
+        uiHandler.enableStatus(StatusUIHandler.IDLE_STATUS_ID, false);
+        uiHandler.enableStatus(StatusUIHandler.CASTING_STATUS_ID, true);
+        break;
+    }
+  });
 
   ctx.addCustomMessageListener(
     NAMESPACE,
@@ -30,8 +39,8 @@ function main(): void {
     }
   );
 
-  // In an ideal case, the playback should pause and resume on connection suspension
-  // and resume. Since communitcation between sender and receiver is only one-way in
+  // In an ideal case, the playback should pause and resume when connection suspends
+  // and resumes. Since communitcation between sender and receiver is only one-way in
   // our implementation, the state can only be maintained at sender's side. Hence we
   // need stop the receiver if the connection breaks.
   ctx.addEventListener(
@@ -40,7 +49,7 @@ function main(): void {
   );
 
   // show idle status by default
-  uiHandler.showIdleStatus();
+  uiHandler.enableStatus(StatusUIHandler.IDLE_STATUS_ID, true);
   ctx.start(opts);
 }
 
