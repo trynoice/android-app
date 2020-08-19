@@ -1,6 +1,6 @@
 import { Howl } from "howler";
 import PlayerManager from "./player_manager";
-import { PlayerAction, PlayerManagerStatusEvent } from "./types";
+import { PlayerAction, PlayerManagerStatus } from "./types";
 
 const mockHowl = {
   playing: jest.fn(),
@@ -54,9 +54,7 @@ describe("PlayerManager#handlePlayerEvent", () => {
   it("should initialize Howl instance on Create action", () => {
     createTestPlayer();
     expect(Howl).toHaveBeenCalled();
-    expect(statusCallback).toHaveBeenCalledWith(
-      PlayerManagerStatusEvent.Playing
-    );
+    expect(statusCallback).toHaveBeenCalledWith(PlayerManagerStatus.Playing);
   });
 
   it("should be in buffering state", () => {
@@ -73,7 +71,7 @@ describe("PlayerManager#handlePlayerEvent", () => {
     expect(window.setTimeout).toHaveBeenCalled();
     jest.runAllTimers();
     expect(statusCallback).toHaveBeenCalledWith(
-      PlayerManagerStatusEvent.IdleTimedOut
+      PlayerManagerStatus.IdleTimedOut
     );
   });
 
@@ -100,9 +98,7 @@ describe("PlayerManager#handlePlayerEvent", () => {
       playTestPlayer();
       expect(mockHowl.once).toHaveBeenCalledWith("play", expect.anything());
       mockHowl.once.mock.calls[0][1](); // invoke once callback
-      expect(statusCallback).toHaveBeenCalledWith(
-        PlayerManagerStatusEvent.Playing
-      );
+      expect(statusCallback).toHaveBeenCalledWith(PlayerManagerStatus.Playing);
     });
 
     it("should not fade-in non-looping sounds", () => {
@@ -150,9 +146,7 @@ describe("PlayerManager#handlePlayerEvent", () => {
 
     it("should invoke the player manager status callback", () => {
       pauseTestPlayer();
-      expect(statusCallback).toHaveBeenCalledWith(
-        PlayerManagerStatusEvent.Playing
-      );
+      expect(statusCallback).toHaveBeenCalledWith(PlayerManagerStatus.Playing);
     });
   });
 
@@ -193,9 +187,7 @@ describe("PlayerManager#handlePlayerEvent", () => {
 
     it("should invoke status callback with an idle event if all players are stopped", () => {
       stopTestPlayer();
-      expect(statusCallback).toHaveBeenCalledWith(
-        PlayerManagerStatusEvent.Idle
-      );
+      expect(statusCallback).toHaveBeenCalledWith(PlayerManagerStatus.Idle);
     });
 
     it("should start idle timer if all players are stopped", () => {

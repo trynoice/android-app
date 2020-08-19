@@ -21,11 +21,10 @@ export interface PlayerControlEvent {
 }
 
 /**
- * PlayerStatusEvent declares the types of player status events emitted by
- * the PlayerManager. These events are subscribed by the StatusUIHandler (bindings
- * are present in index.ts).
+ * PlayerManagerStatus declares the types of status events emitted by
+ * the PlayerManager to notify clients of its state.
  */
-export enum PlayerManagerStatusEvent {
+export enum PlayerManagerStatus {
   Idle = "idle",
   IdleTimedOut = "idletimedout",
   Playing = "playing",

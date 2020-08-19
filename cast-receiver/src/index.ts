@@ -1,6 +1,6 @@
 import PlayerManager from "./player_manager";
 import StatusUIHandler from "./status_ui_handler";
-import { PlayerManagerStatusEvent } from "./types";
+import { PlayerManagerStatus } from "./types";
 
 const NAMESPACE = "urn:x-cast:com.github.ashutoshgngwr.noice";
 
@@ -16,13 +16,13 @@ function main(): void {
   const ctx = cast.framework.CastReceiverContext.getInstance();
   const manager = new PlayerManager();
   const uiHandler = new StatusUIHandler(document.querySelector("#status"));
-  manager.onStatusUpdate((event: PlayerManagerStatusEvent) => {
+  manager.onStatusUpdate((event: PlayerManagerStatus) => {
     switch (event) {
-      case PlayerManagerStatusEvent.Idle:
+      case PlayerManagerStatus.Idle:
         uiHandler.enableStatus(StatusUIHandler.IDLE_STATUS_ID, true);
         uiHandler.enableStatus(StatusUIHandler.CASTING_STATUS_ID, false);
         break;
-      case PlayerManagerStatusEvent.IdleTimedOut:
+      case PlayerManagerStatus.IdleTimedOut:
         ctx.stop();
         break;
       default:
@@ -33,7 +33,7 @@ function main(): void {
 
     uiHandler.enableStatus(
       StatusUIHandler.LOADER_STATUS_ID,
-      event === PlayerManagerStatusEvent.Playing && manager.isBuffering()
+      event === PlayerManagerStatus.Playing && manager.isBuffering()
     );
   });
 

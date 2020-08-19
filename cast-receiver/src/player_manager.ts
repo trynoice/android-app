@@ -1,10 +1,6 @@
 import { Howl } from "howler";
 import { Sounds } from "./library";
-import {
-  PlayerControlEvent,
-  PlayerAction,
-  PlayerManagerStatusEvent,
-} from "./types";
+import { PlayerControlEvent, PlayerAction, PlayerManagerStatus } from "./types";
 
 /**
  * PlayerManager manages various player instances for all the sounds.
@@ -22,7 +18,7 @@ export default class PlayerManager {
   private players: Map<string, Howl> = new Map();
   private bufferingState: Set<string> = new Set();
   private idleTimer: number;
-  private onStatusUpdateCallback?: (status: PlayerManagerStatusEvent) => void;
+  private onStatusUpdateCallback?: (status: PlayerManagerStatus) => void;
 
   constructor() {
     this.startIdleTimer();
@@ -35,7 +31,7 @@ export default class PlayerManager {
   private startIdleTimer(): void {
     this.stopIdleTimer();
     this.idleTimer = window.setTimeout(() => {
-      this.notifyStatusUpdate(PlayerManagerStatusEvent.IdleTimedOut);
+      this.notifyStatusUpdate(PlayerManagerStatus.IdleTimedOut);
     }, PlayerManager.IDLE_TIMEOUT);
   }
 
@@ -83,7 +79,7 @@ export default class PlayerManager {
     if (player.playing() === false) {
       player.once("play", (): void => {
         this.bufferingState.delete(soundKey);
-        this.notifyStatusUpdate(PlayerManagerStatusEvent.Playing);
+        this.notifyStatusUpdate(PlayerManagerStatus.Playing);
         // fade-in only looping sounds because non-looping sounds need to maintain
         // their abruptness thingy.
         if (player.loop()) {
@@ -177,7 +173,7 @@ export default class PlayerManager {
           this.createPlayer(soundKey, event.isLooping, event.volume)
         );
 
-        this.notifyStatusUpdate(PlayerManagerStatusEvent.Playing);
+        this.notifyStatusUpdate(PlayerManagerStatus.Playing);
         return;
       }
 
@@ -195,10 +191,10 @@ export default class PlayerManager {
       }
 
       if (this.players.size === 0) {
-        this.notifyStatusUpdate(PlayerManagerStatusEvent.Idle);
+        this.notifyStatusUpdate(PlayerManagerStatus.Idle);
         this.startIdleTimer();
       } else {
-        this.notifyStatusUpdate(PlayerManagerStatusEvent.Playing);
+        this.notifyStatusUpdate(PlayerManagerStatus.Playing);
       }
     });
   }
@@ -206,7 +202,7 @@ export default class PlayerManager {
   /**
    * helper function to invoke the event receiver callback.
    */
-  private notifyStatusUpdate(event: PlayerManagerStatusEvent): void {
+  private notifyStatusUpdate(event: PlayerManagerStatus): void {
     if (this.onStatusUpdateCallback) {
       this.onStatusUpdateCallback(event);
     }
@@ -215,7 +211,7 @@ export default class PlayerManager {
   /**
    * Registers a callback to notify when status of the player manager changes.
    */
-  onStatusUpdate(f: (event: PlayerManagerStatusEvent) => void): void {
+  onStatusUpdate(f: (event: PlayerManagerStatus) => void): void {
     this.onStatusUpdateCallback = f;
   }
 }
