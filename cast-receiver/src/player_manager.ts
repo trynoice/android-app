@@ -29,8 +29,8 @@ export default class PlayerManager {
   }
 
   /**
-   * Starts a timer that invokes emits a PlayerManagerStatusEvent.IdleTimedOut
-   * event on finish.
+   * Starts a timer that invokes status callback with a
+   * PlayerManagerStatusEvent.IdleTimedOut event on finish.
    */
   private startIdleTimer(): void {
     this.stopIdleTimer();
@@ -70,9 +70,9 @@ export default class PlayerManager {
   }
 
   /**
-   * start playback for a player. It waits for the Howl instance to be ready
-   * and sound to be loaded before starting playback. It emits a
-   * PlayerManagerStatusEvent.Playing event when the sound starts playing.
+   * start playback for a player. It waits for the Howl instance to be ready and
+   * sound to be loaded before starting playback. It invokes the status callback
+   * with a PlayerManagerStatusEvent.Playing event when the sound starts playing.
    */
   private play(soundKey: string): void {
     if (this.players.has(soundKey) === false) {
@@ -153,7 +153,8 @@ export default class PlayerManager {
 
   /**
    * Implements the callback to handle messages received from the Sender application.
-   * Based on the action taken, it emits the appropriate PlayerManagerStatusEvent.
+   * Based on the action taken, it invokes the status callback with an appropriate
+   * PlayerManagerStatusEvent.
    */
   handlePlayerEvent(event: PlayerControlEvent): void {
     event.src.forEach((soundKey: string) => {
