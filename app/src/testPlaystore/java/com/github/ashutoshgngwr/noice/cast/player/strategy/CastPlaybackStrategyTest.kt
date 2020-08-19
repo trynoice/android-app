@@ -44,7 +44,7 @@ class CastPlaybackStrategyTest {
   fun testInit() {
     // should send ACTION_CREATE on init
     val expectedJSON = "{" +
-      "  \"soundKey\": \"test\"," +
+      "  \"src\": [\"test\"]," +
       "  \"isLooping\": false," +
       "  \"volume\": 0.0," +
       "  \"action\": \"create\"" +
@@ -57,7 +57,7 @@ class CastPlaybackStrategyTest {
   fun testSetVolume() {
     playbackStrategy.setVolume(1f)
     val expectedJSON = "{" +
-      "  \"soundKey\": \"test\"," +
+      "  \"src\": [\"test\"]," +
       "  \"isLooping\": false," +
       "  \"volume\": 1.0" +
       "}"
@@ -71,7 +71,7 @@ class CastPlaybackStrategyTest {
 
     playbackStrategy.play()
     val expectedJSON = "{" +
-      "  \"soundKey\": \"test\"," +
+      "  \"src\": [\"test\"]," +
       "  \"isLooping\": true," +
       "  \"volume\": 0.0," +
       "  \"action\": \"play\"" +
@@ -84,7 +84,7 @@ class CastPlaybackStrategyTest {
   fun testPlay_withNonLoopingSound() {
     playbackStrategy.play()
     val expectedJSON = "{" +
-      "  \"soundKey\": \"test\"," +
+      "  \"src\": [\"test\"]," +
       "  \"isLooping\": false," +
       "  \"volume\": 0.0," +
       "  \"action\": \"play\"" +
@@ -97,7 +97,7 @@ class CastPlaybackStrategyTest {
   fun testPause() {
     playbackStrategy.pause()
     val expectedJSON = "{" +
-      "  \"soundKey\": \"test\"," +
+      "  \"src\": [\"test\"]," +
       "  \"isLooping\": false," +
       "  \"volume\": 0.0," +
       "  \"action\": \"pause\"" +
@@ -110,7 +110,7 @@ class CastPlaybackStrategyTest {
   fun testStop() {
     playbackStrategy.stop()
     val expectedJSON = "{" +
-      "  \"soundKey\": \"test\"," +
+      "  \"src\": [\"test\"]," +
       "  \"isLooping\": false," +
       "  \"volume\": 0.0," +
       "  \"action\": \"stop\"" +
