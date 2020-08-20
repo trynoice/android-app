@@ -2,16 +2,16 @@ package com.github.ashutoshgngwr.noice.sound.player.strategy
 
 import android.content.Context
 import android.net.Uri
-import android.os.CountDownTimer
-import androidx.annotation.VisibleForTesting
+import android.os.Handler
+import androidx.core.os.HandlerCompat
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.upstream.AssetDataSource
-import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.util.Util
 import kotlin.math.abs
 import kotlin.math.ceil
 
@@ -30,21 +30,19 @@ class LocalPlaybackStrategy(
     const val FADE_DURATION = 750L
   }
 
-  private val exoPlayer = initPlayer(context, sound, audioAttributes)
-
-  // global reference is needed if volume is tweaked during an ongoing transition
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  var transitionTicker: CountDownTimer? = null
+  private val handler = Handler()
+  private val players = sound.src.map { initPlayer(context, it, sound.isLooping, audioAttributes) }
 
   private fun initPlayer(
     context: Context,
-    sound: Sound,
+    src: String,
+    isLooping: Boolean,
     audioAttributes: AudioAttributesCompat
   ): SimpleExoPlayer {
     return SimpleExoPlayer.Builder(context)
       .build()
       .apply {
-        repeatMode = if (sound.isLooping) {
+        repeatMode = if (isLooping) {
           ExoPlayer.REPEAT_MODE_ONE
         } else {
           ExoPlayer.REPEAT_MODE_OFF
@@ -60,44 +58,49 @@ class LocalPlaybackStrategy(
         )
 
         prepare(
-          ProgressiveMediaSource.Factory(DataSource.Factory { AssetDataSource(context) })
-            .createMediaSource(Uri.parse("asset:///${sound.key}.mp3"))
+          Util.getUserAgent(context, context.packageName).let { userAgent ->
+            ProgressiveMediaSource.Factory(DefaultDataSourceFactory(context, userAgent))
+              .createMediaSource(Uri.parse("asset:///$src"))
+          }
         )
       }
   }
 
   override fun setVolume(volume: Float) {
-    transitionTicker?.cancel()
-    exoPlayer.fade(exoPlayer.volume, volume, FADE_DURATION)
+    players.forEach { it.fade(it.volume, volume, FADE_DURATION) }
   }
 
   override fun play() {
-    if (exoPlayer.playWhenReady && exoPlayer.isPlaying) {
-      return
-    }
+    for (player in players) {
+      if (player.playWhenReady && player.isPlaying) {
+        continue
+      }
 
-    // an internal feature of the LocalPlaybackStrategy is that it won't fade-in non-looping sounds
-    if (exoPlayer.repeatMode == ExoPlayer.REPEAT_MODE_ONE) {
-      exoPlayer.playWhenReady = true
-      exoPlayer.fade(0f, exoPlayer.volume, FADE_DURATION)
-    } else {
-      exoPlayer.seekTo(0)
-      exoPlayer.playWhenReady = true
+      // an internal feature of the LocalPlaybackStrategy is that it won't fade-in non-looping sounds
+      if (player.repeatMode == ExoPlayer.REPEAT_MODE_ONE) {
+        player.playWhenReady = true
+        player.fade(0f, player.volume, FADE_DURATION)
+      } else {
+        player.seekTo(0)
+        player.playWhenReady = true
+      }
     }
   }
 
   override fun pause() {
-    exoPlayer.playWhenReady = false
+    players.forEach { it.playWhenReady = false }
   }
 
   override fun stop() {
-    if (!exoPlayer.playWhenReady) {
-      return
-    }
+    for (player in players) {
+      if (!player.playWhenReady) {
+        continue
+      }
 
-    exoPlayer.fade(exoPlayer.volume, 0f, FADE_DURATION) {
-      playWhenReady = false
-      release()
+      player.fade(player.volume, 0f, FADE_DURATION) {
+        playWhenReady = false
+        release()
+      }
     }
   }
 
@@ -115,6 +118,7 @@ class LocalPlaybackStrategy(
     duration: Long,
     callback: SimpleExoPlayer.() -> Unit = { }
   ) {
+    handler.removeCallbacksAndMessages(this)
     if (!playWhenReady && !isPlaying) {
       // edge case where fade is requested but playback is not playing.
       volume = toVolume
@@ -126,17 +130,15 @@ class LocalPlaybackStrategy(
     val steps = 1 + ceil(abs(toVolume - fromVolume) / FADE_VOLUME_STEP).toInt()
     val period = duration / steps
     volume = fromVolume
-    transitionTicker?.cancel()
-    transitionTicker = object : CountDownTimer(FADE_DURATION, period) {
-      override fun onFinish() {
-        volume = toVolume
-        transitionTicker = null
-        callback()
-      }
+    for (i in 0 until steps) {
+      HandlerCompat.postDelayed(
+        handler, { volume += sign * FADE_VOLUME_STEP }, this, i * period
+      )
+    }
 
-      override fun onTick(millisUntilFinished: Long) {
-        volume += sign * FADE_VOLUME_STEP
-      }
-    }.also { it.start() }
+    HandlerCompat.postDelayed(handler, {
+      volume = toVolume
+      callback.invoke(this)
+    }, this, duration + 1)
   }
 }

@@ -23,8 +23,9 @@ class CastPlaybackStrategy(
     private const val ACTION_STOP = "stop"
   }
 
-  private data class PlayerEvent(
-    @Expose val soundKey: String,
+  @Suppress("unused")
+  private class PlayerEvent(
+    @Expose val src: Array<String>,
     @Expose val isLooping: Boolean,
     @Expose val volume: Float,
     @Expose val action: String?
@@ -62,7 +63,7 @@ class CastPlaybackStrategy(
 
   private fun notifyChanges(action: String?) {
     session.sendMessage(
-      namespace, gson.toJson(PlayerEvent(sound.key, sound.isLooping, volume, action))
+      namespace, gson.toJson(PlayerEvent(sound.src, sound.isLooping, volume, action))
     )
   }
 }

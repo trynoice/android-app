@@ -1,11 +1,6 @@
 import { Howl } from "howler";
 import { Sounds } from "./library";
-import {
-  PlayerMap,
-  PlayerEvent,
-  PlayerAction,
-  PlayerStatusEventType,
-} from "./types";
+import { PlayerControlEvent, PlayerAction, PlayerManagerStatus } from "./types";
 
 /**
  * PlayerManager manages various player instances for all the sounds.
@@ -20,57 +15,47 @@ export default class PlayerManager {
   private static readonly FADE_OUT_DURATION = 750;
   private static readonly FADE_VOLUME_DURATION = 750;
 
-  private players: PlayerMap = {};
+  private players: Map<string, Howl> = new Map();
+  private bufferingState: Set<string> = new Set();
   private idleTimer: number;
-  private onIdleTimeoutCallback?: () => void;
-  private onIdleCallback?: () => void;
-  private onPlayerStatusCallback?: (
-    type: PlayerStatusEventType,
-    soundKey: string
-  ) => void;
+  private onStatusUpdateCallback?: (status: PlayerManagerStatus) => void;
 
   constructor() {
     this.startIdleTimer();
   }
 
   /**
-   * check if any player instance is present. Paused state isn't considered idle.
-   */
-  private isIdle(): boolean {
-    for (const key in this.players) {
-      if (key) return false;
-    }
-    return true;
-  }
-
-  /**
-   * Calls the onIdle callback and starts a timer that invokes onIdleTimeout
-   * callback when finished.
+   * Starts a timer that invokes status callback with a
+   * PlayerManagerStatusEvent.IdleTimedOut event on finish.
    */
   private startIdleTimer(): void {
     this.stopIdleTimer();
     this.idleTimer = window.setTimeout(() => {
-      if (this.onIdleTimeoutCallback) {
-        this.onIdleTimeoutCallback();
-      }
+      this.notifyStatusUpdate(PlayerManagerStatus.IdleTimedOut);
     }, PlayerManager.IDLE_TIMEOUT);
-
-    if (this.onIdleCallback) {
-      this.onIdleCallback();
-    }
   }
 
+  /**
+   * stops idle timer
+   */
   private stopIdleTimer(): void {
     window.clearTimeout(this.idleTimer);
   }
 
+  /**
+   * initializes a new Howl instance with the given paramters.
+   * @param soundKey soundKey as passed by the sender app
+   * @param isLooping whether the sound should loop
+   * @param volume initial volume for the sound
+   */
   private createPlayer(
     soundKey: string,
     isLooping: boolean,
     volume: number
   ): Howl {
+    this.bufferingState.add(soundKey);
     return new Howl({
-      src: Sounds[soundKey],
+      src: Sounds[soundKey.substring(0, soundKey.length - 4)],
       autoplay: false,
       html5: false,
       loop: isLooping,
@@ -81,18 +66,20 @@ export default class PlayerManager {
   }
 
   /**
-   * start playback for a player. It waits for the Howl instance to be ready
-   * and sound to be loaded before starting playback. It invokes the onPlayerStatus
-   * callback when the player actually starts.
+   * start playback for a player. It waits for the Howl instance to be ready and
+   * sound to be loaded before starting playback. It invokes the status callback
+   * with a PlayerManagerStatusEvent.Playing event when the sound starts playing.
    */
   private play(soundKey: string): void {
-    const player = this.players[soundKey];
+    if (this.players.has(soundKey) === false) {
+      return;
+    }
+
+    const player = this.players.get(soundKey);
     if (player.playing() === false) {
       player.once("play", (): void => {
-        if (this.onPlayerStatusCallback) {
-          this.onPlayerStatusCallback(PlayerStatusEventType.Started, soundKey);
-        }
-
+        this.bufferingState.delete(soundKey);
+        this.notifyStatusUpdate(PlayerManagerStatus.Playing);
         // fade-in only looping sounds because non-looping sounds need to maintain
         // their abruptness thingy.
         if (player.loop()) {
@@ -104,11 +91,15 @@ export default class PlayerManager {
     }
   }
 
+  /**
+   * Pauses the given player without destroying the Howl instance.
+   */
   private pause(soundKey: string): void {
-    this.players[soundKey].pause();
-    if (this.onPlayerStatusCallback) {
-      this.onPlayerStatusCallback(PlayerStatusEventType.Paused, soundKey);
+    if (this.players.has(soundKey) === false) {
+      return;
     }
+
+    this.players.get(soundKey).pause();
   }
 
   /**
@@ -116,8 +107,13 @@ export default class PlayerManager {
    * resources regardless of the player's playing state.
    */
   private stop(soundKey: string): void {
-    const player = this.players[soundKey];
-    delete this.players[soundKey];
+    if (this.players.has(soundKey) === false) {
+      return;
+    }
+
+    const player = this.players.get(soundKey);
+    this.players.delete(soundKey);
+    this.bufferingState.delete(soundKey);
     if (player.playing()) {
       player.fade(player.volume(), 0, PlayerManager.FADE_OUT_DURATION);
       player.once("fade", () => {
@@ -128,14 +124,18 @@ export default class PlayerManager {
       player.stop();
       player.unload();
     }
-
-    if (this.onPlayerStatusCallback) {
-      this.onPlayerStatusCallback(PlayerStatusEventType.Removed, soundKey);
-    }
   }
 
+  /**
+   * Sets volume for the given player. If the player is currently playing,
+   * it fades the volume instead to provide smooth transition.
+   */
   private setVolume(soundKey: string, volume: number): void {
-    const player = this.players[soundKey];
+    if (this.players.has(soundKey) === false) {
+      return;
+    }
+
+    const player = this.players.get(soundKey);
     if (player.playing()) {
       player.fade(player.volume(), volume, PlayerManager.FADE_VOLUME_DURATION);
     } else {
@@ -143,78 +143,75 @@ export default class PlayerManager {
     }
   }
 
+  isBuffering(): boolean {
+    return this.bufferingState.size > 0;
+  }
+
   /**
    * Implements the callback to handle messages received from the Sender application.
-   * Based on the action taken, PlayerManager invokes an appropriate callback registered
-   * to it via on* methods.
+   * Based on the action taken, it invokes the status callback with an appropriate
+   * PlayerManagerStatusEvent.
    */
-  handlePlayerEvent(event: PlayerEvent): void {
-    if (event.soundKey in this.players === false) {
-      if (event.action === undefined || event.action === null) {
-        return;
-      }
-
-      if (event.action !== PlayerAction.Create) {
-        // shouldn't be here?
-        return;
-      }
-
-      if (this.isIdle() === true) {
-        this.stopIdleTimer();
-      }
-
-      this.players[event.soundKey] = this.createPlayer(
-        event.soundKey,
-        event.isLooping,
-        event.volume
-      );
-
-      if (this.onPlayerStatusCallback) {
-        this.onPlayerStatusCallback(
-          PlayerStatusEventType.Added,
-          event.soundKey
-        );
-      }
-
-      return;
-    }
-
-    this.setVolume(event.soundKey, event.volume);
-    switch (event.action) {
-      case PlayerAction.Play:
-        this.play(event.soundKey);
-        break;
-      case PlayerAction.Pause:
-        this.pause(event.soundKey);
-        break;
-      case PlayerAction.Stop:
-        this.stop(event.soundKey);
-        if (this.isIdle() === true) {
-          this.startIdleTimer();
+  handlePlayerEvent(event: PlayerControlEvent): void {
+    event.src.forEach((soundKey: string) => {
+      if (this.players.has(soundKey) === false) {
+        if (event.action === undefined || event.action === null) {
+          return;
         }
-        break;
+
+        if (event.action !== PlayerAction.Create) {
+          // shouldn't be here?
+          return;
+        }
+
+        if (this.players.size === 0) {
+          this.stopIdleTimer();
+        }
+
+        this.players.set(
+          soundKey,
+          this.createPlayer(soundKey, event.isLooping, event.volume)
+        );
+
+        this.notifyStatusUpdate(PlayerManagerStatus.Playing);
+        return;
+      }
+
+      this.setVolume(soundKey, event.volume);
+      switch (event.action) {
+        case PlayerAction.Play:
+          this.play(soundKey);
+          break;
+        case PlayerAction.Pause:
+          this.pause(soundKey);
+          break;
+        case PlayerAction.Stop:
+          this.stop(soundKey);
+          break;
+      }
+
+      if (this.players.size === 0) {
+        this.notifyStatusUpdate(PlayerManagerStatus.Idle);
+        this.startIdleTimer();
+      } else {
+        this.notifyStatusUpdate(PlayerManagerStatus.Playing);
+      }
+    });
+  }
+
+  /**
+   * helper function to invoke the event receiver callback.
+   */
+  private notifyStatusUpdate(event: PlayerManagerStatus): void {
+    if (this.onStatusUpdateCallback) {
+      this.onStatusUpdateCallback(event);
     }
   }
 
   /**
-   * Registers a callback to notify when status of an underlying
-   * sound player instance changes.
+   * Registers a callback to notify when status of the player manager changes.
    */
-  onPlayerStatus(f: (type: PlayerStatusEventType, key: string) => void): void {
-    this.onPlayerStatusCallback = f;
-  }
-
-  /**
-   * Registers a callback to notify when PlayerManager becomes idle.
-   */
-  onIdle(f: () => void): void {
-    this.onIdleCallback = f;
-  }
-
-  /**
-   * Registers a callback to notify when PlayerManager's idle timer has timed out.
-   */
-  onIdleTimeout(f: () => void): void {
-    this.onIdleTimeoutCallback = f;
+  onStatusUpdate(f: (event: PlayerManagerStatus) => void): void {
+    this.onStatusUpdateCallback = f;
   }
 }

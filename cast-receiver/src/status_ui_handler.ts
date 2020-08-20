@@ -1,104 +1,102 @@
-import { PlayerStatusEventType } from "./types";
 import { Icons } from "./library";
 
 /**
  * StatusUIHandler is responsible for managing status UI of the application.
- * It implements a callback for subscribing to the PlayerManager events (binding
- * in index.ts) and updates the div container (passed as a constructor argument).
+ * It manages the div container passed via the constructor argument.
  */
 export default class StatusUIHandler {
-  private static readonly READY_TO_CAST_MSG = "Ready to cast";
+  static readonly IDLE_STATUS_ID = "idle";
+  static readonly CASTING_STATUS_ID = "casting";
+  static readonly LOADER_STATUS_ID = "loader";
 
-  static readonly READY_TO_CAST_ID = "ready-to-cast";
-  static readonly LOADING_OPACITY = 0.5;
-  static readonly PAUSED_OPACITY = 0.65;
-  static readonly NORMAL_OPACITY = 0.9;
+  private static readonly IDLE_STATUS_ICON = "cast";
+  private static readonly CASTING_STATUS_ICON = "playing";
+  private static readonly LOADER_STATUS_ICON = "loader";
+
+  private static readonly IDLE_STATUS_MSG = "Ready to cast";
+  private static readonly CASTING_STATUS_MSG = "A device is casting";
 
   private container: HTMLDivElement;
-  private readyToCastElement: HTMLSpanElement;
+  private statusElements: Map<string, HTMLElement> = new Map();
 
   constructor(statusContainer: HTMLDivElement) {
     this.container = statusContainer;
-    this.readyToCastElement = this.createReadyToCastElement();
+    this.statusElements.set(
+      StatusUIHandler.IDLE_STATUS_ID,
+      this.createStatusElement(
+        StatusUIHandler.IDLE_STATUS_ID,
+        StatusUIHandler.IDLE_STATUS_ICON,
+        StatusUIHandler.IDLE_STATUS_MSG
+      )
+    );
+
+    this.statusElements.set(
+      StatusUIHandler.CASTING_STATUS_ID,
+      this.createStatusElement(
+        StatusUIHandler.CASTING_STATUS_ID,
+        StatusUIHandler.CASTING_STATUS_ICON,
+        StatusUIHandler.CASTING_STATUS_MSG
+      )
+    );
+
+    this.statusElements.set(
+      StatusUIHandler.LOADER_STATUS_ID,
+      this.createStatusElement(
+        StatusUIHandler.LOADER_STATUS_ID,
+        StatusUIHandler.LOADER_STATUS_ICON,
+        ""
+      )
+    );
   }
 
   private createIcon(id: string): HTMLElement {
     const template = document.createElement("template");
-    template.innerHTML = `<svg id="${id}" class="sound"><use xlink:href="${Icons[id]}" /><svg>`;
+    template.innerHTML = `<svg id="${id}" class="icon"><use xlink:href="${Icons[id]}" /><svg>`;
     return template.content.firstChild as HTMLElement;
   }
 
-  private createReadyToCastElement(): HTMLSpanElement {
-    const element = document.createElement("span");
-    element.classList.add("caption");
-    element.id = StatusUIHandler.READY_TO_CAST_ID;
-    element.appendChild(this.createIcon("cast"));
-    element.appendChild(
-      document.createTextNode(StatusUIHandler.READY_TO_CAST_MSG)
-    );
-
+  private createStatusElement(
+    id: string,
+    iconID: string,
+    message: string
+  ): HTMLSpanElement {
+    const element = document.createElement("div");
+    element.classList.add("statusline", "caption");
+    element.id = id;
+    element.appendChild(this.createIcon(iconID));
+    element.appendChild(document.createTextNode(message));
     return element;
   }
 
   /**
-   * Puts the ready to cast message on status display. If status display is already
-   * showing ready to cast message, the method does nothing.
+   * Enables the status with given ID.
+   *
+   * @param statusID ID of status to toggle. must be one of
+   * StatusUIHandler.IDLE_STATUS_ID or StatusUIHandler.CASTING_STATUS_ID
+   * @param enabled whether to display or hide the given status
    */
-  showIdleStatus(): void {
-    if (this.isShowingIdleStatus() === true) {
+  enableStatus(statusID: string, enabled: boolean): void {
+    if (this.statusElements.has(statusID) === false) {
       return;
     }
 
-    this.clearStatus();
-    this.container.appendChild(this.readyToCastElement);
-  }
-
-  private isShowingIdleStatus(): boolean {
-    if (this.container.querySelector(`span#${this.readyToCastElement.id}`)) {
-      return true;
-    }
-    return false;
-  }
-
-  private clearStatus(): void {
-    this.container.innerHTML = "";
-  }
-
-  /**
-   * Implements the callback for the PlayerManager events. Based on the events, it
-   * manipulates the status display for each sound by adding its icon and using
-   * opacity to show their playback states.
-   * @param type event type
-   * @param soundKey sound for which the event occurred
-   */
-  handlePlayerStatusEvent(type: PlayerStatusEventType, soundKey: string): void {
-    let icon: HTMLElement = this.container.querySelector(`#${soundKey}`);
-    if (type === PlayerStatusEventType.Removed) {
-      if (icon) {
-        this.container.removeChild(icon);
-      }
+    const isShowing = this.isShowingStatus(statusID);
+    if ((isShowing && enabled) || (!isShowing && !enabled)) {
       return;
     }
 
-    if (this.isShowingIdleStatus()) {
-      this.clearStatus();
+    const element = this.statusElements.get(statusID);
+    if (enabled) {
+      this.container.appendChild(element);
+    } else {
+      this.container.removeChild(element);
     }
+  }
 
-    if (!icon) {
-      icon = this.createIcon(soundKey);
-      this.container.appendChild(icon);
-    }
-
-    switch (type) {
-      case PlayerStatusEventType.Added:
-        icon.style.opacity = `${StatusUIHandler.LOADING_OPACITY}`;
-        break;
-      case PlayerStatusEventType.Paused:
-        icon.style.opacity = `${StatusUIHandler.PAUSED_OPACITY}`;
-        break;
-      default:
-        icon.style.opacity = `${StatusUIHandler.NORMAL_OPACITY}`;
-        break;
-    }
+  private isShowingStatus(id: string): boolean {
+    return (
+      this.statusElements.has(id) &&
+      this.container.querySelector(`#${id}`) != null
+    );
   }
 }

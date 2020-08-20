@@ -20,9 +20,11 @@ class PlayerTest {
 
   @Before
   fun setup() {
+    mockkObject(Sound.Companion)
     mockSound = mockk(relaxed = true)
     mockPlaybackStrategy = mockk(relaxed = true)
-    player = Player(mockSound, mockk {
+    every { Sound.get("test") } returns mockSound
+    player = Player("test", mockk {
       every { newInstance(any()) } returns mockPlaybackStrategy
     })
 

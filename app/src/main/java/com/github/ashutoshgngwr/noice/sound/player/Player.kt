@@ -12,7 +12,7 @@ import kotlin.random.Random.Default.nextInt
  * [Player] manages playback of a single [Sound]. It [PlaybackStrategy] instances to control media
  * playback and keeps track of playback information such as [isPlaying], [volume] and [timePeriod].
  */
-class Player(private val sound: Sound, playbackStrategyFactory: PlaybackStrategyFactory) {
+class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFactory) {
 
   companion object {
     private val TAG = Player::class.simpleName
@@ -30,7 +30,7 @@ class Player(private val sound: Sound, playbackStrategyFactory: PlaybackStrategy
 
   var timePeriod = DEFAULT_TIME_PERIOD
 
-  val soundKey = sound.key
+  private val sound = Sound.get(soundKey)
 
   private var isPlaying = false
   private var playbackStrategy = playbackStrategyFactory.newInstance(sound).also {

@@ -1,6 +1,6 @@
 import { Howl } from "howler";
 import PlayerManager from "./player_manager";
-import { PlayerAction, PlayerStatusEventType } from "./types";
+import { PlayerAction, PlayerManagerStatus } from "./types";
 
 const mockHowl = {
   playing: jest.fn(),
@@ -23,18 +23,18 @@ jest.mock("howler", () => {
 jest.useFakeTimers();
 
 describe("PlayerManager#handlePlayerEvent", () => {
-  const playerStatusCallback = jest.fn();
+  const statusCallback = jest.fn();
   let manager: PlayerManager;
 
   beforeEach(() => {
     manager = new PlayerManager();
-    manager.onPlayerStatus(playerStatusCallback);
+    manager.onStatusUpdate(statusCallback);
   });
 
   function createTestPlayer(): void {
     manager.handlePlayerEvent({
       isLooping: false,
-      soundKey: "test",
+      src: ["test-0", "test-1"],
       volume: 1,
       action: PlayerAction.Create,
     });
@@ -43,9 +43,9 @@ describe("PlayerManager#handlePlayerEvent", () => {
   it("should do nothing before Create action", () => {
     manager.handlePlayerEvent({
       isLooping: false,
-      soundKey: "test",
+      src: ["test-0", "test-1"],
       volume: 1,
-      action: null,
+      action: PlayerAction.Play,
     });
 
     expect(Howl).not.toHaveBeenCalled();
@@ -54,10 +54,12 @@ describe("PlayerManager#handlePlayerEvent", () => {
   it("should initialize Howl instance on Create action", () => {
     createTestPlayer();
     expect(Howl).toHaveBeenCalled();
-    expect(playerStatusCallback).toHaveBeenCalledWith(
-      PlayerStatusEventType.Added,
-      "test"
-    );
+    expect(statusCallback).toHaveBeenCalledWith(PlayerManagerStatus.Playing);
+  });
+
+  it("should be in buffering state", () => {
+    createTestPlayer();
+    expect(manager.isBuffering()).toBeTruthy();
   });
 
   it("should stop idle timer on Create action", () => {
@@ -65,12 +67,12 @@ describe("PlayerManager#handlePlayerEvent", () => {
     expect(window.clearTimeout).toHaveBeenCalled();
   });
 
-  it("should invoke idle timeout callback on timeout", () => {
+  it("should invoke the status callback with an idle event on timeout", () => {
     expect(window.setTimeout).toHaveBeenCalled();
-    const idleTimeoutCallback = jest.fn();
-    manager.onIdleTimeout(idleTimeoutCallback);
     jest.runAllTimers();
-    expect(idleTimeoutCallback).toHaveBeenCalled();
+    expect(statusCallback).toHaveBeenCalledWith(
+      PlayerManagerStatus.IdleTimedOut
+    );
   });
 
   describe("Play action", () => {
@@ -79,7 +81,7 @@ describe("PlayerManager#handlePlayerEvent", () => {
     function playTestPlayer(): void {
       manager.handlePlayerEvent({
         isLooping: false,
-        soundKey: "test",
+        src: ["test-0", "test-1"],
         volume: 1,
         action: PlayerAction.Play,
       });
@@ -88,18 +90,15 @@ describe("PlayerManager#handlePlayerEvent", () => {
     it("should start playback", () => {
       mockHowl.playing.mockReturnValue(false);
       playTestPlayer();
-      expect(mockHowl.play).toHaveBeenCalled();
+      expect(mockHowl.play).toHaveBeenCalledTimes(2);
     });
 
-    it("should invoke player status callback on successful playback", () => {
+    it("should invoke player manager status callback", () => {
       mockHowl.playing.mockReturnValue(false);
       playTestPlayer();
       expect(mockHowl.once).toHaveBeenCalledWith("play", expect.anything());
       mockHowl.once.mock.calls[0][1](); // invoke once callback
-      expect(playerStatusCallback).toHaveBeenCalledWith(
-        PlayerStatusEventType.Started,
-        "test"
-      );
+      expect(statusCallback).toHaveBeenCalledWith(PlayerManagerStatus.Playing);
     });
 
     it("should not fade-in non-looping sounds", () => {
@@ -134,7 +133,7 @@ describe("PlayerManager#handlePlayerEvent", () => {
     function pauseTestPlayer(): void {
       manager.handlePlayerEvent({
         isLooping: false,
-        soundKey: "test",
+        src: ["test-0", "test-1"],
         volume: 1,
         action: PlayerAction.Pause,
       });
@@ -142,15 +141,12 @@ describe("PlayerManager#handlePlayerEvent", () => {
 
     it("should pause playback", () => {
       pauseTestPlayer();
-      expect(mockHowl.pause).toHaveBeenCalledTimes(1);
+      expect(mockHowl.pause).toHaveBeenCalledTimes(2);
     });
 
-    it("should invoke the player status callback", () => {
+    it("should invoke the player manager status callback", () => {
       pauseTestPlayer();
-      expect(playerStatusCallback).toHaveBeenCalledWith(
-        PlayerStatusEventType.Paused,
-        "test"
-      );
+      expect(statusCallback).toHaveBeenCalledWith(PlayerManagerStatus.Playing);
     });
   });
 
@@ -160,7 +156,7 @@ describe("PlayerManager#handlePlayerEvent", () => {
     function stopTestPlayer(): void {
       manager.handlePlayerEvent({
         isLooping: false,
-        soundKey: "test",
+        src: ["test-0", "test-1"],
         volume: 1,
         action: PlayerAction.Stop,
       });
@@ -189,19 +185,9 @@ describe("PlayerManager#handlePlayerEvent", () => {
       expect(mockHowl.unload).toHaveBeenCalled();
     });
 
-    it("should invoke the player status callback", () => {
+    it("should invoke status callback with an idle event if all players are stopped", () => {
       stopTestPlayer();
-      expect(playerStatusCallback).toHaveBeenCalledWith(
-        PlayerStatusEventType.Removed,
-        "test"
-      );
-    });
-
-    it("should invoke the idle callback if all players are stopped", () => {
-      const idleCallback = jest.fn();
-      manager.onIdle(idleCallback);
-      stopTestPlayer();
-      expect(idleCallback).toHaveBeenCalled();
+      expect(statusCallback).toHaveBeenCalledWith(PlayerManagerStatus.Idle);
     });
 
     it("should start idle timer if all players are stopped", () => {
@@ -216,7 +202,7 @@ describe("PlayerManager#handlePlayerEvent", () => {
     function updateTestPlayerVolume(): void {
       manager.handlePlayerEvent({
         isLooping: false,
-        soundKey: "test",
+        src: ["test-0", "test-1"],
         volume: 1,
       });
     }
