@@ -30,9 +30,8 @@ body {
     flex-direction: row;
     align-items: center;
 
-    #logo img {
-      filter: invert(91%) sepia(95%) saturate(4%) hue-rotate(235deg)
-        brightness(109%) contrast(98%);
+    #logo svg {
+      opacity: 0.95;
       margin: 0 2rem 0 0;
       max-width: 7rem;
     }

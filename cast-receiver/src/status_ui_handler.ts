@@ -10,7 +10,7 @@ export default class StatusUIHandler {
   static readonly LOADER_STATUS_ID = "loader";
 
   private static readonly IDLE_STATUS_ICON = "cast";
-  private static readonly CASTING_STATUS_ICON = "cast";
+  private static readonly CASTING_STATUS_ICON = "playing";
   private static readonly LOADER_STATUS_ICON = "loader";
 
   private static readonly IDLE_STATUS_MSG = "Ready to cast";
