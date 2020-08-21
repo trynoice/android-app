@@ -130,6 +130,11 @@ class Sound private constructor(
         R.string.sound_group__train,
         false
       ),
+      "water_hose" to Sound(
+        arrayOf("water_hose_0.mp3", "water_hose_1.mp3"),
+        R.string.water_hose,
+        R.string.sound_group__water
+      ),
       "water_stream" to Sound(
         arrayOf("water_stream_0.mp3", "water_stream_1.mp3"),
         R.string.water_stream,

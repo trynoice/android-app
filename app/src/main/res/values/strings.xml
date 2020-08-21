@@ -34,6 +34,8 @@
   <string name="soft_wind">Soft wind</string>
   <string name="thunder_crack">Thunder crack</string>
   <string name="train_horn">Train horn</string>
+  <string name="water_hose">Water hose</string>
+  <string name="water_hosing">Hosing</string>
   <string name="water_stream">Water stream</string>
   <string name="white_noise">White noise</string>
   <string name="wind_in_palm_trees">Wind in Palm trees</string>
@@ -116,6 +118,7 @@
   <string name="sound_group__raw_noise">Raw Noise</string>
   <string name="sound_group__times_of_day">Times of Day</string>
   <string name="sound_group__train">Train</string>
+  <string name="sound_group__water">Water</string>
   <string name="sound_group__waterfront">Waterfront</string>
   <string name="sound_group__wind">Wind</string>
   <string-array name="app_themes">

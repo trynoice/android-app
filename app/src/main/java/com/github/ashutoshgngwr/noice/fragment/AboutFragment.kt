@@ -117,6 +117,11 @@ class AboutFragment : Fragment() {
         R.string.credits__sound_train_horn_url
       ),
       arrayOf(
+        R.string.credits__sound_water_hose,
+        R.drawable.ic_about_sound,
+        R.string.credits__sound_water_hose_url
+      ),
+      arrayOf(
         R.string.credits__sound_water_stream,
         R.drawable.ic_about_sound,
         R.string.credits__sound_water_stream_url
