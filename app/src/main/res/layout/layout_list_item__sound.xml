@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-  style="@style/Widget.App.CardView"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+  style="?attr/materialCardViewStyle"
   android:layout_width="match_parent"
   android:layout_height="wrap_content">
 
@@ -11,16 +11,16 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <ImageButton
+    <CheckBox
       android:id="@+id/button_play"
-      style="@style/Widget.AppCompat.ImageButton"
+      style="?attr/checkboxStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_margin="5dp"
       android:background="?android:selectableItemBackgroundBorderless"
-      android:contentDescription="@string/play_pause"
-      android:padding="5dp"
-      android:src="@drawable/ic_action_play"
-      android:tint="?attr/colorAccent" />
+      android:button="@drawable/ic_action_play_stop_circled_toggle"
+      android:buttonTint="?attr/colorAccent"
+      android:contentDescription="@string/play_pause" />
 
     <LinearLayout
       android:layout_width="0dp"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+        android:textAppearance="?attr/textAppearanceListItem" />
 
       <LinearLayout
         android:layout_width="match_parent"
@@ -48,7 +48,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:contentDescription="@string/volume"
-          android:src="@drawable/ic_stat_volume"
+          android:src="@drawable/ic_action_volume"
           android:tint="?attr/colorAccent" />
 
         <SeekBar
@@ -72,7 +72,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:contentDescription="@string/repeat_time_period"
-          android:src="@drawable/ic_stat_time_period"
+          android:src="@drawable/ic_action_time_period"
           android:tint="?attr/colorAccent" />
 
         <SeekBar
@@ -87,4 +87,4 @@
 
   </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

@@ -1,35 +1,65 @@
 package com.github.ashutoshgngwr.noice
 
-import android.content.ActivityNotFoundException
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
-import android.media.AudioManager
+import android.graphics.drawable.Animatable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
+import androidx.annotation.IdRes
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
+import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.fragment.*
+import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
   companion object {
+    /**
+     * [EXTRA_CURRENT_NAVIGATED_FRAGMENT] declares the key for intent extra value that is passed to
+     * [MainActivity] for setting the given fragment to the top. The required value for this extra
+     * should be an integer representing the menu item's id in the navigation view corresponding to
+     * the fragment being requested.
+     */
+    const val EXTRA_CURRENT_NAVIGATED_FRAGMENT = "current_fragment"
+
     private const val TAG = "MainActivity"
     private const val PREF_APP_THEME = "app_theme"
     private const val APP_THEME_LIGHT = 0
     private const val APP_THEME_DARK = 1
     private const val APP_THEME_SYSTEM_DEFAULT = 2
+
+    private val NAVIGATED_FRAGMENTS = mapOf(
+      R.id.library to SoundLibraryFragment::class.java,
+      R.id.saved_presets to PresetFragment::class.java,
+      R.id.sleep_timer to SleepTimerFragment::class.java,
+      R.id.wake_up_timer to WakeUpTimerFragment::class.java,
+      R.id.about to AboutFragment::class.java,
+      R.id.support_development to SupportDevelopmentFragment::class.java
+    )
   }
 
   private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+  private lateinit var castAPIWrapper: CastAPIWrapper
+  private var playerManagerState = PlayerManager.State.STOPPED
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    // because cast context is lazy initialized, cast menu item wouldn't show up until
+    // re-resuming the activity. adding this to prevent that.
+    // This should implicitly init CastContext.
+    castAPIWrapper = CastAPIWrapper.from(this, false)
     super.onCreate(savedInstanceState)
     AppCompatDelegate.setDefaultNightMode(getNightModeFromPrefs())
 
@@ -42,46 +72,94 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       R.string.open_drawer,
       R.string.close_drawer
     )
-
     layout_main.addDrawerListener(actionBarDrawerToggle)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
     actionBarDrawerToggle.syncState()
 
     // setup listener for navigation item clicks
     navigation_drawer.setNavigationItemSelectedListener(this)
+    navigation_drawer.menu.findItem(R.id.rate_on_play_store).isVisible =
+      BuildConfig.IS_PLAY_STORE_BUILD
 
     // bind navigation drawer menu items checked state with fragment back stack
     supportFragmentManager.addOnBackStackChangedListener {
-      when (
-        supportFragmentManager
-          .getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1)
-          .name
-        ) {
-        SoundLibraryFragment::class.java.simpleName -> {
-          navigation_drawer.setCheckedItem(R.id.library)
+      val index = supportFragmentManager.backStackEntryCount - 1
+      val currentFragmentName = supportFragmentManager.getBackStackEntryAt(index).name
+      for (item in NAVIGATED_FRAGMENTS) {
+        if (item.value.simpleName == currentFragmentName) {
+          navigation_drawer.setCheckedItem(item.key)
+          break
         }
-        PresetFragment::class.java.simpleName -> {
-          navigation_drawer.setCheckedItem(R.id.saved_presets)
-        }
-        SleepTimerFragment::class.java.simpleName -> {
-          navigation_drawer.setCheckedItem(R.id.sleep_timer)
-        }
-        AboutFragment::class.java.simpleName -> {
-          navigation_drawer.setCheckedItem(R.id.about)
-        }
+      }
+
+      if (R.id.library == navigation_drawer.checkedItem?.itemId) {
+        supportActionBar?.setTitle(R.string.app_name)
+      } else {
+        supportActionBar?.title = navigation_drawer.checkedItem?.title
       }
     }
 
     // set sound library fragment when activity is created initially
     if (savedInstanceState == null) {
-      setFragment(SoundLibraryFragment::class.java)
+      setFragment(R.id.library)
     }
 
-    // volume control to type "media"
-    volumeControlStream = AudioManager.STREAM_MUSIC
+    if (intent.hasExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT)) {
+      setFragment(intent.getIntExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.library))
+    }
+  }
+
+  override fun onResume() {
+    super.onResume()
+    EventBus.getDefault().register(this)
 
     // start the media player service
-    startService(Intent(this, MediaPlayerService::class.java))
+    // workaround for Android 9+. See https://github.com/ashutoshgngwr/noice/issues/179
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+      (getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).also {
+        val importance = it.runningAppProcesses.firstOrNull()?.importance
+          ?: ActivityManager.RunningAppProcessInfo.IMPORTANCE_GONE
+
+        if (importance <= ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+          startService(Intent(this, MediaPlayerService::class.java))
+        }
+      }
+    } else {
+      startService(Intent(this, MediaPlayerService::class.java))
+    }
+  }
+
+  override fun onPause() {
+    EventBus.getDefault().unregister(this)
+    super.onPause()
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    super.onCreateOptionsMenu(menu)
+    castAPIWrapper.setUpMenuItem(menu, R.string.cast_media)
+    menu.add(0, R.id.action_play_pause_toggle, 0, R.string.play_pause).also {
+      it.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+      it.isVisible = PlayerManager.State.STOPPED != playerManagerState
+      if (PlayerManager.State.PLAYING == playerManagerState) {
+        it.setIcon(R.drawable.ic_action_play_to_pause)
+      } else {
+        it.setIcon(R.drawable.ic_action_pause_to_play)
+      }
+
+      (it.icon as Animatable).start()
+      it.setOnMenuItemClickListener {
+        val event: Any = if (PlayerManager.State.PLAYING == playerManagerState) {
+          MediaPlayerService.PausePlaybackEvent()
+        } else {
+          MediaPlayerService.ResumePlaybackEvent()
+        }
+
+        EventBus.getDefault().post(event)
+        true
+      }
+    }
+
+    return true
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -92,27 +170,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
-      R.id.library -> {
-        setFragment(SoundLibraryFragment::class.java)
-      }
-      R.id.saved_presets -> {
-        setFragment(PresetFragment::class.java)
-      }
-      R.id.sleep_timer -> {
-        setFragment(SleepTimerFragment::class.java)
-      }
+      in NAVIGATED_FRAGMENTS -> setFragment(item.itemId)
       R.id.app_theme -> {
         DialogFragment().show(supportFragmentManager) {
           title(R.string.app_theme)
           singleChoiceItems(
-            itemsRes = R.array.app_themes,
+            items = resources.getStringArray(R.array.app_themes),
             currentChoice = getAppTheme(),
             onItemSelected = { setAppTheme(it) }
           )
         }
-      }
-      R.id.about -> {
-        setFragment(AboutFragment::class.java)
       }
       R.id.report_issue -> {
         startActivity(
@@ -123,24 +190,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
       }
       R.id.rate_on_play_store -> {
-        try {
-          startActivity(
-            Intent(
-              Intent.ACTION_VIEW,
-              Uri.parse("market://details?id=$packageName")
-            ).addFlags(
-              Intent.FLAG_ACTIVITY_NO_HISTORY
-                or Intent.FLAG_ACTIVITY_NEW_DOCUMENT
-                or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
-            )
-          )
-        } catch (e: ActivityNotFoundException) {
-          Log.i(TAG, "Play store is not installed on the device", e)
-        }
+        startActivity(
+          Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.rate_us_on_play_store_url)))
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
       }
     }
 
-    layout_main.closeDrawer(GravityCompat.START)
+    // hack to avoid stuttering in animations
+    layout_main.postDelayed({ layout_main.closeDrawer(GravityCompat.START) }, 150)
     return true
   }
 
@@ -155,6 +213,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         finish()
       }
     }
+  }
+
+  @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+  fun onPlayerManagerUpdate(event: MediaPlayerService.OnPlayerManagerUpdateEvent) {
+    if (playerManagerState == event.state) {
+      return
+    }
+
+    playerManagerState = event.state
+    invalidateOptionsMenu()
   }
 
   /**
@@ -193,7 +261,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     recreate()
   }
 
-  private fun <T : Fragment> setFragment(fragmentClass: Class<T>) {
+  private fun setFragment(@IdRes navItemID: Int) {
+    val fragmentClass = NAVIGATED_FRAGMENTS[navItemID] ?: return
     val tag = fragmentClass.simpleName
 
     // show fragment if it isn't present in back stack.

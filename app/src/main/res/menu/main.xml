@@ -3,43 +3,55 @@
 
   <item
     android:id="@+id/library"
-    android:icon="@drawable/ic_action_library"
+    android:icon="@drawable/ic_nav_library"
     android:title="@string/library"
     android:checkable="true" />
 
   <item
     android:id="@+id/saved_presets"
-    android:icon="@drawable/ic_action_saved_presets"
+    android:icon="@drawable/ic_nav_saved_presets"
     android:title="@string/saved_presets"
     android:checkable="true" />
 
   <item
     android:id="@+id/sleep_timer"
-    android:icon="@drawable/ic_action_timer"
+    android:icon="@drawable/ic_nav_sleep_timer"
     android:title="@string/sleep_timer"
     android:checkable="true" />
 
   <item
+    android:id="@+id/wake_up_timer"
+    android:icon="@drawable/ic_nav_wake_up_timer"
+    android:title="@string/wake_up_timer"
+    android:checkable="true" />
+
+  <item
     android:id="@+id/app_theme"
-    android:icon="@drawable/ic_action_theme"
+    android:icon="@drawable/ic_nav_theme"
     android:title="@string/app_theme"
     android:checkable="false" />
 
   <item
     android:id="@+id/about"
-    android:icon="@drawable/ic_action_info"
+    android:icon="@drawable/ic_nav_info"
     android:title="@string/about"
     android:checkable="true" />
 
   <item
+    android:id="@+id/support_development"
+    android:icon="@drawable/ic_nav_support_development"
+    android:title="@string/support_development"
+    android:checkable="true"/>
+
+  <item
     android:id="@+id/report_issue"
-    android:icon="@drawable/ic_action_report"
+    android:icon="@drawable/ic_nav_report"
     android:title="@string/report_issue"
     android:checkable="false" />
 
   <item
     android:id="@+id/rate_on_play_store"
-    android:icon="@drawable/about_icon_google_play"
+    android:icon="@drawable/ic_nav_rate"
     android:title="@string/about_play_store"
     android:checkable="false" />
 

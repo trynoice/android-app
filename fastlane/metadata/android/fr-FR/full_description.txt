@@ -4,7 +4,9 @@ Noice est une application qui permet de créer des ambiances personnalisées à 
 
 <b>Fonctionnalités</b>
 - 24 ambiances sonores
+- Google Cast (Chromecast) activé <i>(expérimental, version Play Store uniquement)</i>
 - Créez et sauvegardez vos mixes personnalisés
+- Minuterie de réveil (réveil) <i>(expérimental)</i>
 - Minuteur pour accompagner le sommeil
 - Peut accompagner d'autres pistes sonores
 - Volume indépendant pour chaque son

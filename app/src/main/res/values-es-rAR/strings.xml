@@ -35,6 +35,8 @@
   <string name="app_description">Relajese y aumente su productividad con sonidos de fondo</string>
   <string name="connect_with_author">Contactar al Autor</string>
   <string name="about__email">Correo</string>
+  <string name="about__github">Github</string>
+  <string name="about__twitter">Twitter</string>
   <string name="credits">Créditos</string>
   <string name="dismiss">Descartar</string>
   <string name="save_preset">Guardar Preajuste</string>
@@ -47,7 +49,6 @@
   <string name="preset_delete_confirmation">¿Confirma borrar %s?</string>
   <string name="delete">Borrar</string>
   <string name="preset_deleted">¡Preajuste borrado!</string>
-  <string name="nothing_saved_yet">¡Nada ha sido guardado aún!</string>
   <string name="sleep_timer">Temporizador</string>
   <string name="reset">Reiniciar</string>
   <string name="auto_sleep_schedule_cancelled">¡Temporizador cancelado!</string>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="library">Knihovna</string>
+  <string name="about">O aplikaci</string>
+  <string name="report_issue">Nahlásit chybu</string>
+  <string name="repeat_time_period">Doba opakování</string>
+  <string name="volume">Hlasitost</string>
+  <string name="play_pause">Přehrát/Pozastavit</string>
+  <string name="open_drawer">Otevřít navigační lištu</string>
+  <string name="close_drawer">Zavřít navigační lištu</string>
+  <string name="notification_channel_default__name">Právě hraje</string>
+  <string name="notification_channel_default__description">Ovladání přehrávače</string>
+  <string name="pause">Pauza</string>
+  <string name="play">Přehrát</string>
+  <string name="stop">Stop</string>
+  <string name="airplane_inflight">Paluba letadla</string>
+  <string name="airplane_seatbelt_beeps">Pípání bezpečnostních pásů v letadle</string>
+  <string name="birds">Ptáci</string>
+  <string name="bonfire">Táborák</string>
+  <string name="brownian_noise">Hnědý šum</string>
+  <string name="coffee_shop">Kavárna</string>
+  <string name="distant_thunder">Vzdálená bouřka</string>
+  <string name="heavy_rain">Silný déšť</string>
+  <string name="light_rain">Slabý déšť</string>
+  <string name="moderate_rain">Střední déšť</string>
+  <string name="morning_in_a_village">Ráno na vesnici</string>
+  <string name="moving_train">Jedoucí vlak</string>
+  <string name="night">Noc</string>
+  <string name="office">Kancelář</string>
+  <string name="pink_noise">Růžový šum</string>
+  <string name="rolling_thunder">Hřímání</string>
+  <string name="seaside">Pobřeží</string>
+  <string name="soft_wind">Mírný vítr</string>
+  <string name="thunder_crack">Prásknutí hromu</string>
+  <string name="train_horn">Troubení vlaku</string>
+  <string name="water_stream">Zurčení potůčku</string>
+  <string name="white_noise">Bílý šum</string>
+  <string name="wind_in_palm_trees">Vítr vanoucí palmami</string>
+  <string name="wind_in_chimes_of_shells">Vítr vanoucí zvonkohrou z mušlí</string>
+  <string name="app_description">Odpočiňte si nebo nakopněte svou produktivitu při uklidňujících zvucích přírody a jiných prostředích</string>
+  <string name="connect_with_author">Spojit se s autorem</string>
+  <string name="about__email">Email</string>
+  <string name="about__github">Github</string>
+  <string name="about__twitter">Twitter</string>
+  <string name="credits">Poděkování</string>
+  <string name="dismiss">Zahodit</string>
+  <string name="save_preset">Uložit předvolbu</string>
+  <string name="name">Název</string>
+  <string name="save">Uložit</string>
+  <string name="cancel">Zrušit</string>
+  <string name="preset_name_cannot_be_empty">Název předvolby musí mít alespoň jedno písmeno!</string>
+  <string name="preset_already_exists">Předvolba s tímto názvem již existuje!</string>
+  <string name="preset_saved">Předvolba uložena!</string>
+  <string name="saved_presets">Uložené předvolby</string>
+  <string name="preset_delete_confirmation">Jste si jisti odstraněním %s?</string>
+  <string name="delete">Odstranit</string>
+  <string name="preset_deleted">Předvolba odstraněna!</string>
+  <string name="preset_info__description">
+    Ještě si nevytvořili žádné předvolby namíchání zvuků. K vytvoření předvolby přejděte do Knihovny a pusťte si nějaký zvuk.
+    Poté klikněte na tlačítko Uložit, které se objeví v levém dolním rohu obrazovky.
+  </string>
+  <string name="sleep_timer">Časovač vypnutí</string>
+  <string name="sleep_timer_description">
+    Noice se sám vypne po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
+  </string>
+  <string name="reset">Resetovat</string>
+  <string name="auto_sleep_schedule_cancelled">Časovač vypnutí byl úspěšně zrušen!</string>
+  <string name="app_theme">Motiv</string>
+  <string name="open_context_menu">Otevřít kontextovou nabídku</string>
+  <string name="rename">Přejmenovat</string>
+  <string name="cast_media">Přehrát na jiném zařízení</string>
+  <string name="about__translations">Překlady</string>
+  <string name="wake_up_timer">Časovač spuštení</string>
+  <string name="wake_up_timer_description">
+    Noice se sám spustí po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
+  </string>
+  <string name="select_preset">Zvolte předvolbu</string>
+  <string name="support_development">Support Development</string>
+  <string name="support_development__why">Proč nás podpořit?</string>
+  <string name="support_development__why_description">
+    - Jako poděkování tvůrci aplikace\n
+    - Pro podporu dalšího vývoje\n
+    - Pro udržení Noice nadále bez reklam\n
+    - Pro umožňění investic do vývoje nových funkcí a dalších vylepšení\n
+  </string>
+  <string name="support_development__share">Sdílet s přáteli</string>
+  <string name="support_development__share_description">
+    Sdílením informace o existenci Noice s vašimi přáteli je podobné jako přímé darování peněz.\n
+    - Vaši přátelé tuto aplikaci __možná__ potřebují\n
+    - Vyšší počet stažení přiláká více vývojářů\n
+    - Čím vyšší počet stažení, tím silnější zpětnou vazbu dostaneme z různých perspektiv,
+      což nám pomůže ke zlepšení kvality celé aplikace\n
+  </string>
+  <string name="support_development__donate">Podpořit</string>
+  <string name="support_development__donate_description">
+    Vaše dary nám pomohou\n
+    - investovat čas a peníze do vývoje nových funkcí\n
+    - zakoupení lepších nahrávek zvuků\n
+    - koupit si kafe\n
+  </string>
+  <string name="support_development__donate_google_play_description">
+    Vaše platba bude bezpečně zaštítěna službou Google Play. Výška daru bude převedena na vaši
+    lokální měnu. V závisloti na vaší poloze vám bude __možná__ bude přiúčtována daň z koupě,
+    dle vašich lokálních zákonů.
+  </string>
+  <string name="support_development__donate_thank_you">Děkujeme!</string>
+  <string name="support_development__donate_thank_you_description">
+    Zcela upřímně vám moc srdečně děkujeme za vaši finanční podporu projektu Noice.
+  </string>
+  <string name="sound_group__airplane">Letadlo</string>
+  <string name="sound_group__jungle">Džungle</string>
+  <string name="sound_group__monsoon">Monzun</string>
+  <string name="sound_group__public_gatherings">Veřejná shromáždění</string>
+  <string name="sound_group__raw_noise">Syntentický šum</string>
+  <string name="sound_group__times_of_day">Denní doba</string>
+  <string name="sound_group__train">Vlak</string>
+  <string name="sound_group__waterfront">Nábřeží</string>
+  <string name="sound_group__wind">Vítr</string>
+  <string-array name="app_themes">
+    <item>Světlý</item>
+    <item>Tmavý</item>
+    <item>Dle nastavení systému</item>
+  </string-array>
+</resources>

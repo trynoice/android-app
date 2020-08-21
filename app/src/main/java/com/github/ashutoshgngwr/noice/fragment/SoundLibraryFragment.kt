@@ -6,13 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import androidx.annotation.StringRes
+import android.widget.TextView
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.sound.Playback
-import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
+import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.Sound
+import com.github.ashutoshgngwr.noice.sound.player.Player
+import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_sound_list.view.*
@@ -21,174 +24,215 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class SoundLibraryFragment : Fragment() {
+class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
 
   private var mRecyclerView: RecyclerView? = null
   private var mSavePresetButton: FloatingActionButton? = null
-  private var eventBus = EventBus.getDefault()
-  private var playbacks = emptyMap<String, Playback>()
+  private var adapter: SoundListAdapter? = null
+  private var players = emptyMap<String, Player>()
+
+  private val eventBus = EventBus.getDefault()
+
+  private val dataSet by lazy {
+    arrayListOf<SoundListItem>().also { list ->
+      var lastDisplayGroupResID = -1
+      val sounds = Sound.LIBRARY.toSortedMap(
+        compareBy(
+          { getString(Sound.get(it).displayGroupResID) },
+          { getString(Sound.get(it).titleResId) }
+        )
+      )
+
+      sounds.forEach {
+        if (lastDisplayGroupResID != it.value.displayGroupResID) {
+          lastDisplayGroupResID = it.value.displayGroupResID
+          list.add(
+            SoundListItem(
+              R.layout.layout_list_item__sound_group_title, getString(lastDisplayGroupResID)
+            )
+          )
+        }
+
+        list.add(SoundListItem(R.layout.layout_list_item__sound, it.key))
+      }
+    }
+  }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.ASYNC)
-  fun onPlaybackUpdate(playbacks: HashMap<String, Playback>) {
-    this.playbacks = playbacks
+  fun onPlayerManagerUpdate(event: MediaPlayerService.OnPlayerManagerUpdateEvent) {
+    this.players = event.players
     var showSavePresetFAB: Boolean
-    PresetFragment.Preset.readAllFromUserPreferences(requireContext()).also {
-      showSavePresetFAB = !it.contains(PresetFragment.Preset("", playbacks.values.toTypedArray()))
+    Preset.readAllFromUserPreferences(requireContext()).also {
+      showSavePresetFAB = !it.contains(Preset.from("", players.values))
     }
 
     view?.post {
-      if (mRecyclerView != null) {
-        requireNotNull(requireNotNull(mRecyclerView).adapter).notifyDataSetChanged()
-      }
-
+      adapter?.notifyDataSetChanged()
       if (mSavePresetButton != null) {
-        if (showSavePresetFAB && playbacks.isNotEmpty()) {
-          requireNotNull(mSavePresetButton).show()
+        if (showSavePresetFAB && event.state == PlayerManager.State.PLAYING) {
+          mSavePresetButton?.show()
         } else {
-          requireNotNull(mSavePresetButton).hide()
+          mSavePresetButton?.hide()
         }
       }
     }
   }
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.fragment_sound_list, container, false)
-  }
-
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    mRecyclerView = view.list_sound.apply {
-      setHasFixedSize(true)
-      adapter = SoundListAdapter(requireContext())
+    adapter = SoundListAdapter(requireContext())
+    mRecyclerView = view.list_sound.also {
+      it.setHasFixedSize(true)
+      it.adapter = adapter
     }
 
     mSavePresetButton = view.fab_save_preset
     requireNotNull(mSavePresetButton).setOnClickListener {
-      DialogFragment().show(requireActivity().supportFragmentManager) {
+      DialogFragment().show(childFragmentManager) {
+        val duplicateNameValidator = Preset.duplicateNameValidator(requireContext())
         title(R.string.save_preset)
-        input(hintRes = R.string.name, errorRes = R.string.preset_name_cannot_be_empty)
+        input(hintRes = R.string.name, validator = {
+          when {
+            it.isBlank() -> R.string.preset_name_cannot_be_empty
+            duplicateNameValidator(it) -> R.string.preset_already_exists
+            else -> 0
+          }
+        })
+
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
-          val preset = PresetFragment.Preset(getInputText(), playbacks.values.toTypedArray())
-          PresetFragment.Preset.appendToUserPreferences(requireContext(), preset)
-          showMessage(R.string.preset_saved)
-          if (mSavePresetButton != null) {
-            requireNotNull(mSavePresetButton).hide()
-          }
+          val preset = Preset.from(getInputText(), players.values)
+          Preset.appendToUserPreferences(requireContext(), preset)
+          mSavePresetButton?.hide()
+          showPresetSavedMessage()
         }
       }
     }
 
-    eventBus.register(this)
+    registerOnEventBus()
   }
 
   override fun onDestroyView() {
-    eventBus.unregister(this)
+    unregisterFromEventBus()
     super.onDestroyView()
   }
 
-  @Suppress("SameParameterValue")
-  private fun showMessage(@StringRes messageId: Int) {
-    Snackbar.make(requireView(), messageId, Snackbar.LENGTH_LONG)
+  /*
+    showPresetSavedMessage, registerOnEventBus and unregisterFromEventBus are helper functions
+    to avoid labelled expressions warning (lint warning in Detekt)
+   */
+
+  private fun showPresetSavedMessage() {
+    Snackbar.make(requireView(), R.string.preset_saved, Snackbar.LENGTH_LONG)
       .setAction(R.string.dismiss) { }
       .show()
   }
 
-  inner class SoundListAdapter(private val context: Context) :
-    RecyclerView.Adapter<SoundListAdapter.ViewHolder>() {
+  private fun registerOnEventBus() {
+    eventBus.register(this)
+  }
+
+  private fun unregisterFromEventBus() {
+    eventBus.unregister(this)
+  }
+
+
+  private inner class SoundListItem(@LayoutRes val layoutID: Int, val data: String)
+
+  private inner class SoundListAdapter(private val context: Context) :
+    RecyclerView.Adapter<ViewHolder>() {
 
     private val layoutInflater = LayoutInflater.from(context)
-    private val dataSet = Sound.LIBRARY.values.toTypedArray()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-      return ViewHolder(layoutInflater.inflate(R.layout.layout_list_item__sound, parent, false))
+      return ViewHolder(layoutInflater.inflate(viewType, parent, false), viewType)
     }
 
     override fun getItemCount(): Int {
       return dataSet.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-      val sound = dataSet[position]
+    override fun getItemViewType(position: Int): Int {
+      return dataSet[position].layoutID
+    }
 
-      holder.itemView.title.text = context.getString(sound.titleResId)
-      if (playbacks.containsKey(sound.key)) {
-        val playback = requireNotNull(playbacks[sound.key])
-        holder.itemView.seekbar_volume.progress = playback.volume
-        holder.itemView.seekbar_time_period.progress = playback.timePeriod
-        holder.itemView.seekbar_volume.isEnabled = true
-        holder.itemView.seekbar_time_period.isEnabled = true
-        holder.itemView.button_play.setImageResource(
-          if (playback.isPlaying) {
-            R.drawable.ic_action_stop
-          } else {
-            R.drawable.ic_action_stop
-          }
-        )
-      } else {
-        holder.itemView.seekbar_volume.progress = Playback.DEFAULT_VOLUME
-        holder.itemView.seekbar_time_period.progress = Playback.DEFAULT_TIME_PERIOD
-        holder.itemView.seekbar_volume.isEnabled = false
-        holder.itemView.seekbar_time_period.isEnabled = false
-        holder.itemView.button_play.setImageResource(R.drawable.ic_action_play)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+      if (dataSet[position].layoutID == R.layout.layout_list_item__sound_group_title) {
+        holder.itemView as TextView
+        holder.itemView.text = dataSet[position].data
+        return
       }
 
-      holder.itemView.layout_time_period.visibility = (if (sound.isLoopable) {
+      val soundKey = dataSet[position].data
+      val sound = Sound.get(soundKey)
+      val isPlaying = players.containsKey(soundKey)
+      holder.itemView.title.text = context.getString(sound.titleResId)
+      holder.itemView.seekbar_volume.isEnabled = isPlaying
+      holder.itemView.seekbar_time_period.isEnabled = isPlaying
+      holder.itemView.button_play.isChecked = isPlaying
+      if (isPlaying) {
+        requireNotNull(players[soundKey]).also {
+          holder.itemView.seekbar_volume.progress = it.volume
+          holder.itemView.seekbar_time_period.progress = it.timePeriod - Player.MIN_TIME_PERIOD
+        }
+      } else {
+        holder.itemView.seekbar_volume.progress = Player.DEFAULT_VOLUME
+        holder.itemView.seekbar_time_period.progress =
+          Player.DEFAULT_TIME_PERIOD - Player.MIN_TIME_PERIOD
+      }
+
+      holder.itemView.layout_time_period.visibility = if (sound.isLooping) {
         View.GONE
       } else {
         View.VISIBLE
-      })
+      }
     }
+  }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+  inner class ViewHolder(view: View, @LayoutRes layoutID: Int) : RecyclerView.ViewHolder(view) {
 
-      init {
-        // set listeners in holders to avoid object recreation on view recycle
-        val seekBarChangeListener = object : SeekBar.OnSeekBarChangeListener {
+    // set listeners in holders to avoid object recreation on view recycle
+    private val seekBarChangeListener = object : SeekBar.OnSeekBarChangeListener {
 
-          override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            if (!fromUser) {
-              return
-            }
-
-            val playback = playbacks[dataSet[adapterPosition].key] ?: return
-            when (requireNotNull(seekBar).id) {
-              R.id.seekbar_volume -> {
-                playback.setVolume(progress)
-              }
-
-              R.id.seekbar_time_period -> {
-                // manually ensure minimum time period to be 1 since ProgressBar#min was introduced
-                // in API 26. Our min API version is 21.
-                playback.timePeriod = maxOf(1, progress)
-              }
-            }
-
-            // publish update event
-            eventBus.post(PlaybackControlEvents.UpdatePlaybackEvent(playback))
-          }
-
-          override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-          override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-
+      override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+        if (!fromUser) {
+          return
         }
 
-        view.seekbar_volume.max = Playback.MAX_VOLUME
-        view.seekbar_volume.setOnSeekBarChangeListener(seekBarChangeListener)
-        view.seekbar_time_period.max = Playback.MAX_TIME_PERIOD
-        view.seekbar_time_period.setOnSeekBarChangeListener(seekBarChangeListener)
-
-        view.button_play.setOnClickListener {
-          val sound = dataSet.getOrNull(adapterPosition) ?: return@setOnClickListener
-
-          if (playbacks.containsKey(sound.key)) {
-            eventBus.post(PlaybackControlEvents.StopPlaybackEvent(sound.key))
-          } else {
-            eventBus.post(PlaybackControlEvents.StartPlaybackEvent(sound.key))
+        val player = players[dataSet[adapterPosition].data] ?: return
+        when (seekBar.id) {
+          R.id.seekbar_volume -> {
+            player.setVolume(progress)
           }
+          R.id.seekbar_time_period -> {
+            player.timePeriod = Player.MIN_TIME_PERIOD + progress
+          }
+        }
+      }
+
+      // unsubscribe from events during the seek action or it will cause adapter to refresh during
+      // the action causing adapterPosition to become -1 (POSITION_NONE). On resubscribing,
+      // this will also cause an update (#onPlayerManagerUpdate) since those events are sticky.
+      override fun onStartTrackingTouch(seekBar: SeekBar?) = unregisterFromEventBus()
+      override fun onStopTrackingTouch(seekBar: SeekBar?) = registerOnEventBus()
+    }
+
+    init {
+      if (layoutID == R.layout.layout_list_item__sound) {
+        initSoundItem(view)
+      }
+    }
+
+    private fun initSoundItem(view: View) {
+      view.seekbar_volume.max = Player.MAX_VOLUME
+      view.seekbar_volume.setOnSeekBarChangeListener(seekBarChangeListener)
+      view.seekbar_time_period.max = Player.MAX_TIME_PERIOD - Player.MIN_TIME_PERIOD
+      view.seekbar_time_period.setOnSeekBarChangeListener(seekBarChangeListener)
+      view.button_play.setOnClickListener {
+        val listItem = dataSet.getOrNull(adapterPosition) ?: return@setOnClickListener
+        if (players.containsKey(listItem.data)) {
+          eventBus.post(MediaPlayerService.StopPlayerEvent(listItem.data))
+        } else {
+          eventBus.post(MediaPlayerService.StartPlayerEvent(listItem.data))
         }
       }
     }

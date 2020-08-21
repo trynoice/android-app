@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+      style="?attr/materialCardViewStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="5dp"
+          android:text="@string/support_development__why"
+          android:textAppearance="?attr/textAppearanceHeadline6"
+          android:textColor="?attr/colorAccent" />
+
+        <com.github.ashutoshgngwr.noice.widget.MarkdownTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="5dp"
+          android:lineSpacingMultiplier="1.2"
+          android:text="@string/support_development__why_description"
+          android:textAppearance="?attr/textAppearanceBody1" />
+
+      </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+      style="?attr/materialCardViewStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="5dp"
+          android:text="@string/support_development__share"
+          android:textAppearance="?attr/textAppearanceHeadline6"
+          android:textColor="?attr/colorAccent" />
+
+        <com.github.ashutoshgngwr.noice.widget.MarkdownTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="5dp"
+          android:lineSpacingMultiplier="1.2"
+          android:text="@string/support_development__share_description"
+          android:textAppearance="?attr/textAppearanceBody1" />
+
+        <Button
+          android:id="@+id/button_share"
+          style="?attr/materialButtonOutlinedStyle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end"
+          android:layout_margin="5dp"
+          android:text="@string/support_development__share" />
+
+      </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+      style="?attr/materialCardViewStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="5dp"
+          android:text="@string/support_development__donate"
+          android:textAppearance="?attr/textAppearanceHeadline6"
+          android:textColor="?attr/colorAccent" />
+
+        <com.github.ashutoshgngwr.noice.widget.MarkdownTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="5dp"
+          android:lineSpacingMultiplier="1.2"
+          android:text="@string/support_development__donate_description"
+          android:textAppearance="?attr/textAppearanceBody1" />
+
+        <com.github.ashutoshgngwr.noice.widget.DonateView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="5dp" />
+
+      </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+  </LinearLayout>
+
+</ScrollView>

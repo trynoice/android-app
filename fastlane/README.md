@@ -12,20 +12,25 @@ Install _fastlane_ using
 ```
 [sudo] gem install fastlane -NV
 ```
-or alternatively using `brew cask install fastlane`
+or alternatively using `brew install fastlane`
 
 # Available Actions
 ## Android
+### android upload_metadata
+```
+fastlane android upload_metadata
+```
+Upload metadata to Google Play Store
 ### android beta
 ```
 fastlane android beta
 ```
-Deploy a new beta version to the Google Play
-### android production
+Deploy a new version to the beta track on the Google Play
+### android generate_screenshots
 ```
-fastlane android production
+fastlane android generate_screenshots
 ```
-Deploy a new production version to the Google Play
+Generate screenshots of locales for which metadata exists
 
 ----
 

@@ -28,6 +28,7 @@
   <string name="night">Night</string>
   <string name="office">Office</string>
   <string name="pink_noise">Pink Noise</string>
+  <string name="public_library">Public Library</string>
   <string name="rolling_thunder">Rolling thunder</string>
   <string name="seaside">Seaside</string>
   <string name="soft_wind">Soft wind</string>
@@ -51,18 +52,74 @@
   <string name="save">Save</string>
   <string name="cancel">Cancel</string>
   <string name="preset_name_cannot_be_empty">Preset name cannot be empty!</string>
+  <string name="preset_already_exists">Preset with the given name already exists!</string>
   <string name="preset_saved">Preset saved!</string>
   <string name="saved_presets">Saved Presets</string>
   <string name="preset_delete_confirmation">Confirm delete %s?</string>
   <string name="delete">Delete</string>
   <string name="preset_deleted">Preset deleted!</string>
-  <string name="nothing_saved_yet">Nothing saved yet!</string>
+  <string name="preset_info__description">
+    You haven\'t created any presets yet. To create a preset, go to the Library and play sounds.
+    Then click on the Save button that appears on the bottom corner of the screen.
+  </string>
   <string name="sleep_timer">Sleep Timer</string>
+  <string name="sleep_timer_description">
+    Noice will shutdown itself when the timer ends. Use the buttons below to add time and start
+    the timer.
+  </string>
   <string name="reset">Reset</string>
   <string name="auto_sleep_schedule_cancelled">Auto sleep timer cancelled!</string>
   <string name="app_theme">Theme</string>
   <string name="open_context_menu">Open context menu</string>
   <string name="rename">Rename</string>
+  <string name="cast_media">Cast media to another device</string>
+  <string name="about__translations">Translations</string>
+  <string name="wake_up_timer">Wake-up Timer</string>
+  <string name="wake_up_timer_description">
+    Noice will start the selected preset when the timer ends. Use the buttons below to select a
+    preset and add the desired duration to start the wake-up timer.
+  </string>
+  <string name="select_preset">Select Preset</string>
+  <string name="support_development">Support Development</string>
+  <string name="support_development__why">Why should you support?</string>
+  <string name="support_development__why_description">
+    - As a gesture of appreciation towards the developer\n
+    - To make future updates possible\n
+    - To keep Noice ad-free forever\n
+    - To allow us to invest in improving existing features as well as in adding new features\n
+  </string>
+  <string name="support_development__share">Share with friends</string>
+  <string name="support_development__share_description">
+    Sharing Noice with friends is similar to donating money.\n
+    - Your friends _might_ need it\n
+    - Higher downloads attract more contributors\n
+    - With higher downloads, we will be able receive feedback from a number different perspectives
+      which will help us in making Noice better than ever\n
+  </string>
+  <string name="support_development__donate">Donate</string>
+  <string name="support_development__donate_description">
+    Donations will help us in\n
+    - investing in new features\n
+    - curating better sound samples\n
+    - buying coffee\n
+  </string>
+  <string name="support_development__donate_google_play_description">
+    Your payment will be securely handled by the Google Play. The amount will be converted to your
+    local currency. Depending on your location, additional taxes _may be_ added to the final amount.
+  </string>
+  <string name="support_development__donate_thank_you">Thank you!</string>
+  <string name="support_development__donate_thank_you_description">
+    We wholeheartedly thank you for your generous contribution to the Noice project.
+  </string>
+  <string name="sound_group__airplane">Airplane</string>
+  <string name="sound_group__jungle">Jungle</string>
+  <string name="sound_group__monsoon">Monsoon</string>
+  <string name="sound_group__public_gatherings">Public Gatherings</string>
+  <string name="sound_group__raw_noise">Raw Noise</string>
+  <string name="sound_group__times_of_day">Times of Day</string>
+  <string name="sound_group__train">Train</string>
+  <string name="sound_group__waterfront">Waterfront</string>
+  <string name="sound_group__wind">Wind</string>
   <string-array name="app_themes">
     <item>Light</item>
     <item>Dark</item>

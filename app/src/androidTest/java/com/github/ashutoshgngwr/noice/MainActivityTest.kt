@@ -1,14 +1,18 @@
 package com.github.ashutoshgngwr.noice
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.Gravity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.launch
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.contrib.DrawerMatchers.isClosed
@@ -20,18 +24,24 @@ import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.github.ashutoshgngwr.noice.fragment.AboutFragment
-import com.github.ashutoshgngwr.noice.fragment.PresetFragment
-import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
+import com.github.ashutoshgngwr.noice.fragment.*
+import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
+import io.mockk.*
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
+import org.hamcrest.Matchers.allOf
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.lang.Thread.sleep
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
+
+  @Rule
+  @JvmField
+  val retryTestRule = RetryTestRule(5)
 
   private lateinit var activityScenario: ActivityScenario<MainActivity>
 
@@ -68,6 +78,47 @@ class MainActivityTest {
       )
 
       assertEquals(R.id.saved_presets, it.navigation_drawer.checkedItem?.itemId)
+      assertEquals(it.getString(R.string.saved_presets), it.navigation_drawer.checkedItem?.title)
+    }
+  }
+
+  @Test
+  fun testSleepTimerMenuItem() {
+    onView(withId(R.id.layout_main))
+      .check(matches(isClosed(Gravity.START)))
+      .perform(DrawerActions.open(Gravity.START))
+
+    onView(withId(R.id.navigation_drawer))
+      .perform(NavigationViewActions.navigateTo(R.id.sleep_timer))
+
+    activityScenario.onActivity {
+      assertEquals(
+        SleepTimerFragment::class.java.simpleName,
+        it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
+      )
+
+      assertEquals(R.id.sleep_timer, it.navigation_drawer.checkedItem?.itemId)
+      assertEquals(it.getString(R.string.sleep_timer), it.navigation_drawer.checkedItem?.title)
+    }
+  }
+
+  @Test
+  fun testWakeUpTimerMenuItem() {
+    onView(withId(R.id.layout_main))
+      .check(matches(isClosed(Gravity.START)))
+      .perform(DrawerActions.open(Gravity.START))
+
+    onView(withId(R.id.navigation_drawer))
+      .perform(NavigationViewActions.navigateTo(R.id.wake_up_timer))
+
+    activityScenario.onActivity {
+      assertEquals(
+        WakeUpTimerFragment::class.java.simpleName,
+        it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
+      )
+
+      assertEquals(R.id.wake_up_timer, it.navigation_drawer.checkedItem?.itemId)
+      assertEquals(it.getString(R.string.wake_up_timer), it.navigation_drawer.checkedItem?.title)
     }
   }
 
@@ -97,7 +148,7 @@ class MainActivityTest {
         .check(matches(isDisplayed()))
         .perform(click())
 
-      InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+      onView(withId(R.id.layout_main)).check(matches(isDisplayed())) // wait for activity to recreate
       assertEquals(nightModes[i], AppCompatDelegate.getDefaultNightMode())
     }
   }
@@ -118,6 +169,30 @@ class MainActivityTest {
       )
 
       assertEquals(R.id.about, it.navigation_drawer.checkedItem?.itemId)
+      assertEquals(it.getString(R.string.about), it.navigation_drawer.checkedItem?.title)
+    }
+  }
+
+  @Test
+  fun testSupportDevelopmentMenuItem() {
+    onView(withId(R.id.layout_main))
+      .check(matches(isClosed(Gravity.START)))
+      .perform(DrawerActions.open(Gravity.START))
+
+    onView(withId(R.id.navigation_drawer))
+      .perform(NavigationViewActions.navigateTo(R.id.support_development))
+
+    activityScenario.onActivity {
+      assertEquals(
+        SupportDevelopmentFragment::class.java.simpleName,
+        it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
+      )
+
+      assertEquals(R.id.support_development, it.navigation_drawer.checkedItem?.itemId)
+      assertEquals(
+        it.getString(R.string.support_development),
+        it.navigation_drawer.checkedItem?.title
+      )
     }
   }
 
@@ -160,7 +235,10 @@ class MainActivityTest {
       filterEquals(
         Intent(
           Intent.ACTION_VIEW,
-          Uri.parse("market://details?id=${InstrumentationRegistry.getInstrumentation().targetContext.packageName}")
+          Uri.parse(
+            ApplicationProvider.getApplicationContext<Context>()
+              .getString(R.string.rate_us_on_play_store_url)
+          )
         )
       )
     )
@@ -173,20 +251,21 @@ class MainActivityTest {
     onView(withId(R.id.layout_main))
       .check(matches(isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
-    onView(withId(R.id.navigation_drawer)).perform(NavigationViewActions.navigateTo(R.id.saved_presets))
-    sleep(1000L) // tests fail complaining drawer is open. let it close..? (doesn't happen always! :/)
 
-    onView(withId(R.id.layout_main))
-      .check(matches(isClosed(Gravity.START)))
+    onView(withId(R.id.navigation_drawer))
+      .perform(NavigationViewActions.navigateTo(R.id.saved_presets))
+
+    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)), 100, 5)
       .perform(DrawerActions.open(Gravity.START))
-    onView(withId(R.id.navigation_drawer)).perform(NavigationViewActions.navigateTo(R.id.about))
+
+    onView(withId(R.id.navigation_drawer))
+      .perform(NavigationViewActions.navigateTo(R.id.about))
+
+    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)), 100, 5)
+      .check(matches(isClosed(Gravity.START)))
 
     activityScenario.onActivity {
       it.onBackPressed()
-    }
-
-    InstrumentationRegistry.getInstrumentation().waitForIdleSync()
-    activityScenario.onActivity {
       assertEquals(
         PresetFragment::class.java.simpleName,
         it.supportFragmentManager
@@ -195,10 +274,6 @@ class MainActivityTest {
       )
 
       it.onBackPressed()
-    }
-
-    InstrumentationRegistry.getInstrumentation().waitForIdleSync()
-    activityScenario.onActivity {
       assertEquals(
         SoundLibraryFragment::class.java.simpleName,
         it.supportFragmentManager
@@ -244,10 +319,7 @@ class MainActivityTest {
       assertEquals(2, it.supportFragmentManager.backStackEntryCount)
     }
 
-    sleep(1000L) // tests fail complaining drawer is open. (don't fail always but sometimes it can make you question your entire life.)
-    // reopen nav drawer
-    onView(withId(R.id.layout_main))
-      .check(matches(isClosed(Gravity.START)))
+    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)), 100, 5)
       .perform(DrawerActions.open(Gravity.START))
 
     // try to reselect the same nav item
@@ -255,6 +327,74 @@ class MainActivityTest {
     activityScenario.onActivity {
       // back stack entry count should remain the same
       assertEquals(2, it.supportFragmentManager.backStackEntryCount)
+    }
+  }
+
+  @Test
+  fun testPlayPauseToggleMenuItem() {
+    mockkStatic(EventBus::class)
+    val mockEventBus = mockk<EventBus>(relaxed = true)
+    every { EventBus.getDefault() } returns mockEventBus
+    activityScenario.recreate() // recreate to initialize with mock event bus
+
+    // shouldn't be displayed by default
+    onView(withId(R.id.action_play_pause_toggle)).check(doesNotExist())
+
+    // with ongoing playback
+    activityScenario.onActivity {
+      it.onPlayerManagerUpdate(mockk(relaxed = true) {
+        every { state } returns PlayerManager.State.PLAYING
+      })
+    }
+
+    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 100, 5)
+      .check(matches(isDisplayed()))
+      .perform(click())
+
+    verify(exactly = 1) { mockEventBus.post(ofType(MediaPlayerService.PausePlaybackEvent::class)) }
+    clearMocks(mockEventBus)
+
+    // with paused playback
+    activityScenario.onActivity {
+      it.onPlayerManagerUpdate(mockk(relaxed = true) {
+        every { state } returns PlayerManager.State.PAUSED
+      })
+    }
+
+    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 100, 5)
+      .check(matches(isDisplayed()))
+      .perform(click())
+
+    verify(exactly = 1) { mockEventBus.post(ofType(MediaPlayerService.ResumePlaybackEvent::class)) }
+    clearMocks(mockEventBus)
+
+    // with stopped playback
+    activityScenario.onActivity {
+      it.onPlayerManagerUpdate(mockk(relaxed = true) {
+        every { state } returns PlayerManager.State.STOPPED
+      })
+    }
+
+    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 100, 5)
+      .check(doesNotExist())
+  }
+
+  @Test
+  fun testNavigatedFragmentIntentExtra() {
+    activityScenario.moveToState(Lifecycle.State.DESTROYED)
+    activityScenario = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
+      .let {
+        it.putExtra(MainActivity.EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.about)
+        launch(it)
+      }
+
+    activityScenario.onActivity {
+      assertEquals(
+        AboutFragment::class.simpleName,
+        it.supportFragmentManager
+          .getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1)
+          .name
+      )
     }
   }
 }

@@ -9,163 +9,120 @@ import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.github.ashutoshgngwr.noice.EspressoX
+import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.RetryTestRule
+import io.mockk.*
+import io.mockk.impl.annotations.InjectionLookupType
+import io.mockk.impl.annotations.OverrideMockKs
+import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.android.synthetic.main.fragment_sleep_timer.view.*
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentCaptor
-import org.mockito.InjectMocks
-import org.mockito.Mock
-import org.mockito.Mockito.*
-import org.mockito.MockitoAnnotations
 
 @RunWith(AndroidJUnit4::class)
 class SleepTimerFragmentTest {
 
-  @Mock
+  @Rule
+  @JvmField
+  val retryTestRule = RetryTestRule(5)
+
+  @RelaxedMockK
   private lateinit var eventBus: EventBus
 
-  @InjectMocks
+  @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
   private lateinit var fragment: SleepTimerFragment
 
   private lateinit var fragmentScenario: FragmentScenario<SleepTimerFragment>
+  private lateinit var lastEvent: MediaPlayerService.ScheduleAutoSleepEvent
+
+  private fun assertDurationInRange(expectedStartSecs: Long, expectedEndSecs: Long, actualMillis: Long) {
+    assertTrue(actualMillis in expectedStartSecs * 1000L until expectedEndSecs * 1000L)
+  }
 
   @Before
   fun setup() {
     fragmentScenario = launchFragmentInContainer<SleepTimerFragment>(null, R.style.Theme_App)
-    fragmentScenario.onFragment {
-      fragment = it
-    }
+    fragmentScenario.onFragment { fragment = it }
+    MockKAnnotations.init(this)
 
-    MockitoAnnotations.initMocks(this)
+    lastEvent = mockk(relaxed = true)
+    every {
+      eventBus.getStickyEvent(MediaPlayerService.ScheduleAutoSleepEvent::class.java)
+    } returns lastEvent
   }
 
   @Test
-  fun testAddTimeButton_onSleepPreScheduled() {
-    val sleepTime = SystemClock.uptimeMillis() + 60 * 1000L
-    `when`(eventBus.getStickyEvent(SleepTimerFragment.ScheduleAutoSleepEvent::class.java))
-      .thenReturn(SleepTimerFragment.ScheduleAutoSleepEvent(sleepTime))
-
-    onView(withId(R.id.button_1m)).perform(click())
-    val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
-    verify(eventBus, atMostOnce()).postSticky(captor.capture())
+  fun testDurationPickerListener_onSleepPreScheduled() {
+    every { lastEvent.atUptimeMillis } returns SystemClock.uptimeMillis() + 60 * 1000L
+    onView(withId(R.id.duration_picker)).perform(EspressoX.addDurationToPicker(60))
+    val eventSlot = slot<MediaPlayerService.ScheduleAutoSleepEvent>()
+    verify(exactly = 1) { eventBus.postSticky(capture(eventSlot)) }
 
     // won't get exact duration back. Need to ensure its in the expected range.
-    val remainingSleepDurationMillis = captor.value.atUptimeMillis - SystemClock.uptimeMillis()
-    assertTrue(remainingSleepDurationMillis > 110 * 1000L)
-    assertTrue(remainingSleepDurationMillis <= 120 * 1000L)
+    val remainingDurationMillis = eventSlot.captured.atUptimeMillis - SystemClock.uptimeMillis()
+    assertDurationInRange(110, 120, remainingDurationMillis)
   }
 
   @Test
-  fun testAddTimeButton_1m() {
-    onView(withId(R.id.button_1m)).perform(click())
-    val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
-    verify(eventBus, atMostOnce()).postSticky(captor.capture())
+  fun testDurationPickerListener() {
+    onView(withId(R.id.duration_picker)).perform(EspressoX.addDurationToPicker(300))
+    val eventSlot = slot<MediaPlayerService.ScheduleAutoSleepEvent>()
+    verify(exactly = 1) { eventBus.postSticky(capture(eventSlot)) }
 
     // won't get exact duration back. Need to ensure its in the expected range.
-    val remainingSleepDurationMillis = captor.value.atUptimeMillis - SystemClock.uptimeMillis()
-    assertTrue(remainingSleepDurationMillis > 50 * 1000L)
-    assertTrue(remainingSleepDurationMillis <= 60 * 1000L)
+    val remainingDurationMillis = eventSlot.captured.atUptimeMillis - SystemClock.uptimeMillis()
+    assertDurationInRange(290, 300, remainingDurationMillis)
   }
-
-  @Test
-  fun testAddTimeButton_5m() {
-    onView(withId(R.id.button_5m)).perform(click())
-    val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
-    verify(eventBus, atMostOnce()).postSticky(captor.capture())
-
-    // won't get exact duration back. Need to ensure its in the expected range.
-    val remainingSleepDurationMillis = captor.value.atUptimeMillis - SystemClock.uptimeMillis()
-    assertTrue(remainingSleepDurationMillis > 290 * 1000L)
-    assertTrue(remainingSleepDurationMillis <= 300 * 1000L)
-  }
-
-  @Test
-  fun testAddTimeButton_30m() {
-    onView(withId(R.id.button_30m)).perform(click())
-    val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
-    verify(eventBus, atMostOnce()).postSticky(captor.capture())
-
-    // won't get exact duration back. Need to ensure its in the expected range.
-    val remainingSleepDurationMillis = captor.value.atUptimeMillis - SystemClock.uptimeMillis()
-    assertTrue(remainingSleepDurationMillis > 1790 * 1000L)
-    assertTrue(remainingSleepDurationMillis <= 1800 * 1000L)
-  }
-
-  @Test
-  fun testAddTimeButton_1h() {
-    onView(withId(R.id.button_1h)).perform(click())
-    val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
-    verify(eventBus, atMostOnce()).postSticky(captor.capture())
-
-    // won't get exact duration back. Need to ensure its in the expected range.
-    val remainingSleepDurationMillis = captor.value.atUptimeMillis - SystemClock.uptimeMillis()
-    assertTrue(remainingSleepDurationMillis > 3590 * 1000L)
-    assertTrue(remainingSleepDurationMillis <= 3600 * 1000L)
-  }
-
-  @Test
-  fun testAddTimeButton_4h() {
-    onView(withId(R.id.button_4h)).perform(click())
-    val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
-    verify(eventBus, atMostOnce()).postSticky(captor.capture())
-
-    // won't get exact duration back. Need to ensure its in the expected range.
-    val remainingSleepDurationMillis = captor.value.atUptimeMillis - SystemClock.uptimeMillis()
-    assertTrue(remainingSleepDurationMillis > 3 * 3600 * 1000L)
-    assertTrue(remainingSleepDurationMillis <= 4 * 3600 * 1000L)
-  }
-
-  @Test
-  fun testAddTimeButton_8h() {
-    onView(withId(R.id.button_8h)).perform(click())
-    val captor = ArgumentCaptor.forClass(SleepTimerFragment.ScheduleAutoSleepEvent::class.java)
-    verify(eventBus, atMostOnce()).postSticky(captor.capture())
-
-    // won't get exact duration back. Need to ensure its in the expected range.
-    val remainingSleepDurationMillis = captor.value.atUptimeMillis - SystemClock.uptimeMillis()
-    assertTrue(remainingSleepDurationMillis > 7 * 3600 * 1000L)
-    assertTrue(remainingSleepDurationMillis <= 8 * 3600 * 1000L)
-  }
-
 
   @Test
   fun testResetButton_shouldNotBeEnabledByDefault() {
-    onView(withId(R.id.button_reset)).check(matches(not(isEnabled())))
+    onView(EspressoX.withDurationPickerResetButton(withId(R.id.duration_picker)))
+      .check(matches(not(isEnabled())))
   }
 
   @Test
   fun testResetButton_onAutoSleepScheduled() {
     fragmentScenario.onFragment {
-      it.requireView().button_reset.isEnabled = true
+      it.requireView().duration_picker.setResetButtonEnabled(true)
     }
 
-    onView(withId(R.id.button_reset)).perform(scrollTo(), click())
+    onView(EspressoX.withDurationPickerResetButton(withId(R.id.duration_picker)))
+      .perform(scrollTo(), click())
+
     onView(withText(R.string.auto_sleep_schedule_cancelled)).check(matches(isDisplayed()))
-    verify(eventBus, atMostOnce()).postSticky(SleepTimerFragment.ScheduleAutoSleepEvent(0))
+    verify(exactly = 1) {
+      eventBus.postSticky(MediaPlayerService.ScheduleAutoSleepEvent(0))
+    }
   }
 
   @Test
   fun testOnScheduleAutoSleep_onScheduleEvent() {
     fragmentScenario.onFragment {
-      it.onScheduleAutoSleep(SleepTimerFragment.ScheduleAutoSleepEvent(SystemClock.uptimeMillis() + 999999))
+      it.onScheduleAutoSleep(MediaPlayerService.ScheduleAutoSleepEvent(SystemClock.uptimeMillis() + 999999))
     }
 
-    onView(withId(R.id.button_reset)).check(matches(isEnabled()))
+    onView(EspressoX.withDurationPickerResetButton(withId(R.id.duration_picker)))
+      .check(matches(isEnabled()))
+
     onView(withId(R.id.countdown_view)).check(matches(not(withText("00h 00m 00s"))))
   }
 
   @Test
   fun testOnScheduleAutoSleep_onCancelEvent() {
     fragmentScenario.onFragment {
-      it.onScheduleAutoSleep(SleepTimerFragment.ScheduleAutoSleepEvent(0))
+      it.onScheduleAutoSleep(MediaPlayerService.ScheduleAutoSleepEvent(0))
     }
 
-    onView(withId(R.id.button_reset)).check(matches(not(isEnabled())))
+    onView(EspressoX.withDurationPickerResetButton(withId(R.id.duration_picker)))
+      .check(matches(not(isEnabled())))
+
     onView(withId(R.id.countdown_view)).check(matches(withText("00h 00m 00s")))
   }
 }

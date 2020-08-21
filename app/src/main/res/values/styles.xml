@@ -10,6 +10,10 @@
     <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton</item>
     <item name="popupMenuStyle">@style/Widget.App.PopupMenu</item>
     <item name="bottomSheetDialogTheme">@style/Theme.App.BottomSheetDialog</item>
+    <item name="mediaRouteTheme">@style/Theme.App.MediaRouter</item>
+    <item name="android:statusBarColor">@color/colorStatusBar</item>
+    <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+    <item name="android:windowTranslucentNavigation">true</item>
   </style>
 
   <style name="ThemeOverlay.App.Dark.ActionBar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
@@ -60,7 +64,7 @@
     <item name="android:textSize">28sp</item>
   </style>
 
-  <style name="TextAppearance.App.CountdownTextView" parent="TextAppearance.MaterialComponents.Headline2">
+  <style name="TextAppearance.App.CountdownTextView" parent="TextAppearance.MaterialComponents.Headline3">
     <item name="android:textColor">?attr/colorAccent</item>
   </style>
 
@@ -68,12 +72,25 @@
     <item name="android:textColor">@color/material_on_background_disabled</item>
   </style>
 
-  <style name="Widget.App.Button.AddTime" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+  <style name="Widget.App.DurationPicker.Button.AddTime" parent="Widget.MaterialComponents.Button.TextButton.Icon">
     <item name="android:layout_columnWeight">1</item>
     <item name="android:layout_gravity">center</item>
-    <item name="android:padding">12dp</item>
-    <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline5</item>
+    <item name="android:padding">14dp</item>
+    <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
     <item name="icon">@drawable/ic_action_add</item>
+  </style>
+
+  <style name="Base.Theme.App.MediaRouter" parent="Theme.MediaRouter.Light" />
+
+  <!-- This theme is a pure function of hit and trial. Following worked at the time. -->
+  <style name="Theme.App.MediaRouter" parent="Base.Theme.App.MediaRouter">
+    <item name="android:windowBackground">@color/colorPopupBackground</item>
+    <item name="android:colorBackground">@color/colorPopupBackground</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorBackgroundFloating">@color/colorPopupBackground</item>
+    <item name="mediaRouteButtonStyle">@style/Widget.MediaRouter.MediaRouteButton</item>
+    <item name="mediaRouteControlPanelThemeOverlay">@style/ThemeOverlay.MediaRouter.Light</item>
   </style>
 
 </resources>

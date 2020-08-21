@@ -13,6 +13,8 @@
   <string name="pause">Пауза</string>
   <string name="play">Воспроизведение</string>
   <string name="stop">Стоп</string>
+  <string name="airplane_inflight">Полёт в самолёте</string>
+  <string name="airplane_seatbelt_beeps">«Пристегните ремни!»</string>
   <string name="birds">Птицы</string>
   <string name="bonfire">Костёр</string>
   <string name="brownian_noise">Броуновский шум</string>
@@ -37,6 +39,9 @@
   <string name="wind_in_chimes_of_shells">Фурин</string>
   <string name="app_description">Расслабьтесь и повысьте производительность с помощью фоновых звуков</string>
   <string name="connect_with_author">Связаться с автором</string>
+  <string name="about__email">Email</string>
+  <string name="about__github">Github</string>
+  <string name="about__twitter">Twitter</string>
   <string name="credits">Ресурсы</string>
   <string name="dismiss">Отменить</string>
   <string name="save_preset">Сохранить пресет</string>
@@ -49,7 +54,6 @@
   <string name="preset_delete_confirmation">Подтвердите удаление %s?</string>
   <string name="delete">Увалить</string>
   <string name="preset_deleted">Пресет удален!</string>
-  <string name="nothing_saved_yet">Пока пресетов нет!</string>
   <string name="sleep_timer">Таймер</string>
   <string name="reset">Сброс</string>
   <string name="auto_sleep_schedule_cancelled">Таймер автоотключения отменен!</string>

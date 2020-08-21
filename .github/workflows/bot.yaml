@@ -1,0 +1,57 @@
+name: Bot
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+
+# generate and push changelogs to master only
+jobs:
+  create-release:
+    name: Create GitHub Release
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: git fetch --prune --unshallow --tags -f
+      - id: get_tag_message
+        run: >-
+          TAG_BODY="$(git tag  --list --format='%(contents:body)' ${GITHUB_REF/'refs/tags/'/''})";
+          TAG_BODY="${TAG_BODY//'%'/'%25'}";
+          TAG_BODY="${TAG_BODY//$'\n'/'%0A'}";
+          TAG_BODY="${TAG_BODY//$'\r'/'%0D'}";
+          echo "::set-output name=message::${TAG_BODY}";
+      - uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: v${{ github.ref }}
+          body: ${{ steps.get_tag_message.outputs.message }}
+          draft: false
+          prerelease: false
+  generate-changelog:
+    name: Generate Changelog
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+          fetch-depth: 0
+      - name: Generate changelog
+        run: >-
+          yarn global add auto-changelog;
+          $(yarn global bin)/auto-changelog --template keepachangelog
+      - name: Commit changelog
+        run: >-
+          git config --local user.email "noreply@github.com";
+          git config --local user.name "GitHub";
+          if [ -n "$(git diff CHANGELOG.md)" ]; then
+            git add CHANGELOG.md;
+            git commit -m "chore(project): update CHANGELOG.md" \
+              --author "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>";
+          fi
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

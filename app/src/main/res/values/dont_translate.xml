@@ -6,13 +6,16 @@
     https://github.com/ashutoshgngwr/noice/blob/master/LICENSE
   </string>
   <string name="app_website" translatable="false">https://ashutoshgngwr.github.io/noice</string>
-  <string name="app_playstore" translatable="false">com.github.ashutoshgngwr.noice</string>
   <string name="app_github" translatable="false">ashutoshgngwr/noice</string>
   <string name="author_email" translatable="false">ashutoshgngwr@gmail.com</string>
   <string name="author_social_handle" translatable="false">ashutoshgngwr</string>
   <string name="credits__app_icon" translatable="false">white noise icon by Juraj Sedlák</string>
   <string name="credits__app_icon_url" translatable="false">
     https://thenounproject.com/term/white-noise/1287855/
+  </string>
+  <string name="credits__support_development_icon" translatable="false">Heart icon by Aybige</string>
+  <string name="credits__support_development_icon_url" translatable="false">
+    https://thenounproject.com/term/heart/1556514
   </string>
   <string name="credits__sound_airplane_inflight" translatable="false">In-flight Ambience Boeing 737-838 by digifishmusic</string>
   <string name="credits__sound_airplane_inflight_url" translatable="false">https://freesound.org/s/47254/</string>
@@ -42,6 +45,10 @@
   <string name="credits__sound_night_url" translatable="false">https://freesound.org/s/424763/</string>
   <string name="credits__sound_office" translatable="false">Office ambiance by Nightwatcher98</string>
   <string name="credits__sound_office_url" translatable="false">https://freesound.org/s/407292/</string>
+  <string name="credits__sound_public_library_0" translatable="false">Quiet Chat by tfsound</string>
+  <string name="credits__sound_public_library_0_url" translatable="false">https://freesound.org/s/82171/</string>
+  <string name="credits__sound_public_library_1" translatable="false">Book handling by launemax</string>
+  <string name="credits__sound_public_library_1_url" translatable="false">https://freesound.org/s/250017/</string>
   <string name="credits__sound_rolling_thunder" translatable="false">Rolling thunder from YouTube Audio Library</string>
   <string name="credits__sound_rolling_thunder_url" translatable="false">
     https://www.youtube.com/audiolibrary_download?vid=5f4a1b5b9c7f5d1f
@@ -70,16 +77,32 @@
   </string>
   <string name="credits__sound_wind_in_palm_trees" translatable="false">Palm trees in the wind by StrangeAcoustics</string>
   <string name="credits__sound_wind_in_palm_trees_url" translatable="false">https://freesound.org/s/346106/</string>
-  <string name="credits__translation_argentinian_spanish" translatable="false">Argentinian spanish translation by Enchufadoo</string>
-  <string name="credits__translation_argentinian_spanish_url" translatable="false">https://github.com/Enchufadoo</string>
-  <string name="credits__translation_russian" translatable="false">Russian translation by yamaks2306</string>
-  <string name="credits__translation_russian_url" translatable="false">https://github.com/yamaks2306</string>
-  <string name="credits__translation_german" translatable="false">German translation by Steffen Schultz</string>
-  <string name="credits__translation_german_url" translatable="false">https://github.com/schulle4u</string>
-  <string name="credits__translation_italian" translatable="false">Italian translation by Sebastian Scaramuzza</string>
-  <string name="credits__translation_italian_url" translatable="false">https://sebastianscaramuzza.com</string>
-  <string name="credits__translation_french" translatable="false">French translation by Eki474</string>
-  <string name="credits__translation_french_url" translatable="false">https://github.com/Eki474</string>
+  <string name="credits__translation_es_es_0" translatable="false">Spanish translation by julianrrr</string>
+  <string name="credits__translation_es_es_0__url" translatable="false">https://github.com/julianrrr</string>
+  <string name="credits__translation_es_ar_0" translatable="false">Argentinian spanish translation by Enchufadoo</string>
+  <string name="credits__translation_es_ar_0__url" translatable="false">https://github.com/Enchufadoo</string>
+  <string name="credits__translation_ru_0" translatable="false">Russian translation by yamaks2306</string>
+  <string name="credits__translation_ru_0__url" translatable="false">https://github.com/yamaks2306</string>
+  <string name="credits__translation_de_0" translatable="false">German translation by Steffen Schultz</string>
+  <string name="credits__translation_de_0__url" translatable="false">https://github.com/schulle4u</string>
+  <string name="credits__translation_de_1" translatable="false">German translation by Luca Hohmann</string>
+  <string name="credits__translation_de_1__url" translatable="false">https://github.com/gilgusmaximus</string>
+  <string name="credits__translation_it_it_0" translatable="false">Italian translation by Sebastian Scaramuzza</string>
+  <string name="credits__translation_it_it_0__url" translatable="false">https://sebastianscaramuzza.com</string>
+  <string name="credits__translation_fr_fr_0" translatable="false">French translation by Eki474</string>
+  <string name="credits__translation_fr_fr_0__url" translatable="false">https://github.com/Eki474</string>
+  <string name="credits__translation_pt_br_0" translatable="false">Portuguese (Brazil) translation by Vinny</string>
+  <string name="credits__translation_pt_br_0__url" translatable="false">https://github.com/CebolaBros64</string>
+  <string name="credits__translation_sv_0" translatable="false">Swedish translation by Ricky Lindén</string>
+  <string name="credits__translation_sv_0__url" translatable="false">https://github.com/sherpashrapnel</string>
+  <string name="credits__translation_sq_al_0" translatable="false">Albanian translation by 3rg1s</string>
+  <string name="credits__translation_sq_al_0__url" translatable="false">https://github.com/3rg1s</string>
+  <string name="credits__translation_nl_0" translatable="false">Dutch translation by Heimen Stoffels</string>
+  <string name="credits__translation_nl_0__url" translatable="false">https://github.com/Vistaus</string>
+  <string name="credits__translation_cs_0" translatable="false">Czech translation by tajnymag</string>
+  <string name="credits__translation_cs_0__url" translatable="false">https://github.com/Tajnymag</string>
+  <string name="credits__translation_pl_0" translatable="false">Polish translation by Karol Kosek</string>
+  <string name="credits__translation_pl_0__url" translatable="false">https://github.com/krkk</string>
   <string name="app_issues_url" translatable="false">https://github.com/ashutoshgngwr/noice/issues</string>
   <string name="plus1m" translatable="false">1m</string>
   <string name="plus5m" translatable="false">5m</string>
@@ -87,4 +110,7 @@
   <string name="plus1h" translatable="false">1h</string>
   <string name="plus4h" translatable="false">4h</string>
   <string name="plus8h" translatable="false">8h</string>
+  <string name="rate_us_on_play_store_url" translatable="false">
+    https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice&amp;referrer=utm_source%3DAndroid%2520Client%26utm_campaign%3DRate%2520Us%2520On%2520Play%2520Store
+  </string>
 </resources>

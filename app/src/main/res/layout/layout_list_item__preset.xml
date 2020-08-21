@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-  style="@style/Widget.App.CardView"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+  style="?attr/materialCardViewStyle"
   android:layout_width="match_parent"
   android:layout_height="wrap_content">
 
@@ -10,14 +10,15 @@
     android:orientation="horizontal"
     android:gravity="center_vertical">
 
-    <ImageButton
-      style="@style/Widget.AppCompat.ImageButton"
+    <CheckBox
       android:id="@+id/button_play"
+      style="?attr/checkboxStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_margin="5dp"
       android:background="?android:selectableItemBackgroundBorderless"
-      android:src="@drawable/ic_action_play"
-      android:tint="?attr/colorAccent"
+      android:button="@drawable/ic_action_play_stop_circled_toggle"
+      android:buttonTint="?attr/colorAccent"
       android:contentDescription="@string/play_pause" />
 
     <TextView
@@ -29,10 +30,10 @@
       android:layout_weight="1"
       android:singleLine="true"
       android:ellipsize="end"
-      android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+      android:textAppearance="?attr/textAppearanceListItem" />
 
     <ImageButton
-      style="@style/Widget.AppCompat.ImageButton"
+      style="?attr/imageButtonStyle"
       android:id="@+id/button_menu"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -43,4 +44,4 @@
 
   </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

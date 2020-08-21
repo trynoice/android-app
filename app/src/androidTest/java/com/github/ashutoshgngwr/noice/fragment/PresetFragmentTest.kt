@@ -1,79 +1,72 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.content.Context
 import android.widget.Button
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.media.AudioAttributesCompat
-import androidx.preference.PreferenceManager
-import androidx.test.annotation.UiThreadTest
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
+import com.github.ashutoshgngwr.noice.EspressoX
+import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.sound.Playback
-import com.github.ashutoshgngwr.noice.sound.PlaybackControlEvents
-import com.github.ashutoshgngwr.noice.sound.Sound
+import com.github.ashutoshgngwr.noice.RetryTestRule
+import com.github.ashutoshgngwr.noice.sound.Preset
+import com.github.ashutoshgngwr.noice.sound.player.Player
+import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
+import io.mockk.*
+import io.mockk.impl.annotations.InjectionLookupType
+import io.mockk.impl.annotations.OverrideMockKs
+import io.mockk.impl.annotations.RelaxedMockK
 import org.greenrobot.eventbus.EventBus
-import org.hamcrest.Matchers.allOf
-import org.hamcrest.Matchers.instanceOf
-import org.junit.After
+import org.hamcrest.Matchers.*
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.InjectMocks
-import org.mockito.Mock
-import org.mockito.Mockito.atMostOnce
-import org.mockito.Mockito.verify
-import org.mockito.MockitoAnnotations
 
 @RunWith(AndroidJUnit4::class)
 class PresetFragmentTest {
 
-  @Mock
+  @Rule
+  @JvmField
+  val retryTestRule = RetryTestRule(5)
+
+  @RelaxedMockK
   private lateinit var eventBus: EventBus
 
-  @InjectMocks
+  @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
   private lateinit var fragment: PresetFragment
 
-  private lateinit var preset: PresetFragment.Preset
   private lateinit var fragmentScenario: FragmentScenario<PresetFragment>
 
-  private fun getContext(): Context {
-    return InstrumentationRegistry.getInstrumentation().targetContext
-  }
+  // returned when Preset.readAllFromUserPreferences() is called
+  private lateinit var mockPreset: Preset
 
   @Before
   fun setup() {
-    InstrumentationRegistry.getInstrumentation().runOnMainSync {
-      preset = PresetFragment.Preset(
-        "test", arrayOf(
-          Playback(
-            getContext(),
-            requireNotNull(Sound.LIBRARY["birds"]),
-            AudioAttributesCompat.Builder().build()
-          )
-        )
+    mockPreset = mockk(relaxed = true) {
+      every { name } returns "test"
+      every { playerStates } returns arrayOf(
+        Preset.PlayerState("test-1", Player.DEFAULT_VOLUME, Player.DEFAULT_TIME_PERIOD),
+        Preset.PlayerState("test-2", Player.MAX_VOLUME, Player.MAX_TIME_PERIOD)
       )
-
-      PresetFragment.Preset.appendToUserPreferences(getContext(), preset)
     }
 
+    mockkObject(Preset.Companion)
+    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(mockPreset)
     fragmentScenario = launchFragmentInContainer<PresetFragment>(null, R.style.Theme_App)
-    fragmentScenario.onFragment { fragment = it }
-    MockitoAnnotations.initMocks(this)
-  }
+    fragmentScenario.onFragment {
+      fragment = it
+      it.onPlayerManagerUpdate(mockk(relaxed = true))
+    }
 
-  @After
-  fun teardown() {
-    PreferenceManager.getDefaultSharedPreferences(getContext())
-      .edit().clear().commit()
+    MockKAnnotations.init(this)
   }
 
   @Test
@@ -81,9 +74,7 @@ class PresetFragmentTest {
     onView(withId(R.id.indicator_list_empty))
       .check(matches(withEffectiveVisibility(Visibility.GONE)))
 
-    PreferenceManager.getDefaultSharedPreferences(getContext())
-      .edit().clear().commit()
-
+    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf()
     fragmentScenario.recreate()
     onView(withId(R.id.indicator_list_empty))
       .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
@@ -91,99 +82,124 @@ class PresetFragmentTest {
 
   @Test
   fun testRecyclerViewItem_playButton() {
-    onView(withId(R.id.button_play)).perform(click())
+    // clear all previous calls to EventBus
+    clearMocks(eventBus)
+    onView(withId(R.id.list_presets)).perform(
+      RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+        hasDescendant(allOf(withId(R.id.title), withText("test"))),
+        EspressoX.clickOn(R.id.button_play)
+      )
+    )
 
-    val expectedPlayback = preset.playbackStates[0]
-    verify(eventBus, atMostOnce()).post(PlaybackControlEvents.StopPlaybackEvent())
-    verify(eventBus, atMostOnce()).post(PlaybackControlEvents.UpdatePlaybackEvent(expectedPlayback))
-    verify(eventBus, atMostOnce())
-      .post(PlaybackControlEvents.StartPlaybackEvent(expectedPlayback.soundKey))
+    val eventSlot = slot<MediaPlayerService.PlayPresetEvent>()
+    verify(exactly = 1) { eventBus.post(capture(eventSlot)) }
+    assertEquals(mockPreset, eventSlot.captured.preset)
   }
 
   @Test
   fun testRecyclerViewItem_stopButton() {
+    // ensure that PresetFragment assumes it is playing a preset
+    every { Preset.from(any(), any()) } returns mockPreset
     fragmentScenario.onFragment {
-      it.onPlaybackUpdate(hashMapOf<String, Playback>().also { playbacks ->
-        preset.playbackStates.forEach { p -> playbacks[p.soundKey] = p }
+      it.onPlayerManagerUpdate(mockk(relaxed = true) {
+        every { state } returns PlayerManager.State.PLAYING
       })
     }
 
-    onView(withId(R.id.button_play)).perform(click())
-    verify(eventBus, atMostOnce()).post(PlaybackControlEvents.StopPlaybackEvent())
+    onView(withId(R.id.list_presets)).perform(
+      RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+        hasDescendant(allOf(withId(R.id.title), withText("test"))),
+        EspressoX.clickOn(R.id.button_play)
+      )
+    )
+
+    verify(exactly = 1) { eventBus.post(ofType(MediaPlayerService.StopPlaybackEvent::class)) }
   }
 
   @Test
   fun testRecyclerViewItem_deleteOption() {
-    onView(withId(R.id.button_menu)).perform(click()) // open context menu
+    // open context menu
+    onView(withId(R.id.list_presets)).perform(
+      RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+        hasDescendant(allOf(withId(R.id.title), withText("test"))),
+        EspressoX.clickOn(R.id.button_menu)
+      )
+    )
+
     onView(withText(R.string.delete)).perform(click()) // select delete option
     onView(allOf(instanceOf(Button::class.java), withText(R.string.delete)))
       .perform(click()) // click delete button in confirmation dialog
 
-    onView(withText(preset.name)).check(doesNotExist())
-    assertEquals(0, PresetFragment.Preset.readAllFromUserPreferences(getContext()).size)
+    onView(withText("test")).check(doesNotExist())
+    verify(exactly = 1) {
+      Preset.writeAllToUserPreferences(any(), emptyList())
+    }
   }
 
   @Test
   fun testRecyclerViewItem_deleteOption_onPresetPlaying() {
-    // pretend that the stuff is playing
+    // ensure that PresetFragment assumes it is playing a preset
+    every { Preset.from(any(), any()) } returns mockPreset
     fragmentScenario.onFragment {
-      it.onPlaybackUpdate(hashMapOf<String, Playback>().also { playbacks ->
-        preset.playbackStates.forEach { p -> playbacks[p.soundKey] = p }
+      it.onPlayerManagerUpdate(mockk(relaxed = true) {
+        every { state } returns PlayerManager.State.PLAYING
       })
     }
 
-    onView(withId(R.id.button_menu)).perform(click()) // open context menu
+    // open context menu
+    onView(withId(R.id.list_presets)).perform(
+      RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+        hasDescendant(allOf(withId(R.id.title), withText("test"))),
+        EspressoX.clickOn(R.id.button_menu)
+      )
+    )
+
     onView(withText(R.string.delete)).perform(click()) // select delete option
     onView(allOf(instanceOf(Button::class.java), withText(R.string.delete)))
       .perform(click()) // click delete button in confirmation dialog
 
     // should publish a stop playback event if preset was playing
-    verify(eventBus, atMostOnce()).post(PlaybackControlEvents.StopPlaybackEvent())
+    verify(exactly = 1) { eventBus.post(ofType(MediaPlayerService.StopPlaybackEvent::class)) }
   }
 
   @Test
   fun testRecyclerViewItem_renameOption() {
-    onView(withId(R.id.button_menu)).perform(click()) // open context menu
+    // if preset with given name already exists, save button should be disabled
+    val mockValidator = mockk<(String) -> Boolean>()
+    every { Preset.duplicateNameValidator(any()) } returns mockValidator
+    every { mockValidator.invoke("test-exists") } returns true
+    every { mockValidator.invoke("test-does-not-exists") } returns false
+
+    // open context menu
+    onView(withId(R.id.list_presets)).perform(
+      RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+        hasDescendant(allOf(withId(R.id.title), withText("test"))),
+        EspressoX.clickOn(R.id.button_menu)
+      )
+    )
+
     onView(withText(R.string.rename)).perform(click()) // select rename option
     onView(withId(R.id.editText))
       .check(matches(isDisplayed())) // check if the rename dialog was displayed
-      .perform(replaceText("test-renamed")) // replace text in input field
+      .perform(replaceText("test-exists")) // replace text in input field
 
     onView(allOf(instanceOf(Button::class.java), withText(R.string.save)))
+      .check(matches(not(isEnabled())))
+
+    onView(withId(R.id.editText))
+      .check(matches(isDisplayed()))
+      .perform(replaceText("test-does-not-exists"))
+
+    onView(allOf(instanceOf(Button::class.java), withText(R.string.save)))
+      .check(matches(isEnabled()))
       .perform(click()) // click on positive button
 
-    PresetFragment.Preset.readAllFromUserPreferences(getContext()).let {
-      assertEquals(1, it.size)
-      assertEquals("test-renamed", it[0].name)
-    }
-  }
-
-  @RunWith(AndroidJUnit4::class)
-  class PresetTest {
-
-    @After
-    fun teardown() {
-      PreferenceManager
-        .getDefaultSharedPreferences(InstrumentationRegistry.getInstrumentation().targetContext)
-        .edit()
-        .clear()
-        .commit()
+    val presetsSlot = slot<List<Preset>>()
+    verify(exactly = 1) {
+      mockPreset.name = "test-does-not-exists"
+      Preset.writeAllToUserPreferences(any(), capture(presetsSlot))
     }
 
-    @Test
-    @UiThreadTest
-    fun testSavePresets() {
-      val ctx = InstrumentationRegistry.getInstrumentation().targetContext
-      val playback = Playback(
-        ctx, requireNotNull(Sound.LIBRARY["birds"]), AudioAttributesCompat.Builder().build()
-      )
-      // save preset to user preferences
-      val preset = PresetFragment.Preset("test", arrayOf(playback))
-      PresetFragment.Preset.appendToUserPreferences(ctx, preset)
-      assertEquals(
-        playback,
-        PresetFragment.Preset.readAllFromUserPreferences(ctx)[0].playbackStates[0]
-      )
-    }
+    assertEquals(mockPreset, presetsSlot.captured[0])
   }
 }

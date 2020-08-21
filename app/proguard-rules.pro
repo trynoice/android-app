@@ -26,3 +26,8 @@
 -keepclassmembers,allowobfuscation class * {
   @com.google.gson.annotations.SerializedName <fields>;
 }
+
+# keep fields annotated with Expose
+-keepclassmembers class * {
+  @com.google.gson.annotations.Expose <fields>;
+}

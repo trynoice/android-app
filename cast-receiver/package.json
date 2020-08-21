@@ -1,0 +1,42 @@
+{
+  "name": "noice-cast-receiver",
+  "description": "CAF custom receiver implementation for playing Noice on Cast enabled devices",
+  "repository": "git@github.com:ashutoshgngwr/noice.git",
+  "author": "Ashutosh Gangwar <ashutoshgngwr@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"yarn:watch-ts\" \"yarn:serve\"",
+    "watch-ts": "tsc --noEmit --watch",
+    "serve": "parcel --log-level none index.html",
+    "build": "parcel build index.html",
+    "lint": "eslint . --ext .ts",
+    "test:single": "jest --config jest.json",
+    "test": "yarn test:single --watchAll"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/chromecast-caf-receiver": "^5.0.9",
+    "@types/howler": "^2.2.1",
+    "@types/jest": "^26.0.10",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "babel-jest": "^26.3.0",
+    "concurrently": "^5.3.0",
+    "eslint": "^7.7.0",
+    "eslint-config-prettier": "^6.11.0",
+    "jest": "^26.4.0",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-svg-sprite": "^1.4.1",
+    "prettier": "^2.0.5",
+    "sass": "^1.26.10",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "howler": "^2.2.0",
+    "normalize.css": "^8.0.1"
+  }
+}
