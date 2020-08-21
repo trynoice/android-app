@@ -118,6 +118,7 @@
   <string name="sound_group__raw_noise">Raw Noise</string>
   <string name="sound_group__times_of_day">Times of Day</string>
   <string name="sound_group__train">Train</string>
+  <string name="sound_group__water">Water</string>
   <string name="sound_group__waterfront">Waterfront</string>
   <string name="sound_group__wind">Wind</string>
   <string-array name="app_themes">
