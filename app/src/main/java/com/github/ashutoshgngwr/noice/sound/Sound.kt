@@ -97,6 +97,11 @@ class Sound private constructor(
         R.string.pink_noise,
         R.string.sound_group__raw_noise
       ),
+      "public_library" to Sound(
+        arrayOf("public_library_0.mp3", "public_library_1.mp3"),
+        R.string.public_library,
+        R.string.sound_group__public_gatherings
+      ),
       "rolling_thunder" to Sound(
         arrayOf("rolling_thunder.mp3"),
         R.string.rolling_thunder,

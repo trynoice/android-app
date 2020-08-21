@@ -45,6 +45,10 @@
   <string name="credits__sound_night_url" translatable="false">https://freesound.org/s/424763/</string>
   <string name="credits__sound_office" translatable="false">Office ambiance by Nightwatcher98</string>
   <string name="credits__sound_office_url" translatable="false">https://freesound.org/s/407292/</string>
+  <string name="credits__sound_public_library_0" translatable="false">Quiet Chat by tfsound</string>
+  <string name="credits__sound_public_library_0_url" translatable="false">https://freesound.org/s/82171/</string>
+  <string name="credits__sound_public_library_1" translatable="false">Book handling by launemax</string>
+  <string name="credits__sound_public_library_1_url" translatable="false">https://freesound.org/s/250017/</string>
   <string name="credits__sound_rolling_thunder" translatable="false">Rolling thunder from YouTube Audio Library</string>
   <string name="credits__sound_rolling_thunder_url" translatable="false">
     https://www.youtube.com/audiolibrary_download?vid=5f4a1b5b9c7f5d1f
