@@ -1,0 +1,22 @@
+coverage:
+  status:
+    project:
+      default:
+        target: auto
+      android:
+        target: auto
+        flags:
+          - android
+      cast-receiver:
+        target: auto
+        flags:
+          - cast_receiver
+flags:
+  android:
+    paths:
+      - app
+    carryforward: true
+  cast_receiver:
+    paths:
+      - cast-receiver
+    carryforward: true
