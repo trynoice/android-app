@@ -52,6 +52,11 @@ class AboutFragment : Fragment() {
         R.string.credits__sound_coffee_shop_url
       ),
       arrayOf(
+        R.string.credits__sound_crickets,
+        R.drawable.ic_about_sound,
+        R.string.credits__sound_crickets_url
+      ),
+      arrayOf(
         R.string.credits__sound_distant_thunder,
         R.drawable.ic_about_sound,
         R.string.credits__sound_distant_thunder_url

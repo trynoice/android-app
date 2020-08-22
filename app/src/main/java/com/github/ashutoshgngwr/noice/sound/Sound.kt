@@ -51,6 +51,11 @@ class Sound private constructor(
         R.string.coffee_shop,
         R.string.sound_group__public_gatherings
       ),
+      "crickets" to Sound(
+        arrayOf("crickets_0.mp3", "crickets_1.mp3"),
+        R.string.crickets,
+        R.string.sound_group__jungle
+      ),
       "distant_thunder" to Sound(
         arrayOf("distant_thunder.mp3"),
         R.string.distant_thunder,
