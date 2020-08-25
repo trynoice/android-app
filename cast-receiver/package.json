@@ -28,7 +28,7 @@
     "concurrently": "^5.3.0",
     "eslint": "^7.7.0",
     "eslint-config-prettier": "^6.11.0",
-    "jest": "^26.4.1",
+    "jest": "^26.4.2",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-svg-sprite": "^1.4.1",
     "prettier": "^2.1.0",
