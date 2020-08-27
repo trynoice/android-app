@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - master
+    paths:
+      - "app/src/main/res/**"
+      - ".github/workflows/**"
 
 jobs:
   check:
