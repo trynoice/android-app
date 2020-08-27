@@ -45,16 +45,6 @@ We welcome contributions of all kinds and sizes. It includes everything from sim
 
 Noice does not collect any data from its users. Selected third-party services handle all payments supporting the development of this project. For policies related to payments, users should refer to the privacy policy of the payment service they have chosen to use.
 
-## Financial Contributors
-
-### Sponsors
-
-[![Sponsors](https://opencollective.com/noice/tiers/sponsor.svg?avatarHeight=36)](https://opencollective.com/noice)
-
-### Backers
-
-[![Backers](https://opencollective.com/noice/tiers/backer.svg?avatarHeight=36)](https://opencollective.com/noice)
-
 ## License
 
 [MIT](LICENSE)
