@@ -16,6 +16,10 @@ flags:
     paths:
       - app
     carryforward: true
+  ui_tests:
+    paths:
+      - app
+    carryforward: true
   cast_receiver:
     paths:
       - cast-receiver
