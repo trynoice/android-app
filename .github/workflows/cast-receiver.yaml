@@ -43,7 +43,7 @@ jobs:
         working-directory: ./cast-receiver
       - uses: codecov/codecov-action@v1
         with:
-          flags: cast_receiver,unit_tests
+          flags: cast_receiver
 
   deploy:
     name: Deploy

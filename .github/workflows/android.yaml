@@ -32,7 +32,7 @@ jobs:
       - run: ./gradlew testCoverage --no-daemon --stacktrace
       - uses: codecov/codecov-action@v1
         with:
-          flags: android,unit_tests
+          flags: android
 
   ui-tests:
     name: UI tests
@@ -60,7 +60,7 @@ jobs:
             -camera-front none -gpu swiftshader_indirect -memory 3583
       - uses: codecov/codecov-action@v1
         with:
-          flags: android,ui_tests
+          flags: android
 
   play-store-release:
     name: Play Store Release
