@@ -21,6 +21,7 @@
   <string name="coffee_shop">Coffee shop</string>
   <string name="crickets">Crickets</string>
   <string name="distant_thunder">Distant thunder</string>
+  <string name="electric_car">Electric car</string>
   <string name="heavy_rain">Heavy rain</string>
   <string name="light_rain">Light rain</string>
   <string name="moderate_rain">Moderate rain</string>
@@ -119,6 +120,7 @@
   <string name="sound_group__raw_noise">Raw Noise</string>
   <string name="sound_group__times_of_day">Times of Day</string>
   <string name="sound_group__train">Train</string>
+  <string name="sound_group__vehicles">Vehicles</string>
   <string name="sound_group__water">Water</string>
   <string name="sound_group__waterfront">Waterfront</string>
   <string name="sound_group__wind">Wind</string>

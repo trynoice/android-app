@@ -33,6 +33,8 @@
   <string name="credits__sound_distant_thunder_url" translatable="false">
     https://www.youtube.com/audiolibrary_download?vid=c661c0547daf6af7
   </string>
+  <string name="credits__sound_electric_car" translatable="false">Electric car BMW i3 - driving by tferrino</string>
+  <string name="credits__sound_electric_car_url" translatable="false">https://freesound.org/s/405285/</string>
   <string name="credits__sound_heavy_rain" translatable="false">Heavy rain (thunderstorm) from YouTube Audio Library</string>
   <string name="credits__sound_heavy_rain_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=85220b39abbc1421</string>
   <string name="credits__sound_light_rain" translatable="false">Light rain (on roof) from YouTube Audio Library</string>

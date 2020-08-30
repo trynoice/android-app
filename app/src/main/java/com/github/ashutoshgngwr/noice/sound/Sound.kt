@@ -62,6 +62,11 @@ class Sound private constructor(
         R.string.sound_group__monsoon,
         false
       ),
+      "electric_car" to Sound(
+        arrayOf("electric_car_0.mp3", "electric_car_1.mp3"),
+        R.string.electric_car,
+        R.string.sound_group__vehicles
+      ),
       "heavy_rain" to Sound(
         arrayOf("heavy_rain.mp3"),
         R.string.heavy_rain,
