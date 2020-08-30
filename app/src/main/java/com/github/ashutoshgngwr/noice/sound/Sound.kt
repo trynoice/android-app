@@ -51,6 +51,11 @@ class Sound private constructor(
         R.string.coffee_shop,
         R.string.sound_group__public_gatherings
       ),
+      "creaking_ship" to Sound(
+        arrayOf("creaking_ship_0.mp3", "creaking_ship_1.mp3"),
+        R.string.creaking_ship,
+        R.string.sound_group__vehicles
+      ),
       "crickets" to Sound(
         arrayOf("crickets_0.mp3", "crickets_1.mp3"),
         R.string.crickets,

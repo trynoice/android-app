@@ -57,6 +57,16 @@ class AboutFragment : Fragment() {
         R.string.credits__sound_crickets_url
       ),
       arrayOf(
+        R.string.credits__sound_creaking_ship_0,
+        R.drawable.ic_about_sound,
+        R.string.credits__sound_creaking_ship_0_url
+      ),
+      arrayOf(
+        R.string.credits__sound_creaking_ship_1,
+        R.drawable.ic_about_sound,
+        R.string.credits__sound_creaking_ship_1_url
+      ),
+      arrayOf(
         R.string.credits__sound_distant_thunder,
         R.drawable.ic_about_sound,
         R.string.credits__sound_distant_thunder_url
