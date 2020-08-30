@@ -75,6 +75,8 @@
   </string>
   <string name="credits__sound_train_horn" translatable="false">Train horn by CouleurCasquette</string>
   <string name="credits__sound_train_horn_url" translatable="false">https://freesound.org/s/248229/</string>
+  <string name="credits__sound_walking_through_the_snow" translatable="false">Snow footsteps close perspective by bmlake</string>
+  <string name="credits__sound_walking_through_the_snow_url" translatable="false">https://freesound.org/s/269001/</string>
   <string name="credits__sound_water_hose" translatable="false">Spraying water from a hose in a wide fan by SFX Bible</string>
   <string name="credits__sound_water_hose_url" translatable="false">https://www.soundsnap.com/node/53530</string>
   <string name="credits__sound_water_stream" translatable="false">Stream, Running Water | Aviemore Scotland by BurghRecords</string>
