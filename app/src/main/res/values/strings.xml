@@ -23,6 +23,7 @@
   <string name="distant_thunder">Distant thunder</string>
   <string name="electric_car">Electric car</string>
   <string name="heavy_rain">Heavy rain</string>
+  <string name="human_heartbeat">Human heartbeat</string>
   <string name="light_rain">Light rain</string>
   <string name="moderate_rain">Moderate rain</string>
   <string name="morning_in_a_village">Morning in a village</string>
@@ -115,6 +116,7 @@
   </string>
   <string name="sound_group__airplane">Airplane</string>
   <string name="sound_group__jungle">Jungle</string>
+  <string name="sound_group__life">Life</string>
   <string name="sound_group__monsoon">Monsoon</string>
   <string name="sound_group__public_gatherings">Public Gatherings</string>
   <string name="sound_group__raw_noise">Raw Noise</string>
