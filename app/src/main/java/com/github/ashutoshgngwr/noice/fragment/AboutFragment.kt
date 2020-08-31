@@ -117,6 +117,21 @@ class AboutFragment : Fragment() {
         R.string.credits__sound_office_url
       ),
       arrayOf(
+        R.string.credits__sound_public_library_0,
+        R.drawable.ic_about_sound,
+        R.string.credits__sound_public_library_0_url
+      ),
+      arrayOf(
+        R.string.credits__sound_public_library_1,
+        R.drawable.ic_about_sound,
+        R.string.credits__sound_public_library_1_url
+      ),
+      arrayOf(
+        R.string.credits__sound_purring_cat,
+        R.drawable.ic_about_sound,
+        R.string.credits__sound_purring_cat_url
+      ),
+      arrayOf(
         R.string.credits__sound_rolling_thunder,
         R.drawable.ic_about_sound,
         R.string.credits__sound_rolling_thunder_url

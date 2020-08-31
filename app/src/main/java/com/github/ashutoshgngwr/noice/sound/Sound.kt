@@ -128,6 +128,11 @@ class Sound private constructor(
         R.string.public_library,
         R.string.sound_group__public_gatherings
       ),
+      "purring_cat" to Sound(
+        arrayOf("purring_cat.mp3"),
+        R.string.purring_cat,
+        R.string.sound_group__life
+      ),
       "rolling_thunder" to Sound(
         arrayOf("rolling_thunder.mp3"),
         R.string.rolling_thunder,
