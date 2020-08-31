@@ -41,6 +41,8 @@
   <string name="credits__sound_electric_car_url" translatable="false">https://freesound.org/s/405285/</string>
   <string name="credits__sound_heavy_rain" translatable="false">Heavy rain (thunderstorm) from YouTube Audio Library</string>
   <string name="credits__sound_heavy_rain_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=85220b39abbc1421</string>
+  <string name="credits__sound_howling_wolf" translatable="false">Solitary wolf howl very clear by betchkal</string>
+  <string name="credits__sound_howling_wolf_url" translatable="false">https://freesound.org/s/500646/</string>
   <string name="credits__sound_human_heartbeat" translatable="false">Heartbeat by RSilveira_88</string>
   <string name="credits__sound_human_heartbeat_url" translatable="false">https://freesound.org/s/216219/</string>
   <string name="credits__sound_light_rain" translatable="false">Light rain (on roof) from YouTube Audio Library</string>

@@ -77,6 +77,12 @@ class Sound private constructor(
         R.string.heavy_rain,
         R.string.sound_group__monsoon
       ),
+      "howling_wolf" to Sound(
+        arrayOf("howling_wolf.mp3"),
+        R.string.howling_wolf,
+        R.string.sound_group__life,
+        false
+      ),
       "human_heartbeat" to Sound(
         arrayOf("human_heartbeat.mp3"),
         R.string.human_heartbeat,

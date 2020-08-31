@@ -77,6 +77,11 @@ class AboutFragment : Fragment() {
         R.string.credits__sound_electric_car_url
       ),
       arrayOf(
+        R.string.credits__sound_howling_wolf,
+        R.drawable.ic_about_sound,
+        R.string.credits__sound_howling_wolf_url
+      ),
+      arrayOf(
         R.string.credits__sound_heavy_rain,
         R.drawable.ic_about_sound,
         R.string.credits__sound_heavy_rain_url
