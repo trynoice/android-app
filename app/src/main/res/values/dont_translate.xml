@@ -63,6 +63,8 @@
   <string name="credits__sound_rolling_thunder_url" translatable="false">
     https://www.youtube.com/audiolibrary_download?vid=5f4a1b5b9c7f5d1f
   </string>
+  <string name="credits__sound_screeching_seagulls" translatable="false">Seagulls ambience Lofoten Svolvær by Lydmakeren</string>
+  <string name="credits__sound_screeching_seagulls_url" translatable="false">https://freesound.org/s/510912/</string>
   <string name="credits__sound_seaside" translatable="false">Seaside waves by foongaz</string>
   <string name="credits__sound_seaside_url" translatable="false">https://freesound.org/s/253287/</string>
   <string name="credits__sound_soft_wind" translatable="false">Wind from YouTube Audio Library</string>

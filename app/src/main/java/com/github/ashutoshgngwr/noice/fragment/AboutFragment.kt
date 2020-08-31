@@ -117,6 +117,11 @@ class AboutFragment : Fragment() {
         R.string.credits__sound_rolling_thunder_url
       ),
       arrayOf(
+        R.string.credits__sound_screeching_seagulls,
+        R.drawable.ic_about_sound,
+        R.string.credits__sound_screeching_seagulls_url
+      ),
+      arrayOf(
         R.string.credits__sound_seaside,
         R.drawable.ic_about_sound,
         R.string.credits__sound_seaside_url

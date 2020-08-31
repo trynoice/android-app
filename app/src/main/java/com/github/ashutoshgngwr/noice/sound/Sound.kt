@@ -128,6 +128,12 @@ class Sound private constructor(
         R.string.sound_group__monsoon,
         false
       ),
+      "screeching_seagulls" to Sound(
+        arrayOf("screeching_seagulls.mp3"),
+        R.string.screeching_seagulls,
+        R.string.sound_group__life,
+        false
+      ),
       "seaside" to Sound(
         arrayOf("seaside_0.mp3", "seaside_1.mp3"),
         R.string.seaside,
