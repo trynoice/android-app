@@ -9,13 +9,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.sound.Sound
 import mehdi.sakout.aboutpage.AboutPage
 import mehdi.sakout.aboutpage.Element
 
 class AboutFragment : Fragment() {
 
   companion object {
-    private val CREDITS = arrayOf(
+    private val OTHER_CREDITS = arrayOf(
       arrayOf(
         R.string.credits__app_icon,
         R.drawable.ic_launcher_24dp,
@@ -25,166 +26,6 @@ class AboutFragment : Fragment() {
         R.string.credits__support_development_icon,
         R.drawable.ic_nav_support_development,
         R.string.credits__support_development_icon_url
-      ),
-      arrayOf(
-        R.string.credits__sound_airplane_inflight,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_airplane_inflight_url
-      ),
-      arrayOf(
-        R.string.credits__sound_airplane_seatbelt_beeps,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_airplane_seatbelt_beeps_url
-      ),
-      arrayOf(
-        R.string.credits__sound_birds,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_birds_url
-      ),
-      arrayOf(
-        R.string.credits__sound_bonfire,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_bonfire_url
-      ),
-      arrayOf(
-        R.string.credits__sound_coffee_shop,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_coffee_shop_url
-      ),
-      arrayOf(
-        R.string.credits__sound_crickets,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_crickets_url
-      ),
-      arrayOf(
-        R.string.credits__sound_creaking_ship_0,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_creaking_ship_0_url
-      ),
-      arrayOf(
-        R.string.credits__sound_creaking_ship_1,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_creaking_ship_1_url
-      ),
-      arrayOf(
-        R.string.credits__sound_distant_thunder,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_distant_thunder_url
-      ),
-      arrayOf(
-        R.string.credits__sound_electric_car,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_electric_car_url
-      ),
-      arrayOf(
-        R.string.credits__sound_howling_wolf,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_howling_wolf_url
-      ),
-      arrayOf(
-        R.string.credits__sound_heavy_rain,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_heavy_rain_url
-      ),
-      arrayOf(
-        R.string.credits__sound_light_rain,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_light_rain_url
-      ),
-      arrayOf(
-        R.string.credits__sound_moderate_rain,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_moderate_rain_url
-      ),
-      arrayOf(
-        R.string.credits__morning_in_a_village,
-        R.drawable.ic_about_sound,
-        R.string.credits__morning_in_a_village_url
-      ),
-      arrayOf(
-        R.string.credits__sound_moving_train,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_moving_train_url
-      ),
-      arrayOf(
-        R.string.credits__sound_night,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_night_url
-      ),
-      arrayOf(
-        R.string.credits__sound_office,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_office_url
-      ),
-      arrayOf(
-        R.string.credits__sound_public_library_0,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_public_library_0_url
-      ),
-      arrayOf(
-        R.string.credits__sound_public_library_1,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_public_library_1_url
-      ),
-      arrayOf(
-        R.string.credits__sound_purring_cat,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_purring_cat_url
-      ),
-      arrayOf(
-        R.string.credits__sound_rolling_thunder,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_rolling_thunder_url
-      ),
-      arrayOf(
-        R.string.credits__sound_screeching_seagulls,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_screeching_seagulls_url
-      ),
-      arrayOf(
-        R.string.credits__sound_seaside,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_seaside_url
-      ),
-      arrayOf(
-        R.string.credits__sound_soft_wind,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_soft_wind_url
-      ),
-      arrayOf(
-        R.string.credits__sound_thunder_crack,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_thunder_crack_url
-      ),
-      arrayOf(
-        R.string.credits__sound_train_horn,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_train_horn_url
-      ),
-      arrayOf(
-        R.string.credits__sound_walking_through_the_snow,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_walking_through_the_snow_url
-      ),
-      arrayOf(
-        R.string.credits__sound_water_hose,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_water_hose_url
-      ),
-      arrayOf(
-        R.string.credits__sound_water_stream,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_water_stream_url
-      ),
-      arrayOf(
-        R.string.credits__sound_wind_chimes_of_shells,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_wind_chimes_of_shells_url
-      ),
-      arrayOf(
-        R.string.credits__sound_wind_in_palm_trees,
-        R.drawable.ic_about_sound,
-        R.string.credits__sound_wind_in_palm_trees_url
       )
     )
 
@@ -277,8 +118,14 @@ class AboutFragment : Fragment() {
       }
 
       addGroup(getString(R.string.credits))
-      for (item in CREDITS) {
+      for (item in OTHER_CREDITS) {
         addItem(createElement(item[0], item[1], item[2]))
+      }
+
+      for (sound in Sound.LIBRARY.values) {
+        for ((titleResID, urlResID) in sound.credits) {
+          addItem(createElement(titleResID, R.drawable.ic_about_sound, urlResID))
+        }
       }
 
       create()

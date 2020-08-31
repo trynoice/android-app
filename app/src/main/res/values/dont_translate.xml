@@ -49,8 +49,8 @@
   <string name="credits__sound_light_rain_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=f0eff544b6f1e0d0</string>
   <string name="credits__sound_moderate_rain" translatable="false">Moderate rain (thunderstorm) from YouTube Audio Library</string>
   <string name="credits__sound_moderate_rain_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=85220b39abbc1421</string>
-  <string name="credits__morning_in_a_village" translatable="false">Village jungle morning by aurelien.leveque</string>
-  <string name="credits__morning_in_a_village_url" translatable="false">https://freesound.org/s/417635/</string>
+  <string name="credits__sound_morning_in_a_village" translatable="false">Village jungle morning by aurelien.leveque</string>
+  <string name="credits__sound_morning_in_a_village_url" translatable="false">https://freesound.org/s/417635/</string>
   <string name="credits__sound_moving_train" translatable="false">Train Wheels Ride outside Thailand by YOH</string>
   <string name="credits__sound_moving_train_url" translatable="false">https://freesound.org/s/170866/</string>
   <string name="credits__sound_night" translatable="false">Jungle choco by jaime_enrique</string>
