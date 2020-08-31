@@ -44,7 +44,6 @@
   <string name="train_horn">Train horn</string>
   <string name="walking_through_the_snow">Walking through the snow</string>
   <string name="water_hose">Water hose</string>
-  <string name="water_hosing">Hosing</string>
   <string name="water_stream">Water stream</string>
   <string name="white_noise">White noise</string>
   <string name="wind_in_palm_trees">Wind in Palm trees</string>
@@ -120,17 +119,13 @@
   <string name="support_development__donate_thank_you_description">
     We wholeheartedly thank you for your generous contribution to the Noice project.
   </string>
-  <string name="sound_group__airplane">Airplane</string>
-  <string name="sound_group__jungle">Jungle</string>
   <string name="sound_group__life">Life</string>
   <string name="sound_group__monsoon">Monsoon</string>
   <string name="sound_group__public_gatherings">Public Gatherings</string>
   <string name="sound_group__raw_noise">Raw Noise</string>
   <string name="sound_group__times_of_day">Times of Day</string>
-  <string name="sound_group__train">Train</string>
   <string name="sound_group__vehicles">Vehicles</string>
   <string name="sound_group__water">Water</string>
-  <string name="sound_group__waterfront">Waterfront</string>
   <string name="sound_group__wind">Wind</string>
   <string-array name="app_themes">
     <item>Light</item>

@@ -31,7 +31,7 @@ class Sound private constructor(
       "airplane_inflight" to Sound(
         arrayOf("airplane_inflight.mp3"),
         R.string.airplane_inflight,
-        R.string.sound_group__airplane,
+        R.string.sound_group__vehicles,
         arrayOf(
           Pair(
             R.string.credits__sound_airplane_inflight,
@@ -41,7 +41,8 @@ class Sound private constructor(
       ),
       "airplane_seatbelt_beeps" to Sound(
         arrayOf("airplane_seatbelt_beeps.mp3"),
-        R.string.airplane_seatbelt_beeps, R.string.sound_group__airplane,
+        R.string.airplane_seatbelt_beeps,
+        R.string.sound_group__vehicles,
         arrayOf(
           Pair(
             R.string.credits__sound_airplane_seatbelt_beeps,
@@ -53,7 +54,7 @@ class Sound private constructor(
       "birds" to Sound(
         arrayOf("birds_0.mp3", "birds_1.mp3"),
         R.string.birds,
-        R.string.sound_group__jungle,
+        R.string.sound_group__life,
         arrayOf(
           Pair(R.string.credits__sound_birds_0, R.string.credits__sound_birds_0_url),
           Pair(R.string.credits__sound_birds_1, R.string.credits__sound_birds_1_url)
@@ -62,7 +63,7 @@ class Sound private constructor(
       "bonfire" to Sound(
         arrayOf("bonfire_0.mp3", "bonfire_1.mp3"),
         R.string.bonfire,
-        R.string.sound_group__jungle,
+        R.string.sound_group__public_gatherings,
         arrayOf(Pair(R.string.credits__sound_bonfire, R.string.credits__sound_bonfire_url))
       ),
       "brownian_noise" to Sound(
@@ -95,7 +96,7 @@ class Sound private constructor(
       "crickets" to Sound(
         arrayOf("crickets_0.mp3", "crickets_1.mp3"),
         R.string.crickets,
-        R.string.sound_group__jungle,
+        R.string.sound_group__life,
         arrayOf(Pair(R.string.credits__sound_crickets, R.string.credits__sound_crickets_url))
       ),
       "distant_thunder" to Sound(
@@ -166,7 +167,7 @@ class Sound private constructor(
       "moving_train" to Sound(
         arrayOf("moving_train.mp3"),
         R.string.moving_train,
-        R.string.sound_group__train,
+        R.string.sound_group__vehicles,
         arrayOf(
           Pair(R.string.credits__sound_moving_train, R.string.credits__sound_moving_train_url)
         )
@@ -245,7 +246,7 @@ class Sound private constructor(
       "seaside" to Sound(
         arrayOf("seaside_0.mp3", "seaside_1.mp3"),
         R.string.seaside,
-        R.string.sound_group__waterfront,
+        R.string.sound_group__water,
         arrayOf(Pair(R.string.credits__sound_seaside, R.string.credits__sound_seaside_url))
       ),
       "soft_wind" to Sound(
@@ -266,7 +267,7 @@ class Sound private constructor(
       "train_horn" to Sound(
         arrayOf("train_horn.mp3"),
         R.string.train_horn,
-        R.string.sound_group__train,
+        R.string.sound_group__vehicles,
         arrayOf(Pair(R.string.credits__sound_train_horn, R.string.credits__sound_train_horn_url)),
         false
       ),
@@ -290,7 +291,7 @@ class Sound private constructor(
       "water_stream" to Sound(
         arrayOf("water_stream_0.mp3", "water_stream_1.mp3"),
         R.string.water_stream,
-        R.string.sound_group__waterfront,
+        R.string.sound_group__water,
         arrayOf(
           Pair(
             R.string.credits__sound_water_stream,
