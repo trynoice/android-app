@@ -207,6 +207,17 @@ class Sound private constructor(
         R.string.sound_group__life,
         arrayOf(Pair(R.string.credits__sound_purring_cat, R.string.credits__sound_purring_cat_url))
       ),
+      "quiet_conversation" to Sound(
+        arrayOf("quiet_conversation_0.mp3", "quiet_conversation_1.mp3"),
+        R.string.quiet_conversation,
+        R.string.sound_group__public_gatherings,
+        arrayOf(
+          Pair(
+            R.string.credits__sound_quiet_conversation,
+            R.string.credits__sound_quiet_conversation_url
+          )
+        )
+      ),
       "rolling_thunder" to Sound(
         arrayOf("rolling_thunder.mp3"),
         R.string.rolling_thunder,
