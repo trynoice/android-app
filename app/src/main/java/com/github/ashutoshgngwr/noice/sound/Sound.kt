@@ -51,10 +51,13 @@ class Sound private constructor(
         false
       ),
       "birds" to Sound(
-        arrayOf("birds.mp3"),
+        arrayOf("birds_0.mp3", "birds_1.mp3"),
         R.string.birds,
         R.string.sound_group__jungle,
-        arrayOf(Pair(R.string.credits__sound_birds, R.string.credits__sound_birds_url))
+        arrayOf(
+          Pair(R.string.credits__sound_birds_0, R.string.credits__sound_birds_0_url),
+          Pair(R.string.credits__sound_birds_1, R.string.credits__sound_birds_1_url)
+        )
       ),
       "bonfire" to Sound(
         arrayOf("bonfire_0.mp3", "bonfire_1.mp3"),

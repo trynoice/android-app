@@ -21,8 +21,10 @@
   <string name="credits__sound_airplane_inflight_url" translatable="false">https://freesound.org/s/47254/</string>
   <string name="credits__sound_airplane_seatbelt_beeps" translatable="false">Seat belt beeps by nachosose</string>
   <string name="credits__sound_airplane_seatbelt_beeps_url" translatable="false">https://freesound.org/s/244583/</string>
-  <string name="credits__sound_birds" translatable="false">Spring Birds Raw (New Jersey) by hargissssound</string>
-  <string name="credits__sound_birds_url" translatable="false">https://freesound.org/s/345851/</string>
+  <string name="credits__sound_birds_0" translatable="false">Spring Birds 2019 by hargissssound</string>
+  <string name="credits__sound_birds_0_url" translatable="false">https://freesound.org/s/471891/</string>
+  <string name="credits__sound_birds_1" translatable="false">Residential ambiance pack by conleec</string>
+  <string name="credits__sound_birds_1_url" translatable="false">https://freesound.org/s/149935/</string>
   <string name="credits__sound_bonfire" translatable="false">Bonfire by amether</string>
   <string name="credits__sound_bonfire_url" translatable="false">https://freesound.org/s/189237/</string>
   <string name="credits__sound_coffee_shop" translatable="false">School Canteen Atmosphere (Coffee shop) by slag777</string>
