@@ -24,7 +24,7 @@ jobs:
           number: 200
           header: translations-report
           message: |
-            Please help in translating Noice to your local language. See [CONTRIBUTING.md](https://github.com/ashutoshgngwr/noice/blob/master/CONTRIBUTING.md#translations) for detailed instructions on adding translations.
+            Please help in translating Noice to your local language. See [CONTRIBUTING.md](https://github.com/ashutoshgngwr/noice/blob/master/docs/CONTRIBUTING.md#translations) for detailed instructions on adding translations.
             Old issue: #108
 
             ${{ steps.check.outputs.report }}

@@ -9,7 +9,9 @@ bug reports to large features.
 - [Getting started](#getting-started)
 - [Translations](#translations)
 - [Adding sounds](#adding-sounds)
-- [Best Practices](#best-practices)
+- [Contributing code](#contributing-code)
+  - [App Architecture](#app-architecture)
+  - [Best Practices](#best-practices)
 - [Guiding Principles](#guiding-principles)
 - [Releases](#releases)
   - [Play Store](#play-store)
@@ -93,18 +95,38 @@ Feel free to add more sounds to Noice taking the following under consideration.
 - Looping sounds should be at least 30 seconds and at most 2 minutes long. These are not
   hard limits but the goal should be to minimize the ease of recognizing recurring
   patterns in loops
+- If a looping sound doesn't have too many recognisable notes, e.g. cricket sound, consider
+  using dual samples. Dual samples make it hard to recognise repeating patterns. See
+  [this issue](https://github.com/ashutoshgngwr/noice/issues/62) for more details. 
 - All sounds should be encoded to `mp3` format with the following configuration. I use
   [Audacity](https://www.audacityteam.org) for editing audio
   - Sample rate: 44.1 kHz
-  - Quality: Standard, 170-210 kbps
+  - Bit rate mode: Average
+  - Quality: Standard, 192 kbps
   - Variable Speed: Fast
   - Channel Mode: Stereo
 
-## Best Practices
+## Contributing code
+
+Most of the code is documented but not very thoroughly.
+
+### App Architecture
+
+<p align="center">
+  <img align="center" alt="Android app architecture" src="assets/android-app-architecture.svg" /><br>
+  Android app overview
+</p>
+<p align="center">
+  <img alt="Cast receiver app architecture" src="assets/cast-receiver-architecture.svg" /><br>
+  Cast Receiver app overview
+</p>
+
+### Best Practices
 
 - Let Android Studio do the code formatting
+- Add comments wherever you deem them necessary
 - Include tests when adding new features
-- When fixing bugs, start with adding a test that highlights how the current behavior
+- When fixing bugs, start with adding a test that highlights how the current behaviour
   is broken. This is not mandatory since it is not always possible/approachable
 
 ## Guiding Principles

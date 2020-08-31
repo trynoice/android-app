@@ -39,7 +39,7 @@ Noice is an app that allows you to create your own set of background sounds by m
 
 ## Contributing
 
-We welcome contributions of all kinds and sizes. It includes everything from simple bug reports to huge features. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+We welcome contributions of all kinds and sizes. It includes everything from simple bug reports to huge features. See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for details.
 
 ## Privacy Policy
 
