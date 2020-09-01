@@ -12,13 +12,6 @@
     android:paddingTop="20dp"
     android:paddingBottom="20dp">
 
-    <com.github.ashutoshgngwr.noice.widget.CountdownTextView
-      android:id="@+id/countdown_view"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_margin="10dp"
-      android:gravity="center" />
-
     <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -36,12 +29,38 @@
       app:drawableEndCompat="@drawable/ic_action_expand"
       app:drawableTint="?attr/colorAccent" />
 
-    <com.github.ashutoshgngwr.noice.widget.DurationPicker
-      android:id="@+id/duration_picker"
+    <TimePicker
+      android:id="@+id/time_picker"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="15dp"
+      android:timePickerMode="spinner" />
+
+    <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_margin="10dp"
-      android:enabled="false" />
+      android:gravity="center"
+      android:orientation="horizontal">
+
+      <Button
+        android:id="@+id/button_reset_time"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/reset"
+        app:drawableTint="?attr/colorAccent" />
+
+      <Button
+        android:id="@+id/button_set_time"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/schedule"
+        app:drawableTint="?attr/colorAccent" />
+
+    </LinearLayout>
 
   </LinearLayout>
 

@@ -6,6 +6,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.PickerActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
@@ -16,11 +17,11 @@ import com.github.ashutoshgngwr.noice.sound.Preset
 import io.mockk.*
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 class WakeUpTimerFragmentTest {
@@ -41,14 +42,14 @@ class WakeUpTimerFragmentTest {
 
   @Test
   fun testInitialLayout_whenTimerIsNotPreScheduled() {
-    onView(withId(R.id.countdown_view))
-      .check(matches(withText("00h 00m 00s")))
-
     onView(withId(R.id.button_select_preset))
       .check(matches(isEnabled()))
       .check(matches(withText(R.string.select_preset)))
 
-    onView(withId(R.id.duration_picker))
+    onView(withId(R.id.button_set_time))
+      .check(matches(not(isEnabled())))
+
+    onView(withId(R.id.button_reset_time))
       .check(matches(not(isEnabled())))
   }
 
@@ -61,14 +62,14 @@ class WakeUpTimerFragmentTest {
     }
 
     fragmentScenario.recreate()
-    onView(withId(R.id.countdown_view))
-      .check(matches(not(withText("00h 00m 00s"))))
-
     onView(withId(R.id.button_select_preset))
       .check(matches(isEnabled()))
       .check(matches(withText("test")))
 
-    onView(withId(R.id.duration_picker))
+    onView(withId(R.id.button_set_time))
+      .check(matches(isEnabled()))
+
+    onView(withId(R.id.button_reset_time))
       .check(matches(isEnabled()))
   }
 
@@ -81,14 +82,14 @@ class WakeUpTimerFragmentTest {
     }
 
     fragmentScenario.recreate()
-    onView(withId(R.id.countdown_view))
-      .check(matches(withText("00h 00m 00s")))
-
     onView(withId(R.id.button_select_preset))
       .check(matches(isEnabled()))
       .check(matches(withText(R.string.select_preset)))
 
-    onView(withId(R.id.duration_picker))
+    onView(withId(R.id.button_set_time))
+      .check(matches(not(isEnabled())))
+
+    onView(withId(R.id.button_reset_time))
       .check(matches(not(isEnabled())))
   }
 
@@ -114,18 +115,22 @@ class WakeUpTimerFragmentTest {
       .check(matches(withText("test-1")))
 
     verify(exactly = 0) { WakeUpTimerManager.set(any(), any()) }
-    onView(withId(R.id.duration_picker))
-      .check(matches(isEnabled()))
-      .perform(EspressoX.addDurationToPicker(10L))
 
+    onView(withId(R.id.time_picker))
+      .perform(PickerActions.setTime(1, 2))
+
+    onView(withId(R.id.button_set_time))
+      .check(matches(isEnabled()))
+      .perform(scrollTo(), click())
+
+    val calendar = Calendar.getInstance()
     val timerSlot = slot<WakeUpTimerManager.Timer>()
     verify(exactly = 1) { WakeUpTimerManager.set(any(), capture(timerSlot)) }
+    calendar.timeInMillis = timerSlot.captured.atMillis
     assertEquals("test-1", timerSlot.captured.presetName)
-    val timeRange = System.currentTimeMillis() until System.currentTimeMillis() + 10000L
-    assertTrue(timerSlot.captured.atMillis in timeRange)
-
-    onView(EspressoX.withDurationPickerResetButton(withId(R.id.duration_picker)))
-      .check(matches(isEnabled()))
+    assertEquals(calendar.get(Calendar.HOUR_OF_DAY), 1)
+    assertEquals(calendar.get(Calendar.MINUTE), 2)
+    onView(withId(R.id.button_reset_time)).check(matches(isEnabled()))
   }
 
   @Test
@@ -138,7 +143,7 @@ class WakeUpTimerFragmentTest {
 
     fragmentScenario.recreate()
     clearMocks(WakeUpTimerManager)
-    onView(EspressoX.withDurationPickerResetButton(withId(R.id.duration_picker)))
+    onView(withId(R.id.button_reset_time))
       .check(matches(isEnabled()))
       .perform(scrollTo(), click())
 
