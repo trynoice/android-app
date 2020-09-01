@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
@@ -17,6 +16,7 @@ import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_sound_list.view.*
 import kotlinx.android.synthetic.main.layout_list_item__sound.view.*
@@ -166,18 +166,17 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
       val sound = Sound.get(soundKey)
       val isPlaying = players.containsKey(soundKey)
       holder.itemView.title.text = context.getString(sound.titleResId)
-      holder.itemView.seekbar_volume.isEnabled = isPlaying
-      holder.itemView.seekbar_time_period.isEnabled = isPlaying
+      holder.itemView.slider_volume.isEnabled = isPlaying
+      holder.itemView.slider_time_period.isEnabled = isPlaying
       holder.itemView.button_play.isChecked = isPlaying
       if (isPlaying) {
         requireNotNull(players[soundKey]).also {
-          holder.itemView.seekbar_volume.progress = it.volume
-          holder.itemView.seekbar_time_period.progress = it.timePeriod - Player.MIN_TIME_PERIOD
+          holder.itemView.slider_volume.value = it.volume.toFloat()
+          holder.itemView.slider_time_period.value = it.timePeriod.toFloat()
         }
       } else {
-        holder.itemView.seekbar_volume.progress = Player.DEFAULT_VOLUME
-        holder.itemView.seekbar_time_period.progress =
-          Player.DEFAULT_TIME_PERIOD - Player.MIN_TIME_PERIOD
+        holder.itemView.slider_volume.value = Player.DEFAULT_VOLUME.toFloat()
+        holder.itemView.slider_time_period.value = Player.DEFAULT_TIME_PERIOD.toFloat()
       }
 
       holder.itemView.layout_time_period.visibility = if (sound.isLooping) {
@@ -191,29 +190,23 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
   inner class ViewHolder(view: View, @LayoutRes layoutID: Int) : RecyclerView.ViewHolder(view) {
 
     // set listeners in holders to avoid object recreation on view recycle
-    private val seekBarChangeListener = object : SeekBar.OnSeekBarChangeListener {
+    private val sliderChangeListener = object : Slider.OnChangeListener {
 
-      override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+      override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
         if (!fromUser) {
           return
         }
 
         val player = players[dataSet[adapterPosition].data] ?: return
-        when (seekBar.id) {
-          R.id.seekbar_volume -> {
-            player.setVolume(progress)
+        when (slider.id) {
+          R.id.slider_volume -> {
+            player.setVolume(value.toInt())
           }
-          R.id.seekbar_time_period -> {
-            player.timePeriod = Player.MIN_TIME_PERIOD + progress
+          R.id.slider_time_period -> {
+            player.timePeriod = value.toInt()
           }
         }
       }
-
-      // unsubscribe from events during the seek action or it will cause adapter to refresh during
-      // the action causing adapterPosition to become -1 (POSITION_NONE). On resubscribing,
-      // this will also cause an update (#onPlayerManagerUpdate) since those events are sticky.
-      override fun onStartTrackingTouch(seekBar: SeekBar?) = unregisterFromEventBus()
-      override fun onStopTrackingTouch(seekBar: SeekBar?) = registerOnEventBus()
     }
 
     init {
@@ -223,10 +216,14 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
     }
 
     private fun initSoundItem(view: View) {
-      view.seekbar_volume.max = Player.MAX_VOLUME
-      view.seekbar_volume.setOnSeekBarChangeListener(seekBarChangeListener)
-      view.seekbar_time_period.max = Player.MAX_TIME_PERIOD - Player.MIN_TIME_PERIOD
-      view.seekbar_time_period.setOnSeekBarChangeListener(seekBarChangeListener)
+      view.slider_volume.valueFrom = 0.0f
+      view.slider_volume.valueTo = Player.MAX_VOLUME.toFloat()
+      view.slider_volume.addOnChangeListener(sliderChangeListener)
+      view.slider_volume.setLabelFormatter { "${(it * 100).toInt() / Player.MAX_VOLUME}%" }
+      view.slider_time_period.valueFrom = Player.MIN_TIME_PERIOD.toFloat()
+      view.slider_time_period.valueTo = Player.MAX_TIME_PERIOD.toFloat()
+      view.slider_time_period.addOnChangeListener(sliderChangeListener)
+      view.slider_time_period.setLabelFormatter { "${it.toInt() / 60}m ${it.toInt() % 60}s" }
       view.button_play.setOnClickListener {
         val listItem = dataSet.getOrNull(adapterPosition) ?: return@setOnClickListener
         if (players.containsKey(listItem.data)) {

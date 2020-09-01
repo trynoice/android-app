@@ -94,6 +94,17 @@ class WakeUpTimerFragmentTest {
   }
 
   @Test
+  fun testSelectPreset_withoutSavedPresets() {
+    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf()
+    onView(withId(R.id.button_select_preset))
+      .check(matches(withText(R.string.select_preset)))
+      .perform(click())
+
+    EspressoX.waitForView(withText(R.string.preset_info__description), 100, 5)
+      .check(matches(isDisplayed()))
+  }
+
+  @Test
   fun testSetTimer() {
     every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(
       mockk(relaxed = true) { every { name } returns "test-1" },

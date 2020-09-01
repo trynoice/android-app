@@ -41,9 +41,14 @@ class WakeUpTimerFragment : Fragment(R.layout.fragment_wake_up_timer) {
     DialogFragment().show(childFragmentManager) {
       val presets = Preset.readAllFromUserPreferences(requireContext()).map { it.name }
       title(R.string.select_preset)
-      singleChoiceItems(presets.toTypedArray(), presets.indexOf(selectedPresetName)) { choice ->
-        selectedPresetName = presets[choice]
-        notifyUpdate()
+      if (presets.isNotEmpty()) {
+        singleChoiceItems(presets.toTypedArray(), presets.indexOf(selectedPresetName)) { choice ->
+          selectedPresetName = presets[choice]
+          notifyUpdate()
+        }
+      } else {
+        message(R.string.preset_info__description)
+        positiveButton(android.R.string.ok)
       }
     }
   }

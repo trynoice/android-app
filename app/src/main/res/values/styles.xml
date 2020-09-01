@@ -93,4 +93,10 @@
     <item name="mediaRouteControlPanelThemeOverlay">@style/ThemeOverlay.MediaRouter.Light</item>
   </style>
 
+  <style name="Widget.App.SoundLibrary.Slider" parent="Widget.MaterialComponents.Slider">
+    <item name="haloRadius">12.5dp</item>
+    <item name="thumbRadius">7.5dp</item>
+    <item name="labelBehavior">floating</item>
+  </style>
+
 </resources>

@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      */
     const val EXTRA_CURRENT_NAVIGATED_FRAGMENT = "current_fragment"
 
-    private const val TAG = "MainActivity"
     private const val PREF_APP_THEME = "app_theme"
     private const val APP_THEME_LIGHT = 0
     private const val APP_THEME_DARK = 1

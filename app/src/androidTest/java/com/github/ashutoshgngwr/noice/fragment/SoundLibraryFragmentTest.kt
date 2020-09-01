@@ -55,7 +55,7 @@ class SoundLibraryFragmentTest {
     onView(withId(R.id.list_sound)).perform(
       RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        EspressoX.clickOn(R.id.button_play)
+        EspressoX.clickInItem(R.id.button_play)
       )
     )
 
@@ -73,7 +73,7 @@ class SoundLibraryFragmentTest {
     onView(withId(R.id.list_sound)).perform(
       RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        EspressoX.clickOn(R.id.button_play)
+        EspressoX.clickInItem(R.id.button_play)
       )
     )
 
@@ -81,7 +81,7 @@ class SoundLibraryFragmentTest {
   }
 
   @Test
-  fun testRecyclerViewItem_volumeSeekBar() {
+  fun testRecyclerViewItem_volumeSlider() {
     val mockPlayer = mockk<Player>(relaxed = true) {
       every { volume } returns Player.DEFAULT_VOLUME
     }
@@ -96,7 +96,7 @@ class SoundLibraryFragmentTest {
       onView(withId(R.id.list_sound)).perform(
         RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
           hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-          EspressoX.seekProgress(R.id.seekbar_volume, expectedVolume)
+          EspressoX.slideInItem(R.id.slider_volume, expectedVolume.toFloat())
         )
       )
 
@@ -105,7 +105,7 @@ class SoundLibraryFragmentTest {
   }
 
   @Test
-  fun testRecyclerViewItem_timePeriodSeekBar() {
+  fun testRecyclerViewItem_timePeriodSlider() {
     val mockPlayer = mockk<Player>(relaxed = true) {
       every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
     }
@@ -118,7 +118,8 @@ class SoundLibraryFragmentTest {
     val expectedTimePeriods = arrayOf(
       Player.MIN_TIME_PERIOD,
       Player.MAX_TIME_PERIOD,
-      Random.nextInt(Player.MIN_TIME_PERIOD, Player.MAX_TIME_PERIOD)
+      // following because step size of the slider is 10s
+      Random.nextInt(Player.MIN_TIME_PERIOD / 10, Player.MAX_TIME_PERIOD / 10) * 10
     )
 
     for (expectedTimePeriod in expectedTimePeriods) {
@@ -129,9 +130,7 @@ class SoundLibraryFragmentTest {
           ),
           RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
             hasDescendant(allOf(withId(R.id.title), withText(R.string.rolling_thunder))),
-            EspressoX.seekProgress(
-              R.id.seekbar_time_period, expectedTimePeriod - Player.MIN_TIME_PERIOD
-            )
+            EspressoX.slideInItem(R.id.slider_time_period, expectedTimePeriod.toFloat())
           )
         )
 
