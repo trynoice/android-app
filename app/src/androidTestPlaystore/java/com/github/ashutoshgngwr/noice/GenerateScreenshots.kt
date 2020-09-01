@@ -7,10 +7,12 @@ import android.view.MenuItem
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.contrib.DrawerMatchers
 import androidx.test.espresso.contrib.NavigationViewActions
+import androidx.test.espresso.contrib.PickerActions
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers
@@ -257,8 +259,11 @@ class GenerateScreenshots {
     EspressoX.waitForView(withText("Airplane"), 100, 5)
       .perform(click())
 
-    onView(withId(R.id.duration_picker))
-      .perform(EspressoX.addDurationToPicker(1800))
+    onView(withId(R.id.time_picker))
+      .perform(PickerActions.setTime(12, 30))
+
+    onView(withId(R.id.button_set_time))
+      .perform(scrollTo(), click())
 
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("4")
