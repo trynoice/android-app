@@ -41,7 +41,6 @@
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -52,11 +51,13 @@
           android:src="@drawable/ic_action_volume"
           app:tint="?attr/colorAccent" />
 
-        <SeekBar
-          android:id="@+id/seekbar_volume"
+        <com.google.android.material.slider.Slider
+          android:id="@+id/slider_volume"
+          style="@style/Widget.App.SoundLibrary.Slider"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_weight="1" />
+          android:layout_weight="1"
+          android:stepSize="1.0" />
 
       </LinearLayout>
 
@@ -64,7 +65,6 @@
         android:id="@+id/layout_time_period"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:visibility="gone">
@@ -76,11 +76,13 @@
           android:src="@drawable/ic_action_time_period"
           app:tint="?attr/colorAccent" />
 
-        <SeekBar
-          android:id="@+id/seekbar_time_period"
+        <com.google.android.material.slider.Slider
+          android:id="@+id/slider_time_period"
+          style="@style/Widget.App.SoundLibrary.Slider"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_weight="1" />
+          android:layout_weight="1"
+          android:stepSize="10.0" />
 
       </LinearLayout>
 

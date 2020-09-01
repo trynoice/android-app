@@ -154,43 +154,44 @@ class GenerateScreenshots {
     onView(withId(R.id.list_sound)).perform(
       actionOnItem<SoundLibraryFragment.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.airplane_inflight))),
-        EspressoX.clickOn(R.id.button_play)
+        EspressoX.clickInItem(R.id.button_play)
       )
     )
 
     onView(withId(R.id.list_sound)).perform(
       actionOnItem<SoundLibraryFragment.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.airplane_inflight))),
-        EspressoX.seekProgress(R.id.seekbar_volume, Player.MAX_VOLUME - Player.DEFAULT_VOLUME)
-      )
-    )
-
-    onView(withId(R.id.list_sound)).perform(
-      actionOnItem<SoundLibraryFragment.ViewHolder>(
-        ViewMatchers.hasDescendant(
-          allOf(withId(R.id.title), withText(R.string.airplane_seatbelt_beeps))
-        ),
-        EspressoX.clickOn(R.id.button_play)
-      )
-    )
-
-    onView(withId(R.id.list_sound)).perform(
-      actionOnItem<SoundLibraryFragment.ViewHolder>(
-        ViewMatchers.hasDescendant(
-          allOf(withId(R.id.title), withText(R.string.airplane_seatbelt_beeps))
-        ),
-        EspressoX.seekProgress(R.id.seekbar_volume, Player.MAX_VOLUME)
-      )
-    )
-
-    onView(withId(R.id.list_sound)).perform(
-      actionOnItem<SoundLibraryFragment.ViewHolder>(
-        ViewMatchers.hasDescendant(
-          allOf(withId(R.id.title), withText(R.string.airplane_seatbelt_beeps))
-        ),
-        EspressoX.seekProgress(
-          R.id.seekbar_time_period, Player.MAX_TIME_PERIOD - Player.MIN_TIME_PERIOD - 30
+        EspressoX.slideInItem(
+          R.id.slider_volume,
+          Player.MAX_VOLUME.toFloat() - Player.DEFAULT_VOLUME
         )
+      )
+    )
+
+    onView(withId(R.id.list_sound)).perform(
+      actionOnItem<SoundLibraryFragment.ViewHolder>(
+        ViewMatchers.hasDescendant(
+          allOf(withId(R.id.title), withText(R.string.airplane_seatbelt_beeps))
+        ),
+        EspressoX.clickInItem(R.id.button_play)
+      )
+    )
+
+    onView(withId(R.id.list_sound)).perform(
+      actionOnItem<SoundLibraryFragment.ViewHolder>(
+        ViewMatchers.hasDescendant(
+          allOf(withId(R.id.title), withText(R.string.airplane_seatbelt_beeps))
+        ),
+        EspressoX.slideInItem(R.id.slider_volume, Player.MAX_VOLUME.toFloat())
+      )
+    )
+
+    onView(withId(R.id.list_sound)).perform(
+      actionOnItem<SoundLibraryFragment.ViewHolder>(
+        ViewMatchers.hasDescendant(
+          allOf(withId(R.id.title), withText(R.string.airplane_seatbelt_beeps))
+        ),
+        EspressoX.slideInItem(R.id.slider_time_period, Player.MAX_TIME_PERIOD.toFloat() - 300)
       )
     )
 
@@ -210,7 +211,9 @@ class GenerateScreenshots {
 
     EspressoX.waitForView(withId(R.id.list_presets), 100, 5)
       .perform(
-        actionOnItemAtPosition<PresetFragment.ViewHolder>(1, EspressoX.clickOn(R.id.button_play))
+        actionOnItemAtPosition<PresetFragment.ViewHolder>(
+          1, EspressoX.clickInItem(R.id.button_play)
+        )
       )
 
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
@@ -222,7 +225,7 @@ class GenerateScreenshots {
     onView(withId(R.id.list_sound)).perform(
       actionOnItem<SoundLibraryFragment.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        EspressoX.clickOn(R.id.button_play)
+        EspressoX.clickInItem(R.id.button_play)
       )
     )
 

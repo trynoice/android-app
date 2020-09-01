@@ -87,7 +87,7 @@ class PresetFragmentTest {
     onView(withId(R.id.list_presets)).perform(
       RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickOn(R.id.button_play)
+        EspressoX.clickInItem(R.id.button_play)
       )
     )
 
@@ -109,7 +109,7 @@ class PresetFragmentTest {
     onView(withId(R.id.list_presets)).perform(
       RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickOn(R.id.button_play)
+        EspressoX.clickInItem(R.id.button_play)
       )
     )
 
@@ -122,7 +122,7 @@ class PresetFragmentTest {
     onView(withId(R.id.list_presets)).perform(
       RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickOn(R.id.button_menu)
+        EspressoX.clickInItem(R.id.button_menu)
       )
     )
 
@@ -150,7 +150,7 @@ class PresetFragmentTest {
     onView(withId(R.id.list_presets)).perform(
       RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickOn(R.id.button_menu)
+        EspressoX.clickInItem(R.id.button_menu)
       )
     )
 
@@ -174,7 +174,7 @@ class PresetFragmentTest {
     onView(withId(R.id.list_presets)).perform(
       RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickOn(R.id.button_menu)
+        EspressoX.clickInItem(R.id.button_menu)
       )
     )
 
