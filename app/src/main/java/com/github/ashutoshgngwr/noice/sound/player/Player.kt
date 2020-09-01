@@ -20,9 +20,9 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
 
     const val DEFAULT_VOLUME = 4
     const val MAX_VOLUME = 20
-    const val DEFAULT_TIME_PERIOD = 60
+    const val DEFAULT_TIME_PERIOD = 300
     const val MIN_TIME_PERIOD = 30
-    const val MAX_TIME_PERIOD = 300
+    const val MAX_TIME_PERIOD = 1200
   }
 
   var volume = DEFAULT_VOLUME
