@@ -19,8 +19,13 @@
   <string name="bonfire">Bonfire</string>
   <string name="brownian_noise">Brownian Noise</string>
   <string name="coffee_shop">Coffee shop</string>
+  <string name="creaking_ship">Creaking ship</string>
+  <string name="crickets">Crickets</string>
   <string name="distant_thunder">Distant thunder</string>
+  <string name="electric_car">Electric car</string>
   <string name="heavy_rain">Heavy rain</string>
+  <string name="howling_wolf">Howling wolf</string>
+  <string name="human_heartbeat">Human heartbeat</string>
   <string name="light_rain">Light rain</string>
   <string name="moderate_rain">Moderate rain</string>
   <string name="morning_in_a_village">Morning in a village</string>
@@ -28,11 +33,17 @@
   <string name="night">Night</string>
   <string name="office">Office</string>
   <string name="pink_noise">Pink Noise</string>
+  <string name="public_library">Public Library</string>
+  <string name="purring_cat">Purring cat</string>
+  <string name="quiet_conversation">Quiet conversation</string>
   <string name="rolling_thunder">Rolling thunder</string>
+  <string name="screeching_seagulls">Screeching seagulls</string>
   <string name="seaside">Seaside</string>
   <string name="soft_wind">Soft wind</string>
   <string name="thunder_crack">Thunder crack</string>
   <string name="train_horn">Train horn</string>
+  <string name="walking_through_the_snow">Walking through the snow</string>
+  <string name="water_hose">Water hose</string>
   <string name="water_stream">Water stream</string>
   <string name="white_noise">White noise</string>
   <string name="wind_in_palm_trees">Wind in Palm trees</string>
@@ -108,14 +119,13 @@
   <string name="support_development__donate_thank_you_description">
     We wholeheartedly thank you for your generous contribution to the Noice project.
   </string>
-  <string name="sound_group__airplane">Airplane</string>
-  <string name="sound_group__jungle">Jungle</string>
+  <string name="sound_group__life">Life</string>
   <string name="sound_group__monsoon">Monsoon</string>
   <string name="sound_group__public_gatherings">Public Gatherings</string>
   <string name="sound_group__raw_noise">Raw Noise</string>
   <string name="sound_group__times_of_day">Times of Day</string>
-  <string name="sound_group__train">Train</string>
-  <string name="sound_group__waterfront">Waterfront</string>
+  <string name="sound_group__vehicles">Vehicles</string>
+  <string name="sound_group__water">Water</string>
   <string name="sound_group__wind">Wind</string>
   <string-array name="app_themes">
     <item>Light</item>

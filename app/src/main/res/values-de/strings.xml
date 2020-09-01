@@ -33,6 +33,7 @@
   <string name="soft_wind">Leichter Wind</string>
   <string name="thunder_crack">Donnerschlag</string>
   <string name="train_horn">Zugsignal</string>
+  <string name="water_hose">Wasserschlauch</string>
   <string name="water_stream">Wasserlauf</string>
   <string name="white_noise">Weißes Rauschen</string>
   <string name="wind_in_palm_trees">Wind in Palmen</string>
@@ -72,14 +73,10 @@
     Noice schaltet sich automatisch nach Ablauf des Timers aus. Nutze die Knöpfe weiter unten, um
     dem Timer Zeit hinzuzufügen oder abzuziehen.
   </string>
-  <string name="sound_group__airplane">Flugzeug</string>
-  <string name="sound_group__jungle">Dschungel</string>
   <string name="sound_group__monsoon">Monsun</string>
   <string name="sound_group__public_gatherings">Öffentliches Zusammenkommen</string>
   <string name="sound_group__raw_noise">Grobes Rausche</string>
   <string name="sound_group__times_of_day">Tageszeiten</string>
-  <string name="sound_group__train">Zug</string>
-  <string name="sound_group__waterfront">Hafenviertel</string>
   <string name="sound_group__wind">Wind</string>
   <string name="support_development">Unterstütze die Entwicklung</string>
   <string name="support_development__why">Warum solltest du unterstützen?</string>

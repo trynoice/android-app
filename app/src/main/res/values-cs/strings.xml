@@ -107,14 +107,10 @@
   <string name="support_development__donate_thank_you_description">
     Zcela upřímně vám moc srdečně děkujeme za vaši finanční podporu projektu Noice.
   </string>
-  <string name="sound_group__airplane">Letadlo</string>
-  <string name="sound_group__jungle">Džungle</string>
   <string name="sound_group__monsoon">Monzun</string>
   <string name="sound_group__public_gatherings">Veřejná shromáždění</string>
   <string name="sound_group__raw_noise">Syntentický šum</string>
   <string name="sound_group__times_of_day">Denní doba</string>
-  <string name="sound_group__train">Vlak</string>
-  <string name="sound_group__waterfront">Nábřeží</string>
   <string name="sound_group__wind">Vítr</string>
   <string-array name="app_themes">
     <item>Světlý</item>
