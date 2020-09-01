@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   style="?attr/materialCardViewStyle"
   android:layout_width="match_parent"
   android:layout_height="wrap_content">
@@ -49,7 +50,7 @@
           android:layout_height="wrap_content"
           android:contentDescription="@string/volume"
           android:src="@drawable/ic_action_volume"
-          android:tint="?attr/colorAccent" />
+          app:tint="?attr/colorAccent" />
 
         <SeekBar
           android:id="@+id/seekbar_volume"
@@ -73,7 +74,7 @@
           android:layout_height="wrap_content"
           android:contentDescription="@string/repeat_time_period"
           android:src="@drawable/ic_action_time_period"
-          android:tint="?attr/colorAccent" />
+          app:tint="?attr/colorAccent" />
 
         <SeekBar
           android:id="@+id/seekbar_time_period"
