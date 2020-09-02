@@ -17,7 +17,7 @@
   <string name="airplane_seatbelt_beeps">Airplane seat-belt beeps</string>
   <string name="birds">Birds</string>
   <string name="bonfire">Bonfire</string>
-  <string name="brownian_noise">Brownian Noise</string>
+  <string name="brownian_noise">Brownian noise</string>
   <string name="coffee_shop">Coffee shop</string>
   <string name="creaking_ship">Creaking ship</string>
   <string name="crickets">Crickets</string>
@@ -32,8 +32,8 @@
   <string name="moving_train">Moving train</string>
   <string name="night">Night</string>
   <string name="office">Office</string>
-  <string name="pink_noise">Pink Noise</string>
-  <string name="public_library">Public Library</string>
+  <string name="pink_noise">Pink noise</string>
+  <string name="public_library">Public library</string>
   <string name="purring_cat">Purring cat</string>
   <string name="quiet_conversation">Quiet conversation</string>
   <string name="rolling_thunder">Rolling thunder</string>
@@ -46,7 +46,7 @@
   <string name="water_hose">Water hose</string>
   <string name="water_stream">Water stream</string>
   <string name="white_noise">White noise</string>
-  <string name="wind_in_palm_trees">Wind in Palm trees</string>
+  <string name="wind_in_palm_trees">Wind in palm trees</string>
   <string name="wind_in_chimes_of_shells">Wind in chimes of shells</string>
   <string name="app_description">Relax and boost productivity with minimal background noise</string>
   <string name="connect_with_author">Connect with Author</string>
