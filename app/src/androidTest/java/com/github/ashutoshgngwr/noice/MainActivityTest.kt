@@ -224,26 +224,28 @@ class MainActivityTest {
   @Test
   fun testRateOnPlayStoreMenuItem() {
     Intents.init()
-    onView(withId(R.id.layout_main))
-      .check(matches(isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
+    try {
+      onView(withId(R.id.layout_main))
+        .check(matches(isClosed(Gravity.START)))
+        .perform(DrawerActions.open(Gravity.START))
 
-    onView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.rate_on_play_store))
+      onView(withId(R.id.navigation_drawer))
+        .perform(NavigationViewActions.navigateTo(R.id.rate_on_play_store))
 
-    intended(
-      filterEquals(
-        Intent(
-          Intent.ACTION_VIEW,
-          Uri.parse(
-            ApplicationProvider.getApplicationContext<Context>()
-              .getString(R.string.rate_us_on_play_store_url)
+      intended(
+        filterEquals(
+          Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(
+              ApplicationProvider.getApplicationContext<Context>()
+                .getString(R.string.rate_us_on_play_store_url)
+            )
           )
         )
       )
-    )
-
-    Intents.release()
+    } finally {
+      Intents.release()
+    }
   }
 
   @Test

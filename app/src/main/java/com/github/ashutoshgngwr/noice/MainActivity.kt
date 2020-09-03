@@ -14,7 +14,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
-import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.fragment.*
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
@@ -84,9 +83,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     supportFragmentManager.addOnBackStackChangedListener {
       val index = supportFragmentManager.backStackEntryCount - 1
       val currentFragmentName = supportFragmentManager.getBackStackEntryAt(index).name
-      for (item in NAVIGATED_FRAGMENTS) {
-        if (item.value.simpleName == currentFragmentName) {
-          navigation_drawer.setCheckedItem(item.key)
+      for ((id, fragment) in NAVIGATED_FRAGMENTS) {
+        if (fragment.simpleName == currentFragmentName) {
+          navigation_drawer.setCheckedItem(id)
           break
         }
       }
@@ -98,12 +97,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       }
     }
 
-    // set sound library fragment when activity is created initially
+    // set sound library fragment when activity is created initially (screen-orientation change
+    // will recall onCreate which will cause weird and unexpected fragment changes otherwise).
     if (savedInstanceState == null) {
-      setFragment(R.id.library)
-    }
-
-    if (intent.hasExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT)) {
       setFragment(intent.getIntExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.library))
     }
   }
@@ -243,8 +239,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
    * Returns one of [APP_THEME_LIGHT], [APP_THEME_DARK] or [APP_THEME_SYSTEM_DEFAULT]
    */
   private fun getAppTheme(): Int {
-    return PreferenceManager.getDefaultSharedPreferences(this)
-      .getInt(PREF_APP_THEME, APP_THEME_SYSTEM_DEFAULT)
+    return Utils.withDefaultSharedPreferences(this) {
+      it.getInt(PREF_APP_THEME, APP_THEME_SYSTEM_DEFAULT)
+    }
   }
 
   /**
@@ -252,10 +249,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
    * @param newTheme should be one of [APP_THEME_LIGHT], [APP_THEME_DARK] or [APP_THEME_SYSTEM_DEFAULT]
    */
   private fun setAppTheme(newTheme: Int) {
-    PreferenceManager.getDefaultSharedPreferences(this)
-      .edit()
-      .putInt(PREF_APP_THEME, newTheme)
-      .apply()
+    Utils.withDefaultSharedPreferences(this) {
+      it.edit()
+        .putInt(PREF_APP_THEME, newTheme)
+        .apply()
+    }
 
     recreate()
   }
