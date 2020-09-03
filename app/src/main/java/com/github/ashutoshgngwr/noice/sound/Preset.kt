@@ -37,7 +37,7 @@ class Preset private constructor(
    * 0.3.0. Volume was written as a Float to persistent storage in older versions.
    * Switching to Integer in newer version was causing crash if the user had any saved presets.
    */
-  private inner class VolumeSerializer : JsonSerializer<Int>, JsonDeserializer<Int> {
+  private class VolumeSerializer : JsonSerializer<Int>, JsonDeserializer<Int> {
 
     override fun serialize(src: Int, type: Type, ctx: JsonSerializationContext) =
       JsonPrimitive(src.toFloat() / Player.MAX_VOLUME)
@@ -58,7 +58,7 @@ class Preset private constructor(
    * corrects the offset to ensure that time period is in the range
    * [[Player.MIN_TIME_PERIOD], [Player.MAX_TIME_PERIOD]].
    */
-  private inner class TimePeriodSerializer : JsonSerializer<Int>, JsonDeserializer<Int> {
+  private class TimePeriodSerializer : JsonSerializer<Int>, JsonDeserializer<Int> {
 
     override fun serialize(src: Int, type: Type, ctx: JsonSerializationContext) =
       JsonPrimitive(src - Player.MIN_TIME_PERIOD)
