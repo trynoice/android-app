@@ -48,7 +48,7 @@
   <string name="white_noise">White noise</string>
   <string name="wind_in_palm_trees">Wind in palm trees</string>
   <string name="wind_in_chimes_of_shells">Wind in chimes of shells</string>
-  <string name="app_description">Relax and boost productivity with minimal background noise</string>
+  <string name="app_description">Relax and boost productivity with minimal background noise.</string>
   <string name="connect_with_author">Connect with Author</string>
   <string name="about__email">Email</string>
   <string name="about__github">Github</string>
@@ -128,6 +128,29 @@
   <string name="sound_group__vehicles">Vehicles</string>
   <string name="sound_group__water">Water</string>
   <string name="sound_group__wind">Wind</string>
+  <string name="appintro__getting_started_title">Welcome</string>
+  <string name="appintro__getting_started_desc_0">Swipe left to get to know all the features!</string>
+  <string name="appintro__getting_started_desc_1">Let\'s get started!</string>
+  <string name="appintro__sound_library_title">Create your perfect surroundings</string>
+  <string name="appintro__sound_library_desc">
+    Use the volume slider to adjust sound volumes. At each repetition of non-looping sounds, a delay
+    period is selected randomly from the range set by the time slider.
+  </string>
+  <string name="appintro__preset_title">Save your favourite mixes</string>
+  <string name="appintro__preset_desc">
+    After playing a few sounds, you can use the button in the bottom end corner to save your mix.
+    To reuse a stored mix, you can visit the preset list from the app menu.
+  </string>
+  <string name="appintro__timer_title">Trouble falling asleep or waking up?</string>
+  <string name="appintro__timer_desc">
+    A little ambience can help you fall asleep effortlessly. Use the sleep timer to let Noice shut
+    itself down. Similarly, to wake up to a calm environment, use the wake-up timer to set the alarm.
+  </string>
+  <string name="appintro__chromecast_title">Chromecast enabled</string>
+  <string name="appintro__chromecast_desc">
+    Use Noice to cast its ambience to other Chromecast enabled devices such as speakers, TVs, etc.
+  </string>
+  <string name="help">Help</string>
   <string-array name="app_themes">
     <item>Light</item>
     <item>Dark</item>

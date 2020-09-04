@@ -39,6 +39,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private const val APP_THEME_DARK = 1
     private const val APP_THEME_SYSTEM_DEFAULT = 2
 
+    // maps fragments that have a one-to-one mapping with a menu item in the navigation drawer.
+    // this map helps in reducing boilerplate for launching these fragments when appropriate
+    // menu item is clicked in the navigation drawer.
     private val NAVIGATED_FRAGMENTS = mapOf(
       R.id.library to SoundLibraryFragment::class.java,
       R.id.saved_presets to PresetFragment::class.java,
@@ -101,6 +104,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // will recall onCreate which will cause weird and unexpected fragment changes otherwise).
     if (savedInstanceState == null) {
       setFragment(intent.getIntExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.library))
+
+      // show app intro if user hasn't already seen it
+      AppIntroActivity.maybeStart(this)
     }
   }
 
@@ -175,6 +181,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             onItemSelected = { setAppTheme(it) }
           )
         }
+      }
+      R.id.help -> {
+        startActivity(Intent(this, AppIntroActivity::class.java))
       }
       R.id.report_issue -> {
         startActivity(

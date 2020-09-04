@@ -2,7 +2,7 @@
   android:width="200dp"
   android:height="100dp"
   android:alpha="1"
-  android:tint="@color/about_text_color"
+  android:tint="?colorOnSurface"
   android:viewportWidth="127"
   android:viewportHeight="63.500004">
   <path

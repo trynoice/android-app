@@ -38,6 +38,12 @@
     android:checkable="true" />
 
   <item
+    android:id="@+id/help"
+    android:icon="@drawable/ic_nav_help"
+    android:title="@string/help"
+    android:checkable="false" />
+
+  <item
     android:id="@+id/support_development"
     android:icon="@drawable/ic_nav_support_development"
     android:title="@string/support_development"
