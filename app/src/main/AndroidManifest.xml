@@ -26,6 +26,10 @@
 
     </activity>
 
+    <activity
+      android:name=".AppIntroActivity"
+      android:theme="@style/Theme.MaterialComponents.NoActionBar" />
+
     <service android:name=".MediaPlayerService" />
 
     <receiver android:name=".WakeUpTimerManager$BootReceiver">

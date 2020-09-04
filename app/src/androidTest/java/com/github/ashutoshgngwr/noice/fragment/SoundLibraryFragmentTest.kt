@@ -23,6 +23,7 @@ import io.mockk.impl.annotations.RelaxedMockK
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -90,6 +91,10 @@ class SoundLibraryFragmentTest {
       every { players } returns hashMapOf("birds" to mockPlayer)
     }
 
+    every {
+      eventBus.getStickyEvent(MediaPlayerService.OnPlayerManagerUpdateEvent::class.java)
+    } returns mockUpdateEvent
+
     fragmentScenario.onFragment { it.onPlayerManagerUpdate(mockUpdateEvent) }
     val expectedVolumes = arrayOf(0, Player.MAX_VOLUME, Random.nextInt(1, Player.MAX_VOLUME))
     for (expectedVolume in expectedVolumes) {
@@ -113,6 +118,10 @@ class SoundLibraryFragmentTest {
     val mockUpdateEvent = mockk<MediaPlayerService.OnPlayerManagerUpdateEvent>(relaxed = true) {
       every { players } returns hashMapOf("rolling_thunder" to mockPlayer)
     }
+
+    every {
+      eventBus.getStickyEvent(MediaPlayerService.OnPlayerManagerUpdateEvent::class.java)
+    } returns mockUpdateEvent
 
     fragmentScenario.onFragment { it.onPlayerManagerUpdate(mockUpdateEvent) }
     val expectedTimePeriods = arrayOf(
@@ -139,34 +148,26 @@ class SoundLibraryFragmentTest {
   }
 
   @Test
-  fun testSavePresetButton_onTogglingPlayback() {
-    onView(withId(R.id.fab_save_preset)).check(matches(withEffectiveVisibility(Visibility.GONE)))
-    fragmentScenario.onFragment {
-      it.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlayerManager.State.PLAYING
-      })
-    }
-
-    onView(withId(R.id.fab_save_preset)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-    fragmentScenario.onFragment {
-      it.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlayerManager.State.STOPPED
-      })
-    }
-
-    onView(withId(R.id.fab_save_preset)).check(matches(withEffectiveVisibility(Visibility.GONE)))
-  }
-
-  @Test
   fun testSavePresetButton_onUnknownPresetPlayback() {
-    fragmentScenario.onFragment {
-      it.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlayerManager.State.PLAYING
-        every { players } returns mockk(relaxed = true)
-      })
+    val mockUpdateEvent = mockk<MediaPlayerService.OnPlayerManagerUpdateEvent>(relaxed = true) {
+      every { players } returns mockk(relaxed = true)
     }
 
-    onView(withId(R.id.fab_save_preset)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+    for (state in PlayerManager.State.values()) {
+      every { mockUpdateEvent.state } returns state
+      fragmentScenario.onFragment {
+        it.onPlayerManagerUpdate(mockUpdateEvent)
+      }
+
+      // a non-playing state should keep the FAB hidden
+      var expectedVisibility = Visibility.GONE
+      if (state == PlayerManager.State.PLAYING) {
+        expectedVisibility = Visibility.VISIBLE
+      }
+
+      onView(withId(R.id.fab_save_preset))
+        .check(matches(withEffectiveVisibility(expectedVisibility)))
+    }
   }
 
   @Test
@@ -187,20 +188,56 @@ class SoundLibraryFragmentTest {
       })
     }
 
-    onView(withId(R.id.fab_save_preset)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+    onView(withId(R.id.fab_save_preset))
+      .check(matches(withEffectiveVisibility(Visibility.GONE)))
+
+    // when volume/time period slider is adjusted, save preset button should be visible.
+    // since the Sticky Event is mocked, the item being slided will perform a mock call. So we'll
+    // need to return a different instance of events (with expected value) when other components
+    // request it after sliding action happens.
+    every {
+      eventBus.getStickyEvent(MediaPlayerService.OnPlayerManagerUpdateEvent::class.java)
+    } returns mockk(relaxed = true) {
+      every { state } returns PlayerManager.State.PLAYING
+      every { players } returns hashMapOf(
+        "birds" to mockk(relaxed = true) {
+          every { volume } returns 6
+        },
+        "rolling_thunder" to mockk(relaxed = true)
+      )
+    }
+
+    onView(withId(R.id.list_sound)).perform(
+      RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+        hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
+        EspressoX.slideInItem(R.id.slider_volume, 6f)
+      )
+    )
+
+    verify(exactly = 1) { requireNotNull(mockPlayers["birds"]).setVolume(6) }
+    onView(withId(R.id.fab_save_preset))
+      .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
   }
 
   @Test
   fun testSavePresetButton_onClick() {
     val mockPlayers: Map<String, Player> = hashMapOf(
-      "birds" to mockk(relaxed = true),
-      "rolling_thunder" to mockk(relaxed = true)
+      "birds" to mockk(relaxed = true){
+        every { soundKey } returns "birds"
+        every { volume } returns 1
+        every { timePeriod } returns Player.MIN_TIME_PERIOD + 2
+      },
+      "rolling_thunder" to mockk(relaxed = true) {
+        every { soundKey } returns "rolling_thunder"
+        every { volume } returns 3
+        every { timePeriod } returns Player.MIN_TIME_PERIOD + 4
+      }
     )
 
     val preset = Preset.from("test", mockPlayers.values)
     val mockValidator = mockk<(String) -> Boolean>()
-
     mockkObject(Preset.Companion)
+    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf()
     every { Preset.from("", mockPlayers.values) } returns preset
     every { Preset.duplicateNameValidator(any()) } returns mockValidator
     every { mockValidator.invoke("test-exists") } returns true
@@ -240,6 +277,12 @@ class SoundLibraryFragmentTest {
     onView(withId(com.google.android.material.R.id.snackbar_text))
       .check(matches(withText(R.string.preset_saved)))
 
-    verify { Preset.appendToUserPreferences(any(), preset) }
+    val presetSlot = slot<Preset>()
+    verify { Preset.appendToUserPreferences(any(), capture(presetSlot)) }
+
+    for (playerState in presetSlot.captured.playerStates) {
+      assertEquals(mockPlayers[playerState.soundKey]?.volume, playerState.volume)
+      assertEquals(mockPlayers[playerState.soundKey]?.timePeriod, playerState.timePeriod)
+    }
   }
 }

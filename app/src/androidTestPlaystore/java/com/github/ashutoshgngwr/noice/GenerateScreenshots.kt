@@ -53,6 +53,11 @@ class GenerateScreenshots {
     @JvmStatic
     @BeforeClass
     fun setupAll() {
+      // prevent app intro from showing up
+      Utils.withDefaultSharedPreferences(ApplicationProvider.getApplicationContext()) {
+        it.edit().putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true).commit()
+      }
+
       // using mocks to save a few presets for screenshots
       Preset.writeAllToUserPreferences(
         ApplicationProvider.getApplicationContext(), arrayListOf(

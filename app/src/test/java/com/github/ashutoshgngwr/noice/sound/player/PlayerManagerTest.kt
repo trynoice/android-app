@@ -20,7 +20,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import kotlin.random.Random
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowMediaSession::class, ShadowMediaSessionCompat::class])
@@ -199,20 +198,6 @@ class PlayerManagerTest {
     verify(exactly = 1) { players.getValue("test").play() }
     assertEquals(PlayerManager.State.PLAYING, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_PLAYING, ShadowMediaSessionCompat.getLastPlaybackState())
-  }
-
-  @Test
-  fun testSetVolume() {
-    val volume = Random.nextInt(0, 1 + Player.MAX_VOLUME)
-    playerManager.setVolume("test", volume)
-    verify(exactly = 1) { players.getValue("test").setVolume(volume) }
-  }
-
-  @Test
-  fun testSetTimePeriod() {
-    val timePeriod = Random.nextInt(1, 1 + Player.MAX_TIME_PERIOD)
-    playerManager.setTimePeriod("test", timePeriod)
-    verify(exactly = 1) { players.getValue("test").timePeriod = timePeriod }
   }
 
   @Test
