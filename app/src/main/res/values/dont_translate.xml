@@ -2,21 +2,23 @@
 <resources>
   <string name="app_name" translatable="false">Noice</string>
   <string name="app_copyright" translatable="false">2019 Ashutosh Gangwar</string>
-  <string name="app_license_url" translatable="false">
-    https://github.com/ashutoshgngwr/noice/blob/master/LICENSE
-  </string>
+  <string name="app_license_url" translatable="false">https://github.com/ashutoshgngwr/noice/blob/master/LICENSE</string>
   <string name="app_website" translatable="false">https://ashutoshgngwr.github.io/noice</string>
   <string name="app_github" translatable="false">ashutoshgngwr/noice</string>
   <string name="author_email" translatable="false">ashutoshgngwr@gmail.com</string>
   <string name="author_social_handle" translatable="false">ashutoshgngwr</string>
   <string name="credits__app_icon" translatable="false">white noise icon by Juraj Sedlák</string>
-  <string name="credits__app_icon_url" translatable="false">
-    https://thenounproject.com/term/white-noise/1287855/
-  </string>
+  <string name="credits__app_icon_url" translatable="false">https://thenounproject.com/term/white-noise/1287855/</string>
   <string name="credits__support_development_icon" translatable="false">Heart icon by Aybige</string>
-  <string name="credits__support_development_icon_url" translatable="false">
-    https://thenounproject.com/term/heart/1556514
-  </string>
+  <string name="credits__support_development_icon_url" translatable="false">https://thenounproject.com/term/heart/1556514</string>
+  <string name="credits__appintro_sound_library_icon" translatable="false">Ecosystem icon by Made x Made</string>
+  <string name="credits__appintro_sound_library_icon_url" translatable="false">https://thenounproject.com/term/ecosystem/2318259</string>
+  <string name="credits__appintro_preset_icon" translatable="false">Equalizer by Souvik Bhattacharjee</string>
+  <string name="credits__appintro_preset_icon_url" translatable="false">https://thenounproject.com/term/equalizer/1596234</string>
+  <string name="credits__appintro_sleep_timer_icon" translatable="false">Sleeping by Koson Rattanaphan, TH</string>
+  <string name="credits__appintro_sleep_timer_icon_url" translatable="false">https://thenounproject.com/term/sleeping/3434765</string>
+  <string name="credits__appintro_chromecast_icon" translatable="false">Chromecast by Oliver Silvérus, SE</string>
+  <string name="credits__appintro_chromecast_icon_url" translatable="false">https://thenounproject.com/term/chromecast/2135765</string>
   <string name="credits__sound_airplane_inflight" translatable="false">In-flight Ambience Boeing 737-838 by digifishmusic</string>
   <string name="credits__sound_airplane_inflight_url" translatable="false">https://freesound.org/s/47254/</string>
   <string name="credits__sound_airplane_seatbelt_beeps" translatable="false">Seat belt beeps by nachosose</string>
@@ -36,9 +38,7 @@
   <string name="credits__sound_crickets" translatable="false">Afternoon Crickets Long from YouTube Audio Library</string>
   <string name="credits__sound_crickets_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=c9c1711e0dfd1421</string>
   <string name="credits__sound_distant_thunder" translatable="false">Distant Thunder from YouTube Audio Library</string>
-  <string name="credits__sound_distant_thunder_url" translatable="false">
-    https://www.youtube.com/audiolibrary_download?vid=c661c0547daf6af7
-  </string>
+  <string name="credits__sound_distant_thunder_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=c661c0547daf6af7</string>
   <string name="credits__sound_electric_car" translatable="false">Electric car BMW i3 - driving by tferrino</string>
   <string name="credits__sound_electric_car_url" translatable="false">https://freesound.org/s/405285/</string>
   <string name="credits__sound_heavy_rain" translatable="false">Heavy rain (thunderstorm) from YouTube Audio Library</string>

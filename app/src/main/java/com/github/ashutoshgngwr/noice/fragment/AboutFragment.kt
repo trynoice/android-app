@@ -26,6 +26,26 @@ class AboutFragment : Fragment() {
         R.string.credits__support_development_icon,
         R.drawable.ic_nav_support_development,
         R.string.credits__support_development_icon_url
+      ),
+      arrayOf(
+        R.string.credits__appintro_sound_library_icon,
+        R.drawable.ic_appintro_sound_library,
+        R.string.credits__appintro_sound_library_icon_url
+      ),
+      arrayOf(
+        R.string.credits__appintro_preset_icon,
+        R.drawable.ic_appintro_preset,
+        R.string.credits__appintro_preset_icon_url
+      ),
+      arrayOf(
+        R.string.credits__appintro_sleep_timer_icon,
+        R.drawable.ic_appintro_sleep_timer,
+        R.string.credits__appintro_sleep_timer_icon_url
+      ),
+      arrayOf(
+        R.string.credits__appintro_chromecast_icon,
+        R.drawable.ic_appintro_chromecast,
+        R.string.credits__appintro_chromecast_icon_url
       )
     )
 
