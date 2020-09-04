@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.annotation.VisibleForTesting
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.github.appintro.AppIntro
@@ -12,7 +13,8 @@ import com.github.appintro.AppIntroPageTransformerType
 class AppIntroActivity : AppIntro() {
 
   companion object {
-    private const val PREF_HAS_USER_SEEN_APP_INTRO = "has_user_seen_app_intro"
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    const val PREF_HAS_USER_SEEN_APP_INTRO = "has_user_seen_app_intro"
 
     /**
      * [maybeStart] displays the [AppIntroActivity] if user hasn't seen it before.
