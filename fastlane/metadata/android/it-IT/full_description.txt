@@ -3,10 +3,10 @@ Per molte persone, un lieve suono di sottofondo è utile per calmarsi e focalizz
 Noice è un'app che ti permette di creare atmosfere personalizzate usando clips da sorgenti di rumore ambientale. Crea il tuo ambiente perfetto combinando differenti suoni per ridurre le distrazioni così che tu possa focalizzarti sul tuo lavoro, o per generare ambientazioni serene e pacifiche che concilino il sonno.
 
 <b>Caratteristiche</b>
-- 24 rumori registrati
-- Google Cast (Chromecast) abilitato <i>(sperimentale, solo versione Play Store)</i>
+- 35 rumori registrati
+- Google Cast (Chromecast) abilitato [solo versione Play Store]
 - Crea mix personalizzati
-- Timer sveglia (Sveglia) <i>(sperimentale)</i>
+- Timer sveglia
 - Salva i tuoi mix preferiti
 - Timer di spegnimento automatico
 - Funziona contemporanamente ad altri riproduttori musicali

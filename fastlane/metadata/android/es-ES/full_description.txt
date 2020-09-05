@@ -3,10 +3,10 @@ Para mucha gente, un poco de ruido de fondo es útil para calmarse y concentrars
 Noice es una aplicación que permite crear un ambiente personalizado utilizando clips de fuentes de sondio ambiental. Crea tu entorno perfecto combinando diferentes sonidos para ahogar las distracciones y así poder concentrarte en tu trabajo, o generar entornos serenos y tranquilos que te animen a quedarte dormido.
 
 <b>Características</b>
-- 24 sonidos registrados
-- Google Cast (Chromecast) activado <i>(experimental, solo en Play Store)</i>
+- 35 sonidos registrados
+- Google Cast (Chromecast) activado [solo en Play Store]
 - Hacer una mezcla personalizada
-- Temporizador de despertador (Despertador) <i>(experimental)</i>
+- Temporizador de despertador
 - Guarda tus mezclas favoritas
 - Temporizador automático para dormir
 - Toca junto con otros reproductores de música

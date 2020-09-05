@@ -158,14 +158,14 @@ class GenerateScreenshots {
     activityRule.runOnUiThread { activityRule.activity.recreate() }
     onView(withId(R.id.list_sound)).perform(
       actionOnItem<SoundLibraryFragment.ViewHolder>(
-        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.airplane_inflight))),
+        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.light_rain))),
         EspressoX.clickInItem(R.id.button_play)
       )
     )
 
     onView(withId(R.id.list_sound)).perform(
       actionOnItem<SoundLibraryFragment.ViewHolder>(
-        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.airplane_inflight))),
+        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.light_rain))),
         EspressoX.slideInItem(
           R.id.slider_volume,
           Player.MAX_VOLUME.toFloat() - Player.DEFAULT_VOLUME
@@ -176,7 +176,7 @@ class GenerateScreenshots {
     onView(withId(R.id.list_sound)).perform(
       actionOnItem<SoundLibraryFragment.ViewHolder>(
         ViewMatchers.hasDescendant(
-          allOf(withId(R.id.title), withText(R.string.airplane_seatbelt_beeps))
+          allOf(withId(R.id.title), withText(R.string.distant_thunder))
         ),
         EspressoX.clickInItem(R.id.button_play)
       )
@@ -185,7 +185,7 @@ class GenerateScreenshots {
     onView(withId(R.id.list_sound)).perform(
       actionOnItem<SoundLibraryFragment.ViewHolder>(
         ViewMatchers.hasDescendant(
-          allOf(withId(R.id.title), withText(R.string.airplane_seatbelt_beeps))
+          allOf(withId(R.id.title), withText(R.string.distant_thunder))
         ),
         EspressoX.slideInItem(R.id.slider_volume, Player.MAX_VOLUME.toFloat())
       )
@@ -194,7 +194,7 @@ class GenerateScreenshots {
     onView(withId(R.id.list_sound)).perform(
       actionOnItem<SoundLibraryFragment.ViewHolder>(
         ViewMatchers.hasDescendant(
-          allOf(withId(R.id.title), withText(R.string.airplane_seatbelt_beeps))
+          allOf(withId(R.id.title), withText(R.string.distant_thunder))
         ),
         EspressoX.slideInItem(R.id.slider_time_period, Player.MAX_TIME_PERIOD.toFloat() - 300)
       )

@@ -3,10 +3,10 @@ Dla wielu ludzi trochę hałasu w tle pomaga uspokoić się i skupić. W niektó
 Noice to aplikacja, która pozwala stworzyć własnej atmosfery za pomocą klipów z środowiskowych źródeł hałasu. Stwórz własną idealną strefę odpoczynku, łącząc różne dźwięki, aby nie rozproszać Swojej uwagi i móc się skupić na pracy albo spokojne zasnąć.
 
 <b>Funkcje</b>
-- 24 nagranych szumów
-- Obsługa Google Cast (Chromecast) <i>(eksperymentalnie, tylko w Play Store)</i>
+- 35 nagranych szumów
+- Obsługa Google Cast (Chromecast) [tylko w Play Store]
 - Automatyczny wyłącznik czasowy
-- Budzik <i>(eksperymentalnie)</i>
+- Budzik
 - Możliwość tworzenia spersonalizowanych miksów
 - Możliwość zapisywania ulubionych miksów
 - Odtwarzanie razem z innymi odtwarzaczami muzyki

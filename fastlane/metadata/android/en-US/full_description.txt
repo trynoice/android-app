@@ -3,10 +3,10 @@ For a lot of people, a little background noise is helpful to calm down and focus
 Noice is an app that allows you to create a customised ambience using clips from environmental noise sources. Create your perfect surroundings by combining different sounds to drown out distractions so you can focus on your work, or generate serene, peaceful environments that encourage you to fall asleep.
 
 <b>Features</b>
-- 24 recorded noises
-- Google Cast (Chromecast) enabled <i>(experimental, Play Store release only)</i>
+- 35 recorded noises
+- Google Cast (Chromecast) enabled [Play Store release only]
 - Auto sleep timer
-- Wake-up timer (Alarm Clock) <i>(experimental)</i>
+- Wake-up timer (Alarm Clock)
 - Make customised mix
 - Save your favorite mixes
 - Play alongside other music players
@@ -15,9 +15,11 @@ Noice is an app that allows you to create a customised ambience using clips from
 - Light and dark app theme variants
 
 <b>Noise library</b>
-- Forest set (birds, bonfire, night, wind, palm trees, etc.)
+- Life set (birds, crickets, wolf, human heartbeat, etc.)
+- Forest set (bonfire, night, wind, palm trees, etc.)
 - Monsoon set (rain, thunders)
-- Teleportation set (coffee shop, office, moving train, in-flight, seaside, riverbank, etc.)
+- Teleportation set (coffee shop, library, office, seaside, riverbank, etc.)
+- Vehicle set (moving train, in-flight, creaking ship, electric car, etc.)
 - Raw noise (white, pink, brownian)
 
 <b>Permissions</b>
