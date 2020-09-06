@@ -20,7 +20,7 @@ Noice is an app that allows you to create your own set of background sounds by m
 
 ## Features
 
-- 24 recorded noises
+- 35 recorded noises
 - Google Cast (Chromecast) enabled
 - Auto sleep timer
 - Wake-up timer (Alarm Clock)
