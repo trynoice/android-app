@@ -8,6 +8,7 @@ on:
 jobs:
   create-release:
     name: Create GitHub Release
+    if: github.repository == 'ashutoshgngwr/noice'
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
@@ -31,6 +32,7 @@ jobs:
           prerelease: false
   generate-changelog:
     name: Generate Changelog
+    if: github.repository == 'ashutoshgngwr/noice'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
