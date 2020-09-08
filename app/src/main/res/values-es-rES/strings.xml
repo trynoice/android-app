@@ -77,12 +77,12 @@
   <string name="app_theme">Tema</string>
   <string name="open_context_menu">Abrir menú contextual</string>
   <string name="rename">Renombrar</string>
-  <string name="cast_media">Cast media to another device</string>
-  <string name="about__translations">Translations</string>
-  <string name="wake_up_timer">Wake-up Timer</string>
+  <string name="cast_media">Transmitir medio a otro dispositivo</string>
+  <string name="about__translations">Traducciones</string>
+  <string name="wake_up_timer">Despertador</string>
   <string name="wake_up_timer_description">
-    Noice will start the selected preset when the timer ends. Use the buttons below to select a
-    preset and set the desired time to start the wake-up timer.
+    Noice iniciará el preset seleccionado cuando finalice el temporizador. Use los botones a continuación
+    para seleccionar un Preset y establecer la hora deseada para iniciar el despertador.
   </string>
   <string name="select_preset">Seleccionar Preset</string>
   <string name="schedule">Temporizador</string>
