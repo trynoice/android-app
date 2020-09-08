@@ -18,7 +18,7 @@ Noice es una aplicación que permite crear un ambiente personalizado utilizando 
 - Bosques (pájaros, hoguera, noche, viento, palmeras, etc.)
 - Fenómenos naturales(lluvia, truenos)
 - Teletransportación (cafetería, oficina, tren en movimiento, en vuelo, en el mar, en la orilla del río, etc.)
-- Sonido bruto (blanco, rosa, marrón)
+- Ruido en crudo (blanco, rosa, marrón)
 
 Noice es un software libre y de código abierto.
 https://github.com/ashutoshgngwr/noice
