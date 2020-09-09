@@ -102,12 +102,17 @@ class AppIntroActivity : AppIntro() {
     )
   }
 
-  override fun onSkipPressed(currentFragment: Fragment?) {
+  // make onSkipPressed and onDonePressed public so that these can be called directly from the
+  // unit tests. Without it, the tests need to rely on (not so) complex ViewActions. This move is
+  // an attempt to fix tests breaking in the CI environment but running smooth on my local setup.
+  // https://github.com/ashutoshgngwr/noice/issues/320
+
+  public override fun onSkipPressed(currentFragment: Fragment?) {
     super.onSkipPressed(currentFragment)
     markSeenInPrefsAndFinish()
   }
 
-  override fun onDonePressed(currentFragment: Fragment?) {
+  public override fun onDonePressed(currentFragment: Fragment?) {
     super.onDonePressed(currentFragment)
     markSeenInPrefsAndFinish()
   }

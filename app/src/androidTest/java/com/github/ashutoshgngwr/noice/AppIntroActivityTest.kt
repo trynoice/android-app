@@ -1,19 +1,11 @@
 package com.github.ashutoshgngwr.noice
 
-import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.NoMatchingViewException
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.swipeLeft
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -45,12 +37,14 @@ class AppIntroActivityTest {
 
   @Test
   fun testOnSkipPressed() {
-    onView(withText(R.string.app_intro_skip_button))
-      .check(matches(isDisplayed()))
-      .perform(click())
+    activityScenario.onActivity {
+      it.onSkipPressed(null)
 
-    // should destroy the activity and update the preferences
-    assertEquals(Lifecycle.State.DESTROYED, activityScenario.state)
+      // should destroy the activity
+      assertTrue(it.isFinishing || it.isDestroyed)
+    }
+
+    // should update the preferences
     Utils.withDefaultSharedPreferences(ApplicationProvider.getApplicationContext()) {
       assertTrue(it.getBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, false))
     }
@@ -58,21 +52,14 @@ class AppIntroActivityTest {
 
   @Test
   fun testOnDonePressed() {
-    do { // find the last slide (where done button is shown)
-      try {
-        onView(allOf(isDisplayed(), withText(R.string.app_intro_done_button)))
-          .check(matches(isDisplayed()))
-        break
-      } catch (e: NoMatchingViewException) {
-        onView(withId(R.id.view_pager)).perform(swipeLeft())
-      }
-    } while (true)
+    activityScenario.onActivity {
+      it.onDonePressed(null)
 
-    onView(withText(R.string.app_intro_done_button))
-      .perform(click())
+      // should destroy the activity
+      assertTrue(it.isFinishing || it.isDestroyed)
+    }
 
-    // should destroy the activity and update the preferences
-    assertEquals(Lifecycle.State.DESTROYED, activityScenario.state)
+    // should update the preferences
     Utils.withDefaultSharedPreferences(ApplicationProvider.getApplicationContext()) {
       assertTrue(it.getBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, false))
     }
