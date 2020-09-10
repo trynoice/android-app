@@ -113,6 +113,8 @@
   <string name="credits__translation_it_it_0__url" translatable="false">https://sebastianscaramuzza.com</string>
   <string name="credits__translation_fr_fr_0" translatable="false">French translation by Eki474</string>
   <string name="credits__translation_fr_fr_0__url" translatable="false">https://github.com/Eki474</string>
+  <string name="credits__translation_fr_fr_1" translatable="false">French translation by Mickael-Martin</string>
+  <string name="credits__translation_fr_fr_1__url" translatable="false">https://github.com/Mickael-Martin</string>
   <string name="credits__translation_pt_br_0" translatable="false">Portuguese (Brazil) translation by Vinny</string>
   <string name="credits__translation_pt_br_0__url" translatable="false">https://github.com/CebolaBros64</string>
   <string name="credits__translation_sv_0" translatable="false">Swedish translation by Ricky Lindén</string>
