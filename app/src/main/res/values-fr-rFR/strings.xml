@@ -84,7 +84,7 @@
   <string name="about__translations">Traductions</string>
   <string name="wake_up_timer">Réveil</string>
   <string name="wake_up_timer_description">
-    Noice peut démarrer un réglage à la fin de la minuterie. Utilisez les boutons ci-dessous pour sélectionner
+    Noice peut démarrer un réglage au moment du réveil. Utilisez les boutons ci-dessous pour sélectionner
     un réglage et l\'heure voulue pour activer le reveil.
   </string>
   <string name="select_preset">Sélectionner le réglage</string>
