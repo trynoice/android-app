@@ -120,11 +120,11 @@
   <string name="support_development__donate_thank_you_description">
     Nous vous remercions de tout cœur pour votre généreuse contribution au projet Noice.
   </string>
-  <string name="sound_group__life">Life</string>
-  <string name="sound_group__monsoon">Monsoon</string>
-  <string name="sound_group__public_gatherings">Public Gatherings</string>
+  <string name="sound_group__life">Vie</string>
+  <string name="sound_group__monsoon">Temps orageux</string>
+  <string name="sound_group__public_gatherings">Lieux publics</string>
   <string name="sound_group__raw_noise">Sons Bruts</string>
-  <string name="sound_group__times_of_day">Times of Day</string>
+  <string name="sound_group__times_of_day">Moments de la journée</string>
   <string name="sound_group__vehicles">Véhicules</string>
   <string name="sound_group__water">Eau</string>
   <string name="sound_group__wind">Vent</string>
@@ -141,7 +141,7 @@
     Après avoir joué quelques sons, vous pouvez utiliser le bouton en bas à droite pour sauvegarder le mix.
     Pour réutiliser un mix sauvegardé, allez dans la liste des réglages depuis le menu de l\'application.
   </string>
-  <string name="appintro__timer_title">Des difficultés à s'endormir ou à se réveiller ?</string>
+  <string name="appintro__timer_title">Des difficultés à s\'endormir ou à se réveiller ?</string>
   <string name="appintro__timer_desc">
     Une ambiance légère peut vous aider à vous endormir plus facilement. Utilisez la minuterie pour laisser Noice 
     s\'eteindre tout seul. De la même manière, pour se réveiller au calme, utilisez le réveil pour régler l\'alarme.
