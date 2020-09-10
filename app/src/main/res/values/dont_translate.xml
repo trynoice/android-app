@@ -101,6 +101,8 @@
   <string name="credits__sound_wind_in_palm_trees_url" translatable="false">https://freesound.org/s/346106/</string>
   <string name="credits__translation_es_es_0" translatable="false">Spanish translation by julianrrr</string>
   <string name="credits__translation_es_es_0__url" translatable="false">https://github.com/julianrrr</string>
+  <string name="credits__translation_es_es_1" translatable="false">Spanish translation by Diego</string>
+  <string name="credits__translation_es_es_1__url" translatable="false">https://github.com/sguinetti</string>
   <string name="credits__translation_es_ar_0" translatable="false">Argentinian spanish translation by Enchufadoo</string>
   <string name="credits__translation_es_ar_0__url" translatable="false">https://github.com/Enchufadoo</string>
   <string name="credits__translation_ru_0" translatable="false">Russian translation by yamaks2306</string>
