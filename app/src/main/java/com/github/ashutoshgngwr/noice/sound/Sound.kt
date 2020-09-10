@@ -70,7 +70,12 @@ class Sound private constructor(
         arrayOf("brownian_noise.mp3"),
         R.string.brownian_noise,
         R.string.sound_group__raw_noise,
-        arrayOf()
+        arrayOf(
+          Pair(
+            R.string.credits__sound_brownian_noise,
+            R.string.credits__sound_brownian_noise_url
+          )
+        )
       ),
       "coffee_shop" to Sound(
         arrayOf("coffee_shop_0.mp3", "coffee_shop_1.mp3"),
