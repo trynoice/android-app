@@ -20,8 +20,17 @@ on:
       - "**.md"
 
 jobs:
+  validate-gradle-wrapper:
+    name: Validate Gradle Wrapper
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+      - uses: gradle/wrapper-validation-action@v1
+
   unit-tests:
     name: Unit Tests
+    needs: [validate-gradle-wrapper]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -36,6 +45,7 @@ jobs:
 
   ui-tests:
     name: UI tests
+    needs: [validate-gradle-wrapper]
     runs-on: macos-latest
     timeout-minutes: 30
     strategy:
