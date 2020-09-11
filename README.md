@@ -9,6 +9,8 @@
 [![Releases](https://img.shields.io/badge/android-5.0%2B-blue.svg)][google-play-link]
 [![GitHub license](https://img.shields.io/github/license/ashutoshgngwr/noice.svg)](https://github.com/ashutoshgngwr/noice/blob/master/LICENSE)
 
+[<img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=256596&theme=light" alt="Noice for Android | Product Hunt" height="75" />](https://www.producthunt.com/posts/noice-for-android?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-noice-for-android)
+
 For a lot of people, a little background noise is helpful to calm down and focus. In some cases, it's also a boost to productivity. Background noise can also help minimize the effects of stress.
 
 Noice is an app that allows you to create your own set of background sounds by mixing clips from environmental sources. Create your perfect surroundings by combining different sounds to drown out distractions so you can focus on your work, or generate serene, peaceful environments that encourage you to fall asleep.
