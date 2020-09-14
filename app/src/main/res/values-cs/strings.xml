@@ -19,8 +19,13 @@
   <string name="bonfire">Táborák</string>
   <string name="brownian_noise">Hnědý šum</string>
   <string name="coffee_shop">Kavárna</string>
+  <string name="creaking_ship">Vrzající loď</string>
+  <string name="crickets">Cvrčci</string>
   <string name="distant_thunder">Vzdálená bouřka</string>
+  <string name="electric_car">Elektromobil</string>
   <string name="heavy_rain">Silný déšť</string>
+  <string name="howling_wolf">Vytí vlka</string>
+  <string name="human_heartbeat">Zvuk lidského srdce</string>
   <string name="light_rain">Slabý déšť</string>
   <string name="moderate_rain">Střední déšť</string>
   <string name="morning_in_a_village">Ráno na vesnici</string>
@@ -28,11 +33,17 @@
   <string name="night">Noc</string>
   <string name="office">Kancelář</string>
   <string name="pink_noise">Růžový šum</string>
+  <string name="public_library">Veřejná knihovna</string>
+  <string name="purring_cat">Předení kočky</string>
+  <string name="quiet_conversation">Tichá konverzace</string>
   <string name="rolling_thunder">Hřímání</string>
+  <string name="screeching_seagulls">Křik racků</string>
   <string name="seaside">Pobřeží</string>
   <string name="soft_wind">Mírný vítr</string>
   <string name="thunder_crack">Prásknutí hromu</string>
   <string name="train_horn">Troubení vlaku</string>
+  <string name="walking_through_the_snow">Šlápoty ve sněhu</string>
+  <string name="water_hose">Zahradní hadice</string>
   <string name="water_stream">Zurčení potůčku</string>
   <string name="white_noise">Bílý šum</string>
   <string name="wind_in_palm_trees">Vítr vanoucí palmami</string>
@@ -75,7 +86,8 @@
     Noice se sám spustí po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
   </string>
   <string name="select_preset">Zvolte předvolbu</string>
-  <string name="support_development">Support Development</string>
+  <string name="schedule">Nastavit</string>
+  <string name="support_development">Podpořit vývoj</string>
   <string name="support_development__why">Proč nás podpořit?</string>
   <string name="support_development__why_description">
     - Jako poděkování tvůrci aplikace\n
@@ -107,11 +119,39 @@
   <string name="support_development__donate_thank_you_description">
     Zcela upřímně vám moc srdečně děkujeme za vaši finanční podporu projektu Noice.
   </string>
+  <string name="sound_group__life">Life</string>
   <string name="sound_group__monsoon">Monzun</string>
   <string name="sound_group__public_gatherings">Veřejná shromáždění</string>
   <string name="sound_group__raw_noise">Syntentický šum</string>
   <string name="sound_group__times_of_day">Denní doba</string>
+  <string name="sound_group__vehicles">Vozidla</string>
+  <string name="sound_group__water">Voda</string>
   <string name="sound_group__wind">Vítr</string>
+  <string name="appintro__getting_started_title">Vítejte</string>
+  <string name="appintro__getting_started_desc_0">Zatáhněte doleva a my vám ukážeme, co vše Noice umí!</string>
+  <string name="appintro__getting_started_desc_1">Začněme!</string>
+  <string name="appintro__sound_library_title">Vytvořte si vaši vysněnou zvukovou kulisu</string>
+  <string name="appintro__sound_library_desc">
+    Posuvníky hlasitosti nastavujete hlasitost jednotlivých zvuků. Mezi každým opakováním nahrávek bez smyčky
+    je vložena mezera o náhodné délce. Tu můžete nastavit posuvníkem prodlevy.
+  </string>
+  <string name="appintro__preset_title">Uložte si svůj oblíbený mix</string>
+  <string name="appintro__preset_desc">
+    Při přehrávání vícero zvuků si můžete aktuálně přehrávaný mix uložit klepnutím na tlačítko v pravém dolním rohu.
+    Pro znovupoužití vámi uloženého mixu, navštivte sekci Uložené předvolby v menu aplikace.
+  </string>
+  <string name="appintro__timer_title">Máte problémy s usínáním či se v noci budíte?</string>
+  <string name="appintro__timer_desc">
+    Tichá zvuková kulisa vám může pomoci snadněji usnout. Použijte Časovač vypnutí a nechejte Noice
+    se sám vypnout, až usnete. Podobně se můžete i ráno probudit do vašeho uklidňujícího mixu
+    pomocí Časovače zapnutí.
+  </string>
+  <string name="appintro__chromecast_title">Podpora Chromecast</string>
+  <string name="appintro__chromecast_desc">
+    S Noice můžete přehrávat vaše mixy i na všech ostatních Chromecast zařízení,
+    jako jsou reproduktory, chytré televize, Google Home a další.
+  </string>
+  <string name="help">Nápověda</string>
   <string-array name="app_themes">
     <item>Světlý</item>
     <item>Tmavý</item>
