@@ -26,7 +26,7 @@
     "@typescript-eslint/parser": "^2.30.0",
     "babel-jest": "^26.3.0",
     "concurrently": "^5.3.0",
-    "eslint": "^7.8.1",
+    "eslint": "^7.9.0",
     "eslint-config-prettier": "^6.11.0",
     "jest": "^26.4.2",
     "parcel-bundler": "^1.12.4",
