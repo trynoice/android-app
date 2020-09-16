@@ -106,6 +106,13 @@ class DialogFragment : BottomSheetDialogFragment() {
   }
 
   /**
+   * Configures the neutral button of the dialog. Wrapper around [setButton]
+   */
+  fun neutralButton(@StringRes resId: Int, onClick: () -> Unit = { }) {
+    setButton(R.id.neutral, resId, onClick)
+  }
+
+  /**
    * shows the dialog and schedules the passed `options` lambda to be invoked in [onViewCreated]
    */
   fun show(fragmentManager: FragmentManager, options: DialogFragment.() -> Unit = { }) {

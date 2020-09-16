@@ -23,30 +23,38 @@
     android:orientation="vertical" />
 
   <LinearLayout
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="end"
+    android:gravity="end"
     android:orientation="horizontal">
+
+    <!-- marginStart is added by the default button style. See styles.xml for details. -->
+    <Button
+      android:id="@+id/neutral"
+      style="?attr/buttonStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="0dp"
+      android:layout_marginTop="16dp" />
+
+    <View
+      android:layout_width="0dp"
+      android:layout_height="1dp"
+      android:layout_weight="1" />
 
     <Button
       android:id="@+id/negative"
       style="?attr/buttonStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
-      android:visibility="gone" />
-
-    <View
-      android:layout_width="16dp"
-      android:layout_height="1dp" />
+      android:layout_marginTop="16dp" />
 
     <Button
       android:id="@+id/positive"
       style="?attr/buttonStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
-      android:visibility="gone" />
+      android:layout_marginTop="16dp" />
 
   </LinearLayout>
 
