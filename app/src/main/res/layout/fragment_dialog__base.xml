@@ -35,7 +35,8 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="0dp"
-      android:layout_marginTop="16dp" />
+      android:layout_marginTop="16dp"
+      android:visibility="gone" />
 
     <View
       android:layout_width="0dp"
@@ -47,14 +48,16 @@
       style="?attr/buttonStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="16dp" />
+      android:layout_marginTop="16dp"
+      android:visibility="gone" />
 
     <Button
       android:id="@+id/positive"
       style="?attr/buttonStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="16dp" />
+      android:layout_marginTop="16dp"
+      android:visibility="gone" />
 
   </LinearLayout>
 
