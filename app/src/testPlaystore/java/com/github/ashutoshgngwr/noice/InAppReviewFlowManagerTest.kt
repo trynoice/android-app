@@ -1,7 +1,6 @@
 package com.github.ashutoshgngwr.noice
 
 import androidx.fragment.app.FragmentActivity
-import androidx.test.core.app.ActivityScenario
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory

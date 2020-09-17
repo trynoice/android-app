@@ -3,7 +3,11 @@ package com.github.ashutoshgngwr.noice.sound
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.sound.player.Player
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.slot
+import io.mockk.verify
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith

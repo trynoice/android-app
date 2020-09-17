@@ -14,10 +14,15 @@ import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.every
 import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.slot
+import io.mockk.verify
 import kotlinx.android.synthetic.main.fragment_sleep_timer.view.*
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.not

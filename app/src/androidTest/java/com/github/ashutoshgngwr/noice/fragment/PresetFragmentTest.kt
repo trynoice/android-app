@@ -19,10 +19,16 @@ import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.clearMocks
+import io.mockk.every
 import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.slot
+import io.mockk.verify
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.*
 import org.junit.Assert.assertEquals

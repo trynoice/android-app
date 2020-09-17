@@ -15,7 +15,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
-import com.github.ashutoshgngwr.noice.fragment.*
+import com.github.ashutoshgngwr.noice.fragment.AboutFragment
+import com.github.ashutoshgngwr.noice.fragment.DialogFragment
+import com.github.ashutoshgngwr.noice.fragment.PresetFragment
+import com.github.ashutoshgngwr.noice.fragment.SleepTimerFragment
+import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
+import com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment
+import com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*

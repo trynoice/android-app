@@ -31,8 +31,13 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkObject
 import org.hamcrest.Matchers.allOf
-import org.junit.*
+import org.junit.After
+import org.junit.AfterClass
 import org.junit.Assume.assumeNotNull
+import org.junit.BeforeClass
+import org.junit.ClassRule
+import org.junit.Rule
+import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.junit.runners.model.Statement
