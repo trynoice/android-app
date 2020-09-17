@@ -12,6 +12,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
+import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
@@ -58,6 +59,7 @@ class PresetFragmentTest {
       )
     }
 
+    mockkObject(InAppReviewFlowManager)
     mockkObject(Preset.Companion)
     every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(mockPreset)
     fragmentScenario = launchFragmentInContainer<PresetFragment>(null, R.style.Theme_App)
@@ -133,6 +135,7 @@ class PresetFragmentTest {
     onView(withText("test")).check(doesNotExist())
     verify(exactly = 1) {
       Preset.writeAllToUserPreferences(any(), emptyList())
+      InAppReviewFlowManager.maybeAskForReview(any())
     }
   }
 
@@ -198,6 +201,7 @@ class PresetFragmentTest {
     verify(exactly = 1) {
       mockPreset.name = "test-does-not-exists"
       Preset.writeAllToUserPreferences(any(), capture(presetsSlot))
+      InAppReviewFlowManager.maybeAskForReview(any())
     }
 
     assertEquals(mockPreset, presetsSlot.captured[0])

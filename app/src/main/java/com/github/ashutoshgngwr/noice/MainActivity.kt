@@ -108,6 +108,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       // show app intro if user hasn't already seen it
       AppIntroActivity.maybeStart(this)
     }
+
+    InAppReviewFlowManager.init(this)
   }
 
   override fun onResume() {

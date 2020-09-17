@@ -10,6 +10,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
+import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
@@ -42,12 +43,18 @@ class SleepTimerFragmentTest {
   private lateinit var fragmentScenario: FragmentScenario<SleepTimerFragment>
   private lateinit var lastEvent: MediaPlayerService.ScheduleAutoSleepEvent
 
-  private fun assertDurationInRange(expectedStartSecs: Long, expectedEndSecs: Long, actualMillis: Long) {
-    assertTrue(actualMillis in expectedStartSecs * 1000L until expectedEndSecs * 1000L)
+  private fun assertDurationInRange(
+    expectedStartSecs: Long,
+    expectedEndSecs: Long,
+    actualMillis: Long
+  ) {
+    assertTrue(actualMillis >= expectedStartSecs * 1000L)
+    assertTrue(actualMillis < expectedEndSecs * 1000L)
   }
 
   @Before
   fun setup() {
+    mockkObject(InAppReviewFlowManager)
     fragmentScenario = launchFragmentInContainer<SleepTimerFragment>(null, R.style.Theme_App)
     fragmentScenario.onFragment { fragment = it }
     MockKAnnotations.init(this)
@@ -112,6 +119,7 @@ class SleepTimerFragmentTest {
       .check(matches(isEnabled()))
 
     onView(withId(R.id.countdown_view)).check(matches(not(withText("00h 00m 00s"))))
+    verify(exactly = 1) { InAppReviewFlowManager.maybeAskForReview(any()) }
   }
 
   @Test
@@ -124,5 +132,6 @@ class SleepTimerFragmentTest {
       .check(matches(not(isEnabled())))
 
     onView(withId(R.id.countdown_view)).check(matches(withText("00h 00m 00s")))
+    verify(exactly = 1) { InAppReviewFlowManager.maybeAskForReview(any()) }
   }
 }

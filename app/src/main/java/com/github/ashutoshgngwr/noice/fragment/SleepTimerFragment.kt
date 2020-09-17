@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.google.android.material.snackbar.Snackbar
@@ -45,6 +46,9 @@ class SleepTimerFragment : Fragment(R.layout.fragment_sleep_timer) {
     val remainingMillis = event.atUptimeMillis - SystemClock.uptimeMillis()
     requireView().duration_picker.setResetButtonEnabled(remainingMillis > 0)
     requireView().countdown_view.startCountdown(remainingMillis)
+
+    // maybe show in-app review dialog to the user
+    InAppReviewFlowManager.maybeAskForReview(requireActivity())
   }
 
   override fun onDestroyView() {

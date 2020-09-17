@@ -5,6 +5,7 @@
   <string name="app_license_url" translatable="false">https://github.com/ashutoshgngwr/noice/blob/master/LICENSE</string>
   <string name="app_website" translatable="false">https://ashutoshgngwr.github.io/noice</string>
   <string name="app_github" translatable="false">ashutoshgngwr/noice</string>
+  <string name="app_github_url" translatable="false">https://github.com/ashutoshgngwr/noice</string>
   <string name="author_email" translatable="false">ashutoshgngwr@gmail.com</string>
   <string name="author_social_handle" translatable="false">ashutoshgngwr</string>
   <string name="credits__app_icon" translatable="false">white noise icon by Juraj Sedlák</string>
