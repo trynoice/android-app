@@ -1,9 +1,12 @@
 package com.github.ashutoshgngwr.noice
 
+import android.content.SharedPreferences
 import androidx.fragment.app.FragmentActivity
+import androidx.preference.PreferenceManager
 import io.mockk.every
+import io.mockk.mockk
 import io.mockk.mockkObject
-import org.junit.After
+import io.mockk.mockkStatic
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -16,21 +19,19 @@ import kotlin.random.Random
 class InAppReviewFlowManagerTest {
 
   private lateinit var fragmentActivity: FragmentActivity
+  private lateinit var mockPrefs: SharedPreferences
 
   @Before
   fun setup() {
     fragmentActivity = Robolectric.buildActivity(FragmentActivity::class.java).setup().get()
+    mockPrefs = mockk(relaxed = true)
+
     mockkObject(Random.Default)
+    mockkStatic(PreferenceManager::class)
+    every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
   }
 
-  @After
-  fun teardown() {
-    Utils.withDefaultSharedPreferences(fragmentActivity) {
-      it.edit().clear().commit()
-    }
-  }
-
-  // These are a rather shallow tests. These don't check the correctness of the review dialog but only
+  // These are rather shallow tests. These don't check the correctness of the review dialog but only
   // check if it was shown. This is me being lazy because interacting with dialog would require me
   // to add another dependency to this source set. For that I'd have to open 'app/build.gradle' and
   // stuff so just let it go. okay? besides, I have manually tested the shit out of it.
@@ -39,31 +40,43 @@ class InAppReviewFlowManagerTest {
   @Test
   fun testMaybeAskForReview_whenUnlucky() {
     every { Random.Default.nextInt(any()) } returns 1 // expecting 0 but return something else
+    every {
+      mockPrefs.getBoolean(InAppReviewFlowManager.PREF_FLOW_SUCCESSFULLY_COMPLETED, any())
+    } returns false
+
     InAppReviewFlowManager.maybeAskForReview(fragmentActivity)
 
-    // no new fragment should be created
+    // dialog fragment should not be shown
     assertEquals(0, fragmentActivity.supportFragmentManager.fragments.size)
   }
 
   @Test
   fun testMaybeAskForReview_whenLucky() {
     every { Random.Default.nextInt(any()) } returns 0 // returns the expected value
+    every {
+      mockPrefs.getBoolean(InAppReviewFlowManager.PREF_FLOW_SUCCESSFULLY_COMPLETED, any())
+    } returns false
+
     InAppReviewFlowManager.maybeAskForReview(fragmentActivity)
 
-    // dialog fragment should be created
+    // dialog fragment should be shown
     assertEquals(1, fragmentActivity.supportFragmentManager.fragments.size)
   }
 
   @Test
   fun testMaybeAskForReview_whenUserHasCompletedReviewFlow() {
     every { Random.Default.nextInt(any()) } returns 0 // returns the expected value
+    every {
+      mockPrefs.getBoolean(InAppReviewFlowManager.PREF_FLOW_SUCCESSFULLY_COMPLETED, any())
+    } returns true
+
     Utils.withDefaultSharedPreferences(fragmentActivity) {
       it.edit().putBoolean(InAppReviewFlowManager.PREF_FLOW_SUCCESSFULLY_COMPLETED, true).commit()
     }
 
     InAppReviewFlowManager.maybeAskForReview(fragmentActivity)
 
-    // dialog fragment should not be created
+    // dialog fragment should not be shown
     assertEquals(0, fragmentActivity.supportFragmentManager.fragments.size)
   }
 }
