@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.sound.Preset
@@ -81,6 +82,9 @@ class WakeUpTimerFragment : Fragment(R.layout.fragment_wake_up_timer) {
 
     selectedTime = calendar.timeInMillis
     notifyUpdate()
+
+    // maybe show in-app review dialog to the user
+    InAppReviewFlowManager.maybeAskForReview(requireActivity())
   }
 
   /**

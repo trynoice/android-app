@@ -151,6 +151,15 @@
     Use Noice to cast its ambience to other Chromecast enabled devices such as speakers, TVs, etc.
   </string>
   <string name="help">Help</string>
+  <string name="in_app_feedback__title">Submit a review</string>
+  <string name="in_app_feedback__description">
+    We\'d love to hear from you about the app. Please take a moment to visit our GitHub repository.
+    If you didn\'t love the app, please consider opening up an issue explaining your concerns.
+    Otherwise, please star the project to show love and support.
+  </string>
+  <string name="okay">Okay</string>
+  <string name="later">Later</string>
+  <string name="never">Never</string>
   <string-array name="app_themes">
     <item>Light</item>
     <item>Dark</item>

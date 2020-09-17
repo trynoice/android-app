@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
@@ -137,6 +138,9 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
           dataSet[adapterPosition].name = getInputText()
           Preset.writeAllToUserPreferences(requireContext(), dataSet)
           adapter?.notifyItemChanged(adapterPosition)
+
+          // maybe show in-app review dialog to the user
+          InAppReviewFlowManager.maybeAskForReview(requireActivity())
         }
       }
     }
@@ -164,6 +168,9 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
           Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
             .setAction(R.string.dismiss) { }
             .show()
+
+          // maybe show in-app review dialog to the user
+          InAppReviewFlowManager.maybeAskForReview(requireActivity())
         }
       }
     }

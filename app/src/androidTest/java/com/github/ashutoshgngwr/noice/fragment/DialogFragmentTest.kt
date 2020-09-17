@@ -83,6 +83,21 @@ class DialogFragmentTest {
   }
 
   @Test
+  fun neutralButton() {
+    emptyFragmentScenario.onFragment {
+      dialogFragment.show(it.childFragmentManager) {
+        neutralButton(android.R.string.copy)
+      }
+    }
+
+    EspressoX.waitForView(withId(R.id.neutral), 100, 5)
+      .check(matches(withText(android.R.string.copy)))
+      .perform(click())
+
+    onView(withId(R.id.neutral)).check(doesNotExist())
+  }
+
+  @Test
   fun testMessageText() {
     emptyFragmentScenario.onFragment {
       dialogFragment.show(it.childFragmentManager) {

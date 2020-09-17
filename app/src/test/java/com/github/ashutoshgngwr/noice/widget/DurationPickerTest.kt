@@ -1,7 +1,11 @@
 package com.github.ashutoshgngwr.noice.widget
 
 import androidx.test.core.app.ApplicationProvider
-import io.mockk.*
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.android.synthetic.main.view_duration_picker.view.*
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue

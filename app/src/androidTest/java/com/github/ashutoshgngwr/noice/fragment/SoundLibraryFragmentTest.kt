@@ -10,16 +10,23 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
+import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.confirmVerified
+import io.mockk.every
 import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.slot
+import io.mockk.verify
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
@@ -46,6 +53,7 @@ class SoundLibraryFragmentTest {
 
   @Before
   fun setup() {
+    mockkObject(InAppReviewFlowManager)
     fragmentScenario = launchFragmentInContainer<SoundLibraryFragment>(null, R.style.Theme_App)
     fragmentScenario.onFragment { fragment = it } // just for mock injection
     MockKAnnotations.init(this)
@@ -222,7 +230,7 @@ class SoundLibraryFragmentTest {
   @Test
   fun testSavePresetButton_onClick() {
     val mockPlayers: Map<String, Player> = hashMapOf(
-      "birds" to mockk(relaxed = true){
+      "birds" to mockk(relaxed = true) {
         every { soundKey } returns "birds"
         every { volume } returns 1
         every { timePeriod } returns Player.MIN_TIME_PERIOD + 2
@@ -284,5 +292,7 @@ class SoundLibraryFragmentTest {
       assertEquals(mockPlayers[playerState.soundKey]?.volume, playerState.volume)
       assertEquals(mockPlayers[playerState.soundKey]?.timePeriod, playerState.timePeriod)
     }
+
+    verify(exactly = 1) { InAppReviewFlowManager.maybeAskForReview(any()) }
   }
 }
