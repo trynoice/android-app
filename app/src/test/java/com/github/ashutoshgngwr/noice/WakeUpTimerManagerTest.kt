@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.Utils.withGson
 import io.mockk.every
 import io.mockk.mockk
@@ -16,14 +17,12 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowAlarmManager
 
 @RunWith(RobolectricTestRunner::class)
 class WakeUpTimerManagerTest {
 
-  private lateinit var mockContext: Context
   private lateinit var mockPrefs: SharedPreferences
   private lateinit var shadowAlarmManager: ShadowAlarmManager
 
@@ -32,12 +31,10 @@ class WakeUpTimerManagerTest {
     mockkStatic(PreferenceManager::class)
     mockPrefs = mockk(relaxed = true)
     every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
-
-    val alarmManager = RuntimeEnvironment.systemContext.getSystemService(AlarmManager::class.java)
-    shadowAlarmManager = shadowOf(alarmManager)
-    mockContext = mockk(relaxed = true) {
-      every { getSystemService(AlarmManager::class.java) } returns alarmManager
-    }
+    shadowAlarmManager = shadowOf(
+      ApplicationProvider.getApplicationContext<Context>()
+        .getSystemService(AlarmManager::class.java)
+    )
   }
 
   @Test
@@ -50,7 +47,7 @@ class WakeUpTimerManagerTest {
     }
 
     every { mockPrefs.edit() } returns mockPrefsEditor
-    WakeUpTimerManager.set(mockContext, expectedTimer)
+    WakeUpTimerManager.set(ApplicationProvider.getApplicationContext(), expectedTimer)
 
     verifyOrder {
       mockPrefs.edit()
@@ -68,7 +65,7 @@ class WakeUpTimerManagerTest {
     }
 
     every { mockPrefs.edit() } returns mockPrefsEditor
-    WakeUpTimerManager.cancel(mockContext)
+    WakeUpTimerManager.cancel(ApplicationProvider.getApplicationContext())
 
     verifyOrder {
       mockPrefs.edit()
@@ -83,10 +80,10 @@ class WakeUpTimerManagerTest {
   fun testGet() {
     // when timer is not scheduled
     every { mockPrefs.getString(any(), any()) } returns null
-    assertNull(WakeUpTimerManager.get(mockContext))
+    assertNull(WakeUpTimerManager.get(ApplicationProvider.getApplicationContext()))
 
     every { mockPrefs.getString(any(), any()) } returns "{\"presetName\":\"test\", \"atMillis\": 1}"
-    val timer = WakeUpTimerManager.get(mockContext)
+    val timer = WakeUpTimerManager.get(ApplicationProvider.getApplicationContext())
     assertEquals(1L, timer?.atMillis)
     assertEquals("test", timer?.presetName)
   }
@@ -98,14 +95,18 @@ class WakeUpTimerManagerTest {
       mockPrefs.getString(any(), any())
     } returns "{\"presetName\":\"test\", \"atMillis\": $expectedTime}"
 
-    WakeUpTimerManager.BootReceiver().onReceive(mockContext, Intent(Intent.ACTION_BOOT_COMPLETED))
+    WakeUpTimerManager.BootReceiver()
+      .onReceive(ApplicationProvider.getApplicationContext(), Intent(Intent.ACTION_BOOT_COMPLETED))
+
     assertEquals(expectedTime, shadowAlarmManager.nextScheduledAlarm.triggerAtTime)
   }
 
   @Test
   fun testBootReceiver_whenTimeIsNotPreScheduled() {
     every { mockPrefs.getString(any(), any()) } returns null
-    WakeUpTimerManager.BootReceiver().onReceive(mockContext, Intent(Intent.ACTION_BOOT_COMPLETED))
+    WakeUpTimerManager.BootReceiver()
+      .onReceive(ApplicationProvider.getApplicationContext(), Intent(Intent.ACTION_BOOT_COMPLETED))
+
     assertNull(shadowAlarmManager.nextScheduledAlarm)
   }
 }
