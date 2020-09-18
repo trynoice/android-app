@@ -6,18 +6,26 @@ on:
       - "[0-9]+.[0-9]+.x"
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
-    paths-ignore:
-      - "cast-receiver/**"
-      - "fastlane/**"
-      - "**.md"
+    paths:
+      - ".github/workflows/**"
+      - "app/**"
+      - "gradle/**"
+      - "**.gradle"
+      - "gradle.properties"
+      - "gradlew"
+      - "gradlew.bat"
   pull_request:
     branches:
       - master
       - "[0-9]+.[0-9]+.x"
-    paths-ignore:
-      - "cast-receiver/**"
-      - "fastlane/**"
-      - "**.md"
+    paths:
+      - ".github/workflows/**"
+      - "app/**"
+      - "gradle/**"
+      - "**.gradle"
+      - "gradle.properties"
+      - "gradlew"
+      - "gradlew.bat"
 
 jobs:
   validate-gradle-wrapper:
