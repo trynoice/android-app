@@ -112,6 +112,8 @@
   <string name="credits__translation_de_0__url" translatable="false">https://github.com/schulle4u</string>
   <string name="credits__translation_de_1" translatable="false">German translation by Luca Hohmann</string>
   <string name="credits__translation_de_1__url" translatable="false">https://github.com/gilgusmaximus</string>
+  <string name="credits__translation_de_2" translatable="false">German translation by schubeda</string>
+  <string name="credits__translation_de_2__url" translatable="false">https://github.com/schubeda</string>
   <string name="credits__translation_it_it_0" translatable="false">Italian translation by Sebastian Scaramuzza</string>
   <string name="credits__translation_it_it_0__url" translatable="false">https://sebastianscaramuzza.com</string>
   <string name="credits__translation_fr_fr_0" translatable="false">French translation by Eki474</string>

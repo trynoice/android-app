@@ -63,6 +63,14 @@ class AboutFragment : Fragment() {
         R.string.credits__translation_de_0__url
       ),
       arrayOf(
+        R.string.credits__translation_de_1,
+        R.string.credits__translation_de_1__url
+      ),
+      arrayOf(
+        R.string.credits__translation_de_2,
+        R.string.credits__translation_de_2__url
+      ),
+      arrayOf(
         R.string.credits__translation_it_it_0,
         R.string.credits__translation_it_it_0__url
       ),
@@ -105,10 +113,6 @@ class AboutFragment : Fragment() {
       arrayOf(
         R.string.credits__translation_pl_0,
         R.string.credits__translation_pl_0__url
-      ),
-      arrayOf(
-        R.string.credits__translation_de_1,
-        R.string.credits__translation_de_1__url
       )
     )
   }
