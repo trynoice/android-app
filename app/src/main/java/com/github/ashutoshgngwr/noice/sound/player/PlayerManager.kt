@@ -271,32 +271,6 @@ class PlayerManager(private val context: Context) :
   }
 
   /**
-   * Sets the volume for the [Player] with given key.
-   * @param soundKey identifier for the [Player]. If [Player] is not found, no action is taken
-   * @param volume updated volume for the [Player]
-   */
-  fun setVolume(soundKey: String, volume: Int) {
-    if (!players.containsKey(soundKey)) {
-      return
-    }
-
-    requireNotNull(players[soundKey]).setVolume(volume)
-  }
-
-  /**
-   * Sets the time period for the [Player] with given key
-   * @param soundKey identifier for the [Player]. If [Player] is not found, no action is taken
-   * @param timePeriod updated time period for the [Player]
-   */
-  fun setTimePeriod(soundKey: String, timePeriod: Int) {
-    if (!players.containsKey(soundKey)) {
-      return
-    }
-
-    requireNotNull(players[soundKey]).timePeriod = timePeriod
-  }
-
-  /**
    * Attempts to recreate the [PlaybackStrategyFactory] for all [Player]s using the current
    * [PlaybackStrategyFactory] instance
    */

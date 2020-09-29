@@ -6,22 +6,39 @@ on:
       - "[0-9]+.[0-9]+.x"
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
-    paths-ignore:
-      - "cast-receiver/**"
-      - "fastlane/**"
-      - "**.md"
+    paths:
+      - ".github/workflows/**"
+      - "app/**"
+      - "gradle/**"
+      - "**.gradle"
+      - "gradle.properties"
+      - "gradlew"
+      - "gradlew.bat"
   pull_request:
     branches:
       - master
       - "[0-9]+.[0-9]+.x"
-    paths-ignore:
-      - "cast-receiver/**"
-      - "fastlane/**"
-      - "**.md"
+    paths:
+      - ".github/workflows/**"
+      - "app/**"
+      - "gradle/**"
+      - "**.gradle"
+      - "gradle.properties"
+      - "gradlew"
+      - "gradlew.bat"
 
 jobs:
+  validate-gradle-wrapper:
+    name: Validate Gradle Wrapper
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+      - uses: gradle/wrapper-validation-action@v1
+
   unit-tests:
     name: Unit Tests
+    needs: [validate-gradle-wrapper]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -36,6 +53,7 @@ jobs:
 
   ui-tests:
     name: UI tests
+    needs: [validate-gradle-wrapper]
     runs-on: macos-latest
     timeout-minutes: 30
     strategy:
@@ -64,7 +82,7 @@ jobs:
 
   play-store-release:
     name: Play Store Release
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    if: github.repository == 'ashutoshgngwr/noice' && github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     needs: [unit-tests, ui-tests]
     runs-on: ubuntu-latest
     timeout-minutes: 10

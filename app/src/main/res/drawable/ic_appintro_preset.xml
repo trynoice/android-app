@@ -1,0 +1,46 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+  android:width="200dp"
+  android:height="200dp"
+  android:alpha="0.87"
+  android:viewportWidth="100"
+  android:viewportHeight="100">
+  <path
+    android:fillColor="#ffffff"
+    android:pathData="M21.332,42.136l1.495,0l0,31.405l2.991,0l0,-31.405l1.495,0l0,-2.991l-1.495,0l0,-13.459l-2.991,0l0,13.459l-1.495,0z" />
+  <path
+    android:fillColor="#ffffff"
+    android:pathData="M34.792,49.613l1.495,0l0,23.927l2.991,0l0,-23.927l1.495,0l0,-2.991l-1.495,0l0,-20.937l-2.991,0l0,20.937l-1.495,0z" />
+  <path
+    android:fillColor="#ffffff"
+    android:pathData="M48.251,37.65l1.495,0l0,35.891l2.991,0l0,-35.891l1.495,0l0,-2.991l-1.495,0l0,-8.973l-2.991,0l0,8.973l-1.495,0z" />
+  <path
+    android:fillColor="#ffffff"
+    android:pathData="M61.71,45.127l1.495,0l0,28.414l2.991,0l0,-28.414l1.495,0l0,-2.991l-1.495,0l0,-16.45l-2.991,0l0,16.45l-1.495,0z" />
+  <path
+    android:fillColor="#ffffff"
+    android:pathData="M76.665,39.145l0,34.396l2.991,0l0,-34.396l1.495,0l0,-2.991l-1.495,0l0,-10.468l-2.991,0l0,10.468l-1.495,0l0,2.991z" />
+  <path
+    android:fillColor="#ffffff"
+    android:pathData="M88.628,45.127l1.495,0l0,28.414l2.991,0l0,-28.414l1.495,0l0,-2.991l-1.495,0l0,-16.45l-2.991,0l0,16.45l-1.495,0z" />
+  <path
+    android:fillColor="#ffffff"
+    android:pathData="M4.882,25.686l5.982,0l0,2.991l-5.982,0z" />
+  <path
+    android:fillColor="#ffffff"
+    android:pathData="M4.882,33.163l5.982,0l0,2.991l-5.982,0z" />
+  <path
+    android:fillColor="#ffffff"
+    android:pathData="M4.882,40.641l5.982,0l0,2.991l-5.982,0z" />
+  <path
+    android:fillColor="#ffffff"
+    android:pathData="M4.882,48.118l5.982,0l0,2.991l-5.982,0z" />
+  <path
+    android:fillColor="#ffffff"
+    android:pathData="M4.882,55.595l5.982,0l0,2.991l-5.982,0z" />
+  <path
+    android:fillColor="#ffffff"
+    android:pathData="M4.882,63.072l5.982,0l0,2.991l-5.982,0z" />
+  <path
+    android:fillColor="#ffffff"
+    android:pathData="M4.882,70.55l5.982,0l0,2.991l-5.982,0z" />
+</vector>

@@ -2,9 +2,13 @@ package com.github.ashutoshgngwr.noice.cast.player.strategy
 
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.google.android.gms.cast.framework.CastSession
-import io.mockk.*
+import io.mockk.CapturingSlot
+import io.mockk.MockKAnnotations
+import io.mockk.every
 import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
+import io.mockk.mockk
+import io.mockk.slot
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

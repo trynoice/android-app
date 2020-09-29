@@ -11,16 +11,25 @@ import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategyFactory
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.called
+import io.mockk.clearMocks
+import io.mockk.every
 import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
+import io.mockk.invoke
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.mockkStatic
+import io.mockk.slot
+import io.mockk.spyk
+import io.mockk.verify
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import kotlin.random.Random
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowMediaSession::class, ShadowMediaSessionCompat::class])
@@ -199,20 +208,6 @@ class PlayerManagerTest {
     verify(exactly = 1) { players.getValue("test").play() }
     assertEquals(PlayerManager.State.PLAYING, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_PLAYING, ShadowMediaSessionCompat.getLastPlaybackState())
-  }
-
-  @Test
-  fun testSetVolume() {
-    val volume = Random.nextInt(0, 1 + Player.MAX_VOLUME)
-    playerManager.setVolume("test", volume)
-    verify(exactly = 1) { players.getValue("test").setVolume(volume) }
-  }
-
-  @Test
-  fun testSetTimePeriod() {
-    val timePeriod = Random.nextInt(1, 1 + Player.MAX_TIME_PERIOD)
-    playerManager.setTimePeriod("test", timePeriod)
-    verify(exactly = 1) { players.getValue("test").timePeriod = timePeriod }
   }
 
   @Test

@@ -3,10 +3,10 @@ Para muitos, os "barulhos de fundo" podem ajudar na concentração, a se acalmar
 Noice é um aplicativo que lhe permite simular seu próprio "ambiente sonoro" usando sons pré-definidos. Dessa forma, você pode se livrar de distrações, focar melhor em seu trabalho, ou mesmo criar um clima relaxante para ajudar no sono.
 
 <b>Funções</b>
-- 24 sons disponíveis
-- Google Cast (Chromecast) ativado <i>(experimental, apenas na versão Play Store)</i>
+- 35 sons disponíveis
+- Google Cast (Chromecast) ativado [apenas na versão Play Store]
 - Misture e ajuste sons a gosto
-- Despertador (Despertador) <i>(experimental)</i>
+- Despertador
 - Salve seus ajustes para uso futuro
 - Timer para uso no sono
 - Funciona em conjunto com qualquer aplicativo de música

@@ -3,10 +3,10 @@ Pour beaucoup de personnes, utiliser une ambiance légère permet de rester calm
 Noice est une application qui permet de créer des ambiances personnalisées à partir de plusieurs sons pré-enregistrés. Créez un environnement parfait en les combinant pour vous concentrer sur votre travail ou vous relaxer avant de dormir.
 
 <b>Fonctionnalités</b>
-- 24 ambiances sonores
-- Google Cast (Chromecast) activé <i>(expérimental, version Play Store uniquement)</i>
+- 35 ambiances sonores
+- Google Cast (Chromecast) activé [version Play Store uniquement]
 - Créez et sauvegardez vos mixes personnalisés
-- Minuterie de réveil (réveil) <i>(expérimental)</i>
+- Minuterie de réveil
 - Minuteur pour accompagner le sommeil
 - Peut accompagner d'autres pistes sonores
 - Volume indépendant pour chaque son

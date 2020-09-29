@@ -15,28 +15,31 @@
     "test": "yarn test:single --watchAll"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.5",
+    "@babel/core": "^7.11.6",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-typescript": "^7.10.4",
     "@types/chromecast-caf-receiver": "^5.0.11",
     "@types/howler": "^2.2.1",
-    "@types/jest": "^26.0.12",
+    "@types/jest": "^26.0.14",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
     "babel-jest": "^26.3.0",
     "concurrently": "^5.3.0",
-    "eslint": "^7.8.0",
-    "eslint-config-prettier": "^6.11.0",
+    "eslint": "^7.9.0",
+    "eslint-config-prettier": "^6.12.0",
     "jest": "^26.4.2",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-svg-sprite": "^1.4.1",
-    "prettier": "^2.1.1",
-    "sass": "^1.26.10",
-    "typescript": "^4.0.2"
+    "prettier": "^2.1.2",
+    "sass": "^1.26.11",
+    "typescript": "^4.0.3"
   },
   "dependencies": {
     "howler": "^2.2.0",
     "normalize.css": "^8.0.1"
+  },
+  "resolutions": {
+    "node-forge": "^0.10.0"
   }
 }

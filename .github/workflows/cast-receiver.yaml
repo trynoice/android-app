@@ -47,7 +47,7 @@ jobs:
 
   deploy:
     name: Deploy
-    if: github.event_name == 'push'
+    if: github.repository == 'ashutoshgngwr/noice' && github.event_name == 'push'
     needs: [build, unit-tests]
     runs-on: ubuntu-latest
     timeout-minutes: 10

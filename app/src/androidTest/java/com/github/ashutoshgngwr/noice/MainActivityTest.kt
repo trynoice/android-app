@@ -20,16 +20,27 @@ import androidx.test.espresso.contrib.NavigationViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.filterEquals
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.github.ashutoshgngwr.noice.fragment.*
+import com.github.ashutoshgngwr.noice.fragment.AboutFragment
+import com.github.ashutoshgngwr.noice.fragment.PresetFragment
+import com.github.ashutoshgngwr.noice.fragment.SleepTimerFragment
+import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
+import com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment
+import com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
-import io.mockk.*
+import io.mockk.clearMocks
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.verify
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.allOf
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -47,7 +58,19 @@ class MainActivityTest {
 
   @Before
   fun setup() {
+    // mark app intro as seen to run main activity tests in peace
+    Utils.withDefaultSharedPreferences(ApplicationProvider.getApplicationContext()) {
+      it.edit().putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true).commit()
+    }
+
     activityScenario = launch(MainActivity::class.java)
+  }
+
+  @After
+  fun teardown() {
+    Utils.withDefaultSharedPreferences(ApplicationProvider.getApplicationContext()) {
+      it.edit().clear().commit()
+    }
   }
 
   @Test
@@ -174,6 +197,23 @@ class MainActivityTest {
   }
 
   @Test
+  fun testHelpMenuItem() {
+    Intents.init()
+    try {
+      onView(withId(R.id.layout_main))
+        .check(matches(isClosed(Gravity.START)))
+        .perform(DrawerActions.open(Gravity.START))
+
+      onView(withId(R.id.navigation_drawer))
+        .perform(NavigationViewActions.navigateTo(R.id.help))
+
+      intended(hasComponent(AppIntroActivity::class.qualifiedName))
+    } finally {
+      Intents.release()
+    }
+  }
+
+  @Test
   fun testSupportDevelopmentMenuItem() {
     onView(withId(R.id.layout_main))
       .check(matches(isClosed(Gravity.START)))
@@ -199,51 +239,55 @@ class MainActivityTest {
   @Test
   fun testReportIssuesMenuItem() {
     Intents.init()
-    onView(withId(R.id.layout_main))
-      .check(matches(isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
+    try {
+      onView(withId(R.id.layout_main))
+        .check(matches(isClosed(Gravity.START)))
+        .perform(DrawerActions.open(Gravity.START))
 
-    onView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.report_issue))
+      onView(withId(R.id.navigation_drawer))
+        .perform(NavigationViewActions.navigateTo(R.id.report_issue))
 
-    intended(
-      filterEquals(
-        Intent(
-          Intent.ACTION_VIEW, Uri.parse(
-            InstrumentationRegistry.getInstrumentation()
-              .targetContext
-              .getString(R.string.app_issues_url)
+      intended(
+        filterEquals(
+          Intent(
+            Intent.ACTION_VIEW, Uri.parse(
+              InstrumentationRegistry.getInstrumentation()
+                .targetContext
+                .getString(R.string.app_issues_url)
+            )
           )
         )
       )
-    )
-
-    Intents.release()
+    } finally {
+      Intents.release()
+    }
   }
 
   @Test
   fun testRateOnPlayStoreMenuItem() {
     Intents.init()
-    onView(withId(R.id.layout_main))
-      .check(matches(isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
+    try {
+      onView(withId(R.id.layout_main))
+        .check(matches(isClosed(Gravity.START)))
+        .perform(DrawerActions.open(Gravity.START))
 
-    onView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.rate_on_play_store))
+      onView(withId(R.id.navigation_drawer))
+        .perform(NavigationViewActions.navigateTo(R.id.rate_on_play_store))
 
-    intended(
-      filterEquals(
-        Intent(
-          Intent.ACTION_VIEW,
-          Uri.parse(
-            ApplicationProvider.getApplicationContext<Context>()
-              .getString(R.string.rate_us_on_play_store_url)
+      intended(
+        filterEquals(
+          Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(
+              ApplicationProvider.getApplicationContext<Context>()
+                .getString(R.string.rate_us_on_play_store_url)
+            )
           )
         )
       )
-    )
-
-    Intents.release()
+    } finally {
+      Intents.release()
+    }
   }
 
   @Test

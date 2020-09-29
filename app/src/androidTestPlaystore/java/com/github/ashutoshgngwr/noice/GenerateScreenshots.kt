@@ -31,8 +31,13 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkObject
 import org.hamcrest.Matchers.allOf
-import org.junit.*
+import org.junit.After
+import org.junit.AfterClass
 import org.junit.Assume.assumeNotNull
+import org.junit.BeforeClass
+import org.junit.ClassRule
+import org.junit.Rule
+import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.junit.runners.model.Statement
@@ -53,6 +58,11 @@ class GenerateScreenshots {
     @JvmStatic
     @BeforeClass
     fun setupAll() {
+      // prevent app intro from showing up
+      Utils.withDefaultSharedPreferences(ApplicationProvider.getApplicationContext()) {
+        it.edit().putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true).commit()
+      }
+
       // using mocks to save a few presets for screenshots
       Preset.writeAllToUserPreferences(
         ApplicationProvider.getApplicationContext(), arrayListOf(
@@ -153,14 +163,14 @@ class GenerateScreenshots {
     activityRule.runOnUiThread { activityRule.activity.recreate() }
     onView(withId(R.id.list_sound)).perform(
       actionOnItem<SoundLibraryFragment.ViewHolder>(
-        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.airplane_inflight))),
+        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.light_rain))),
         EspressoX.clickInItem(R.id.button_play)
       )
     )
 
     onView(withId(R.id.list_sound)).perform(
       actionOnItem<SoundLibraryFragment.ViewHolder>(
-        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.airplane_inflight))),
+        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.light_rain))),
         EspressoX.slideInItem(
           R.id.slider_volume,
           Player.MAX_VOLUME.toFloat() - Player.DEFAULT_VOLUME
@@ -171,7 +181,7 @@ class GenerateScreenshots {
     onView(withId(R.id.list_sound)).perform(
       actionOnItem<SoundLibraryFragment.ViewHolder>(
         ViewMatchers.hasDescendant(
-          allOf(withId(R.id.title), withText(R.string.airplane_seatbelt_beeps))
+          allOf(withId(R.id.title), withText(R.string.distant_thunder))
         ),
         EspressoX.clickInItem(R.id.button_play)
       )
@@ -180,7 +190,7 @@ class GenerateScreenshots {
     onView(withId(R.id.list_sound)).perform(
       actionOnItem<SoundLibraryFragment.ViewHolder>(
         ViewMatchers.hasDescendant(
-          allOf(withId(R.id.title), withText(R.string.airplane_seatbelt_beeps))
+          allOf(withId(R.id.title), withText(R.string.distant_thunder))
         ),
         EspressoX.slideInItem(R.id.slider_volume, Player.MAX_VOLUME.toFloat())
       )
@@ -189,7 +199,7 @@ class GenerateScreenshots {
     onView(withId(R.id.list_sound)).perform(
       actionOnItem<SoundLibraryFragment.ViewHolder>(
         ViewMatchers.hasDescendant(
-          allOf(withId(R.id.title), withText(R.string.airplane_seatbelt_beeps))
+          allOf(withId(R.id.title), withText(R.string.distant_thunder))
         ),
         EspressoX.slideInItem(R.id.slider_time_period, Player.MAX_TIME_PERIOD.toFloat() - 300)
       )

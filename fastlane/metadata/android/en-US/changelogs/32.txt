@@ -1,0 +1,6 @@
+- Added flow to provide review inside the app
+- Updated French translations
+- Updated Czech translations
+
+We're continuously working to make Noice better and useful. Please turn on updates to never miss a thing!
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG

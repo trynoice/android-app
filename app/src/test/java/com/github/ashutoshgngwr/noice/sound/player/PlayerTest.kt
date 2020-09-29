@@ -3,7 +3,12 @@ package com.github.ashutoshgngwr.noice.sound.player
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategy
 import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategyFactory
-import io.mockk.*
+import io.mockk.clearMocks
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.verify
+import io.mockk.verifySequence
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

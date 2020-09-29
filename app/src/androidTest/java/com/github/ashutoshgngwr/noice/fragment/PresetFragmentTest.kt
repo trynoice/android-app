@@ -12,16 +12,23 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
+import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.clearMocks
+import io.mockk.every
 import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.slot
+import io.mockk.verify
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.*
 import org.junit.Assert.assertEquals
@@ -58,6 +65,7 @@ class PresetFragmentTest {
       )
     }
 
+    mockkObject(InAppReviewFlowManager)
     mockkObject(Preset.Companion)
     every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(mockPreset)
     fragmentScenario = launchFragmentInContainer<PresetFragment>(null, R.style.Theme_App)
@@ -133,6 +141,7 @@ class PresetFragmentTest {
     onView(withText("test")).check(doesNotExist())
     verify(exactly = 1) {
       Preset.writeAllToUserPreferences(any(), emptyList())
+      InAppReviewFlowManager.maybeAskForReview(any())
     }
   }
 
@@ -198,6 +207,7 @@ class PresetFragmentTest {
     verify(exactly = 1) {
       mockPreset.name = "test-does-not-exists"
       Preset.writeAllToUserPreferences(any(), capture(presetsSlot))
+      InAppReviewFlowManager.maybeAskForReview(any())
     }
 
     assertEquals(mockPreset, presetsSlot.captured[0])

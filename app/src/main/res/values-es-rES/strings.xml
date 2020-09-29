@@ -19,8 +19,13 @@
   <string name="bonfire">Fogata</string>
   <string name="brownian_noise">Ruido marrón</string>
   <string name="coffee_shop">Cafetería</string>
-  <string name="distant_thunder">Truenos distantes</string>
+  <string name="creaking_ship">Barco crujiente</string>
+  <string name="crickets">Grillos</string>
+  <string name="distant_thunder">Truenos lejanos</string>
+  <string name="electric_car">Carro eléctrico</string>
   <string name="heavy_rain">Lluvia fuerte</string>
+  <string name="howling_wolf">Lobo aullando</string>
+  <string name="human_heartbeat">Latido del corazón humano</string>
   <string name="light_rain">Lluvia suave</string>
   <string name="moderate_rain">Lluvia moderada</string>
   <string name="morning_in_a_village">Una mañana en un pueblo</string>
@@ -28,16 +33,22 @@
   <string name="night">Noche</string>
   <string name="office">Oficina</string>
   <string name="pink_noise">Ruido rosa</string>
-  <string name="rolling_thunder">Trueno rodado</string>
+  <string name="public_library">Biblioteca pública</string>
+  <string name="purring_cat">Gato ronroneando</string>
+  <string name="quiet_conversation">Conversación tranquila</string>
+  <string name="rolling_thunder">Retumbado de truenos</string>
+  <string name="screeching_seagulls">Gaviotas chillando</string>
   <string name="seaside">Orilla del mar</string>
   <string name="soft_wind">Viento suave</string>
   <string name="thunder_crack">Rugido de truenos</string>
   <string name="train_horn">Bocina de tren</string>
+  <string name="walking_through_the_snow">Caminata sobre la nieve</string>
+  <string name="water_hose">Manguera de agua</string>
   <string name="water_stream">Corriente de agua</string>
   <string name="white_noise">Ruido blanco</string>
   <string name="wind_in_palm_trees">Brisa palmeras</string>
   <string name="wind_in_chimes_of_shells">Brisa sonajero de viento</string>
-  <string name="app_description">Relájate y aumenta la productividad con un mínimo ruido de fondo</string>
+  <string name="app_description">Relájese y aumente la productividad con un mínimo ruido de fondo</string>
   <string name="connect_with_author">Contactar al Autor</string>
   <string name="about__email">Correo</string>
   <string name="about__github">Github</string>
@@ -49,14 +60,14 @@
   <string name="save">Guardar</string>
   <string name="cancel">Cancelar</string>
   <string name="preset_name_cannot_be_empty">¡El nombre del Preset no puede estar vacío!</string>
+  <string name="preset_already_exists">¡El nombre dado del Preset ya existe!</string>
   <string name="preset_saved">¡Preset guardado!</string>
   <string name="saved_presets">Presets Guardados</string>
   <string name="preset_delete_confirmation">¿Estás seguro de borrar \"%s\"?</string>
   <string name="delete">Borrar</string>
   <string name="preset_deleted">¡Preset borrado!</string>
   <string name="preset_info__description">
-    Los presets no son otra cosa que un conjunto de sonidos configurados a tu gusto y que sirve para aplicar y reproducir, con un simple clic, la lista de sonidos configurados previamente.
-    Si aún no has creado ningún preset. Ve a la biblioteca y reproduce los sonidos que quieras simultáneamente.
+    No has creado ningún preset. Ve a la biblioteca y reproduce los sonidos que quieras simultáneamente.
     Luego haga clic en el botón Guardar que aparece en la esquina inferior de la pantalla.
   </string>
   <string name="sleep_timer">Temporizador</string>
@@ -66,6 +77,77 @@
   <string name="app_theme">Tema</string>
   <string name="open_context_menu">Abrir menú contextual</string>
   <string name="rename">Renombrar</string>
+  <string name="cast_media">Transmitir medio a otro dispositivo</string>
+  <string name="about__translations">Traducciones</string>
+  <string name="wake_up_timer">Despertador</string>
+  <string name="wake_up_timer_description">
+    Noice iniciará el preset seleccionado cuando finalice el temporizador. Use los botones a continuación
+    para seleccionar un Preset y establecer la hora deseada para iniciar el despertador.
+  </string>
+  <string name="select_preset">Seleccionar Preset</string>
+  <string name="schedule">Temporizador</string>
+  <string name="support_development">Apoyar al desarrollador</string>
+  <string name="support_development__why">¿Porqué debería apoyar?</string>
+  <string name="support_development__why_description">
+    - Como gesto de agradecimiento al desarrollador\n
+    - Para garantizar futuras actualizaciones\n
+    - Para mantener a Noice sin anuncios siempre\n
+    - Para permitirnos invertir en la mejora de las funciones existentes, así como en la adición de nuevas funciones\n
+  </string>
+  <string name="support_development__share">Compartir con friends</string>
+  <string name="support_development__share_description">
+    Comparte Noice con amigos es una alternativa a las donaciones.\n
+    - Sus amigos _podrían_ necesitar it\n
+    - Muchas descargas atraen más colaboraciones\n
+    - Con descargas más altas, podremos recibir comentarios desde diferentes perspectivas
+      que nos ayudará a hacer de Noice mejor que nunca\n
+  </string>
+  <string name="support_development__donate">Donate</string>
+  <string name="support_development__donate_description">
+    Las donaciones nos ayudarán a\n
+    - invertir en nuevas funciones\n
+    - curar mejores muestras de sonido\n
+    - comprar café\n
+  </string>
+  <string name="support_development__donate_google_play_description">
+    Su pago será manejado de forma segura por Google Play. La cantidad se convertirá a su moneda
+    local. Dependiendo de su ubicación, se pueden agregar impuestos adicionales al monto final.
+  </string>
+  <string name="support_development__donate_thank_you">Thank you!</string>
+  <string name="support_development__donate_thank_you_description">
+    Le agradecemos de todo corazón su generosa contribución al proyecto Noise.
+  </string>
+  <string name="sound_group__life">Vida</string>
+  <string name="sound_group__monsoon">Monzón</string>
+  <string name="sound_group__public_gatherings">Reuniones públicas</string>
+  <string name="sound_group__raw_noise">Ruido en crudo</string>
+  <string name="sound_group__times_of_day">Momentos del día</string>
+  <string name="sound_group__vehicles">Vehículos</string>
+  <string name="sound_group__water">Agua</string>
+  <string name="sound_group__wind">Viento</string>
+  <string name="appintro__getting_started_title">Bienvenidos</string>
+  <string name="appintro__getting_started_desc_0">¡Desliza hacia la izquierda para conocer todas las funciones!</string>
+  <string name="appintro__getting_started_desc_1">¡Empecemos!</string>
+  <string name="appintro__sound_library_title">Cree su entorno perfecto</string>
+  <string name="appintro__sound_library_desc">
+    Utilice el control deslizante de volumen para ajustar los volúmenes de sonido. En cada repetición de sonidos sin bucle, un periodo
+    prolongado se selecciona aleatoriamente del rango establecido por el control deslizante de tiempo.
+  </string>
+  <string name="appintro__preset_title">Guarde sus presets favoritos</string>
+  <string name="appintro__preset_desc">
+    Después de reproducir algunos sonidos, puede usar el botón en la esquina inferior para guardar su preset.
+    Para reutilizar un preset almacenado, puede visitar la lista predeterminada en el menú de la aplicación.
+  </string>
+  <string name="appintro__timer_title">¿Problemas para conciliar el sueño o para despertar?</string>
+  <string name="appintro__timer_desc">
+    Un poco de ambiente puede ayudarle a conciliar el sueño sin esfuerzo. Use el temporizador de apagado para permitir que Noice se apague.
+    De manera similar, para despertarse en un ambiente tranquilo, use el temporizador de despertador para configurar la alarma.
+  </string>
+  <string name="appintro__chromecast_title">Chromecast activado</string>
+  <string name="appintro__chromecast_desc">
+    Utilice Noise para transmitir su ambiente a otros dispositivos conectados a Chromecast, como altavoces, televisores, etc.
+  </string>
+  <string name="help">Ayuda</string>
   <string-array name="app_themes">
     <item>Claro</item>
     <item>Oscuro</item>

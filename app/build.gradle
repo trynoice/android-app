@@ -10,8 +10,8 @@ android {
     applicationId 'com.github.ashutoshgngwr.noice'
     minSdkVersion 21
     targetSdkVersion 29
-    versionCode 29
-    versionName '0.9.1'
+    versionCode 33
+    versionName '0.11.1'
     testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
   }
 
@@ -70,37 +70,42 @@ android {
 dependencies {
   implementation 'androidx.core:core-ktx:1.3.1'
   implementation 'androidx.appcompat:appcompat:1.2.0'
-  implementation 'androidx.media:media:1.1.0'
+  implementation 'androidx.media:media:1.2.0'
   implementation 'androidx.mediarouter:mediarouter:1.1.0'
   implementation 'androidx.preference:preference:1.1.1'
+  implementation 'com.github.AppIntro:AppIntro:6.0.0'
   implementation 'com.github.medyo:android-about-page:1.2.5'
   implementation 'com.google.android.exoplayer:exoplayer-core:2.11.8'
-  implementation 'com.google.android.material:material:1.2.0'
+  implementation 'com.google.android.material:material:1.2.1'
   implementation 'com.google.code.gson:gson:2.8.6'
-  implementation 'io.noties.markwon:core:4.5.1'
+  implementation 'io.noties.markwon:core:4.6.0'
   implementation 'org.greenrobot:eventbus:3.1.1'
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
   playstoreImplementation 'com.anjlab.android.iab.v3:library:1.1.0'
   playstoreImplementation 'com.google.android.gms:play-services-cast-framework:19.0.0'
+  playstoreImplementation 'com.google.android.play:core:1.8.0'
 
   testImplementation 'androidx.test:core:1.3.0'
-  testImplementation 'io.mockk:mockk:1.10.0'
+  testImplementation 'io.mockk:mockk:1.10.2'
   testImplementation 'junit:junit:4.13'
   testImplementation 'org.robolectric:robolectric:4.4'
   testImplementation 'org.skyscreamer:jsonassert:1.5.0'
 
-  androidTestImplementation 'androidx.test:core:1.2.0'
-  androidTestImplementation 'androidx.test:rules:1.2.0'
-  androidTestImplementation 'androidx.test:runner:1.2.0'
-  androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-  androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
-  androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
+  androidTestImplementation 'androidx.test:core:1.3.0'
+  androidTestImplementation 'androidx.test:rules:1.3.0'
+  androidTestImplementation 'androidx.test:runner:1.3.0'
+  androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+  androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.3.0'
+  androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0'
   androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-  androidTestImplementation 'io.mockk:mockk-android:1.10.0'
+  androidTestImplementation 'io.mockk:mockk-android:1.10.2'
   androidTestImplementation 'junit:junit:4.13'
 
   androidTestPlaystoreImplementation 'tools.fastlane:screengrab:2.0.0'
 
-  debugImplementation 'androidx.fragment:fragment-testing:1.2.5'
+  debugImplementation 'androidx.fragment:fragment-testing:1.2.5', {
+    // https://github.com/android/android-test/issues/294
+    exclude group: 'androidx.test', module: 'core'
+  }
 }

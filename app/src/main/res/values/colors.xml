@@ -12,4 +12,13 @@
   This is supposed to override its default background color -->
   <color name="about_background_color">@color/colorBackground</color>
   <color name="ic_launcher_background">#FFFFFF</color>
+
+  <!-- app intro colors -->
+  <color name="appintro_slide_0__background">#202028</color>
+  <color name="appintro_slide_1__background">#1F7A8C</color>
+  <color name="appintro_slide_2__background">#5946D8</color>
+  <color name="appintro_slide_3__background">#A63D40</color>
+  <color name="appintro_slide_4__background">#684488</color>
+  <color name="appintro_slide_5__background">@color/colorPrimaryDark</color>
+  <color name="appintro__text_color">#EFEFEF</color>
 </resources>

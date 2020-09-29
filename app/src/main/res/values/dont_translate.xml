@@ -2,21 +2,24 @@
 <resources>
   <string name="app_name" translatable="false">Noice</string>
   <string name="app_copyright" translatable="false">2019 Ashutosh Gangwar</string>
-  <string name="app_license_url" translatable="false">
-    https://github.com/ashutoshgngwr/noice/blob/master/LICENSE
-  </string>
+  <string name="app_license_url" translatable="false">https://github.com/ashutoshgngwr/noice/blob/master/LICENSE</string>
   <string name="app_website" translatable="false">https://ashutoshgngwr.github.io/noice</string>
   <string name="app_github" translatable="false">ashutoshgngwr/noice</string>
+  <string name="app_github_url" translatable="false">https://github.com/ashutoshgngwr/noice</string>
   <string name="author_email" translatable="false">ashutoshgngwr@gmail.com</string>
   <string name="author_social_handle" translatable="false">ashutoshgngwr</string>
   <string name="credits__app_icon" translatable="false">white noise icon by Juraj Sedlák</string>
-  <string name="credits__app_icon_url" translatable="false">
-    https://thenounproject.com/term/white-noise/1287855/
-  </string>
+  <string name="credits__app_icon_url" translatable="false">https://thenounproject.com/term/white-noise/1287855/</string>
   <string name="credits__support_development_icon" translatable="false">Heart icon by Aybige</string>
-  <string name="credits__support_development_icon_url" translatable="false">
-    https://thenounproject.com/term/heart/1556514
-  </string>
+  <string name="credits__support_development_icon_url" translatable="false">https://thenounproject.com/term/heart/1556514</string>
+  <string name="credits__appintro_sound_library_icon" translatable="false">Ecosystem icon by Made x Made</string>
+  <string name="credits__appintro_sound_library_icon_url" translatable="false">https://thenounproject.com/term/ecosystem/2318259</string>
+  <string name="credits__appintro_preset_icon" translatable="false">Equalizer by Souvik Bhattacharjee</string>
+  <string name="credits__appintro_preset_icon_url" translatable="false">https://thenounproject.com/term/equalizer/1596234</string>
+  <string name="credits__appintro_sleep_timer_icon" translatable="false">Sleeping by Koson Rattanaphan, TH</string>
+  <string name="credits__appintro_sleep_timer_icon_url" translatable="false">https://thenounproject.com/term/sleeping/3434765</string>
+  <string name="credits__appintro_chromecast_icon" translatable="false">Chromecast by Oliver Silvérus, SE</string>
+  <string name="credits__appintro_chromecast_icon_url" translatable="false">https://thenounproject.com/term/chromecast/2135765</string>
   <string name="credits__sound_airplane_inflight" translatable="false">In-flight Ambience Boeing 737-838 by digifishmusic</string>
   <string name="credits__sound_airplane_inflight_url" translatable="false">https://freesound.org/s/47254/</string>
   <string name="credits__sound_airplane_seatbelt_beeps" translatable="false">Seat belt beeps by nachosose</string>
@@ -27,6 +30,8 @@
   <string name="credits__sound_birds_1_url" translatable="false">https://freesound.org/s/149935/</string>
   <string name="credits__sound_bonfire" translatable="false">Bonfire by amether</string>
   <string name="credits__sound_bonfire_url" translatable="false">https://freesound.org/s/189237/</string>
+  <string name="credits__sound_brownian_noise" translatable="false">Brown noise by georgedyer</string>
+  <string name="credits__sound_brownian_noise_url" translatable="false">https://freesound.org/s/171552/</string>
   <string name="credits__sound_coffee_shop" translatable="false">School Canteen Atmosphere (Coffee shop) by slag777</string>
   <string name="credits__sound_coffee_shop_url" translatable="false">https://freesound.org/s/167057/</string>
   <string name="credits__sound_creaking_ship_0" translatable="false">Wood Creak by dheming</string>
@@ -36,9 +41,7 @@
   <string name="credits__sound_crickets" translatable="false">Afternoon Crickets Long from YouTube Audio Library</string>
   <string name="credits__sound_crickets_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=c9c1711e0dfd1421</string>
   <string name="credits__sound_distant_thunder" translatable="false">Distant Thunder from YouTube Audio Library</string>
-  <string name="credits__sound_distant_thunder_url" translatable="false">
-    https://www.youtube.com/audiolibrary_download?vid=c661c0547daf6af7
-  </string>
+  <string name="credits__sound_distant_thunder_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=c661c0547daf6af7</string>
   <string name="credits__sound_electric_car" translatable="false">Electric car BMW i3 - driving by tferrino</string>
   <string name="credits__sound_electric_car_url" translatable="false">https://freesound.org/s/405285/</string>
   <string name="credits__sound_heavy_rain" translatable="false">Heavy rain (thunderstorm) from YouTube Audio Library</string>
@@ -99,6 +102,8 @@
   <string name="credits__sound_wind_in_palm_trees_url" translatable="false">https://freesound.org/s/346106/</string>
   <string name="credits__translation_es_es_0" translatable="false">Spanish translation by julianrrr</string>
   <string name="credits__translation_es_es_0__url" translatable="false">https://github.com/julianrrr</string>
+  <string name="credits__translation_es_es_1" translatable="false">Spanish translation by Diego</string>
+  <string name="credits__translation_es_es_1__url" translatable="false">https://github.com/sguinetti</string>
   <string name="credits__translation_es_ar_0" translatable="false">Argentinian spanish translation by Enchufadoo</string>
   <string name="credits__translation_es_ar_0__url" translatable="false">https://github.com/Enchufadoo</string>
   <string name="credits__translation_ru_0" translatable="false">Russian translation by yamaks2306</string>
@@ -107,10 +112,14 @@
   <string name="credits__translation_de_0__url" translatable="false">https://github.com/schulle4u</string>
   <string name="credits__translation_de_1" translatable="false">German translation by Luca Hohmann</string>
   <string name="credits__translation_de_1__url" translatable="false">https://github.com/gilgusmaximus</string>
+  <string name="credits__translation_de_2" translatable="false">German translation by schubeda</string>
+  <string name="credits__translation_de_2__url" translatable="false">https://github.com/schubeda</string>
   <string name="credits__translation_it_it_0" translatable="false">Italian translation by Sebastian Scaramuzza</string>
   <string name="credits__translation_it_it_0__url" translatable="false">https://sebastianscaramuzza.com</string>
   <string name="credits__translation_fr_fr_0" translatable="false">French translation by Eki474</string>
   <string name="credits__translation_fr_fr_0__url" translatable="false">https://github.com/Eki474</string>
+  <string name="credits__translation_fr_fr_1" translatable="false">French translation by Mickael-Martin</string>
+  <string name="credits__translation_fr_fr_1__url" translatable="false">https://github.com/Mickael-Martin</string>
   <string name="credits__translation_pt_br_0" translatable="false">Portuguese (Brazil) translation by Vinny</string>
   <string name="credits__translation_pt_br_0__url" translatable="false">https://github.com/CebolaBros64</string>
   <string name="credits__translation_sv_0" translatable="false">Swedish translation by Ricky Lindén</string>

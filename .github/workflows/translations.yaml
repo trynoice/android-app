@@ -10,10 +10,13 @@ on:
 jobs:
   check:
     name: Check
+    if: github.repository == 'ashutoshgngwr/noice'
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - id: check
         uses: ashutoshgngwr/android-missing-translations@v1
         with:

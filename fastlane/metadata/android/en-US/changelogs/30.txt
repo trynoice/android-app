@@ -1,0 +1,11 @@
+It is a mandatory update to make Chromecast work as the new receiver app is incompatible with earlier versions. 
+
+- Compressed sound library disk size by ~42%
+- Added 11 new sounds
+- Increased allowed time range for non-looping sounds
+- Replaced duration with exact time in wake-up timer
+- Applied loudness equilization to many sounds
+- Added app intro slides for first-timers
+- Simplified Chromecast UI on receiver devices
+
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG

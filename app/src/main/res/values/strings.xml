@@ -17,7 +17,7 @@
   <string name="airplane_seatbelt_beeps">Airplane seat-belt beeps</string>
   <string name="birds">Birds</string>
   <string name="bonfire">Bonfire</string>
-  <string name="brownian_noise">Brownian Noise</string>
+  <string name="brownian_noise">Brownian noise</string>
   <string name="coffee_shop">Coffee shop</string>
   <string name="creaking_ship">Creaking ship</string>
   <string name="crickets">Crickets</string>
@@ -32,8 +32,8 @@
   <string name="moving_train">Moving train</string>
   <string name="night">Night</string>
   <string name="office">Office</string>
-  <string name="pink_noise">Pink Noise</string>
-  <string name="public_library">Public Library</string>
+  <string name="pink_noise">Pink noise</string>
+  <string name="public_library">Public library</string>
   <string name="purring_cat">Purring cat</string>
   <string name="quiet_conversation">Quiet conversation</string>
   <string name="rolling_thunder">Rolling thunder</string>
@@ -46,9 +46,9 @@
   <string name="water_hose">Water hose</string>
   <string name="water_stream">Water stream</string>
   <string name="white_noise">White noise</string>
-  <string name="wind_in_palm_trees">Wind in Palm trees</string>
+  <string name="wind_in_palm_trees">Wind in palm trees</string>
   <string name="wind_in_chimes_of_shells">Wind in chimes of shells</string>
-  <string name="app_description">Relax and boost productivity with minimal background noise</string>
+  <string name="app_description">Relax and boost productivity with minimal background noise.</string>
   <string name="connect_with_author">Connect with Author</string>
   <string name="about__email">Email</string>
   <string name="about__github">Github</string>
@@ -85,7 +85,7 @@
   <string name="wake_up_timer">Wake-up Timer</string>
   <string name="wake_up_timer_description">
     Noice will start the selected preset when the timer ends. Use the buttons below to select a
-    preset and add the desired duration to start the wake-up timer.
+    preset and set the desired time to start the wake-up timer.
   </string>
   <string name="select_preset">Select Preset</string>
   <string name="schedule">Schedule</string>
@@ -102,8 +102,8 @@
     Sharing Noice with friends is similar to donating money.\n
     - Your friends _might_ need it\n
     - Higher downloads attract more contributors\n
-    - With higher downloads, we will be able receive feedback from a number different perspectives
-      which will help us in making Noice better than ever\n
+    - With higher downloads, we will be able to receive feedback from a number of different
+      perspectives which will help us in making Noice better than ever\n
   </string>
   <string name="support_development__donate">Donate</string>
   <string name="support_development__donate_description">
@@ -128,6 +128,38 @@
   <string name="sound_group__vehicles">Vehicles</string>
   <string name="sound_group__water">Water</string>
   <string name="sound_group__wind">Wind</string>
+  <string name="appintro__getting_started_title">Welcome</string>
+  <string name="appintro__getting_started_desc_0">Swipe left to get to know all the features!</string>
+  <string name="appintro__getting_started_desc_1">Let\'s get started!</string>
+  <string name="appintro__sound_library_title">Create your perfect surroundings</string>
+  <string name="appintro__sound_library_desc">
+    Use the volume slider to adjust sound volumes. At each repetition of non-looping sounds, a delay
+    period is selected randomly from the range set by the time slider.
+  </string>
+  <string name="appintro__preset_title">Save your favourite mixes</string>
+  <string name="appintro__preset_desc">
+    After playing a few sounds, you can use the button in the bottom end corner to save your mix.
+    To reuse a stored mix, you can visit the preset list from the app menu.
+  </string>
+  <string name="appintro__timer_title">Trouble falling asleep or waking up?</string>
+  <string name="appintro__timer_desc">
+    A little ambience can help you fall asleep effortlessly. Use the sleep timer to let Noice shut
+    itself down. Similarly, to wake up to a calm environment, use the wake-up timer to set the alarm.
+  </string>
+  <string name="appintro__chromecast_title">Chromecast enabled</string>
+  <string name="appintro__chromecast_desc">
+    Use Noice to cast its ambience to other Chromecast enabled devices such as speakers, TVs, etc.
+  </string>
+  <string name="help">Help</string>
+  <string name="in_app_feedback__title">Submit a review</string>
+  <string name="in_app_feedback__description">
+    We\'d love to hear from you about the app. Please take a moment to visit our GitHub repository.
+    If you didn\'t love the app, please consider opening up an issue explaining your concerns.
+    Otherwise, please star the project to show love and support.
+  </string>
+  <string name="okay">Okay</string>
+  <string name="later">Later</string>
+  <string name="never">Never</string>
   <string-array name="app_themes">
     <item>Light</item>
     <item>Dark</item>

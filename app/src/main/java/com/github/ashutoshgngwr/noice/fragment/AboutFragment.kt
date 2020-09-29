@@ -26,6 +26,26 @@ class AboutFragment : Fragment() {
         R.string.credits__support_development_icon,
         R.drawable.ic_nav_support_development,
         R.string.credits__support_development_icon_url
+      ),
+      arrayOf(
+        R.string.credits__appintro_sound_library_icon,
+        R.drawable.ic_appintro_sound_library,
+        R.string.credits__appintro_sound_library_icon_url
+      ),
+      arrayOf(
+        R.string.credits__appintro_preset_icon,
+        R.drawable.ic_appintro_preset,
+        R.string.credits__appintro_preset_icon_url
+      ),
+      arrayOf(
+        R.string.credits__appintro_sleep_timer_icon,
+        R.drawable.ic_appintro_sleep_timer,
+        R.string.credits__appintro_sleep_timer_icon_url
+      ),
+      arrayOf(
+        R.string.credits__appintro_chromecast_icon,
+        R.drawable.ic_appintro_chromecast,
+        R.string.credits__appintro_chromecast_icon_url
       )
     )
 
@@ -43,6 +63,14 @@ class AboutFragment : Fragment() {
         R.string.credits__translation_de_0__url
       ),
       arrayOf(
+        R.string.credits__translation_de_1,
+        R.string.credits__translation_de_1__url
+      ),
+      arrayOf(
+        R.string.credits__translation_de_2,
+        R.string.credits__translation_de_2__url
+      ),
+      arrayOf(
         R.string.credits__translation_it_it_0,
         R.string.credits__translation_it_it_0__url
       ),
@@ -51,12 +79,20 @@ class AboutFragment : Fragment() {
         R.string.credits__translation_fr_fr_0__url
       ),
       arrayOf(
+        R.string.credits__translation_fr_fr_1,
+        R.string.credits__translation_fr_fr_1__url
+      ),
+      arrayOf(
         R.string.credits__translation_pt_br_0,
         R.string.credits__translation_pt_br_0__url
       ),
       arrayOf(
         R.string.credits__translation_es_es_0,
         R.string.credits__translation_es_es_0__url
+      ),
+      arrayOf(
+        R.string.credits__translation_es_es_1,
+        R.string.credits__translation_es_es_1__url
       ),
       arrayOf(
         R.string.credits__translation_sv_0,
@@ -77,10 +113,6 @@ class AboutFragment : Fragment() {
       arrayOf(
         R.string.credits__translation_pl_0,
         R.string.credits__translation_pl_0__url
-      ),
-      arrayOf(
-        R.string.credits__translation_de_1,
-        R.string.credits__translation_de_1__url
       )
     )
   }

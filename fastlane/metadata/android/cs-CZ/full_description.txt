@@ -3,10 +3,10 @@ Mnoha lidem pomáhá nějaký slabý podkresový zvukový šum se uklidnit a sou
 Noice je aplikace, která vám umožní si vytvořit vlastní zvuková prostředí za pomoci smyček nahrávek klidných lokací. Vytvořte si vlastní dokonalou klidovou zónu kombinací různých šumů, abyste se odprostili od stimulů okolí a mohli se znovu soustředit na práci. Případně si vygenerovat prostředí, které vás ukolébá ke spánku.
 
 <b>Funkce</b>
-- 24 zvukových smyček
-- podpora pro Google Cast (Chromecast) <i>(experimentální, jen na Google Play)</i>
+- 35 zvukových smyček
+- podpora pro Google Cast (Chromecast) [jen na Google Play]
 - Automatický časovač vypnutí pro spáče
-- Časovač zapnutí (Funkce budíku) <i>(experimentální)</i>
+- Časovač zapnutí (Funkce budíku)
 - Vytvořte si vlastní mix
 - Uložte si vlastní mixy
 - Možnost přehrávat i při spuštěné hudbě z jiného přehrávače

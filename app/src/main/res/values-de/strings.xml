@@ -17,7 +17,7 @@
   <string name="airplane_seatbelt_beeps">Flugzeug-Anschnallsignal</string>
   <string name="birds">Vögel</string>
   <string name="bonfire">Lagerfeuer</string>
-  <string name="brownian_noise">Braunes Rauschen</string>
+  <string name="brownian_noise">Brownsches Rauschen</string>
   <string name="coffee_shop">Kaffeehaus</string>
   <string name="distant_thunder">Ferner Donner</string>
   <string name="heavy_rain">Starker Regen</string>
@@ -60,11 +60,11 @@
   <string name="auto_sleep_schedule_cancelled">Automatischer Schlaftimer abgebrochen!</string>
   <string name="app_theme">Theme</string>
   <string name="cast_media">Übertrage das Medium auf ein anderes Gerät</string>
-  <string name="open_context_menu">Öffne das Context-Menü</string>
+  <string name="open_context_menu">Öffne das Kontext-Menü</string>
   <string name="preset_already_exists">Eine Voreinstellung mit diesem Namen existiert bereits!</string>
   <string name="preset_info__description">
     Du hast bisher keine Voreinstellungen erstellt. Um eine Voreinstellung zu erstellen, gehe zur
-    Bibliothek und starte eine Audioausgabe. Im Anschluss kannst du den Speichern Knopf in der
+    Bibliothek und starte eine Audioausgabe. Im Anschluss kannst du den Speichern-Knopf in der
     unteren Ecke des Bildschirms anklicken.
   </string>
   <string name="rename">Umbenennen</string>
@@ -75,7 +75,7 @@
   </string>
   <string name="sound_group__monsoon">Monsun</string>
   <string name="sound_group__public_gatherings">Öffentliches Zusammenkommen</string>
-  <string name="sound_group__raw_noise">Grobes Rausche</string>
+  <string name="sound_group__raw_noise">Grobes Rauschen</string>
   <string name="sound_group__times_of_day">Tageszeiten</string>
   <string name="sound_group__wind">Wind</string>
   <string name="support_development">Unterstütze die Entwicklung</string>

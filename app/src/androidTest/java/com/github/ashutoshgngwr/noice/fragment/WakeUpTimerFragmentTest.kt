@@ -10,11 +10,17 @@ import androidx.test.espresso.contrib.PickerActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
+import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.sound.Preset
-import io.mockk.*
+import io.mockk.clearMocks
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.slot
+import io.mockk.verify
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -34,6 +40,7 @@ class WakeUpTimerFragmentTest {
 
   @Before
   fun setup() {
+    mockkObject(InAppReviewFlowManager)
     mockkObject(Preset.Companion)
     mockkObject(WakeUpTimerManager)
     every { WakeUpTimerManager.set(any(), any()) } returns Unit
@@ -136,7 +143,11 @@ class WakeUpTimerFragmentTest {
 
     val calendar = Calendar.getInstance()
     val timerSlot = slot<WakeUpTimerManager.Timer>()
-    verify(exactly = 1) { WakeUpTimerManager.set(any(), capture(timerSlot)) }
+    verify(exactly = 1) {
+      WakeUpTimerManager.set(any(), capture(timerSlot))
+      InAppReviewFlowManager.maybeAskForReview(any())
+    }
+
     calendar.timeInMillis = timerSlot.captured.atMillis
     assertEquals("test-1", timerSlot.captured.presetName)
     assertEquals(calendar.get(Calendar.HOUR_OF_DAY), 1)

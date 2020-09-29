@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.sound.Preset
@@ -104,22 +105,20 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
           Preset.appendToUserPreferences(requireContext(), preset)
           mSavePresetButton?.hide()
           showPresetSavedMessage()
+
+          // maybe show in-app review dialog to the user
+          InAppReviewFlowManager.maybeAskForReview(requireActivity())
         }
       }
     }
 
-    registerOnEventBus()
+    eventBus.register(this)
   }
 
   override fun onDestroyView() {
-    unregisterFromEventBus()
+    eventBus.unregister(this)
     super.onDestroyView()
   }
-
-  /*
-    showPresetSavedMessage, registerOnEventBus and unregisterFromEventBus are helper functions
-    to avoid labelled expressions warning (lint warning in Detekt)
-   */
 
   private fun showPresetSavedMessage() {
     Snackbar.make(requireView(), R.string.preset_saved, Snackbar.LENGTH_LONG)
@@ -127,16 +126,7 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
       .show()
   }
 
-  private fun registerOnEventBus() {
-    eventBus.register(this)
-  }
-
-  private fun unregisterFromEventBus() {
-    eventBus.unregister(this)
-  }
-
-
-  private inner class SoundListItem(@LayoutRes val layoutID: Int, val data: String)
+  private class SoundListItem(@LayoutRes val layoutID: Int, val data: String)
 
   private inner class SoundListAdapter(private val context: Context) :
     RecyclerView.Adapter<ViewHolder>() {
@@ -165,20 +155,21 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
       val soundKey = dataSet[position].data
       val sound = Sound.get(soundKey)
       val isPlaying = players.containsKey(soundKey)
-      holder.itemView.title.text = context.getString(sound.titleResId)
-      holder.itemView.slider_volume.isEnabled = isPlaying
-      holder.itemView.slider_time_period.isEnabled = isPlaying
-      holder.itemView.button_play.isChecked = isPlaying
+      var volume = Player.DEFAULT_VOLUME
+      var timePeriod = Player.DEFAULT_TIME_PERIOD
       if (isPlaying) {
         requireNotNull(players[soundKey]).also {
-          holder.itemView.slider_volume.value = it.volume.toFloat()
-          holder.itemView.slider_time_period.value = it.timePeriod.toFloat()
+          volume = it.volume
+          timePeriod = it.timePeriod
         }
-      } else {
-        holder.itemView.slider_volume.value = Player.DEFAULT_VOLUME.toFloat()
-        holder.itemView.slider_time_period.value = Player.DEFAULT_TIME_PERIOD.toFloat()
       }
 
+      holder.itemView.button_play.isChecked = isPlaying
+      holder.itemView.title.text = context.getString(sound.titleResId)
+      holder.itemView.slider_volume.isEnabled = isPlaying
+      holder.itemView.slider_volume.value = volume.toFloat()
+      holder.itemView.slider_time_period.isEnabled = isPlaying
+      holder.itemView.slider_time_period.value = timePeriod.toFloat()
       holder.itemView.layout_time_period.visibility = if (sound.isLooping) {
         View.GONE
       } else {
@@ -191,7 +182,6 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
 
     // set listeners in holders to avoid object recreation on view recycle
     private val sliderChangeListener = object : Slider.OnChangeListener {
-
       override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
         if (!fromUser) {
           return
@@ -209,6 +199,18 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
       }
     }
 
+    // forces update to save preset button (by invoking onPlayerManagerUpdate)
+    private val sliderTouchListener = object : Slider.OnSliderTouchListener {
+      override fun onStartTrackingTouch(slider: Slider) = Unit
+
+      override fun onStopTrackingTouch(slider: Slider) {
+        eventBus.getStickyEvent(MediaPlayerService.OnPlayerManagerUpdateEvent::class.java).also {
+          it ?: return
+          onPlayerManagerUpdate(it)
+        }
+      }
+    }
+
     init {
       if (layoutID == R.layout.layout_list_item__sound) {
         initSoundItem(view)
@@ -216,14 +218,14 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
     }
 
     private fun initSoundItem(view: View) {
-      view.slider_volume.valueFrom = 0.0f
-      view.slider_volume.valueTo = Player.MAX_VOLUME.toFloat()
-      view.slider_volume.addOnChangeListener(sliderChangeListener)
-      view.slider_volume.setLabelFormatter { "${(it * 100).toInt() / Player.MAX_VOLUME}%" }
-      view.slider_time_period.valueFrom = Player.MIN_TIME_PERIOD.toFloat()
-      view.slider_time_period.valueTo = Player.MAX_TIME_PERIOD.toFloat()
-      view.slider_time_period.addOnChangeListener(sliderChangeListener)
-      view.slider_time_period.setLabelFormatter { "${it.toInt() / 60}m ${it.toInt() % 60}s" }
+      setupSlider(view.slider_volume, 0, Player.MAX_VOLUME) {
+        "${(it * 100).toInt() / Player.MAX_VOLUME}%"
+      }
+
+      setupSlider(view.slider_time_period, Player.MIN_TIME_PERIOD, Player.MAX_TIME_PERIOD) {
+        "${it.toInt() / 60}m ${it.toInt() % 60}s"
+      }
+
       view.button_play.setOnClickListener {
         val listItem = dataSet.getOrNull(adapterPosition) ?: return@setOnClickListener
         if (players.containsKey(listItem.data)) {
@@ -232,6 +234,14 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
           eventBus.post(MediaPlayerService.StartPlayerEvent(listItem.data))
         }
       }
+    }
+
+    private fun setupSlider(slider: Slider, from: Int, to: Int, formatter: (Float) -> String) {
+      slider.valueFrom = from.toFloat()
+      slider.valueTo = to.toFloat()
+      slider.setLabelFormatter(formatter)
+      slider.addOnChangeListener(sliderChangeListener)
+      slider.addOnSliderTouchListener(sliderTouchListener)
     }
   }
 }

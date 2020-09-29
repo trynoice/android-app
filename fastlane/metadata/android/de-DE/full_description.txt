@@ -3,10 +3,10 @@ Vielen Menschen helfen dezemte Hintergrundgeräusche, sich zu beruhigen und zu f
 Die App Noice erlaubt es dir, deine eigene Geräuschumgebung mit Clips aus diversen Quellen für Umgebungsgeräusche zu erstellen. Kombiniere verschiedene Klänge zu einer perfekten Umgebung, die dir ein ablenkungsfreies Arbeiten ermöglicht oder generiere ruhige, friedvolle Umgebungen zum Einschlafen. 
 
 <b>Funktionen</b>
-- 24 Geräuschaufnahmen
-- Google Cast (Chromecast) aktiviert <i>(experimentell, nur im Play Store)</i>
+- 35 Geräuschaufnahmen
+- Google Cast (Chromecast) aktiviert [nur im Play Store]
 - Erstelle einen benutzerdefinierten Mix
-- Weck-Timer (Wecker) <i>(experimentell)</i>
+- Weck-Timer (Wecker)
 - Speichere deine Lieblingsmixe
 - Automatischer Schlaftimer
 - Neben anderen Musikplayern abspielbar
