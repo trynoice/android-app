@@ -17,6 +17,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.shadows.ShadowLooper
 
 @RunWith(RobolectricTestRunner::class)
 class InAppReviewFlowManagerTest {
@@ -36,6 +37,7 @@ class InAppReviewFlowManagerTest {
     every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
     every { ReviewManagerFactory.create(any()) } returns fakeReviewManager
     InAppReviewFlowManager.init(fragmentActivity)
+    ShadowLooper.idleMainLooper() // to let the fake review manager return its ReviewInfo object
   }
 
   @Test
@@ -47,6 +49,7 @@ class InAppReviewFlowManagerTest {
 
     // try to show review flow for the first time, should work
     InAppReviewFlowManager.maybeAskForReview(fragmentActivity)
+    ShadowLooper.idleMainLooper()
 
     // should update the last shown timestamp in shared preferences
     val timestampSlot = slot<Long>()
