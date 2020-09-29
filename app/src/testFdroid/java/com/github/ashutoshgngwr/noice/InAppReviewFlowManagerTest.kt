@@ -13,6 +13,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.shadows.ShadowLooper
 import kotlin.random.Random
 
 @RunWith(RobolectricTestRunner::class)
@@ -58,6 +59,7 @@ class InAppReviewFlowManagerTest {
     } returns false
 
     InAppReviewFlowManager.maybeAskForReview(fragmentActivity)
+    ShadowLooper.idleMainLooper()
 
     // dialog fragment should be shown
     assertEquals(1, fragmentActivity.supportFragmentManager.fragments.size)

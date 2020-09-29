@@ -2,12 +2,14 @@ package com.github.ashutoshgngwr.noice.widget
 
 import android.content.Context
 import android.os.Build
+import android.os.Handler
 import android.os.SystemClock
 import android.text.Html
 import android.text.Spanned
 import android.util.AttributeSet
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
+import androidx.annotation.VisibleForTesting
 import com.github.ashutoshgngwr.noice.R
 import com.google.android.material.textview.MaterialTextView
 import java.util.concurrent.TimeUnit
@@ -36,6 +38,21 @@ class CountdownTextView : MaterialTextView {
   )
 
   /**
+   * In Robolectric 4.4 onwards, the looper model has changed. Earlier, all tasks were posted on the
+   * main looper and could be executed during tests by (main looper related) ShadowLooper APIs. With
+   * PAUSED looper mode set as default now, this is no longer true and each looper has its own thread
+   * and task queue. On top of that, this view used to post its tasks to handler exposed by the its
+   * parent class using [getHandler]. This handler isn't initialized unless the view is attached to
+   * a window. Personally, I tried building a dummy activity using Robolectric and setting this view
+   * as its content during the tests but it didn't work.
+   *
+   * The only way around was to initialize a new [Handler] instance and keeps it visibility open
+   * for tests so that we'd be able to use it with ShadowLooper APIs.
+   */
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  val countdownHandler = Handler()
+
+  /**
    * countdownUntilMillis denotes the time until which the countdown should run. It is
    * countdown duration (millis) added to [SystemClock.uptimeMillis]
    */
@@ -51,18 +68,18 @@ class CountdownTextView : MaterialTextView {
     override fun run() {
       updateCountdown()
       if (SystemClock.uptimeMillis() < countdownUntilMillis) {
-        postDelayed(this, UPDATE_INTERVAL)
+        countdownHandler.postDelayed(this, UPDATE_INTERVAL)
       }
     }
   }
 
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
-    post(updateCallback)
+    countdownHandler.post(updateCallback)
   }
 
   override fun onDetachedFromWindow() {
-    removeCallbacks(updateCallback)
+    countdownHandler.removeCallbacks(updateCallback)
     super.onDetachedFromWindow()
   }
 
@@ -73,9 +90,9 @@ class CountdownTextView : MaterialTextView {
    */
   fun startCountdown(millis: Long) {
     // remove any pre-registered callbacks. startCountdown() may be called multiple times.
-    removeCallbacks(updateCallback)
+    countdownHandler.removeCallbacks(updateCallback)
     countdownUntilMillis = SystemClock.uptimeMillis() + millis
-    post(updateCallback)
+    countdownHandler.post(updateCallback)
   }
 
   /**
