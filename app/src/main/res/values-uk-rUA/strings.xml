@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="library">Бібліотека</string>
+  <string name="library">Бібліотека</string>
   <string name="about">Про додаток</string>
   <string name="report_issue">Повідомити про проблему</string>
   <string name="repeat_time_period">Період повтору</string>
@@ -48,7 +48,9 @@
   <string name="white_noise">Білий шум</string>
   <string name="wind_in_palm_trees">Вітер у пальмах</string>
   <string name="wind_in_chimes_of_shells">Дзвін мушель</string>
-  <string name="app_description">Розслабтесь та покращить продуктивність з мінімальним фоновим шумом</string>
+  <string name="app_description">
+    Розслабтесь та покращить продуктивність з мінімальним фоновим шумом
+  </string>
   <string name="connect_with_author">Зв\'язатися з автором</string>
   <string name="about__email">Email</string>
   <string name="about__github">Github</string>
@@ -66,9 +68,15 @@
   <string name="preset_delete_confirmation">Підтвердити видалення %s?</string>
   <string name="delete">Видалити</string>
   <string name="preset_deleted">Пресет видалено!</string>
-  <string name="preset_info__description">Ви ще не створили пресети. Щоб створити пресети перейдіть до Бібліотеки та програйте звуки.     Після цього натисніть на кнопку Зберегти яка з\'явиться у нижньому кутку екрану</string>
+  <string name="preset_info__description">
+    Ви ще не створили пресети. Щоб створити пресети перейдіть до Бібліотеки та програйте звуки.
+    Після цього натисніть на кнопку Зберегти яка з\'явиться у нижньому кутку екрану
+  </string>
   <string name="sleep_timer">Таймер сну</string>
-  <string name="sleep_timer_description">"     Noice вимкне себе коли закінчиться таймер. Використовуйте кнопки нижче для того, щоб додати час та запустити     таймер."</string>
+  <string name="sleep_timer_description">
+    Noice вимкне себе коли закінчиться таймер. Використовуйте кнопки нижче для того, щоб додати час
+    та запустити таймер.
+  </string>
   <string name="reset">Скинути</string>
   <string name="auto_sleep_schedule_cancelled">Автоматичний таймер сну скасовано!</string>
   <string name="app_theme">Тема</string>
@@ -77,19 +85,45 @@
   <string name="cast_media">Транслювати медіа на інший пристрій</string>
   <string name="about__translations">Переклади</string>
   <string name="wake_up_timer">Таймер пробудження</string>
-  <string name="wake_up_timer_description">"     Noice увімкне обрані пресети коли таймер закінчиться. Використовуйте кнопки нижче для того, щоб обрати     пресет та встановити обраний час щоб запустити таймер пробудження."</string>
+  <string name="wake_up_timer_description">
+    Noice увімкне обрані пресети коли таймер закінчиться. Використовуйте кнопки нижче для того, щоб
+    обрати пресет та встановити обраний час щоб запустити таймер пробудження.
+  </string>
   <string name="select_preset">Обрати пресет</string>
   <string name="schedule">Розклад</string>
   <string name="support_development">Підтримати розробку</string>
   <string name="support_development__why">Чому Вам потрібно підтримати?</string>
-  <string name="support_development__why_description">"- Щоб висловити подяку розробникам\n- Щоб зробити можливими майбутні оновлення\n- Щоб залишити Noice вільним від реклами назавжди\n- Щоб дати нам можливість інвестувати у покращення існуючих можливостей так само як і у додавання нових"</string>
+  <string name="support_development__why_description">
+    - Щоб висловити подяку розробникам\n
+    - Щоб зробити можливими майбутні оновлення\n
+    - Щоб залишити Noice вільним від реклами назавжди\n
+    - Щоб дати нам можливість інвестувати у покращення існуючих можливостей так само як і у
+    додавання нових
+  </string>
   <string name="support_development__share">Поділитися з друзями</string>
-  <string name="support_development__share_description">"Поділитися Noice з друзями схоже з грошовими пожертвами.\n- Вашим друзям це _може_ бути потрібно\n- Більш висока кількість завантажень приваблює більше помічників\n- З більшою кількістю завантажень ми зможемо отримувати зворотний зв'язок з різними точками зору що допоможе нам робити Noice краще\n"</string>
+  <string name="support_development__share_description">
+    Поділитися Noice з друзями схоже з грошовими пожертвами.\n
+    - Вашим друзям це _може_ бути потрібно\n
+    - Більш висока кількість завантажень приваблює більше помічників\n
+    - З більшою кількістю завантажень ми зможемо отримувати зворотний зв\'язок з різними точками зору
+      що допоможе нам робити Noice краще\n
+  </string>
   <string name="support_development__donate">Пожертвувати</string>
-  <string name="support_development__donate_description">"Пожертви допоможуть нам у\n- інвестиціях у нові функції\n- додавати кращі звукові зразки\n- купувати каву\n"</string>
-    <string name="support_development__donate_google_play_description">"     Ваш платіж буде безпечно проведений через Google Play. Суму буде конвертовано у вашу місцеву валюту. Додаткові податки _можуть_ бути додані до кінцевої суми в залежності від вашого місця знаходження."</string>
+  <string name="support_development__donate_description">
+    Пожертви допоможуть нам у\n
+    - інвестиціях у нові функції\n
+    - додавати кращі звукові зразки\n
+    - купувати каву\n
+  </string>
+  <string name="support_development__donate_google_play_description">
+    Ваш платіж буде безпечно проведений через Google Play. Суму буде конвертовано у вашу місцеву
+    валюту. Додаткові податки _можуть_ бути додані до кінцевої суми в залежності від вашого місця
+    знаходження.
+  </string>
   <string name="support_development__donate_thank_you">Дякуємо!</string>
-  <string name="support_development__donate_thank_you_description">"     Ми з щирого серця дякуємо за вашу щедру пожертву до проєкту Noice."</string>
+  <string name="support_development__donate_thank_you_description">
+    Ми з щирого серця дякуємо за вашу щедру пожертву до проєкту Noice.
+  </string>
   <string name="sound_group__life">Життя</string>
   <string name="sound_group__monsoon">Мусон</string>
   <string name="sound_group__public_gatherings">Громадські збори</string>
@@ -99,20 +133,45 @@
   <string name="sound_group__water">Вода</string>
   <string name="sound_group__wind">Вітер</string>
   <string name="appintro__getting_started_title">Вітаємо</string>
-  <string name="appintro__getting_started_desc_0">Проведіть пальцем ліворуч щоб дізнатись всі функції!</string>
+  <string name="appintro__getting_started_desc_0">
+    Проведіть пальцем ліворуч щоб дізнатись всі функції!
+  </string>
   <string name="appintro__getting_started_desc_1">Почнімо!</string>
   <string name="appintro__sound_library_title">Створіть своє ідеальне оточення</string>
-  <string name="appintro__sound_library_desc">"     Використовуйте повзунок гучності, щоб відрегулювати гучність звуків. При кожному програванні нециклічних звуків період затримки обирається випадково з діапазону за допомогою повзунка часу."</string>
+  <string name="appintro__sound_library_desc">
+    Використовуйте повзунок гучності, щоб відрегулювати гучність звуків. При кожному програванні
+    нециклічних звуків період затримки обирається випадково з діапазону за допомогою повзунка часу.
+  </string>
   <string name="appintro__preset_title">Збережіть свої улюблені мікси</string>
-  <string name="appintro__preset_desc">"     Після відтворення декількох звуків Ви можете використовувати кнопку у нижньому кутку щоб зберегти свої мікси. Щоб використати збережені мікси Ви можете відвідати список пресетів через меню додатку."</string>
+  <string name="appintro__preset_desc">
+    Після відтворення декількох звуків Ви можете використовувати кнопку у нижньому кутку щоб
+    зберегти свої мікси. Щоб використати збережені мікси Ви можете відвідати список пресетів через
+    меню додатку.
+  </string>
   <string name="appintro__timer_title">Важко заснути або прокинутись?</string>
-  <string name="appintro__timer_desc">Маленька атмосфера може допомогти Вам заснути не докладаючи зусиль. Використовуйте таймер сну, щоб дозволити Noice вимкнутися, та таймер пробудження, щоб поставити будильник і прокинутись у спокійному оточенні.</string>
+  <string name="appintro__timer_desc">
+    Маленька атмосфера може допомогти Вам заснути не докладаючи зусиль. Використовуйте таймер сну,
+    щоб дозволити Noice вимкнутися, та таймер пробудження, щоб поставити будильник і прокинутись у
+    спокійному оточенні.
+  </string>
   <string name="appintro__chromecast_title">Chromecast увімкнено</string>
-  <string name="appintro__chromecast_desc">"     Використовуйте Noice для того, щоб передати його атмосферу до інших Chromecast сумісних пристроїв, таких як гучномовці, ТВ та інші."</string>
+  <string name="appintro__chromecast_desc">
+    Використовуйте Noice для того, щоб передати його атмосферу до інших Chromecast сумісних
+    пристроїв, таких як гучномовці, ТВ та інші.
+  </string>
   <string name="help">Допомога</string>
   <string name="in_app_feedback__title">Відправити рецензію</string>
-  <string name="in_app_feedback__description">"     Ми хотіли б почути що Ви думаєте про додаток. Відвідайте, будь ласка, наш GitHub репозиторій. Якщо Вам не сподобався додаток, будь ласка, відкрийте issue з поясненням. В іншому випадку, будь ласка, поставте проєкту зірочку щоб показати любов та підтримку."</string>
+  <string name="in_app_feedback__description">
+    Ми хотіли б почути що Ви думаєте про додаток. Відвідайте, будь ласка, наш GitHub репозиторій.
+    Якщо Вам не сподобався додаток, будь ласка, відкрийте issue з поясненням. В іншому випадку, будь
+    ласка, поставте проєкту зірочку щоб показати любов та підтримку.
+  </string>
   <string name="okay">Добре</string>
   <string name="later">Пізніше</string>
   <string name="never">Ніколи</string>
+  <string-array name="app_themes">
+    <item>Світло</item>
+    <item>Темний</item>
+    <item>Система за замовчуванням</item>
+  </string-array>
 </resources>

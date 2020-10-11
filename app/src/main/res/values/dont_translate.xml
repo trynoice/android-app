@@ -108,6 +108,8 @@
   <string name="credits__translation_es_ar_0__url" translatable="false">https://github.com/Enchufadoo</string>
   <string name="credits__translation_ru_0" translatable="false">Russian translation by yamaks2306</string>
   <string name="credits__translation_ru_0__url" translatable="false">https://github.com/yamaks2306</string>
+  <string name="credits__translation_ru_1" translatable="false">Russian translation by Yevhen Badorov</string>
+  <string name="credits__translation_ru_1__url" translatable="false">https://github.com/JekRock</string>
   <string name="credits__translation_de_0" translatable="false">German translation by Steffen Schultz</string>
   <string name="credits__translation_de_0__url" translatable="false">https://github.com/schulle4u</string>
   <string name="credits__translation_de_1" translatable="false">German translation by Luca Hohmann</string>
