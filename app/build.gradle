@@ -88,7 +88,7 @@ dependencies {
 
   testImplementation 'androidx.test:core:1.3.0'
   testImplementation 'io.mockk:mockk:1.10.2'
-  testImplementation 'junit:junit:4.13'
+  testImplementation 'junit:junit:4.13.1'
   testImplementation 'org.robolectric:robolectric:4.4'
   testImplementation 'org.skyscreamer:jsonassert:1.5.0'
 
@@ -100,7 +100,7 @@ dependencies {
   androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0'
   androidTestImplementation 'androidx.test.ext:junit:1.1.2'
   androidTestImplementation 'io.mockk:mockk-android:1.10.2'
-  androidTestImplementation 'junit:junit:4.13'
+  androidTestImplementation 'junit:junit:4.13.1'
 
   androidTestPlaystoreImplementation 'tools.fastlane:screengrab:2.0.0'
 
