@@ -17,11 +17,11 @@
   <string name="airplane_seatbelt_beeps">Bunyi sabuk pengaman pesawat</string>
   <string name="birds">Burung</string>
   <string name="bonfire">Api unggun</string>
-  <string name="brownian_noise">Derau Brownian</string>
+  <string name="brownian_noise">Brownian noise</string>
   <string name="coffee_shop">Kedai kopi</string>
   <string name="creaking_ship">Kapal pecah</string>
   <string name="crickets">Jangkrik</string>
-  <string name="distant_thunder">Guntur di kejauhan</string>
+  <string name="distant_thunder">Gemuruh di kejauhan</string>
   <string name="electric_car">Mobil listrik</string>
   <string name="heavy_rain">Hujan deras</string>
   <string name="howling_wolf">Serigala melolong</string>
@@ -32,20 +32,20 @@
   <string name="moving_train">Kereta bergerak</string>
   <string name="night">Malam</string>
   <string name="office">Kantor</string>
-  <string name="pink_noise">Noise pink</string>
+  <string name="pink_noise">Pink noise</string>
   <string name="public_library">Perpustakaan umum</string>
   <string name="purring_cat">Mendengkur kucing</string>
   <string name="quiet_conversation">Percakapan senyap</string>
-  <string name="rolling_thunder">Rolling thunder</string>
+  <string name="rolling_thunder">Gemuruh bergulir</string>
   <string name="screeching_seagulls">Burung camar yang melengking</string>
   <string name="seaside">Tepi laut</string>
   <string name="soft_wind">Angin lembut</string>
-  <string name="thunder_crack">Guntur retak</string>
+  <string name="thunder_crack">Gemuruh retak</string>
   <string name="train_horn">Klakson kereta</string>
   <string name="walking_through_the_snow">Berjalan melintasi salju</string>
   <string name="water_hose">Selang air</string>
   <string name="water_stream">Aliran air</string>
-  <string name="white_noise">Derau putih</string>
+  <string name="white_noise">White noise</string>
   <string name="wind_in_palm_trees">Angin di pohon palem</string>
   <string name="wind_in_chimes_of_shells">Angin di lonceng kerang</string>
   <string name="app_description">Santai dan tingkatkan produktivitas dengan kebisingan latar belakang minimal.</string>
@@ -76,60 +76,60 @@
     pengatur waktu.
 </string>
   <string name="reset">Setel ulang</string>
-  <string name="auto_sleep_schedule_cancelled">Timer tidur otomatis dibatalkan!</string>
+  <string name="auto_sleep_schedule_cancelled">Pengatur waktu tidur otomatis dibatalkan!</string>
   <string name="app_theme">Tema</string>
   <string name="open_context_menu">Buka menu konteks</string>
   <string name="rename">Ganti nama</string>
   <string name="cast_media">Transmisikan media ke perangkat lain</string>
   <string name="about__translations">Terjemahan</string>
-  <string name="wake_up_timer">Timer Bangun</string>
+  <string name="wake_up_timer">Pengatur Waktu Bangun</string>
   <string name="wake_up_timer_description">
     Noice akan memulai preset yang dipilih saat timer berakhir. Gunakan tombol di bawah untuk memilih a
     preset dan atur waktu yang diinginkan untuk memulai pengatur waktu bangun.
 </string>
   <string name="select_preset">Pilih Preset</string>
   <string name="schedule">Jadwal</string>
-  <string name="support_development">Pengembangan Dukungan</string>
+  <string name="support_development">Dukung Pengembangan</string>
   <string name="support_development__why">Mengapa Anda harus mendukung?</string>
   <string name="support_development__why_description">
-    - Sebagai bentuk apresiasi terhadap pengembang \ n
-    - Untuk memungkinkan pembaruan di masa mendatang \ n
-    - Untuk membuat Noice bebas iklan selamanya \ n
-    - Untuk memungkinkan kami berinvestasi dalam meningkatkan fitur yang ada serta menambahkan fitur baru \ n
+    - Sebagai bentuk apresiasi terhadap pengembang \n
+    - Untuk memungkinkan pembaruan di masa mendatang \n
+    - Untuk membuat Noice bebas iklan selamanya \n
+    - Untuk memungkinkan kami berinvestasi dalam meningkatkan fitur yang ada serta menambahkan fitur baru \n
  </string>
   <string name="support_development__share">Bagikan dengan teman</string>
   <string name="support_development__share_description">
-    Berbagi Noice dengan teman mirip dengan mendonasikan uang. \ N
-    - Temanmu _might_ membutuhkannya \ n
-    - Unduhan yang lebih tinggi menarik lebih banyak kontributor \ n
-    - Dengan unduhan yang lebih tinggi, kami akan dapat menerima umpan balik dari sejumlah berbeda
-      perspektif yang akan membantu kami membuat Noice lebih baik dari sebelumnya \ n
+    Berbagi Noice dengan teman sama dengan mendonasikan uang. \n
+    - Temanmu mungkin membutuhkannya \n
+    - Unduhan yang lebih tinggi menarik lebih banyak kontributor \n
+    - Dengan unduhan yang lebih tinggi, kami akan dapat menerima umpan balik dari sejumlah berbagai
+      perspektif yang akan membantu kami membuat Noice lebih baik dari sebelumnya \n
  </string>
   <string name="support_development__donate">Donasi</string>
   <string name="support_development__donate_description">
-    Donasi akan membantu kami dalam \ n
-    - berinvestasi dalam fitur baru \ n
-    - membuat sampel suara yang lebih baik \ n
-    - membeli kopi \ n
+    Donasi akan membantu kami dalam \n
+    - berinvestasi dalam fitur baru \n
+    - membuat sampel suara yang lebih baik \n
+    - membeli kopi \n
  </string>
   <string name="support_development__donate_google_play_description">
-    Pembayaran Anda akan ditangani dengan aman oleh Google Play. Jumlah tersebut akan dikonversi ke Anda
-    mata uang lokal. Bergantung pada lokasi Anda, pajak tambahan _mungkin_ ditambahkan ke jumlah akhir.
+    Pembayaran Anda akan ditangani dengan aman oleh Google Play. Jumlah tersebut akan dikonversi ke
+    mata uang lokal Anda. Bergantung pada lokasi Anda, pajak tambahan mungkin ditambahkan ke jumlah akhir.
  </string>
   <string name="support_development__donate_thank_you">Terima kasih!</string>
   <string name="support_development__donate_thank_you_description">
-    Kami dengan sepenuh hati berterima kasih atas kontribusi Anda yang murah hati untuk proyek Noice.
+    Kami dengan sepenuh hati berterima kasih atas kemurah hatian kontribusi Anda untuk proyek Noice.
  </string>
   <string name="sound_group__life">Kehidupan</string>
   <string name="sound_group__monsoon">Musim</string>
   <string name="sound_group__public_gatherings">Pertemuan Umum</string>
-  <string name="sound_group__raw_noise">Kebisingan Mentah</string>
+  <string name="sound_group__raw_noise">Raw Noise</string>
   <string name="sound_group__times_of_day">Waktu</string>
   <string name="sound_group__vehicles">Kendaraan</string>
   <string name="sound_group__water">Air</string>
   <string name="sound_group__wind">Angin</string>
   <string name="appintro__getting_started_title">Selamat Datang</string>
-  <string name="appintro__getting_started_desc_0">Gesek ke kiri untuk mengenal semua fitur!</string>
+  <string name="appintro__getting_started_desc_0">Geser ke kiri untuk mengenal semua fitur!</string>
   <string name="appintro__getting_started_desc_1">Mari kita mulai!</string>
   <string name="appintro__sound_library_title">Ciptakan lingkungan Anda yang sempurna</string>
   <string name="appintro__sound_library_desc">
@@ -144,7 +144,7 @@
   <string name="appintro__timer_title">Kesulitan tidur atau bangun?</string>
   <string name="appintro__timer_desc">
     Sedikit suasana dapat membantu Anda tertidur dengan mudah. Gunakan pengatur waktu tidur untuk menutup Noice
-    sendiri turun. Demikian pula, untuk bangun di lingkungan yang tenang, gunakan pengatur waktu bangun untuk menyetel alarm.
+    secara otomatis. Demikian pula, untuk bangun di lingkungan yang tenang, gunakan pengatur waktu bangun untuk menyetel alarm.
  </string>
   <string name="appintro__chromecast_title">Chromecast diaktifkan</string>
   <string name="appintro__chromecast_desc">
@@ -161,8 +161,8 @@
   <string name="later">Nanti</string>
   <string name="never">Never</string>
   <string-array name="app_themes">
-    <item> Cahaya </item>
-    <item> Gelap </item>
-    <item> Sistem default </item>
+    <item>Terang</item>
+    <item>Gelap</item>
+    <item>Sistem default</item>
   </string-array>
 </resources>

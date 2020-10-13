@@ -1,0 +1,34 @@
+Bagi banyak orang, sedikit derau latar akan membantu menenangkan dan fokus. Dalam beberapa kasus, derau juga merupakan pendorong produktivitas. Derau latar belakang (ambience) juga dapat membantu meminimalkan efek stres.
+
+Noice adalah aplikasi yang memungkinkan Anda membuat suasana yang disesuaikan menggunakan klip dari sumber derau lingkungan. Ciptakan lingkungan Anda yang sempurna dengan menggabungkan berbagai suara untuk meredam gangguan sehingga Anda dapat fokus pada pekerjaan Anda, atau menghasilkan lingkungan yang tenang dan damai yang mendorong Anda untuk tertidur.
+
+<b>Fitur</b>
+- 35 suara yang direkam
+- Google Cast (Chromecast) diaktifkan [Play Store rilis saja]
+- Pengatur waktu tidur otomatis
+- Pengatur waktu bangun (Jam Alarm)
+- Buat campuran yang disesuaikan
+- Simpan campuran favorit Anda
+- Mainkan bersama pemutar musik lainnya
+- Kontrol volume khusus untuk setiap sumber derau
+- Pemutaran offline
+- Varian tema aplikasi terang dan gelap
+
+<b>Perpustakaan derau</b>
+- Kehidupan (burung, jangkrik, serigala, detak jantung manusia, dll.)
+- Pengaturan hutan (api unggun, malam, angin, pohon palem, dll.)
+- Musim hujan (hujan, gemuruh)
+- Teleportasi (kedai kopi, perpustakaan, kantor, tepi laut, tepi sungai, dll.)
+- Kendaraan (kereta yang bergerak, dalam penerbangan, kapal yang berderit, mobil listrik, dll.)
+- Raw noise (white, pink, brownian)
+
+<b>Perizinan</b>
+-<b>mencegah perangkat tidur</b>: untuk menjaga CPU perangkat tetap aktif selama pemutaran
+-<b>menjalankan layanan latar depan</b>: untuk menjalankan proses pemutar (berbeda dari UI)
+-<b>dijalankan saat memulai</b>: untuk memastikan bahwa pengatur waktu bangun tetap ada selama proses boot ulang
+-<b>akses jaringan penuh</b>: untuk mengaktifkan Chromecast dan kontribusi keuangan
+-<b>lihat koneksi jaringan</b>: ditambahkan oleh ketergantungan, saat ini tidak digunakan
+-<b>Layanan penagihan Google Play</b>: untuk mengaktifkan kontribusi keuangan untuk mendukung pengembangan
+
+Noice adalah perangkat lunak gratis dan sumber terbuka.
+https://github.com/ashutoshgngwr/noice
