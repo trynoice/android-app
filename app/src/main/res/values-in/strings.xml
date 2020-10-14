@@ -63,7 +63,7 @@
   <string name="preset_already_exists">Preset dengan nama yang diberikan sudah ada!</string>
   <string name="preset_saved">Preset disimpan!</string>
   <string name="saved_presets">Preset Tersimpan</string>
-  <string name="preset_delete_confirmation">Konfirmasi hapus% s?</string>
+  <string name="preset_delete_confirmation">Konfirmasi hapus %s?</string>
   <string name="delete">Hapus</string>
   <string name="preset_deleted">Preset dihapus!</string>
   <string name="preset_info__description">
@@ -76,7 +76,7 @@
     pengatur waktu.
 </string>
   <string name="reset">Setel ulang</string>
-  <string name="auto_sleep_schedule_cancelled">Pengatur waktu tidur otomatis dibatalkan!</string>
+  <string name="auto_sleep_schedule_cancelled">Pengatur waktu tidur otomatis telah dibatalkan!</string>
   <string name="app_theme">Tema</string>
   <string name="open_context_menu">Buka menu konteks</string>
   <string name="rename">Ganti nama</string>
