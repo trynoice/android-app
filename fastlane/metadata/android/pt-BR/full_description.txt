@@ -5,20 +5,30 @@ Noice é um aplicativo que lhe permite simular seu próprio "ambiente sonoro" us
 <b>Funções</b>
 - 35 sons disponíveis
 - Google Cast (Chromecast) ativado [apenas na versão Play Store]
-- Misture e ajuste sons a gosto
+- Temporizador
 - Despertador
+- Faça um mix personalizado
 - Salve seus ajustes para uso futuro
-- Timer para uso no sono
 - Funciona em conjunto com qualquer aplicativo de música
-- Ajuste o volume de cada som indivídualmente
+- Ajuste o volume de cada som individualmente
 - Não precisa de internet
-- Disponíveis temas claro e escuro
+- Variações de tema claro e escuro
 
-<b>Sons disponíveis</b>
-- Sons de natureza (pássaros, fogueira, beira-mar...)
-- Sons do clima (chuva, trovões, vento...)
-- Sons de lugares (escritório, trem, cafeteria, avião...)
-- Ruído em cores (ruído branco, rosa, vermelho)
+<b>Bibliotecas de ruídos</b>
+- Vida (pássaros, grilos, lobo, batimento cardíaco humano, etc.)
+- Floresta (fogueira, noite, vento, palmeiras, etc.)
+- Monção (chuva, trovões)
+- Teleportação (cafeteria, biblioteca, escritório, beira-mar, margem do rio, etc.)
+- Veículo (trem em movimento, avião em voo, navio rangendo, carro elétrico, etc.)
+- Ruído bruto (branco, rosa, vermelho)
+
+<b>Permissões</b>
+- <b>impedir modo de inatividade do telefone</b>: para manter a CPU do dispositivo ativa durante a reprodução
+- <b>executar serviço em primeiro plano</b>: para executar o processo do player (diferente da IU)
+- <b>executar na inicialização</b>: para garantir que os despertadores persistam durante reinicializações
+- <b>acesso total à rede</b>: para habilitar o Chromecast e contribuições financeiras
+- <b>ver conexões de rede</b>: adicionado por uma dependência, atualmente não está em uso
+- <b>Sistema de faturamento do Google Play</b>: para permitir contribuições financeiras para apoiar o desenvolvimento
 
 Noice é um aplicativo livre e de código aberto.
 https://github.com/ashutoshgngwr/noice
