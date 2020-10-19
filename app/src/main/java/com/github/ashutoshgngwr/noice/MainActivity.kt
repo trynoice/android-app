@@ -13,7 +13,9 @@ import androidx.annotation.IdRes
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.edit
 import androidx.core.view.GravityCompat
+import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
@@ -256,9 +258,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
    * Returns one of [APP_THEME_LIGHT], [APP_THEME_DARK] or [APP_THEME_SYSTEM_DEFAULT]
    */
   private fun getAppTheme(): Int {
-    return Utils.withDefaultSharedPreferences(this) {
-      it.getInt(PREF_APP_THEME, APP_THEME_SYSTEM_DEFAULT)
-    }
+    return PreferenceManager.getDefaultSharedPreferences(this)
+      .getInt(PREF_APP_THEME, APP_THEME_SYSTEM_DEFAULT)
   }
 
   /**
@@ -266,10 +267,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
    * @param newTheme should be one of [APP_THEME_LIGHT], [APP_THEME_DARK] or [APP_THEME_SYSTEM_DEFAULT]
    */
   private fun setAppTheme(newTheme: Int) {
-    Utils.withDefaultSharedPreferences(this) {
-      it.edit()
-        .putInt(PREF_APP_THEME, newTheme)
-        .apply()
+    PreferenceManager.getDefaultSharedPreferences(this).edit {
+      putInt(PREF_APP_THEME, newTheme)
     }
 
     recreate()

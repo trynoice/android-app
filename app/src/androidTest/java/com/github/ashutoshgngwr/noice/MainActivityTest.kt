@@ -5,8 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.view.Gravity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.edit
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
+import androidx.preference.PreferenceManager
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.core.app.ApplicationProvider
@@ -59,18 +61,20 @@ class MainActivityTest {
   @Before
   fun setup() {
     // mark app intro as seen to run main activity tests in peace
-    Utils.withDefaultSharedPreferences(ApplicationProvider.getApplicationContext()) {
-      it.edit().putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true).commit()
-    }
+    PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
+      .edit(commit = true) {
+        putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true)
+      }
 
     activityScenario = launch(MainActivity::class.java)
   }
 
   @After
   fun teardown() {
-    Utils.withDefaultSharedPreferences(ApplicationProvider.getApplicationContext()) {
-      it.edit().clear().commit()
-    }
+    PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
+      .edit(commit = true) {
+        clear()
+      }
   }
 
   @Test

@@ -4,6 +4,8 @@ import android.content.Intent
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -59,9 +61,10 @@ class GenerateScreenshots {
     @BeforeClass
     fun setupAll() {
       // prevent app intro from showing up
-      Utils.withDefaultSharedPreferences(ApplicationProvider.getApplicationContext()) {
-        it.edit().putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true).commit()
-      }
+      PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
+        .edit(commit = true) {
+          putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true)
+        }
 
       // using mocks to save a few presets for screenshots
       Preset.writeAllToUserPreferences(

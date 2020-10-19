@@ -5,7 +5,9 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.edit
 import androidx.fragment.app.FragmentActivity
+import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import kotlin.random.Random
 
@@ -60,14 +62,13 @@ object InAppReviewFlowManager {
   }
 
   private fun hasUserCompletedReviewFlow(context: Context): Boolean {
-    return Utils.withDefaultSharedPreferences(context) {
-      it.getBoolean(PREF_FLOW_SUCCESSFULLY_COMPLETED, false)
-    }
+    return PreferenceManager.getDefaultSharedPreferences(context)
+      .getBoolean(PREF_FLOW_SUCCESSFULLY_COMPLETED, false)
   }
 
   private fun markReviewFlowCompleted(context: Context) {
-    Utils.withDefaultSharedPreferences(context) {
-      it.edit().putBoolean(PREF_FLOW_SUCCESSFULLY_COMPLETED, true).apply()
+    PreferenceManager.getDefaultSharedPreferences(context).edit {
+      putBoolean(PREF_FLOW_SUCCESSFULLY_COMPLETED, true)
     }
   }
 }

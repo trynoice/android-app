@@ -3,7 +3,9 @@ package com.github.ashutoshgngwr.noice
 import android.content.Context
 import android.util.Log
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.edit
 import androidx.fragment.app.FragmentActivity
+import androidx.preference.PreferenceManager
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
@@ -70,15 +72,14 @@ object InAppReviewFlowManager {
   }
 
   private fun updateLastSeenTimestamp(context: Context) {
-    Utils.withDefaultSharedPreferences(context) {
-      it.edit().putLong(PREF_LAST_SHOWN_ON, System.currentTimeMillis()).apply()
+    PreferenceManager.getDefaultSharedPreferences(context).edit {
+      putLong(PREF_LAST_SHOWN_ON, System.currentTimeMillis())
     }
   }
 
   private fun isShownWithinLastWeek(context: Context): Boolean {
-    val timestamp = Utils.withDefaultSharedPreferences(context) {
-      it.getLong(PREF_LAST_SHOWN_ON, 0)
-    }
+    val timestamp = PreferenceManager.getDefaultSharedPreferences(context)
+      .getLong(PREF_LAST_SHOWN_ON, 0)
 
     return TimeUnit.DAYS.toMillis(7L) + timestamp > System.currentTimeMillis()
   }

@@ -7,7 +7,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.content.ContextCompat
-import com.github.ashutoshgngwr.noice.Utils.withDefaultSharedPreferences
+import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.Utils.withGson
 import com.google.gson.annotations.Expose
 
@@ -58,17 +59,17 @@ object WakeUpTimerManager {
       return
     }
 
-    withDefaultSharedPreferences(context) { prefs ->
-      withGson {
-        prefs.edit().putString(PREF_WAKE_UP_TIMER, it.toJson(timer)).apply()
+    withGson {
+      PreferenceManager.getDefaultSharedPreferences(context).edit {
+        putString(PREF_WAKE_UP_TIMER, it.toJson(timer))
       }
+    }
 
-      withAlarmManager(context) {
-        it.setAlarmClock(
-          AlarmManager.AlarmClockInfo(timer.atMillis, getPendingIntentForActivity(context)),
-          getPendingIntentForService(context, timer.presetName)
-        )
-      }
+    withAlarmManager(context) {
+      it.setAlarmClock(
+        AlarmManager.AlarmClockInfo(timer.atMillis, getPendingIntentForActivity(context)),
+        getPendingIntentForService(context, timer.presetName)
+      )
     }
   }
 
@@ -76,8 +77,8 @@ object WakeUpTimerManager {
    * [cancel] cancels the last scheduled timer.
    */
   fun cancel(context: Context) {
-    withDefaultSharedPreferences(context) {
-      it.edit().remove(PREF_WAKE_UP_TIMER).apply()
+    PreferenceManager.getDefaultSharedPreferences(context).edit {
+      remove(PREF_WAKE_UP_TIMER)
     }
 
     withAlarmManager(context) {
@@ -90,11 +91,10 @@ object WakeUpTimerManager {
    * [get] returns the last scheduled timer if found in the persisted state. Returns null otherwise.
    */
   fun get(context: Context): Timer? {
-    return withGson {
-      withDefaultSharedPreferences(context) { prefs ->
-        it.fromJson(prefs.getString(PREF_WAKE_UP_TIMER, null), Timer::class.java)
-      }
-    }
+    val timer = PreferenceManager.getDefaultSharedPreferences(context)
+      .getString(PREF_WAKE_UP_TIMER, null)
+
+    return withGson { it.fromJson(timer, Timer::class.java) }
   }
 
   /**

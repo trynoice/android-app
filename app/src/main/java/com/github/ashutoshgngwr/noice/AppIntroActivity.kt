@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.ActivityCompat
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import com.github.appintro.AppIntro
 import com.github.appintro.AppIntroFragment
 import com.github.appintro.AppIntroPageTransformerType
@@ -20,7 +22,7 @@ class AppIntroActivity : AppIntro() {
      * [maybeStart] displays the [AppIntroActivity] if user hasn't seen it before.
      */
     fun maybeStart(context: Context) {
-      Utils.withDefaultSharedPreferences(context) {
+      PreferenceManager.getDefaultSharedPreferences(context).also {
         if (!it.getBoolean(PREF_HAS_USER_SEEN_APP_INTRO, false)) {
           context.startActivity(Intent(context, AppIntroActivity::class.java))
         }
@@ -118,8 +120,8 @@ class AppIntroActivity : AppIntro() {
   }
 
   private fun markSeenInPrefsAndFinish() {
-    Utils.withDefaultSharedPreferences(this) {
-      it.edit().putBoolean(PREF_HAS_USER_SEEN_APP_INTRO, true).commit()
+    PreferenceManager.getDefaultSharedPreferences(this).edit {
+      putBoolean(PREF_HAS_USER_SEEN_APP_INTRO, true)
     }
 
     finish()

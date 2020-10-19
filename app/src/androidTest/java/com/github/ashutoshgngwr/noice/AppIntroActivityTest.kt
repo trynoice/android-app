@@ -1,5 +1,7 @@
 package com.github.ashutoshgngwr.noice
 
+import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.intent.Intents
@@ -30,9 +32,10 @@ class AppIntroActivityTest {
 
   @After
   fun teardown() {
-    Utils.withDefaultSharedPreferences(ApplicationProvider.getApplicationContext()) {
-      it.edit().clear().commit()
-    }
+    PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
+      .edit(commit = true) {
+        clear()
+      }
   }
 
   @Test
@@ -45,9 +48,10 @@ class AppIntroActivityTest {
     }
 
     // should update the preferences
-    Utils.withDefaultSharedPreferences(ApplicationProvider.getApplicationContext()) {
-      assertTrue(it.getBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, false))
-    }
+    PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
+      .also {
+        assertTrue(it.getBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, false))
+      }
   }
 
   @Test
@@ -60,10 +64,10 @@ class AppIntroActivityTest {
     }
 
     // should update the preferences
-    Utils.withDefaultSharedPreferences(ApplicationProvider.getApplicationContext()) {
-      assertTrue(it.getBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, false))
-    }
-
+    PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
+      .also {
+        assertTrue(it.getBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, false))
+      }
   }
 
   @Test
@@ -87,9 +91,10 @@ class AppIntroActivityTest {
     try {
       // when user has already seen the activity once, i.e., if the preference is present in the
       // storage, maybeStart shouldn't start the activity.
-      Utils.withDefaultSharedPreferences(ApplicationProvider.getApplicationContext()) {
-        it.edit().putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true).commit()
-      }
+      PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
+        .edit(commit = true) {
+          putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true)
+        }
 
       activityScenario.onActivity {
         AppIntroActivity.maybeStart(it)

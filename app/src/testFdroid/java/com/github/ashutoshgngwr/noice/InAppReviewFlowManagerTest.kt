@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
 import io.mockk.every
@@ -72,8 +73,8 @@ class InAppReviewFlowManagerTest {
       mockPrefs.getBoolean(InAppReviewFlowManager.PREF_FLOW_SUCCESSFULLY_COMPLETED, any())
     } returns true
 
-    Utils.withDefaultSharedPreferences(fragmentActivity) {
-      it.edit().putBoolean(InAppReviewFlowManager.PREF_FLOW_SUCCESSFULLY_COMPLETED, true).commit()
+    PreferenceManager.getDefaultSharedPreferences(fragmentActivity).edit(commit = true) {
+      putBoolean(InAppReviewFlowManager.PREF_FLOW_SUCCESSFULLY_COMPLETED, true)
     }
 
     InAppReviewFlowManager.maybeAskForReview(fragmentActivity)

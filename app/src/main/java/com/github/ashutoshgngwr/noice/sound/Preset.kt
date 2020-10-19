@@ -2,7 +2,8 @@ package com.github.ashutoshgngwr.noice.sound
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.github.ashutoshgngwr.noice.Utils.withDefaultSharedPreferences
+import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.Utils.withGson
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.google.gson.JsonDeserializationContext
@@ -94,7 +95,7 @@ class Preset private constructor(
      * storage and returns an [ArrayList].
      */
     fun readAllFromUserPreferences(context: Context): Array<Preset> = withGson {
-      withDefaultSharedPreferences(context) { prefs ->
+      PreferenceManager.getDefaultSharedPreferences(context).let { prefs ->
         it.fromJson(prefs.getString(PREF_PRESETS, "[]"), Array<Preset>::class.java)
       }
     }
@@ -104,11 +105,9 @@ class Preset private constructor(
      * given [ArrayList] in the persistent storage.
      */
     fun writeAllToUserPreferences(context: Context, presets: Collection<Preset>) {
-      withDefaultSharedPreferences(context) { prefs ->
-        withGson {
-          prefs.edit()
-            .putString(PREF_PRESETS, it.toJson(presets))
-            .apply()
+      withGson {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+          putString(PREF_PRESETS, it.toJson(presets))
         }
       }
     }
