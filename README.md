@@ -20,18 +20,6 @@ Noice is an app that allows you to create your own set of background sounds by m
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="100">][f-droid-link]
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="100">][google-play-link]
 
-## Features
-
-- 35 recorded noises
-- Google Cast (Chromecast) enabled
-- Auto sleep timer
-- Wake-up timer (Alarm Clock)
-- Make customised mix
-- Save your favorite mixes
-- Play alongside other music players
-- Individual volume control for each noise source
-- Offline playback
-
 ## Screenshots
 
 |                                                                                |                                                                                |                                                                                |                                                                                |
@@ -39,13 +27,11 @@ Noice is an app that allows you to create your own set of background sounds by m
 | ![Screenshot 1](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png) | ![Screenshot 2](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png) | ![Screenshot 3](fastlane/metadata/android/en-US/images/phoneScreenshots/3.png) | ![Screenshot 4](fastlane/metadata/android/en-US/images/phoneScreenshots/4.png) |
 | ![Screenshot 5](fastlane/metadata/android/en-US/images/phoneScreenshots/5.png) | ![Screenshot 6](fastlane/metadata/android/en-US/images/phoneScreenshots/6.png) | ![Screenshot 7](fastlane/metadata/android/en-US/images/phoneScreenshots/7.png) |                                                                                |
 
-## Contributing
+## Documentation
 
-We welcome contributions of all kinds and sizes. It includes everything from simple bug reports to huge features. See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for details.
-
-## Privacy Policy
-
-Noice does not collect any data from its users. Selected third-party services handle all payments supporting the development of this project. For policies related to payments, users should refer to the privacy policy of the payment service they have chosen to use.
+1. See [`docs/CHANGELOG.md`](docs/CHANGELOG.md) for a brief history of the project
+2. See [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) for workflow, app architecture and translation related documentation
+3. See [`docs/CODE_OF_CONDUCT.md`](docs/CODE_OF_CONDUCT.md) for communication norms
 
 ## License
 

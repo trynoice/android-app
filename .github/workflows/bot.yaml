@@ -43,13 +43,13 @@ jobs:
       - name: Generate changelog
         run: >-
           yarn global add auto-changelog;
-          $(yarn global bin)/auto-changelog --template keepachangelog
+          $(yarn global bin)/auto-changelog --template keepachangelog -o docs/CHANGELOG.md
       - name: Commit changelog
         run: >-
           git config --local user.email "noreply@github.com";
           git config --local user.name "GitHub";
-          if [ -n "$(git diff CHANGELOG.md)" ]; then
-            git add CHANGELOG.md;
+          if [ -n "$(git diff docs/CHANGELOG.md)" ]; then
+            git add docs/CHANGELOG.md;
             git commit -m "chore(project): update CHANGELOG.md" \
               --author "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>";
           fi

@@ -1,0 +1,129 @@
+############################
+### Jekyll Configuration ###
+############################
+
+remote_theme: ashutoshgngwr/automatic-app-landing-page
+plugins:
+  - jekyll-optional-front-matter
+  - jekyll-remote-theme
+
+# Set the Sass partials directory, as we're using @imports
+sass:
+  style: :compressed # You might prefer to minify using :compressed
+
+include:
+  - CODE_OF_CONDUCT.md
+  - CONTRIBUTING.md
+
+# Exclude these files from your production _site
+exclude:
+  - README.md
+  - CNAME
+
+# Markdown rendering
+markdown: kramdown
+
+baseurl: /noice
+permalink: /:path
+
+# configure community pages explicitly so that front-matter need not be added to
+# them and they are rendered normally on GitHub.
+defaults:
+  - scope:
+      path: CODE_OF_CONDUCT.md
+    values:
+      layout: page
+      title: Code of Conduct
+      permalink: /code-of-conduct
+  - scope:
+      path: CONTRIBUTING.md
+    values:
+      layout: page
+      title: Contributing
+      include_in_header: true
+      permalink: /contributing
+  - scope:
+      path: PRIVACY.md
+    values:
+      layout: page
+      title: Privacy Policy
+      permalink: /privacy-policy
+  - scope:
+      path: CHANGELOG.md
+    values:
+      layout: page
+      title: What's New
+      include_in_header: true
+      permalink: /CHANGELOG
+
+############################
+### Theme Configuration ###
+############################
+
+page_title: Noice for Android
+playstore_link: https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice
+fdroid_link: https://f-droid.org/packages/com.github.ashutoshgngwr.noice/
+
+app_icon: /assets/app_icon.svg
+app_name: Noice for Android
+app_price: Free
+app_description: Relax, improve focus and boost productivity with minimal background noise.
+
+enable_smart_app_banner: false
+
+your_name: Ashutosh Gangwar
+your_link: https://ashutoshgngwr.github.io
+your_city: Bengaluru, India
+email_address: ashutoshgngwr@gmail.com
+twitter_username: ashutoshgngwr
+github_username: ashutoshgngwr
+
+features:
+  - title: Hi-Fi sound library
+    description: Ships with many recorded, high-fidelity sounds
+    fontawesome_icon_class: fas fa-music
+  - title: Chromecast enabled
+    description: Play on other Chromecast-enabled devices such as TV, speakers, etc.
+    fontawesome_icon_class: fab fa-chromecast
+  - title: Sleep timer
+    description: Supports automatic shutdown after desired time duration
+    fontawesome_icon_class: fas fa-bed
+  - title: Wake-up timer
+    description: Use as Alarm Clock to wake up to a serene environment
+    fontawesome_icon_class: fas fa-clock
+  - title: Save your custom mix
+    description: Save your favourite mixes and easily play them again
+    fontawesome_icon_class: fas fa-sliders-h
+  - title: Offline playback
+    description: Provides fully offline playback. No internet connected needed!
+    fontawesome_icon_class: fas fa-plane
+
+# Theme Settings
+topbar_color: "#000000"
+topbar_transparency: 0.33
+topbar_title_color: "#ffffff"
+
+cover_image: /assets/headerimage.jpg
+cover_overlay_color: "#363b3d"
+cover_overlay_transparency: 0.8
+
+device_color: black
+
+body_background_color: "#ffffff"
+
+link_color: "#1d63ea"
+
+app_title_color: "#ffffff"
+app_price_color: "#ffffff"
+app_description_color: "#ffffff"
+
+feature_title_color: "#000000"
+feature_text_color: "#666666"
+
+feature_icons_foreground_color: "#1d63ea"
+feature_icons_background_color: "#e6e6e6"
+
+social_icons_foreground_color: "#666666"
+social_icons_background_color: "#e6e6e6"
+
+footer_text_color: "#666666"
