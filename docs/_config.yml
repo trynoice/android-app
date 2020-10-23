@@ -95,7 +95,7 @@ features:
     description: Save your favourite mixes and easily play them again
     fontawesome_icon_class: fas fa-sliders-h
   - title: Offline playback
-    description: Provides fully offline playback. No internet connected needed!
+    description: Provides fully offline playback. No internet connection needed!
     fontawesome_icon_class: fas fa-plane
 
 # Theme Settings
