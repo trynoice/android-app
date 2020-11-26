@@ -10,7 +10,9 @@ bug reports to large features.
 - [Translations](#translations)
 - [Adding sounds](#adding-sounds)
 - [Contributing code](#contributing-code)
-  - [App Architecture](#app-architecture)
+  - [Architecture](#architecture)
+    - [Android](#android)
+    - [Cast Receiver](#cast-receiver)
   - [Best Practices](#best-practices)
 - [Guiding Principles](#guiding-principles)
 - [Releases](#releases)
@@ -92,33 +94,108 @@ Adding translations to Noice is rather easy on GitHub as well
 
 Feel free to add more sounds to Noice taking the following under consideration.
 
-- Looping sounds should be at least 30 seconds and at most 2 minutes long. These are not
-  hard limits but the goal should be to minimize the ease of recognizing recurring
-  patterns in loops
-- If a looping sound doesn't have too many recognisable notes, e.g. cricket sound, consider
-  using dual samples. Dual samples make it hard to recognise repeating patterns. See
-  [this issue](https://github.com/ashutoshgngwr/noice/issues/62) for more details. 
-- All sounds should be encoded to `mp3` format with the following configuration. I use
-  [Audacity](https://www.audacityteam.org) for editing audio
+- Looping sounds should be at least 30 seconds and at most 2 minutes long. These
+  are not hard limits but the goal should be to minimize the ease of recognising
+  recurring patterns in loops
+- If a looping sound doesn't have too many recognisable notes, e.g. cricket
+  sound, consider using dual samples. Dual samples make it hard to recognise
+  repeating patterns. See [this
+  issue](https://github.com/ashutoshgngwr/noice/issues/62) for more details.
+- Consider applying the [Compressor
+  effect](https://en.wikipedia.org/wiki/Dynamic_range_compression#Controls_and_features)
+  to the new sounds. We recommend the following settings, but these do not
+  produce the best results for all ambient sounds. To get best results, tweak
+  these settings, test their output and trust your best judgement.
+  - Threshold: -32 dB
+  - Noise Floor: -70 dB
+  - Ratio: 10:1
+  - Attack Time: 0.10 sec
+  - Release Time: 1 sec
+- All sounds should be encoded to `mp3` format with the following configuration.
+  I use [Audacity](https://www.audacityteam.org) for editing audio
   - Sample rate: 44.1 kHz
   - Bit rate mode: Average
   - Quality: Standard, 192 kbps
   - Variable Speed: Fast
   - Channel Mode: Stereo
+- Once you have the sounds ready, copy the audio files to the
+  [`assets`](https://github.com/ashutoshgngwr/noice/tree/HEAD/app/src/main/assets)
+  directory and add them to the `LIBRARY` map in
+  [`Sound.kt`](https://github.com/ashutoshgngwr/noice/blob/HEAD/app/src/main/java/com/github/ashutoshgngwr/noice/sound/Sound.kt),
+  e.g.
+
+  ```kotlin
+  "birds" to Sound(
+    // relative path of audio files in `assets` directory
+    arrayOf("birds_0.mp3", "birds_1.mp3"),
+
+    // title string resource
+    R.string.birds,
+
+    // sound group in which the sound should be placed
+    R.string.sound_group__life,
+
+    // an array of Pair instances where first string resource represents the description
+    // of sound and second string resource represents the URL of sound's source. Both of
+    // these resources are shown on the `About` screen of app.
+    arrayOf(
+      Pair(
+        R.string.credits__sound_birds,
+        R.string.credits__sound_birds_url
+      )
+    )
+  )
+  ```
 
 ## Contributing code
 
 Most of the code is documented but not very thoroughly.
 
-### App Architecture
+### Architecture
+
+#### Android
+
+The Android app is written in Kotlin. It does not adhere to modern architectures
+(e.g. MVVM) or use modern frameworks. The rationale behind the choice was simple
+&mdash; the view interactions are simple, and the views don't mutate too often.
+
+The following diagram depicts the sound engine architecture in detail. Here
+`MediaPlayerService` (a foreground service) controls a `PlayerManager` instance.
+A `PlayerManager` controls multiple `Player` instances and can have at most one
+`Player` instance for each sound present in the library.
 
 <p align="center">
   <img align="center" alt="Android app architecture" src="assets/android-app-architecture.svg" /><br>
-  Android app overview
 </p>
+
+#### Cast Receiver
+
+The Cast receiver app is written in TypeScript. The TypeScript code transpiles
+to the plain JavaScript to run in the Chromium instance on Chromecast devices.
+The receiver app receives simple commands (JSON) from the `Player` component in
+the Android app using Chromecast Sender and Receiver SDKs.
+
+The receiver app has its `PlayerManager` implementation, which reacts to command
+messages received from the sender Android app. The receiver app fetches the
+audio from the internet instead of employing complicated mechanisms for
+streaming audio over the local network. Hence, the sender app only needs to send
+`soundKey`s with each of its control messages.
+
+On receiving the following message, the `PlayerManager` on the receiver app will
+immediately pause the [`Howl`](https://howlerjs.com/) instances corresponding to
+the keys present in `src` array.
+
+```json
+{
+  "src": ["birds_0.mp3", "birds_1.mp3"],
+  "isLooping": true,
+  "action": "pause",
+  "volume": 0.3
+}
+```
+
 <p align="center">
   <img alt="Cast receiver app architecture" src="assets/cast-receiver-architecture.svg" /><br>
-  Cast Receiver app overview
 </p>
 
 ### Best Practices
