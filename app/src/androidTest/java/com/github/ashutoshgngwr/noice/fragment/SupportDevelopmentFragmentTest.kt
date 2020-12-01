@@ -40,7 +40,7 @@ class SupportDevelopmentFragmentTest {
 
   @Test
   fun testShareWithFriendsButton() {
-    onView(withId(R.id.button_share)).perform(scrollTo(), click())
+    onView(withId(R.id.share_button)).perform(scrollTo(), click())
 
     Intents.intended(
       IntentMatchers.filterEquals(

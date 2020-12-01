@@ -17,32 +17,32 @@
     android:textAppearance="?attr/textAppearanceBody1" />
 
   <Button
-    android:id="@+id/button_usd1"
+    android:id="@+id/one_usd_button"
     style="@style/Widget.App.DonateView.DonateButton"
     android:text="@string/support_development__donate_usd1" />
 
   <Button
-    android:id="@+id/button_usd2"
+    android:id="@+id/two_usd_button"
     style="@style/Widget.App.DonateView.DonateButton"
     android:text="@string/support_development__donate_usd2" />
 
   <Button
-    android:id="@+id/button_usd5"
+    android:id="@+id/five_usd_button"
     style="@style/Widget.App.DonateView.DonateButton"
     android:text="@string/support_development__donate_usd5" />
 
   <Button
-    android:id="@+id/button_usd10"
+    android:id="@+id/ten_usd_button"
     style="@style/Widget.App.DonateView.DonateButton"
     android:text="@string/support_development__donate_usd10" />
 
   <Button
-    android:id="@+id/button_usd15"
+    android:id="@+id/fifteen_usd_button"
     style="@style/Widget.App.DonateView.DonateButton"
     android:text="@string/support_development__donate_usd15" />
 
   <Button
-    android:id="@+id/button_usd25"
+    android:id="@+id/twentyfive_usd_button"
     style="@style/Widget.App.DonateView.DonateButton"
     android:text="@string/support_development__donate_usd25" />
 

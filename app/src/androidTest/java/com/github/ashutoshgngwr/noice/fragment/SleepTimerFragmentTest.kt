@@ -14,6 +14,7 @@ import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
+import com.github.ashutoshgngwr.noice.databinding.SleepTimerFragmentBinding
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.InjectionLookupType
@@ -23,7 +24,6 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.slot
 import io.mockk.verify
-import kotlinx.android.synthetic.main.fragment_sleep_timer.view.*
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertTrue
@@ -102,7 +102,9 @@ class SleepTimerFragmentTest {
   @Test
   fun testResetButton_onAutoSleepScheduled() {
     fragmentScenario.onFragment {
-      it.requireView().duration_picker.setResetButtonEnabled(true)
+      SleepTimerFragmentBinding.bind(it.requireView()).also { binding ->
+        binding.durationPicker.setResetButtonEnabled(true)
+      }
     }
 
     onView(EspressoX.withDurationPickerResetButton(withId(R.id.duration_picker)))

@@ -7,37 +7,37 @@
   android:useDefaultMargins="true">
 
   <Button
-    android:id="@+id/button_1m"
+    android:id="@+id/one_minute_button"
     style="@style/Widget.App.DurationPicker.Button.AddTime"
     android:text="@string/plus1m" />
 
   <Button
-    android:id="@+id/button_5m"
+    android:id="@+id/five_minute_button"
     style="@style/Widget.App.DurationPicker.Button.AddTime"
     android:text="@string/plus5m" />
 
   <Button
-    android:id="@+id/button_30m"
+    android:id="@+id/thirty_minute_button"
     style="@style/Widget.App.DurationPicker.Button.AddTime"
     android:text="@string/plus30m" />
 
   <Button
-    android:id="@+id/button_1h"
+    android:id="@+id/one_hour_button"
     style="@style/Widget.App.DurationPicker.Button.AddTime"
     android:text="@string/plus1h" />
 
   <Button
-    android:id="@+id/button_4h"
+    android:id="@+id/four_hour_button"
     style="@style/Widget.App.DurationPicker.Button.AddTime"
     android:text="@string/plus4h" />
 
   <Button
-    android:id="@+id/button_8h"
+    android:id="@+id/eight_hour_button"
     style="@style/Widget.App.DurationPicker.Button.AddTime"
     android:text="@string/plus8h" />
 
   <Button
-    android:id="@+id/button_reset"
+    android:id="@+id/reset_button"
     style="?attr/materialButtonOutlinedStyle"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

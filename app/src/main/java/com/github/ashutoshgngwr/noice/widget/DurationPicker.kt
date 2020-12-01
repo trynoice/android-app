@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.FrameLayout
@@ -9,7 +10,7 @@ import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.annotation.VisibleForTesting
 import com.github.ashutoshgngwr.noice.R
-import kotlinx.android.synthetic.main.view_duration_picker.view.*
+import com.github.ashutoshgngwr.noice.databinding.DurationPickerViewBinding
 
 /**
  * [DurationPicker] creates a compound [View] with 7 buttons to manipulate the duration in a larger
@@ -19,9 +20,8 @@ import kotlinx.android.synthetic.main.view_duration_picker.view.*
  */
 class DurationPicker : FrameLayout {
 
-  private val buttons by lazy {
-    arrayOf(button_1m, button_5m, button_30m, button_1h, button_4h, button_8h, button_reset)
-  }
+  private val binding: DurationPickerViewBinding
+  private val buttons: Array<View>
 
   private var onDurationAddedListener: ((Long) -> Unit)? = null
 
@@ -32,16 +32,29 @@ class DurationPicker : FrameLayout {
   )
 
   init {
-    View.inflate(context, R.layout.view_duration_picker, this)
+    LayoutInflater.from(context).also {
+      binding = DurationPickerViewBinding.inflate(it, this, true)
+    }
+
+    buttons = arrayOf(
+      binding.oneMinuteButton,
+      binding.fiveMinuteButton,
+      binding.thirtyMinuteButton,
+      binding.oneHourButton,
+      binding.fourHourButton,
+      binding.eightHourButton,
+      binding.resetButton
+    )
+
     OnClickListener {
       val timeToAdd = 1000L * 60L * when (it.id) {
-        R.id.button_1m -> 1
-        R.id.button_5m -> 5
-        R.id.button_30m -> 30
-        R.id.button_1h -> 60
-        R.id.button_4h -> 240
-        R.id.button_8h -> 480
-        R.id.button_reset -> -1
+        R.id.one_minute_button -> 1
+        R.id.five_minute_button -> 5
+        R.id.thirty_minute_button -> 30
+        R.id.one_hour_button -> 60
+        R.id.four_hour_button -> 240
+        R.id.eight_hour_button -> 480
+        R.id.reset_button -> -1
         else -> 0
       }
 
@@ -74,7 +87,7 @@ class DurationPicker : FrameLayout {
    * [setResetButtonEnabled] enables or disables the reset button for user interactions.
    */
   fun setResetButtonEnabled(enabled: Boolean) {
-    button_reset.isEnabled = enabled
+    binding.resetButton.isEnabled = enabled
   }
 
   /**

@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply from: 'jacoco.gradle'
 
 android {
@@ -22,6 +21,10 @@ android {
       storePassword "$System.env.STORE_PASSWORD"
       keyPassword "$System.env.KEY_PASSWORD"
     }
+  }
+
+  buildFeatures {
+    viewBinding true
   }
 
   buildTypes {

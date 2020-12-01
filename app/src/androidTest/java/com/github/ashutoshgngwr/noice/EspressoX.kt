@@ -143,7 +143,7 @@ object EspressoX {
    * Returns a [Matcher] that matches reset button of the [DurationPicker] view.
    */
   fun withDurationPickerResetButton(durationPickerMatcher: Matcher<View>): Matcher<View> {
-    return allOf(isDescendantOfA(durationPickerMatcher), withId(R.id.button_reset))
+    return allOf(isDescendantOfA(durationPickerMatcher), withId(R.id.reset_button))
   }
 
   /**

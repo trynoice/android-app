@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
@@ -15,22 +14,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.databinding.DialogFragmentRandomPresetBinding
+import com.github.ashutoshgngwr.noice.databinding.SoundGroupListItemBinding
+import com.github.ashutoshgngwr.noice.databinding.SoundLibraryFragmentBinding
+import com.github.ashutoshgngwr.noice.databinding.SoundListItemBinding
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_dialog__random_preset.view.*
-import kotlinx.android.synthetic.main.fragment_sound_list.view.*
-import kotlinx.android.synthetic.main.layout_list_item__sound.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import kotlin.random.Random
 import kotlin.random.nextInt
 
-class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
+class SoundLibraryFragment : Fragment() {
 
   companion object {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -43,7 +43,8 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
     val RANGE_INTENSITY_ANY = 2 until 8
   }
 
-  private var mRecyclerView: RecyclerView? = null
+  private lateinit var binding: SoundLibraryFragmentBinding
+
   private var adapter: SoundListAdapter? = null
   private var players = emptyMap<String, Player>()
 
@@ -64,12 +65,12 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
           lastDisplayGroupResID = it.value.displayGroupResID
           list.add(
             SoundListItem(
-              R.layout.layout_list_item__sound_group_title, getString(lastDisplayGroupResID)
+              R.layout.sound_group_list_item, getString(lastDisplayGroupResID)
             )
           )
         }
 
-        list.add(SoundListItem(R.layout.layout_list_item__sound, it.key))
+        list.add(SoundListItem(R.layout.sound_list_item, it.key))
       }
     }
   }
@@ -85,32 +86,41 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
     view?.post {
       adapter?.notifyDataSetChanged()
       if (showSavePresetFAB && event.state == PlayerManager.State.PLAYING) {
-        view?.fab_save_preset?.show()
+        binding.savePresetButton.show()
       } else {
-        view?.fab_save_preset?.hide()
+        binding.savePresetButton.hide()
       }
 
       if (event.state == PlayerManager.State.STOPPED) {
-        view?.fab_shuffle?.show()
+        binding.randomPresetButton.show()
       } else {
-        view?.fab_shuffle?.hide()
+        binding.randomPresetButton.hide()
       }
     }
   }
 
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View {
+    binding = SoundLibraryFragmentBinding.inflate(inflater, container, false)
+    return binding.root
+  }
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     adapter = SoundListAdapter(requireContext())
-    mRecyclerView = view.list_sound.also {
+    binding.soundList.also {
       it.setHasFixedSize(true)
       it.adapter = adapter
     }
 
-    view.fab_save_preset.setOnLongClickListener {
+    binding.savePresetButton.setOnLongClickListener {
       Toast.makeText(requireContext(), R.string.save_preset, Toast.LENGTH_LONG).show()
       true
     }
 
-    view.fab_save_preset.setOnClickListener {
+    binding.savePresetButton.setOnClickListener {
       DialogFragment.show(childFragmentManager) {
         val duplicateNameValidator = Preset.duplicateNameValidator(requireContext())
         title(R.string.save_preset)
@@ -126,7 +136,7 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
         positiveButton(R.string.save) {
           val preset = Preset.from(getInputText(), players.values)
           Preset.appendToUserPreferences(requireContext(), preset)
-          view.fab_save_preset.hide()
+          binding.savePresetButton.hide()
           showPresetSavedMessage()
 
           // maybe show in-app review dialog to the user
@@ -135,22 +145,23 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
       }
     }
 
-    view.fab_shuffle.setOnLongClickListener {
+    binding.randomPresetButton.setOnLongClickListener {
       Toast.makeText(requireContext(), R.string.random_preset, Toast.LENGTH_LONG).show()
       true
     }
 
-    view.fab_shuffle.setOnClickListener {
+    binding.randomPresetButton.setOnClickListener {
       DialogFragment.show(childFragmentManager) {
+        val viewBinding = DialogFragmentRandomPresetBinding.inflate(layoutInflater)
+        addContentView(viewBinding.root)
         title(R.string.random_preset)
-        addContentView(R.layout.fragment_dialog__random_preset)
         negativeButton(R.string.cancel)
         positiveButton(R.string.play) {
           eventBus.post(
             MediaPlayerService.PlayPresetEvent(
               generateRandomPreset(
-                requireView().preset_type.checkedRadioButtonId,
-                requireView().preset_intensity.checkedRadioButtonId
+                viewBinding.presetType.checkedRadioButtonId,
+                viewBinding.presetIntensity.checkedRadioButtonId
               )
             )
           )
@@ -204,12 +215,28 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
   private class SoundListItem(@LayoutRes val layoutID: Int, val data: String)
 
   private inner class SoundListAdapter(private val context: Context) :
-    RecyclerView.Adapter<ViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val layoutInflater = LayoutInflater.from(context)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-      return ViewHolder(layoutInflater.inflate(viewType, parent, false), viewType)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+      return when (viewType) {
+        R.layout.sound_group_list_item -> SoundGroupListItemViewHolder(
+          SoundGroupListItemBinding.inflate(
+            layoutInflater,
+            parent,
+            false
+          )
+        )
+        R.layout.sound_list_item -> SoundListItemViewHolder(
+          SoundListItemBinding.inflate(
+            layoutInflater,
+            parent,
+            false
+          )
+        )
+        else -> throw IllegalArgumentException("unknown view type: $viewType")
+      }
     }
 
     override fun getItemCount(): Int {
@@ -220,10 +247,10 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
       return dataSet[position].layoutID
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-      if (dataSet[position].layoutID == R.layout.layout_list_item__sound_group_title) {
-        holder.itemView as TextView
-        holder.itemView.text = dataSet[position].data
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+      if (dataSet[position].layoutID == R.layout.sound_group_list_item) {
+        holder as SoundGroupListItemViewHolder
+        holder.binding.root.text = dataSet[position].data
         return
       }
 
@@ -239,13 +266,14 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
         }
       }
 
-      holder.itemView.button_play.isChecked = isPlaying
-      holder.itemView.title.text = context.getString(sound.titleResId)
-      holder.itemView.slider_volume.isEnabled = isPlaying
-      holder.itemView.slider_volume.value = volume.toFloat()
-      holder.itemView.slider_time_period.isEnabled = isPlaying
-      holder.itemView.slider_time_period.value = timePeriod.toFloat()
-      holder.itemView.layout_time_period.visibility = if (sound.isLooping) {
+      holder as SoundListItemViewHolder
+      holder.binding.playButton.isChecked = isPlaying
+      holder.binding.title.text = context.getString(sound.titleResId)
+      holder.binding.volumeSlider.isEnabled = isPlaying
+      holder.binding.volumeSlider.value = volume.toFloat()
+      holder.binding.timePeriodSlider.isEnabled = isPlaying
+      holder.binding.timePeriodSlider.value = timePeriod.toFloat()
+      holder.binding.timePeriodLayout.visibility = if (sound.isLooping) {
         View.GONE
       } else {
         View.VISIBLE
@@ -253,7 +281,11 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
     }
   }
 
-  inner class ViewHolder(view: View, @LayoutRes layoutID: Int) : RecyclerView.ViewHolder(view) {
+  inner class SoundGroupListItemViewHolder(val binding: SoundGroupListItemBinding) :
+    RecyclerView.ViewHolder(binding.root)
+
+  inner class SoundListItemViewHolder(val binding: SoundListItemBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     // set listeners in holders to avoid object recreation on view recycle
     private val sliderChangeListener = object : Slider.OnChangeListener {
@@ -264,10 +296,10 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
 
         val player = players[dataSet[adapterPosition].data] ?: return
         when (slider.id) {
-          R.id.slider_volume -> {
+          R.id.volume_slider -> {
             player.setVolume(value.toInt())
           }
-          R.id.slider_time_period -> {
+          R.id.time_period_slider -> {
             player.timePeriod = value.toInt()
           }
         }
@@ -287,21 +319,15 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
     }
 
     init {
-      if (layoutID == R.layout.layout_list_item__sound) {
-        initSoundItem(view)
-      }
-    }
-
-    private fun initSoundItem(view: View) {
-      setupSlider(view.slider_volume, 0, Player.MAX_VOLUME) {
+      setupSlider(binding.volumeSlider, 0, Player.MAX_VOLUME) {
         "${(it * 100).toInt() / Player.MAX_VOLUME}%"
       }
 
-      setupSlider(view.slider_time_period, Player.MIN_TIME_PERIOD, Player.MAX_TIME_PERIOD) {
+      setupSlider(binding.timePeriodSlider, Player.MIN_TIME_PERIOD, Player.MAX_TIME_PERIOD) {
         "${it.toInt() / 60}m ${it.toInt() % 60}s"
       }
 
-      view.button_play.setOnClickListener {
+      binding.playButton.setOnClickListener {
         val listItem = dataSet.getOrNull(adapterPosition) ?: return@setOnClickListener
         if (players.containsKey(listItem.data)) {
           eventBus.post(MediaPlayerService.StopPlayerEvent(listItem.data))

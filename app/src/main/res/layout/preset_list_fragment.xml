@@ -5,7 +5,7 @@
   android:layout_height="match_parent">
 
   <TextView
-    android:id="@+id/indicator_list_empty"
+    android:id="@+id/empty_list_hint"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -18,7 +18,7 @@
     app:drawableTopCompat="@drawable/ic_info_48dp" />
 
   <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/list_presets"
+    android:id="@+id/preset_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

@@ -65,7 +65,7 @@
           android:textAppearance="?attr/textAppearanceBody1" />
 
         <Button
-          android:id="@+id/button_share"
+          android:id="@+id/share_button"
           style="?attr/materialButtonOutlinedStyle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"

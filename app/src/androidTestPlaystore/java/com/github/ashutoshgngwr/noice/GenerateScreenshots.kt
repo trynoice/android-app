@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -25,7 +26,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
-import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import io.mockk.every
@@ -162,47 +162,47 @@ class GenerateScreenshots {
     }
 
     activityScenarioRule.scenario.recreate()
-    onView(withId(R.id.list_sound)).perform(
-      actionOnItem<SoundLibraryFragment.ViewHolder>(
+    onView(withId(R.id.sound_list)).perform(
+      actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.light_rain))),
-        EspressoX.clickInItem(R.id.button_play)
+        EspressoX.clickInItem(R.id.play_button)
       )
     )
 
-    onView(withId(R.id.list_sound)).perform(
-      actionOnItem<SoundLibraryFragment.ViewHolder>(
+    onView(withId(R.id.sound_list)).perform(
+      actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.light_rain))),
         EspressoX.slideInItem(
-          R.id.slider_volume,
+          R.id.volume_slider,
           Player.MAX_VOLUME.toFloat() - Player.DEFAULT_VOLUME
         )
       )
     )
 
-    onView(withId(R.id.list_sound)).perform(
-      actionOnItem<SoundLibraryFragment.ViewHolder>(
+    onView(withId(R.id.sound_list)).perform(
+      actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(
           allOf(withId(R.id.title), withText(R.string.distant_thunder))
         ),
-        EspressoX.clickInItem(R.id.button_play)
+        EspressoX.clickInItem(R.id.play_button)
       )
     )
 
-    onView(withId(R.id.list_sound)).perform(
-      actionOnItem<SoundLibraryFragment.ViewHolder>(
+    onView(withId(R.id.sound_list)).perform(
+      actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(
           allOf(withId(R.id.title), withText(R.string.distant_thunder))
         ),
-        EspressoX.slideInItem(R.id.slider_volume, Player.MAX_VOLUME.toFloat())
+        EspressoX.slideInItem(R.id.volume_slider, Player.MAX_VOLUME.toFloat())
       )
     )
 
-    onView(withId(R.id.list_sound)).perform(
-      actionOnItem<SoundLibraryFragment.ViewHolder>(
+    onView(withId(R.id.sound_list)).perform(
+      actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(
           allOf(withId(R.id.title), withText(R.string.distant_thunder))
         ),
-        EspressoX.slideInItem(R.id.slider_time_period, Player.MAX_TIME_PERIOD.toFloat() - 300)
+        EspressoX.slideInItem(R.id.time_period_slider, Player.MAX_TIME_PERIOD.toFloat() - 300)
       )
     )
 
@@ -220,10 +220,10 @@ class GenerateScreenshots {
     EspressoX.waitForView(withId(R.id.navigation_drawer), 100, 5)
       .perform(NavigationViewActions.navigateTo(R.id.saved_presets))
 
-    EspressoX.waitForView(withId(R.id.list_presets), 100, 5)
+    EspressoX.waitForView(withId(R.id.preset_list), 100, 5)
       .perform(
         actionOnItemAtPosition<PresetFragment.ViewHolder>(
-          1, EspressoX.clickInItem(R.id.button_play)
+          1, EspressoX.clickInItem(R.id.play_button)
         )
       )
 
@@ -233,10 +233,10 @@ class GenerateScreenshots {
 
   @Test
   fun sleepTimer() {
-    onView(withId(R.id.list_sound)).perform(
-      actionOnItem<SoundLibraryFragment.ViewHolder>(
+    onView(withId(R.id.sound_list)).perform(
+      actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        EspressoX.clickInItem(R.id.button_play)
+        EspressoX.clickInItem(R.id.play_button)
       )
     )
 
@@ -267,7 +267,7 @@ class GenerateScreenshots {
     EspressoX.waitForView(withId(R.id.navigation_drawer), 100, 5)
       .perform(NavigationViewActions.navigateTo(R.id.wake_up_timer))
 
-    EspressoX.waitForView(withId(R.id.button_select_preset), 100, 5)
+    EspressoX.waitForView(withId(R.id.select_preset_button), 100, 5)
       .perform(click())
 
     EspressoX.waitForView(withText("Airplane"), 100, 5)
@@ -276,7 +276,7 @@ class GenerateScreenshots {
     onView(withId(R.id.time_picker))
       .perform(PickerActions.setTime(12, 30))
 
-    onView(withId(R.id.button_set_time))
+    onView(withId(R.id.set_time_button))
       .perform(scrollTo(), click())
 
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)

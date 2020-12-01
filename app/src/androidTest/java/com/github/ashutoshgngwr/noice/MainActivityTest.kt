@@ -34,12 +34,12 @@ import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment
 import com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
+import com.google.android.material.navigation.NavigationView
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.verify
-import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.allOf
 import org.junit.After
@@ -85,7 +85,10 @@ class MainActivityTest {
         it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
       )
 
-      assertEquals(R.id.library, it.navigation_drawer.checkedItem?.itemId)
+      assertEquals(
+        R.id.library,
+        it.findViewById<NavigationView>(R.id.navigation_drawer).checkedItem?.itemId
+      )
     }
   }
 
@@ -104,8 +107,10 @@ class MainActivityTest {
         it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
       )
 
-      assertEquals(R.id.saved_presets, it.navigation_drawer.checkedItem?.itemId)
-      assertEquals(it.getString(R.string.saved_presets), it.navigation_drawer.checkedItem?.title)
+      it.findViewById<NavigationView>(R.id.navigation_drawer).also { navView ->
+        assertEquals(R.id.saved_presets, navView.checkedItem?.itemId)
+        assertEquals(it.getString(R.string.saved_presets), navView.checkedItem?.title)
+      }
     }
   }
 
@@ -124,8 +129,10 @@ class MainActivityTest {
         it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
       )
 
-      assertEquals(R.id.sleep_timer, it.navigation_drawer.checkedItem?.itemId)
-      assertEquals(it.getString(R.string.sleep_timer), it.navigation_drawer.checkedItem?.title)
+      it.findViewById<NavigationView>(R.id.navigation_drawer).also { navView ->
+        assertEquals(R.id.sleep_timer, navView.checkedItem?.itemId)
+        assertEquals(it.getString(R.string.sleep_timer), navView.checkedItem?.title)
+      }
     }
   }
 
@@ -144,8 +151,10 @@ class MainActivityTest {
         it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
       )
 
-      assertEquals(R.id.wake_up_timer, it.navigation_drawer.checkedItem?.itemId)
-      assertEquals(it.getString(R.string.wake_up_timer), it.navigation_drawer.checkedItem?.title)
+      it.findViewById<NavigationView>(R.id.navigation_drawer).also { navView ->
+        assertEquals(R.id.wake_up_timer, navView.checkedItem?.itemId)
+        assertEquals(it.getString(R.string.wake_up_timer), navView.checkedItem?.title)
+      }
     }
   }
 
@@ -195,8 +204,10 @@ class MainActivityTest {
         it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
       )
 
-      assertEquals(R.id.about, it.navigation_drawer.checkedItem?.itemId)
-      assertEquals(it.getString(R.string.about), it.navigation_drawer.checkedItem?.title)
+      it.findViewById<NavigationView>(R.id.navigation_drawer).also { navView ->
+        assertEquals(R.id.about, navView.checkedItem?.itemId)
+        assertEquals(it.getString(R.string.about), navView.checkedItem?.title)
+      }
     }
   }
 
@@ -232,11 +243,10 @@ class MainActivityTest {
         it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
       )
 
-      assertEquals(R.id.support_development, it.navigation_drawer.checkedItem?.itemId)
-      assertEquals(
-        it.getString(R.string.support_development),
-        it.navigation_drawer.checkedItem?.title
-      )
+      it.findViewById<NavigationView>(R.id.navigation_drawer).also { navView ->
+        assertEquals(R.id.support_development, navView.checkedItem?.itemId)
+        assertEquals(it.getString(R.string.support_development), navView.checkedItem?.title)
+      }
     }
   }
 

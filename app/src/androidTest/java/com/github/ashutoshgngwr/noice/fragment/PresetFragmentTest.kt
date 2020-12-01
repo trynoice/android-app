@@ -79,12 +79,12 @@ class PresetFragmentTest {
 
   @Test
   fun testInitialLayout() {
-    onView(withId(R.id.indicator_list_empty))
+    onView(withId(R.id.empty_list_hint))
       .check(matches(withEffectiveVisibility(Visibility.GONE)))
 
     every { Preset.readAllFromUserPreferences(any()) } returns arrayOf()
     fragmentScenario.recreate()
-    onView(withId(R.id.indicator_list_empty))
+    onView(withId(R.id.empty_list_hint))
       .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
   }
 
@@ -92,10 +92,10 @@ class PresetFragmentTest {
   fun testRecyclerViewItem_playButton() {
     // clear all previous calls to EventBus
     clearMocks(eventBus)
-    onView(withId(R.id.list_presets)).perform(
-      RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+    onView(withId(R.id.preset_list)).perform(
+      RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickInItem(R.id.button_play)
+        EspressoX.clickInItem(R.id.play_button)
       )
     )
 
@@ -114,10 +114,10 @@ class PresetFragmentTest {
       })
     }
 
-    onView(withId(R.id.list_presets)).perform(
-      RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+    onView(withId(R.id.preset_list)).perform(
+      RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickInItem(R.id.button_play)
+        EspressoX.clickInItem(R.id.play_button)
       )
     )
 
@@ -127,10 +127,10 @@ class PresetFragmentTest {
   @Test
   fun testRecyclerViewItem_deleteOption() {
     // open context menu
-    onView(withId(R.id.list_presets)).perform(
-      RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+    onView(withId(R.id.preset_list)).perform(
+      RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickInItem(R.id.button_menu)
+        EspressoX.clickInItem(R.id.menu_button)
       )
     )
 
@@ -156,10 +156,10 @@ class PresetFragmentTest {
     }
 
     // open context menu
-    onView(withId(R.id.list_presets)).perform(
-      RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+    onView(withId(R.id.preset_list)).perform(
+      RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickInItem(R.id.button_menu)
+        EspressoX.clickInItem(R.id.menu_button)
       )
     )
 
@@ -180,10 +180,10 @@ class PresetFragmentTest {
     every { mockValidator.invoke("test-does-not-exists") } returns false
 
     // open context menu
-    onView(withId(R.id.list_presets)).perform(
-      RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+    onView(withId(R.id.preset_list)).perform(
+      RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickInItem(R.id.button_menu)
+        EspressoX.clickInItem(R.id.menu_button)
       )
     )
 

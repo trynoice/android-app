@@ -1,12 +1,13 @@
 package com.github.ashutoshgngwr.noice.widget
 
+import androidx.core.view.children
 import androidx.test.core.app.ApplicationProvider
+import com.github.ashutoshgngwr.noice.databinding.DurationPickerViewBinding
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.android.synthetic.main.view_duration_picker.view.*
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -18,11 +19,13 @@ import org.robolectric.RobolectricTestRunner
 class DurationPickerTest {
 
   private lateinit var view: DurationPicker
+  private lateinit var binding: DurationPickerViewBinding
   private lateinit var onDurationAddedListener: (Long) -> Unit
 
   @Before
   fun setup() {
     view = DurationPicker(ApplicationProvider.getApplicationContext())
+    binding = DurationPickerViewBinding.bind(view.children.first())
     onDurationAddedListener = mockk()
     view.setOnDurationAddedListener(onDurationAddedListener)
 
@@ -33,19 +36,19 @@ class DurationPickerTest {
   @Test
   fun testEnableDisableControls() {
     view.setResetButtonEnabled(true)
-    assertTrue(view.button_reset.isEnabled)
+    assertTrue(binding.resetButton.isEnabled)
 
     view.setResetButtonEnabled(false)
-    assertFalse(view.button_reset.isEnabled)
+    assertFalse(binding.resetButton.isEnabled)
 
     val controlButtons = arrayOf(
-      view.button_1m,
-      view.button_5m,
-      view.button_30m,
-      view.button_1h,
-      view.button_4h,
-      view.button_8h,
-      view.button_reset
+      binding.oneMinuteButton,
+      binding.fiveMinuteButton,
+      binding.thirtyMinuteButton,
+      binding.oneHourButton,
+      binding.fourHourButton,
+      binding.eightHourButton,
+      binding.resetButton
     )
 
     view.setControlsEnabled(false)
@@ -57,43 +60,43 @@ class DurationPickerTest {
 
   @Test
   fun testResetButton() {
-    view.button_reset.performClick()
+    binding.resetButton.performClick()
     verify(exactly = 1) { onDurationAddedListener.invoke(less(0L)) }
   }
 
   @Test
   fun test1mButton() {
-    view.button_1m.performClick()
+    binding.oneMinuteButton.performClick()
     verify(exactly = 1) { onDurationAddedListener.invoke(60000L) }
   }
 
   @Test
   fun test5mButton() {
-    view.button_5m.performClick()
+    binding.fiveMinuteButton.performClick()
     verify(exactly = 1) { onDurationAddedListener.invoke(300000L) }
   }
 
   @Test
   fun test30mButton() {
-    view.button_30m.performClick()
+    binding.thirtyMinuteButton.performClick()
     verify(exactly = 1) { onDurationAddedListener.invoke(1800000L) }
   }
 
   @Test
   fun test1hButton() {
-    view.button_1h.performClick()
+    binding.oneHourButton.performClick()
     verify(exactly = 1) { onDurationAddedListener.invoke(3600000L) }
   }
 
   @Test
   fun test4hButton() {
-    view.button_4h.performClick()
+    binding.fourHourButton.performClick()
     verify(exactly = 1) { onDurationAddedListener.invoke(14400000L) }
   }
 
   @Test
   fun test8hButton() {
-    view.button_8h.performClick()
+    binding.eightHourButton.performClick()
     verify(exactly = 1) { onDurationAddedListener.invoke(28800000L) }
   }
 }

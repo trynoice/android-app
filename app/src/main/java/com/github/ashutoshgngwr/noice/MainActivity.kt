@@ -17,6 +17,7 @@ import androidx.core.content.edit
 import androidx.core.view.GravityCompat
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
+import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
@@ -26,7 +27,6 @@ import com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment
 import com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     )
   }
 
+  private lateinit var binding: MainActivityBinding
   private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
   private lateinit var castAPIWrapper: CastAPIWrapper
   private var playerManagerState = PlayerManager.State.STOPPED
@@ -72,22 +73,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     super.onCreate(savedInstanceState)
     AppCompatDelegate.setDefaultNightMode(getNightModeFromPrefs())
 
-    setContentView(R.layout.activity_main)
+    binding = MainActivityBinding.inflate(layoutInflater)
+    setContentView(binding.root)
 
     // setup toolbar to display animated drawer toggle button
     actionBarDrawerToggle = ActionBarDrawerToggle(
       this,
-      layout_main,
+      binding.layoutMain,
       R.string.open_drawer,
       R.string.close_drawer
     )
-    layout_main.addDrawerListener(actionBarDrawerToggle)
+    binding.layoutMain.addDrawerListener(actionBarDrawerToggle)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
     actionBarDrawerToggle.syncState()
 
     // setup listener for navigation item clicks
-    navigation_drawer.setNavigationItemSelectedListener(this)
-    navigation_drawer.menu.findItem(R.id.rate_on_play_store).isVisible =
+    binding.navigationDrawer.setNavigationItemSelectedListener(this)
+    binding.navigationDrawer.menu.findItem(R.id.rate_on_play_store).isVisible =
       BuildConfig.IS_PLAY_STORE_BUILD
 
     // bind navigation drawer menu items checked state with fragment back stack
@@ -96,15 +98,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       val currentFragmentName = supportFragmentManager.getBackStackEntryAt(index).name
       for ((id, fragment) in NAVIGATED_FRAGMENTS) {
         if (fragment.simpleName == currentFragmentName) {
-          navigation_drawer.setCheckedItem(id)
+          binding.navigationDrawer.setCheckedItem(id)
           break
         }
       }
 
-      if (R.id.library == navigation_drawer.checkedItem?.itemId) {
+      if (R.id.library == binding.navigationDrawer.checkedItem?.itemId) {
         supportActionBar?.setTitle(R.string.app_name)
       } else {
-        supportActionBar?.title = navigation_drawer.checkedItem?.title
+        supportActionBar?.title = binding.navigationDrawer.checkedItem?.title
       }
     }
 
@@ -212,13 +214,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     // hack to avoid stuttering in animations
-    layout_main.postDelayed({ layout_main.closeDrawer(GravityCompat.START) }, 150)
+    binding.layoutMain.postDelayed({ binding.layoutMain.closeDrawer(GravityCompat.START) }, 150)
     return true
   }
 
   override fun onBackPressed() {
-    if (layout_main.isDrawerOpen(GravityCompat.START)) {
-      layout_main.closeDrawer(GravityCompat.START)
+    if (binding.layoutMain.isDrawerOpen(GravityCompat.START)) {
+      binding.layoutMain.closeDrawer(GravityCompat.START)
     } else {
       // last fragment need not be removed, activity should be finished instead
       if (supportFragmentManager.backStackEntryCount > 1) {

@@ -12,17 +12,18 @@ import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
+import com.github.ashutoshgngwr.noice.databinding.PresetListFragmentBinding
+import com.github.ashutoshgngwr.noice.databinding.PresetListItemBinding
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_preset_list.view.*
-import kotlinx.android.synthetic.main.layout_list_item__preset.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class PresetFragment : Fragment(R.layout.fragment_preset_list) {
+class PresetFragment : Fragment() {
 
-  private var mRecyclerView: RecyclerView? = null
+  private lateinit var binding: PresetListFragmentBinding
+
   private var adapter: PresetListAdapter? = null
   private var activePresetPos = -1
 
@@ -31,9 +32,18 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
     Preset.readAllFromUserPreferences(requireContext()).toMutableList()
   }
 
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View {
+    binding = PresetListFragmentBinding.inflate(inflater, container, false)
+    return binding.root
+  }
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     adapter = PresetListAdapter(requireContext())
-    mRecyclerView = view.list_presets.also {
+    binding.presetList.also {
       it.setHasFixedSize(true)
       it.adapter = adapter
     }
@@ -63,9 +73,9 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
 
   private fun updateEmptyListIndicatorVisibility() {
     if (adapter?.itemCount ?: 0 > 0) {
-      requireView().indicator_list_empty.visibility = View.GONE
+      binding.emptyListHint.visibility = View.GONE
     } else {
-      requireView().indicator_list_empty.visibility = View.VISIBLE
+      binding.emptyListHint.visibility = View.VISIBLE
     }
   }
 
@@ -74,7 +84,7 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
     private val layoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-      return ViewHolder(layoutInflater.inflate(R.layout.layout_list_item__preset, parent, false))
+      return ViewHolder(PresetListItemBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -82,15 +92,16 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-      holder.itemView.title.text = dataSet[position].name
-      holder.itemView.button_play.isChecked = position == activePresetPos
+      holder.binding.title.text = dataSet[position].name
+      holder.binding.playButton.isChecked = position == activePresetPos
     }
   }
 
-  inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+  inner class ViewHolder(val binding: PresetListItemBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     init {
-      itemView.button_play.setOnClickListener {
+      binding.playButton.setOnClickListener {
         if (adapterPosition != activePresetPos) {
           eventBus.post(MediaPlayerService.PlayPresetEvent(dataSet[adapterPosition]))
         } else {
@@ -107,8 +118,8 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
         true
       }
 
-      itemView.button_menu.setOnClickListener {
-        PopupMenu(requireContext(), itemView.button_menu).let {
+      binding.menuButton.setOnClickListener {
+        PopupMenu(requireContext(), binding.menuButton).let {
           it.inflate(R.menu.preset)
           it.setOnMenuItemClickListener(onMenuItemClickListener)
           it.show()

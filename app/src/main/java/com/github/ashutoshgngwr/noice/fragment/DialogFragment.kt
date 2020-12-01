@@ -11,16 +11,15 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
 import androidx.annotation.IdRes
-import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.core.widget.TextViewCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentManager
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.databinding.DialogFragmentBaseBinding
+import com.github.ashutoshgngwr.noice.databinding.DialogFragmentTextInputBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textview.MaterialTextView
-import kotlinx.android.synthetic.main.fragment_dialog__base.view.*
-import kotlinx.android.synthetic.main.fragment_dialog__text_input.view.*
 
 
 /**
@@ -43,6 +42,9 @@ class DialogFragment : BottomSheetDialogFragment() {
    */
   private var displayOptions: DialogFragment.() -> Unit = { }
 
+  private lateinit var baseBinding: DialogFragmentBaseBinding
+  private lateinit var textInputBinding: DialogFragmentTextInputBinding
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     retainInstance = true // so this instance is retained when screen orientation changes.
@@ -52,8 +54,9 @@ class DialogFragment : BottomSheetDialogFragment() {
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.fragment_dialog__base, container, false)
+  ): View {
+    baseBinding = DialogFragmentBaseBinding.inflate(inflater, container, false)
+    return baseBinding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,15 +66,8 @@ class DialogFragment : BottomSheetDialogFragment() {
   /**
    * Adds given [View] to the [R.id.content] layout in the dialog
    */
-  private fun addContentView(view: View) {
-    requireView().content.addView(view)
-  }
-
-  /**
-   * Inflates the given [layoutID] to the [R.id.content] layout in the dialog
-   */
-  fun addContentView(@LayoutRes layoutID: Int) {
-    addContentView(layoutInflater.inflate(layoutID, requireView().content, false))
+  fun addContentView(view: View) {
+    baseBinding.content.addView(view)
   }
 
   /**
@@ -102,7 +98,7 @@ class DialogFragment : BottomSheetDialogFragment() {
    * Sets the title of the dialog
    */
   fun title(@StringRes resId: Int) {
-    requireView().title.text = getString(resId)
+    baseBinding.title.text = getString(resId)
   }
 
   /**
@@ -165,20 +161,23 @@ class DialogFragment : BottomSheetDialogFragment() {
     singleLine: Boolean = true,
     validator: (String) -> Int = { 0 }
   ) {
-    requireView().positive.isEnabled = false
-    addContentView(R.layout.fragment_dialog__text_input)
-    requireView().textInputLayout.hint = getString(hintRes)
-    requireView().editText.inputType = type
-    requireView().editText.isSingleLine = singleLine
-    requireView().editText.setText(preFillValue)
-    requireView().editText.addTextChangedListener {
+    textInputBinding =
+      DialogFragmentTextInputBinding.inflate(layoutInflater, baseBinding.content, false)
+    addContentView(textInputBinding.root)
+
+    baseBinding.positive.isEnabled = false
+    textInputBinding.textInputLayout.hint = getString(hintRes)
+    textInputBinding.editText.inputType = type
+    textInputBinding.editText.isSingleLine = singleLine
+    textInputBinding.editText.setText(preFillValue)
+    textInputBinding.editText.addTextChangedListener {
       val errResID = validator(it.toString())
       if (errResID == 0) {
-        requireView().positive.isEnabled = true
-        requireView().textInputLayout.error = ""
+        baseBinding.positive.isEnabled = true
+        textInputBinding.textInputLayout.error = ""
       } else {
-        requireView().positive.isEnabled = false
-        requireView().textInputLayout.error = getString(errResID)
+        baseBinding.positive.isEnabled = false
+        textInputBinding.textInputLayout.error = getString(errResID)
       }
     }
   }
@@ -188,7 +187,11 @@ class DialogFragment : BottomSheetDialogFragment() {
    * without invoking [input] \o/
    */
   fun getInputText(): String {
-    return requireView().editText.text.toString()
+    if (!this::textInputBinding.isInitialized) {
+      return ""
+    }
+
+    return textInputBinding.editText.text.toString()
   }
 
   /**

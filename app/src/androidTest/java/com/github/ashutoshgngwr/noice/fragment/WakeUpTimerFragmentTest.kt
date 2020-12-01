@@ -49,14 +49,14 @@ class WakeUpTimerFragmentTest {
 
   @Test
   fun testInitialLayout_whenTimerIsNotPreScheduled() {
-    onView(withId(R.id.button_select_preset))
+    onView(withId(R.id.select_preset_button))
       .check(matches(isEnabled()))
       .check(matches(withText(R.string.select_preset)))
 
-    onView(withId(R.id.button_set_time))
+    onView(withId(R.id.set_time_button))
       .check(matches(not(isEnabled())))
 
-    onView(withId(R.id.button_reset_time))
+    onView(withId(R.id.reset_time_button))
       .check(matches(not(isEnabled())))
   }
 
@@ -69,14 +69,14 @@ class WakeUpTimerFragmentTest {
     }
 
     fragmentScenario.recreate()
-    onView(withId(R.id.button_select_preset))
+    onView(withId(R.id.select_preset_button))
       .check(matches(isEnabled()))
       .check(matches(withText("test")))
 
-    onView(withId(R.id.button_set_time))
+    onView(withId(R.id.set_time_button))
       .check(matches(isEnabled()))
 
-    onView(withId(R.id.button_reset_time))
+    onView(withId(R.id.reset_time_button))
       .check(matches(isEnabled()))
   }
 
@@ -89,21 +89,21 @@ class WakeUpTimerFragmentTest {
     }
 
     fragmentScenario.recreate()
-    onView(withId(R.id.button_select_preset))
+    onView(withId(R.id.select_preset_button))
       .check(matches(isEnabled()))
       .check(matches(withText(R.string.select_preset)))
 
-    onView(withId(R.id.button_set_time))
+    onView(withId(R.id.set_time_button))
       .check(matches(not(isEnabled())))
 
-    onView(withId(R.id.button_reset_time))
+    onView(withId(R.id.reset_time_button))
       .check(matches(not(isEnabled())))
   }
 
   @Test
   fun testSelectPreset_withoutSavedPresets() {
     every { Preset.readAllFromUserPreferences(any()) } returns arrayOf()
-    onView(withId(R.id.button_select_preset))
+    onView(withId(R.id.select_preset_button))
       .check(matches(withText(R.string.select_preset)))
       .perform(click())
 
@@ -118,7 +118,7 @@ class WakeUpTimerFragmentTest {
       mockk(relaxed = true) { every { name } returns "test-2" }
     )
 
-    onView(withId(R.id.button_select_preset))
+    onView(withId(R.id.select_preset_button))
       .check(matches(withText(R.string.select_preset)))
       .perform(click())
 
@@ -129,7 +129,7 @@ class WakeUpTimerFragmentTest {
     onView(withText("test-1"))
       .perform(click())
 
-    onView(withId(R.id.button_select_preset))
+    onView(withId(R.id.select_preset_button))
       .check(matches(withText("test-1")))
 
     verify(exactly = 0) { WakeUpTimerManager.set(any(), any()) }
@@ -137,7 +137,7 @@ class WakeUpTimerFragmentTest {
     onView(withId(R.id.time_picker))
       .perform(PickerActions.setTime(1, 2))
 
-    onView(withId(R.id.button_set_time))
+    onView(withId(R.id.set_time_button))
       .check(matches(isEnabled()))
       .perform(scrollTo(), click())
 
@@ -152,7 +152,7 @@ class WakeUpTimerFragmentTest {
     assertEquals("test-1", timerSlot.captured.presetName)
     assertEquals(calendar.get(Calendar.HOUR_OF_DAY), 1)
     assertEquals(calendar.get(Calendar.MINUTE), 2)
-    onView(withId(R.id.button_reset_time)).check(matches(isEnabled()))
+    onView(withId(R.id.reset_time_button)).check(matches(isEnabled()))
   }
 
   @Test
@@ -165,7 +165,7 @@ class WakeUpTimerFragmentTest {
 
     fragmentScenario.recreate()
     clearMocks(WakeUpTimerManager)
-    onView(withId(R.id.button_reset_time))
+    onView(withId(R.id.reset_time_button))
       .check(matches(isEnabled()))
       .perform(scrollTo(), click())
 

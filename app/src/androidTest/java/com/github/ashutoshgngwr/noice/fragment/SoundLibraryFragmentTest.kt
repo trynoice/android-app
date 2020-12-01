@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -63,10 +64,10 @@ class SoundLibraryFragmentTest {
 
   @Test
   fun testRecyclerViewItem_playButton() {
-    onView(withId(R.id.list_sound)).perform(
-      RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+    onView(withId(R.id.sound_list)).perform(
+      RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        EspressoX.clickInItem(R.id.button_play)
+        EspressoX.clickInItem(R.id.play_button)
       )
     )
 
@@ -81,10 +82,10 @@ class SoundLibraryFragmentTest {
     }
 
     fragmentScenario.onFragment { it.onPlayerManagerUpdate(mockUpdateEvent) }
-    onView(withId(R.id.list_sound)).perform(
-      RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+    onView(withId(R.id.sound_list)).perform(
+      RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        EspressoX.clickInItem(R.id.button_play)
+        EspressoX.clickInItem(R.id.play_button)
       )
     )
 
@@ -108,10 +109,10 @@ class SoundLibraryFragmentTest {
     fragmentScenario.onFragment { it.onPlayerManagerUpdate(mockUpdateEvent) }
     val expectedVolumes = arrayOf(0, Player.MAX_VOLUME, Random.nextInt(1, Player.MAX_VOLUME))
     for (expectedVolume in expectedVolumes) {
-      onView(withId(R.id.list_sound)).perform(
-        RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+      onView(withId(R.id.sound_list)).perform(
+        RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
           hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-          EspressoX.slideInItem(R.id.slider_volume, expectedVolume.toFloat())
+          EspressoX.slideInItem(R.id.volume_slider, expectedVolume.toFloat())
         )
       )
 
@@ -142,14 +143,14 @@ class SoundLibraryFragmentTest {
     )
 
     for (expectedTimePeriod in expectedTimePeriods) {
-      onView(withId(R.id.list_sound))
+      onView(withId(R.id.sound_list))
         .perform(
-          RecyclerViewActions.scrollTo<SoundLibraryFragment.ViewHolder>(
+          RecyclerViewActions.scrollTo<RecyclerView.ViewHolder>(
             hasDescendant(allOf(withId(R.id.title), withText(R.string.rolling_thunder)))
           ),
-          RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+          RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
             hasDescendant(allOf(withId(R.id.title), withText(R.string.rolling_thunder))),
-            EspressoX.slideInItem(R.id.slider_time_period, expectedTimePeriod.toFloat())
+            EspressoX.slideInItem(R.id.time_period_slider, expectedTimePeriod.toFloat())
           )
         )
 
@@ -175,7 +176,7 @@ class SoundLibraryFragmentTest {
         expectedVisibility = Visibility.VISIBLE
       }
 
-      onView(withId(R.id.fab_save_preset))
+      onView(withId(R.id.save_preset_button))
         .check(matches(withEffectiveVisibility(expectedVisibility)))
     }
   }
@@ -198,7 +199,7 @@ class SoundLibraryFragmentTest {
       })
     }
 
-    onView(withId(R.id.fab_save_preset))
+    onView(withId(R.id.save_preset_button))
       .check(matches(withEffectiveVisibility(Visibility.GONE)))
 
     // when volume/time period slider is adjusted, save preset button should be visible.
@@ -217,15 +218,15 @@ class SoundLibraryFragmentTest {
       )
     }
 
-    onView(withId(R.id.list_sound)).perform(
-      RecyclerViewActions.actionOnItem<SoundLibraryFragment.ViewHolder>(
+    onView(withId(R.id.sound_list)).perform(
+      RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        EspressoX.slideInItem(R.id.slider_volume, 6f)
+        EspressoX.slideInItem(R.id.volume_slider, 6f)
       )
     )
 
     verify(exactly = 1) { requireNotNull(mockPlayers["birds"]).setVolume(6) }
-    onView(withId(R.id.fab_save_preset))
+    onView(withId(R.id.save_preset_button))
       .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
   }
 
@@ -260,7 +261,7 @@ class SoundLibraryFragmentTest {
       })
     }
 
-    onView(withId(R.id.fab_save_preset))
+    onView(withId(R.id.save_preset_button))
       .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
       .perform(click())
 
@@ -283,7 +284,7 @@ class SoundLibraryFragmentTest {
       .check(matches(isEnabled()))
       .perform(click())
 
-    onView(withId(R.id.fab_save_preset)).check(matches(not(isDisplayed())))
+    onView(withId(R.id.save_preset_button)).check(matches(not(isDisplayed())))
     onView(withId(com.google.android.material.R.id.snackbar_text))
       .check(matches(withText(R.string.preset_saved)))
 
@@ -316,7 +317,7 @@ class SoundLibraryFragmentTest {
         expectedVisibility = Visibility.VISIBLE
       }
 
-      onView(withId(R.id.fab_shuffle))
+      onView(withId(R.id.random_preset_button))
         .check(matches(withEffectiveVisibility(expectedVisibility)))
     }
   }
@@ -337,7 +338,7 @@ class SoundLibraryFragmentTest {
 
     for ((typeID, tag) in typeExpectations) {
       for ((intensityID, intensityRange) in intensityExpectations) {
-        onView(withId(R.id.fab_shuffle))
+        onView(withId(R.id.random_preset_button))
           .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
           .perform(click())
 

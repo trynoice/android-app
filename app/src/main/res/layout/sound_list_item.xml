@@ -13,7 +13,7 @@
     android:orientation="horizontal">
 
     <CheckBox
-      android:id="@+id/button_play"
+      android:id="@+id/play_button"
       style="?attr/checkboxStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
           app:tint="?attr/colorAccent" />
 
         <com.google.android.material.slider.Slider
-          android:id="@+id/slider_volume"
+          android:id="@+id/volume_slider"
           style="@style/Widget.App.SoundLibrary.Slider"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
       </LinearLayout>
 
       <LinearLayout
-        android:id="@+id/layout_time_period"
+        android:id="@+id/time_period_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -77,7 +77,7 @@
           app:tint="?attr/colorAccent" />
 
         <com.google.android.material.slider.Slider
-          android:id="@+id/slider_time_period"
+          android:id="@+id/time_period_slider"
           style="@style/Widget.App.SoundLibrary.Slider"
           android:layout_width="0dp"
           android:layout_height="wrap_content"

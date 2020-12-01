@@ -2,24 +2,36 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
+import com.github.ashutoshgngwr.noice.databinding.WakeUpTimerFragmentBinding
 import com.github.ashutoshgngwr.noice.sound.Preset
-import kotlinx.android.synthetic.main.fragment_wake_up_timer.*
 import java.util.*
 
-class WakeUpTimerFragment : Fragment(R.layout.fragment_wake_up_timer) {
+class WakeUpTimerFragment : Fragment() {
 
+  private lateinit var binding: WakeUpTimerFragmentBinding
   private var selectedPresetName: String? = null
   private var selectedTime: Long = 0
 
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View {
+    binding = WakeUpTimerFragmentBinding.inflate(inflater, container, false)
+    return binding.root
+  }
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    button_select_preset.setOnClickListener { onSelectPresetClicked() }
-    button_reset_time.setOnClickListener { onResetTimeClicked() }
-    button_set_time.setOnClickListener { onSetTimeClicked() }
+    binding.selectPresetButton.setOnClickListener { onSelectPresetClicked() }
+    binding.resetTimeButton.setOnClickListener { onResetTimeClicked() }
+    binding.setTimeButton.setOnClickListener { onSetTimeClicked() }
 
     val timer = WakeUpTimerManager.get(requireContext())
     if (timer?.atMillis ?: 0 > System.currentTimeMillis()) {
@@ -64,14 +76,14 @@ class WakeUpTimerFragment : Fragment(R.layout.fragment_wake_up_timer) {
     val calendar = Calendar.getInstance()
     calendar.set(Calendar.SECOND, 0)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      calendar.set(Calendar.HOUR_OF_DAY, time_picker.hour)
-      calendar.set(Calendar.MINUTE, time_picker.minute)
+      calendar.set(Calendar.HOUR_OF_DAY, binding.timePicker.hour)
+      calendar.set(Calendar.MINUTE, binding.timePicker.minute)
     } else {
       @Suppress("DEPRECATION")
-      calendar.set(Calendar.HOUR_OF_DAY, time_picker.currentHour)
+      calendar.set(Calendar.HOUR_OF_DAY, binding.timePicker.currentHour)
 
       @Suppress("DEPRECATION")
-      calendar.set(Calendar.MINUTE, time_picker.currentMinute)
+      calendar.set(Calendar.MINUTE, binding.timePicker.currentMinute)
     }
 
     if (calendar.timeInMillis < System.currentTimeMillis()) {
@@ -93,14 +105,14 @@ class WakeUpTimerFragment : Fragment(R.layout.fragment_wake_up_timer) {
    */
   private fun notifyUpdate() {
     val isTimerValid = selectedTime - System.currentTimeMillis() > 0 && selectedPresetName != null
-    button_set_time.isEnabled = selectedPresetName != null
-    button_reset_time.isEnabled = isTimerValid
+    binding.setTimeButton.isEnabled = selectedPresetName != null
+    binding.resetTimeButton.isEnabled = isTimerValid
 
     updateTimePicker()
     if (selectedPresetName == null) {
-      button_select_preset.setText(R.string.select_preset)
+      binding.selectPresetButton.setText(R.string.select_preset)
     } else {
-      button_select_preset.text = selectedPresetName
+      binding.selectPresetButton.text = selectedPresetName
     }
 
     if (isTimerValid) {
@@ -120,14 +132,14 @@ class WakeUpTimerFragment : Fragment(R.layout.fragment_wake_up_timer) {
     }
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      time_picker.hour = calendar.get(Calendar.HOUR_OF_DAY)
-      time_picker.minute = calendar.get(Calendar.MINUTE)
+      binding.timePicker.hour = calendar.get(Calendar.HOUR_OF_DAY)
+      binding.timePicker.minute = calendar.get(Calendar.MINUTE)
     } else {
       @Suppress("DEPRECATION")
-      time_picker.currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+      binding.timePicker.currentHour = calendar.get(Calendar.HOUR_OF_DAY)
 
       @Suppress("DEPRECATION")
-      time_picker.currentMinute = calendar.get(Calendar.MINUTE)
+      binding.timePicker.currentMinute = calendar.get(Calendar.MINUTE)
     }
   }
 }
