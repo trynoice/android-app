@@ -3,8 +3,7 @@ package com.github.ashutoshgngwr.noice.fragment
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.replaceText
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -15,9 +14,11 @@ import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.sound.Preset
+import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import io.mockk.MockKAnnotations
+import io.mockk.clearMocks
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.impl.annotations.InjectionLookupType
@@ -31,6 +32,7 @@ import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -294,5 +296,81 @@ class SoundLibraryFragmentTest {
     }
 
     verify(exactly = 1) { InAppReviewFlowManager.maybeAskForReview(any()) }
+  }
+
+  @Test
+  fun testRandomPresetButton_onPlayback() {
+    val mockUpdateEvent = mockk<MediaPlayerService.OnPlayerManagerUpdateEvent>(relaxed = true) {
+      every { players } returns mockk(relaxed = true)
+    }
+
+    for (state in PlayerManager.State.values()) {
+      every { mockUpdateEvent.state } returns state
+      fragmentScenario.onFragment {
+        it.onPlayerManagerUpdate(mockUpdateEvent)
+      }
+
+      // a non-stopped state should keep the FAB hidden
+      var expectedVisibility = Visibility.GONE
+      if (state == PlayerManager.State.STOPPED) {
+        expectedVisibility = Visibility.VISIBLE
+      }
+
+      onView(withId(R.id.fab_shuffle))
+        .check(matches(withEffectiveVisibility(expectedVisibility)))
+    }
+  }
+
+  @Test
+  fun testRandomPresetButton_onClick() {
+    val intensityExpectations = mapOf(
+      R.id.preset_intensity__any to SoundLibraryFragment.RANGE_INTENSITY_ANY,
+      R.id.preset_intensity__dense to SoundLibraryFragment.RANGE_INTENSITY_DENSE,
+      R.id.preset_intensity__light to SoundLibraryFragment.RANGE_INTENSITY_LIGHT
+    )
+
+    val typeExpectations = mapOf(
+      R.id.preset_type__any to null,
+      R.id.preset_type__focus to Sound.Tag.FOCUS,
+      R.id.preset_type__relax to Sound.Tag.RELAX
+    )
+
+    for ((typeID, tag) in typeExpectations) {
+      for ((intensityID, intensityRange) in intensityExpectations) {
+        onView(withId(R.id.fab_shuffle))
+          .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+          .perform(click())
+
+        onView(allOf(withId(R.id.title), withText(R.string.random_preset)))
+          .check(matches(isDisplayed()))
+          // swipeUp to reveal bottom sheet completely; click to release the tap from swipeUp..?!!
+          // first click after swipeUp wasn't working otherwise.
+          .perform(swipeUp(), click())
+
+        onView(withId(typeID)).perform(click())
+        onView(withId(intensityID)).perform(click())
+        onView(allOf(withId(R.id.positive), withText(R.string.play)))
+          .perform(click())
+
+        val eventSlot = slot<MediaPlayerService.PlayPresetEvent>()
+        verify(exactly = 1) { eventBus.post(capture(eventSlot)) }
+        assertTrue("should capture a PlayPresetEvent", eventSlot.isCaptured)
+
+        val preset = eventSlot.captured.preset
+        assertTrue(
+          "should have expected intensity",
+          preset.playerStates.size in intensityRange
+        )
+
+        preset.playerStates.forEach {
+          assertTrue(
+            "should have expected sound tags",
+            tag == null || Sound.get(it.soundKey).tags.contains(tag)
+          )
+        }
+
+        clearMocks(eventBus)
+      }
+    }
   }
 }

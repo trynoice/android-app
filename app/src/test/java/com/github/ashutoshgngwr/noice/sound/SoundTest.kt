@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.sound
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,6 +22,24 @@ class SoundTest {
     Sound.LIBRARY.forEach { (_, sound) ->
       sound.src.forEach {
         assertTrue("'$it' not found in assets", files.contains(it))
+      }
+    }
+  }
+
+  @Test
+  fun testFilterLibraryByTag() {
+    assertEquals(
+      "should contain all keys when tag is null",
+      Sound.LIBRARY.size,
+      Sound.filterLibraryByTag(null).size
+    )
+
+    for (tag in Sound.Tag.values()) {
+      Sound.filterLibraryByTag(tag).forEach {
+        assertTrue(
+          "should only contain keys of sounds that have the given tag",
+          Sound.get(it).tags.contains(tag)
+        )
       }
     }
   }

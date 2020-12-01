@@ -11,12 +11,25 @@
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/fab_shuffle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentBottom="true"
+    android:layout_margin="16dp"
+    android:contentDescription="@string/random_preset"
+    android:src="@drawable/ic_action_shuffle"
+    app:elevation="5dp"
+    app:fabSize="normal" />
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
     android:id="@+id/fab_save_preset"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentEnd="true"
     android:layout_alignParentBottom="true"
     android:layout_margin="16dp"
+    android:contentDescription="@string/save_preset"
     android:src="@drawable/ic_action_save"
     android:visibility="gone"
     app:elevation="5dp"

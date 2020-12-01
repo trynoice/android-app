@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
 import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.core.widget.TextViewCompat
 import androidx.core.widget.addTextChangedListener
@@ -58,6 +59,13 @@ class DialogFragment : BottomSheetDialogFragment() {
    */
   private fun addContentView(view: View) {
     requireView().content.addView(view)
+  }
+
+  /**
+   * Inflates the given [layoutID] to the [R.id.content] layout in the dialog
+   */
+  fun addContentView(@LayoutRes layoutID: Int) {
+    addContentView(layoutInflater.inflate(layoutID, requireView().content, false))
   }
 
   /**
@@ -152,25 +160,21 @@ class DialogFragment : BottomSheetDialogFragment() {
     validator: (String) -> Int = { 0 }
   ) {
     requireView().positive.isEnabled = false
-    layoutInflater.inflate(R.layout.fragment_dialog__text_input, requireView().content, false)
-      .apply {
-        textInputLayout.hint = getString(hintRes)
-        editText.inputType = type
-        editText.isSingleLine = singleLine
-        editText.setText(preFillValue)
-        editText.addTextChangedListener {
-          val errResID = validator(it.toString())
-          if (errResID == 0) {
-            requireView().positive.isEnabled = true
-            textInputLayout.error = ""
-          } else {
-            requireView().positive.isEnabled = false
-            textInputLayout.error = getString(errResID)
-          }
-        }
-
-        addContentView(this)
+    addContentView(R.layout.fragment_dialog__text_input)
+    requireView().textInputLayout.hint = getString(hintRes)
+    requireView().editText.inputType = type
+    requireView().editText.isSingleLine = singleLine
+    requireView().editText.setText(preFillValue)
+    requireView().editText.addTextChangedListener {
+      val errResID = validator(it.toString())
+      if (errResID == 0) {
+        requireView().positive.isEnabled = true
+        requireView().textInputLayout.error = ""
+      } else {
+        requireView().positive.isEnabled = false
+        requireView().textInputLayout.error = getString(errResID)
       }
+    }
   }
 
   /**

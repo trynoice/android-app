@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="7dp"
+      android:text="@string/mood"
+      android:textAppearance="?attr/textAppearanceHeadline5" />
+
+    <RadioGroup
+      android:id="@+id/preset_type"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:checkedButton="@id/preset_type__any">
+
+      <RadioButton
+        android:id="@+id/preset_type__any"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/any" />
+
+      <RadioButton
+        android:id="@+id/preset_type__focus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/focus" />
+
+      <RadioButton
+        android:id="@+id/preset_type__relax"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/relax" />
+
+    </RadioGroup>
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:layout_marginBottom="7dp"
+      android:text="@string/intensity"
+      android:textAppearance="?attr/textAppearanceHeadline5" />
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="7dp"
+      android:text="@string/intensity_description" />
+
+    <RadioGroup
+      android:id="@+id/preset_intensity"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:checkedButton="@id/preset_intensity__any">
+
+      <RadioButton
+        android:id="@+id/preset_intensity__any"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/any" />
+
+      <RadioButton
+        android:id="@+id/preset_intensity__light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/light" />
+
+      <RadioButton
+        android:id="@+id/preset_intensity__dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dense" />
+
+    </RadioGroup>
+
+  </LinearLayout>
+
+</ScrollView>
