@@ -20,9 +20,9 @@ import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.ActivityTestRule
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
@@ -123,7 +123,7 @@ class GenerateScreenshots {
 
   @JvmField
   @Rule
-  var activityRule = ActivityTestRule(MainActivity::class.java, true)
+  var activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
   @Rule
   @JvmField
@@ -144,10 +144,8 @@ class GenerateScreenshots {
 
   @After
   fun after() {
-    activityRule.runOnUiThread {
-      activityRule.activity.stopService(
-        Intent(activityRule.activity, MediaPlayerService::class.java)
-      )
+    activityScenarioRule.scenario.onActivity {
+      it.stopService(Intent(it, MediaPlayerService::class.java))
     }
   }
 
@@ -163,7 +161,7 @@ class GenerateScreenshots {
       }
     }
 
-    activityRule.runOnUiThread { activityRule.activity.recreate() }
+    activityScenarioRule.scenario.recreate()
     onView(withId(R.id.list_sound)).perform(
       actionOnItem<SoundLibraryFragment.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.light_rain))),
