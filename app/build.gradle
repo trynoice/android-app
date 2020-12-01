@@ -87,7 +87,7 @@ dependencies {
   playstoreImplementation 'com.google.android.play:core:1.8.3'
 
   testImplementation 'androidx.test:core:1.3.0'
-  testImplementation 'io.mockk:mockk:1.10.2'
+  testImplementation 'io.mockk:mockk:1.10.3'
   testImplementation 'junit:junit:4.13.1'
   testImplementation 'org.robolectric:robolectric:4.4'
   testImplementation 'org.skyscreamer:jsonassert:1.5.0'
