@@ -18,6 +18,7 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLooper
+import java.util.concurrent.TimeUnit
 
 @RunWith(RobolectricTestRunner::class)
 class InAppReviewFlowManagerTest {
@@ -46,6 +47,10 @@ class InAppReviewFlowManagerTest {
       every { mockPrefs.edit() } returns this
       every { putLong(any(), any()) } returns this
     }
+
+    every {
+      mockPrefs.getLong(InAppReviewFlowManager.PREF_LAST_SHOWN_ON, any())
+    } returns System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7L)
 
     // try to show review flow for the first time, should work
     InAppReviewFlowManager.maybeAskForReview(fragmentActivity)

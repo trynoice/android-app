@@ -44,7 +44,7 @@ object InAppReviewFlowManager {
       return
     }
 
-    if (Random.nextInt(20) != 0) {
+    if (Random.nextInt(30) != 0) {
       Log.d(TAG, "abandoning request due to bad luck!")
       return
     }

@@ -78,8 +78,14 @@ object InAppReviewFlowManager {
   }
 
   private fun isShownWithinLastWeek(context: Context): Boolean {
-    val timestamp = PreferenceManager.getDefaultSharedPreferences(context)
-      .getLong(PREF_LAST_SHOWN_ON, 0)
+    val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+    var timestamp = prefs.getLong(PREF_LAST_SHOWN_ON, 0L)
+
+    // refrain from showing review flow to the users newer than a day.
+    if (timestamp == 0L) {
+      timestamp = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(6L)
+      prefs.edit { putLong(PREF_LAST_SHOWN_ON, timestamp) }
+    }
 
     return TimeUnit.DAYS.toMillis(7L) + timestamp > System.currentTimeMillis()
   }
