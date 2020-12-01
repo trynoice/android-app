@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
+import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
@@ -16,19 +19,31 @@ import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_dialog__random_preset.view.*
 import kotlinx.android.synthetic.main.fragment_sound_list.view.*
 import kotlinx.android.synthetic.main.layout_list_item__sound.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
 
+  companion object {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val RANGE_INTENSITY_LIGHT = 2 until 5
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val RANGE_INTENSITY_DENSE = 3 until 8
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val RANGE_INTENSITY_ANY = 2 until 8
+  }
+
   private var mRecyclerView: RecyclerView? = null
-  private var mSavePresetButton: FloatingActionButton? = null
   private var adapter: SoundListAdapter? = null
   private var players = emptyMap<String, Player>()
 
@@ -69,12 +84,16 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
 
     view?.post {
       adapter?.notifyDataSetChanged()
-      if (mSavePresetButton != null) {
-        if (showSavePresetFAB && event.state == PlayerManager.State.PLAYING) {
-          mSavePresetButton?.show()
-        } else {
-          mSavePresetButton?.hide()
-        }
+      if (showSavePresetFAB && event.state == PlayerManager.State.PLAYING) {
+        view?.fab_save_preset?.show()
+      } else {
+        view?.fab_save_preset?.hide()
+      }
+
+      if (event.state == PlayerManager.State.STOPPED) {
+        view?.fab_shuffle?.show()
+      } else {
+        view?.fab_shuffle?.hide()
       }
     }
   }
@@ -86,8 +105,12 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
       it.adapter = adapter
     }
 
-    mSavePresetButton = view.fab_save_preset
-    requireNotNull(mSavePresetButton).setOnClickListener {
+    view.fab_save_preset.setOnLongClickListener {
+      Toast.makeText(requireContext(), R.string.save_preset, Toast.LENGTH_LONG).show()
+      true
+    }
+
+    view.fab_save_preset.setOnClickListener {
       DialogFragment().show(childFragmentManager) {
         val duplicateNameValidator = Preset.duplicateNameValidator(requireContext())
         title(R.string.save_preset)
@@ -103,7 +126,7 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
         positiveButton(R.string.save) {
           val preset = Preset.from(getInputText(), players.values)
           Preset.appendToUserPreferences(requireContext(), preset)
-          mSavePresetButton?.hide()
+          view.fab_save_preset.hide()
           showPresetSavedMessage()
 
           // maybe show in-app review dialog to the user
@@ -112,7 +135,59 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
       }
     }
 
+    view.fab_shuffle.setOnLongClickListener {
+      Toast.makeText(requireContext(), R.string.random_preset, Toast.LENGTH_LONG).show()
+      true
+    }
+
+    view.fab_shuffle.setOnClickListener {
+      DialogFragment().show(childFragmentManager) {
+        title(R.string.random_preset)
+        addContentView(R.layout.fragment_dialog__random_preset)
+        negativeButton(R.string.cancel)
+        positiveButton(R.string.play) {
+          eventBus.post(
+            MediaPlayerService.PlayPresetEvent(
+              generateRandomPreset(
+                requireView().preset_type.checkedRadioButtonId,
+                requireView().preset_intensity.checkedRadioButtonId
+              )
+            )
+          )
+
+          // maybe show in-app review dialog to the user
+          InAppReviewFlowManager.maybeAskForReview(requireActivity())
+        }
+      }
+    }
+
     eventBus.register(this)
+  }
+
+  private fun generateRandomPreset(@IdRes type: Int, @IdRes intensity: Int): Preset {
+    val tag = when (type) {
+      R.id.preset_type__focus -> Sound.Tag.FOCUS
+      R.id.preset_type__relax -> Sound.Tag.RELAX
+      else -> null
+    }
+
+    val library = Sound.filterLibraryByTag(tag).shuffled()
+    val presetSizeRange = when (intensity) {
+      R.id.preset_intensity__light -> RANGE_INTENSITY_LIGHT
+      R.id.preset_intensity__dense -> RANGE_INTENSITY_DENSE
+      else -> RANGE_INTENSITY_ANY
+    }
+
+    val playerStates = mutableListOf<Preset.PlayerState>()
+    for (i in 0 until Random.nextInt(presetSizeRange)) {
+      val volume = 1 + Random.nextInt(0, Player.MAX_VOLUME)
+      val timePeriod = Random.nextInt(Player.MIN_TIME_PERIOD, Player.MAX_TIME_PERIOD + 1)
+      playerStates.add(
+        Preset.PlayerState(library[i], volume, timePeriod)
+      )
+    }
+
+    return Preset("", playerStates.toTypedArray())
   }
 
   override fun onDestroyView() {

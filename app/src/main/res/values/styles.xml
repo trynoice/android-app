@@ -40,9 +40,11 @@
   <style name="Theme.App.BottomSheetDialog" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
     <item name="android:colorBackground">@color/colorPopupBackground</item>
     <item name="colorPrimary">@color/colorPrimary</item>
+    <!-- RadioButtons use the secondary color but we don't really have a secondary color so... -->
+    <item name="colorSecondary">@color/colorPrimary</item>
     <item name="bottomSheetStyle">@style/Widget.App.BottomSheet.Modal</item>
-    <!-- following attributes are mostly unnecessary with current values. just for reference -->
     <item name="titleTextAppearance">@style/TextAppearance.App.BottomSheetDialog.Title</item>
+    <!-- following attributes are mostly unnecessary with current values. just for reference -->
     <item name="buttonStyle">@style/Widget.MaterialComponents.Button.TextButton.Dialog</item>
     <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
     <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>

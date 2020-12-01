@@ -23,7 +23,7 @@ import java.lang.reflect.Type
  * [Preset] is the serialization class to save player states onto the persistent storage using
  * Android's [SharedPreferences].
  */
-class Preset private constructor(
+class Preset(
   @Expose @SerializedName("a") var name: String,
   @Expose @SerializedName("b") val playerStates: Array<PlayerState>
 ) {

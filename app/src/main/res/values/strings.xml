@@ -160,6 +160,15 @@
   <string name="okay">Okay</string>
   <string name="later">Later</string>
   <string name="never">Never</string>
+  <string name="random_preset">Random Preset</string>
+  <string name="mood">Mood</string>
+  <string name="any">Any</string>
+  <string name="focus">Focus</string>
+  <string name="relax">Relax</string>
+  <string name="intensity">Intensity</string>
+  <string name="intensity_description">Dense presets will try to play more sounds at once.</string>
+  <string name="dense">Dense</string>
+  <string name="light">Light</string>
   <string-array name="app_themes">
     <item>Light</item>
     <item>Dark</item>
