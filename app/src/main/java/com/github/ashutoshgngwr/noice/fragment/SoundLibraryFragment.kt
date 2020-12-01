@@ -111,7 +111,7 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
     }
 
     view.fab_save_preset.setOnClickListener {
-      DialogFragment().show(childFragmentManager) {
+      DialogFragment.show(childFragmentManager) {
         val duplicateNameValidator = Preset.duplicateNameValidator(requireContext())
         title(R.string.save_preset)
         input(hintRes = R.string.name, validator = {
@@ -141,7 +141,7 @@ class SoundLibraryFragment : Fragment(R.layout.fragment_sound_list) {
     }
 
     view.fab_shuffle.setOnClickListener {
-      DialogFragment().show(childFragmentManager) {
+      DialogFragment.show(childFragmentManager) {
         title(R.string.random_preset)
         addContentView(R.layout.fragment_dialog__random_preset)
         negativeButton(R.string.cancel)

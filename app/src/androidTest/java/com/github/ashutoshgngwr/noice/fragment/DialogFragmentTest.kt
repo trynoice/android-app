@@ -32,18 +32,16 @@ class DialogFragmentTest {
   val retryTestRule = RetryTestRule(5)
 
   private lateinit var emptyFragmentScenario: FragmentScenario<Fragment>
-  private lateinit var dialogFragment: DialogFragment
 
   @Before
   fun setup() {
-    dialogFragment = DialogFragment()
     emptyFragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
 
   @Test
   fun testTitleText() {
     emptyFragmentScenario.onFragment {
-      dialogFragment.show(it.childFragmentManager) {
+      DialogFragment.show(it.childFragmentManager) {
         title(android.R.string.yes)
       }
     }
@@ -55,7 +53,7 @@ class DialogFragmentTest {
   @Test
   fun testPositiveButton() {
     emptyFragmentScenario.onFragment {
-      dialogFragment.show(it.childFragmentManager) {
+      DialogFragment.show(it.childFragmentManager) {
         positiveButton(android.R.string.yes)
       }
     }
@@ -70,7 +68,7 @@ class DialogFragmentTest {
   @Test
   fun testNegativeButton() {
     emptyFragmentScenario.onFragment {
-      dialogFragment.show(it.childFragmentManager) {
+      DialogFragment.show(it.childFragmentManager) {
         negativeButton(android.R.string.no)
       }
     }
@@ -85,7 +83,7 @@ class DialogFragmentTest {
   @Test
   fun neutralButton() {
     emptyFragmentScenario.onFragment {
-      dialogFragment.show(it.childFragmentManager) {
+      DialogFragment.show(it.childFragmentManager) {
         neutralButton(android.R.string.copy)
       }
     }
@@ -100,7 +98,7 @@ class DialogFragmentTest {
   @Test
   fun testMessageText() {
     emptyFragmentScenario.onFragment {
-      dialogFragment.show(it.childFragmentManager) {
+      DialogFragment.show(it.childFragmentManager) {
         message(android.R.string.yes)
       }
     }
@@ -114,8 +112,9 @@ class DialogFragmentTest {
     val mockValidator = mockk<(String) -> Int>()
     every { mockValidator.invoke("invalid") } returns android.R.string.no
     every { mockValidator.invoke("test") } returns 0
+    var dialogFragment: DialogFragment? = null
     emptyFragmentScenario.onFragment {
-      dialogFragment.show(it.childFragmentManager) {
+      dialogFragment = DialogFragment.show(it.childFragmentManager) {
         input(
           hintRes = android.R.string.yes,
           preFillValue = "test",
@@ -140,7 +139,7 @@ class DialogFragmentTest {
     onView(withId(R.id.textInputLayout))
       .check(matches(not(EspressoX.withErrorText(android.R.string.no))))
 
-    assertEquals("test", dialogFragment.getInputText())
+    assertEquals("test", dialogFragment?.getInputText())
   }
 
   @Test
@@ -149,7 +148,7 @@ class DialogFragmentTest {
     val items = arrayOf("test-0", "test-1", "test-2")
 
     emptyFragmentScenario.onFragment {
-      dialogFragment.show(it.childFragmentManager) {
+      DialogFragment.show(it.childFragmentManager) {
         singleChoiceItems(items, currentChoice = selectedItem) { choice ->
           selectedItem = choice
         }

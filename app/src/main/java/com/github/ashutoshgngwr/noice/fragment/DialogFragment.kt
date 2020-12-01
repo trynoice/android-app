@@ -32,6 +32,12 @@ import kotlinx.android.synthetic.main.fragment_dialog__text_input.view.*
  */
 class DialogFragment : BottomSheetDialogFragment() {
 
+  companion object {
+    fun show(fm: FragmentManager, options: DialogFragment.() -> Unit): DialogFragment {
+      return DialogFragment().also { it.show(fm, options) }
+    }
+  }
+
   /**
    * A lambda for calling functions to configure the dialog, passed while invoking [show].
    */
@@ -123,7 +129,7 @@ class DialogFragment : BottomSheetDialogFragment() {
   /**
    * shows the dialog and schedules the passed `options` lambda to be invoked in [onViewCreated]
    */
-  fun show(fragmentManager: FragmentManager, options: DialogFragment.() -> Unit = { }) {
+  private fun show(fragmentManager: FragmentManager, options: DialogFragment.() -> Unit = { }) {
     displayOptions = options
     show(fragmentManager, javaClass.simpleName)
   }

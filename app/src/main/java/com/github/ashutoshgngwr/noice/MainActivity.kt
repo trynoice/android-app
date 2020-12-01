@@ -183,7 +183,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     when (item.itemId) {
       in NAVIGATED_FRAGMENTS -> setFragment(item.itemId)
       R.id.app_theme -> {
-        DialogFragment().show(supportFragmentManager) {
+        DialogFragment.show(supportFragmentManager) {
           title(R.string.app_theme)
           singleChoiceItems(
             items = resources.getStringArray(R.array.app_themes),

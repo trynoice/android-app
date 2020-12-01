@@ -65,7 +65,7 @@ class DonateActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
 
   override fun onProductPurchased(productId: String, details: TransactionDetails?) {
     billingProcessor.consumePurchase(productId)
-    DialogFragment().show(supportFragmentManager) {
+    DialogFragment.show(supportFragmentManager) {
       title(R.string.support_development__donate_thank_you)
       message(R.string.support_development__donate_thank_you_description)
       positiveButton(android.R.string.ok) {

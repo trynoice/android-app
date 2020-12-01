@@ -117,7 +117,7 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
     }
 
     private fun showRenamePresetInput() {
-      DialogFragment().show(childFragmentManager) {
+      DialogFragment.show(childFragmentManager) {
         val duplicateNameValidator = Preset.duplicateNameValidator(requireContext())
         title(R.string.rename)
         input(
@@ -146,7 +146,7 @@ class PresetFragment : Fragment(R.layout.fragment_preset_list) {
     }
 
     private fun showDeletePresetConfirmation() {
-      DialogFragment().show(requireActivity().supportFragmentManager) {
+      DialogFragment.show(requireActivity().supportFragmentManager) {
         title(R.string.delete)
         message(R.string.preset_delete_confirmation, dataSet[adapterPosition].name)
         negativeButton(R.string.cancel)

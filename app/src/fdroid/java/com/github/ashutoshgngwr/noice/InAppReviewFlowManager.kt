@@ -49,7 +49,7 @@ object InAppReviewFlowManager {
       return
     }
 
-    DialogFragment().show(activity.supportFragmentManager) {
+    DialogFragment.show(activity.supportFragmentManager) {
       title(R.string.in_app_feedback__title)
       message(R.string.in_app_feedback__description)
       negativeButton(R.string.later)
