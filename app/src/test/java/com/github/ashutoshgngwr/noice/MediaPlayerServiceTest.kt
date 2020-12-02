@@ -114,9 +114,9 @@ class MediaPlayerServiceTest {
 
     // send play preset command
     mockkObject(Preset.Companion)
-    every { Preset.findByName(any(), "test") } returns mockk(relaxed = true)
+    every { Preset.findByID(any(), "test") } returns mockk(relaxed = true)
     every { mockServiceIntent.action } returns MediaPlayerService.ACTION_PLAY_PRESET
-    every { mockServiceIntent.getStringExtra(MediaPlayerService.EXTRA_PRESET_NAME) } returns "test"
+    every { mockServiceIntent.getStringExtra(MediaPlayerService.EXTRA_PRESET_ID) } returns "test"
     serviceController.startCommand(0, 0)
 
     verifySequence {

@@ -94,7 +94,7 @@ class MediaPlayerService : Service() {
     const val ACTION_STOP_PLAYBACK = "stop_playback"
 
     const val ACTION_PLAY_PRESET = "play_preset"
-    const val EXTRA_PRESET_NAME = "preset_name"
+    const val EXTRA_PRESET_ID = "preset_id"
   }
 
   private val handler = Handler() // needed in scheduleAutoStop for register callback
@@ -234,9 +234,9 @@ class MediaPlayerService : Service() {
       }
 
       ACTION_PLAY_PRESET -> {
-        intent.getStringExtra(EXTRA_PRESET_NAME)?.also {
-          Log.d(TAG, "starting preset $it")
-          Preset.findByName(this, it)?.also { preset ->
+        intent.getStringExtra(EXTRA_PRESET_ID)?.also {
+          Log.d(TAG, "starting preset with id: $it")
+          Preset.findByID(this, it)?.also { preset ->
             playerManager.playPreset(preset)
           }
         }

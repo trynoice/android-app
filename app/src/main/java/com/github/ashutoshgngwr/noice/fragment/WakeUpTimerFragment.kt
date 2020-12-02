@@ -11,12 +11,13 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.databinding.WakeUpTimerFragmentBinding
 import com.github.ashutoshgngwr.noice.sound.Preset
+import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 class WakeUpTimerFragment : Fragment() {
 
   private lateinit var binding: WakeUpTimerFragmentBinding
-  private var selectedPresetName: String? = null
+  private var selectedPresetID: String? = null
   private var selectedTime: Long = 0
 
   override fun onCreateView(
@@ -35,16 +36,14 @@ class WakeUpTimerFragment : Fragment() {
 
     val timer = WakeUpTimerManager.get(requireContext())
     if (timer?.atMillis ?: 0 > System.currentTimeMillis()) {
-      selectedPresetName = timer?.presetName
+      selectedPresetID = timer?.presetID
       selectedTime = timer?.atMillis ?: 0
     }
 
-    // check selectedPresetName exists in user preferences.
-    selectedPresetName?.also {
-      if (Preset.findByName(requireContext(), it) == null) {
-        selectedPresetName = null
-        selectedTime = 0
-      }
+    // check selectedPresetID exists in user preferences.
+    if (Preset.findByID(requireContext(), selectedPresetID) == null) {
+      selectedPresetID = null
+      selectedTime = 0
     }
 
     notifyUpdate()
@@ -52,11 +51,13 @@ class WakeUpTimerFragment : Fragment() {
 
   private fun onSelectPresetClicked() {
     DialogFragment.show(childFragmentManager) {
-      val presets = Preset.readAllFromUserPreferences(requireContext()).map { it.name }
+      val presets = Preset.readAllFromUserPreferences(requireContext())
+      val presetNames = presets.map { it.name }.toTypedArray()
+      val presetIDs = presets.map { it.id }
       title(R.string.select_preset)
       if (presets.isNotEmpty()) {
-        singleChoiceItems(presets.toTypedArray(), presets.indexOf(selectedPresetName)) { choice ->
-          selectedPresetName = presets[choice]
+        singleChoiceItems(presetNames, presetIDs.indexOf(selectedPresetID)) { choice ->
+          selectedPresetID = presetIDs[choice]
           notifyUpdate()
         }
       } else {
@@ -68,8 +69,10 @@ class WakeUpTimerFragment : Fragment() {
 
   private fun onResetTimeClicked() {
     selectedTime = 0
-    selectedPresetName = null
+    selectedPresetID = null
     notifyUpdate()
+
+    Snackbar.make(requireView(), R.string.wake_up_timer_cancelled, Snackbar.LENGTH_LONG).show()
   }
 
   private fun onSetTimeClicked() {
@@ -104,21 +107,22 @@ class WakeUpTimerFragment : Fragment() {
    * schedules or cancels timer using [WakeUpTimerManager] based on these values.
    */
   private fun notifyUpdate() {
-    val isTimerValid = selectedTime - System.currentTimeMillis() > 0 && selectedPresetName != null
-    binding.setTimeButton.isEnabled = selectedPresetName != null
+    val selectedPreset = Preset.findByID(requireContext(), selectedPresetID)
+    val isTimerValid = selectedTime > System.currentTimeMillis() && selectedPreset != null
+    binding.setTimeButton.isEnabled = selectedPreset != null
     binding.resetTimeButton.isEnabled = isTimerValid
 
     updateTimePicker()
-    if (selectedPresetName == null) {
+    if (selectedPreset == null) {
       binding.selectPresetButton.setText(R.string.select_preset)
     } else {
-      binding.selectPresetButton.text = selectedPresetName
+      binding.selectPresetButton.text = selectedPreset.name
     }
 
     if (isTimerValid) {
       WakeUpTimerManager.set(
         requireContext(),
-        WakeUpTimerManager.Timer(requireNotNull(selectedPresetName), selectedTime)
+        WakeUpTimerManager.Timer(requireNotNull(selectedPresetID), selectedTime)
       )
     } else {
       WakeUpTimerManager.cancel(requireContext())

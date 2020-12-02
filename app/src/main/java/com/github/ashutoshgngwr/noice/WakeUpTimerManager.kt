@@ -6,10 +6,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.Utils.withGson
+import com.github.ashutoshgngwr.noice.sound.Preset
 import com.google.gson.annotations.Expose
 
 object WakeUpTimerManager {
@@ -17,9 +19,11 @@ object WakeUpTimerManager {
   /**
    * [Timer] declares fields necessary to schedule a Wake-up timer.
    */
-  data class Timer(@Expose var presetName: String, @Expose var atMillis: Long)
+  data class Timer(@Expose var presetID: String, @Expose var atMillis: Long)
 
-  private const val PREF_WAKE_UP_TIMER = "wake_up_timer"
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  const val PREF_WAKE_UP_TIMER = "wake_up_timer"
+
   private const val RC_WAKE_UP_TIMER = 0x39
   private const val RC_MAIN_ACTIVITY = 0x40
 
@@ -29,10 +33,10 @@ object WakeUpTimerManager {
     )
   }
 
-  private fun getPendingIntentForService(context: Context, presetName: String): PendingIntent {
+  private fun getPendingIntentForService(context: Context, presetID: String): PendingIntent {
     val intent = Intent(context, MediaPlayerService::class.java).also {
       it.action = MediaPlayerService.ACTION_PLAY_PRESET
-      it.putExtra(MediaPlayerService.EXTRA_PRESET_NAME, presetName)
+      it.putExtra(MediaPlayerService.EXTRA_PRESET_ID, presetID)
     }
 
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -59,6 +63,10 @@ object WakeUpTimerManager {
       return
     }
 
+    if (Preset.findByID(context, timer.presetID) == null) {
+      return
+    }
+
     withGson {
       PreferenceManager.getDefaultSharedPreferences(context).edit {
         putString(PREF_WAKE_UP_TIMER, it.toJson(timer))
@@ -68,7 +76,7 @@ object WakeUpTimerManager {
     withAlarmManager(context) {
       it.setAlarmClock(
         AlarmManager.AlarmClockInfo(timer.atMillis, getPendingIntentForActivity(context)),
-        getPendingIntentForService(context, timer.presetName)
+        getPendingIntentForService(context, timer.presetID)
       )
     }
   }

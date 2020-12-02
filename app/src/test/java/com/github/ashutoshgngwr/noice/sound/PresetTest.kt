@@ -240,7 +240,7 @@ class PresetTest {
   }
 
   @Test
-  fun testFindByName() {
+  fun testFindByID() {
     mockkStatic(PreferenceManager::class)
     val mockPrefs = mockk<SharedPreferences>(relaxed = true)
     every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
@@ -265,9 +265,9 @@ class PresetTest {
       }]
     """
 
-    assertNull(Preset.findByName(mockk(), "test-0"))
-    assertNotNull(Preset.findByName(mockk(), "test-1"))
-    assertNotNull(Preset.findByName(mockk(), "test-2"))
+    assertNull(Preset.findByID(mockk(), "test-id-0"))
+    assertNotNull(Preset.findByID(mockk(), "test-id-1"))
+    assertNotNull(Preset.findByID(mockk(), "test-id-2"))
   }
 
   @Test

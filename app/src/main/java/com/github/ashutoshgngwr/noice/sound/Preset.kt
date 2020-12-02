@@ -149,12 +149,12 @@ class Preset(@Expose var name: String, @Expose val playerStates: Array<PlayerSta
     }
 
     /**
-     * [findByName] searches the given name in the persistent storage. Returns a [Preset] if it
+     * [findByID] searches the given name in the persistent storage. Returns a [Preset] if it
      * finds one with the given name. Returns null otherwise.
      */
-    fun findByName(context: Context, name: String): Preset? {
+    fun findByID(context: Context, id: String?): Preset? {
       readAllFromUserPreferences(context).forEach {
-        if (it.name == name) {
+        if (it.id == id) {
           return it
         }
       }

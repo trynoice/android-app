@@ -173,7 +173,7 @@ class PresetFragment : Fragment() {
             activePresetPos -= 1 // account for recent deletion
           }
 
-          cancelWakeUpTimerIfScheduled(preset.name)
+          cancelWakeUpTimerIfScheduled(preset.id)
           adapter?.notifyItemRemoved(adapterPosition)
           updateEmptyListIndicatorVisibility()
           Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
@@ -187,11 +187,11 @@ class PresetFragment : Fragment() {
     }
 
     /**
-     * cancels the wake-up timer if it was scheduled with the given [presetName].
+     * cancels the wake-up timer if it was scheduled with the given [Preset.id].
      */
-    private fun cancelWakeUpTimerIfScheduled(presetName: String) {
+    private fun cancelWakeUpTimerIfScheduled(@Suppress("SameParameterValue") id: String) {
       WakeUpTimerManager.get(requireContext())?.also {
-        if (presetName == it.presetName) {
+        if (id == it.presetID) {
           WakeUpTimerManager.cancel(requireContext())
         }
       }
