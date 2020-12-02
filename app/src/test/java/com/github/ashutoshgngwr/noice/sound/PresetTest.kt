@@ -2,7 +2,6 @@ package com.github.ashutoshgngwr.noice.sound
 
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import com.github.ashutoshgngwr.noice.sound.player.Player
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -13,6 +12,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.skyscreamer.jsonassert.JSONAssert
+import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
 class PresetTest {
@@ -68,27 +68,30 @@ class PresetTest {
   @Test
   fun testReadAllFromUserPreferences() {
     mockkStatic(PreferenceManager::class)
-    val mockPrefs = mockk<SharedPreferences>(relaxed = true)
+    val mockPrefs = mockk<SharedPreferences>(relaxed = true) {
+      every { getString(Preset.PREFERENCE_KEY, any()) } returns """
+        [{
+          "id": "test-id-1",
+          "name": "test-1",
+          "playerStates": [{
+            "soundKey": "test-1",
+            "timePeriod": 60,
+            "volume": 15
+          }]
+        }]
+      """
+    }
+
     every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
-    every { mockPrefs.getString("presets", any()) } returns "[{" +
-      "  \"a\":\"test\"," +
-      "  \"b\":[" +
-      "    {" +
-      "      \"a\":\"test-1\"," +
-      "      \"c\":30," +
-      "      \"b\":0.75" +
-      "    }" +
-      "  ]" +
-      "}]"
 
     val presets = Preset.readAllFromUserPreferences(mockk())
     assertEquals(1, presets.size)
-    assertEquals("test", presets[0].name)
+    assertEquals("test-id-1", presets[0].id)
+    assertEquals("test-1", presets[0].name)
     assertEquals(1, presets[0].playerStates.size)
-    assertEquals("test-1", presets[0].playerStates[0].soundKey)
-    // returned time period should have correct offset
-    assertEquals(Player.MIN_TIME_PERIOD + 30, presets[0].playerStates[0].timePeriod)
-    assertEquals(15, presets[0].playerStates[0].volume)
+    assertEquals(
+      presets[0].playerStates[0], Preset.PlayerState("test-1", 15, 60)
+    )
   }
 
   @Test
@@ -102,35 +105,59 @@ class PresetTest {
       every { edit() } returns mockPrefsEditor
     }
 
-    val expectedJSON = "[{" +
-      "  \"a\":\"test\"," +
-      "  \"b\":[" +
-      "    {" +
-      "      \"a\":\"test-1\"," +
-      "      \"c\":30," +
-      "      \"b\":0.75" +
-      "    }" +
-      "  ]" +
-      "}]"
+    // mock UUID classes since id gets generated on write if not already present
+    mockkStatic(UUID::class)
+    val mockUUID = mockk<UUID>(relaxed = true)
+    every { mockUUID.toString() } returns "test-id-1"
+    every { UUID.randomUUID() } returns mockUUID
+
+    val expectedJSON = """
+      [{
+        "id": "test-id-1",
+        "name": "test-1",
+        "playerStates": [{
+          "soundKey": "test-1",
+          "volume": 17,
+          "timePeriod": 45
+        }]
+      },
+      {
+        "id": "test-id-2",
+        "name": "test-2",
+        "playerStates": [{
+          "soundKey": "test-1",
+          "volume": 17,
+          "timePeriod": 45
+        }]
+      }]
+    """
+
+    val mockPlayerState = mockk<Preset.PlayerState> {
+      every { soundKey } returns "test-1"
+      every { volume } returns 17
+      every { timePeriod } returns 45
+    }
 
     Preset.writeAllToUserPreferences(mockk(), listOf(
       mockk(relaxed = true) {
-        every { name } returns "test"
-        every { playerStates } returns arrayOf(mockk {
-          every { soundKey } returns "test-1"
-          every { volume } returns 15
-          every { timePeriod } returns Player.MIN_TIME_PERIOD + 30
-        })
+        every { id } returns ""
+        every { name } returns "test-1"
+        every { playerStates } returns arrayOf(mockPlayerState)
+      },
+      mockk(relaxed = true) {
+        every { id } returns "test-id-2"
+        every { name } returns "test-2"
+        every { playerStates } returns arrayOf(mockPlayerState)
       }
     ))
 
     val stringSlot = slot<String>()
     verify(exactly = 1) {
-      mockPrefsEditor.putString("presets", capture(stringSlot))
+      mockPrefsEditor.putString(Preset.PREFERENCE_KEY, capture(stringSlot))
       mockPrefsEditor.apply()
     }
 
-    JSONAssert.assertEquals(expectedJSON, stringSlot.captured, false)
+    JSONAssert.assertEquals(expectedJSON, stringSlot.captured, true)
   }
 
   @Test
@@ -144,47 +171,50 @@ class PresetTest {
       every { edit() } returns mockPrefsEditor
     }
 
-    val presetJSON1 = "{" +
-      "  \"a\":\"test-1\"," +
-      "  \"b\":[" +
-      "    {" +
-      "      \"a\":\"test-1\"," +
-      "      \"c\":30," +
-      "      \"b\":0.75" +
-      "    }" +
-      "  ]" +
-      "}"
+    val presetJSON1 = """
+      {
+        "id": "test-id-1",
+        "name": "test-1",
+        "playerStates": [{
+          "soundKey": "test-1",
+          "timePeriod": 100,
+          "volume": 13
+        }]
+      }
+    """
 
-    val presetJSON2 = "{" +
-      "  \"a\":\"test-2\"," +
-      "  \"b\":[" +
-      "    {" +
-      "      \"a\":\"test-1\"," +
-      "      \"c\":30," +
-      "      \"b\":0.75" +
-      "    }" +
-      "  ]" +
-      "}"
+    val presetJSON2 = """
+      {
+        "id": "test-id-2",
+        "name": "test-2",
+        "playerStates": [{
+          "soundKey": "test-1",
+          "timePeriod": 79,
+          "volume": 14
+        }]
+      }
+    """
 
     every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
-    every { mockPrefs.getString("presets", any()) } returns "[${presetJSON1}]"
+    every { mockPrefs.getString(Preset.PREFERENCE_KEY, any()) } returns "[${presetJSON1}]"
 
     Preset.appendToUserPreferences(mockk(), mockk(relaxed = true) {
+      every { id } returns "test-id-2"
       every { name } returns "test-2"
       every { playerStates } returns arrayOf(mockk {
         every { soundKey } returns "test-1"
-        every { volume } returns 15
-        every { timePeriod } returns Player.MIN_TIME_PERIOD + 30
+        every { volume } returns 14
+        every { timePeriod } returns 79
       })
     })
 
     val stringSlot = slot<String>()
     verify(exactly = 1) {
-      mockPrefsEditor.putString("presets", capture(stringSlot))
+      mockPrefsEditor.putString(Preset.PREFERENCE_KEY, capture(stringSlot))
       mockPrefsEditor.apply()
     }
 
-    JSONAssert.assertEquals("[${presetJSON1}, ${presetJSON2}]", stringSlot.captured, false)
+    JSONAssert.assertEquals("[${presetJSON1}, ${presetJSON2}]", stringSlot.captured, true)
   }
 
   @Test
@@ -192,16 +222,17 @@ class PresetTest {
     mockkStatic(PreferenceManager::class)
     val mockPrefs = mockk<SharedPreferences>(relaxed = true)
     every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
-    every { mockPrefs.getString("presets", any()) } returns "[{" +
-      "  \"a\":\"test\"," +
-      "  \"b\":[" +
-      "    {" +
-      "      \"a\":\"test-1\"," +
-      "      \"c\":30," +
-      "      \"b\":0.75" +
-      "    }" +
-      "  ]" +
-      "}]"
+    every { mockPrefs.getString(Preset.PREFERENCE_KEY, any()) } returns """
+      [{
+        "id": "test-id",
+        "name": "test",
+        "playerStates": [{
+          "soundKey": "test-1",
+          "timePeriod": 30,
+          "volume": 15
+        }]
+      }]
+    """
 
     val validator = Preset.duplicateNameValidator(mockk())
     assertTrue(validator.invoke("test"))
@@ -213,28 +244,81 @@ class PresetTest {
     mockkStatic(PreferenceManager::class)
     val mockPrefs = mockk<SharedPreferences>(relaxed = true)
     every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
-    every { mockPrefs.getString("presets", any()) } returns "[{" +
-      "  \"a\":\"test-1\"," +
-      "  \"b\":[" +
-      "    {" +
-      "      \"a\":\"test-1\"," +
-      "      \"c\":30," +
-      "      \"b\":0.75" +
-      "    }" +
-      "  ]" +
-      "}," +
-      "{" +
-      "  \"a\":\"test-2\"," +
-      "  \"b\":[" +
-      "    {" +
-      "      \"a\":\"test-1\"," +
-      "      \"c\":30," +
-      "      \"b\":0.75" +
-      "    }" +
-      "  ]" +
-      "}]"
+    every { mockPrefs.getString(Preset.PREFERENCE_KEY, any()) } returns """
+      [{
+        "id": "test-id-1",
+        "name": "test-1",
+        "playerStates": [{
+          "soundKey": "test-1",
+          "timePeriod": 30,
+          "volume": 15
+        }]
+      },
+      {
+        "id": "test-id-2",
+        "name": "test-2",
+        "playerStates": [{
+          "soundKey": "test-1",
+          "timePeriod": 30,
+          "volume": 15
+        }]
+      }]
+    """
 
     assertNull(Preset.findByName(mockk(), "test-0"))
     assertNotNull(Preset.findByName(mockk(), "test-1"))
+    assertNotNull(Preset.findByName(mockk(), "test-2"))
+  }
+
+  @Test
+  fun testMigrateToV1() {
+    mockkStatic(PreferenceManager::class)
+    val mockPrefsEditor = mockk<SharedPreferences.Editor>(relaxed = true) {
+      every { putString(any(), any()) } returns this
+    }
+
+    val mockPrefs = mockk<SharedPreferences>(relaxed = true) {
+      every { edit() } returns mockPrefsEditor
+      every { getString(Preset.PREF_V0, any()) } returns """
+        [{
+          "a": "test",
+          "b": [{
+            "a": "test-1",
+            "c": 30,
+            "b": 0.75
+          }]
+        }]
+      """
+    }
+
+    every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
+
+    // mock UUID classes since id will get generated on migration
+    val mockUUID = mockk<UUID>(relaxed = true)
+    every { mockUUID.toString() } returns "test-id"
+    mockkStatic(UUID::class)
+    every { UUID.randomUUID() } returns mockUUID
+
+    val expectedV1JSON = """
+      [{
+        "id": "test-id",
+        "name": "test",
+        "playerStates": [{
+          "soundKey": "test-1",
+          "timePeriod": 60,
+          "volume": 15
+        }]
+      }]
+    """
+
+    Preset.migrateAllToV1(mockk())
+
+    val jsonSlot = slot<String>()
+    verify(exactly = 1) {
+      mockPrefsEditor.remove(Preset.PREF_V0)
+      mockPrefsEditor.putString(Preset.PREF_V1, capture(jsonSlot))
+    }
+
+    JSONAssert.assertEquals(expectedV1JSON, jsonSlot.captured, true)
   }
 }

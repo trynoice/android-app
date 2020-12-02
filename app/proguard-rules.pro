@@ -27,7 +27,7 @@
   @com.google.gson.annotations.SerializedName <fields>;
 }
 
-# keep fields annotated with Expose
+# keep field names for fields annotated with Expose
 -keepclassmembers class * {
   @com.google.gson.annotations.Expose <fields>;
 }
