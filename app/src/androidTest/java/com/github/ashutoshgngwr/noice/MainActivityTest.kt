@@ -1,5 +1,7 @@
 package com.github.ashutoshgngwr.noice
 
+import android.app.Activity
+import android.app.Instrumentation
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -21,8 +23,7 @@ import androidx.test.espresso.contrib.DrawerMatchers.isClosed
 import androidx.test.espresso.contrib.NavigationViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.filterEquals
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.intent.matcher.IntentMatchers.*
 import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -254,6 +255,9 @@ class MainActivityTest {
   fun testReportIssuesMenuItem() {
     Intents.init()
     try {
+      Intents.intending(hasAction(Intent.ACTION_VIEW))
+        .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, Intent()))
+
       onView(withId(R.id.layout_main))
         .check(matches(isClosed(Gravity.START)))
         .perform(DrawerActions.open(Gravity.START))
@@ -281,6 +285,9 @@ class MainActivityTest {
   fun testRateOnPlayStoreMenuItem() {
     Intents.init()
     try {
+      Intents.intending(hasAction(Intent.ACTION_VIEW))
+        .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, Intent()))
+
       onView(withId(R.id.layout_main))
         .check(matches(isClosed(Gravity.START)))
         .perform(DrawerActions.open(Gravity.START))

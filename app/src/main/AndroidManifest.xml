@@ -31,6 +31,10 @@
       android:name=".AppIntroActivity"
       android:theme="@style/Theme.MaterialComponents.NoActionBar" />
 
+    <activity
+      android:name=".ShortcutHandlerActivity"
+      android:excludeFromRecents="true" />
+
     <service android:name=".MediaPlayerService" />
 
     <receiver android:name=".WakeUpTimerManager$BootReceiver">

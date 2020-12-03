@@ -249,6 +249,7 @@ class SoundLibraryFragmentTest {
     val mockValidator = mockk<(String) -> Boolean>()
     mockkObject(Preset.Companion)
     every { Preset.readAllFromUserPreferences(any()) } returns arrayOf()
+    every { Preset.writeAllToUserPreferences(any(), any()) } returns Unit
     every { Preset.from("", mockPlayers.values) } returns preset
     every { Preset.duplicateNameValidator(any()) } returns mockValidator
     every { mockValidator.invoke("test-exists") } returns true

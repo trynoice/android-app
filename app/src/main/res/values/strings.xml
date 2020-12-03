@@ -70,6 +70,7 @@
     You haven\'t created any presets yet. To create a preset, go to the Library and play sounds.
     Then click on the Save button that appears on the bottom corner of the screen.
   </string>
+  <string name="preset_does_not_exist">Preset does not exist. It may have been deleted!</string>
   <string name="sleep_timer">Sleep Timer</string>
   <string name="sleep_timer_description">
     Noice will shutdown itself when the timer ends. Use the buttons below to add time and start
@@ -170,6 +171,8 @@
   <string name="intensity_description">Dense presets will try to play more sounds at once.</string>
   <string name="dense">Dense</string>
   <string name="light">Light</string>
+  <string name="add_to_home_screen">Add to home screen</string>
+  <string name="shortcuts_not_supported">Your default launcher does not support adding shortcuts</string>
   <string-array name="app_themes">
     <item>Light</item>
     <item>Dark</item>

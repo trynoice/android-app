@@ -125,6 +125,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   override fun onResume() {
     super.onResume()
     EventBus.getDefault().register(this)
+    val serviceIntent = Intent(this, MediaPlayerService::class.java)
 
     // start the media player service
     // workaround for Android 9+. See https://github.com/ashutoshgngwr/noice/issues/179
@@ -134,11 +135,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
           ?: ActivityManager.RunningAppProcessInfo.IMPORTANCE_GONE
 
         if (importance <= ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-          startService(Intent(this, MediaPlayerService::class.java))
+          startService(serviceIntent)
         }
       }
     } else {
-      startService(Intent(this, MediaPlayerService::class.java))
+      startService(serviceIntent)
     }
   }
 
