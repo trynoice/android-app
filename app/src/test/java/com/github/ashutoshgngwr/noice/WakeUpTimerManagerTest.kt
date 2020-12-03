@@ -7,8 +7,10 @@ import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.Utils.withGson
+import com.github.ashutoshgngwr.noice.sound.Preset
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.verifyOrder
 import org.junit.Assert.assertEquals
@@ -47,11 +49,14 @@ class WakeUpTimerManagerTest {
     }
 
     every { mockPrefs.edit() } returns mockPrefsEditor
+    mockkObject(Preset.Companion)
+    every { Preset.findByID(any(), "test") } returns mockk()
+
     WakeUpTimerManager.set(ApplicationProvider.getApplicationContext(), expectedTimer)
 
     verifyOrder {
       mockPrefs.edit()
-      mockPrefsEditor.putString(any(), expectedJSON)
+      mockPrefsEditor.putString(WakeUpTimerManager.PREF_WAKE_UP_TIMER, expectedJSON)
       mockPrefsEditor.apply()
     }
 
@@ -69,7 +74,7 @@ class WakeUpTimerManagerTest {
 
     verifyOrder {
       mockPrefs.edit()
-      mockPrefsEditor.remove(any())
+      mockPrefsEditor.remove(WakeUpTimerManager.PREF_WAKE_UP_TIMER)
       mockPrefsEditor.apply()
     }
 
@@ -79,21 +84,27 @@ class WakeUpTimerManagerTest {
   @Test
   fun testGet() {
     // when timer is not scheduled
-    every { mockPrefs.getString(any(), any()) } returns null
+    every { mockPrefs.getString(WakeUpTimerManager.PREF_WAKE_UP_TIMER, any()) } returns null
     assertNull(WakeUpTimerManager.get(ApplicationProvider.getApplicationContext()))
 
-    every { mockPrefs.getString(any(), any()) } returns "{\"presetName\":\"test\", \"atMillis\": 1}"
+    every {
+      mockPrefs.getString(WakeUpTimerManager.PREF_WAKE_UP_TIMER, any())
+    } returns """{"presetID": "test", "atMillis": 1}"""
+
     val timer = WakeUpTimerManager.get(ApplicationProvider.getApplicationContext())
     assertEquals(1L, timer?.atMillis)
-    assertEquals("test", timer?.presetName)
+    assertEquals("test", timer?.presetID)
   }
 
   @Test
   fun testBootReceiver_whenTimerIsPreScheduled() {
     val expectedTime = System.currentTimeMillis() + 1000L
     every {
-      mockPrefs.getString(any(), any())
-    } returns "{\"presetName\":\"test\", \"atMillis\": $expectedTime}"
+      mockPrefs.getString(WakeUpTimerManager.PREF_WAKE_UP_TIMER, any())
+    } returns """{"presetID": "test", "atMillis": $expectedTime}"""
+
+    mockkObject(Preset.Companion)
+    every { Preset.findByID(any(), "test") } returns mockk()
 
     WakeUpTimerManager.BootReceiver()
       .onReceive(ApplicationProvider.getApplicationContext(), Intent(Intent.ACTION_BOOT_COMPLETED))
@@ -103,7 +114,7 @@ class WakeUpTimerManagerTest {
 
   @Test
   fun testBootReceiver_whenTimeIsNotPreScheduled() {
-    every { mockPrefs.getString(any(), any()) } returns null
+    every { mockPrefs.getString(WakeUpTimerManager.PREF_WAKE_UP_TIMER, any()) } returns null
     WakeUpTimerManager.BootReceiver()
       .onReceive(ApplicationProvider.getApplicationContext(), Intent(Intent.ACTION_BOOT_COMPLETED))
 

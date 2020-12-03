@@ -62,16 +62,19 @@ class WakeUpTimerFragmentTest {
 
   @Test
   fun testInitialLayout_whenTimerIsPreScheduled() {
-    every { Preset.findByName(any(), "test") } returns mockk()
+    every { Preset.findByID(any(), "test-id") } returns mockk {
+      every { name } returns "test-name"
+    }
+
     every { WakeUpTimerManager.get(any()) } returns mockk {
-      every { presetName } returns "test"
+      every { presetID } returns "test-id"
       every { atMillis } returns System.currentTimeMillis() + 10000L
     }
 
     fragmentScenario.recreate()
     onView(withId(R.id.select_preset_button))
       .check(matches(isEnabled()))
-      .check(matches(withText("test")))
+      .check(matches(withText("test-name")))
 
     onView(withId(R.id.set_time_button))
       .check(matches(isEnabled()))
@@ -82,9 +85,9 @@ class WakeUpTimerFragmentTest {
 
   @Test
   fun testInitialLayout_whenTimerIsPreScheduled_andPresetIsDeletedFromStorage() {
-    every { Preset.findByName(any(), "test") } returns null
+    every { Preset.findByID(any(), "test") } returns null
     every { WakeUpTimerManager.get(any()) } returns mockk {
-      every { presetName } returns "test"
+      every { presetID } returns "test"
       every { atMillis } returns System.currentTimeMillis() + 10000L
     }
 
@@ -114,8 +117,14 @@ class WakeUpTimerFragmentTest {
   @Test
   fun testSetTimer() {
     every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(
-      mockk(relaxed = true) { every { name } returns "test-1" },
-      mockk(relaxed = true) { every { name } returns "test-2" }
+      mockk(relaxed = true) {
+        every { id } returns "test-id-1"
+        every { name } returns "test-1"
+      },
+      mockk(relaxed = true) {
+        every { id } returns "test-id-2"
+        every { name } returns "test-2"
+      }
     )
 
     onView(withId(R.id.select_preset_button))
@@ -149,7 +158,7 @@ class WakeUpTimerFragmentTest {
     }
 
     calendar.timeInMillis = timerSlot.captured.atMillis
-    assertEquals("test-1", timerSlot.captured.presetName)
+    assertEquals("test-id-1", timerSlot.captured.presetID)
     assertEquals(calendar.get(Calendar.HOUR_OF_DAY), 1)
     assertEquals(calendar.get(Calendar.MINUTE), 2)
     onView(withId(R.id.reset_time_button)).check(matches(isEnabled()))
@@ -157,9 +166,12 @@ class WakeUpTimerFragmentTest {
 
   @Test
   fun testCancelTimer() {
-    every { Preset.findByName(any(), "test") } returns mockk()
+    every { Preset.findByID(any(), "test-id") } returns mockk {
+      every { name } returns "test-name"
+    }
+
     every { WakeUpTimerManager.get(any()) } returns mockk {
-      every { presetName } returns "test"
+      every { presetID } returns "test-id"
       every { atMillis } returns System.currentTimeMillis() + 10000L
     }
 

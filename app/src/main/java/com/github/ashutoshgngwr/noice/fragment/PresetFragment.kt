@@ -1,16 +1,21 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.ShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.databinding.PresetListFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.PresetListItemBinding
@@ -111,6 +116,7 @@ class PresetFragment : Fragment() {
 
       val onMenuItemClickListener = PopupMenu.OnMenuItemClickListener {
         when (it.itemId) {
+          R.id.action_create_shortcut -> createShortcut()
           R.id.action_delete -> showDeletePresetConfirmation()
           R.id.action_rename -> showRenamePresetInput()
         }
@@ -124,6 +130,26 @@ class PresetFragment : Fragment() {
           it.setOnMenuItemClickListener(onMenuItemClickListener)
           it.show()
         }
+      }
+    }
+
+    private fun createShortcut() {
+      if (!ShortcutManagerCompat.isRequestPinShortcutSupported(requireContext())) {
+        Snackbar.make(requireView(), R.string.shortcuts_not_supported, Snackbar.LENGTH_LONG).show()
+        return
+      }
+
+      val presetID = dataSet[adapterPosition].id
+      ShortcutInfoCompat.Builder(requireContext(), presetID).also {
+        it.setShortLabel(dataSet[adapterPosition].name)
+        it.setIcon(IconCompat.createWithResource(requireContext(), R.mipmap.ic_preset_shortcut))
+        it.setIntent(
+          Intent(requireContext(), ShortcutHandlerActivity::class.java)
+            .setAction(Intent.ACTION_VIEW)
+            .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, presetID)
+        )
+
+        ShortcutManagerCompat.requestPinShortcut(requireContext(), it.build(), null)
       }
     }
 
@@ -173,7 +199,7 @@ class PresetFragment : Fragment() {
             activePresetPos -= 1 // account for recent deletion
           }
 
-          cancelWakeUpTimerIfScheduled(preset.name)
+          cancelWakeUpTimerIfScheduled(preset.id)
           adapter?.notifyItemRemoved(adapterPosition)
           updateEmptyListIndicatorVisibility()
           Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
@@ -187,11 +213,11 @@ class PresetFragment : Fragment() {
     }
 
     /**
-     * cancels the wake-up timer if it was scheduled with the given [presetName].
+     * cancels the wake-up timer if it was scheduled with the given [Preset.id].
      */
-    private fun cancelWakeUpTimerIfScheduled(presetName: String) {
+    private fun cancelWakeUpTimerIfScheduled(@Suppress("SameParameterValue") id: String) {
       WakeUpTimerManager.get(requireContext())?.also {
-        if (presetName == it.presetName) {
+        if (id == it.presetID) {
           WakeUpTimerManager.cancel(requireContext())
         }
       }

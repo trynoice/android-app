@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
   <item
+    android:id="@+id/action_create_shortcut"
+    android:title="@string/add_to_home_screen" />
+
+  <item
     android:id="@+id/action_rename"
     android:title="@string/rename" />
 

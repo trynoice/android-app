@@ -12,6 +12,7 @@
   This is supposed to override its default background color -->
   <color name="about_background_color">@color/colorBackground</color>
   <color name="ic_launcher_background">#FFFFFF</color>
+  <color name="ic_preset_shortcut_background">#FFFFFF</color>
 
   <!-- app intro colors -->
   <color name="appintro_slide_0__background">#202028</color>

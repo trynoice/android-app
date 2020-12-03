@@ -1,6 +1,8 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.widget.Button
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
@@ -16,22 +18,25 @@ import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
+import com.github.ashutoshgngwr.noice.ShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import io.mockk.MockKAnnotations
 import io.mockk.clearMocks
+import io.mockk.clearStaticMockk
 import io.mockk.every
 import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.mockk
 import io.mockk.mockkObject
+import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.verify
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.*
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -58,6 +63,7 @@ class PresetFragmentTest {
   @Before
   fun setup() {
     mockPreset = mockk(relaxed = true) {
+      every { id } returns "test-id"
       every { name } returns "test"
       every { playerStates } returns arrayOf(
         Preset.PlayerState("test-1", Player.DEFAULT_VOLUME, Player.DEFAULT_TIME_PERIOD),
@@ -179,6 +185,9 @@ class PresetFragmentTest {
     every { mockValidator.invoke("test-exists") } returns true
     every { mockValidator.invoke("test-does-not-exists") } returns false
 
+    // stub writing to the shared preferences part.
+    every { Preset.writeAllToUserPreferences(any(), any()) } returns Unit
+
     // open context menu
     onView(withId(R.id.preset_list)).perform(
       RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
@@ -211,5 +220,60 @@ class PresetFragmentTest {
     }
 
     assertEquals(mockPreset, presetsSlot.captured[0])
+  }
+
+  @Test
+  fun testRecyclerViewItem_AddToHomeScreenOption() {
+    mockkStatic(ShortcutManagerCompat::class)
+
+    val pinShortcutSupportedExpectations = arrayOf(false, true)
+    val expectedRequestPinShortcutCalls = arrayOf(0, 1)
+
+    for (i in pinShortcutSupportedExpectations.indices) {
+      // prevent system dialog from showing up.
+      every { ShortcutManagerCompat.requestPinShortcut(any(), any(), any()) } returns true
+      every {
+        ShortcutManagerCompat.isRequestPinShortcutSupported(any())
+      } returns pinShortcutSupportedExpectations[i]
+
+      // open context menu
+      onView(withId(R.id.preset_list)).perform(
+        RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
+          hasDescendant(allOf(withId(R.id.title), withText("test"))),
+          EspressoX.clickInItem(R.id.menu_button)
+        )
+      )
+
+      onView(withText(R.string.add_to_home_screen)).perform(click()) // select add to home screen option
+
+      val shortcutInfoSlot = slot<ShortcutInfoCompat>()
+      verify(exactly = expectedRequestPinShortcutCalls[i]) {
+        ShortcutManagerCompat.requestPinShortcut(any(), capture(shortcutInfoSlot), any())
+      }
+
+      if (pinShortcutSupportedExpectations[i]) {
+        assertTrue(
+          "should capture a ShortcutInfo from requestPinShortcut() call",
+          shortcutInfoSlot.isCaptured
+        )
+
+        assertEquals("test-id", shortcutInfoSlot.captured.id)
+        assertEquals("test", shortcutInfoSlot.captured.shortLabel)
+
+        val intent = shortcutInfoSlot.captured.intent
+        assertEquals(ShortcutHandlerActivity::class.qualifiedName, intent.component?.className)
+        assertEquals("test-id", intent.getStringExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID))
+      } else {
+        assertFalse(
+          "should not capture a ShortcutInfo from requestPinShortcut() call",
+          shortcutInfoSlot.isCaptured
+        )
+
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+          .check(matches(withText(R.string.shortcuts_not_supported)))
+      }
+
+      clearStaticMockk(ShortcutManagerCompat::class)
+    }
   }
 }
