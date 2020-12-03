@@ -1,0 +1,9 @@
+- Add button to play a random mix (preset)
+- Add "Add to home screen" option for presets
+- Amplify sound volumes
+- Fix the disappearing Wake-up timer when renaming the selected preset
+
+To add a preset to your home screen, go to the "Saved Preset" list and click on the item menu.
+
+We're continuously working to make Noice better and useful. Please turn on updates to never miss a thing!
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG

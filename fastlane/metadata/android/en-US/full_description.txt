@@ -7,6 +7,7 @@ Noice is an app that allows you to create a customised ambience using clips from
 - Google Cast (Chromecast) enabled [Play Store release only]
 - Auto sleep timer
 - Wake-up timer (Alarm Clock)
+- Generate random mixes
 - Make a customised mix
 - Save your favourite mixes
 - Play alongside other music players
