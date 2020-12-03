@@ -72,7 +72,7 @@
   </string>
   <string name="sleep_timer">Minuterie</string>
   <string name="sleep_timer_description">
-    Noice s\'éteindra tout seul à la fin de la minuterie. Utilisez les boutons ci-dessous pour ajouter du temps et démarrer 
+    Noice s\'éteindra tout seul à la fin de la minuterie. Utilisez les boutons ci-dessous pour ajouter du temps et démarrer
     la minuterie.
   </string>
   <string name="reset">Réinitialiser</string>
@@ -92,18 +92,14 @@
   <string name="support_development">Soutenir le développement</string>
   <string name="support_development__why">Pourquoi soutenir le développement ?</string>
   <string name="support_development__why_description">
-    - En signe de soutien au développeur\n
     - Pour rendre possible les futures mises à jour\n
     - Pour que Noice reste toujours sans publicité\n
-    - Pour nous permettre d\'investir dans l\'amélioration des fonctionnalités existantes ainsi que dans l\'ajout de nouvelles fonctionnalités\n
   </string>
   <string name="support_development__share">Partager avec vos amis</string>
   <string name="support_development__share_description">
-    Partager avec vos amis revient à faire un don.\n
-    - Vos amis _pourraient_ en avoir besoin\n
-    - D\'avantage de téléchargements améliore la visibilité pour les contributeurs\n
-    - Avec l\'augmentation du nombre de téléchargement, nous pourrons avoir plus de retour d\'utilisateurs
-      et ces derniers nous permettons d\'améliorer Noice\n
+    Partager avec vos amis revient à faire un don. Avec l\'augmentation du nombre de téléchargement,
+    nous pourrons avoir plus de retour d\'utilisateurs et ces derniers nous permettons d\'améliorer
+    Noice.
   </string>
   <string name="support_development__donate">Donner</string>
   <string name="support_development__donate_description">
@@ -133,7 +129,7 @@
   <string name="appintro__getting_started_desc_1">C\'est parti !</string>
   <string name="appintro__sound_library_title">Créez votre environnement idéal</string>
   <string name="appintro__sound_library_desc">
-    Utilisez les boutons de volume pour régler le volume des sons. A chaque répétition d\'un son "sans-boucle", 
+    Utilisez les boutons de volume pour régler le volume des sons. A chaque répétition d\'un son "sans-boucle",
     un délai aléatoire sera généré dans la plage établie par le curseur de temps.
   </string>
   <string name="appintro__preset_title">Sauvegardez vos mixes préférés</string>
@@ -143,7 +139,7 @@
   </string>
   <string name="appintro__timer_title">Des difficultés à s\'endormir ou à se réveiller ?</string>
   <string name="appintro__timer_desc">
-    Une ambiance légère peut vous aider à vous endormir plus facilement. Utilisez la minuterie pour laisser Noice 
+    Une ambiance légère peut vous aider à vous endormir plus facilement. Utilisez la minuterie pour laisser Noice
     s\'eteindre tout seul. De la même manière, pour se réveiller au calme, utilisez le réveil pour régler l\'alarme.
   </string>
   <string name="appintro__chromecast_title">Chromecast activé</string>

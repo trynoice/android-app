@@ -90,18 +90,14 @@
   <string name="support_development">Podpořit vývoj</string>
   <string name="support_development__why">Proč nás podpořit?</string>
   <string name="support_development__why_description">
-    - Jako poděkování tvůrci aplikace\n
     - Pro podporu dalšího vývoje\n
     - Pro udržení Noice nadále bez reklam\n
-    - Pro umožňění investic do vývoje nových funkcí a dalších vylepšení\n
   </string>
   <string name="support_development__share">Sdílet s přáteli</string>
   <string name="support_development__share_description">
-    Sdílením informace o existenci Noice s vašimi přáteli je podobné jako přímé darování peněz.\n
-    - Vaši přátelé tuto aplikaci __možná__ potřebují\n
-    - Vyšší počet stažení přiláká více vývojářů\n
-    - Čím vyšší počet stažení, tím silnější zpětnou vazbu dostaneme z různých perspektiv,
-      což nám pomůže ke zlepšení kvality celé aplikace\n
+    Sdílením informace o existenci Noice s vašimi přáteli je podobné jako přímé darování peněz. Čím
+    vyšší počet stažení, tím silnější zpětnou vazbu dostaneme z různých perspektiv, což nám pomůže
+    ke zlepšení kvality celé aplikace.
   </string>
   <string name="support_development__donate">Podpořit</string>
   <string name="support_development__donate_description">

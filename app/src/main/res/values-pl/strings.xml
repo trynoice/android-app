@@ -80,18 +80,14 @@
   <string name="support_development">Wesprzyj rozwój</string>
   <string name="support_development__why">Dlaczego powinieneś(-aś) wesprzeć?</string>
   <string name="support_development__why_description">
-    - Jako gest uznania dla dewelopera\n
     - Aby umożliwić przyszłe aktualizacje\n
     - Aby Noice pozostał wolny od reklam na zawsze\n
-    - Aby umożliwić nam inwestowanie w ulepszanie istniejących jak i dodawanie nowych funkcji\n
   </string>
   <string name="support_development__share">Podziel się z przyjaciółmi</string>
   <string name="support_development__share_description">
-    Dzielenie się tą aplikacją z przyjaciółmi jest podobne do przekazywania pieniędzy.\n
-    - Twoi znajomi _mogą_ to potrzebować\n
-    - Większa liczba pobrań przyciąga więcej uczestników\n
-    - Z większą liczbą pobrań, będziemy mogli uzyskać informacje zwrotne z wielu różnych perspektyw,
-      które pomogą nam w uczynieniu Noice lepszym niż kiedykolwiek wcześniej\n
+    Dzielenie się tą aplikacją z przyjaciółmi jest podobne do przekazywania pieniędzy. Z większą
+    liczbą pobrań, będziemy mogli uzyskać informacje zwrotne z wielu różnych perspektyw, które
+    pomogą nam w uczynieniu Noice lepszym niż kiedykolwiek wcześniej.
   </string>
   <string name="support_development__donate">Przekaż darowiznę</string>
   <string name="support_development__donate_description">

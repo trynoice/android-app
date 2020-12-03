@@ -89,18 +89,14 @@
   <string name="support_development">Apoyar al desarrollador</string>
   <string name="support_development__why">¿Porqué debería apoyar?</string>
   <string name="support_development__why_description">
-    - Como gesto de agradecimiento al desarrollador\n
     - Para garantizar futuras actualizaciones\n
     - Para mantener a Noice sin anuncios siempre\n
-    - Para permitirnos invertir en la mejora de las funciones existentes, así como en la adición de nuevas funciones\n
   </string>
   <string name="support_development__share">Compartir con friends</string>
   <string name="support_development__share_description">
-    Comparte Noice con amigos es una alternativa a las donaciones.\n
-    - Sus amigos _podrían_ necesitar it\n
-    - Muchas descargas atraen más colaboraciones\n
-    - Con descargas más altas, podremos recibir comentarios desde diferentes perspectivas
-      que nos ayudará a hacer de Noice mejor que nunca\n
+    Comparte Noice con amigos es una alternativa a las donaciones. Con descargas más altas, podremos
+    recibir comentarios desde diferentes perspectivas que nos ayudará a hacer de Noice mejor que
+    nunca.
   </string>
   <string name="support_development__donate">Donate</string>
   <string name="support_development__donate_description">

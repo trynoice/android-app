@@ -92,18 +92,14 @@
   <string name="support_development">Dukung Pengembangan</string>
   <string name="support_development__why">Mengapa Anda harus mendukung?</string>
   <string name="support_development__why_description">
-    - Sebagai bentuk apresiasi terhadap pengembang \n
     - Untuk memungkinkan pembaruan di masa mendatang \n
     - Untuk membuat Noice bebas iklan selamanya \n
-    - Untuk memungkinkan kami berinvestasi dalam meningkatkan fitur yang ada serta menambahkan fitur baru \n
  </string>
   <string name="support_development__share">Bagikan dengan teman</string>
   <string name="support_development__share_description">
-    Berbagi Noice dengan teman sama dengan mendonasikan uang. \n
-    - Temanmu mungkin membutuhkannya \n
-    - Unduhan yang lebih tinggi menarik lebih banyak kontributor \n
-    - Dengan unduhan yang lebih tinggi, kami akan dapat menerima umpan balik dari sejumlah berbagai
-      perspektif yang akan membantu kami membuat Noice lebih baik dari sebelumnya \n
+    Berbagi Noice dengan teman sama dengan mendonasikan uang. Dengan unduhan yang lebih tinggi, kami
+    akan dapat menerima umpan balik dari sejumlah berbagai perspektif yang akan membantu kami
+    membuat Noice lebih baik dari sebelumnya.
  </string>
   <string name="support_development__donate">Donasi</string>
   <string name="support_development__donate_description">
