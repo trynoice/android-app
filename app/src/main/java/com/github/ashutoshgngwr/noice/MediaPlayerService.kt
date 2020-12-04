@@ -109,7 +109,7 @@ class MediaPlayerService : Service() {
     override fun onReceive(context: Context?, intent: Intent?) {
       if (intent?.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
         Log.i(TAG, "Becoming noisy... Pause playback!")
-        playerManager.pause()
+        playerManager.pauseAndWaitBeforeStop()
       }
     }
   }

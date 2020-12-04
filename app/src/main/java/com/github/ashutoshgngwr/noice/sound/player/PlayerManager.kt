@@ -245,11 +245,12 @@ class PlayerManager(private val context: Context) :
     notifyChanges()
   }
 
-  private fun pauseAndWaitBeforeStop() {
+  fun pauseAndWaitBeforeStop() {
     pause()
-    Log.d(TAG, "scheduling pauseAndWaitBeforeStop callback")
+    Log.d(TAG, "scheduling stop callback")
+    handler.removeCallbacksAndMessages(DELAYED_STOP_CALLBACK_TOKEN) // clear previous callbacks
     HandlerCompat.postDelayed(
-      handler, this::stop, DELAYED_STOP_CALLBACK_TOKEN, TimeUnit.MINUTES.toMillis(1)
+      handler, this::stop, DELAYED_STOP_CALLBACK_TOKEN, TimeUnit.MINUTES.toMillis(5)
     )
   }
 
@@ -345,7 +346,6 @@ class PlayerManager(private val context: Context) :
         PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
         0f
       )
-
     }
 
     mediaSession.setPlaybackState(playbackStateBuilder.build())

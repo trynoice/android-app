@@ -30,6 +30,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import org.robolectric.shadows.ShadowLooper
 
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowMediaSession::class, ShadowMediaSessionCompat::class])
@@ -169,6 +170,21 @@ class PlayerManagerTest {
     assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
     assertEquals(1, playerManager.players.size)
     verify(exactly = 1) { players.getValue("test").pause() }
+  }
+
+  @Test
+  fun testPauseAndWaitBeforeStop() {
+    playerManager.pauseAndWaitBeforeStop()
+
+    assertEquals(PlayerManager.State.PAUSED, playerManager.state)
+    assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
+    assertEquals(1, playerManager.players.size)
+    verify(exactly = 1) { players.getValue("test").pause() }
+
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+    assertEquals(PlayerManager.State.STOPPED, playerManager.state)
+    assertEquals(PlaybackStateCompat.STATE_STOPPED, ShadowMediaSessionCompat.getLastPlaybackState())
+    assertEquals(0, playerManager.players.size)
   }
 
   @Test
