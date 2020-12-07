@@ -140,6 +140,8 @@
   <string name="credits__translation_uk_0__url" translatable="false">https://github.com/JekRock</string>
   <string name="credits__translation_in_id_0" translatable="false">Indonesian translation by imanudinsh</string>
   <string name="credits__translation_in_id_0__url" translatable="false">https://github.com/imanudinsh</string>
+  <string name="credits__translation_tr_0" translatable="false">Turkish translation by Berkay Gündüz</string>
+  <string name="credits__translation_tr_0__url" translatable="false">https://github.com/berkaygunduzz</string>
   <string name="app_issues_url" translatable="false">https://github.com/ashutoshgngwr/noice/issues</string>
   <string name="plus1m" translatable="false">1m</string>
   <string name="plus5m" translatable="false">5m</string>
