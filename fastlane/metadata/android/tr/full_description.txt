@@ -1,6 +1,9 @@
-Pek çok insan için, ufak bir arka plan gürültüsü sakinleşmeye ve odaklanmaya yardımcı oluyor. Bazı durumlarda üretkenliği bile arttrıyor. Ayrıca arka plan sesi (ambiyans) stresin etkilerini azaltmaya da yardımcı olabilir.
+Pek çok insan için, ufak bir arka plan gürültüsü sakinleşmeye ve odaklanmaya
+yardımcı oluyor. Bazı durumlarda üretkenliği bile arttrıyor. Ayrıca arka plan
+sesi (ambiyans) stresin etkilerini azaltmaya da yardımcı olabilir.
 
-Noice çevresel sesleri kullanarak kendi ambiyans kayıtlarınızı oluşturmanızı sağlayan bir uygulamadır. İşinize odaklanmak ya da sakin, barış dolu bir ortam yaratarak uyumanızı sağlamak adına rahatsız edecek sesleri baskılayacak mükemmel kayıtlarınızı oluşturun.
+Noice çevresel sesleri kullanarak kendi ambiyans kayıtlarınızı oluşturmanızı
+sağlayan bir uygulamadır. İşinize odaklanmak ya da sakin, barış dolu bir ortam yaratarak uyumanızı sağlamak adına rahatsız edecek sesleri baskılayacak mükemmel kayıtlarınızı oluşturun.
 
 <b>Özellikler</b>
 - 35 kaydedilmiş gürültü
@@ -25,11 +28,11 @@ Noice çevresel sesleri kullanarak kendi ambiyans kayıtlarınızı oluşturman�
 
 <b>İzinler</b>
 - <b>cihazın uyumasını önle</b>: cihazı oynatıcı için açık tutmak
-- <b>ön plan işlemlerini yürüt</b>: oynatıcının çalışması için (arayüzden farklı)
-- <b>açılışta başlat</b>: açıp kapatmalarda alarmın çalıştığından emin olmak için
+- <b>ön plan işlemlerini yürüt</b>: arayüzden farklı, oynatıcının çalışması için
+- <b>açılışta başlat</b>: açıp kapatmada alarmın çalıştığından emin olmak için
 - <b>tam ağ erişimi</b>: Chromecast ve maddi katkıları etkinleştirmek için
-- <b>ağ bağlantılarını gör</b>: gereklilik yüzünden eklendi, şaunda kullanılmıyor
-- <b>Google Play ödeme servisi</b>: destek adına maddi katkıları etkinleştirmek için
+- <b>ağ bağlantılarını gör</b>: gereklilik için eklendi, şaunda kullanılmıyor
+- <b>Google Play ödeme servisi</b>: destek adına maddi katkıda bulunulması için
 
 Noice özgür ve açık kaynak kodlu bir yazılımdır.
 https://github.com/ashutoshgngwr/noice
