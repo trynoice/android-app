@@ -80,7 +80,7 @@
   <string name="app_theme">Tema</string>
   <string name="open_context_menu">İçerik menüsünü aç</string>
   <string name="rename">Yeniden adlandır</string>
-  <string name="cast_media">Cast media to another device</string>
+  <string name="cast_media">İçeriği başka bir cihaza yayınla</string>
   <string name="about__translations">Çeviriler</string>
   <string name="wake_up_timer">Uyandırma Zamanlayıcı</string>
   <string name="wake_up_timer_description">
