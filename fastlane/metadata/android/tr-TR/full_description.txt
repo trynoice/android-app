@@ -1,10 +1,6 @@
-Pek çok insan için, ufak bir arka plan sesi sakinleşmeye ve odaklanmaya
-yardımcı oluyor. Bazı durumlarda üretkenliği bile arttrıyor. Ayrıca arka plan
-sesi (ambiyans) stresin etkilerini azaltmaya da yardımcı olabiliyor.
+Pek çok insan için, ufak bir arka plan sesi sakinleşmeye ve odaklanmaya yardımcı oluyor. Bazı durumlarda üretkenliği bile arttrıyor. Ayrıca arka plan sesi (ambiyans) stresin etkilerini azaltmaya da yardımcı olabiliyor.
 
-Noice çevresel sesleri kullanarak kendi ambiyansınız oluşturmanızı sağlayan bir
-uygulamadır. İşinize odaklanmak ya da sakin, barış dolu bir ortamda uyumak için
-rahatsız edici sesleri baskılayacak mükemmel ambiyansınızı oluşturun.
+Noice çevresel sesleri kullanarak kendi ambiyansınız oluşturmanızı sağlayan bir uygulamadır. İşinize odaklanmak ya da sakin, barış dolu bir ortamda uyumak için rahatsız edici sesleri baskılayacak mükemmel ambiyansınızı oluşturun.
 
 <b>Özellikler</b>
 - 35 kaydedilmiş ses
