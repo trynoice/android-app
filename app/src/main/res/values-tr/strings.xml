@@ -153,23 +153,22 @@
   <string name="help">Yardım</string>
   <string name="in_app_feedback__title">Değerlendirme yap</string>
   <string name="in_app_feedback__description">
-    Uygulama ile ilgili düşüncelerini duymaktan ve GitHub sitemizi ziyaret etmek
-    için biraz zaman ayırmandan çok mutlu oluruz. Eğer uygulamayı beğenmediysen,
-    lütfen yeni bir sorun açarak düşüncelerini bizimle paylaşmayı unutma. Yoksa
-    lütfen projeyi yıldızlayarak sevgi ve desteğini esirgeme.
+    GitHub adresimizi ziyaret edip düşüncelerini bizimle paylaşman bizi çok mutlu eder.
+    Uygulamayı beğenmediysen lütfen yeni bir sorun açıp düşüncelerini bizimle paylaş.
+    Yoksa lütfen projeyi yıldızlayarak sevgi ve desteğini bizimle paylaş.
   </string>
   <string name="okay">Tamam</string>
   <string name="later">Sonra</string>
   <string name="never">Asla</string>
   <string name="random_preset">Rastgele kayıt</string>
-  <string name="mood">Ruh hali</string>
+  <string name="mood">Amaç</string>
   <string name="any">Herhangi</string>
-  <string name="focus">Odaklan</string>
-  <string name="relax">Rahatla</string>
-  <string name="intensity">Yoğunluk</string>
-  <string name="intensity_description">Tek seferde daha fazla ses oynatmayı deneyecektir.</string>
-  <string name="dense">Yoğunlaştır</string>
-  <string name="light">Açık</string>
+  <string name="focus">Odaklanmak</string>
+  <string name="relax">Rahatlamak</string>
+  <string name="intensity">Çeşitlilik</string>
+  <string name="intensity_description">Çeşitli iken tek seferde daha çok ses kullanır.</string>
+  <string name="dense">Çeşitli</string>
+  <string name="light">Sade</string>
   <string name="add_to_home_screen">Ana ekrana ekle</string>
   <string name="shortcuts_not_supported">Başlatıcınız kısa yol eklemeyi desteklemiyor</string>
   <string-array name="app_themes">
