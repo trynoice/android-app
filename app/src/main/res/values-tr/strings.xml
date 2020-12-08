@@ -21,7 +21,7 @@
   <string name="coffee_shop">Kahve dükkanı</string>
   <string name="creaking_ship">Gıcırdayan gemi</string>
   <string name="crickets">Cırcır böcekleri</string>
-  <string name="distant_thunder">Uzak gök gütültüsü</string>
+  <string name="distant_thunder">Uzak gök gürültüsü</string>
   <string name="electric_car">Elektrikli araba</string>
   <string name="heavy_rain">Şiddetli yağmur</string>
   <string name="howling_wolf">Kurt uluması</string>
@@ -48,7 +48,7 @@
   <string name="white_noise">Beyaz gürültü</string>
   <string name="wind_in_palm_trees">Palmiye hışırtıları</string>
   <string name="wind_in_chimes_of_shells">Deniz kabuğu çıngırtısı</string>
-  <string name="app_description">Hafif bir arka plan gürültüsüyle rahatlayın ve üretkenliğinizi arttırın.</string>
+  <string name="app_description">Hafif bir arka plan sesiyle rahatlayın ve üretkenliğinizi arttırın.</string>
   <string name="connect_with_author">Sahibiyle iletişime geç</string>
   <string name="about__email">Email</string>
   <string name="about__github">Github</string>
@@ -59,7 +59,7 @@
   <string name="name">İsim</string>
   <string name="save">Kaydet</string>
   <string name="cancel">İptal</string>
-  <string name="preset_name_cannot_be_empty">Kayıt ismi boş olamaz!</string>
+  <string name="preset_name_cannot_be_empty">Kayıt ismi boş bırakılamaz!</string>
   <string name="preset_already_exists">Verilen isimde bir kayıt zaten mevcut!</string>
   <string name="preset_saved">Kayıt oluşturuldu!</string>
   <string name="saved_presets">Kayıtlar</string>
@@ -68,12 +68,12 @@
   <string name="preset_deleted">Kayıt silindi!</string>
   <string name="preset_info__description">
     Henüz hiçbir kayıt oluşturmadınız. Kayıt oluşturmak için Kütüphane\'ye gidin
-    sesleri oynatın. Sonra da ekranın alt köşesindeki Kaydet tuşuna basın.
+    ve birkaç ses oynatın. Sonra da ekranın alt köşesindeki Kaydet tuşuna basın.
   </string>
   <string name="preset_does_not_exist">Kayıt mevcut değil. Silinmiş olabilir!</string>
   <string name="sleep_timer">Uyku Zamanlayıcı</string>
   <string name="sleep_timer_description">
-    Süre bittiğinde gürültü kesilecektir. Zamanlamak için aşağıdaki tuşları kullanın.
+    Süre bittiğinde sesler kesilecektir. Zamanlamak için aşağıdaki tuşları kullanın.
   </string>
   <string name="reset">Sıfırla</string>
   <string name="auto_sleep_schedule_cancelled">Otomatik uyku zamanlayıcısı iptal edildi!</string>
@@ -84,7 +84,7 @@
   <string name="about__translations">Çeviriler</string>
   <string name="wake_up_timer">Uyandırma Zamanlayıcı</string>
   <string name="wake_up_timer_description">
-    Zamanı geldiğinde gürültü başlayacaktır. Kayıt seçmek ve zamanlamak için
+    Zamanı geldiğinde kayıt başlayacaktır. Kayıt seçmek ve zamanlamak için
     aşağıdaki tuşları kullanın.
   </string>
   <string name="wake_up_timer_cancelled">Uyandırma zamanlayıcısı iptal edildi!</string>
@@ -96,27 +96,27 @@
     - Gelecek güncellemeleri mümkün kılmak için\n
     - Noice\'in reklamsız kalmasını sağlamak için\n
   </string>
-  <string name="support_development__share">Arkadaşlarınla paylaş</string>
+  <string name="support_development__share">Arkadaşlarınızla paylaşın</string>
   <string name="support_development__share_description">
     Noice\'i arkadaşlarınızla paylaşmanız para bağışlamanız kadar faydalıdır.
-    Daha fazla indirme ile Noice\'i olduğundan daha iyi bir şekle geliştirmekte 
-    yardımcı olacak çeşitli geri dönüşler elde edebiliriz.
+    Daha fazla indirme, Noice\'i daha iyi bir seviyeye doğru geliştirmekte 
+    yardımcı olacak çeşitli geri dönüşler etmemizi sağlayabilir.
   </string>
   <string name="support_development__donate">Bağışta bulunun</string>
   <string name="support_development__donate_description">
-    Bağışlarınız bize şunlarda yardımcı olur\n
+    Bağışlarınız bize şunları sağlar\n
     - yeni özellikler için yatırım\n
     - daha iyi ve kaliteli sesler\n
     - kahve almak\n
   </string>
   <string name="support_development__donate_google_play_description">
-    Ödemeniz güvenli bir şekilde Google Play ile sağlanacaktır. Tutar kendi
-    ülkenizin para birimine çevrilecektir. Konumunuza bağlı olarak son tutara
-    _belki_ vergi eklenebilir.
+    Ödemeniz Google Play ile güvenli bir şekilde gerçekleşecektir. Tutar 
+    otomatik olarak kendi ülkenizin para birimine çevrilecektir. Konumunuza
+    bağlı olarak son tutara _belki_ vergi eklenebilir.
   </string>
   <string name="support_development__donate_thank_you">Teşekkür ederiz!</string>
   <string name="support_development__donate_thank_you_description">
-    Noice projesine olan çömertçe katkınınzdan dolayı tüm içtenliğimzle teşekkür ederiz.
+    Noice projesine olan cömertçe katkınızdan dolayı tüm içtenliğimizle teşekkür ederiz.
   </string>
   <string name="sound_group__life">Yaşam</string>
   <string name="sound_group__monsoon">Muson</string>
@@ -131,31 +131,33 @@
   <string name="appintro__getting_started_desc_1">Hadi başlayalım!</string>
   <string name="appintro__sound_library_title">Mükemmel ortamınızı yaratın</string>
   <string name="appintro__sound_library_desc">
-    Ses çubuğuyla oynayarak ses seviyesini ayarlayın. Döngüsü olmayan seslerdeki
-    her tekrarda bekleme süresi zaman çubuğundaki rasgele zamanlara göre ayarlanır.
+    Ses ayarıyla sese özel ses seviyesini ayarlayabilirken, zaman ayarıyla
+    döngüdeki seslerin tekrar etme sıklığını ayarlayabilirsiniz.
   </string>
   <string name="appintro__preset_title">En sevdiğin karışımları kaydet</string>
   <string name="appintro__preset_desc">
-    Birkaç ses oynattıktan sonra alttaki tuşu kullanarak karışımınızı kaydedeblirsiniz.
-    Kaydettiğiniz bir karışımı yeniden kullanmak için gezinti çubuğundan Kayıtlar
-    listesini ziyaret edebilirsiniz.
+    Birkaç ses oynattıktan sonra alttaki tuşu kullanarak karışımınızı
+    kaydedeblirsiniz. Kaydettiğiniz bir karışımı yeniden kullanmak için gezinti
+    çubuğundan Kayıtlar listesini ziyaret edebilirsiniz.
   </string>
   <string name="appintro__timer_title">Uyku sorunlarınız mı var?</string>
   <string name="appintro__timer_desc">
-    Ufak bir ambiyans uyumanızda yardımcı olabilir. Uyku Zamanlayıcı ile sesin kendiliğinden
-    kesilmesini sağlayabilir, sakin bir ortamda uyanmak içinse Uyandırma Zamanlayıcı
-    kullanabilirsiniz.
+    Ufak bir ambiyans uyumanızda yardımcı olabilir. Uyku Zamanlayıcı ile sesin
+    kendiliğinden kesilmesini sağlayabilir, sakin bir ortamda uyanmak içinse
+    Uyandırma Zamanlayıcı kullanabilirsiniz.
   </string>
   <string name="appintro__chromecast_title">Chromecast</string>
   <string name="appintro__chromecast_desc">
-    Noice kullanarak hoparlör, TV vb. Chromecast kullanan cihazlarda ambiyansı yansıtabilirsiniz..
+    Noice kullanarak hoparlör, TV vb. Chromecast kullanan cihazlara ambiyansı
+    yansıtabilirsiniz.
   </string>
   <string name="help">Yardım</string>
   <string name="in_app_feedback__title">Değerlendirme yap</string>
   <string name="in_app_feedback__description">
-    GitHub adresimizi ziyaret edip düşüncelerini bizimle paylaşman bizi çok mutlu eder.
-    Uygulamayı beğenmediysen lütfen yeni bir sorun açıp düşüncelerini bizimle paylaş.
-    Yoksa lütfen projeyi yıldızlayarak sevgi ve desteğini bizimle paylaş.
+    GitHub adresimizi ziyaret edip düşüncelerinizi bizimle paylaşmanızdan
+    mutluluk duyarız. Eğer uygulamayı beğenmediyseniz lütfen yeni bir sorun açıp
+    düşüncelerinizi bizimle paylaşın. Beğendiyseniz lütfen projeyi yıldızlayarak
+    sevgi ve desteklerinizi bizden esirgemeyin.
   </string>
   <string name="okay">Tamam</string>
   <string name="later">Sonra</string>
