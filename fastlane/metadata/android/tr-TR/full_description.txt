@@ -1,9 +1,9 @@
-Pek çok insan için, ufak bir arka plan gürültüsü sakinleşmeye ve odaklanmaya yardımcı oluyor. Bazı durumlarda üretkenliği bile arttrıyor. Ayrıca arka plan sesi (ambiyans) stresin etkilerini azaltmaya da yardımcı olabilir.
+Pek çok insan için, ufak bir arka plan sesi sakinleşmeye ve odaklanmaya yardımcı oluyor. Bazı durumlarda üretkenliği bile arttrıyor. Ayrıca arka plan sesi (ambiyans) stresin etkilerini azaltmaya da yardımcı olabiliyor.
 
-Noice çevresel sesleri kullanarak kendi ambiyans kayıtlarınızı oluşturmanızı sağlayan bir uygulamadır. İşinize odaklanmak ya da sakin, barış dolu bir ortam yaratarak uyumanızı sağlamak adına rahatsız edecek sesleri baskılayacak mükemmel kayıtlarınızı oluşturun.
+Noice çevresel sesleri kullanarak kendi ambiyansınız oluşturmanızı sağlayan bir uygulamadır. İşinize odaklanmak ya da sakin, barış dolu bir ortamda uyumak için rahatsız edici sesleri baskılayacak mükemmel ambiyansınızı oluşturun.
 
 <b>Özellikler</b>
-- 35 kaydedilmiş gürültü
+- 35 kaydedilmiş ses
 - Google Cast (Chromecast) kullanılabilir [sadece Play Store için]
 - Otomatik uyku zamanlayıcısı
 - Uyandırma zamanlayıcısı (Alarm)
@@ -15,7 +15,7 @@ Noice çevresel sesleri kullanarak kendi ambiyans kayıtlarınızı oluşturman�
 - Çevrim dışı oynatma
 - Açık ve karanlık tema
 
-<b>Gürültü Kütüphanesi</b>
+<b>Ses Kütüphanesi</b>
 - Yaşam (kuşlar, cırcır böcekleri, kurt, insan kalp atışı vb.)
 - Orman (kamp ateşi, gece, rüzgar, palmiye vb.)
 - Muson (yağmur, gök gürültüsü)
@@ -24,12 +24,12 @@ Noice çevresel sesleri kullanarak kendi ambiyans kayıtlarınızı oluşturman�
 - Kuru gürültü (beyaz, pembe, kayverengi)
 
 <b>İzinler</b>
-- <b>cihazın uyumasını önle</b>: cihazı oynatıcı için açık tutmak
-- <b>ön plan işlemlerini yürüt</b>: arayüzden farklı, oynatıcının çalışması için
-- <b>açılışta başlat</b>: açıp kapatmada alarmın çalıştığından emin olmak için
-- <b>tam ağ erişimi</b>: Chromecast ve maddi katkıları etkinleştirmek için
-- <b>ağ bağlantılarını gör</b>: gereklilik için eklendi, şaunda kullanılmıyor
-- <b>Google Play ödeme servisi</b>: destek adına maddi katkıda bulunulması için
+- <b>cihazın uyumasını önle</b>: oynatıcı için cihazı açık tutma
+- <b>ön plan işlemlerini yürüt</b>: oynatıcıyı çalıştırma (arayüzden farklı)
+- <b>açılışta başlat</b>: yeniden başlatmalerda alarmın çalıştığından emin olma
+- <b>tam ağ erişimi</b>: Chromecast ve maddi katkıları etkinleştirme
+- <b>ağ bağlantılarını gör</b>: gereklilik adına eklendi, şaunda kullanılmıyor
+- <b>Google Play ödeme servisi</b>: destek adına maddi katkıda bulunulma imkanı
 
 Noice özgür ve açık kaynak kodlu bir yazılımdır.
 https://github.com/ashutoshgngwr/noice
