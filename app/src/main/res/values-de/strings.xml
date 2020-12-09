@@ -28,6 +28,7 @@
   <string name="night">Nacht</string>
   <string name="office">Büro</string>
   <string name="pink_noise">Rosa Rauschen</string>
+  <string name="public_library">Öffentliche Bibliothek</string>
   <string name="rolling_thunder">Rollender Donner</string>
   <string name="seaside">Am Meer</string>
   <string name="soft_wind">Leichter Wind</string>
@@ -62,6 +63,7 @@
   <string name="cast_media">Übertrage das Medium auf ein anderes Gerät</string>
   <string name="open_context_menu">Öffne das Kontext-Menü</string>
   <string name="preset_already_exists">Eine Voreinstellung mit diesem Namen existiert bereits!</string>
+  <string name="help">Hilfe</string>
   <string name="preset_info__description">
     Du hast bisher keine Voreinstellungen erstellt. Um eine Voreinstellung zu erstellen, gehe zur
     Bibliothek und starte eine Audioausgabe. Im Anschluss kannst du den Speichern-Knopf in der
@@ -75,9 +77,11 @@
   </string>
   <string name="sound_group__monsoon">Monsun</string>
   <string name="sound_group__public_gatherings">Öffentliches Zusammenkommen</string>
+  <string name="sound_group__water">Wasser</string>
   <string name="sound_group__raw_noise">Grobes Rauschen</string>
   <string name="sound_group__times_of_day">Tageszeiten</string>
   <string name="sound_group__wind">Wind</string>
+  <string name="sound_group__vehicles">Fahrzeuge</string>
   <string name="support_development">Unterstütze die Entwicklung</string>
   <string name="support_development__why">Warum solltest du unterstützen?</string>
   <string name="support_development__why_description">
