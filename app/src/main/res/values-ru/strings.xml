@@ -1,26 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="library">Библиотека звуков</string>
+
+  <!-- Navigation Drawer -->
+
   <string name="about">О приложении</string>
-  <string name="report_issue">Сообщить о проблеме</string>
-  <string name="repeat_time_period">Период повтора</string>
-  <string name="volume">Громкость</string>
-  <string name="play_pause">Воспроизвести или остановить</string>
-  <string name="open_drawer">Открыть меню</string>
+  <string name="app_theme">Тема</string>
   <string name="close_drawer">Закрыть меню</string>
-  <string name="notification_channel_default__name">Воспроизведение звуков</string>
-  <string name="notification_channel_default__description">Регуляторы воспроизведения</string>
+  <string name="help">Помощь</string>
+  <string name="library">Библиотека звуков</string>
+  <string name="open_drawer">Открыть меню</string>
+  <string name="report_issue">Сообщить о проблеме</string>
+  <string name="saved_presets">Сохраненные пресеты</string>
+  <string name="sleep_timer">Таймер</string>
+  <string name="support_development">Поддержать разработку</string>
+  <string name="wake_up_timer">Таймер пробуждения</string>
+  
+
+  <!-- Random preset Dialog -->
+
+  <string name="okay">Хорошо</string>
+  
+
+  <!-- Save new preset Dialog -->
+
+  <string name="cancel">Отмена</string>
+  <string name="dismiss">Отменить</string>
+  <string name="name">Название</string>
   <string name="pause">Пауза</string>
+  <string name="preset_already_exists">Пресет с таким именем уже существует!</string>
+  <string name="preset_name_cannot_be_empty">Название пресета не может быть пустым!</string>
+  <string name="preset_saved">Пресет сохранен!</string>
+  <string name="save">Сохранить</string>
+  <string name="save_preset">Сохранить пресет</string>
+  
+
+  <!-- Library List Item -->
+
   <string name="play">Воспроизведение</string>
+  <string name="play_pause">Воспроизвести или остановить</string>
+  <string name="repeat_time_period">Период повтора</string>
   <string name="stop">Стоп</string>
+  <string name="volume">Громкость</string>
+  
+
+  <!-- Library - sound groups -->
+
+  <string name="sound_group__life">Жизнь</string>
+  <string name="sound_group__monsoon">Сезон дождей</string>
+  <string name="sound_group__public_gatherings">Общественные собрания</string>
+  <string name="sound_group__raw_noise">Чистый шум</string>
+  <string name="sound_group__times_of_day">Времена дня</string>
+  <string name="sound_group__vehicles">Транспортные средства</string>
+  <string name="sound_group__water">Вода</string>
+  <string name="sound_group__wind">Ветер</string>
+  
+
+  <!-- Library - sounds -->
+
   <string name="airplane_inflight">Полёт в самолёте</string>
   <string name="airplane_seatbelt_beeps">«Пристегните ремни!»</string>
   <string name="birds">Птицы</string>
   <string name="bonfire">Костёр</string>
   <string name="brownian_noise">Броуновский шум</string>
   <string name="coffee_shop">Кофейня</string>
+  <string name="creaking_ship">Скрипящий корабль</string>
+  <string name="crickets">Сверчки</string>
   <string name="distant_thunder">Далекий гром</string>
+  <string name="electric_car">Электроавтомобиль</string>
   <string name="heavy_rain">Ливень</string>
+  <string name="howling_wolf">Воющий волк</string>
+  <string name="human_heartbeat">Сердцебиение человека</string>
   <string name="light_rain">Небольшой дождь</string>
   <string name="moderate_rain">Умеренный дождь</string>
   <string name="morning_in_a_village">Утро в деревне</string>
@@ -28,80 +77,107 @@
   <string name="night">Ночь</string>
   <string name="office">Офис</string>
   <string name="pink_noise">Розовый шум</string>
+  <string name="public_library">Публичная библиотека</string>
+  <string name="purring_cat">Мурлыкающий кот</string>
+  <string name="quiet_conversation">Тихий разговор</string>
   <string name="rolling_thunder">Раскаты грома</string>
+  <string name="screeching_seagulls">Визг чайки</string>
   <string name="seaside">Прибой</string>
   <string name="soft_wind">Легкий ветер</string>
   <string name="thunder_crack">Удар грома</string>
   <string name="train_horn">Гудок паровоза</string>
-  <string name="water_stream">Поток воды</string>
-  <string name="white_noise">Белый шум</string>
-  <string name="wind_in_palm_trees">Шум деревьев</string>
-  <string name="wind_in_chimes_of_shells">Фурин</string>
-  <string name="app_description">
-    Расслабьтесь и повысьте производительность с помощью фоновых звуков
-  </string>
-  <string name="connect_with_author">Связаться с автором</string>
-  <string name="about__email">Email</string>
-  <string name="about__github">Github</string>
-  <string name="about__twitter">Twitter</string>
-  <string name="credits">Ресурсы</string>
-  <string name="dismiss">Отменить</string>
-  <string name="save_preset">Сохранить пресет</string>
-  <string name="name">Название</string>
-  <string name="save">Сохранить</string>
-  <string name="cancel">Отмена</string>
-  <string name="preset_name_cannot_be_empty">Название пресета не может быть пустым!</string>
-  <string name="preset_saved">Пресет сохранен!</string>
-  <string name="saved_presets">Сохраненные пресеты</string>
-  <string name="preset_delete_confirmation">Подтвердите удаление %s?</string>
-  <string name="delete">Увалить</string>
-  <string name="preset_deleted">Пресет удален!</string>
-  <string name="sleep_timer">Таймер</string>
-  <string name="reset">Сброс</string>
-  <string name="auto_sleep_schedule_cancelled">Таймер автоотключения отменен!</string>
-  <string name="app_theme">Тема</string>
-  <string name="creaking_ship">Скрипящий корабль</string>
-  <string name="crickets">Сверчки</string>
-  <string name="electric_car">Электроавтомобиль</string>
-  <string name="howling_wolf">Воющий волк</string>
-  <string name="human_heartbeat">Сердцебиение человека</string>
-  <string name="public_library">Публичная библиотека</string>
-  <string name="purring_cat">Мурлыкающий кот</string>
-  <string name="quiet_conversation">Тихий разговор</string>
-  <string name="screeching_seagulls">Визг чайки</string>
   <string name="walking_through_the_snow">Прогулка по снегу</string>
   <string name="water_hose">Водяной шланг</string>
-  <string name="preset_already_exists">Пресет с таким именем уже существует!</string>
+  <string name="water_stream">Поток воды</string>
+  <string name="white_noise">Белый шум</string>
+  <string name="wind_in_chimes_of_shells">Фурин</string>
+  <string name="wind_in_palm_trees">Шум деревьев</string>
+  
+
+  <!-- Saved Presets -->
+
+  <string name="delete">Увалить</string>
+  <string name="open_context_menu">Открыть контекстное меню</string>
+  <string name="preset_delete_confirmation">Подтвердите удаление %s?</string>
+  <string name="preset_deleted">Пресет удален!</string>
   <string name="preset_info__description">
     Вы еще не сделали ни одного пресета. Чтобы сделать пресет, зайдите в Библиотеку и воспроизведите
     звуки. Потом нажмите на кнопку Сохранить которая появится в нижнем углу экрана.
   </string>
+  <string name="rename">Переименовать</string>
+  
+
+  <!-- Sleep Timer -->
+
+  <string name="auto_sleep_schedule_cancelled">Таймер автоотключения отменен!</string>
+  <string name="reset">Сброс</string>
   <string name="sleep_timer_description">
     Noice выключится когда закончится таймер. Используйте кнопки ниже чтобы добавить время и
     запустить таймер.
   </string>
-  <string name="open_context_menu">Открыть контекстное меню</string>
-  <string name="rename">Переименовать</string>
-  <string name="cast_media">Транслировать медиа на другое устройство</string>
-  <string name="about__translations">Переводы</string>
-  <string name="wake_up_timer">Таймер пробуждения</string>
+  
+
+  <!-- Wake-up Timer -->
+
+  <string name="schedule">Расписание</string>
+  <string name="select_preset">Выбрать пресет</string>
   <string name="wake_up_timer_description">
     Noice запустит выбраный пресет когда закончится время. Используйте кнопки ниже чтобы выбрать
     пресет и установить время для таймера пробуждения.
   </string>
-  <string name="select_preset">Выбрать пресет</string>
-  <string name="schedule">Расписание</string>
-  <string name="support_development">Поддержать разработку</string>
-  <string name="support_development__why">Почему Вам следует поддержать?</string>
-  <string name="support_development__why_description">
-    - Сделать возможными последующие обновления\n
-    - Оставить Noice свободным от рекламы навсегда\n
+  
+
+  <!-- Theme -->
+
+  <string-array name="app_themes">
+    <item>Светлая</item>
+    <item>Темная</item>
+    <item>Системная тема</item>
+  </string-array>
+
+
+  <!-- About -->
+
+  <string name="about__email">Email</string>
+  <string name="about__github">Github</string>
+  <string name="about__translations">Переводы</string>
+  <string name="about__twitter">Twitter</string>
+  <string name="app_description">
+    Расслабьтесь и повысьте производительность с помощью фоновых звуков
   </string>
-  <string name="support_development__share">Поделиться с друзьями</string>
-  <string name="support_development__share_description">
-    Поделиться Noice с друзьями похоже на пожертвование денег. С большим числом загрузок мы сможем
-    получать обратную связь с разными взглядами, что поможет нам сделать Noice еще лучше.
+  <string name="connect_with_author">Связаться с автором</string>
+  <string name="credits">Ресурсы</string>
+  
+
+  <!-- Help -->
+
+  <string name="appintro__chromecast_desc">
+    Используйте Noice чтобы передать атмосферу на другие устройства с поддержкой Chromecast,
+    такие как колонки, ТВ и т.д.
   </string>
+  <string name="appintro__chromecast_title">Chromecast включен</string>
+  <string name="appintro__getting_started_desc_0">Проведите влево чтобы узнать все функции!</string>
+  <string name="appintro__getting_started_desc_1">Давайте начнем!</string>
+  <string name="appintro__getting_started_title">Добро пожаловать</string>
+  <string name="appintro__preset_desc">После воспроизведения нескольких звуков Вы можете использовать
+    кнопку внизу экрана чтобы сохранить микс. Чтобы использовать сохраненный микс, откройте список
+    пресетов в меню приложения.
+  </string>
+  <string name="appintro__preset_title">Сохраните свои любимые миксы</string>
+  <string name="appintro__sound_library_desc">
+    Используйте регулятор громкости чтобы отрегулировать громкость. На каждом повторе нецикличных
+    звуков задержка выбирается случайно из диапазона регулятора времени
+  </string>
+  <string name="appintro__sound_library_title">Создайте свои идеальные окружения</string>
+  <string name="appintro__timer_desc">
+    Небольшая атмосфера поможет заснуть не прилагая усилий. Используйте таймер сна чтобы Noice
+    выключил себя, и таймер пробуждения, чтобы проснуться в спокойном окружении.
+  </string>
+  <string name="appintro__timer_title">Сложно засыпать или просыпаться?</string>
+  
+
+  <!-- Support Development -->
+
   <string name="support_development__donate">Пожертвовать</string>
   <string name="support_development__donate_description">
     Пожертвования помогут нам в\n
@@ -118,51 +194,30 @@
   <string name="support_development__donate_thank_you_description">
     Мы от всего сердца благодарим Вас за вашу щедрую помощь для проекта Noice.
   </string>
-  <string name="sound_group__life">Жизнь</string>
-  <string name="sound_group__monsoon">Сезон дождей</string>
-  <string name="sound_group__public_gatherings">Общественные собрания</string>
-  <string name="sound_group__raw_noise">Чистый шум</string>
-  <string name="sound_group__times_of_day">Времена дня</string>
-  <string name="sound_group__vehicles">Транспортные средства</string>
-  <string name="sound_group__water">Вода</string>
-  <string name="sound_group__wind">Ветер</string>
-  <string name="appintro__getting_started_title">Добро пожаловать</string>
-  <string name="appintro__getting_started_desc_0">Проведите влево чтобы узнать все функции!</string>
-  <string name="appintro__getting_started_desc_1">Давайте начнем!</string>
-  <string name="appintro__sound_library_title">Создайте свои идеальные окружения</string>
-  <string name="appintro__sound_library_desc">
-    Используйте регулятор громкости чтобы отрегулировать громкость. На каждом повторе нецикличных
-    звуков задержка выбирается случайно из диапазона регулятора времени
+  <string name="support_development__share">Поделиться с друзьями</string>
+  <string name="support_development__share_description">
+    Поделиться Noice с друзьями похоже на пожертвование денег. С большим числом загрузок мы сможем
+    получать обратную связь с разными взглядами, что поможет нам сделать Noice еще лучше.
   </string>
-  <string name="appintro__preset_title">Сохраните свои любимые миксы</string>
-  <string name="appintro__preset_desc">После воспроизведения нескольких звуков Вы можете использовать
-    кнопку внизу экрана чтобы сохранить микс. Чтобы использовать сохраненный микс, откройте список
-    пресетов в меню приложения.
+  <string name="support_development__why">Почему Вам следует поддержать?</string>
+  <string name="support_development__why_description">
+    - Сделать возможными последующие обновления\n
+    - Оставить Noice свободным от рекламы навсегда\n
   </string>
-  <string name="appintro__timer_title">Сложно засыпать или просыпаться?</string>
-  <string name="appintro__timer_desc">
-    Небольшая атмосфера поможет заснуть не прилагая усилий. Используйте таймер сна чтобы Noice
-    выключил себя, и таймер пробуждения, чтобы проснуться в спокойном окружении.
-  </string>
-  <string name="appintro__chromecast_title">Chromecast включен</string>
-  <string name="appintro__chromecast_desc">
-    Используйте Noice чтобы передать атмосферу на другие устройства с поддержкой Chromecast,
-    такие как колонки, ТВ и т.д.
-  </string>
-  <string name="help">Помощь</string>
-  <string name="in_app_feedback__title">Отправить обзор</string>
+  
+
+  <!-- Others -->
+
+  <string name="cast_media">Транслировать медиа на другое устройство</string>
   <string name="in_app_feedback__description">
     Нам было бы приятно узнать что Вы думаете о приложении. Выделите, пожалуйста, минутку и посетите
     наш GitHub репозиторий. Если приложение Вам не понравилось, откройте, пожалуйста, issue с
     объяснением. В другом случае, поставьте, пожалуйста, звездочку приложению чтобы показать любовь
     и поддержку
   </string>
-  <string name="okay">Хорошо</string>
+  <string name="in_app_feedback__title">Отправить обзор</string>
   <string name="later">Позже</string>
   <string name="never">Никогда</string>
-  <string-array name="app_themes">
-    <item>Светлая</item>
-    <item>Темная</item>
-    <item>Системная тема</item>
-  </string-array>
+  <string name="notification_channel_default__description">Регуляторы воспроизведения</string>
+  <string name="notification_channel_default__name">Воспроизведение звуков</string>
 </resources>
