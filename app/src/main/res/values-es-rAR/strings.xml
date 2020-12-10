@@ -1,18 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="library">Librería</string>
+
+  <!-- Navigation Drawer -->
+
   <string name="about">Acerca de</string>
-  <string name="report_issue">Reportar Errores</string>
-  <string name="repeat_time_period">Periodo de repetición</string>
-  <string name="volume">Volumen de sonido</string>
-  <string name="play_pause">Reproducir o pausar</string>
-  <string name="open_drawer">Abrir el menú de navegación</string>
+  <string name="app_theme">Tema</string>
   <string name="close_drawer">Cerrar el menú de navegación</string>
-  <string name="notification_channel_default__name">Reproducción de medios</string>
-  <string name="notification_channel_default__description">Controles de reproducción</string>
+  <string name="library">Librería</string>
+  <string name="open_drawer">Abrir el menú de navegación</string>
+  <string name="report_issue">Reportar Errores</string>
+  <string name="saved_presets">Preajustes Guardados</string>
+  <string name="sleep_timer">Temporizador</string>
+  
+
+  <!-- Save new preset Dialog -->
+
+  <string name="cancel">Cancelar</string>
+  <string name="dismiss">Descartar</string>
+  <string name="name">Nombre</string>
   <string name="pause">Pausar</string>
+  <string name="preset_name_cannot_be_empty">El nombre del preajuste no puede estar vacío</string>
+  <string name="preset_saved">¡Preajuste guardado!</string>
+  <string name="save">Guardar</string>
+  <string name="save_preset">Guardar Preajuste</string>
+  
+
+  <!-- Library List Item -->
+
   <string name="play">Reproducir</string>
+  <string name="play_pause">Reproducir o pausar</string>
+  <string name="repeat_time_period">Periodo de repetición</string>
   <string name="stop">Detener</string>
+  <string name="volume">Volumen de sonido</string>
+  
+
+  <!-- Library - sounds -->
+
   <string name="birds">Pájaros</string>
   <string name="bonfire">Fogata</string>
   <string name="coffee_shop">Cafetería</string>
@@ -30,33 +53,44 @@
   <string name="thunder_crack">Rugido de truenos</string>
   <string name="train_horn">Bocina de tren</string>
   <string name="water_stream">Corriente de agua</string>
-  <string name="wind_in_palm_trees">Viento en las palmeras</string>
   <string name="wind_in_chimes_of_shells">Viento en los timbales</string>
-  <string name="app_description">Relajese y aumente su productividad con sonidos de fondo</string>
-  <string name="connect_with_author">Contactar al Autor</string>
-  <string name="about__email">Correo</string>
-  <string name="about__github">Github</string>
-  <string name="about__twitter">Twitter</string>
-  <string name="credits">Créditos</string>
-  <string name="dismiss">Descartar</string>
-  <string name="save_preset">Guardar Preajuste</string>
-  <string name="name">Nombre</string>
-  <string name="save">Guardar</string>
-  <string name="cancel">Cancelar</string>
-  <string name="preset_name_cannot_be_empty">El nombre del preajuste no puede estar vacío</string>
-  <string name="preset_saved">¡Preajuste guardado!</string>
-  <string name="saved_presets">Preajustes Guardados</string>
-  <string name="preset_delete_confirmation">¿Confirma borrar %s?</string>
+  <string name="wind_in_palm_trees">Viento en las palmeras</string>
+  
+
+  <!-- Saved Presets -->
+
   <string name="delete">Borrar</string>
+  <string name="preset_delete_confirmation">¿Confirma borrar %s?</string>
   <string name="preset_deleted">¡Preajuste borrado!</string>
-  <string name="sleep_timer">Temporizador</string>
-  <string name="reset">Reiniciar</string>
+  
+
+  <!-- Sleep Timer -->
+
   <string name="auto_sleep_schedule_cancelled">¡Temporizador cancelado!</string>
-  <string name="app_theme">Tema</string>
+  <string name="reset">Reiniciar</string>
+  
+
+  <!-- Theme -->
+
   <string-array name="app_themes">
     <item>Claro</item>
     <item>Oscuro</item>
     <item>Por defecto del sistema</item>
   </string-array>
-</resources>
 
+
+  <!-- About -->
+
+  <string name="about__email">Correo</string>
+  <string name="about__github">Github</string>
+  <string name="about__twitter">Twitter</string>
+  <string name="app_description">Relajese y aumente su productividad con sonidos de fondo</string>
+  <string name="connect_with_author">Contactar al Autor</string>
+  <string name="credits">Créditos</string>
+  
+
+  <!-- Others -->
+
+  <string name="notification_channel_default__description">Controles de reproducción</string>
+  <string name="notification_channel_default__name">Reproducción de medios</string>
+</resources>

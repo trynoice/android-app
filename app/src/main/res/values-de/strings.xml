@@ -1,27 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="library">Sammlung</string>
+
+  <!-- Navigation Drawer -->
+
   <string name="about">Über</string>
-  <string name="about__translations">Übersetzungen</string>
-  <string name="report_issue">Fehler melden</string>
-  <string name="repeat_time_period">Wiederholungszeit</string>
-  <string name="volume">Lautstärke</string>
-  <string name="play_pause">Abspielen / pausieren</string>
-  <string name="open_drawer">Navigationsleiste öffnen</string>
+  <string name="app_theme">Theme</string>
   <string name="close_drawer">Navigationsleiste schließen</string>
-  <string name="notification_channel_default__name">Medienwiedergabe</string>
-  <string name="notification_channel_default__description">Steuerung der Medienwiedergabe</string>
+  <string name="help">Hilfe</string>
+  <string name="library">Sammlung</string>
+  <string name="open_drawer">Navigationsleiste öffnen</string>
+  <string name="report_issue">Fehler melden</string>
+  <string name="saved_presets">Gespeicherte Voreinstellungen</string>
+  <string name="sleep_timer">Einschlaftimer</string>
+  <string name="support_development">Unterstütze die Entwicklung</string>
+  <string name="wake_up_timer">Aufwach-Timer</string>
+
+
+  <!-- Save new preset Dialog -->
+
+  <string name="cancel">Abbrechen</string>
+  <string name="dismiss">Ausblenden</string>
+  <string name="name">Name</string>
   <string name="pause">Pause</string>
+  <string name="preset_already_exists">Eine Voreinstellung mit diesem Namen existiert bereits!</string>
+  <string name="preset_name_cannot_be_empty">Der Voreinstellungsname darf nicht leer sein!</string>
+  <string name="preset_saved">Voreinstellung gespeichert!</string>
+  <string name="save">Speichern</string>
+  <string name="save_preset">Voreinstellung speichern</string>
+
+
+  <!-- Library List Item -->
+
   <string name="play">Abspielen</string>
+  <string name="play_pause">Abspielen / pausieren</string>
+  <string name="repeat_time_period">Wiederholungszeit</string>
   <string name="stop">Stop</string>
+  <string name="volume">Lautstärke</string>
+
+
+  <!-- Library - sound groups -->
+
+  <string name="sound_group__life">Leben</string>
+  <string name="sound_group__monsoon">Monsun</string>
+  <string name="sound_group__public_gatherings">Öffentliches Zusammenkommen</string>
+  <string name="sound_group__raw_noise">Grobes Rauschen</string>
+  <string name="sound_group__times_of_day">Tageszeiten</string>
+  <string name="sound_group__vehicles">Fahrzeuge</string>
+  <string name="sound_group__water">Wasser</string>
+  <string name="sound_group__wind">Wind</string>
+
+
+  <!-- Library - sounds -->
+
   <string name="airplane_inflight">Im Flugzeug</string>
   <string name="airplane_seatbelt_beeps">Flugzeug-Anschnallsignal</string>
   <string name="birds">Vögel</string>
   <string name="bonfire">Lagerfeuer</string>
   <string name="brownian_noise">Brownsches Rauschen</string>
   <string name="coffee_shop">Kaffeehaus</string>
+  <string name="creaking_ship">Knarrendes Schiff</string>
+  <string name="crickets">Grillen</string>
   <string name="distant_thunder">Ferner Donner</string>
+  <string name="electric_car">Elektroauto</string>
   <string name="heavy_rain">Starker Regen</string>
+  <string name="howling_wolf">Heulender Wolf</string>
+  <string name="human_heartbeat">Menschlicher Herzschlag</string>
   <string name="light_rain">Leichter Regen</string>
   <string name="moderate_rain">Milder Regen</string>
   <string name="morning_in_a_village">Dörfliche Morgenstimmung</string>
@@ -30,83 +73,84 @@
   <string name="office">Büro</string>
   <string name="pink_noise">Rosa Rauschen</string>
   <string name="public_library">Öffentliche Bibliothek</string>
+  <string name="purring_cat">Schnurrende Katze</string>
+  <string name="quiet_conversation">Stille Unterhaltung</string>
   <string name="rolling_thunder">Rollender Donner</string>
+  <string name="screeching_seagulls">Kreischende Möwen</string>
   <string name="seaside">Am Meer</string>
   <string name="soft_wind">Leichter Wind</string>
   <string name="thunder_crack">Donnerschlag</string>
   <string name="train_horn">Zugsignal</string>
-  <string name="electric_car">Elektroauto</string>
-  <string name="quiet_conversation">Stille Unterhaltung</string>
-  <string name="sound_group__life">Leben</string>
-  <string name="howling_wolf">heulender Wolf</string>
-  <string name="crickets">Grillen</string>
-  <string name="human_heartbeat">menschlicher Herzschlag</string>
-  <string name="creaking_ship">knarrendes Schiff</string>
-  <string name="screeching_seagulls">kreischende Möwen</string>
-  <string name="purring_cat">schnurrende Katze</string>
-  <string name="walking_through_the_snow">durch den Schnee gehen</string>
+  <string name="walking_through_the_snow">Durch den Schnee gehen</string>
   <string name="water_hose">Wasserschlauch</string>
   <string name="water_stream">Wasserlauf</string>
   <string name="white_noise">Weißes Rauschen</string>
-  <string name="wind_in_palm_trees">Wind in Palmen</string>
-  <string name="appintro__getting_started_title">Willkommen</string>
-  <string name="appintro__getting_started_desc_0">Wischen Sie nach links um alle Funktionen kennenzulernen!</string>
   <string name="wind_in_chimes_of_shells">Wind in Glockenspiel aus Muscheln</string>
-  <string name="app_description">Entspannung und Produktivitätssteigerung durch minimale Hintergrundgeräusche</string>
-  <string name="connect_with_author">Autor kontaktieren</string>
-  <string name="about__email">E-Mail</string>
-  <string name="about__github">Github</string>
-  <string name="about__twitter">Twitter</string>
-  <string name="credits">Danksagungen</string>
-  <string name="dismiss">Ausblenden</string>
-  <string name="save_preset">Voreinstellung speichern</string>
-  <string name="name">Name</string>
-  <string name="save">Speichern</string>
-  <string name="cancel">Abbrechen</string>
-  <string name="preset_name_cannot_be_empty">Der Voreinstellungsname darf nicht leer sein!</string>
-  <string name="preset_saved">Voreinstellung gespeichert!</string>
-  <string name="saved_presets">Gespeicherte Voreinstellungen</string>
-  <string name="preset_delete_confirmation">%s löschen?</string>
+  <string name="wind_in_palm_trees">Wind in Palmen</string>
+
+
+  <!-- Saved Presets -->
+
   <string name="delete">Löschen</string>
-  <string name="preset_deleted">Voreinstellung gelöscht!</string>
-  <string name="sleep_timer">Einschlaftimer</string>
-  <string name="reset">Zurücksetzen</string>
-  <string name="auto_sleep_schedule_cancelled">Automatischer Schlaftimer abgebrochen!</string>
-  <string name="app_theme">Theme</string>
-  <string name="cast_media">Übertrage das Medium auf ein anderes Gerät</string>
   <string name="open_context_menu">Öffne das Kontext-Menü</string>
-  <string name="preset_already_exists">Eine Voreinstellung mit diesem Namen existiert bereits!</string>
-  <string name="help">Hilfe</string>
+  <string name="preset_delete_confirmation">%s löschen?</string>
+  <string name="preset_deleted">Voreinstellung gelöscht!</string>
   <string name="preset_info__description">
     Du hast bisher keine Voreinstellungen erstellt. Um eine Voreinstellung zu erstellen, gehe zur
     Bibliothek und starte eine Audioausgabe. Im Anschluss kannst du den Speichern-Knopf in der
     unteren Ecke des Bildschirms anklicken.
   </string>
   <string name="rename">Umbenennen</string>
-  <string name="select_preset">Wähle eine Voreinstellung aus</string>
+
+
+  <!-- Sleep Timer -->
+
+  <string name="auto_sleep_schedule_cancelled">Automatischer Schlaftimer abgebrochen!</string>
+  <string name="reset">Zurücksetzen</string>
   <string name="sleep_timer_description">
     Noice schaltet sich automatisch nach Ablauf des Timers aus. Nutze die Knöpfe weiter unten, um
     dem Timer Zeit hinzuzufügen oder abzuziehen.
   </string>
-  <string name="sound_group__monsoon">Monsun</string>
-  <string name="sound_group__public_gatherings">Öffentliches Zusammenkommen</string>
-  <string name="sound_group__water">Wasser</string>
-  <string name="sound_group__raw_noise">Grobes Rauschen</string>
-  <string name="sound_group__times_of_day">Tageszeiten</string>
-  <string name="sound_group__wind">Wind</string>
-  <string name="sound_group__vehicles">Fahrzeuge</string>
-  <string name="support_development">Unterstütze die Entwicklung</string>
-  <string name="support_development__why">Warum solltest du unterstützen?</string>
-  <string name="support_development__why_description">
-    - Um zukünftige Updates zu ermöglichen\n
-    - Um Noice für immer werbefrei zu halten\n
+
+
+  <!-- Wake-up Timer -->
+
+  <string name="select_preset">Wähle eine Voreinstellung aus</string>
+  <string name="wake_up_timer_description">
+    Noice startet die ausgewählte Voreinstellung wenn der Timer endet. Nutze die Knöpfe weiter unten,
+    um eine Voreinstellung auszusuchen und die gewünschte Länge bis zum Start des Aufwach-Timers
+    hinzuzufügen.
   </string>
-  <string name="support_development__share">Mit Freunden teilen</string>
-  <string name="support_development__share_description">
-    Noice mit Freunden zu teilen ist fast genau so wichtig wie Geld zu spenden. Mit mehr Downloads
-    können wir Feedback aus vielen unterschiedlichen Perspektiven erhalten, welches uns dabei hilft
-    Noice noch besser zu machen\n
-  </string>
+
+
+  <!-- Theme -->
+
+  <string-array name="app_themes">
+    <item>Hell</item>
+    <item>Dunkel</item>
+    <item>Systemstandard</item>
+  </string-array>
+
+
+  <!-- About -->
+
+  <string name="about__email">E-Mail</string>
+  <string name="about__github">Github</string>
+  <string name="about__translations">Übersetzungen</string>
+  <string name="about__twitter">Twitter</string>
+  <string name="app_description">Entspannung und Produktivitätssteigerung durch minimale Hintergrundgeräusche</string>
+  <string name="connect_with_author">Autor kontaktieren</string>
+  <string name="credits">Danksagungen</string>
+
+
+  <!-- Help -->
+
+  <string name="appintro__getting_started_desc_0">Wischen Sie nach links um alle Funktionen kennenzulernen!</string>
+  <string name="appintro__getting_started_title">Willkommen</string>
+
+
+  <!-- Support Development -->
+
   <string name="support_development__donate">Spenden</string>
   <string name="support_development__donate_description">
     Spenden helfen uns dabei\n
@@ -122,15 +166,22 @@
   <string name="support_development__donate_thank_you_description">
     Wir danken dir von ganzem Herzen für deine großzügige Spende an das Noice-Projekt.
   </string>
-  <string name="wake_up_timer">Aufwach-Timer</string>
-  <string name="wake_up_timer_description">
-    Noice startet die ausgewählte Voreinstellung wenn der Timer endet. Nutze die Knöpfe weiter unten,
-    um eine Voreinstellung auszusuchen und die gewünschte Länge bis zum Start des Aufwach-Timers
-    hinzuzufügen.
+  <string name="support_development__share">Mit Freunden teilen</string>
+  <string name="support_development__share_description">
+    Noice mit Freunden zu teilen ist fast genau so wichtig wie Geld zu spenden. Mit mehr Downloads
+    können wir Feedback aus vielen unterschiedlichen Perspektiven erhalten, welches uns dabei hilft
+    Noice noch besser zu machen\n
   </string>
-  <string-array name="app_themes">
-    <item>Hell</item>
-    <item>Dunkel</item>
-    <item>Systemstandard</item>
-  </string-array>
+  <string name="support_development__why">Warum solltest du unterstützen?</string>
+  <string name="support_development__why_description">
+    - Um zukünftige Updates zu ermöglichen\n
+    - Um Noice für immer werbefrei zu halten\n
+  </string>
+
+
+  <!-- Others -->
+
+  <string name="cast_media">Übertrage das Medium auf ein anderes Gerät</string>
+  <string name="notification_channel_default__description">Steuerung der Medienwiedergabe</string>
+  <string name="notification_channel_default__name">Medienwiedergabe</string>
 </resources>
