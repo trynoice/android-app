@@ -1,18 +1,62 @@
-<?xml version= "1.0" encoding= "utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="library">Perpustakaan</string>
+
+  <!-- Navigation Drawer -->
+
   <string name="about">Tentang</string>
-  <string name="report_issue">Laporkan Masalah</string>
-  <string name="repeat_time_period">Ulangi periode waktu</string>
-  <string name="volume">Volume suara</string>
-  <string name="play_pause">putar atau jeda</string>
-  <string name="open_drawer">Buka panel navigasi</string>
+  <string name="app_theme">Tema</string>
   <string name="close_drawer">Tutup panel navigasi</string>
-  <string name="notification_channel_default__name">Pemutaran Media</string>
-  <string name="notification_channel_default__description">Kontrol pemutaran media</string>
+  <string name="help">Bantuan</string>
+  <string name="library">Perpustakaan</string>
+  <string name="open_drawer">Buka panel navigasi</string>
+  <string name="report_issue">Laporkan Masalah</string>
+  <string name="saved_presets">Preset Tersimpan</string>
+  <string name="sleep_timer">Pengatur Waktu Tidur</string>
+  <string name="support_development">Dukung Pengembangan</string>
+  <string name="wake_up_timer">Pengatur Waktu Bangun</string>
+  
+
+  <!-- Random preset Dialog -->
+
+  <string name="okay">Oke</string>
+  
+
+  <!-- Save new preset Dialog -->
+
+  <string name="cancel">Batal</string>
+  <string name="dismiss">Singkirkan</string>
+  <string name="name">Nama</string>
   <string name="pause">Jeda</string>
+  <string name="preset_already_exists">Preset dengan nama yang diberikan sudah ada!</string>
+  <string name="preset_name_cannot_be_empty">Nama preset tidak boleh kosong!</string>
+  <string name="preset_saved">Preset disimpan!</string>
+  <string name="save">Simpan</string>
+  <string name="save_preset">Simpan Preset</string>
+  
+
+  <!-- Library List Item -->
+
   <string name="play">Mainkan</string>
+  <string name="play_pause">putar atau jeda</string>
+  <string name="repeat_time_period">Ulangi periode waktu</string>
   <string name="stop">Berhenti</string>
+  <string name="volume">Volume suara</string>
+  
+
+  <!-- Library - sound groups -->
+
+  <string name="sound_group__life">Kehidupan</string>
+  <string name="sound_group__monsoon">Musim</string>
+  <string name="sound_group__public_gatherings">Pertemuan Umum</string>
+  <string name="sound_group__raw_noise">Raw Noise</string>
+  <string name="sound_group__times_of_day">Waktu</string>
+  <string name="sound_group__vehicles">Kendaraan</string>
+  <string name="sound_group__water">Air</string>
+  <string name="sound_group__wind">Angin</string>
+  
+
+  <!-- Library - sounds -->
+
   <string name="airplane_inflight">Pesawat dalam penerbangan</string>
   <string name="airplane_seatbelt_beeps">Bunyi sabuk pengaman pesawat</string>
   <string name="birds">Burung</string>
@@ -46,61 +90,91 @@
   <string name="water_hose">Selang air</string>
   <string name="water_stream">Aliran air</string>
   <string name="white_noise">White noise</string>
-  <string name="wind_in_palm_trees">Angin di pohon palem</string>
   <string name="wind_in_chimes_of_shells">Angin di lonceng kerang</string>
-  <string name="app_description">Santai dan tingkatkan produktivitas dengan kebisingan latar belakang minimal.</string>
-  <string name="connect_with_author">Hubungkan dengan Penulis</string>
-  <string name="about__email">Email</string>
-  <string name="about__github">Github</string>
-  <string name="about__twitter">Twitter</string>
-  <string name="credits">Kredit</string>
-  <string name="dismiss">Singkirkan</string>
-  <string name="save_preset">Simpan Preset</string>
-  <string name="name">Nama</string>
-  <string name="save">Simpan</string>
-  <string name="cancel">Batal</string>
-  <string name="preset_name_cannot_be_empty">Nama preset tidak boleh kosong!</string>
-  <string name="preset_already_exists">Preset dengan nama yang diberikan sudah ada!</string>
-  <string name="preset_saved">Preset disimpan!</string>
-  <string name="saved_presets">Preset Tersimpan</string>
-  <string name="preset_delete_confirmation">Konfirmasi hapus %s?</string>
+  <string name="wind_in_palm_trees">Angin di pohon palem</string>
+  
+
+  <!-- Saved Presets -->
+
   <string name="delete">Hapus</string>
+  <string name="open_context_menu">Buka menu konteks</string>
+  <string name="preset_delete_confirmation">Konfirmasi hapus %s?</string>
   <string name="preset_deleted">Preset dihapus!</string>
   <string name="preset_info__description">
     Anda belum membuat preset apa pun. Untuk membuat preset, buka Perpustakaan dan putar suara.
     Kemudian klik tombol Simpan yang muncul di sudut bawah layar.
 </string>
-  <string name="sleep_timer">Pengatur Waktu Tidur</string>
+  <string name="rename">Ganti nama</string>
+  
+
+  <!-- Sleep Timer -->
+
+  <string name="auto_sleep_schedule_cancelled">Pengatur waktu tidur otomatis telah dibatalkan!</string>
+  <string name="reset">Setel ulang</string>
   <string name="sleep_timer_description">
     Noice akan mati sendiri ketika timer berakhir. Gunakan tombol di bawah untuk menambahkan waktu dan memulai
     pengatur waktu.
 </string>
-  <string name="reset">Setel ulang</string>
-  <string name="auto_sleep_schedule_cancelled">Pengatur waktu tidur otomatis telah dibatalkan!</string>
-  <string name="app_theme">Tema</string>
-  <string name="open_context_menu">Buka menu konteks</string>
-  <string name="rename">Ganti nama</string>
-  <string name="cast_media">Transmisikan media ke perangkat lain</string>
-  <string name="about__translations">Terjemahan</string>
-  <string name="wake_up_timer">Pengatur Waktu Bangun</string>
+  
+
+  <!-- Wake-up Timer -->
+
+  <string name="schedule">Jadwal</string>
+  <string name="select_preset">Pilih Preset</string>
   <string name="wake_up_timer_description">
     Noice akan memulai preset yang dipilih saat timer berakhir. Gunakan tombol di bawah untuk memilih a
     preset dan atur waktu yang diinginkan untuk memulai pengatur waktu bangun.
 </string>
-  <string name="select_preset">Pilih Preset</string>
-  <string name="schedule">Jadwal</string>
-  <string name="support_development">Dukung Pengembangan</string>
-  <string name="support_development__why">Mengapa Anda harus mendukung?</string>
-  <string name="support_development__why_description">
-    - Untuk memungkinkan pembaruan di masa mendatang \n
-    - Untuk membuat Noice bebas iklan selamanya \n
+  
+
+  <!-- Theme -->
+
+  <string-array name="app_themes">
+    <item>Terang</item>
+    <item>Gelap</item>
+    <item>Sistem default</item>
+  </string-array>
+
+
+  <!-- About -->
+
+  <string name="about__email">Email</string>
+  <string name="about__github">Github</string>
+  <string name="about__translations">Terjemahan</string>
+  <string name="about__twitter">Twitter</string>
+  <string name="app_description">Santai dan tingkatkan produktivitas dengan kebisingan latar belakang minimal.</string>
+  <string name="connect_with_author">Hubungkan dengan Penulis</string>
+  <string name="credits">Kredit</string>
+  
+
+  <!-- Help -->
+
+  <string name="appintro__chromecast_desc">
+    Gunakan Noice untuk mentransmisikan suasananya ke perangkat berkemampuan Chromecast lainnya seperti speaker, TV, dll.
  </string>
-  <string name="support_development__share">Bagikan dengan teman</string>
-  <string name="support_development__share_description">
-    Berbagi Noice dengan teman sama dengan mendonasikan uang. Dengan unduhan yang lebih tinggi, kami
-    akan dapat menerima umpan balik dari sejumlah berbagai perspektif yang akan membantu kami
-    membuat Noice lebih baik dari sebelumnya.
+  <string name="appintro__chromecast_title">Chromecast diaktifkan</string>
+  <string name="appintro__getting_started_desc_0">Geser ke kiri untuk mengenal semua fitur!</string>
+  <string name="appintro__getting_started_desc_1">Mari kita mulai!</string>
+  <string name="appintro__getting_started_title">Selamat Datang</string>
+  <string name="appintro__preset_desc">
+    Setelah memainkan beberapa suara, Anda dapat menggunakan tombol di sudut ujung bawah untuk menyimpan campuran Anda.
+    Untuk menggunakan kembali campuran yang disimpan, Anda dapat mengunjungi daftar prasetel dari menu aplikasi.
  </string>
+  <string name="appintro__preset_title">Simpan campuran favorit Anda</string>
+  <string name="appintro__sound_library_desc">
+    Gunakan penggeser volume untuk menyesuaikan volume suara. Pada setiap pengulangan suara non-looping, terjadi penundaan
+    periode dipilih secara acak dari rentang yang ditetapkan oleh penggeser waktu.
+ </string>
+  <string name="appintro__sound_library_title">Ciptakan lingkungan Anda yang sempurna</string>
+  <string name="appintro__timer_desc">
+    Sedikit suasana dapat membantu Anda tertidur dengan mudah. Gunakan pengatur waktu tidur untuk menutup Noice
+    secara otomatis. Demikian pula, untuk bangun di lingkungan yang tenang, gunakan pengatur waktu bangun untuk menyetel alarm.
+ </string>
+  <string name="appintro__timer_title">Kesulitan tidur atau bangun?</string>
+  
+
+  <!-- Support Development -->
+
   <string name="support_development__donate">Donasi</string>
   <string name="support_development__donate_description">
     Donasi akan membantu kami dalam \n
@@ -116,49 +190,30 @@
   <string name="support_development__donate_thank_you_description">
     Kami dengan sepenuh hati berterima kasih atas kemurah hatian kontribusi Anda untuk proyek Noice.
  </string>
-  <string name="sound_group__life">Kehidupan</string>
-  <string name="sound_group__monsoon">Musim</string>
-  <string name="sound_group__public_gatherings">Pertemuan Umum</string>
-  <string name="sound_group__raw_noise">Raw Noise</string>
-  <string name="sound_group__times_of_day">Waktu</string>
-  <string name="sound_group__vehicles">Kendaraan</string>
-  <string name="sound_group__water">Air</string>
-  <string name="sound_group__wind">Angin</string>
-  <string name="appintro__getting_started_title">Selamat Datang</string>
-  <string name="appintro__getting_started_desc_0">Geser ke kiri untuk mengenal semua fitur!</string>
-  <string name="appintro__getting_started_desc_1">Mari kita mulai!</string>
-  <string name="appintro__sound_library_title">Ciptakan lingkungan Anda yang sempurna</string>
-  <string name="appintro__sound_library_desc">
-    Gunakan penggeser volume untuk menyesuaikan volume suara. Pada setiap pengulangan suara non-looping, terjadi penundaan
-    periode dipilih secara acak dari rentang yang ditetapkan oleh penggeser waktu.
+  <string name="support_development__share">Bagikan dengan teman</string>
+  <string name="support_development__share_description">
+    Berbagi Noice dengan teman sama dengan mendonasikan uang. Dengan unduhan yang lebih tinggi, kami
+    akan dapat menerima umpan balik dari sejumlah berbagai perspektif yang akan membantu kami
+    membuat Noice lebih baik dari sebelumnya.
  </string>
-  <string name="appintro__preset_title">Simpan campuran favorit Anda</string>
-  <string name="appintro__preset_desc">
-    Setelah memainkan beberapa suara, Anda dapat menggunakan tombol di sudut ujung bawah untuk menyimpan campuran Anda.
-    Untuk menggunakan kembali campuran yang disimpan, Anda dapat mengunjungi daftar prasetel dari menu aplikasi.
+  <string name="support_development__why">Mengapa Anda harus mendukung?</string>
+  <string name="support_development__why_description">
+    - Untuk memungkinkan pembaruan di masa mendatang \n
+    - Untuk membuat Noice bebas iklan selamanya \n
  </string>
-  <string name="appintro__timer_title">Kesulitan tidur atau bangun?</string>
-  <string name="appintro__timer_desc">
-    Sedikit suasana dapat membantu Anda tertidur dengan mudah. Gunakan pengatur waktu tidur untuk menutup Noice
-    secara otomatis. Demikian pula, untuk bangun di lingkungan yang tenang, gunakan pengatur waktu bangun untuk menyetel alarm.
- </string>
-  <string name="appintro__chromecast_title">Chromecast diaktifkan</string>
-  <string name="appintro__chromecast_desc">
-    Gunakan Noice untuk mentransmisikan suasananya ke perangkat berkemampuan Chromecast lainnya seperti speaker, TV, dll.
- </string>
-  <string name="help">Bantuan</string>
-  <string name="in_app_feedback__title">Kirimkan ulasan</string>
+  
+
+  <!-- Others -->
+
+  <string name="cast_media">Transmisikan media ke perangkat lain</string>
   <string name="in_app_feedback__description">
     Kami ingin sekali mendengar dari Anda tentang aplikasi ini. Mohon luangkan waktu sejenak untuk mengunjungi repositori GitHub kami.
     Jika Anda tidak menyukai aplikasinya, pertimbangkan untuk membuka masalah yang menjelaskan kekhawatiran Anda.
     Jika tidak, bintangi proyek tersebut untuk menunjukkan cinta dan dukungan.
  </string>
-  <string name="okay">Oke</string>
+  <string name="in_app_feedback__title">Kirimkan ulasan</string>
   <string name="later">Nanti</string>
   <string name="never">Never</string>
-  <string-array name="app_themes">
-    <item>Terang</item>
-    <item>Gelap</item>
-    <item>Sistem default</item>
-  </string-array>
+  <string name="notification_channel_default__description">Kontrol pemutaran media</string>
+  <string name="notification_channel_default__name">Pemutaran Media</string>
 </resources>
