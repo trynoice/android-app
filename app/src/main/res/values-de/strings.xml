@@ -6,6 +6,7 @@
   <string name="about">Über</string>
   <string name="app_theme">Theme</string>
   <string name="close_drawer">Navigationsleiste schließen</string>
+  <string name="help">Hilfe</string>
   <string name="library">Sammlung</string>
   <string name="open_drawer">Navigationsleiste öffnen</string>
   <string name="report_issue">Fehler melden</string>
@@ -13,7 +14,7 @@
   <string name="sleep_timer">Einschlaftimer</string>
   <string name="support_development">Unterstütze die Entwicklung</string>
   <string name="wake_up_timer">Aufwach-Timer</string>
-  
+
 
   <!-- Save new preset Dialog -->
 
@@ -26,7 +27,7 @@
   <string name="preset_saved">Voreinstellung gespeichert!</string>
   <string name="save">Speichern</string>
   <string name="save_preset">Voreinstellung speichern</string>
-  
+
 
   <!-- Library List Item -->
 
@@ -35,16 +36,19 @@
   <string name="repeat_time_period">Wiederholungszeit</string>
   <string name="stop">Stop</string>
   <string name="volume">Lautstärke</string>
-  
+
 
   <!-- Library - sound groups -->
 
+  <string name="sound_group__life">Leben</string>
   <string name="sound_group__monsoon">Monsun</string>
   <string name="sound_group__public_gatherings">Öffentliches Zusammenkommen</string>
   <string name="sound_group__raw_noise">Grobes Rauschen</string>
   <string name="sound_group__times_of_day">Tageszeiten</string>
+  <string name="sound_group__vehicles">Fahrzeuge</string>
+  <string name="sound_group__water">Wasser</string>
   <string name="sound_group__wind">Wind</string>
-  
+
 
   <!-- Library - sounds -->
 
@@ -54,8 +58,13 @@
   <string name="bonfire">Lagerfeuer</string>
   <string name="brownian_noise">Brownsches Rauschen</string>
   <string name="coffee_shop">Kaffeehaus</string>
+  <string name="creaking_ship">Knarrendes Schiff</string>
+  <string name="crickets">Grillen</string>
   <string name="distant_thunder">Ferner Donner</string>
+  <string name="electric_car">Elektroauto</string>
   <string name="heavy_rain">Starker Regen</string>
+  <string name="howling_wolf">Heulender Wolf</string>
+  <string name="human_heartbeat">Menschlicher Herzschlag</string>
   <string name="light_rain">Leichter Regen</string>
   <string name="moderate_rain">Milder Regen</string>
   <string name="morning_in_a_village">Dörfliche Morgenstimmung</string>
@@ -63,17 +72,22 @@
   <string name="night">Nacht</string>
   <string name="office">Büro</string>
   <string name="pink_noise">Rosa Rauschen</string>
+  <string name="public_library">Öffentliche Bibliothek</string>
+  <string name="purring_cat">Schnurrende Katze</string>
+  <string name="quiet_conversation">Stille Unterhaltung</string>
   <string name="rolling_thunder">Rollender Donner</string>
+  <string name="screeching_seagulls">Kreischende Möwen</string>
   <string name="seaside">Am Meer</string>
   <string name="soft_wind">Leichter Wind</string>
   <string name="thunder_crack">Donnerschlag</string>
   <string name="train_horn">Zugsignal</string>
+  <string name="walking_through_the_snow">Durch den Schnee gehen</string>
   <string name="water_hose">Wasserschlauch</string>
   <string name="water_stream">Wasserlauf</string>
   <string name="white_noise">Weißes Rauschen</string>
   <string name="wind_in_chimes_of_shells">Wind in Glockenspiel aus Muscheln</string>
   <string name="wind_in_palm_trees">Wind in Palmen</string>
-  
+
 
   <!-- Saved Presets -->
 
@@ -87,7 +101,7 @@
     unteren Ecke des Bildschirms anklicken.
   </string>
   <string name="rename">Umbenennen</string>
-  
+
 
   <!-- Sleep Timer -->
 
@@ -97,7 +111,7 @@
     Noice schaltet sich automatisch nach Ablauf des Timers aus. Nutze die Knöpfe weiter unten, um
     dem Timer Zeit hinzuzufügen oder abzuziehen.
   </string>
-  
+
 
   <!-- Wake-up Timer -->
 
@@ -107,7 +121,7 @@
     um eine Voreinstellung auszusuchen und die gewünschte Länge bis zum Start des Aufwach-Timers
     hinzuzufügen.
   </string>
-  
+
 
   <!-- Theme -->
 
@@ -122,11 +136,18 @@
 
   <string name="about__email">E-Mail</string>
   <string name="about__github">Github</string>
+  <string name="about__translations">Übersetzungen</string>
   <string name="about__twitter">Twitter</string>
   <string name="app_description">Entspannung und Produktivitätssteigerung durch minimale Hintergrundgeräusche</string>
   <string name="connect_with_author">Autor kontaktieren</string>
   <string name="credits">Danksagungen</string>
-  
+
+
+  <!-- Help -->
+
+  <string name="appintro__getting_started_desc_0">Wischen Sie nach links um alle Funktionen kennenzulernen!</string>
+  <string name="appintro__getting_started_title">Willkommen</string>
+
 
   <!-- Support Development -->
 
@@ -156,7 +177,7 @@
     - Um zukünftige Updates zu ermöglichen\n
     - Um Noice für immer werbefrei zu halten\n
   </string>
-  
+
 
   <!-- Others -->
 
