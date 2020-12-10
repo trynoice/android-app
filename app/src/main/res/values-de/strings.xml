@@ -2,6 +2,7 @@
 <resources>
   <string name="library">Sammlung</string>
   <string name="about">Über</string>
+  <string name="about__translations">Übersetzungen</string>
   <string name="report_issue">Fehler melden</string>
   <string name="repeat_time_period">Wiederholungszeit</string>
   <string name="volume">Lautstärke</string>
@@ -34,10 +35,22 @@
   <string name="soft_wind">Leichter Wind</string>
   <string name="thunder_crack">Donnerschlag</string>
   <string name="train_horn">Zugsignal</string>
+  <string name="electric_car">Elektroauto</string>
+  <string name="quiet_conversation">Stille Unterhaltung</string>
+  <string name="sound_group__life">Leben</string>
+  <string name="howling_wolf">heulender Wolf</string>
+  <string name="crickets">Grillen</string>
+  <string name="human_heartbeat">menschlicher Herzschlag</string>
+  <string name="creaking_ship">knarrendes Schiff</string>
+  <string name="screeching_seagulls">kreischende Möwen</string>
+  <string name="purring_cat">schnurrende Katze</string>
+  <string name="walking_through_the_snow">durch den Schnee gehen</string>
   <string name="water_hose">Wasserschlauch</string>
   <string name="water_stream">Wasserlauf</string>
   <string name="white_noise">Weißes Rauschen</string>
   <string name="wind_in_palm_trees">Wind in Palmen</string>
+  <string name="appintro__getting_started_title">Willkommen</string>
+  <string name="appintro__getting_started_desc_0">Wischen Sie nach links um alle Funktionen kennenzulernen!</string>
   <string name="wind_in_chimes_of_shells">Wind in Glockenspiel aus Muscheln</string>
   <string name="app_description">Entspannung und Produktivitätssteigerung durch minimale Hintergrundgeräusche</string>
   <string name="connect_with_author">Autor kontaktieren</string>
