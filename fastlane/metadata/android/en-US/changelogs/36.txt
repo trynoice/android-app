@@ -1,0 +1,6 @@
+- Fixed app stuck in "Pause" mode after unplugging headphones
+- Added Turkish translations (by Berkay Gündüz)
+- Updated German translations (by MakiWolf)
+
+We're continuously working to make Noice better and useful. Please turn on updates to never miss a thing!
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG
