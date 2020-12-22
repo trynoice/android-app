@@ -19,7 +19,7 @@
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-typescript": "^7.12.7",
-    "@types/chromecast-caf-receiver": "^5.0.12",
+    "@types/chromecast-caf-receiver": "^5.0.13",
     "@types/howler": "^2.2.1",
     "@types/jest": "^26.0.19",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
