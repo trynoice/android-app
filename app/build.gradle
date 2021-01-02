@@ -9,8 +9,8 @@ android {
     applicationId 'com.github.ashutoshgngwr.noice'
     minSdkVersion 21
     targetSdkVersion 29
-    versionCode 35
-    versionName '0.13.0'
+    versionCode 36
+    versionName '0.14.0'
     testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
   }
 
@@ -81,7 +81,7 @@ dependencies {
   implementation 'com.google.android.exoplayer:exoplayer-core:2.11.8'
   implementation 'com.google.android.material:material:1.2.1'
   implementation 'com.google.code.gson:gson:2.8.6'
-  implementation 'io.noties.markwon:core:4.6.0'
+  implementation 'io.noties.markwon:core:4.6.1'
   implementation 'org.greenrobot:eventbus:3.1.1'
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
@@ -90,7 +90,7 @@ dependencies {
   playstoreImplementation 'com.google.android.play:core:1.9.0'
 
   testImplementation 'androidx.test:core:1.3.0'
-  testImplementation 'io.mockk:mockk:1.10.3-jdk8'
+  testImplementation 'io.mockk:mockk:1.10.4'
   testImplementation 'junit:junit:4.13.1'
   testImplementation 'org.robolectric:robolectric:4.4'
   testImplementation 'org.skyscreamer:jsonassert:1.5.0'
