@@ -1,49 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:columnCount="3"
-  android:rowCount="3"
-  android:useDefaultMargins="true">
+  android:orientation="vertical">
 
-  <Button
-    android:id="@+id/one_minute_button"
-    style="@style/Widget.App.DurationPicker.Button.AddTime"
-    android:text="@string/plus1m" />
+  <com.google.android.flexbox.FlexboxLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:alignContent="stretch"
+    app:alignItems="stretch"
+    app:flexWrap="wrap"
+    app:justifyContent="space_evenly">
 
-  <Button
-    android:id="@+id/five_minute_button"
-    style="@style/Widget.App.DurationPicker.Button.AddTime"
-    android:text="@string/plus5m" />
+    <Button
+      android:id="@+id/one_minute_button"
+      style="@style/Widget.App.DurationPicker.Button.AddTime"
+      android:text="@string/plus1m" />
 
-  <Button
-    android:id="@+id/thirty_minute_button"
-    style="@style/Widget.App.DurationPicker.Button.AddTime"
-    android:text="@string/plus30m" />
+    <Button
+      android:id="@+id/five_minute_button"
+      style="@style/Widget.App.DurationPicker.Button.AddTime"
+      android:text="@string/plus5m" />
 
-  <Button
-    android:id="@+id/one_hour_button"
-    style="@style/Widget.App.DurationPicker.Button.AddTime"
-    android:text="@string/plus1h" />
+    <Button
+      android:id="@+id/thirty_minute_button"
+      style="@style/Widget.App.DurationPicker.Button.AddTime"
+      android:text="@string/plus30m" />
 
-  <Button
-    android:id="@+id/four_hour_button"
-    style="@style/Widget.App.DurationPicker.Button.AddTime"
-    android:text="@string/plus4h" />
+    <Button
+      android:id="@+id/one_hour_button"
+      style="@style/Widget.App.DurationPicker.Button.AddTime"
+      android:text="@string/plus1h" />
 
-  <Button
-    android:id="@+id/eight_hour_button"
-    style="@style/Widget.App.DurationPicker.Button.AddTime"
-    android:text="@string/plus8h" />
+    <Button
+      android:id="@+id/four_hour_button"
+      style="@style/Widget.App.DurationPicker.Button.AddTime"
+      android:text="@string/plus4h" />
+
+    <Button
+      android:id="@+id/eight_hour_button"
+      style="@style/Widget.App.DurationPicker.Button.AddTime"
+      android:text="@string/plus8h" />
+
+  </com.google.android.flexbox.FlexboxLayout>
 
   <Button
     android:id="@+id/reset_button"
     style="?attr/materialButtonOutlinedStyle"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_columnSpan="3"
     android:layout_gravity="center"
     android:layout_margin="10dp"
     android:text="@string/reset" />
 
-</GridLayout>
+</LinearLayout>
