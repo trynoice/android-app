@@ -139,6 +139,7 @@
     Noice will start the selected preset when the timer ends. Use the buttons below to select a
     preset and set the desired time to start the wake-up timer.
   </string>
+  <string name="use_24h_format">Use 24-hour format</string>
 
 
   <!-- Theme -->

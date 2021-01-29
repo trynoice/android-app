@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice
 
 import android.view.View
+import android.widget.TimePicker
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.test.espresso.Espresso.onView
@@ -156,6 +157,18 @@ object EspressoX {
         if (item !is TextInputLayout) return false
         val error = item.error ?: return false
         return item.context.getString(expectedErrorText) == error.toString()
+      }
+    }
+  }
+
+  /**
+   * [is24hViewEnabled] matches a [TimePicker] that has the field [TimePicker.is24HourView] enabled.
+   */
+  fun is24hViewEnabled(): Matcher<View> {
+    return object : TypeSafeMatcher<View>() {
+      override fun describeTo(description: Description?) = Unit
+      override fun matchesSafely(item: View?): Boolean {
+        return item is TimePicker && item.is24HourView
       }
     }
   }

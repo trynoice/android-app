@@ -190,4 +190,13 @@ class WakeUpTimerFragmentTest {
 
     verify(exactly = 1) { WakeUpTimerManager.cancel(any()) }
   }
+
+  @Test
+  fun testIs24hView() {
+    onView(withId(R.id.time_picker)).check(matches(not(EspressoX.is24hViewEnabled())))
+    onView(withId(R.id.is_24h_view)).perform(click())
+    onView(withId(R.id.time_picker)).check(matches(EspressoX.is24hViewEnabled()))
+    onView(withId(R.id.is_24h_view)).perform(click())
+    onView(withId(R.id.time_picker)).check(matches(not(EspressoX.is24hViewEnabled())))
+  }
 }

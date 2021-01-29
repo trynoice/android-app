@@ -33,6 +33,9 @@ class WakeUpTimerFragment : Fragment() {
     binding.selectPresetButton.setOnClickListener { onSelectPresetClicked() }
     binding.resetTimeButton.setOnClickListener { onResetTimeClicked() }
     binding.setTimeButton.setOnClickListener { onSetTimeClicked() }
+    binding.is24hView.setOnCheckedChangeListener { _, enabled ->
+      binding.timePicker.setIs24HourView(enabled)
+    }
 
     val timer = WakeUpTimerManager.get(requireContext())
     if (timer?.atMillis ?: 0 > System.currentTimeMillis()) {
