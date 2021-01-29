@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
       }
 
-      if (R.id.library == binding.navigationDrawer.checkedItem?.itemId) {
+      if (index == 0) {
         supportActionBar?.setTitle(R.string.app_name)
       } else {
         supportActionBar?.title = binding.navigationDrawer.checkedItem?.title
@@ -113,7 +113,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // set sound library fragment when activity is created initially (screen-orientation change
     // will recall onCreate which will cause weird and unexpected fragment changes otherwise).
     if (savedInstanceState == null) {
-      setFragment(intent.getIntExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.library))
+      var defaultFragmentID = R.id.library
+      if (PresetFragment.shouldDisplayAsHomeScreen(this)) {
+        defaultFragmentID = R.id.saved_presets
+      }
+
+      setFragment(intent.getIntExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT, defaultFragmentID))
 
       // show app intro if user hasn't already seen it
       AppIntroActivity.maybeStart(this)

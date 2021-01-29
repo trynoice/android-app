@@ -39,6 +39,7 @@ import com.google.android.material.navigation.NavigationView
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.verify
 import org.greenrobot.eventbus.EventBus
@@ -73,9 +74,7 @@ class MainActivityTest {
   @After
   fun teardown() {
     PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
-      .edit(commit = true) {
-        clear()
-      }
+      .edit(commit = true) { clear() }
   }
 
   @Test
@@ -88,6 +87,25 @@ class MainActivityTest {
 
       assertEquals(
         R.id.library,
+        it.findViewById<NavigationView>(R.id.navigation_drawer).checkedItem?.itemId
+      )
+    }
+  }
+
+  @Test
+  fun testIfSavedPresetsIsVisibleOnStart() {
+    mockkObject(PresetFragment.Companion)
+    every { PresetFragment.shouldDisplayAsHomeScreen(any()) } returns true
+
+    activityScenario.recreate()
+    activityScenario.onActivity {
+      assertEquals(
+        PresetFragment::class.java.simpleName,
+        it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
+      )
+
+      assertEquals(
+        R.id.saved_presets,
         it.findViewById<NavigationView>(R.id.navigation_drawer).checkedItem?.itemId
       )
     }

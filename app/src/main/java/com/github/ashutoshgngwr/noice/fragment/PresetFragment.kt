@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
@@ -27,15 +30,23 @@ import org.greenrobot.eventbus.ThreadMode
 
 class PresetFragment : Fragment() {
 
+  companion object {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    const val PREF_SAVED_PRESETS_AS_HOME_SCREEN = "pref_saved_presets_as_homescreen"
+
+    fun shouldDisplayAsHomeScreen(context: Context): Boolean {
+      return PreferenceManager.getDefaultSharedPreferences(context)
+        .getBoolean(PREF_SAVED_PRESETS_AS_HOME_SCREEN, false)
+    }
+  }
+
   private lateinit var binding: PresetListFragmentBinding
 
   private var adapter: PresetListAdapter? = null
   private var activePresetPos = -1
 
   private val eventBus = EventBus.getDefault()
-  private val dataSet by lazy {
-    Preset.readAllFromUserPreferences(requireContext()).toMutableList()
-  }
+  private var dataSet = mutableListOf<Preset>()
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -47,6 +58,14 @@ class PresetFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    binding.shouldDisplayAsHomeScreen.isChecked = shouldDisplayAsHomeScreen(requireContext())
+    binding.shouldDisplayAsHomeScreen.setOnCheckedChangeListener { _, enabled ->
+      PreferenceManager.getDefaultSharedPreferences(context).edit {
+        putBoolean(PREF_SAVED_PRESETS_AS_HOME_SCREEN, enabled)
+      }
+    }
+
+    dataSet = Preset.readAllFromUserPreferences(requireContext()).toMutableList()
     adapter = PresetListAdapter(requireContext())
     binding.presetList.also {
       it.setHasFixedSize(true)
