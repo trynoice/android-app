@@ -23,7 +23,9 @@ import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.spyk
+import io.mockk.unmockkAll
 import io.mockk.verify
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -56,6 +58,11 @@ class PlayerManagerTest {
 
     playerManager = PlayerManager(ApplicationProvider.getApplicationContext())
     MockKAnnotations.init(this)
+  }
+
+  @After
+  fun teardown() {
+    unmockkAll()
   }
 
   @Test

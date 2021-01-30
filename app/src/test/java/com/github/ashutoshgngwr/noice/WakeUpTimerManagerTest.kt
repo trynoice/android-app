@@ -12,7 +12,9 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
+import io.mockk.unmockkAll
 import io.mockk.verifyOrder
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before
@@ -37,6 +39,11 @@ class WakeUpTimerManagerTest {
       ApplicationProvider.getApplicationContext<Context>()
         .getSystemService(AlarmManager::class.java)
     )
+  }
+
+  @After
+  fun teardown() {
+    unmockkAll()
   }
 
   @Test

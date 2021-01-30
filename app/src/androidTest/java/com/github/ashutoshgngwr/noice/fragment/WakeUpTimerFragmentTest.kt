@@ -20,8 +20,10 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.slot
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.hamcrest.Matchers.not
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -45,6 +47,11 @@ class WakeUpTimerFragmentTest {
     mockkObject(WakeUpTimerManager)
     every { WakeUpTimerManager.set(any(), any()) } returns Unit
     fragmentScenario = launchFragmentInContainer<WakeUpTimerFragment>(null, R.style.Theme_App)
+  }
+
+  @After
+  fun teardown() {
+    unmockkAll()
   }
 
   @Test

@@ -14,8 +14,10 @@ import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.hamcrest.Matchers.allOf
+import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -27,6 +29,11 @@ class ShortcutHandlerActivityTest {
   @Rule
   @JvmField
   val retryTestRule = RetryTestRule(5)
+
+  @After
+  fun teardown() {
+    unmockkAll()
+  }
 
   @Test
   fun testOnCreate() {
@@ -45,7 +52,7 @@ class ShortcutHandlerActivityTest {
       try {
         Intent(ApplicationProvider.getApplicationContext(), ShortcutHandlerActivity::class.java)
           .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, presetIDExpectations[i])
-          .also { ActivityScenario.launch<MainActivity>(it) }
+          .also { ActivityScenario.launch<ShortcutHandlerActivity>(it).close() }
 
         Intents.intended(
           allOf(

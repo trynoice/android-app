@@ -28,10 +28,12 @@ import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.slot
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -60,6 +62,11 @@ class SoundLibraryFragmentTest {
     fragmentScenario = launchFragmentInContainer<SoundLibraryFragment>(null, R.style.Theme_App)
     fragmentScenario.onFragment { fragment = it } // just for mock injection
     MockKAnnotations.init(this)
+  }
+
+  @After
+  fun teardown() {
+    unmockkAll()
   }
 
   @Test
@@ -325,6 +332,12 @@ class SoundLibraryFragmentTest {
 
   @Test
   fun testRandomPresetButton_onClick() {
+    fragmentScenario.onFragment { fragment ->
+      fragment.onPlayerManagerUpdate(mockk(relaxed = true) {
+        every { state } returns PlayerManager.State.STOPPED
+      })
+    }
+
     val intensityExpectations = mapOf(
       R.id.preset_intensity__any to SoundLibraryFragment.RANGE_INTENSITY_ANY,
       R.id.preset_intensity__dense to SoundLibraryFragment.RANGE_INTENSITY_DENSE,

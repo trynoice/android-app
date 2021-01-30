@@ -10,7 +10,9 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
+import io.mockk.unmockkAll
 import io.mockk.verify
+import org.junit.After
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
@@ -39,6 +41,11 @@ class InAppReviewFlowManagerTest {
     every { ReviewManagerFactory.create(any()) } returns fakeReviewManager
     InAppReviewFlowManager.init(fragmentActivity)
     ShadowLooper.idleMainLooper() // to let the fake review manager return its ReviewInfo object
+  }
+
+  @After
+  fun teardown() {
+    unmockkAll()
   }
 
   @Test

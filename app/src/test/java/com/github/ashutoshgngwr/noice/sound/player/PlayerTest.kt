@@ -7,8 +7,10 @@ import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
+import io.mockk.unmockkAll
 import io.mockk.verify
 import io.mockk.verifySequence
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -35,6 +37,11 @@ class PlayerTest {
 
     // clear calls that may have been invoked during player initialization.
     clearMocks(mockSound, mockPlaybackStrategy)
+  }
+
+  @After
+  fun teardown() {
+    unmockkAll()
   }
 
   @Test

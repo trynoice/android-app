@@ -35,9 +35,11 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.slot
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.*
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -83,6 +85,11 @@ class PresetFragmentTest {
     }
 
     MockKAnnotations.init(this)
+  }
+
+  @After
+  fun teardown() {
+    unmockkAll()
   }
 
   @Test
@@ -281,7 +288,10 @@ class PresetFragmentTest {
 
   @Test
   fun testShouldShowAsHomeScreenSwitch_whenInitiallyUnchecked() {
-    val mockPrefsEditor = mockk<SharedPreferences.Editor>(relaxed = true)
+    val mockPrefsEditor = mockk<SharedPreferences.Editor>(relaxed = true) {
+      every { putBoolean(any(), any()) } returns this
+    }
+
     mockkStatic(PreferenceManager::class)
     every {
       PreferenceManager.getDefaultSharedPreferences(any())
@@ -300,7 +310,10 @@ class PresetFragmentTest {
 
   @Test
   fun testShouldShowAsHomeScreenSwitch_whenInitiallyChecked() {
-    val mockPrefsEditor = mockk<SharedPreferences.Editor>(relaxed = true)
+    val mockPrefsEditor = mockk<SharedPreferences.Editor>(relaxed = true) {
+      every { putBoolean(any(), any()) } returns this
+    }
+
     mockkStatic(PreferenceManager::class)
     every {
       PreferenceManager.getDefaultSharedPreferences(any())
@@ -309,8 +322,9 @@ class PresetFragmentTest {
       every { edit() } returns mockPrefsEditor
     }
 
-    fragmentScenario.recreate()
-    onView(withId(R.id.should_display_as_home_screen)).check(matches(isChecked()))
+    fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
+    onView(withId(R.id.should_display_as_home_screen))
+      .check(matches(isChecked()))
       .perform(click())
 
     verify(exactly = 1) {

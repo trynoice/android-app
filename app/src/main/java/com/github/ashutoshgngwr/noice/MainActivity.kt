@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // set sound library fragment when activity is created initially (screen-orientation change
     // will recall onCreate which will cause weird and unexpected fragment changes otherwise).
-    if (savedInstanceState == null) {
+    if (supportFragmentManager.backStackEntryCount < 1) {
       var defaultFragmentID = R.id.library
       if (PresetFragment.shouldDisplayAsHomeScreen(this)) {
         defaultFragmentID = R.id.saved_presets

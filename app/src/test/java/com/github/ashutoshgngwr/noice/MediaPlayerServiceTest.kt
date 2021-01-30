@@ -17,9 +17,11 @@ import io.mockk.invoke
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.slot
+import io.mockk.unmockkAll
 import io.mockk.verify
 import io.mockk.verifySequence
 import org.greenrobot.eventbus.EventBus
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -51,6 +53,11 @@ class MediaPlayerServiceTest {
     serviceController = Robolectric.buildService(MediaPlayerService::class.java, mockServiceIntent)
     service = serviceController.get()
     MockKAnnotations.init(this)
+  }
+
+  @After
+  fun teardown() {
+    unmockkAll()
   }
 
   @Test

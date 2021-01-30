@@ -6,7 +6,9 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
+import io.mockk.unmockkAll
 import io.mockk.verify
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -16,6 +18,11 @@ import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
 class PresetTest {
+
+  @After
+  fun teardown() {
+    unmockkAll()
+  }
 
   @Test
   fun testEquality() {

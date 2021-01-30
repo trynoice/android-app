@@ -32,6 +32,7 @@ class AppIntroActivityTest {
 
   @After
   fun teardown() {
+    activityScenario.close()
     PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
       .edit(commit = true) {
         clear()

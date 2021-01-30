@@ -15,7 +15,9 @@ import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
+import io.mockk.unmockkAll
 import io.mockk.verify
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -42,6 +44,12 @@ class DonateActivityTest {
       it.putExtra(DonateActivity.EXTRA_DONATE_AMOUNT, "test")
       activityScenario = ActivityScenario.launch(it)
     }
+  }
+
+  @After
+  fun teardown() {
+    activityScenario.close()
+    unmockkAll()
   }
 
   @Test

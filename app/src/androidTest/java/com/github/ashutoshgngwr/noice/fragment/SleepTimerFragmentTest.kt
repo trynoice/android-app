@@ -23,9 +23,11 @@ import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.slot
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.not
+import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
@@ -68,6 +70,11 @@ class SleepTimerFragmentTest {
     every {
       eventBus.getStickyEvent(MediaPlayerService.ScheduleAutoSleepEvent::class.java)
     } returns lastEvent
+  }
+
+  @After
+  fun teardown() {
+    unmockkAll()
   }
 
   @Test

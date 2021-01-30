@@ -41,6 +41,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.allOf
@@ -73,6 +74,9 @@ class MainActivityTest {
 
   @After
   fun teardown() {
+    activityScenario.close()
+    unmockkAll()
+
     PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
       .edit(commit = true) { clear() }
   }
@@ -97,7 +101,9 @@ class MainActivityTest {
     mockkObject(PresetFragment.Companion)
     every { PresetFragment.shouldDisplayAsHomeScreen(any()) } returns true
 
-    activityScenario.recreate()
+    // recreate activity with null bundle
+    activityScenario.close()
+    activityScenario = launch(MainActivity::class.java)
     activityScenario.onActivity {
       assertEquals(
         PresetFragment::class.java.simpleName,
