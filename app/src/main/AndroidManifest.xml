@@ -2,6 +2,10 @@
   xmlns:tools="http://schemas.android.com/tools"
   package="com.github.ashutoshgngwr.noice">
 
+  <uses-feature
+    android:name="android.hardware.audio.output"
+    android:required="true" />
+
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
   <uses-permission android:name="android.permission.WAKE_LOCK" />
