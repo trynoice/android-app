@@ -45,6 +45,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.model.Statement
 import tools.fastlane.screengrab.Screengrab
 import tools.fastlane.screengrab.locale.LocaleTestRule
+import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 class GenerateScreenshots {
@@ -70,6 +71,7 @@ class GenerateScreenshots {
       Preset.writeAllToUserPreferences(
         ApplicationProvider.getApplicationContext(), arrayListOf(
           mockk {
+            every { id } returns UUID.randomUUID().toString()
             every { name } returns "Airplane"
             every { playerStates } returns arrayOf(
               mockk {
@@ -85,6 +87,7 @@ class GenerateScreenshots {
             )
           },
           mockk {
+            every { id } returns UUID.randomUUID().toString()
             every { name } returns "Night in the Jungle"
             every { playerStates } returns arrayOf(
               mockk {
@@ -95,6 +98,7 @@ class GenerateScreenshots {
             )
           },
           mockk {
+            every { id } returns UUID.randomUUID().toString()
             every { name } returns "Windy Summer"
             every { playerStates } returns arrayOf(
               mockk {
@@ -268,16 +272,19 @@ class GenerateScreenshots {
       .perform(NavigationViewActions.navigateTo(R.id.wake_up_timer))
 
     EspressoX.waitForView(withId(R.id.select_preset_button), 100, 5)
-      .perform(click())
+      .perform(scrollTo(), click())
 
     EspressoX.waitForView(withText("Airplane"), 100, 5)
-      .perform(click())
+      .perform(scrollTo(), click())
 
     onView(withId(R.id.time_picker))
       .perform(PickerActions.setTime(12, 30))
 
     onView(withId(R.id.set_time_button))
       .perform(scrollTo(), click())
+
+    onView(withText(R.string.wake_up_timer_description))
+      .perform(scrollTo())
 
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("4")
