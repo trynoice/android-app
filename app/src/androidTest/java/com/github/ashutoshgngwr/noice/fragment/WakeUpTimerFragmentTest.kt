@@ -1,7 +1,12 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.content.Context
+import android.media.AudioManager
+import androidx.core.content.getSystemService
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.media.AudioManagerCompat
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
@@ -30,6 +35,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.*
+import kotlin.random.Random
 
 @RunWith(AndroidJUnit4::class)
 class WakeUpTimerFragmentTest {
@@ -69,19 +75,33 @@ class WakeUpTimerFragmentTest {
 
   @Test
   fun testInitialLayout_whenTimerIsPreScheduled() {
-    every { Preset.findByID(any(), "test-id") } returns mockk {
-      every { name } returns "test-name"
+    val expectedPresetID = "test-preset-id"
+    val expectedPresetName = "test-preset-name"
+    val expectedMediaVolume = 10
+    every { Preset.findByID(any(), expectedPresetID) } returns mockk {
+      every { name } returns expectedPresetName
     }
 
     every { WakeUpTimerManager.get(any()) } returns mockk {
-      every { presetID } returns "test-id"
+      every { presetID } returns expectedPresetID
       every { atMillis } returns System.currentTimeMillis() + 10000L
+      every { shouldUpdateMediaVolume } returns true
+      every { mediaVolume } returns expectedMediaVolume
     }
 
-    fragmentScenario.recreate()
+    // fragmentScenario.recreate() // for whatever reasons, doesn't invoke Fragment.onViewCreated().
+    fragmentScenario.onFragment { it.onViewCreated(it.requireView(), null) }
+
     onView(withId(R.id.select_preset_button))
       .check(matches(isEnabled()))
-      .check(matches(withText("test-name")))
+      .check(matches(withText(expectedPresetName)))
+
+    onView(withId(R.id.should_update_media_volume))
+      .check(matches(isChecked()))
+
+    onView(withId(R.id.media_volume_slider))
+      .check(matches(isEnabled()))
+      .check(matches(EspressoX.withSliderValue(expectedMediaVolume.toFloat())))
 
     onView(withId(R.id.set_time_button))
       .check(matches(isEnabled()))
@@ -96,6 +116,8 @@ class WakeUpTimerFragmentTest {
     every { WakeUpTimerManager.get(any()) } returns mockk {
       every { presetID } returns "test"
       every { atMillis } returns System.currentTimeMillis() + 10000L
+      every { shouldUpdateMediaVolume } returns false
+      every { mediaVolume } returns 1
     }
 
     fragmentScenario.recreate()
@@ -107,6 +129,12 @@ class WakeUpTimerFragmentTest {
       .check(matches(not(isEnabled())))
 
     onView(withId(R.id.reset_time_button))
+      .check(matches(not(isEnabled())))
+
+    onView(withId(R.id.should_update_media_volume))
+      .check(matches(isNotChecked()))
+
+    onView(withId(R.id.media_volume_slider))
       .check(matches(not(isEnabled())))
   }
 
@@ -153,22 +181,52 @@ class WakeUpTimerFragmentTest {
     onView(withId(R.id.time_picker))
       .perform(PickerActions.setTime(1, 2))
 
-    onView(withId(R.id.set_time_button))
-      .check(matches(isEnabled()))
-      .perform(scrollTo(), click())
+    val am = ApplicationProvider.getApplicationContext<Context>().getSystemService<AudioManager>()
+    requireNotNull(am)
+    val maxVol = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+    val minVol = AudioManagerCompat.getStreamMinVolume(am, AudioManager.STREAM_MUSIC)
+    val expectedVolume = Random.nextInt(minVol, maxVol)
 
-    val calendar = Calendar.getInstance()
-    val timerSlot = slot<WakeUpTimerManager.Timer>()
-    verify(exactly = 1) {
-      WakeUpTimerManager.set(any(), capture(timerSlot))
-      InAppReviewFlowManager.maybeAskForReview(any())
+    for (shouldUpdateMediaVolume in arrayOf(true, false)) {
+      onView(withId(R.id.should_update_media_volume))
+        .perform(scrollTo(), EspressoX.setChecked(shouldUpdateMediaVolume))
+
+      if (shouldUpdateMediaVolume) {
+        onView(withId(R.id.media_volume_slider))
+          .check(matches(isEnabled()))
+          .perform(scrollTo(), EspressoX.slide(expectedVolume.toFloat()))
+      } else {
+        onView(withId(R.id.media_volume_slider))
+          .check(matches(not(isEnabled())))
+      }
+
+      onView(withId(R.id.set_time_button))
+        .check(matches(isEnabled()))
+        .perform(scrollTo(), click())
+
+      val calendar = Calendar.getInstance()
+      val timerSlot = slot<WakeUpTimerManager.Timer>()
+
+      try {
+        verify(exactly = 1) {
+          WakeUpTimerManager.set(any(), capture(timerSlot))
+          InAppReviewFlowManager.maybeAskForReview(any())
+        }
+      } finally {
+        clearMocks(WakeUpTimerManager, InAppReviewFlowManager)
+      }
+
+      calendar.timeInMillis = timerSlot.captured.atMillis
+      assertEquals(1, calendar.get(Calendar.HOUR_OF_DAY))
+      assertEquals(2, calendar.get(Calendar.MINUTE))
+      assertEquals("test-id-1", timerSlot.captured.presetID)
+      assertEquals(shouldUpdateMediaVolume, timerSlot.captured.shouldUpdateMediaVolume)
+      if (shouldUpdateMediaVolume) {
+        assertEquals(expectedVolume, timerSlot.captured.mediaVolume)
+      }
+
+      onView(withId(R.id.reset_time_button)).check(matches(isEnabled()))
     }
-
-    calendar.timeInMillis = timerSlot.captured.atMillis
-    assertEquals("test-id-1", timerSlot.captured.presetID)
-    assertEquals(calendar.get(Calendar.HOUR_OF_DAY), 1)
-    assertEquals(calendar.get(Calendar.MINUTE), 2)
-    onView(withId(R.id.reset_time_button)).check(matches(isEnabled()))
   }
 
   @Test
@@ -180,6 +238,8 @@ class WakeUpTimerFragmentTest {
     every { WakeUpTimerManager.get(any()) } returns mockk {
       every { presetID } returns "test-id"
       every { atMillis } returns System.currentTimeMillis() + 10000L
+      every { shouldUpdateMediaVolume } returns false
+      every { mediaVolume } returns 1
     }
 
     fragmentScenario.recreate()

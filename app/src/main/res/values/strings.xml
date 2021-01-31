@@ -140,6 +140,8 @@
     preset and set the desired time to start the wake-up timer.
   </string>
   <string name="use_24h_format">Use 24-hour format</string>
+  <string name="device_media_volume">Device media volume</string>
+  <string name="should_update_media_volume">Update device media volume before starting preset</string>
 
 
   <!-- Theme -->

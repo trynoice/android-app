@@ -153,6 +153,7 @@ class Preset(@Expose var name: String, @Expose val playerStates: Array<PlayerSta
      * finds one with the given name. Returns null otherwise.
      */
     fun findByID(context: Context, id: String?): Preset? {
+      id ?: return null
       readAllFromUserPreferences(context).forEach {
         if (it.id == id) {
           return it
