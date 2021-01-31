@@ -284,4 +284,36 @@ class PlayerManagerTest {
     assertTrue(players.contains("test-2"))
     assertTrue(players.contains("test-3"))
   }
+
+  /**
+   * Essentially, the issue requested to not dampen the sound of other music players when playing
+   * sounds in Noice. The dampening is done by the Android Framework after Noice requests audio
+   * focus and is out of the control of the app. But the issue also mentioned that it doesn't happen
+   * if the sound is played once, stopped and then played again.
+   *
+   * On investigating further, the issue is that the audio focus request was not issued again if
+   * [PlayerManager] had abandoned it previously.
+   */
+  @Test
+  fun testIssue462() {
+    mockkStatic(AudioManagerCompat::class)
+    every {
+      AudioManagerCompat.requestAudioFocus(any(), any())
+    } returns AudioManager.AUDIOFOCUS_REQUEST_GRANTED
+
+    val player = players.getValue("test")
+
+    playerManager.play(player.soundKey)
+    playerManager.stop(player.soundKey)
+    players[player.soundKey] = player // stopping the player will remove it from players map.
+    playerManager.play(player.soundKey)
+    playerManager.stop(player.soundKey)
+    verify(exactly = 2) {
+      player.play()
+      player.stop()
+
+      AudioManagerCompat.requestAudioFocus(any(), any())
+      AudioManagerCompat.abandonAudioFocusRequest(any(), any())
+    }
+  }
 }
