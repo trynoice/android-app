@@ -306,6 +306,36 @@ class MainActivityTest {
   }
 
   @Test
+  fun testSubmitFeedbackMenuItem() {
+    Intents.init()
+    try {
+      Intents.intending(hasAction(Intent.ACTION_VIEW))
+        .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, Intent()))
+
+      onView(withId(R.id.layout_main))
+        .check(matches(isClosed(Gravity.START)))
+        .perform(DrawerActions.open(Gravity.START))
+
+      onView(withId(R.id.navigation_drawer))
+        .perform(NavigationViewActions.navigateTo(R.id.submit_feedback))
+
+      intended(
+        filterEquals(
+          Intent(
+            Intent.ACTION_VIEW, Uri.parse(
+              InstrumentationRegistry.getInstrumentation()
+                .targetContext
+                .getString(R.string.feedback_form_url)
+            )
+          )
+        )
+      )
+    } finally {
+      Intents.release()
+    }
+  }
+
+  @Test
   fun testRateOnPlayStoreMenuItem() {
     Intents.init()
     try {

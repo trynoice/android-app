@@ -13,7 +13,10 @@ import androidx.annotation.IdRes
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.edit
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
@@ -63,6 +66,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   private lateinit var binding: MainActivityBinding
   private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
   private lateinit var castAPIWrapper: CastAPIWrapper
+  private lateinit var customTabsIntent: CustomTabsIntent
   private var playerManagerState = PlayerManager.State.STOPPED
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -125,6 +129,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     InAppReviewFlowManager.init(this)
+
+    customTabsIntent = CustomTabsIntent.Builder()
+      .setDefaultColorSchemeParams(
+        CustomTabColorSchemeParams.Builder()
+          .setToolbarColor(ResourcesCompat.getColor(resources, R.color.colorActionBar, theme))
+          .build()
+      )
+      .build()
   }
 
   override fun onResume() {
@@ -204,12 +216,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         startActivity(Intent(this, AppIntroActivity::class.java))
       }
       R.id.report_issue -> {
-        startActivity(
-          Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(getString(R.string.app_issues_url))
-          )
-        )
+        customTabsIntent.launchUrl(this, Uri.parse(getString(R.string.app_issues_url)))
+      }
+      R.id.submit_feedback -> {
+        customTabsIntent.launchUrl(this, Uri.parse(getString(R.string.feedback_form_url)))
       }
       R.id.rate_on_play_store -> {
         startActivity(
