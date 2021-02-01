@@ -132,14 +132,14 @@ class PlayerManager(private val context: Context) :
         hasAudioFocus = false
         resumeOnFocusGain = true
         playbackDelayed = false
-        pauseAndWaitBeforeStop()
+        pause()
       }
       AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
         Log.d(TAG, "onAudioFocusChange(): temporarily lost audio focus, pause playback")
         hasAudioFocus = false
         resumeOnFocusGain = true
         playbackDelayed = false
-        pause()
+        pauseIndefinitely()
       }
     }
   }
@@ -158,14 +158,14 @@ class PlayerManager(private val context: Context) :
         playbackDelayed = true
         hasAudioFocus = false
         resumeOnFocusGain = false
-        pause()
+        pauseIndefinitely()
       }
       AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
         Log.d(TAG, "requestAudioFocus(): acquire audio focus request failed, pause all players")
         hasAudioFocus = false
         playbackDelayed = false
         resumeOnFocusGain = false
-        pauseAndWaitBeforeStop()
+        pause()
       }
       AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
         Log.d(TAG, "requestAudioFocus(): acquire audio focus request granted, resuming playback")
@@ -255,16 +255,21 @@ class PlayerManager(private val context: Context) :
 
   /**
    * Stops all [Player]s but maintains their state so that these can be resumed at a later stage.
+   * It doesn't release any underlying resources.
    */
-  fun pause() {
+  private fun pauseIndefinitely() {
     state = State.PAUSED
     players.values.forEach { it.pause() }
     notifyChanges()
   }
 
-  fun pauseAndWaitBeforeStop() {
-    pause()
-    Log.d(TAG, "pauseAndWaitBeforeStop(): scheduling stop callback")
+  /**
+   * Stops all [Player]s but maintains their state so that these can be resumed. It schedules a
+   * delayed callback to release all underlying resources after 5 minutes.
+   */
+  fun pause() {
+    pauseIndefinitely()
+    Log.d(TAG, "pause(): scheduling stop callback")
     handler.removeCallbacksAndMessages(DELAYED_STOP_CALLBACK_TOKEN) // clear previous callbacks
     HandlerCompat.postDelayed(
       handler, this::stop, DELAYED_STOP_CALLBACK_TOKEN, TimeUnit.MINUTES.toMillis(5)
