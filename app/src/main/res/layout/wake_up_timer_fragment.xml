@@ -9,13 +9,11 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp">
+    android:padding="20dp">
 
     <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_margin="20dp"
       android:gravity="center"
       android:text="@string/wake_up_timer_description"
       android:textAppearance="?attr/textAppearanceBody1" />
@@ -25,6 +23,7 @@
       style="?attr/materialButtonOutlinedStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_marginVertical="20dp"
       android:text="@string/select_preset"
       app:drawableEndCompat="@drawable/ic_action_expand"
       app:drawableTint="?attr/colorAccent" />
@@ -33,8 +32,40 @@
       android:id="@+id/time_picker"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_margin="15dp"
+      android:layout_marginBottom="15dp"
       android:timePickerMode="spinner" />
+
+    <androidx.appcompat.widget.SwitchCompat
+      android:id="@+id/is_24h_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="15dp"
+      android:text="@string/use_24h_format"
+      app:switchPadding="15dp" />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="15dp"
+      android:drawablePadding="5dp"
+      android:text="@string/device_media_volume"
+      android:textAppearance="?textAppearanceBody1"
+      app:drawableStartCompat="@drawable/ic_action_volume"
+      app:drawableTint="@color/colorPrimary" />
+
+    <CheckBox
+      android:id="@+id/should_update_media_volume"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="15dp"
+      android:paddingHorizontal="5dp"
+      android:text="@string/should_update_media_volume" />
+
+    <com.google.android.material.slider.Slider
+      android:id="@+id/media_volume_slider"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="10dp" />
 
     <LinearLayout
       android:layout_width="match_parent"

@@ -8,6 +8,8 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
+import io.mockk.unmockkAll
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -31,6 +33,11 @@ class InAppReviewFlowManagerTest {
     mockkObject(Random.Default)
     mockkStatic(PreferenceManager::class)
     every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
+  }
+
+  @After
+  fun teardown() {
+    unmockkAll()
   }
 
   // These are rather shallow tests. These don't check the correctness of the review dialog but only

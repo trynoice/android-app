@@ -19,7 +19,12 @@ object WakeUpTimerManager {
   /**
    * [Timer] declares fields necessary to schedule a Wake-up timer.
    */
-  data class Timer(@Expose var presetID: String, @Expose var atMillis: Long)
+  data class Timer(
+    @Expose var presetID: String,
+    @Expose var atMillis: Long,
+    @Expose var shouldUpdateMediaVolume: Boolean,
+    @Expose var mediaVolume: Int
+  )
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   const val PREF_WAKE_UP_TIMER = "wake_up_timer"
@@ -33,10 +38,15 @@ object WakeUpTimerManager {
     )
   }
 
-  private fun getPendingIntentForService(context: Context, presetID: String): PendingIntent {
-    val intent = Intent(context, MediaPlayerService::class.java).also {
-      it.action = MediaPlayerService.ACTION_PLAY_PRESET
-      it.putExtra(MediaPlayerService.EXTRA_PRESET_ID, presetID)
+  private fun getPendingIntentForService(context: Context, timer: Timer?): PendingIntent {
+    val intent = Intent(context, MediaPlayerService::class.java)
+    intent.action = MediaPlayerService.ACTION_PLAY_PRESET
+    timer?.also {
+      intent.putExtra(MediaPlayerService.EXTRA_PRESET_ID, it.presetID)
+
+      if (it.shouldUpdateMediaVolume) {
+        intent.putExtra(MediaPlayerService.EXTRA_DEVICE_MEDIA_VOLUME, it.mediaVolume)
+      }
     }
 
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -76,7 +86,7 @@ object WakeUpTimerManager {
     withAlarmManager(context) {
       it.setAlarmClock(
         AlarmManager.AlarmClockInfo(timer.atMillis, getPendingIntentForActivity(context)),
-        getPendingIntentForService(context, timer.presetID)
+        getPendingIntentForService(context, timer)
       )
     }
   }
@@ -91,7 +101,7 @@ object WakeUpTimerManager {
 
     withAlarmManager(context) {
       // don't need concrete timer value for cancelling the alarm.
-      it.cancel(getPendingIntentForService(context, ""))
+      it.cancel(getPendingIntentForService(context, null))
     }
   }
 

@@ -23,7 +23,9 @@ import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.spyk
+import io.mockk.unmockkAll
 import io.mockk.verify
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -58,24 +60,43 @@ class PlayerManagerTest {
     MockKAnnotations.init(this)
   }
 
+  @After
+  fun teardown() {
+    unmockkAll()
+  }
+
+  private fun assertPaused() {
+    assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+    assertEquals(PlayerManager.State.STOPPED, playerManager.state)
+    assertEquals(PlaybackStateCompat.STATE_STOPPED, ShadowMediaSessionCompat.getLastPlaybackState())
+    assertEquals(0, playerManager.players.size)
+  }
+
+  private fun assertPausedIndefinitely() {
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+    assertEquals(PlayerManager.State.PAUSED, playerManager.state)
+    assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
+  }
+
   @Test
   fun testOnAudioFocusChange() {
-    // should pause players on focus loss
-    playerManager.onAudioFocusChange(AudioManager.AUDIOFOCUS_LOSS)
-    verify(exactly = 1) { players.getValue("test").pause() }
-    assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
-    clearMocks(players.getValue("test"))
-
     // should pause players on focus loss transient
     playerManager.onAudioFocusChange(AudioManager.AUDIOFOCUS_LOSS_TRANSIENT)
     verify(exactly = 1) { players.getValue("test").pause() }
-    assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
+    assertPausedIndefinitely()
     clearMocks(players.getValue("test"))
 
     // should resume players on focus gain
     playerManager.onAudioFocusChange(AudioManager.AUDIOFOCUS_GAIN)
     assertEquals(PlaybackStateCompat.STATE_PLAYING, ShadowMediaSessionCompat.getLastPlaybackState())
     verify(exactly = 1) { players.getValue("test").play() }
+    clearMocks(players.getValue("test"))
+
+    // should pause players on focus loss
+    playerManager.onAudioFocusChange(AudioManager.AUDIOFOCUS_LOSS)
+    verify(exactly = 1) { players.getValue("test").pause() }
+    assertPaused()
   }
 
   @Test
@@ -87,8 +108,7 @@ class PlayerManagerTest {
 
     playerManager.play("test")
     verify(exactly = 0) { players.getValue("test").play() }
-    assertEquals(PlayerManager.State.PAUSED, playerManager.state)
-    assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
+    assertPaused()
   }
 
   @Test
@@ -100,8 +120,7 @@ class PlayerManagerTest {
 
     playerManager.play("test")
     verify(exactly = 0) { players.getValue("test").play() }
-    assertEquals(PlayerManager.State.PAUSED, playerManager.state)
-    assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
+    assertPausedIndefinitely()
 
     // finally grant audio focus request
     playerManager.onAudioFocusChange(AudioManager.AUDIOFOCUS_GAIN)
@@ -163,28 +182,11 @@ class PlayerManagerTest {
   }
 
   @Test
-  fun testPausePlayback() {
+  fun testPause() {
     playerManager.pause()
-
-    assertEquals(PlayerManager.State.PAUSED, playerManager.state)
-    assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
     assertEquals(1, playerManager.players.size)
     verify(exactly = 1) { players.getValue("test").pause() }
-  }
-
-  @Test
-  fun testPauseAndWaitBeforeStop() {
-    playerManager.pauseAndWaitBeforeStop()
-
-    assertEquals(PlayerManager.State.PAUSED, playerManager.state)
-    assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
-    assertEquals(1, playerManager.players.size)
-    verify(exactly = 1) { players.getValue("test").pause() }
-
-    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
-    assertEquals(PlayerManager.State.STOPPED, playerManager.state)
-    assertEquals(PlaybackStateCompat.STATE_STOPPED, ShadowMediaSessionCompat.getLastPlaybackState())
-    assertEquals(0, playerManager.players.size)
+    assertPaused()
   }
 
   @Test
@@ -196,8 +198,7 @@ class PlayerManagerTest {
 
     playerManager.resume()
     verify(exactly = 0) { players.getValue("test").play() }
-    assertEquals(PlayerManager.State.PAUSED, playerManager.state)
-    assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
+    assertPaused()
   }
 
   @Test
@@ -209,8 +210,7 @@ class PlayerManagerTest {
 
     playerManager.resume()
     verify(exactly = 0) { players.getValue("test").play() }
-    assertEquals(PlayerManager.State.PAUSED, playerManager.state)
-    assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
+    assertPausedIndefinitely()
   }
 
   @Test
@@ -276,5 +276,37 @@ class PlayerManagerTest {
     assertFalse(players.contains("test"))
     assertTrue(players.contains("test-2"))
     assertTrue(players.contains("test-3"))
+  }
+
+  /**
+   * Essentially, the issue requested to not dampen the sound of other music players when playing
+   * sounds in Noice. The dampening is done by the Android Framework after Noice requests audio
+   * focus and is out of the control of the app. But the issue also mentioned that it doesn't happen
+   * if the sound is played once, stopped and then played again.
+   *
+   * On investigating further, the issue is that the audio focus request was not issued again if
+   * [PlayerManager] had abandoned it previously.
+   */
+  @Test
+  fun testIssue462() {
+    mockkStatic(AudioManagerCompat::class)
+    every {
+      AudioManagerCompat.requestAudioFocus(any(), any())
+    } returns AudioManager.AUDIOFOCUS_REQUEST_GRANTED
+
+    val player = players.getValue("test")
+
+    playerManager.play(player.soundKey)
+    playerManager.stop(player.soundKey)
+    players[player.soundKey] = player // stopping the player will remove it from players map.
+    playerManager.play(player.soundKey)
+    playerManager.stop(player.soundKey)
+    verify(exactly = 2) {
+      player.play()
+      player.stop()
+
+      AudioManagerCompat.requestAudioFocus(any(), any())
+      AudioManagerCompat.abandonAudioFocusRequest(any(), any())
+    }
   }
 }

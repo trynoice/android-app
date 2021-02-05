@@ -33,7 +33,7 @@ class PlayerManager(private val context: Context) :
   }
 
   companion object {
-    private val TAG = PlayerManager::javaClass.name
+    private val TAG = PlayerManager::class.simpleName
     private val DELAYED_STOP_CALLBACK_TOKEN = "${PlayerManager::javaClass.name}.stop_callback"
   }
 
@@ -91,7 +91,7 @@ class PlayerManager(private val context: Context) :
 
   private val castAPIWrapper = CastAPIWrapper.from(context, true).apply {
     onSessionBegin {
-      Log.d(TAG, "starting cast session")
+      Log.d(TAG, "onSessionBegin(): switching playback to CastPlaybackStrategy")
       playbackStrategyFactory = newCastPlaybackStrategyFactory()
       updatePlaybackStrategies()
       mediaSession.setPlaybackToRemote(newCastVolumeProvider())
@@ -102,7 +102,7 @@ class PlayerManager(private val context: Context) :
       // recreating the LocalPlaybackStrategyFactory again because it will cause [PlaybackStrategy]s to be
       // recreated resulting glitches in playback.
       if (playbackStrategyFactory !is LocalPlaybackStrategyFactory) {
-        Log.d(TAG, "ending cast session")
+        Log.d(TAG, "onSessionEnd(): switching playback to LocalPlaybackStrategy")
         playbackStrategyFactory = LocalPlaybackStrategyFactory(context, audioAttributes)
         mediaSession.setPlaybackToLocal(AudioManager.STREAM_MUSIC)
         updatePlaybackStrategies()
@@ -118,28 +118,28 @@ class PlayerManager(private val context: Context) :
   override fun onAudioFocusChange(focusChange: Int) {
     when (focusChange) {
       AudioManager.AUDIOFOCUS_GAIN -> {
-        Log.d(TAG, "Gained audio focus...")
+        Log.d(TAG, "onAudioFocusChange(): gained audio focus")
         hasAudioFocus = true
         if (playbackDelayed || resumeOnFocusGain) {
-          Log.d(TAG, "Resume playback after audio focus gain...")
+          Log.d(TAG, "onAudioFocusChange(): resuming playback")
           playbackDelayed = false
           resumeOnFocusGain = false
           resume()
         }
       }
       AudioManager.AUDIOFOCUS_LOSS -> {
-        Log.d(TAG, "Permanently lost audio focus! pause and wait to stop playback...")
-        hasAudioFocus = false
-        resumeOnFocusGain = true
-        playbackDelayed = false
-        pauseAndWaitBeforeStop()
-      }
-      AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
-        Log.d(TAG, "Temporarily lost audio focus! Pause playback...")
+        Log.d(TAG, "onAudioFocusChange(): permanently lost audio focus, pause and stop playback")
         hasAudioFocus = false
         resumeOnFocusGain = true
         playbackDelayed = false
         pause()
+      }
+      AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
+        Log.d(TAG, "onAudioFocusChange(): temporarily lost audio focus, pause playback")
+        hasAudioFocus = false
+        resumeOnFocusGain = true
+        playbackDelayed = false
+        pauseIndefinitely()
       }
     }
   }
@@ -151,27 +151,43 @@ class PlayerManager(private val context: Context) :
     }
 
     val result = AudioManagerCompat.requestAudioFocus(audioManager, audioFocusRequest)
-    Log.d(TAG, "AudioFocusRequest result: $result")
+    Log.d(TAG, "requestAudioFocus(): result - $result")
     when (result) {
       AudioManager.AUDIOFOCUS_REQUEST_DELAYED -> {
-        Log.d(TAG, "Audio focus request was delayed! Pause playback for now.")
+        Log.d(TAG, "requestAudioFocus(): acquire audio focus request is delayed, pause all players")
         playbackDelayed = true
         hasAudioFocus = false
         resumeOnFocusGain = false
-        pause()
+        pauseIndefinitely()
       }
       AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
-        Log.d(TAG, "Failed to get audio focus! Pause playback...")
+        Log.d(TAG, "requestAudioFocus(): acquire audio focus request failed, pause all players")
         hasAudioFocus = false
         playbackDelayed = false
         resumeOnFocusGain = false
-        pauseAndWaitBeforeStop()
+        pause()
       }
       AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
+        Log.d(TAG, "requestAudioFocus(): acquire audio focus request granted, resuming playback")
         hasAudioFocus = true
         playbackDelayed = false
         resumeOnFocusGain = false
         resume()
+      }
+    }
+  }
+
+  private fun abandonAudioFocus() {
+    hasAudioFocus = false
+    playbackDelayed = false
+    resumeOnFocusGain = false
+
+    when (AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)) {
+      AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
+        Log.w(TAG, "abandonAudioFocus(): abandon audio focus request failed")
+      }
+      AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
+        Log.d(TAG, "abandonAudioFocus(): abandon audio focus request granted")
       }
     }
   }
@@ -218,7 +234,8 @@ class PlayerManager(private val context: Context) :
 
     if (players.isEmpty()) {
       state = State.STOPPED
-      AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
+      Log.d(TAG, "stop(sound): no other sound is playing, abandoning audio focus")
+      abandonAudioFocus()
     }
 
     notifyChanges()
@@ -231,23 +248,28 @@ class PlayerManager(private val context: Context) :
     state = State.STOPPED
     players.values.forEach { it.stop() }
     players.clear()
-    AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
+    Log.d(TAG, "stop(): abandoning audio focus")
+    abandonAudioFocus()
     notifyChanges()
   }
 
   /**
    * Stops all [Player]s but maintains their state so that these can be resumed at a later stage.
-   * It abandons audio focus.
+   * It doesn't release any underlying resources.
    */
-  fun pause() {
+  private fun pauseIndefinitely() {
     state = State.PAUSED
     players.values.forEach { it.pause() }
     notifyChanges()
   }
 
-  fun pauseAndWaitBeforeStop() {
-    pause()
-    Log.d(TAG, "scheduling stop callback")
+  /**
+   * Stops all [Player]s but maintains their state so that these can be resumed. It schedules a
+   * delayed callback to release all underlying resources after 5 minutes.
+   */
+  fun pause() {
+    pauseIndefinitely()
+    Log.d(TAG, "pause(): scheduling stop callback")
     handler.removeCallbacksAndMessages(DELAYED_STOP_CALLBACK_TOKEN) // clear previous callbacks
     HandlerCompat.postDelayed(
       handler, this::stop, DELAYED_STOP_CALLBACK_TOKEN, TimeUnit.MINUTES.toMillis(5)
@@ -259,7 +281,7 @@ class PlayerManager(private val context: Context) :
    */
   fun resume() {
     if (hasAudioFocus) {
-      Log.d(TAG, "removing pauseAndWaitBeforeStop callback")
+      Log.d(TAG, "resume(): removing delayed stop callbacks, if any")
       handler.removeCallbacksAndMessages(DELAYED_STOP_CALLBACK_TOKEN)
       state = State.PLAYING
       players.values.forEach { it.play() }

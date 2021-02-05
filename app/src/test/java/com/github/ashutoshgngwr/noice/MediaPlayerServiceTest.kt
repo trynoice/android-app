@@ -1,7 +1,11 @@
 package com.github.ashutoshgngwr.noice
 
+import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
 import android.os.SystemClock
+import androidx.core.content.getSystemService
+import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.Player
@@ -17,9 +21,11 @@ import io.mockk.invoke
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.slot
+import io.mockk.unmockkAll
 import io.mockk.verify
 import io.mockk.verifySequence
 import org.greenrobot.eventbus.EventBus
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -51,6 +57,11 @@ class MediaPlayerServiceTest {
     serviceController = Robolectric.buildService(MediaPlayerService::class.java, mockServiceIntent)
     service = serviceController.get()
     MockKAnnotations.init(this)
+  }
+
+  @After
+  fun teardown() {
+    unmockkAll()
   }
 
   @Test
@@ -114,9 +125,16 @@ class MediaPlayerServiceTest {
 
     // send play preset command
     mockkObject(Preset.Companion)
+
     every { Preset.findByID(any(), "test") } returns mockk(relaxed = true)
     every { mockServiceIntent.action } returns MediaPlayerService.ACTION_PLAY_PRESET
     every { mockServiceIntent.getStringExtra(MediaPlayerService.EXTRA_PRESET_ID) } returns "test"
+
+    val volume = 10
+    every {
+      mockServiceIntent.getIntExtra(MediaPlayerService.EXTRA_DEVICE_MEDIA_VOLUME, any())
+    } returns volume
+
     serviceController.startCommand(0, 0)
 
     verifySequence {
@@ -125,6 +143,13 @@ class MediaPlayerServiceTest {
       playerManager.stop()
       playerManager.playPreset(any())
     }
+
+    assertEquals(
+      volume,
+      ApplicationProvider.getApplicationContext<Context>()
+        .getSystemService<AudioManager>()
+        ?.getStreamVolume(AudioManager.STREAM_MUSIC)
+    )
   }
 
   @Test

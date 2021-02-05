@@ -39,7 +39,9 @@ import com.google.android.material.navigation.NavigationView
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkObject
 import io.mockk.mockkStatic
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.allOf
@@ -72,10 +74,11 @@ class MainActivityTest {
 
   @After
   fun teardown() {
+    activityScenario.close()
+    unmockkAll()
+
     PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
-      .edit(commit = true) {
-        clear()
-      }
+      .edit(commit = true) { clear() }
   }
 
   @Test
@@ -88,6 +91,27 @@ class MainActivityTest {
 
       assertEquals(
         R.id.library,
+        it.findViewById<NavigationView>(R.id.navigation_drawer).checkedItem?.itemId
+      )
+    }
+  }
+
+  @Test
+  fun testIfSavedPresetsIsVisibleOnStart() {
+    mockkObject(PresetFragment.Companion)
+    every { PresetFragment.shouldDisplayAsHomeScreen(any()) } returns true
+
+    // recreate activity with null bundle
+    activityScenario.close()
+    activityScenario = launch(MainActivity::class.java)
+    activityScenario.onActivity {
+      assertEquals(
+        PresetFragment::class.java.simpleName,
+        it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
+      )
+
+      assertEquals(
+        R.id.saved_presets,
         it.findViewById<NavigationView>(R.id.navigation_drawer).checkedItem?.itemId
       )
     }
@@ -272,6 +296,36 @@ class MainActivityTest {
               InstrumentationRegistry.getInstrumentation()
                 .targetContext
                 .getString(R.string.app_issues_url)
+            )
+          )
+        )
+      )
+    } finally {
+      Intents.release()
+    }
+  }
+
+  @Test
+  fun testSubmitFeedbackMenuItem() {
+    Intents.init()
+    try {
+      Intents.intending(hasAction(Intent.ACTION_VIEW))
+        .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, Intent()))
+
+      onView(withId(R.id.layout_main))
+        .check(matches(isClosed(Gravity.START)))
+        .perform(DrawerActions.open(Gravity.START))
+
+      onView(withId(R.id.navigation_drawer))
+        .perform(NavigationViewActions.navigateTo(R.id.submit_feedback))
+
+      intended(
+        filterEquals(
+          Intent(
+            Intent.ACTION_VIEW, Uri.parse(
+              InstrumentationRegistry.getInstrumentation()
+                .targetContext
+                .getString(R.string.feedback_form_url)
             )
           )
         )

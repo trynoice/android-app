@@ -1,6 +1,8 @@
 package com.github.ashutoshgngwr.noice
 
 import android.view.View
+import android.widget.CompoundButton
+import android.widget.TimePicker
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.test.espresso.Espresso.onView
@@ -9,6 +11,7 @@ import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.MotionEvents
+import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.util.TreeIterables
 import com.github.ashutoshgngwr.noice.widget.DurationPicker
@@ -41,28 +44,25 @@ object EspressoX {
   }
 
   /**
-   * [slideInItem] performs a slide action on a [Slider] with given [sliderID] inside currently
-   * matched view.
+   * [slide] emulates slide action on the provided [Slider] widget.
    */
-  fun slideInItem(@IdRes sliderID: Int, value: Float): ViewAction {
+  fun slide(value: Float): ViewAction {
     return object : ViewAction {
-      override fun getDescription() = "Emulate user input on a seek bar"
-      override fun getConstraints() =
-        hasDescendant(allOf(withId(sliderID), instanceOf(Slider::class.java)))
+      override fun getDescription() = "Emulate user input on a slider"
+      override fun getConstraints() = instanceOf<View>(Slider::class.java)
 
       override fun perform(uiController: UiController, view: View) {
-        val slider = view.findViewById<Slider>(sliderID)
-        val height = slider.height - slider.paddingTop - slider.paddingBottom
-
+        view as Slider
+        val height = view.height - view.paddingTop - view.paddingBottom
         val location = intArrayOf(0, 0)
-        slider.getLocationOnScreen(location)
+        view.getLocationOnScreen(location)
 
-        val xOffset = location[0].toFloat() + slider.paddingStart + slider.trackSidePadding
-        val range = slider.valueTo - slider.valueFrom
-        val xStart = (((slider.value - slider.valueFrom) / range) * slider.trackWidth) + xOffset
+        val xOffset = location[0].toFloat() + view.paddingStart + view.trackSidePadding
+        val range = view.valueTo - view.valueFrom
+        val xStart = (((view.value - view.valueFrom) / range) * view.trackWidth) + xOffset
 
-        val x = (((value - slider.valueFrom) / range) * slider.trackWidth) + xOffset
-        val y = location[1] + slider.paddingTop + (height.toFloat() / 2)
+        val x = (((value - view.valueFrom) / range) * view.trackWidth) + xOffset
+        val y = location[1] + view.paddingTop + (height.toFloat() / 2)
 
         val startCoordinates = floatArrayOf(xStart, y)
         val endCoordinates = floatArrayOf(x, y)
@@ -74,6 +74,37 @@ object EspressoX {
         MotionEvents.sendMovement(uiController, down, endCoordinates)
         uiController.loopMainThreadForAtLeast(100)
         MotionEvents.sendUp(uiController, down, endCoordinates)
+      }
+    }
+  }
+
+  /**
+   * [slideInItem] emulates a slide action on a [Slider] with given [sliderID] that is a descendant
+   * of the provided view.
+   */
+  fun slideInItem(@IdRes sliderID: Int, value: Float): ViewAction {
+    return object : ViewAction {
+      override fun getDescription() = "Emulate user input on a descendant slider"
+      override fun getConstraints() =
+        hasDescendant(allOf(withId(sliderID), instanceOf(Slider::class.java)))
+
+      override fun perform(uiController: UiController, view: View) {
+        slide(value).perform(uiController, view.findViewById<Slider>(sliderID))
+      }
+    }
+  }
+
+  /**
+   * [withSliderValue] matches a [Slider] with the provided [expectedValue].
+   */
+  fun withSliderValue(expectedValue: Float): Matcher<View> {
+    return object : BoundedMatcher<View, Slider>(Slider::class.java) {
+      override fun describeTo(description: Description) {
+        description.appendText("Slider with value $expectedValue")
+      }
+
+      override fun matchesSafely(slider: Slider): Boolean {
+        return expectedValue == slider.value
       }
     }
   }
@@ -156,6 +187,34 @@ object EspressoX {
         if (item !is TextInputLayout) return false
         val error = item.error ?: return false
         return item.context.getString(expectedErrorText) == error.toString()
+      }
+    }
+  }
+
+  /**
+   * [is24hViewEnabled] matches a [TimePicker] that has the field [TimePicker.is24HourView] enabled.
+   */
+  fun is24hViewEnabled(): Matcher<View> {
+    return object : TypeSafeMatcher<View>() {
+      override fun describeTo(description: Description?) = Unit
+      override fun matchesSafely(item: View?): Boolean {
+        return item is TimePicker && item.is24HourView
+      }
+    }
+  }
+
+  /**
+   * [setChecked] returns a [ViewAction] to set the checked state of a [CompoundButton].
+   */
+  fun setChecked(checked: Boolean): ViewAction {
+    return object : ViewAction {
+      override fun getDescription() = "check/uncheck compound buttons"
+      override fun getConstraints() = instanceOf<View>(CompoundButton::class.java)
+
+      override fun perform(uiController: UiController, view: View) {
+        if (view is CompoundButton) {
+          view.isChecked = checked
+        }
       }
     }
   }

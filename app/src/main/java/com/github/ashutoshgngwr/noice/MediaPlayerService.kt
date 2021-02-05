@@ -18,6 +18,7 @@ import android.os.SystemClock
 import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
+import androidx.core.content.getSystemService
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
@@ -93,8 +94,25 @@ class MediaPlayerService : Service() {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     const val ACTION_STOP_PLAYBACK = "stop_playback"
 
+    /**
+     * When [ACTION_PLAY_PRESET] is specified by the [Intent.getAction], [MediaPlayerService] will
+     * attempt to start the preset with id provided using [EXTRA_PRESET_ID]. If
+     * [EXTRA_DEVICE_MEDIA_VOLUME] is specified, [MediaPlayerService] also tries to set the
+     * [AudioManager.STREAM_MUSIC] volume to the provided value.
+     */
     const val ACTION_PLAY_PRESET = "play_preset"
+
+    /**
+     * [EXTRA_PRESET_ID] is a [String] extra that specified the ID of preset to play when
+     * [MediaPlayerService] is started with [ACTION_PLAY_PRESET] intent action.
+     */
     const val EXTRA_PRESET_ID = "preset_id"
+
+    /**
+     * [EXTRA_DEVICE_MEDIA_VOLUME] is an [Int] extra that specified the desired device media volume
+     * before starting a preset wirh [ACTION_PLAY_PRESET].
+     */
+    const val EXTRA_DEVICE_MEDIA_VOLUME = "device_media_volume"
   }
 
   private val handler = Handler() // needed in scheduleAutoStop for register callback
@@ -109,7 +127,7 @@ class MediaPlayerService : Service() {
     override fun onReceive(context: Context?, intent: Intent?) {
       if (intent?.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
         Log.i(TAG, "Becoming noisy... Pause playback!")
-        playerManager.pauseAndWaitBeforeStop()
+        playerManager.pause()
       }
     }
   }
@@ -234,6 +252,12 @@ class MediaPlayerService : Service() {
       }
 
       ACTION_PLAY_PRESET -> {
+        val mediaVol = intent.getIntExtra(EXTRA_DEVICE_MEDIA_VOLUME, -1)
+        if (mediaVol >= 0) {
+          requireNotNull(getSystemService<AudioManager>())
+            .setStreamVolume(AudioManager.STREAM_MUSIC, mediaVol, 0)
+        }
+
         intent.getStringExtra(EXTRA_PRESET_ID)?.also {
           Log.d(TAG, "starting preset with id: $it")
           Preset.findByID(this, it)?.also { preset ->

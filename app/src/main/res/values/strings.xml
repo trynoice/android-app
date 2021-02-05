@@ -14,7 +14,8 @@
   <string name="sleep_timer">Sleep Timer</string>
   <string name="support_development">Support Development</string>
   <string name="wake_up_timer">Wake-up Timer</string>
-  
+  <string name="submit_feedback">Submit Feedback</string>
+
 
   <!-- Random preset Dialog -->
 
@@ -28,7 +29,7 @@
   <string name="okay">Okay</string>
   <string name="random_preset">Random Preset</string>
   <string name="relax">Relax</string>
-  
+
 
   <!-- Save new preset Dialog -->
 
@@ -41,7 +42,7 @@
   <string name="preset_saved">Preset saved!</string>
   <string name="save">Save</string>
   <string name="save_preset">Save Preset</string>
-  
+
 
   <!-- Library List Item -->
 
@@ -50,7 +51,7 @@
   <string name="repeat_time_period">Repeat time period</string>
   <string name="stop">Stop</string>
   <string name="volume">Sound volume</string>
-  
+
 
   <!-- Library - sound groups -->
 
@@ -62,7 +63,7 @@
   <string name="sound_group__vehicles">Vehicles</string>
   <string name="sound_group__water">Water</string>
   <string name="sound_group__wind">Wind</string>
-  
+
 
   <!-- Library - sounds -->
 
@@ -101,7 +102,7 @@
   <string name="white_noise">White noise</string>
   <string name="wind_in_chimes_of_shells">Wind in chimes of shells</string>
   <string name="wind_in_palm_trees">Wind in palm trees</string>
-  
+
 
   <!-- Saved Presets -->
 
@@ -117,7 +118,8 @@
   </string>
   <string name="rename">Rename</string>
   <string name="shortcuts_not_supported">Your default launcher does not support adding shortcuts</string>
-  
+  <string name="show_saved_preset_on_startup">Show saved presets on app startup</string>
+
 
   <!-- Sleep Timer -->
 
@@ -127,7 +129,7 @@
     Noice will shutdown itself when the timer ends. Use the buttons below to add time and start
     the timer.
   </string>
-  
+
 
   <!-- Wake-up Timer -->
 
@@ -138,7 +140,10 @@
     Noice will start the selected preset when the timer ends. Use the buttons below to select a
     preset and set the desired time to start the wake-up timer.
   </string>
-  
+  <string name="use_24h_format">Use 24-hour format</string>
+  <string name="device_media_volume">Device media volume</string>
+  <string name="should_update_media_volume">Update device media volume before starting preset</string>
+
 
   <!-- Theme -->
 
@@ -158,7 +163,7 @@
   <string name="app_description">Relax and boost productivity with minimal background noise.</string>
   <string name="connect_with_author">Connect with Author</string>
   <string name="credits">Credits</string>
-  
+
 
   <!-- Help -->
 
@@ -184,7 +189,7 @@
     itself down. Similarly, to wake up to a calm environment, use the wake-up timer to set the alarm.
   </string>
   <string name="appintro__timer_title">Trouble falling asleep or waking up?</string>
-  
+
 
   <!-- Support Development -->
 
@@ -214,7 +219,7 @@
     - To make future updates possible\n
     - To keep Noice ad-free forever\n
   </string>
-  
+
 
   <!-- Others -->
 

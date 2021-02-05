@@ -56,6 +56,12 @@
     android:checkable="false" />
 
   <item
+    android:id="@+id/submit_feedback"
+    android:checkable="false"
+    android:icon="@drawable/ic_nav_feedback"
+    android:title="@string/submit_feedback" />
+
+  <item
     android:id="@+id/rate_on_play_store"
     android:icon="@drawable/ic_nav_rate"
     android:title="@string/about_play_store"

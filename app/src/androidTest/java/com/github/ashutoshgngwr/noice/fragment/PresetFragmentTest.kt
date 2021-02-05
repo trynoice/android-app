@@ -1,10 +1,12 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.content.SharedPreferences
 import android.widget.Button
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.preference.PreferenceManager
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
@@ -33,9 +35,11 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.slot
+import io.mockk.unmockkAll
 import io.mockk.verify
 import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.*
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -81,6 +85,11 @@ class PresetFragmentTest {
     }
 
     MockKAnnotations.init(this)
+  }
+
+  @After
+  fun teardown() {
+    unmockkAll()
   }
 
   @Test
@@ -274,6 +283,52 @@ class PresetFragmentTest {
       }
 
       clearStaticMockk(ShortcutManagerCompat::class)
+    }
+  }
+
+  @Test
+  fun testShouldShowAsHomeScreenSwitch_whenInitiallyUnchecked() {
+    val mockPrefsEditor = mockk<SharedPreferences.Editor>(relaxed = true) {
+      every { putBoolean(any(), any()) } returns this
+    }
+
+    mockkStatic(PreferenceManager::class)
+    every {
+      PreferenceManager.getDefaultSharedPreferences(any())
+    } returns mockk(relaxed = true) {
+      every { edit() } returns mockPrefsEditor
+    }
+
+    onView(withId(R.id.should_display_as_home_screen))
+      .check(matches(isNotChecked()))
+      .perform(click())
+
+    verify(exactly = 1) {
+      mockPrefsEditor.putBoolean(PresetFragment.PREF_SAVED_PRESETS_AS_HOME_SCREEN, true)
+    }
+  }
+
+  @Test
+  fun testShouldShowAsHomeScreenSwitch_whenInitiallyChecked() {
+    val mockPrefsEditor = mockk<SharedPreferences.Editor>(relaxed = true) {
+      every { putBoolean(any(), any()) } returns this
+    }
+
+    mockkStatic(PreferenceManager::class)
+    every {
+      PreferenceManager.getDefaultSharedPreferences(any())
+    } returns mockk(relaxed = true) {
+      every { getBoolean(PresetFragment.PREF_SAVED_PRESETS_AS_HOME_SCREEN, any()) } returns true
+      every { edit() } returns mockPrefsEditor
+    }
+
+    fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
+    onView(withId(R.id.should_display_as_home_screen))
+      .check(matches(isChecked()))
+      .perform(click())
+
+    verify(exactly = 1) {
+      mockPrefsEditor.putBoolean(PresetFragment.PREF_SAVED_PRESETS_AS_HOME_SCREEN, false)
     }
   }
 }

@@ -10,7 +10,9 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
+import io.mockk.unmockkAll
 import io.mockk.verify
+import org.junit.After
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
@@ -18,7 +20,6 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLooper
-import java.util.concurrent.TimeUnit
 
 @RunWith(RobolectricTestRunner::class)
 class InAppReviewFlowManagerTest {
@@ -41,16 +42,17 @@ class InAppReviewFlowManagerTest {
     ShadowLooper.idleMainLooper() // to let the fake review manager return its ReviewInfo object
   }
 
+  @After
+  fun teardown() {
+    unmockkAll()
+  }
+
   @Test
   fun testMaybeAskForReview_whenNotShownWithinLastWeek() {
     val mockPrefsEditor = mockk<SharedPreferences.Editor>(relaxed = true) {
       every { mockPrefs.edit() } returns this
       every { putLong(any(), any()) } returns this
     }
-
-    every {
-      mockPrefs.getLong(InAppReviewFlowManager.PREF_LAST_SHOWN_ON, any())
-    } returns System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7L)
 
     // try to show review flow for the first time, should work
     InAppReviewFlowManager.maybeAskForReview(fragmentActivity)
