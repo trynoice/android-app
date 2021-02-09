@@ -58,7 +58,7 @@ class DialogFragmentTest {
       }
     }
 
-    EspressoX.waitForView(withId(R.id.positive), 100, 5)
+    EspressoX.waitForView(withId(R.id.positive), 250, 5)
       .check(matches(withText(android.R.string.yes)))
       .perform(click())
 
@@ -73,7 +73,7 @@ class DialogFragmentTest {
       }
     }
 
-    EspressoX.waitForView(withId(R.id.negative), 100, 5)
+    EspressoX.waitForView(withId(R.id.negative), 250, 5)
       .check(matches(withText(android.R.string.no)))
       .perform(click())
 
@@ -88,7 +88,7 @@ class DialogFragmentTest {
       }
     }
 
-    EspressoX.waitForView(withId(R.id.neutral), 100, 5)
+    EspressoX.waitForView(withId(R.id.neutral), 250, 5)
       .check(matches(withText(android.R.string.copy)))
       .perform(click())
 
@@ -156,7 +156,7 @@ class DialogFragmentTest {
     }
 
     items.forEach {
-      EspressoX.waitForView(allOf(isDescendantOfA(withId(android.R.id.list)), withText(it)), 100, 5)
+      EspressoX.waitForView(allOf(isDescendantOfA(withId(android.R.id.list)), withText(it)), 250, 5)
         .check(matches(isDisplayed()))
     }
 

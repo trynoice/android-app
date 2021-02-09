@@ -87,7 +87,7 @@ class DonateActivityTest {
       verify(exactly = 1) { mockBillingProcessor.consumePurchase("test") }
     }
 
-    EspressoX.waitForView(withText(R.string.support_development__donate_thank_you), 100, 5)
+    EspressoX.waitForView(withText(R.string.support_development__donate_thank_you), 250, 5)
       .check(matches(isDisplayed()))
 
     onView(withText(android.R.string.ok)).perform(click())

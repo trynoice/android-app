@@ -374,13 +374,13 @@ class MainActivityTest {
     onView(withId(R.id.navigation_drawer))
       .perform(NavigationViewActions.navigateTo(R.id.saved_presets))
 
-    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)), 100, 5)
+    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)), 250, 5)
       .perform(DrawerActions.open(Gravity.START))
 
     onView(withId(R.id.navigation_drawer))
       .perform(NavigationViewActions.navigateTo(R.id.about))
 
-    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)), 100, 5)
+    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)), 250, 5)
       .check(matches(isClosed(Gravity.START)))
 
     activityScenario.onActivity {
@@ -438,7 +438,7 @@ class MainActivityTest {
       assertEquals(2, it.supportFragmentManager.backStackEntryCount)
     }
 
-    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)), 100, 5)
+    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)), 250, 5)
       .perform(DrawerActions.open(Gravity.START))
 
     // try to reselect the same nav item
@@ -466,7 +466,7 @@ class MainActivityTest {
       })
     }
 
-    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 100, 5)
+    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 250, 5)
       .check(matches(isDisplayed()))
       .perform(click())
 
@@ -480,7 +480,7 @@ class MainActivityTest {
       })
     }
 
-    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 100, 5)
+    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 250, 5)
       .check(matches(isDisplayed()))
       .perform(click())
 
@@ -494,7 +494,7 @@ class MainActivityTest {
       })
     }
 
-    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 100, 5)
+    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 250, 5)
       .check(doesNotExist())
   }
 
