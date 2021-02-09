@@ -105,7 +105,7 @@ class Sound private constructor(
         )
       ),
       "crickets" to Sound(
-        arrayOf("crickets_0.mp3", "crickets_1.mp3"),
+        arrayOf("crickets.mp3"),
         R.string.crickets,
         R.string.sound_group__life,
         arrayOf(Pair(R.string.credits__sound_crickets, R.string.credits__sound_crickets_url)),
@@ -154,7 +154,7 @@ class Sound private constructor(
         )
       ),
       "light_rain" to Sound(
-        arrayOf("light_rain_0.mp3", "light_rain_1.mp3"),
+        arrayOf("light_rain.mp3"),
         R.string.light_rain,
         R.string.sound_group__monsoon,
         arrayOf(Pair(R.string.credits__sound_light_rain, R.string.credits__sound_light_rain_url)),
@@ -170,7 +170,7 @@ class Sound private constructor(
         tags = arrayOf(Tag.FOCUS, Tag.RELAX)
       ),
       "morning_in_a_village" to Sound(
-        arrayOf("morning_in_a_village_0.mp3", "morning_in_a_village_1.mp3"),
+        arrayOf("morning_in_a_village.mp3"),
         R.string.morning_in_a_village,
         R.string.sound_group__times_of_day,
         arrayOf(
@@ -267,7 +267,7 @@ class Sound private constructor(
         isLooping = false
       ),
       "seaside" to Sound(
-        arrayOf("seaside_0.mp3", "seaside_1.mp3"),
+        arrayOf("seaside.mp3"),
         R.string.seaside,
         R.string.sound_group__water,
         arrayOf(Pair(R.string.credits__sound_seaside, R.string.credits__sound_seaside_url)),

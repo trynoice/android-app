@@ -32,8 +32,8 @@
   <string name="credits__sound_bonfire_url" translatable="false">https://freesound.org/s/189237/</string>
   <string name="credits__sound_brownian_noise" translatable="false">Brown noise by georgedyer</string>
   <string name="credits__sound_brownian_noise_url" translatable="false">https://freesound.org/s/171552/</string>
-  <string name="credits__sound_coffee_shop" translatable="false">School Canteen Atmosphere (Coffee shop) by slag777</string>
-  <string name="credits__sound_coffee_shop_url" translatable="false">https://freesound.org/s/167057/</string>
+  <string name="credits__sound_coffee_shop" translatable="false">Crowds - Quiet Restaurant from BBC Sound Effects</string>
+  <string name="credits__sound_coffee_shop_url" translatable="false">https://sound-effects.bbcrewind.co.uk/search?q=07052072</string>
   <string name="credits__sound_creaking_ship_0" translatable="false">Wood Creak by dheming</string>
   <string name="credits__sound_creaking_ship_0_url" translatable="false">https://freesound.org/s/177778/</string>
   <string name="credits__sound_creaking_ship_1" translatable="false">Creaking Wooden Floor by DBlover</string>
@@ -44,52 +44,50 @@
   <string name="credits__sound_distant_thunder_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=c661c0547daf6af7</string>
   <string name="credits__sound_electric_car" translatable="false">Electric car BMW i3 - driving by tferrino</string>
   <string name="credits__sound_electric_car_url" translatable="false">https://freesound.org/s/405285/</string>
-  <string name="credits__sound_heavy_rain" translatable="false">Heavy rain (thunderstorm) from YouTube Audio Library</string>
-  <string name="credits__sound_heavy_rain_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=85220b39abbc1421</string>
+  <string name="credits__sound_heavy_rain" translatable="false">Rain Atmosphere from BBC Sound Effects</string>
+  <string name="credits__sound_heavy_rain_url" translatable="false">https://sound-effects.bbcrewind.co.uk/search?q=NHU10356525</string>
   <string name="credits__sound_howling_wolf" translatable="false">Solitary wolf howl very clear by betchkal</string>
   <string name="credits__sound_howling_wolf_url" translatable="false">https://freesound.org/s/500646/</string>
   <string name="credits__sound_human_heartbeat" translatable="false">Heartbeat by RSilveira_88</string>
   <string name="credits__sound_human_heartbeat_url" translatable="false">https://freesound.org/s/216219/</string>
   <string name="credits__sound_light_rain" translatable="false">Light rain (on roof) from YouTube Audio Library</string>
   <string name="credits__sound_light_rain_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=f0eff544b6f1e0d0</string>
-  <string name="credits__sound_moderate_rain" translatable="false">Moderate rain (thunderstorm) from YouTube Audio Library</string>
-  <string name="credits__sound_moderate_rain_url" translatable="false">https://www.youtube.com/audiolibrary_download?vid=85220b39abbc1421</string>
-  <string name="credits__sound_morning_in_a_village" translatable="false">Village jungle morning by aurelien.leveque</string>
-  <string name="credits__sound_morning_in_a_village_url" translatable="false">https://freesound.org/s/417635/</string>
+  <string name="credits__sound_moderate_rain" translatable="false">Moderate rain from BBC Sound Effects</string>
+  <string name="credits__sound_moderate_rain_url" translatable="false">https://sound-effects.bbcrewind.co.uk/search?q=NHU05047033</string>
+  <string name="credits__sound_morning_in_a_village" translatable="false">Early morning atmosphere from BBC Sound Effects</string>
+  <string name="credits__sound_morning_in_a_village_url" translatable="false">https://sound-effects.bbcrewind.co.uk/search?q=07030039</string>
   <string name="credits__sound_moving_train" translatable="false">Train Wheels Ride outside Thailand by YOH</string>
   <string name="credits__sound_moving_train_url" translatable="false">https://freesound.org/s/170866/</string>
   <string name="credits__sound_night" translatable="false">Jungle choco by jaime_enrique</string>
   <string name="credits__sound_night_url" translatable="false">https://freesound.org/s/424763/</string>
   <string name="credits__sound_office" translatable="false">Office ambiance by Nightwatcher98</string>
   <string name="credits__sound_office_url" translatable="false">https://freesound.org/s/407292/</string>
-  <string name="credits__sound_public_library_0" translatable="false">Quiet Chat by tfsound</string>
-  <string name="credits__sound_public_library_0_url" translatable="false">https://freesound.org/s/82171/</string>
+  <string name="credits__sound_public_library_0" translatable="false">Public Library from BBC Sound Effects</string>
+  <string name="credits__sound_public_library_0_url" translatable="false">https://sound-effects.bbcrewind.co.uk/search?q=07044038</string>
   <string name="credits__sound_public_library_1" translatable="false">Book handling by launemax</string>
   <string name="credits__sound_public_library_1_url" translatable="false">https://freesound.org/s/250017/</string>
   <string name="credits__sound_purring_cat" translatable="false">Cat Purring / Cleaning Fur by nebulousflynn</string>
   <string name="credits__sound_purring_cat_url" translatable="false">https://freesound.org/s/332274/</string>
   <string name="credits__sound_quiet_conversation" translatable="false">Quiet Chat by tfsound</string>
   <string name="credits__sound_quiet_conversation_url" translatable="false">https://freesound.org/s/82171/</string>
-  <string name="credits__sound_rolling_thunder" translatable="false">Rolling thunder from YouTube Audio Library</string>
+  <string name="credits__sound_rolling_thunder" translatable="false">Thunder roll from BBC Sound Effects</string>
   <string name="credits__sound_rolling_thunder_url" translatable="false">
-    https://www.youtube.com/audiolibrary_download?vid=5f4a1b5b9c7f5d1f
+    https://sound-effects.bbcrewind.co.uk/search?q=07043394
   </string>
   <string name="credits__sound_screeching_seagulls" translatable="false">Seagulls ambience Lofoten Svolvær by Lydmakeren</string>
   <string name="credits__sound_screeching_seagulls_url" translatable="false">https://freesound.org/s/510912/</string>
-  <string name="credits__sound_seaside" translatable="false">Seaside waves by foongaz</string>
-  <string name="credits__sound_seaside_url" translatable="false">https://freesound.org/s/253287/</string>
+  <string name="credits__sound_seaside" translatable="false">Seawash from BBC Sound Effects</string>
+  <string name="credits__sound_seaside_url" translatable="false">https://sound-effects.bbcrewind.co.uk/search?q=07044050</string>
   <string name="credits__sound_soft_wind" translatable="false">Wind from YouTube Audio Library</string>
   <string name="credits__sound_soft_wind_url" translatable="false">
     https://www.youtube.com/audiolibrary_download?vid=e7334011b49fb938
   </string>
-  <string name="credits__sound_thunder_crack" translatable="false">Thunder crack from YouTube Audio Library</string>
-  <string name="credits__sound_thunder_crack_url" translatable="false">
-    https://www.youtube.com/audiolibrary_download?vid=e4b6c4fa94a94535
-  </string>
+  <string name="credits__sound_thunder_crack" translatable="false">Lightning by Taira Komori</string>
+  <string name="credits__sound_thunder_crack_url" translatable="false">https://freesound.org/s/213015/</string>
   <string name="credits__sound_train_horn" translatable="false">Train horn by CouleurCasquette</string>
   <string name="credits__sound_train_horn_url" translatable="false">https://freesound.org/s/248229/</string>
-  <string name="credits__sound_walking_through_the_snow" translatable="false">Snow footsteps close perspective by bmlake</string>
-  <string name="credits__sound_walking_through_the_snow_url" translatable="false">https://freesound.org/s/269001/</string>
+  <string name="credits__sound_walking_through_the_snow" translatable="false">Walking in Snow from BBC Sound Effects</string>
+  <string name="credits__sound_walking_through_the_snow_url" translatable="false">https://sound-effects.bbcrewind.co.uk/search?q=NHU9479494</string>
   <string name="credits__sound_water_hose" translatable="false">Spraying water from a hose in a wide fan by SFX Bible</string>
   <string name="credits__sound_water_hose_url" translatable="false">https://www.soundsnap.com/node/53530</string>
   <string name="credits__sound_water_stream" translatable="false">Stream, Running Water | Aviemore Scotland by BurghRecords</string>
@@ -98,8 +96,8 @@
   <string name="credits__sound_wind_chimes_of_shells_url" translatable="false">
     https://www.youtube.com/audiolibrary_download?vid=b604ba49f305d739
   </string>
-  <string name="credits__sound_wind_in_palm_trees" translatable="false">Palm trees in the wind by StrangeAcoustics</string>
-  <string name="credits__sound_wind_in_palm_trees_url" translatable="false">https://freesound.org/s/346106/</string>
+  <string name="credits__sound_wind_in_palm_trees" translatable="false">Palm Trees from BBC Sound Effects</string>
+  <string name="credits__sound_wind_in_palm_trees_url" translatable="false">https://sound-effects.bbcrewind.co.uk/search?q=NHU05078140</string>
   <string name="credits__translation_es_es_0" translatable="false">Spanish translation by julianrrr</string>
   <string name="credits__translation_es_es_0__url" translatable="false">https://github.com/julianrrr</string>
   <string name="credits__translation_es_es_1" translatable="false">Spanish translation by Diego</string>
