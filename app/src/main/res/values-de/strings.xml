@@ -14,6 +14,7 @@
   <string name="sleep_timer">Einschlaftimer</string>
   <string name="support_development">Unterstütze die Entwicklung</string>
   <string name="wake_up_timer">Aufwach-Timer</string>
+  <string name="submit_feedback">Feedback abgeben</string>
 
 
   <!-- Random preset Dialog -->
@@ -118,6 +119,7 @@
   </string>
   <string name="rename">Umbenennen</string>
   <string name="shortcuts_not_supported">Ihr Standard-Launcher unterstützt das Hinzufügen von Verknüpfungen nicht</string>
+  <string name="show_saved_preset_on_startup">Gespeicherte Voreinstellungen beim Start der App anzeigen</string>
 
 
   <!-- Sleep Timer -->
@@ -140,6 +142,9 @@
     um eine Voreinstellung auszusuchen und die gewünschte Länge bis zum Start des Aufwach-Timers
     hinzuzufügen.
   </string>
+  <string name="use_24h_format">Benutze das 24-Stunden Format</string>
+  <string name="device_media_volume">Lautstärke des Gerätes</string>
+  <string name="should_update_media_volume">Aktualisieren Sie die Lautstärke des Gerätes, bevor Sie die Voreinstellung starten</string>
 
 
   <!-- Theme -->
