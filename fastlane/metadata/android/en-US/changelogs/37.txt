@@ -1,0 +1,10 @@
+- Added option to set "Saved Preset" as default app screen
+- Added 24 hour time picker and global volume controller to Wake-up timer
+- Updated German translations (by MakiWolf)
+- Fixed and updated sound samples and amplified volumes
+- Fixed overflowing donate and timer buttons
+- Fixed "app stuck in the paused state indefinitely"
+- Fixed text overflow in the app intro
+- Fixed a bug in audio focus management
+
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG
