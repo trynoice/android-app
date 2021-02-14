@@ -9,7 +9,6 @@ import android.view.Gravity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Lifecycle
 import androidx.preference.PreferenceManager
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.launch
@@ -374,13 +373,13 @@ class MainActivityTest {
     onView(withId(R.id.navigation_drawer))
       .perform(NavigationViewActions.navigateTo(R.id.saved_presets))
 
-    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)), 250, 5)
+    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
 
     onView(withId(R.id.navigation_drawer))
       .perform(NavigationViewActions.navigateTo(R.id.about))
 
-    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)), 250, 5)
+    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)))
       .check(matches(isClosed(Gravity.START)))
 
     activityScenario.onActivity {
@@ -438,7 +437,7 @@ class MainActivityTest {
       assertEquals(2, it.supportFragmentManager.backStackEntryCount)
     }
 
-    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)), 250, 5)
+    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
 
     // try to reselect the same nav item
@@ -466,7 +465,7 @@ class MainActivityTest {
       })
     }
 
-    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 250, 5)
+    EspressoX.waitForView(withId(R.id.action_play_pause_toggle))
       .check(matches(isDisplayed()))
       .perform(click())
 
@@ -480,7 +479,7 @@ class MainActivityTest {
       })
     }
 
-    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 250, 5)
+    EspressoX.waitForView(withId(R.id.action_play_pause_toggle))
       .check(matches(isDisplayed()))
       .perform(click())
 
@@ -494,13 +493,13 @@ class MainActivityTest {
       })
     }
 
-    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), 250, 5)
+    EspressoX.waitForView(withId(R.id.action_play_pause_toggle))
       .check(doesNotExist())
   }
 
   @Test
   fun testNavigatedFragmentIntentExtra() {
-    activityScenario.moveToState(Lifecycle.State.DESTROYED)
+    activityScenario.close()
     activityScenario = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
       .let {
         it.putExtra(MainActivity.EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.about)

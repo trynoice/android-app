@@ -131,14 +131,14 @@ object EspressoX {
 
   /**
    * [waitForView] tries to find a view with given [viewMatcher]. If found, it returns the
-   * [ViewInteraction] for the given [viewMatcher]. If not found, it waits for given [periodMillis]
+   * [ViewInteraction] for the given [viewMatcher]. If not found, it waits for given [wait]
    * before attempting to find the view again. It reties for given number of [retries].
    *
    * Adaptation of the [StackOverflow post by manbradcalf](https://stackoverflow.com/a/56499223/2410641)
    */
-  fun waitForView(viewMatcher: Matcher<View>, periodMillis: Long, retries: Int): ViewInteraction {
-    require(retries > 0 && periodMillis > 0)
-    for (i in 1..retries) {
+  fun waitForView(viewMatcher: Matcher<View>, retries: Int = 5, wait: Long = 250): ViewInteraction {
+    require(retries > 0 && wait > 0)
+    for (i in 0 until retries) {
       try {
         onView(isRoot()).perform(searchForView(viewMatcher))
         return onView(viewMatcher)
@@ -147,7 +147,7 @@ object EspressoX {
           throw e
         }
 
-        Thread.sleep(periodMillis)
+        Thread.sleep(wait)
       }
     }
 

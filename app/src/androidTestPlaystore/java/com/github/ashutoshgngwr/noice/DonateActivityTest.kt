@@ -19,6 +19,7 @@ import io.mockk.unmockkAll
 import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -48,7 +49,6 @@ class DonateActivityTest {
 
   @After
   fun teardown() {
-    activityScenario.close()
     unmockkAll()
   }
 
@@ -77,7 +77,7 @@ class DonateActivityTest {
       it.onBillingError(0, mockk())
     }
 
-    assertEquals(Lifecycle.State.DESTROYED, activityScenario.state)
+    assertActivityState(Lifecycle.State.DESTROYED)
   }
 
   @Test
@@ -87,10 +87,22 @@ class DonateActivityTest {
       verify(exactly = 1) { mockBillingProcessor.consumePurchase("test") }
     }
 
-    EspressoX.waitForView(withText(R.string.support_development__donate_thank_you), 250, 5)
+    EspressoX.waitForView(withText(R.string.support_development__donate_thank_you))
       .check(matches(isDisplayed()))
 
     onView(withText(android.R.string.ok)).perform(click())
-    assertEquals(Lifecycle.State.DESTROYED, activityScenario.state)
+    assertActivityState(Lifecycle.State.DESTROYED)
+  }
+
+  private fun assertActivityState(expected: Lifecycle.State, retries: Int = 5, wait: Long = 250) {
+    for (i in 0 until retries) {
+      Thread.sleep(wait)
+
+      if (expected == activityScenario.state) {
+        return
+      }
+    }
+
+    fail("expected activity state to be: \"$expected\", got: \"${activityScenario.state}\"")
   }
 }
