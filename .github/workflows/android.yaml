@@ -59,13 +59,12 @@ jobs:
     strategy:
       matrix:
         include:
-          - android: 29
+          - android: 28
             target: default
             gradleTask: connectedFdroidDebugAndroidTest
-          - android: 29
+          - android: 28
             target: google_apis
             gradleTask: connectedPlaystoreDebugAndroidTest
-
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
@@ -76,7 +75,7 @@ jobs:
         with:
           api-level: ${{ matrix.android }}
           target: ${{ matrix.target }}
-          arch: x86
+          arch: x86_64
           script: ./gradlew ${{ matrix.gradleTask }} --no-daemon --stacktrace
           emulator-options: >-
             -no-boot-anim -no-audio -no-snapshot -no-window -camera-back none
