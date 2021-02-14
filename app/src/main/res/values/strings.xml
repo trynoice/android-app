@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
   <!-- Navigation Drawer -->
-
   <string name="about">About</string>
   <string name="app_theme">Theme</string>
   <string name="close_drawer">Close navigation drawer</string>
@@ -15,10 +13,7 @@
   <string name="support_development">Support Development</string>
   <string name="wake_up_timer">Wake-up Timer</string>
   <string name="submit_feedback">Submit Feedback</string>
-
-
   <!-- Random preset Dialog -->
-
   <string name="any">Any</string>
   <string name="dense">Dense</string>
   <string name="focus">Focus</string>
@@ -29,10 +24,7 @@
   <string name="okay">Okay</string>
   <string name="random_preset">Random Preset</string>
   <string name="relax">Relax</string>
-
-
   <!-- Save new preset Dialog -->
-
   <string name="cancel">Cancel</string>
   <string name="dismiss">Dismiss</string>
   <string name="name">Name</string>
@@ -42,19 +34,13 @@
   <string name="preset_saved">Preset saved!</string>
   <string name="save">Save</string>
   <string name="save_preset">Save Preset</string>
-
-
   <!-- Library List Item -->
-
   <string name="play">Play</string>
   <string name="play_pause">play or pause</string>
   <string name="repeat_time_period">Repeat time period</string>
   <string name="stop">Stop</string>
   <string name="volume">Sound volume</string>
-
-
   <!-- Library - sound groups -->
-
   <string name="sound_group__life">Life</string>
   <string name="sound_group__monsoon">Monsoon</string>
   <string name="sound_group__public_gatherings">Public Gatherings</string>
@@ -63,10 +49,7 @@
   <string name="sound_group__vehicles">Vehicles</string>
   <string name="sound_group__water">Water</string>
   <string name="sound_group__wind">Wind</string>
-
-
   <!-- Library - sounds -->
-
   <string name="airplane_inflight">Airplane in-flight</string>
   <string name="airplane_seatbelt_beeps">Airplane seat-belt beeps</string>
   <string name="birds">Birds</string>
@@ -102,10 +85,7 @@
   <string name="white_noise">White noise</string>
   <string name="wind_in_chimes_of_shells">Wind in chimes of shells</string>
   <string name="wind_in_palm_trees">Wind in palm trees</string>
-
-
   <!-- Saved Presets -->
-
   <string name="add_to_home_screen">Add to home screen</string>
   <string name="delete">Delete</string>
   <string name="open_context_menu">Open context menu</string>
@@ -117,22 +97,16 @@
     Then click on the Save button that appears on the bottom corner of the screen.
   </string>
   <string name="rename">Rename</string>
-  <string name="shortcuts_not_supported">Your default launcher does not support adding shortcuts</string>
+  <string name="shortcuts_not_supported">Your default launcher does not support adding shortcuts.</string>
   <string name="show_saved_preset_on_startup">Show saved presets on app startup</string>
-
-
   <!-- Sleep Timer -->
-
   <string name="auto_sleep_schedule_cancelled">Auto sleep timer cancelled!</string>
   <string name="reset">Reset</string>
   <string name="sleep_timer_description">
     Noice will shutdown itself when the timer ends. Use the buttons below to add time and start
     the timer.
   </string>
-
-
   <!-- Wake-up Timer -->
-
   <string name="schedule">Schedule</string>
   <string name="select_preset">Select Preset</string>
   <string name="wake_up_timer_cancelled">Wake-up Timer cancelled!</string>
@@ -143,19 +117,13 @@
   <string name="use_24h_format">Use 24-hour format</string>
   <string name="device_media_volume">Device media volume</string>
   <string name="should_update_media_volume">Update device media volume before starting preset</string>
-
-
   <!-- Theme -->
-
   <string-array name="app_themes">
     <item>Light</item>
     <item>Dark</item>
     <item>System default</item>
   </string-array>
-
-
   <!-- About -->
-
   <string name="about__email">Email</string>
   <string name="about__github">Github</string>
   <string name="about__translations">Translations</string>
@@ -163,10 +131,7 @@
   <string name="app_description">Relax and boost productivity with minimal background noise.</string>
   <string name="connect_with_author">Connect with Author</string>
   <string name="credits">Credits</string>
-
-
   <!-- Help -->
-
   <string name="appintro__chromecast_desc">
     Use Noice to cast its ambience to other Chromecast enabled devices such as speakers, TVs, etc.
   </string>
@@ -189,10 +154,7 @@
     itself down. Similarly, to wake up to a calm environment, use the wake-up timer to set the alarm.
   </string>
   <string name="appintro__timer_title">Trouble falling asleep or waking up?</string>
-
-
   <!-- Support Development -->
-
   <string name="support_development__donate">Donate</string>
   <string name="support_development__donate_description">
     Donations will help us in\n
@@ -219,10 +181,7 @@
     - To make future updates possible\n
     - To keep Noice ad-free forever\n
   </string>
-
-
   <!-- Others -->
-
   <string name="cast_media">Cast media to another device</string>
   <string name="in_app_feedback__description">
     We\'d love to hear from you about the app. Please take a moment to visit our GitHub repository.

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
   <!-- Navigation Drawer -->
-
   <string name="about">Acerca de</string>
   <string name="app_theme">Tema</string>
   <string name="close_drawer">Cerrar menú de navegación</string>
@@ -14,10 +12,7 @@
   <string name="sleep_timer">Temporizador</string>
   <string name="support_development">Apoyar al desarrollador</string>
   <string name="wake_up_timer">Despertador</string>
-  
-
   <!-- Save new preset Dialog -->
-
   <string name="cancel">Cancelar</string>
   <string name="dismiss">Descartar</string>
   <string name="name">Nombre</string>
@@ -27,19 +22,13 @@
   <string name="preset_saved">¡Preset guardado!</string>
   <string name="save">Guardar</string>
   <string name="save_preset">Guardar Preset</string>
-  
-
   <!-- Library List Item -->
-
   <string name="play">Reproducir</string>
   <string name="play_pause">Reproducir o pausar</string>
   <string name="repeat_time_period">Periodo de repetición</string>
   <string name="stop">Detener</string>
   <string name="volume">Volumen del sonido</string>
-  
-
   <!-- Library - sound groups -->
-
   <string name="sound_group__life">Vida</string>
   <string name="sound_group__monsoon">Monzón</string>
   <string name="sound_group__public_gatherings">Reuniones públicas</string>
@@ -48,10 +37,7 @@
   <string name="sound_group__vehicles">Vehículos</string>
   <string name="sound_group__water">Agua</string>
   <string name="sound_group__wind">Viento</string>
-  
-
   <!-- Library - sounds -->
-
   <string name="airplane_inflight">Avión en vuelo</string>
   <string name="airplane_seatbelt_beeps">Señal cinturón del avión</string>
   <string name="birds">Pájaros</string>
@@ -87,10 +73,7 @@
   <string name="white_noise">Ruido blanco</string>
   <string name="wind_in_chimes_of_shells">Brisa sonajero de viento</string>
   <string name="wind_in_palm_trees">Brisa palmeras</string>
-  
-
   <!-- Saved Presets -->
-
   <string name="delete">Borrar</string>
   <string name="open_context_menu">Abrir menú contextual</string>
   <string name="preset_delete_confirmation">¿Estás seguro de borrar \"%s\"?</string>
@@ -100,47 +83,32 @@
     Luego haga clic en el botón Guardar que aparece en la esquina inferior de la pantalla.
   </string>
   <string name="rename">Renombrar</string>
-  
-
   <!-- Sleep Timer -->
-
   <string name="auto_sleep_schedule_cancelled">¡Temporizador cancelado!</string>
   <string name="reset">Reiniciar</string>
   <string name="sleep_timer_description">Noice se apagará solo cuando el temporizador termine. Use los botones de abajo para añadir tiempo e iniciar el temporizador.</string>
-  
-
   <!-- Wake-up Timer -->
-
   <string name="schedule">Temporizador</string>
   <string name="select_preset">Seleccionar Preset</string>
   <string name="wake_up_timer_description">
     Noice iniciará el preset seleccionado cuando finalice el temporizador. Use los botones a continuación
     para seleccionar un Preset y establecer la hora deseada para iniciar el despertador.
   </string>
-  
-
   <!-- Theme -->
-
   <string-array name="app_themes">
     <item>Claro</item>
     <item>Oscuro</item>
     <item>Por defecto del sistema</item>
   </string-array>
-
-
   <!-- About -->
-
   <string name="about__email">Correo</string>
   <string name="about__github">Github</string>
   <string name="about__translations">Traducciones</string>
   <string name="about__twitter">Twitter</string>
-  <string name="app_description">Relájese y aumente la productividad con un mínimo ruido de fondo</string>
+  <string name="app_description">Relájese y aumente la productividad con un mínimo ruido de fondo.</string>
   <string name="connect_with_author">Contactar al Autor</string>
   <string name="credits">Créditos</string>
-  
-
   <!-- Help -->
-
   <string name="appintro__chromecast_desc">
     Utilice Noise para transmitir su ambiente a otros dispositivos conectados a Chromecast, como altavoces, televisores, etc.
   </string>
@@ -163,10 +131,7 @@
     De manera similar, para despertarse en un ambiente tranquilo, use el temporizador de despertador para configurar la alarma.
   </string>
   <string name="appintro__timer_title">¿Problemas para conciliar el sueño o para despertar?</string>
-  
-
   <!-- Support Development -->
-
   <string name="support_development__donate">Donate</string>
   <string name="support_development__donate_description">
     Las donaciones nos ayudarán a\n
@@ -193,10 +158,7 @@
     - Para garantizar futuras actualizaciones\n
     - Para mantener a Noice sin anuncios siempre\n
   </string>
-  
-
   <!-- Others -->
-
   <string name="cast_media">Transmitir medio a otro dispositivo</string>
   <string name="notification_channel_default__description">Controles de reproducción de medios</string>
   <string name="notification_channel_default__name">Reproducción de medios</string>
