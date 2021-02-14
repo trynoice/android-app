@@ -1,189 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Navigation Drawer -->
-    <string name="about">ऐप के बारे में</string>
-    <string name="app_theme">दिखावट</string>
-    <string name="close_drawer">मार्गदर्शक ड्रॉवर बंद करें</string>
-    <string name="help">सहायता</string>
-    <string name="library">लाइब्रेरी</string>
-    <string name="open_drawer">मार्गदर्शक ड्रॉवर खोलें</string>
-    <string name="report_issue">समस्या की सूचना दें</string>
-    <string name="saved_presets">सहेजे गए प्रीसेट</string>
-    <string name="sleep_timer">स्लीप टाइमर</string>
-    <string name="support_development">विकास का समर्थन करें</string>
-    <string name="wake_up_timer">वेक-अप टाइमर</string>
-    <!-- Save new preset Dialog -->
-    <string name="cancel">रद्द करें</string>
-    <string name="dismiss">खारिज</string>
-    <string name="name">नाम</string>
-    <string name="pause">रोकें</string>
-    <string name="preset_already_exists">दिए गए नाम के साथ प्रीसेट पहले से मौजूद है!</string>
-    <string name="preset_name_cannot_be_empty">प्रीसेट नाम खाली नहीं हो सकता है!</string>
-    <string name="preset_saved">प्रीसेट सहेजा गया!</string>
-    <string name="save">सहेजें</string>
-    <string name="save_preset">प्रीसेट सहेजें</string>
-    <!-- Library List Item -->
-    <string name="play">बजाएं</string>
-    <string name="play_pause">बजाएं या रोकें</string>
-    <string name="repeat_time_period">दोहराने की समय अवधि</string>
-    <string name="stop">बंद करे</string>
-    <string name="volume">ध्वनि की मात्रा</string>
-    <!-- Library - sound groups -->
-    <string name="sound_group__life">जीवन</string>
-    <string name="sound_group__monsoon">मानसून</string>
-    <string name="sound_group__public_gatherings">सार्वजनिक समारोह</string>
-    <string name="sound_group__raw_noise">कच्चे शोर</string>
-    <string name="sound_group__times_of_day">दिन के समय</string>
-    <string name="sound_group__vehicles">वाहन</string>
-    <string name="sound_group__water">पानी</string>
-    <string name="sound_group__wind">हवा</string>
-    <!-- Library - sounds -->
-    <string name="airplane_inflight">हवाई जहाज में उड़ान</string>
-    <string name="airplane_seatbelt_beeps">हवाई जहाज की सीट-बेल्ट बीप</string>
-    <string name="birds">पक्षी</string>
-    <string name="bonfire">होलिका</string>
-    <string name="brownian_noise">ब्राउनियन नॉइज़</string>
-    <string name="coffee_shop">काफी की दूकान</string>
-    <string name="creaking_ship">चरमराता हुआ जहाज</string>
-    <string name="crickets">झींगुर</string>
-    <string name="distant_thunder">दूरी पर गड़गड़ाहट</string>
-    <string name="electric_car">इलेक्ट्रिक कार</string>
-    <string name="heavy_rain">भारी वर्षा</string>
-    <string name="howling_wolf">गरजता भेड़िया</string>
-    <string name="human_heartbeat">मानव दिल की धड़कन</string>
-    <string name="light_rain">हलकी बारिश</string>
-    <string name="moderate_rain">औसत दर्जे की वर्षा</string>
-    <string name="morning_in_a_village">एक गांव में सुबह</string>
-    <string name="moving_train">चलती ट्रेन</string>
-    <string name="night">रात</string>
-    <string name="office">कार्यालय</string>
-    <string name="pink_noise">पिंक नॉइज़</string>
-    <string name="public_library">सार्वजनिक पुस्तकालय</string>
-    <string name="purring_cat">घुरघुराती बिल्ली</string>
-    <string name="quiet_conversation">शांत बातचीत</string>
-    <string name="rolling_thunder">घूमती गड़गड़ाहट</string>
-    <string name="screeching_seagulls">चिलचिलाती सीगलियाँ</string>
-    <string name="seaside">समुंदर के किनारे</string>
-    <string name="soft_wind">शीतल हवा</string>
-    <string name="thunder_crack">बिजली के कड़कने की आवाज़</string>
-    <string name="train_horn">ट्रेन हॉर्न</string>
-    <string name="walking_through_the_snow">बर्फ पर चलना</string>
-    <string name="water_hose">पानी का पाइप</string>
-    <string name="water_stream">पानी की धारा</string>
-    <string name="white_noise">वाइट नॉइज़</string>
-    <string name="wind_in_chimes_of_shells">गोले की झंकार में हवा</string>
-    <string name="wind_in_palm_trees">खजूर के पेड़ में पवन</string>
-    <!-- Saved Presets -->
-    <string name="delete">हटाएं</string>
-    <string name="open_context_menu">संदर्भ मेनू खोलें</string>
-    <string name="preset_delete_confirmation">%s को हटाने की पुष्टि करें?</string>
-    <string name="preset_deleted">प्रीसेट को हटा दिया गया है!</string>
-    <string name="preset_info__description">
+  <!-- Navigation Drawer -->
+  <string name="about">ऐप के बारे में</string>
+  <string name="app_theme">दिखावट</string>
+  <string name="close_drawer">मार्गदर्शक ड्रॉवर बंद करें</string>
+  <string name="help">सहायता</string>
+  <string name="library">लाइब्रेरी</string>
+  <string name="open_drawer">मार्गदर्शक ड्रॉवर खोलें</string>
+  <string name="report_issue">समस्या की सूचना दें</string>
+  <string name="saved_presets">सहेजे गए प्रीसेट</string>
+  <string name="sleep_timer">स्लीप टाइमर</string>
+  <string name="support_development">विकास का समर्थन करें</string>
+  <string name="wake_up_timer">वेक-अप टाइमर</string>
+  <!-- Save new preset Dialog -->
+  <string name="cancel">रद्द करें</string>
+  <string name="dismiss">खारिज</string>
+  <string name="name">नाम</string>
+  <string name="pause">रोकें</string>
+  <string name="preset_already_exists">दिए गए नाम के साथ प्रीसेट पहले से मौजूद है!</string>
+  <string name="preset_name_cannot_be_empty">प्रीसेट नाम खाली नहीं हो सकता है!</string>
+  <string name="preset_saved">प्रीसेट सहेजा गया!</string>
+  <string name="save">सहेजें</string>
+  <string name="save_preset">प्रीसेट सहेजें</string>
+  <!-- Library List Item -->
+  <string name="play">बजाएं</string>
+  <string name="play_pause">बजाएं या रोकें</string>
+  <string name="repeat_time_period">दोहराने की समय अवधि</string>
+  <string name="stop">बंद करे</string>
+  <string name="volume">ध्वनि की मात्रा</string>
+  <!-- Library - sound groups -->
+  <string name="sound_group__life">जीवन</string>
+  <string name="sound_group__monsoon">मानसून</string>
+  <string name="sound_group__public_gatherings">सार्वजनिक समारोह</string>
+  <string name="sound_group__raw_noise">कच्चे शोर</string>
+  <string name="sound_group__times_of_day">दिन के समय</string>
+  <string name="sound_group__vehicles">वाहन</string>
+  <string name="sound_group__water">पानी</string>
+  <string name="sound_group__wind">हवा</string>
+  <!-- Library - sounds -->
+  <string name="airplane_inflight">हवाई जहाज में उड़ान</string>
+  <string name="airplane_seatbelt_beeps">हवाई जहाज की सीट-बेल्ट बीप</string>
+  <string name="birds">पक्षी</string>
+  <string name="bonfire">होलिका</string>
+  <string name="brownian_noise">ब्राउनियन नॉइज़</string>
+  <string name="coffee_shop">काफी की दूकान</string>
+  <string name="creaking_ship">चरमराता हुआ जहाज</string>
+  <string name="crickets">झींगुर</string>
+  <string name="distant_thunder">दूरी पर गड़गड़ाहट</string>
+  <string name="electric_car">इलेक्ट्रिक कार</string>
+  <string name="heavy_rain">भारी वर्षा</string>
+  <string name="howling_wolf">गरजता भेड़िया</string>
+  <string name="human_heartbeat">मानव दिल की धड़कन</string>
+  <string name="light_rain">हलकी बारिश</string>
+  <string name="moderate_rain">औसत दर्जे की वर्षा</string>
+  <string name="morning_in_a_village">एक गांव में सुबह</string>
+  <string name="moving_train">चलती ट्रेन</string>
+  <string name="night">रात</string>
+  <string name="office">कार्यालय</string>
+  <string name="pink_noise">पिंक नॉइज़</string>
+  <string name="public_library">सार्वजनिक पुस्तकालय</string>
+  <string name="purring_cat">घुरघुराती बिल्ली</string>
+  <string name="quiet_conversation">शांत बातचीत</string>
+  <string name="rolling_thunder">घूमती गड़गड़ाहट</string>
+  <string name="screeching_seagulls">चिलचिलाती सीगलियाँ</string>
+  <string name="seaside">समुंदर के किनारे</string>
+  <string name="soft_wind">शीतल हवा</string>
+  <string name="thunder_crack">बिजली के कड़कने की आवाज़</string>
+  <string name="train_horn">ट्रेन हॉर्न</string>
+  <string name="walking_through_the_snow">बर्फ पर चलना</string>
+  <string name="water_hose">पानी का पाइप</string>
+  <string name="water_stream">पानी की धारा</string>
+  <string name="white_noise">वाइट नॉइज़</string>
+  <string name="wind_in_chimes_of_shells">गोले की झंकार में हवा</string>
+  <string name="wind_in_palm_trees">खजूर के पेड़ में पवन</string>
+  <!-- Saved Presets -->
+  <string name="delete">हटाएं</string>
+  <string name="open_context_menu">संदर्भ मेनू खोलें</string>
+  <string name="preset_delete_confirmation">%s को हटाने की पुष्टि करें?</string>
+  <string name="preset_deleted">प्रीसेट को हटा दिया गया है!</string>
+  <string name="preset_info__description">
        आपने अभी तक कोई प्रीसेट नहीं बनाया है। प्रीसेट बनाने के लिए, लाइब्रेरी में जाएँ और ध्वनियाँ बजाएँ। इसके बाद स्क्रीन के निचले
        कोने पर दिखाई देने वाले सेव बटन पर क्लिक करें।
   </string>
-    <string name="rename">नाम बदलें</string>
-    <!-- Sleep Timer -->
-    <string name="auto_sleep_schedule_cancelled">ऑटो स्लीप टाइमर रद्द हो गया है!</string>
-    <string name="reset">रद्द करें</string>
-    <string name="sleep_timer_description">
+  <string name="rename">नाम बदलें</string>
+  <!-- Sleep Timer -->
+  <string name="auto_sleep_schedule_cancelled">ऑटो स्लीप टाइमर रद्द हो गया है!</string>
+  <string name="reset">रद्द करें</string>
+  <string name="sleep_timer_description">
        टाइमर खत्म होने पर ऐप खुद ब खुद बंद हो जाएगी। समय जोड़ने और टाइमर शुरू करने के लिए नीचे दिए गए बटनों का उपयोग करें।
   </string>
-    <!-- Wake-up Timer -->
-    <string name="schedule">शेड्यूल करें</string>
-    <string name="select_preset">प्रीसेट का चयन करें</string>
-    <string name="wake_up_timer_description">
+  <!-- Wake-up Timer -->
+  <string name="schedule">शेड्यूल करें</string>
+  <string name="select_preset">प्रीसेट का चयन करें</string>
+  <string name="wake_up_timer_description">
        टाइमर समाप्त होने पर ऐप चयनित प्रीसेट शुरू करेगी। प्रीसेट का चयन करने के लिए नीचे दिए गए बटनों का उपयोग करें और वेक-अप
        टाइमर शुरू करने के लिए वांछित समय निर्धारित करें।
   </string>
-    <!-- Theme -->
-    <string-array name="app_themes">
-        <item>हल्का रंग</item>
-        <item>गहरा रंग</item>
-        <item>सिस्टम डिफ़ॉल्ट</item>
-    </string-array>
-    <!-- About -->
-    <string name="about__email">ईमेल</string>
-    <string name="about__github">गिटहब</string>
-    <string name="about__translations">अनुवाद</string>
-    <string name="about__twitter">ट्विटर</string>
-    <string name="app_description">कम से कम पृष्ठभूमि शोर के साथ, उत्पादकता और विश्राम को बढ़ावा दे।</string>
-    <string name="connect_with_author">रचयिता से जुड़े</string>
-    <string name="credits">श्रेय</string>
-    <!-- Help -->
-    <string name="appintro__chromecast_desc">
+  <!-- Theme -->
+  <string-array name="app_themes">
+    <item>हल्का रंग</item>
+    <item>गहरा रंग</item>
+    <item>सिस्टम डिफ़ॉल्ट</item>
+  </string-array>
+  <!-- About -->
+  <string name="about__email">ईमेल</string>
+  <string name="about__github">गिटहब</string>
+  <string name="about__translations">अनुवाद</string>
+  <string name="about__twitter">ट्विटर</string>
+  <string name="app_description">कम से कम पृष्ठभूमि शोर के साथ, उत्पादकता और विश्राम को बढ़ावा दे।</string>
+  <string name="connect_with_author">रचयिता से जुड़े</string>
+  <string name="credits">श्रेय</string>
+  <!-- Help -->
+  <string name="appintro__chromecast_desc">
        अन्य क्रोमकास्ट सक्षम डिवाइस जैसे स्पीकर, टीवी, आदि पर ऑडियो चलाने के लिए ऐप का उपयोग करें।
   </string>
-    <string name="appintro__chromecast_title">क्रोमकास्ट सक्षम</string>
-    <string name="appintro__getting_started_desc_0">सभी सुविधाओं को जानने के लिए बाएं स्वाइप करें!</string>
-    <string name="appintro__getting_started_desc_1">आइए शुरू करते हैं!</string>
-    <string name="appintro__getting_started_title">स्वागत है</string>
-    <string name="appintro__preset_desc">
+  <string name="appintro__chromecast_title">क्रोमकास्ट सक्षम</string>
+  <string name="appintro__getting_started_desc_0">सभी सुविधाओं को जानने के लिए बाएं स्वाइप करें!</string>
+  <string name="appintro__getting_started_desc_1">आइए शुरू करते हैं!</string>
+  <string name="appintro__getting_started_title">स्वागत है</string>
+  <string name="appintro__preset_desc">
        कुछ ध्वनियों को चलाने के बाद, आप अपने मिक्स को सेव करने के लिए नीचे के कोने में स्थित बटन का उपयोग कर सकते हैं।
        संग्रहीत मिक्स का पुन: उपयोग करने के लिए, आप ऐप मेनू से प्रीसेट सूची देख सकते हैं।
   </string>
-    <string name="appintro__preset_title">अपने पसंदीदा मिक्स को सेव करें</string>
-    <string name="appintro__sound_library_desc">
+  <string name="appintro__preset_title">अपने पसंदीदा मिक्स को सेव करें</string>
+  <string name="appintro__sound_library_desc">
        ध्वनि मात्रा समायोजित करने के लिए वॉल्यूम स्लाइडर का उपयोग करें। गैर-लूपिंग ध्वनियों के प्रत्येक पुनरावृत्ति में,
        एक विलंब अवधि को समय स्लाइडर द्वारा निर्धारित सीमा से यादृच्छिक रूप से चुना जाता है।
   </string>
-    <string name="appintro__sound_library_title">अपने आदर्श परिवेश का निर्माण करें</string>
-    <string name="appintro__timer_desc">
+  <string name="appintro__sound_library_title">अपने आदर्श परिवेश का निर्माण करें</string>
+  <string name="appintro__timer_desc">
        थोड़ा सा परिवेश आपको सहजता से सो जाने में मदद कर सकता है। ऐप को खुद बंद करने के लिए स्लीप टाइमर का उपयोग करें।
        इसी तरह, शांत वातावरण में जागने के लिए, अलार्म सेट करने के लिए वेक-अप टाइमर का उपयोग करें।
   </string>
-    <string name="appintro__timer_title">सोते हुए या जागने में परेशानी?</string>
-    <!-- Support Development -->
-    <string name="support_development__donate">दान करें</string>
-    <string name="support_development__donate_description">
+  <string name="appintro__timer_title">सोते हुए या जागने में परेशानी?</string>
+  <!-- Support Development -->
+  <string name="support_development__donate">दान करें</string>
+  <string name="support_development__donate_description">
        दान निम्नलिखित में हमारी सहायता करेगा\n
     - नई सुविधाओं में निवेश\n
     - बेहतर ध्वनि नमूनों पर अंकुश लगाना\n
     - कॉफी खरीदना\n
   </string>
-    <string name="support_development__donate_google_play_description">
+  <string name="support_development__donate_google_play_description">
        आपका भुगतान गूगल प्ले द्वारा सुरक्षित रूप से नियंत्रित किया जाएगा। राशि को आपकी स्थानीय मुद्रा में परिवर्तित
        किया जाएगा। आपके स्थान के आधार पर, अतिरिक्त करों को अंतिम राशि में जोड़ा जा सकता है।
   </string>
-    <string name="support_development__donate_thank_you">धन्यवाद!</string>
-    <string name="support_development__donate_thank_you_description">
+  <string name="support_development__donate_thank_you">धन्यवाद!</string>
+  <string name="support_development__donate_thank_you_description">
        हम इस परियोजना में आपके उदार योगदान के लिए तहे दिल से शुक्रिया अदा करते हैं।
   </string>
-    <string name="support_development__share">दोस्तों के साथ शेयर करें</string>
-    <string name="support_development__share_description">
+  <string name="support_development__share">दोस्तों के साथ शेयर करें</string>
+  <string name="support_development__share_description">
        दोस्तों के साथ ऐप साझा करना पैसे दान करने के समान है। उच्च डाउनलोड के साथ, हम कई अलग-अलग दृष्टिकोणों से प्रतिक्रिया प्राप्त करने
        में सक्षम होंगे जो हमें ऐप को पहले से बेहतर बनाने में मदद करेगा।
   </string>
-    <string name="support_development__why">आपको क्यों समर्थन करना चाहिए?</string>
-    <string name="support_development__why_description">
+  <string name="support_development__why">आपको क्यों समर्थन करना चाहिए?</string>
+  <string name="support_development__why_description">
     - भविष्य के अपडेट को संभव बनाने के लिए\n
     - Noice को हमेशा विज्ञापन मुक्त रखने के लिए\n
   </string>
-    <!-- Others -->
-    <string name="cast_media">किसी अन्य डिवाइस पर मीडिया कास्ट करें</string>
-    <string name="notification_channel_default__description">मीडिया प्लेबैक नियंत्रण</string>
-    <string name="notification_channel_default__name">मीडिया प्लेबैक</string>
-    <string name="shortcuts_not_supported">आपका डिफ़ॉल्ट लॉन्चर शॉर्टकट जोड़ने का समर्थन नहीं करता है।</string>
-    <string name="never">कभी नहीं</string>
-    <string name="later">बाद में</string>
-    <string name="in_app_feedback__title">समीक्षा जमा करें</string>
-    <string name="in_app_feedback__description">हम आपसे ऐप के बारे में सुनना पसंद करेंगे। कृपया हमारे गिटहब रिपॉजिटरी पर जाने के लिए एक क्षण लें। यदि आपको ऐप पसंद नहीं है, तो कृपया अपनी चिंताओं को बताते हुए एक मुद्दे को खोलने पर विचार करें। अन्यथा प्यार और समर्थन दिखाने के लिए, कृपया प्रोजेक्ट को स्टार करें।</string>
-    <string name="should_update_media_volume">प्रीसेट शुरू करने से पहले डिवाइस मीडिया वॉल्यूम अपडेट करें</string>
-    <string name="device_media_volume">डिवाइस मीडिया वॉल्यूम</string>
-    <string name="use_24h_format">२४-घंटे के समय प्रारूप का उपयोग करें</string>
-    <string name="wake_up_timer_cancelled">वेक-अप टाइमर रद्द कर दिया!</string>
-    <string name="show_saved_preset_on_startup">ऐप स्टार्टअप पर सहेजे गए प्रीसेट दिखाएं</string>
-    <string name="preset_does_not_exist">प्रीसेट मौजूद नहीं है। यह संभव है कि इसे हटा दिया गया हो!</string>
-    <string name="add_to_home_screen">होम स्क्रीन में शामिल करें</string>
-    <string name="relax">शांतिदायक</string>
-    <string name="random_preset">यादृच्छिक प्रीसेट</string>
-    <string name="okay">ठीक</string>
-    <string name="mood">भाव</string>
-    <string name="light">हलका</string>
-    <string name="intensity_description">घने प्रीसेट एक साथ अधिक ध्वनियों को बजाने का प्रयास करेंगे।</string>
-    <string name="intensity">सघनता</string>
-    <string name="focus">फोकस</string>
-    <string name="dense">सघन</string>
-    <string name="any">कोई भी</string>
-    <string name="submit_feedback">प्रतिपुष्टि दें</string>
+  <!-- Others -->
+  <string name="cast_media">किसी अन्य डिवाइस पर मीडिया कास्ट करें</string>
+  <string name="notification_channel_default__description">मीडिया प्लेबैक नियंत्रण</string>
+  <string name="notification_channel_default__name">मीडिया प्लेबैक</string>
+  <string name="shortcuts_not_supported">आपका डिफ़ॉल्ट लॉन्चर शॉर्टकट जोड़ने का समर्थन नहीं करता है।</string>
+  <string name="never">कभी नहीं</string>
+  <string name="later">बाद में</string>
+  <string name="in_app_feedback__title">समीक्षा जमा करें</string>
+  <string name="in_app_feedback__description">हम आपसे ऐप के बारे में सुनना पसंद करेंगे। कृपया हमारे गिटहब रिपॉजिटरी पर जाने के लिए एक क्षण लें। यदि आपको ऐप पसंद नहीं है, तो कृपया अपनी चिंताओं को बताते हुए एक मुद्दे को खोलने पर विचार करें। अन्यथा प्यार और समर्थन दिखाने के लिए, कृपया प्रोजेक्ट को स्टार करें।</string>
+  <string name="should_update_media_volume">प्रीसेट शुरू करने से पहले डिवाइस मीडिया वॉल्यूम अपडेट करें</string>
+  <string name="device_media_volume">डिवाइस मीडिया वॉल्यूम</string>
+  <string name="use_24h_format">२४-घंटे के समय प्रारूप का उपयोग करें</string>
+  <string name="wake_up_timer_cancelled">वेक-अप टाइमर रद्द कर दिया!</string>
+  <string name="show_saved_preset_on_startup">ऐप स्टार्टअप पर सहेजे गए प्रीसेट दिखाएं</string>
+  <string name="preset_does_not_exist">प्रीसेट मौजूद नहीं है। यह संभव है कि इसे हटा दिया गया हो!</string>
+  <string name="add_to_home_screen">होम स्क्रीन में शामिल करें</string>
+  <string name="relax">शांतिदायक</string>
+  <string name="random_preset">यादृच्छिक प्रीसेट</string>
+  <string name="okay">ठीक</string>
+  <string name="mood">भाव</string>
+  <string name="light">हलका</string>
+  <string name="intensity_description">घने प्रीसेट एक साथ अधिक ध्वनियों को बजाने का प्रयास करेंगे।</string>
+  <string name="intensity">सघनता</string>
+  <string name="focus">फोकस</string>
+  <string name="dense">सघन</string>
+  <string name="any">कोई भी</string>
+  <string name="submit_feedback">प्रतिपुष्टि दें</string>
 </resources>

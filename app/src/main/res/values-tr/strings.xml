@@ -1,195 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Navigation Drawer -->
-    <string name="about">Hakkında</string>
-    <string name="app_theme">Tema</string>
-    <string name="close_drawer">Gezinti çubuğunu kapat</string>
-    <string name="help">Yardım</string>
-    <string name="library">Kütüphane</string>
-    <string name="open_drawer">Gezinti çubuğunu aç</string>
-    <string name="report_issue">Sorun Bildir</string>
-    <string name="saved_presets">Kayıtlar</string>
-    <string name="sleep_timer">Uyku Zamanlayıcı</string>
-    <string name="support_development">Geliştiriciyi Destekle</string>
-    <string name="wake_up_timer">Uyandırma Zamanlayıcı</string>
-    <!-- Random preset Dialog -->
-    <string name="any">Herhangi</string>
-    <string name="dense">Çeşitli</string>
-    <string name="focus">Odaklanmak</string>
-    <string name="intensity">Çeşitlilik</string>
-    <string name="intensity_description">Çeşitli iken tek seferde daha çok ses kullanır.</string>
-    <string name="light">Sade</string>
-    <string name="mood">Amaç</string>
-    <string name="okay">Tamam</string>
-    <string name="random_preset">Rastgele kayıt</string>
-    <string name="relax">Rahatlamak</string>
-    <!-- Save new preset Dialog -->
-    <string name="cancel">İptal</string>
-    <string name="dismiss">Kapat</string>
-    <string name="name">İsim</string>
-    <string name="pause">Durdur</string>
-    <string name="preset_already_exists">Verilen isimde bir kayıt zaten mevcut!</string>
-    <string name="preset_name_cannot_be_empty">Kayıt ismi boş bırakılamaz!</string>
-    <string name="preset_saved">Kayıt oluşturuldu!</string>
-    <string name="save">Kaydet</string>
-    <string name="save_preset">Kayıt Oluştur</string>
-    <!-- Library List Item -->
-    <string name="play">Oynat</string>
-    <string name="play_pause">oynat ya da durdur</string>
-    <string name="repeat_time_period">Zamanı tekrarla</string>
-    <string name="stop">Bitir</string>
-    <string name="volume">Ses seviyesi</string>
-    <!-- Library - sound groups -->
-    <string name="sound_group__life">Yaşam</string>
-    <string name="sound_group__monsoon">Muson</string>
-    <string name="sound_group__public_gatherings">Kalabalık</string>
-    <string name="sound_group__raw_noise">Kuru Grültü</string>
-    <string name="sound_group__times_of_day">Günün Zamanları</string>
-    <string name="sound_group__vehicles">Araçlar</string>
-    <string name="sound_group__water">Su</string>
-    <string name="sound_group__wind">Rüzgar</string>
-    <!-- Library - sounds -->
-    <string name="airplane_inflight">Uçak yolculuğu</string>
-    <string name="airplane_seatbelt_beeps">Uçak kemer uyarıları</string>
-    <string name="birds">Kuşlar</string>
-    <string name="bonfire">Kamp ateşi</string>
-    <string name="brownian_noise">Kahverengi gürültü</string>
-    <string name="coffee_shop">Kahve dükkanı</string>
-    <string name="creaking_ship">Gıcırdayan gemi</string>
-    <string name="crickets">Cırcır böcekleri</string>
-    <string name="distant_thunder">Uzak gök gürültüsü</string>
-    <string name="electric_car">Elektrikli araba</string>
-    <string name="heavy_rain">Şiddetli yağmur</string>
-    <string name="howling_wolf">Kurt uluması</string>
-    <string name="human_heartbeat">İnsan kalp atışı</string>
-    <string name="light_rain">Hafif yağmur</string>
-    <string name="moderate_rain">Normal yağmur</string>
-    <string name="morning_in_a_village">Köyde bir sabah</string>
-    <string name="moving_train">Hareket eden tren</string>
-    <string name="night">Gece</string>
-    <string name="office">Ofis</string>
-    <string name="pink_noise">Pembe gürültü</string>
-    <string name="public_library">Halk kütüphanesi</string>
-    <string name="purring_cat">Kedi mırıltısı</string>
-    <string name="quiet_conversation">Kısık sesle konuşma</string>
-    <string name="rolling_thunder">Gök gürlemesi</string>
-    <string name="screeching_seagulls">Martı çığlıkları</string>
-    <string name="seaside">Sahil</string>
-    <string name="soft_wind">Rüzgar</string>
-    <string name="thunder_crack">Gök gürültüsü</string>
-    <string name="train_horn">Tren kornası</string>
-    <string name="walking_through_the_snow">Karda yürümek</string>
-    <string name="water_hose">Sulama hortumu</string>
-    <string name="water_stream">Su kaynağı</string>
-    <string name="white_noise">Beyaz gürültü</string>
-    <string name="wind_in_chimes_of_shells">Deniz kabuğu çıngırtısı</string>
-    <string name="wind_in_palm_trees">Palmiye hışırtıları</string>
-    <!-- Saved Presets -->
-    <string name="add_to_home_screen">Ana ekrana ekle</string>
-    <string name="delete">Sil</string>
-    <string name="open_context_menu">İçerik menüsünü aç</string>
-    <string name="preset_delete_confirmation">%s kaydını silmeyi onaylıyor musunuz?</string>
-    <string name="preset_deleted">Kayıt silindi!</string>
-    <string name="preset_does_not_exist">Kayıt mevcut değil. Silinmiş olabilir!</string>
-    <string name="preset_info__description">
+  <!-- Navigation Drawer -->
+  <string name="about">Hakkında</string>
+  <string name="app_theme">Tema</string>
+  <string name="close_drawer">Gezinti çubuğunu kapat</string>
+  <string name="help">Yardım</string>
+  <string name="library">Kütüphane</string>
+  <string name="open_drawer">Gezinti çubuğunu aç</string>
+  <string name="report_issue">Sorun Bildir</string>
+  <string name="saved_presets">Kayıtlar</string>
+  <string name="sleep_timer">Uyku Zamanlayıcı</string>
+  <string name="support_development">Geliştiriciyi Destekle</string>
+  <string name="wake_up_timer">Uyandırma Zamanlayıcı</string>
+  <!-- Random preset Dialog -->
+  <string name="any">Herhangi</string>
+  <string name="dense">Çeşitli</string>
+  <string name="focus">Odaklanmak</string>
+  <string name="intensity">Çeşitlilik</string>
+  <string name="intensity_description">Çeşitli iken tek seferde daha çok ses kullanır.</string>
+  <string name="light">Sade</string>
+  <string name="mood">Amaç</string>
+  <string name="okay">Tamam</string>
+  <string name="random_preset">Rastgele kayıt</string>
+  <string name="relax">Rahatlamak</string>
+  <!-- Save new preset Dialog -->
+  <string name="cancel">İptal</string>
+  <string name="dismiss">Kapat</string>
+  <string name="name">İsim</string>
+  <string name="pause">Durdur</string>
+  <string name="preset_already_exists">Verilen isimde bir kayıt zaten mevcut!</string>
+  <string name="preset_name_cannot_be_empty">Kayıt ismi boş bırakılamaz!</string>
+  <string name="preset_saved">Kayıt oluşturuldu!</string>
+  <string name="save">Kaydet</string>
+  <string name="save_preset">Kayıt Oluştur</string>
+  <!-- Library List Item -->
+  <string name="play">Oynat</string>
+  <string name="play_pause">oynat ya da durdur</string>
+  <string name="repeat_time_period">Zamanı tekrarla</string>
+  <string name="stop">Bitir</string>
+  <string name="volume">Ses seviyesi</string>
+  <!-- Library - sound groups -->
+  <string name="sound_group__life">Yaşam</string>
+  <string name="sound_group__monsoon">Muson</string>
+  <string name="sound_group__public_gatherings">Kalabalık</string>
+  <string name="sound_group__raw_noise">Kuru Grültü</string>
+  <string name="sound_group__times_of_day">Günün Zamanları</string>
+  <string name="sound_group__vehicles">Araçlar</string>
+  <string name="sound_group__water">Su</string>
+  <string name="sound_group__wind">Rüzgar</string>
+  <!-- Library - sounds -->
+  <string name="airplane_inflight">Uçak yolculuğu</string>
+  <string name="airplane_seatbelt_beeps">Uçak kemer uyarıları</string>
+  <string name="birds">Kuşlar</string>
+  <string name="bonfire">Kamp ateşi</string>
+  <string name="brownian_noise">Kahverengi gürültü</string>
+  <string name="coffee_shop">Kahve dükkanı</string>
+  <string name="creaking_ship">Gıcırdayan gemi</string>
+  <string name="crickets">Cırcır böcekleri</string>
+  <string name="distant_thunder">Uzak gök gürültüsü</string>
+  <string name="electric_car">Elektrikli araba</string>
+  <string name="heavy_rain">Şiddetli yağmur</string>
+  <string name="howling_wolf">Kurt uluması</string>
+  <string name="human_heartbeat">İnsan kalp atışı</string>
+  <string name="light_rain">Hafif yağmur</string>
+  <string name="moderate_rain">Normal yağmur</string>
+  <string name="morning_in_a_village">Köyde bir sabah</string>
+  <string name="moving_train">Hareket eden tren</string>
+  <string name="night">Gece</string>
+  <string name="office">Ofis</string>
+  <string name="pink_noise">Pembe gürültü</string>
+  <string name="public_library">Halk kütüphanesi</string>
+  <string name="purring_cat">Kedi mırıltısı</string>
+  <string name="quiet_conversation">Kısık sesle konuşma</string>
+  <string name="rolling_thunder">Gök gürlemesi</string>
+  <string name="screeching_seagulls">Martı çığlıkları</string>
+  <string name="seaside">Sahil</string>
+  <string name="soft_wind">Rüzgar</string>
+  <string name="thunder_crack">Gök gürültüsü</string>
+  <string name="train_horn">Tren kornası</string>
+  <string name="walking_through_the_snow">Karda yürümek</string>
+  <string name="water_hose">Sulama hortumu</string>
+  <string name="water_stream">Su kaynağı</string>
+  <string name="white_noise">Beyaz gürültü</string>
+  <string name="wind_in_chimes_of_shells">Deniz kabuğu çıngırtısı</string>
+  <string name="wind_in_palm_trees">Palmiye hışırtıları</string>
+  <!-- Saved Presets -->
+  <string name="add_to_home_screen">Ana ekrana ekle</string>
+  <string name="delete">Sil</string>
+  <string name="open_context_menu">İçerik menüsünü aç</string>
+  <string name="preset_delete_confirmation">%s kaydını silmeyi onaylıyor musunuz?</string>
+  <string name="preset_deleted">Kayıt silindi!</string>
+  <string name="preset_does_not_exist">Kayıt mevcut değil. Silinmiş olabilir!</string>
+  <string name="preset_info__description">
     Henüz hiçbir kayıt oluşturmadınız. Kayıt oluşturmak için Kütüphane\'ye gidin
     ve birkaç ses oynatın. Sonra da ekranın alt köşesindeki Kaydet tuşuna basın.
   </string>
-    <string name="rename">Yeniden adlandır</string>
-    <string name="shortcuts_not_supported">Başlatıcınız kısa yol eklemeyi desteklemiyor.</string>
-    <!-- Sleep Timer -->
-    <string name="auto_sleep_schedule_cancelled">Otomatik uyku zamanlayıcısı iptal edildi!</string>
-    <string name="reset">Sıfırla</string>
-    <string name="sleep_timer_description">
+  <string name="rename">Yeniden adlandır</string>
+  <string name="shortcuts_not_supported">Başlatıcınız kısa yol eklemeyi desteklemiyor.</string>
+  <!-- Sleep Timer -->
+  <string name="auto_sleep_schedule_cancelled">Otomatik uyku zamanlayıcısı iptal edildi!</string>
+  <string name="reset">Sıfırla</string>
+  <string name="sleep_timer_description">
     Süre bittiğinde sesler kesilecektir. Zamanlamak için aşağıdaki tuşları kullanın.
   </string>
-    <!-- Wake-up Timer -->
-    <string name="schedule">Zamanla</string>
-    <string name="select_preset">Kayıt Seç</string>
-    <string name="wake_up_timer_cancelled">Uyandırma zamanlayıcısı iptal edildi!</string>
-    <string name="wake_up_timer_description">
+  <!-- Wake-up Timer -->
+  <string name="schedule">Zamanla</string>
+  <string name="select_preset">Kayıt Seç</string>
+  <string name="wake_up_timer_cancelled">Uyandırma zamanlayıcısı iptal edildi!</string>
+  <string name="wake_up_timer_description">
     Zamanı geldiğinde kayıt başlayacaktır. Kayıt seçmek ve zamanlamak için
     aşağıdaki tuşları kullanın.
   </string>
-    <!-- Theme -->
-    <string-array name="app_themes">
-        <item>Açık</item>
-        <item>Koyu</item>
-        <item>Sistem Varsayılanı</item>
-    </string-array>
-    <!-- About -->
-    <string name="about__email">Email</string>
-    <string name="about__github">Github</string>
-    <string name="about__translations">Çeviriler</string>
-    <string name="about__twitter">Twitter</string>
-    <string name="app_description">Hafif bir arka plan sesiyle rahatlayın ve üretkenliğinizi arttırın.</string>
-    <string name="connect_with_author">Sahibiyle iletişime geç</string>
-    <string name="credits">Katkıda bulunanlar</string>
-    <!-- Help -->
-    <string name="appintro__chromecast_desc">
+  <!-- Theme -->
+  <string-array name="app_themes">
+    <item>Açık</item>
+    <item>Koyu</item>
+    <item>Sistem Varsayılanı</item>
+  </string-array>
+  <!-- About -->
+  <string name="about__email">Email</string>
+  <string name="about__github">Github</string>
+  <string name="about__translations">Çeviriler</string>
+  <string name="about__twitter">Twitter</string>
+  <string name="app_description">Hafif bir arka plan sesiyle rahatlayın ve üretkenliğinizi arttırın.</string>
+  <string name="connect_with_author">Sahibiyle iletişime geç</string>
+  <string name="credits">Katkıda bulunanlar</string>
+  <!-- Help -->
+  <string name="appintro__chromecast_desc">
     Noice kullanarak hoparlör, TV vb. Chromecast kullanan cihazlara ambiyansı
     yansıtabilirsiniz.
   </string>
-    <string name="appintro__chromecast_title">Chromecast</string>
-    <string name="appintro__getting_started_desc_0">Tüm özellikleri öğrenmek için sola kaydırın!</string>
-    <string name="appintro__getting_started_desc_1">Hadi başlayalım!</string>
-    <string name="appintro__getting_started_title">Hoş geldiniz</string>
-    <string name="appintro__preset_desc">
+  <string name="appintro__chromecast_title">Chromecast</string>
+  <string name="appintro__getting_started_desc_0">Tüm özellikleri öğrenmek için sola kaydırın!</string>
+  <string name="appintro__getting_started_desc_1">Hadi başlayalım!</string>
+  <string name="appintro__getting_started_title">Hoş geldiniz</string>
+  <string name="appintro__preset_desc">
     Birkaç ses oynattıktan sonra alttaki tuşu kullanarak karışımınızı
     kaydedeblirsiniz. Kaydettiğiniz bir karışımı yeniden kullanmak için gezinti
     çubuğundan Kayıtlar listesini ziyaret edebilirsiniz.
   </string>
-    <string name="appintro__preset_title">En sevdiğin karışımları kaydet</string>
-    <string name="appintro__sound_library_desc">
+  <string name="appintro__preset_title">En sevdiğin karışımları kaydet</string>
+  <string name="appintro__sound_library_desc">
     Ses ayarıyla sese özel ses seviyesini ayarlayabilirken, zaman ayarıyla
     döngüdeki seslerin tekrar etme sıklığını ayarlayabilirsiniz.
   </string>
-    <string name="appintro__sound_library_title">Mükemmel ortamınızı yaratın</string>
-    <string name="appintro__timer_desc">
+  <string name="appintro__sound_library_title">Mükemmel ortamınızı yaratın</string>
+  <string name="appintro__timer_desc">
     Ufak bir ambiyans uyumanızda yardımcı olabilir. Uyku Zamanlayıcı ile sesin
     kendiliğinden kesilmesini sağlayabilir, sakin bir ortamda uyanmak içinse
     Uyandırma Zamanlayıcı kullanabilirsiniz.
   </string>
-    <string name="appintro__timer_title">Uyku sorunlarınız mı var?</string>
-    <!-- Support Development -->
-    <string name="support_development__donate">Bağışta bulunun</string>
-    <string name="support_development__donate_description">
+  <string name="appintro__timer_title">Uyku sorunlarınız mı var?</string>
+  <!-- Support Development -->
+  <string name="support_development__donate">Bağışta bulunun</string>
+  <string name="support_development__donate_description">
     Bağışlarınız bize şunları sağlar\n
     - yeni özellikler için yatırım\n
     - daha iyi ve kaliteli sesler\n
     - kahve almak\n
   </string>
-    <string name="support_development__donate_google_play_description">
-    Ödemeniz Google Play ile güvenli bir şekilde gerçekleşecektir. Tutar 
+  <string name="support_development__donate_google_play_description">
+    Ödemeniz Google Play ile güvenli bir şekilde gerçekleşecektir. Tutar
     otomatik olarak kendi ülkenizin para birimine çevrilecektir. Konumunuza
     bağlı olarak son tutara _belki_ vergi eklenebilir.
   </string>
-    <string name="support_development__donate_thank_you">Teşekkür ederiz!</string>
-    <string name="support_development__donate_thank_you_description">
+  <string name="support_development__donate_thank_you">Teşekkür ederiz!</string>
+  <string name="support_development__donate_thank_you_description">
     Noice projesine olan cömertçe katkınızdan dolayı tüm içtenliğimizle teşekkür ederiz.
   </string>
-    <string name="support_development__share">Arkadaşlarınızla paylaşın</string>
-    <string name="support_development__share_description">
+  <string name="support_development__share">Arkadaşlarınızla paylaşın</string>
+  <string name="support_development__share_description">
     Noice\'i arkadaşlarınızla paylaşmanız para bağışlamanız kadar faydalıdır.
-    Daha fazla indirme, Noice\'i daha iyi bir seviyeye doğru geliştirmekte 
+    Daha fazla indirme, Noice\'i daha iyi bir seviyeye doğru geliştirmekte
     yardımcı olacak çeşitli geri dönüşler elde etmemizi sağlayabilir.
   </string>
-    <string name="support_development__why">Neden desteklemelisiniz?</string>
-    <string name="support_development__why_description">
+  <string name="support_development__why">Neden desteklemelisiniz?</string>
+  <string name="support_development__why_description">
     - Gelecek güncellemeleri mümkün kılmak için\n
     - Noice\'in reklamsız kalmasını sağlamak için\n
   </string>
-    <!-- Others -->
-    <string name="cast_media">İçeriği başka bir cihaza yayınla</string>
-    <string name="in_app_feedback__description">
+  <!-- Others -->
+  <string name="cast_media">İçeriği başka bir cihaza yayınla</string>
+  <string name="in_app_feedback__description">
     GitHub adresimizi ziyaret edip düşüncelerinizi bizimle paylaşmanızdan
     mutluluk duyarız. Eğer uygulamayı beğenmediyseniz lütfen yeni bir sorun açıp
     düşüncelerinizi bizimle paylaşın. Beğendiyseniz lütfen projeyi yıldızlayarak
     sevgi ve desteklerinizi bizden esirgemeyin.
   </string>
-    <string name="in_app_feedback__title">Değerlendirme yap</string>
-    <string name="later">Sonra</string>
-    <string name="never">Asla</string>
-    <string name="notification_channel_default__description">Arka plan oynatıcı ayarları</string>
-    <string name="notification_channel_default__name">Arka Plan Oynatıcı</string>
+  <string name="in_app_feedback__title">Değerlendirme yap</string>
+  <string name="later">Sonra</string>
+  <string name="never">Asla</string>
+  <string name="notification_channel_default__description">Arka plan oynatıcı ayarları</string>
+  <string name="notification_channel_default__name">Arka Plan Oynatıcı</string>
 </resources>
