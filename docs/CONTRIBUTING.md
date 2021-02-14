@@ -8,6 +8,7 @@ bug reports to large features.
 - [Workflow](#workflow)
 - [Getting started](#getting-started)
 - [Translations](#translations)
+  - [Stats](#stats)
 - [Adding sounds](#adding-sounds)
 - [Contributing code](#contributing-code)
   - [Architecture](#architecture)
@@ -38,57 +39,14 @@ bug reports to large features.
 
 ## Translations
 
-Noice is currently being maintained by a single developer. To avoid context switches, I
-have decided to accept translation contributions through GitHub only and will not be
-using a dedicated service for Translations, such as [Weblate.org](https://weblate.org/),
-in the foreseeable future.
+Please refer to the [Noice project on
+Weblate](https://hosted.weblate.org/engage/noice/) to contribute translations.
 
-Adding translations to Noice is rather easy on GitHub as well
+### Stats
 
-1. Fork the repo
-1. To create and edit a `strings.xml` file, you should ideally be using Android Studio.
-   If you don't have Android Studio set up on your local machine, that's fine too.
-
-   - To create a new `strings.xml` file using Android Studio
-
-     1. Open the new file wizard under **File > New > Android resource file**
-     1. From the **Available qualifiers**, add **Locale** to the **Chosen qualifiers**
-     1. Select the correct language and region, and create the new `strings.xml` file
-
-   - Use [this list](https://github.com/championswimmer/android-locales) to find
-     the correct path for a new `strings.xml` file otherwise
-
-1. Translate all the strings in `values/strings.xml`
-1. If you're updating translations for an existing language, see
-   [this issue](https://github.com/ashutoshgngwr/noice/issues/200) where we keep
-   track of missing and potentially outdated translations.
-1. Translate the F-Droid and Play Store metadata. See
-   [docs](https://docs.fastlane.tools/actions/supply/#images-and-screenshots) and [an
-   example](https://github.com/ashutoshgngwr/noice/tree/master/fastlane/metadata/android/pt-BR)
-
-   - Do not add screenshots. Screenshots are generated using Fastlane before creating
-     a release
-   - Do not add `icon` as it is untranslated
-   - You are free to create a `featureGraphic`. Its dimensions should be 1024wx500h and it
-     should be opaque
-
-1. Add your name to the translation credits section in the
-   [`AboutFragment`](https://github.com/ashutoshgngwr/noice/blob/master/app/src/main/java/com/github/ashutoshgngwr/noice/fragment/AboutFragment.kt)
-
-   - Add the required strings to the [`values/dont_translate.xml`](https://github.com/ashutoshgngwr/noice/blob/master/app/src/main/res/values/dont_translate.xml).
-     See [example](https://github.com/ashutoshgngwr/noice/blob/9a4dce2330b3005acf88b4f6c95f9c4456766e75/app/src/main/res/values/dont_translate.xml#L68-L69)
-   - Add the required item to the `TRANSLATIONS` array in
-     [`AboutFragment`](https://github.com/ashutoshgngwr/noice/blob/master/app/src/main/java/com/github/ashutoshgngwr/noice/fragment/AboutFragment.kt).
-     See [example](https://github.com/ashutoshgngwr/noice/blob/9a4dce2330b3005acf88b4f6c95f9c4456766e75/app/src/main/java/com/github/ashutoshgngwr/noice/fragment/AboutFragment.kt#L132-L135)
-   - The naming convention for credit strings is as follows where the `index` is an integer denoting
-     the number of revisions for a particular locale. For new locales, the `index` is 0. For
-     existing locales, the `index` is its last value for that locale incremented by one.
-
-     1. `credits__translation_<language code>_<region, if any>_<index>`: for descriptions
-     2. `credits__translation_<language code>_<region, if any>_<index>__url`: for author's URL
-
-1. Create a Pull Request proposing the new changes. On creating the pull request, Noice will
-   run a set of GitHub actions that will check syntactical errors in the proposed changes.
+<p align="center">
+  <img alt="Cast receiver app architecture" src="https://hosted.weblate.org/widgets/noice/-/horizontal-auto.svg" /><br>
+</p>
 
 ## Adding sounds
 
