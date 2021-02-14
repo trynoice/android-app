@@ -1,108 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-  <!-- Navigation Drawer -->
-
-  <string name="about">Reth</string>
-  <string name="app_theme">Tema</string>
-  <string name="close_drawer">Mbyll sirtarin e lundrimit</string>
-  <string name="library">Libraria</string>
-  <string name="open_drawer">Hap sirtarin e lundrimit</string>
-  <string name="report_issue">Raporto problemë</string>
-  <string name="saved_presets">Paravendosjet e ruajtur!</string>
-  <string name="sleep_timer">Koha e gjumit</string>
-  
-
-  <!-- Save new preset Dialog -->
-
-  <string name="cancel">Anulo</string>
-  <string name="dismiss">Heq</string>
-  <string name="name">Emri</string>
-  <string name="pause">Pauzë</string>
-  <string name="preset_name_cannot_be_empty">Emri i paravendosur nuk mund të jetë bosh!</string>
-  <string name="preset_saved">Paracaktuar e ruajtur!</string>
-  <string name="save">Ruaj</string>
-  <string name="save_preset">Ruani paraprakisht</string>
-  
-
-  <!-- Library List Item -->
-
-  <string name="play">Luaj</string>
-  <string name="play_pause">Luaj ose pauzë</string>
-  <string name="repeat_time_period">Periudha kohore e përsëritjes</string>
-  <string name="stop">Ndalo</string>
-  <string name="volume">Volumi i zerit</string>
-  
-
-  <!-- Library - sounds -->
-
-  <string name="airplane_inflight">Aeroplan në fluturim</string>
-  <string name="airplane_seatbelt_beeps">Sinjal i rripit te sigurimit ne aeroplan</string>
-  <string name="birds">Zogj</string>
-  <string name="bonfire">Zjarr</string>
-  <string name="brownian_noise">Zhurmë kafe</string>
-  <string name="coffee_shop">Kafene</string>
-  <string name="distant_thunder">Bubullimë ne largësi</string>
-  <string name="heavy_rain">Shi i fortë</string>
-  <string name="light_rain">Shi i lehtë</string>
-  <string name="moderate_rain">Shi mesatar</string>
-  <string name="morning_in_a_village">Mëngjesi në një fshat</string>
-  <string name="moving_train">Tren në lëvizje</string>
-  <string name="night">Natë</string>
-  <string name="office">Zyra</string>
-  <string name="pink_noise">Zhurmë roz</string>
-  <string name="rolling_thunder">Bubullima</string>
-  <string name="seaside">Bregdet</string>
-  <string name="soft_wind">Era e butë</string>
-  <string name="thunder_crack">Gjëmim</string>
-  <string name="train_horn">Bori treni</string>
-  <string name="water_stream">Rrjedha e ujit</string>
-  <string name="white_noise">Zhurma e bardhë</string>
-  <string name="wind_in_chimes_of_shells">Era në krisma e guaskëve</string>
-  <string name="wind_in_palm_trees">Era në palmat</string>
-  
-
-  <!-- Saved Presets -->
-
-  <string name="delete">Fshij</string>
-  <string name="open_context_menu">Menu e hapur e kontekstit</string>
-  <string name="preset_delete_confirmation">Konfirmoni fshirjen %s?</string>
-  <string name="preset_deleted">Paravendosja u fshih!</string>
-  <string name="preset_info__description">
+    <!-- Navigation Drawer -->
+    <string name="about">Reth</string>
+    <string name="app_theme">Tema</string>
+    <string name="close_drawer">Mbyll sirtarin e lundrimit</string>
+    <string name="library">Libraria</string>
+    <string name="open_drawer">Hap sirtarin e lundrimit</string>
+    <string name="report_issue">Raporto problemë</string>
+    <string name="saved_presets">Paravendosjet e ruajtur!</string>
+    <string name="sleep_timer">Koha e gjumit</string>
+    <!-- Save new preset Dialog -->
+    <string name="cancel">Anulo</string>
+    <string name="dismiss">Heq</string>
+    <string name="name">Emri</string>
+    <string name="pause">Pauzë</string>
+    <string name="preset_name_cannot_be_empty">Emri i paravendosur nuk mund të jetë bosh!</string>
+    <string name="preset_saved">Paracaktuar e ruajtur!</string>
+    <string name="save">Ruaj</string>
+    <string name="save_preset">Ruani paraprakisht</string>
+    <!-- Library List Item -->
+    <string name="play">Luaj</string>
+    <string name="play_pause">Luaj ose pauzë</string>
+    <string name="repeat_time_period">Periudha kohore e përsëritjes</string>
+    <string name="stop">Ndalo</string>
+    <string name="volume">Volumi i zerit</string>
+    <!-- Library - sounds -->
+    <string name="airplane_inflight">Aeroplan në fluturim</string>
+    <string name="airplane_seatbelt_beeps">Sinjal i rripit te sigurimit ne aeroplan</string>
+    <string name="birds">Zogj</string>
+    <string name="bonfire">Zjarr</string>
+    <string name="brownian_noise">Zhurmë kafe</string>
+    <string name="coffee_shop">Kafene</string>
+    <string name="distant_thunder">Bubullimë ne largësi</string>
+    <string name="heavy_rain">Shi i fortë</string>
+    <string name="light_rain">Shi i lehtë</string>
+    <string name="moderate_rain">Shi mesatar</string>
+    <string name="morning_in_a_village">Mëngjesi në një fshat</string>
+    <string name="moving_train">Tren në lëvizje</string>
+    <string name="night">Natë</string>
+    <string name="office">Zyra</string>
+    <string name="pink_noise">Zhurmë roz</string>
+    <string name="rolling_thunder">Bubullima</string>
+    <string name="seaside">Bregdet</string>
+    <string name="soft_wind">Era e butë</string>
+    <string name="thunder_crack">Gjëmim</string>
+    <string name="train_horn">Bori treni</string>
+    <string name="water_stream">Rrjedha e ujit</string>
+    <string name="white_noise">Zhurma e bardhë</string>
+    <string name="wind_in_chimes_of_shells">Era në krisma e guaskëve</string>
+    <string name="wind_in_palm_trees">Era në palmat</string>
+    <!-- Saved Presets -->
+    <string name="delete">Fshij</string>
+    <string name="open_context_menu">Menu e hapur e kontekstit</string>
+    <string name="preset_delete_confirmation">Konfirmoni fshirjen %s?</string>
+    <string name="preset_deleted">Paravendosja u fshih!</string>
+    <string name="preset_info__description">
     Nuk keni krijuar ndonjë Paravendosje akoma. Për të krijuar një paravendosje, shkoni tek Libraria dhe luani tinguj.
     Pastaj klikoni në butonin Ruaj që shfaqet në këndin e poshtëm të ekranit.
   </string>
-  <string name="rename">Riemërtoj</string>
-  
-
-  <!-- Sleep Timer -->
-
-  <string name="auto_sleep_schedule_cancelled">Koha automatike e gjumit u anullu!</string>
-  <string name="reset">Rivë</string>
-  <string name="sleep_timer_description">Noice do të mbyllë vetveten kur koha do të përfundojë. Përdorni butonat më poshtë për të shtuar kohën dhe për të filluar kohëmatësin.</string>
-  
-
-  <!-- Theme -->
-
-  <string-array name="app_themes">
-    <item>E çelët</item>
-    <item>E errët</item>
-    <item>Parazgjedhje sistemi</item>
-  </string-array>
-
-
-  <!-- About -->
-
-  <string name="about__email">Email</string>
-  <string name="about__github">Github</string>
-  <string name="about__twitter">Twitter</string>
-  <string name="app_description">Relaksohuni dhe rritni produktivitetin me zhurmë minimale në sfond</string>
-  <string name="connect_with_author">Lidhu me Autorin</string>
-  <string name="credits">Kredite</string>
-  
-
-  <!-- Others -->
-
-  <string name="notification_channel_default__description">Kontrollet e riprodhimit të mediave</string>
-  <string name="notification_channel_default__name">Ridëgjim i medias</string>
+    <string name="rename">Riemërtoj</string>
+    <!-- Sleep Timer -->
+    <string name="auto_sleep_schedule_cancelled">Koha automatike e gjumit u anullu!</string>
+    <string name="reset">Rivë</string>
+    <string name="sleep_timer_description">Noice do të mbyllë vetveten kur koha do të përfundojë. Përdorni butonat më poshtë për të shtuar kohën dhe për të filluar kohëmatësin.</string>
+    <!-- Theme -->
+    <string-array name="app_themes">
+        <item>E çelët</item>
+        <item>E errët</item>
+        <item>Parazgjedhje sistemi</item>
+    </string-array>
+    <!-- About -->
+    <string name="about__email">Email</string>
+    <string name="about__github">Github</string>
+    <string name="about__twitter">Twitter</string>
+    <string name="app_description">Relaksohuni dhe rritni produktivitetin me zhurmë minimale në sfond.</string>
+    <string name="connect_with_author">Lidhu me Autorin</string>
+    <string name="credits">Kredite</string>
+    <!-- Others -->
+    <string name="notification_channel_default__description">Kontrollet e riprodhimit të mediave</string>
+    <string name="notification_channel_default__name">Ridëgjim i medias</string>
 </resources>
