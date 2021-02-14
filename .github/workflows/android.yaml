@@ -58,9 +58,14 @@ jobs:
     timeout-minutes: 30
     strategy:
       matrix:
-        android:
-          - 28 # Mockk won't work below 28
-        # - 29 # commented out cause the Google APIs emulator image is unstable.
+        include:
+          - android: 29
+            target: default
+            gradleTask: connectedFdroidDebugAndroidTest
+          - android: 29
+            target: google_apis
+            gradleTask: connectedPlaystoreDebugAndroidTest
+
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
@@ -70,9 +75,9 @@ jobs:
       - uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.android }}
-          target: google_apis
-          arch: x86_64 # x86 is not available for android-28 with google_apis
-          script: ./gradlew connectedCheck --no-daemon --stacktrace
+          target: ${{ matrix.target }}
+          arch: x86
+          script: ./gradlew ${{ matrix.gradleTask }} --no-daemon --stacktrace
           emulator-options: >-
             -no-boot-anim -no-audio -no-snapshot -no-window -camera-back none
             -camera-front none -gpu swiftshader_indirect -memory 3583
