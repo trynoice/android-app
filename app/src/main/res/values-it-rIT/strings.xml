@@ -1,101 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-  <!-- Navigation Drawer -->
-
-  <string name="about">A proposito di</string>
-  <string name="app_theme">Tema</string>
-  <string name="close_drawer">Chiudi menu di navigazione</string>
-  <string name="library">Libreria</string>
-  <string name="open_drawer">Apri menù di navigazione</string>
-  <string name="report_issue">Riporta errore</string>
-  <string name="saved_presets">Preimpostazioni salvate</string>
-  <string name="sleep_timer">Timer di spegnimento </string>
-  
-
-  <!-- Save new preset Dialog -->
-
-  <string name="cancel">Annulla</string>
-  <string name="dismiss">Annulla</string>
-  <string name="name">Nome</string>
-  <string name="pause">Pausa</string>
-  <string name="preset_name_cannot_be_empty">Il nome della preimpostazione non può essere vuoto!</string>
-  <string name="preset_saved">Preimpostazione salvata!</string>
-  <string name="save">Salva</string>
-  <string name="save_preset">Salva preimpostazione</string>
-  
-
-  <!-- Library List Item -->
-
-  <string name="play">Riproduci</string>
-  <string name="play_pause">riproduci o pausa</string>
-  <string name="repeat_time_period">Periodo di ripetizione</string>
-  <string name="stop">Ferma</string>
-  <string name="volume">Volume del suono</string>
-  
-
-  <!-- Library - sounds -->
-
-  <string name="airplane_inflight">Aereo in volo</string>
-  <string name="airplane_seatbelt_beeps">Bip cinture di sicurezza in aereo</string>
-  <string name="birds">Uccelli</string>
-  <string name="bonfire">Falò</string>
-  <string name="brownian_noise">Rumore marrone</string>
-  <string name="coffee_shop">Caffetteria</string>
-  <string name="distant_thunder">Tuono distante</string>
-  <string name="heavy_rain">Pioggia forte</string>
-  <string name="light_rain">Pioggia leggera</string>
-  <string name="moderate_rain">Pioggia moderata</string>
-  <string name="morning_in_a_village">Mattino in un villaggio</string>
-  <string name="moving_train">Treno in movimento</string>
-  <string name="night">Notte</string>
-  <string name="office">Ufficio</string>
-  <string name="pink_noise">Rumore Rosa</string>
-  <string name="rolling_thunder">Rombo di tuono</string>
-  <string name="seaside">Litorale</string>
-  <string name="soft_wind">Vento leggero</string>
-  <string name="thunder_crack">Scarica di fulmine</string>
-  <string name="train_horn">Fischio di treno</string>
-  <string name="water_stream">Flusso d\'acqua</string>
-  <string name="white_noise">Rumore bianco</string>
-  <string name="wind_in_chimes_of_shells">Vento tra le conciglie</string>
-  <string name="wind_in_palm_trees">Vento tra le palme</string>
-  
-
-  <!-- Saved Presets -->
-
-  <string name="delete">Rimuovi</string>
-  <string name="preset_delete_confirmation">Confermi rimozione di %s?</string>
-  <string name="preset_deleted">Preimpostazione rimossa!</string>
-  
-
-  <!-- Sleep Timer -->
-
-  <string name="auto_sleep_schedule_cancelled">Timer di spegnimento rimosso!</string>
-  <string name="reset">Ripristina</string>
-  
-
-  <!-- Theme -->
-
-  <string-array name="app_themes">
-    <item>Chiaro</item>
-    <item>Scuro</item>
-    <item>Predefinito del sistema</item>
-  </string-array>
-
-
-  <!-- About -->
-
-  <string name="about__email">Email</string>
-  <string name="about__github">Github</string>
-  <string name="about__twitter">Twitter</string>
-  <string name="app_description">Rilassati e migliora la produttività con rumori di fondo minimali</string>
-  <string name="connect_with_author">Connettiti con l\'Autore</string>
-  <string name="credits">Crediti</string>
-  
-
-  <!-- Others -->
-
-  <string name="notification_channel_default__description">Controlli di riproduzione</string>
-  <string name="notification_channel_default__name">Riproduzione dei media</string>
+    <!-- Navigation Drawer -->
+    <string name="about">A proposito di</string>
+    <string name="app_theme">Tema</string>
+    <string name="close_drawer">Chiudi menu di navigazione</string>
+    <string name="library">Libreria</string>
+    <string name="open_drawer">Apri menù di navigazione</string>
+    <string name="report_issue">Riporta errore</string>
+    <string name="saved_presets">Preimpostazioni salvate</string>
+    <string name="sleep_timer">Timer di spegnimento </string>
+    <!-- Save new preset Dialog -->
+    <string name="cancel">Annulla</string>
+    <string name="dismiss">Annulla</string>
+    <string name="name">Nome</string>
+    <string name="pause">Pausa</string>
+    <string name="preset_name_cannot_be_empty">Il nome della preimpostazione non può essere vuoto!</string>
+    <string name="preset_saved">Preimpostazione salvata!</string>
+    <string name="save">Salva</string>
+    <string name="save_preset">Salva preimpostazione</string>
+    <!-- Library List Item -->
+    <string name="play">Riproduci</string>
+    <string name="play_pause">riproduci o pausa</string>
+    <string name="repeat_time_period">Periodo di ripetizione</string>
+    <string name="stop">Ferma</string>
+    <string name="volume">Volume del suono</string>
+    <!-- Library - sounds -->
+    <string name="airplane_inflight">Aereo in volo</string>
+    <string name="airplane_seatbelt_beeps">Bip cinture di sicurezza in aereo</string>
+    <string name="birds">Uccelli</string>
+    <string name="bonfire">Falò</string>
+    <string name="brownian_noise">Rumore marrone</string>
+    <string name="coffee_shop">Caffetteria</string>
+    <string name="distant_thunder">Tuono distante</string>
+    <string name="heavy_rain">Pioggia forte</string>
+    <string name="light_rain">Pioggia leggera</string>
+    <string name="moderate_rain">Pioggia moderata</string>
+    <string name="morning_in_a_village">Mattino in un villaggio</string>
+    <string name="moving_train">Treno in movimento</string>
+    <string name="night">Notte</string>
+    <string name="office">Ufficio</string>
+    <string name="pink_noise">Rumore Rosa</string>
+    <string name="rolling_thunder">Rombo di tuono</string>
+    <string name="seaside">Litorale</string>
+    <string name="soft_wind">Vento leggero</string>
+    <string name="thunder_crack">Scarica di fulmine</string>
+    <string name="train_horn">Fischio di treno</string>
+    <string name="water_stream">Flusso d\'acqua</string>
+    <string name="white_noise">Rumore bianco</string>
+    <string name="wind_in_chimes_of_shells">Vento tra le conciglie</string>
+    <string name="wind_in_palm_trees">Vento tra le palme</string>
+    <!-- Saved Presets -->
+    <string name="delete">Rimuovi</string>
+    <string name="preset_delete_confirmation">Confermi rimozione di %s?</string>
+    <string name="preset_deleted">Preimpostazione rimossa!</string>
+    <!-- Sleep Timer -->
+    <string name="auto_sleep_schedule_cancelled">Timer di spegnimento rimosso!</string>
+    <string name="reset">Ripristina</string>
+    <!-- Theme -->
+    <string-array name="app_themes">
+        <item>Chiaro</item>
+        <item>Scuro</item>
+        <item>Predefinito del sistema</item>
+    </string-array>
+    <!-- About -->
+    <string name="about__email">Email</string>
+    <string name="about__github">Github</string>
+    <string name="about__twitter">Twitter</string>
+    <string name="app_description">Rilassati e migliora la produttività con rumori di fondo minimali.</string>
+    <string name="connect_with_author">Connettiti con l\'Autore</string>
+    <string name="credits">Crediti</string>
+    <!-- Others -->
+    <string name="notification_channel_default__description">Controlli di riproduzione</string>
+    <string name="notification_channel_default__name">Riproduzione dei media</string>
 </resources>
