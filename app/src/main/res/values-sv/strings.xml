@@ -1,104 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-  <!-- Navigation Drawer -->
-
-  <string name="about">Om</string>
-  <string name="app_theme">Tema</string>
-  <string name="close_drawer">Stäng navigationslåda</string>
-  <string name="library">Bibliotek</string>
-  <string name="open_drawer">Öppna navigationslåda</string>
-  <string name="report_issue">Rapportera problem</string>
-  <string name="saved_presets">Sparade kombinationer</string>
-  <string name="sleep_timer">Timer för nedstängning</string>
-  
-
-  <!-- Save new preset Dialog -->
-
-  <string name="cancel">Avbryt</string>
-  <string name="dismiss">Avfärda</string>
-  <string name="name">Namn</string>
-  <string name="pause">Pausa</string>
-  <string name="preset_name_cannot_be_empty">Kombinationens namn kan inte vara tom!</string>
-  <string name="preset_saved">Kombination sparad!</string>
-  <string name="save">Spara</string>
-  <string name="save_preset">Sparade kombinationer</string>
-  
-
-  <!-- Library List Item -->
-
-  <string name="play">Spela</string>
-  <string name="play_pause">spela eller pausa</string>
-  <string name="repeat_time_period">Upprepa period</string>
-  <string name="stop">Stopp</string>
-  <string name="volume">Ljudvolym</string>
-  
-
-  <!-- Library - sounds -->
-
-  <string name="airplane_inflight">Flygplan i luften</string>
-  <string name="airplane_seatbelt_beeps">Flygplan bältet-på</string>
-  <string name="birds">Fåglar</string>
-  <string name="bonfire">Brasa</string>
-  <string name="brownian_noise">Brunt brus</string>
-  <string name="coffee_shop">Café</string>
-  <string name="distant_thunder">Distant åska</string>
-  <string name="heavy_rain">Starkt regn</string>
-  <string name="light_rain">Milt regn</string>
-  <string name="moderate_rain">Måttligt regn</string>
-  <string name="morning_in_a_village">Morgon i en by</string>
-  <string name="moving_train">Tåg i rörelse</string>
-  <string name="night">Natt</string>
-  <string name="office">Kontor</string>
-  <string name="pink_noise">Rosa brus</string>
-  <string name="rolling_thunder">Åskmuller</string>
-  <string name="seaside">Vid kusten</string>
-  <string name="soft_wind">Mjuk vind</string>
-  <string name="thunder_crack">Blixt</string>
-  <string name="train_horn">Tågsignal</string>
-  <string name="water_stream">Flod</string>
-  <string name="white_noise">Vitt brus</string>
-  <string name="wind_in_chimes_of_shells">Vindspel</string>
-  <string name="wind_in_palm_trees">Palmträd i vind</string>
-  
-
-  <!-- Saved Presets -->
-
-  <string name="delete">Ta bort</string>
-  <string name="open_context_menu">Öppna kontext-meny</string>
-  <string name="preset_delete_confirmation">Vill du ta bort %s?</string>
-  <string name="preset_deleted">Kombination borttagen!</string>
-  <string name="rename">Ändra namn</string>
-  
-
-  <!-- Sleep Timer -->
-
-  <string name="auto_sleep_schedule_cancelled">Timer avbruten!</string>
-  <string name="reset">Starta om</string>
-  <string name="sleep_timer_description">Noice kommer att stänga av sig själv när timern avslutats. Välj tid för att starta timern.</string>
-  
-
-  <!-- Theme -->
-
-  <string-array name="app_themes">
-    <item>Ljust</item>
-    <item>Mörk</item>
-    <item>Systemstandard</item>
-  </string-array>
-
-
-  <!-- About -->
-
-  <string name="about__email">E-post</string>
-  <string name="about__github">GitHub</string>
-  <string name="about__twitter">Twitter</string>
-  <string name="app_description">Koppla av och öka din koncentrationsförmåga med minimala bakgrundsljud</string>
-  <string name="connect_with_author">Kontakta utvecklaren</string>
-  <string name="credits">Credits</string>
-  
-
-  <!-- Others -->
-
-  <string name="notification_channel_default__description">Inställningar för mediauppspelning</string>
-  <string name="notification_channel_default__name">Mediauppspelning</string>
+    <!-- Navigation Drawer -->
+    <string name="about">Om</string>
+    <string name="app_theme">Tema</string>
+    <string name="close_drawer">Stäng navigationslåda</string>
+    <string name="library">Bibliotek</string>
+    <string name="open_drawer">Öppna navigationslåda</string>
+    <string name="report_issue">Rapportera problem</string>
+    <string name="saved_presets">Sparade kombinationer</string>
+    <string name="sleep_timer">Timer för nedstängning</string>
+    <!-- Save new preset Dialog -->
+    <string name="cancel">Avbryt</string>
+    <string name="dismiss">Avfärda</string>
+    <string name="name">Namn</string>
+    <string name="pause">Pausa</string>
+    <string name="preset_name_cannot_be_empty">Kombinationens namn kan inte vara tom!</string>
+    <string name="preset_saved">Kombination sparad!</string>
+    <string name="save">Spara</string>
+    <string name="save_preset">Sparade kombinationer</string>
+    <!-- Library List Item -->
+    <string name="play">Spela</string>
+    <string name="play_pause">spela eller pausa</string>
+    <string name="repeat_time_period">Upprepa period</string>
+    <string name="stop">Stopp</string>
+    <string name="volume">Ljudvolym</string>
+    <!-- Library - sounds -->
+    <string name="airplane_inflight">Flygplan i luften</string>
+    <string name="airplane_seatbelt_beeps">Flygplan bältet-på</string>
+    <string name="birds">Fåglar</string>
+    <string name="bonfire">Brasa</string>
+    <string name="brownian_noise">Brunt brus</string>
+    <string name="coffee_shop">Café</string>
+    <string name="distant_thunder">Distant åska</string>
+    <string name="heavy_rain">Starkt regn</string>
+    <string name="light_rain">Milt regn</string>
+    <string name="moderate_rain">Måttligt regn</string>
+    <string name="morning_in_a_village">Morgon i en by</string>
+    <string name="moving_train">Tåg i rörelse</string>
+    <string name="night">Natt</string>
+    <string name="office">Kontor</string>
+    <string name="pink_noise">Rosa brus</string>
+    <string name="rolling_thunder">Åskmuller</string>
+    <string name="seaside">Vid kusten</string>
+    <string name="soft_wind">Mjuk vind</string>
+    <string name="thunder_crack">Blixt</string>
+    <string name="train_horn">Tågsignal</string>
+    <string name="water_stream">Flod</string>
+    <string name="white_noise">Vitt brus</string>
+    <string name="wind_in_chimes_of_shells">Vindspel</string>
+    <string name="wind_in_palm_trees">Palmträd i vind</string>
+    <!-- Saved Presets -->
+    <string name="delete">Ta bort</string>
+    <string name="open_context_menu">Öppna kontext-meny</string>
+    <string name="preset_delete_confirmation">Vill du ta bort %s?</string>
+    <string name="preset_deleted">Kombination borttagen!</string>
+    <string name="rename">Ändra namn</string>
+    <!-- Sleep Timer -->
+    <string name="auto_sleep_schedule_cancelled">Timer avbruten!</string>
+    <string name="reset">Starta om</string>
+    <string name="sleep_timer_description">Noice kommer att stänga av sig själv när timern avslutats. Välj tid för att starta timern.</string>
+    <!-- Theme -->
+    <string-array name="app_themes">
+        <item>Ljust</item>
+        <item>Mörk</item>
+        <item>Systemstandard</item>
+    </string-array>
+    <!-- About -->
+    <string name="about__email">E-post</string>
+    <string name="about__github">GitHub</string>
+    <string name="about__twitter">Twitter</string>
+    <string name="app_description">Koppla av och öka din koncentrationsförmåga med minimala bakgrundsljud.</string>
+    <string name="connect_with_author">Kontakta utvecklaren</string>
+    <string name="credits">Credits</string>
+    <!-- Others -->
+    <string name="notification_channel_default__description">Inställningar för mediauppspelning</string>
+    <string name="notification_channel_default__name">Mediauppspelning</string>
 </resources>
