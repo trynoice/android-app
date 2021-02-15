@@ -105,7 +105,7 @@ dependencies {
   androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.3.0'
   androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0'
   androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-  androidTestImplementation 'io.mockk:mockk-android:1.10.5'
+  androidTestImplementation 'io.mockk:mockk-android:1.10.6'
   androidTestImplementation 'junit:junit:4.13.1'
 
   androidTestPlaystoreImplementation 'tools.fastlane:screengrab:2.0.0'
