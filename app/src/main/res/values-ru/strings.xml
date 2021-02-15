@@ -170,4 +170,10 @@
     <string name="notification_channel_default__description">Регуляторы воспроизведения</string>
     <string name="notification_channel_default__name">Воспроизведение звуков</string>
     <string name="submit_feedback">Отправить отзыв</string>
+    <string name="use_24h_format">Использовать 24-часовой формат</string>
+    <string name="add_to_home_screen">Добавить на домашний экран</string>
+    <string name="light">Светлая</string>
+    <string name="intensity">Интенсивность</string>
+    <string name="dense">Плотный</string>
+    <string name="any">Любой</string>
 </resources>
