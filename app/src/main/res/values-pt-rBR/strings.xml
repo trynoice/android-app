@@ -1,183 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <!-- Navigation Drawer -->
-  <string name="about">Saiba mais</string>
-  <string name="app_theme">Tema</string>
-  <string name="close_drawer">Fechar menu de navegação</string>
-  <string name="help">Ajuda</string>
-  <string name="library">Biblioteca</string>
-  <string name="open_drawer">Abrir menu de navegação</string>
-  <string name="report_issue">Informar sobre problema</string>
-  <string name="saved_presets">Ajustes salvos</string>
-  <string name="sleep_timer">Temporizador</string>
-  <string name="support_development">Apoie o Desenvolvimento</string>
-  <string name="wake_up_timer">Despertador</string>
-  <!-- Random preset Dialog -->
-  <string name="okay">OK</string>
-  <!-- Save new preset Dialog -->
-  <string name="cancel">Cancelar</string>
-  <string name="dismiss">Dispensar</string>
-  <string name="name">Nome</string>
-  <string name="pause">Pausar</string>
-  <string name="preset_already_exists">Já existe um ajuste com o nome fornecido!</string>
-  <string name="preset_name_cannot_be_empty">Um ajuste não pode ter seu nome vazio!</string>
-  <string name="preset_saved">Ajuste salvo!</string>
-  <string name="save">Salvar</string>
-  <string name="save_preset">Salvar ajustes</string>
-  <!-- Library List Item -->
-  <string name="play">Tocar</string>
-  <string name="play_pause">tocar ou pausar som</string>
-  <string name="repeat_time_period">Período até repetir som</string>
-  <string name="stop">Parar</string>
-  <string name="volume">Volume do som</string>
-  <!-- Library - sound groups -->
-  <string name="sound_group__life">Vida</string>
-  <string name="sound_group__monsoon">Monção</string>
-  <string name="sound_group__public_gatherings">Encontros Públicos</string>
-  <string name="sound_group__raw_noise">Ruído Bruto</string>
-  <string name="sound_group__times_of_day">Horas do Dia</string>
-  <string name="sound_group__vehicles">Veículos</string>
-  <string name="sound_group__water">Água</string>
-  <string name="sound_group__wind">Vento</string>
-  <!-- Library - sounds -->
-  <string name="airplane_inflight">Avião voando</string>
-  <string name="airplane_seatbelt_beeps">Cinto de segurança de avião</string>
-  <string name="birds">Pássaros</string>
-  <string name="bonfire">Fogueira</string>
-  <string name="brownian_noise">Ruído vermelho (Browniano)</string>
-  <string name="coffee_shop">Cafeteria</string>
-  <string name="creaking_ship">Navio rangendo</string>
-  <string name="crickets">Grilos</string>
-  <string name="distant_thunder">Trovoadas distantes</string>
-  <string name="electric_car">Carro elétrico</string>
-  <string name="heavy_rain">Chuva intensa</string>
-  <string name="howling_wolf">Lobo uivante</string>
-  <string name="human_heartbeat">Batimento cardíaco humano</string>
-  <string name="light_rain">Chuva leve</string>
-  <string name="moderate_rain">Chuva moderada</string>
-  <string name="morning_in_a_village">Manhã em um vilarejo</string>
-  <string name="moving_train">Trem</string>
-  <string name="night">Sons noturnos</string>
-  <string name="office">Em um escritório</string>
-  <string name="pink_noise">Ruído rosa</string>
-  <string name="public_library">Biblioteca pública</string>
-  <string name="purring_cat">Gato ronronando</string>
-  <string name="quiet_conversation">Conversa reservada</string>
-  <string name="rolling_thunder">Trovoada iminente</string>
-  <string name="screeching_seagulls">Gaivotas gritando</string>
-  <string name="seaside">Beira-mar</string>
-  <string name="soft_wind">Vento leve</string>
-  <string name="thunder_crack">Trovoada forte</string>
-  <string name="train_horn">Sirene de trem</string>
-  <string name="walking_through_the_snow">Caminhando pela neve</string>
-  <string name="water_hose">Mangueira de água</string>
-  <string name="water_stream">Água em correnteza</string>
-  <string name="white_noise">Ruído branco</string>
-  <string name="wind_in_chimes_of_shells">Vento contra sininhos</string>
-  <string name="wind_in_palm_trees">Vento contra folhagem de palmeiras</string>
-  <!-- Saved Presets -->
-  <string name="delete">Remover</string>
-  <string name="open_context_menu">Abrir menu</string>
-  <string name="preset_delete_confirmation">Deseja mesmo remover \"%s\"?</string>
-  <string name="preset_deleted">Ajuste removido!</string>
-  <string name="preset_info__description">
+    <!-- Navigation Drawer -->
+    <string name="about">Saiba mais</string>
+    <string name="app_theme">Tema</string>
+    <string name="close_drawer">Fechar menu de navegação</string>
+    <string name="help">Ajuda</string>
+    <string name="library">Biblioteca</string>
+    <string name="open_drawer">Abrir menu de navegação</string>
+    <string name="report_issue">Informar sobre problema</string>
+    <string name="saved_presets">Ajustes salvos</string>
+    <string name="sleep_timer">Temporizador</string>
+    <string name="support_development">Apoie o Desenvolvimento</string>
+    <string name="wake_up_timer">Despertador</string>
+    <!-- Random preset Dialog -->
+    <string name="okay">OK</string>
+    <!-- Save new preset Dialog -->
+    <string name="cancel">Cancelar</string>
+    <string name="dismiss">Dispensar</string>
+    <string name="name">Nome</string>
+    <string name="pause">Pausar</string>
+    <string name="preset_already_exists">Já existe um ajuste com o nome fornecido!</string>
+    <string name="preset_name_cannot_be_empty">Um ajuste não pode ter seu nome vazio!</string>
+    <string name="preset_saved">Ajuste salvo!</string>
+    <string name="save">Salvar</string>
+    <string name="save_preset">Salvar ajustes</string>
+    <!-- Library List Item -->
+    <string name="play">Tocar</string>
+    <string name="play_pause">tocar ou pausar som</string>
+    <string name="repeat_time_period">Período até repetir som</string>
+    <string name="stop">Parar</string>
+    <string name="volume">Volume do som</string>
+    <!-- Library - sound groups -->
+    <string name="sound_group__life">Vida</string>
+    <string name="sound_group__monsoon">Monção</string>
+    <string name="sound_group__public_gatherings">Encontros Públicos</string>
+    <string name="sound_group__raw_noise">Ruído Bruto</string>
+    <string name="sound_group__times_of_day">Horas do Dia</string>
+    <string name="sound_group__vehicles">Veículos</string>
+    <string name="sound_group__water">Água</string>
+    <string name="sound_group__wind">Vento</string>
+    <!-- Library - sounds -->
+    <string name="airplane_inflight">Avião voando</string>
+    <string name="airplane_seatbelt_beeps">Cinto de segurança de avião</string>
+    <string name="birds">Pássaros</string>
+    <string name="bonfire">Fogueira</string>
+    <string name="brownian_noise">Ruído vermelho (Browniano)</string>
+    <string name="coffee_shop">Cafeteria</string>
+    <string name="creaking_ship">Navio rangendo</string>
+    <string name="crickets">Grilos</string>
+    <string name="distant_thunder">Trovoadas distantes</string>
+    <string name="electric_car">Carro elétrico</string>
+    <string name="heavy_rain">Chuva intensa</string>
+    <string name="howling_wolf">Lobo uivante</string>
+    <string name="human_heartbeat">Batimento cardíaco humano</string>
+    <string name="light_rain">Chuva leve</string>
+    <string name="moderate_rain">Chuva moderada</string>
+    <string name="morning_in_a_village">Manhã em um vilarejo</string>
+    <string name="moving_train">Trem</string>
+    <string name="night">Sons noturnos</string>
+    <string name="office">Em um escritório</string>
+    <string name="pink_noise">Ruído rosa</string>
+    <string name="public_library">Biblioteca pública</string>
+    <string name="purring_cat">Gato ronronando</string>
+    <string name="quiet_conversation">Conversa reservada</string>
+    <string name="rolling_thunder">Trovoada iminente</string>
+    <string name="screeching_seagulls">Gaivotas gritando</string>
+    <string name="seaside">Beira-mar</string>
+    <string name="soft_wind">Vento leve</string>
+    <string name="thunder_crack">Trovoada forte</string>
+    <string name="train_horn">Sirene de trem</string>
+    <string name="walking_through_the_snow">Caminhando pela neve</string>
+    <string name="water_hose">Mangueira de água</string>
+    <string name="water_stream">Água em correnteza</string>
+    <string name="white_noise">Ruído branco</string>
+    <string name="wind_in_chimes_of_shells">Vento contra sininhos</string>
+    <string name="wind_in_palm_trees">Vento contra folhagem de palmeiras</string>
+    <!-- Saved Presets -->
+    <string name="delete">Remover</string>
+    <string name="open_context_menu">Abrir menu</string>
+    <string name="preset_delete_confirmation">Deseja mesmo remover \"%s\"?</string>
+    <string name="preset_deleted">Ajuste removido!</string>
+    <string name="preset_info__description">
     Você ainda não criou nenhum ajuste. Para criar um ajuste, vá para a Biblioteca e reproduza sons.
     Em seguida, clique no botão Salvar que aparece no canto inferior da tela.
   </string>
-  <string name="rename">Renomear</string>
-  <!-- Sleep Timer -->
-  <string name="auto_sleep_schedule_cancelled">Temporizador cancelado!</string>
-  <string name="reset">Parar</string>
-  <string name="sleep_timer_description">
+    <string name="rename">Renomear</string>
+    <!-- Sleep Timer -->
+    <string name="auto_sleep_schedule_cancelled">Temporizador cancelado!</string>
+    <string name="reset">Parar</string>
+    <string name="sleep_timer_description">
     Assim que o temporizador acabar, Noice irá parar de tocar qualquer som.
     Use os botões abaixo para acrescentar tempo e iniciar o temporizador.
   </string>
-  <!-- Wake-up Timer -->
-  <string name="schedule">Agendar</string>
-  <string name="select_preset">Selecionar Ajuste</string>
-  <string name="wake_up_timer_description">
+    <!-- Wake-up Timer -->
+    <string name="schedule">Agendar</string>
+    <string name="select_preset">Selecionar Ajuste</string>
+    <string name="wake_up_timer_description">
     Noice irá iniciar o ajuste selecionado quando o tempo acabar. Use os botões abaixo para
     selecionar um ajuste e definir a hora desejada para iniciar o despertador.
   </string>
-  <!-- Theme -->
-  <string-array name="app_themes">
-    <item>Claro</item>
-    <item>Escuro</item>
-    <item>Padrão do sistema</item>
-  </string-array>
-  <!-- About -->
-  <string name="about__email">E-mail</string>
-  <string name="about__github">Github</string>
-  <string name="about__translations">Traduções</string>
-  <string name="about__twitter">Twitter</string>
-  <string name="app_description">Melhore sua produtividade e relaxe com um pouquinho de barulho.</string>
-  <string name="connect_with_author">Fale com o Autor</string>
-  <string name="credits">Créditos</string>
-  <!-- Help -->
-  <string name="appintro__chromecast_desc">
+    <!-- Theme -->
+    <string-array name="app_themes">
+        <item>Claro</item>
+        <item>Escuro</item>
+        <item>Padrão do sistema</item>
+    </string-array>
+    <!-- About -->
+    <string name="about__email">E-mail</string>
+    <string name="about__github">Github</string>
+    <string name="about__translations">Traduções</string>
+    <string name="about__twitter">Twitter</string>
+    <string name="app_description">Melhore sua produtividade e relaxe com um pouquinho de barulho.</string>
+    <string name="connect_with_author">Fale com o Autor</string>
+    <string name="credits">Créditos</string>
+    <!-- Help -->
+    <string name="appintro__chromecast_desc">
     Use o Noice para transmitir seu ambiente a outros dispositivos compatíveis com Chromecast,
     como alto-falantes, TVs, etc.
   </string>
-  <string name="appintro__chromecast_title">Chromecast habilitado</string>
-  <string name="appintro__getting_started_desc_0">
+    <string name="appintro__chromecast_title">Chromecast habilitado</string>
+    <string name="appintro__getting_started_desc_0">
     Deslize para a esquerda para conhecer todas as funcionalidades!
   </string>
-  <string name="appintro__getting_started_desc_1">Vamos começar!</string>
-  <string name="appintro__getting_started_title">Bem-vindo</string>
-  <string name="appintro__preset_desc">
+    <string name="appintro__getting_started_desc_1">Vamos começar!</string>
+    <string name="appintro__getting_started_title">Bem-vindo</string>
+    <string name="appintro__preset_desc">
     Depois de tocar alguns sons, você pode usar o botão no canto inferior para salvar sua mixagem.
     Para reutilizar um mix armazenado, pode visitar a lista de ajustes no menu do aplicativo.
   </string>
-  <string name="appintro__preset_title">Salve seus mixes favoritos</string>
-  <string name="appintro__sound_library_desc">
+    <string name="appintro__preset_title">Salve seus mixes favoritos</string>
+    <string name="appintro__sound_library_desc">
     Use a barra de volume para ajustar o volume dos sons. A cada repetição de sons sem loop, um
     período de atraso é selecionado aleatoriamente a partir do intervalo definido na barra de tempo.
   </string>
-  <string name="appintro__sound_library_title">Crie seu ambiente perfeito</string>
-  <string name="appintro__timer_desc">
+    <string name="appintro__sound_library_title">Crie seu ambiente perfeito</string>
+    <string name="appintro__timer_desc">
     Um pouco de ambiente pode ajudá-lo a adormecer sem esforço. Use o temporizador para deixar
     o Noice desligar-se sozinho. Da mesma forma, para acordar com um ambiente calmo,
     use o despertador para definir o alarme.
   </string>
-  <string name="appintro__timer_title">Problemas para adormecer ou acordar?</string>
-  <!-- Support Development -->
-  <string name="support_development__donate">Doar</string>
-  <string name="support_development__donate_description">
+    <string name="appintro__timer_title">Problemas para adormecer ou acordar?</string>
+    <!-- Support Development -->
+    <string name="support_development__donate">Doar</string>
+    <string name="support_development__donate_description">
     As doações nos ajudarão em\n
     - investir em novas funcionalidades\n
     - selecionar melhores amostras de som\n
     - comprar café\n
   </string>
-  <string name="support_development__donate_google_play_description">
+    <string name="support_development__donate_google_play_description">
     Seu pagamento será administrado com segurança pelo Google Play. A quantia será convertida para
     sua moeda local. Dependendo de sua localização, impostos adicionais _podem_ ser adicionados ao
     valor final.
   </string>
-  <string name="support_development__donate_thank_you">Obrigado!</string>
-  <string name="support_development__donate_thank_you_description">
+    <string name="support_development__donate_thank_you">Obrigado!</string>
+    <string name="support_development__donate_thank_you_description">
     Agradecemos de todo o coração por sua generosa contribuição para o projeto Noice.
   </string>
-  <string name="support_development__share">Compartilhe com amigos</string>
-  <string name="support_development__share_description">
+    <string name="support_development__share">Compartilhe com amigos</string>
+    <string name="support_development__share_description">
     Compartilhar o Noice com amigos é semelhante a doar dinheiro. Com maiores downloads, poderemos
     receber feedback de várias perspectivas que nos ajudarão a tornar o Noice melhor do que nunca.
   </string>
-  <string name="support_development__why">Por que você deveria apoiar?</string>
-  <string name="support_development__why_description">
+    <string name="support_development__why">Por que você deveria apoiar?</string>
+    <string name="support_development__why_description">
     - Para possibilitar futuras atualizações\n
     - Para manter o Noice livre de anúncios para sempre\n
   </string>
-  <!-- Others -->
-  <string name="cast_media">Transmitir mídia para outro dispositivo</string>
-  <string name="in_app_feedback__description">
+    <!-- Others -->
+    <string name="cast_media">Transmitir mídia para outro dispositivo</string>
+    <string name="in_app_feedback__description">
     Gostaríamos muito de ouvir de você sobre o aplicativo. Por favor, reserve um momento para
     visitar nosso repositório no GitHub. Se você não gostou do aplicativo, considere criar uma
     issue explicando suas motivações. Caso contrário, por favor, marque com estrela o projeto para
     mostrar amor e apoio.
   </string>
-  <string name="in_app_feedback__title">Enviar uma avaliação</string>
-  <string name="later">Mais tarde</string>
-  <string name="never">Nunca</string>
-  <string name="notification_channel_default__description">Controles de audio</string>
-  <string name="notification_channel_default__name">Reprodução de audio</string>
+    <string name="in_app_feedback__title">Enviar uma avaliação</string>
+    <string name="later">Mais tarde</string>
+    <string name="never">Nunca</string>
+    <string name="notification_channel_default__description">Controles de audio</string>
+    <string name="notification_channel_default__name">Reprodução de audio</string>
+    <string name="submit_feedback">Enviar Comentarios</string>
+    <string name="relax">Relaxar</string>
 </resources>
