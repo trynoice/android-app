@@ -185,4 +185,9 @@
     <string name="focus">Fokus</string>
     <string name="any">Apapun</string>
     <string name="submit_feedback">Masukan Feedback</string>
+    <string name="should_update_media_volume">Update volume media perangkat sebelum memulai preset</string>
+    <string name="device_media_volume">Volume media perangkat</string>
+    <string name="use_24h_format">Pakai format 24-jam</string>
+    <string name="wake_up_timer_cancelled">Timer Wake-up terbatalkan!</string>
+    <string name="show_saved_preset_on_startup">Tunjukan Preset yang tersimpan pada permulaan aplikasi</string>
 </resources>
