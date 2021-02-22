@@ -175,7 +175,7 @@
     <string name="never">Never</string>
     <string name="notification_channel_default__description">Kontrol pemutaran media</string>
     <string name="notification_channel_default__name">Pemutaran Media</string>
-    <string name="shortcuts_not_supported">Launcher default anda tidak mendukung untuk menambahkan shortcuts</string>
+    <string name="shortcuts_not_supported">Launcher default anda tidak mendukung untuk menambahkan shortcuts.</string>
     <string name="preset_does_not_exist">Preset tidak tersedia. Mungkin sudah dihapus!</string>
     <string name="add_to_home_screen">Tambahkan di layar utama</string>
     <string name="relax">Rileks</string>
