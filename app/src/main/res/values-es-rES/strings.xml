@@ -165,4 +165,5 @@
     <string name="dense">Denso</string>
     <string name="any">Cualquiera</string>
     <string name="submit_feedback">Enviar Comentarios</string>
+    <string name="intensity">Intensidad</string>
 </resources>
