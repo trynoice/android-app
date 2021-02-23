@@ -176,4 +176,9 @@
     <string name="intensity">Интенсивность</string>
     <string name="dense">Плотный</string>
     <string name="any">Любой</string>
+    <string name="show_saved_preset_on_startup">Показывать сохранённые пресеты при старте приложения</string>
+    <string name="preset_does_not_exist">Пресета не существует. Возможно, он был удален!</string>
+    <string name="relax">Расслабиться</string>
+    <string name="random_preset">Случайный пресет</string>
+    <string name="mood">Настроение</string>
 </resources>
