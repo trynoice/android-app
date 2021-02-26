@@ -28,4 +28,13 @@
     <string name="close_drawer">Lukk navigasjonsskuff</string>
     <string name="app_theme">Drakt</string>
     <string name="about">Om</string>
+    <string name="about__github">GitHub</string>
+    <string name="appintro__getting_started_title">Velkommen</string>
+    <string name="credits">Æreshenvisninger</string>
+    <string name="about__twitter">Twitter</string>
+    <string name="about__translations">Oversettelser</string>
+    <string name="about__email">Epost</string>
+    <string name="rename">Gi nytt navn</string>
+    <string name="schedule">Timeplan</string>
+    <string name="reset">Tilbakestill</string>
 </resources>
