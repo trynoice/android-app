@@ -1,124 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <!-- Navigation Drawer -->
-  <string name="about">O aplikacji</string>
-  <string name="app_theme">Motyw</string>
-  <string name="close_drawer">Zamknij szufladę nawigacyjną</string>
-  <string name="library">Biblioteka</string>
-  <string name="open_drawer">Otwórz szufladę nawigacyjną</string>
-  <string name="report_issue">Zgłoś problem</string>
-  <string name="saved_presets">Zapisane szablony</string>
-  <string name="sleep_timer">Wyłącznik czasowy</string>
-  <string name="support_development">Wesprzyj rozwój</string>
-  <string name="wake_up_timer">Budzik</string>
-  <!-- Save new preset Dialog -->
-  <string name="cancel">Anuluj</string>
-  <string name="dismiss">Odrzuć</string>
-  <string name="name">Nazwa</string>
-  <string name="pause">Wstrzymaj</string>
-  <string name="preset_already_exists">Szablon o podanej nazwie już istnieje!</string>
-  <string name="preset_name_cannot_be_empty">Nazwa szablonu nie może być pusta!</string>
-  <string name="preset_saved">Szablon zapisany!</string>
-  <string name="save">Zapisz</string>
-  <string name="save_preset">Zapisz szablon</string>
-  <!-- Library List Item -->
-  <string name="play">Odtwarzaj</string>
-  <string name="play_pause">odtwarzaj lub wstrzymaj</string>
-  <string name="repeat_time_period">Okres powtarzania</string>
-  <string name="stop">Zakończ</string>
-  <string name="volume">Głośność dźwięku</string>
-  <!-- Library - sounds -->
-  <string name="airplane_inflight">Samolot w locie</string>
-  <string name="airplane_seatbelt_beeps">Sygnał pasa bezpieczeństwa w samolocie</string>
-  <string name="birds">Ptaki</string>
-  <string name="bonfire">Ognisko</string>
-  <string name="brownian_noise">Szum Browna</string>
-  <string name="coffee_shop">Kawiarnia</string>
-  <string name="distant_thunder">Odległy grzmot</string>
-  <string name="heavy_rain">Ulewa</string>
-  <string name="light_rain">Lekki deszcz</string>
-  <string name="moderate_rain">Umiarkowany deszcz</string>
-  <string name="morning_in_a_village">Poranek na wsi</string>
-  <string name="moving_train">Poruszający pociąg</string>
-  <string name="night">Noc</string>
-  <string name="office">Biuro</string>
-  <string name="pink_noise">Szum różowy</string>
-  <string name="rolling_thunder">Toczący się grzmot</string>
-  <string name="seaside">Wybrzeże</string>
-  <string name="soft_wind">Lekki wiatr</string>
-  <string name="thunder_crack">Grzmot pioruna</string>
-  <string name="train_horn">Klakson pociągu</string>
-  <string name="water_stream">Strumień wody</string>
-  <string name="white_noise">Szum biały</string>
-  <string name="wind_in_chimes_of_shells">Wiatr na dzwonkach z muszli</string>
-  <string name="wind_in_palm_trees">Wiatr w palmach</string>
-  <!-- Saved Presets -->
-  <string name="delete">Usuń</string>
-  <string name="open_context_menu">Otwórz menu kontekstowe</string>
-  <string name="preset_delete_confirmation">Czy na pewno chcesz usunąć %s?</string>
-  <string name="preset_deleted">Szablon usunięty!</string>
-  <string name="preset_info__description">
+    <!-- Navigation Drawer -->
+    <string name="about">O aplikacji</string>
+    <string name="app_theme">Motyw</string>
+    <string name="close_drawer">Zamknij szufladę nawigacyjną</string>
+    <string name="library">Biblioteka</string>
+    <string name="open_drawer">Otwórz szufladę nawigacyjną</string>
+    <string name="report_issue">Zgłoś problem</string>
+    <string name="saved_presets">Zapisane szablony</string>
+    <string name="sleep_timer">Wyłącznik czasowy</string>
+    <string name="support_development">Wesprzyj rozwój</string>
+    <string name="wake_up_timer">Budzik</string>
+    <!-- Save new preset Dialog -->
+    <string name="cancel">Anuluj</string>
+    <string name="dismiss">Odrzuć</string>
+    <string name="name">Nazwa</string>
+    <string name="pause">Wstrzymaj</string>
+    <string name="preset_already_exists">Szablon o podanej nazwie już istnieje!</string>
+    <string name="preset_name_cannot_be_empty">Nazwa szablonu nie może być pusta!</string>
+    <string name="preset_saved">Szablon zapisany!</string>
+    <string name="save">Zapisz</string>
+    <string name="save_preset">Zapisz szablon</string>
+    <!-- Library List Item -->
+    <string name="play">Odtwarzaj</string>
+    <string name="play_pause">odtwarzaj lub wstrzymaj</string>
+    <string name="repeat_time_period">Okres powtarzania</string>
+    <string name="stop">Zakończ</string>
+    <string name="volume">Głośność dźwięku</string>
+    <!-- Library - sounds -->
+    <string name="airplane_inflight">Samolot w locie</string>
+    <string name="airplane_seatbelt_beeps">Sygnał pasa bezpieczeństwa w samolocie</string>
+    <string name="birds">Ptaki</string>
+    <string name="bonfire">Ognisko</string>
+    <string name="brownian_noise">Szum Browna</string>
+    <string name="coffee_shop">Kawiarnia</string>
+    <string name="distant_thunder">Odległy grzmot</string>
+    <string name="heavy_rain">Ulewa</string>
+    <string name="light_rain">Lekki deszcz</string>
+    <string name="moderate_rain">Umiarkowany deszcz</string>
+    <string name="morning_in_a_village">Poranek na wsi</string>
+    <string name="moving_train">Poruszający pociąg</string>
+    <string name="night">Noc</string>
+    <string name="office">Biuro</string>
+    <string name="pink_noise">Szum różowy</string>
+    <string name="rolling_thunder">Toczący się grzmot</string>
+    <string name="seaside">Wybrzeże</string>
+    <string name="soft_wind">Lekki wiatr</string>
+    <string name="thunder_crack">Grzmot pioruna</string>
+    <string name="train_horn">Klakson pociągu</string>
+    <string name="water_stream">Strumień wody</string>
+    <string name="white_noise">Szum biały</string>
+    <string name="wind_in_chimes_of_shells">Wiatr na dzwonkach z muszli</string>
+    <string name="wind_in_palm_trees">Wiatr w palmach</string>
+    <!-- Saved Presets -->
+    <string name="delete">Usuń</string>
+    <string name="open_context_menu">Otwórz menu kontekstowe</string>
+    <string name="preset_delete_confirmation">Czy na pewno chcesz usunąć %s?</string>
+    <string name="preset_deleted">Szablon usunięty!</string>
+    <string name="preset_info__description">
     Nie utworzono jeszcze żadnych szablonów. Aby utworzyć szablon, przejdź do biblioteki
     i odtwórz dźwięki. Następnie kliknij przycisk Zapisz, który pojawi się w dolnym rogu ekranu.
   </string>
-  <string name="rename">Zmień nazwę</string>
-  <!-- Sleep Timer -->
-  <string name="auto_sleep_schedule_cancelled">Automatyczny wyłącznik czasowy anulowany!</string>
-  <string name="reset">Resetuj</string>
-  <string name="sleep_timer_description">
+    <string name="rename">Zmień nazwę</string>
+    <!-- Sleep Timer -->
+    <string name="auto_sleep_schedule_cancelled">Automatyczny wyłącznik czasowy anulowany!</string>
+    <string name="reset">Resetuj</string>
+    <string name="sleep_timer_description">
     Noice wyłączy się sam po upływie czasu.
     Użyj poniższych przycisków, aby dodać czas i uruchomić czasomierz.
   </string>
-  <!-- Wake-up Timer -->
-  <string name="select_preset">Wybierz szablon</string>
-  <string name="wake_up_timer_description">
+    <!-- Wake-up Timer -->
+    <string name="select_preset">Wybierz szablon</string>
+    <string name="wake_up_timer_description">
     Noice rozpocznie wybrany szablon po upływie czasu. Użyj poniższych przycisków, aby wybrać
     szablon i dodać żądany czas trwania, aby uruchomić budzik.
   </string>
-  <!-- Theme -->
-  <string-array name="app_themes">
-    <item>Jasny</item>
-    <item>Ciemny</item>
-    <item>Domyślny systemowy</item>
-  </string-array>
-  <!-- About -->
-  <string name="about__email">E-mail</string>
-  <string name="about__github">Github</string>
-  <string name="about__translations">Tłumaczenia</string>
-  <string name="about__twitter">Twitter</string>
-  <string name="app_description">Zrelaksuj się i zwiększ wydajność pracy przy minimalnym szumie w tle.</string>
-  <string name="connect_with_author">Skontaktuj się z autorem</string>
-  <string name="credits">Zasługi</string>
-  <!-- Support Development -->
-  <string name="support_development__donate">Przekaż darowiznę</string>
-  <string name="support_development__donate_description">
+    <!-- Theme -->
+    <string-array name="app_themes">
+        <item>Jasny</item>
+        <item>Ciemny</item>
+        <item>Domyślny systemowy</item>
+    </string-array>
+    <!-- About -->
+    <string name="about__email">E-mail</string>
+    <string name="about__github">Github</string>
+    <string name="about__translations">Tłumaczenia</string>
+    <string name="about__twitter">Twitter</string>
+    <string name="app_description">Zrelaksuj się i zwiększ wydajność pracy przy minimalnym szumie w tle.</string>
+    <string name="connect_with_author">Skontaktuj się z autorem</string>
+    <string name="credits">Zasługi</string>
+    <!-- Support Development -->
+    <string name="support_development__donate">Przekaż darowiznę</string>
+    <string name="support_development__donate_description">
     Darowizny pomogą nam w\n
     - inwestowaniu nowych funkcji\n
     - doborze lepszych sampli\n
     - zakupie kawy\n
   </string>
-  <string name="support_development__donate_google_play_description">
+    <string name="support_development__donate_google_play_description">
     Twoja płatność będzie bezpiecznie obsługiwana przez Google Play. Kwota zostanie przeliczona
     na Twoją lokalną walutę. W zależności od lokalizacji, do ostatecznej kwoty _mogą_ zostać
     naliczone dodatkowe opłaty.
   </string>
-  <string name="support_development__donate_thank_you">Dziękujemy!</string>
-  <string name="support_development__donate_thank_you_description">
+    <string name="support_development__donate_thank_you">Dziękujemy!</string>
+    <string name="support_development__donate_thank_you_description">
     Z całego serca dziękujemy Ci za Twój hojny wkład w projekt Noice.
   </string>
-  <string name="support_development__share">Podziel się z przyjaciółmi</string>
-  <string name="support_development__share_description">
+    <string name="support_development__share">Podziel się z przyjaciółmi</string>
+    <string name="support_development__share_description">
     Dzielenie się tą aplikacją z przyjaciółmi jest podobne do przekazywania pieniędzy. Z większą
     liczbą pobrań, będziemy mogli uzyskać informacje zwrotne z wielu różnych perspektyw, które
     pomogą nam w uczynieniu Noice lepszym niż kiedykolwiek wcześniej.
   </string>
-  <string name="support_development__why">Dlaczego powinieneś(-aś) wesprzeć?</string>
-  <string name="support_development__why_description">
+    <string name="support_development__why">Dlaczego powinieneś(-aś) wesprzeć?</string>
+    <string name="support_development__why_description">
     - Aby umożliwić przyszłe aktualizacje\n
     - Aby Noice pozostał wolny od reklam na zawsze\n
   </string>
-  <!-- Others -->
-  <string name="cast_media">Prześlij multimedia na inne urządzenie</string>
-  <string name="notification_channel_default__description">Elementy sterujące odtwarzaniem multimediów</string>
-  <string name="notification_channel_default__name">Odtwarzanie multimediów</string>
+    <!-- Others -->
+    <string name="cast_media">Prześlij multimedia na inne urządzenie</string>
+    <string name="notification_channel_default__description">Elementy sterujące odtwarzaniem multimediów</string>
+    <string name="notification_channel_default__name">Odtwarzanie multimediów</string>
+    <string name="never">Nigdy</string>
+    <string name="later">Pózniej</string>
+    <string name="in_app_feedback__title">Wyślij recenzje</string>
+    <string name="appintro__timer_title">Problem z zasypianiem albo wstawaniem\?</string>
+    <string name="appintro__preset_title">Zapisz swoje ulubione miksy</string>
+    <string name="appintro__getting_started_title">Witaj</string>
+    <string name="appintro__getting_started_desc_1">Zaczynajmy!</string>
+    <string name="appintro__getting_started_desc_0">Przesuń w lewo aby poznać wszystkie funkcje!</string>
+    <string name="appintro__chromecast_title">Chromecast aktywny</string>
+    <string name="use_24h_format">Uzyj 24-godzinnego formatu</string>
+    <string name="schedule">Zaplanuj</string>
+    <string name="shortcuts_not_supported">Twój domyślny ekran startowy nie wspiera dodawania skrótów.</string>
+    <string name="add_to_home_screen">Dodaj do ekranu głównego</string>
+    <string name="walking_through_the_snow">Chodzenie przez śnieg</string>
+    <string name="quiet_conversation">Cicha Konwersacja</string>
+    <string name="public_library">Publiczna Biblioteka</string>
+    <string name="human_heartbeat">Bicie serca</string>
+    <string name="electric_car">Elektryczny Samochód</string>
+    <string name="sound_group__water">Woda</string>
+    <string name="sound_group__life">Życie</string>
+    <string name="relax">Relaks</string>
+    <string name="okay">Okej</string>
+    <string name="light">Swiatło</string>
+    <string name="intensity">Intensywność</string>
+    <string name="focus">Skupienie</string>
+    <string name="any">Jakikolwiek</string>
+    <string name="submit_feedback">Wyślij Opinie</string>
+    <string name="help">Pomoc</string>
 </resources>
