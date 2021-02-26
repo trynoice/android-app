@@ -1,169 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <!-- Navigation Drawer -->
-  <string name="about">O aplikaci</string>
-  <string name="app_theme">Motiv</string>
-  <string name="close_drawer">Zavřít navigační lištu</string>
-  <string name="help">Nápověda</string>
-  <string name="library">Knihovna</string>
-  <string name="open_drawer">Otevřít navigační lištu</string>
-  <string name="report_issue">Nahlásit chybu</string>
-  <string name="saved_presets">Uložené předvolby</string>
-  <string name="sleep_timer">Časovač vypnutí</string>
-  <string name="support_development">Podpořit vývoj</string>
-  <string name="wake_up_timer">Časovač spuštení</string>
-  <!-- Save new preset Dialog -->
-  <string name="cancel">Zrušit</string>
-  <string name="dismiss">Zahodit</string>
-  <string name="name">Název</string>
-  <string name="pause">Pauza</string>
-  <string name="preset_already_exists">Předvolba s tímto názvem již existuje!</string>
-  <string name="preset_name_cannot_be_empty">Název předvolby musí mít alespoň jedno písmeno!</string>
-  <string name="preset_saved">Předvolba uložena!</string>
-  <string name="save">Uložit</string>
-  <string name="save_preset">Uložit předvolbu</string>
-  <!-- Library List Item -->
-  <string name="play">Přehrát</string>
-  <string name="play_pause">Přehrát/Pozastavit</string>
-  <string name="repeat_time_period">Doba opakování</string>
-  <string name="stop">Stop</string>
-  <string name="volume">Hlasitost</string>
-  <!-- Library - sound groups -->
-  <string name="sound_group__life">Life</string>
-  <string name="sound_group__monsoon">Monzun</string>
-  <string name="sound_group__public_gatherings">Veřejná shromáždění</string>
-  <string name="sound_group__raw_noise">Syntentický šum</string>
-  <string name="sound_group__times_of_day">Denní doba</string>
-  <string name="sound_group__vehicles">Vozidla</string>
-  <string name="sound_group__water">Voda</string>
-  <string name="sound_group__wind">Vítr</string>
-  <!-- Library - sounds -->
-  <string name="airplane_inflight">Paluba letadla</string>
-  <string name="airplane_seatbelt_beeps">Pípání bezpečnostních pásů v letadle</string>
-  <string name="birds">Ptáci</string>
-  <string name="bonfire">Táborák</string>
-  <string name="brownian_noise">Hnědý šum</string>
-  <string name="coffee_shop">Kavárna</string>
-  <string name="creaking_ship">Vrzající loď</string>
-  <string name="crickets">Cvrčci</string>
-  <string name="distant_thunder">Vzdálená bouřka</string>
-  <string name="electric_car">Elektromobil</string>
-  <string name="heavy_rain">Silný déšť</string>
-  <string name="howling_wolf">Vytí vlka</string>
-  <string name="human_heartbeat">Zvuk lidského srdce</string>
-  <string name="light_rain">Slabý déšť</string>
-  <string name="moderate_rain">Střední déšť</string>
-  <string name="morning_in_a_village">Ráno na vesnici</string>
-  <string name="moving_train">Jedoucí vlak</string>
-  <string name="night">Noc</string>
-  <string name="office">Kancelář</string>
-  <string name="pink_noise">Růžový šum</string>
-  <string name="public_library">Veřejná knihovna</string>
-  <string name="purring_cat">Předení kočky</string>
-  <string name="quiet_conversation">Tichá konverzace</string>
-  <string name="rolling_thunder">Hřímání</string>
-  <string name="screeching_seagulls">Křik racků</string>
-  <string name="seaside">Pobřeží</string>
-  <string name="soft_wind">Mírný vítr</string>
-  <string name="thunder_crack">Prásknutí hromu</string>
-  <string name="train_horn">Troubení vlaku</string>
-  <string name="walking_through_the_snow">Šlápoty ve sněhu</string>
-  <string name="water_hose">Zahradní hadice</string>
-  <string name="water_stream">Zurčení potůčku</string>
-  <string name="white_noise">Bílý šum</string>
-  <string name="wind_in_chimes_of_shells">Vítr vanoucí zvonkohrou z mušlí</string>
-  <string name="wind_in_palm_trees">Vítr vanoucí palmami</string>
-  <!-- Saved Presets -->
-  <string name="delete">Odstranit</string>
-  <string name="open_context_menu">Otevřít kontextovou nabídku</string>
-  <string name="preset_delete_confirmation">Jste si jisti odstraněním %s?</string>
-  <string name="preset_deleted">Předvolba odstraněna!</string>
-  <string name="preset_info__description">
+    <!-- Navigation Drawer -->
+    <string name="about">O aplikaci</string>
+    <string name="app_theme">Motiv</string>
+    <string name="close_drawer">Zavřít navigační lištu</string>
+    <string name="help">Nápověda</string>
+    <string name="library">Knihovna</string>
+    <string name="open_drawer">Otevřít navigační lištu</string>
+    <string name="report_issue">Nahlásit chybu</string>
+    <string name="saved_presets">Uložené předvolby</string>
+    <string name="sleep_timer">Časovač vypnutí</string>
+    <string name="support_development">Podpořit vývoj</string>
+    <string name="wake_up_timer">Časovač spuštení</string>
+    <!-- Save new preset Dialog -->
+    <string name="cancel">Zrušit</string>
+    <string name="dismiss">Zahodit</string>
+    <string name="name">Název</string>
+    <string name="pause">Pauza</string>
+    <string name="preset_already_exists">Předvolba s tímto názvem již existuje!</string>
+    <string name="preset_name_cannot_be_empty">Název předvolby musí mít alespoň jedno písmeno!</string>
+    <string name="preset_saved">Předvolba uložena!</string>
+    <string name="save">Uložit</string>
+    <string name="save_preset">Uložit předvolbu</string>
+    <!-- Library List Item -->
+    <string name="play">Přehrát</string>
+    <string name="play_pause">Přehrát/Pozastavit</string>
+    <string name="repeat_time_period">Doba opakování</string>
+    <string name="stop">Stop</string>
+    <string name="volume">Hlasitost</string>
+    <!-- Library - sound groups -->
+    <string name="sound_group__life">Life</string>
+    <string name="sound_group__monsoon">Monzun</string>
+    <string name="sound_group__public_gatherings">Veřejná shromáždění</string>
+    <string name="sound_group__raw_noise">Syntentický šum</string>
+    <string name="sound_group__times_of_day">Denní doba</string>
+    <string name="sound_group__vehicles">Vozidla</string>
+    <string name="sound_group__water">Voda</string>
+    <string name="sound_group__wind">Vítr</string>
+    <!-- Library - sounds -->
+    <string name="airplane_inflight">Paluba letadla</string>
+    <string name="airplane_seatbelt_beeps">Pípání bezpečnostních pásů v letadle</string>
+    <string name="birds">Ptáci</string>
+    <string name="bonfire">Táborák</string>
+    <string name="brownian_noise">Hnědý šum</string>
+    <string name="coffee_shop">Kavárna</string>
+    <string name="creaking_ship">Vrzající loď</string>
+    <string name="crickets">Cvrčci</string>
+    <string name="distant_thunder">Vzdálená bouřka</string>
+    <string name="electric_car">Elektromobil</string>
+    <string name="heavy_rain">Silný déšť</string>
+    <string name="howling_wolf">Vytí vlka</string>
+    <string name="human_heartbeat">Zvuk lidského srdce</string>
+    <string name="light_rain">Slabý déšť</string>
+    <string name="moderate_rain">Střední déšť</string>
+    <string name="morning_in_a_village">Ráno na vesnici</string>
+    <string name="moving_train">Jedoucí vlak</string>
+    <string name="night">Noc</string>
+    <string name="office">Kancelář</string>
+    <string name="pink_noise">Růžový šum</string>
+    <string name="public_library">Veřejná knihovna</string>
+    <string name="purring_cat">Předení kočky</string>
+    <string name="quiet_conversation">Tichá konverzace</string>
+    <string name="rolling_thunder">Hřímání</string>
+    <string name="screeching_seagulls">Křik racků</string>
+    <string name="seaside">Pobřeží</string>
+    <string name="soft_wind">Mírný vítr</string>
+    <string name="thunder_crack">Prásknutí hromu</string>
+    <string name="train_horn">Troubení vlaku</string>
+    <string name="walking_through_the_snow">Šlápoty ve sněhu</string>
+    <string name="water_hose">Zahradní hadice</string>
+    <string name="water_stream">Zurčení potůčku</string>
+    <string name="white_noise">Bílý šum</string>
+    <string name="wind_in_chimes_of_shells">Vítr vanoucí zvonkohrou z mušlí</string>
+    <string name="wind_in_palm_trees">Vítr vanoucí palmami</string>
+    <!-- Saved Presets -->
+    <string name="delete">Odstranit</string>
+    <string name="open_context_menu">Otevřít kontextovou nabídku</string>
+    <string name="preset_delete_confirmation">Jste si jisti odstraněním %s?</string>
+    <string name="preset_deleted">Předvolba odstraněna!</string>
+    <string name="preset_info__description">
     Ještě si nevytvořili žádné předvolby namíchání zvuků. K vytvoření předvolby přejděte do Knihovny a pusťte si nějaký zvuk.
     Poté klikněte na tlačítko Uložit, které se objeví v levém dolním rohu obrazovky.
   </string>
-  <string name="rename">Přejmenovat</string>
-  <!-- Sleep Timer -->
-  <string name="auto_sleep_schedule_cancelled">Časovač vypnutí byl úspěšně zrušen!</string>
-  <string name="reset">Resetovat</string>
-  <string name="sleep_timer_description">
+    <string name="rename">Přejmenovat</string>
+    <!-- Sleep Timer -->
+    <string name="auto_sleep_schedule_cancelled">Časovač vypnutí byl úspěšně zrušen!</string>
+    <string name="reset">Resetovat</string>
+    <string name="sleep_timer_description">
     Noice se sám vypne po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
   </string>
-  <!-- Wake-up Timer -->
-  <string name="schedule">Nastavit</string>
-  <string name="select_preset">Zvolte předvolbu</string>
-  <string name="wake_up_timer_description">
+    <!-- Wake-up Timer -->
+    <string name="schedule">Nastavit</string>
+    <string name="select_preset">Zvolte předvolbu</string>
+    <string name="wake_up_timer_description">
     Noice se sám spustí po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
   </string>
-  <!-- Theme -->
-  <string-array name="app_themes">
-    <item>Světlý</item>
-    <item>Tmavý</item>
-    <item>Dle nastavení systému</item>
-  </string-array>
-  <!-- About -->
-  <string name="about__email">Email</string>
-  <string name="about__github">Github</string>
-  <string name="about__translations">Překlady</string>
-  <string name="about__twitter">Twitter</string>
-  <string name="app_description">Odpočiňte si nebo nakopněte svou produktivitu při uklidňujících zvucích přírody a jiných prostředích.</string>
-  <string name="connect_with_author">Spojit se s autorem</string>
-  <string name="credits">Poděkování</string>
-  <!-- Help -->
-  <string name="appintro__chromecast_desc">
+    <!-- Theme -->
+    <string-array name="app_themes">
+        <item>Světlý</item>
+        <item>Tmavý</item>
+        <item>Dle nastavení systému</item>
+    </string-array>
+    <!-- About -->
+    <string name="about__email">Email</string>
+    <string name="about__github">GitHub</string>
+    <string name="about__translations">Překlady</string>
+    <string name="about__twitter">Twitter</string>
+    <string name="app_description">Odpočiňte si nebo nakopněte svou produktivitu při uklidňujících zvucích přírody a jiných prostředích.</string>
+    <string name="connect_with_author">Spojit se s autorem</string>
+    <string name="credits">Poděkování</string>
+    <!-- Help -->
+    <string name="appintro__chromecast_desc">
     S Noice můžete přehrávat vaše mixy i na všech ostatních Chromecast zařízení,
     jako jsou reproduktory, chytré televize, Google Home a další.
   </string>
-  <string name="appintro__chromecast_title">Podpora Chromecast</string>
-  <string name="appintro__getting_started_desc_0">Zatáhněte doleva a my vám ukážeme, co vše Noice umí!</string>
-  <string name="appintro__getting_started_desc_1">Začněme!</string>
-  <string name="appintro__getting_started_title">Vítejte</string>
-  <string name="appintro__preset_desc">
+    <string name="appintro__chromecast_title">Podpora Chromecast</string>
+    <string name="appintro__getting_started_desc_0">Zatáhněte doleva a my vám ukážeme, co vše Noice umí!</string>
+    <string name="appintro__getting_started_desc_1">Začněme!</string>
+    <string name="appintro__getting_started_title">Vítejte</string>
+    <string name="appintro__preset_desc">
     Při přehrávání vícero zvuků si můžete aktuálně přehrávaný mix uložit klepnutím na tlačítko v pravém dolním rohu.
     Pro znovupoužití vámi uloženého mixu, navštivte sekci Uložené předvolby v menu aplikace.
   </string>
-  <string name="appintro__preset_title">Uložte si svůj oblíbený mix</string>
-  <string name="appintro__sound_library_desc">
+    <string name="appintro__preset_title">Uložte si svůj oblíbený mix</string>
+    <string name="appintro__sound_library_desc">
     Posuvníky hlasitosti nastavujete hlasitost jednotlivých zvuků. Mezi každým opakováním nahrávek bez smyčky
     je vložena mezera o náhodné délce. Tu můžete nastavit posuvníkem prodlevy.
   </string>
-  <string name="appintro__sound_library_title">Vytvořte si vaši vysněnou zvukovou kulisu</string>
-  <string name="appintro__timer_desc">
+    <string name="appintro__sound_library_title">Vytvořte si vaši vysněnou zvukovou kulisu</string>
+    <string name="appintro__timer_desc">
     Tichá zvuková kulisa vám může pomoci snadněji usnout. Použijte Časovač vypnutí a nechejte Noice
     se sám vypnout, až usnete. Podobně se můžete i ráno probudit do vašeho uklidňujícího mixu
     pomocí Časovače zapnutí.
   </string>
-  <string name="appintro__timer_title">Máte problémy s usínáním či se v noci budíte?</string>
-  <!-- Support Development -->
-  <string name="support_development__donate">Podpořit</string>
-  <string name="support_development__donate_description">
+    <string name="appintro__timer_title">Máte problémy s usínáním či se v noci budíte?</string>
+    <!-- Support Development -->
+    <string name="support_development__donate">Podpořit</string>
+    <string name="support_development__donate_description">
     Vaše dary nám pomohou\n
     - investovat čas a peníze do vývoje nových funkcí\n
     - zakoupení lepších nahrávek zvuků\n
     - koupit si kafe\n
   </string>
-  <string name="support_development__donate_google_play_description">
+    <string name="support_development__donate_google_play_description">
     Vaše platba bude bezpečně zaštítěna službou Google Play. Výška daru bude převedena na vaši
     lokální měnu. V závisloti na vaší poloze vám bude __možná__ bude přiúčtována daň z koupě,
     dle vašich lokálních zákonů.
   </string>
-  <string name="support_development__donate_thank_you">Děkujeme!</string>
-  <string name="support_development__donate_thank_you_description">
+    <string name="support_development__donate_thank_you">Děkujeme!</string>
+    <string name="support_development__donate_thank_you_description">
     Zcela upřímně vám moc srdečně děkujeme za vaši finanční podporu projektu Noice.
   </string>
-  <string name="support_development__share">Sdílet s přáteli</string>
-  <string name="support_development__share_description">
+    <string name="support_development__share">Sdílet s přáteli</string>
+    <string name="support_development__share_description">
     Sdílením informace o existenci Noice s vašimi přáteli je podobné jako přímé darování peněz. Čím
     vyšší počet stažení, tím silnější zpětnou vazbu dostaneme z různých perspektiv, což nám pomůže
     ke zlepšení kvality celé aplikace.
   </string>
-  <string name="support_development__why">Proč nás podpořit?</string>
-  <string name="support_development__why_description">
+    <string name="support_development__why">Proč nás podpořit?</string>
+    <string name="support_development__why_description">
     - Pro podporu dalšího vývoje\n
     - Pro udržení Noice nadále bez reklam\n
   </string>
-  <!-- Others -->
-  <string name="cast_media">Přehrát na jiném zařízení</string>
-  <string name="notification_channel_default__description">Ovladání přehrávače</string>
-  <string name="notification_channel_default__name">Právě hraje</string>
+    <!-- Others -->
+    <string name="cast_media">Přehrát na jiném zařízení</string>
+    <string name="notification_channel_default__description">Ovladání přehrávače</string>
+    <string name="notification_channel_default__name">Právě hraje</string>
 </resources>
