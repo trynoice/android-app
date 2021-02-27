@@ -48,7 +48,7 @@
     <string name="sound_group__times_of_day">Tageszeiten</string>
     <string name="sound_group__vehicles">Fahrzeuge</string>
     <string name="sound_group__water">Wasser</string>
-    <string name="sound_group__wind">Wind</string>
+    <string name="sound_group__wind">der Wind</string>
     <!-- Library - sounds -->
     <string name="airplane_inflight">Im Flugzeug</string>
     <string name="airplane_seatbelt_beeps">Flugzeug-Anschnallsignal</string>
