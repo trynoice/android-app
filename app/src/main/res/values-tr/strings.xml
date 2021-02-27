@@ -196,4 +196,5 @@
     <string name="device_media_volume">Cihaz ses düzeyi</string>
     <string name="use_24h_format">24 saat formatını kullan</string>
     <string name="show_saved_preset_on_startup">Açılışta mevcut kayıtları göster</string>
+    <string name="submit_feedback">Geri Bildirim Gönder</string>
 </resources>
