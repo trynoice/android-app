@@ -1,196 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <!-- Navigation Drawer -->
-  <string name="about">About</string>
-  <string name="app_theme">Theme</string>
-  <string name="close_drawer">Close navigation drawer</string>
-  <string name="help">Help</string>
-  <string name="library">Library</string>
-  <string name="open_drawer">Open navigation drawer</string>
-  <string name="report_issue">Report Issues</string>
-  <string name="saved_presets">Saved Presets</string>
-  <string name="sleep_timer">Sleep Timer</string>
-  <string name="support_development">Support Development</string>
-  <string name="wake_up_timer">Wake-up Timer</string>
-  <string name="submit_feedback">Submit Feedback</string>
-  <!-- Random preset Dialog -->
-  <string name="any">Any</string>
-  <string name="dense">Dense</string>
-  <string name="focus">Focus</string>
-  <string name="intensity">Intensity</string>
-  <string name="intensity_description">Dense presets will try to play more sounds at once.</string>
-  <string name="light">Light</string>
-  <string name="mood">Mood</string>
-  <string name="okay">Okay</string>
-  <string name="random_preset">Random Preset</string>
-  <string name="relax">Relax</string>
-  <!-- Save new preset Dialog -->
-  <string name="cancel">Cancel</string>
-  <string name="dismiss">Dismiss</string>
-  <string name="name">Name</string>
-  <string name="pause">Pause</string>
-  <string name="preset_already_exists">Preset with the given name already exists!</string>
-  <string name="preset_name_cannot_be_empty">Preset name cannot be empty!</string>
-  <string name="preset_saved">Preset saved!</string>
-  <string name="save">Save</string>
-  <string name="save_preset">Save Preset</string>
-  <!-- Library List Item -->
-  <string name="play">Play</string>
-  <string name="play_pause">play or pause</string>
-  <string name="repeat_time_period">Repeat time period</string>
-  <string name="stop">Stop</string>
-  <string name="volume">Sound volume</string>
-  <!-- Library - sound groups -->
-  <string name="sound_group__life">Life</string>
-  <string name="sound_group__monsoon">Monsoon</string>
-  <string name="sound_group__public_gatherings">Public Gatherings</string>
-  <string name="sound_group__raw_noise">Raw Noise</string>
-  <string name="sound_group__times_of_day">Times of Day</string>
-  <string name="sound_group__vehicles">Vehicles</string>
-  <string name="sound_group__water">Water</string>
-  <string name="sound_group__wind">Wind</string>
-  <!-- Library - sounds -->
-  <string name="airplane_inflight">Airplane in-flight</string>
-  <string name="airplane_seatbelt_beeps">Airplane seat-belt beeps</string>
-  <string name="birds">Birds</string>
-  <string name="bonfire">Bonfire</string>
-  <string name="brownian_noise">Brownian noise</string>
-  <string name="coffee_shop">Coffee shop</string>
-  <string name="creaking_ship">Creaking ship</string>
-  <string name="crickets">Crickets</string>
-  <string name="distant_thunder">Distant thunder</string>
-  <string name="electric_car">Electric car</string>
-  <string name="heavy_rain">Heavy rain</string>
-  <string name="howling_wolf">Howling wolf</string>
-  <string name="human_heartbeat">Human heartbeat</string>
-  <string name="light_rain">Light rain</string>
-  <string name="moderate_rain">Moderate rain</string>
-  <string name="morning_in_a_village">Morning in a village</string>
-  <string name="moving_train">Moving train</string>
-  <string name="night">Night</string>
-  <string name="office">Office</string>
-  <string name="pink_noise">Pink noise</string>
-  <string name="public_library">Public library</string>
-  <string name="purring_cat">Purring cat</string>
-  <string name="quiet_conversation">Quiet conversation</string>
-  <string name="rolling_thunder">Rolling thunder</string>
-  <string name="screeching_seagulls">Screeching seagulls</string>
-  <string name="seaside">Seaside</string>
-  <string name="soft_wind">Soft wind</string>
-  <string name="thunder_crack">Thunder crack</string>
-  <string name="train_horn">Train horn</string>
-  <string name="walking_through_the_snow">Walking through the snow</string>
-  <string name="water_hose">Water hose</string>
-  <string name="water_stream">Water stream</string>
-  <string name="white_noise">White noise</string>
-  <string name="wind_in_chimes_of_shells">Wind in chimes of shells</string>
-  <string name="wind_in_palm_trees">Wind in palm trees</string>
-  <!-- Saved Presets -->
-  <string name="add_to_home_screen">Add to home screen</string>
-  <string name="delete">Delete</string>
-  <string name="open_context_menu">Open context menu</string>
-  <string name="preset_delete_confirmation">Confirm delete %s?</string>
-  <string name="preset_deleted">Preset deleted!</string>
-  <string name="preset_does_not_exist">Preset does not exist. It may have been deleted!</string>
-  <string name="preset_info__description">
+    <!-- Navigation Drawer -->
+    <string name="about">About</string>
+    <string name="app_theme">Theme</string>
+    <string name="close_drawer">Close navigation drawer</string>
+    <string name="help">Help</string>
+    <string name="library">Library</string>
+    <string name="open_drawer">Open navigation drawer</string>
+    <string name="report_issue">Report Issues</string>
+    <string name="saved_presets">Saved Presets</string>
+    <string name="sleep_timer">Sleep Timer</string>
+    <string name="support_development">Support Development</string>
+    <string name="wake_up_timer">Wake-up Timer</string>
+    <string name="submit_feedback">Submit Feedback</string>
+    <!-- Random preset Dialog -->
+    <string name="any">Any</string>
+    <string name="dense">Dense</string>
+    <string name="focus">Focus</string>
+    <string name="intensity">Intensity</string>
+    <string name="intensity_description">Dense presets will try to play more sounds at once.</string>
+    <string name="light">Light</string>
+    <string name="mood">Mood</string>
+    <string name="okay">Okay</string>
+    <string name="random_preset">Random Preset</string>
+    <string name="relax">Relax</string>
+    <!-- Save new preset Dialog -->
+    <string name="cancel">Cancel</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="name">Name</string>
+    <string name="pause">Pause</string>
+    <string name="preset_already_exists">Preset with the given name already exists!</string>
+    <string name="preset_name_cannot_be_empty">Preset name cannot be empty!</string>
+    <string name="preset_saved">Preset saved!</string>
+    <string name="save">Save</string>
+    <string name="save_preset">Save Preset</string>
+    <!-- Library List Item -->
+    <string name="play">Play</string>
+    <string name="play_pause">play or pause</string>
+    <string name="repeat_time_period">Repeat time period</string>
+    <string name="stop">Stop</string>
+    <string name="volume">Sound volume</string>
+    <!-- Library - sound groups -->
+    <string name="sound_group__life">Life</string>
+    <string name="sound_group__monsoon">Monsoon</string>
+    <string name="sound_group__public_gatherings">Public Gatherings</string>
+    <string name="sound_group__raw_noise">Raw Noise</string>
+    <string name="sound_group__times_of_day">Times of Day</string>
+    <string name="sound_group__vehicles">Vehicles</string>
+    <string name="sound_group__water">Water</string>
+    <string name="sound_group__wind">Wind</string>
+    <!-- Library - sounds -->
+    <string name="airplane_inflight">Airplane in-flight</string>
+    <string name="airplane_seatbelt_beeps">Airplane seat-belt beeps</string>
+    <string name="birds">Birds</string>
+    <string name="bonfire">Bonfire</string>
+    <string name="brownian_noise">Brownian noise</string>
+    <string name="coffee_shop">Coffee shop</string>
+    <string name="creaking_ship">Creaking ship</string>
+    <string name="crickets">Crickets</string>
+    <string name="distant_thunder">Distant thunder</string>
+    <string name="electric_car">Electric car</string>
+    <string name="heavy_rain">Heavy rain</string>
+    <string name="howling_wolf">Howling wolf</string>
+    <string name="human_heartbeat">Human heartbeat</string>
+    <string name="light_rain">Light rain</string>
+    <string name="moderate_rain">Moderate rain</string>
+    <string name="morning_in_a_village">Morning in a village</string>
+    <string name="moving_train">Moving train</string>
+    <string name="night">Night</string>
+    <string name="office">Office</string>
+    <string name="pink_noise">Pink noise</string>
+    <string name="public_library">Public library</string>
+    <string name="purring_cat">Purring cat</string>
+    <string name="quiet_conversation">Quiet conversation</string>
+    <string name="rolling_thunder">Rolling thunder</string>
+    <string name="screeching_seagulls">Screeching seagulls</string>
+    <string name="seaside">Seaside</string>
+    <string name="soft_wind">Soft wind</string>
+    <string name="thunder_crack">Thunder crack</string>
+    <string name="train_horn">Train horn</string>
+    <string name="walking_through_the_snow">Walking through the snow</string>
+    <string name="water_hose">Water hose</string>
+    <string name="water_stream">Water stream</string>
+    <string name="white_noise">White noise</string>
+    <string name="wind_in_chimes_of_shells">Wind in chimes of shells</string>
+    <string name="wind_in_palm_trees">Wind in palm trees</string>
+    <!-- Saved Presets -->
+    <string name="add_to_home_screen">Add to home screen</string>
+    <string name="delete">Delete</string>
+    <string name="open_context_menu">Open context menu</string>
+    <string name="preset_delete_confirmation">Confirm delete %s?</string>
+    <string name="preset_deleted">Preset deleted!</string>
+    <string name="preset_does_not_exist">Preset does not exist. It may have been deleted!</string>
+    <string name="preset_info__description">
     You haven\'t created any presets yet. To create a preset, go to the Library and play sounds.
     Then click on the Save button that appears on the bottom corner of the screen.
   </string>
-  <string name="rename">Rename</string>
-  <string name="shortcuts_not_supported">Your default launcher does not support adding shortcuts.</string>
-  <string name="show_saved_preset_on_startup">Show saved presets on app startup</string>
-  <!-- Sleep Timer -->
-  <string name="auto_sleep_schedule_cancelled">Auto sleep timer cancelled!</string>
-  <string name="reset">Reset</string>
-  <string name="sleep_timer_description">
+    <string name="rename">Rename</string>
+    <string name="shortcuts_not_supported">Your default launcher does not support adding shortcuts.</string>
+    <string name="show_saved_preset_on_startup">Show saved presets on app startup</string>
+    <!-- Sleep Timer -->
+    <string name="auto_sleep_schedule_cancelled">Auto sleep timer cancelled!</string>
+    <string name="reset">Reset</string>
+    <string name="sleep_timer_description">
     Noice will shutdown itself when the timer ends. Use the buttons below to add time and start
     the timer.
   </string>
-  <!-- Wake-up Timer -->
-  <string name="schedule">Schedule</string>
-  <string name="select_preset">Select Preset</string>
-  <string name="wake_up_timer_cancelled">Wake-up Timer cancelled!</string>
-  <string name="wake_up_timer_description">
+    <!-- Wake-up Timer -->
+    <string name="schedule">Schedule</string>
+    <string name="select_preset">Select Preset</string>
+    <string name="wake_up_timer_cancelled">Wake-up Timer cancelled!</string>
+    <string name="wake_up_timer_description">
     Noice will start the selected preset when the timer ends. Use the buttons below to select a
     preset and set the desired time to start the wake-up timer.
   </string>
-  <string name="use_24h_format">Use 24-hour format</string>
-  <string name="device_media_volume">Device media volume</string>
-  <string name="should_update_media_volume">Update device media volume before starting preset</string>
-  <!-- Theme -->
-  <string-array name="app_themes">
-    <item>Light</item>
-    <item>Dark</item>
-    <item>System default</item>
-  </string-array>
-  <!-- About -->
-  <string name="about__email">Email</string>
-  <string name="about__github">Github</string>
-  <string name="about__translations">Translations</string>
-  <string name="about__twitter">Twitter</string>
-  <string name="app_description">Relax and boost productivity with minimal background noise.</string>
-  <string name="connect_with_author">Connect with Author</string>
-  <string name="credits">Credits</string>
-  <!-- Help -->
-  <string name="appintro__chromecast_desc">
+    <string name="use_24h_format">Use 24-hour format</string>
+    <string name="device_media_volume">Device media volume</string>
+    <string name="should_update_media_volume">Update device media volume before starting preset</string>
+    <!-- Theme -->
+    <string-array name="app_themes">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>System default</item>
+    </string-array>
+    <!-- About -->
+    <string name="about__email">Email</string>
+    <string name="about__github">GitHub</string>
+    <string name="about__translations">Translations</string>
+    <string name="about__twitter">Twitter</string>
+    <string name="app_description">Relax and boost productivity with minimal background noise.</string>
+    <string name="connect_with_author">Connect with Author</string>
+    <string name="credits">Credits</string>
+    <!-- Help -->
+    <string name="appintro__chromecast_desc">
     Use Noice to cast its ambience to other Chromecast enabled devices such as speakers, TVs, etc.
   </string>
-  <string name="appintro__chromecast_title">Chromecast enabled</string>
-  <string name="appintro__getting_started_desc_0">Swipe left to get to know all the features!</string>
-  <string name="appintro__getting_started_desc_1">Let\'s get started!</string>
-  <string name="appintro__getting_started_title">Welcome</string>
-  <string name="appintro__preset_desc">
+    <string name="appintro__chromecast_title">Chromecast enabled</string>
+    <string name="appintro__getting_started_desc_0">Swipe left to get to know all the features!</string>
+    <string name="appintro__getting_started_desc_1">Let\'s get started!</string>
+    <string name="appintro__getting_started_title">Welcome</string>
+    <string name="appintro__preset_desc">
     After playing a few sounds, you can use the button in the bottom end corner to save your mix.
     To reuse a stored mix, you can visit the preset list from the app menu.
   </string>
-  <string name="appintro__preset_title">Save your favourite mixes</string>
-  <string name="appintro__sound_library_desc">
+    <string name="appintro__preset_title">Save your favourite mixes</string>
+    <string name="appintro__sound_library_desc">
     Use the volume slider to adjust sound volumes. At each repetition of non-looping sounds, a delay
     period is selected randomly from the range set by the time slider.
   </string>
-  <string name="appintro__sound_library_title">Create your perfect surroundings</string>
-  <string name="appintro__timer_desc">
+    <string name="appintro__sound_library_title">Create your perfect surroundings</string>
+    <string name="appintro__timer_desc">
     A little ambience can help you fall asleep effortlessly. Use the sleep timer to let Noice shut
     itself down. Similarly, to wake up to a calm environment, use the wake-up timer to set the alarm.
   </string>
-  <string name="appintro__timer_title">Trouble falling asleep or waking up?</string>
-  <!-- Support Development -->
-  <string name="support_development__donate">Donate</string>
-  <string name="support_development__donate_description">
+    <string name="appintro__timer_title">Trouble falling asleep or waking up?</string>
+    <!-- Support Development -->
+    <string name="support_development__donate">Donate</string>
+    <string name="support_development__donate_description">
     Donations will help us in\n
     - investing in new features\n
     - curating better sound samples\n
     - buying coffee\n
   </string>
-  <string name="support_development__donate_google_play_description">
+    <string name="support_development__donate_google_play_description">
     Your payment will be securely handled by the Google Play. The amount will be converted to your
     local currency. Depending on your location, additional taxes _may be_ added to the final amount.
   </string>
-  <string name="support_development__donate_thank_you">Thank you!</string>
-  <string name="support_development__donate_thank_you_description">
+    <string name="support_development__donate_thank_you">Thank you!</string>
+    <string name="support_development__donate_thank_you_description">
     We wholeheartedly thank you for your generous contribution to the Noice project.
   </string>
-  <string name="support_development__share">Share with friends</string>
-  <string name="support_development__share_description">
+    <string name="support_development__share">Share with friends</string>
+    <string name="support_development__share_description">
     Sharing Noice with friends is similar to donating money. With higher downloads, we will be able
     to receive feedback from a number of different perspectives which will help us in making Noice
     better than ever.
   </string>
-  <string name="support_development__why">Why should you support?</string>
-  <string name="support_development__why_description">
+    <string name="support_development__why">Why should you support?</string>
+    <string name="support_development__why_description">
     - To make future updates possible\n
     - To keep Noice ad-free forever\n
   </string>
-  <!-- Others -->
-  <string name="cast_media">Cast media to another device</string>
-  <string name="in_app_feedback__description">
+    <!-- Others -->
+    <string name="cast_media">Cast media to another device</string>
+    <string name="in_app_feedback__description">
     We\'d love to hear from you about the app. Please take a moment to visit our GitHub repository.
     If you didn\'t love the app, please consider opening up an issue explaining your concerns.
     Otherwise, please star the project to show love and support.
   </string>
-  <string name="in_app_feedback__title">Submit a review</string>
-  <string name="later">Later</string>
-  <string name="never">Never</string>
-  <string name="notification_channel_default__description">Media playback controls</string>
-  <string name="notification_channel_default__name">Media Playback</string>
+    <string name="in_app_feedback__title">Submit a review</string>
+    <string name="later">Later</string>
+    <string name="never">Never</string>
+    <string name="notification_channel_default__description">Media playback controls</string>
+    <string name="notification_channel_default__name">Media Playback</string>
 </resources>

@@ -1,183 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <!-- Navigation Drawer -->
-  <string name="about">Про додаток</string>
-  <string name="app_theme">Тема</string>
-  <string name="close_drawer">Закрити меню</string>
-  <string name="help">Допомога</string>
-  <string name="library">Бібліотека</string>
-  <string name="open_drawer">Відкрити меню</string>
-  <string name="report_issue">Повідомити про проблему</string>
-  <string name="saved_presets">Збережені пресети</string>
-  <string name="sleep_timer">Таймер сну</string>
-  <string name="support_development">Підтримати розробку</string>
-  <string name="wake_up_timer">Таймер пробудження</string>
-  <!-- Random preset Dialog -->
-  <string name="okay">Добре</string>
-  <!-- Save new preset Dialog -->
-  <string name="cancel">Скасувати</string>
-  <string name="dismiss">Прибрати</string>
-  <string name="name">Назва</string>
-  <string name="pause">Пауза</string>
-  <string name="preset_already_exists">Пресет з такою назвою вже існує!</string>
-  <string name="preset_name_cannot_be_empty">Назва пресету не може бути порожньою!</string>
-  <string name="preset_saved">Пресет збережено!</string>
-  <string name="save">Зберегти</string>
-  <string name="save_preset">Зберегти пресет</string>
-  <!-- Library List Item -->
-  <string name="play">Відтворити</string>
-  <string name="play_pause">Програти або зупинити</string>
-  <string name="repeat_time_period">Період повтору</string>
-  <string name="stop">Стоп</string>
-  <string name="volume">Гучність</string>
-  <!-- Library - sound groups -->
-  <string name="sound_group__life">Життя</string>
-  <string name="sound_group__monsoon">Мусон</string>
-  <string name="sound_group__public_gatherings">Громадські збори</string>
-  <string name="sound_group__raw_noise">Чистий шум</string>
-  <string name="sound_group__times_of_day">Часи доби</string>
-  <string name="sound_group__vehicles">Транспортні засоби</string>
-  <string name="sound_group__water">Вода</string>
-  <string name="sound_group__wind">Вітер</string>
-  <!-- Library - sounds -->
-  <string name="airplane_inflight">Політ у літаку</string>
-  <string name="airplane_seatbelt_beeps">Сигнал «Пристебнути ремені»</string>
-  <string name="birds">Птахи</string>
-  <string name="bonfire">Багаття</string>
-  <string name="brownian_noise">Броунівський шум</string>
-  <string name="coffee_shop">Кав\'ярня</string>
-  <string name="creaking_ship">Скриплячий корабель</string>
-  <string name="crickets">Цвіркуни</string>
-  <string name="distant_thunder">Далекий грім</string>
-  <string name="electric_car">Електричний автомобіль</string>
-  <string name="heavy_rain">Злива</string>
-  <string name="howling_wolf">Виття вовка</string>
-  <string name="human_heartbeat">Серцебиття людини</string>
-  <string name="light_rain">Невеликий дощ</string>
-  <string name="moderate_rain">Помірний дощ</string>
-  <string name="morning_in_a_village">Ранок в селі</string>
-  <string name="moving_train">Поїзд у русі</string>
-  <string name="night">Ніч</string>
-  <string name="office">Офіс</string>
-  <string name="pink_noise">Рожевий шум</string>
-  <string name="public_library">Публічна бібліотека</string>
-  <string name="purring_cat">Муркотіння кота</string>
-  <string name="quiet_conversation">Тиха розмова</string>
-  <string name="rolling_thunder">Гуркіт грому</string>
-  <string name="screeching_seagulls">Вереск чайок</string>
-  <string name="seaside">Морський берег</string>
-  <string name="soft_wind">Легкий вітер</string>
-  <string name="thunder_crack">Тріск грому</string>
-  <string name="train_horn">Гудок поїзду</string>
-  <string name="walking_through_the_snow">Прогулянка по снігу</string>
-  <string name="water_hose">Водяний шланг</string>
-  <string name="water_stream">Потік води</string>
-  <string name="white_noise">Білий шум</string>
-  <string name="wind_in_chimes_of_shells">Дзвін мушель</string>
-  <string name="wind_in_palm_trees">Вітер у пальмах</string>
-  <!-- Saved Presets -->
-  <string name="delete">Видалити</string>
-  <string name="open_context_menu">Відкрити контекстне меню</string>
-  <string name="preset_delete_confirmation">Підтвердити видалення %s?</string>
-  <string name="preset_deleted">Пресет видалено!</string>
-  <string name="preset_info__description">
+    <!-- Navigation Drawer -->
+    <string name="about">Про додаток</string>
+    <string name="app_theme">Тема</string>
+    <string name="close_drawer">Закрити меню</string>
+    <string name="help">Допомога</string>
+    <string name="library">Бібліотека</string>
+    <string name="open_drawer">Відкрити меню</string>
+    <string name="report_issue">Повідомити про проблему</string>
+    <string name="saved_presets">Збережені пресети</string>
+    <string name="sleep_timer">Таймер сну</string>
+    <string name="support_development">Підтримати розробку</string>
+    <string name="wake_up_timer">Таймер пробудження</string>
+    <!-- Random preset Dialog -->
+    <string name="okay">Добре</string>
+    <!-- Save new preset Dialog -->
+    <string name="cancel">Скасувати</string>
+    <string name="dismiss">Прибрати</string>
+    <string name="name">Назва</string>
+    <string name="pause">Пауза</string>
+    <string name="preset_already_exists">Пресет з такою назвою вже існує!</string>
+    <string name="preset_name_cannot_be_empty">Назва пресету не може бути порожньою!</string>
+    <string name="preset_saved">Пресет збережено!</string>
+    <string name="save">Зберегти</string>
+    <string name="save_preset">Зберегти пресет</string>
+    <!-- Library List Item -->
+    <string name="play">Відтворити</string>
+    <string name="play_pause">Програти або зупинити</string>
+    <string name="repeat_time_period">Період повтору</string>
+    <string name="stop">Стоп</string>
+    <string name="volume">Гучність</string>
+    <!-- Library - sound groups -->
+    <string name="sound_group__life">Життя</string>
+    <string name="sound_group__monsoon">Мусон</string>
+    <string name="sound_group__public_gatherings">Громадські збори</string>
+    <string name="sound_group__raw_noise">Чистий шум</string>
+    <string name="sound_group__times_of_day">Часи доби</string>
+    <string name="sound_group__vehicles">Транспортні засоби</string>
+    <string name="sound_group__water">Вода</string>
+    <string name="sound_group__wind">Вітер</string>
+    <!-- Library - sounds -->
+    <string name="airplane_inflight">Політ у літаку</string>
+    <string name="airplane_seatbelt_beeps">Сигнал «Пристебнути ремені»</string>
+    <string name="birds">Птахи</string>
+    <string name="bonfire">Багаття</string>
+    <string name="brownian_noise">Броунівський шум</string>
+    <string name="coffee_shop">Кав\'ярня</string>
+    <string name="creaking_ship">Скриплячий корабель</string>
+    <string name="crickets">Цвіркуни</string>
+    <string name="distant_thunder">Далекий грім</string>
+    <string name="electric_car">Електричний автомобіль</string>
+    <string name="heavy_rain">Злива</string>
+    <string name="howling_wolf">Виття вовка</string>
+    <string name="human_heartbeat">Серцебиття людини</string>
+    <string name="light_rain">Невеликий дощ</string>
+    <string name="moderate_rain">Помірний дощ</string>
+    <string name="morning_in_a_village">Ранок в селі</string>
+    <string name="moving_train">Поїзд у русі</string>
+    <string name="night">Ніч</string>
+    <string name="office">Офіс</string>
+    <string name="pink_noise">Рожевий шум</string>
+    <string name="public_library">Публічна бібліотека</string>
+    <string name="purring_cat">Муркотіння кота</string>
+    <string name="quiet_conversation">Тиха розмова</string>
+    <string name="rolling_thunder">Гуркіт грому</string>
+    <string name="screeching_seagulls">Вереск чайок</string>
+    <string name="seaside">Морський берег</string>
+    <string name="soft_wind">Легкий вітер</string>
+    <string name="thunder_crack">Тріск грому</string>
+    <string name="train_horn">Гудок поїзду</string>
+    <string name="walking_through_the_snow">Прогулянка по снігу</string>
+    <string name="water_hose">Водяний шланг</string>
+    <string name="water_stream">Потік води</string>
+    <string name="white_noise">Білий шум</string>
+    <string name="wind_in_chimes_of_shells">Дзвін мушель</string>
+    <string name="wind_in_palm_trees">Вітер у пальмах</string>
+    <!-- Saved Presets -->
+    <string name="delete">Видалити</string>
+    <string name="open_context_menu">Відкрити контекстне меню</string>
+    <string name="preset_delete_confirmation">Підтвердити видалення %s?</string>
+    <string name="preset_deleted">Пресет видалено!</string>
+    <string name="preset_info__description">
     Ви ще не створили пресети. Щоб створити пресети перейдіть до Бібліотеки та програйте звуки.
     Після цього натисніть на кнопку Зберегти яка з\'явиться у нижньому кутку екрану
   </string>
-  <string name="rename">Перейменувати</string>
-  <!-- Sleep Timer -->
-  <string name="auto_sleep_schedule_cancelled">Автоматичний таймер сну скасовано!</string>
-  <string name="reset">Скинути</string>
-  <string name="sleep_timer_description">
+    <string name="rename">Перейменувати</string>
+    <!-- Sleep Timer -->
+    <string name="auto_sleep_schedule_cancelled">Автоматичний таймер сну скасовано!</string>
+    <string name="reset">Скинути</string>
+    <string name="sleep_timer_description">
     Noice вимкне себе коли закінчиться таймер. Використовуйте кнопки нижче для того, щоб додати час
     та запустити таймер.
   </string>
-  <!-- Wake-up Timer -->
-  <string name="schedule">Розклад</string>
-  <string name="select_preset">Обрати пресет</string>
-  <string name="wake_up_timer_description">
+    <!-- Wake-up Timer -->
+    <string name="schedule">Розклад</string>
+    <string name="select_preset">Обрати пресет</string>
+    <string name="wake_up_timer_description">
     Noice увімкне обрані пресети коли таймер закінчиться. Використовуйте кнопки нижче для того, щоб
     обрати пресет та встановити обраний час щоб запустити таймер пробудження.
   </string>
-  <!-- Theme -->
-  <string-array name="app_themes">
-    <item>Світло</item>
-    <item>Темний</item>
-    <item>Система за замовчуванням</item>
-  </string-array>
-  <!-- About -->
-  <string name="about__email">Email</string>
-  <string name="about__github">Github</string>
-  <string name="about__translations">Переклади</string>
-  <string name="about__twitter">Twitter</string>
-  <string name="app_description">Розслабтесь та покращить продуктивність з мінімальним фоновим шумом.</string>
-  <string name="connect_with_author">Зв\'язатися з автором</string>
-  <string name="credits">Ресурси</string>
-  <!-- Help -->
-  <string name="appintro__chromecast_desc">
+    <!-- Theme -->
+    <string-array name="app_themes">
+        <item>Світло</item>
+        <item>Темний</item>
+        <item>Система за замовчуванням</item>
+    </string-array>
+    <!-- About -->
+    <string name="about__email">Email</string>
+    <string name="about__github">GitHub</string>
+    <string name="about__translations">Переклади</string>
+    <string name="about__twitter">Twitter</string>
+    <string name="app_description">Розслабтесь та покращить продуктивність з мінімальним фоновим шумом.</string>
+    <string name="connect_with_author">Зв\'язатися з автором</string>
+    <string name="credits">Ресурси</string>
+    <!-- Help -->
+    <string name="appintro__chromecast_desc">
     Використовуйте Noice для того, щоб передати його атмосферу до інших Chromecast сумісних
     пристроїв, таких як гучномовці, ТВ та інші.
   </string>
-  <string name="appintro__chromecast_title">Chromecast увімкнено</string>
-  <string name="appintro__getting_started_desc_0">
+    <string name="appintro__chromecast_title">Chromecast увімкнено</string>
+    <string name="appintro__getting_started_desc_0">
     Проведіть пальцем ліворуч щоб дізнатись всі функції!
   </string>
-  <string name="appintro__getting_started_desc_1">Почнімо!</string>
-  <string name="appintro__getting_started_title">Вітаємо</string>
-  <string name="appintro__preset_desc">
+    <string name="appintro__getting_started_desc_1">Почнімо!</string>
+    <string name="appintro__getting_started_title">Вітаємо</string>
+    <string name="appintro__preset_desc">
     Після відтворення декількох звуків Ви можете використовувати кнопку у нижньому кутку щоб
     зберегти свої мікси. Щоб використати збережені мікси Ви можете відвідати список пресетів через
     меню додатку.
   </string>
-  <string name="appintro__preset_title">Збережіть свої улюблені мікси</string>
-  <string name="appintro__sound_library_desc">
+    <string name="appintro__preset_title">Збережіть свої улюблені мікси</string>
+    <string name="appintro__sound_library_desc">
     Використовуйте повзунок гучності, щоб відрегулювати гучність звуків. При кожному програванні
     нециклічних звуків період затримки обирається випадково з діапазону за допомогою повзунка часу.
   </string>
-  <string name="appintro__sound_library_title">Створіть своє ідеальне оточення</string>
-  <string name="appintro__timer_desc">
+    <string name="appintro__sound_library_title">Створіть своє ідеальне оточення</string>
+    <string name="appintro__timer_desc">
     Маленька атмосфера може допомогти Вам заснути не докладаючи зусиль. Використовуйте таймер сну,
     щоб дозволити Noice вимкнутися, та таймер пробудження, щоб поставити будильник і прокинутись у
     спокійному оточенні.
   </string>
-  <string name="appintro__timer_title">Важко заснути або прокинутись?</string>
-  <!-- Support Development -->
-  <string name="support_development__donate">Пожертвувати</string>
-  <string name="support_development__donate_description">
+    <string name="appintro__timer_title">Важко заснути або прокинутись?</string>
+    <!-- Support Development -->
+    <string name="support_development__donate">Пожертвувати</string>
+    <string name="support_development__donate_description">
     Пожертви допоможуть нам у\n
     - інвестиціях у нові функції\n
     - додавати кращі звукові зразки\n
     - купувати каву\n
   </string>
-  <string name="support_development__donate_google_play_description">
+    <string name="support_development__donate_google_play_description">
     Ваш платіж буде безпечно проведений через Google Play. Суму буде конвертовано у вашу місцеву
     валюту. Додаткові податки _можуть_ бути додані до кінцевої суми в залежності від вашого місця
     знаходження.
   </string>
-  <string name="support_development__donate_thank_you">Дякуємо!</string>
-  <string name="support_development__donate_thank_you_description">
+    <string name="support_development__donate_thank_you">Дякуємо!</string>
+    <string name="support_development__donate_thank_you_description">
     Ми з щирого серця дякуємо за вашу щедру пожертву до проєкту Noice.
   </string>
-  <string name="support_development__share">Поділитися з друзями</string>
-  <string name="support_development__share_description">
+    <string name="support_development__share">Поділитися з друзями</string>
+    <string name="support_development__share_description">
     Поділитися Noice з друзями схоже з грошовими пожертвами. З більшою кількістю завантажень ми
     зможемо отримувати зворотний зв\'язок з різними точками зору що допоможе нам робити Noice краще.
   </string>
-  <string name="support_development__why">Чому Вам потрібно підтримати?</string>
-  <string name="support_development__why_description">
+    <string name="support_development__why">Чому Вам потрібно підтримати?</string>
+    <string name="support_development__why_description">
     - Щоб зробити можливими майбутні оновлення\n
     - Щоб залишити Noice вільним від реклами назавжди\n
   </string>
-  <!-- Others -->
-  <string name="cast_media">Транслювати медіа на інший пристрій</string>
-  <string name="in_app_feedback__description">
+    <!-- Others -->
+    <string name="cast_media">Транслювати медіа на інший пристрій</string>
+    <string name="in_app_feedback__description">
     Ми хотіли б почути що Ви думаєте про додаток. Відвідайте, будь ласка, наш GitHub репозиторій.
     Якщо Вам не сподобався додаток, будь ласка, відкрийте issue з поясненням. В іншому випадку, будь
     ласка, поставте проєкту зірочку щоб показати любов та підтримку.
   </string>
-  <string name="in_app_feedback__title">Відправити рецензію</string>
-  <string name="later">Пізніше</string>
-  <string name="never">Ніколи</string>
-  <string name="notification_channel_default__description">Регулювання відтворення звуків</string>
-  <string name="notification_channel_default__name">Відтворення звуків</string>
+    <string name="in_app_feedback__title">Відправити рецензію</string>
+    <string name="later">Пізніше</string>
+    <string name="never">Ніколи</string>
+    <string name="notification_channel_default__description">Регулювання відтворення звуків</string>
+    <string name="notification_channel_default__name">Відтворення звуків</string>
 </resources>
