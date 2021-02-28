@@ -21,10 +21,7 @@ class ShortcutHandlerActivity : AppCompatActivity() {
       if (Preset.findByID(this, it) == null) {
         Toast.makeText(this, R.string.preset_does_not_exist, Toast.LENGTH_LONG).show()
       } else {
-        Intent(this, MediaPlayerService::class.java)
-          .setAction(MediaPlayerService.ACTION_PLAY_PRESET)
-          .putExtra(MediaPlayerService.EXTRA_PRESET_ID, it)
-          .also { intent -> startService(intent) }
+        MediaPlayerService.playPreset(this, it)
       }
     }
 

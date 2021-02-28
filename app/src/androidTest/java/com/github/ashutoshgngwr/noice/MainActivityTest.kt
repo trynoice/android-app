@@ -35,14 +35,11 @@ import com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment
 import com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import com.google.android.material.navigation.NavigationView
-import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
-import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import io.mockk.verify
-import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.Assert.*
@@ -450,10 +447,12 @@ class MainActivityTest {
 
   @Test
   fun testPlayPauseToggleMenuItem() {
-    mockkStatic(EventBus::class)
-    val mockEventBus = mockk<EventBus>(relaxed = true)
-    every { EventBus.getDefault() } returns mockEventBus
-    activityScenario.recreate() // recreate to initialize with mock event bus
+    mockkObject(MediaPlayerService.Companion)
+    activityScenario.onActivity {
+      it.onPlayerManagerUpdate(mockk(relaxed = true) {
+        every { state } returns PlayerManager.State.STOPPED
+      })
+    }
 
     // shouldn't be displayed by default
     onView(withId(R.id.action_play_pause_toggle)).check(doesNotExist())
@@ -469,8 +468,7 @@ class MainActivityTest {
       .check(matches(isDisplayed()))
       .perform(click())
 
-    verify(exactly = 1) { mockEventBus.post(ofType(MediaPlayerService.PausePlaybackEvent::class)) }
-    clearMocks(mockEventBus)
+    verify(exactly = 1) { MediaPlayerService.pausePlayback(any()) }
 
     // with paused playback
     activityScenario.onActivity {
@@ -483,8 +481,7 @@ class MainActivityTest {
       .check(matches(isDisplayed()))
       .perform(click())
 
-    verify(exactly = 1) { mockEventBus.post(ofType(MediaPlayerService.ResumePlaybackEvent::class)) }
-    clearMocks(mockEventBus)
+    verify(exactly = 1) { MediaPlayerService.resumePlayback(any()) }
 
     // with stopped playback
     activityScenario.onActivity {

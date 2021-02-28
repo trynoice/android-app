@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.widget
 import android.content.Context
 import android.os.Build
 import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.text.Html
 import android.text.Spanned
@@ -50,7 +51,7 @@ class CountdownTextView : MaterialTextView {
    * for tests so that we'd be able to use it with ShadowLooper APIs.
    */
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  val countdownHandler = Handler()
+  val countdownHandler = Handler(Looper.getMainLooper())
 
   /**
    * countdownUntilMillis denotes the time until which the countdown should run. It is

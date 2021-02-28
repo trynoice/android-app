@@ -1,11 +1,8 @@
 package com.github.ashutoshgngwr.noice
 
-import android.app.ActivityManager
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Animatable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -142,22 +139,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   override fun onResume() {
     super.onResume()
     EventBus.getDefault().register(this)
-    val serviceIntent = Intent(this, MediaPlayerService::class.java)
-
-    // start the media player service
-    // workaround for Android 9+. See https://github.com/ashutoshgngwr/noice/issues/179
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-      (getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).also {
-        val importance = it.runningAppProcesses.firstOrNull()?.importance
-          ?: ActivityManager.RunningAppProcessInfo.IMPORTANCE_GONE
-
-        if (importance <= ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-          startService(serviceIntent)
-        }
-      }
-    } else {
-      startService(serviceIntent)
-    }
   }
 
   override fun onPause() {
@@ -179,13 +160,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
       (it.icon as Animatable).start()
       it.setOnMenuItemClickListener {
-        val event: Any = if (PlayerManager.State.PLAYING == playerManagerState) {
-          MediaPlayerService.PausePlaybackEvent()
+        if (PlayerManager.State.PLAYING == playerManagerState) {
+          MediaPlayerService.pausePlayback(this)
         } else {
-          MediaPlayerService.ResumePlaybackEvent()
+          MediaPlayerService.resumePlayback(this)
         }
 
-        EventBus.getDefault().post(event)
         true
       }
     }
