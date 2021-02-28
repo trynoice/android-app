@@ -332,6 +332,7 @@ class SoundLibraryFragmentTest {
 
   @Test
   fun testRandomPresetButton_onClick() {
+    mockkObject(Preset.Companion)
     fragmentScenario.onFragment { fragment ->
       fragment.onPlayerManagerUpdate(mockk(relaxed = true) {
         every { state } returns PlayerManager.State.STOPPED
@@ -352,6 +353,9 @@ class SoundLibraryFragmentTest {
 
     for ((typeID, tag) in typeExpectations) {
       for ((intensityID, intensityRange) in intensityExpectations) {
+        val mockPreset = mockk<Preset>(relaxed = true)
+        every { Preset.generateRandom(tag, intensityRange) } returns mockPreset
+
         onView(withId(R.id.random_preset_button))
           .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
           .perform(click())
@@ -370,20 +374,7 @@ class SoundLibraryFragmentTest {
         val eventSlot = slot<MediaPlayerService.PlayPresetEvent>()
         verify(exactly = 1) { eventBus.post(capture(eventSlot)) }
         assertTrue("should capture a PlayPresetEvent", eventSlot.isCaptured)
-
-        val preset = eventSlot.captured.preset
-        assertTrue(
-          "should have expected intensity",
-          preset.playerStates.size in intensityRange
-        )
-
-        preset.playerStates.forEach {
-          assertTrue(
-            "should have expected sound tags",
-            tag == null || Sound.get(it.soundKey).tags.contains(tag)
-          )
-        }
-
+        assertEquals("should equal mocked preset", mockPreset, eventSlot.captured.preset)
         clearMocks(eventBus)
       }
     }

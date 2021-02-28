@@ -27,8 +27,6 @@ import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import kotlin.random.Random
-import kotlin.random.nextInt
 
 class SoundLibraryFragment : Fragment() {
 
@@ -182,23 +180,13 @@ class SoundLibraryFragment : Fragment() {
       else -> null
     }
 
-    val library = Sound.filterLibraryByTag(tag).shuffled()
-    val presetSizeRange = when (intensity) {
+    val intensity = when (intensity) {
       R.id.preset_intensity__light -> RANGE_INTENSITY_LIGHT
       R.id.preset_intensity__dense -> RANGE_INTENSITY_DENSE
       else -> RANGE_INTENSITY_ANY
     }
 
-    val playerStates = mutableListOf<Preset.PlayerState>()
-    for (i in 0 until Random.nextInt(presetSizeRange)) {
-      val volume = 1 + Random.nextInt(0, Player.MAX_VOLUME)
-      val timePeriod = Random.nextInt(Player.MIN_TIME_PERIOD, Player.MAX_TIME_PERIOD + 1)
-      playerStates.add(
-        Preset.PlayerState(library[i], volume, timePeriod)
-      )
-    }
-
-    return Preset("", playerStates.toTypedArray())
+    return Preset.generateRandom(tag, intensity)
   }
 
   override fun onDestroyView() {
