@@ -81,4 +81,6 @@
     <string name="submit_feedback">Invia feedback</string>
     <string name="support_development">Supporta lo sviluppo</string>
     <string name="help">Aiuto</string>
+    <string name="preset_already_exists">Un preset con questo nome é già esistente</string>
+    <string name="random_preset">Preset casuale</string>
 </resources>
