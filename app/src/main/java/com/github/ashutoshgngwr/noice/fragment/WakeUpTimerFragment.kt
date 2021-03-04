@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.media.AudioManagerCompat
+import androidx.preference.PreferenceManager
+import com.github.ashutoshgngwr.noice.Constants
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
@@ -74,6 +76,7 @@ class WakeUpTimerFragment : Fragment() {
         audioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
     }
 
+    loadSelectedPresetID()
     notifyUpdate()
   }
 
@@ -87,6 +90,7 @@ class WakeUpTimerFragment : Fragment() {
         singleChoiceItems(presetNames, presetIDs.indexOf(selectedPresetID)) { choice ->
           selectedPresetID = presetIDs[choice]
           notifyUpdate()
+          savePresetID()
         }
       } else {
         message(R.string.preset_info__description)
@@ -180,6 +184,33 @@ class WakeUpTimerFragment : Fragment() {
 
       @Suppress("DEPRECATION")
       binding.timePicker.currentMinute = calendar.get(Calendar.MINUTE)
+    }
+  }
+
+  private fun loadSelectedPresetID(){
+    if(!loadSharedPrefsSelectedPresetID()){
+      loadFirstPreset()
+    }
+  }
+
+  private fun loadSharedPrefsSelectedPresetID() : Boolean{
+    val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+    selectedPresetID = sharedPrefs.getString(Constants.SELECTED_PRESET_ID, null)
+    return selectedPresetID != null
+  }
+
+  private fun savePresetID() {
+    val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+    with(sharedPrefs.edit()) {
+      putString(Constants.SELECTED_PRESET_ID, selectedPresetID)
+      apply()
+    }
+  }
+
+  private fun loadFirstPreset() {
+    val presets = Preset.readAllFromUserPreferences(requireContext())
+    if (presets.isNotEmpty()) {
+      selectedPresetID = presets.first().id
     }
   }
 }
