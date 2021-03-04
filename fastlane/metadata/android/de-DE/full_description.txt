@@ -1,6 +1,6 @@
-Vielen Menschen helfen dezemte Hintergrundgeräusche, sich zu beruhigen und zu fokussieren. In manchen Fällen kann dadurch sogar die Produktivität gesteigert werden. Hintergrundgeräusche können auch Stresseffekte minimieren. 
+Vielen Menschen helfen dezente Hintergrundgeräusche, sich zu beruhigen und zu fokussieren. In manchen Fällen kann dadurch sogar die Produktivität gesteigert werden. Hintergrundgeräusche können auch helfen Stress zu minimieren. 
 
-Die App Noice erlaubt es dir, deine eigene Geräuschumgebung mit Clips aus diversen Quellen für Umgebungsgeräusche zu erstellen. Kombiniere verschiedene Klänge zu einer perfekten Umgebung, die dir ein ablenkungsfreies Arbeiten ermöglicht oder generiere ruhige, friedvolle Umgebungen zum Einschlafen. 
+Die App Noice erlaubt es dir, deine eigene Geräuschumgebung mit Clips aus diversen Quellen für Umgebungsgeräusche zu erstellen. Kombiniere verschiedene Klänge zu einem perfekten Hintergrundgeräusch, welches dir ein fokussierteres Arbeiten ermöglicht oder eine ruhige, friedvolle Atmosphäre zum Einschlafen schaffen kann. 
 
 <b>Funktionen</b>
 - 35 Geräuschaufnahmen
@@ -8,17 +8,27 @@ Die App Noice erlaubt es dir, deine eigene Geräuschumgebung mit Clips aus diver
 - Erstelle einen benutzerdefinierten Mix
 - Weck-Timer (Wecker)
 - Speichere deine Lieblingsmixe
-- Automatischer Schlaftimer
+- Automatischer Einschlaftimer
 - Neben anderen Musikplayern abspielbar
 - Individuelle Lautstärke für jede Geräuschquelle
 - Offline-Wiedergabe
 - Helles und dunkles App-Theme
 
 <b>Geräuschesammlung</b>
-- Wald-Set (Vögel, Lagerfeuer, Nacht, Wind, Palmen, etc.)
-- Monsun-Set (Regen, Donner)
-- Teleportierungs-Set (Kaffeehaus, Büro, fahrender Zug, im Flugzeug, am Meer, Flussufer, etc.)
+- Leben-Set (Vögel, Grillen, Wolf, Menschlicher Herzschlag, etc.)
+- Wald-Set (Lagerfeuer, Nacht, Wind, Palmen, etc.)
+- Monsum-Set (Regen, Donner)
+- Ambiente-Set (Kaffeehaus, Bibliothek, Büro, Küste, Flussufer, etc.)
+- Fahrzeug-Set (Fahrender Zug, Im Flugzeug, Knarrendes Schiff, Elektroauto, etc.)
 - Rauschen (weiß, rosa und braun)
+
+<b>Berechtigungen</b>
+- <b>Ruhezustand deaktivieren</b>: um die CPU während der Wiedergabe aktiv zu halten
+- <b>Vordergrunddienste ausführen</b>: zum Ausführen des Player-Prozesses (anders als UI)
+- <b>Beim Start ausführen</b>: um sicherzustellen, dass der Weck-Timer über Neustarts hinweg bestehen bleiben
+- <b>Auf alle Netzwerke zugreifen</b>: um Chromecast und finanzielle Beiträge zu ermöglichen
+- <b>Netzwerkverbindungen abrufen</b>: von einer programmtechnischen Abhängigkeit hinzugefügt, wird aktuell nicht verwendet
+- <b>Google Play-Rechnungsdienst</b>: um finanzielle Unterstützungen für die App Entwicklung zu möglich zu machen
 
 Noice ist freie und quelloffene Software.
 https://github.com/ashutoshgngwr/noice
