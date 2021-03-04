@@ -26,6 +26,7 @@ class WakeUpTimerFragment : Fragment() {
 
   private var selectedPresetID: String? = null
   private var selectedTime: Long = 0
+  private var changedPreset = false
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -89,6 +90,7 @@ class WakeUpTimerFragment : Fragment() {
       if (presets.isNotEmpty()) {
         singleChoiceItems(presetNames, presetIDs.indexOf(selectedPresetID)) { choice ->
           selectedPresetID = presetIDs[choice]
+          changedPreset = true
           notifyUpdate()
           savePresetID()
         }
@@ -170,6 +172,11 @@ class WakeUpTimerFragment : Fragment() {
   }
 
   private fun updateTimePicker() {
+    if (changedPreset) {
+      changedPreset = false
+      return
+    }
+
     val calendar = Calendar.getInstance()
     if (selectedTime > System.currentTimeMillis()) {
       calendar.timeInMillis = selectedTime
@@ -187,13 +194,13 @@ class WakeUpTimerFragment : Fragment() {
     }
   }
 
-  private fun loadSelectedPresetID(){
-    if(!loadSharedPrefsSelectedPresetID()){
+  private fun loadSelectedPresetID() {
+    if (!loadSharedPrefsSelectedPresetID()) {
       loadFirstPreset()
     }
   }
 
-  private fun loadSharedPrefsSelectedPresetID() : Boolean{
+  private fun loadSharedPrefsSelectedPresetID(): Boolean {
     val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
     selectedPresetID = sharedPrefs.getString(Constants.SELECTED_PRESET_ID, null)
     return selectedPresetID != null
