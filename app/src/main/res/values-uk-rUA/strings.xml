@@ -80,10 +80,7 @@
     <string name="open_context_menu">Відкрити контекстне меню</string>
     <string name="preset_delete_confirmation">Підтвердити видалення %s?</string>
     <string name="preset_deleted">Пресет видалено!</string>
-    <string name="preset_info__description">
-    Ви ще не створили пресети. Щоб створити пресети перейдіть до Бібліотеки та програйте звуки.
-    Після цього натисніть на кнопку Зберегти яка з\'явиться у нижньому кутку екрану
-  </string>
+    <string name="preset_info__description">Ви ще не створили пресети. Щоб створити пресети перейдіть до Бібліотеки та програйте звуки. Після цього натисніть на кнопку Зберегти яка з\'явиться у нижньому кутку екрану.</string>
     <string name="rename">Перейменувати</string>
     <!-- Sleep Timer -->
     <string name="auto_sleep_schedule_cancelled">Автоматичний таймер сну скасовано!</string>
