@@ -165,4 +165,15 @@
     <string name="cast_media">Envoyer le son vers un autre appareil</string>
     <string name="notification_channel_default__description">Contrôles de lecture</string>
     <string name="notification_channel_default__name">Lecture audio</string>
+    <string name="preset_does_not_exist">Cette préconfiguration n\'existe pas. Peut-être a-t-elle été effacée !</string>
+    <string name="add_to_home_screen">Ajouter à l\'écran d\'accueil</string>
+    <string name="relax">Apaisant</string>
+    <string name="random_preset">Préconfiguration aléatoire</string>
+    <string name="okay">Ok</string>
+    <string name="mood">Ambiance</string>
+    <string name="light">Clair</string>
+    <string name="intensity_description">La présélection « dense » tentera de jouer plus de son simultanément.</string>
+    <string name="intensity">Intensité</string>
+    <string name="dense">Dense</string>
+    <string name="submit_feedback">Soumettre une évaluation</string>
 </resources>
