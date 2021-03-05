@@ -14,7 +14,7 @@
     <string name="dismiss">Descartar</string>
     <string name="name">Nombre</string>
     <string name="pause">Pausar</string>
-    <string name="preset_name_cannot_be_empty">El nombre del preajuste no puede estar vacío</string>
+    <string name="preset_name_cannot_be_empty">El nombre del preajuste no puede estar vacío!</string>
     <string name="preset_saved">¡Preajuste guardado!</string>
     <string name="save">Guardar</string>
     <string name="save_preset">Guardar Preajuste</string>
