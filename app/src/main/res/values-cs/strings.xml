@@ -29,7 +29,7 @@
     <string name="stop">Stop</string>
     <string name="volume">Hlasitost</string>
     <!-- Library - sound groups -->
-    <string name="sound_group__life">Life</string>
+    <string name="sound_group__life">Život</string>
     <string name="sound_group__monsoon">Monzun</string>
     <string name="sound_group__public_gatherings">Veřejná shromáždění</string>
     <string name="sound_group__raw_noise">Syntentický šum</string>
