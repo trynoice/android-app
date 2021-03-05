@@ -180,4 +180,6 @@
     <string name="never">Ніколи</string>
     <string name="notification_channel_default__description">Регулювання відтворення звуків</string>
     <string name="notification_channel_default__name">Відтворення звуків</string>
+    <string name="light">Світла</string>
+    <string name="any">Будь-який</string>
 </resources>

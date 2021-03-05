@@ -165,4 +165,25 @@
     <string name="cast_media">Envoyer le son vers un autre appareil</string>
     <string name="notification_channel_default__description">Contrôles de lecture</string>
     <string name="notification_channel_default__name">Lecture audio</string>
+    <string name="preset_does_not_exist">Cette préconfiguration n\'existe pas. Peut-être a-t-elle été effacée !</string>
+    <string name="add_to_home_screen">Ajouter à l\'écran d\'accueil</string>
+    <string name="relax">Apaisant</string>
+    <string name="random_preset">Préconfiguration aléatoire</string>
+    <string name="okay">Ok</string>
+    <string name="mood">Ambiance</string>
+    <string name="light">Clair</string>
+    <string name="intensity_description">La présélection « dense » tentera de jouer plus de son simultanément.</string>
+    <string name="intensity">Intensité</string>
+    <string name="dense">Dense</string>
+    <string name="submit_feedback">Soumettre une évaluation</string>
+    <string name="in_app_feedback__description">Nous aimerions connaître votre avis sur l\'application. Nous vous prions de consulter notre GitHub. Si vous n\'aimez pas l\'application, nous vous prions d\'ouvrir un billet « issue » afin de nous expliquer vos critiques. Autrement, nous vous prions de noter le projet pour nous montrer votre reconnaissance.</string>
+    <string name="should_update_media_volume">Ajustez le volume de l\'appareil avant de lancer la préconfiguration</string>
+    <string name="device_media_volume">Volume de l\'appareil</string>
+    <string name="use_24h_format">Utiliser le format 24 heures</string>
+    <string name="wake_up_timer_cancelled">Minuterie du réveil annulée !</string>
+    <string name="show_saved_preset_on_startup">Afficher les configurations sauvegardées au lancement de l\'application</string>
+    <string name="shortcuts_not_supported">Votre lanceur par défaut ne supporte pas l\'ajout de raccourcis.</string>
+    <string name="never">Jamais</string>
+    <string name="later">Plus tard</string>
+    <string name="in_app_feedback__title">Soumettre une évaluation</string>
 </resources>
