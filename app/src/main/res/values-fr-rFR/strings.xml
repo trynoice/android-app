@@ -116,7 +116,7 @@
     Utilisez Noice pour envoyer l\'ambiance créée vers un appareil équipé de Chromecast comme des enceintes, une télé, etc.
   </string>
     <string name="appintro__chromecast_title">Chromecast activé</string>
-    <string name="appintro__getting_started_desc_0">Glissez vers la gauche pour connaître toutes les fonctionnalités!</string>
+    <string name="appintro__getting_started_desc_0">Glissez vers la gauche pour connaître toutes les fonctionnalités !</string>
     <string name="appintro__getting_started_desc_1">C\'est parti !</string>
     <string name="appintro__getting_started_title">Bienvenue</string>
     <string name="appintro__preset_desc">

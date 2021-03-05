@@ -132,7 +132,7 @@
   </string>
     <string name="appintro__timer_title">¿Problemas para conciliar el sueño o para despertar?</string>
     <!-- Support Development -->
-    <string name="support_development__donate">Donate</string>
+    <string name="support_development__donate">Donar</string>
     <string name="support_development__donate_description">
     Las donaciones nos ayudarán a\n
     - invertir en nuevas funciones\n
@@ -143,7 +143,7 @@
     Su pago será manejado de forma segura por Google Play. La cantidad se convertirá a su moneda
     local. Dependiendo de su ubicación, se pueden agregar impuestos adicionales al monto final.
   </string>
-    <string name="support_development__donate_thank_you">Thank you!</string>
+    <string name="support_development__donate_thank_you">Gracias!</string>
     <string name="support_development__donate_thank_you_description">
     Le agradecemos de todo corazón su generosa contribución al proyecto Noise.
   </string>
