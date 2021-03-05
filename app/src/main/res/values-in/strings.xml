@@ -34,7 +34,7 @@
     <string name="sound_group__life">Kehidupan</string>
     <string name="sound_group__monsoon">Musim</string>
     <string name="sound_group__public_gatherings">Pertemuan Umum</string>
-    <string name="sound_group__raw_noise">Raw Noise</string>
+    <string name="sound_group__raw_noise">Kebisingan Mentah</string>
     <string name="sound_group__times_of_day">Waktu</string>
     <string name="sound_group__vehicles">Kendaraan</string>
     <string name="sound_group__water">Air</string>
@@ -44,7 +44,7 @@
     <string name="airplane_seatbelt_beeps">Bunyi sabuk pengaman pesawat</string>
     <string name="birds">Burung</string>
     <string name="bonfire">Api unggun</string>
-    <string name="brownian_noise">Brownian noise</string>
+    <string name="brownian_noise">Kebisingan brownian</string>
     <string name="coffee_shop">Kedai kopi</string>
     <string name="creaking_ship">Kapal pecah</string>
     <string name="crickets">Jangkrik</string>
@@ -59,7 +59,7 @@
     <string name="moving_train">Kereta bergerak</string>
     <string name="night">Malam</string>
     <string name="office">Kantor</string>
-    <string name="pink_noise">Pink noise</string>
+    <string name="pink_noise">Kebisingan merah muda</string>
     <string name="public_library">Perpustakaan umum</string>
     <string name="purring_cat">Mendengkur kucing</string>
     <string name="quiet_conversation">Percakapan senyap</string>
@@ -72,7 +72,7 @@
     <string name="walking_through_the_snow">Berjalan melintasi salju</string>
     <string name="water_hose">Selang air</string>
     <string name="water_stream">Aliran air</string>
-    <string name="white_noise">White noise</string>
+    <string name="white_noise">Kebisingan putih</string>
     <string name="wind_in_chimes_of_shells">Angin di lonceng kerang</string>
     <string name="wind_in_palm_trees">Angin di pohon palem</string>
     <!-- Saved Presets -->
@@ -172,7 +172,7 @@
  </string>
     <string name="in_app_feedback__title">Kirimkan ulasan</string>
     <string name="later">Nanti</string>
-    <string name="never">Never</string>
+    <string name="never">Tidak pernah</string>
     <string name="notification_channel_default__description">Kontrol pemutaran media</string>
     <string name="notification_channel_default__name">Pemutaran Media</string>
     <string name="shortcuts_not_supported">Launcher default anda tidak mendukung untuk menambahkan shortcuts.</string>
