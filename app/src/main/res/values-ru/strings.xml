@@ -181,4 +181,10 @@
     <string name="relax">Расслабиться</string>
     <string name="random_preset">Случайный пресет</string>
     <string name="mood">Настроение</string>
+    <string name="should_update_media_volume">Обновить громкость звуков устройства перед запуском предустановок</string>
+    <string name="device_media_volume">Громкость звука устройства</string>
+    <string name="wake_up_timer_cancelled">Таймер пробуждения отменён!</string>
+    <string name="shortcuts_not_supported">Ваш лаунчер по умолчанию не поддерживает добавление ярлыков.</string>
+    <string name="intensity_description">Компактные предустановки будут пытаться воспроизводить больше звуков одновременно.</string>
+    <string name="focus">Фокус</string>
 </resources>
