@@ -26,13 +26,13 @@
     <string name="play">Lecture</string>
     <string name="play_pause">Lecture ou pause</string>
     <string name="repeat_time_period">Fréquence</string>
-    <string name="stop">Stop</string>
+    <string name="stop">Arrêter</string>
     <string name="volume">Volume</string>
     <!-- Library - sound groups -->
     <string name="sound_group__life">Vie</string>
     <string name="sound_group__monsoon">Temps orageux</string>
     <string name="sound_group__public_gatherings">Lieux publics</string>
-    <string name="sound_group__raw_noise">Sons Bruts</string>
+    <string name="sound_group__raw_noise">Sons bruts</string>
     <string name="sound_group__times_of_day">Moments de la journée</string>
     <string name="sound_group__vehicles">Véhicules</string>
     <string name="sound_group__water">Eau</string>
@@ -104,7 +104,7 @@
         <item>Système</item>
     </string-array>
     <!-- About -->
-    <string name="about__email">E-mail</string>
+    <string name="about__email">Courriel</string>
     <string name="about__github">GitHub</string>
     <string name="about__translations">Traductions</string>
     <string name="about__twitter">Twitter</string>
@@ -169,10 +169,10 @@
     <string name="add_to_home_screen">Ajouter à l\'écran d\'accueil</string>
     <string name="relax">Apaisant</string>
     <string name="random_preset">Préconfiguration aléatoire</string>
-    <string name="okay">Ok</string>
+    <string name="okay">D\'accord</string>
     <string name="mood">Ambiance</string>
     <string name="light">Clair</string>
-    <string name="intensity_description">La présélection « dense » tentera de jouer plus de son simultanément.</string>
+    <string name="intensity_description">La présélection « dense » tentera de jouer plus de son simultanément.</string>
     <string name="intensity">Intensité</string>
     <string name="dense">Dense</string>
     <string name="submit_feedback">Soumettre une évaluation</string>
@@ -186,4 +186,5 @@
     <string name="never">Jamais</string>
     <string name="later">Plus tard</string>
     <string name="in_app_feedback__title">Soumettre une évaluation</string>
+    <string name="any">N\'importe</string>
 </resources>
