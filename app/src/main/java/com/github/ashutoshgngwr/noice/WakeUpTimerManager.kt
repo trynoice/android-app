@@ -29,6 +29,9 @@ object WakeUpTimerManager {
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   const val PREF_WAKE_UP_TIMER = "wake_up_timer"
 
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  const val PREF_LAST_USED_PRESET_ID = "last_used_preset_id"
+
   private const val RC_WAKE_UP_TIMER = 0x39
   private const val RC_MAIN_ACTIVITY = 0x40
 
@@ -113,6 +116,29 @@ object WakeUpTimerManager {
       .getString(PREF_WAKE_UP_TIMER, null)
 
     return withGson { it.fromJson(timer, Timer::class.java) }
+  }
+
+  /**
+   * [saveLastUsedPresetID] saves the ID of the preset last used by the user in a Wake-up timer.
+   */
+  fun saveLastUsedPresetID(context: Context, selectedPresetID: String) {
+    val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+    with(sharedPrefs.edit()) {
+      putString(PREF_LAST_USED_PRESET_ID, selectedPresetID)
+      apply()
+    }
+  }
+
+  /**
+   * [getLastUsedPresetID] return the saved ID of the last selected preset. Returns null otherwise.
+   */
+  fun getLastUsedPresetID(context: Context): String? {
+    return with(PreferenceManager.getDefaultSharedPreferences(context)) {
+      val lastSelectedPresetID = getString(PREF_LAST_USED_PRESET_ID, null)
+
+      // ensure that preset with given ID exists in preferences.
+      Preset.findByID(context, lastSelectedPresetID)?.id
+    }
   }
 
   /**
