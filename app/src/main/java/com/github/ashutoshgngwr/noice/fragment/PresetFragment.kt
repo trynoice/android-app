@@ -163,6 +163,7 @@ class PresetFragment : Fragment() {
         it.setIcon(IconCompat.createWithResource(requireContext(), R.mipmap.ic_preset_shortcut))
         it.setIntent(
           Intent(requireContext(), ShortcutHandlerActivity::class.java)
+            .setAction(Intent.ACTION_VIEW)
             .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, presetID)
         )
 
