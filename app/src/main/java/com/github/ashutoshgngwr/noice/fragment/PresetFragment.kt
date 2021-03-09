@@ -207,8 +207,6 @@ class PresetFragment : Fragment() {
         positiveButton(R.string.delete) {
           val preset = dataSet.removeAt(adapterPosition)
           Preset.writeAllToUserPreferences(requireContext(), dataSet)
-          WakeUpTimerManager.removePresetIDFromSharedPrefs(requireContext(), preset.id)
-
           // then stop playback if recently deleted preset was playing
           if (adapterPosition == activePresetPos) {
             MediaPlayerService.stopPlayback(requireContext())

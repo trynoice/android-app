@@ -282,7 +282,7 @@ class WakeUpTimerFragmentTest {
         every { name } returns "test-not-saved-preset-2"
       }
     )
-    every { WakeUpTimerManager.getSharedPrefsSelectedPresetID(any()) } returns "test-saved-preset-id"
+    every { WakeUpTimerManager.getLastUsedPresetID(any()) } returns "test-saved-preset-id"
 
     fragmentScenario.recreate()
     onView(withId(R.id.select_preset_button))

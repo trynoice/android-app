@@ -85,7 +85,7 @@ class WakeUpTimerFragment : Fragment() {
           selectedPresetID = presetIDs[choice]
           changedPreset = true
           notifyUpdate()
-          WakeUpTimerManager.savePresetID(requireContext(), selectedPresetID!!)
+          WakeUpTimerManager.saveLastUsedPresetID(requireContext(), selectedPresetID!!)
         }
       } else {
         message(R.string.preset_info__description)
@@ -189,7 +189,7 @@ class WakeUpTimerFragment : Fragment() {
   }
 
   private fun loadSharedPrefsSelectedPresetID(): Boolean {
-    selectedPresetID = WakeUpTimerManager.getSharedPrefsSelectedPresetID(requireContext())
+    selectedPresetID = WakeUpTimerManager.getLastUsedPresetID(requireContext())
     return selectedPresetID != null
   }
 

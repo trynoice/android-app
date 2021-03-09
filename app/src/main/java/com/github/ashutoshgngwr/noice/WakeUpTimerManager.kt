@@ -16,8 +16,6 @@ import com.google.gson.annotations.Expose
 
 object WakeUpTimerManager {
 
-  private const val SELECTED_PRESET_ID = "selectedPresetID"
-
   /**
    * [Timer] declares fields necessary to schedule a Wake-up timer.
    */
@@ -30,6 +28,9 @@ object WakeUpTimerManager {
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   const val PREF_WAKE_UP_TIMER = "wake_up_timer"
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  const val PREF_LAST_USED_PRESET_ID = "last_used_preset_id"
 
   private const val RC_WAKE_UP_TIMER = 0x39
   private const val RC_MAIN_ACTIVITY = 0x40
@@ -118,36 +119,26 @@ object WakeUpTimerManager {
   }
 
   /**
-   * [savePresetID] saves the ID of the selected preset by the user
+   * [saveLastUsedPresetID] saves the ID of the preset last used by the user in a Wake-up timer.
    */
-  fun savePresetID(context: Context, selectedPresetID: String) {
+  fun saveLastUsedPresetID(context: Context, selectedPresetID: String) {
     val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
     with(sharedPrefs.edit()) {
-      putString(SELECTED_PRESET_ID, selectedPresetID)
+      putString(PREF_LAST_USED_PRESET_ID, selectedPresetID)
       apply()
     }
   }
 
   /**
-   * [removePresetIDFromSharedPrefs] remove the ID of the selected preset from Shared Preferences if exists.
+   * [getLastUsedPresetID] return the saved ID of the last selected preset. Returns null otherwise.
    */
-  fun removePresetIDFromSharedPrefs(context: Context, removePresetID: String) {
-    if (PreferenceManager.getDefaultSharedPreferences(context)
-        .getString("selectedPresetID", null) == removePresetID
-    ) {
-      with(PreferenceManager.getDefaultSharedPreferences(context).edit()) {
-        clear()
-        apply()
-      }
-    }
-  }
+  fun getLastUsedPresetID(context: Context): String? {
+    return with(PreferenceManager.getDefaultSharedPreferences(context)) {
+      val lastSelectedPresetID = getString(PREF_LAST_USED_PRESET_ID, null)
 
-  /**
-   * [getSharedPrefsSelectedPresetID] return the saved ID of the selected preset. Returns null otherwise.
-   */
-  fun getSharedPrefsSelectedPresetID(context: Context): String? {
-    val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
-    return sharedPrefs.getString(SELECTED_PRESET_ID, null)
+      // ensure that preset with given ID exists in preferences.
+      Preset.findByID(context, lastSelectedPresetID)?.id
+    }
   }
 
   /**
