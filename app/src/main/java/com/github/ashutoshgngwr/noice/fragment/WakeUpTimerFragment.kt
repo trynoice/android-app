@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.media.AudioManagerCompat
-import androidx.preference.PreferenceManager
-import com.github.ashutoshgngwr.noice.Constants
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
@@ -92,7 +90,7 @@ class WakeUpTimerFragment : Fragment() {
           selectedPresetID = presetIDs[choice]
           changedPreset = true
           notifyUpdate()
-          savePresetID()
+          WakeUpTimerManager.savePresetID(requireContext(), selectedPresetID!!)
         }
       } else {
         message(R.string.preset_info__description)
@@ -201,17 +199,8 @@ class WakeUpTimerFragment : Fragment() {
   }
 
   private fun loadSharedPrefsSelectedPresetID(): Boolean {
-    val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-    selectedPresetID = sharedPrefs.getString(Constants.SELECTED_PRESET_ID, null)
+    selectedPresetID = WakeUpTimerManager.getSharedPrefsSelectedPresetID(requireContext())
     return selectedPresetID != null
-  }
-
-  private fun savePresetID() {
-    val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-    with(sharedPrefs.edit()) {
-      putString(Constants.SELECTED_PRESET_ID, selectedPresetID)
-      apply()
-    }
   }
 
   private fun loadFirstPreset() {

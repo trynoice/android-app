@@ -16,6 +16,8 @@ import com.google.gson.annotations.Expose
 
 object WakeUpTimerManager {
 
+  private const val SELECTED_PRESET_ID = "selectedPresetID"
+
   /**
    * [Timer] declares fields necessary to schedule a Wake-up timer.
    */
@@ -113,6 +115,39 @@ object WakeUpTimerManager {
       .getString(PREF_WAKE_UP_TIMER, null)
 
     return withGson { it.fromJson(timer, Timer::class.java) }
+  }
+
+  /**
+   * [savePresetID] saves the ID of the selected preset by the user
+   */
+  fun savePresetID(context: Context, selectedPresetID: String) {
+    val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+    with(sharedPrefs.edit()) {
+      putString(SELECTED_PRESET_ID, selectedPresetID)
+      apply()
+    }
+  }
+
+  /**
+   * [removePresetIDFromSharedPrefs] remove the ID of the selected preset from Shared Preferences if exists.
+   */
+  fun removePresetIDFromSharedPrefs(context: Context, removePresetID: String) {
+    if (PreferenceManager.getDefaultSharedPreferences(context)
+        .getString("selectedPresetID", null) == removePresetID
+    ) {
+      with(PreferenceManager.getDefaultSharedPreferences(context).edit()) {
+        clear()
+        apply()
+      }
+    }
+  }
+
+  /**
+   * [getSharedPrefsSelectedPresetID] return the saved ID of the selected preset. Returns null otherwise.
+   */
+  fun getSharedPrefsSelectedPresetID(context: Context): String? {
+    val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+    return sharedPrefs.getString(SELECTED_PRESET_ID, null)
   }
 
   /**

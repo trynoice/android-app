@@ -259,4 +259,55 @@ class WakeUpTimerFragmentTest {
     onView(withId(R.id.is_24h_view)).perform(click())
     onView(withId(R.id.time_picker)).check(matches(not(EspressoX.is24hViewEnabled())))
   }
+
+  @Test
+  fun testLoadSavedPreset() {
+    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(
+      mockk(relaxed = true) {
+        every { id } returns "test-not-saved-preset-id-1"
+        every { name } returns "test-not-saved-preset-1"
+      }
+      ,
+      mockk(relaxed = true) {
+        every { id } returns "test-saved-preset-id"
+        every { name } returns "test-saved-preset"
+      },
+      mockk(relaxed = true) {
+        every { id } returns "test-not-saved-preset-id-2"
+        every { name } returns "test-not-saved-preset-2"
+      }
+    )
+    every { WakeUpTimerManager.getSharedPrefsSelectedPresetID(any()) } returns "test-saved-preset-id"
+
+    fragmentScenario.recreate()
+    onView(withId(R.id.select_preset_button))
+      .check(matches(withText("test-saved-preset")))
+  }
+
+  /*
+    In case it doesn't work, clear cache/storage of the app.
+    This could be due to an existent saved preset id.
+   */
+  @Test
+  fun testNotSavedPreset_loadFirstPreset() {
+    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(
+      mockk(relaxed = true) {
+        every { id } returns "test-not-saved-preset-id-1"
+        every { name } returns "test-not-saved-preset-1"
+      }
+      ,
+      mockk(relaxed = true) {
+        every { id } returns "test-saved-preset-id"
+        every { name } returns "test-saved-preset"
+      },
+      mockk(relaxed = true) {
+        every { id } returns "test-not-saved-preset-id-2"
+        every { name } returns "test-not-saved-preset-2"
+      }
+    )
+
+    fragmentScenario.recreate()
+    onView(withId(R.id.select_preset_button))
+      .check(matches(withText("test-not-saved-preset-1")))
+  }
 }
