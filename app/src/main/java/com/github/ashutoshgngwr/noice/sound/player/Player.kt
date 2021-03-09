@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice.sound.player
 
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.core.os.HandlerCompat
 import com.github.ashutoshgngwr.noice.sound.Sound
@@ -37,14 +38,16 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
     it.setVolume(volume.toFloat() / MAX_VOLUME)
   }
 
-  private val handler = Handler()
+  private val handler = Handler(Looper.getMainLooper())
 
   /**
    * Sets the volume for the [Player] using current [PlaybackStrategy].
    */
   fun setVolume(volume: Int) {
-    this.volume = volume
-    this.playbackStrategy.setVolume(volume.toFloat() / MAX_VOLUME)
+    handler.post {
+      this.volume = volume
+      this.playbackStrategy.setVolume(volume.toFloat() / MAX_VOLUME)
+    }
   }
 
   /**
@@ -52,7 +55,7 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
    * task to replay the sound. Delay period is randomised with guaranteed
    * [MIN_TIME_PERIOD][MIN_TIME_PERIOD].
    */
-  fun play() {
+  internal fun play() {
     isPlaying = true
     if (sound.isLooping) {
       playbackStrategy.play()
@@ -82,7 +85,7 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
    * Stops the [Player] without releasing the underlying media resource.
    * If the sound is non-loopable, it also removes the randomised play callback.
    */
-  fun pause() {
+  internal fun pause() {
     isPlaying = false
     playbackStrategy.pause()
     if (!sound.isLooping) {
@@ -94,7 +97,7 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
    * Stops the [Player] and releases the underlying media resource.
    * If the sound is non-loopable, it also removes the randomised play callback.
    */
-  fun stop() {
+  internal fun stop() {
     isPlaying = false
     playbackStrategy.stop()
     if (!sound.isLooping) {
@@ -108,7 +111,7 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
    * on the new [PlaybackStrategy]. If [Player] is looping and playing, it also sends the play
    * command on the new [PlaybackStrategy].
    */
-  fun updatePlaybackStrategy(playbackStrategyFactory: PlaybackStrategyFactory) {
+  internal fun updatePlaybackStrategy(playbackStrategyFactory: PlaybackStrategyFactory) {
     // pause then stop just to prevent the fade-out transition from LocalSoundPlayer
     playbackStrategy.pause()
     playbackStrategy.stop()

@@ -24,6 +24,7 @@ class WakeUpTimerFragment : Fragment() {
 
   private var selectedPresetID: String? = null
   private var selectedTime: Long = 0
+  private var changedPreset = false
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -67,11 +68,7 @@ class WakeUpTimerFragment : Fragment() {
 
     // check selectedPresetID exists in user preferences.
     if (Preset.findByID(requireContext(), selectedPresetID) == null) {
-      selectedPresetID = null
-      selectedTime = 0
-      binding.shouldUpdateMediaVolume.isChecked = false
-      binding.mediaVolumeSlider.value =
-        audioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
+      resetControls()
     }
 
     notifyUpdate()
@@ -86,7 +83,9 @@ class WakeUpTimerFragment : Fragment() {
       if (presets.isNotEmpty()) {
         singleChoiceItems(presetNames, presetIDs.indexOf(selectedPresetID)) { choice ->
           selectedPresetID = presetIDs[choice]
+          changedPreset = true
           notifyUpdate()
+          WakeUpTimerManager.saveLastUsedPresetID(requireContext(), selectedPresetID!!)
         }
       } else {
         message(R.string.preset_info__description)
@@ -96,12 +95,7 @@ class WakeUpTimerFragment : Fragment() {
   }
 
   private fun onResetTimeClicked() {
-    selectedTime = 0
-    selectedPresetID = null
-    binding.shouldUpdateMediaVolume.isChecked = false
-    binding.mediaVolumeSlider.value =
-      audioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
-
+    resetControls()
     notifyUpdate()
     Snackbar.make(requireView(), R.string.wake_up_timer_cancelled, Snackbar.LENGTH_LONG).show()
   }
@@ -166,6 +160,11 @@ class WakeUpTimerFragment : Fragment() {
   }
 
   private fun updateTimePicker() {
+    if (changedPreset) {
+      changedPreset = false
+      return
+    }
+
     val calendar = Calendar.getInstance()
     if (selectedTime > System.currentTimeMillis()) {
       calendar.timeInMillis = selectedTime
@@ -181,5 +180,31 @@ class WakeUpTimerFragment : Fragment() {
       @Suppress("DEPRECATION")
       binding.timePicker.currentMinute = calendar.get(Calendar.MINUTE)
     }
+  }
+
+  private fun loadSelectedPresetID() {
+    if (!loadSharedPrefsSelectedPresetID()) {
+      loadFirstPreset()
+    }
+  }
+
+  private fun loadSharedPrefsSelectedPresetID(): Boolean {
+    selectedPresetID = WakeUpTimerManager.getLastUsedPresetID(requireContext())
+    return selectedPresetID != null
+  }
+
+  private fun loadFirstPreset() {
+    val presets = Preset.readAllFromUserPreferences(requireContext())
+    if (presets.isNotEmpty()) {
+      selectedPresetID = presets.first().id
+    }
+  }
+
+  private fun resetControls() {
+    loadSelectedPresetID()
+    selectedTime = 0
+    binding.shouldUpdateMediaVolume.isChecked = false
+    binding.mediaVolumeSlider.value =
+      audioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
   }
 }

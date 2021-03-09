@@ -15,17 +15,10 @@ import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.databinding.SleepTimerFragmentBinding
-import io.mockk.MockKAnnotations
 import io.mockk.every
-import io.mockk.impl.annotations.InjectionLookupType
-import io.mockk.impl.annotations.OverrideMockKs
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.mockk
 import io.mockk.mockkObject
-import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
-import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Assert.assertTrue
@@ -33,6 +26,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class SleepTimerFragmentTest {
@@ -41,35 +35,14 @@ class SleepTimerFragmentTest {
   @JvmField
   val retryTestRule = RetryTestRule(5)
 
-  @RelaxedMockK
-  private lateinit var eventBus: EventBus
-
-  @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
-  private lateinit var fragment: SleepTimerFragment
-
   private lateinit var fragmentScenario: FragmentScenario<SleepTimerFragment>
-  private lateinit var lastEvent: MediaPlayerService.ScheduleAutoSleepEvent
-
-  private fun assertDurationInRange(
-    expectedStartSecs: Long,
-    expectedEndSecs: Long,
-    actualMillis: Long
-  ) {
-    assertTrue(actualMillis >= expectedStartSecs * 1000L)
-    assertTrue(actualMillis < expectedEndSecs * 1000L)
-  }
 
   @Before
   fun setup() {
-    mockkObject(InAppReviewFlowManager)
-    fragmentScenario = launchFragmentInContainer<SleepTimerFragment>(null, R.style.Theme_App)
-    fragmentScenario.onFragment { fragment = it }
-    MockKAnnotations.init(this)
+    mockkObject(InAppReviewFlowManager, MediaPlayerService.Companion)
+    every { MediaPlayerService.scheduleStopPlayback(any(), any()) } returns Unit
 
-    lastEvent = mockk(relaxed = true)
-    every {
-      eventBus.getStickyEvent(MediaPlayerService.ScheduleAutoSleepEvent::class.java)
-    } returns lastEvent
+    fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
 
   @After
@@ -79,25 +52,29 @@ class SleepTimerFragmentTest {
 
   @Test
   fun testDurationPickerListener_onSleepPreScheduled() {
-    every { lastEvent.atUptimeMillis } returns SystemClock.uptimeMillis() + 60 * 1000L
+    val before = SystemClock.uptimeMillis()
+    every { MediaPlayerService.getScheduledStopPlaybackRemainingDurationMillis() } returns 60 * 1000
     onView(withId(R.id.duration_picker)).perform(EspressoX.addDurationToPicker(60))
-    val eventSlot = slot<MediaPlayerService.ScheduleAutoSleepEvent>()
-    verify(exactly = 1) { eventBus.postSticky(capture(eventSlot)) }
-
-    // won't get exact duration back. Need to ensure its in the expected range.
-    val remainingDurationMillis = eventSlot.captured.atUptimeMillis - SystemClock.uptimeMillis()
-    assertDurationInRange(110, 120, remainingDurationMillis)
+    verify(exactly = 1) {
+      MediaPlayerService.scheduleStopPlayback(any(), withArg {
+        val delta = SystemClock.uptimeMillis() - before
+        val duration = TimeUnit.SECONDS.toMillis(120)
+        assertTrue(it in (duration - delta)..(duration))
+      })
+    }
   }
 
   @Test
   fun testDurationPickerListener() {
+    val before = SystemClock.uptimeMillis()
     onView(withId(R.id.duration_picker)).perform(EspressoX.addDurationToPicker(300))
-    val eventSlot = slot<MediaPlayerService.ScheduleAutoSleepEvent>()
-    verify(exactly = 1) { eventBus.postSticky(capture(eventSlot)) }
-
-    // won't get exact duration back. Need to ensure its in the expected range.
-    val remainingDurationMillis = eventSlot.captured.atUptimeMillis - SystemClock.uptimeMillis()
-    assertDurationInRange(290, 300, remainingDurationMillis)
+    verify(exactly = 1) {
+      MediaPlayerService.scheduleStopPlayback(any(), withArg {
+        val delta = SystemClock.uptimeMillis() - before
+        val duration = TimeUnit.SECONDS.toMillis(300)
+        assertTrue(it in (duration - delta)..(duration))
+      })
+    }
   }
 
   @Test
@@ -118,34 +95,6 @@ class SleepTimerFragmentTest {
       .perform(scrollTo(), click())
 
     onView(withText(R.string.auto_sleep_schedule_cancelled)).check(matches(isDisplayed()))
-    verify(exactly = 1) {
-      eventBus.postSticky(MediaPlayerService.ScheduleAutoSleepEvent(0))
-    }
-  }
-
-  @Test
-  fun testOnScheduleAutoSleep_onScheduleEvent() {
-    fragmentScenario.onFragment {
-      it.onScheduleAutoSleep(MediaPlayerService.ScheduleAutoSleepEvent(SystemClock.uptimeMillis() + 999999))
-    }
-
-    onView(EspressoX.withDurationPickerResetButton(withId(R.id.duration_picker)))
-      .check(matches(isEnabled()))
-
-    onView(withId(R.id.countdown_view)).check(matches(not(withText("00h 00m 00s"))))
-    verify(exactly = 1) { InAppReviewFlowManager.maybeAskForReview(any()) }
-  }
-
-  @Test
-  fun testOnScheduleAutoSleep_onCancelEvent() {
-    fragmentScenario.onFragment {
-      it.onScheduleAutoSleep(MediaPlayerService.ScheduleAutoSleepEvent(0))
-    }
-
-    onView(EspressoX.withDurationPickerResetButton(withId(R.id.duration_picker)))
-      .check(matches(not(isEnabled())))
-
-    onView(withId(R.id.countdown_view)).check(matches(withText("00h 00m 00s")))
-    verify(exactly = 1) { InAppReviewFlowManager.maybeAskForReview(any()) }
+    verify(exactly = 1) { MediaPlayerService.scheduleStopPlayback(any(), 0L) }
   }
 }

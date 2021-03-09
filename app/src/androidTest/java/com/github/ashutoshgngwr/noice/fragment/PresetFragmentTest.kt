@@ -24,20 +24,14 @@ import com.github.ashutoshgngwr.noice.ShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
-import io.mockk.MockKAnnotations
-import io.mockk.clearMocks
 import io.mockk.clearStaticMockk
 import io.mockk.every
-import io.mockk.impl.annotations.InjectionLookupType
-import io.mockk.impl.annotations.OverrideMockKs
-import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
-import org.greenrobot.eventbus.EventBus
 import org.hamcrest.Matchers.*
 import org.junit.After
 import org.junit.Assert.*
@@ -52,12 +46,6 @@ class PresetFragmentTest {
   @Rule
   @JvmField
   val retryTestRule = RetryTestRule(5)
-
-  @RelaxedMockK
-  private lateinit var eventBus: EventBus
-
-  @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
-  private lateinit var fragment: PresetFragment
 
   private lateinit var fragmentScenario: FragmentScenario<PresetFragment>
 
@@ -75,16 +63,9 @@ class PresetFragmentTest {
       )
     }
 
-    mockkObject(InAppReviewFlowManager)
-    mockkObject(Preset.Companion)
+    mockkObject(InAppReviewFlowManager, Preset.Companion, MediaPlayerService.Companion)
     every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(mockPreset)
-    fragmentScenario = launchFragmentInContainer<PresetFragment>(null, R.style.Theme_App)
-    fragmentScenario.onFragment {
-      fragment = it
-      it.onPlayerManagerUpdate(mockk(relaxed = true))
-    }
-
-    MockKAnnotations.init(this)
+    fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
 
   @After
@@ -105,8 +86,9 @@ class PresetFragmentTest {
 
   @Test
   fun testRecyclerViewItem_playButton() {
-    // clear all previous calls to EventBus
-    clearMocks(eventBus)
+    // stub the original method. Without stubbing, mockk will also run the real implementation.
+    every { MediaPlayerService.playPreset(any(), any()) } returns Unit
+
     onView(withId(R.id.preset_list)).perform(
       RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
@@ -114,9 +96,7 @@ class PresetFragmentTest {
       )
     )
 
-    val eventSlot = slot<MediaPlayerService.PlayPresetEvent>()
-    verify(exactly = 1) { eventBus.post(capture(eventSlot)) }
-    assertEquals(mockPreset, eventSlot.captured.preset)
+    verify(exactly = 1) { MediaPlayerService.playPreset(any(), "test-id") }
   }
 
   @Test
@@ -136,7 +116,7 @@ class PresetFragmentTest {
       )
     )
 
-    verify(exactly = 1) { eventBus.post(ofType(MediaPlayerService.StopPlaybackEvent::class)) }
+    verify(exactly = 1) { MediaPlayerService.stopPlayback(any()) }
   }
 
   @Test
@@ -183,7 +163,7 @@ class PresetFragmentTest {
       .perform(click()) // click delete button in confirmation dialog
 
     // should publish a stop playback event if preset was playing
-    verify(exactly = 1) { eventBus.post(ofType(MediaPlayerService.StopPlaybackEvent::class)) }
+    verify(exactly = 1) { MediaPlayerService.stopPlayback(any()) }
   }
 
   @Test

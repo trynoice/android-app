@@ -20,6 +20,8 @@ import org.json.JSONObject
 import java.lang.reflect.Type
 import java.util.*
 import kotlin.math.round
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 /**
  * [Preset] is the serialization class to save player states onto the persistent storage using
@@ -221,6 +223,25 @@ class Preset(@Expose var name: String, @Expose val playerStates: Array<PlayerSta
 
         f(get(i) as T)
       }
+    }
+
+    /**
+     * [generateRandom] generates a nameless random preset using the provided sound [tag] and
+     * [intensity]. If sound [tag] is null, full library is considered for randomly selecting sounds
+     * for the preset. If it is non-null, only sounds containing the provided tag are considered.
+     * [intensity] is a [IntRange] that hints the lower and upper bounds for the number of sounds
+     * present in the generated preset. A number is chosen randomly in this range.
+     */
+    fun generateRandom(tag: Sound.Tag?, intensity: IntRange): Preset {
+      val library = Sound.filterLibraryByTag(tag).shuffled()
+      val playerStates = mutableListOf<PlayerState>()
+      for (i in 0 until Random.nextInt(intensity)) {
+        val volume = 1 + Random.nextInt(0, Player.MAX_VOLUME)
+        val timePeriod = Random.nextInt(Player.MIN_TIME_PERIOD, Player.MAX_TIME_PERIOD + 1)
+        playerStates.add(PlayerState(library[i], volume, timePeriod))
+      }
+
+      return Preset("", playerStates.toTypedArray())
     }
   }
 }

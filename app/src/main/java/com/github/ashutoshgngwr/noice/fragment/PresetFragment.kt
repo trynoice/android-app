@@ -45,7 +45,6 @@ class PresetFragment : Fragment() {
   private var adapter: PresetListAdapter? = null
   private var activePresetPos = -1
 
-  private val eventBus = EventBus.getDefault()
   private var dataSet = mutableListOf<Preset>()
 
   override fun onCreateView(
@@ -72,12 +71,12 @@ class PresetFragment : Fragment() {
       it.adapter = adapter
     }
 
-    eventBus.register(this)
+    EventBus.getDefault().register(this)
     updateEmptyListIndicatorVisibility()
   }
 
   override fun onDestroyView() {
-    eventBus.unregister(this)
+    EventBus.getDefault().unregister(this)
     super.onDestroyView()
   }
 
@@ -127,9 +126,9 @@ class PresetFragment : Fragment() {
     init {
       binding.playButton.setOnClickListener {
         if (adapterPosition != activePresetPos) {
-          eventBus.post(MediaPlayerService.PlayPresetEvent(dataSet[adapterPosition]))
+          MediaPlayerService.playPreset(requireContext(), dataSet[adapterPosition].id)
         } else {
-          eventBus.post(MediaPlayerService.StopPlaybackEvent())
+          MediaPlayerService.stopPlayback(requireContext())
         }
       }
 
@@ -164,7 +163,6 @@ class PresetFragment : Fragment() {
         it.setIcon(IconCompat.createWithResource(requireContext(), R.mipmap.ic_preset_shortcut))
         it.setIntent(
           Intent(requireContext(), ShortcutHandlerActivity::class.java)
-            .setAction(Intent.ACTION_VIEW)
             .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, presetID)
         )
 
@@ -211,7 +209,7 @@ class PresetFragment : Fragment() {
           Preset.writeAllToUserPreferences(requireContext(), dataSet)
           // then stop playback if recently deleted preset was playing
           if (adapterPosition == activePresetPos) {
-            eventBus.post(MediaPlayerService.StopPlaybackEvent())
+            MediaPlayerService.stopPlayback(requireContext())
           }
 
           if (adapterPosition < activePresetPos) {
