@@ -91,7 +91,7 @@ dependencies {
 
   playstoreImplementation 'com.anjlab.android.iab.v3:library:1.1.0'
   playstoreImplementation 'com.google.android.gms:play-services-cast-framework:19.0.0'
-  playstoreImplementation 'com.google.android.play:core:1.9.1'
+  playstoreImplementation 'com.google.android.play:core:1.10.0'
 
   testImplementation 'androidx.test:core:1.3.0'
   testImplementation 'io.mockk:mockk:1.10.6'
