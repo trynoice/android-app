@@ -109,4 +109,13 @@
     <string name="sound_group__vehicles">Veicoli</string>
     <string name="sound_group__monsoon">Monsone</string>
     <string name="sound_group__life">Vita</string>
+    <string name="preset_info__description">"Non hai ancora creato alcun preset. Per creare un preset,  vai nella Libreria e riproduci i suoni. Poi clicca sul pulsante Salva che appare nell\'angolo dello schermo."</string>
+    <string name="preset_does_not_exist">Preset non esistente. Potrebbe essere stato cancellato!</string>
+    <string name="water_hose">Manichetta dell\'acqua</string>
+    <string name="sound_group__times_of_day">Ore del giorno</string>
+    <string name="sound_group__raw_noise">Rumore grezzo</string>
+    <string name="sound_group__public_gatherings">Riunioni pubbliche</string>
+    <string name="relax">Relax</string>
+    <string name="intensity_description">Preimpostazioni dense tenteranno di riprodurre più suoni assieme.</string>
+    <string name="wake_up_timer">Timer risveglio</string>
 </resources>
