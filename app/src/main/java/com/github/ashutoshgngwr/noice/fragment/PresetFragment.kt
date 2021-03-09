@@ -27,6 +27,7 @@ import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 class PresetFragment : Fragment() {
 
@@ -157,13 +158,16 @@ class PresetFragment : Fragment() {
         return
       }
 
+      val shortcutID = UUID.randomUUID().toString()
       val presetID = dataSet[adapterPosition].id
-      ShortcutInfoCompat.Builder(requireContext(), presetID).also {
+      ShortcutInfoCompat.Builder(requireContext(), shortcutID).also {
         it.setShortLabel(dataSet[adapterPosition].name)
         it.setIcon(IconCompat.createWithResource(requireContext(), R.mipmap.ic_preset_shortcut))
         it.setIntent(
           Intent(requireContext(), ShortcutHandlerActivity::class.java)
             .setAction(Intent.ACTION_VIEW)
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_ID, shortcutID)
             .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, presetID)
         )
 

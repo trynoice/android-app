@@ -246,11 +246,12 @@ class PresetFragmentTest {
           shortcutInfoSlot.isCaptured
         )
 
-        assertEquals("test-id", shortcutInfoSlot.captured.id)
+        assertNotNull(shortcutInfoSlot.captured.id)
         assertEquals("test", shortcutInfoSlot.captured.shortLabel)
 
         val intent = shortcutInfoSlot.captured.intent
         assertEquals(ShortcutHandlerActivity::class.qualifiedName, intent.component?.className)
+        assertNotNull(intent.getStringExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_ID))
         assertEquals("test-id", intent.getStringExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID))
       } else {
         assertFalse(
