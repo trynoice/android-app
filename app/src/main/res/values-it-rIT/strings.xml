@@ -121,7 +121,7 @@
     <string name="sleep_timer_description">Noice si riavvierà allo scadere del tempo. Usare i pulsanti sotto per aggiungere del tempo e avviare il timer.</string>
     <string name="show_saved_preset_on_startup">Mostra i preset salvati all\'avvio dell\'app</string>
     <string name="shortcuts_not_supported">Il tuo launcher di default non supporta l\'aggiunta di scorciatoie.</string>
-    <string name="wake_up_timer_description">Noice eseguirà il preset selezionato allo scadere del tempo. Usa i pulsanti sotto per selezionare un preset e impostare il tempo desiderato per il timer di risveglio.</string>
+    <string name="wake_up_timer_description">Noice eseguirà il preset selezionato allo scadere del tempo. Usare i pulsanti sotto per selezionare un preset e impostare il tempo desiderato per il timer di risveglio.</string>
     <string name="wake_up_timer_cancelled">Timer di risveglio annullato!</string>
     <string name="schedule">Programma</string>
     <string name="support_development__donate_description">Le donazioni ci aiutano a
