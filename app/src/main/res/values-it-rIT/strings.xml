@@ -148,4 +148,9 @@
     <string name="support_development__donate_thank_you_description">Ti ringraziamo con tutto il cuore per il tuo contributo generoso al progetto Noice.</string>
     <string name="support_development__donate_google_play_description">Il tuo pagamento sarà gestito con sicurezza da Google Play. L\'ammontare sarà convertito nella tua valuta. A seconda della tua ubicazione, potrebbero essere aggiunte tasse all\'ammontare finale.</string>
     <string name="focus">Focus</string>
+    <string name="never">Mai</string>
+    <string name="later">Più tardi</string>
+    <string name="in_app_feedback__title">Sottoponi una recensione</string>
+    <string name="in_app_feedback__description">Ci piacerebbe che ci inviassi commenti sulla app. Ti preghiamo di prenderti un attimo per visitare il repository su Github. Se invece non ti è piaciuta, ti preghiamo di aprire una discussione, ed esprimere il tuo disappunto. Altrimenti, ti chiediamo di cliccare sulla stella per mostrare il tuo affetto e supporto al progetto.</string>
+    <string name="cast_media">Riproduci il supporto su un altro dispositivo</string>
 </resources>
