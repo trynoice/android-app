@@ -118,10 +118,10 @@
     <string name="relax">Relax</string>
     <string name="intensity_description">Preimpostazioni dense tenteranno di riprodurre più suoni assieme.</string>
     <string name="wake_up_timer">Timer risveglio</string>
-    <string name="sleep_timer_description">Noice si riavvierà allo scadere del tempo. Usare i pulsanti sotto per aggiungere del tempo e avviare il timer.</string>
+    <string name="sleep_timer_description">Noice si riavvierà allo scadere del tempo. Usa i pulsanti sotto per aggiungere del tempo e avviare il timer.</string>
     <string name="show_saved_preset_on_startup">Mostra i preset salvati all\'avvio dell\'app</string>
     <string name="shortcuts_not_supported">Il tuo launcher di default non supporta l\'aggiunta di scorciatoie.</string>
-    <string name="wake_up_timer_description">Noice eseguirà il preset selezionato allo scadere del tempo. Usare i pulsanti sotto per selezionare un preset e impostare il tempo desiderato per il timer di risveglio.</string>
+    <string name="wake_up_timer_description">Noice eseguirà il preset selezionato allo scadere del tempo. Usa i pulsanti sotto per selezionare un preset e impostare il tempo desiderato per il timer di risveglio.</string>
     <string name="wake_up_timer_cancelled">Timer di risveglio annullato!</string>
     <string name="schedule">Programma</string>
     <string name="support_development__donate_description">Le donazioni ci aiutano a
@@ -147,4 +147,5 @@
     <string name="support_development__share_description">Condividere Noice con i tuoi amici è come regalare denaro. Con un più alto numero di downloads, potremo ricevere feedback più variegato, e ciò ci aiuterà a fare di Noice un software migliore.</string>
     <string name="support_development__donate_thank_you_description">Ti ringraziamo con tutto il cuore per il tuo contributo generoso al progetto Noice.</string>
     <string name="support_development__donate_google_play_description">Il tuo pagamento sarà gestito con sicurezza da Google Play. L\'ammontare sarà convertito nella tua valuta. A seconda della tua ubicazione, potrebbero essere aggiunte tasse all\'ammontare finale.</string>
+    <string name="focus">Focus</string>
 </resources>
