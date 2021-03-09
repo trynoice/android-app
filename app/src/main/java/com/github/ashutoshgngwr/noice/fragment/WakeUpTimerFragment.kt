@@ -68,14 +68,9 @@ class WakeUpTimerFragment : Fragment() {
 
     // check selectedPresetID exists in user preferences.
     if (Preset.findByID(requireContext(), selectedPresetID) == null) {
-      selectedPresetID = null
-      selectedTime = 0
-      binding.shouldUpdateMediaVolume.isChecked = false
-      binding.mediaVolumeSlider.value =
-        audioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
+      resetControls()
     }
 
-    loadSelectedPresetID()
     notifyUpdate()
   }
 
@@ -100,12 +95,7 @@ class WakeUpTimerFragment : Fragment() {
   }
 
   private fun onResetTimeClicked() {
-    selectedTime = 0
-    selectedPresetID = null
-    binding.shouldUpdateMediaVolume.isChecked = false
-    binding.mediaVolumeSlider.value =
-      audioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
-
+    resetControls()
     notifyUpdate()
     Snackbar.make(requireView(), R.string.wake_up_timer_cancelled, Snackbar.LENGTH_LONG).show()
   }
@@ -208,5 +198,13 @@ class WakeUpTimerFragment : Fragment() {
     if (presets.isNotEmpty()) {
       selectedPresetID = presets.first().id
     }
+  }
+
+  private fun resetControls() {
+    loadSelectedPresetID()
+    selectedTime = 0
+    binding.shouldUpdateMediaVolume.isChecked = false
+    binding.mediaVolumeSlider.value =
+      audioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
   }
 }

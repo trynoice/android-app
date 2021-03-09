@@ -2,10 +2,12 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import android.content.Context
 import android.media.AudioManager
+import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.media.AudioManagerCompat
+import androidx.preference.PreferenceManager
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -52,12 +54,15 @@ class WakeUpTimerFragmentTest {
     mockkObject(Preset.Companion)
     mockkObject(WakeUpTimerManager)
     every { WakeUpTimerManager.set(any(), any()) } returns Unit
-    fragmentScenario = launchFragmentInContainer<WakeUpTimerFragment>(null, R.style.Theme_App)
+    fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
 
   @After
   fun teardown() {
     unmockkAll()
+    with(PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())) {
+      edit { clear() }
+    }
   }
 
   @Test
@@ -284,18 +289,13 @@ class WakeUpTimerFragmentTest {
       .check(matches(withText("test-saved-preset")))
   }
 
-  /*
-    In case it doesn't work, clear cache/storage of the app.
-    This could be due to an existent saved preset id.
-   */
   @Test
   fun testNotSavedPreset_loadFirstPreset() {
     every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(
       mockk(relaxed = true) {
         every { id } returns "test-not-saved-preset-id-1"
         every { name } returns "test-not-saved-preset-1"
-      }
-      ,
+      },
       mockk(relaxed = true) {
         every { id } returns "test-saved-preset-id"
         every { name } returns "test-saved-preset"
