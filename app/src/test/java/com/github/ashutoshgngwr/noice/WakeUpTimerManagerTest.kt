@@ -161,7 +161,7 @@ class WakeUpTimerManagerTest {
     WakeUpTimerManager.saveLastUsedPresetID(ApplicationProvider.getApplicationContext(), presetID)
     verify(exactly = 1) {
       mockPrefs.edit()
-      mockPrefsEditor.putString(WakeUpTimerManager.SELECTED_PRESET_ID, presetID)
+      mockPrefsEditor.putString(WakeUpTimerManager.PREF_LAST_USED_PRESET_ID, presetID)
       mockPrefsEditor.apply()
     }
   }
@@ -171,11 +171,14 @@ class WakeUpTimerManagerTest {
     mockkObject(Preset.Companion)
 
     val context = ApplicationProvider.getApplicationContext<Context>()
-    every { mockPrefs.getString(WakeUpTimerManager.SELECTED_PRESET_ID, any()) } returns null
+    every { mockPrefs.getString(WakeUpTimerManager.PREF_LAST_USED_PRESET_ID, any()) } returns null
     assertNull(WakeUpTimerManager.getLastUsedPresetID(context))
 
     val presetID = "test-preset-id"
-    every { mockPrefs.getString(WakeUpTimerManager.SELECTED_PRESET_ID, any()) } returns presetID
+    every {
+      mockPrefs.getString(WakeUpTimerManager.PREF_LAST_USED_PRESET_ID, any())
+    } returns presetID
+
     every { Preset.findByID(any(), presetID) } returns null // preset doesn't exist
     assertNull(WakeUpTimerManager.getLastUsedPresetID(context))
 
