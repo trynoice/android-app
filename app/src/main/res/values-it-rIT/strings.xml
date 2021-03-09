@@ -124,4 +124,20 @@
     <string name="wake_up_timer_description">Noice eseguirà il preset selezionato allo scadere del tempo. Usa i pulsanti sotto per selezionare un preset e impostare il tempo desiderato per il timer di risveglio.</string>
     <string name="wake_up_timer_cancelled">Timer di risveglio annullato!</string>
     <string name="schedule">Programma</string>
+    <string name="support_development__donate_description">Le donazioni ci aiutano a
+\n- investire in nuove funzionalità
+\n- preparare migliori campionamenti
+\n- comprare il caffè
+\n</string>
+    <string name="appintro__timer_title">Hai problemi a coricarti o a risvegliarti\?</string>
+    <string name="appintro__timer_desc">Un po\' di atmosfera può aiutarti ad addormentarti senza fatica. Usa il timer di spegnimento per permettere a Noice di spegnersi automaticamente. Allo stesso modo, per risvegliarti in un ambiente tranquillo, puoi usare il timer di risveglio per impostare la sveglia.</string>
+    <string name="appintro__sound_library_title">Crea i tuoi ambienti perfetti</string>
+    <string name="appintro__sound_library_desc">Usa il potenziometro del volume per adeguare il volume dei suoni. Ad ogni ripetizioni di suoni non in loop, verrà casualmente selezionato un tempo di ritardo nel range impostato dal potenziometro del tempo.</string>
+    <string name="appintro__preset_title">Salva i tuoi missaggi preferiti</string>
+    <string name="appintro__preset_desc">Dopo aver riprodotto alcuni suoni, puoi usare il pulsante nell\'angolo in basso per salvare il tuo missaggio. Per riutilizzare un missaggio salvato, puoi consultare la lista dei preset dal menu dell\'app.</string>
+    <string name="appintro__getting_started_desc_0">Scorri a sinistra per conoscere tutte le funzionalità!</string>
+    <string name="appintro__chromecast_title">Abilitato a Chromecast</string>
+    <string name="appintro__chromecast_desc">Usa Noice per trasmettere l\'atmosfera ad altri dispositivi abilitati a Chromecast, come altoparlanti, TV, ecc.</string>
+    <string name="should_update_media_volume">Aggiorna il volume del dispositivo multimediale prima dell\'avvio del preset</string>
+    <string name="device_media_volume">Volume del dispositivo multimediale</string>
 </resources>
