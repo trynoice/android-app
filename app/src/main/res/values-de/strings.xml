@@ -38,7 +38,7 @@
     <string name="play">Abspielen</string>
     <string name="play_pause">Abspielen / pausieren</string>
     <string name="repeat_time_period">Wiederholungszeit</string>
-    <string name="stop">Stop</string>
+    <string name="stop">Stopp</string>
     <string name="volume">Lautstärke</string>
     <!-- Library - sound groups -->
     <string name="sound_group__life">Leben</string>

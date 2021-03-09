@@ -190,4 +190,5 @@
     <string name="use_24h_format">Pakai format 24-jam</string>
     <string name="wake_up_timer_cancelled">Timer Wake-up terbatalkan!</string>
     <string name="show_saved_preset_on_startup">Tunjukan Preset yang tersimpan pada permulaan aplikasi</string>
+    <string name="intensity">Intensitas</string>
 </resources>
