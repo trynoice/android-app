@@ -310,4 +310,18 @@ class WakeUpTimerFragmentTest {
     onView(withId(R.id.select_preset_button))
       .check(matches(withText("test-not-saved-preset-1")))
   }
+
+  @Test
+  fun testSetSchedule_ShowNotifySnackBar() {
+    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(
+      mockk(relaxed = true) {
+        every { id } returns "test-preset"
+        every { name } returns "test-preset"
+      }
+    )
+    fragmentScenario.recreate()
+
+    onView(withId(R.id.set_time_button)).perform(click())
+    onView(withSubstring("Alarm will go off")).check(matches(isDisplayed()))
+  }
 }
