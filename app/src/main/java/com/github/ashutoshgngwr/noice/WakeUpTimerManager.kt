@@ -141,6 +141,33 @@ object WakeUpTimerManager {
     }
   }
 
+  fun getStringScheduleLeftTime(context: Context, diffHours: Int, diffMinutes: Int): String{
+    return when(diffHours){
+      0 -> {
+        when(diffMinutes){
+          0 -> context.getString(R.string.wake_up_timer_schedule_set_minute, diffMinutes)
+          1 -> context.getString(R.string.wake_up_timer_schedule_set_minute, diffMinutes)
+          else -> context.getString(R.string.wake_up_timer_schedule_set_minutes, diffMinutes)
+        }
+      }
+      1 -> {
+        when(diffMinutes){
+          0 -> context.getString(R.string.wake_up_timer_schedule_set_hour_minute, diffHours, diffMinutes)
+          1 -> context.getString(R.string.wake_up_timer_schedule_set_hour_minute, diffHours, diffMinutes)
+          else -> context.getString(R.string.wake_up_timer_schedule_set_hour_minutes, diffHours, diffMinutes)
+        }
+      }
+      else -> {
+        when(diffMinutes){
+          0 -> context.getString(R.string.wake_up_timer_schedule_set_hours_minute, diffHours, diffMinutes)
+          1 -> context.getString(R.string.wake_up_timer_schedule_set_hours_minute, diffHours, diffMinutes)
+          else -> context.getString(R.string.wake_up_timer_schedule_set_hours_minutes, diffHours, diffMinutes)
+        }
+      }
+    }
+
+  }
+
   /**
    * [BootReceiver] ensures that a scheduled [Timer] is able to persist across device restarts.
    */

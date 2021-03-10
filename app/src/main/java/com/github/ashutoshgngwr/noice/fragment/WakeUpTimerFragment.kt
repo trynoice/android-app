@@ -214,7 +214,11 @@ class WakeUpTimerFragment : Fragment() {
 
     Snackbar.make(
       requireView(),
-      "Alarm will go off in $diffHours hours and $diffMinutes minutes",
+      WakeUpTimerManager.getStringScheduleLeftTime(
+        requireContext(),
+        diffHours.toInt(),
+        diffMinutes.toInt()
+      ),
       Snackbar.LENGTH_SHORT
     ).show()
   }
