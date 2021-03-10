@@ -152,14 +152,14 @@ object WakeUpTimerManager {
       }
       1 -> {
         when(diffMinutes){
-          0 -> context.getString(R.string.wake_up_timer_schedule_set_hour_minute, diffHours, diffMinutes)
+          0 -> context.getString(R.string.wake_up_timer_schedule_set_hour, diffHours)
           1 -> context.getString(R.string.wake_up_timer_schedule_set_hour_minute, diffHours, diffMinutes)
           else -> context.getString(R.string.wake_up_timer_schedule_set_hour_minutes, diffHours, diffMinutes)
         }
       }
       else -> {
         when(diffMinutes){
-          0 -> context.getString(R.string.wake_up_timer_schedule_set_hours_minute, diffHours, diffMinutes)
+          0 -> context.getString(R.string.wake_up_timer_schedule_set_hours, diffHours)
           1 -> context.getString(R.string.wake_up_timer_schedule_set_hours_minute, diffHours, diffMinutes)
           else -> context.getString(R.string.wake_up_timer_schedule_set_hours_minutes, diffHours, diffMinutes)
         }
