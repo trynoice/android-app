@@ -16,6 +16,7 @@ import com.github.ashutoshgngwr.noice.databinding.WakeUpTimerFragmentBinding
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class WakeUpTimerFragment : Fragment() {
 
@@ -121,7 +122,9 @@ class WakeUpTimerFragment : Fragment() {
     }
 
     selectedTime = calendar.timeInMillis
+
     notifyUpdate()
+    notifyScheduleLeftTime()
 
     // maybe show in-app review dialog to the user
     InAppReviewFlowManager.maybeAskForReview(requireActivity())
@@ -198,6 +201,22 @@ class WakeUpTimerFragment : Fragment() {
     if (presets.isNotEmpty()) {
       selectedPresetID = presets.first().id
     }
+  }
+
+
+  private fun notifyScheduleLeftTime() {
+    val actualTime = System.currentTimeMillis()
+    var differenceMillis = selectedTime - actualTime
+
+    val diffHours = TimeUnit.MILLISECONDS.toHours(differenceMillis)
+    differenceMillis -= TimeUnit.HOURS.toMillis(diffHours)
+    val diffMinutes = TimeUnit.MILLISECONDS.toMinutes(differenceMillis)
+
+    Snackbar.make(
+      requireView(),
+      "Alarm will go off in $diffHours hours and $diffMinutes minutes",
+      Snackbar.LENGTH_SHORT
+    ).show()
   }
 
   private fun resetControls() {
