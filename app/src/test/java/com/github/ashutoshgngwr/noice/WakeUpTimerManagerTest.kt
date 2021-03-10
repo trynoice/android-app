@@ -195,68 +195,78 @@ class WakeUpTimerManagerTest {
     val stringMinute1 = WakeUpTimerManager.getStringScheduleLeftTime(context, 0, 0)
     val stringMinute2 = WakeUpTimerManager.getStringScheduleLeftTime(context, 0, 1)
 
-    val stringShouldDisplay1 = context.getString(R.string.wake_up_timer_schedule_set_minute, 0)
-    val stringShouldDisplay2 = context.getString(R.string.wake_up_timer_schedule_set_minute, 1)
-
-    assertEquals(stringShouldDisplay1, stringMinute1)
-    assertEquals(stringShouldDisplay2, stringMinute2)
+    val stringStart = context.getString(R.string.wake_up_timer_schedule_set)
+    val stringShouldDisplayMinute1 = context.resources.getQuantityString(R.plurals.minutes, 0, 0)
+    val stringShouldDisplayMinute2 = context.resources.getQuantityString(R.plurals.minutes, 1, 1)
+    assertEquals("$stringStart $stringShouldDisplayMinute1.", stringMinute1)
+    assertEquals("$stringStart $stringShouldDisplayMinute2.", stringMinute2)
   }
 
   @Test
   fun testGetStringScheduleLeftTime_returnStringHour() {
     val context = ApplicationProvider.getApplicationContext<Context>()
     val stringHour = WakeUpTimerManager.getStringScheduleLeftTime(context, 1, 0)
-    val stringShouldDisplay = context.getString(R.string.wake_up_timer_schedule_set_hour, 1)
 
-    assertEquals(stringShouldDisplay, stringHour)
+    val stringStart = context.getString(R.string.wake_up_timer_schedule_set)
+    val stringShouldDisplayHour = context.resources.getQuantityString(R.plurals.hours, 1, 1)
+    assertEquals("$stringStart $stringShouldDisplayHour.", stringHour)
   }
 
   @Test
   fun testGetStringScheduleLeftTime_returnStringHourAndMinute() {
     val context = ApplicationProvider.getApplicationContext<Context>()
     val stringHourAndMinute = WakeUpTimerManager.getStringScheduleLeftTime(context, 1, 1)
-    val stringShouldDisplay =
-      context.getString(R.string.wake_up_timer_schedule_set_hour_minute, 1, 1)
 
-    assertEquals(stringShouldDisplay, stringHourAndMinute)
+    val stringStart = context.getString(R.string.wake_up_timer_schedule_set)
+    val stringBridge = context.getString(R.string.wake_up_timer_schedule_set_bridge)
+    val stringShouldDisplayHour = context.resources.getQuantityString(R.plurals.hours, 1, 1)
+    val stringShouldDisplayMinute = context.resources.getQuantityString(R.plurals.minutes, 1, 1)
+    assertEquals("$stringStart $stringShouldDisplayHour $stringBridge $stringShouldDisplayMinute.", stringHourAndMinute)
   }
 
   @Test
   fun testGetStringScheduleLeftTime_returnStringHourAndMinutes() {
     val context = ApplicationProvider.getApplicationContext<Context>()
-    val stringHourAndMinutes = WakeUpTimerManager.getStringScheduleLeftTime(context, 1, 2)
-    val stringShouldDisplay =
-      context.getString(R.string.wake_up_timer_schedule_set_hour_minutes, 1, 2)
+    val stringHourAndMinutes = WakeUpTimerManager.getStringScheduleLeftTime(context, 1, 30)
 
-    assertEquals(stringShouldDisplay, stringHourAndMinutes)
+    val stringStart = context.getString(R.string.wake_up_timer_schedule_set)
+    val stringBridge = context.getString(R.string.wake_up_timer_schedule_set_bridge)
+    val stringShouldDisplayHour = context.resources.getQuantityString(R.plurals.hours, 1, 1)
+    val stringShouldDisplayMinutes = context.resources.getQuantityString(R.plurals.minutes, 30, 30)
+    assertEquals("$stringStart $stringShouldDisplayHour $stringBridge $stringShouldDisplayMinutes.", stringHourAndMinutes)
   }
 
   @Test
   fun testGetStringScheduleLeftTime_returnStringHours() {
     val context = ApplicationProvider.getApplicationContext<Context>()
     val stringHours = WakeUpTimerManager.getStringScheduleLeftTime(context, 2, 0)
-    val stringShouldDisplay = context.getString(R.string.wake_up_timer_schedule_set_hours, 2, 0)
 
-    assertEquals(stringShouldDisplay, stringHours)
+    val stringStart = context.getString(R.string.wake_up_timer_schedule_set)
+    val stringShouldDisplayHours = context.resources.getQuantityString(R.plurals.hours, 2, 2)
+    assertEquals("$stringStart $stringShouldDisplayHours.", stringHours)
   }
 
   @Test
   fun testGetStringScheduleLeftTime_returnStringHoursAndMinute() {
     val context = ApplicationProvider.getApplicationContext<Context>()
     val stringHoursAndMinute = WakeUpTimerManager.getStringScheduleLeftTime(context, 2, 1)
-    val stringShouldDisplay =
-      context.getString(R.string.wake_up_timer_schedule_set_hours_minute, 2, 1)
 
-    assertEquals(stringShouldDisplay, stringHoursAndMinute)
+    val stringStart = context.getString(R.string.wake_up_timer_schedule_set)
+    val stringBridge = context.getString(R.string.wake_up_timer_schedule_set_bridge)
+    val stringShouldDisplayHours = context.resources.getQuantityString(R.plurals.hours, 2, 2)
+    val stringShouldDisplayMinute = context.resources.getQuantityString(R.plurals.minutes, 1, 1)
+    assertEquals("$stringStart $stringShouldDisplayHours $stringBridge $stringShouldDisplayMinute.", stringHoursAndMinute)
   }
 
   @Test
   fun testGetStringScheduleLeftTime_returnStringHoursAndMinutes() {
     val context = ApplicationProvider.getApplicationContext<Context>()
-    val stringHoursAndMinutes = WakeUpTimerManager.getStringScheduleLeftTime(context, 2, 2)
-    val stringShouldDisplay =
-      context.getString(R.string.wake_up_timer_schedule_set_hours_minutes, 2, 2)
+    val stringHoursAndMinutes = WakeUpTimerManager.getStringScheduleLeftTime(context, 2, 30)
 
-    assertEquals(stringShouldDisplay, stringHoursAndMinutes)
+    val stringStart = context.getString(R.string.wake_up_timer_schedule_set)
+    val stringBridge = context.getString(R.string.wake_up_timer_schedule_set_bridge)
+    val stringShouldDisplayHours = context.resources.getQuantityString(R.plurals.hours, 2, 2)
+    val stringShouldDisplayMinutes = context.resources.getQuantityString(R.plurals.minutes, 30, 30)
+    assertEquals("$stringStart $stringShouldDisplayHours $stringBridge $stringShouldDisplayMinutes.", stringHoursAndMinutes)
   }
 }

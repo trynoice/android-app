@@ -312,15 +312,25 @@ class WakeUpTimerFragmentTest {
 
   @Test
   fun testSetSchedule_ShowNotifySnackBar() {
+    val context = ApplicationProvider.getApplicationContext<Context>()
     every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(
       mockk(relaxed = true) {
-        every { id } returns "test-preset"
+        every { id } returns "test-preset-id"
         every { name } returns "test-preset"
       }
     )
+
+    every { WakeUpTimerManager.get(any()) } returns mockk {
+      every { presetID } returns "test-preset-id"
+      every { atMillis } returns System.currentTimeMillis() + 10000L
+      every { shouldUpdateMediaVolume } returns true
+      every { mediaVolume } returns 10
+    }
+
     fragmentScenario.recreate()
 
     onView(withId(R.id.set_time_button)).perform(click())
-    onView(withSubstring("Alarm will go off")).check(matches(isDisplayed()))
+    onView(withSubstring(context.getString(R.string.wake_up_timer_schedule_set)))
+      .check(matches(isDisplayed()))
   }
 }

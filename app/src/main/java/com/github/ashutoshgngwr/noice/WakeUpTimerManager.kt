@@ -142,44 +142,27 @@ object WakeUpTimerManager {
   }
 
   fun getStringScheduleLeftTime(context: Context, diffHours: Int, diffMinutes: Int): String {
-    return when (diffHours) {
-      0 -> {
-        when (diffMinutes) {
-          0 -> context.getString(R.string.wake_up_timer_schedule_set_minute, diffMinutes)
-          1 -> context.getString(R.string.wake_up_timer_schedule_set_minute, diffMinutes)
-          else -> context.getString(R.string.wake_up_timer_schedule_set_minutes, diffMinutes)
-        }
-      }
-      1 -> {
-        when (diffMinutes) {
-          0 -> context.getString(R.string.wake_up_timer_schedule_set_hour, diffHours)
-          1 -> context.getString(
-            R.string.wake_up_timer_schedule_set_hour_minute,
-            diffHours,
-            diffMinutes
-          )
-          else -> context.getString(
-            R.string.wake_up_timer_schedule_set_hour_minutes,
-            diffHours,
-            diffMinutes
-          )
-        }
-      }
-      else -> {
-        when (diffMinutes) {
-          0 -> context.getString(R.string.wake_up_timer_schedule_set_hours, diffHours)
-          1 -> context.getString(
-            R.string.wake_up_timer_schedule_set_hours_minute,
-            diffHours,
-            diffMinutes
-          )
-          else -> context.getString(
-            R.string.wake_up_timer_schedule_set_hours_minutes,
-            diffHours,
-            diffMinutes
-          )
-        }
-      }
+    val startString = context.getString(R.string.wake_up_timer_schedule_set)
+
+    val stringHours = if (diffHours == 0) {
+      ""
+    } else {
+      context.resources.getQuantityString(R.plurals.hours, diffHours, diffHours)
+    }
+
+    val stringMinutes = if (diffMinutes == 0 && diffHours > 0) {
+      ""
+    } else if (diffMinutes == 0 && diffHours == 0) {
+      context.getString(R.string.wake_up_timer_schedule_set_0_minutes)
+    } else {
+      context.resources.getQuantityString(R.plurals.minutes, diffMinutes, diffMinutes)
+    }
+
+    return if (diffHours > 0 && diffMinutes > 0) {
+      val bridge = context.getString(R.string.wake_up_timer_schedule_set_bridge)
+      "$startString $stringHours $bridge $stringMinutes."
+    } else {
+      "$startString $stringHours$stringMinutes."
     }
   }
 
