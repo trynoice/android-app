@@ -271,8 +271,7 @@ class WakeUpTimerFragmentTest {
       mockk(relaxed = true) {
         every { id } returns "test-not-saved-preset-id-1"
         every { name } returns "test-not-saved-preset-1"
-      }
-      ,
+      },
       mockk(relaxed = true) {
         every { id } returns "test-saved-preset-id"
         every { name } returns "test-saved-preset"
