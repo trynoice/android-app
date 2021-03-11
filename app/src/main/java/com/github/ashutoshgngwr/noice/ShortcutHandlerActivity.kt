@@ -11,20 +11,20 @@ class ShortcutHandlerActivity : AppCompatActivity() {
 
   companion object {
     const val EXTRA_PRESET_ID = "preset_name"
+    const val EXTRA_SHORTCUT_ID = "shortcut_id"
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     intent.getStringExtra(EXTRA_PRESET_ID)?.also {
-      reportShortcutUsage(it)
+      // id is passed with the intent. For app version <= 0.15.0, preset id was treated as shortcut
+      // id. Hence, using preset id as fallback in cases where shortcut id is null.
+      reportShortcutUsage(intent.getStringExtra(EXTRA_SHORTCUT_ID) ?: it)
 
       if (Preset.findByID(this, it) == null) {
         Toast.makeText(this, R.string.preset_does_not_exist, Toast.LENGTH_LONG).show()
       } else {
-        Intent(this, MediaPlayerService::class.java)
-          .setAction(MediaPlayerService.ACTION_PLAY_PRESET)
-          .putExtra(MediaPlayerService.EXTRA_PRESET_ID, it)
-          .also { intent -> startService(intent) }
+        MediaPlayerService.playPreset(this, it)
       }
     }
 

@@ -27,6 +27,7 @@ import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 class PresetFragment : Fragment() {
 
@@ -45,7 +46,6 @@ class PresetFragment : Fragment() {
   private var adapter: PresetListAdapter? = null
   private var activePresetPos = -1
 
-  private val eventBus = EventBus.getDefault()
   private var dataSet = mutableListOf<Preset>()
 
   override fun onCreateView(
@@ -72,12 +72,12 @@ class PresetFragment : Fragment() {
       it.adapter = adapter
     }
 
-    eventBus.register(this)
+    EventBus.getDefault().register(this)
     updateEmptyListIndicatorVisibility()
   }
 
   override fun onDestroyView() {
-    eventBus.unregister(this)
+    EventBus.getDefault().unregister(this)
     super.onDestroyView()
   }
 
@@ -127,9 +127,9 @@ class PresetFragment : Fragment() {
     init {
       binding.playButton.setOnClickListener {
         if (adapterPosition != activePresetPos) {
-          eventBus.post(MediaPlayerService.PlayPresetEvent(dataSet[adapterPosition]))
+          MediaPlayerService.playPreset(requireContext(), dataSet[adapterPosition].id)
         } else {
-          eventBus.post(MediaPlayerService.StopPlaybackEvent())
+          MediaPlayerService.stopPlayback(requireContext())
         }
       }
 
@@ -158,13 +158,16 @@ class PresetFragment : Fragment() {
         return
       }
 
+      val shortcutID = UUID.randomUUID().toString()
       val presetID = dataSet[adapterPosition].id
-      ShortcutInfoCompat.Builder(requireContext(), presetID).also {
+      ShortcutInfoCompat.Builder(requireContext(), shortcutID).also {
         it.setShortLabel(dataSet[adapterPosition].name)
         it.setIcon(IconCompat.createWithResource(requireContext(), R.mipmap.ic_preset_shortcut))
         it.setIntent(
           Intent(requireContext(), ShortcutHandlerActivity::class.java)
             .setAction(Intent.ACTION_VIEW)
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_ID, shortcutID)
             .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, presetID)
         )
 
@@ -211,7 +214,7 @@ class PresetFragment : Fragment() {
           Preset.writeAllToUserPreferences(requireContext(), dataSet)
           // then stop playback if recently deleted preset was playing
           if (adapterPosition == activePresetPos) {
-            eventBus.post(MediaPlayerService.StopPlaybackEvent())
+            MediaPlayerService.stopPlayback(requireContext())
           }
 
           if (adapterPosition < activePresetPos) {

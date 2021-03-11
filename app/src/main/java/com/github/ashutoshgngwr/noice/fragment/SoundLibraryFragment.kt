@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
@@ -27,8 +26,6 @@ import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import kotlin.random.Random
-import kotlin.random.nextInt
 
 class SoundLibraryFragment : Fragment() {
 
@@ -157,15 +154,19 @@ class SoundLibraryFragment : Fragment() {
         title(R.string.random_preset)
         negativeButton(R.string.cancel)
         positiveButton(R.string.play) {
-          eventBus.post(
-            MediaPlayerService.PlayPresetEvent(
-              generateRandomPreset(
-                viewBinding.presetType.checkedRadioButtonId,
-                viewBinding.presetIntensity.checkedRadioButtonId
-              )
-            )
-          )
+          val tag = when (viewBinding.presetType.checkedRadioButtonId) {
+            R.id.preset_type__focus -> Sound.Tag.FOCUS
+            R.id.preset_type__relax -> Sound.Tag.RELAX
+            else -> null
+          }
 
+          val intensity = when (viewBinding.presetIntensity.checkedRadioButtonId) {
+            R.id.preset_intensity__light -> RANGE_INTENSITY_LIGHT
+            R.id.preset_intensity__dense -> RANGE_INTENSITY_DENSE
+            else -> RANGE_INTENSITY_ANY
+          }
+
+          MediaPlayerService.playRandomPreset(requireContext(), tag, intensity)
           // maybe show in-app review dialog to the user
           InAppReviewFlowManager.maybeAskForReview(requireActivity())
         }
@@ -173,32 +174,6 @@ class SoundLibraryFragment : Fragment() {
     }
 
     eventBus.register(this)
-  }
-
-  private fun generateRandomPreset(@IdRes type: Int, @IdRes intensity: Int): Preset {
-    val tag = when (type) {
-      R.id.preset_type__focus -> Sound.Tag.FOCUS
-      R.id.preset_type__relax -> Sound.Tag.RELAX
-      else -> null
-    }
-
-    val library = Sound.filterLibraryByTag(tag).shuffled()
-    val presetSizeRange = when (intensity) {
-      R.id.preset_intensity__light -> RANGE_INTENSITY_LIGHT
-      R.id.preset_intensity__dense -> RANGE_INTENSITY_DENSE
-      else -> RANGE_INTENSITY_ANY
-    }
-
-    val playerStates = mutableListOf<Preset.PlayerState>()
-    for (i in 0 until Random.nextInt(presetSizeRange)) {
-      val volume = 1 + Random.nextInt(0, Player.MAX_VOLUME)
-      val timePeriod = Random.nextInt(Player.MIN_TIME_PERIOD, Player.MAX_TIME_PERIOD + 1)
-      playerStates.add(
-        Preset.PlayerState(library[i], volume, timePeriod)
-      )
-    }
-
-    return Preset("", playerStates.toTypedArray())
   }
 
   override fun onDestroyView() {
@@ -330,9 +305,9 @@ class SoundLibraryFragment : Fragment() {
       binding.playButton.setOnClickListener {
         val listItem = dataSet.getOrNull(adapterPosition) ?: return@setOnClickListener
         if (players.containsKey(listItem.data)) {
-          eventBus.post(MediaPlayerService.StopPlayerEvent(listItem.data))
+          MediaPlayerService.stopSound(requireContext(), listItem.data)
         } else {
-          eventBus.post(MediaPlayerService.StartPlayerEvent(listItem.data))
+          MediaPlayerService.playSound(requireContext(), listItem.data)
         }
       }
     }

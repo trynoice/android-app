@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.sound.player
 import android.content.Context
 import android.media.AudioManager
 import android.os.Handler
+import android.os.Looper
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
@@ -46,7 +47,7 @@ class PlayerManager(private val context: Context) :
   private var onPlayerUpdateListener = { }
 
   val players = HashMap<String, Player>(Sound.LIBRARY.size)
-  private val handler = Handler()
+  private val handler = Handler(Looper.getMainLooper())
   private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
   private val audioAttributes = AudioAttributesCompat.Builder()
     .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)

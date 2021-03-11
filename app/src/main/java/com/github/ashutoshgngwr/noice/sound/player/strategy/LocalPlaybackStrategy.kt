@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.sound.player.strategy
 import android.content.Context
 import android.net.Uri
 import android.os.Handler
+import android.os.Looper
 import androidx.core.os.HandlerCompat
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.sound.Sound
@@ -30,7 +31,7 @@ class LocalPlaybackStrategy(
     const val FADE_DURATION = 750L
   }
 
-  private val handler = Handler()
+  private val handler = Handler(Looper.getMainLooper())
   private val players = sound.src.map { initPlayer(context, it, sound.isLooping, audioAttributes) }
 
   private fun initPlayer(

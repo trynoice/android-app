@@ -18,15 +18,11 @@ import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
-import io.mockk.MockKAnnotations
 import io.mockk.clearMocks
-import io.mockk.confirmVerified
 import io.mockk.every
-import io.mockk.impl.annotations.InjectionLookupType
-import io.mockk.impl.annotations.OverrideMockKs
-import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.mockk
 import io.mockk.mockkObject
+import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
@@ -35,7 +31,6 @@ import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -49,19 +44,17 @@ class SoundLibraryFragmentTest {
   @JvmField
   val retryTestRule = RetryTestRule(5)
 
-  @RelaxedMockK
-  private lateinit var eventBus: EventBus
-
-  @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
-  private lateinit var fragment: SoundLibraryFragment
+  private lateinit var mockEventBus: EventBus
   private lateinit var fragmentScenario: FragmentScenario<SoundLibraryFragment>
 
   @Before
   fun setup() {
-    mockkObject(InAppReviewFlowManager)
-    fragmentScenario = launchFragmentInContainer<SoundLibraryFragment>(null, R.style.Theme_App)
-    fragmentScenario.onFragment { fragment = it } // just for mock injection
-    MockKAnnotations.init(this)
+    mockkObject(InAppReviewFlowManager, MediaPlayerService.Companion)
+    mockkStatic(EventBus::class)
+
+    mockEventBus = mockk(relaxed = true)
+    every { EventBus.getDefault() } returns mockEventBus
+    fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
 
   @After
@@ -71,6 +64,9 @@ class SoundLibraryFragmentTest {
 
   @Test
   fun testRecyclerViewItem_playButton() {
+    // stub the real implementation
+    every { MediaPlayerService.playSound(any(), any()) } returns Unit
+
     onView(withId(R.id.sound_list)).perform(
       RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
@@ -78,12 +74,12 @@ class SoundLibraryFragmentTest {
       )
     )
 
-    verify(exactly = 1) { eventBus.post(MediaPlayerService.StartPlayerEvent("birds")) }
-    confirmVerified(eventBus)
+    verify(exactly = 1) { MediaPlayerService.playSound(any(), "birds") }
   }
 
   @Test
   fun testRecyclerViewItem_stopButton() {
+    every { MediaPlayerService.stopSound(any(), any()) } returns Unit
     val mockUpdateEvent = mockk<MediaPlayerService.OnPlayerManagerUpdateEvent>(relaxed = true) {
       every { players } returns hashMapOf("birds" to mockk(relaxed = true))
     }
@@ -96,7 +92,7 @@ class SoundLibraryFragmentTest {
       )
     )
 
-    verify(exactly = 1) { eventBus.post(MediaPlayerService.StopPlayerEvent("birds")) }
+    verify(exactly = 1) { MediaPlayerService.stopSound(any(), "birds") }
   }
 
   @Test
@@ -110,7 +106,7 @@ class SoundLibraryFragmentTest {
     }
 
     every {
-      eventBus.getStickyEvent(MediaPlayerService.OnPlayerManagerUpdateEvent::class.java)
+      mockEventBus.getStickyEvent(MediaPlayerService.OnPlayerManagerUpdateEvent::class.java)
     } returns mockUpdateEvent
 
     fragmentScenario.onFragment { it.onPlayerManagerUpdate(mockUpdateEvent) }
@@ -138,7 +134,7 @@ class SoundLibraryFragmentTest {
     }
 
     every {
-      eventBus.getStickyEvent(MediaPlayerService.OnPlayerManagerUpdateEvent::class.java)
+      mockEventBus.getStickyEvent(MediaPlayerService.OnPlayerManagerUpdateEvent::class.java)
     } returns mockUpdateEvent
 
     fragmentScenario.onFragment { it.onPlayerManagerUpdate(mockUpdateEvent) }
@@ -214,7 +210,7 @@ class SoundLibraryFragmentTest {
     // need to return a different instance of events (with expected value) when other components
     // request it after sliding action happens.
     every {
-      eventBus.getStickyEvent(MediaPlayerService.OnPlayerManagerUpdateEvent::class.java)
+      mockEventBus.getStickyEvent(MediaPlayerService.OnPlayerManagerUpdateEvent::class.java)
     } returns mockk(relaxed = true) {
       every { state } returns PlayerManager.State.PLAYING
       every { players } returns hashMapOf(
@@ -332,6 +328,7 @@ class SoundLibraryFragmentTest {
 
   @Test
   fun testRandomPresetButton_onClick() {
+    mockkObject(Preset.Companion)
     fragmentScenario.onFragment { fragment ->
       fragment.onPlayerManagerUpdate(mockk(relaxed = true) {
         every { state } returns PlayerManager.State.STOPPED
@@ -352,6 +349,9 @@ class SoundLibraryFragmentTest {
 
     for ((typeID, tag) in typeExpectations) {
       for ((intensityID, intensityRange) in intensityExpectations) {
+        val mockPreset = mockk<Preset>(relaxed = true)
+        every { Preset.generateRandom(tag, intensityRange) } returns mockPreset
+
         onView(withId(R.id.random_preset_button))
           .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
           .perform(click())
@@ -367,24 +367,8 @@ class SoundLibraryFragmentTest {
         onView(allOf(withId(R.id.positive), withText(R.string.play)))
           .perform(click())
 
-        val eventSlot = slot<MediaPlayerService.PlayPresetEvent>()
-        verify(exactly = 1) { eventBus.post(capture(eventSlot)) }
-        assertTrue("should capture a PlayPresetEvent", eventSlot.isCaptured)
-
-        val preset = eventSlot.captured.preset
-        assertTrue(
-          "should have expected intensity",
-          preset.playerStates.size in intensityRange
-        )
-
-        preset.playerStates.forEach {
-          assertTrue(
-            "should have expected sound tags",
-            tag == null || Sound.get(it.soundKey).tags.contains(tag)
-          )
-        }
-
-        clearMocks(eventBus)
+        verify(exactly = 1) { MediaPlayerService.playRandomPreset(any(), tag, intensityRange) }
+        clearMocks(MediaPlayerService.Companion)
       }
     }
   }

@@ -328,4 +328,24 @@ class PresetTest {
 
     JSONAssert.assertEquals(expectedV1JSON, jsonSlot.captured, true)
   }
+
+  @Test
+  fun testGenerateRandom() {
+    for (tag in arrayOf(null, Sound.Tag.FOCUS, Sound.Tag.RELAX)) {
+      for (intensity in arrayOf(2 until 5, 6 until 9, 1 until 3)) {
+        val preset = Preset.generateRandom(tag, intensity)
+        assertTrue(
+          "should have expected intensity",
+          preset.playerStates.size in intensity
+        )
+
+        preset.playerStates.forEach {
+          assertTrue(
+            "should have expected sound tags",
+            tag == null || Sound.get(it.soundKey).tags.contains(tag)
+          )
+        }
+      }
+    }
+  }
 }

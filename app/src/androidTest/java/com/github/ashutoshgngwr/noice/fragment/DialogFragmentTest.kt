@@ -42,11 +42,11 @@ class DialogFragmentTest {
   fun testTitleText() {
     emptyFragmentScenario.onFragment {
       DialogFragment.show(it.childFragmentManager) {
-        title(android.R.string.yes)
+        title(R.string.app_name)
       }
     }
 
-    onView(allOf(withId(R.id.title), withText(android.R.string.yes)))
+    onView(allOf(withId(R.id.title), withText(R.string.app_name)))
       .check(matches(isDisplayed()))
   }
 
@@ -54,12 +54,12 @@ class DialogFragmentTest {
   fun testPositiveButton() {
     emptyFragmentScenario.onFragment {
       DialogFragment.show(it.childFragmentManager) {
-        positiveButton(android.R.string.yes)
+        positiveButton(R.string.app_name)
       }
     }
 
     EspressoX.waitForView(withId(R.id.positive))
-      .check(matches(withText(android.R.string.yes)))
+      .check(matches(withText(R.string.app_name)))
       .perform(click())
 
     onView(withId(R.id.positive)).check(doesNotExist())
@@ -69,12 +69,12 @@ class DialogFragmentTest {
   fun testNegativeButton() {
     emptyFragmentScenario.onFragment {
       DialogFragment.show(it.childFragmentManager) {
-        negativeButton(android.R.string.no)
+        negativeButton(R.string.app_name)
       }
     }
 
     EspressoX.waitForView(withId(R.id.negative))
-      .check(matches(withText(android.R.string.no)))
+      .check(matches(withText(R.string.app_name)))
       .perform(click())
 
     onView(withId(R.id.negative)).check(doesNotExist())
@@ -99,24 +99,24 @@ class DialogFragmentTest {
   fun testMessageText() {
     emptyFragmentScenario.onFragment {
       DialogFragment.show(it.childFragmentManager) {
-        message(android.R.string.yes)
+        message(R.string.app_name)
       }
     }
 
-    onView(allOf(isDescendantOfA(withId(R.id.content)), withText(android.R.string.yes)))
+    onView(allOf(isDescendantOfA(withId(R.id.content)), withText(R.string.app_name)))
       .check(matches(isDisplayed()))
   }
 
   @Test
   fun testTextInput() {
     val mockValidator = mockk<(String) -> Int>()
-    every { mockValidator.invoke("invalid") } returns android.R.string.no
+    every { mockValidator.invoke("invalid") } returns R.string.app_name
     every { mockValidator.invoke("test") } returns 0
     var dialogFragment: DialogFragment? = null
     emptyFragmentScenario.onFragment {
       dialogFragment = DialogFragment.show(it.childFragmentManager) {
         input(
-          hintRes = android.R.string.yes,
+          hintRes = R.string.app_name,
           preFillValue = "test",
           validator = mockValidator
         )
@@ -128,7 +128,7 @@ class DialogFragmentTest {
       .perform(replaceText("invalid"))
 
     onView(withId(R.id.textInputLayout))
-      .check(matches(EspressoX.withErrorText(android.R.string.no)))
+      .check(matches(EspressoX.withErrorText(R.string.app_name)))
 
     onView(withId(R.id.positive))
       .check(matches(not(isEnabled())))
@@ -137,7 +137,7 @@ class DialogFragmentTest {
       .perform(replaceText("test"))
 
     onView(withId(R.id.textInputLayout))
-      .check(matches(not(EspressoX.withErrorText(android.R.string.no))))
+      .check(matches(not(EspressoX.withErrorText(R.string.app_name))))
 
     assertEquals("test", dialogFragment?.getInputText())
   }

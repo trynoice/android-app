@@ -13,6 +13,7 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
+import io.mockk.verify
 import io.mockk.verifyOrder
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -147,5 +148,44 @@ class WakeUpTimerManagerTest {
       .onReceive(ApplicationProvider.getApplicationContext(), Intent(Intent.ACTION_BOOT_COMPLETED))
 
     assertNull(shadowAlarmManager.nextScheduledAlarm)
+  }
+
+  @Test
+  fun testSaveLastUsedPresetID() {
+    val presetID = "test-preset-id"
+    val mockPrefsEditor = mockk<SharedPreferences.Editor>(relaxed = true) {
+      every { putString(any(), any()) } returns this
+    }
+
+    every { mockPrefs.edit() } returns mockPrefsEditor
+    WakeUpTimerManager.saveLastUsedPresetID(ApplicationProvider.getApplicationContext(), presetID)
+    verify(exactly = 1) {
+      mockPrefs.edit()
+      mockPrefsEditor.putString(WakeUpTimerManager.PREF_LAST_USED_PRESET_ID, presetID)
+      mockPrefsEditor.apply()
+    }
+  }
+
+  @Test
+  fun testGetLastUsedPresetID() {
+    mockkObject(Preset.Companion)
+
+    val context = ApplicationProvider.getApplicationContext<Context>()
+    every { mockPrefs.getString(WakeUpTimerManager.PREF_LAST_USED_PRESET_ID, any()) } returns null
+    assertNull(WakeUpTimerManager.getLastUsedPresetID(context))
+
+    val presetID = "test-preset-id"
+    every {
+      mockPrefs.getString(WakeUpTimerManager.PREF_LAST_USED_PRESET_ID, any())
+    } returns presetID
+
+    every { Preset.findByID(any(), presetID) } returns null // preset doesn't exist
+    assertNull(WakeUpTimerManager.getLastUsedPresetID(context))
+
+    every { Preset.findByID(any(), presetID) } returns mockk {
+      every { id } returns presetID
+    }
+
+    assertEquals(presetID, WakeUpTimerManager.getLastUsedPresetID(context))
   }
 }

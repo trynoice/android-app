@@ -2,7 +2,6 @@ package com.github.ashutoshgngwr.noice
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.anjlab.android.iab.v3.BillingProcessor
 import com.anjlab.android.iab.v3.TransactionDetails
@@ -60,7 +59,7 @@ class DonateActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
   }
 
   override fun onBillingInitialized() {
-    billingProcessor.purchase(this, intent.getStringExtra(EXTRA_DONATE_AMOUNT) ?: null)
+    billingProcessor.purchase(this, intent.getStringExtra(EXTRA_DONATE_AMOUNT))
   }
 
   override fun onProductPurchased(productId: String, details: TransactionDetails?) {
@@ -70,7 +69,7 @@ class DonateActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
       message(R.string.support_development__donate_thank_you_description)
       positiveButton(android.R.string.ok) {
         // finish activity with a delay to finish dialog close animation since activity has no anim.
-        Handler().postDelayed({ finish() }, 200)
+        requireView().postDelayed({ finish() }, 200)
       }
     }
   }

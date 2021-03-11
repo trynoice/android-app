@@ -16,6 +16,7 @@ import com.github.ashutoshgngwr.noice.databinding.WakeUpTimerFragmentBinding
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class WakeUpTimerFragment : Fragment() {
 
@@ -24,6 +25,7 @@ class WakeUpTimerFragment : Fragment() {
 
   private var selectedPresetID: String? = null
   private var selectedTime: Long = 0
+  private var changedPreset = false
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -67,11 +69,7 @@ class WakeUpTimerFragment : Fragment() {
 
     // check selectedPresetID exists in user preferences.
     if (Preset.findByID(requireContext(), selectedPresetID) == null) {
-      selectedPresetID = null
-      selectedTime = 0
-      binding.shouldUpdateMediaVolume.isChecked = false
-      binding.mediaVolumeSlider.value =
-        audioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
+      resetControls()
     }
 
     notifyUpdate()
@@ -86,7 +84,9 @@ class WakeUpTimerFragment : Fragment() {
       if (presets.isNotEmpty()) {
         singleChoiceItems(presetNames, presetIDs.indexOf(selectedPresetID)) { choice ->
           selectedPresetID = presetIDs[choice]
+          changedPreset = true
           notifyUpdate()
+          WakeUpTimerManager.saveLastUsedPresetID(requireContext(), selectedPresetID!!)
         }
       } else {
         message(R.string.preset_info__description)
@@ -96,12 +96,7 @@ class WakeUpTimerFragment : Fragment() {
   }
 
   private fun onResetTimeClicked() {
-    selectedTime = 0
-    selectedPresetID = null
-    binding.shouldUpdateMediaVolume.isChecked = false
-    binding.mediaVolumeSlider.value =
-      audioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
-
+    resetControls()
     notifyUpdate()
     Snackbar.make(requireView(), R.string.wake_up_timer_cancelled, Snackbar.LENGTH_LONG).show()
   }
@@ -127,7 +122,9 @@ class WakeUpTimerFragment : Fragment() {
     }
 
     selectedTime = calendar.timeInMillis
+
     notifyUpdate()
+    notifyScheduleLeftTime()
 
     // maybe show in-app review dialog to the user
     InAppReviewFlowManager.maybeAskForReview(requireActivity())
@@ -166,6 +163,11 @@ class WakeUpTimerFragment : Fragment() {
   }
 
   private fun updateTimePicker() {
+    if (changedPreset) {
+      changedPreset = false
+      return
+    }
+
     val calendar = Calendar.getInstance()
     if (selectedTime > System.currentTimeMillis()) {
       calendar.timeInMillis = selectedTime
@@ -181,5 +183,70 @@ class WakeUpTimerFragment : Fragment() {
       @Suppress("DEPRECATION")
       binding.timePicker.currentMinute = calendar.get(Calendar.MINUTE)
     }
+  }
+
+  private fun loadSelectedPresetID() {
+    if (!loadSharedPrefsSelectedPresetID()) {
+      loadFirstPreset()
+    }
+  }
+
+  private fun loadSharedPrefsSelectedPresetID(): Boolean {
+    selectedPresetID = WakeUpTimerManager.getLastUsedPresetID(requireContext())
+    return selectedPresetID != null
+  }
+
+  private fun loadFirstPreset() {
+    val presets = Preset.readAllFromUserPreferences(requireContext())
+    if (presets.isNotEmpty()) {
+      selectedPresetID = presets.first().id
+    }
+  }
+
+
+  private fun notifyScheduleLeftTime() {
+    val differenceMillis = selectedTime - System.currentTimeMillis()
+    if (differenceMillis < 0) {
+      return // should it ever happen?
+    }
+
+    val diffHours = TimeUnit.MILLISECONDS.toHours(differenceMillis).toInt()
+    val diffMinutes = TimeUnit.MILLISECONDS.toMinutes(differenceMillis).toInt() % 60
+
+    Snackbar.make(
+      requireView(),
+      getRelativeDurationString(diffHours, diffMinutes),
+      Snackbar.LENGTH_LONG
+    ).show()
+  }
+
+  private val matchSpacesRegex = """\s+""".toRegex()
+
+  private fun getRelativeDurationString(hours: Int, minutes: Int): String {
+    var minutePlural = ""
+    if (minutes > 0 || hours == 0) {
+      minutePlural = resources.getQuantityString(R.plurals.time_minutes, minutes, minutes)
+    }
+
+    var hourPlural = ""
+    if (hours > 0) {
+      hourPlural = resources.getQuantityString(R.plurals.time_hours, hours, hours)
+    }
+
+    var timeBridge = ""
+    if (hours * minutes != 0) {
+      timeBridge = getString(R.string.time_bridge)
+    }
+
+    return getString(R.string.wake_up_timer_schedule_set, hourPlural, timeBridge, minutePlural)
+      .replace(matchSpacesRegex, " ")
+  }
+
+  private fun resetControls() {
+    loadSelectedPresetID()
+    selectedTime = 0
+    binding.shouldUpdateMediaVolume.isChecked = false
+    binding.mediaVolumeSlider.value =
+      audioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
   }
 }

@@ -47,6 +47,7 @@ class PlayerTest {
   @Test
   fun testSetVolume() {
     player.setVolume(16)
+    ShadowLooper.runUiThreadTasks()
     verify(exactly = 1) { mockPlaybackStrategy.setVolume(16f / Player.MAX_VOLUME) }
     assertEquals(16, player.volume)
   }

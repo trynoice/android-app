@@ -2,10 +2,12 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import android.content.Context
 import android.media.AudioManager
+import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.media.AudioManagerCompat
+import androidx.preference.PreferenceManager
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -48,16 +50,17 @@ class WakeUpTimerFragmentTest {
 
   @Before
   fun setup() {
-    mockkObject(InAppReviewFlowManager)
-    mockkObject(Preset.Companion)
-    mockkObject(WakeUpTimerManager)
+    mockkObject(InAppReviewFlowManager, Preset.Companion, WakeUpTimerManager)
     every { WakeUpTimerManager.set(any(), any()) } returns Unit
-    fragmentScenario = launchFragmentInContainer<WakeUpTimerFragment>(null, R.style.Theme_App)
+    fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
 
   @After
   fun teardown() {
     unmockkAll()
+    with(PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())) {
+      edit { clear() }
+    }
   }
 
   @Test
@@ -162,25 +165,6 @@ class WakeUpTimerFragmentTest {
       }
     )
 
-    onView(withId(R.id.select_preset_button))
-      .check(matches(withText(R.string.select_preset)))
-      .perform(click())
-
-    EspressoX.waitForView(withId(android.R.id.list))
-      .check(matches(withChild(withText("test-1"))))
-      .check(matches(withChild(withText("test-2"))))
-
-    onView(withText("test-1"))
-      .perform(click())
-
-    onView(withId(R.id.select_preset_button))
-      .check(matches(withText("test-1")))
-
-    verify(exactly = 0) { WakeUpTimerManager.set(any(), any()) }
-
-    onView(withId(R.id.time_picker))
-      .perform(PickerActions.setTime(1, 2))
-
     val am = ApplicationProvider.getApplicationContext<Context>().getSystemService<AudioManager>()
     requireNotNull(am)
     val maxVol = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
@@ -188,6 +172,24 @@ class WakeUpTimerFragmentTest {
     val expectedVolume = Random.nextInt(minVol, maxVol)
 
     for (shouldUpdateMediaVolume in arrayOf(true, false)) {
+      onView(withId(R.id.select_preset_button))
+        .perform(click())
+
+      EspressoX.waitForView(withId(android.R.id.list))
+        .check(matches(withChild(withText("test-1"))))
+        .check(matches(withChild(withText("test-2"))))
+
+      onView(withText("test-1"))
+        .perform(click())
+
+      onView(withId(R.id.select_preset_button))
+        .check(matches(withText("test-1")))
+
+      verify(exactly = 0) { WakeUpTimerManager.set(any(), any()) }
+
+      onView(withId(R.id.time_picker))
+        .perform(PickerActions.setTime(1, 2))
+
       onView(withId(R.id.should_update_media_volume))
         .perform(scrollTo(), EspressoX.setChecked(shouldUpdateMediaVolume))
 
@@ -226,6 +228,10 @@ class WakeUpTimerFragmentTest {
       }
 
       onView(withId(R.id.reset_time_button)).check(matches(isEnabled()))
+      onView(withSubstring("The alarm will go off in"))
+        .check(matches(isDisplayed()))
+
+      fragmentScenario.recreate()
     }
   }
 
@@ -258,5 +264,50 @@ class WakeUpTimerFragmentTest {
     onView(withId(R.id.time_picker)).check(matches(EspressoX.is24hViewEnabled()))
     onView(withId(R.id.is_24h_view)).perform(click())
     onView(withId(R.id.time_picker)).check(matches(not(EspressoX.is24hViewEnabled())))
+  }
+
+  @Test
+  fun testLoadSavedPreset() {
+    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(
+      mockk(relaxed = true) {
+        every { id } returns "test-not-saved-preset-id-1"
+        every { name } returns "test-not-saved-preset-1"
+      },
+      mockk(relaxed = true) {
+        every { id } returns "test-saved-preset-id"
+        every { name } returns "test-saved-preset"
+      },
+      mockk(relaxed = true) {
+        every { id } returns "test-not-saved-preset-id-2"
+        every { name } returns "test-not-saved-preset-2"
+      }
+    )
+    every { WakeUpTimerManager.getLastUsedPresetID(any()) } returns "test-saved-preset-id"
+
+    fragmentScenario.recreate()
+    onView(withId(R.id.select_preset_button))
+      .check(matches(withText("test-saved-preset")))
+  }
+
+  @Test
+  fun testNotSavedPreset_loadFirstPreset() {
+    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(
+      mockk(relaxed = true) {
+        every { id } returns "test-not-saved-preset-id-1"
+        every { name } returns "test-not-saved-preset-1"
+      },
+      mockk(relaxed = true) {
+        every { id } returns "test-saved-preset-id"
+        every { name } returns "test-saved-preset"
+      },
+      mockk(relaxed = true) {
+        every { id } returns "test-not-saved-preset-id-2"
+        every { name } returns "test-not-saved-preset-2"
+      }
+    )
+
+    fragmentScenario.recreate()
+    onView(withId(R.id.select_preset_button))
+      .check(matches(withText("test-not-saved-preset-1")))
   }
 }
