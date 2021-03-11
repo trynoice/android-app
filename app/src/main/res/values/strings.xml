@@ -110,19 +110,16 @@
   <string name="schedule">Schedule</string>
   <string name="select_preset">Select Preset</string>
   <string name="wake_up_timer_cancelled">Wake-up Timer cancelled!</string>
-  <string name="wake_up_timer_schedule_set">Alarm will go off in</string>
-  <string name="wake_up_timer_schedule_set_bridge">and</string>
-  <string name="wake_up_timer_schedule_set_0_minutes">0 minutes</string>
-  <plurals name="hours">
+  <string name="wake_up_timer_schedule_set">The alarm will go off in %1$s %2$s %3$s</string>
+  <string name="time_bridge">and</string>
+  <plurals name="time_hours">
     <item quantity="one">%1$d hour</item>
     <item quantity="other">%1$d hours</item>
   </plurals>
-
-  <plurals name="minutes">
+  <plurals name="time_minutes">
     <item quantity="one">%1$d minute</item>
     <item quantity="other">%1$d minutes</item>
   </plurals>
-
   <string name="wake_up_timer_description">
     Noice will start the selected preset when the timer ends. Use the buttons below to select a
     preset and set the desired time to start the wake-up timer.

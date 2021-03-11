@@ -50,9 +50,7 @@ class WakeUpTimerFragmentTest {
 
   @Before
   fun setup() {
-    mockkObject(InAppReviewFlowManager)
-    mockkObject(Preset.Companion)
-    mockkObject(WakeUpTimerManager)
+    mockkObject(InAppReviewFlowManager, Preset.Companion, WakeUpTimerManager)
     every { WakeUpTimerManager.set(any(), any()) } returns Unit
     fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
@@ -167,25 +165,6 @@ class WakeUpTimerFragmentTest {
       }
     )
 
-    onView(withId(R.id.select_preset_button))
-      .check(matches(withText(R.string.select_preset)))
-      .perform(click())
-
-    EspressoX.waitForView(withId(android.R.id.list))
-      .check(matches(withChild(withText("test-1"))))
-      .check(matches(withChild(withText("test-2"))))
-
-    onView(withText("test-1"))
-      .perform(click())
-
-    onView(withId(R.id.select_preset_button))
-      .check(matches(withText("test-1")))
-
-    verify(exactly = 0) { WakeUpTimerManager.set(any(), any()) }
-
-    onView(withId(R.id.time_picker))
-      .perform(PickerActions.setTime(1, 2))
-
     val am = ApplicationProvider.getApplicationContext<Context>().getSystemService<AudioManager>()
     requireNotNull(am)
     val maxVol = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
@@ -193,6 +172,24 @@ class WakeUpTimerFragmentTest {
     val expectedVolume = Random.nextInt(minVol, maxVol)
 
     for (shouldUpdateMediaVolume in arrayOf(true, false)) {
+      onView(withId(R.id.select_preset_button))
+        .perform(click())
+
+      EspressoX.waitForView(withId(android.R.id.list))
+        .check(matches(withChild(withText("test-1"))))
+        .check(matches(withChild(withText("test-2"))))
+
+      onView(withText("test-1"))
+        .perform(click())
+
+      onView(withId(R.id.select_preset_button))
+        .check(matches(withText("test-1")))
+
+      verify(exactly = 0) { WakeUpTimerManager.set(any(), any()) }
+
+      onView(withId(R.id.time_picker))
+        .perform(PickerActions.setTime(1, 2))
+
       onView(withId(R.id.should_update_media_volume))
         .perform(scrollTo(), EspressoX.setChecked(shouldUpdateMediaVolume))
 
@@ -231,6 +228,10 @@ class WakeUpTimerFragmentTest {
       }
 
       onView(withId(R.id.reset_time_button)).check(matches(isEnabled()))
+      onView(withSubstring("The alarm will go off in"))
+        .check(matches(isDisplayed()))
+
+      fragmentScenario.recreate()
     }
   }
 
@@ -308,29 +309,5 @@ class WakeUpTimerFragmentTest {
     fragmentScenario.recreate()
     onView(withId(R.id.select_preset_button))
       .check(matches(withText("test-not-saved-preset-1")))
-  }
-
-  @Test
-  fun testSetSchedule_ShowNotifySnackBar() {
-    val context = ApplicationProvider.getApplicationContext<Context>()
-    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(
-      mockk(relaxed = true) {
-        every { id } returns "test-preset-id"
-        every { name } returns "test-preset"
-      }
-    )
-
-    every { WakeUpTimerManager.get(any()) } returns mockk {
-      every { presetID } returns "test-preset-id"
-      every { atMillis } returns System.currentTimeMillis() + 10000L
-      every { shouldUpdateMediaVolume } returns true
-      every { mediaVolume } returns 10
-    }
-
-    fragmentScenario.recreate()
-
-    onView(withId(R.id.set_time_button)).perform(click())
-    onView(withSubstring(context.getString(R.string.wake_up_timer_schedule_set)))
-      .check(matches(isDisplayed()))
   }
 }

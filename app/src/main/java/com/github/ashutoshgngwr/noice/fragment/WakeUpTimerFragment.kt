@@ -205,22 +205,41 @@ class WakeUpTimerFragment : Fragment() {
 
 
   private fun notifyScheduleLeftTime() {
-    val actualTime = System.currentTimeMillis()
-    var differenceMillis = selectedTime - actualTime
+    val differenceMillis = selectedTime - System.currentTimeMillis()
+    if (differenceMillis < 0) {
+      return // should it ever happen?
+    }
 
-    val diffHours = TimeUnit.MILLISECONDS.toHours(differenceMillis)
-    differenceMillis -= TimeUnit.HOURS.toMillis(diffHours)
-    val diffMinutes = TimeUnit.MILLISECONDS.toMinutes(differenceMillis)
+    val diffHours = TimeUnit.MILLISECONDS.toHours(differenceMillis).toInt()
+    val diffMinutes = TimeUnit.MILLISECONDS.toMinutes(differenceMillis).toInt() % 60
 
     Snackbar.make(
       requireView(),
-      WakeUpTimerManager.getStringScheduleLeftTime(
-        requireContext(),
-        diffHours.toInt(),
-        diffMinutes.toInt()
-      ),
-      Snackbar.LENGTH_SHORT
+      getRelativeDurationString(diffHours, diffMinutes),
+      Snackbar.LENGTH_LONG
     ).show()
+  }
+
+  private val matchSpacesRegex = """\s+""".toRegex()
+
+  private fun getRelativeDurationString(hours: Int, minutes: Int): String {
+    var minutePlural = ""
+    if (minutes > 0 || hours == 0) {
+      minutePlural = resources.getQuantityString(R.plurals.time_minutes, minutes, minutes)
+    }
+
+    var hourPlural = ""
+    if (hours > 0) {
+      hourPlural = resources.getQuantityString(R.plurals.time_hours, hours, hours)
+    }
+
+    var timeBridge = ""
+    if (hours * minutes != 0) {
+      timeBridge = getString(R.string.time_bridge)
+    }
+
+    return getString(R.string.wake_up_timer_schedule_set, hourPlural, timeBridge, minutePlural)
+      .replace(matchSpacesRegex, " ")
   }
 
   private fun resetControls() {

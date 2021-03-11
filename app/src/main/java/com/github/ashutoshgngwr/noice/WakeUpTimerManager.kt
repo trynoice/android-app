@@ -141,31 +141,6 @@ object WakeUpTimerManager {
     }
   }
 
-  fun getStringScheduleLeftTime(context: Context, diffHours: Int, diffMinutes: Int): String {
-    val startString = context.getString(R.string.wake_up_timer_schedule_set)
-
-    val stringHours = if (diffHours == 0) {
-      ""
-    } else {
-      context.resources.getQuantityString(R.plurals.hours, diffHours, diffHours)
-    }
-
-    val stringMinutes = if (diffMinutes == 0 && diffHours > 0) {
-      ""
-    } else if (diffMinutes == 0 && diffHours == 0) {
-      context.getString(R.string.wake_up_timer_schedule_set_0_minutes)
-    } else {
-      context.resources.getQuantityString(R.plurals.minutes, diffMinutes, diffMinutes)
-    }
-
-    return if (diffHours > 0 && diffMinutes > 0) {
-      val bridge = context.getString(R.string.wake_up_timer_schedule_set_bridge)
-      "$startString $stringHours $bridge $stringMinutes."
-    } else {
-      "$startString $stringHours$stringMinutes."
-    }
-  }
-
   /**
    * [BootReceiver] ensures that a scheduled [Timer] is able to persist across device restarts.
    */
