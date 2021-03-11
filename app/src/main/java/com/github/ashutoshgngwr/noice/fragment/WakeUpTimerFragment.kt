@@ -16,6 +16,7 @@ import com.github.ashutoshgngwr.noice.databinding.WakeUpTimerFragmentBinding
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class WakeUpTimerFragment : Fragment() {
 
@@ -121,7 +122,9 @@ class WakeUpTimerFragment : Fragment() {
     }
 
     selectedTime = calendar.timeInMillis
+
     notifyUpdate()
+    notifyScheduleLeftTime()
 
     // maybe show in-app review dialog to the user
     InAppReviewFlowManager.maybeAskForReview(requireActivity())
@@ -198,6 +201,45 @@ class WakeUpTimerFragment : Fragment() {
     if (presets.isNotEmpty()) {
       selectedPresetID = presets.first().id
     }
+  }
+
+
+  private fun notifyScheduleLeftTime() {
+    val differenceMillis = selectedTime - System.currentTimeMillis()
+    if (differenceMillis < 0) {
+      return // should it ever happen?
+    }
+
+    val diffHours = TimeUnit.MILLISECONDS.toHours(differenceMillis).toInt()
+    val diffMinutes = TimeUnit.MILLISECONDS.toMinutes(differenceMillis).toInt() % 60
+
+    Snackbar.make(
+      requireView(),
+      getRelativeDurationString(diffHours, diffMinutes),
+      Snackbar.LENGTH_LONG
+    ).show()
+  }
+
+  private val matchSpacesRegex = """\s+""".toRegex()
+
+  private fun getRelativeDurationString(hours: Int, minutes: Int): String {
+    var minutePlural = ""
+    if (minutes > 0 || hours == 0) {
+      minutePlural = resources.getQuantityString(R.plurals.time_minutes, minutes, minutes)
+    }
+
+    var hourPlural = ""
+    if (hours > 0) {
+      hourPlural = resources.getQuantityString(R.plurals.time_hours, hours, hours)
+    }
+
+    var timeBridge = ""
+    if (hours * minutes != 0) {
+      timeBridge = getString(R.string.time_bridge)
+    }
+
+    return getString(R.string.wake_up_timer_schedule_set, hourPlural, timeBridge, minutePlural)
+      .replace(matchSpacesRegex, " ")
   }
 
   private fun resetControls() {
