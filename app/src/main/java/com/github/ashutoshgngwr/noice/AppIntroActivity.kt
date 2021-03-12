@@ -9,8 +9,8 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.github.appintro.AppIntro
-import com.github.appintro.AppIntroFragment
 import com.github.appintro.AppIntroPageTransformerType
+import com.github.ashutoshgngwr.noice.fragment.AppIntroFragment
 
 class AppIntroActivity : AppIntro() {
 
@@ -34,6 +34,7 @@ class AppIntroActivity : AppIntro() {
     super.onCreate(savedInstanceState)
     isColorTransitionsEnabled = true
     showStatusBar(true)
+
     setStatusBarColor(ActivityCompat.getColor(this, R.color.colorStatusBar))
     setTransformer(
       AppIntroPageTransformerType.Parallax(
