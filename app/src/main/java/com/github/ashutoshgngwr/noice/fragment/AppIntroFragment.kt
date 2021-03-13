@@ -32,7 +32,7 @@ class AppIntroFragment(override val layoutId: Int) : AppIntroBaseFragment() {
     @JvmOverloads
     @JvmStatic
     fun newInstance(
-      layoutId: Int = R.layout.fragment_app_intro,
+      layoutId: Int = R.layout.app_intro_fragment,
       title: CharSequence? = null,
       description: CharSequence? = null,
       @DrawableRes imageDrawable: Int = 0,

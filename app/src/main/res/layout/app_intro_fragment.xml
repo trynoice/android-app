@@ -7,6 +7,8 @@
   android:layout_height="match_parent"
   android:paddingTop="@dimen/appintro_statusbar_height"
   android:paddingBottom="@dimen/appintro2_bottombar_height"
+  android:paddingStart="15dp"
+  android:paddingEnd="15dp"
   tools:background="@color/appintro_background_color">
 
   <androidx.appcompat.widget.AppCompatTextView
