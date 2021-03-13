@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Navigation Drawer -->
     <string name="about">Tentang</string>
     <string name="app_theme">Tema</string>
     <string name="close_drawer">Tutup panel navigasi</string>
@@ -12,9 +11,7 @@
     <string name="sleep_timer">Pengatur Waktu Tidur</string>
     <string name="support_development">Dukung Pengembangan</string>
     <string name="wake_up_timer">Pengatur Waktu Bangun</string>
-    <!-- Random preset Dialog -->
     <string name="okay">Oke</string>
-    <!-- Save new preset Dialog -->
     <string name="cancel">Batal</string>
     <string name="dismiss">Singkirkan</string>
     <string name="name">Nama</string>
@@ -24,13 +21,11 @@
     <string name="preset_saved">Preset disimpan!</string>
     <string name="save">Simpan</string>
     <string name="save_preset">Simpan Preset</string>
-    <!-- Library List Item -->
     <string name="play">Mainkan</string>
     <string name="play_pause">putar atau jeda</string>
     <string name="repeat_time_period">Ulangi periode waktu</string>
     <string name="stop">Berhenti</string>
     <string name="volume">Volume suara</string>
-    <!-- Library - sound groups -->
     <string name="sound_group__life">Kehidupan</string>
     <string name="sound_group__monsoon">Musim</string>
     <string name="sound_group__public_gatherings">Pertemuan Umum</string>
@@ -39,7 +34,6 @@
     <string name="sound_group__vehicles">Kendaraan</string>
     <string name="sound_group__water">Air</string>
     <string name="sound_group__wind">Angin</string>
-    <!-- Library - sounds -->
     <string name="airplane_inflight">Pesawat dalam penerbangan</string>
     <string name="airplane_seatbelt_beeps">Bunyi sabuk pengaman pesawat</string>
     <string name="birds">Burung</string>
@@ -75,7 +69,6 @@
     <string name="white_noise">Kebisingan putih</string>
     <string name="wind_in_chimes_of_shells">Angin di lonceng kerang</string>
     <string name="wind_in_palm_trees">Angin di pohon palem</string>
-    <!-- Saved Presets -->
     <string name="delete">Hapus</string>
     <string name="open_context_menu">Buka menu konteks</string>
     <string name="preset_delete_confirmation">Konfirmasi hapus %s?</string>
@@ -85,27 +78,21 @@
     Kemudian klik tombol Simpan yang muncul di sudut bawah layar.
 </string>
     <string name="rename">Ganti nama</string>
-    <!-- Sleep Timer -->
     <string name="auto_sleep_schedule_cancelled">Pengatur waktu tidur otomatis telah dibatalkan!</string>
     <string name="reset">Setel ulang</string>
     <string name="sleep_timer_description">
     Noice akan mati sendiri ketika timer berakhir. Gunakan tombol di bawah untuk menambahkan waktu dan memulai
     pengatur waktu.
 </string>
-    <!-- Wake-up Timer -->
     <string name="schedule">Jadwal</string>
     <string name="select_preset">Pilih Preset</string>
     <string name="wake_up_timer_description">
     Noice akan memulai preset yang dipilih saat timer berakhir. Gunakan tombol di bawah untuk memilih a
     preset dan atur waktu yang diinginkan untuk memulai pengatur waktu bangun.
 </string>
-    <!-- Theme -->
-    <string-array name="app_themes">
-        <item>Terang</item>
-        <item>Gelap</item>
-        <item>Sistem default</item>
-    </string-array>
-    <!-- About -->
+    <string name="app_theme_light">Terang</string>
+    <string name="app_theme_dark">Gelap</string>
+    <string name="app_theme_system_default">Sistem default</string>
     <string name="about__email">Email</string>
     <string name="about__github">GitHub</string>
     <string name="about__translations">Terjemahan</string>
@@ -113,7 +100,6 @@
     <string name="app_description">Santai dan tingkatkan produktivitas dengan kebisingan latar belakang minimal.</string>
     <string name="connect_with_author">Hubungkan dengan Penulis</string>
     <string name="credits">Kredit</string>
-    <!-- Help -->
     <string name="appintro__chromecast_desc">
     Gunakan Noice untuk mentransmisikan suasananya ke perangkat berkemampuan Chromecast lainnya seperti speaker, TV, dll.
  </string>
@@ -136,7 +122,6 @@
     secara otomatis. Demikian pula, untuk bangun di lingkungan yang tenang, gunakan pengatur waktu bangun untuk menyetel alarm.
  </string>
     <string name="appintro__timer_title">Kesulitan tidur atau bangun?</string>
-    <!-- Support Development -->
     <string name="support_development__donate">Donasi</string>
     <string name="support_development__donate_description">
     Donasi akan membantu kami dalam \n
@@ -163,7 +148,6 @@
     - Untuk memungkinkan pembaruan di masa mendatang \n
     - Untuk membuat Noice bebas iklan selamanya \n
  </string>
-    <!-- Others -->
     <string name="cast_media">Transmisikan media ke perangkat lain</string>
     <string name="in_app_feedback__description">
     Kami ingin sekali mendengar dari Anda tentang aplikasi ini. Mohon luangkan waktu sejenak untuk mengunjungi repositori GitHub kami.

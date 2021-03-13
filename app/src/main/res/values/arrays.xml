@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="app_themes">
+    <item>@string/app_theme_light</item>
+    <item>@string/app_theme_dark</item>
+    <item>@string/app_theme_system_default</item>
+  </string-array>
+</resources>

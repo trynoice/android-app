@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Navigation Drawer -->
     <string name="about">O aplikacji</string>
     <string name="app_theme">Motyw</string>
     <string name="close_drawer">Zamknij szufladę nawigacyjną</string>
@@ -11,7 +10,6 @@
     <string name="sleep_timer">Wyłącznik czasowy</string>
     <string name="support_development">Wesprzyj rozwój</string>
     <string name="wake_up_timer">Budzik</string>
-    <!-- Save new preset Dialog -->
     <string name="cancel">Anuluj</string>
     <string name="dismiss">Odrzuć</string>
     <string name="name">Nazwa</string>
@@ -21,13 +19,11 @@
     <string name="preset_saved">Szablon zapisany!</string>
     <string name="save">Zapisz</string>
     <string name="save_preset">Zapisz szablon</string>
-    <!-- Library List Item -->
     <string name="play">Odtwarzaj</string>
     <string name="play_pause">odtwarzaj lub wstrzymaj</string>
     <string name="repeat_time_period">Okres powtarzania</string>
     <string name="stop">Zakończ</string>
     <string name="volume">Głośność dźwięku</string>
-    <!-- Library - sounds -->
     <string name="airplane_inflight">Samolot w locie</string>
     <string name="airplane_seatbelt_beeps">Sygnał pasa bezpieczeństwa w samolocie</string>
     <string name="birds">Ptaki</string>
@@ -52,7 +48,6 @@
     <string name="white_noise">Szum biały</string>
     <string name="wind_in_chimes_of_shells">Wiatr na dzwonkach z muszli</string>
     <string name="wind_in_palm_trees">Wiatr w palmach</string>
-    <!-- Saved Presets -->
     <string name="delete">Usuń</string>
     <string name="open_context_menu">Otwórz menu kontekstowe</string>
     <string name="preset_delete_confirmation">Czy na pewno chcesz usunąć %s?</string>
@@ -62,26 +57,20 @@
     i odtwórz dźwięki. Następnie kliknij przycisk Zapisz, który pojawi się w dolnym rogu ekranu.
   </string>
     <string name="rename">Zmień nazwę</string>
-    <!-- Sleep Timer -->
     <string name="auto_sleep_schedule_cancelled">Automatyczny wyłącznik czasowy anulowany!</string>
     <string name="reset">Resetuj</string>
     <string name="sleep_timer_description">
     Noice wyłączy się sam po upływie czasu.
     Użyj poniższych przycisków, aby dodać czas i uruchomić czasomierz.
   </string>
-    <!-- Wake-up Timer -->
     <string name="select_preset">Wybierz szablon</string>
     <string name="wake_up_timer_description">
     Noice rozpocznie wybrany szablon po upływie czasu. Użyj poniższych przycisków, aby wybrać
     szablon i dodać żądany czas trwania, aby uruchomić budzik.
   </string>
-    <!-- Theme -->
-    <string-array name="app_themes">
-        <item>Jasny</item>
-        <item>Ciemny</item>
-        <item>Domyślny systemowy</item>
-    </string-array>
-    <!-- About -->
+    <string name="app_theme_light">Jasny</string>
+    <string name="app_theme_dark">Ciemny</string>
+    <string name="app_theme_system_default">Domyślny systemowy</string>
     <string name="about__email">E-mail</string>
     <string name="about__github">GitHub</string>
     <string name="about__translations">Tłumaczenia</string>
@@ -89,7 +78,6 @@
     <string name="app_description">Zrelaksuj się i zwiększ wydajność pracy przy minimalnym szumie w tle.</string>
     <string name="connect_with_author">Skontaktuj się z autorem</string>
     <string name="credits">Zasługi</string>
-    <!-- Support Development -->
     <string name="support_development__donate">Przekaż darowiznę</string>
     <string name="support_development__donate_description">
     Darowizny pomogą nam w\n
@@ -117,7 +105,6 @@
     - Aby umożliwić przyszłe aktualizacje\n
     - Aby Noice pozostał wolny od reklam na zawsze\n
   </string>
-    <!-- Others -->
     <string name="cast_media">Prześlij multimedia na inne urządzenie</string>
     <string name="notification_channel_default__description">Elementy sterujące odtwarzaniem multimediów</string>
     <string name="notification_channel_default__name">Odtwarzanie multimediów</string>

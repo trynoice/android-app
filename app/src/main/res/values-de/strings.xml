@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Navigation Drawer -->
     <string name="about">Über</string>
     <string name="app_theme">Theme</string>
     <string name="close_drawer">Navigationsleiste schließen</string>
@@ -13,7 +12,6 @@
     <string name="support_development">Unterstütze die Entwicklung</string>
     <string name="wake_up_timer">Aufwach-Timer</string>
     <string name="submit_feedback">Feedback abgeben</string>
-    <!-- Random preset Dialog -->
     <string name="any">Zufall</string>
     <string name="dense">Dicht</string>
     <string name="focus">Fokus</string>
@@ -24,7 +22,6 @@
     <string name="okay">Ok</string>
     <string name="random_preset">zufällige Voreinstellung</string>
     <string name="relax">Entspannen</string>
-    <!-- Save new preset Dialog -->
     <string name="cancel">Abbrechen</string>
     <string name="dismiss">Ausblenden</string>
     <string name="name">Name</string>
@@ -34,13 +31,11 @@
     <string name="preset_saved">Voreinstellung gespeichert!</string>
     <string name="save">Speichern</string>
     <string name="save_preset">Voreinstellung speichern</string>
-    <!-- Library List Item -->
     <string name="play">Abspielen</string>
     <string name="play_pause">Abspielen / pausieren</string>
     <string name="repeat_time_period">Wiederholungszeit</string>
     <string name="stop">Stopp</string>
     <string name="volume">Lautstärke</string>
-    <!-- Library - sound groups -->
     <string name="sound_group__life">Leben</string>
     <string name="sound_group__monsoon">Monsun</string>
     <string name="sound_group__public_gatherings">Öffentliches Zusammenkommen</string>
@@ -49,7 +44,6 @@
     <string name="sound_group__vehicles">Fahrzeuge</string>
     <string name="sound_group__water">Wasser</string>
     <string name="sound_group__wind">der Wind</string>
-    <!-- Library - sounds -->
     <string name="airplane_inflight">Im Flugzeug</string>
     <string name="airplane_seatbelt_beeps">Flugzeug-Anschnallsignal</string>
     <string name="birds">Vögel</string>
@@ -85,7 +79,6 @@
     <string name="white_noise">Weißes Rauschen</string>
     <string name="wind_in_chimes_of_shells">Wind in Glockenspiel aus Muscheln</string>
     <string name="wind_in_palm_trees">Wind in Palmen</string>
-    <!-- Saved Presets -->
     <string name="add_to_home_screen">zum Startbildschirm hinzufügen</string>
     <string name="delete">Löschen</string>
     <string name="open_context_menu">Öffne das Kontext-Menü</string>
@@ -100,14 +93,12 @@
     <string name="rename">Umbenennen</string>
     <string name="shortcuts_not_supported">Ihr Standard-Launcher unterstützt das Hinzufügen von Verknüpfungen nicht.</string>
     <string name="show_saved_preset_on_startup">Gespeicherte Voreinstellungen beim Start der App anzeigen</string>
-    <!-- Sleep Timer -->
     <string name="auto_sleep_schedule_cancelled">Automatischer Schlaftimer abgebrochen!</string>
     <string name="reset">Zurücksetzen</string>
     <string name="sleep_timer_description">
     Noice schaltet sich automatisch nach Ablauf des Timers aus. Nutze die Knöpfe weiter unten, um
     dem Timer Zeit hinzuzufügen oder abzuziehen.
   </string>
-    <!-- Wake-up Timer -->
     <string name="schedule">Zeitplan</string>
     <string name="select_preset">Wähle eine Voreinstellung aus</string>
     <string name="wake_up_timer_cancelled">Aufwach Wecker gelöscht!</string>
@@ -119,13 +110,9 @@
     <string name="use_24h_format">Benutze das 24-Stunden Format</string>
     <string name="device_media_volume">Lautstärke des Gerätes</string>
     <string name="should_update_media_volume">Aktualisieren Sie die Lautstärke des Gerätes, bevor Sie die Voreinstellung starten</string>
-    <!-- Theme -->
-    <string-array name="app_themes">
-        <item>Hell</item>
-        <item>Dunkel</item>
-        <item>Systemstandard</item>
-    </string-array>
-    <!-- About -->
+    <string name="app_theme_light">Hell</string>
+    <string name="app_theme_dark">Dunkel</string>
+    <string name="app_theme_system_default">Systemstandard</string>
     <string name="about__email">E-Mail</string>
     <string name="about__github">GitHub</string>
     <string name="about__translations">Übersetzungen</string>
@@ -133,7 +120,6 @@
     <string name="app_description">Entspannung und Produktivitätssteigerung durch minimale Hintergrundgeräusche.</string>
     <string name="connect_with_author">Autor kontaktieren</string>
     <string name="credits">Danksagungen</string>
-    <!-- Help -->
     <string name="appintro__chromecast_desc">
     Benutze Noice um die Stimmung zu anderen Chromecast aktivierten Geräten wie Lautsprechern, TVs, etc zu übertragen.
   </string>
@@ -156,7 +142,6 @@
     von selbst auszuschalten. Auf die gleiche Weise benutze den Aufwach timer um den Alarm zu setzen, um in einer angenehmen Stimmung aufzuwachen.
   </string>
     <string name="appintro__timer_title">Schwierigkeiten einzuschlafen oder aufzuwachen?</string>
-    <!-- Support Development -->
     <string name="support_development__donate">Spenden</string>
     <string name="support_development__donate_description">
     Spenden helfen uns dabei\n
@@ -179,7 +164,6 @@
     - Um zukünftige Updates zu ermöglichen\n
     - Um Noice für immer werbefrei zu halten\n
   </string>
-    <!-- Others -->
     <string name="cast_media">Übertrage das Medium auf ein anderes Gerät</string>
     <string name="in_app_feedback__description">
     Wir würden uns freuen von Ihnen über die App zu hören. Bitte nehmen Sie sich einen Moment um das Github Repositorie zu besuchen.
