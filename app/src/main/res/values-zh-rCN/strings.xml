@@ -139,4 +139,12 @@
     <string name="help">帮助</string>
     <string name="close_drawer">关闭导航抽屉</string>
     <string name="app_theme">主题</string>
+    <string name="wake_up_timer_schedule_set">闹铃将在 %1$s %2$s %3$s 后结束</string>
+    <plurals name="time_minutes">
+        <item quantity="other">%1$d 分钟</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="other">%1$d 小时</item>
+    </plurals>
+    <string name="time_bridge">和</string>
 </resources>
