@@ -21,6 +21,7 @@ import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
+import com.github.ashutoshgngwr.noice.fragment.RandomPresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SleepTimerFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       R.id.saved_presets to PresetFragment::class.java,
       R.id.sleep_timer to SleepTimerFragment::class.java,
       R.id.wake_up_timer to WakeUpTimerFragment::class.java,
+      R.id.random_preset to RandomPresetFragment::class.java,
       R.id.about to AboutFragment::class.java,
       R.id.support_development to SupportDevelopmentFragment::class.java
     )

@@ -26,6 +26,12 @@
     android:checkable="true" />
 
   <item
+    android:id="@+id/random_preset"
+    android:icon="@drawable/ic_action_shuffle"
+    android:title="@string/random_preset"
+    android:checkable="true" />
+
+  <item
     android:id="@+id/app_theme"
     android:icon="@drawable/ic_nav_theme"
     android:title="@string/app_theme"
