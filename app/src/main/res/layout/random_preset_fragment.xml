@@ -42,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
+        app:flexCheckedButton="@id/preset_type__any"
         android:checkedButton="@id/preset_type__any"
         app:alignContent="space_between"
         app:alignItems="center"
@@ -84,7 +85,7 @@
           android:layout_height="wrap_content"
           android:layout_gravity="center"
           android:layout_marginStart="10dp"
-          android:checkedButton="@id/preset_type__any"
+          app:flexCheckedButton="@id/preset_intensity__any"
           app:alignContent="space_between"
           app:alignItems="center"
           app:flexWrap="wrap">

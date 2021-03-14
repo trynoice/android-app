@@ -25,6 +25,9 @@ class RandomPresetFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    //flexCheckedButton in XML is not working so we set manually.
+    binding.presetIntensityAny.isChecked = true
+    binding.presetTypeAny.isChecked = true
 
     binding.playPresetButton.setOnClickListener {
       val tag = when (binding.presetType.checkedRadioButtonId) {
