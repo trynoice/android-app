@@ -1,11 +1,11 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetFragmentBinding
@@ -40,15 +40,9 @@ class RandomPresetFragment : Fragment() {
       }
       MediaPlayerService.playRandomPreset(requireContext(), tag, intensity)
       //We'll add later a if player is playing then show else there was an error
-      Toast.makeText(requireContext(), "Playing Random!", Toast.LENGTH_SHORT).show()
 
-      // Your choice to show up in-app review on this fragment!
       // maybe show in-app review dialog to the user
-      //InAppReviewFlowManager.maybeAskForReview(requireActivity())
-    }
-
-    binding.cancelPresetButton.setOnClickListener {
-      //What do we do cancel? Should we reset preferences button?
+      InAppReviewFlowManager.maybeAskForReview(requireActivity())
     }
   }
 }

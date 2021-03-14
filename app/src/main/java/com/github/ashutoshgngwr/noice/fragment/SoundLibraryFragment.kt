@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.databinding.DialogFragmentRandomPresetBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundGroupListItemBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundLibraryFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundListItemBinding
@@ -87,12 +86,6 @@ class SoundLibraryFragment : Fragment() {
       } else {
         binding.savePresetButton.hide()
       }
-
-      if (event.state == PlayerManager.State.STOPPED) {
-        binding.randomPresetButton.show()
-      } else {
-        binding.randomPresetButton.hide()
-      }
     }
   }
 
@@ -136,37 +129,6 @@ class SoundLibraryFragment : Fragment() {
           binding.savePresetButton.hide()
           showPresetSavedMessage()
 
-          // maybe show in-app review dialog to the user
-          InAppReviewFlowManager.maybeAskForReview(requireActivity())
-        }
-      }
-    }
-
-    binding.randomPresetButton.setOnLongClickListener {
-      Toast.makeText(requireContext(), R.string.random_preset, Toast.LENGTH_LONG).show()
-      true
-    }
-
-    binding.randomPresetButton.setOnClickListener {
-      DialogFragment.show(childFragmentManager) {
-        val viewBinding = DialogFragmentRandomPresetBinding.inflate(layoutInflater)
-        addContentView(viewBinding.root)
-        title(R.string.random_preset)
-        negativeButton(R.string.cancel)
-        positiveButton(R.string.play) {
-          val tag = when (viewBinding.presetType.checkedRadioButtonId) {
-            R.id.preset_type__focus -> Sound.Tag.FOCUS
-            R.id.preset_type__relax -> Sound.Tag.RELAX
-            else -> null
-          }
-
-          val intensity = when (viewBinding.presetIntensity.checkedRadioButtonId) {
-            R.id.preset_intensity__light -> RANGE_INTENSITY_LIGHT
-            R.id.preset_intensity__dense -> RANGE_INTENSITY_DENSE
-            else -> RANGE_INTENSITY_ANY
-          }
-
-          MediaPlayerService.playRandomPreset(requireContext(), tag, intensity)
           // maybe show in-app review dialog to the user
           InAppReviewFlowManager.maybeAskForReview(requireActivity())
         }
