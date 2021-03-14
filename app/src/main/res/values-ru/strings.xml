@@ -171,4 +171,18 @@
     <string name="shortcuts_not_supported">Ваш лаунчер по умолчанию не поддерживает добавление ярлыков.</string>
     <string name="intensity_description">Компактные предустановки будут пытаться воспроизводить больше звуков одновременно.</string>
     <string name="focus">Фокус</string>
+    <plurals name="time_minutes">
+        <item quantity="one">%1$d минуту</item>
+        <item quantity="few">%1$d минуты</item>
+        <item quantity="many">%1$d минут</item>
+        <item quantity="other">%1$d минут</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one">%1$d час</item>
+        <item quantity="few">%1$d часа</item>
+        <item quantity="many">%1$d часов</item>
+        <item quantity="other">%1$d часов</item>
+    </plurals>
+    <string name="time_bridge">и</string>
+    <string name="wake_up_timer_schedule_set">Будильник выключится через %1$s %3$s</string>
 </resources>

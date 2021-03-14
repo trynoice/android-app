@@ -70,7 +70,7 @@
     <string name="submit_feedback">Invia feedback</string>
     <string name="support_development">Supporta lo sviluppo</string>
     <string name="help">Aiuto</string>
-    <string name="preset_already_exists">Un preset con questo nome é già esistente!</string>
+    <string name="preset_already_exists">Un preimpostato con questo nome esiste già!</string>
     <string name="random_preset">Preset casuale</string>
     <string name="support_development__share">Condividi</string>
     <string name="support_development__donate_thank_you">Grazie!</string>
@@ -142,4 +142,14 @@
     <string name="in_app_feedback__title">Sottoponi una recensione</string>
     <string name="in_app_feedback__description">Ci piacerebbe che ci inviassi commenti sulla app. Ti preghiamo di prenderti un attimo per visitare il repository su Github. Se invece non ti è piaciuta, ti preghiamo di aprire una discussione, ed esprimere il tuo disappunto. Altrimenti, ti chiediamo di cliccare sulla stella per mostrare il tuo affetto e supporto al progetto.</string>
     <string name="cast_media">Riproduci il supporto su un altro dispositivo</string>
+    <plurals name="time_minutes">
+        <item quantity="one">%1$d minuto</item>
+        <item quantity="other">%1$d minuti</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one">%1$d ora</item>
+        <item quantity="other">%1$d ore</item>
+    </plurals>
+    <string name="time_bridge">e</string>
+    <string name="wake_up_timer_schedule_set">La sveglia si spegnerà in %1$s %2$s %3$s</string>
 </resources>
