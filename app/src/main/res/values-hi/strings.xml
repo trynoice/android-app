@@ -171,7 +171,7 @@
     <string name="dense">सघन</string>
     <string name="any">कोई भी</string>
     <string name="submit_feedback">प्रतिपुष्टि दें</string>
-    <string name="wake_up_timer_schedule_set">अलार्म %1$s %2$s %3$s में बजेगा</string>
+    <string name="wake_up_timer_schedule_set">अलार्म %1$s %3$s में बजेगा</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d मिनट</item>
         <item quantity="other">%1$d मिनट</item>
