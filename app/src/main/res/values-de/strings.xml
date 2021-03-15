@@ -173,4 +173,13 @@
     <string name="notification_channel_default__description">Steuerung der Medienwiedergabe</string>
     <string name="notification_channel_default__name">Medienwiedergabe</string>
     <string name="wake_up_timer_schedule_set">Der Alarm wird in %1$s %2$s %3$s ausgelöst</string>
+    <plurals name="time_minutes">
+        <item quantity="one">%1$d Minute</item>
+        <item quantity="other">%1$d Minuten</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one">%1$d Stunde</item>
+        <item quantity="other">%1$d Stunden</item>
+    </plurals>
+    <string name="time_bridge">und</string>
 </resources>
