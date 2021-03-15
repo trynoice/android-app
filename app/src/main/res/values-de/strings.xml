@@ -94,10 +94,7 @@
     <string name="show_saved_preset_on_startup">Gespeicherte Voreinstellungen beim Start der App anzeigen</string>
     <string name="auto_sleep_schedule_cancelled">Automatischer Schlaftimer abgebrochen!</string>
     <string name="reset">Zurücksetzen</string>
-    <string name="sleep_timer_description">
-    Noice schaltet sich automatisch nach Ablauf des Timers aus. Nutze die Knöpfe weiter unten, um
-    dem Timer Zeit hinzuzufügen oder abzuziehen.
-  </string>
+    <string name="sleep_timer_description">Noice schaltet sich automatisch nach Ablauf des Timers aus. Nutze die Knöpfe weiter unten, um dem Timer Zeit hinzuzufügen oder abzuziehen.</string>
     <string name="schedule">Zeitplan</string>
     <string name="select_preset">Wähle eine Voreinstellung aus</string>
     <string name="wake_up_timer_cancelled">Aufwach Wecker gelöscht!</string>
@@ -174,4 +171,14 @@
     <string name="never">Nie</string>
     <string name="notification_channel_default__description">Steuerung der Medienwiedergabe</string>
     <string name="notification_channel_default__name">Medienwiedergabe</string>
+    <string name="wake_up_timer_schedule_set">Der Alarm wird in %1$s %2$s %3$s ausgelöst</string>
+    <plurals name="time_minutes">
+        <item quantity="one">%1$d Minute</item>
+        <item quantity="other">%1$d Minuten</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one">%1$d Stunde</item>
+        <item quantity="other">%1$d Stunden</item>
+    </plurals>
+    <string name="time_bridge">und</string>
 </resources>

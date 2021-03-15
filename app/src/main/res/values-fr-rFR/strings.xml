@@ -172,4 +172,14 @@
     <string name="in_app_feedback__title">Soumettre une évaluation</string>
     <string name="any">N\'importe</string>
     <string name="focus">Focus</string>
+    <plurals name="time_minutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="other">%1$d minutes</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one">%1$d heure</item>
+        <item quantity="other">%1$d heures</item>
+    </plurals>
+    <string name="time_bridge">et</string>
+    <string name="wake_up_timer_schedule_set">L\'alarme s\'éteindra dans %1$s %2$s %3$s</string>
 </resources>

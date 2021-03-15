@@ -104,7 +104,7 @@
     <string name="sound_group__times_of_day">Ore del giorno</string>
     <string name="sound_group__raw_noise">Rumore grezzo</string>
     <string name="sound_group__public_gatherings">Riunioni pubbliche</string>
-    <string name="relax">Relax</string>
+    <string name="relax">Lenitivo</string>
     <string name="wake_up_timer">Timer risveglio</string>
     <string name="sleep_timer_description">Noice si riavvierà allo scadere del tempo. Usa i pulsanti sotto per aggiungere del tempo e avviare il timer.</string>
     <string name="show_saved_preset_on_startup">Mostra i preset salvati all\'avvio dell\'app</string>
