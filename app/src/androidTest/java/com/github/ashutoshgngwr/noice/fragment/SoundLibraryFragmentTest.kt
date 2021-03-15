@@ -15,10 +15,8 @@ import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.sound.Preset
-import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
-import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -301,75 +299,5 @@ class SoundLibraryFragmentTest {
     }
 
     verify(exactly = 1) { InAppReviewFlowManager.maybeAskForReview(any()) }
-  }
-
-  @Test
-  fun testRandomPresetButton_onPlayback() {
-    val mockUpdateEvent = mockk<MediaPlayerService.OnPlayerManagerUpdateEvent>(relaxed = true) {
-      every { players } returns mockk(relaxed = true)
-    }
-
-    for (state in PlayerManager.State.values()) {
-      every { mockUpdateEvent.state } returns state
-      fragmentScenario.onFragment {
-        it.onPlayerManagerUpdate(mockUpdateEvent)
-      }
-
-      // a non-stopped state should keep the FAB hidden
-      var expectedVisibility = Visibility.GONE
-      if (state == PlayerManager.State.STOPPED) {
-        expectedVisibility = Visibility.VISIBLE
-      }
-
-      onView(withId(R.id.random_preset_button))
-        .check(matches(withEffectiveVisibility(expectedVisibility)))
-    }
-  }
-
-  @Test
-  fun testRandomPresetButton_onClick() {
-    mockkObject(Preset.Companion)
-    fragmentScenario.onFragment { fragment ->
-      fragment.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlayerManager.State.STOPPED
-      })
-    }
-
-    val intensityExpectations = mapOf(
-      R.id.preset_intensity__any to SoundLibraryFragment.RANGE_INTENSITY_ANY,
-      R.id.preset_intensity__dense to SoundLibraryFragment.RANGE_INTENSITY_DENSE,
-      R.id.preset_intensity__light to SoundLibraryFragment.RANGE_INTENSITY_LIGHT
-    )
-
-    val typeExpectations = mapOf(
-      R.id.preset_type__any to null,
-      R.id.preset_type__focus to Sound.Tag.FOCUS,
-      R.id.preset_type__relax to Sound.Tag.RELAX
-    )
-
-    for ((typeID, tag) in typeExpectations) {
-      for ((intensityID, intensityRange) in intensityExpectations) {
-        val mockPreset = mockk<Preset>(relaxed = true)
-        every { Preset.generateRandom(tag, intensityRange) } returns mockPreset
-
-        onView(withId(R.id.random_preset_button))
-          .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-          .perform(click())
-
-        onView(allOf(withId(R.id.title), withText(R.string.random_preset)))
-          .check(matches(isDisplayed()))
-          // swipeUp to reveal bottom sheet completely; click to release the tap from swipeUp..?!!
-          // first click after swipeUp wasn't working otherwise.
-          .perform(swipeUp(), click())
-
-        onView(withId(typeID)).perform(click())
-        onView(withId(intensityID)).perform(click())
-        onView(allOf(withId(R.id.positive), withText(R.string.play)))
-          .perform(click())
-
-        verify(exactly = 1) { MediaPlayerService.playRandomPreset(any(), tag, intensityRange) }
-        clearMocks(MediaPlayerService.Companion)
-      }
-    }
   }
 }

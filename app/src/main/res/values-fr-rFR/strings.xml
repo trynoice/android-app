@@ -157,7 +157,6 @@
     <string name="okay">D\'accord</string>
     <string name="mood">Ambiance</string>
     <string name="light">Clair</string>
-    <string name="intensity_description">La présélection « dense » tentera de jouer plus de son simultanément.</string>
     <string name="intensity">Intensité</string>
     <string name="dense">Dense</string>
     <string name="submit_feedback">Soumettre une évaluation</string>
