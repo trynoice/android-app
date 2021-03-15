@@ -8,9 +8,9 @@
     <string name="open_drawer">Navigationsleiste öffnen</string>
     <string name="report_issue">Fehler melden</string>
     <string name="saved_presets">Gespeicherte Voreinstellungen</string>
-    <string name="sleep_timer">Schaltuhr</string>
+    <string name="sleep_timer">Einschlaftimer</string>
     <string name="support_development">Unterstütze die Entwicklung</string>
-    <string name="wake_up_timer">Wecker</string>
+    <string name="wake_up_timer">Aufwach-Timer</string>
     <string name="submit_feedback">Feedback abgeben</string>
     <string name="any">Zufall</string>
     <string name="dense">Dicht</string>
@@ -93,12 +93,12 @@
     <string name="rename">Umbenennen</string>
     <string name="shortcuts_not_supported">Ihr Standard-Launcher unterstützt das Hinzufügen von Verknüpfungen nicht.</string>
     <string name="show_saved_preset_on_startup">Gespeicherte Voreinstellungen beim Start der App anzeigen</string>
-    <string name="auto_sleep_schedule_cancelled">Automatischer Schaltuhr abgebrochen!</string>
+    <string name="auto_sleep_schedule_cancelled">Automatischer Schlaftimer abgebrochen!</string>
     <string name="reset">Zurücksetzen</string>
-    <string name="sleep_timer_description">Noice schaltet sich automatisch nach Ablauf der Schaltuhr aus. Nutze die Knöpfe weiter unten, um der Schaltuhr Zeit hinzuzufügen oder abzuziehen.</string>
+    <string name="sleep_timer_description">Noice schaltet sich automatisch nach Ablauf des Timers aus. Nutze die Knöpfe weiter unten, um dem Timer Zeit hinzuzufügen oder abzuziehen.</string>
     <string name="schedule">Zeitplan</string>
     <string name="select_preset">Wähle eine Voreinstellung aus</string>
-    <string name="wake_up_timer_cancelled">Wecker gelöscht!</string>
+    <string name="wake_up_timer_cancelled">Aufwach Wecker gelöscht!</string>
     <string name="wake_up_timer_description">
     Noice startet die ausgewählte Voreinstellung wenn der Timer endet. Nutze die Knöpfe weiter unten,
     um eine Voreinstellung auszusuchen und die gewünschte Länge bis zum Start des Aufwach-Timers
