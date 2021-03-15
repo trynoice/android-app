@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="7dp"
         android:paddingBottom="15dp"
-        android:text="@string/intensity_description"
+        android:text="@string/random_preset_description"
         android:textAlignment="center" />
 
       <TextView

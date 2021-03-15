@@ -16,7 +16,7 @@
     <string name="dense">Dense</string>
     <string name="focus">Focus</string>
     <string name="intensity">Intensity</string>
-    <string name="intensity_description">Generated random presets will contain sounds corresponding to the chosen mood. Moreover, dense presets will attempt to play more sounds simultaneously.</string>
+    <string name="random_preset_description">Generated random presets will contain sounds corresponding to the chosen mood. Moreover, dense presets will attempt to play more sounds simultaneously.</string>
     <string name="light">Light</string>
     <string name="mood">Mood</string>
     <string name="okay">Okay</string>

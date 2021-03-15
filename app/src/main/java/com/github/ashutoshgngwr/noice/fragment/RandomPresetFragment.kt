@@ -41,8 +41,8 @@ class RandomPresetFragment : Fragment() {
         R.id.preset_intensity__dense -> SoundLibraryFragment.RANGE_INTENSITY_DENSE
         else -> SoundLibraryFragment.RANGE_INTENSITY_ANY
       }
+
       MediaPlayerService.playRandomPreset(requireContext(), tag, intensity)
-      //We'll add later a if player is playing then show else there was an error
 
       // maybe show in-app review dialog to the user
       InAppReviewFlowManager.maybeAskForReview(requireActivity())

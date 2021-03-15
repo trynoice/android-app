@@ -46,8 +46,6 @@ class RandomPresetFragmentTest {
 
   @Test
   fun testRandomPresetButton_onClick() {
-    mockkObject(Preset.Companion)
-
     val intensityExpectations = mapOf(
       R.id.preset_intensity__any to SoundLibraryFragment.RANGE_INTENSITY_ANY,
       R.id.preset_intensity__dense to SoundLibraryFragment.RANGE_INTENSITY_DENSE,
@@ -62,9 +60,6 @@ class RandomPresetFragmentTest {
 
     for ((typeID, tag) in typeExpectations) {
       for ((intensityID, intensityRange) in intensityExpectations) {
-        val mockPreset = mockk<Preset>(relaxed = true)
-        every { Preset.generateRandom(tag, intensityRange) } returns mockPreset
-
         Espresso.onView(withId(typeID)).perform(ViewActions.click())
         Espresso.onView(withId(intensityID)).perform(ViewActions.click())
 
