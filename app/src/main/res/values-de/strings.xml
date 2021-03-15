@@ -175,4 +175,5 @@
     <string name="never">Nie</string>
     <string name="notification_channel_default__description">Steuerung der Medienwiedergabe</string>
     <string name="notification_channel_default__name">Medienwiedergabe</string>
+    <string name="wake_up_timer_schedule_set">Der Alarm wird in %1$s %2$s %3$s ausgelöst.</string>
 </resources>
