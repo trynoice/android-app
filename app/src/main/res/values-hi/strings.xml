@@ -180,4 +180,5 @@
         <item quantity="other">%1$d घंटे</item>
     </plurals>
     <string name="time_bridge">और</string>
+    <string name="random_preset_description">उत्पन्न रैंडम प्रीसेट में चुने हुए मूड के अनुरूप ध्वनियाँ होंगी। इसके अलावा, घने प्रीसेट एक साथ अधिक ध्वनियों को चलाने का प्रयास करेंगे।</string>
 </resources>
