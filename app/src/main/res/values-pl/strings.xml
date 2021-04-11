@@ -137,4 +137,6 @@
     <string name="submit_feedback">Wyślij Opinie</string>
     <string name="help">Pomoc</string>
     <string name="sound_group__raw_noise">Czysty szum</string>
+    <string name="sound_group__wind">Wiatr</string>
+    <string name="sound_group__vehicles">Pojazdy</string>
 </resources>
