@@ -50,24 +50,15 @@
     <string name="wind_in_palm_trees">Wiatr w palmach</string>
     <string name="delete">Usuń</string>
     <string name="open_context_menu">Otwórz menu kontekstowe</string>
-    <string name="preset_delete_confirmation">Czy na pewno chcesz usunąć %s?</string>
+    <string name="preset_delete_confirmation">Czy na pewno chcesz usunąć %s\?</string>
     <string name="preset_deleted">Szablon usunięty!</string>
-    <string name="preset_info__description">
-    Nie utworzono jeszcze żadnych szablonów. Aby utworzyć szablon, przejdź do biblioteki
-    i odtwórz dźwięki. Następnie kliknij przycisk Zapisz, który pojawi się w dolnym rogu ekranu.
-  </string>
+    <string name="preset_info__description">Nie utworzono jeszcze żadnych szablonów. Aby utworzyć szablon, przejdź do biblioteki i odtwórz dźwięki. Następnie kliknij przycisk Zapisz, który pojawi się w dolnym rogu ekranu.</string>
     <string name="rename">Zmień nazwę</string>
     <string name="auto_sleep_schedule_cancelled">Automatyczny wyłącznik czasowy anulowany!</string>
     <string name="reset">Resetuj</string>
-    <string name="sleep_timer_description">
-    Noice wyłączy się sam po upływie czasu.
-    Użyj poniższych przycisków, aby dodać czas i uruchomić czasomierz.
-  </string>
+    <string name="sleep_timer_description">Noice wyłączy się sam po upływie czasu. Użyj poniższych przycisków, aby dodać czas i uruchomić czasomierz.</string>
     <string name="select_preset">Wybierz szablon</string>
-    <string name="wake_up_timer_description">
-    Noice rozpocznie wybrany szablon po upływie czasu. Użyj poniższych przycisków, aby wybrać
-    szablon i dodać żądany czas trwania, aby uruchomić budzik.
-  </string>
+    <string name="wake_up_timer_description">Noice rozpocznie wybrany szablon po upływie czasu. Użyj poniższych przycisków, aby wybrać szablon i dodać żądany czas trwania, aby uruchomić budzik.</string>
     <string name="app_theme_light">Jasny</string>
     <string name="app_theme_dark">Ciemny</string>
     <string name="app_theme_system_default">Domyślny systemowy</string>
@@ -79,32 +70,20 @@
     <string name="connect_with_author">Skontaktuj się z autorem</string>
     <string name="credits">Zasługi</string>
     <string name="support_development__donate">Przekaż darowiznę</string>
-    <string name="support_development__donate_description">
-    Darowizny pomogą nam w\n
-    - inwestowaniu nowych funkcji\n
-    - doborze lepszych sampli\n
-    - zakupie kawy\n
-  </string>
-    <string name="support_development__donate_google_play_description">
-    Twoja płatność będzie bezpiecznie obsługiwana przez Google Play. Kwota zostanie przeliczona
-    na Twoją lokalną walutę. W zależności od lokalizacji, do ostatecznej kwoty _mogą_ zostać
-    naliczone dodatkowe opłaty.
-  </string>
+    <string name="support_development__donate_description">Darowizny pomogą nam w
+\n - inwestowaniu nowych funkcji
+\n - doborze lepszych sampli
+\n - zakupie kawy
+\n</string>
+    <string name="support_development__donate_google_play_description">Twoja płatność będzie bezpiecznie obsługiwana przez Google Play. Kwota zostanie przeliczona na Twoją lokalną walutę. W zależności od lokalizacji, do ostatecznej kwoty _mogą_ zostać naliczone dodatkowe opłaty.</string>
     <string name="support_development__donate_thank_you">Dziękujemy!</string>
-    <string name="support_development__donate_thank_you_description">
-    Z całego serca dziękujemy Ci za Twój hojny wkład w projekt Noice.
-  </string>
+    <string name="support_development__donate_thank_you_description">Z całego serca dziękujemy Ci za Twój hojny wkład w projekt Noice.</string>
     <string name="support_development__share">Podziel się z przyjaciółmi</string>
-    <string name="support_development__share_description">
-    Dzielenie się tą aplikacją z przyjaciółmi jest podobne do przekazywania pieniędzy. Z większą
-    liczbą pobrań, będziemy mogli uzyskać informacje zwrotne z wielu różnych perspektyw, które
-    pomogą nam w uczynieniu Noice lepszym niż kiedykolwiek wcześniej.
-  </string>
-    <string name="support_development__why">Dlaczego powinieneś(-aś) wesprzeć?</string>
-    <string name="support_development__why_description">
-    - Aby umożliwić przyszłe aktualizacje\n
-    - Aby Noice pozostał wolny od reklam na zawsze\n
-  </string>
+    <string name="support_development__share_description">Dzielenie się tą aplikacją z przyjaciółmi jest podobne do przekazywania pieniędzy. Z większą liczbą pobrań, będziemy mogli uzyskać informacje zwrotne z wielu różnych perspektyw, które pomogą nam w uczynieniu Noice lepszym niż kiedykolwiek wcześniej.</string>
+    <string name="support_development__why">Dlaczego powinieneś(-aś) wesprzeć\?</string>
+    <string name="support_development__why_description">- Aby umożliwić przyszłe aktualizacje
+\n - Aby Noice pozostał wolny od reklam na zawsze
+\n</string>
     <string name="cast_media">Prześlij multimedia na inne urządzenie</string>
     <string name="notification_channel_default__description">Elementy sterujące odtwarzaniem multimediów</string>
     <string name="notification_channel_default__name">Odtwarzanie multimediów</string>
@@ -139,4 +118,42 @@
     <string name="sound_group__raw_noise">Czysty szum</string>
     <string name="sound_group__wind">Wiatr</string>
     <string name="sound_group__vehicles">Pojazdy</string>
+    <string name="appintro__timer_desc"></string>
+    <string name="howling_wolf"></string>
+    <string name="appintro__sound_library_desc"></string>
+    <string name="should_update_media_volume"></string>
+    <string name="time_bridge"></string>
+    <string name="dense"></string>
+    <string name="wake_up_timer_cancelled"></string>
+    <string name="sound_group__times_of_day"></string>
+    <string name="water_hose"></string>
+    <string name="appintro__sound_library_title"></string>
+    <string name="show_saved_preset_on_startup"></string>
+    <string name="screeching_seagulls"></string>
+    <string name="in_app_feedback__description"></string>
+    <string name="appintro__preset_desc"></string>
+    <plurals name="time_hours">
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="crickets"></string>
+    <plurals name="time_minutes">
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="sound_group__monsoon"></string>
+    <string name="sound_group__public_gatherings"></string>
+    <string name="random_preset"></string>
+    <string name="device_media_volume"></string>
+    <string name="wake_up_timer_schedule_set"></string>
+    <string name="random_preset_description"></string>
+    <string name="appintro__chromecast_desc"></string>
+    <string name="creaking_ship"></string>
+    <string name="preset_does_not_exist"></string>
+    <string name="mood"></string>
+    <string name="purring_cat"></string>
 </resources>
