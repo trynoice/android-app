@@ -181,4 +181,5 @@
         <item quantity="other">%1$d Stunden</item>
     </plurals>
     <string name="time_bridge">und</string>
+    <string name="random_preset_description">Generierte Zufallsvoreinstellungen enthalten Sounds, die der gewählten Stimmung entsprechen. Darüber hinaus versuchen dichte Voreinstellungen, mehr Sounds gleichzeitig abzuspielen.</string>
 </resources>
