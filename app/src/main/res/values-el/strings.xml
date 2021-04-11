@@ -145,4 +145,11 @@
     <string name="appintro__sound_library_desc">Χρησιμοποιήστε το ρυθμιστικό για τη ρύθμιση της έντασης των ήχων. Στους επαναλαμβανόμενους ήχους επιλέγεται ένας τυχαίος χρόνος καθυστέρησης, από το επιλεγμένο εύρος με το αντίστοιχο ρυθμιστικό.</string>
     <string name="appintro__preset_title">Αποθηκεύστε τις αγαπημένες σας συνθέσεις</string>
     <string name="appintro__preset_desc">Αφού ξεκινήσετε κάποιους ήχους, μπορείτε να χρησιμοποιήσετε το κουμπί στην κάτω δεξιά γωνία για να αποθηκεύσετε τη σύνθεση σας. Για να την ξαναχρησιμοποιήσετε, ανατρέξτε στη λίστα των συνθέσεων από το μενού της εφαρμογής.</string>
+    <string name="notification_channel_default__name">Αναπαραγωγή</string>
+    <string name="notification_channel_default__description">Χειριστήρια αναπαραγωγής</string>
+    <string name="never">Ποτέ</string>
+    <string name="later">Αργότερα</string>
+    <string name="in_app_feedback__title">Υποβολή αξιολόγησης</string>
+    <string name="in_app_feedback__description">Θα θέλαμε τα σχόλια σας. Σας παρακαλούμε επισκεφτείτε τη σελίδα μας στο GitHub. Αν δε σας άρεσε η εφαρμογή σας παρακαλούμε εξηγήστε μας τους λόγους. Αλλιώς, δώστε μια καλή αξιολόγηση για να δείξετε την αγάπη και την υποστήριξη σας.</string>
+    <string name="cast_media">Μετάδοση ήχου σε άλλη συσκευή</string>
 </resources>
