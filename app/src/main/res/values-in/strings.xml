@@ -175,4 +175,13 @@
     <string name="wake_up_timer_cancelled">Timer Wake-up terbatalkan!</string>
     <string name="show_saved_preset_on_startup">Tunjukan Preset yang tersimpan pada permulaan aplikasi</string>
     <string name="intensity">Intensitas</string>
+    <plurals name="time_minutes">
+        <item quantity="other">%1$d menit</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="other">%1$d jam</item>
+    </plurals>
+    <string name="time_bridge">dan</string>
+    <string name="wake_up_timer_schedule_set">Alarm akan mati dalam %1$s %2$s %3$s</string>
+    <string name="random_preset_description">Preset acak yang dihasilkan akan memiliki suara sesuai dengan suasana yang dipilih. Selain itu, preset padat akan berusaha memainkan lebih banyak suara secara bersamaan.</string>
 </resources>

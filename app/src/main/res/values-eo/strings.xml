@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="sound_group__life">Vivo</string>
+    <string name="play">Ludi</string>
+    <string name="save">Konservi</string>
+    <string name="pause">Paŭzigi</string>
+    <string name="name">Nomo</string>
+    <string name="cancel">Nuligi</string>
+    <string name="okay">Bone</string>
+    <string name="library">Biblioteko</string>
+    <string name="help">Helpo</string>
+    <string name="app_theme">Etoso</string>
+    <string name="about">Pri</string>
+</resources>
