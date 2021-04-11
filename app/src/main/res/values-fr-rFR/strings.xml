@@ -70,25 +70,16 @@
     <string name="wind_in_palm_trees">Palmiers</string>
     <string name="delete">Supprimer</string>
     <string name="open_context_menu">Menu contextuel</string>
-    <string name="preset_delete_confirmation">Confirmer la suppression de %s ?</string>
+    <string name="preset_delete_confirmation">Confirmer la suppression de %s \?</string>
     <string name="preset_deleted">Réglage supprimé !</string>
-    <string name="preset_info__description">
-    Vous n\'avez pas encore de réglage. Pour en créer un, allez dans Bibliothèque et jouez des sons.
-    Puis cliquez sur le bouton Sauvegarder qui apparait en bas à droite.
-  </string>
+    <string name="preset_info__description">Vous n\'avez pas encore de réglage. Pour en créer un, allez dans Bibliothèque et jouez des sons. Puis cliquez sur le bouton Sauvegarder qui apparait en bas à droite.</string>
     <string name="rename">Renommer</string>
     <string name="auto_sleep_schedule_cancelled">Minuterie annulée !</string>
     <string name="reset">Réinitialiser</string>
-    <string name="sleep_timer_description">
-    Noice s\'éteindra tout seul à la fin de la minuterie. Utilisez les boutons ci-dessous pour ajouter du temps et démarrer
-    la minuterie.
-  </string>
+    <string name="sleep_timer_description">Noice s\'éteindra tout seul à la fin de la minuterie. Utilisez les boutons ci-dessous pour ajouter du temps et démarrer la minuterie.</string>
     <string name="schedule">Plannifier</string>
     <string name="select_preset">Sélectionner le réglage</string>
-    <string name="wake_up_timer_description">
-    Noice peut démarrer un réglage au moment du réveil. Utilisez les boutons ci-dessous pour sélectionner
-    un réglage et l\'heure voulue pour activer le reveil.
-  </string>
+    <string name="wake_up_timer_description">Noice peut démarrer un réglage au moment du réveil. Utilisez les boutons ci-dessous pour sélectionner un réglage et l\'heure voulue pour activer le reveil.</string>
     <string name="app_theme_light">Clair</string>
     <string name="app_theme_dark">Sombre</string>
     <string name="app_theme_system_default">Système</string>
@@ -99,54 +90,32 @@
     <string name="app_description">Relaxation, concentration et productivité avec une ambiance sonore minimaliste.</string>
     <string name="connect_with_author">Entrer en contact avec l\'auteur</string>
     <string name="credits">Crédits</string>
-    <string name="appintro__chromecast_desc">
-    Utilisez Noice pour envoyer l\'ambiance créée vers un appareil équipé de Chromecast comme des enceintes, une télé, etc.
-  </string>
+    <string name="appintro__chromecast_desc">Utilisez Noice pour envoyer l\'ambiance créée vers un appareil équipé de Chromecast comme des enceintes, une télé, etc.</string>
     <string name="appintro__chromecast_title">Chromecast activé</string>
     <string name="appintro__getting_started_desc_0">Glissez vers la gauche pour connaître toutes les fonctionnalités !</string>
     <string name="appintro__getting_started_desc_1">C\'est parti !</string>
     <string name="appintro__getting_started_title">Bienvenue</string>
-    <string name="appintro__preset_desc">
-    Après avoir joué quelques sons, vous pouvez utiliser le bouton en bas à droite pour sauvegarder le mix.
-    Pour réutiliser un mix sauvegardé, allez dans la liste des réglages depuis le menu de l\'application.
-  </string>
+    <string name="appintro__preset_desc">Après avoir joué quelques sons, vous pouvez utiliser le bouton en bas à droite pour sauvegarder le mix. Pour réutiliser un mix sauvegardé, allez dans la liste des réglages depuis le menu de l\'application.</string>
     <string name="appintro__preset_title">Sauvegardez vos mixes préférés</string>
-    <string name="appintro__sound_library_desc">
-    Utilisez les boutons de volume pour régler le volume des sons. A chaque répétition d\'un son "sans-boucle",
-    un délai aléatoire sera généré dans la plage établie par le curseur de temps.
-  </string>
+    <string name="appintro__sound_library_desc">Utilisez les boutons de volume pour régler le volume des sons. A chaque répétition d\'un son sans-boucle, un délai aléatoire sera généré dans la plage établie par le curseur de temps.</string>
     <string name="appintro__sound_library_title">Créez votre environnement idéal</string>
-    <string name="appintro__timer_desc">
-    Une ambiance légère peut vous aider à vous endormir plus facilement. Utilisez la minuterie pour laisser Noice
-    s\'eteindre tout seul. De la même manière, pour se réveiller au calme, utilisez le réveil pour régler l\'alarme.
-  </string>
-    <string name="appintro__timer_title">Des difficultés à s\'endormir ou à se réveiller ?</string>
+    <string name="appintro__timer_desc">Une ambiance légère peut vous aider à vous endormir plus facilement. Utilisez la minuterie pour laisser Noice s\'eteindre tout seul. De la même manière, pour se réveiller au calme, utilisez le réveil pour régler l\'alarme.</string>
+    <string name="appintro__timer_title">Des difficultés à s\'endormir ou à se réveiller \?</string>
     <string name="support_development__donate">Donner</string>
-    <string name="support_development__donate_description">
-    Les dons nous aideront dans\n
-    - le développement de nouvelles fonctionnalités\n
-    - la recherche d\'échantillons sonores de qualité\n
-    - l\'achat de café\n
-  </string>
-    <string name="support_development__donate_google_play_description">
-    Votre paiement sera effectué en toute sécurité par Google Play. Le montant sera converti dans votre
-    monnaie locale. Selon votre lieu de résidence, des taxes supplémentaires _peuvent être_ ajoutées au montant final.
-  </string>
+    <string name="support_development__donate_description">Les dons nous aideront dans
+\n - le développement de nouvelles fonctionnalités
+\n - la recherche d\'échantillons sonores de qualité
+\n - l\'achat de café
+\n</string>
+    <string name="support_development__donate_google_play_description">Votre paiement sera effectué en toute sécurité par Google Play. Le montant sera converti dans votre monnaie locale. Selon votre lieu de résidence, des taxes supplémentaires _peuvent être_ ajoutées au montant final.</string>
     <string name="support_development__donate_thank_you">Merci !</string>
-    <string name="support_development__donate_thank_you_description">
-    Nous vous remercions de tout cœur pour votre généreuse contribution au projet Noice.
-  </string>
+    <string name="support_development__donate_thank_you_description">Nous vous remercions de tout cœur pour votre généreuse contribution au projet Noice.</string>
     <string name="support_development__share">Partager avec vos amis</string>
-    <string name="support_development__share_description">
-    Partager avec vos amis revient à faire un don. Avec l\'augmentation du nombre de téléchargement,
-    nous pourrons avoir plus de retour d\'utilisateurs et ces derniers nous permettons d\'améliorer
-    Noice.
-  </string>
-    <string name="support_development__why">Pourquoi soutenir le développement ?</string>
-    <string name="support_development__why_description">
-    - Pour rendre possible les futures mises à jour\n
-    - Pour que Noice reste toujours sans publicité\n
-  </string>
+    <string name="support_development__share_description">Partager avec vos amis revient à faire un don. Avec l\'augmentation du nombre de téléchargement, nous pourrons avoir plus de retour d\'utilisateurs et ces derniers nous permettons d\'améliorer Noice.</string>
+    <string name="support_development__why">Pourquoi soutenir le développement \?</string>
+    <string name="support_development__why_description">- Pour rendre possible les futures mises à jour
+\n - Pour que Noice reste toujours sans publicité
+\n</string>
     <string name="cast_media">Envoyer le son vers un autre appareil</string>
     <string name="notification_channel_default__description">Contrôles de lecture</string>
     <string name="notification_channel_default__name">Lecture audio</string>
