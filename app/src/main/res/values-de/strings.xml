@@ -81,14 +81,10 @@
     <string name="add_to_home_screen">zum Startbildschirm hinzufügen</string>
     <string name="delete">Löschen</string>
     <string name="open_context_menu">Öffne das Kontext-Menü</string>
-    <string name="preset_delete_confirmation">%s löschen?</string>
+    <string name="preset_delete_confirmation">%s löschen\?</string>
     <string name="preset_deleted">Voreinstellung gelöscht!</string>
     <string name="preset_does_not_exist">Einstellung existiert nicht. Sie wurde vielleicht gelöscht!</string>
-    <string name="preset_info__description">
-    Du hast bisher keine Voreinstellungen erstellt. Um eine Voreinstellung zu erstellen, gehe zur
-    Bibliothek und starte eine Audioausgabe. Im Anschluss kannst du den Speichern-Knopf in der
-    unteren Ecke des Bildschirms anklicken.
-  </string>
+    <string name="preset_info__description">Du hast bisher keine Voreinstellungen erstellt. Um eine Voreinstellung zu erstellen, gehe zur Bibliothek und starte eine Audioausgabe. Im Anschluss kannst du den Speichern-Knopf in der unteren Ecke des Bildschirms anklicken.</string>
     <string name="rename">Umbenennen</string>
     <string name="shortcuts_not_supported">Ihr Standard-Launcher unterstützt das Hinzufügen von Verknüpfungen nicht.</string>
     <string name="show_saved_preset_on_startup">Gespeicherte Voreinstellungen beim Start der App anzeigen</string>
@@ -98,11 +94,7 @@
     <string name="schedule">Zeitplan</string>
     <string name="select_preset">Wähle eine Voreinstellung aus</string>
     <string name="wake_up_timer_cancelled">Aufwach Wecker gelöscht!</string>
-    <string name="wake_up_timer_description">
-    Noice startet die ausgewählte Voreinstellung wenn der Timer endet. Nutze die Knöpfe weiter unten,
-    um eine Voreinstellung auszusuchen und die gewünschte Länge bis zum Start des Aufwach-Timers
-    hinzuzufügen.
-  </string>
+    <string name="wake_up_timer_description">Noice startet die ausgewählte Voreinstellung wenn der Timer endet. Nutze die Knöpfe weiter unten, um eine Voreinstellung auszusuchen und die gewünschte Länge bis zum Start des Aufwach-Timers hinzuzufügen.</string>
     <string name="use_24h_format">Benutze das 24-Stunden Format</string>
     <string name="device_media_volume">Lautstärke des Gerätes</string>
     <string name="should_update_media_volume">Aktualisieren Sie die Lautstärke des Gerätes, bevor Sie die Voreinstellung starten</string>
@@ -116,56 +108,34 @@
     <string name="app_description">Entspannung und Produktivitätssteigerung durch minimale Hintergrundgeräusche.</string>
     <string name="connect_with_author">Autor kontaktieren</string>
     <string name="credits">Danksagungen</string>
-    <string name="appintro__chromecast_desc">
-    Benutze Noice um die Stimmung zu anderen Chromecast aktivierten Geräten wie Lautsprechern, TVs, etc zu übertragen.
-  </string>
+    <string name="appintro__chromecast_desc">Benutze Noice um die Stimmung zu anderen Chromecast aktivierten Geräten wie Lautsprechern, TVs, etc zu übertragen.</string>
     <string name="appintro__chromecast_title">Chromecast aktiviert</string>
     <string name="appintro__getting_started_desc_0">Wischen Sie nach links um alle Funktionen kennenzulernen!</string>
     <string name="appintro__getting_started_desc_1">Lass uns anfangen!</string>
     <string name="appintro__getting_started_title">Willkommen</string>
-    <string name="appintro__preset_desc">
-    Nach ein paar gespielten Tönen, können Sie den Knopf in der unteren Ecke benutzen um Ihren Mix zu speichern.
-    Um Ihren gespeicherten Mix wiederzuverwenden, können Sie Ihre voreingestellte Liste vom App Menu besuchen.
-  </string>
+    <string name="appintro__preset_desc">Nach ein paar gespielten Tönen, können Sie den Knopf in der unteren Ecke benutzen um Ihren Mix zu speichern. Um Ihren gespeicherten Mix wiederzuverwenden, können Sie Ihre voreingestellte Liste vom App Menu besuchen.</string>
     <string name="appintro__preset_title">Speichern Sie Ihre Lieblingsmischungen</string>
-    <string name="appintro__sound_library_desc">
-    Benutzen Sie die Lautstärken Taste um die Lautstärke einzustellen. Bei jeder Wiederholung von sich nicht wiederholenden Geräuschen, ist eine Verspätungs
-    Periode per Zufall ausgewählt, in dem vom Zeitschieber eingestellten Bereich.
-  </string>
+    <string name="appintro__sound_library_desc">Benutzen Sie die Lautstärken Taste um die Lautstärke einzustellen. Bei jeder Wiederholung von sich nicht wiederholenden Geräuschen, ist eine Verspätungs Periode per Zufall ausgewählt, in dem vom Zeitschieber eingestellten Bereich.</string>
     <string name="appintro__sound_library_title">Erstellen Sie Ihre perfekten Umgebungen</string>
-    <string name="appintro__timer_desc">
-    Ein bisschen Stimmung kann helfen um sofort einzuschlafen. Benutze den Einschlaf timer um Noice
-    von selbst auszuschalten. Auf die gleiche Weise benutze den Aufwach timer um den Alarm zu setzen, um in einer angenehmen Stimmung aufzuwachen.
-  </string>
-    <string name="appintro__timer_title">Schwierigkeiten einzuschlafen oder aufzuwachen?</string>
+    <string name="appintro__timer_desc">Ein bisschen Stimmung kann helfen um sofort einzuschlafen. Benutze den Einschlaf timer um Noice von selbst auszuschalten. Auf die gleiche Weise benutze den Aufwach timer um den Alarm zu setzen, um in einer angenehmen Stimmung aufzuwachen.</string>
+    <string name="appintro__timer_title">Schwierigkeiten einzuschlafen oder aufzuwachen\?</string>
     <string name="support_development__donate">Spenden</string>
-    <string name="support_development__donate_description">
-    Spenden helfen uns dabei\n
-    - in neue Funktionen zu investieren\n
-    - bessere Audiosamples zu kuratieren\n
-    - Kaffee zu kaufen\n
-  </string>
-    <string name="support_development__donate_google_play_description">
-    Deine Spende wird sicher über Google Play abgewickelt. Der Betrag wird in deine lokale Währung
-    umgewandelt. Je nach Land _können_ weitere Steuern zum Endbetrag hinzukommen.
-  </string>
+    <string name="support_development__donate_description">Spenden helfen uns dabei
+\n - in neue Funktionen zu investieren
+\n - bessere Audiosamples zu kuratieren
+\n - Kaffee zu kaufen
+\n</string>
+    <string name="support_development__donate_google_play_description">Deine Spende wird sicher über Google Play abgewickelt. Der Betrag wird in deine lokale Währung umgewandelt. Je nach Land _können_ weitere Steuern zum Endbetrag hinzukommen.</string>
     <string name="support_development__donate_thank_you">Vielen Dank!</string>
-    <string name="support_development__donate_thank_you_description">
-    Wir danken dir von ganzem Herzen für deine großzügige Spende an das Noice-Projekt.
-  </string>
+    <string name="support_development__donate_thank_you_description">Wir danken dir von ganzem Herzen für deine großzügige Spende an das Noice-Projekt.</string>
     <string name="support_development__share">Mit Freunden teilen</string>
     <string name="support_development__share_description">Noice mit Freunden zu teilen ist fast genau so wichtig wie Geld zu spenden. Mit mehr Downloads können wir Feedback aus vielen unterschiedlichen Perspektiven erhalten, welches uns dabei hilft Noice noch besser zu machen.</string>
-    <string name="support_development__why">Warum solltest du unterstützen?</string>
-    <string name="support_development__why_description">
-    - Um zukünftige Updates zu ermöglichen\n
-    - Um Noice für immer werbefrei zu halten\n
-  </string>
+    <string name="support_development__why">Warum solltest du unterstützen\?</string>
+    <string name="support_development__why_description">- Um zukünftige Updates zu ermöglichen
+\n - Um Noice für immer werbefrei zu halten
+\n</string>
     <string name="cast_media">Übertrage das Medium auf ein anderes Gerät</string>
-    <string name="in_app_feedback__description">
-    Wir würden uns freuen von Ihnen über die App zu hören. Bitte nehmen Sie sich einen Moment um das Github Repositorie zu besuchen.
-    Wenn Sie die App nicht mögen, bitte erwägen Sie ein Issue aufzumachen um Ihre Bedenken zu erklären.
-    Andererseits, bitte makieren Sie das Projekt um Ihre Liebe und Unterstützung zu zeigen.
-  </string>
+    <string name="in_app_feedback__description">Wir würden uns freuen von Ihnen über die App zu hören. Bitte nehmen Sie sich einen Moment um das Github Repositorie zu besuchen. Wenn Sie die App nicht mögen, bitte erwägen Sie ein Issue aufzumachen um Ihre Bedenken zu erklären. Andererseits, bitte makieren Sie das Projekt um Ihre Liebe und Unterstützung zu zeigen.</string>
     <string name="in_app_feedback__title">Senden Sie eine Bewertung</string>
     <string name="later">Später</string>
     <string name="never">Nie</string>
