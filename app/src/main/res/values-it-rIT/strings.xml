@@ -7,7 +7,7 @@
     <string name="open_drawer">Apri menù di navigazione</string>
     <string name="report_issue">Riporta errore</string>
     <string name="saved_presets">Preimpostazioni salvate</string>
-    <string name="sleep_timer">Timer di spegnimento </string>
+    <string name="sleep_timer">Timer di spegnimento</string>
     <string name="cancel">Annulla</string>
     <string name="dismiss">Annulla</string>
     <string name="name">Nome</string>
@@ -46,7 +46,7 @@
     <string name="wind_in_chimes_of_shells">Vento tra le conciglie</string>
     <string name="wind_in_palm_trees">Vento tra le palme</string>
     <string name="delete">Rimuovi</string>
-    <string name="preset_delete_confirmation">Confermi rimozione di %s?</string>
+    <string name="preset_delete_confirmation">Confermi rimozione di %s\?</string>
     <string name="preset_deleted">Preimpostazione rimossa!</string>
     <string name="auto_sleep_schedule_cancelled">Timer di spegnimento rimosso!</string>
     <string name="reset">Ripristina</string>
