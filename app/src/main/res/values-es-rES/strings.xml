@@ -70,22 +70,16 @@
     <string name="wind_in_palm_trees">Brisa palmeras</string>
     <string name="delete">Borrar</string>
     <string name="open_context_menu">Abrir menú contextual</string>
-    <string name="preset_delete_confirmation">¿Estás seguro de borrar \"%s\"?</string>
+    <string name="preset_delete_confirmation">¿Estás seguro de borrar \"%s\"\?</string>
     <string name="preset_deleted">¡Preset borrado!</string>
-    <string name="preset_info__description">
-    No has creado ningún preset. Ve a la biblioteca y reproduce los sonidos que quieras simultáneamente.
-    Luego haga clic en el botón Guardar que aparece en la esquina inferior de la pantalla.
-  </string>
+    <string name="preset_info__description">No has creado ningún preset. Ve a la biblioteca y reproduce los sonidos que quieras simultáneamente. Luego haga clic en el botón Guardar que aparece en la esquina inferior de la pantalla.</string>
     <string name="rename">Renombrar</string>
     <string name="auto_sleep_schedule_cancelled">¡Temporizador cancelado!</string>
     <string name="reset">Reiniciar</string>
     <string name="sleep_timer_description">Noice se apagará solo cuando el temporizador termine. Use los botones de abajo para añadir tiempo e iniciar el temporizador.</string>
     <string name="schedule">Temporizador</string>
     <string name="select_preset">Seleccionar Preset</string>
-    <string name="wake_up_timer_description">
-    Noice iniciará el preset seleccionado cuando finalice el temporizador. Use los botones a continuación
-    para seleccionar un Preset y establecer la hora deseada para iniciar el despertador.
-  </string>
+    <string name="wake_up_timer_description">Noice iniciará el preset seleccionado cuando finalice el temporizador. Use los botones a continuación para seleccionar un Preset y establecer la hora deseada para iniciar el despertador.</string>
     <string name="app_theme_light">Claro</string>
     <string name="app_theme_dark">Oscuro</string>
     <string name="app_theme_system_default">Por defecto del sistema</string>
@@ -96,54 +90,32 @@
     <string name="app_description">Relájese y aumente la productividad con un mínimo ruido de fondo.</string>
     <string name="connect_with_author">Contactar al Autor</string>
     <string name="credits">Créditos</string>
-    <string name="appintro__chromecast_desc">
-    Utilice Noise para transmitir su ambiente a otros dispositivos conectados a Chromecast, como altavoces, televisores, etc.
-  </string>
+    <string name="appintro__chromecast_desc">Utilice Noise para transmitir su ambiente a otros dispositivos conectados a Chromecast, como altavoces, televisores, etc.</string>
     <string name="appintro__chromecast_title">Chromecast activado</string>
     <string name="appintro__getting_started_desc_0">¡Desliza hacia la izquierda para conocer todas las funciones!</string>
     <string name="appintro__getting_started_desc_1">¡Empecemos!</string>
     <string name="appintro__getting_started_title">Bienvenidos</string>
-    <string name="appintro__preset_desc">
-    Después de reproducir algunos sonidos, puede usar el botón en la esquina inferior para guardar su preset.
-    Para reutilizar un preset almacenado, puede visitar la lista predeterminada en el menú de la aplicación.
-  </string>
+    <string name="appintro__preset_desc">Después de reproducir algunos sonidos, puede usar el botón en la esquina inferior para guardar su preset. Para reutilizar un preset almacenado, puede visitar la lista predeterminada en el menú de la aplicación.</string>
     <string name="appintro__preset_title">Guarde sus presets favoritos</string>
-    <string name="appintro__sound_library_desc">
-    Utilice el control deslizante de volumen para ajustar los volúmenes de sonido. En cada repetición de sonidos sin bucle, un periodo
-    prolongado se selecciona aleatoriamente del rango establecido por el control deslizante de tiempo.
-  </string>
+    <string name="appintro__sound_library_desc">Utilice el control deslizante de volumen para ajustar los volúmenes de sonido. En cada repetición de sonidos sin bucle, un periodo prolongado se selecciona aleatoriamente del rango establecido por el control deslizante de tiempo.</string>
     <string name="appintro__sound_library_title">Cree su entorno perfecto</string>
-    <string name="appintro__timer_desc">
-    Un poco de ambiente puede ayudarle a conciliar el sueño sin esfuerzo. Use el temporizador de apagado para permitir que Noice se apague.
-    De manera similar, para despertarse en un ambiente tranquilo, use el temporizador de despertador para configurar la alarma.
-  </string>
-    <string name="appintro__timer_title">¿Problemas para conciliar el sueño o para despertar?</string>
+    <string name="appintro__timer_desc">Un poco de ambiente puede ayudarle a conciliar el sueño sin esfuerzo. Use el temporizador de apagado para permitir que Noice se apague. De manera similar, para despertarse en un ambiente tranquilo, use el temporizador de despertador para configurar la alarma.</string>
+    <string name="appintro__timer_title">¿Problemas para conciliar el sueño o para despertar\?</string>
     <string name="support_development__donate">Donar</string>
-    <string name="support_development__donate_description">
-    Las donaciones nos ayudarán a\n
-    - invertir en nuevas funciones\n
-    - curar mejores muestras de sonido\n
-    - comprar café\n
-  </string>
-    <string name="support_development__donate_google_play_description">
-    Su pago será manejado de forma segura por Google Play. La cantidad se convertirá a su moneda
-    local. Dependiendo de su ubicación, se pueden agregar impuestos adicionales al monto final.
-  </string>
+    <string name="support_development__donate_description">Las donaciones nos ayudarán a
+\n - invertir en nuevas funciones
+\n - curar mejores muestras de sonido
+\n - comprar café
+\n</string>
+    <string name="support_development__donate_google_play_description">Su pago será manejado de forma segura por Google Play. La cantidad se convertirá a su moneda local. Dependiendo de su ubicación, se pueden agregar impuestos adicionales al monto final.</string>
     <string name="support_development__donate_thank_you">Gracias!</string>
-    <string name="support_development__donate_thank_you_description">
-    Le agradecemos de todo corazón su generosa contribución al proyecto Noise.
-  </string>
+    <string name="support_development__donate_thank_you_description">Le agradecemos de todo corazón su generosa contribución al proyecto Noise.</string>
     <string name="support_development__share">Compartir con friends</string>
-    <string name="support_development__share_description">
-    Comparte Noice con amigos es una alternativa a las donaciones. Con descargas más altas, podremos
-    recibir comentarios desde diferentes perspectivas que nos ayudará a hacer de Noice mejor que
-    nunca.
-  </string>
-    <string name="support_development__why">¿Porqué debería apoyar?</string>
-    <string name="support_development__why_description">
-    - Para garantizar futuras actualizaciones\n
-    - Para mantener a Noice sin anuncios siempre\n
-  </string>
+    <string name="support_development__share_description">Comparte Noice con amigos es una alternativa a las donaciones. Con descargas más altas, podremos recibir comentarios desde diferentes perspectivas que nos ayudará a hacer de Noice mejor que nunca.</string>
+    <string name="support_development__why">¿Porqué debería apoyar\?</string>
+    <string name="support_development__why_description">- Para garantizar futuras actualizaciones
+\n - Para mantener a Noice sin anuncios siempre
+\n</string>
     <string name="cast_media">Transmitir medio a otro dispositivo</string>
     <string name="notification_channel_default__description">Controles de reproducción de medios</string>
     <string name="notification_channel_default__name">Reproducción de medios</string>
@@ -151,4 +123,33 @@
     <string name="any">Cualquiera</string>
     <string name="submit_feedback">Enviar Comentarios</string>
     <string name="intensity">Intensidad</string>
+    <string name="in_app_feedback__title"></string>
+    <string name="random_preset_description"></string>
+    <string name="random_preset"></string>
+    <string name="light"></string>
+    <string name="preset_does_not_exist"></string>
+    <string name="wake_up_timer_schedule_set"></string>
+    <string name="device_media_volume"></string>
+    <string name="shortcuts_not_supported"></string>
+    <string name="show_saved_preset_on_startup"></string>
+    <plurals name="time_minutes">
+        <item quantity="one"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="okay"></string>
+    <string name="should_update_media_volume"></string>
+    <plurals name="time_hours">
+        <item quantity="one"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="in_app_feedback__description"></string>
+    <string name="add_to_home_screen"></string>
+    <string name="wake_up_timer_cancelled"></string>
+    <string name="use_24h_format"></string>
+    <string name="later"></string>
+    <string name="mood"></string>
+    <string name="relax"></string>
+    <string name="focus"></string>
+    <string name="time_bridge"></string>
+    <string name="never"></string>
 </resources>
