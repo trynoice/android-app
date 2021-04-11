@@ -70,23 +70,16 @@
     <string name="wind_in_palm_trees">Vítr vanoucí palmami</string>
     <string name="delete">Odstranit</string>
     <string name="open_context_menu">Otevřít kontextovou nabídku</string>
-    <string name="preset_delete_confirmation">Jste si jisti odstraněním %s?</string>
+    <string name="preset_delete_confirmation">Jste si jisti odstraněním %s\?</string>
     <string name="preset_deleted">Předvolba odstraněna!</string>
-    <string name="preset_info__description">
-    Ještě si nevytvořili žádné předvolby namíchání zvuků. K vytvoření předvolby přejděte do Knihovny a pusťte si nějaký zvuk.
-    Poté klikněte na tlačítko Uložit, které se objeví v levém dolním rohu obrazovky.
-  </string>
+    <string name="preset_info__description">Ještě si nevytvořili žádné předvolby namíchání zvuků. K vytvoření předvolby přejděte do Knihovny a pusťte si nějaký zvuk. Poté klikněte na tlačítko Uložit, které se objeví v levém dolním rohu obrazovky.</string>
     <string name="rename">Přejmenovat</string>
     <string name="auto_sleep_schedule_cancelled">Časovač vypnutí byl úspěšně zrušen!</string>
     <string name="reset">Resetovat</string>
-    <string name="sleep_timer_description">
-    Noice se sám vypne po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
-  </string>
+    <string name="sleep_timer_description">Noice se sám vypne po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.</string>
     <string name="schedule">Nastavit</string>
     <string name="select_preset">Zvolte předvolbu</string>
-    <string name="wake_up_timer_description">
-    Noice se sám spustí po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
-  </string>
+    <string name="wake_up_timer_description">Noice se sám spustí po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.</string>
     <string name="app_theme_light">Světlý</string>
     <string name="app_theme_dark">Tmavý</string>
     <string name="app_theme_system_default">Dle nastavení systému</string>
@@ -97,58 +90,68 @@
     <string name="app_description">Odpočiňte si nebo nakopněte svou produktivitu při uklidňujících zvucích přírody a jiných prostředích.</string>
     <string name="connect_with_author">Spojit se s autorem</string>
     <string name="credits">Poděkování</string>
-    <string name="appintro__chromecast_desc">
-    S Noice můžete přehrávat vaše mixy i na všech ostatních Chromecast zařízení,
-    jako jsou reproduktory, chytré televize, Google Home a další.
-  </string>
+    <string name="appintro__chromecast_desc">S Noice můžete přehrávat vaše mixy i na všech ostatních Chromecast zařízení, jako jsou reproduktory, chytré televize, Google Home a další.</string>
     <string name="appintro__chromecast_title">Podpora Chromecast</string>
     <string name="appintro__getting_started_desc_0">Zatáhněte doleva a my vám ukážeme, co vše Noice umí!</string>
     <string name="appintro__getting_started_desc_1">Začněme!</string>
     <string name="appintro__getting_started_title">Vítejte</string>
-    <string name="appintro__preset_desc">
-    Při přehrávání vícero zvuků si můžete aktuálně přehrávaný mix uložit klepnutím na tlačítko v pravém dolním rohu.
-    Pro znovupoužití vámi uloženého mixu, navštivte sekci Uložené předvolby v menu aplikace.
-  </string>
+    <string name="appintro__preset_desc">Při přehrávání vícero zvuků si můžete aktuálně přehrávaný mix uložit klepnutím na tlačítko v pravém dolním rohu. Pro znovupoužití vámi uloženého mixu, navštivte sekci Uložené předvolby v menu aplikace.</string>
     <string name="appintro__preset_title">Uložte si svůj oblíbený mix</string>
-    <string name="appintro__sound_library_desc">
-    Posuvníky hlasitosti nastavujete hlasitost jednotlivých zvuků. Mezi každým opakováním nahrávek bez smyčky
-    je vložena mezera o náhodné délce. Tu můžete nastavit posuvníkem prodlevy.
-  </string>
+    <string name="appintro__sound_library_desc">Posuvníky hlasitosti nastavujete hlasitost jednotlivých zvuků. Mezi každým opakováním nahrávek bez smyčky je vložena mezera o náhodné délce. Tu můžete nastavit posuvníkem prodlevy.</string>
     <string name="appintro__sound_library_title">Vytvořte si vaši vysněnou zvukovou kulisu</string>
-    <string name="appintro__timer_desc">
-    Tichá zvuková kulisa vám může pomoci snadněji usnout. Použijte Časovač vypnutí a nechejte Noice
-    se sám vypnout, až usnete. Podobně se můžete i ráno probudit do vašeho uklidňujícího mixu
-    pomocí Časovače zapnutí.
-  </string>
-    <string name="appintro__timer_title">Máte problémy s usínáním či se v noci budíte?</string>
+    <string name="appintro__timer_desc">Tichá zvuková kulisa vám může pomoci snadněji usnout. Použijte Časovač vypnutí a nechejte Noice se sám vypnout, až usnete. Podobně se můžete i ráno probudit do vašeho uklidňujícího mixu pomocí Časovače zapnutí.</string>
+    <string name="appintro__timer_title">Máte problémy s usínáním či se v noci budíte\?</string>
     <string name="support_development__donate">Podpořit</string>
-    <string name="support_development__donate_description">
-    Vaše dary nám pomohou\n
-    - investovat čas a peníze do vývoje nových funkcí\n
-    - zakoupení lepších nahrávek zvuků\n
-    - koupit si kafe\n
-  </string>
-    <string name="support_development__donate_google_play_description">
-    Vaše platba bude bezpečně zaštítěna službou Google Play. Výška daru bude převedena na vaši
-    lokální měnu. V závisloti na vaší poloze vám bude __možná__ bude přiúčtována daň z koupě,
-    dle vašich lokálních zákonů.
-  </string>
+    <string name="support_development__donate_description">Vaše dary nám pomohou
+\n - investovat čas a peníze do vývoje nových funkcí
+\n - zakoupení lepších nahrávek zvuků
+\n - koupit si kafe
+\n</string>
+    <string name="support_development__donate_google_play_description">Vaše platba bude bezpečně zaštítěna službou Google Play. Výška daru bude převedena na vaši lokální měnu. V závisloti na vaší poloze vám bude __možná__ bude přiúčtována daň z koupě, dle vašich lokálních zákonů.</string>
     <string name="support_development__donate_thank_you">Děkujeme!</string>
-    <string name="support_development__donate_thank_you_description">
-    Zcela upřímně vám moc srdečně děkujeme za vaši finanční podporu projektu Noice.
-  </string>
+    <string name="support_development__donate_thank_you_description">Zcela upřímně vám moc srdečně děkujeme za vaši finanční podporu projektu Noice.</string>
     <string name="support_development__share">Sdílet s přáteli</string>
-    <string name="support_development__share_description">
-    Sdílením informace o existenci Noice s vašimi přáteli je podobné jako přímé darování peněz. Čím
-    vyšší počet stažení, tím silnější zpětnou vazbu dostaneme z různých perspektiv, což nám pomůže
-    ke zlepšení kvality celé aplikace.
-  </string>
-    <string name="support_development__why">Proč nás podpořit?</string>
-    <string name="support_development__why_description">
-    - Pro podporu dalšího vývoje\n
-    - Pro udržení Noice nadále bez reklam\n
-  </string>
+    <string name="support_development__share_description">Sdílením informace o existenci Noice s vašimi přáteli je podobné jako přímé darování peněz. Čím vyšší počet stažení, tím silnější zpětnou vazbu dostaneme z různých perspektiv, což nám pomůže ke zlepšení kvality celé aplikace.</string>
+    <string name="support_development__why">Proč nás podpořit\?</string>
+    <string name="support_development__why_description">- Pro podporu dalšího vývoje
+\n - Pro udržení Noice nadále bez reklam
+\n</string>
     <string name="cast_media">Přehrát na jiném zařízení</string>
     <string name="notification_channel_default__description">Ovladání přehrávače</string>
     <string name="notification_channel_default__name">Právě hraje</string>
+    <string name="use_24h_format"></string>
+    <string name="light"></string>
+    <string name="wake_up_timer_cancelled"></string>
+    <string name="never"></string>
+    <string name="wake_up_timer_schedule_set"></string>
+    <string name="relax"></string>
+    <string name="device_media_volume"></string>
+    <string name="show_saved_preset_on_startup"></string>
+    <string name="intensity"></string>
+    <string name="submit_feedback"></string>
+    <string name="any"></string>
+    <string name="shortcuts_not_supported"></string>
+    <string name="okay"></string>
+    <string name="in_app_feedback__description"></string>
+    <string name="preset_does_not_exist"></string>
+    <string name="dense"></string>
+    <plurals name="time_minutes">
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="later"></string>
+    <string name="add_to_home_screen"></string>
+    <string name="mood"></string>
+    <string name="random_preset_description"></string>
+    <string name="should_update_media_volume"></string>
+    <string name="in_app_feedback__title"></string>
+    <string name="random_preset"></string>
+    <string name="time_bridge"></string>
+    <string name="focus"></string>
+    <plurals name="time_hours">
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="other"></item>
+    </plurals>
 </resources>
