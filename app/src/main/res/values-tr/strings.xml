@@ -180,4 +180,15 @@
     <string name="use_24h_format">24 saat formatını kullan</string>
     <string name="show_saved_preset_on_startup">Açılışta mevcut kayıtları göster</string>
     <string name="submit_feedback">Geri Bildirim Gönder</string>
+    <plurals name="time_minutes">
+        <item quantity="one">%1$d dakika</item>
+        <item quantity="other">%1$d dakika</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one">%1$d saat</item>
+        <item quantity="other">%1$d saat</item>
+    </plurals>
+    <string name="time_bridge">ve</string>
+    <string name="wake_up_timer_schedule_set">Alarm %1$s %2$s %3$s içinde çalacak</string>
+    <string name="random_preset_description">Oluşturulan rastgele kayıtlar, seçilen amaca karşılık gelen sesleri içerecektir. Dahası, çeşitli kayıtlar aynı anda daha fazla ses çalmaya çalışacaktır.</string>
 </resources>
