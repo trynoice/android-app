@@ -7,7 +7,7 @@
     <string name="library">Biblioteca</string>
     <string name="open_drawer">Abrir menú de navegación</string>
     <string name="report_issue">Reportar Errores</string>
-    <string name="saved_presets">Presets Guardados</string>
+    <string name="saved_presets">Preajustes Guardados</string>
     <string name="sleep_timer">Temporizador</string>
     <string name="support_development">Apoyar al desarrollador</string>
     <string name="wake_up_timer">Despertador</string>
@@ -15,11 +15,11 @@
     <string name="dismiss">Descartar</string>
     <string name="name">Nombre</string>
     <string name="pause">Pausar</string>
-    <string name="preset_already_exists">¡El nombre dado del Preset ya existe!</string>
-    <string name="preset_name_cannot_be_empty">¡El nombre del Preset no puede estar vacío!</string>
-    <string name="preset_saved">¡Preset guardado!</string>
+    <string name="preset_already_exists">¡Ya existe un preajuste con ese nombre!</string>
+    <string name="preset_name_cannot_be_empty">¡El nombre del preajuste no puede estar vacío!</string>
+    <string name="preset_saved">¡Preajuste guardado!</string>
     <string name="save">Guardar</string>
-    <string name="save_preset">Guardar Preset</string>
+    <string name="save_preset">Guardar preajuste</string>
     <string name="play">Reproducir</string>
     <string name="play_pause">Reproducir o pausar</string>
     <string name="repeat_time_period">Periodo de repetición</string>
@@ -71,21 +71,15 @@
     <string name="delete">Borrar</string>
     <string name="open_context_menu">Abrir menú contextual</string>
     <string name="preset_delete_confirmation">¿Estás seguro de borrar \"%s\"?</string>
-    <string name="preset_deleted">¡Preset borrado!</string>
-    <string name="preset_info__description">
-    No has creado ningún preset. Ve a la biblioteca y reproduce los sonidos que quieras simultáneamente.
-    Luego haga clic en el botón Guardar que aparece en la esquina inferior de la pantalla.
-  </string>
+    <string name="preset_deleted">¡Preajuste borrado!</string>
+    <string name="preset_info__description">No ha creado ningún preajuste. Para crearlo, vaya a la biblioteca y reproduce los sonidos que quiera. Luego haga clic en el botón Guardar que aparece en la esquina inferior de la pantalla.</string>
     <string name="rename">Renombrar</string>
     <string name="auto_sleep_schedule_cancelled">¡Temporizador cancelado!</string>
     <string name="reset">Reiniciar</string>
     <string name="sleep_timer_description">Noice se apagará solo cuando el temporizador termine. Use los botones de abajo para añadir tiempo e iniciar el temporizador.</string>
     <string name="schedule">Temporizador</string>
-    <string name="select_preset">Seleccionar Preset</string>
-    <string name="wake_up_timer_description">
-    Noice iniciará el preset seleccionado cuando finalice el temporizador. Use los botones a continuación
-    para seleccionar un Preset y establecer la hora deseada para iniciar el despertador.
-  </string>
+    <string name="select_preset">Seleccionar preajuste</string>
+    <string name="wake_up_timer_description">Noice iniciará el preajuste seleccionado cuando finalice el temporizador. Use los siguientes botones para seleccionar un preajuste y establecer la hora deseada para iniciar el despertador.</string>
     <string name="app_theme_light">Claro</string>
     <string name="app_theme_dark">Oscuro</string>
     <string name="app_theme_system_default">Por defecto del sistema</string>
@@ -107,7 +101,7 @@
     Después de reproducir algunos sonidos, puede usar el botón en la esquina inferior para guardar su preset.
     Para reutilizar un preset almacenado, puede visitar la lista predeterminada en el menú de la aplicación.
   </string>
-    <string name="appintro__preset_title">Guarde sus presets favoritos</string>
+    <string name="appintro__preset_title">Guarde sus mezclas preferidas</string>
     <string name="appintro__sound_library_desc">
     Utilice el control deslizante de volumen para ajustar los volúmenes de sonido. En cada repetición de sonidos sin bucle, un periodo
     prolongado se selecciona aleatoriamente del rango establecido por el control deslizante de tiempo.
@@ -147,8 +141,33 @@
     <string name="cast_media">Transmitir medio a otro dispositivo</string>
     <string name="notification_channel_default__description">Controles de reproducción de medios</string>
     <string name="notification_channel_default__name">Reproducción de medios</string>
-    <string name="dense">Denso</string>
+    <string name="dense">Densa</string>
     <string name="any">Cualquiera</string>
     <string name="submit_feedback">Enviar Comentarios</string>
     <string name="intensity">Intensidad</string>
+    <string name="relax">Relajado</string>
+    <string name="random_preset">Preajuste aleatorio</string>
+    <string name="mood">Ambiente</string>
+    <string name="light">Ligero</string>
+    <string name="focus">Concetrado</string>
+    <string name="never">Nunca</string>
+    <string name="later">Mas tarde</string>
+    <string name="in_app_feedback__title">Envíe una reseña</string>
+    <string name="in_app_feedback__description">Nos encantaría saber que le parece la aplicación. Por favor, tómese un momento para visitar nuestro repositorio de GitHub. Si no le gustó la aplicación, considere abrir un reporte para explicar su malestar. De lo contrario, dele una estrella al proyecto para mostrar amor y apoyo.</string>
+    <string name="use_24h_format">Usar formato 24 horas</string>
+    <plurals name="time_minutes">
+        <item quantity="one">%1$d minuto</item>
+        <item quantity="other">%1$d minutos</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one">%1$d hora</item>
+        <item quantity="other">%1$d horas</item>
+    </plurals>
+    <string name="time_bridge">y</string>
+    <string name="wake_up_timer_schedule_set">La alarma sonará en %1$s %2$s %3$s</string>
+    <string name="wake_up_timer_cancelled">¡Despertador cancelado!</string>
+    <string name="show_saved_preset_on_startup">Mostrar preajustes guardados al iniciar la aplicación</string>
+    <string name="preset_does_not_exist">El preajuste no existe. ¡Puede haber sido borrada!</string>
+    <string name="add_to_home_screen">Añadir a la pantalla de inicio</string>
+    <string name="okay">Vale</string>
 </resources>
