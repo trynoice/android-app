@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name" translatable="false">Noice</string>
-  <string name="app_copyright" translatable="false">2019 Ashutosh Gangwar</string>
+  <string name="app_copyright" translatable="false">2019-21 the Noice Authors</string>
   <string name="app_license_url" translatable="false">https://github.com/ashutoshgngwr/noice/blob/master/LICENSE</string>
+  <string name="app_authors_url" translatable="false">https://github.com/ashutoshgngwr/noice/graphs/contributors</string>
   <string name="app_website" translatable="false">https://ashutoshgngwr.github.io/noice</string>
   <string name="app_github" translatable="false">ashutoshgngwr/noice</string>
   <string name="app_github_url" translatable="false">https://github.com/ashutoshgngwr/noice</string>
@@ -98,50 +99,6 @@
   </string>
   <string name="credits__sound_wind_in_palm_trees" translatable="false">Palm Trees from BBC Sound Effects</string>
   <string name="credits__sound_wind_in_palm_trees_url" translatable="false">https://sound-effects.bbcrewind.co.uk/search?q=NHU05078140</string>
-  <string name="credits__translation_es_es_0" translatable="false">Spanish translation by julianrrr</string>
-  <string name="credits__translation_es_es_0__url" translatable="false">https://github.com/julianrrr</string>
-  <string name="credits__translation_es_es_1" translatable="false">Spanish translation by Diego</string>
-  <string name="credits__translation_es_es_1__url" translatable="false">https://github.com/sguinetti</string>
-  <string name="credits__translation_es_ar_0" translatable="false">Argentinian spanish translation by Enchufadoo</string>
-  <string name="credits__translation_es_ar_0__url" translatable="false">https://github.com/Enchufadoo</string>
-  <string name="credits__translation_ru_0" translatable="false">Russian translation by yamaks2306</string>
-  <string name="credits__translation_ru_0__url" translatable="false">https://github.com/yamaks2306</string>
-  <string name="credits__translation_ru_1" translatable="false">Russian translation by Yevhen Badorov</string>
-  <string name="credits__translation_ru_1__url" translatable="false">https://github.com/JekRock</string>
-  <string name="credits__translation_de_0" translatable="false">German translation by Steffen Schultz</string>
-  <string name="credits__translation_de_0__url" translatable="false">https://github.com/schulle4u</string>
-  <string name="credits__translation_de_1" translatable="false">German translation by Luca Hohmann</string>
-  <string name="credits__translation_de_1__url" translatable="false">https://github.com/gilgusmaximus</string>
-  <string name="credits__translation_de_2" translatable="false">German translation by schubeda</string>
-  <string name="credits__translation_de_2__url" translatable="false">https://github.com/schubeda</string>
-  <string name="credits__translation_de_3" translatable="false">German translation by MakiWolf</string>
-  <string name="credits__translation_de_3__url" translatable="false">https://github.com/MakiWolf</string>
-  <string name="credits__translation_it_it_0" translatable="false">Italian translation by Sebastian Scaramuzza</string>
-  <string name="credits__translation_it_it_0__url" translatable="false">https://sebastianscaramuzza.com</string>
-  <string name="credits__translation_fr_fr_0" translatable="false">French translation by Eki474</string>
-  <string name="credits__translation_fr_fr_0__url" translatable="false">https://github.com/Eki474</string>
-  <string name="credits__translation_fr_fr_1" translatable="false">French translation by Mickael-Martin</string>
-  <string name="credits__translation_fr_fr_1__url" translatable="false">https://github.com/Mickael-Martin</string>
-  <string name="credits__translation_pt_br_0" translatable="false">Portuguese (Brazil) translation by Vinny</string>
-  <string name="credits__translation_pt_br_0__url" translatable="false">https://github.com/CebolaBros64</string>
-  <string name="credits__translation_pt_br_1" translatable="false">Portuguese (Brazil) translation by Lucas Teixeira</string>
-  <string name="credits__translation_pt_br_1__url" translatable="false">https://github.com/lucastsantos</string>
-  <string name="credits__translation_sv_0" translatable="false">Swedish translation by Ricky Lindén</string>
-  <string name="credits__translation_sv_0__url" translatable="false">https://github.com/sherpashrapnel</string>
-  <string name="credits__translation_sq_al_0" translatable="false">Albanian translation by 3rg1s</string>
-  <string name="credits__translation_sq_al_0__url" translatable="false">https://github.com/3rg1s</string>
-  <string name="credits__translation_nl_0" translatable="false">Dutch translation by Heimen Stoffels</string>
-  <string name="credits__translation_nl_0__url" translatable="false">https://github.com/Vistaus</string>
-  <string name="credits__translation_cs_0" translatable="false">Czech translation by tajnymag</string>
-  <string name="credits__translation_cs_0__url" translatable="false">https://github.com/Tajnymag</string>
-  <string name="credits__translation_pl_0" translatable="false">Polish translation by Karol Kosek</string>
-  <string name="credits__translation_pl_0__url" translatable="false">https://github.com/krkk</string>
-  <string name="credits__translation_uk_0" translatable="false">Ukrainian translation by Yevhen Badorov</string>
-  <string name="credits__translation_uk_0__url" translatable="false">https://github.com/JekRock</string>
-  <string name="credits__translation_in_id_0" translatable="false">Indonesian translation by imanudinsh</string>
-  <string name="credits__translation_in_id_0__url" translatable="false">https://github.com/imanudinsh</string>
-  <string name="credits__translation_tr_0" translatable="false">Turkish translation by Berkay Gündüz</string>
-  <string name="credits__translation_tr_0__url" translatable="false">https://github.com/berkaygunduzz</string>
   <string name="app_issues_url" translatable="false">https://github.com/ashutoshgngwr/noice/issues</string>
   <string name="feedback_form_url" translatable="false">
     https://docs.google.com/forms/d/e/1FAIpQLSdEfOCyWfQ4QFMnLqlLj3BF27VKS1C-CQIokbmkXFchf6QZ6g/viewform?usp=sf_link

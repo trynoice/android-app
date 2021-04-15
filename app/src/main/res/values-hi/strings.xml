@@ -93,7 +93,6 @@
     <string name="app_theme_system_default">सिस्टम डिफ़ॉल्ट</string>
     <string name="about__email">ईमेल</string>
     <string name="about__github">गिटहब</string>
-    <string name="about__translations">अनुवाद</string>
     <string name="about__twitter">ट्विटर</string>
     <string name="app_description">कम से कम पृष्ठभूमि शोर के साथ, उत्पादकता और विश्राम को बढ़ावा दे।</string>
     <string name="connect_with_author">रचयिता से जुड़े</string>

@@ -1,0 +1,9 @@
+- Added visual confirmation on setting a wake-up timer
+- Moved random preset button to navigation drawer menu
+- Fixed time reset bug in wake-up timer
+- Fixed launcher shortcut not working the second time
+- Fixed clipped text in app intro on small screens
+- Updated translations
+
+We're continuously working to make Noice better and useful. Please turn on updates to never miss a thing!
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG

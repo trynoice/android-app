@@ -37,7 +37,6 @@
     <string name="connect_with_author">与作者联系</string>
     <string name="app_description">在最小的背景噪音下，放松并提高工作效率。</string>
     <string name="about__twitter">Twitter</string>
-    <string name="about__translations">翻译</string>
     <string name="about__github">GitHub</string>
     <string name="about__email">电子邮件</string>
     <string name="should_update_media_volume">启动预设前更新设备媒体音量</string>

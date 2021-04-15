@@ -48,97 +48,6 @@ class AboutFragment : Fragment() {
         R.string.credits__appintro_chromecast_icon_url
       )
     )
-
-    val TRANSLATIONS = arrayOf(
-      arrayOf(
-        R.string.credits__translation_es_ar_0,
-        R.string.credits__translation_es_ar_0__url
-      ),
-      arrayOf(
-        R.string.credits__translation_ru_0,
-        R.string.credits__translation_ru_0__url
-      ),
-      arrayOf(
-        R.string.credits__translation_ru_1,
-        R.string.credits__translation_ru_1__url
-      ),
-      arrayOf(
-        R.string.credits__translation_de_0,
-        R.string.credits__translation_de_0__url
-      ),
-      arrayOf(
-        R.string.credits__translation_de_1,
-        R.string.credits__translation_de_1__url
-      ),
-      arrayOf(
-        R.string.credits__translation_de_2,
-        R.string.credits__translation_de_2__url
-      ),
-      arrayOf(
-        R.string.credits__translation_de_3,
-        R.string.credits__translation_de_3__url
-      ),
-      arrayOf(
-        R.string.credits__translation_it_it_0,
-        R.string.credits__translation_it_it_0__url
-      ),
-      arrayOf(
-        R.string.credits__translation_fr_fr_0,
-        R.string.credits__translation_fr_fr_0__url
-      ),
-      arrayOf(
-        R.string.credits__translation_fr_fr_1,
-        R.string.credits__translation_fr_fr_1__url
-      ),
-      arrayOf(
-        R.string.credits__translation_pt_br_0,
-        R.string.credits__translation_pt_br_0__url
-      ),
-      arrayOf(
-        R.string.credits__translation_pt_br_1,
-        R.string.credits__translation_pt_br_1__url
-      ),
-      arrayOf(
-        R.string.credits__translation_es_es_0,
-        R.string.credits__translation_es_es_0__url
-      ),
-      arrayOf(
-        R.string.credits__translation_es_es_1,
-        R.string.credits__translation_es_es_1__url
-      ),
-      arrayOf(
-        R.string.credits__translation_sv_0,
-        R.string.credits__translation_sv_0__url
-      ),
-      arrayOf(
-        R.string.credits__translation_sq_al_0,
-        R.string.credits__translation_sq_al_0__url
-      ),
-      arrayOf(
-        R.string.credits__translation_nl_0,
-        R.string.credits__translation_nl_0__url
-      ),
-      arrayOf(
-        R.string.credits__translation_cs_0,
-        R.string.credits__translation_cs_0__url
-      ),
-      arrayOf(
-        R.string.credits__translation_pl_0,
-        R.string.credits__translation_pl_0__url
-      ),
-      arrayOf(
-        R.string.credits__translation_uk_0,
-        R.string.credits__translation_uk_0__url
-      ),
-      arrayOf(
-        R.string.credits__translation_in_id_0,
-        R.string.credits__translation_in_id_0__url
-      ),
-      arrayOf(
-        R.string.credits__translation_tr_0,
-        R.string.credits__translation_tr_0__url
-      )
-    )
   }
 
   override fun onCreateView(
@@ -157,6 +66,13 @@ class AboutFragment : Fragment() {
           R.string.app_license_url
         )
       )
+      addItem(
+        createElement(
+          R.string.app_authors,
+          R.drawable.ic_about_group,
+          R.string.app_authors_url
+        )
+      )
       addWebsite(getString(R.string.app_website))
       @Suppress("ConstantConditionIf")
       if (BuildConfig.IS_PLAY_STORE_BUILD) {
@@ -168,11 +84,6 @@ class AboutFragment : Fragment() {
       addEmail(getString(R.string.author_email), getString(R.string.about__email))
       addGitHub(getString(R.string.author_social_handle), getString(R.string.about__github))
       addTwitter(getString(R.string.author_social_handle), getString(R.string.about__twitter))
-      addGroup(getString(R.string.about__translations))
-      for (item in TRANSLATIONS) {
-        addItem(createElement(item[0], R.drawable.ic_about_translation, item[1]))
-      }
-
       addGroup(getString(R.string.credits))
       for (item in OTHER_CREDITS) {
         addItem(createElement(item[0], item[1], item[2]))

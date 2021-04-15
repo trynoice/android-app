@@ -123,7 +123,6 @@
     <string name="app_theme_system_default">System default</string>
     <string name="about__email">Email</string>
     <string name="about__github">GitHub</string>
-    <string name="about__translations">Translations</string>
     <string name="about__twitter">Twitter</string>
     <string name="app_description">Relax and boost productivity with minimal background noise.</string>
     <string name="connect_with_author">Connect with Author</string>
@@ -187,4 +186,5 @@
     <string name="never">Never</string>
     <string name="notification_channel_default__description">Media playback controls</string>
     <string name="notification_channel_default__name">Media Playback</string>
+    <string name="app_authors">View list of the Noice Authors</string>
 </resources>
