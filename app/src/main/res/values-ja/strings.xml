@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="support_development__why">なぜサポートを頂きたいのか</string>
+    <string name="support_development__why">なぜサポートを頂きたいのか\?</string>
     <string name="support_development__share_description">友達とNoiceを共有することは、お金を寄付することに似ています。ダウンロード数が増えれば、様々な視点からのご意見を受けられ、Noiceをより良いものにできるでしょう。</string>
     <string name="support_development__share">友達に共有</string>
     <string name="support_development__donate_thank_you_description">Noiceプロジェクトに多大なご協力をいただき、心より感謝申し上げます。</string>
