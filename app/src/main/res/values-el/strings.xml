@@ -3,7 +3,7 @@
     <string name="appintro__getting_started_title">Καλώς ήρθατε</string>
     <string name="appintro__getting_started_desc_1">Ας αρχίσουμε!</string>
     <string name="appintro__getting_started_desc_0">Σύρετε προς τα αριστερά για να δείτε όλα τα χαρακτηριστικά!</string>
-    <string name="appintro__chromecast_title">Το Chromecast ενεργοποιήθηκε</string>
+    <string name="appintro__chromecast_title">Συμβατό με Chromecast</string>
     <string name="appintro__chromecast_desc">Χρησιμοποιήστε την εφαρμογή για μετάδοση του ήχου της σε άλλες συσκευές Chromecast, όπως ηχεία, τηλεοράσεις κλπ.</string>
     <string name="credits">Ευχαριστίες</string>
     <string name="connect_with_author">Επικοινωνία με τον προγραμματιστή</string>

@@ -190,4 +190,5 @@
     <string name="time_bridge">ve</string>
     <string name="wake_up_timer_schedule_set">Alarm %1$s %2$s %3$s içinde çalacak</string>
     <string name="random_preset_description">Oluşturulan rastgele kayıtlar, seçilen amaca karşılık gelen sesleri içerecektir. Dahası, çeşitli kayıtlar aynı anda daha fazla ses çalmaya çalışacaktır.</string>
+    <string name="app_authors">Noice yazarlarının listesini görüntüle</string>
 </resources>
