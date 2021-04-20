@@ -44,10 +44,8 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
    * Sets the volume for the [Player] using current [PlaybackStrategy].
    */
   fun setVolume(volume: Int) {
-    handler.post {
-      this.volume = volume
-      this.playbackStrategy.setVolume(volume.toFloat() / MAX_VOLUME)
-    }
+    this.volume = volume
+    this.playbackStrategy.setVolume(volume.toFloat() / MAX_VOLUME)
   }
 
   /**

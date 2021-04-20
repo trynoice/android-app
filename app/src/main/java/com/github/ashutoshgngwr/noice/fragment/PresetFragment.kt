@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -85,14 +86,8 @@ class PresetFragment : Fragment() {
   fun onPlayerManagerUpdate(event: MediaPlayerService.OnPlayerManagerUpdateEvent) {
     val oldPresetPos = activePresetPos
     activePresetPos = Preset.from("", event.players.values).let { dataSet.indexOf(it) }
-
-    if (activePresetPos != oldPresetPos) {
-      adapter?.notifyItemChanged(oldPresetPos)
-
-      if (activePresetPos > -1) {
-        adapter?.notifyItemChanged(activePresetPos)
-      }
-    }
+    adapter?.notifyItemChanged(oldPresetPos)
+    adapter?.notifyItemChanged(activePresetPos)
   }
 
   private fun updateEmptyListIndicatorVisibility() {
