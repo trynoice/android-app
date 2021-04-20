@@ -286,12 +286,11 @@ class PlayerManager(private val context: Context) :
       handler.removeCallbacksAndMessages(DELAYED_STOP_CALLBACK_TOKEN)
       state = State.PLAYING
       players.values.forEach { it.play() }
+      notifyChanges()
     } else if (!playbackDelayed) {
       // request audio focus only if audio focus is not delayed from any previous requests
       requestAudioFocus()
     }
-
-    notifyChanges()
   }
 
   /**
@@ -372,6 +371,6 @@ class PlayerManager(private val context: Context) :
     }
 
     mediaSession.setPlaybackState(playbackStateBuilder.build())
-    onPlayerUpdateListener()
+    onPlayerUpdateListener.invoke()
   }
 }
