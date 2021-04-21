@@ -35,7 +35,7 @@ class AppIntroActivity : AppIntro() {
     isColorTransitionsEnabled = true
     showStatusBar(true)
 
-    setStatusBarColor(ActivityCompat.getColor(this, R.color.colorStatusBar))
+    setStatusBarColor(ActivityCompat.getColor(this, R.color.status_bar))
     setTransformer(
       AppIntroPageTransformerType.Parallax(
         titleParallaxFactor = 1.0,

@@ -51,7 +51,7 @@
       android:text="@string/device_media_volume"
       android:textAppearance="?textAppearanceBody1"
       app:drawableStartCompat="@drawable/ic_action_volume"
-      app:drawableTint="@color/colorPrimary" />
+      app:drawableTint="@color/primary" />
 
     <CheckBox
       android:id="@+id/should_update_media_volume"

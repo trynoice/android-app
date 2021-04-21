@@ -1,93 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  style="?attr/materialCardViewStyle"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="wrap_content"
+  android:gravity="center_vertical"
+  android:orientation="horizontal"
+  android:padding="16dp">
 
-  <!-- Lot of linear layouts because performance -->
-  <LinearLayout
-    android:layout_width="match_parent"
+  <CheckBox
+    android:id="@+id/play_button"
+    style="?attr/checkboxStyle"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:layout_margin="5dp"
+    android:background="?android:selectableItemBackgroundBorderless"
+    android:button="@drawable/ic_action_play_stop_circled_toggle"
+    android:buttonTint="?attr/colorAccent"
+    android:contentDescription="@string/play_pause" />
 
-    <CheckBox
-      android:id="@+id/play_button"
-      style="?attr/checkboxStyle"
-      android:layout_width="wrap_content"
+  <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="15dp"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
+    <TextView
+      android:id="@+id/title"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_margin="5dp"
-      android:background="?android:selectableItemBackgroundBorderless"
-      android:button="@drawable/ic_action_play_stop_circled_toggle"
-      android:buttonTint="?attr/colorAccent"
-      android:contentDescription="@string/play_pause" />
+      android:ellipsize="end"
+      android:singleLine="true"
+      android:textAppearance="?attr/textAppearanceListItem" />
 
     <LinearLayout
-      android:layout_width="0dp"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginStart="15dp"
-      android:layout_weight="1"
-      android:orientation="vertical">
+      android:gravity="center_vertical"
+      android:orientation="horizontal">
 
-      <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
+      <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:contentDescription="@string/volume"
+        android:src="@drawable/ic_action_volume"
+        app:tint="?attr/colorAccent" />
 
-      <LinearLayout
-        android:layout_width="match_parent"
+      <com.google.android.material.slider.Slider
+        android:id="@+id/volume_slider"
+        style="@style/Widget.App.SoundLibrary.Slider"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+        android:stepSize="1.0" />
 
-        <ImageView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:contentDescription="@string/volume"
-          android:src="@drawable/ic_action_volume"
-          app:tint="?attr/colorAccent" />
+    </LinearLayout>
 
-        <com.google.android.material.slider.Slider
-          android:id="@+id/volume_slider"
-          style="@style/Widget.App.SoundLibrary.Slider"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:stepSize="1.0" />
+    <LinearLayout
+      android:id="@+id/time_period_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:visibility="gone">
 
-      </LinearLayout>
-
-      <LinearLayout
-        android:id="@+id/time_period_layout"
-        android:layout_width="match_parent"
+      <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:contentDescription="@string/repeat_time_period"
+        android:src="@drawable/ic_action_time_period"
+        app:tint="?attr/colorAccent" />
 
-        <ImageView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:contentDescription="@string/repeat_time_period"
-          android:src="@drawable/ic_action_time_period"
-          app:tint="?attr/colorAccent" />
-
-        <com.google.android.material.slider.Slider
-          android:id="@+id/time_period_slider"
-          style="@style/Widget.App.SoundLibrary.Slider"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:stepSize="1" />
-
-      </LinearLayout>
+      <com.google.android.material.slider.Slider
+        android:id="@+id/time_period_slider"
+        style="@style/Widget.App.SoundLibrary.Slider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:stepSize="1" />
 
     </LinearLayout>
 
   </LinearLayout>
 
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>
