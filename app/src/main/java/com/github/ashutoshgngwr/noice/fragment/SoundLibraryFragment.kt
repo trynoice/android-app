@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
@@ -101,8 +102,9 @@ class SoundLibraryFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     adapter = SoundListAdapter(requireContext())
     binding.soundList.also {
-      it.setHasFixedSize(true)
       it.adapter = adapter
+      it.setHasFixedSize(true)
+      it.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
     }
 
     binding.savePresetButton.setOnLongClickListener {

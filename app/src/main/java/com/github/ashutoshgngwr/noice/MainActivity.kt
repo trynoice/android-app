@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     customTabsIntent = CustomTabsIntent.Builder()
       .setDefaultColorSchemeParams(
         CustomTabColorSchemeParams.Builder()
-          .setToolbarColor(ResourcesCompat.getColor(resources, R.color.colorActionBar, theme))
+          .setToolbarColor(ResourcesCompat.getColor(resources, R.color.action_bar, theme))
           .build()
       )
       .build()

@@ -1,47 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-  style="?attr/materialCardViewStyle"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="wrap_content"
+  android:gravity="center_vertical"
+  android:orientation="horizontal"
+  android:padding="16dp">
 
-  <LinearLayout
-    android:layout_width="match_parent"
+  <CheckBox
+    android:id="@+id/play_button"
+    style="?attr/checkboxStyle"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_vertical">
+    android:layout_margin="5dp"
+    android:background="?android:selectableItemBackgroundBorderless"
+    android:button="@drawable/ic_action_play_stop_circled_toggle"
+    android:buttonTint="?attr/colorAccent"
+    android:contentDescription="@string/play_pause" />
 
-    <CheckBox
-      android:id="@+id/play_button"
-      style="?attr/checkboxStyle"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_margin="5dp"
-      android:background="?android:selectableItemBackgroundBorderless"
-      android:button="@drawable/ic_action_play_stop_circled_toggle"
-      android:buttonTint="?attr/colorAccent"
-      android:contentDescription="@string/play_pause" />
+  <TextView
+    android:id="@+id/title"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_weight="1"
+    android:ellipsize="end"
+    android:singleLine="true"
+    android:textAppearance="?attr/textAppearanceListItem" />
 
-    <TextView
-      android:id="@+id/title"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="10dp"
-      android:layout_marginEnd="10dp"
-      android:layout_weight="1"
-      android:singleLine="true"
-      android:ellipsize="end"
-      android:textAppearance="?attr/textAppearanceListItem" />
+  <ImageButton
+    android:id="@+id/menu_button"
+    style="?attr/imageButtonStyle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="?android:selectableItemBackgroundBorderless"
+    android:contentDescription="@string/open_context_menu"
+    android:src="@drawable/ic_action_expand"
+    android:tint="?attr/colorOnSurface" />
 
-    <ImageButton
-      style="?attr/imageButtonStyle"
-      android:id="@+id/menu_button"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:background="?android:selectableItemBackgroundBorderless"
-      android:src="@drawable/ic_action_expand"
-      android:tint="?attr/colorOnSurface"
-      android:contentDescription="@string/open_context_menu" />
-
-  </LinearLayout>
-
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>

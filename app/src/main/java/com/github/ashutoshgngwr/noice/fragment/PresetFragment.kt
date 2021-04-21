@@ -3,7 +3,6 @@ package com.github.ashutoshgngwr.noice.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,7 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
@@ -69,8 +69,9 @@ class PresetFragment : Fragment() {
     dataSet = Preset.readAllFromUserPreferences(requireContext()).toMutableList()
     adapter = PresetListAdapter(requireContext())
     binding.presetList.also {
-      it.setHasFixedSize(true)
       it.adapter = adapter
+      it.setHasFixedSize(true)
+      it.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
     }
 
     EventBus.getDefault().register(this)

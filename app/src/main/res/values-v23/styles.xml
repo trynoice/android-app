@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="Base.V23.Theme.App" parent="Base.V21.Theme.App">
+    <item name="android:windowLightStatusBar">?isLightTheme</item>
+    <item name="android:statusBarColor">@color/action_bar</item>
+  </style>
+
+  <style name="Base.Theme.App" parent="Base.V23.Theme.App" />
+
+</resources>

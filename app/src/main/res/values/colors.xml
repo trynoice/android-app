@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#1eb980</color>
-  <color name="colorPrimaryDark">#168a60</color>
-  <color name="colorAccent">#1eb980</color>
-  <color name="colorStatusBar">#17171d</color>
-  <color name="colorActionBar">#1b1b22</color>
-  <color name="colorBackground">#f8fAf9</color>
-  <color name="colorCardBackground">#fdfdfd</color>
-  <color name="colorPopupBackground">#fefefe</color>
+  <color name="primary">@color/meadow_0</color>
+  <color name="primary_dark">@color/meadow_1</color>
+  <color name="accent">@color/meadow_0</color>
+  <color name="status_bar">@color/woodsmoke</color>
+  <color name="action_bar">@color/white_1</color>
+  <color name="background">@color/white_0</color>
+  <color name="background_dark">@color/white_1</color>
+
   <!-- Following is needed because AboutPage doesn't have any way to define custom style.
   This is supposed to override its default background color -->
-  <color name="about_background_color">@color/colorBackground</color>
-  <color name="ic_launcher_background">#FFFFFF</color>
-  <color name="ic_preset_shortcut_background">#FFFFFF</color>
+  <color name="about_background_color">@color/background</color>
+  <color name="ic_launcher_background">@color/white_0</color>
+  <color name="ic_preset_shortcut_background">@color/white_0</color>
 
   <!-- app intro colors -->
-  <color name="appintro_slide_0__background">#202028</color>
-  <color name="appintro_slide_1__background">#1F7A8C</color>
-  <color name="appintro_slide_2__background">#5946D8</color>
-  <color name="appintro_slide_3__background">#A63D40</color>
-  <color name="appintro_slide_4__background">#684488</color>
-  <color name="appintro_slide_5__background">@color/colorPrimaryDark</color>
+  <color name="appintro_slide_0__background">@color/shark_1</color>
+  <color name="appintro_slide_1__background">@color/elm</color>
+  <color name="appintro_slide_2__background">@color/purple_heart</color>
+  <color name="appintro_slide_3__background">@color/apple_blossom</color>
+  <color name="appintro_slide_4__background">@color/affair</color>
+  <color name="appintro_slide_5__background">@color/meadow_1</color>
   <color name="appintro__text_color">#EFEFEF</color>
+
+  <color name="affair">#684488</color>
+  <color name="apple_blossom">#a63d40</color>
+  <color name="elm">#1f7a8c</color>
+  <color name="meadow_0">#1eb980</color>
+  <color name="meadow_1">#168a60</color>
+  <color name="purple_heart">#5946d8</color>
+  <color name="shark_0">#23232d</color>
+  <color name="shark_1">#1d1d26</color>
+  <color name="white_0">#fefefe</color>
+  <color name="white_1">#f1f1f1</color>
+  <color name="woodsmoke">#17171D</color>
 </resources>
