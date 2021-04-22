@@ -184,4 +184,5 @@
     <string name="time_bridge">и</string>
     <string name="wake_up_timer_schedule_set">Будильник выключится через %1$s %3$s</string>
     <string name="random_preset_description">Сгенерированные случайные пресеты будут содержать звуки, соответствующие выбранному настроению. Более того, плотные пресеты будут пытаться проигрывать больше звуков одновременно.</string>
+    <string name="app_authors">Посмотреть список авторов Noice</string>
 </resources>
