@@ -6,7 +6,7 @@
     <string name="help">Aide</string>
     <string name="library">Bibliothèque</string>
     <string name="open_drawer">Ouvrir navigation</string>
-    <string name="report_issue">Rapporter un problème</string>
+    <string name="report_issue">Signaler des problèmes</string>
     <string name="saved_presets">Réglages sauvegardés</string>
     <string name="sleep_timer">Minuterie</string>
     <string name="support_development">Soutenir le développement</string>
@@ -85,10 +85,7 @@
   </string>
     <string name="schedule">Plannifier</string>
     <string name="select_preset">Sélectionner le réglage</string>
-    <string name="wake_up_timer_description">
-    Noice peut démarrer un réglage au moment du réveil. Utilisez les boutons ci-dessous pour sélectionner
-    un réglage et l\'heure voulue pour activer le reveil.
-  </string>
+    <string name="wake_up_timer_description">Noice peut démarrer un réglage au moment du réveil. Utilisez les boutons ci-dessous pour sélectionner un réglage et l\'heure voulue pour activer le réveil.</string>
     <string name="app_theme_light">Clair</string>
     <string name="app_theme_dark">Sombre</string>
     <string name="app_theme_system_default">Système</string>
@@ -109,11 +106,8 @@
     Après avoir joué quelques sons, vous pouvez utiliser le bouton en bas à droite pour sauvegarder le mix.
     Pour réutiliser un mix sauvegardé, allez dans la liste des réglages depuis le menu de l\'application.
   </string>
-    <string name="appintro__preset_title">Sauvegardez vos mixes préférés</string>
-    <string name="appintro__sound_library_desc">
-    Utilisez les boutons de volume pour régler le volume des sons. A chaque répétition d\'un son "sans-boucle",
-    un délai aléatoire sera généré dans la plage établie par le curseur de temps.
-  </string>
+    <string name="appintro__preset_title">Sauvegardez vos mix préférés</string>
+    <string name="appintro__sound_library_desc">Utilisez les boutons de volume pour régler le volume des sons. À chaque répétition d\'un son sans-boucle, un délai aléatoire sera généré dans la plage établie par le curseur de temps.</string>
     <string name="appintro__sound_library_title">Créez votre environnement idéal</string>
     <string name="appintro__timer_desc">
     Une ambiance légère peut vous aider à vous endormir plus facilement. Utilisez la minuterie pour laisser Noice
@@ -182,4 +176,5 @@
     <string name="time_bridge">et</string>
     <string name="wake_up_timer_schedule_set">L\'alarme s\'éteindra dans %1$s %2$s %3$s</string>
     <string name="random_preset_description">Les préréglages aléatoires générés contiendront des sons correspondant à l\'ambiance choisie. De plus, les préréglages denses tenteront de jouer plus de sons simultanément.</string>
+    <string name="app_authors">Voir la liste des auteurs de Noice</string>
 </resources>
