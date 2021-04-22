@@ -174,9 +174,10 @@ class Sound private constructor(
         src = arrayOf("howling_wolf.mp3"),
         titleResID = R.string.howling_wolf,
         displayGroupResID = R.string.sound_group__life,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_howling_wolf,
         credits = arrayOf(
-          Pair(R.string.credits__sound_howling_wolf, R.string.credits__sound_howling_wolf_url)
+          Pair(R.string.credits__sound_howling_wolf_0, R.string.credits__sound_howling_wolf_0_url),
+          Pair(R.string.credits__sound_howling_wolf_1, R.string.credits__sound_howling_wolf_1_url),
         ),
         isLooping = false
       ),
