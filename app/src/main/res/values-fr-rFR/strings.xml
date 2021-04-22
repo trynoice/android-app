@@ -165,7 +165,7 @@
     <string name="use_24h_format">Utiliser le format 24 heures</string>
     <string name="wake_up_timer_cancelled">Minuterie du réveil annulée !</string>
     <string name="show_saved_preset_on_startup">Afficher les configurations sauvegardées au lancement de l\'application</string>
-    <string name="shortcuts_not_supported">Votre lanceur par défaut ne supporte pas l\'ajout de raccourcis.</string>
+    <string name="pinned_shortcuts_not_supported">Votre lanceur par défaut ne supporte pas l\'ajout de raccourcis.</string>
     <string name="never">Jamais</string>
     <string name="later">Plus tard</string>
     <string name="in_app_feedback__title">Soumettre une évaluation</string>
