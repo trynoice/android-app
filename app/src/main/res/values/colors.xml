@@ -7,6 +7,7 @@
   <color name="action_bar">@color/white_1</color>
   <color name="background">@color/white_0</color>
   <color name="background_dark">@color/white_1</color>
+  <color name="action_menu_item">@color/woodsmoke</color>
 
   <!-- Following is needed because AboutPage doesn't have any way to define custom style.
   This is supposed to override its default background color -->
