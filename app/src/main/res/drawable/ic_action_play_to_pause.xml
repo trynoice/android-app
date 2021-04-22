@@ -2,11 +2,12 @@
   xmlns:aapt="http://schemas.android.com/aapt">
 
   <aapt:attr name="android:drawable">
+    <!-- '?attr/colorControlNormal' or other attribute references weren't working properly in tint. -->
     <vector
       android:width="32dp"
       android:height="32dp"
       android:alpha="0.87"
-      android:tint="#FFFFFF"
+      android:tint="@color/action_menu_item"
       android:viewportWidth="24.0"
       android:viewportHeight="24.0">
 
