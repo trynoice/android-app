@@ -5,7 +5,7 @@
     <string name="close_drawer">Chiudi menu di navigazione</string>
     <string name="library">Libreria</string>
     <string name="open_drawer">Apri menù di navigazione</string>
-    <string name="report_issue">Riporta errore</string>
+    <string name="report_issue">Segnala i problemi</string>
     <string name="saved_presets">Preimpostazioni salvate</string>
     <string name="sleep_timer">Timer di spegnimento </string>
     <string name="cancel">Annulla</string>
@@ -151,4 +151,5 @@
     <string name="time_bridge">e</string>
     <string name="wake_up_timer_schedule_set">La sveglia si spegnerà in %1$s %2$s %3$s</string>
     <string name="random_preset_description">I preset casuali generati conterranno suoni corrispondenti allo stato d\'animo selezionato. Inoltre, preset densi cercheranno di riprodurre più suoni simultaneamente.</string>
+    <string name="app_authors">Visualizza l\'elenco degli autori di Noice</string>
 </resources>
