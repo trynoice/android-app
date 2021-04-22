@@ -20,7 +20,7 @@ class DonateView : AppCompatImageButton {
 
   init {
     val background = TypedValue()
-    context.theme.resolveAttribute(R.attr.selectableItemBackgroundBorderless, background, true)
+    context.theme.resolveAttribute(R.attr.selectableItemBackground, background, true)
 
     setBackgroundResource(background.resourceId)
     setImageResource(R.drawable.ic_donate_opencollective)
