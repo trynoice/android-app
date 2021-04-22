@@ -64,6 +64,7 @@ class PresetFragmentTest {
     }
 
     mockkObject(InAppReviewFlowManager, Preset.Companion, MediaPlayerService.Companion)
+    mockkStatic(ShortcutManagerCompat::class)
     every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(mockPreset)
     fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
@@ -136,6 +137,7 @@ class PresetFragmentTest {
     onView(withText("test")).check(doesNotExist())
     verify(exactly = 1) {
       Preset.writeAllToUserPreferences(any(), emptyList())
+      ShortcutManagerCompat.removeDynamicShortcuts(any(), listOf("test-id"))
       InAppReviewFlowManager.maybeAskForReview(any())
     }
   }
@@ -213,8 +215,6 @@ class PresetFragmentTest {
 
   @Test
   fun testRecyclerViewItem_AddToHomeScreenOption() {
-    mockkStatic(ShortcutManagerCompat::class)
-
     val pinShortcutSupportedExpectations = arrayOf(false, true)
     val expectedRequestPinShortcutCalls = arrayOf(0, 1)
 
@@ -260,10 +260,57 @@ class PresetFragmentTest {
         )
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
-          .check(matches(withText(R.string.shortcuts_not_supported)))
+          .check(matches(withText(R.string.pinned_shortcuts_not_supported)))
       }
 
       clearStaticMockk(ShortcutManagerCompat::class)
+    }
+  }
+
+  @Test
+  fun testRecyclerViewItem_addToAppShortcuts() {
+    every { ShortcutManagerCompat.addDynamicShortcuts(any(), any()) } returns true
+    every { ShortcutManagerCompat.getDynamicShortcuts(any()) } returns mutableListOf()
+
+    // open context menu
+    onView(withId(R.id.preset_list)).perform(
+      RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
+        hasDescendant(allOf(withId(R.id.title), withText("test"))),
+        EspressoX.clickInItem(R.id.menu_button)
+      )
+    )
+
+    onView(withText(R.string.add_to_app_shortcuts)).perform(click())
+
+    val shortcutInfoSlot = slot<List<ShortcutInfoCompat>>()
+    verify(exactly = 1) {
+      ShortcutManagerCompat.addDynamicShortcuts(any(), capture(shortcutInfoSlot))
+    }
+
+    assertEquals(1, shortcutInfoSlot.captured.size)
+    assertEquals("test-id", shortcutInfoSlot.captured[0].id)
+  }
+
+  @Test
+  fun testRecyclerViewItem_removeFromAppShortcuts() {
+    every { ShortcutManagerCompat.getDynamicShortcuts(any()) } returns listOf(
+      mockk(relaxed = true) {
+        every { id } returns mockPreset.id
+      }
+    )
+
+    // open context menu
+    onView(withId(R.id.preset_list)).perform(
+      RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
+        hasDescendant(allOf(withId(R.id.title), withText("test"))),
+        EspressoX.clickInItem(R.id.menu_button)
+      )
+    )
+
+    onView(withText(R.string.remove_from_app_shortcuts)).perform(click())
+
+    verify(exactly = 1) {
+      ShortcutManagerCompat.removeDynamicShortcuts(any(), listOf("test-id"))
     }
   }
 

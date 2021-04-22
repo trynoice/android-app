@@ -131,7 +131,9 @@ class PresetFragment : Fragment() {
 
       val onMenuItemClickListener = PopupMenu.OnMenuItemClickListener {
         when (it.itemId) {
-          R.id.action_create_shortcut -> createShortcut()
+          R.id.action_create_pinned_shortcut -> createPinnedShortcut()
+          R.id.action_create_app_shortcut -> createAppShortcut()
+          R.id.action_remove_app_shortcut -> removeAppShortcut()
           R.id.action_delete -> showDeletePresetConfirmation()
           R.id.action_rename -> showRenamePresetInput()
         }
@@ -142,32 +144,68 @@ class PresetFragment : Fragment() {
       binding.menuButton.setOnClickListener {
         PopupMenu(requireContext(), binding.menuButton).let {
           it.inflate(R.menu.preset)
+          val hasAppShortcut = hasAppShortcut()
+          it.menu.findItem(R.id.action_create_app_shortcut).isVisible = !hasAppShortcut
+          it.menu.findItem(R.id.action_remove_app_shortcut).isVisible = hasAppShortcut
           it.setOnMenuItemClickListener(onMenuItemClickListener)
           it.show()
         }
       }
     }
 
-    private fun createShortcut() {
+    private fun createPinnedShortcut() {
       if (!ShortcutManagerCompat.isRequestPinShortcutSupported(requireContext())) {
-        Snackbar.make(requireView(), R.string.shortcuts_not_supported, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(requireView(), R.string.pinned_shortcuts_not_supported, Snackbar.LENGTH_LONG)
+          .show()
         return
       }
 
-      val shortcutID = UUID.randomUUID().toString()
+      val info = buildShortcutInfo(UUID.randomUUID().toString())
+      ShortcutManagerCompat.requestPinShortcut(requireContext(), info, null)
+    }
+
+    private fun createAppShortcut() {
+      val list = ShortcutManagerCompat.getDynamicShortcuts(requireContext())
       val presetID = dataSet[adapterPosition].id
-      ShortcutInfoCompat.Builder(requireContext(), shortcutID).also {
-        it.setShortLabel(dataSet[adapterPosition].name)
-        it.setIcon(IconCompat.createWithResource(requireContext(), R.mipmap.ic_preset_shortcut))
-        it.setIntent(
+      list.add(buildShortcutInfo(presetID))
+
+      var message = R.string.app_shortcut_creation_failed
+      if (ShortcutManagerCompat.addDynamicShortcuts(requireContext(), list)) {
+        message = R.string.app_shortcut_created
+      }
+
+      Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun removeAppShortcut() {
+      val presetID = dataSet[adapterPosition].id
+      ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(presetID))
+      Snackbar.make(requireView(), R.string.app_shortcut_removed, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun hasAppShortcut(): Boolean {
+      ShortcutManagerCompat.getDynamicShortcuts(requireContext()).forEach {
+        if (it.id == dataSet[adapterPosition].id) {
+          return true
+        }
+      }
+
+      return false
+    }
+
+    private fun buildShortcutInfo(shortcutID: String): ShortcutInfoCompat {
+      return with(ShortcutInfoCompat.Builder(requireContext(), shortcutID)) {
+        setShortLabel(dataSet[adapterPosition].name)
+        setIcon(IconCompat.createWithResource(requireContext(), R.mipmap.ic_preset_shortcut))
+        setIntent(
           Intent(requireContext(), ShortcutHandlerActivity::class.java)
             .setAction(Intent.ACTION_VIEW)
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_ID, shortcutID)
-            .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, presetID)
+            .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, dataSet[adapterPosition].id)
         )
 
-        ShortcutManagerCompat.requestPinShortcut(requireContext(), it.build(), null)
+        build()
       }
     }
 
@@ -218,6 +256,7 @@ class PresetFragment : Fragment() {
           }
 
           cancelWakeUpTimerIfScheduled(preset.id)
+          ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
           adapter?.notifyItemRemoved(adapterPosition)
           updateEmptyListIndicatorVisibility()
           Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
