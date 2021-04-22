@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
@@ -12,6 +13,17 @@ import com.github.ashutoshgngwr.noice.databinding.RandomPresetFragmentBinding
 import com.github.ashutoshgngwr.noice.sound.Sound
 
 class RandomPresetFragment : Fragment() {
+
+  companion object {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val RANGE_INTENSITY_LIGHT = 2 until 5
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val RANGE_INTENSITY_DENSE = 3 until 8
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val RANGE_INTENSITY_ANY = 2 until 8
+  }
 
   private lateinit var binding: RandomPresetFragmentBinding
 
@@ -37,9 +49,9 @@ class RandomPresetFragment : Fragment() {
       }
 
       val intensity = when (binding.presetIntensity.checkedRadioButtonId) {
-        R.id.preset_intensity__light -> SoundLibraryFragment.RANGE_INTENSITY_LIGHT
-        R.id.preset_intensity__dense -> SoundLibraryFragment.RANGE_INTENSITY_DENSE
-        else -> SoundLibraryFragment.RANGE_INTENSITY_ANY
+        R.id.preset_intensity__light -> RANGE_INTENSITY_LIGHT
+        R.id.preset_intensity__dense -> RANGE_INTENSITY_DENSE
+        else -> RANGE_INTENSITY_ANY
       }
 
       MediaPlayerService.playRandomPreset(requireContext(), tag, intensity)

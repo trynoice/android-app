@@ -29,6 +29,8 @@
   <string name="credits__sound_birds_0_url" translatable="false">https://freesound.org/s/471891/</string>
   <string name="credits__sound_birds_1" translatable="false">Residential ambiance pack by conleec</string>
   <string name="credits__sound_birds_1_url" translatable="false">https://freesound.org/s/149935/</string>
+  <string name="credits__sound_birds_2" translatable="false">Birds icon by Adrien Coquet</string>
+  <string name="credits__sound_birds_2_url" translatable="false">https://thenounproject.com/term/birds/3202430/</string>
   <string name="credits__sound_bonfire" translatable="false">Bonfire by amether</string>
   <string name="credits__sound_bonfire_url" translatable="false">https://freesound.org/s/189237/</string>
   <string name="credits__sound_brownian_noise" translatable="false">Brown noise by georgedyer</string>

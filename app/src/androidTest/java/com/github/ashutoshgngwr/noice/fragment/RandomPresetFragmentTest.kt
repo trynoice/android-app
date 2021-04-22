@@ -10,11 +10,8 @@ import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
-import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.Sound
 import io.mockk.clearMocks
-import io.mockk.every
-import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkAll
 import io.mockk.verify
@@ -47,9 +44,9 @@ class RandomPresetFragmentTest {
   @Test
   fun testRandomPresetButton_onClick() {
     val intensityExpectations = mapOf(
-      R.id.preset_intensity__any to SoundLibraryFragment.RANGE_INTENSITY_ANY,
-      R.id.preset_intensity__dense to SoundLibraryFragment.RANGE_INTENSITY_DENSE,
-      R.id.preset_intensity__light to SoundLibraryFragment.RANGE_INTENSITY_LIGHT
+      R.id.preset_intensity__any to RandomPresetFragment.RANGE_INTENSITY_ANY,
+      R.id.preset_intensity__dense to RandomPresetFragment.RANGE_INTENSITY_DENSE,
+      R.id.preset_intensity__light to RandomPresetFragment.RANGE_INTENSITY_LIGHT
     )
 
     val typeExpectations = mapOf(
