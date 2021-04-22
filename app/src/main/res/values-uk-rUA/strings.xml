@@ -162,4 +162,29 @@
     <string name="notification_channel_default__name">Відтворення звуків</string>
     <string name="light">Світла</string>
     <string name="any">Будь-який</string>
+    <string name="use_24h_format">Використовувати 24-годинний формат</string>
+    <plurals name="time_minutes">
+        <item quantity="one">%1$d хвилина</item>
+        <item quantity="few">%1$d хвилин</item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one">%1$d година</item>
+        <item quantity="few">%1$d годин</item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="time_bridge">та</string>
+    <string name="wake_up_timer_schedule_set">Будильник спрацює через %1$s %2$s %3$s</string>
+    <string name="wake_up_timer_cancelled">Таймер пробудження скасовано!</string>
+    <string name="shortcuts_not_supported">Ваш лаунчер не підтримує додавання ярликів.</string>
+    <string name="add_to_home_screen">Додати на головний екран</string>
+    <string name="relax">Розслабитися</string>
+    <string name="mood">Настрій</string>
+    <string name="random_preset_description">Згенеровані випадкові пресети міститимуть звуки, що відповідають вибраному настрою. Крім того, щільні пресети будуть намагатися відтворювати більше звуків одночасно.</string>
+    <string name="intensity">Інтенсивність</string>
+    <string name="focus">Фокус</string>
+    <string name="dense">Щільна</string>
+    <string name="submit_feedback">Надіслати відгук</string>
 </resources>
