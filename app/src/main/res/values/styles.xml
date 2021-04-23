@@ -23,8 +23,8 @@
 
   <style name="ThemeOverlay.App.ActionBar" parent="ThemeOverlay.MaterialComponents.ActionBar">
     <item name="colorPrimary">@color/action_bar</item>
+    <item name="colorControlNormal">@color/action_menu_item</item>
   </style>
-  3385ff
 
   <style name="Widget.App.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
     <item name="tint">@android:color/primary_text_dark</item>
@@ -98,7 +98,6 @@
     <item name="colorPrimary">@color/primary</item>
     <item name="colorAccent">@color/accent</item>
     <item name="colorBackgroundFloating">@color/background_dark</item>
-    <item name="mediaRouteButtonStyle">@style/Widget.MediaRouter.MediaRouteButton</item>
     <item name="mediaRouteControlPanelThemeOverlay">@style/ThemeOverlay.MediaRouter.Light</item>
   </style>
 

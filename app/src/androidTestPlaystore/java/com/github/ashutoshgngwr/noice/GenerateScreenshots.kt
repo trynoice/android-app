@@ -1,6 +1,8 @@
 package com.github.ashutoshgngwr.noice
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -162,6 +164,12 @@ class GenerateScreenshots {
         firstArg<Menu>().add("fake-cast-button")
           .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS)
           .setIcon(R.drawable.cast_ic_notification_small_icon)
+          .setIconTintList(
+            ColorStateList.valueOf(
+              ApplicationProvider.getApplicationContext<Context>()
+                .getColor(R.color.action_menu_item)
+            )
+          )
       }
     }
 
