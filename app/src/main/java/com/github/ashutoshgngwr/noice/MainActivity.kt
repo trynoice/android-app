@@ -121,6 +121,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         defaultFragmentID = R.id.saved_presets
       }
 
+      setFragment(defaultFragmentID) // default fragment must be in the back stack
       setFragment(intent.getIntExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT, defaultFragmentID))
 
       // show app intro if user hasn't already seen it
@@ -136,6 +137,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
           .build()
       )
       .build()
+  }
+
+  override fun onNewIntent(intent: Intent?) {
+    super.onNewIntent(intent)
+    intent?.also {
+      if (intent.hasExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT)) {
+        setFragment(intent.getIntExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT, 0))
+      }
+    }
   }
 
   override fun onResume() {
