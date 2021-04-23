@@ -9,8 +9,8 @@ android {
     applicationId 'com.github.ashutoshgngwr.noice'
     minSdkVersion 21
     targetSdkVersion 30
-    versionCode 38
-    versionName '0.16.0'
+    versionCode 39
+    versionName '0.16.1'
     testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
   }
 
