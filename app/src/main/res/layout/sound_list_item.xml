@@ -14,7 +14,7 @@
     android:layout_marginHorizontal="16dp"
     android:adjustViewBounds="true"
     android:alpha="0.5"
-    android:maxHeight="126dp"
+    android:maxHeight="150dp"
     android:scaleType="fitEnd"
     app:tint="@color/material_on_background_disabled"
     tools:ignore="ContentDescription"

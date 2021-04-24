@@ -37,7 +37,7 @@ class Sound private constructor(
         src = arrayOf("airplane_inflight.mp3"),
         titleResID = R.string.airplane_inflight,
         displayGroupResID = R.string.sound_group__vehicles,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_airplane_inflight,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_airplane_inflight,
@@ -49,7 +49,7 @@ class Sound private constructor(
         src = arrayOf("airplane_seatbelt_beeps.mp3"),
         titleResID = R.string.airplane_seatbelt_beeps,
         displayGroupResID = R.string.sound_group__vehicles,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_airplane_seatbelt_beeps,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_airplane_seatbelt_beeps,
@@ -74,7 +74,7 @@ class Sound private constructor(
         src = arrayOf("bonfire_0.mp3", "bonfire_1.mp3"),
         titleResID = R.string.bonfire,
         displayGroupResID = R.string.sound_group__public_gatherings,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_bonfire,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_bonfire,
@@ -87,7 +87,7 @@ class Sound private constructor(
         src = arrayOf("brownian_noise.mp3"),
         titleResID = R.string.brownian_noise,
         displayGroupResID = R.string.sound_group__raw_noise,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_brownian_noise,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_brownian_noise,
@@ -99,7 +99,7 @@ class Sound private constructor(
         src = arrayOf("coffee_shop_0.mp3", "coffee_shop_1.mp3"),
         titleResID = R.string.coffee_shop,
         displayGroupResID = R.string.sound_group__public_gatherings,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_coffee_shop,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_coffee_shop,
@@ -112,7 +112,7 @@ class Sound private constructor(
         src = arrayOf("creaking_ship_0.mp3", "creaking_ship_1.mp3"),
         titleResID = R.string.creaking_ship,
         displayGroupResID = R.string.sound_group__vehicles,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_creaking_ship,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_creaking_ship_0,
@@ -141,7 +141,7 @@ class Sound private constructor(
         src = arrayOf("distant_thunder.mp3"),
         titleResID = R.string.distant_thunder,
         displayGroupResID = R.string.sound_group__monsoon,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_distant_thunder,
         credits = arrayOf(
           Pair(R.string.credits__sound_distant_thunder, R.string.credits__sound_distant_thunder_url)
         ),
@@ -161,7 +161,7 @@ class Sound private constructor(
         src = arrayOf("heavy_rain.mp3"),
         titleResID = R.string.heavy_rain,
         displayGroupResID = R.string.sound_group__monsoon,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_heavy_rain,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_heavy_rain,
@@ -185,7 +185,7 @@ class Sound private constructor(
         src = arrayOf("human_heartbeat.mp3"),
         titleResID = R.string.human_heartbeat,
         displayGroupResID = R.string.sound_group__life,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_human_heartbeat,
         credits = arrayOf(
           Pair(R.string.credits__sound_human_heartbeat, R.string.credits__sound_human_heartbeat_url)
         )
@@ -194,7 +194,7 @@ class Sound private constructor(
         src = arrayOf("light_rain.mp3"),
         titleResID = R.string.light_rain,
         displayGroupResID = R.string.sound_group__monsoon,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_light_rain,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_light_rain,
@@ -207,7 +207,7 @@ class Sound private constructor(
         src = arrayOf("moderate_rain.mp3"),
         titleResID = R.string.moderate_rain,
         displayGroupResID = R.string.sound_group__monsoon,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_moderate_rain,
         credits = arrayOf(
           Pair(R.string.credits__sound_moderate_rain, R.string.credits__sound_moderate_rain_url)
         ),
@@ -217,7 +217,7 @@ class Sound private constructor(
         src = arrayOf("morning_in_a_village.mp3"),
         titleResID = R.string.morning_in_a_village,
         displayGroupResID = R.string.sound_group__times_of_day,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_morning_in_a_village,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_morning_in_a_village,
@@ -240,7 +240,7 @@ class Sound private constructor(
         src = arrayOf("night_0.mp3", "night_1.mp3"),
         titleResID = R.string.night,
         displayGroupResID = R.string.sound_group__times_of_day,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_night,
         credits = arrayOf(Pair(R.string.credits__sound_night, R.string.credits__sound_night_url)),
         tags = arrayOf(Tag.RELAX)
       ),
@@ -248,7 +248,7 @@ class Sound private constructor(
         src = arrayOf("office_0.mp3", "office_1.mp3"),
         titleResID = R.string.office,
         displayGroupResID = R.string.sound_group__public_gatherings,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_office,
         credits = arrayOf(Pair(R.string.credits__sound_office, R.string.credits__sound_office_url)),
         tags = arrayOf(Tag.FOCUS)
       ),
@@ -256,14 +256,14 @@ class Sound private constructor(
         src = arrayOf("pink_noise.mp3"),
         titleResID = R.string.pink_noise,
         displayGroupResID = R.string.sound_group__raw_noise,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_pink_noise,
         credits = arrayOf()
       ),
       "public_library" to Sound(
         src = arrayOf("public_library_0.mp3", "public_library_1.mp3"),
         titleResID = R.string.public_library,
         displayGroupResID = R.string.sound_group__public_gatherings,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_public_library,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_public_library_0,
@@ -305,7 +305,7 @@ class Sound private constructor(
         src = arrayOf("rolling_thunder.mp3"),
         titleResID = R.string.rolling_thunder,
         displayGroupResID = R.string.sound_group__monsoon,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_rolling_thunder,
         credits = arrayOf(
           Pair(R.string.credits__sound_rolling_thunder, R.string.credits__sound_rolling_thunder_url)
         ),
@@ -329,7 +329,7 @@ class Sound private constructor(
         src = arrayOf("seaside.mp3"),
         titleResID = R.string.seaside,
         displayGroupResID = R.string.sound_group__water,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_seaside,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_seaside,
@@ -342,7 +342,7 @@ class Sound private constructor(
         src = arrayOf("soft_wind_0.mp3", "soft_wind_1.mp3"),
         titleResID = R.string.soft_wind,
         displayGroupResID = R.string.sound_group__wind,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_soft_wind,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_soft_wind,
@@ -355,7 +355,7 @@ class Sound private constructor(
         src = arrayOf("thunder_crack.mp3"),
         titleResID = R.string.thunder_crack,
         displayGroupResID = R.string.sound_group__monsoon,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_thunder_crack,
         credits = arrayOf(
           Pair(R.string.credits__sound_thunder_crack, R.string.credits__sound_thunder_crack_url)
         ),
@@ -366,7 +366,7 @@ class Sound private constructor(
         src = arrayOf("train_horn.mp3"),
         titleResID = R.string.train_horn,
         displayGroupResID = R.string.sound_group__vehicles,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_train_horn,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_train_horn,
@@ -380,7 +380,7 @@ class Sound private constructor(
         src = arrayOf("walking_through_the_snow.mp3"),
         titleResID = R.string.walking_through_the_snow,
         displayGroupResID = R.string.sound_group__life,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_walking_through_the_snow,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_walking_through_the_snow,
@@ -393,7 +393,7 @@ class Sound private constructor(
         src = arrayOf("water_hose_0.mp3", "water_hose_1.mp3"),
         titleResID = R.string.water_hose,
         displayGroupResID = R.string.sound_group__water,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_water_hose,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_water_hose,
@@ -405,7 +405,7 @@ class Sound private constructor(
         src = arrayOf("water_stream_0.mp3", "water_stream_1.mp3"),
         titleResID = R.string.water_stream,
         displayGroupResID = R.string.sound_group__water,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_water_stream,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_water_stream,
@@ -418,14 +418,14 @@ class Sound private constructor(
         src = arrayOf("white_noise.mp3"),
         titleResID = R.string.white_noise,
         displayGroupResID = R.string.sound_group__raw_noise,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_white_noise,
         credits = arrayOf()
       ),
       "wind_chimes_of_shells" to Sound(
         src = arrayOf("wind_chimes_of_shells.mp3"),
         titleResID = R.string.wind_in_chimes_of_shells,
         displayGroupResID = R.string.sound_group__wind,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_wind_in_chimes_of_shells,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_wind_chimes_of_shells,
@@ -437,7 +437,7 @@ class Sound private constructor(
         src = arrayOf("wind_in_palm_trees_0.mp3", "wind_in_palm_trees_1.mp3"),
         titleResID = R.string.wind_in_palm_trees,
         displayGroupResID = R.string.sound_group__wind,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_wind_in_palm_trees,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_wind_in_palm_trees,
