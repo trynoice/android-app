@@ -112,4 +112,7 @@
   <string name="rate_us_on_play_store_url" translatable="false">
     https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice&amp;referrer=utm_source%3DAndroid%2520Client%26utm_campaign%3DRate%2520Us%2520On%2520Play%2520Store
   </string>
+  <string name="saved_presets_as_home_screen_key" translatable="false">pref_saved_presets_as_homescreen</string>
+  <string name="sound_fade_duration_key" translatable="false">sound_fade_duration</string>
+  <string name="app_theme_key" translatable="false">app_theme</string>
 </resources>

@@ -32,10 +32,10 @@
     android:checkable="true" />
 
   <item
-    android:id="@+id/app_theme"
-    android:icon="@drawable/ic_nav_theme"
-    android:title="@string/app_theme"
-    android:checkable="false" />
+    android:id="@+id/settings"
+    android:checkable="true"
+    android:icon="@drawable/ic_nav_settings"
+    android:title="@string/settings" />
 
   <item
     android:id="@+id/about"

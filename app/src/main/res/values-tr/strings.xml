@@ -177,7 +177,7 @@
     <string name="should_update_media_volume">Kaydı başlatmadan önce cihaz sesini güncelle</string>
     <string name="device_media_volume">Cihaz ses düzeyi</string>
     <string name="use_24h_format">24 saat formatını kullan</string>
-    <string name="show_saved_preset_on_startup">Açılışta mevcut kayıtları göster</string>
+    <string name="saved_presets_as_home_screen_summary">Açılışta mevcut kayıtları göster</string>
     <string name="submit_feedback">Geri Bildirim Gönder</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d dakika</item>

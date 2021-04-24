@@ -324,15 +324,15 @@ class GenerateScreenshots {
   }
 
   @Test
-  fun themeItem() {
+  fun settingsItem() {
     onView(withId(R.id.layout_main))
       .check(matches(DrawerMatchers.isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
 
     EspressoX.waitForView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.app_theme))
+      .perform(NavigationViewActions.navigateTo(R.id.settings))
 
-    EspressoX.waitForView(withId(R.id.positive)) // wait for dialog
+    EspressoX.waitForView(allOf(withId(R.id.navigation_drawer), DrawerMatchers.isClosed()))
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("7")
   }

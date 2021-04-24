@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <PreferenceCategory android:title="@string/behavior">
+
+    <SwitchPreferenceCompat
+      android:icon="@drawable/ic_settings_home_screen"
+      android:key="@string/saved_presets_as_home_screen_key"
+      android:summary="@string/saved_presets_as_home_screen_summary"
+      android:title="@string/saved_presets_as_home_screen" />
+
+    <SeekBarPreference
+      android:defaultValue="1"
+      android:icon="@drawable/ic_settings_fade_duration"
+      android:key="@string/sound_fade_duration_key"
+      android:max="10"
+      android:summary="@string/sound_fade_duration_summary"
+      android:title="@string/sound_fade_duration"
+      app:min="0"
+      app:showSeekBarValue="true" />
+
+  </PreferenceCategory>
+
+  <PreferenceCategory android:title="@string/appearance">
+
+    <Preference
+      android:icon="@drawable/ic_settings_theme"
+      android:key="@string/app_theme_key"
+      android:title="@string/app_theme"
+      tools:summary="Light" />
+
+  </PreferenceCategory>
+
+</PreferenceScreen>

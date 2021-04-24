@@ -156,7 +156,7 @@
     <string name="device_media_volume">डिवाइस मीडिया वॉल्यूम</string>
     <string name="use_24h_format">२४-घंटे के समय प्रारूप का उपयोग करें</string>
     <string name="wake_up_timer_cancelled">वेक-अप टाइमर रद्द कर दिया!</string>
-    <string name="show_saved_preset_on_startup">ऐप स्टार्टअप पर सहेजे गए प्रीसेट दिखाएं</string>
+    <string name="saved_presets_as_home_screen_summary">ऐप स्टार्टअप पर सहेजे गए प्रीसेट दिखाएं</string>
     <string name="preset_does_not_exist">प्रीसेट मौजूद नहीं है। यह संभव है कि इसे हटा दिया गया हो!</string>
     <string name="add_to_home_screen">होम स्क्रीन में शामिल करें</string>
     <string name="relax">शांतिदायक</string>
