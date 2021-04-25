@@ -91,7 +91,7 @@
   </string>
     <string name="rename">Umbenennen</string>
     <string name="pinned_shortcuts_not_supported">Ihr Standard-Launcher unterstützt das Hinzufügen von Verknüpfungen nicht.</string>
-    <string name="show_saved_preset_on_startup">Gespeicherte Voreinstellungen beim Start der App anzeigen</string>
+    <string name="saved_presets_as_home_screen_summary">Gespeicherte Voreinstellungen beim Start der App anzeigen</string>
     <string name="auto_sleep_schedule_cancelled">Automatischer Schlaftimer abgebrochen!</string>
     <string name="reset">Zurücksetzen</string>
     <string name="sleep_timer_description">Noice schaltet sich automatisch nach Ablauf des Timers aus. Nutze die Knöpfe weiter unten, um dem Timer Zeit hinzuzufügen oder abzuziehen.</string>

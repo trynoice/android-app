@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.core.os.HandlerCompat
 import androidx.media.AudioAttributesCompat
+import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -27,12 +28,15 @@ class LocalPlaybackStrategy(
 ) : PlaybackStrategy {
 
   companion object {
-    const val FADE_VOLUME_STEP = 0.02f
-    const val FADE_DURATION = 750L
+    private const val FADE_VOLUME_STEP = 0.01f
+
+    // a smaller default used when changing volume of an active player.
+    private const val ADJUSTED_VOLUME_FADE_DURATION = 750L
   }
 
   private val handler = Handler(Looper.getMainLooper())
   private val players = sound.src.map { initPlayer(context, it, sound.isLooping, audioAttributes) }
+  private val settingsRepository = SettingsRepository.getInstance(context)
 
   private fun initPlayer(
     context: Context,
@@ -68,7 +72,7 @@ class LocalPlaybackStrategy(
   }
 
   override fun setVolume(volume: Float) {
-    players.forEach { it.fade(it.volume, volume, FADE_DURATION) }
+    players.forEach { it.fade(it.volume, volume, duration = ADJUSTED_VOLUME_FADE_DURATION) }
   }
 
   override fun play() {
@@ -80,7 +84,7 @@ class LocalPlaybackStrategy(
       // an internal feature of the LocalPlaybackStrategy is that it won't fade-in non-looping sounds
       if (player.repeatMode == ExoPlayer.REPEAT_MODE_ONE) {
         player.playWhenReady = true
-        player.fade(0f, player.volume, FADE_DURATION)
+        player.fade(0f, player.volume)
       } else {
         player.seekTo(0)
         player.playWhenReady = true
@@ -98,7 +102,7 @@ class LocalPlaybackStrategy(
         continue
       }
 
-      player.fade(player.volume, 0f, FADE_DURATION) {
+      player.fade(player.volume, 0f) {
         playWhenReady = false
         release()
       }
@@ -116,7 +120,7 @@ class LocalPlaybackStrategy(
   private fun SimpleExoPlayer.fade(
     fromVolume: Float,
     toVolume: Float,
-    duration: Long,
+    duration: Long = settingsRepository.getSoundFadeDurationInMillis(),
     callback: SimpleExoPlayer.() -> Unit = { }
   ) {
     handler.removeCallbacksAndMessages(this)

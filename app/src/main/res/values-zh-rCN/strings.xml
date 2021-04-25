@@ -49,7 +49,7 @@
     <string name="sleep_timer_description">计时器结束后，Noice将自动关闭。使用下面的按钮来添加时间和启动定时器。</string>
     <string name="reset">重置</string>
     <string name="auto_sleep_schedule_cancelled">自动睡眠定时器已取消！</string>
-    <string name="show_saved_preset_on_startup">在应用启动时显示已保存的预设</string>
+    <string name="saved_presets_as_home_screen_summary">在应用启动时显示已保存的预设</string>
     <string name="pinned_shortcuts_not_supported">你的默认启动器不支持添加快捷方式。</string>
     <string name="rename">重命名</string>
     <string name="preset_info__description">你还没有创建任何预设。要创建预设，请进入库并播放声音。然后点击屏幕下角出现的 \"保存 \"按钮。</string>

@@ -32,7 +32,7 @@ class AboutFragmentTest {
 
   @Before
   fun setup() {
-    fragmentScenario = launchFragmentInContainer<AboutFragment>()
+    fragmentScenario = launchFragmentInContainer()
   }
 
   @Test

@@ -7,25 +7,25 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.IdRes
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
-import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
-import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.fragment.RandomPresetFragment
+import com.github.ashutoshgngwr.noice.fragment.SettingsFragment
 import com.github.ashutoshgngwr.noice.fragment.SleepTimerFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment
 import com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment
+import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import com.google.android.material.navigation.NavigationView
 import org.greenrobot.eventbus.EventBus
@@ -43,20 +43,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      */
     const val EXTRA_CURRENT_NAVIGATED_FRAGMENT = "current_fragment"
 
-    private const val PREF_APP_THEME = "app_theme"
-    private const val APP_THEME_LIGHT = 0
-    private const val APP_THEME_DARK = 1
-    private const val APP_THEME_SYSTEM_DEFAULT = 2
-
     // maps fragments that have a one-to-one mapping with a menu item in the navigation drawer.
     // this map helps in reducing boilerplate for launching these fragments when appropriate
     // menu item is clicked in the navigation drawer.
-    private val NAVIGATED_FRAGMENTS = mapOf(
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val NAVIGATED_FRAGMENTS = mapOf(
       R.id.library to SoundLibraryFragment::class.java,
       R.id.saved_presets to PresetFragment::class.java,
       R.id.sleep_timer to SleepTimerFragment::class.java,
       R.id.wake_up_timer to WakeUpTimerFragment::class.java,
       R.id.random_preset to RandomPresetFragment::class.java,
+      R.id.settings to SettingsFragment::class.java,
       R.id.about to AboutFragment::class.java,
       R.id.support_development to SupportDevelopmentFragment::class.java
     )
@@ -68,13 +65,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   private lateinit var customTabsIntent: CustomTabsIntent
   private var playerManagerState = PlayerManager.State.STOPPED
 
+  private val settingsRepository by lazy { SettingsRepository.getInstance(this) }
+
   override fun onCreate(savedInstanceState: Bundle?) {
     // because cast context is lazy initialized, cast menu item wouldn't show up until
     // re-resuming the activity. adding this to prevent that.
     // This should implicitly init CastContext.
     castAPIWrapper = CastAPIWrapper.from(this, false)
     super.onCreate(savedInstanceState)
-    AppCompatDelegate.setDefaultNightMode(getNightModeFromPrefs())
+    AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
 
     binding = MainActivityBinding.inflate(layoutInflater)
     setContentView(binding.root)
@@ -92,8 +91,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // setup listener for navigation item clicks
     binding.navigationDrawer.setNavigationItemSelectedListener(this)
-    binding.navigationDrawer.menu.findItem(R.id.rate_on_play_store).isVisible =
-      BuildConfig.IS_PLAY_STORE_BUILD
 
     // bind navigation drawer menu items checked state with fragment back stack
     supportFragmentManager.addOnBackStackChangedListener {
@@ -117,19 +114,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // will recall onCreate which will cause weird and unexpected fragment changes otherwise).
     if (supportFragmentManager.backStackEntryCount < 1) {
       var defaultFragmentID = R.id.library
-      if (PresetFragment.shouldDisplayAsHomeScreen(this)) {
+      if (settingsRepository.shouldDisplaySavedPresetsAsHomeScreen()) {
         defaultFragmentID = R.id.saved_presets
       }
 
       setFragment(defaultFragmentID) // default fragment must be in the back stack
-      setFragment(intent.getIntExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT, defaultFragmentID))
-
-      // show app intro if user hasn't already seen it
-      AppIntroActivity.maybeStart(this)
+      setNavigatedFragment()
+      AppIntroActivity.maybeStart(this) // show app intro if user hasn't already seen it
     }
 
     InAppReviewFlowManager.init(this)
-
     customTabsIntent = CustomTabsIntent.Builder()
       .setDefaultColorSchemeParams(
         CustomTabColorSchemeParams.Builder()
@@ -141,9 +135,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
   override fun onNewIntent(intent: Intent?) {
     super.onNewIntent(intent)
+    setIntent(intent)
+    setNavigatedFragment()
+  }
+
+  private fun setNavigatedFragment() {
     intent?.also {
-      if (intent.hasExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT)) {
-        setFragment(intent.getIntExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT, 0))
+      if (it.hasExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT)) {
+        setFragment(it.getIntExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT, 0))
+      } else if (Intent.ACTION_APPLICATION_PREFERENCES == it.action) {
+        setFragment(R.id.settings)
       }
     }
   }
@@ -194,30 +195,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       in NAVIGATED_FRAGMENTS -> setFragment(item.itemId)
-      R.id.app_theme -> {
-        DialogFragment.show(supportFragmentManager) {
-          title(R.string.app_theme)
-          singleChoiceItems(
-            items = resources.getStringArray(R.array.app_themes),
-            currentChoice = getAppTheme(),
-            onItemSelected = { setAppTheme(it) }
-          )
-        }
-      }
       R.id.help -> {
         startActivity(Intent(this, AppIntroActivity::class.java))
       }
       R.id.report_issue -> {
-        customTabsIntent.launchUrl(this, Uri.parse(getString(R.string.app_issues_url)))
+        var url = getString(R.string.app_issues_github_url)
+        if (BuildConfig.IS_PLAY_STORE_BUILD) {
+          url = getString(R.string.app_issues_form_url)
+        }
+
+        customTabsIntent.launchUrl(this, Uri.parse(url))
       }
       R.id.submit_feedback -> {
         customTabsIntent.launchUrl(this, Uri.parse(getString(R.string.feedback_form_url)))
-      }
-      R.id.rate_on_play_store -> {
-        startActivity(
-          Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.rate_us_on_play_store_url)))
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
       }
     }
 
@@ -247,41 +237,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     playerManagerState = event.state
     invalidateOptionsMenu()
-  }
-
-  /**
-   * Gets user setting for app theme and converts it into its corresponding value from
-   * array ([AppCompatDelegate.MODE_NIGHT_NO], [AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM],
-   * [AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM]).
-   */
-  private fun getNightModeFromPrefs(): Int {
-    return when (getAppTheme()) {
-      APP_THEME_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
-      APP_THEME_DARK -> AppCompatDelegate.MODE_NIGHT_YES
-      APP_THEME_SYSTEM_DEFAULT -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-      else -> AppCompatDelegate.MODE_NIGHT_UNSPECIFIED
-    }
-  }
-
-  /**
-   * Gets user setting for current app theme.
-   * Returns one of [APP_THEME_LIGHT], [APP_THEME_DARK] or [APP_THEME_SYSTEM_DEFAULT]
-   */
-  private fun getAppTheme(): Int {
-    return PreferenceManager.getDefaultSharedPreferences(this)
-      .getInt(PREF_APP_THEME, APP_THEME_SYSTEM_DEFAULT)
-  }
-
-  /**
-   * Sets user setting for current app theme.
-   * @param newTheme should be one of [APP_THEME_LIGHT], [APP_THEME_DARK] or [APP_THEME_SYSTEM_DEFAULT]
-   */
-  private fun setAppTheme(newTheme: Int) {
-    PreferenceManager.getDefaultSharedPreferences(this).edit {
-      putInt(PREF_APP_THEME, newTheme)
-    }
-
-    recreate()
   }
 
   private fun setFragment(@IdRes navItemID: Int) {

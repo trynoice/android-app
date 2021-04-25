@@ -23,16 +23,13 @@ import androidx.test.espresso.contrib.NavigationViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.*
-import androidx.test.espresso.matcher.RootMatchers.isDialog
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
-import com.github.ashutoshgngwr.noice.fragment.SleepTimerFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
-import com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment
-import com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment
+import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import com.google.android.material.navigation.NavigationView
 import io.mockk.every
@@ -94,8 +91,10 @@ class MainActivityTest {
 
   @Test
   fun testIfSavedPresetsIsVisibleOnStart() {
-    mockkObject(PresetFragment.Companion)
-    every { PresetFragment.shouldDisplayAsHomeScreen(any()) } returns true
+    mockkObject(SettingsRepository.Companion)
+    every { SettingsRepository.getInstance(any()) } returns mockk(relaxed = true) {
+      every { shouldDisplaySavedPresetsAsHomeScreen() } returns true
+    }
 
     // recreate activity with null bundle
     activityScenario.close()
@@ -114,120 +113,26 @@ class MainActivityTest {
   }
 
   @Test
-  fun testSavedPresetMenuItem() {
-    onView(withId(R.id.layout_main))
-      .check(matches(isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
-
-    onView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.saved_presets))
-
-    activityScenario.onActivity {
-      assertEquals(
-        PresetFragment::class.java.simpleName,
-        it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
-      )
-
-      it.findViewById<NavigationView>(R.id.navigation_drawer).also { navView ->
-        assertEquals(R.id.saved_presets, navView.checkedItem?.itemId)
-        assertEquals(it.getString(R.string.saved_presets), navView.checkedItem?.title)
-      }
-    }
-  }
-
-  @Test
-  fun testSleepTimerMenuItem() {
-    onView(withId(R.id.layout_main))
-      .check(matches(isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
-
-    onView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.sleep_timer))
-
-    activityScenario.onActivity {
-      assertEquals(
-        SleepTimerFragment::class.java.simpleName,
-        it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
-      )
-
-      it.findViewById<NavigationView>(R.id.navigation_drawer).also { navView ->
-        assertEquals(R.id.sleep_timer, navView.checkedItem?.itemId)
-        assertEquals(it.getString(R.string.sleep_timer), navView.checkedItem?.title)
-      }
-    }
-  }
-
-  @Test
-  fun testWakeUpTimerMenuItem() {
-    onView(withId(R.id.layout_main))
-      .check(matches(isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
-
-    onView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.wake_up_timer))
-
-    activityScenario.onActivity {
-      assertEquals(
-        WakeUpTimerFragment::class.java.simpleName,
-        it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
-      )
-
-      it.findViewById<NavigationView>(R.id.navigation_drawer).also { navView ->
-        assertEquals(R.id.wake_up_timer, navView.checkedItem?.itemId)
-        assertEquals(it.getString(R.string.wake_up_timer), navView.checkedItem?.title)
-      }
-    }
-  }
-
-  @Test
-  fun testThemeMenuItem() {
-    val nightModes = arrayOf(
-      AppCompatDelegate.MODE_NIGHT_NO,
-      AppCompatDelegate.MODE_NIGHT_YES,
-      AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-    )
-
-    val themes = InstrumentationRegistry.getInstrumentation()
-      .targetContext
-      .resources
-      .getStringArray(R.array.app_themes)
-
-    for (i in themes.indices) {
+  fun testNavigatedFragmentsMenuItems() {
+    for ((menuItemID, fragmentClass) in MainActivity.NAVIGATED_FRAGMENTS) {
       onView(withId(R.id.layout_main))
         .check(matches(isClosed(Gravity.START)))
         .perform(DrawerActions.open(Gravity.START))
 
       onView(withId(R.id.navigation_drawer))
-        .perform(NavigationViewActions.navigateTo(R.id.app_theme))
+        .perform(NavigationViewActions.navigateTo(menuItemID))
 
-      onView(withText(themes[i]))
-        .inRoot(isDialog())
-        .check(matches(isDisplayed()))
-        .perform(click())
+      EspressoX.waitForView(allOf(withId(R.id.navigation_drawer), isClosed()))
 
-      onView(withId(R.id.layout_main)).check(matches(isDisplayed())) // wait for activity to recreate
-      assertEquals(nightModes[i], AppCompatDelegate.getDefaultNightMode())
-    }
-  }
+      activityScenario.onActivity {
+        assertEquals(
+          fragmentClass.simpleName,
+          it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
+        )
 
-  @Test
-  fun testAboutMenuItem() {
-    onView(withId(R.id.layout_main))
-      .check(matches(isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
-
-    onView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.about))
-
-    activityScenario.onActivity {
-      assertEquals(
-        AboutFragment::class.java.simpleName,
-        it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
-      )
-
-      it.findViewById<NavigationView>(R.id.navigation_drawer).also { navView ->
-        assertEquals(R.id.about, navView.checkedItem?.itemId)
-        assertEquals(it.getString(R.string.about), navView.checkedItem?.title)
+        it.findViewById<NavigationView>(R.id.navigation_drawer).also { navView ->
+          assertEquals(menuItemID, navView.checkedItem?.itemId)
+        }
       }
     }
   }
@@ -250,28 +155,6 @@ class MainActivityTest {
   }
 
   @Test
-  fun testSupportDevelopmentMenuItem() {
-    onView(withId(R.id.layout_main))
-      .check(matches(isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
-
-    onView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.support_development))
-
-    activityScenario.onActivity {
-      assertEquals(
-        SupportDevelopmentFragment::class.java.simpleName,
-        it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
-      )
-
-      it.findViewById<NavigationView>(R.id.navigation_drawer).also { navView ->
-        assertEquals(R.id.support_development, navView.checkedItem?.itemId)
-        assertEquals(it.getString(R.string.support_development), navView.checkedItem?.title)
-      }
-    }
-  }
-
-  @Test
   fun testReportIssuesMenuItem() {
     Intents.init()
     try {
@@ -285,17 +168,13 @@ class MainActivityTest {
       onView(withId(R.id.navigation_drawer))
         .perform(NavigationViewActions.navigateTo(R.id.report_issue))
 
-      intended(
-        filterEquals(
-          Intent(
-            Intent.ACTION_VIEW, Uri.parse(
-              InstrumentationRegistry.getInstrumentation()
-                .targetContext
-                .getString(R.string.app_issues_url)
-            )
-          )
-        )
-      )
+      val context = ApplicationProvider.getApplicationContext<Context>()
+      var url = context.getString(R.string.app_issues_github_url)
+      if (BuildConfig.IS_PLAY_STORE_BUILD) {
+        url = context.getString(R.string.app_issues_form_url)
+      }
+
+      intended(filterEquals(Intent(Intent.ACTION_VIEW, Uri.parse(url))))
     } finally {
       Intents.release()
     }
@@ -319,39 +198,8 @@ class MainActivityTest {
         filterEquals(
           Intent(
             Intent.ACTION_VIEW, Uri.parse(
-              InstrumentationRegistry.getInstrumentation()
-                .targetContext
-                .getString(R.string.feedback_form_url)
-            )
-          )
-        )
-      )
-    } finally {
-      Intents.release()
-    }
-  }
-
-  @Test
-  fun testRateOnPlayStoreMenuItem() {
-    Intents.init()
-    try {
-      Intents.intending(hasAction(Intent.ACTION_VIEW))
-        .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, Intent()))
-
-      onView(withId(R.id.layout_main))
-        .check(matches(isClosed(Gravity.START)))
-        .perform(DrawerActions.open(Gravity.START))
-
-      onView(withId(R.id.navigation_drawer))
-        .perform(NavigationViewActions.navigateTo(R.id.rate_on_play_store))
-
-      intended(
-        filterEquals(
-          Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(
               ApplicationProvider.getApplicationContext<Context>()
-                .getString(R.string.rate_us_on_play_store_url)
+                .getString(R.string.feedback_form_url)
             )
           )
         )
@@ -510,6 +358,25 @@ class MainActivityTest {
           .getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1)
           .name
       )
+    }
+  }
+
+  @Test
+  fun testAppTheme() {
+    val nightModes = arrayOf(
+      AppCompatDelegate.MODE_NIGHT_NO,
+      AppCompatDelegate.MODE_NIGHT_YES,
+      AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+    )
+
+    val mockRepo = mockk<SettingsRepository>()
+    mockkObject(SettingsRepository.Companion)
+    every { SettingsRepository.getInstance(any()) } returns mockRepo
+
+    for (nightMode in nightModes) {
+      every { mockRepo.getAppThemeAsNightMode() } returns nightMode
+      activityScenario.recreate()
+      assertEquals(nightMode, AppCompatDelegate.getDefaultNightMode())
     }
   }
 }

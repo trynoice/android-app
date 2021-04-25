@@ -165,7 +165,7 @@
     <string name="time_bridge">y</string>
     <string name="wake_up_timer_schedule_set">La alarma sonará en %1$s %2$s %3$s</string>
     <string name="wake_up_timer_cancelled">¡Despertador cancelado!</string>
-    <string name="show_saved_preset_on_startup">Mostrar preajustes guardados al iniciar la aplicación</string>
+    <string name="saved_presets_as_home_screen_summary">Mostrar preajustes guardados al iniciar la aplicación</string>
     <string name="preset_does_not_exist">El preajuste no existe. ¡Puede haber sido borrada!</string>
     <string name="add_to_home_screen">Añadir a la pantalla de inicio</string>
     <string name="okay">Vale</string>
