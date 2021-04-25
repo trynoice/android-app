@@ -38,6 +38,12 @@
     android:title="@string/settings" />
 
   <item
+    android:id="@+id/support_development"
+    android:icon="@drawable/ic_nav_support_development"
+    android:title="@string/support_development"
+    android:checkable="true" />
+
+  <item
     android:id="@+id/about"
     android:icon="@drawable/ic_nav_info"
     android:title="@string/about"
@@ -50,12 +56,6 @@
     android:checkable="false" />
 
   <item
-    android:id="@+id/support_development"
-    android:icon="@drawable/ic_nav_support_development"
-    android:title="@string/support_development"
-    android:checkable="true" />
-
-  <item
     android:id="@+id/report_issue"
     android:icon="@drawable/ic_nav_report"
     android:title="@string/report_issue"
@@ -66,11 +66,5 @@
     android:checkable="false"
     android:icon="@drawable/ic_nav_feedback"
     android:title="@string/submit_feedback" />
-
-  <item
-    android:id="@+id/rate_on_play_store"
-    android:icon="@drawable/ic_nav_rate"
-    android:title="@string/about_play_store"
-    android:checkable="false" />
 
 </menu>

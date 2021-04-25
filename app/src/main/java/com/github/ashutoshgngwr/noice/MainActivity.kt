@@ -91,8 +91,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // setup listener for navigation item clicks
     binding.navigationDrawer.setNavigationItemSelectedListener(this)
-    binding.navigationDrawer.menu.findItem(R.id.rate_on_play_store).isVisible =
-      BuildConfig.IS_PLAY_STORE_BUILD
 
     // bind navigation drawer menu items checked state with fragment back stack
     supportFragmentManager.addOnBackStackChangedListener {
@@ -201,16 +199,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         startActivity(Intent(this, AppIntroActivity::class.java))
       }
       R.id.report_issue -> {
-        customTabsIntent.launchUrl(this, Uri.parse(getString(R.string.app_issues_url)))
+        var url = getString(R.string.app_issues_github_url)
+        if (BuildConfig.IS_PLAY_STORE_BUILD) {
+          url = getString(R.string.app_issues_form_url)
+        }
+
+        customTabsIntent.launchUrl(this, Uri.parse(url))
       }
       R.id.submit_feedback -> {
         customTabsIntent.launchUrl(this, Uri.parse(getString(R.string.feedback_form_url)))
-      }
-      R.id.rate_on_play_store -> {
-        startActivity(
-          Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.rate_us_on_play_store_url)))
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
       }
     }
 

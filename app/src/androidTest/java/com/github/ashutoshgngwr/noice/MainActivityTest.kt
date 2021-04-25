@@ -26,7 +26,6 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.*
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
@@ -169,17 +168,13 @@ class MainActivityTest {
       onView(withId(R.id.navigation_drawer))
         .perform(NavigationViewActions.navigateTo(R.id.report_issue))
 
-      intended(
-        filterEquals(
-          Intent(
-            Intent.ACTION_VIEW, Uri.parse(
-              InstrumentationRegistry.getInstrumentation()
-                .targetContext
-                .getString(R.string.app_issues_url)
-            )
-          )
-        )
-      )
+      val context = ApplicationProvider.getApplicationContext<Context>()
+      var url = context.getString(R.string.app_issues_github_url)
+      if (BuildConfig.IS_PLAY_STORE_BUILD) {
+        url = context.getString(R.string.app_issues_form_url)
+      }
+
+      intended(filterEquals(Intent(Intent.ACTION_VIEW, Uri.parse(url))))
     } finally {
       Intents.release()
     }
@@ -203,39 +198,8 @@ class MainActivityTest {
         filterEquals(
           Intent(
             Intent.ACTION_VIEW, Uri.parse(
-              InstrumentationRegistry.getInstrumentation()
-                .targetContext
-                .getString(R.string.feedback_form_url)
-            )
-          )
-        )
-      )
-    } finally {
-      Intents.release()
-    }
-  }
-
-  @Test
-  fun testRateOnPlayStoreMenuItem() {
-    Intents.init()
-    try {
-      Intents.intending(hasAction(Intent.ACTION_VIEW))
-        .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, Intent()))
-
-      onView(withId(R.id.layout_main))
-        .check(matches(isClosed(Gravity.START)))
-        .perform(DrawerActions.open(Gravity.START))
-
-      onView(withId(R.id.navigation_drawer))
-        .perform(NavigationViewActions.navigateTo(R.id.rate_on_play_store))
-
-      intended(
-        filterEquals(
-          Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(
               ApplicationProvider.getApplicationContext<Context>()
-                .getString(R.string.rate_us_on_play_store_url)
+                .getString(R.string.feedback_form_url)
             )
           )
         )

@@ -99,7 +99,10 @@
   </string>
   <string name="credits__sound_wind_in_palm_trees" translatable="false">Palm Trees from BBC Sound Effects</string>
   <string name="credits__sound_wind_in_palm_trees_url" translatable="false">https://sound-effects.bbcrewind.co.uk/search?q=NHU05078140</string>
-  <string name="app_issues_url" translatable="false">https://github.com/ashutoshgngwr/noice/issues</string>
+  <string name="app_issues_github_url" translatable="false">https://github.com/ashutoshgngwr/noice/issues</string>
+  <string name="app_issues_form_url" translatable="false">
+    https://docs.google.com/forms/d/e/1FAIpQLSdYhyYjxhJ7IKyiqdc3AE3uINSoRWBw8ROB003gkZ47KeSjWw/viewform?usp=sf_link
+  </string>
   <string name="feedback_form_url" translatable="false">
     https://docs.google.com/forms/d/e/1FAIpQLSdEfOCyWfQ4QFMnLqlLj3BF27VKS1C-CQIokbmkXFchf6QZ6g/viewform?usp=sf_link
   </string>
