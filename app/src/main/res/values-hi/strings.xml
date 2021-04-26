@@ -180,4 +180,10 @@
     </plurals>
     <string name="time_bridge">और</string>
     <string name="random_preset_description">उत्पन्न रैंडम प्रीसेट में चुने हुए मूड के अनुरूप ध्वनियाँ होंगी। इसके अलावा, घने प्रीसेट एक साथ अधिक ध्वनियों को चलाने का प्रयास करेंगे।</string>
+    <string name="app_shortcut_creation_failed">ऐप शॉर्टकट में प्रीसेट जोड़ने में विफल!</string>
+    <string name="app_shortcut_created">ऐप शॉर्टकट्स में प्रीसेट जोड़ा दिया गया है!</string>
+    <string name="app_shortcut_removed">प्रीसेट को ऐप शॉर्टकट से हटा दिया गया है!</string>
+    <string name="remove_from_app_shortcuts">ऐप शॉर्टकट से निकालें</string>
+    <string name="add_to_app_shortcuts">ऐप शॉर्टकट में जोड़ें</string>
+    <string name="app_authors">नोइस ऑथर्स की सूची देखें</string>
 </resources>
