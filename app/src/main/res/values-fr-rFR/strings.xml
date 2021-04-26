@@ -177,4 +177,7 @@
     <string name="wake_up_timer_schedule_set">L\'alarme s\'éteindra dans %1$s %2$s %3$s</string>
     <string name="random_preset_description">Les préréglages aléatoires générés contiendront des sons correspondant à l\'ambiance choisie. De plus, les préréglages denses tenteront de jouer plus de sons simultanément.</string>
     <string name="app_authors">Voir la liste des auteurs de Noice</string>
+    <string name="app_shortcut_creation_failed">Échec de l\'ajout du préréglage aux raccourcis d\'applis !</string>
+    <string name="remove_from_app_shortcuts">Retirer des raccourcis d\'applis</string>
+    <string name="add_to_app_shortcuts">Ajouter aux raccourcis des applis</string>
 </resources>
