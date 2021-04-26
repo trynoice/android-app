@@ -37,7 +37,7 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkAll
 import io.mockk.verify
-import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -92,7 +92,7 @@ class MainActivityTest {
   @Test
   fun testIfSavedPresetsIsVisibleOnStart() {
     mockkObject(SettingsRepository.Companion)
-    every { SettingsRepository.getInstance(any()) } returns mockk(relaxed = true) {
+    every { SettingsRepository.newInstance(any()) } returns mockk(relaxed = true) {
       every { shouldDisplaySavedPresetsAsHomeScreen() } returns true
     }
 
@@ -122,8 +122,7 @@ class MainActivityTest {
       onView(withId(R.id.navigation_drawer))
         .perform(NavigationViewActions.navigateTo(menuItemID))
 
-      EspressoX.waitForView(allOf(withId(R.id.navigation_drawer), isClosed()))
-
+      EspressoX.waitForView(withId(R.id.navigation_drawer), isClosed())
       activityScenario.onActivity {
         assertEquals(
           fragmentClass.simpleName,
@@ -218,13 +217,13 @@ class MainActivityTest {
     onView(withId(R.id.navigation_drawer))
       .perform(NavigationViewActions.navigateTo(R.id.saved_presets))
 
-    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)))
+    EspressoX.waitForView(withId(R.id.layout_main), isClosed(Gravity.START))
       .perform(DrawerActions.open(Gravity.START))
 
     onView(withId(R.id.navigation_drawer))
       .perform(NavigationViewActions.navigateTo(R.id.about))
 
-    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)))
+    EspressoX.waitForView(withId(R.id.layout_main), isClosed(Gravity.START))
       .check(matches(isClosed(Gravity.START)))
 
     activityScenario.onActivity {
@@ -282,7 +281,7 @@ class MainActivityTest {
       assertEquals(2, it.supportFragmentManager.backStackEntryCount)
     }
 
-    EspressoX.waitForView(allOf(withId(R.id.layout_main), isClosed(Gravity.START)))
+    EspressoX.waitForView(withId(R.id.layout_main), isClosed(Gravity.START))
       .perform(DrawerActions.open(Gravity.START))
 
     // try to reselect the same nav item
@@ -312,8 +311,7 @@ class MainActivityTest {
       })
     }
 
-    EspressoX.waitForView(withId(R.id.action_play_pause_toggle))
-      .check(matches(isDisplayed()))
+    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), isDisplayed())
       .perform(click())
 
     verify(exactly = 1) { MediaPlayerService.pausePlayback(any()) }
@@ -325,8 +323,7 @@ class MainActivityTest {
       })
     }
 
-    EspressoX.waitForView(withId(R.id.action_play_pause_toggle))
-      .check(matches(isDisplayed()))
+    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), isDisplayed())
       .perform(click())
 
     verify(exactly = 1) { MediaPlayerService.resumePlayback(any()) }
@@ -338,8 +335,7 @@ class MainActivityTest {
       })
     }
 
-    EspressoX.waitForView(withId(R.id.action_play_pause_toggle))
-      .check(doesNotExist())
+    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), not(isDisplayed()))
   }
 
   @Test
@@ -371,8 +367,7 @@ class MainActivityTest {
 
     val mockRepo = mockk<SettingsRepository>()
     mockkObject(SettingsRepository.Companion)
-    every { SettingsRepository.getInstance(any()) } returns mockRepo
-
+    every { SettingsRepository.newInstance(any()) } returns mockRepo
     for (nightMode in nightModes) {
       every { mockRepo.getAppThemeAsNightMode() } returns nightMode
       activityScenario.recreate()

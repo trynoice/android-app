@@ -6,33 +6,32 @@ import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.R
 
-class SettingsRepository internal constructor(context: Context) {
+/**
+ * [SettingsRepository] implements the data access layer for storing various user preferences.
+ */
+class SettingsRepository private constructor(private val context: Context) {
 
   companion object {
     const val APP_THEME_LIGHT = 0
     const val APP_THEME_DARK = 1
     const val APP_THEME_SYSTEM_DEFAULT = 2
 
-    private lateinit var instance: SettingsRepository
-
-    fun getInstance(context: Context): SettingsRepository {
-      if (!this::instance.isInitialized) {
-        instance = SettingsRepository(context)
-      }
-
-      return instance
-    }
+    /**
+     * Creates a new instance of [SettingsRepository]. It is needed because mockk in unable to mock
+     * constructors on Android instrumented tests and there's no cleaner way to inject mocks in
+     * Android components than mocking companion object methods.
+     */
+    fun newInstance(context: Context) = SettingsRepository(context)
   }
 
-  private val prefs = PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
-  private val resources = context.applicationContext.resources
+  private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
   /**
    * Gets user setting for current app theme.
    * Returns one of [APP_THEME_LIGHT], [APP_THEME_DARK] or [APP_THEME_SYSTEM_DEFAULT]
    */
   fun getAppTheme(): Int {
-    return prefs.getInt(resources.getString(R.string.app_theme_key), APP_THEME_SYSTEM_DEFAULT)
+    return prefs.getInt(context.getString(R.string.app_theme_key), APP_THEME_SYSTEM_DEFAULT)
   }
 
   /**
@@ -54,20 +53,20 @@ class SettingsRepository internal constructor(context: Context) {
    * @param newTheme should be one of [APP_THEME_LIGHT], [APP_THEME_DARK] or [APP_THEME_SYSTEM_DEFAULT]
    */
   fun setAppTheme(newTheme: Int) {
-    prefs.edit { putInt(resources.getString(R.string.app_theme_key), newTheme) }
+    prefs.edit { putInt(context.getString(R.string.app_theme_key), newTheme) }
   }
 
   /**
    * Returns the current value of switch preference with key [R.string.saved_presets_as_home_screen_key].
    */
   fun shouldDisplaySavedPresetsAsHomeScreen(): Boolean {
-    return prefs.getBoolean(resources.getString(R.string.saved_presets_as_home_screen_key), false)
+    return prefs.getBoolean(context.getString(R.string.saved_presets_as_home_screen_key), false)
   }
 
   /**
    * Returns the value of [R.string.sound_fade_duration_key] preference in milliseconds.
    */
   fun getSoundFadeDurationInMillis(): Long {
-    return prefs.getInt(resources.getString(R.string.sound_fade_duration_key), 1) * 1000L
+    return prefs.getInt(context.getString(R.string.sound_fade_duration_key), 1) * 1000L
   }
 }

@@ -63,9 +63,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
   private lateinit var castAPIWrapper: CastAPIWrapper
   private lateinit var customTabsIntent: CustomTabsIntent
-  private var playerManagerState = PlayerManager.State.STOPPED
+  private lateinit var settingsRepository: SettingsRepository
 
-  private val settingsRepository by lazy { SettingsRepository.getInstance(this) }
+  private var playerManagerState = PlayerManager.State.STOPPED
 
   override fun onCreate(savedInstanceState: Bundle?) {
     // because cast context is lazy initialized, cast menu item wouldn't show up until
@@ -73,6 +73,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // This should implicitly init CastContext.
     castAPIWrapper = CastAPIWrapper.from(this, false)
     super.onCreate(savedInstanceState)
+
+    settingsRepository = SettingsRepository.newInstance(this)
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
 
     binding = MainActivityBinding.inflate(layoutInflater)

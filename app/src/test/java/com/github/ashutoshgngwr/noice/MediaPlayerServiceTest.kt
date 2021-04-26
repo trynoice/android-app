@@ -6,7 +6,7 @@ import android.media.AudioManager
 import android.os.SystemClock
 import androidx.core.content.getSystemService
 import androidx.test.core.app.ApplicationProvider
-import com.github.ashutoshgngwr.noice.sound.Preset
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
@@ -19,7 +19,6 @@ import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.invoke
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkAll
@@ -43,6 +42,9 @@ class MediaPlayerServiceTest {
 
   @RelaxedMockK
   private lateinit var playerManager: PlayerManager
+
+  @RelaxedMockK
+  private lateinit var presetRepository: PresetRepository
 
   @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
   private lateinit var service: MediaPlayerService
@@ -139,8 +141,7 @@ class MediaPlayerServiceTest {
 
   @Test
   fun testOnStartCommand_withPlayPresetAction() {
-    mockkObject(Preset.Companion)
-    every { Preset.findByID(any(), "test") } returns mockk(relaxed = true)
+    every { presetRepository.get("test") } returns mockk(relaxed = true)
     every { mockServiceIntent.action } returns MediaPlayerService.ACTION_PLAY_PRESET
     every { mockServiceIntent.getStringExtra(MediaPlayerService.EXTRA_PRESET_ID) } returns "test"
 

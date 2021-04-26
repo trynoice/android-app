@@ -6,7 +6,6 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -18,7 +17,6 @@ import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import io.mockk.verify
 import org.junit.After
-import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Rule
@@ -87,9 +85,7 @@ class DonateActivityTest {
       verify(exactly = 1) { mockBillingProcessor.consumePurchase("test") }
     }
 
-    EspressoX.waitForView(withText(R.string.support_development__donate_thank_you))
-      .check(matches(isDisplayed()))
-
+    EspressoX.waitForView(withText(R.string.support_development__donate_thank_you), isDisplayed())
     onView(withText(android.R.string.ok)).perform(click())
     assertActivityState(Lifecycle.State.DESTROYED)
   }

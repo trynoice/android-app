@@ -7,11 +7,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.annotation.VisibleForTesting
-import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
-import com.github.ashutoshgngwr.noice.Utils.withGson
-import com.github.ashutoshgngwr.noice.sound.Preset
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
 
 object WakeUpTimerManager {
@@ -35,10 +35,10 @@ object WakeUpTimerManager {
   private const val RC_WAKE_UP_TIMER = 0x39
   private const val RC_MAIN_ACTIVITY = 0x40
 
+  private val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+
   private inline fun <T> withAlarmManager(ctx: Context, crossinline block: (AlarmManager) -> T): T {
-    return block.invoke(
-      requireNotNull(ContextCompat.getSystemService(ctx, AlarmManager::class.java))
-    )
+    return with(requireNotNull(ctx.getSystemService()), block)
   }
 
   private fun getPendingIntentForService(context: Context, timer: Timer?): PendingIntent {
@@ -76,14 +76,12 @@ object WakeUpTimerManager {
       return
     }
 
-    if (Preset.findByID(context, timer.presetID) == null) {
+    if (PresetRepository.newInstance(context).get(timer.presetID) == null) {
       return
     }
 
-    withGson {
-      PreferenceManager.getDefaultSharedPreferences(context).edit {
-        putString(PREF_WAKE_UP_TIMER, it.toJson(timer))
-      }
+    PreferenceManager.getDefaultSharedPreferences(context).edit {
+      putString(PREF_WAKE_UP_TIMER, gson.toJson(timer))
     }
 
     withAlarmManager(context) {
@@ -115,7 +113,7 @@ object WakeUpTimerManager {
     val timer = PreferenceManager.getDefaultSharedPreferences(context)
       .getString(PREF_WAKE_UP_TIMER, null)
 
-    return withGson { it.fromJson(timer, Timer::class.java) }
+    return gson.fromJson(timer, Timer::class.java)
   }
 
   /**
@@ -137,7 +135,7 @@ object WakeUpTimerManager {
       val lastSelectedPresetID = getString(PREF_LAST_USED_PRESET_ID, null)
 
       // ensure that preset with given ID exists in preferences.
-      Preset.findByID(context, lastSelectedPresetID)?.id
+      PresetRepository.newInstance(context).get(lastSelectedPresetID)?.id
     }
   }
 

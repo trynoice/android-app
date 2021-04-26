@@ -4,7 +4,8 @@ import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -14,6 +15,7 @@ import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
@@ -43,15 +45,20 @@ class SoundLibraryFragmentTest {
   val retryTestRule = RetryTestRule(5)
 
   private lateinit var mockEventBus: EventBus
+  private lateinit var mockPresetRepository: PresetRepository
   private lateinit var fragmentScenario: FragmentScenario<SoundLibraryFragment>
 
   @Before
   fun setup() {
-    mockkObject(InAppReviewFlowManager, MediaPlayerService.Companion)
+    mockkObject(InAppReviewFlowManager, MediaPlayerService.Companion, PresetRepository.Companion)
     mockkStatic(EventBus::class)
 
     mockEventBus = mockk(relaxed = true)
+    mockPresetRepository = mockk(relaxed = true)
+
     every { EventBus.getDefault() } returns mockEventBus
+    every { PresetRepository.newInstance(any()) } returns mockPresetRepository
+
     fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
 
@@ -191,8 +198,8 @@ class SoundLibraryFragmentTest {
 
     val preset = Preset.from("test", mockPlayers.values)
     mockkObject(Preset.Companion)
-    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(preset)
     every { Preset.from("", mockPlayers.values) } returns preset
+    every { mockPresetRepository.list() } returns arrayOf(preset)
     fragmentScenario.onFragment { fragment ->
       fragment.onPlayerManagerUpdate(mockk(relaxed = true) {
         every { state } returns PlayerManager.State.PLAYING
@@ -246,15 +253,11 @@ class SoundLibraryFragmentTest {
       }
     )
 
-    val preset = Preset.from("test", mockPlayers.values)
-    val mockValidator = mockk<(String) -> Boolean>()
-    mockkObject(Preset.Companion)
-    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf()
-    every { Preset.writeAllToUserPreferences(any(), any()) } returns Unit
-    every { Preset.from("", mockPlayers.values) } returns preset
-    every { Preset.duplicateNameValidator(any()) } returns mockValidator
-    every { mockValidator.invoke("test-exists") } returns true
-    every { mockValidator.invoke("test-does-not-exists") } returns false
+    every { mockPresetRepository.list() } returns arrayOf(
+      mockk(relaxed = true) {
+        every { name } returns "test-exists"
+      }
+    )
 
     fragmentScenario.onFragment { fragment ->
       fragment.onPlayerManagerUpdate(mockk(relaxed = true) {
@@ -291,7 +294,7 @@ class SoundLibraryFragmentTest {
       .check(matches(withText(R.string.preset_saved)))
 
     val presetSlot = slot<Preset>()
-    verify { Preset.appendToUserPreferences(any(), capture(presetSlot)) }
+    verify { mockPresetRepository.create(capture(presetSlot)) }
 
     for (playerState in presetSlot.captured.playerStates) {
       assertEquals(mockPlayers[playerState.soundKey]?.volume, playerState.volume)

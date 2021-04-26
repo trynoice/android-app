@@ -50,6 +50,7 @@ class SettingsFragmentTest {
 
     val context = ApplicationProvider.getApplicationContext<Context>()
     val themes = context.resources.getStringArray(R.array.app_themes)
+    val repo = SettingsRepository.newInstance(context)
 
     for (i in themes.indices) {
       onView(withText(R.string.app_theme)).perform(click())
@@ -61,7 +62,7 @@ class SettingsFragmentTest {
       // wait for activity to be recreated.
       onView(withText(R.string.app_theme)).check(matches(isDisplayed()))
       onView(withText(prefSummary[i])).check(matches(isDisplayed()))
-      assertEquals(nightModes[i], SettingsRepository.getInstance(context).getAppThemeAsNightMode())
+      assertEquals(nightModes[i], repo.getAppThemeAsNightMode())
     }
   }
 }

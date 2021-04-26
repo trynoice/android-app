@@ -6,8 +6,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import androidx.test.core.app.ApplicationProvider
-import com.github.ashutoshgngwr.noice.Utils.withGson
-import com.github.ashutoshgngwr.noice.sound.Preset
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import com.google.gson.GsonBuilder
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -30,6 +30,7 @@ import org.robolectric.shadows.ShadowPendingIntent
 class WakeUpTimerManagerTest {
 
   private lateinit var mockPrefs: SharedPreferences
+  private lateinit var mockPresetRepository: PresetRepository
   private lateinit var shadowAlarmManager: ShadowAlarmManager
 
   @Before
@@ -37,6 +38,11 @@ class WakeUpTimerManagerTest {
     mockkStatic(PreferenceManager::class)
     mockPrefs = mockk(relaxed = true)
     every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
+
+    mockkObject(PresetRepository.Companion)
+    mockPresetRepository = mockk(relaxed = true)
+    every { PresetRepository.newInstance(any()) } returns mockPresetRepository
+
     shadowAlarmManager = shadowOf(
       ApplicationProvider.getApplicationContext<Context>()
         .getSystemService(AlarmManager::class.java)
@@ -53,7 +59,6 @@ class WakeUpTimerManagerTest {
     val expectedTime = System.currentTimeMillis() + 10000L
     val expectedPresetID = "test-preset-id"
     val expectedVolume = 10
-    mockkObject(Preset.Companion)
 
     for (shouldUpdateMediaVolume in arrayOf(true, false)) {
       ShadowPendingIntent.reset()
@@ -61,13 +66,17 @@ class WakeUpTimerManagerTest {
         expectedPresetID, expectedTime, shouldUpdateMediaVolume, expectedVolume
       )
 
-      val expectedJSON = withGson { it.toJson(expectedTimer) }
+      val expectedJSON = GsonBuilder()
+        .excludeFieldsWithoutExposeAnnotation()
+        .create()
+        .toJson(expectedTimer)
+
       val mockPrefsEditor = mockk<SharedPreferences.Editor>(relaxed = true) {
         every { putString(any(), any()) } returns this
       }
 
       every { mockPrefs.edit() } returns mockPrefsEditor
-      every { Preset.findByID(any(), expectedPresetID) } returns mockk()
+      every { mockPresetRepository.get(expectedPresetID) } returns mockk()
 
       WakeUpTimerManager.set(ApplicationProvider.getApplicationContext(), expectedTimer)
 
@@ -132,8 +141,7 @@ class WakeUpTimerManagerTest {
       mockPrefs.getString(WakeUpTimerManager.PREF_WAKE_UP_TIMER, any())
     } returns """{"presetID": "test", "atMillis": $expectedTime}"""
 
-    mockkObject(Preset.Companion)
-    every { Preset.findByID(any(), "test") } returns mockk()
+    every { mockPresetRepository.get("test") } returns mockk()
 
     WakeUpTimerManager.BootReceiver()
       .onReceive(ApplicationProvider.getApplicationContext(), Intent(Intent.ACTION_BOOT_COMPLETED))
@@ -168,10 +176,9 @@ class WakeUpTimerManagerTest {
 
   @Test
   fun testGetLastUsedPresetID() {
-    mockkObject(Preset.Companion)
-
     val context = ApplicationProvider.getApplicationContext<Context>()
     every { mockPrefs.getString(WakeUpTimerManager.PREF_LAST_USED_PRESET_ID, any()) } returns null
+    every { mockPresetRepository.get(null) } returns null
     assertNull(WakeUpTimerManager.getLastUsedPresetID(context))
 
     val presetID = "test-preset-id"
@@ -179,10 +186,12 @@ class WakeUpTimerManagerTest {
       mockPrefs.getString(WakeUpTimerManager.PREF_LAST_USED_PRESET_ID, any())
     } returns presetID
 
-    every { Preset.findByID(any(), presetID) } returns null // preset doesn't exist
+    // preset doesn't exist
+    every { mockPresetRepository.get(presetID) } returns null
     assertNull(WakeUpTimerManager.getLastUsedPresetID(context))
 
-    every { Preset.findByID(any(), presetID) } returns mockk {
+    // preset doesn't exist
+    every { mockPresetRepository.get(presetID) } returns mockk {
       every { id } returns presetID
     }
 

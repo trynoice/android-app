@@ -20,6 +20,7 @@ import com.github.ashutoshgngwr.noice.ShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.databinding.PresetListFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.PresetListItemBinding
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus
@@ -30,6 +31,7 @@ import java.util.*
 class PresetFragment : Fragment() {
 
   private lateinit var binding: PresetListFragmentBinding
+  private lateinit var presetRepository: PresetRepository
 
   private var adapter: PresetListAdapter? = null
   private var activePresetPos = -1
@@ -45,7 +47,8 @@ class PresetFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    dataSet = Preset.readAllFromUserPreferences(requireContext()).toMutableList()
+    presetRepository = PresetRepository.newInstance(requireContext())
+    dataSet = presetRepository.list().toMutableList()
     adapter = PresetListAdapter(requireContext())
     binding.presetList.also {
       it.adapter = adapter
@@ -190,7 +193,6 @@ class PresetFragment : Fragment() {
 
     private fun showRenamePresetInput() {
       DialogFragment.show(childFragmentManager) {
-        val duplicateNameValidator = Preset.duplicateNameValidator(requireContext())
         title(R.string.rename)
         input(
           hintRes = R.string.name,
@@ -199,7 +201,7 @@ class PresetFragment : Fragment() {
             when {
               it.isBlank() -> R.string.preset_name_cannot_be_empty
               dataSet[adapterPosition].name == it -> 0 // no error if the name didn't change
-              duplicateNameValidator(it) -> R.string.preset_already_exists
+              dataSet.any { p -> it == p.name } -> R.string.preset_already_exists
               else -> 0
             }
           }
@@ -208,7 +210,7 @@ class PresetFragment : Fragment() {
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
           dataSet[adapterPosition].name = getInputText()
-          Preset.writeAllToUserPreferences(requireContext(), dataSet)
+          presetRepository.update(dataSet[adapterPosition])
           adapter?.notifyItemChanged(adapterPosition)
 
           // maybe show in-app review dialog to the user
@@ -224,7 +226,7 @@ class PresetFragment : Fragment() {
         negativeButton(R.string.cancel)
         positiveButton(R.string.delete) {
           val preset = dataSet.removeAt(adapterPosition)
-          Preset.writeAllToUserPreferences(requireContext(), dataSet)
+          presetRepository.delete(preset.id)
           // then stop playback if recently deleted preset was playing
           if (adapterPosition == activePresetPos) {
             MediaPlayerService.stopPlayback(requireContext())

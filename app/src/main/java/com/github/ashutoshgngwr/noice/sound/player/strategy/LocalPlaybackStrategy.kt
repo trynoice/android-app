@@ -36,7 +36,7 @@ class LocalPlaybackStrategy(
 
   private val handler = Handler(Looper.getMainLooper())
   private val players = sound.src.map { initPlayer(context, it, sound.isLooping, audioAttributes) }
-  private val settingsRepository = SettingsRepository.getInstance(context)
+  private val settingsRepository = SettingsRepository.newInstance(context)
 
   private fun initPlayer(
     context: Context,

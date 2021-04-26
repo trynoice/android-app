@@ -5,7 +5,7 @@ import android.content.pm.ShortcutManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.github.ashutoshgngwr.noice.sound.Preset
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 
 class ShortcutHandlerActivity : AppCompatActivity() {
 
@@ -21,7 +21,7 @@ class ShortcutHandlerActivity : AppCompatActivity() {
       // id. Hence, using preset id as fallback in cases where shortcut id is null.
       reportShortcutUsage(intent.getStringExtra(EXTRA_SHORTCUT_ID) ?: it)
 
-      if (Preset.findByID(this, it) == null) {
+      if (PresetRepository.newInstance(this).get(it) == null) {
         Toast.makeText(this, R.string.preset_does_not_exist, Toast.LENGTH_LONG).show()
       } else {
         MediaPlayerService.playPreset(this, it)

@@ -35,7 +35,7 @@ class SettingsRepositoryTest {
     }
 
     context = ApplicationProvider.getApplicationContext()
-    settingsRepository = SettingsRepository(context)
+    settingsRepository = SettingsRepository.newInstance(  context)
     MockKAnnotations.init(this)
   }
 

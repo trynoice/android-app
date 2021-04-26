@@ -20,6 +20,7 @@ import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.Player
@@ -191,8 +192,10 @@ class MediaPlayerService : Service() {
   }
 
   private val handler = Handler(Looper.getMainLooper())
+
   private lateinit var playerManager: PlayerManager
   private lateinit var wakeLock: PowerManager.WakeLock
+  private lateinit var presetRepository: PresetRepository
 
   private val becomingNoisyReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -280,6 +283,10 @@ class MediaPlayerService : Service() {
       playerManager = PlayerManager(this)
     }
 
+    if (!this::presetRepository.isInitialized) {
+      presetRepository = PresetRepository.newInstance(this)
+    }
+
     playerManager.setOnPlayerUpdateListener(onPlayerUpdateListener)
     createNotificationChannel()
 
@@ -337,7 +344,7 @@ class MediaPlayerService : Service() {
 
         intent.getStringExtra(EXTRA_PRESET_ID)?.also {
           Log.d(TAG, "starting preset with id: $it")
-          Preset.findByID(this, it)?.also { preset ->
+          presetRepository.get(it)?.also { preset ->
             playerManager.playPreset(preset)
           }
         }
@@ -351,7 +358,7 @@ class MediaPlayerService : Service() {
           throw IllegalArgumentException("invalid range for number of sounds in random preset")
         }
 
-        playerManager.playPreset(Preset.generateRandom(tag, minSounds..maxSounds))
+        playerManager.playPreset(Preset.random(tag, minSounds..maxSounds))
       }
 
       ACTION_SCHEDULE_STOP_PLAYBACK -> {

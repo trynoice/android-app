@@ -19,6 +19,7 @@ import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.ShortcutHandlerActivity
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
@@ -46,12 +47,19 @@ class PresetFragmentTest {
   val retryTestRule = RetryTestRule(5)
 
   private lateinit var fragmentScenario: FragmentScenario<PresetFragment>
-
-  // returned when Preset.readAllFromUserPreferences() is called
   private lateinit var mockPreset: Preset
+  private lateinit var mockPresetRepository: PresetRepository
 
   @Before
   fun setup() {
+    mockkStatic(ShortcutManagerCompat::class)
+    mockkObject(
+      InAppReviewFlowManager,
+      Preset.Companion,
+      MediaPlayerService.Companion,
+      PresetRepository.Companion
+    )
+
     mockPreset = mockk(relaxed = true) {
       every { id } returns "test-id"
       every { name } returns "test"
@@ -61,9 +69,13 @@ class PresetFragmentTest {
       )
     }
 
-    mockkObject(InAppReviewFlowManager, Preset.Companion, MediaPlayerService.Companion)
-    mockkStatic(ShortcutManagerCompat::class)
-    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(mockPreset)
+    mockPresetRepository = mockk {
+      every { list() } returns arrayOf(mockPreset, mockk(relaxed = true) {
+        every { name } returns "test-exists"
+      })
+    }
+
+    every { PresetRepository.newInstance(any()) } returns mockPresetRepository
     fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
 
@@ -77,7 +89,7 @@ class PresetFragmentTest {
     onView(withId(R.id.empty_list_hint))
       .check(matches(withEffectiveVisibility(Visibility.GONE)))
 
-    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf()
+    every { mockPresetRepository.list() } returns arrayOf()
     fragmentScenario.recreate()
     onView(withId(R.id.empty_list_hint))
       .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
@@ -120,6 +132,8 @@ class PresetFragmentTest {
 
   @Test
   fun testRecyclerViewItem_deleteOption() {
+    every { mockPresetRepository.delete(any()) } returns true
+
     // open context menu
     onView(withId(R.id.preset_list)).perform(
       RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
@@ -134,7 +148,7 @@ class PresetFragmentTest {
 
     onView(withText("test")).check(doesNotExist())
     verify(exactly = 1) {
-      Preset.writeAllToUserPreferences(any(), emptyList())
+      mockPresetRepository.delete("test-id")
       ShortcutManagerCompat.removeDynamicShortcuts(any(), listOf("test-id"))
       InAppReviewFlowManager.maybeAskForReview(any())
     }
@@ -144,6 +158,8 @@ class PresetFragmentTest {
   fun testRecyclerViewItem_deleteOption_onPresetPlaying() {
     // ensure that PresetFragment assumes it is playing a preset
     every { Preset.from(any(), any()) } returns mockPreset
+    every { mockPresetRepository.delete(any()) } returns true
+
     fragmentScenario.onFragment {
       it.onPlayerManagerUpdate(mockk(relaxed = true) {
         every { state } returns PlayerManager.State.PLAYING
@@ -168,14 +184,7 @@ class PresetFragmentTest {
 
   @Test
   fun testRecyclerViewItem_renameOption() {
-    // if preset with given name already exists, save button should be disabled
-    val mockValidator = mockk<(String) -> Boolean>()
-    every { Preset.duplicateNameValidator(any()) } returns mockValidator
-    every { mockValidator.invoke("test-exists") } returns true
-    every { mockValidator.invoke("test-does-not-exists") } returns false
-
-    // stub writing to the shared preferences part.
-    every { Preset.writeAllToUserPreferences(any(), any()) } returns Unit
+    every { mockPresetRepository.update(any()) } returns Unit
 
     // open context menu
     onView(withId(R.id.preset_list)).perform(
@@ -201,14 +210,14 @@ class PresetFragmentTest {
       .check(matches(isEnabled()))
       .perform(click()) // click on positive button
 
-    val presetsSlot = slot<List<Preset>>()
+    val presetSlot = slot<Preset>()
     verify(exactly = 1) {
       mockPreset.name = "test-does-not-exists"
-      Preset.writeAllToUserPreferences(any(), capture(presetsSlot))
+      mockPresetRepository.update(capture(presetSlot))
       InAppReviewFlowManager.maybeAskForReview(any())
     }
 
-    assertEquals(mockPreset, presetsSlot.captured[0])
+    assertEquals(mockPreset, presetSlot.captured)
   }
 
   @Test

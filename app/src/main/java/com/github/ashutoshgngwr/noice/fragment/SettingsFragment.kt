@@ -9,10 +9,12 @@ import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
-  private val repository by lazy { SettingsRepository.getInstance(requireContext()) }
+  private lateinit var settingsRepository: SettingsRepository
 
   override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
     setPreferencesFromResource(R.xml.settings, rootKey)
+    settingsRepository = SettingsRepository.newInstance(requireContext())
+
     with(findPreference<Preference>(R.string.app_theme_key)) {
       summary = getAppThemeString()
       setOnPreferenceClickListener {
@@ -20,9 +22,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
           title(R.string.app_theme)
           singleChoiceItems(
             items = resources.getStringArray(R.array.app_themes),
-            currentChoice = repository.getAppTheme(),
+            currentChoice = settingsRepository.getAppTheme(),
             onItemSelected = { theme ->
-              repository.setAppTheme(theme)
+              settingsRepository.setAppTheme(theme)
               summary = getAppThemeString()
               requireActivity().recreate()
             }
@@ -41,7 +43,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
   private fun getAppThemeString(): String {
     return getString(
-      when (repository.getAppTheme()) {
+      when (settingsRepository.getAppTheme()) {
         SettingsRepository.APP_THEME_DARK -> R.string.app_theme_dark
         SettingsRepository.APP_THEME_LIGHT -> R.string.app_theme_light
         else -> R.string.app_theme_system_default

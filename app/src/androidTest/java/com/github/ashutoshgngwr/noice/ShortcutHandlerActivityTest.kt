@@ -9,6 +9,7 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.sound.Preset
 import io.mockk.clearMocks
 import io.mockk.every
@@ -37,14 +38,17 @@ class ShortcutHandlerActivityTest {
 
   @Test
   fun testOnCreate() {
+    mockkObject(PresetRepository.Companion, MediaPlayerService.Companion)
+
+    val mockRepo = mockk<PresetRepository>()
+    every { PresetRepository.newInstance(any()) } returns mockRepo
+
     val presetIDExpectations = arrayOf("invalid-id", "valid-id")
     val presetFindByIdReturns = arrayOf(null, mockk<Preset>(relaxed = true))
-    val nPresetPlayerStateCalls = arrayOf(0, 1)
+    val playPresetCallCount = arrayOf(0, 1)
 
-    mockkObject(Preset.Companion)
     for (i in presetIDExpectations.indices) {
-      every { Preset.findByID(any(), presetIDExpectations[i]) } returns presetFindByIdReturns[i]
-
+      every { mockRepo.get(presetIDExpectations[i]) } returns presetFindByIdReturns[i]
       Intents.init()
       Intents.intending(hasComponent(MainActivity::class.qualifiedName))
         .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, Intent()))
@@ -63,17 +67,12 @@ class ShortcutHandlerActivityTest {
           Intents.times(1)
         )
 
-        // since there is no way to match the service intents, we'll have to rely on the preset mock.
-        // if the media player service was started with an intent to play a preset, we can verify
-        // the calls on the preset mock.
-        // best source I could find: https://stackoverflow.com/a/32131576/2410641
-        presetFindByIdReturns[i]?.also {
-          verify(atLeast = nPresetPlayerStateCalls[i]) { it.playerStates }
+        verify(exactly = playPresetCallCount[i]) {
+          MediaPlayerService.playPreset(any(), presetIDExpectations[i])
         }
-
       } finally {
         Intents.release()
-        clearMocks(Preset.Companion)
+        clearMocks(MediaPlayerService.Companion)
       }
     }
   }

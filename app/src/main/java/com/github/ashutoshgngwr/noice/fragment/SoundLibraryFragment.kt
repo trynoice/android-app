@@ -17,6 +17,7 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SoundGroupListItemBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundLibraryFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundListItemBinding
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.sound.Preset
 import com.github.ashutoshgngwr.noice.sound.Sound
 import com.github.ashutoshgngwr.noice.sound.player.Player
@@ -41,6 +42,7 @@ class SoundLibraryFragment : Fragment() {
   }
 
   private lateinit var binding: SoundLibraryFragmentBinding
+  private lateinit var presetRepository: PresetRepository
 
   private var adapter: SoundListAdapter? = null
   private var players = emptyMap<String, Player>()
@@ -75,10 +77,7 @@ class SoundLibraryFragment : Fragment() {
   @Subscribe(sticky = true, threadMode = ThreadMode.ASYNC)
   fun onPlayerManagerUpdate(event: MediaPlayerService.OnPlayerManagerUpdateEvent) {
     this.players = event.players
-    var showSavePresetFAB: Boolean
-    Preset.readAllFromUserPreferences(requireContext()).also {
-      showSavePresetFAB = !it.contains(Preset.from("", players.values))
-    }
+    val showSavePresetFAB = !presetRepository.list().contains(Preset.from("", players.values))
 
     view?.post {
       adapter?.notifyDataSetChanged()
@@ -100,6 +99,7 @@ class SoundLibraryFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    presetRepository = PresetRepository.newInstance(requireContext())
     adapter = SoundListAdapter(requireContext())
     binding.soundList.also {
       it.adapter = adapter
@@ -114,12 +114,12 @@ class SoundLibraryFragment : Fragment() {
 
     binding.savePresetButton.setOnClickListener {
       DialogFragment.show(childFragmentManager) {
-        val duplicateNameValidator = Preset.duplicateNameValidator(requireContext())
+        val presets = presetRepository.list()
         title(R.string.save_preset)
         input(hintRes = R.string.name, validator = {
           when {
             it.isBlank() -> R.string.preset_name_cannot_be_empty
-            duplicateNameValidator(it) -> R.string.preset_already_exists
+            presets.any { p -> it == p.name } -> R.string.preset_already_exists
             else -> 0
           }
         })
@@ -127,7 +127,7 @@ class SoundLibraryFragment : Fragment() {
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
           val preset = Preset.from(getInputText(), players.values)
-          Preset.appendToUserPreferences(requireContext(), preset)
+          presetRepository.create(preset)
           binding.savePresetButton.hide()
           showPresetSavedMessage()
 
