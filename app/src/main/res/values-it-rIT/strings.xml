@@ -152,4 +152,7 @@
     <string name="wake_up_timer_schedule_set">La sveglia si spegnerà in %1$s %2$s %3$s</string>
     <string name="random_preset_description">I preset casuali generati conterranno suoni corrispondenti allo stato d\'animo selezionato. Inoltre, preset densi cercheranno di riprodurre più suoni simultaneamente.</string>
     <string name="app_authors">Visualizza l\'elenco degli autori di Noice</string>
+    <string name="app_shortcut_creation_failed">Impossibile aggiungere il preimpostato alle scorciatoie delle app!</string>
+    <string name="remove_from_app_shortcuts">Rimuovi dalle scorciatoie delle app</string>
+    <string name="add_to_app_shortcuts">Aggiungi alle scorciatoie delle app</string>
 </resources>
