@@ -182,4 +182,7 @@
     <string name="time_bridge">und</string>
     <string name="random_preset_description">Generierte Zufall voreinstellungen enthalten Sounds, die der gewählten Stimmen entsprechend. Darüber hinaus versuchen dichte Voreinstellungen, mehr Sounds gleichzeitig abzuspielen.</string>
     <string name="app_authors">Liste der Noice-Autoren anzeigen</string>
+    <string name="app_shortcut_creation_failed">Das Hinzufügen der Voreinstellung zu Anwendungsverknüpfungen ist fehlgeschlagen!</string>
+    <string name="remove_from_app_shortcuts">Aus Anwendungsverknüpfungen entfernen</string>
+    <string name="add_to_app_shortcuts">Zu Anwendungsverknüpfungen hinzufügen</string>
 </resources>
