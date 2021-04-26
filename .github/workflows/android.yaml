@@ -61,10 +61,10 @@ jobs:
         include:
           - android: 28
             target: default
-            gradleTask: connectedFdroidDebugAndroidTest
+            gradleTask: createFdroidDebugCoverageReport
           - android: 28
             target: google_apis
-            gradleTask: connectedPlaystoreDebugAndroidTest
+            gradleTask: createPlaystoreDebugCoverageReport
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
