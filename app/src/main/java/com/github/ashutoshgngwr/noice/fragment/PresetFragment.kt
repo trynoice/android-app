@@ -2,10 +2,12 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
@@ -137,13 +139,17 @@ class PresetFragment : Fragment() {
 
     private fun createPinnedShortcut() {
       if (!ShortcutManagerCompat.isRequestPinShortcutSupported(requireContext())) {
-        Snackbar.make(requireView(), R.string.pinned_shortcuts_not_supported, Snackbar.LENGTH_LONG)
-          .show()
+        showSnackBar(R.string.pinned_shortcuts_not_supported)
         return
       }
 
       val info = buildShortcutInfo(UUID.randomUUID().toString())
-      ShortcutManagerCompat.requestPinShortcut(requireContext(), info, null)
+      val result = ShortcutManagerCompat.requestPinShortcut(requireContext(), info, null)
+      if (!result) {
+        showSnackBar(R.string.pinned_shortcut_creation_failed)
+      } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+        showSnackBar(R.string.pinned_shortcut_created)
+      }
     }
 
     private fun createAppShortcut() {
@@ -151,18 +157,17 @@ class PresetFragment : Fragment() {
       val presetID = dataSet[adapterPosition].id
       list.add(buildShortcutInfo(presetID))
 
-      var message = R.string.app_shortcut_creation_failed
       if (ShortcutManagerCompat.addDynamicShortcuts(requireContext(), list)) {
-        message = R.string.app_shortcut_created
+        showSnackBar(R.string.app_shortcut_created)
+      } else {
+        showSnackBar(R.string.app_shortcut_creation_failed)
       }
-
-      Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun removeAppShortcut() {
       val presetID = dataSet[adapterPosition].id
       ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(presetID))
-      Snackbar.make(requireView(), R.string.app_shortcut_removed, Snackbar.LENGTH_LONG).show()
+      showSnackBar(R.string.app_shortcut_removed)
     }
 
     private fun hasAppShortcut(): Boolean {
@@ -240,9 +245,7 @@ class PresetFragment : Fragment() {
           ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
           adapter?.notifyItemRemoved(adapterPosition)
           updateEmptyListIndicatorVisibility()
-          Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
-            .setAction(R.string.dismiss) { }
-            .show()
+          showSnackBar(R.string.preset_deleted)
 
           // maybe show in-app review dialog to the user
           InAppReviewFlowManager.maybeAskForReview(requireActivity())
@@ -259,6 +262,12 @@ class PresetFragment : Fragment() {
           WakeUpTimerManager.cancel(requireContext())
         }
       }
+    }
+
+    private fun showSnackBar(@StringRes message: Int) {
+      Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG)
+        .setAction(R.string.dismiss) { }
+        .show()
     }
   }
 }
