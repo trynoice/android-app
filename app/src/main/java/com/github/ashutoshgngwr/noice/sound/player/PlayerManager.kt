@@ -68,8 +68,8 @@ class PlayerManager(private val context: Context) :
   private val playbackStateBuilder = PlaybackStateCompat.Builder()
     .setActions(
       PlaybackStateCompat.ACTION_PLAY_PAUSE
-        and PlaybackStateCompat.ACTION_PAUSE
-        and PlaybackStateCompat.ACTION_STOP
+        or PlaybackStateCompat.ACTION_PAUSE
+        or PlaybackStateCompat.ACTION_STOP
     )
 
   private val mediaSession = MediaSessionCompat(context, context.packageName).also {
