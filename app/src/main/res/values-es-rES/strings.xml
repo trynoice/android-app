@@ -132,11 +132,10 @@
     recibir comentarios desde diferentes perspectivas que nos ayudará a hacer de Noice mejor que
     nunca.
   </string>
-    <string name="support_development__why">¿Porqué debería apoyar?</string>
-    <string name="support_development__why_description">
-    - Para garantizar futuras actualizaciones\n
-    - Para mantener a Noice sin anuncios siempre\n
-  </string>
+    <string name="support_development__why">¿Por qué debería apoyar\?</string>
+    <string name="support_development__why_description">- Para garantizar futuras actualizaciones
+\n- Para mantener Noice libre de anuncios siempre
+\n</string>
     <string name="cast_media">Transmitir medio a otro dispositivo</string>
     <string name="notification_channel_default__description">Controles de reproducción de medios</string>
     <string name="notification_channel_default__name">Reproducción de medios</string>
@@ -150,8 +149,8 @@
     <string name="light">Ligero</string>
     <string name="focus">Concetrado</string>
     <string name="never">Nunca</string>
-    <string name="later">Mas tarde</string>
-    <string name="in_app_feedback__title">Envíe una reseña</string>
+    <string name="later">Más tarde</string>
+    <string name="in_app_feedback__title">Enviar una reseña</string>
     <string name="in_app_feedback__description">Nos encantaría saber que le parece la aplicación. Por favor, tómese un momento para visitar nuestro repositorio de GitHub. Si no le gustó la aplicación, considere abrir un reporte para explicar su malestar. De lo contrario, dele una estrella al proyecto para mostrar amor y apoyo.</string>
     <string name="use_24h_format">Usar formato 24 horas</string>
     <plurals name="time_minutes">
@@ -174,4 +173,12 @@
     <string name="should_update_media_volume">Actualice el volumen del dispositivo multimedia antes de que comience el preajuste</string>
     <string name="device_media_volume">Volumen del dispositivo multimedia</string>
     <string name="app_authors">Ver la lista de los autores de Noice</string>
+    <string name="sound_fade_duration_summary">Duración del fundido de entrada/salida para reproducir/detener sonidos (en segundos)</string>
+    <string name="sound_fade_duration">Duración de la disminución del sonido</string>
+    <string name="appearance">Apariencia</string>
+    <string name="behavior">Comportamiento</string>
+    <string name="saved_presets_as_home_screen">Preajustes guardados como pantalla de inicio</string>
+    <string name="settings">Configuración</string>
+    <string name="remove_from_app_shortcuts">Quitar de atajos de aplicación</string>
+    <string name="add_to_app_shortcuts">Añadir a atajos de aplicación</string>
 </resources>
