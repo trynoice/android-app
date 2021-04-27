@@ -10,11 +10,8 @@ import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
-import com.github.ashutoshgngwr.noice.sound.Preset
-import com.github.ashutoshgngwr.noice.sound.Sound
+import com.github.ashutoshgngwr.noice.model.Sound
 import io.mockk.clearMocks
-import io.mockk.every
-import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkAll
 import io.mockk.verify

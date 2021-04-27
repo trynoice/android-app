@@ -22,8 +22,8 @@ import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
+import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
-import com.github.ashutoshgngwr.noice.sound.Preset
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk

@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.repository.PresetRepository.Companion.PREFERENCE_KEY
-import com.github.ashutoshgngwr.noice.sound.Preset
-import com.github.ashutoshgngwr.noice.sound.player.Player
 import com.google.gson.GsonBuilder
 import org.json.JSONArray
 import org.json.JSONObject

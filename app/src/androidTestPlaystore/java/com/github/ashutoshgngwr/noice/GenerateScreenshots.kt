@@ -26,10 +26,12 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.github.ashutoshgngwr.noice.activity.AppIntroActivity
+import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
+import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
-import com.github.ashutoshgngwr.noice.sound.player.Player
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject

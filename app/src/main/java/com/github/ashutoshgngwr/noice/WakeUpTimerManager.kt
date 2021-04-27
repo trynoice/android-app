@@ -10,6 +10,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
+import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose

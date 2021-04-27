@@ -3,7 +3,7 @@ package com.github.ashutoshgngwr.noice.widget
 import android.app.Application
 import androidx.core.view.children
 import androidx.test.core.app.ApplicationProvider
-import com.github.ashutoshgngwr.noice.DonateActivity
+import com.github.ashutoshgngwr.noice.activity.DonateActivity
 import com.github.ashutoshgngwr.noice.databinding.DonateViewBinding
 import org.junit.Assert.assertEquals
 import org.junit.Before

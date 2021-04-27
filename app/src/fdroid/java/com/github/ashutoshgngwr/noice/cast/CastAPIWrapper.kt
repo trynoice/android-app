@@ -5,7 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.StringRes
 import androidx.media.VolumeProviderCompat
-import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategyFactory
+import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
 
 /**
  * [CastAPIWrapper] wraps all API calls to GMS API and hides API specific classes from the caller.

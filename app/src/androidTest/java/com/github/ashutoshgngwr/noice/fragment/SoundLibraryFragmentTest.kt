@@ -15,10 +15,10 @@ import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
+import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.playback.Player
+import com.github.ashutoshgngwr.noice.playback.PlayerManager
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
-import com.github.ashutoshgngwr.noice.sound.Preset
-import com.github.ashutoshgngwr.noice.sound.player.Player
-import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject

@@ -2,7 +2,7 @@ package com.github.ashutoshgngwr.noice.repository
 
 import android.content.SharedPreferences
 import androidx.test.core.app.ApplicationProvider
-import com.github.ashutoshgngwr.noice.sound.Preset
+import com.github.ashutoshgngwr.noice.model.Preset
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.InjectionLookupType

@@ -17,11 +17,11 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SoundGroupListItemBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundLibraryFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundListItemBinding
+import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.model.Sound
+import com.github.ashutoshgngwr.noice.playback.Player
+import com.github.ashutoshgngwr.noice.playback.PlayerManager
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
-import com.github.ashutoshgngwr.noice.sound.Preset
-import com.github.ashutoshgngwr.noice.sound.Sound
-import com.github.ashutoshgngwr.noice.sound.player.Player
-import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus

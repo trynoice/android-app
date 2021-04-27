@@ -20,11 +20,12 @@ import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
+import com.github.ashutoshgngwr.noice.activity.MainActivity
+import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.model.Sound
+import com.github.ashutoshgngwr.noice.playback.Player
+import com.github.ashutoshgngwr.noice.playback.PlayerManager
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
-import com.github.ashutoshgngwr.noice.sound.Preset
-import com.github.ashutoshgngwr.noice.sound.Sound
-import com.github.ashutoshgngwr.noice.sound.player.Player
-import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import org.greenrobot.eventbus.EventBus
 import java.util.concurrent.TimeUnit
 import kotlin.math.max

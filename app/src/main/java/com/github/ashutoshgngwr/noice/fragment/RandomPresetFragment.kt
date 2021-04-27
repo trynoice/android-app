@@ -9,7 +9,7 @@ import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetFragmentBinding
-import com.github.ashutoshgngwr.noice.sound.Sound
+import com.github.ashutoshgngwr.noice.model.Sound
 
 class RandomPresetFragment : Fragment() {
 

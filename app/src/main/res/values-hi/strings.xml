@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="about">ऐप के बारे में</string>
     <string name="app_theme">दिखावट</string>
     <string name="close_drawer">मार्गदर्शक ड्रॉवर बंद करें</string>
@@ -169,7 +169,7 @@
     <string name="dense">सघन</string>
     <string name="any">कोई भी</string>
     <string name="submit_feedback">प्रतिपुष्टि दें</string>
-    <string name="wake_up_timer_schedule_set">अलार्म %1$s %3$s में बजेगा</string>
+    <string name="wake_up_timer_schedule_set" tools:ignore="StringFormatCount">अलार्म %1$s %3$s में बजेगा</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d मिनट</item>
         <item quantity="other">%1$d मिनट</item>

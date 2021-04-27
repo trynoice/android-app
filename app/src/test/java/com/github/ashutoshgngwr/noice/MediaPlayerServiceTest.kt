@@ -6,10 +6,10 @@ import android.media.AudioManager
 import android.os.SystemClock
 import androidx.core.content.getSystemService
 import androidx.test.core.app.ApplicationProvider
+import com.github.ashutoshgngwr.noice.model.Sound
+import com.github.ashutoshgngwr.noice.playback.Player
+import com.github.ashutoshgngwr.noice.playback.PlayerManager
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
-import com.github.ashutoshgngwr.noice.sound.Sound
-import com.github.ashutoshgngwr.noice.sound.player.Player
-import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
 import io.mockk.MockKAnnotations
 import io.mockk.called
 import io.mockk.clearMocks

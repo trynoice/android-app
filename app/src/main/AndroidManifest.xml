@@ -26,7 +26,7 @@
     tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
     <activity
-      android:name=".MainActivity"
+      android:name=".activity.MainActivity"
       android:launchMode="singleTask">
 
       <intent-filter>
@@ -42,11 +42,11 @@
     </activity>
 
     <activity
-      android:name=".AppIntroActivity"
+      android:name=".activity.AppIntroActivity"
       android:theme="@style/Theme.MaterialComponents.NoActionBar" />
 
     <activity
-      android:name=".ShortcutHandlerActivity"
+      android:name=".activity.ShortcutHandlerActivity"
       android:excludeFromRecents="true" />
 
     <service android:name=".MediaPlayerService" />
