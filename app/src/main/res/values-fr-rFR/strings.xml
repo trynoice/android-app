@@ -180,7 +180,7 @@
     <string name="app_shortcut_creation_failed">Échec de l\'ajout du préréglage aux raccourcis d\'applis !</string>
     <string name="remove_from_app_shortcuts">Retirer des raccourcis d\'applis</string>
     <string name="add_to_app_shortcuts">Ajouter aux raccourcis des applis</string>
-    <string name="app_shortcut_removed">Le préréglage a été supprimé des raccourcis d\'applications !</string>
+    <string name="app_shortcut_removed">Le préréglage a été supprimé des raccourcis d\'applications !</string>
     <string name="pinned_shortcut_created">Le raccourci a été ajouté à l\'écran d\'accueil !</string>
     <string name="pinned_shortcut_creation_failed">Échec de l\'ajout du raccourci à l\'écran d\'accueil !</string>
     <string name="sound_fade_duration_summary">Durée du fondu graduel pour la lecture / l\'arrêt des sons (en secondes)</string>
