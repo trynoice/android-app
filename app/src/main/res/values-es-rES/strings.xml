@@ -178,4 +178,5 @@
     <string name="sound_fade_duration">Duración de la disminución del sonido</string>
     <string name="appearance">Apariencia</string>
     <string name="behavior">Comportamiento</string>
+    <string name="saved_presets_as_home_screen">Preajustes guardados como pantalla de inicio</string>
 </resources>
