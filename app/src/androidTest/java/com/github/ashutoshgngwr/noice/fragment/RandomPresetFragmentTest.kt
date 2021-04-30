@@ -7,10 +7,10 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
-import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.model.Sound
+import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import io.mockk.clearMocks
 import io.mockk.mockkObject
 import io.mockk.unmockkAll
@@ -32,7 +32,7 @@ class RandomPresetFragmentTest {
 
   @Before
   fun setup() {
-    mockkObject(InAppReviewFlowManager, MediaPlayerService.Companion)
+    mockkObject(InAppReviewFlowManager, PlaybackController)
     fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
 
@@ -63,8 +63,8 @@ class RandomPresetFragmentTest {
         Espresso.onView(withId(R.id.play_preset_button))
           .perform(ViewActions.click())
 
-        verify(exactly = 1) { MediaPlayerService.playRandomPreset(any(), tag, intensityRange) }
-        clearMocks(MediaPlayerService.Companion)
+        verify(exactly = 1) { PlaybackController.playRandomPreset(any(), tag, intensityRange) }
+        clearMocks(PlaybackController)
       }
     }
   }

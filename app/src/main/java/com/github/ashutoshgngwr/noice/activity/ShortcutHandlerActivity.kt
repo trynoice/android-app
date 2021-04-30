@@ -5,8 +5,8 @@ import android.content.pm.ShortcutManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 
 class ShortcutHandlerActivity : AppCompatActivity() {
@@ -26,7 +26,7 @@ class ShortcutHandlerActivity : AppCompatActivity() {
       if (PresetRepository.newInstance(this).get(it) == null) {
         Toast.makeText(this, R.string.preset_does_not_exist, Toast.LENGTH_LONG).show()
       } else {
-        MediaPlayerService.playPreset(this, it)
+        PlaybackController.playPreset(this, it)
       }
     }
 

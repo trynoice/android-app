@@ -4,7 +4,6 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.FontRes
 import com.github.appintro.AppIntroBaseFragment
-import com.github.appintro.AppIntroFragment
 import com.github.appintro.model.SliderPage
 import com.github.ashutoshgngwr.noice.R
 
@@ -42,7 +41,7 @@ class AppIntroFragment(override val layoutId: Int) : AppIntroBaseFragment() {
       @FontRes titleTypefaceFontRes: Int = 0,
       @FontRes descriptionTypefaceFontRes: Int = 0,
       @DrawableRes backgroundDrawable: Int = 0
-    ): com.github.ashutoshgngwr.noice.fragment.AppIntroFragment {
+    ): AppIntroFragment {
       return newInstance(
         layoutId,
         SliderPage(
@@ -67,7 +66,7 @@ class AppIntroFragment(override val layoutId: Int) : AppIntroBaseFragment() {
      *
      * @return An [AppIntroFragment] created instance
      */
-    private fun newInstance(layoutId: Int, sliderPage: SliderPage): com.github.ashutoshgngwr.noice.fragment.AppIntroFragment {
+    private fun newInstance(layoutId: Int, sliderPage: SliderPage): AppIntroFragment {
       val slide = AppIntroFragment(layoutId)
       slide.arguments = sliderPage.toBundle()
       return slide

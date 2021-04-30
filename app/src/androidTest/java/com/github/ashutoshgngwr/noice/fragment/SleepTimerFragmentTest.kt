@@ -11,10 +11,10 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
-import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.databinding.SleepTimerFragmentBinding
+import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import io.mockk.every
 import io.mockk.mockkObject
 import io.mockk.unmockkAll
@@ -39,8 +39,8 @@ class SleepTimerFragmentTest {
 
   @Before
   fun setup() {
-    mockkObject(InAppReviewFlowManager, MediaPlayerService.Companion)
-    every { MediaPlayerService.scheduleStopPlayback(any(), any()) } returns Unit
+    mockkObject(InAppReviewFlowManager, PlaybackController)
+    every { PlaybackController.scheduleAutoStop(any(), any()) } returns Unit
 
     fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
@@ -53,10 +53,10 @@ class SleepTimerFragmentTest {
   @Test
   fun testDurationPickerListener_onSleepPreScheduled() {
     val before = SystemClock.uptimeMillis()
-    every { MediaPlayerService.getScheduledStopPlaybackRemainingDurationMillis() } returns 60 * 1000
+    every { PlaybackController.getScheduledAutoStopRemainingDurationMillis(any()) } returns 60 * 1000
     onView(withId(R.id.duration_picker)).perform(EspressoX.addDurationToPicker(60))
     verify(exactly = 1) {
-      MediaPlayerService.scheduleStopPlayback(any(), withArg {
+      PlaybackController.scheduleAutoStop(any(), withArg {
         val delta = SystemClock.uptimeMillis() - before
         val duration = TimeUnit.SECONDS.toMillis(120)
         assertTrue(it in (duration - delta)..(duration))
@@ -69,7 +69,7 @@ class SleepTimerFragmentTest {
     val before = SystemClock.uptimeMillis()
     onView(withId(R.id.duration_picker)).perform(EspressoX.addDurationToPicker(300))
     verify(exactly = 1) {
-      MediaPlayerService.scheduleStopPlayback(any(), withArg {
+      PlaybackController.scheduleAutoStop(any(), withArg {
         val delta = SystemClock.uptimeMillis() - before
         val duration = TimeUnit.SECONDS.toMillis(300)
         assertTrue(it in (duration - delta)..(duration))
@@ -95,6 +95,6 @@ class SleepTimerFragmentTest {
       .perform(scrollTo(), click())
 
     onView(withText(R.string.auto_sleep_schedule_cancelled)).check(matches(isDisplayed()))
-    verify(exactly = 1) { MediaPlayerService.scheduleStopPlayback(any(), 0L) }
+    verify(exactly = 1) { PlaybackController.clearScheduledAutoStop(any()) }
   }
 }

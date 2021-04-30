@@ -23,6 +23,7 @@ import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.databinding.PresetListFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.PresetListItemBinding
 import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus
@@ -68,7 +69,7 @@ class PresetFragment : Fragment() {
   }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-  fun onPlayerManagerUpdate(event: MediaPlayerService.OnPlayerManagerUpdateEvent) {
+  fun onPlayerManagerUpdate(event: MediaPlayerService.PlaybackUpdateEvent) {
     val oldPresetPos = activePresetPos
     activePresetPos = Preset.from("", event.players.values).let { dataSet.indexOf(it) }
     adapter?.notifyItemChanged(oldPresetPos)
@@ -107,9 +108,9 @@ class PresetFragment : Fragment() {
     init {
       binding.playButton.setOnClickListener {
         if (adapterPosition != activePresetPos) {
-          MediaPlayerService.playPreset(requireContext(), dataSet[adapterPosition].id)
+          PlaybackController.playPreset(requireContext(), dataSet[adapterPosition].id)
         } else {
-          MediaPlayerService.stopPlayback(requireContext())
+          PlaybackController.stop(requireContext())
         }
       }
 
@@ -234,7 +235,7 @@ class PresetFragment : Fragment() {
           presetRepository.delete(preset.id)
           // then stop playback if recently deleted preset was playing
           if (adapterPosition == activePresetPos) {
-            MediaPlayerService.stopPlayback(requireContext())
+            PlaybackController.stop(requireContext())
           }
 
           if (adapterPosition < activePresetPos) {
