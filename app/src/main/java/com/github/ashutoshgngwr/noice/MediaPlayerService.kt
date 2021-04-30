@@ -18,10 +18,12 @@ import android.util.Log
 import androidx.core.content.getSystemService
 import androidx.mediarouter.media.MediaRouter
 import com.github.ashutoshgngwr.noice.activity.MainActivity
+import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.playback.PlayerManager
 import com.github.ashutoshgngwr.noice.playback.PlayerNotificationManager
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import org.greenrobot.eventbus.EventBus
 import java.util.concurrent.TimeUnit
 
@@ -46,6 +48,7 @@ class MediaPlayerService : Service() {
   private lateinit var wakeLock: PowerManager.WakeLock
   private lateinit var mediaSession: MediaSessionCompat
   private lateinit var playerManager: PlayerManager
+  private lateinit var presetRepository: PresetRepository
 
   private val handler = Handler(Looper.getMainLooper())
 
@@ -69,12 +72,6 @@ class MediaPlayerService : Service() {
     }
 
     mediaSession = MediaSessionCompat(this, "$TAG.mediaSession").also {
-      it.setMetadata(
-        MediaMetadataCompat.Builder()
-          .putString(MediaMetadataCompat.METADATA_KEY_TITLE, getString(R.string.app_name))
-          .build()
-      )
-
       it.setCallback(object : MediaSessionCompat.Callback() {
         override fun onPlay() = playerManager.resume()
         override fun onStop() = playerManager.stop()
@@ -98,12 +95,20 @@ class MediaPlayerService : Service() {
     playerManager = PlayerManager(this, mediaSession)
     playerManager.setPlaybackUpdateListener(this::onPlaybackUpdate)
 
+    presetRepository = PresetRepository.newInstance(this)
     PlayerNotificationManager.createChannel(this)
     registerReceiver(becomingNoisyReceiver, IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY))
   }
 
   private fun onPlaybackUpdate(state: Int, players: Map<String, Player>) {
     EventBus.getDefault().postSticky(PlaybackUpdateEvent(state, players))
+
+    val title = getCurrentPresetName(players.values)
+    mediaSession.setMetadata(
+      MediaMetadataCompat.Builder()
+        .putString(MediaMetadataCompat.METADATA_KEY_TITLE, title)
+        .build()
+    )
 
     if (state == PlaybackStateCompat.STATE_STOPPED) {
       stopForeground(true)
@@ -112,8 +117,19 @@ class MediaPlayerService : Service() {
       wakeLock.acquire(WAKELOCK_TIMEOUT)
       startForeground(
         FOREGROUND_ID,
-        PlayerNotificationManager.createNotification(this, mediaSession)
+        PlayerNotificationManager.createNotification(this, mediaSession, title)
       )
+    }
+  }
+
+  private fun getCurrentPresetName(players: Collection<Player>): String {
+    val name = getString(R.string.app_name)
+    if (players.isEmpty()) {
+      return name
+    }
+
+    return Preset.from("", players).let {
+      presetRepository.list().find { p -> p == it }?.name ?: name
     }
   }
 

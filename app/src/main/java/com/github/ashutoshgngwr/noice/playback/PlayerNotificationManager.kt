@@ -37,10 +37,10 @@ object PlayerNotificationManager {
       .createNotificationChannel(channel)
   }
 
-  fun createNotification(context: Context, mediaSession: MediaSessionCompat): Notification {
+  fun createNotification(context: Context, mediaSession: MediaSessionCompat, title: String): Notification {
     return with(NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)) {
       color = ContextCompat.getColor(context, R.color.primary_dark)
-      setContentTitle(context.getString(R.string.app_name))
+      setContentTitle(title)
       setSmallIcon(R.drawable.ic_launcher_24dp)
       setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
       setOngoing(true)
