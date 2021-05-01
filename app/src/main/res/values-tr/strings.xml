@@ -196,4 +196,12 @@
     <string name="app_shortcut_removed">Kayıt, uygulama kısayollarından kaldırıldı!</string>
     <string name="remove_from_app_shortcuts">Uygulama kısayollarından kaldır</string>
     <string name="add_to_app_shortcuts">Uygulama kısayollarına ekle</string>
+    <string name="pinned_shortcut_created">Kısayol ana ekrana eklendi!</string>
+    <string name="pinned_shortcut_creation_failed">Kısayol ana ekrana eklenemedi!</string>
+    <string name="sound_fade_duration_summary">Seslerin oynatılması/durdurulması için geçiş süresi (saniye cinsinden)</string>
+    <string name="sound_fade_duration">Ses geçiş süresi</string>
+    <string name="appearance">Görünüm</string>
+    <string name="behavior">Davranış</string>
+    <string name="saved_presets_as_home_screen">Ana ekrana kaydedilen kayıtlar</string>
+    <string name="settings">Ayarlar</string>
 </resources>

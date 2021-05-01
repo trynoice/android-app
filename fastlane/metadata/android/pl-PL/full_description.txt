@@ -1,32 +1,35 @@
-Dla wielu ludzi trochę hałasu w tle pomaga uspokoić się i skupić. W niektórych przypadkach również wziększa produktywność. Szum może również pomóc w zminimalizowaniu skutków stresu.
+Dla wielu osób niewielki hałas w tle pomaga się wyciszyć i skupić. W niektórych przypadkach pomaga również na wzrost produktywności. Hałas w tle (atmosfera) może również pomóc zminimalizować skutki stresu.
 
-Noice to aplikacja, która pozwala stworzyć własnej atmosfery za pomocą klipów z środowiskowych źródeł hałasu. Stwórz własną idealną strefę odpoczynku, łącząc różne dźwięki, aby nie rozproszać Swojej uwagi i móc się skupić na pracy albo spokojne zasnąć.
+Noice to aplikacja, która umożliwia tworzenie spersonalizowanej atmosfery za pomocą klipów ze źródeł hałasu otoczenia. Stwórz idealne otoczenie, łącząc różne dźwięki, aby zagłuszyć czynniki rozpraszające, dzięki czemu możesz skupić się na pracy lub stworzyć spokojne otoczenie, które zachęci Cię do zasypiania.
 
-<b>Funkcje</b>
-- 35 nagranych szumów
-- Obsługa Google Cast (Chromecast) [tylko w Play Store]
+<b> Funkcje </b>
+- 35 zarejestrowanych odgłosów
+- Wsparcie Google Cast (Chromecast) [tylko w Sklepie Play]
 - Automatyczny wyłącznik czasowy
 - Budzik
-- Możliwość tworzenia spersonalizowanych miksów
-- Możliwość zapisywania ulubionych miksów
-- Odtwarzanie razem z innymi odtwarzaczami muzyki
-- Osobna regulacja głośności dla każdego źródła hałasu
+- Generuj losowe miksy
+- Stwórz własną mieszankę
+- Zapisz swoje ulubione miksy
+- Graj obok innych odtwarzaczy muzycznych
+- Indywidualna regulacja głośności dla każdego źródła hałasu
 - Odtwarzanie offline
-- Jasne i ciemne warianty motywu aplikacji
+- Jasne i ciemne warianty motywów aplikacji
 
-<b>Bibloteka szumów</b>
-- Zestaw leśny (drzewa palmowe, noc, ognisko, ptaki, wiatr, itd.)
-- Zestaw monsunów (deszcz, grzmoty)
-- Zestaw do teleportacji (biuro, brzeg rzeki, kawiarnia, poruszający się pociąg, w locie, wybrzeże, itd.)
-- Surowy szum (biały, różowy, Browna)
+<b> Biblioteka szumów </b>
+- Zestaw życia (ptaki, świerszcze, wilk, bicie ludzkiego serca itp.)
+- Zestaw leśny (ognisko, noc, wiatr, palmy itp.)
+- zestaw monsunowy (deszcz, grzmoty)
+- Zestaw teleportacyjny (kawiarnia, biblioteka, biuro, morze, brzeg rzeki itp.)
+- Zestaw pojazdów (jadący pociąg, w locie, skrzypiący statek, samochód elektryczny itp.)
+- Surowy szum (biały, różowy, browna)
 
-<b>Uprawnienia</b>
-- WAKE_LOCK: aby zachować czuwanie procesora podczas odtwarzania
-- FOREGROUND_SERVICE: aby uruchomić proces odtwarzacza (inny niż UI)
-- RECEIVE_BOOT_COMPLETED: aby zagwarantować, że budziki będą się utrzymywać podczas ponownego uruchamiania
-- ACCESS_NETWORK_STATE: dodane przez zależność, obecnie nieużywane
-- INTERNET: aby obsłużyć Chromecasta i wkłady finansowe
-- BILLING: aby umożliwić wkład finansowy na wsparcie rozwoju
+<b> Uprawnienia </b>
+- <b>prevent device from sleeping</b>: aby procesor urządzenia był aktywny podczas odtwarzania
+- <b>run foreground service</b>: aby uruchomić proces odtwarzacza (inny niż UI)
+- <b>run at startup</b>: aby zapewnić, że liczniki czasu wybudzania będą się utrzymywać po ponownym uruchomieniu
+- <b>full network access</b>: aby włączyć Chromecasta i datki finansowe
+- <b>view network connections</b>: dodane przez zależność, obecnie nieużywane
+- <b>Google Play billing service</b>: aby umożliwić datki finansowe na wspieranie rozwoju
 
-Noice jest wolnym i otwartym oprogramowaniem.
+Noice jest darmowym oprogramowaniem o otwartym kodzie źródłowym.
 https://github.com/ashutoshgngwr/noice
