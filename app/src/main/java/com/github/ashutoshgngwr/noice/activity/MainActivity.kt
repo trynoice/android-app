@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.drawable.Animatable
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.media.session.PlaybackStateCompat
 import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.IdRes
@@ -29,7 +30,7 @@ import com.github.ashutoshgngwr.noice.fragment.SleepTimerFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment
 import com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment
-import com.github.ashutoshgngwr.noice.playback.PlayerManager
+import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.navigation.NavigationView
 import org.greenrobot.eventbus.EventBus
@@ -69,7 +70,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   private lateinit var customTabsIntent: CustomTabsIntent
   private lateinit var settingsRepository: SettingsRepository
 
-  private var playerManagerState = PlayerManager.State.STOPPED
+  private var playerManagerState = PlaybackStateCompat.STATE_STOPPED
 
   override fun onCreate(savedInstanceState: Bundle?) {
     // because cast context is lazy initialized, cast menu item wouldn't show up until
@@ -170,8 +171,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     castAPIWrapper.setUpMenuItem(menu, R.string.cast_media)
     menu.add(0, R.id.action_play_pause_toggle, 0, R.string.play_pause).also {
       it.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-      it.isVisible = PlayerManager.State.STOPPED != playerManagerState
-      if (PlayerManager.State.PLAYING == playerManagerState) {
+      it.isVisible = PlaybackStateCompat.STATE_STOPPED != playerManagerState
+      if (PlaybackStateCompat.STATE_PLAYING == playerManagerState) {
         it.setIcon(R.drawable.ic_action_play_to_pause)
       } else {
         it.setIcon(R.drawable.ic_action_pause_to_play)
@@ -179,10 +180,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
       (it.icon as Animatable).start()
       it.setOnMenuItemClickListener {
-        if (PlayerManager.State.PLAYING == playerManagerState) {
-          MediaPlayerService.pausePlayback(this)
+        if (PlaybackStateCompat.STATE_PLAYING == playerManagerState) {
+          PlaybackController.pause(this)
         } else {
-          MediaPlayerService.resumePlayback(this)
+          PlaybackController.resume(this)
         }
 
         true
@@ -236,7 +237,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-  fun onPlayerManagerUpdate(event: MediaPlayerService.OnPlayerManagerUpdateEvent) {
+  fun onPlayerManagerUpdate(event: MediaPlayerService.PlaybackUpdateEvent) {
     if (playerManagerState == event.state) {
       return
     }

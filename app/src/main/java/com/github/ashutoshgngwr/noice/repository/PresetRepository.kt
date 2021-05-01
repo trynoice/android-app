@@ -5,6 +5,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.repository.PresetRepository.Companion.PREFERENCE_KEY
 import com.google.gson.GsonBuilder
@@ -12,6 +13,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
 import kotlin.math.round
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 /**
  * [PresetRepository] implements the data access layer for [Preset]. It stores all its data in a
@@ -70,6 +73,25 @@ class PresetRepository private constructor(context: Context) {
   fun get(id: String?): Preset? {
     id ?: return null
     return list().find { it.id == id }
+  }
+
+  /**
+   * [random] generates a nameless random preset using the provided sound [tag] and [intensity].
+   * If sound [tag] is null, full library is considered for randomly selecting sounds for the
+   * preset. If it is non-null, only sounds containing the provided tag are considered.
+   * [intensity] is a [IntRange] that hints the lower and upper bounds for the number of sounds
+   * present in the generated preset. A number is chosen randomly in this range.
+   */
+  fun random(tag: Sound.Tag?, intensity: IntRange): Preset {
+    val library = Sound.filterLibraryByTag(tag).shuffled()
+    val playerStates = mutableListOf<Preset.PlayerState>()
+    for (i in 0 until Random.nextInt(intensity)) {
+      val volume = 1 + Random.nextInt(0, Player.MAX_VOLUME)
+      val timePeriod = Random.nextInt(Player.MIN_TIME_PERIOD, Player.MAX_TIME_PERIOD + 1)
+      playerStates.add(Preset.PlayerState(library[i], volume, timePeriod))
+    }
+
+    return Preset(UUID.randomUUID().toString(), "", playerStates.toTypedArray())
   }
 
   /**

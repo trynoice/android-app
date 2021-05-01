@@ -1,6 +1,8 @@
 package com.github.ashutoshgngwr.noice.playback
 
+import android.content.Context
 import android.media.AudioManager
+import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.media.AudioManagerCompat
 import androidx.media.VolumeProviderCompat
@@ -56,7 +58,8 @@ class PlayerManagerTest {
       every { soundKey } returns "test"
     })
 
-    playerManager = PlayerManager(ApplicationProvider.getApplicationContext())
+    val context = ApplicationProvider.getApplicationContext<Context>()
+    playerManager = PlayerManager(context, MediaSessionCompat(context, "test"))
     MockKAnnotations.init(this)
   }
 
@@ -68,14 +71,12 @@ class PlayerManagerTest {
   private fun assertPaused() {
     assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
-    assertEquals(PlayerManager.State.STOPPED, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_STOPPED, ShadowMediaSessionCompat.getLastPlaybackState())
-    assertEquals(0, playerManager.players.size)
+    assertEquals(0, players.size)
   }
 
   private fun assertPausedIndefinitely() {
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
-    assertEquals(PlayerManager.State.PAUSED, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_PAUSED, ShadowMediaSessionCompat.getLastPlaybackState())
   }
 
@@ -125,7 +126,6 @@ class PlayerManagerTest {
     // finally grant audio focus request
     playerManager.onAudioFocusChange(AudioManager.AUDIOFOCUS_GAIN)
     verify(exactly = 1) { players.getValue("test").play() }
-    assertEquals(PlayerManager.State.PLAYING, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_PLAYING, ShadowMediaSessionCompat.getLastPlaybackState())
   }
 
@@ -138,7 +138,6 @@ class PlayerManagerTest {
 
     playerManager.play("test")
     verify(exactly = 1) { players.getValue("test").play() }
-    assertEquals(PlayerManager.State.PLAYING, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_PLAYING, ShadowMediaSessionCompat.getLastPlaybackState())
   }
 
@@ -147,7 +146,6 @@ class PlayerManagerTest {
     mockkStatic(AudioManagerCompat::class)
     // should do noop if player is not present in players state
     playerManager.stop("test-x")  // stop something other than "test
-    assertEquals(PlayerManager.State.STOPPED, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_STOPPED, ShadowMediaSessionCompat.getLastPlaybackState())
 
     // shouldn't abandon audio focus since players is not empty
@@ -160,9 +158,8 @@ class PlayerManagerTest {
     val mockPlayer = players.getValue("test")
     playerManager.stop("test")
     verify(exactly = 1) { mockPlayer.stop() }
-    assertEquals(PlayerManager.State.STOPPED, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_STOPPED, ShadowMediaSessionCompat.getLastPlaybackState())
-    assertEquals(0, playerManager.players.size)
+    assertEquals(0, players.size)
     // should abandon audio focus since players is empty
     verify(exactly = 1) { AudioManagerCompat.abandonAudioFocusRequest(any(), any()) }
   }
@@ -174,9 +171,8 @@ class PlayerManagerTest {
     playerManager.stop()
 
     verify(exactly = 1) { mockPlayer.stop() }
-    assertEquals(PlayerManager.State.STOPPED, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_STOPPED, ShadowMediaSessionCompat.getLastPlaybackState())
-    assertEquals(0, playerManager.players.size)
+    assertEquals(0, players.size)
     // should abandon audio focus
     verify(exactly = 1) { AudioManagerCompat.abandonAudioFocusRequest(any(), any()) }
   }
@@ -184,7 +180,7 @@ class PlayerManagerTest {
   @Test
   fun testPause() {
     playerManager.pause()
-    assertEquals(1, playerManager.players.size)
+    assertEquals(1, players.size)
     verify(exactly = 1) { players.getValue("test").pause() }
     assertPaused()
   }
@@ -222,7 +218,6 @@ class PlayerManagerTest {
 
     playerManager.resume()
     verify(exactly = 1) { players.getValue("test").play() }
-    assertEquals(PlayerManager.State.PLAYING, playerManager.state)
     assertEquals(PlaybackStateCompat.STATE_PLAYING, ShadowMediaSessionCompat.getLastPlaybackState())
   }
 
@@ -230,7 +225,7 @@ class PlayerManagerTest {
   fun testCleanup() {
     playerManager.cleanup()
     // should stop all players
-    assertEquals(0, playerManager.players.size)
+    assertEquals(0, players.size)
     verify(exactly = 1) {
       // should clear session callbacks
       mockCastAPIWrapper.clearSessionCallbacks()

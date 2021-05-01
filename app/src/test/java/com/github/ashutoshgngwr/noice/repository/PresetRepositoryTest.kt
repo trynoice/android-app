@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.repository
 import android.content.SharedPreferences
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.model.Sound
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.InjectionLookupType
@@ -139,6 +140,26 @@ class PresetRepositoryTest {
     assertNull(repository.get("test-id-0"))
     assertNotNull(repository.get("test-id-1"))
     assertNotNull(repository.get("test-id-2"))
+  }
+
+  @Test
+  fun testRandom() {
+    for (tag in arrayOf(null, Sound.Tag.FOCUS, Sound.Tag.RELAX)) {
+      for (intensity in arrayOf(2 until 5, 6 until 9, 1 until 3)) {
+        val preset = repository.random(tag, intensity)
+        assertTrue(
+          "should have expected intensity",
+          preset.playerStates.size in intensity
+        )
+
+        preset.playerStates.forEach {
+          assertTrue(
+            "should have expected sound tags",
+            tag == null || Sound.get(it.soundKey).tags.contains(tag)
+          )
+        }
+      }
+    }
   }
 
   @Test

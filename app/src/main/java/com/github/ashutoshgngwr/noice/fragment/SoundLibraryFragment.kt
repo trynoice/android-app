@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +20,8 @@ import com.github.ashutoshgngwr.noice.databinding.SoundLibraryFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundListItemBinding
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
+import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.Player
-import com.github.ashutoshgngwr.noice.playback.PlayerManager
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
@@ -75,13 +76,13 @@ class SoundLibraryFragment : Fragment() {
   }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.ASYNC)
-  fun onPlayerManagerUpdate(event: MediaPlayerService.OnPlayerManagerUpdateEvent) {
+  fun onPlayerManagerUpdate(event: MediaPlayerService.PlaybackUpdateEvent) {
     this.players = event.players
     val showSavePresetFAB = !presetRepository.list().contains(Preset.from("", players.values))
 
     view?.post {
       adapter?.notifyDataSetChanged()
-      if (showSavePresetFAB && event.state == PlayerManager.State.PLAYING) {
+      if (showSavePresetFAB && event.state == PlaybackStateCompat.STATE_PLAYING) {
         binding.savePresetButton.show()
       } else {
         binding.savePresetButton.hide()
@@ -250,7 +251,7 @@ class SoundLibraryFragment : Fragment() {
       override fun onStartTrackingTouch(slider: Slider) = Unit
 
       override fun onStopTrackingTouch(slider: Slider) {
-        eventBus.getStickyEvent(MediaPlayerService.OnPlayerManagerUpdateEvent::class.java).also {
+        eventBus.getStickyEvent(MediaPlayerService.PlaybackUpdateEvent::class.java).also {
           it ?: return
           onPlayerManagerUpdate(it)
         }
@@ -269,9 +270,9 @@ class SoundLibraryFragment : Fragment() {
       binding.playButton.setOnClickListener {
         val listItem = dataSet.getOrNull(adapterPosition) ?: return@setOnClickListener
         if (players.containsKey(listItem.data)) {
-          MediaPlayerService.stopSound(requireContext(), listItem.data)
+          PlaybackController.stop(requireContext(), listItem.data)
         } else {
-          MediaPlayerService.playSound(requireContext(), listItem.data)
+          PlaybackController.play(requireContext(), listItem.data)
         }
       }
     }

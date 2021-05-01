@@ -9,10 +9,10 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import io.mockk.clearMocks
 import io.mockk.every
@@ -41,7 +41,7 @@ class ShortcutHandlerActivityTest {
 
   @Test
   fun testOnCreate() {
-    mockkObject(PresetRepository.Companion, MediaPlayerService)
+    mockkObject(PresetRepository.Companion, PlaybackController)
 
     val mockRepo = mockk<PresetRepository>()
     every { PresetRepository.newInstance(any()) } returns mockRepo
@@ -71,11 +71,11 @@ class ShortcutHandlerActivityTest {
         )
 
         verify(exactly = playPresetCallCount[i]) {
-          MediaPlayerService.playPreset(any(), presetIDExpectations[i])
+          PlaybackController.playPreset(any(), presetIDExpectations[i])
         }
       } finally {
         Intents.release()
-        clearMocks(MediaPlayerService)
+        clearMocks(PlaybackController)
       }
     }
   }
