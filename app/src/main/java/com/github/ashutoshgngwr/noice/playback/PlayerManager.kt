@@ -18,6 +18,7 @@ import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.strategy.LocalPlaybackStrategyFactory
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import java.util.concurrent.TimeUnit
 
 typealias PlaybackUpdateListener = (state: Int, players: Map<String, Player>) -> Unit
@@ -47,6 +48,7 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
   private val players = HashMap<String, Player>(Sound.LIBRARY.size)
   private val handler = Handler(Looper.getMainLooper())
   private val presetRepository = PresetRepository.newInstance(context)
+  private val settingsRepository = SettingsRepository.newInstance(context)
   private val audioManager = requireNotNull(context.getSystemService<AudioManager>())
   private val audioAttributes = AudioAttributesCompat.Builder()
     .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)
@@ -140,6 +142,12 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
       return
     }
 
+    if (settingsRepository.shouldIgnoreAudioFocusChanges()) {
+      hasAudioFocus = true
+      resume()
+      return
+    }
+
     val result = AudioManagerCompat.requestAudioFocus(audioManager, audioFocusRequest)
     Log.d(TAG, "requestAudioFocus(): result - $result")
     when (result) {
@@ -171,6 +179,10 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
     hasAudioFocus = false
     playbackDelayed = false
     resumeOnFocusGain = false
+
+    if (settingsRepository.shouldIgnoreAudioFocusChanges()) {
+      return
+    }
 
     when (AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)) {
       AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {

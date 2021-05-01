@@ -69,4 +69,11 @@ class SettingsRepository private constructor(private val context: Context) {
   fun getSoundFadeDurationInMillis(): Long {
     return prefs.getInt(context.getString(R.string.sound_fade_duration_key), 1) * 1000L
   }
+
+  /**
+   * Returns the value of switch preference with key [R.string.ignore_audio_focus_changes_key].
+   */
+  fun shouldIgnoreAudioFocusChanges(): Boolean {
+    return prefs.getBoolean(context.getString(R.string.ignore_audio_focus_changes_key), false)
+  }
 }

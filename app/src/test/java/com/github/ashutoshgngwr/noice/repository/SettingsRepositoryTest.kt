@@ -112,4 +112,16 @@ class SettingsRepositoryTest {
       assertEquals(input * 1000L, settingsRepository.getSoundFadeDurationInMillis())
     }
   }
+
+  @Test
+  fun testShouldIgnoreAudioFocusChanges() {
+    val inputs = arrayOf(true, false)
+    for (input in inputs) {
+      every {
+        prefs.getBoolean(context.getString(R.string.ignore_audio_focus_changes_key), any())
+      } returns input
+
+      assertEquals(input, settingsRepository.shouldIgnoreAudioFocusChanges())
+    }
+  }
 }

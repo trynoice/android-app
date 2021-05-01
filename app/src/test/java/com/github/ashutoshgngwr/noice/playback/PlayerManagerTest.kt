@@ -11,6 +11,7 @@ import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
+import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.shadow.ShadowMediaSession
 import com.github.ashutoshgngwr.noice.shadow.ShadowMediaSessionCompat
 import io.mockk.MockKAnnotations
@@ -41,8 +42,8 @@ import org.robolectric.shadows.ShadowLooper
 class PlayerManagerTest {
 
   private lateinit var mockCastAPIWrapper: CastAPIWrapper
-
   private lateinit var players: HashMap<String, Player>
+  private lateinit var settingsRepository: SettingsRepository
 
   @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
   private lateinit var playerManager: PlayerManager
@@ -57,6 +58,8 @@ class PlayerManagerTest {
     players = hashMapOf("test" to mockk(relaxed = true) {
       every { soundKey } returns "test"
     })
+
+    settingsRepository = mockk(relaxed = true)
 
     val context = ApplicationProvider.getApplicationContext<Context>()
     playerManager = PlayerManager(context, MediaSessionCompat(context, "test"))
@@ -98,6 +101,16 @@ class PlayerManagerTest {
     playerManager.onAudioFocusChange(AudioManager.AUDIOFOCUS_LOSS)
     verify(exactly = 1) { players.getValue("test").pause() }
     assertPaused()
+  }
+
+  @Test
+  fun testPlaySound_whenIgnoringAudioFocusChanges() {
+    mockkStatic(AudioManagerCompat::class)
+    every { settingsRepository.shouldIgnoreAudioFocusChanges() } returns true
+
+    playerManager.play("test")
+    verify(exactly = 1) { players.getValue("test").play() }
+    verify(exactly = 0) { AudioManagerCompat.requestAudioFocus(any(), any()) }
   }
 
   @Test
@@ -176,6 +189,19 @@ class PlayerManagerTest {
     // should abandon audio focus
     verify(exactly = 1) { AudioManagerCompat.abandonAudioFocusRequest(any(), any()) }
   }
+
+  @Test
+  fun testStopPlayback_whenIgnoringAudioFocus() {
+    mockkStatic(AudioManagerCompat::class)
+    every { settingsRepository.shouldIgnoreAudioFocusChanges() } returns true
+
+    val mockPlayer = players.getValue("test")
+    playerManager.stop()
+
+    verify(exactly = 1) { mockPlayer.stop() }
+    verify(exactly = 0) { AudioManagerCompat.abandonAudioFocusRequest(any(), any()) }
+  }
+
 
   @Test
   fun testPause() {

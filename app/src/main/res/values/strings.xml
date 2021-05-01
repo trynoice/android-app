@@ -203,4 +203,7 @@
     <string name="skip_to_prev">Previous preset</string>
     <string name="skip_to_next">Next preset</string>
     <string name="unsaved_preset">Unsaved Preset</string>
+    <string name="ignore_audio_focus_changes">Ignore audio focus changes</string>
+    <string name="ignore_audio_focus_changes_summary_off">Pause when other apps play audio</string>
+    <string name="ignore_audio_focus_changes_summary_on">Do not react when other apps play audio</string>
 </resources>

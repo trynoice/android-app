@@ -21,6 +21,13 @@
       app:min="0"
       app:showSeekBarValue="true" />
 
+    <SwitchPreferenceCompat
+      android:icon="@drawable/ic_settings_audio_focus"
+      android:key="@string/ignore_audio_focus_changes_key"
+      android:summaryOff="@string/ignore_audio_focus_changes_summary_off"
+      android:summaryOn="@string/ignore_audio_focus_changes_summary_on"
+      android:title="@string/ignore_audio_focus_changes" />
+
   </PreferenceCategory>
 
   <PreferenceCategory android:title="@string/appearance">
