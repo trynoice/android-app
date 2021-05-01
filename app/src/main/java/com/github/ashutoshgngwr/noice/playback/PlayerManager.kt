@@ -33,6 +33,9 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
   companion object {
     private val TAG = PlayerManager::class.simpleName
     private val DELAYED_STOP_CALLBACK_TOKEN = "${PlayerManager::javaClass.name}.stop_callback"
+
+    const val SKIP_DIRECTION_PREV = -1
+    const val SKIP_DIRECTION_NEXT = 1
   }
 
   private var state = PlaybackStateCompat.STATE_STOPPED
@@ -66,6 +69,8 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
       PlaybackStateCompat.ACTION_PLAY_PAUSE
         or PlaybackStateCompat.ACTION_PAUSE
         or PlaybackStateCompat.ACTION_STOP
+        or PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
+        or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
     )
 
   private val castAPIWrapper = CastAPIWrapper.from(context, true).apply {
@@ -87,6 +92,16 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
         updatePlaybackStrategies()
       }
     }
+  }
+
+  init {
+    mediaSession.setCallback(object : MediaSessionCompat.Callback() {
+      override fun onPlay() = resume()
+      override fun onStop() = stop()
+      override fun onPause() = pause()
+      override fun onSkipToPrevious() = skipPreset(SKIP_DIRECTION_PREV)
+      override fun onSkipToNext() = skipPreset(SKIP_DIRECTION_NEXT)
+    })
   }
 
   // implements audio focus change listener
@@ -339,5 +354,30 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
     playbackStateBuilder.setState(state, PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN, speed)
     mediaSession.setPlaybackState(playbackStateBuilder.build())
     playbackUpdateListener?.invoke(state, players)
+  }
+
+  fun skipPreset(skipDirection: Int) {
+    if (skipDirection != SKIP_DIRECTION_PREV && skipDirection != SKIP_DIRECTION_NEXT) {
+      throw IllegalArgumentException(
+        "'skipDirection' must be one of 'PlayerManager.SKIP_DIRECTION_PREV' or " +
+          "'PlayerManager.SKIP_DIRECTION_NEXT'"
+      )
+    }
+
+    val presets = presetRepository.list()
+    val currentPos = presets.indexOf(Preset.from("", players.values))
+    if (currentPos < 0) {
+      playRandomPreset()
+      return
+    }
+
+    var nextPresetIndex = currentPos + skipDirection
+    if (nextPresetIndex < 0) {
+      nextPresetIndex = presets.size - 1
+    } else if (nextPresetIndex >= presets.size) {
+      nextPresetIndex = 0
+    }
+
+    playPreset(presets[nextPresetIndex])
   }
 }

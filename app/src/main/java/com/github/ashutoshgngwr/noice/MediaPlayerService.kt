@@ -72,12 +72,6 @@ class MediaPlayerService : Service() {
     }
 
     mediaSession = MediaSessionCompat(this, "$TAG.mediaSession").also {
-      it.setCallback(object : MediaSessionCompat.Callback() {
-        override fun onPlay() = playerManager.resume()
-        override fun onStop() = playerManager.stop()
-        override fun onPause() = playerManager.pause()
-      })
-
       it.setSessionActivity(
         PendingIntent.getActivity(
           this,
@@ -123,7 +117,7 @@ class MediaPlayerService : Service() {
   }
 
   private fun getCurrentPresetName(players: Collection<Player>): String {
-    val name = getString(R.string.app_name)
+    val name = getString(R.string.unsaved_preset)
     if (players.isEmpty()) {
       return name
     }

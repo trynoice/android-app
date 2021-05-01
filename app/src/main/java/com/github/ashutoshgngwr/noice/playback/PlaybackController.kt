@@ -31,6 +31,8 @@ object PlaybackController {
   internal const val EXTRA_RANDOM_PRESET_MAX_SOUNDS = "preset_intensity_upper"
   internal const val ACTION_SCHEDULE_STOP_PLAYBACK = "schedule_stop_playback"
   internal const val EXTRA_AT_UPTIME_MILLIS = "at_uptime_millis"
+  internal const val ACTION_SKIP_PRESET = "skip_preset"
+  internal const val EXTRA_SKIP_DIRECTION = "skip_direction"
 
   private val TAG = PlaybackController::class.simpleName
   private val AUTO_STOP_CALLBACK_TOKEN = "${TAG}.auto_stop_cb"
@@ -38,18 +40,56 @@ object PlaybackController {
   internal val PREF_LAST_SCHEDULED_STOP_TIME = "${TAG}.scheduled_stop_time"
 
   private const val RC_ALARM = 0x39
+  private const val RC_SKIP_PREV = 0x3A
+  private const val RC_SKIP_NEXT = 0x3B
+  private const val RC_RESUME = 0x3C
+  private const val RC_PAUSE = 0x3D
+  private const val RC_STOP = 0x3E
 
-  internal fun buildNotificationActionIntent(
+  fun buildResumeActionPendingIntent(context: Context): PendingIntent {
+    return buildSimpleActionPendingIntent(context, ACTION_RESUME_PLAYBACK, RC_RESUME)
+  }
+
+  fun buildPauseActionPendingIntent(context: Context): PendingIntent {
+    return buildSimpleActionPendingIntent(context, ACTION_PAUSE_PLAYBACK, RC_PAUSE)
+  }
+
+  fun buildStopActionPendingIntent(context: Context): PendingIntent {
+    return buildSimpleActionPendingIntent(context, ACTION_STOP_PLAYBACK, RC_STOP)
+  }
+
+  private fun buildSimpleActionPendingIntent(
     context: Context,
     action: String,
     requestCode: Int
   ): PendingIntent {
     val intent = Intent(context, MediaPlayerService::class.java)
       .setAction(action)
+
     return buildPendingIntent(context, intent, requestCode)
   }
 
-  fun buildAlarmIntent(
+  fun buildSkipPrevActionPendingIntent(context: Context): PendingIntent {
+    return buildSkipActionPendingIntent(context, PlayerManager.SKIP_DIRECTION_PREV, RC_SKIP_PREV)
+  }
+
+  fun buildSkipNextActionPendingIntent(context: Context): PendingIntent {
+    return buildSkipActionPendingIntent(context, PlayerManager.SKIP_DIRECTION_NEXT, RC_SKIP_NEXT)
+  }
+
+  private fun buildSkipActionPendingIntent(
+    context: Context,
+    direction: Int,
+    requestCode: Int
+  ): PendingIntent {
+    val intent = Intent(context, MediaPlayerService::class.java)
+      .setAction(ACTION_SKIP_PRESET)
+      .putExtra(EXTRA_SKIP_DIRECTION, direction)
+
+    return buildPendingIntent(context, intent, requestCode)
+  }
+
+  fun buildAlarmPendingIntent(
     context: Context,
     presetID: String?,
     shouldUpdateMediaVolume: Boolean,
@@ -61,6 +101,8 @@ object PlaybackController {
 
     if (shouldUpdateMediaVolume) {
       intent.putExtra(EXTRA_DEVICE_MEDIA_VOLUME, mediaVolume)
+    } else {
+      intent.putExtra(EXTRA_DEVICE_MEDIA_VOLUME, -1)
     }
 
     return buildPendingIntent(context, intent, RC_ALARM)
@@ -137,6 +179,10 @@ object PlaybackController {
           // pause, not stop. give user a chance to resume if they chose to do so.
           handler.postAtTime({ playerManager.pause() }, AUTO_STOP_CALLBACK_TOKEN, atUptime)
         }
+      }
+      ACTION_SKIP_PRESET -> {
+        val skipDirection = intent.getIntExtra(EXTRA_SKIP_DIRECTION, 1)
+        playerManager.skipPreset(skipDirection)
       }
     }
   }

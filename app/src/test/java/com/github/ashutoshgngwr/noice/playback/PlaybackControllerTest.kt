@@ -26,6 +26,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowLooper
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
@@ -43,6 +44,92 @@ class PlaybackControllerTest {
   @After
   fun teardown() {
     unmockkAll()
+  }
+
+  @Test
+  fun testBuildResumeActionPendingIntent() {
+    val pendingIntent = PlaybackController.buildResumeActionPendingIntent(
+      ApplicationProvider.getApplicationContext()
+    )
+
+    val intent = shadowOf(pendingIntent).savedIntent
+    assertEquals(MediaPlayerService::class.qualifiedName, intent.component?.className)
+    assertEquals(PlaybackController.ACTION_RESUME_PLAYBACK, intent.action)
+  }
+
+  @Test
+  fun testBuildPauseActionPendingIntent() {
+    val pendingIntent = PlaybackController.buildPauseActionPendingIntent(
+      ApplicationProvider.getApplicationContext()
+    )
+
+    val intent = shadowOf(pendingIntent).savedIntent
+    assertEquals(MediaPlayerService::class.qualifiedName, intent.component?.className)
+    assertEquals(PlaybackController.ACTION_PAUSE_PLAYBACK, intent.action)
+  }
+
+  @Test
+  fun testBuildStopActionPendingIntent() {
+    val pendingIntent = PlaybackController.buildStopActionPendingIntent(
+      ApplicationProvider.getApplicationContext()
+    )
+
+    val intent = shadowOf(pendingIntent).savedIntent
+    assertEquals(MediaPlayerService::class.qualifiedName, intent.component?.className)
+    assertEquals(PlaybackController.ACTION_STOP_PLAYBACK, intent.action)
+  }
+
+  @Test
+  fun testBuildSkipPrevActionPendingIntent() {
+    val pendingIntent = PlaybackController.buildSkipPrevActionPendingIntent(
+      ApplicationProvider.getApplicationContext()
+    )
+
+    val intent = shadowOf(pendingIntent).savedIntent
+    assertEquals(MediaPlayerService::class.qualifiedName, intent.component?.className)
+    assertEquals(PlaybackController.ACTION_SKIP_PRESET, intent.action)
+    assertEquals(
+      PlayerManager.SKIP_DIRECTION_PREV,
+      intent.getIntExtra(PlaybackController.EXTRA_SKIP_DIRECTION, 0)
+    )
+  }
+
+  @Test
+  fun testBuildSkipNextActionPendingIntent() {
+    val pendingIntent = PlaybackController.buildSkipNextActionPendingIntent(
+      ApplicationProvider.getApplicationContext()
+    )
+
+    val intent = shadowOf(pendingIntent).savedIntent
+    assertEquals(MediaPlayerService::class.qualifiedName, intent.component?.className)
+    assertEquals(PlaybackController.ACTION_SKIP_PRESET, intent.action)
+    assertEquals(
+      PlayerManager.SKIP_DIRECTION_NEXT,
+      intent.getIntExtra(PlaybackController.EXTRA_SKIP_DIRECTION, 0)
+    )
+  }
+
+  @Test
+  fun testBuildAlarmPendingIntent() {
+    val inputShouldUpdateMediaVolume = arrayOf(true, false)
+    val outputVolumes = arrayOf(10, -1)
+    for (i in inputShouldUpdateMediaVolume.indices) {
+      val presetID = "test-preset-id"
+      val volume = 10
+      val pendingIntent = PlaybackController.buildAlarmPendingIntent(
+        ApplicationProvider.getApplicationContext(),
+        presetID, inputShouldUpdateMediaVolume[i], volume
+      )
+
+      val intent = shadowOf(pendingIntent).savedIntent
+      assertEquals(MediaPlayerService::class.qualifiedName, intent.component?.className)
+      assertEquals(PlaybackController.ACTION_PLAY_PRESET, intent.action)
+      assertEquals(presetID, intent.getStringExtra(PlaybackController.EXTRA_PRESET_ID))
+      assertEquals(
+        outputVolumes[i],
+        intent.getIntExtra(PlaybackController.EXTRA_DEVICE_MEDIA_VOLUME, -1)
+      )
+    }
   }
 
   @Test

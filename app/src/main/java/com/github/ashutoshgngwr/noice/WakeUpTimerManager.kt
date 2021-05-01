@@ -67,7 +67,7 @@ object WakeUpTimerManager {
     withAlarmManager(context) {
       it.setAlarmClock(
         AlarmManager.AlarmClockInfo(timer.atMillis, getPendingIntentForActivity(context)),
-        PlaybackController.buildAlarmIntent(
+        PlaybackController.buildAlarmPendingIntent(
           context,
           timer.presetID,
           timer.shouldUpdateMediaVolume,
@@ -87,7 +87,7 @@ object WakeUpTimerManager {
 
     withAlarmManager(context) {
       // don't need concrete timer value for cancelling the alarm.
-      it.cancel(PlaybackController.buildAlarmIntent(context, null, false, -1))
+      it.cancel(PlaybackController.buildAlarmPendingIntent(context, null, false, -1))
     }
   }
 
