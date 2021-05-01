@@ -2,8 +2,8 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
+  android:background="@color/background_dark"
   android:paddingHorizontal="16dp"
   android:paddingTop="16dp"
-  android:background="@color/background_dark"
   android:paddingBottom="8dp"
   android:textAppearance="?attr/textAppearanceButton" />

@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.support.v4.media.session.PlaybackStateCompat
 import android.widget.Button
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
@@ -15,13 +16,12 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
-import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.Player
-import com.github.ashutoshgngwr.noice.playback.PlayerManager
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import io.mockk.clearStaticMockk
 import io.mockk.every
@@ -56,7 +56,7 @@ class PresetFragmentTest {
     mockkObject(
       InAppReviewFlowManager,
       Preset.Companion,
-      MediaPlayerService.Companion,
+      PlaybackController,
       PresetRepository.Companion
     )
 
@@ -98,7 +98,7 @@ class PresetFragmentTest {
   @Test
   fun testRecyclerViewItem_playButton() {
     // stub the original method. Without stubbing, mockk will also run the real implementation.
-    every { MediaPlayerService.playPreset(any(), any()) } returns Unit
+    every { PlaybackController.playPreset(any(), any()) } returns Unit
 
     onView(withId(R.id.preset_list)).perform(
       RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
@@ -107,7 +107,7 @@ class PresetFragmentTest {
       )
     )
 
-    verify(exactly = 1) { MediaPlayerService.playPreset(any(), "test-id") }
+    verify(exactly = 1) { PlaybackController.playPreset(any(), "test-id") }
   }
 
   @Test
@@ -116,7 +116,7 @@ class PresetFragmentTest {
     every { Preset.from(any(), any()) } returns mockPreset
     fragmentScenario.onFragment {
       it.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlayerManager.State.PLAYING
+        every { state } returns PlaybackStateCompat.STATE_PLAYING
       })
     }
 
@@ -127,7 +127,7 @@ class PresetFragmentTest {
       )
     )
 
-    verify(exactly = 1) { MediaPlayerService.stopPlayback(any()) }
+    verify(exactly = 1) { PlaybackController.stop(any()) }
   }
 
   @Test
@@ -162,7 +162,7 @@ class PresetFragmentTest {
 
     fragmentScenario.onFragment {
       it.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlayerManager.State.PLAYING
+        every { state } returns PlaybackStateCompat.STATE_PLAYING
       })
     }
 
@@ -179,7 +179,7 @@ class PresetFragmentTest {
       .perform(click()) // click delete button in confirmation dialog
 
     // should publish a stop playback event if preset was playing
-    verify(exactly = 1) { MediaPlayerService.stopPlayback(any()) }
+    verify(exactly = 1) { PlaybackController.stop(any()) }
   }
 
   @Test

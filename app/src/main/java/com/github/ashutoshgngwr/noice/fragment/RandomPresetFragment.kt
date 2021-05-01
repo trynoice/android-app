@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
-import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetFragmentBinding
 import com.github.ashutoshgngwr.noice.model.Sound
+import com.github.ashutoshgngwr.noice.playback.PlaybackController
 
 class RandomPresetFragment : Fragment() {
 
@@ -42,7 +42,7 @@ class RandomPresetFragment : Fragment() {
         else -> SoundLibraryFragment.RANGE_INTENSITY_ANY
       }
 
-      MediaPlayerService.playRandomPreset(requireContext(), tag, intensity)
+      PlaybackController.playRandomPreset(requireContext(), tag, intensity)
 
       // maybe show in-app review dialog to the user
       InAppReviewFlowManager.maybeAskForReview(requireActivity())

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import androidx.test.core.app.ApplicationProvider
+import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.gson.GsonBuilder
 import io.mockk.every
@@ -89,9 +90,9 @@ class WakeUpTimerManagerTest {
       val alarm = shadowAlarmManager.nextScheduledAlarm
       val i = shadowOf(alarm.operation).savedIntent
       assertEquals(expectedTime, alarm.triggerAtTime)
-      assertEquals(expectedPresetID, i.getStringExtra(MediaPlayerService.EXTRA_PRESET_ID))
+      assertEquals(expectedPresetID, i.getStringExtra(PlaybackController.EXTRA_PRESET_ID))
 
-      val vol = i.getIntExtra(MediaPlayerService.EXTRA_DEVICE_MEDIA_VOLUME, -1)
+      val vol = i.getIntExtra(PlaybackController.EXTRA_DEVICE_MEDIA_VOLUME, -1)
       if (shouldUpdateMediaVolume) {
         assertEquals(expectedVolume, vol)
       } else {

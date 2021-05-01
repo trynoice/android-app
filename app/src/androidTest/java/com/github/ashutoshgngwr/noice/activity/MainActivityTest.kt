@@ -5,6 +5,7 @@ import android.app.Instrumentation
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.support.v4.media.session.PlaybackStateCompat
 import android.view.Gravity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
@@ -28,13 +29,12 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.EspressoX
-import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
-import com.github.ashutoshgngwr.noice.playback.PlayerManager
+import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.navigation.NavigationView
 import io.mockk.every
@@ -299,10 +299,10 @@ class MainActivityTest {
 
   @Test
   fun testPlayPauseToggleMenuItem() {
-    mockkObject(MediaPlayerService)
+    mockkObject(PlaybackController)
     activityScenario.onActivity {
       it.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlayerManager.State.STOPPED
+        every { state } returns PlaybackStateCompat.STATE_STOPPED
       })
     }
 
@@ -312,31 +312,31 @@ class MainActivityTest {
     // with ongoing playback
     activityScenario.onActivity {
       it.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlayerManager.State.PLAYING
+        every { state } returns PlaybackStateCompat.STATE_PLAYING
       })
     }
 
     EspressoX.waitForView(withId(R.id.action_play_pause_toggle), isDisplayed())
       .perform(click())
 
-    verify(exactly = 1) { MediaPlayerService.pausePlayback(any()) }
+    verify(exactly = 1) { PlaybackController.pause(any()) }
 
     // with paused playback
     activityScenario.onActivity {
       it.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlayerManager.State.PAUSED
+        every { state } returns PlaybackStateCompat.STATE_PAUSED
       })
     }
 
     EspressoX.waitForView(withId(R.id.action_play_pause_toggle), isDisplayed())
       .perform(click())
 
-    verify(exactly = 1) { MediaPlayerService.resumePlayback(any()) }
+    verify(exactly = 1) { PlaybackController.resume(any()) }
 
     // with stopped playback
     activityScenario.onActivity {
       it.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlayerManager.State.STOPPED
+        every { state } returns PlaybackStateCompat.STATE_STOPPED
       })
     }
 

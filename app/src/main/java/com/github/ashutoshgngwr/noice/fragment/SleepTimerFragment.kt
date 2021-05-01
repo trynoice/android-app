@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
-import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SleepTimerFragmentBinding
+import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.google.android.material.snackbar.Snackbar
 
 class SleepTimerFragment : Fragment() {
@@ -28,7 +28,7 @@ class SleepTimerFragment : Fragment() {
     binding.durationPicker.setResetButtonEnabled(false)
     binding.durationPicker.setOnDurationAddedListener(this::onDurationAdded)
 
-    MediaPlayerService.getScheduledStopPlaybackRemainingDurationMillis().also {
+    PlaybackController.getScheduledAutoStopRemainingDurationMillis(requireContext()).also {
       if (it > 0) {
         binding.countdownView.startCountdown(it)
       }
@@ -36,21 +36,21 @@ class SleepTimerFragment : Fragment() {
   }
 
   private fun onDurationAdded(duration: Long) {
-    var remainingMillis = 0L
+    var remaining = 0L
     var enableResetButton = false
     if (duration < 0) { // duration picker reset
-      MediaPlayerService.scheduleStopPlayback(requireContext(), 0)
+      PlaybackController.clearScheduledAutoStop(requireContext())
       Snackbar.make(requireView(), R.string.auto_sleep_schedule_cancelled, Snackbar.LENGTH_SHORT)
         .show()
     } else {
-      remainingMillis = MediaPlayerService.getScheduledStopPlaybackRemainingDurationMillis()
-      remainingMillis += duration
-      MediaPlayerService.scheduleStopPlayback(requireContext(), remainingMillis)
+      remaining = PlaybackController.getScheduledAutoStopRemainingDurationMillis(requireContext())
+      remaining += duration
+      PlaybackController.scheduleAutoStop(requireContext(), remaining)
       enableResetButton = true
     }
 
     binding.durationPicker.setResetButtonEnabled(enableResetButton)
-    binding.countdownView.startCountdown(remainingMillis)
+    binding.countdownView.startCountdown(remaining)
     // maybe show in-app review dialog to the user
     InAppReviewFlowManager.maybeAskForReview(requireActivity())
   }

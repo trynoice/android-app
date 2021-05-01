@@ -200,4 +200,7 @@
     <string name="sound_fade_duration_summary">Fade in/out duration for playing/stopping sounds (in seconds)</string>
     <string name="pinned_shortcut_creation_failed">Failed to add the shortcut to the home screen!</string>
     <string name="pinned_shortcut_created">Shortcut has been added to the home screen!</string>
+    <string name="skip_to_prev">Previous preset</string>
+    <string name="skip_to_next">Next preset</string>
+    <string name="unsaved_preset">Unsaved Preset</string>
 </resources>

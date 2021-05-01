@@ -4,51 +4,50 @@ import android.content.Context
 import android.media.AudioManager
 import android.os.Handler
 import android.os.Looper
-import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
+import androidx.core.content.getSystemService
 import androidx.core.os.HandlerCompat
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
-import androidx.mediarouter.media.MediaRouter
-import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.strategy.LocalPlaybackStrategyFactory
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import java.util.concurrent.TimeUnit
+
+typealias PlaybackUpdateListener = (state: Int, players: Map<String, Player>) -> Unit
 
 /**
  * [PlayerManager] is responsible for managing [Player]s end-to-end for all sounds.
  * It manages Android's audio focus implicitly. It also manages Playback routing to
  * cast enabled devices on-demand.
  */
-class PlayerManager(private val context: Context) :
+class PlayerManager(context: Context, private val mediaSession: MediaSessionCompat) :
   AudioManager.OnAudioFocusChangeListener {
-
-  enum class State {
-    PLAYING, PAUSED, STOPPED
-  }
 
   companion object {
     private val TAG = PlayerManager::class.simpleName
     private val DELAYED_STOP_CALLBACK_TOKEN = "${PlayerManager::javaClass.name}.stop_callback"
+
+    const val SKIP_DIRECTION_PREV = -1
+    const val SKIP_DIRECTION_NEXT = 1
   }
 
-  var state = State.STOPPED
-    private set
-
+  private var state = PlaybackStateCompat.STATE_STOPPED
   private var hasAudioFocus = false
   private var playbackDelayed = false
   private var resumeOnFocusGain = false
-  private var onPlayerUpdateListener = { }
+  private var playbackUpdateListener: PlaybackUpdateListener? = null
 
-  val players = HashMap<String, Player>(Sound.LIBRARY.size)
+  private val players = HashMap<String, Player>(Sound.LIBRARY.size)
   private val handler = Handler(Looper.getMainLooper())
-  private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+  private val presetRepository = PresetRepository.newInstance(context)
+  private val audioManager = requireNotNull(context.getSystemService<AudioManager>())
   private val audioAttributes = AudioAttributesCompat.Builder()
     .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)
     .setUsage(AudioAttributesCompat.USAGE_GAME)
@@ -70,25 +69,9 @@ class PlayerManager(private val context: Context) :
       PlaybackStateCompat.ACTION_PLAY_PAUSE
         or PlaybackStateCompat.ACTION_PAUSE
         or PlaybackStateCompat.ACTION_STOP
+        or PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
+        or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
     )
-
-  private val mediaSession = MediaSessionCompat(context, context.packageName).also {
-    it.setMetadata(
-      MediaMetadataCompat.Builder()
-        .putString(MediaMetadataCompat.METADATA_KEY_TITLE, context.getString(R.string.app_name))
-        .build()
-    )
-
-    it.setCallback(object : MediaSessionCompat.Callback() {
-      override fun onPlay() = resume()
-      override fun onStop() = stop()
-      override fun onPause() = pause()
-    })
-
-    it.setPlaybackToLocal(AudioManager.STREAM_MUSIC)
-    it.setPlaybackState(playbackStateBuilder.build())
-    it.isActive = true
-  }
 
   private val castAPIWrapper = CastAPIWrapper.from(context, true).apply {
     onSessionBegin {
@@ -112,7 +95,13 @@ class PlayerManager(private val context: Context) :
   }
 
   init {
-    MediaRouter.getInstance(context).setMediaSessionCompat(mediaSession)
+    mediaSession.setCallback(object : MediaSessionCompat.Callback() {
+      override fun onPlay() = resume()
+      override fun onStop() = stop()
+      override fun onPause() = pause()
+      override fun onSkipToPrevious() = skipPreset(SKIP_DIRECTION_PREV)
+      override fun onSkipToNext() = skipPreset(SKIP_DIRECTION_NEXT)
+    })
   }
 
   // implements audio focus change listener
@@ -206,7 +195,7 @@ class PlayerManager(private val context: Context) :
     if (playbackDelayed) {
       // If audio focus is delayed, add this sound to players and it will be played whenever the
       // we get audio focus.
-      state = State.PAUSED
+      state = PlaybackStateCompat.STATE_PAUSED
       notifyChanges()
       return
     }
@@ -218,7 +207,7 @@ class PlayerManager(private val context: Context) :
       return
     }
 
-    state = State.PLAYING
+    state = PlaybackStateCompat.STATE_PLAYING
     requireNotNull(players[soundKey]).play()
     notifyChanges()
   }
@@ -234,7 +223,7 @@ class PlayerManager(private val context: Context) :
     }
 
     if (players.isEmpty()) {
-      state = State.STOPPED
+      state = PlaybackStateCompat.STATE_STOPPED
       Log.d(TAG, "stop(sound): no other sound is playing, abandoning audio focus")
       abandonAudioFocus()
     }
@@ -246,7 +235,7 @@ class PlayerManager(private val context: Context) :
    * Stops all [Player]s and releases underlying resources. Also abandon the audio focus.
    */
   fun stop() {
-    state = State.STOPPED
+    state = PlaybackStateCompat.STATE_STOPPED
     players.values.forEach { it.stop() }
     players.clear()
     Log.d(TAG, "stop(): abandoning audio focus")
@@ -259,7 +248,7 @@ class PlayerManager(private val context: Context) :
    * It doesn't release any underlying resources.
    */
   private fun pauseIndefinitely() {
-    state = State.PAUSED
+    state = PlaybackStateCompat.STATE_PAUSED
     players.values.forEach { it.pause() }
     notifyChanges()
   }
@@ -284,7 +273,7 @@ class PlayerManager(private val context: Context) :
     if (hasAudioFocus) {
       Log.d(TAG, "resume(): removing delayed stop callbacks, if any")
       handler.removeCallbacksAndMessages(DELAYED_STOP_CALLBACK_TOKEN)
-      state = State.PLAYING
+      state = PlaybackStateCompat.STATE_PLAYING
       players.values.forEach { it.play() }
       notifyChanges()
     } else if (!playbackDelayed) {
@@ -306,7 +295,6 @@ class PlayerManager(private val context: Context) :
    */
   fun cleanup() {
     stop()
-    mediaSession.release()
     castAPIWrapper.clearSessionCallbacks()
   }
 
@@ -314,18 +302,26 @@ class PlayerManager(private val context: Context) :
    * Allows clients to subscribe for changes in [Player]s
    * @param listener a lambda that is called on every update
    */
-  fun setOnPlayerUpdateListener(listener: () -> Unit) {
-    onPlayerUpdateListener = listener
+  fun setPlaybackUpdateListener(listener: PlaybackUpdateListener) {
+    playbackUpdateListener = listener
+  }
+
+  fun playRandomPreset(tag: Sound.Tag? = null, intensity: IntRange = 2 until 6) {
+    playPreset(presetRepository.random(tag, intensity))
+  }
+
+  fun playPreset(presetID: String) {
+    presetRepository.get(presetID)?.also { playPreset(it) }
   }
 
   /**
    * [playPreset] efficiently loads a given [Preset] to the [PlayerManager]. It attempts to re-use
    * [Player] instances that are both present in its state and requested by [Preset]. It is also
    * superior to calling [play] manually for each [Preset.PlayerState] since that would cause
-   * [PlayerManager] to invoke [onPlayerUpdateListener] with each [Preset.PlayerState]. This method
-   * ensures that [onPlayerUpdateListener] is invoked only once for any given [Preset].
+   * [PlayerManager] to invoke [playbackUpdateListener] with each [Preset.PlayerState]. This method
+   * ensures that [playbackUpdateListener] is invoked only once for any given [Preset].
    */
-  fun playPreset(preset: Preset) {
+  internal fun playPreset(preset: Preset) {
     // stop players that are not present in preset state
     players.keys.subtract(preset.playerStates.map { it.soundKey }).forEach {
       players.remove(it)?.stop()
@@ -350,27 +346,38 @@ class PlayerManager(private val context: Context) :
   }
 
   private fun notifyChanges() {
-    when (state) {
-      State.PLAYING -> playbackStateBuilder.setState(
-        PlaybackStateCompat.STATE_PLAYING,
-        PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
-        1f
-      )
+    var speed = 0f
+    if (state == PlaybackStateCompat.STATE_PLAYING) {
+      speed = 1f
+    }
 
-      State.PAUSED -> playbackStateBuilder.setState(
-        PlaybackStateCompat.STATE_PAUSED,
-        PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
-        0f
-      )
+    playbackStateBuilder.setState(state, PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN, speed)
+    mediaSession.setPlaybackState(playbackStateBuilder.build())
+    playbackUpdateListener?.invoke(state, players)
+  }
 
-      State.STOPPED -> playbackStateBuilder.setState(
-        PlaybackStateCompat.STATE_STOPPED,
-        PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
-        0f
+  fun skipPreset(skipDirection: Int) {
+    if (skipDirection != SKIP_DIRECTION_PREV && skipDirection != SKIP_DIRECTION_NEXT) {
+      throw IllegalArgumentException(
+        "'skipDirection' must be one of 'PlayerManager.SKIP_DIRECTION_PREV' or " +
+          "'PlayerManager.SKIP_DIRECTION_NEXT'"
       )
     }
 
-    mediaSession.setPlaybackState(playbackStateBuilder.build())
-    onPlayerUpdateListener.invoke()
+    val presets = presetRepository.list()
+    val currentPos = presets.indexOf(Preset.from("", players.values))
+    if (currentPos < 0) {
+      playRandomPreset()
+      return
+    }
+
+    var nextPresetIndex = currentPos + skipDirection
+    if (nextPresetIndex < 0) {
+      nextPresetIndex = presets.size - 1
+    } else if (nextPresetIndex >= presets.size) {
+      nextPresetIndex = 0
+    }
+
+    playPreset(presets[nextPresetIndex])
   }
 }

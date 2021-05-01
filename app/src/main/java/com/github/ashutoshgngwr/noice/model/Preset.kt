@@ -3,8 +3,6 @@ package com.github.ashutoshgngwr.noice.model
 import com.github.ashutoshgngwr.noice.playback.Player
 import com.google.gson.annotations.Expose
 import java.util.*
-import kotlin.random.Random
-import kotlin.random.nextInt
 
 /**
  * [Preset] represents a snapshot of Player Manager at any given time. It holds states of various
@@ -61,25 +59,6 @@ class Preset(
       }
 
       return Preset(UUID.randomUUID().toString(), name, playerStates.toTypedArray())
-    }
-
-    /**
-     * [random] generates a nameless random preset using the provided sound [tag] and [intensity].
-     * If sound [tag] is null, full library is considered for randomly selecting sounds for the
-     * preset. If it is non-null, only sounds containing the provided tag are considered.
-     * [intensity] is a [IntRange] that hints the lower and upper bounds for the number of sounds
-     * present in the generated preset. A number is chosen randomly in this range.
-     */
-    fun random(tag: Sound.Tag?, intensity: IntRange): Preset {
-      val library = Sound.filterLibraryByTag(tag).shuffled()
-      val playerStates = mutableListOf<PlayerState>()
-      for (i in 0 until Random.nextInt(intensity)) {
-        val volume = 1 + Random.nextInt(0, Player.MAX_VOLUME)
-        val timePeriod = Random.nextInt(Player.MIN_TIME_PERIOD, Player.MAX_TIME_PERIOD + 1)
-        playerStates.add(PlayerState(library[i], volume, timePeriod))
-      }
-
-      return Preset(UUID.randomUUID().toString(), "", playerStates.toTypedArray())
     }
   }
 }
