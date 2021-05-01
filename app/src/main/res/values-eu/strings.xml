@@ -1,2 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="bonfire">Sua</string>
+    <string name="birds">Txoriak</string>
+    <string name="sound_group__wind">Haizea</string>
+    <string name="sound_group__water">Ura</string>
+    <string name="sound_group__vehicles">Ibilgailuak</string>
+    <string name="sound_group__monsoon">Montzoia</string>
+    <string name="sound_group__life">Bizitza</string>
+    <string name="stop">Gelditu</string>
+    <string name="play">Erreproduzitu</string>
+    <string name="save">Gorde</string>
+    <string name="intensity">Intentsitatea</string>
+    <string name="focus">Fokuratu</string>
+    <string name="dense">Trinkoa</string>
+    <string name="any">Edozein</string>
+    <string name="support_development">Garapena babestu</string>
+    <string name="report_issue">Arazoen berri eman</string>
+    <string name="open_drawer">Nabigazio menua ireki</string>
+    <string name="library">Liburutegia</string>
+    <string name="help">Laguntza</string>
+    <string name="close_drawer">Nabigazio menua itxi</string>
+    <string name="app_theme">Itxura</string>
+    <string name="about">Honi buruz</string>
+</resources>
