@@ -39,7 +39,7 @@
     <string name="night">Noc</string>
     <string name="office">Biuro</string>
     <string name="pink_noise">Szum różowy</string>
-    <string name="rolling_thunder">Toczący się grzmot</string>
+    <string name="rolling_thunder">Dudniący grzmot</string>
     <string name="seaside">Wybrzeże</string>
     <string name="soft_wind">Lekki wiatr</string>
     <string name="thunder_crack">Grzmot pioruna</string>
@@ -129,7 +129,7 @@
     <string name="sound_group__life">Życie</string>
     <string name="relax">Relaks</string>
     <string name="okay">Okej</string>
-    <string name="light">Swiatło</string>
+    <string name="light">Jasny</string>
     <string name="intensity">Intensywność</string>
     <string name="focus">Skupienie</string>
     <string name="any">Jakikolwiek</string>
