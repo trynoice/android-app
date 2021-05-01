@@ -4,6 +4,7 @@
   <color name="background">@color/shark_0</color>
   <color name="background_dark">@color/shark_1</color>
   <color name="action_menu_item">@color/white_0</color>
+  <color name="sound_icon">@color/white_0</color>
 
   <!-- Following is needed because AboutPage doesn't have any way to define custom style.
   This is supposed to override its default background color -->

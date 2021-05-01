@@ -13,10 +13,10 @@
     android:layout_gravity="center_vertical|end"
     android:layout_marginHorizontal="16dp"
     android:adjustViewBounds="true"
-    android:alpha="0.5"
+    android:alpha="0.25"
     android:maxHeight="150dp"
     android:scaleType="fitEnd"
-    app:tint="@color/material_on_background_disabled"
+    app:tint="@color/sound_icon"
     tools:ignore="ContentDescription"
     tools:src="@drawable/ic_sound_birds" />
 
