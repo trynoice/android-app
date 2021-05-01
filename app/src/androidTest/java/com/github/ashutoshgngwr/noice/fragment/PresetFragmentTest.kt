@@ -1,12 +1,11 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.content.SharedPreferences
+import android.support.v4.media.session.PlaybackStateCompat
 import android.widget.Button
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.preference.PreferenceManager
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
@@ -17,13 +16,13 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
-import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
-import com.github.ashutoshgngwr.noice.ShortcutHandlerActivity
-import com.github.ashutoshgngwr.noice.sound.Preset
-import com.github.ashutoshgngwr.noice.sound.player.Player
-import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
+import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
+import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.playback.Player
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import io.mockk.clearStaticMockk
 import io.mockk.every
 import io.mockk.mockk
@@ -48,12 +47,19 @@ class PresetFragmentTest {
   val retryTestRule = RetryTestRule(5)
 
   private lateinit var fragmentScenario: FragmentScenario<PresetFragment>
-
-  // returned when Preset.readAllFromUserPreferences() is called
   private lateinit var mockPreset: Preset
+  private lateinit var mockPresetRepository: PresetRepository
 
   @Before
   fun setup() {
+    mockkStatic(ShortcutManagerCompat::class)
+    mockkObject(
+      InAppReviewFlowManager,
+      Preset.Companion,
+      PlaybackController,
+      PresetRepository.Companion
+    )
+
     mockPreset = mockk(relaxed = true) {
       every { id } returns "test-id"
       every { name } returns "test"
@@ -63,9 +69,13 @@ class PresetFragmentTest {
       )
     }
 
-    mockkObject(InAppReviewFlowManager, Preset.Companion, MediaPlayerService.Companion)
-    mockkStatic(ShortcutManagerCompat::class)
-    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(mockPreset)
+    mockPresetRepository = mockk {
+      every { list() } returns arrayOf(mockPreset, mockk(relaxed = true) {
+        every { name } returns "test-exists"
+      })
+    }
+
+    every { PresetRepository.newInstance(any()) } returns mockPresetRepository
     fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
 
@@ -79,7 +89,7 @@ class PresetFragmentTest {
     onView(withId(R.id.empty_list_hint))
       .check(matches(withEffectiveVisibility(Visibility.GONE)))
 
-    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf()
+    every { mockPresetRepository.list() } returns arrayOf()
     fragmentScenario.recreate()
     onView(withId(R.id.empty_list_hint))
       .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
@@ -88,7 +98,7 @@ class PresetFragmentTest {
   @Test
   fun testRecyclerViewItem_playButton() {
     // stub the original method. Without stubbing, mockk will also run the real implementation.
-    every { MediaPlayerService.playPreset(any(), any()) } returns Unit
+    every { PlaybackController.playPreset(any(), any()) } returns Unit
 
     onView(withId(R.id.preset_list)).perform(
       RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
@@ -97,7 +107,7 @@ class PresetFragmentTest {
       )
     )
 
-    verify(exactly = 1) { MediaPlayerService.playPreset(any(), "test-id") }
+    verify(exactly = 1) { PlaybackController.playPreset(any(), "test-id") }
   }
 
   @Test
@@ -106,7 +116,7 @@ class PresetFragmentTest {
     every { Preset.from(any(), any()) } returns mockPreset
     fragmentScenario.onFragment {
       it.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlayerManager.State.PLAYING
+        every { state } returns PlaybackStateCompat.STATE_PLAYING
       })
     }
 
@@ -117,11 +127,13 @@ class PresetFragmentTest {
       )
     )
 
-    verify(exactly = 1) { MediaPlayerService.stopPlayback(any()) }
+    verify(exactly = 1) { PlaybackController.stop(any()) }
   }
 
   @Test
   fun testRecyclerViewItem_deleteOption() {
+    every { mockPresetRepository.delete(any()) } returns true
+
     // open context menu
     onView(withId(R.id.preset_list)).perform(
       RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
@@ -136,7 +148,7 @@ class PresetFragmentTest {
 
     onView(withText("test")).check(doesNotExist())
     verify(exactly = 1) {
-      Preset.writeAllToUserPreferences(any(), emptyList())
+      mockPresetRepository.delete("test-id")
       ShortcutManagerCompat.removeDynamicShortcuts(any(), listOf("test-id"))
       InAppReviewFlowManager.maybeAskForReview(any())
     }
@@ -146,9 +158,11 @@ class PresetFragmentTest {
   fun testRecyclerViewItem_deleteOption_onPresetPlaying() {
     // ensure that PresetFragment assumes it is playing a preset
     every { Preset.from(any(), any()) } returns mockPreset
+    every { mockPresetRepository.delete(any()) } returns true
+
     fragmentScenario.onFragment {
       it.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlayerManager.State.PLAYING
+        every { state } returns PlaybackStateCompat.STATE_PLAYING
       })
     }
 
@@ -165,19 +179,12 @@ class PresetFragmentTest {
       .perform(click()) // click delete button in confirmation dialog
 
     // should publish a stop playback event if preset was playing
-    verify(exactly = 1) { MediaPlayerService.stopPlayback(any()) }
+    verify(exactly = 1) { PlaybackController.stop(any()) }
   }
 
   @Test
   fun testRecyclerViewItem_renameOption() {
-    // if preset with given name already exists, save button should be disabled
-    val mockValidator = mockk<(String) -> Boolean>()
-    every { Preset.duplicateNameValidator(any()) } returns mockValidator
-    every { mockValidator.invoke("test-exists") } returns true
-    every { mockValidator.invoke("test-does-not-exists") } returns false
-
-    // stub writing to the shared preferences part.
-    every { Preset.writeAllToUserPreferences(any(), any()) } returns Unit
+    every { mockPresetRepository.update(any()) } returns Unit
 
     // open context menu
     onView(withId(R.id.preset_list)).perform(
@@ -203,14 +210,14 @@ class PresetFragmentTest {
       .check(matches(isEnabled()))
       .perform(click()) // click on positive button
 
-    val presetsSlot = slot<List<Preset>>()
+    val presetSlot = slot<Preset>()
     verify(exactly = 1) {
       mockPreset.name = "test-does-not-exists"
-      Preset.writeAllToUserPreferences(any(), capture(presetsSlot))
+      mockPresetRepository.update(capture(presetSlot))
       InAppReviewFlowManager.maybeAskForReview(any())
     }
 
-    assertEquals(mockPreset, presetsSlot.captured[0])
+    assertEquals(mockPreset, presetSlot.captured)
   }
 
   @Test
@@ -311,52 +318,6 @@ class PresetFragmentTest {
 
     verify(exactly = 1) {
       ShortcutManagerCompat.removeDynamicShortcuts(any(), listOf("test-id"))
-    }
-  }
-
-  @Test
-  fun testShouldShowAsHomeScreenSwitch_whenInitiallyUnchecked() {
-    val mockPrefsEditor = mockk<SharedPreferences.Editor>(relaxed = true) {
-      every { putBoolean(any(), any()) } returns this
-    }
-
-    mockkStatic(PreferenceManager::class)
-    every {
-      PreferenceManager.getDefaultSharedPreferences(any())
-    } returns mockk(relaxed = true) {
-      every { edit() } returns mockPrefsEditor
-    }
-
-    onView(withId(R.id.should_display_as_home_screen))
-      .check(matches(isNotChecked()))
-      .perform(click())
-
-    verify(exactly = 1) {
-      mockPrefsEditor.putBoolean(PresetFragment.PREF_SAVED_PRESETS_AS_HOME_SCREEN, true)
-    }
-  }
-
-  @Test
-  fun testShouldShowAsHomeScreenSwitch_whenInitiallyChecked() {
-    val mockPrefsEditor = mockk<SharedPreferences.Editor>(relaxed = true) {
-      every { putBoolean(any(), any()) } returns this
-    }
-
-    mockkStatic(PreferenceManager::class)
-    every {
-      PreferenceManager.getDefaultSharedPreferences(any())
-    } returns mockk(relaxed = true) {
-      every { getBoolean(PresetFragment.PREF_SAVED_PRESETS_AS_HOME_SCREEN, any()) } returns true
-      every { edit() } returns mockPrefsEditor
-    }
-
-    fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
-    onView(withId(R.id.should_display_as_home_screen))
-      .check(matches(isChecked()))
-      .perform(click())
-
-    verify(exactly = 1) {
-      mockPrefsEditor.putBoolean(PresetFragment.PREF_SAVED_PRESETS_AS_HOME_SCREEN, false)
     }
   }
 }

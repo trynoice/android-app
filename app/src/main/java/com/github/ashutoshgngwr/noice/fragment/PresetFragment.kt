@@ -2,28 +2,29 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.VisibleForTesting
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.ShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
+import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.databinding.PresetListFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.PresetListItemBinding
-import com.github.ashutoshgngwr.noice.sound.Preset
+import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -32,21 +33,11 @@ import java.util.*
 
 class PresetFragment : Fragment() {
 
-  companion object {
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val PREF_SAVED_PRESETS_AS_HOME_SCREEN = "pref_saved_presets_as_homescreen"
-
-    fun shouldDisplayAsHomeScreen(context: Context): Boolean {
-      return PreferenceManager.getDefaultSharedPreferences(context)
-        .getBoolean(PREF_SAVED_PRESETS_AS_HOME_SCREEN, false)
-    }
-  }
-
   private lateinit var binding: PresetListFragmentBinding
+  private lateinit var presetRepository: PresetRepository
 
   private var adapter: PresetListAdapter? = null
   private var activePresetPos = -1
-
   private var dataSet = mutableListOf<Preset>()
 
   override fun onCreateView(
@@ -59,14 +50,8 @@ class PresetFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    binding.shouldDisplayAsHomeScreen.isChecked = shouldDisplayAsHomeScreen(requireContext())
-    binding.shouldDisplayAsHomeScreen.setOnCheckedChangeListener { _, enabled ->
-      PreferenceManager.getDefaultSharedPreferences(context).edit {
-        putBoolean(PREF_SAVED_PRESETS_AS_HOME_SCREEN, enabled)
-      }
-    }
-
-    dataSet = Preset.readAllFromUserPreferences(requireContext()).toMutableList()
+    presetRepository = PresetRepository.newInstance(requireContext())
+    dataSet = presetRepository.list().toMutableList()
     adapter = PresetListAdapter(requireContext())
     binding.presetList.also {
       it.adapter = adapter
@@ -84,7 +69,7 @@ class PresetFragment : Fragment() {
   }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-  fun onPlayerManagerUpdate(event: MediaPlayerService.OnPlayerManagerUpdateEvent) {
+  fun onPlayerManagerUpdate(event: MediaPlayerService.PlaybackUpdateEvent) {
     val oldPresetPos = activePresetPos
     activePresetPos = Preset.from("", event.players.values).let { dataSet.indexOf(it) }
     adapter?.notifyItemChanged(oldPresetPos)
@@ -123,9 +108,9 @@ class PresetFragment : Fragment() {
     init {
       binding.playButton.setOnClickListener {
         if (adapterPosition != activePresetPos) {
-          MediaPlayerService.playPreset(requireContext(), dataSet[adapterPosition].id)
+          PlaybackController.playPreset(requireContext(), dataSet[adapterPosition].id)
         } else {
-          MediaPlayerService.stopPlayback(requireContext())
+          PlaybackController.stop(requireContext())
         }
       }
 
@@ -155,13 +140,17 @@ class PresetFragment : Fragment() {
 
     private fun createPinnedShortcut() {
       if (!ShortcutManagerCompat.isRequestPinShortcutSupported(requireContext())) {
-        Snackbar.make(requireView(), R.string.pinned_shortcuts_not_supported, Snackbar.LENGTH_LONG)
-          .show()
+        showSnackBar(R.string.pinned_shortcuts_not_supported)
         return
       }
 
       val info = buildShortcutInfo(UUID.randomUUID().toString())
-      ShortcutManagerCompat.requestPinShortcut(requireContext(), info, null)
+      val result = ShortcutManagerCompat.requestPinShortcut(requireContext(), info, null)
+      if (!result) {
+        showSnackBar(R.string.pinned_shortcut_creation_failed)
+      } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+        showSnackBar(R.string.pinned_shortcut_created)
+      }
     }
 
     private fun createAppShortcut() {
@@ -169,18 +158,17 @@ class PresetFragment : Fragment() {
       val presetID = dataSet[adapterPosition].id
       list.add(buildShortcutInfo(presetID))
 
-      var message = R.string.app_shortcut_creation_failed
       if (ShortcutManagerCompat.addDynamicShortcuts(requireContext(), list)) {
-        message = R.string.app_shortcut_created
+        showSnackBar(R.string.app_shortcut_created)
+      } else {
+        showSnackBar(R.string.app_shortcut_creation_failed)
       }
-
-      Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun removeAppShortcut() {
       val presetID = dataSet[adapterPosition].id
       ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(presetID))
-      Snackbar.make(requireView(), R.string.app_shortcut_removed, Snackbar.LENGTH_LONG).show()
+      showSnackBar(R.string.app_shortcut_removed)
     }
 
     private fun hasAppShortcut(): Boolean {
@@ -211,7 +199,6 @@ class PresetFragment : Fragment() {
 
     private fun showRenamePresetInput() {
       DialogFragment.show(childFragmentManager) {
-        val duplicateNameValidator = Preset.duplicateNameValidator(requireContext())
         title(R.string.rename)
         input(
           hintRes = R.string.name,
@@ -220,7 +207,7 @@ class PresetFragment : Fragment() {
             when {
               it.isBlank() -> R.string.preset_name_cannot_be_empty
               dataSet[adapterPosition].name == it -> 0 // no error if the name didn't change
-              duplicateNameValidator(it) -> R.string.preset_already_exists
+              dataSet.any { p -> it == p.name } -> R.string.preset_already_exists
               else -> 0
             }
           }
@@ -229,7 +216,7 @@ class PresetFragment : Fragment() {
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
           dataSet[adapterPosition].name = getInputText()
-          Preset.writeAllToUserPreferences(requireContext(), dataSet)
+          presetRepository.update(dataSet[adapterPosition])
           adapter?.notifyItemChanged(adapterPosition)
 
           // maybe show in-app review dialog to the user
@@ -245,10 +232,10 @@ class PresetFragment : Fragment() {
         negativeButton(R.string.cancel)
         positiveButton(R.string.delete) {
           val preset = dataSet.removeAt(adapterPosition)
-          Preset.writeAllToUserPreferences(requireContext(), dataSet)
+          presetRepository.delete(preset.id)
           // then stop playback if recently deleted preset was playing
           if (adapterPosition == activePresetPos) {
-            MediaPlayerService.stopPlayback(requireContext())
+            PlaybackController.stop(requireContext())
           }
 
           if (adapterPosition < activePresetPos) {
@@ -259,9 +246,7 @@ class PresetFragment : Fragment() {
           ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
           adapter?.notifyItemRemoved(adapterPosition)
           updateEmptyListIndicatorVisibility()
-          Snackbar.make(requireView(), R.string.preset_deleted, Snackbar.LENGTH_LONG)
-            .setAction(R.string.dismiss) { }
-            .show()
+          showSnackBar(R.string.preset_deleted)
 
           // maybe show in-app review dialog to the user
           InAppReviewFlowManager.maybeAskForReview(requireActivity())
@@ -278,6 +263,12 @@ class PresetFragment : Fragment() {
           WakeUpTimerManager.cancel(requireContext())
         }
       }
+    }
+
+    private fun showSnackBar(@StringRes message: Int) {
+      Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG)
+        .setAction(R.string.dismiss) { }
+        .show()
     }
   }
 }

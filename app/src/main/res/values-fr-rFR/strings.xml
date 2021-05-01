@@ -158,7 +158,7 @@
     <string name="device_media_volume">Volume de l\'appareil</string>
     <string name="use_24h_format">Utiliser le format 24 heures</string>
     <string name="wake_up_timer_cancelled">Minuterie du réveil annulée !</string>
-    <string name="show_saved_preset_on_startup">Afficher les configurations sauvegardées au lancement de l\'application</string>
+    <string name="saved_presets_as_home_screen_summary">Afficher les configurations sauvegardées au lancement de l\'application</string>
     <string name="pinned_shortcuts_not_supported">Votre lanceur par défaut ne supporte pas l\'ajout de raccourcis.</string>
     <string name="never">Jamais</string>
     <string name="later">Plus tard</string>
@@ -177,4 +177,17 @@
     <string name="wake_up_timer_schedule_set">L\'alarme s\'éteindra dans %1$s %2$s %3$s</string>
     <string name="random_preset_description">Les préréglages aléatoires générés contiendront des sons correspondant à l\'ambiance choisie. De plus, les préréglages denses tenteront de jouer plus de sons simultanément.</string>
     <string name="app_authors">Voir la liste des auteurs de Noice</string>
+    <string name="app_shortcut_creation_failed">Échec de l\'ajout du préréglage aux raccourcis d\'applis !</string>
+    <string name="remove_from_app_shortcuts">Retirer des raccourcis d\'applis</string>
+    <string name="add_to_app_shortcuts">Ajouter aux raccourcis des applis</string>
+    <string name="app_shortcut_removed">Le préréglage a été supprimé des raccourcis d\'applications !</string>
+    <string name="pinned_shortcut_created">Le raccourci a été ajouté à l\'écran d\'accueil !</string>
+    <string name="pinned_shortcut_creation_failed">Échec de l\'ajout du raccourci à l\'écran d\'accueil !</string>
+    <string name="sound_fade_duration_summary">Durée du fondu graduel pour la lecture / l\'arrêt des sons (en secondes)</string>
+    <string name="sound_fade_duration">Durée de l\'atténuation sonore</string>
+    <string name="appearance">Apparence</string>
+    <string name="behavior">Comportement</string>
+    <string name="saved_presets_as_home_screen">Préréglages enregistrés comme écran d\'accueil</string>
+    <string name="settings">Paramètres</string>
+    <string name="app_shortcut_created">Le préréglage a été ajouté aux raccourcis de l\'application !</string>
 </resources>

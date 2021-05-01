@@ -42,10 +42,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
-        app:flexCheckedButton="@id/preset_type__any"
         android:checkedButton="@id/preset_type__any"
         app:alignContent="space_between"
         app:alignItems="center"
+        app:flexCheckedButton="@id/preset_type__any"
         app:flexWrap="wrap">
 
         <RadioButton
@@ -79,38 +79,38 @@
         android:text="@string/intensity"
         android:textAppearance="?attr/textAppearanceHeadline6" />
 
-        <com.hopenlib.flextools.FlexRadioGroup
-          android:id="@+id/preset_intensity"
-          android:layout_width="match_parent"
+      <com.hopenlib.flextools.FlexRadioGroup
+        android:id="@+id/preset_intensity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        app:alignContent="space_between"
+        app:alignItems="center"
+        app:flexCheckedButton="@id/preset_intensity__any"
+        app:flexWrap="wrap">
+
+        <RadioButton
+          android:id="@+id/preset_intensity__any"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_marginStart="10dp"
-          app:flexCheckedButton="@id/preset_intensity__any"
-          app:alignContent="space_between"
-          app:alignItems="center"
-          app:flexWrap="wrap">
+          android:minWidth="90dp"
+          android:text="@string/any" />
 
-          <RadioButton
-            android:id="@+id/preset_intensity__any"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="90dp"
-            android:text="@string/any" />
+        <RadioButton
+          android:id="@+id/preset_intensity__light"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:minWidth="90dp"
+          android:text="@string/light" />
 
-          <RadioButton
-            android:id="@+id/preset_intensity__light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="90dp"
-            android:text="@string/light" />
-
-          <RadioButton
-            android:id="@+id/preset_intensity__dense"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="90dp"
-            android:text="@string/dense" />
-        </com.hopenlib.flextools.FlexRadioGroup>
+        <RadioButton
+          android:id="@+id/preset_intensity__dense"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:minWidth="90dp"
+          android:text="@string/dense" />
+      </com.hopenlib.flextools.FlexRadioGroup>
     </LinearLayout>
   </ScrollView>
 

@@ -91,7 +91,7 @@
   </string>
     <string name="rename">Umbenennen</string>
     <string name="pinned_shortcuts_not_supported">Ihr Standard-Launcher unterstützt das Hinzufügen von Verknüpfungen nicht.</string>
-    <string name="show_saved_preset_on_startup">Gespeicherte Voreinstellungen beim Start der App anzeigen</string>
+    <string name="saved_presets_as_home_screen_summary">Gespeicherte Voreinstellungen beim Start der App anzeigen</string>
     <string name="auto_sleep_schedule_cancelled">Automatischer Schlaftimer abgebrochen!</string>
     <string name="reset">Zurücksetzen</string>
     <string name="sleep_timer_description">Noice schaltet sich automatisch nach Ablauf des Timers aus. Nutze die Knöpfe weiter unten, um dem Timer Zeit hinzuzufügen oder abzuziehen.</string>
@@ -182,4 +182,16 @@
     <string name="time_bridge">und</string>
     <string name="random_preset_description">Generierte Zufall voreinstellungen enthalten Sounds, die der gewählten Stimmen entsprechend. Darüber hinaus versuchen dichte Voreinstellungen, mehr Sounds gleichzeitig abzuspielen.</string>
     <string name="app_authors">Liste der Noice-Autoren anzeigen</string>
+    <string name="app_shortcut_creation_failed">Das Hinzufügen der Voreinstellung zu Anwendungsverknüpfungen ist fehlgeschlagen!</string>
+    <string name="remove_from_app_shortcuts">Aus Anwendungsverknüpfungen entfernen</string>
+    <string name="add_to_app_shortcuts">Zu Anwendungsverknüpfungen hinzufügen</string>
+    <string name="pinned_shortcut_created">Dem Startbildschirm wurde eine Verknüpfung hinzugefügt!</string>
+    <string name="pinned_shortcut_creation_failed">Fehler beim Hinzufügen der Verknüpfung zum Startbildschirm!</string>
+    <string name="sound_fade_duration">Dauer der Tonausblendung</string>
+    <string name="appearance">Aussehen</string>
+    <string name="behavior">Verhalten</string>
+    <string name="saved_presets_as_home_screen">Voreinstellungen gespeichert als Startbildschirm</string>
+    <string name="settings">Einstellungen</string>
+    <string name="app_shortcut_created">Voreinstellung wurde zu den Anwendungsverknüpfungen hinzugefügt!</string>
+    <string name="app_shortcut_removed">Die Voreinstellung wurde aus den Anwendungsverknüpfungen entfernt!</string>
 </resources>

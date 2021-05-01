@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.support.v4.media.session.PlaybackStateCompat
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.recyclerview.widget.RecyclerView
@@ -15,9 +16,10 @@ import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
-import com.github.ashutoshgngwr.noice.sound.Preset
-import com.github.ashutoshgngwr.noice.sound.player.Player
-import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
+import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.playback.Player
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -44,15 +46,20 @@ class SoundLibraryFragmentTest {
   val retryTestRule = RetryTestRule(5)
 
   private lateinit var mockEventBus: EventBus
+  private lateinit var mockPresetRepository: PresetRepository
   private lateinit var fragmentScenario: FragmentScenario<SoundLibraryFragment>
 
   @Before
   fun setup() {
-    mockkObject(InAppReviewFlowManager, MediaPlayerService.Companion)
+    mockkObject(InAppReviewFlowManager, PlaybackController, PresetRepository.Companion)
     mockkStatic(EventBus::class)
 
     mockEventBus = mockk(relaxed = true)
+    mockPresetRepository = mockk(relaxed = true)
+
     every { EventBus.getDefault() } returns mockEventBus
+    every { PresetRepository.newInstance(any()) } returns mockPresetRepository
+
     fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
 
@@ -64,7 +71,7 @@ class SoundLibraryFragmentTest {
   @Test
   fun testRecyclerViewItem_playButton() {
     // stub the real implementation
-    every { MediaPlayerService.playSound(any(), any()) } returns Unit
+    every { PlaybackController.play(any(), any()) } returns Unit
 
     onView(withId(R.id.sound_list)).perform(
       RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
@@ -73,13 +80,13 @@ class SoundLibraryFragmentTest {
       )
     )
 
-    verify(exactly = 1) { MediaPlayerService.playSound(any(), "birds") }
+    verify(exactly = 1) { PlaybackController.play(any(), "birds") }
   }
 
   @Test
   fun testRecyclerViewItem_stopButton() {
-    every { MediaPlayerService.stopSound(any(), any()) } returns Unit
-    val mockUpdateEvent = mockk<MediaPlayerService.OnPlayerManagerUpdateEvent>(relaxed = true) {
+    every { PlaybackController.stop(any(), any()) } returns Unit
+    val mockUpdateEvent = mockk<MediaPlayerService.PlaybackUpdateEvent>(relaxed = true) {
       every { players } returns hashMapOf("birds" to mockk(relaxed = true))
     }
 
@@ -96,7 +103,7 @@ class SoundLibraryFragmentTest {
       )
     )
 
-    verify(exactly = 1) { MediaPlayerService.stopSound(any(), "birds") }
+    verify(exactly = 1) { PlaybackController.stop(any(), "birds") }
   }
 
   @Test
@@ -105,12 +112,12 @@ class SoundLibraryFragmentTest {
       every { volume } returns Player.DEFAULT_VOLUME
     }
 
-    val mockUpdateEvent = mockk<MediaPlayerService.OnPlayerManagerUpdateEvent>(relaxed = true) {
+    val mockUpdateEvent = mockk<MediaPlayerService.PlaybackUpdateEvent>(relaxed = true) {
       every { players } returns hashMapOf("birds" to mockPlayer)
     }
 
     every {
-      mockEventBus.getStickyEvent(MediaPlayerService.OnPlayerManagerUpdateEvent::class.java)
+      mockEventBus.getStickyEvent(MediaPlayerService.PlaybackUpdateEvent::class.java)
     } returns mockUpdateEvent
 
     fragmentScenario.onFragment { it.onPlayerManagerUpdate(mockUpdateEvent) }
@@ -138,12 +145,12 @@ class SoundLibraryFragmentTest {
       every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
     }
 
-    val mockUpdateEvent = mockk<MediaPlayerService.OnPlayerManagerUpdateEvent>(relaxed = true) {
+    val mockUpdateEvent = mockk<MediaPlayerService.PlaybackUpdateEvent>(relaxed = true) {
       every { players } returns hashMapOf("rolling_thunder" to mockPlayer)
     }
 
     every {
-      mockEventBus.getStickyEvent(MediaPlayerService.OnPlayerManagerUpdateEvent::class.java)
+      mockEventBus.getStickyEvent(MediaPlayerService.PlaybackUpdateEvent::class.java)
     } returns mockUpdateEvent
 
     fragmentScenario.onFragment { it.onPlayerManagerUpdate(mockUpdateEvent) }
@@ -177,11 +184,17 @@ class SoundLibraryFragmentTest {
 
   @Test
   fun testSavePresetButton_onUnknownPresetPlayback() {
-    val mockUpdateEvent = mockk<MediaPlayerService.OnPlayerManagerUpdateEvent>(relaxed = true) {
+    val mockUpdateEvent = mockk<MediaPlayerService.PlaybackUpdateEvent>(relaxed = true) {
       every { players } returns mockk(relaxed = true)
     }
 
-    for (state in PlayerManager.State.values()) {
+    val states = arrayOf(
+      PlaybackStateCompat.STATE_PLAYING,
+      PlaybackStateCompat.STATE_PAUSED,
+      PlaybackStateCompat.STATE_STOPPED
+    )
+
+    for (state in states) {
       every { mockUpdateEvent.state } returns state
       fragmentScenario.onFragment {
         it.onPlayerManagerUpdate(mockUpdateEvent)
@@ -189,7 +202,7 @@ class SoundLibraryFragmentTest {
 
       // a non-playing state should keep the FAB hidden
       var expectedVisibility = Visibility.GONE
-      if (state == PlayerManager.State.PLAYING) {
+      if (state == PlaybackStateCompat.STATE_PLAYING) {
         expectedVisibility = Visibility.VISIBLE
       }
 
@@ -207,11 +220,11 @@ class SoundLibraryFragmentTest {
 
     val preset = Preset.from("test", mockPlayers.values)
     mockkObject(Preset.Companion)
-    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(preset)
     every { Preset.from("", mockPlayers.values) } returns preset
+    every { mockPresetRepository.list() } returns arrayOf(preset)
     fragmentScenario.onFragment { fragment ->
       fragment.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlayerManager.State.PLAYING
+        every { state } returns PlaybackStateCompat.STATE_PLAYING
         every { players } returns mockPlayers
       })
     }
@@ -224,9 +237,9 @@ class SoundLibraryFragmentTest {
     // need to return a different instance of events (with expected value) when other components
     // request it after sliding action happens.
     every {
-      mockEventBus.getStickyEvent(MediaPlayerService.OnPlayerManagerUpdateEvent::class.java)
+      mockEventBus.getStickyEvent(MediaPlayerService.PlaybackUpdateEvent::class.java)
     } returns mockk(relaxed = true) {
-      every { state } returns PlayerManager.State.PLAYING
+      every { state } returns PlaybackStateCompat.STATE_PLAYING
       every { players } returns hashMapOf(
         "birds" to mockk(relaxed = true) {
           every { volume } returns 6
@@ -267,19 +280,15 @@ class SoundLibraryFragmentTest {
       }
     )
 
-    val preset = Preset.from("test", mockPlayers.values)
-    val mockValidator = mockk<(String) -> Boolean>()
-    mockkObject(Preset.Companion)
-    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf()
-    every { Preset.writeAllToUserPreferences(any(), any()) } returns Unit
-    every { Preset.from("", mockPlayers.values) } returns preset
-    every { Preset.duplicateNameValidator(any()) } returns mockValidator
-    every { mockValidator.invoke("test-exists") } returns true
-    every { mockValidator.invoke("test-does-not-exists") } returns false
+    every { mockPresetRepository.list() } returns arrayOf(
+      mockk(relaxed = true) {
+        every { name } returns "test-exists"
+      }
+    )
 
     fragmentScenario.onFragment { fragment ->
       fragment.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlayerManager.State.PLAYING
+        every { state } returns PlaybackStateCompat.STATE_PLAYING
         every { players } returns mockPlayers
       })
     }
@@ -312,7 +321,7 @@ class SoundLibraryFragmentTest {
       .check(matches(withText(R.string.preset_saved)))
 
     val presetSlot = slot<Preset>()
-    verify { Preset.appendToUserPreferences(any(), capture(presetSlot)) }
+    verify { mockPresetRepository.create(capture(presetSlot)) }
 
     for (playerState in presetSlot.captured.playerStates) {
       assertEquals(mockPlayers[playerState.soundKey]?.volume, playerState.volume)

@@ -26,10 +26,12 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.github.ashutoshgngwr.noice.activity.AppIntroActivity
+import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
-import com.github.ashutoshgngwr.noice.sound.Preset
-import com.github.ashutoshgngwr.noice.sound.player.Player
+import com.github.ashutoshgngwr.noice.playback.Player
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -66,64 +68,66 @@ class GenerateScreenshots {
       // prevent app intro from showing up
       PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
         .edit(commit = true) {
+          clear() // clear any existing preferences.
           putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true)
         }
 
       // using mocks to save a few presets for screenshots
-      Preset.writeAllToUserPreferences(
-        ApplicationProvider.getApplicationContext(), arrayListOf(
-          mockk {
-            every { id } returns UUID.randomUUID().toString()
-            every { name } returns "Airplane"
-            every { playerStates } returns arrayOf(
-              mockk {
-                every { soundKey } returns "airplane_inflight"
-                every { volume } returns Player.DEFAULT_VOLUME
-                every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
-              },
-              mockk {
-                every { soundKey } returns "airplane_seatbelt_beeps"
-                every { volume } returns Player.DEFAULT_VOLUME
-                every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
-              }
-            )
-          },
-          mockk {
-            every { id } returns UUID.randomUUID().toString()
-            every { name } returns "Night in the Jungle"
-            every { playerStates } returns arrayOf(
-              mockk {
-                every { soundKey } returns "night"
-                every { volume } returns Player.DEFAULT_VOLUME
-                every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
-              }
-            )
-          },
-          mockk {
-            every { id } returns UUID.randomUUID().toString()
-            every { name } returns "Windy Summer"
-            every { playerStates } returns arrayOf(
-              mockk {
-                every { soundKey } returns "soft_wind"
-                every { volume } returns Player.DEFAULT_VOLUME
-                every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
-              },
-              mockk {
-                every { soundKey } returns "wind_in_palm_trees"
-                every { volume } returns Player.DEFAULT_VOLUME
-                every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
-              }
-            )
-          }
-        )
-      )
+      with(PresetRepository.newInstance(ApplicationProvider.getApplicationContext())) {
+        create(mockk {
+          every { id } returns UUID.randomUUID().toString()
+          every { name } returns "Airplane"
+          every { playerStates } returns arrayOf(
+            mockk {
+              every { soundKey } returns "airplane_inflight"
+              every { volume } returns Player.DEFAULT_VOLUME
+              every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
+            },
+            mockk {
+              every { soundKey } returns "airplane_seatbelt_beeps"
+              every { volume } returns Player.DEFAULT_VOLUME
+              every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
+            }
+          )
+        })
+
+        create(mockk {
+          every { id } returns UUID.randomUUID().toString()
+          every { name } returns "Night in the Jungle"
+          every { playerStates } returns arrayOf(
+            mockk {
+              every { soundKey } returns "night"
+              every { volume } returns Player.DEFAULT_VOLUME
+              every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
+            }
+          )
+        })
+
+        create(mockk {
+          every { id } returns UUID.randomUUID().toString()
+          every { name } returns "Windy Summer"
+          every { playerStates } returns arrayOf(
+            mockk {
+              every { soundKey } returns "soft_wind"
+              every { volume } returns Player.DEFAULT_VOLUME
+              every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
+            },
+            mockk {
+              every { soundKey } returns "wind_in_palm_trees"
+              every { volume } returns Player.DEFAULT_VOLUME
+              every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
+            }
+          )
+        })
+      }
     }
 
     @JvmStatic
     @AfterClass
     fun teardownAll() {
       // clear saved presets
-      Preset.writeAllToUserPreferences(ApplicationProvider.getApplicationContext(), arrayListOf())
+      PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
+        .edit { clear() }
     }
   }
 
@@ -318,21 +322,21 @@ class GenerateScreenshots {
       .check(matches(DrawerMatchers.isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
 
-    EspressoX.waitForView(allOf(withId(R.id.layout_main), DrawerMatchers.isOpen()))
+    EspressoX.waitForView(withId(R.id.layout_main), DrawerMatchers.isOpen())
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("6")
   }
 
   @Test
-  fun themeItem() {
+  fun settingsItem() {
     onView(withId(R.id.layout_main))
       .check(matches(DrawerMatchers.isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
 
     EspressoX.waitForView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.app_theme))
+      .perform(NavigationViewActions.navigateTo(R.id.settings))
 
-    EspressoX.waitForView(withId(R.id.positive)) // wait for dialog
+    EspressoX.waitForView(withId(R.id.navigation_drawer), DrawerMatchers.isClosed())
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("7")
   }

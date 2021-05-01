@@ -177,7 +177,7 @@
     <string name="should_update_media_volume">Kaydı başlatmadan önce cihaz sesini güncelle</string>
     <string name="device_media_volume">Cihaz ses düzeyi</string>
     <string name="use_24h_format">24 saat formatını kullan</string>
-    <string name="show_saved_preset_on_startup">Açılışta mevcut kayıtları göster</string>
+    <string name="saved_presets_as_home_screen_summary">Açılışta mevcut kayıtları göster</string>
     <string name="submit_feedback">Geri Bildirim Gönder</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d dakika</item>
@@ -191,4 +191,17 @@
     <string name="wake_up_timer_schedule_set">Alarm %1$s %2$s %3$s içinde çalacak</string>
     <string name="random_preset_description">Oluşturulan rastgele kayıtlar, seçilen amaca karşılık gelen sesleri içerecektir. Dahası, çeşitli kayıtlar aynı anda daha fazla ses çalmaya çalışacaktır.</string>
     <string name="app_authors">Noice yazarlarının listesini görüntüle</string>
+    <string name="app_shortcut_creation_failed">Kayıt, uygulama kısayollarına eklenemedi!</string>
+    <string name="app_shortcut_created">Kayıt, uygulama kısayollarına eklendi!</string>
+    <string name="app_shortcut_removed">Kayıt, uygulama kısayollarından kaldırıldı!</string>
+    <string name="remove_from_app_shortcuts">Uygulama kısayollarından kaldır</string>
+    <string name="add_to_app_shortcuts">Uygulama kısayollarına ekle</string>
+    <string name="pinned_shortcut_created">Kısayol ana ekrana eklendi!</string>
+    <string name="pinned_shortcut_creation_failed">Kısayol ana ekrana eklenemedi!</string>
+    <string name="sound_fade_duration_summary">Seslerin oynatılması/durdurulması için geçiş süresi (saniye cinsinden)</string>
+    <string name="sound_fade_duration">Ses geçiş süresi</string>
+    <string name="appearance">Görünüm</string>
+    <string name="behavior">Davranış</string>
+    <string name="saved_presets_as_home_screen">Ana ekrana kaydedilen kayıtlar</string>
+    <string name="settings">Ayarlar</string>
 </resources>

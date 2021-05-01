@@ -10,7 +10,7 @@
       android:value="com.github.ashutoshgngwr.noice.cast.CastOptionsProvider" />
 
     <activity
-      android:name="com.github.ashutoshgngwr.noice.DonateActivity"
+      android:name="com.github.ashutoshgngwr.noice.activity.DonateActivity"
       android:theme="@style/Theme.App.Translucent" />
 
   </application>

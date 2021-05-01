@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="about">ऐप के बारे में</string>
     <string name="app_theme">दिखावट</string>
     <string name="close_drawer">मार्गदर्शक ड्रॉवर बंद करें</string>
@@ -156,7 +156,7 @@
     <string name="device_media_volume">डिवाइस मीडिया वॉल्यूम</string>
     <string name="use_24h_format">२४-घंटे के समय प्रारूप का उपयोग करें</string>
     <string name="wake_up_timer_cancelled">वेक-अप टाइमर रद्द कर दिया!</string>
-    <string name="show_saved_preset_on_startup">ऐप स्टार्टअप पर सहेजे गए प्रीसेट दिखाएं</string>
+    <string name="saved_presets_as_home_screen_summary">ऐप स्टार्टअप पर सहेजे गए प्रीसेट दिखाएं</string>
     <string name="preset_does_not_exist">प्रीसेट मौजूद नहीं है। यह संभव है कि इसे हटा दिया गया हो!</string>
     <string name="add_to_home_screen">होम स्क्रीन में शामिल करें</string>
     <string name="relax">शांतिदायक</string>
@@ -169,7 +169,7 @@
     <string name="dense">सघन</string>
     <string name="any">कोई भी</string>
     <string name="submit_feedback">प्रतिपुष्टि दें</string>
-    <string name="wake_up_timer_schedule_set">अलार्म %1$s %3$s में बजेगा</string>
+    <string name="wake_up_timer_schedule_set" tools:ignore="StringFormatCount">अलार्म %1$s %3$s में बजेगा</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d मिनट</item>
         <item quantity="other">%1$d मिनट</item>
@@ -180,4 +180,10 @@
     </plurals>
     <string name="time_bridge">और</string>
     <string name="random_preset_description">उत्पन्न रैंडम प्रीसेट में चुने हुए मूड के अनुरूप ध्वनियाँ होंगी। इसके अलावा, घने प्रीसेट एक साथ अधिक ध्वनियों को चलाने का प्रयास करेंगे।</string>
+    <string name="app_shortcut_creation_failed">ऐप शॉर्टकट में प्रीसेट जोड़ने में विफल!</string>
+    <string name="app_shortcut_created">ऐप शॉर्टकट्स में प्रीसेट जोड़ा दिया गया है!</string>
+    <string name="app_shortcut_removed">प्रीसेट को ऐप शॉर्टकट से हटा दिया गया है!</string>
+    <string name="remove_from_app_shortcuts">ऐप शॉर्टकट से निकालें</string>
+    <string name="add_to_app_shortcuts">ऐप शॉर्टकट में जोड़ें</string>
+    <string name="app_authors">नोइस ऑथर्स की सूची देखें</string>
 </resources>

@@ -8,7 +8,7 @@ import android.view.View.OnClickListener
 import android.widget.FrameLayout
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
-import com.github.ashutoshgngwr.noice.DonateActivity
+import com.github.ashutoshgngwr.noice.activity.DonateActivity
 import com.github.ashutoshgngwr.noice.databinding.DonateViewBinding
 
 class DonateView : FrameLayout {

@@ -60,8 +60,7 @@ class DialogFragmentTest {
       }
     }
 
-    EspressoX.waitForView(withId(R.id.positive))
-      .check(matches(withText(R.string.app_name)))
+    EspressoX.waitForView(withId(R.id.positive), withText(R.string.app_name))
       .perform(click())
 
     onView(withId(R.id.positive)).check(doesNotExist())
@@ -75,8 +74,7 @@ class DialogFragmentTest {
       }
     }
 
-    EspressoX.waitForView(withId(R.id.negative))
-      .check(matches(withText(R.string.app_name)))
+    EspressoX.waitForView(withId(R.id.negative), withText(R.string.app_name))
       .perform(click())
 
     onView(withId(R.id.negative)).check(doesNotExist())
@@ -90,8 +88,7 @@ class DialogFragmentTest {
       }
     }
 
-    EspressoX.waitForView(withId(R.id.neutral))
-      .check(matches(withText(android.R.string.copy)))
+    EspressoX.waitForView(withId(R.id.neutral), withText(android.R.string.copy))
       .perform(click())
 
     onView(withId(R.id.neutral)).check(doesNotExist())
@@ -158,8 +155,7 @@ class DialogFragmentTest {
     }
 
     items.forEach {
-      EspressoX.waitForView(allOf(isDescendantOfA(withId(android.R.id.list)), withText(it)))
-        .check(matches(isDisplayed()))
+      EspressoX.waitForView(isDescendantOfA(withId(android.R.id.list)), withText(it), isDisplayed())
     }
 
     onView(allOf(isDescendantOfA(withId(android.R.id.list)), withText(items[1])))

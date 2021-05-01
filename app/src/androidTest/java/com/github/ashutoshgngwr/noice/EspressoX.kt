@@ -130,18 +130,23 @@ object EspressoX {
   }
 
   /**
-   * [waitForView] tries to find a view with given [viewMatcher]. If found, it returns the
-   * [ViewInteraction] for the given [viewMatcher]. If not found, it waits for given [wait]
+   * [waitForView] tries to find a view with given [viewMatchers]. If found, it returns the
+   * [ViewInteraction] for given [viewMatchers]. If not found, it waits for given [wait]
    * before attempting to find the view again. It reties for given number of [retries].
    *
    * Adaptation of the [StackOverflow post by manbradcalf](https://stackoverflow.com/a/56499223/2410641)
    */
-  fun waitForView(viewMatcher: Matcher<View>, retries: Int = 5, wait: Long = 250): ViewInteraction {
+  fun waitForView(
+    vararg viewMatchers: Matcher<View>,
+    retries: Int = 5,
+    wait: Long = 500L,
+  ): ViewInteraction {
     require(retries > 0 && wait > 0)
+    val viewMatcher = allOf(*viewMatchers)
     for (i in 0 until retries) {
       try {
         onView(isRoot()).perform(searchForView(viewMatcher))
-        return onView(viewMatcher)
+        break
       } catch (e: NoMatchingViewException) {
         if (i == retries) {
           throw e

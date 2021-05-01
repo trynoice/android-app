@@ -3,12 +3,12 @@ package com.github.ashutoshgngwr.noice.fragment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -18,10 +18,11 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SoundGroupListItemBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundLibraryFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundListItemBinding
-import com.github.ashutoshgngwr.noice.sound.Preset
-import com.github.ashutoshgngwr.noice.sound.Sound
-import com.github.ashutoshgngwr.noice.sound.player.Player
-import com.github.ashutoshgngwr.noice.sound.player.PlayerManager
+import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.model.Sound
+import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.playback.Player
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -30,6 +31,7 @@ import org.greenrobot.eventbus.ThreadMode
 class SoundLibraryFragment : Fragment() {
 
   private lateinit var binding: SoundLibraryFragmentBinding
+  private lateinit var presetRepository: PresetRepository
 
   private var adapter: SoundListAdapter? = null
   private var players = emptyMap<String, Player>()
@@ -60,16 +62,13 @@ class SoundLibraryFragment : Fragment() {
   }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.ASYNC)
-  fun onPlayerManagerUpdate(event: MediaPlayerService.OnPlayerManagerUpdateEvent) {
+  fun onPlayerManagerUpdate(event: MediaPlayerService.PlaybackUpdateEvent) {
     this.players = event.players
-    var showSavePresetFAB: Boolean
-    Preset.readAllFromUserPreferences(requireContext()).also {
-      showSavePresetFAB = !it.contains(Preset.from("", players.values))
-    }
+    val showSavePresetFAB = !presetRepository.list().contains(Preset.from("", players.values))
 
     view?.post {
       adapter?.notifyDataSetChanged()
-      if (showSavePresetFAB && event.state == PlayerManager.State.PLAYING) {
+      if (showSavePresetFAB && event.state == PlaybackStateCompat.STATE_PLAYING) {
         binding.savePresetButton.show()
       } else {
         binding.savePresetButton.hide()
@@ -87,6 +86,7 @@ class SoundLibraryFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    presetRepository = PresetRepository.newInstance(requireContext())
     adapter = SoundListAdapter(requireContext())
     binding.soundList.also {
       it.adapter = adapter
@@ -101,12 +101,12 @@ class SoundLibraryFragment : Fragment() {
 
     binding.savePresetButton.setOnClickListener {
       DialogFragment.show(childFragmentManager) {
-        val duplicateNameValidator = Preset.duplicateNameValidator(requireContext())
+        val presets = presetRepository.list()
         title(R.string.save_preset)
         input(hintRes = R.string.name, validator = {
           when {
             it.isBlank() -> R.string.preset_name_cannot_be_empty
-            duplicateNameValidator(it) -> R.string.preset_already_exists
+            presets.any { p -> it == p.name } -> R.string.preset_already_exists
             else -> 0
           }
         })
@@ -114,7 +114,7 @@ class SoundLibraryFragment : Fragment() {
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
           val preset = Preset.from(getInputText(), players.values)
-          Preset.appendToUserPreferences(requireContext(), preset)
+          presetRepository.create(preset)
           binding.savePresetButton.hide()
           showPresetSavedMessage()
 
@@ -227,9 +227,9 @@ class SoundLibraryFragment : Fragment() {
       binding.root.setOnClickListener {
         dataSet.getOrNull(adapterPosition)?.also {
           if (players.containsKey(it.data)) {
-            MediaPlayerService.stopSound(requireContext(), it.data)
+            PlaybackController.stop(requireContext(), it.data)
           } else {
-            MediaPlayerService.playSound(requireContext(), it.data)
+            PlaybackController.play(requireContext(), it.data)
           }
         }
       }
@@ -268,7 +268,7 @@ class SoundLibraryFragment : Fragment() {
 
         positiveButton(R.string.okay)
         onDismiss {
-          eventBus.getStickyEvent(MediaPlayerService.OnPlayerManagerUpdateEvent::class.java)?.also {
+          eventBus.getStickyEvent(MediaPlayerService.PlaybackUpdateEvent::class.java)?.also {
             onPlayerManagerUpdate(it)
           }
         }

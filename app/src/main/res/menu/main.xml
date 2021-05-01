@@ -3,74 +3,68 @@
 
   <item
     android:id="@+id/library"
+    android:checkable="true"
     android:icon="@drawable/ic_nav_library"
-    android:title="@string/library"
-    android:checkable="true" />
+    android:title="@string/library" />
 
   <item
     android:id="@+id/saved_presets"
+    android:checkable="true"
     android:icon="@drawable/ic_nav_saved_presets"
-    android:title="@string/saved_presets"
-    android:checkable="true" />
+    android:title="@string/saved_presets" />
 
   <item
     android:id="@+id/random_preset"
+    android:checkable="true"
     android:icon="@drawable/ic_action_shuffle"
-    android:title="@string/random_preset"
-    android:checkable="true" />
+    android:title="@string/random_preset" />
 
   <item
     android:id="@+id/sleep_timer"
+    android:checkable="true"
     android:icon="@drawable/ic_nav_sleep_timer"
-    android:title="@string/sleep_timer"
-    android:checkable="true" />
+    android:title="@string/sleep_timer" />
 
   <item
     android:id="@+id/wake_up_timer"
+    android:checkable="true"
     android:icon="@drawable/ic_nav_wake_up_timer"
-    android:title="@string/wake_up_timer"
-    android:checkable="true" />
+    android:title="@string/wake_up_timer" />
 
   <item
-    android:id="@+id/app_theme"
-    android:icon="@drawable/ic_nav_theme"
-    android:title="@string/app_theme"
-    android:checkable="false" />
-
-  <item
-    android:id="@+id/about"
-    android:icon="@drawable/ic_nav_info"
-    android:title="@string/about"
-    android:checkable="true" />
-
-  <item
-    android:id="@+id/help"
-    android:icon="@drawable/ic_nav_help"
-    android:title="@string/help"
-    android:checkable="false" />
+    android:id="@+id/settings"
+    android:checkable="true"
+    android:icon="@drawable/ic_nav_settings"
+    android:title="@string/settings" />
 
   <item
     android:id="@+id/support_development"
+    android:checkable="true"
     android:icon="@drawable/ic_nav_support_development"
-    android:title="@string/support_development"
-    android:checkable="true" />
+    android:title="@string/support_development" />
+
+  <item
+    android:id="@+id/about"
+    android:checkable="true"
+    android:icon="@drawable/ic_nav_info"
+    android:title="@string/about" />
+
+  <item
+    android:id="@+id/help"
+    android:checkable="false"
+    android:icon="@drawable/ic_nav_help"
+    android:title="@string/help" />
 
   <item
     android:id="@+id/report_issue"
+    android:checkable="false"
     android:icon="@drawable/ic_nav_report"
-    android:title="@string/report_issue"
-    android:checkable="false" />
+    android:title="@string/report_issue" />
 
   <item
     android:id="@+id/submit_feedback"
     android:checkable="false"
     android:icon="@drawable/ic_nav_feedback"
     android:title="@string/submit_feedback" />
-
-  <item
-    android:id="@+id/rate_on_play_store"
-    android:icon="@drawable/ic_nav_rate"
-    android:title="@string/about_play_store"
-    android:checkable="false" />
 
 </menu>

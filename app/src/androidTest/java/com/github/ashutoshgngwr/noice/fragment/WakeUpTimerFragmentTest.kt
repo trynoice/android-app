@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.content.Context
+import android.icu.util.Calendar
 import android.media.AudioManager
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
@@ -21,7 +22,8 @@ import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
-import com.github.ashutoshgngwr.noice.sound.Preset
+import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -36,7 +38,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.*
 import kotlin.random.Random
 
 @RunWith(AndroidJUnit4::class)
@@ -46,11 +47,18 @@ class WakeUpTimerFragmentTest {
   @JvmField
   val retryTestRule = RetryTestRule(5)
 
+  private lateinit var mockPresetRepository: PresetRepository
   private lateinit var fragmentScenario: FragmentScenario<WakeUpTimerFragment>
 
   @Before
   fun setup() {
-    mockkObject(InAppReviewFlowManager, Preset.Companion, WakeUpTimerManager)
+    mockkObject(InAppReviewFlowManager, PresetRepository.Companion, WakeUpTimerManager)
+    mockPresetRepository = mockk {
+      every { get(null) } returns null
+      every { list() } returns emptyArray()
+    }
+
+    every { PresetRepository.newInstance(any()) } returns mockPresetRepository
     every { WakeUpTimerManager.set(any(), any()) } returns Unit
     fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
@@ -81,7 +89,7 @@ class WakeUpTimerFragmentTest {
     val expectedPresetID = "test-preset-id"
     val expectedPresetName = "test-preset-name"
     val expectedMediaVolume = 10
-    every { Preset.findByID(any(), expectedPresetID) } returns mockk {
+    every { mockPresetRepository.get(expectedPresetID) } returns mockk {
       every { name } returns expectedPresetName
     }
 
@@ -115,7 +123,7 @@ class WakeUpTimerFragmentTest {
 
   @Test
   fun testInitialLayout_whenTimerIsPreScheduled_andPresetIsDeletedFromStorage() {
-    every { Preset.findByID(any(), "test") } returns null
+    every { mockPresetRepository.get("test") } returns null
     every { WakeUpTimerManager.get(any()) } returns mockk {
       every { presetID } returns "test"
       every { atMillis } returns System.currentTimeMillis() + 10000L
@@ -143,7 +151,7 @@ class WakeUpTimerFragmentTest {
 
   @Test
   fun testSelectPreset_withoutSavedPresets() {
-    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf()
+    every { mockPresetRepository.list() } returns arrayOf()
     onView(withId(R.id.select_preset_button))
       .check(matches(withText(R.string.select_preset)))
       .perform(click())
@@ -154,11 +162,14 @@ class WakeUpTimerFragmentTest {
 
   @Test
   fun testSetTimer() {
-    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(
-      mockk(relaxed = true) {
-        every { id } returns "test-id-1"
-        every { name } returns "test-1"
-      },
+    val savedPreset = mockk<Preset>(relaxed = true) {
+      every { id } returns "test-id-1"
+      every { name } returns "test-1"
+    }
+
+    every { mockPresetRepository.get("test-id-1") } returns savedPreset
+    every { mockPresetRepository.list() } returns arrayOf(
+      savedPreset,
       mockk(relaxed = true) {
         every { id } returns "test-id-2"
         every { name } returns "test-2"
@@ -237,7 +248,7 @@ class WakeUpTimerFragmentTest {
 
   @Test
   fun testCancelTimer() {
-    every { Preset.findByID(any(), "test-id") } returns mockk {
+    every { mockPresetRepository.get("test-id") } returns mockk {
       every { name } returns "test-name"
     }
 
@@ -268,21 +279,26 @@ class WakeUpTimerFragmentTest {
 
   @Test
   fun testLoadSavedPreset() {
-    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(
+    val savedPresetID = "test-saved-preset-id"
+    val savedPreset = mockk<Preset>(relaxed = true) {
+      every { id } returns savedPresetID
+      every { name } returns "test-saved-preset"
+    }
+
+    every { mockPresetRepository.list() } returns arrayOf(
       mockk(relaxed = true) {
         every { id } returns "test-not-saved-preset-id-1"
         every { name } returns "test-not-saved-preset-1"
       },
-      mockk(relaxed = true) {
-        every { id } returns "test-saved-preset-id"
-        every { name } returns "test-saved-preset"
-      },
+      savedPreset,
       mockk(relaxed = true) {
         every { id } returns "test-not-saved-preset-id-2"
         every { name } returns "test-not-saved-preset-2"
       }
     )
-    every { WakeUpTimerManager.getLastUsedPresetID(any()) } returns "test-saved-preset-id"
+
+    every { WakeUpTimerManager.getLastUsedPresetID(any()) } returns savedPresetID
+    every { mockPresetRepository.get(savedPresetID) } returns savedPreset
 
     fragmentScenario.recreate()
     onView(withId(R.id.select_preset_button))
@@ -291,11 +307,15 @@ class WakeUpTimerFragmentTest {
 
   @Test
   fun testNotSavedPreset_loadFirstPreset() {
-    every { Preset.readAllFromUserPreferences(any()) } returns arrayOf(
-      mockk(relaxed = true) {
-        every { id } returns "test-not-saved-preset-id-1"
-        every { name } returns "test-not-saved-preset-1"
-      },
+    val savedPresetID = "test-not-saved-preset-id-1"
+    val savedPreset = mockk<Preset>(relaxed = true) {
+      every { id } returns savedPresetID
+      every { name } returns "test-not-saved-preset-1"
+    }
+
+    every { mockPresetRepository.get(savedPresetID) } returns savedPreset
+    every { mockPresetRepository.list() } returns arrayOf(
+      savedPreset,
       mockk(relaxed = true) {
         every { id } returns "test-saved-preset-id"
         every { name } returns "test-saved-preset"

@@ -13,7 +13,7 @@ import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.databinding.WakeUpTimerFragmentBinding
-import com.github.ashutoshgngwr.noice.sound.Preset
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -22,6 +22,7 @@ class WakeUpTimerFragment : Fragment() {
 
   private lateinit var audioManager: AudioManager
   private lateinit var binding: WakeUpTimerFragmentBinding
+  private lateinit var presetRepository: PresetRepository
 
   private var selectedPresetID: String? = null
   private var selectedTime: Long = 0
@@ -32,7 +33,6 @@ class WakeUpTimerFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View {
-    audioManager = requireNotNull(requireContext().getSystemService())
     binding = WakeUpTimerFragmentBinding.inflate(inflater, container, false)
     return binding.root
   }
@@ -49,6 +49,8 @@ class WakeUpTimerFragment : Fragment() {
       binding.mediaVolumeSlider.isEnabled = enabled
     }
 
+    audioManager = requireNotNull(requireContext().getSystemService())
+    presetRepository = PresetRepository.newInstance(requireContext())
     val max = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
     val min = AudioManagerCompat.getStreamMinVolume(audioManager, AudioManager.STREAM_MUSIC)
 
@@ -68,7 +70,7 @@ class WakeUpTimerFragment : Fragment() {
     }
 
     // check selectedPresetID exists in user preferences.
-    if (Preset.findByID(requireContext(), selectedPresetID) == null) {
+    if (presetRepository.get(selectedPresetID) == null) {
       resetControls()
     }
 
@@ -77,7 +79,7 @@ class WakeUpTimerFragment : Fragment() {
 
   private fun onSelectPresetClicked() {
     DialogFragment.show(childFragmentManager) {
-      val presets = Preset.readAllFromUserPreferences(requireContext())
+      val presets = presetRepository.list()
       val presetNames = presets.map { it.name }.toTypedArray()
       val presetIDs = presets.map { it.id }
       title(R.string.select_preset)
@@ -135,7 +137,7 @@ class WakeUpTimerFragment : Fragment() {
    * schedules or cancels timer using [WakeUpTimerManager] based on these values.
    */
   private fun notifyUpdate() {
-    val selectedPreset = Preset.findByID(requireContext(), selectedPresetID)
+    val selectedPreset = presetRepository.get(selectedPresetID)
     val isTimerValid = selectedTime > System.currentTimeMillis() && selectedPreset != null
     binding.setTimeButton.isEnabled = selectedPreset != null
     binding.resetTimeButton.isEnabled = isTimerValid
@@ -197,7 +199,7 @@ class WakeUpTimerFragment : Fragment() {
   }
 
   private fun loadFirstPreset() {
-    val presets = Preset.readAllFromUserPreferences(requireContext())
+    val presets = presetRepository.list()
     if (presets.isNotEmpty()) {
       selectedPresetID = presets.first().id
     }

@@ -14,8 +14,9 @@
 
   <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
+  <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+
   <application
-    android:name=".Application"
     android:allowBackup="true"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
@@ -24,21 +25,28 @@
     android:theme="@style/Theme.App"
     tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-    <activity android:name=".MainActivity">
+    <activity
+      android:name=".activity.MainActivity"
+      android:launchMode="singleTask">
 
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
 
+      <intent-filter>
+        <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+
     </activity>
 
     <activity
-      android:name=".AppIntroActivity"
+      android:name=".activity.AppIntroActivity"
       android:theme="@style/Theme.MaterialComponents.NoActionBar" />
 
     <activity
-      android:name=".ShortcutHandlerActivity"
+      android:name=".activity.ShortcutHandlerActivity"
       android:excludeFromRecents="true" />
 
     <service android:name=".MediaPlayerService" />

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="cast_app_id__debug" tools:ignore="UnusedResources">EB68E994</string>
+  <string name="cast_app_id__release" tools:ignore="UnusedResources">E421E43B</string>
+  <string name="cast_namespace__default">urn:x-cast:com.github.ashutoshgngwr.noice</string>
+  <string name="google_play_license_key">
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkxR84yP6PFaAFqhgVtFzI4O1Ws/xFQjJOhKCCrnyfs59SXSLsSbWjdMikCB7xcJsSkhfsril5iK88UIKhBLUW3oe16LO7YMOS6xeH0s0LdxHnF1rdwr0WtFc41CjGFIMWFxkB27jft97Ycp72cASjmU3K/Jc0a2Qo3thrpZlJN+vwRzveaVUE73o/FyzdUqyu4e8IngKOXDqxkgz3XLmzTHsx6XmeLTQl1WFMhOi5FxoHD9AHVoyZzbkGCMdRJERvk+ziSXdGR9pRUtGVkv+h5v3fwfVqBYZC28TAz5w6wSRDFvUnIp52nQH52vdHf1mrwHbeniMUJzV5GoBaspTqQIDAQAB
+  </string>
+  <string name="support_development__share_url">
+    https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice&amp;referrer=utm_source%3DAndroid%2520Client%26utm_campaign%3DShare%2520With%2520Friends
+  </string>
+  <string name="support_development__donate_usd1">$1</string>
+  <string name="support_development__donate_usd2">$2</string>
+  <string name="support_development__donate_usd5">$5</string>
+  <string name="support_development__donate_usd10">$10</string>
+  <string name="support_development__donate_usd15">$15</string>
+  <string name="support_development__donate_usd25">$25</string>
+</resources>

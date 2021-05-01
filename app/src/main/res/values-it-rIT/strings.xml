@@ -106,8 +106,8 @@
     <string name="relax">Lenitivo</string>
     <string name="wake_up_timer">Timer risveglio</string>
     <string name="sleep_timer_description">Noice si riavvierà allo scadere del tempo. Usa i pulsanti sotto per aggiungere del tempo e avviare il timer.</string>
-    <string name="show_saved_preset_on_startup">Mostra i preset salvati all\'avvio dell\'app</string>
-    <string name="pinned_shortcuts_not_supported">Il tuo launcher di default non supporta l\'aggiunta di scorciatoie.</string>
+    <string name="saved_presets_as_home_screen_summary">Mostra i preset salvati all\'avvio dell\'app</string>
+    <string name="pinned_shortcuts_not_supported">Il tuo launcher predefinito non supporta l\'aggiunta di scorciatoie.</string>
     <string name="wake_up_timer_description">Noice eseguirà il preset selezionato allo scadere del tempo. Usa i pulsanti sotto per selezionare un preset e impostare il tempo desiderato per il timer di risveglio.</string>
     <string name="wake_up_timer_cancelled">Timer di risveglio annullato!</string>
     <string name="schedule">Programma</string>
@@ -152,4 +152,16 @@
     <string name="wake_up_timer_schedule_set">La sveglia si spegnerà in %1$s %2$s %3$s</string>
     <string name="random_preset_description">I preset casuali generati conterranno suoni corrispondenti allo stato d\'animo selezionato. Inoltre, preset densi cercheranno di riprodurre più suoni simultaneamente.</string>
     <string name="app_authors">Visualizza l\'elenco degli autori di Noice</string>
+    <string name="app_shortcut_creation_failed">Impossibile aggiungere il preimpostato alle scorciatoie delle app!</string>
+    <string name="remove_from_app_shortcuts">Rimuovi dalle scorciatoie delle app</string>
+    <string name="add_to_app_shortcuts">Aggiungi alle scorciatoie delle app</string>
+    <string name="pinned_shortcut_created">La scorciatoia è stata aggiunta alla schermata iniziale!</string>
+    <string name="pinned_shortcut_creation_failed">Impossibile aggiungere la scorciatoia alla schermata iniziale.</string>
+    <string name="sound_fade_duration">Durata della dissolvenza del suono</string>
+    <string name="appearance">Aspetto</string>
+    <string name="behavior">Comportamento</string>
+    <string name="saved_presets_as_home_screen">Preimpostazioni salvate come schermata iniziale</string>
+    <string name="settings">Impostazioni</string>
+    <string name="app_shortcut_created">La preimpostazione è stata aggiunta alle scorciatoie delle app!</string>
+    <string name="app_shortcut_removed">La preimpostazione è stata rimossa dalle scorciatoie delle app!</string>
 </resources>

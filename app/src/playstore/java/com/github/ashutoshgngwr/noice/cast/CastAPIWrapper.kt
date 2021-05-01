@@ -8,8 +8,8 @@ import androidx.core.view.MenuItemCompat
 import androidx.media.VolumeProviderCompat
 import androidx.mediarouter.app.MediaRouteActionProvider
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.cast.player.strategy.CastPlaybackStrategyFactory
-import com.github.ashutoshgngwr.noice.sound.player.strategy.PlaybackStrategyFactory
+import com.github.ashutoshgngwr.noice.cast.playback.strategy.CastPlaybackStrategyFactory
+import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
 import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
 import com.google.android.gms.cast.framework.CastSession
