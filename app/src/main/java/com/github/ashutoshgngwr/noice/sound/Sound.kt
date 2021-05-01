@@ -128,7 +128,7 @@ class Sound private constructor(
         src = arrayOf("crickets.mp3"),
         titleResID = R.string.crickets,
         displayGroupResID = R.string.sound_group__life,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_crickets,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_crickets,
@@ -152,7 +152,7 @@ class Sound private constructor(
         src = arrayOf("electric_car_0.mp3", "electric_car_1.mp3"),
         titleResID = R.string.electric_car,
         displayGroupResID = R.string.sound_group__vehicles,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_electric_car,
         credits = arrayOf(
           Pair(R.string.credits__sound_electric_car, R.string.credits__sound_electric_car_url)
         )
@@ -230,7 +230,7 @@ class Sound private constructor(
         src = arrayOf("moving_train.mp3"),
         titleResID = R.string.moving_train,
         displayGroupResID = R.string.sound_group__vehicles,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_moving_train,
         credits = arrayOf(
           Pair(R.string.credits__sound_moving_train, R.string.credits__sound_moving_train_url)
         ),
@@ -280,7 +280,7 @@ class Sound private constructor(
         src = arrayOf("purring_cat.mp3"),
         titleResID = R.string.purring_cat,
         displayGroupResID = R.string.sound_group__life,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_purring_cat,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_purring_cat,
@@ -292,7 +292,7 @@ class Sound private constructor(
         src = arrayOf("quiet_conversation_0.mp3", "quiet_conversation_1.mp3"),
         titleResID = R.string.quiet_conversation,
         displayGroupResID = R.string.sound_group__public_gatherings,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_quiet_conversation,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_quiet_conversation,
@@ -316,7 +316,7 @@ class Sound private constructor(
         src = arrayOf("screeching_seagulls.mp3"),
         titleResID = R.string.screeching_seagulls,
         displayGroupResID = R.string.sound_group__life,
-        iconID = 0,
+        iconID = R.drawable.ic_sound_screeching_seagulls,
         credits = arrayOf(
           Pair(
             R.string.credits__sound_screeching_seagulls,
