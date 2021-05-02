@@ -33,6 +33,7 @@ object PlaybackController {
   internal const val EXTRA_AT_UPTIME_MILLIS = "at_uptime_millis"
   internal const val ACTION_SKIP_PRESET = "skip_preset"
   internal const val EXTRA_SKIP_DIRECTION = "skip_direction"
+  internal const val ACTION_REQUEST_UPDATE_EVENT = "request_update_event"
 
   private val TAG = PlaybackController::class.simpleName
   private val AUTO_STOP_CALLBACK_TOKEN = "${TAG}.auto_stop_cb"
@@ -184,6 +185,9 @@ object PlaybackController {
         val skipDirection = intent.getIntExtra(EXTRA_SKIP_DIRECTION, 1)
         playerManager.skipPreset(skipDirection)
       }
+      ACTION_REQUEST_UPDATE_EVENT -> {
+        playerManager.callPlaybackUpdateListener()
+      }
     }
   }
 
@@ -302,5 +306,12 @@ object PlaybackController {
 
   fun clearAutoStopCallback(handler: Handler) {
     handler.removeCallbacksAndMessages(AUTO_STOP_CALLBACK_TOKEN)
+  }
+
+  fun requestUpdateEvent(context: Context) {
+    context.startService(
+      Intent(context, MediaPlayerService::class.java)
+        .setAction(ACTION_REQUEST_UPDATE_EVENT)
+    )
   }
 }

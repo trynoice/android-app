@@ -330,4 +330,12 @@ class PlayerManagerTest {
       AudioManagerCompat.abandonAudioFocusRequest(any(), any())
     }
   }
+
+  @Test
+  fun testCallPlaybackUpdateListener() {
+    val listener = mockk<PlaybackUpdateListener>(relaxed = true)
+    playerManager.setPlaybackUpdateListener(listener)
+    playerManager.callPlaybackUpdateListener()
+    verify(exactly = 1) { listener.invoke(any(), any()) }
+  }
 }

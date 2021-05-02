@@ -117,6 +117,7 @@ class SoundLibraryFragment : Fragment() {
           presetRepository.create(preset)
           binding.savePresetButton.hide()
           showPresetSavedMessage()
+          PlaybackController.requestUpdateEvent(requireContext())
 
           // maybe show in-app review dialog to the user
           InAppReviewFlowManager.maybeAskForReview(requireActivity())
@@ -267,7 +268,7 @@ class SoundLibraryFragment : Fragment() {
         }
 
         positiveButton(R.string.okay)
-        onDismiss { adapter?.notifyItemChanged(adapterPosition) }
+        onDismiss { PlaybackController.requestUpdateEvent(requireContext()) }
       }
     }
   }

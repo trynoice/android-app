@@ -357,6 +357,10 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
     resume()
   }
 
+  fun callPlaybackUpdateListener() {
+    playbackUpdateListener?.invoke(state, players)
+  }
+
   private fun notifyChanges() {
     var speed = 0f
     if (state == PlaybackStateCompat.STATE_PLAYING) {
@@ -365,7 +369,7 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
 
     playbackStateBuilder.setState(state, PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN, speed)
     mediaSession.setPlaybackState(playbackStateBuilder.build())
-    playbackUpdateListener?.invoke(state, players)
+    callPlaybackUpdateListener()
   }
 
   fun skipPreset(skipDirection: Int) {

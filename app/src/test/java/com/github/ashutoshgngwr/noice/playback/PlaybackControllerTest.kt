@@ -13,6 +13,7 @@ import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.model.Sound
 import io.mockk.called
+import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -277,6 +278,33 @@ class PlaybackControllerTest {
   }
 
   @Test
+  fun testHandleServiceIntent_withSkipPresetAction() {
+    for (input in arrayOf(PlayerManager.SKIP_DIRECTION_PREV, PlayerManager.SKIP_DIRECTION_NEXT)) {
+      PlaybackController.handleServiceIntent(
+        ApplicationProvider.getApplicationContext(),
+        mockPlayerManager,
+        Intent(PlaybackController.ACTION_SKIP_PRESET)
+          .putExtra(PlaybackController.EXTRA_SKIP_DIRECTION, input),
+        mockk()
+      )
+
+      verify(exactly = 1) { mockPlayerManager.skipPreset(input) }
+      clearMocks(mockPlayerManager)
+    }
+  }
+
+  fun testHandleServiceIntent_withRequestUpdateEventAction() {
+    PlaybackController.handleServiceIntent(
+      ApplicationProvider.getApplicationContext(),
+      mockPlayerManager,
+      Intent(PlaybackController.ACTION_REQUEST_UPDATE_EVENT),
+      mockk()
+    )
+
+    verify(exactly = 1) { mockPlayerManager.callPlaybackUpdateListener() }
+  }
+
+  @Test
   fun testHandleServiceIntent_withoutAction() {
     PlaybackController.handleServiceIntent(
       ApplicationProvider.getApplicationContext(),
@@ -484,5 +512,19 @@ class PlaybackControllerTest {
     PlaybackController.clearAutoStopCallback(handler)
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     verify { mockPlayerManager wasNot called }
+  }
+
+  @Test
+  fun testRequestUpdateEvent() {
+    val mockContext = mockk<Context>(relaxed = true)
+    PlaybackController.requestUpdateEvent(mockContext)
+    verify(exactly = 1) {
+      mockContext.startService(
+        withArg {
+          assertEquals(MediaPlayerService::class.qualifiedName, it.component?.className)
+          assertEquals(PlaybackController.ACTION_REQUEST_UPDATE_EVENT, it.action)
+        }
+      )
+    }
   }
 }

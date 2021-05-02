@@ -218,6 +218,7 @@ class PresetFragment : Fragment() {
           dataSet[adapterPosition].name = getInputText()
           presetRepository.update(dataSet[adapterPosition])
           adapter?.notifyItemChanged(adapterPosition)
+          PlaybackController.requestUpdateEvent(requireContext())
 
           // maybe show in-app review dialog to the user
           InAppReviewFlowManager.maybeAskForReview(requireActivity())
