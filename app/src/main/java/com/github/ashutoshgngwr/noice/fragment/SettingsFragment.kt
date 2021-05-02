@@ -29,6 +29,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
               requireActivity().recreate()
             }
           )
+          negativeButton(R.string.cancel)
         }
 
         false

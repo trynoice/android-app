@@ -220,7 +220,6 @@ class DialogFragment : BottomSheetDialogFragment() {
     onItemSelected: (Int) -> Unit = { }
   ) {
     require(currentChoice >= -1 && currentChoice < items.size)
-    setButton(R.id.positive, android.R.string.cancel) { }
     addContentView(
       ListView(requireContext()).apply {
         id = android.R.id.list

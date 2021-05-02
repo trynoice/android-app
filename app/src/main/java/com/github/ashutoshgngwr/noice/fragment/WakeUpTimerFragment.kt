@@ -90,6 +90,7 @@ class WakeUpTimerFragment : Fragment() {
           notifyUpdate()
           WakeUpTimerManager.saveLastUsedPresetID(requireContext(), selectedPresetID!!)
         }
+        negativeButton(R.string.cancel)
       } else {
         message(R.string.preset_info__description)
         positiveButton(android.R.string.ok)
