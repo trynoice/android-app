@@ -66,7 +66,7 @@ class CastAPIWrapper private constructor(val context: Context, registerSessionCa
    */
   fun newCastPlaybackStrategyFactory(): PlaybackStrategyFactory =
     CastPlaybackStrategyFactory(
-      castContext.sessionManager.currentCastSession,
+      requireNotNull(castContext.sessionManager.currentCastSession),
       context.getString(R.string.cast_namespace__default)
     )
 
@@ -75,7 +75,7 @@ class CastAPIWrapper private constructor(val context: Context, registerSessionCa
    * [android.support.v4.media.session.MediaSessionCompat.setPlaybackToRemote].
    */
   fun newCastVolumeProvider(): VolumeProviderCompat =
-    CastVolumeProvider(castContext.sessionManager.currentCastSession)
+    CastVolumeProvider(requireNotNull(castContext.sessionManager.currentCastSession))
 
   /**
    * Sets a convenience lambda that is called in session started and resumed callbacks.

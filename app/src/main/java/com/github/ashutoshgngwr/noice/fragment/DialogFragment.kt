@@ -16,6 +16,7 @@ import androidx.annotation.StringRes
 import androidx.core.widget.TextViewCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.viewModels
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.DialogFragmentBaseBinding
 import com.github.ashutoshgngwr.noice.databinding.DialogFragmentTextInputBinding
@@ -39,19 +40,12 @@ class DialogFragment : BottomSheetDialogFragment() {
     }
   }
 
-  /**
-   * A lambda for calling functions to configure the dialog, passed while invoking [show].
-   */
-  private var displayOptions: DialogFragment.() -> Unit = { }
-  private var onDismissListener: () -> Unit = { }
-
   private lateinit var baseBinding: DialogFragmentBaseBinding
   private lateinit var textInputBinding: DialogFragmentTextInputBinding
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    retainInstance = true // so this instance is retained when screen orientation changes.
-  }
+  private var onDismissListener: (() -> Unit)? = null
+
+  private val viewModel: ViewModel by viewModels()
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -63,11 +57,11 @@ class DialogFragment : BottomSheetDialogFragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    displayOptions.invoke(this)
+    viewModel.displayOptions?.invoke(this)
   }
 
   override fun onDismiss(dialog: DialogInterface) {
-    onDismissListener.invoke()
+    onDismissListener?.invoke()
     super.onDismiss(dialog)
   }
 
@@ -138,8 +132,9 @@ class DialogFragment : BottomSheetDialogFragment() {
    * shows the dialog and schedules the passed `options` lambda to be invoked in [onViewCreated]
    */
   private fun show(fragmentManager: FragmentManager, options: DialogFragment.() -> Unit = { }) {
-    displayOptions = options
-    show(fragmentManager, javaClass.simpleName)
+    showNow(fragmentManager, this::class.simpleName)
+    viewModel.displayOptions = options // save state for configuration changes.
+    onViewCreated(requireView(), null) // need to manually invoke the callback
   }
 
   /**
@@ -267,5 +262,15 @@ class DialogFragment : BottomSheetDialogFragment() {
 
       addContentView(this)
     }
+  }
+
+  /**
+   * Since [setRetainInstance] is deprecated, need to persist state in a view model.
+   */
+  class ViewModel : androidx.lifecycle.ViewModel() {
+    /**
+     * A lambda for calling functions to configure the dialog, passed while invoking [show].
+     */
+    internal var displayOptions: (DialogFragment.() -> Unit)? = null
   }
 }

@@ -267,11 +267,7 @@ class SoundLibraryFragment : Fragment() {
         }
 
         positiveButton(R.string.okay)
-        onDismiss {
-          eventBus.getStickyEvent(MediaPlayerService.PlaybackUpdateEvent::class.java)?.also {
-            onPlayerManagerUpdate(it)
-          }
-        }
+        onDismiss { adapter?.notifyItemChanged(adapterPosition) }
       }
     }
   }
