@@ -102,12 +102,6 @@
     <item name="mediaRouteControlPanelThemeOverlay">@style/ThemeOverlay.MediaRouter.Light</item>
   </style>
 
-  <style name="Widget.App.SoundLibrary.Slider" parent="Widget.MaterialComponents.Slider">
-    <item name="haloRadius">12dp</item>
-    <item name="thumbRadius">8dp</item>
-    <item name="labelBehavior">floating</item>
-  </style>
-
   <style name="PreferenceThemeOverlay.App" parent="PreferenceThemeOverlay.v14.Material">
     <item name="android:tint">?android:attr/textColorSecondary</item>
   </style>

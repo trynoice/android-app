@@ -44,9 +44,9 @@ class RandomPresetFragmentTest {
   @Test
   fun testRandomPresetButton_onClick() {
     val intensityExpectations = mapOf(
-      R.id.preset_intensity__any to SoundLibraryFragment.RANGE_INTENSITY_ANY,
-      R.id.preset_intensity__dense to SoundLibraryFragment.RANGE_INTENSITY_DENSE,
-      R.id.preset_intensity__light to SoundLibraryFragment.RANGE_INTENSITY_LIGHT
+      R.id.preset_intensity__any to RandomPresetFragment.RANGE_INTENSITY_ANY,
+      R.id.preset_intensity__dense to RandomPresetFragment.RANGE_INTENSITY_DENSE,
+      R.id.preset_intensity__light to RandomPresetFragment.RANGE_INTENSITY_LIGHT
     )
 
     val typeExpectations = mapOf(

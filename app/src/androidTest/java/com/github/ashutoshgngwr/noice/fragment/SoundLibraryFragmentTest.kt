@@ -76,7 +76,7 @@ class SoundLibraryFragmentTest {
     onView(withId(R.id.sound_list)).perform(
       RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        EspressoX.clickInItem(R.id.play_button)
+        click()
       )
     )
 
@@ -93,8 +93,13 @@ class SoundLibraryFragmentTest {
     fragmentScenario.onFragment { it.onPlayerManagerUpdate(mockUpdateEvent) }
     onView(withId(R.id.sound_list)).perform(
       RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
-        hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        EspressoX.clickInItem(R.id.play_button)
+        allOf(
+          hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
+          hasDescendant(
+            allOf(withId(R.id.play_indicator), withEffectiveVisibility(Visibility.VISIBLE))
+          )
+        ),
+        click()
       )
     )
 
@@ -121,10 +126,15 @@ class SoundLibraryFragmentTest {
       onView(withId(R.id.sound_list)).perform(
         RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
           hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-          EspressoX.slideInItem(R.id.volume_slider, expectedVolume.toFloat())
+          EspressoX.clickInItem(R.id.volume_button)
         )
       )
 
+      onView(withId(R.id.volume_slider))
+        .check(matches(isDisplayed()))
+        .perform(EspressoX.slide(expectedVolume.toFloat()))
+
+      onView(withId(R.id.positive)).perform(click())
       verify(exactly = 1) { mockPlayer.setVolume(expectedVolume) }
     }
   }
@@ -159,10 +169,15 @@ class SoundLibraryFragmentTest {
           ),
           RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
             hasDescendant(allOf(withId(R.id.title), withText(R.string.rolling_thunder))),
-            EspressoX.slideInItem(R.id.time_period_slider, expectedTimePeriod.toFloat())
+            EspressoX.clickInItem(R.id.time_period_button)
           )
         )
 
+      onView(withId(R.id.time_period_slider))
+        .check(matches(isDisplayed()))
+        .perform(EspressoX.slide(expectedTimePeriod.toFloat()))
+
+      onView(withId(R.id.positive)).perform(click())
       verify(exactly = 1) { mockPlayer.timePeriod = expectedTimePeriod }
     }
   }
@@ -236,10 +251,15 @@ class SoundLibraryFragmentTest {
     onView(withId(R.id.sound_list)).perform(
       RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        EspressoX.slideInItem(R.id.volume_slider, 6f)
+        EspressoX.clickInItem(R.id.volume_button)
       )
     )
 
+    onView(withId(R.id.volume_slider))
+      .check(matches(isDisplayed()))
+      .perform(EspressoX.slide(6f))
+
+    onView(withId(R.id.positive)).perform(click())
     verify(exactly = 1) { requireNotNull(mockPlayers["birds"]).setVolume(6) }
     onView(withId(R.id.save_preset_button))
       .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))

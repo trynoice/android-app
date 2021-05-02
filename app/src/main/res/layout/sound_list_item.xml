@@ -1,37 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:gravity="center_vertical"
-  android:orientation="horizontal"
-  android:padding="16dp">
+  android:background="?attr/selectableItemBackground">
 
-  <CheckBox
-    android:id="@+id/play_button"
-    style="?attr/checkboxStyle"
+  <ImageView
+    android:id="@+id/icon"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:background="?android:selectableItemBackgroundBorderless"
-    android:button="@drawable/ic_action_play_stop_circled_toggle"
-    android:buttonTint="?attr/colorAccent"
-    android:contentDescription="@string/play_pause" />
+    android:layout_gravity="center_vertical|end"
+    android:layout_marginHorizontal="16dp"
+    android:adjustViewBounds="true"
+    android:alpha="0.25"
+    android:maxHeight="150dp"
+    android:scaleType="fitEnd"
+    app:tint="@color/sound_icon"
+    tools:ignore="ContentDescription"
+    tools:src="@drawable/ic_sound_birds" />
 
   <LinearLayout
-    android:layout_width="0dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="15dp"
-    android:layout_weight="1"
-    android:orientation="vertical">
-
-    <TextView
-      android:id="@+id/title"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:ellipsize="end"
-      android:singleLine="true"
-      android:textAppearance="?attr/textAppearanceListItem" />
+    android:layout_gravity="bottom"
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <LinearLayout
       android:layout_width="match_parent"
@@ -39,48 +33,63 @@
       android:gravity="center_vertical"
       android:orientation="horizontal">
 
-      <ImageView
+      <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/volume"
-        android:src="@drawable/ic_action_volume"
-        app:tint="?attr/colorAccent" />
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAppearance="?attr/textAppearanceListItem"
+        tools:text="Sound Title" />
 
-      <com.google.android.material.slider.Slider
-        android:id="@+id/volume_slider"
-        style="@style/Widget.App.SoundLibrary.Slider"
-        android:layout_width="0dp"
+      <Space
+        android:layout_width="10dp"
+        android:layout_height="wrap_content" />
+
+      <ImageView
+        android:id="@+id/play_indicator"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:stepSize="1.0" />
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_noti_play"
+        app:tint="@color/primary"
+        tools:ignore="ContentDescription" />
 
     </LinearLayout>
 
+    <Space
+      android:layout_width="match_parent"
+      android:layout_height="16dp" />
+
     <LinearLayout
-      android:id="@+id/time_period_layout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:gravity="center_vertical"
-      android:orientation="horizontal"
-      android:visibility="gone">
+      android:orientation="horizontal">
 
-      <ImageView
+      <Button
+        android:id="@+id/volume_button"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/repeat_time_period"
-        android:src="@drawable/ic_action_time_period"
-        app:tint="?attr/colorAccent" />
+        app:icon="@drawable/ic_action_volume"
+        tools:text="25%" />
 
-      <com.google.android.material.slider.Slider
-        android:id="@+id/time_period_slider"
-        style="@style/Widget.App.SoundLibrary.Slider"
-        android:layout_width="0dp"
+      <Space
+        android:layout_width="16dp"
+        android:layout_height="wrap_content" />
+
+      <Button
+        android:id="@+id/time_period_button"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:stepSize="1" />
+        android:textAllCaps="false"
+        app:icon="@drawable/ic_action_time_period"
+        tools:text="2m 10s" />
 
     </LinearLayout>
 
   </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

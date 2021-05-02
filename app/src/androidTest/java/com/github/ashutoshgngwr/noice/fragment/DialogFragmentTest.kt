@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -22,6 +23,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.random.Random
 
 
 @RunWith(AndroidJUnit4::class)
@@ -161,5 +163,32 @@ class DialogFragmentTest {
 
     onView(withId(android.R.id.list)).check(doesNotExist())
     assertEquals(1, selectedItem)
+  }
+
+  @Test
+  fun testSlider() {
+    val id = View.generateViewId()
+    val expectedValue = Random.nextInt(10).toFloat()
+    var value = 1.0f
+
+    emptyFragmentScenario.onFragment {
+      DialogFragment.show(it.childFragmentManager) {
+        slider(
+          viewID = id,
+          from = 0.0f,
+          to = 10.0f,
+          value = value,
+          changeListener = { v -> value = v },
+        )
+
+        positiveButton(R.string.okay)
+      }
+    }
+
+    EspressoX.waitForView(withId(id)).check(matches(isDisplayed()))
+      .perform(EspressoX.slide(expectedValue))
+
+    onView(withId(R.id.positive)).perform(click())
+    assertEquals(expectedValue, value)
   }
 }

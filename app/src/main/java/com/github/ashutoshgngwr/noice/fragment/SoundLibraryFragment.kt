@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
@@ -8,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
-import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -23,24 +23,12 @@ import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
-import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class SoundLibraryFragment : Fragment() {
-
-  companion object {
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val RANGE_INTENSITY_LIGHT = 2 until 5
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val RANGE_INTENSITY_DENSE = 3 until 8
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val RANGE_INTENSITY_ANY = 2 until 8
-  }
 
   private lateinit var binding: SoundLibraryFragmentBinding
   private lateinit var presetRepository: PresetRepository
@@ -53,14 +41,12 @@ class SoundLibraryFragment : Fragment() {
   private val dataSet by lazy {
     arrayListOf<SoundListItem>().also { list ->
       var lastDisplayGroupResID = -1
-      val sounds = Sound.LIBRARY.toSortedMap(
+      Sound.LIBRARY.toSortedMap(
         compareBy(
           { getString(Sound.get(it).displayGroupResID) },
-          { getString(Sound.get(it).titleResId) }
+          { getString(Sound.get(it).titleResID) }
         )
-      )
-
-      sounds.forEach {
+      ).forEach {
         if (lastDisplayGroupResID != it.value.displayGroupResID) {
           lastDisplayGroupResID = it.value.displayGroupResID
           list.add(
@@ -206,17 +192,27 @@ class SoundLibraryFragment : Fragment() {
         }
       }
 
-      holder as SoundListItemViewHolder
-      holder.binding.playButton.isChecked = isPlaying
-      holder.binding.title.text = context.getString(sound.titleResId)
-      holder.binding.volumeSlider.isEnabled = isPlaying
-      holder.binding.volumeSlider.value = volume.toFloat()
-      holder.binding.timePeriodSlider.isEnabled = isPlaying
-      holder.binding.timePeriodSlider.value = timePeriod.toFloat()
-      holder.binding.timePeriodLayout.visibility = if (sound.isLooping) {
-        View.GONE
-      } else {
-        View.VISIBLE
+      with((holder as SoundListItemViewHolder).binding) {
+        title.text = context.getString(sound.titleResID)
+        icon.setImageResource(sound.iconID)
+        if (isPlaying) {
+          playIndicator.visibility = View.VISIBLE
+        } else {
+          playIndicator.visibility = View.INVISIBLE
+        }
+
+        @SuppressLint("SetTextI18n")
+        volumeButton.text = "${(volume * 100) / Player.MAX_VOLUME}%"
+        volumeButton.isEnabled = isPlaying
+
+        @SuppressLint("SetTextI18n")
+        timePeriodButton.text = "${timePeriod / 60}m ${timePeriod % 60}s"
+        timePeriodButton.isEnabled = isPlaying
+        if (sound.isLooping) {
+          timePeriodButton.visibility = View.GONE
+        } else {
+          timePeriodButton.visibility = View.VISIBLE
+        }
       }
     }
   }
@@ -227,62 +223,56 @@ class SoundLibraryFragment : Fragment() {
   inner class SoundListItemViewHolder(val binding: SoundListItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    // set listeners in holders to avoid object recreation on view recycle
-    private val sliderChangeListener = object : Slider.OnChangeListener {
-      override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
-        if (!fromUser) {
-          return
-        }
-
-        val player = players[dataSet[adapterPosition].data] ?: return
-        when (slider.id) {
-          R.id.volume_slider -> {
-            player.setVolume(value.toInt())
-          }
-          R.id.time_period_slider -> {
-            player.timePeriod = value.toInt()
-          }
-        }
-      }
-    }
-
-    // forces update to save preset button (by invoking onPlayerManagerUpdate)
-    private val sliderTouchListener = object : Slider.OnSliderTouchListener {
-      override fun onStartTrackingTouch(slider: Slider) = Unit
-
-      override fun onStopTrackingTouch(slider: Slider) {
-        eventBus.getStickyEvent(MediaPlayerService.PlaybackUpdateEvent::class.java).also {
-          it ?: return
-          onPlayerManagerUpdate(it)
-        }
-      }
-    }
-
     init {
-      setupSlider(binding.volumeSlider, 0, Player.MAX_VOLUME) {
-        "${(it * 100).toInt() / Player.MAX_VOLUME}%"
-      }
-
-      setupSlider(binding.timePeriodSlider, Player.MIN_TIME_PERIOD, Player.MAX_TIME_PERIOD) {
-        "${it.toInt() / 60}m ${it.toInt() % 60}s"
-      }
-
-      binding.playButton.setOnClickListener {
-        val listItem = dataSet.getOrNull(adapterPosition) ?: return@setOnClickListener
-        if (players.containsKey(listItem.data)) {
-          PlaybackController.stop(requireContext(), listItem.data)
-        } else {
-          PlaybackController.play(requireContext(), listItem.data)
+      binding.root.setOnClickListener {
+        dataSet.getOrNull(adapterPosition)?.also {
+          if (players.containsKey(it.data)) {
+            PlaybackController.stop(requireContext(), it.data)
+          } else {
+            PlaybackController.play(requireContext(), it.data)
+          }
         }
       }
+
+      binding.volumeButton.setOnClickListener { showSoundControlDialog() }
+      binding.timePeriodButton.setOnClickListener { showSoundControlDialog() }
     }
 
-    private fun setupSlider(slider: Slider, from: Int, to: Int, formatter: (Float) -> String) {
-      slider.valueFrom = from.toFloat()
-      slider.valueTo = to.toFloat()
-      slider.setLabelFormatter(formatter)
-      slider.addOnChangeListener(sliderChangeListener)
-      slider.addOnSliderTouchListener(sliderTouchListener)
+    private fun showSoundControlDialog() {
+      val listItem = dataSet.getOrNull(adapterPosition) ?: return
+      val player = players[listItem.data] ?: return
+      val sound = Sound.get(listItem.data)
+
+      DialogFragment.show(childFragmentManager) {
+        title(sound.titleResID)
+        message(R.string.volume)
+        slider(
+          viewID = R.id.volume_slider,
+          to = Player.MAX_VOLUME.toFloat(),
+          value = player.volume.toFloat(),
+          labelFormatter = { "${(it * 100).toInt() / Player.MAX_VOLUME}%" },
+          changeListener = { player.setVolume(it.toInt()) }
+        )
+
+        if (!sound.isLooping) {
+          message(R.string.repeat_time_period)
+          slider(
+            viewID = R.id.time_period_slider,
+            from = Player.MIN_TIME_PERIOD.toFloat(),
+            to = Player.MAX_TIME_PERIOD.toFloat(),
+            value = player.timePeriod.toFloat(),
+            labelFormatter = { "${it.toInt() / 60}m ${it.toInt() % 60}s" },
+            changeListener = { player.timePeriod = it.toInt() }
+          )
+        }
+
+        positiveButton(R.string.okay)
+        onDismiss {
+          eventBus.getStickyEvent(MediaPlayerService.PlaybackUpdateEvent::class.java)?.also {
+            onPlayerManagerUpdate(it)
+          }
+        }
+      }
     }
   }
 }

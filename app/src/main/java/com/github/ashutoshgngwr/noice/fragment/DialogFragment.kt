@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.os.Bundle
 import android.text.InputType
 import android.util.TypedValue
@@ -19,6 +20,7 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.DialogFragmentBaseBinding
 import com.github.ashutoshgngwr.noice.databinding.DialogFragmentTextInputBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.slider.Slider
 import com.google.android.material.textview.MaterialTextView
 
 
@@ -41,6 +43,7 @@ class DialogFragment : BottomSheetDialogFragment() {
    * A lambda for calling functions to configure the dialog, passed while invoking [show].
    */
   private var displayOptions: DialogFragment.() -> Unit = { }
+  private var onDismissListener: () -> Unit = { }
 
   private lateinit var baseBinding: DialogFragmentBaseBinding
   private lateinit var textInputBinding: DialogFragmentTextInputBinding
@@ -60,7 +63,16 @@ class DialogFragment : BottomSheetDialogFragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    displayOptions()
+    displayOptions.invoke(this)
+  }
+
+  override fun onDismiss(dialog: DialogInterface) {
+    onDismissListener.invoke()
+    super.onDismiss(dialog)
+  }
+
+  fun onDismiss(listener: () -> Unit) {
+    onDismissListener = listener
   }
 
   /**
@@ -188,7 +200,7 @@ class DialogFragment : BottomSheetDialogFragment() {
    */
   fun getInputText(): String {
     if (!this::textInputBinding.isInitialized) {
-      return ""
+      throw IllegalStateException("getInputText() called without setting up input field")
     }
 
     return textInputBinding.editText.text.toString()
@@ -230,5 +242,31 @@ class DialogFragment : BottomSheetDialogFragment() {
         }
       }
     )
+  }
+
+  fun slider(
+    @IdRes viewID: Int = 0,
+    step: Float = 1.0f,
+    from: Float = 0.0f,
+    to: Float = -1.0f,
+    value: Float = -1.0f,
+    labelFormatter: (Float) -> String = { "$it" },
+    changeListener: (Float) -> Unit = { },
+  ) {
+    with(Slider(requireContext())) {
+      id = viewID
+      stepSize = step
+      valueFrom = from
+      valueTo = to
+      setValue(value)
+      setLabelFormatter(labelFormatter)
+      addOnChangeListener { _, value, fromUser ->
+        if (fromUser) {
+          changeListener.invoke(value)
+        }
+      }
+
+      addContentView(this)
+    }
   }
 }
