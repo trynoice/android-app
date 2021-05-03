@@ -261,8 +261,10 @@ class SoundLibraryFragmentTest {
 
     onView(withId(R.id.positive)).perform(click())
     verify(exactly = 1) { requireNotNull(mockPlayers["birds"]).setVolume(6) }
-    onView(withId(R.id.save_preset_button))
-      .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+    EspressoX.waitForView(
+      withId(R.id.save_preset_button),
+      withEffectiveVisibility(Visibility.VISIBLE)
+    )
   }
 
   @Test
