@@ -53,12 +53,7 @@
     <string name="app_theme_light">Chiaro</string>
     <string name="app_theme_dark">Scuro</string>
     <string name="app_theme_system_default">Predefinito del sistema</string>
-    <string name="about__email">Email</string>
-    <string name="about__github">GitHub</string>
-    <string name="about__twitter">Twitter</string>
     <string name="app_description">Rilassati e migliora la produttività con rumori di fondo minimali.</string>
-    <string name="connect_with_author">Connettiti con l\'Autore</string>
-    <string name="credits">Crediti</string>
     <string name="notification_channel_default__description">Controlli di riproduzione</string>
     <string name="notification_channel_default__name">Riproduzione dei media</string>
     <string name="okay">Va bene</string>

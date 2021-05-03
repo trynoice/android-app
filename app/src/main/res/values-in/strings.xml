@@ -93,12 +93,7 @@
     <string name="app_theme_light">Terang</string>
     <string name="app_theme_dark">Gelap</string>
     <string name="app_theme_system_default">Sistem default</string>
-    <string name="about__email">Email</string>
-    <string name="about__github">GitHub</string>
-    <string name="about__twitter">Twitter</string>
     <string name="app_description">Santai dan tingkatkan produktivitas dengan kebisingan latar belakang minimal.</string>
-    <string name="connect_with_author">Hubungkan dengan Penulis</string>
-    <string name="credits">Kredit</string>
     <string name="appintro__chromecast_desc">
     Gunakan Noice untuk mentransmisikan suasananya ke perangkat berkemampuan Chromecast lainnya seperti speaker, TV, dll.
  </string>

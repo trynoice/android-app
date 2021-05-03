@@ -23,12 +23,7 @@
     <string name="appintro__getting_started_desc_0">左へスワイプすることで全機能を確認することができます!</string>
     <string name="appintro__chromecast_title">Chromecast対応</string>
     <string name="appintro__chromecast_desc">Noiceを利用して、スピーカーやテレビなどのChromecast対応デバイスに環境音をキャストできます。</string>
-    <string name="credits">クレジット</string>
-    <string name="connect_with_author">作者に連絡</string>
     <string name="app_description">最小限のバックグラウンドノイズによってリラックスし,生産効率を向上させます。</string>
-    <string name="about__twitter">Twitter</string>
-    <string name="about__github">GitHub</string>
-    <string name="about__email">Eメール</string>
     <string name="app_theme_system_default">システム設定のデフォルト</string>
     <string name="app_theme_dark">ダーク</string>
     <string name="app_theme_light">ライト</string>

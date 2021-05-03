@@ -36,6 +36,12 @@ defaults:
       title: Code of Conduct
       permalink: /code-of-conduct
   - scope:
+      path: CONTRIBUTORS.md
+    values:
+      layout: page
+      title: Contributors
+      permalink: /contributors
+  - scope:
       path: CONTRIBUTING.md
     values:
       layout: page

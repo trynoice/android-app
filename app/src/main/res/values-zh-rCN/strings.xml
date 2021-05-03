@@ -33,12 +33,7 @@
     <string name="appintro__getting_started_desc_0">向左滑动即可了解所有功能!</string>
     <string name="appintro__chromecast_title">已启用 Chromecast</string>
     <string name="appintro__chromecast_desc">使用Noice将其氛围投射到其他支持Chromecast的设备上，如扬声器、电视等。</string>
-    <string name="credits">贡献人员</string>
-    <string name="connect_with_author">与作者联系</string>
     <string name="app_description">在最小的背景噪音下，放松并提高工作效率。</string>
-    <string name="about__twitter">Twitter</string>
-    <string name="about__github">GitHub</string>
-    <string name="about__email">电子邮件</string>
     <string name="should_update_media_volume">启动预设前更新设备媒体音量</string>
     <string name="device_media_volume">设备媒体音量</string>
     <string name="use_24h_format">使用24小时制</string>

@@ -3,102 +3,10 @@
   <string name="app_name">Noice</string>
   <string name="app_copyright">2019–21 the Noice Authors</string>
   <string name="app_license_url">https://github.com/ashutoshgngwr/noice/blob/master/LICENSE</string>
-  <string name="app_authors_url">https://github.com/ashutoshgngwr/noice/graphs/contributors</string>
+  <string name="app_authors_url">https://ashutoshgngwr.github.io/noice/contributors</string>
   <string name="app_website">https://ashutoshgngwr.github.io/noice</string>
   <string name="app_github">ashutoshgngwr/noice</string>
   <string name="app_github_url">https://github.com/ashutoshgngwr/noice</string>
-  <string name="author_email">ashutoshgngwr@gmail.com</string>
-  <string name="author_social_handle">ashutoshgngwr</string>
-  <string name="credits__app_icon">white noise icon by Juraj Sedlák</string>
-  <string name="credits__app_icon_url">https://thenounproject.com/term/white-noise/1287855/</string>
-  <string name="credits__support_development_icon">Heart icon by Aybige</string>
-  <string name="credits__support_development_icon_url">https://thenounproject.com/term/heart/1556514</string>
-  <string name="credits__appintro_sound_library_icon">Ecosystem icon by Made x Made</string>
-  <string name="credits__appintro_sound_library_icon_url">https://thenounproject.com/term/ecosystem/2318259</string>
-  <string name="credits__appintro_preset_icon">Equalizer by Souvik Bhattacharjee</string>
-  <string name="credits__appintro_preset_icon_url">https://thenounproject.com/term/equalizer/1596234</string>
-  <string name="credits__appintro_sleep_timer_icon">Sleeping by Koson Rattanaphan, TH</string>
-  <string name="credits__appintro_sleep_timer_icon_url">https://thenounproject.com/term/sleeping/3434765</string>
-  <string name="credits__appintro_chromecast_icon">Chromecast by Oliver Silvérus, SE</string>
-  <string name="credits__appintro_chromecast_icon_url">https://thenounproject.com/term/chromecast/2135765</string>
-  <string name="credits__sound_airplane_inflight">In–flight Ambience Boeing 737–838 by digifishmusic</string>
-  <string name="credits__sound_airplane_inflight_url">https://freesound.org/s/47254/</string>
-  <string name="credits__sound_airplane_seatbelt_beeps">Seat belt beeps by nachosose</string>
-  <string name="credits__sound_airplane_seatbelt_beeps_url">https://freesound.org/s/244583/</string>
-  <string name="credits__sound_birds_0">Spring Birds 2019 by hargissssound</string>
-  <string name="credits__sound_birds_0_url">https://freesound.org/s/471891/</string>
-  <string name="credits__sound_birds_1">Residential ambiance pack by conleec</string>
-  <string name="credits__sound_birds_1_url">https://freesound.org/s/149935/</string>
-  <string name="credits__sound_bonfire">Bonfire by amether</string>
-  <string name="credits__sound_bonfire_url">https://freesound.org/s/189237/</string>
-  <string name="credits__sound_brownian_noise">Brown noise by georgedyer</string>
-  <string name="credits__sound_brownian_noise_url">https://freesound.org/s/171552/</string>
-  <string name="credits__sound_coffee_shop">Crowds - Quiet Restaurant from BBC Sound Effects</string>
-  <string name="credits__sound_coffee_shop_url">https://sound-effects.bbcrewind.co.uk/search?q=07052072</string>
-  <string name="credits__sound_creaking_ship_0">Wood Creak by dheming</string>
-  <string name="credits__sound_creaking_ship_0_url">https://freesound.org/s/177778/</string>
-  <string name="credits__sound_creaking_ship_1">Creaking Wooden Floor by DBlover</string>
-  <string name="credits__sound_creaking_ship_1_url">https://freesound.org/s/478667/</string>
-  <string name="credits__sound_crickets">Afternoon Crickets Long from YouTube Audio Library</string>
-  <string name="credits__sound_crickets_url">https://www.youtube.com/audiolibrary_download?vid=c9c1711e0dfd1421</string>
-  <string name="credits__sound_distant_thunder">Distant Thunder from YouTube Audio Library</string>
-  <string name="credits__sound_distant_thunder_url">https://www.youtube.com/audiolibrary_download?vid=c661c0547daf6af7</string>
-  <string name="credits__sound_electric_car">Electric car BMW i3 - driving by tferrino</string>
-  <string name="credits__sound_electric_car_url">https://freesound.org/s/405285/</string>
-  <string name="credits__sound_heavy_rain">Rain Atmosphere from BBC Sound Effects</string>
-  <string name="credits__sound_heavy_rain_url">https://sound-effects.bbcrewind.co.uk/search?q=NHU10356525</string>
-  <string name="credits__sound_howling_wolf">Solitary wolf howl very clear by betchkal</string>
-  <string name="credits__sound_howling_wolf_url">https://freesound.org/s/500646/</string>
-  <string name="credits__sound_human_heartbeat">Heartbeat by RSilveira_88</string>
-  <string name="credits__sound_human_heartbeat_url">https://freesound.org/s/216219/</string>
-  <string name="credits__sound_light_rain">Light rain (on roof) from YouTube Audio Library</string>
-  <string name="credits__sound_light_rain_url">https://www.youtube.com/audiolibrary_download?vid=f0eff544b6f1e0d0</string>
-  <string name="credits__sound_moderate_rain">Moderate rain by idomusics</string>
-  <string name="credits__sound_moderate_rain_url">https://freesound.org/s/518863/</string>
-  <string name="credits__sound_morning_in_a_village">Early morning atmosphere from BBC Sound Effects</string>
-  <string name="credits__sound_morning_in_a_village_url">https://sound-effects.bbcrewind.co.uk/search?q=07030039</string>
-  <string name="credits__sound_moving_train">Train Wheels Ride outside Thailand by YOH</string>
-  <string name="credits__sound_moving_train_url">https://freesound.org/s/170866/</string>
-  <string name="credits__sound_night">Jungle choco by jaime_enrique</string>
-  <string name="credits__sound_night_url">https://freesound.org/s/424763/</string>
-  <string name="credits__sound_office">Office ambiance by Nightwatcher98</string>
-  <string name="credits__sound_office_url">https://freesound.org/s/407292/</string>
-  <string name="credits__sound_public_library_0">Public Library from BBC Sound Effects</string>
-  <string name="credits__sound_public_library_0_url">https://sound-effects.bbcrewind.co.uk/search?q=07044038</string>
-  <string name="credits__sound_public_library_1">Book handling by launemax</string>
-  <string name="credits__sound_public_library_1_url">https://freesound.org/s/250017/</string>
-  <string name="credits__sound_purring_cat">Cat Purring / Cleaning Fur by nebulousflynn</string>
-  <string name="credits__sound_purring_cat_url">https://freesound.org/s/332274/</string>
-  <string name="credits__sound_quiet_conversation">Quiet Chat by tfsound</string>
-  <string name="credits__sound_quiet_conversation_url">https://freesound.org/s/82171/</string>
-  <string name="credits__sound_rolling_thunder">Thunder roll from BBC Sound Effects</string>
-  <string name="credits__sound_rolling_thunder_url">
-    https://sound-effects.bbcrewind.co.uk/search?q=07043394
-  </string>
-  <string name="credits__sound_screeching_seagulls">Seagulls ambience Lofoten Svolvær by Lydmakeren</string>
-  <string name="credits__sound_screeching_seagulls_url">https://freesound.org/s/510912/</string>
-  <string name="credits__sound_seaside">Seawash from BBC Sound Effects</string>
-  <string name="credits__sound_seaside_url">https://sound-effects.bbcrewind.co.uk/search?q=07044050</string>
-  <string name="credits__sound_soft_wind">Wind from YouTube Audio Library</string>
-  <string name="credits__sound_soft_wind_url">
-    https://www.youtube.com/audiolibrary_download?vid=e7334011b49fb938
-  </string>
-  <string name="credits__sound_thunder_crack">Lightning by Taira Komori</string>
-  <string name="credits__sound_thunder_crack_url">https://freesound.org/s/213015/</string>
-  <string name="credits__sound_train_horn">Train horn by CouleurCasquette</string>
-  <string name="credits__sound_train_horn_url">https://freesound.org/s/248229/</string>
-  <string name="credits__sound_walking_through_the_snow">Walking in Snow from BBC Sound Effects</string>
-  <string name="credits__sound_walking_through_the_snow_url">https://sound-effects.bbcrewind.co.uk/search?q=NHU9479494</string>
-  <string name="credits__sound_water_hose">Spraying water from a hose in a wide fan by SFX Bible</string>
-  <string name="credits__sound_water_hose_url">https://www.soundsnap.com/node/53530</string>
-  <string name="credits__sound_water_stream">Stream, Running Water | Aviemore Scotland by BurghRecords</string>
-  <string name="credits__sound_water_stream_url">https://freesound.org/s/415151/</string>
-  <string name="credits__sound_wind_chimes_of_shells">Wind chimes of shells from YouTube Audio Library</string>
-  <string name="credits__sound_wind_chimes_of_shells_url">
-    https://www.youtube.com/audiolibrary_download?vid=b604ba49f305d739
-  </string>
-  <string name="credits__sound_wind_in_palm_trees">Palm Trees from BBC Sound Effects</string>
-  <string name="credits__sound_wind_in_palm_trees_url">https://sound-effects.bbcrewind.co.uk/search?q=NHU05078140</string>
   <string name="app_issues_github_url">https://github.com/ashutoshgngwr/noice/issues</string>
   <string name="app_issues_form_url">
     https://docs.google.com/forms/d/e/1FAIpQLSdYhyYjxhJ7IKyiqdc3AE3uINSoRWBw8ROB003gkZ47KeSjWw/viewform?usp=sf_link
@@ -112,9 +20,6 @@
   <string name="plus1h">1h</string>
   <string name="plus4h">4h</string>
   <string name="plus8h">8h</string>
-  <string name="rate_us_on_play_store_url">
-    https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice&amp;referrer=utm_source%3DAndroid%2520Client%26utm_campaign%3DRate%2520Us%2520On%2520Play%2520Store
-  </string>
   <string name="saved_presets_as_home_screen_key">pref_saved_presets_as_homescreen</string>
   <string name="sound_fade_duration_key">sound_fade_duration</string>
   <string name="app_theme_key">app_theme</string>

@@ -56,12 +56,7 @@
     <string name="app_theme_light">Licht</string>
     <string name="app_theme_dark">Donker</string>
     <string name="app_theme_system_default">Systeemthema</string>
-    <string name="about__email">E-mailadres</string>
-    <string name="about__github">GitHub</string>
-    <string name="about__twitter">Twitter</string>
     <string name="app_description">Ontspan en verhoog je productiviteit met rustige achtergrondgeluiden.</string>
-    <string name="connect_with_author">Contact opnemen met maker</string>
-    <string name="credits">Met dank aan</string>
     <string name="notification_channel_default__description">Afspeelbediening</string>
     <string name="notification_channel_default__name">Media afspelen</string>
     <string name="never">Nooit</string>

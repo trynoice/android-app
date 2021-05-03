@@ -104,12 +104,7 @@
     <string name="app_theme_light">Açık</string>
     <string name="app_theme_dark">Koyu</string>
     <string name="app_theme_system_default">Sistem Varsayılanı</string>
-    <string name="about__email">Email</string>
-    <string name="about__github">GitHub</string>
-    <string name="about__twitter">Twitter</string>
     <string name="app_description">Hafif bir arka plan sesiyle rahatlayın ve üretkenliğinizi arttırın.</string>
-    <string name="connect_with_author">Sahibiyle iletişime geç</string>
-    <string name="credits">Katkıda bulunanlar</string>
     <string name="appintro__chromecast_desc">
     Noice kullanarak hoparlör, TV vb. Chromecast kullanan cihazlara ambiyansı
     yansıtabilirsiniz.

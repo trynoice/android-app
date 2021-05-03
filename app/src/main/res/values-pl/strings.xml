@@ -71,12 +71,7 @@
     <string name="app_theme_light">Jasny</string>
     <string name="app_theme_dark">Ciemny</string>
     <string name="app_theme_system_default">Domyślny systemowy</string>
-    <string name="about__email">E-mail</string>
-    <string name="about__github">GitHub</string>
-    <string name="about__twitter">Twitter</string>
     <string name="app_description">Zrelaksuj się i zwiększ wydajność pracy przy minimalnym szumie w tle.</string>
-    <string name="connect_with_author">Skontaktuj się z autorem</string>
-    <string name="credits">Zasługi</string>
     <string name="support_development__donate">Przekaż darowiznę</string>
     <string name="support_development__donate_description">
     Darowizny pomogą nam w\n

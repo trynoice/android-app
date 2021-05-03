@@ -15,12 +15,12 @@ jobs:
       - uses: actions/checkout@v2
       - run: git fetch --prune --unshallow --tags -f
       - id: get_tag_message
-        run: >-
-          TAG_BODY="$(git tag  --list --format='%(contents:body)' ${GITHUB_REF/'refs/tags/'/''})";
-          TAG_BODY="${TAG_BODY//'%'/'%25'}";
-          TAG_BODY="${TAG_BODY//$'\n'/'%0A'}";
-          TAG_BODY="${TAG_BODY//$'\r'/'%0D'}";
-          echo "::set-output name=message::${TAG_BODY}";
+        run: |
+          export TAG_BODY="$(git tag  --list --format='%(contents:body)' ${GITHUB_REF/'refs/tags/'/''})"
+          export TAG_BODY="${TAG_BODY//'%'/'%25'}"
+          export TAG_BODY="${TAG_BODY//$'\n'/'%0A'}"
+          export TAG_BODY="${TAG_BODY//$'\r'/'%0D'}"
+          echo "::set-output name=message::${TAG_BODY}"
       - uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -30,8 +30,9 @@ jobs:
           body: ${{ steps.get_tag_message.outputs.message }}
           draft: false
           prerelease: false
-  generate-changelog:
-    name: Generate Changelog
+
+  generate-docs:
+    name: Generate Docs
     if: github.repository == 'ashutoshgngwr/noice'
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -41,17 +42,25 @@ jobs:
           ref: ${{ github.ref }}
           fetch-depth: 0
       - name: Generate changelog
-        run: >-
-          yarn global add auto-changelog;
+        run: |
+          yarn global add auto-changelog
           $(yarn global bin)/auto-changelog --template keepachangelog -o docs/CHANGELOG.md
-      - name: Commit changelog
-        run: >-
-          git config --local user.email "noreply@github.com";
-          git config --local user.name "GitHub";
-          if [ -n "$(git diff docs/CHANGELOG.md)" ]; then
-            git add docs/CHANGELOG.md;
-            git commit -m "chore(project): update CHANGELOG.md" \
-              --author "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>";
+      - name: Generate list of code authors
+        run: |
+          export LIST_PATH="docs/_data/authors/code.yaml"
+          git log --pretty="- %an <%ae>%n- %cn <%ce>" > "$LIST_PATH"
+          git log --pretty="%b" | grep "Co-authored-by:" >> "$LIST_PATH"
+          sed -i -e 's/Co-authored-by:/-/g' -e 's/\r$//' "$LIST_PATH"
+          sort -u -o "$LIST_PATH" "$LIST_PATH"
+          sed -i -E 's/(.*) <(.*)>/\1 | [\2](mailto:\2)/g' "$LIST_PATH"
+      - name: Commit changes
+        run: |
+          git config --local user.email "noreply@github.com"
+          git config --local user.name "GitHub"
+          if [ -n "$(git diff docs/)" ]; then
+            git add docs/
+            git commit -m "chore(project): update docs" \
+              --author "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
           fi
       - name: Push changes
         uses: ad-m/github-push-action@master

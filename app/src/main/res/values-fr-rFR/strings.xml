@@ -89,12 +89,7 @@
     <string name="app_theme_light">Clair</string>
     <string name="app_theme_dark">Sombre</string>
     <string name="app_theme_system_default">Système</string>
-    <string name="about__email">Courriel</string>
-    <string name="about__github">GitHub</string>
-    <string name="about__twitter">Twitter</string>
     <string name="app_description">Relaxation, concentration et productivité avec une ambiance sonore minimaliste.</string>
-    <string name="connect_with_author">Entrer en contact avec l\'auteur</string>
-    <string name="credits">Crédits</string>
     <string name="appintro__chromecast_desc">
     Utilisez Noice pour envoyer l\'ambiance créée vers un appareil équipé de Chromecast comme des enceintes, une télé, etc.
   </string>

@@ -109,12 +109,7 @@
     <string name="app_theme_light">Hell</string>
     <string name="app_theme_dark">Dunkel</string>
     <string name="app_theme_system_default">Systemstandard</string>
-    <string name="about__email">E-Mail</string>
-    <string name="about__github">GitHub</string>
-    <string name="about__twitter">Twitter</string>
     <string name="app_description">Entspannung und Produktivitätssteigerung durch minimale Hintergrundgeräusche.</string>
-    <string name="connect_with_author">Autor kontaktieren</string>
-    <string name="credits">Danksagungen</string>
     <string name="appintro__chromecast_desc">
     Benutze Noice um die Stimmung zu anderen Chromecast aktivierten Geräten wie Lautsprechern, TVs, etc zu übertragen.
   </string>

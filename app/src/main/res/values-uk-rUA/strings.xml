@@ -90,12 +90,7 @@
     <string name="app_theme_light">Світло</string>
     <string name="app_theme_dark">Темний</string>
     <string name="app_theme_system_default">Система за замовчуванням</string>
-    <string name="about__email">Email</string>
-    <string name="about__github">GitHub</string>
-    <string name="about__twitter">Twitter</string>
     <string name="app_description">Розслабтесь та покращить продуктивність з мінімальним фоновим шумом.</string>
-    <string name="connect_with_author">Зв\'язатися з автором</string>
-    <string name="credits">Ресурси</string>
     <string name="appintro__chromecast_desc">
     Використовуйте Noice для того, щоб передати його атмосферу до інших Chromecast сумісних
     пристроїв, таких як гучномовці, ТВ та інші.

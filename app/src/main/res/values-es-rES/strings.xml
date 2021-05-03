@@ -83,12 +83,7 @@
     <string name="app_theme_light">Claro</string>
     <string name="app_theme_dark">Oscuro</string>
     <string name="app_theme_system_default">Por defecto del sistema</string>
-    <string name="about__email">Correo</string>
-    <string name="about__github">GitHub</string>
-    <string name="about__twitter">Twitter</string>
     <string name="app_description">Relájese y aumente la productividad con un mínimo ruido de fondo.</string>
-    <string name="connect_with_author">Contactar al Autor</string>
-    <string name="credits">Créditos</string>
     <string name="appintro__chromecast_desc">
     Utilice Noise para transmitir su ambiente a otros dispositivos conectados a Chromecast, como altavoces, televisores, etc.
   </string>
