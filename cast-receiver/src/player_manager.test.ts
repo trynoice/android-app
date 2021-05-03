@@ -140,8 +140,12 @@ describe("PlayerManager#handlePlayerEvent", () => {
     }
 
     it("should pause playback", () => {
+      mockHowl.playing.mockReturnValue(true);
+      mockHowl.volume.mockReturnValue(1);
       pauseTestPlayer();
-      expect(mockHowl.pause).toHaveBeenCalledTimes(2);
+      expect(mockHowl.fade).toHaveBeenCalledWith(1, 0, expect.anything());
+      mockHowl.once.mock.calls[0][1](); // invoke callback
+      expect(mockHowl.pause).toHaveBeenCalled();
     });
 
     it("should invoke the player manager status callback", () => {
@@ -167,6 +171,8 @@ describe("PlayerManager#handlePlayerEvent", () => {
       mockHowl.volume.mockReturnValue(1);
       stopTestPlayer();
       expect(mockHowl.fade).toHaveBeenCalledWith(1, 0, expect.anything());
+      mockHowl.once.mock.calls[0][1](); // invoke callback
+      expect(mockHowl.stop).toHaveBeenCalled()
     });
 
     it("should stop playback on finishing fade-out", () => {

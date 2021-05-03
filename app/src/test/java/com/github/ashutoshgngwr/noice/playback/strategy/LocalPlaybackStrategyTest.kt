@@ -44,27 +44,19 @@ class LocalPlaybackStrategyTest {
   }
 
   @Test
-  fun testPlay_onOngoingPlayback() {
-    every { mockPlayer.playWhenReady } returns true
-    every { mockPlayer.isPlaying } returns true
-    playbackStrategy.play()
-    verify(exactly = 0) { mockPlayer.playWhenReady = any() }
-  }
-
-  @Test
   fun testPlay_onStoppedPlayback_withLoopingSound() {
     // should fade in looping sounds
     every { mockPlayer.playWhenReady } returns true
     every { mockPlayer.isPlaying } returns false
     every { mockPlayer.repeatMode } returns ExoPlayer.REPEAT_MODE_ONE
-    every { mockPlayer.volume } returns 1f
+    playbackStrategy.setVolume(1f)
     playbackStrategy.play()
 
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     verify(exactly = 1) { mockPlayer.playWhenReady = true }
     val volumeSlots = mutableListOf<Float>()
     verify { mockPlayer.volume = capture(volumeSlots) }
-    assertTrue("volume should increase with each step", volumeSlots[0] < volumeSlots[1])
+    assertTrue("volume should increase with each step", volumeSlots.first() < volumeSlots.last())
     assertEquals("volume should be set to desired value on finish", 1f, volumeSlots.last())
   }
 
@@ -83,6 +75,7 @@ class LocalPlaybackStrategyTest {
   @Test
   fun testPause() {
     playbackStrategy.pause()
+    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     verify(exactly = 1) { mockPlayer.playWhenReady = false }
   }
 
@@ -108,7 +101,7 @@ class LocalPlaybackStrategyTest {
 
     val volumeSlots = mutableListOf<Float>()
     verify(atLeast = 3) { mockPlayer.volume = capture(volumeSlots) }
-    assertTrue("volume should decrease with each step", volumeSlots[0] > volumeSlots[1])
+    assertTrue("volume should decrease with each step", volumeSlots.first() > volumeSlots.last())
     assertEquals("volume should be set to desired value on finish", 0f, volumeSlots.last())
   }
 }

@@ -3,17 +3,16 @@ import { Sounds } from "./library";
 import { PlayerControlEvent, PlayerAction, PlayerManagerStatus } from "./types";
 
 /**
- * PlayerManager manages various player instances for all the sounds.
- * It also implements a callback for subscribing to sender application
- * messagees (bindings in index.ts). Based on these messages, it loads
- * various sounds and controls their playback. It also keeps track of
- * idle status and runs an idle timer that runs out on 5m of inactivity.
+ * PlayerManager manages various player instances for all the sounds. It also
+ * implements a callback for subscribing to sender application messages
+ * (bindings in index.ts). Based on these messages, it loads various sounds and
+ * controls their playback. It also keeps track of idle status and runs an idle
+ * timer that runs out on 5m of inactivity.
  */
 export default class PlayerManager {
   private static readonly IDLE_TIMEOUT = 300 * 1000;
-  private static readonly FADE_IN_DURATION = 1500;
-  private static readonly FADE_OUT_DURATION = 750;
-  private static readonly FADE_VOLUME_DURATION = 750;
+  private static readonly FADE_IN_OUT_DURATION = 1500;
+  private static readonly VOLUME_ADJUSTMENT_FADE_DURATION = 750;
 
   private players: Map<string, Howl> = new Map();
   private bufferingState: Set<string> = new Set();
@@ -80,10 +79,10 @@ export default class PlayerManager {
       player.once("play", (): void => {
         this.bufferingState.delete(soundKey);
         this.notifyStatusUpdate(PlayerManagerStatus.Playing);
-        // fade-in only looping sounds because non-looping sounds need to maintain
-        // their abruptness thingy.
+        // fade-in only looping sounds because non-looping sounds need to
+        // maintain their abruptness thingy.
         if (player.loop()) {
-          player.fade(0, player.volume(), PlayerManager.FADE_IN_DURATION);
+          player.fade(0, player.volume(), PlayerManager.FADE_IN_OUT_DURATION);
         }
       });
 
@@ -99,7 +98,13 @@ export default class PlayerManager {
       return;
     }
 
-    this.players.get(soundKey).pause();
+    const player = this.players.get(soundKey);
+    const originalVolume = player.volume();
+    player.fade(originalVolume, 0, PlayerManager.FADE_IN_OUT_DURATION);
+    player.once("fade", () => {
+      player.pause();
+      player.volume(originalVolume);
+    });
   }
 
   /**
@@ -115,7 +120,7 @@ export default class PlayerManager {
     this.players.delete(soundKey);
     this.bufferingState.delete(soundKey);
     if (player.playing()) {
-      player.fade(player.volume(), 0, PlayerManager.FADE_OUT_DURATION);
+      player.fade(player.volume(), 0, PlayerManager.FADE_IN_OUT_DURATION);
       player.once("fade", () => {
         player.stop();
         player.unload();
@@ -127,8 +132,8 @@ export default class PlayerManager {
   }
 
   /**
-   * Sets volume for the given player. If the player is currently playing,
-   * it fades the volume instead to provide smooth transition.
+   * Sets volume for the given player. If the player is currently playing, it
+   * fades the volume instead to provide smooth transition.
    */
   private setVolume(soundKey: string, volume: number): void {
     if (this.players.has(soundKey) === false) {
@@ -137,7 +142,11 @@ export default class PlayerManager {
 
     const player = this.players.get(soundKey);
     if (player.playing()) {
-      player.fade(player.volume(), volume, PlayerManager.FADE_VOLUME_DURATION);
+      player.fade(
+        player.volume(),
+        volume,
+        PlayerManager.VOLUME_ADJUSTMENT_FADE_DURATION
+      );
     } else {
       player.volume(volume);
     }
@@ -148,9 +157,9 @@ export default class PlayerManager {
   }
 
   /**
-   * Implements the callback to handle messages received from the Sender application.
-   * Based on the action taken, it invokes the status callback with an appropriate
-   * PlayerManagerStatusEvent.
+   * Implements the callback to handle messages received from the Sender
+   * application. Based on the action taken, it invokes the status callback with
+   * an appropriate PlayerManagerStatusEvent.
    */
   handlePlayerEvent(event: PlayerControlEvent): void {
     event.src.forEach((soundKey: string) => {

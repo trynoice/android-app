@@ -16,6 +16,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import kotlin.math.abs
 import kotlin.math.ceil
+import kotlin.math.min
 
 /**
  * [LocalPlaybackStrategy] implements [PlaybackStrategy] which plays the media locally
@@ -31,12 +32,13 @@ class LocalPlaybackStrategy(
     private const val FADE_VOLUME_STEP = 0.01f
 
     // a smaller default used when changing volume of an active player.
-    private const val ADJUSTED_VOLUME_FADE_DURATION = 750L
+    private const val VOLUME_ADJUSTMENT_FADE_DURATION = 750L
   }
 
   private val handler = Handler(Looper.getMainLooper())
   private val players = sound.src.map { initPlayer(context, it, sound.isLooping, audioAttributes) }
   private val settingsRepository = SettingsRepository.newInstance(context)
+  private var volume: Float = 0f
 
   private fun initPlayer(
     context: Context,
@@ -72,28 +74,30 @@ class LocalPlaybackStrategy(
   }
 
   override fun setVolume(volume: Float) {
-    players.forEach { it.fade(it.volume, volume, duration = ADJUSTED_VOLUME_FADE_DURATION) }
+    this.volume = volume
+    players.forEach { it.fade(it.volume, volume, duration = VOLUME_ADJUSTMENT_FADE_DURATION) }
   }
 
   override fun play() {
     for (player in players) {
-      if (player.playWhenReady && player.isPlaying) {
-        continue
+      if (player.repeatMode != ExoPlayer.REPEAT_MODE_ONE && !player.isPlaying) {
+        player.seekTo(0)
       }
 
+      player.playWhenReady = true
       // an internal feature of the LocalPlaybackStrategy is that it won't fade-in non-looping sounds
       if (player.repeatMode == ExoPlayer.REPEAT_MODE_ONE) {
-        player.playWhenReady = true
-        player.fade(0f, player.volume)
-      } else {
-        player.seekTo(0)
-        player.playWhenReady = true
+        player.fade(0f, volume)
       }
     }
   }
 
   override fun pause() {
-    players.forEach { it.playWhenReady = false }
+    players.forEach {
+      it.fade(it.volume, 0f, duration = VOLUME_ADJUSTMENT_FADE_DURATION) {
+        it.playWhenReady = false
+      }
+    }
   }
 
   override fun stop() {
@@ -103,8 +107,8 @@ class LocalPlaybackStrategy(
       }
 
       player.fade(player.volume, 0f) {
-        playWhenReady = false
-        release()
+        player.playWhenReady = false
+        player.release()
       }
     }
   }
@@ -121,13 +125,13 @@ class LocalPlaybackStrategy(
     fromVolume: Float,
     toVolume: Float,
     duration: Long = settingsRepository.getSoundFadeDurationInMillis(),
-    callback: SimpleExoPlayer.() -> Unit = { }
+    callback: () -> Unit = { }
   ) {
     handler.removeCallbacksAndMessages(this)
     if (!playWhenReady && !isPlaying) {
       // edge case where fade is requested but playback is not playing.
       volume = toVolume
-      callback.invoke(this)
+      callback.invoke()
       return
     }
 
@@ -137,13 +141,13 @@ class LocalPlaybackStrategy(
     volume = fromVolume
     for (i in 0 until steps) {
       HandlerCompat.postDelayed(
-        handler, { volume += sign * FADE_VOLUME_STEP }, this, i * period
+        handler, { volume = min(1f, volume + (sign * FADE_VOLUME_STEP)) }, this, i * period
       )
     }
 
     HandlerCompat.postDelayed(handler, {
       volume = toVolume
-      callback.invoke(this)
+      callback.invoke()
     }, this, duration + 1)
   }
 }
