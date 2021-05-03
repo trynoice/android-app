@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.playback
 
 import android.content.Context
 import android.media.AudioManager
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.support.v4.media.session.MediaSessionCompat
@@ -324,6 +325,10 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
 
   fun playPreset(presetID: String) {
     presetRepository.get(presetID)?.also { playPreset(it) }
+  }
+
+  fun playPreset(uri: Uri) {
+    playPreset(Preset.from(uri))
   }
 
   /**

@@ -1,0 +1,18 @@
+---
+layout: page
+---
+
+<h1 id="shared-preset">Shared Preset</h1>
+<p>
+  You should have opened this link using the Noice Android app, rather than your
+  browser. Please <a class="preset-intent">click here</a> to open the Noice app
+  and play the <q class="preset-title">unnamed</q> preset.
+</p>
+<script>
+  addEventListener("load", function () {
+    var uri = new URL("noice://preset" + window.location.search);
+    document.querySelector(".preset-intent").href = uri;
+    var params = new URLSearchParams(window.location.search);
+    document.querySelector(".preset-title").innerHTML = params.get("name");
+  });
+</script>

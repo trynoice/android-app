@@ -2,6 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
   <item
+    android:id="@+id/action_share"
+    android:title="@string/share" />
+
+  <item
+    android:id="@+id/action_rename"
+    android:title="@string/rename" />
+
+  <item
+    android:id="@+id/action_delete"
+    android:title="@string/delete" />
+
+  <item
     android:id="@+id/action_create_pinned_shortcut"
     android:title="@string/add_to_home_screen" />
 
@@ -12,13 +24,5 @@
   <item
     android:id="@+id/action_remove_app_shortcut"
     android:title="@string/remove_from_app_shortcuts" />
-
-  <item
-    android:id="@+id/action_rename"
-    android:title="@string/rename" />
-
-  <item
-    android:id="@+id/action_delete"
-    android:title="@string/delete" />
 
 </menu>

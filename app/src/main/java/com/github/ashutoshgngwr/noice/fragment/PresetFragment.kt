@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.app.ShareCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
@@ -116,11 +117,12 @@ class PresetFragment : Fragment() {
 
       val onMenuItemClickListener = PopupMenu.OnMenuItemClickListener {
         when (it.itemId) {
+          R.id.action_share -> showShareIntentSender()
+          R.id.action_delete -> showDeletePresetConfirmation()
+          R.id.action_rename -> showRenamePresetInput()
           R.id.action_create_pinned_shortcut -> createPinnedShortcut()
           R.id.action_create_app_shortcut -> createAppShortcut()
           R.id.action_remove_app_shortcut -> removeAppShortcut()
-          R.id.action_delete -> showDeletePresetConfirmation()
-          R.id.action_rename -> showRenamePresetInput()
         }
 
         true
@@ -136,6 +138,14 @@ class PresetFragment : Fragment() {
           it.show()
         }
       }
+    }
+
+    private fun showShareIntentSender() {
+      ShareCompat.IntentBuilder.from(requireActivity())
+        .setType("text/plain")
+        .setChooserTitle(R.string.share)
+        .setText(dataSet[adapterPosition].toUri().toString())
+        .startChooser()
     }
 
     private fun createPinnedShortcut() {

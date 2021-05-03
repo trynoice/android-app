@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice
 
+import android.content.Intent
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.TimePicker
@@ -11,6 +12,8 @@ import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.MotionEvents
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.util.TreeIterables
@@ -19,8 +22,7 @@ import com.google.android.material.slider.Slider
 import com.google.android.material.textfield.TextInputLayout
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers.allOf
-import org.hamcrest.Matchers.instanceOf
+import org.hamcrest.Matchers.*
 import org.hamcrest.TypeSafeMatcher
 
 /**
@@ -222,5 +224,15 @@ object EspressoX {
         }
       }
     }
+  }
+
+  /**
+   * Returns a matcher that matches the nested intent sent with an Intent chooser.
+   */
+  fun hasIntentChooser(matcher: Matcher<Intent>): Matcher<Intent> {
+    return allOf(
+      hasAction(Intent.ACTION_CHOOSER),
+      hasExtra(`is`(Intent.EXTRA_INTENT), matcher)
+    )
   }
 }

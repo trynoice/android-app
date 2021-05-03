@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       }
 
       setFragment(defaultFragmentID) // default fragment must be in the back stack
-      setNavigatedFragment()
+      handleNewIntent()
       AppIntroActivity.maybeStart(this) // show app intro if user hasn't already seen it
     }
 
@@ -140,10 +140,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       .build()
   }
 
-  override fun onNewIntent(intent: Intent?) {
+  override fun onNewIntent(intent: Intent) {
     super.onNewIntent(intent)
     setIntent(intent)
+    handleNewIntent()
+  }
+
+  private fun handleNewIntent() {
     setNavigatedFragment()
+
+    if (Intent.ACTION_VIEW == intent.action &&
+      (intent.dataString?.startsWith(getString(R.string.app_website)) == true ||
+        intent.dataString?.startsWith("noice://preset") == true)
+    ) {
+      intent.data?.also { PlaybackController.playPresetFromUri(this, it) }
+    }
   }
 
   private fun setNavigatedFragment() {

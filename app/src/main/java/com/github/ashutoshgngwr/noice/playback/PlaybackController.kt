@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.media.AudioManager
+import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.os.SystemClock
@@ -157,9 +158,8 @@ object PlaybackController {
             .setStreamVolume(AudioManager.STREAM_MUSIC, mediaVol, 0)
         }
 
-        intent.getStringExtra(EXTRA_PRESET_ID)?.also {
-          playerManager.playPreset(it)
-        }
+        intent.getStringExtra(EXTRA_PRESET_ID)?.also { playerManager.playPreset(it) }
+        intent.data?.also { playerManager.playPreset(it) }
       }
 
       ACTION_PLAY_RANDOM_PRESET -> {
@@ -256,6 +256,17 @@ object PlaybackController {
       Intent(context, MediaPlayerService::class.java)
         .setAction(ACTION_PLAY_PRESET)
         .putExtra(EXTRA_PRESET_ID, presetID)
+    )
+  }
+
+  /**
+   * Sends the start command to the service with [ACTION_PLAY_PRESET] with [uri] as its data.
+   */
+  fun playPresetFromUri(context: Context, uri: Uri) {
+    context.startService(
+      Intent(context, MediaPlayerService::class.java)
+        .setAction(ACTION_PLAY_PRESET)
+        .setData(uri)
     )
   }
 

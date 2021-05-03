@@ -37,6 +37,7 @@ import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.navigation.NavigationView
+import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -377,6 +378,28 @@ class MainActivityTest {
       every { mockRepo.getAppThemeAsNightMode() } returns nightMode
       activityScenario.recreate()
       assertEquals(nightMode, AppCompatDelegate.getDefaultNightMode())
+    }
+  }
+
+  @Test
+  fun testPresetUriIntent() {
+    mockkObject(PlaybackController)
+    val inputs = arrayOf(
+      "https://ashutoshgngwr.github.io/noice/preset?name=test&playerStates=[]",
+      "noice://preset?name=test&playerStates=[]"
+    )
+
+    for (input in inputs) {
+      activityScenario.close()
+
+      val uri = Uri.parse(input)
+      val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
+        .setAction(Intent.ACTION_VIEW)
+        .setData(uri)
+
+      activityScenario = launch(intent)
+      verify(exactly = 1) { PlaybackController.playPresetFromUri(any(), uri) }
+      clearMocks(PlaybackController)
     }
   }
 }

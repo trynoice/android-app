@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.media.AudioManager
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
@@ -183,7 +184,19 @@ class PlaybackControllerTest {
       mockk()
     )
 
-    verifySequence { mockPlayerManager.playPreset(presetID) }
+    val uri = Uri.parse("test")
+    PlaybackController.handleServiceIntent(
+      ApplicationProvider.getApplicationContext(),
+      mockPlayerManager,
+      Intent(PlaybackController.ACTION_PLAY_PRESET)
+        .setData(uri),
+      mockk()
+    )
+
+    verifySequence {
+      mockPlayerManager.playPreset(presetID)
+      mockPlayerManager.playPreset(uri)
+    }
 
     assertEquals(
       volume,
@@ -400,6 +413,22 @@ class PlaybackControllerTest {
           assertEquals(MediaPlayerService::class.qualifiedName, it.component?.className)
           assertEquals(PlaybackController.ACTION_PLAY_PRESET, it.action)
           assertEquals("test", it.getStringExtra(PlaybackController.EXTRA_PRESET_ID))
+        }
+      )
+    }
+  }
+
+  @Test
+  fun testPlayPresetFromUri() {
+    val mockContext = mockk<Context>(relaxed = true)
+    val uri = Uri.parse("test")
+    PlaybackController.playPresetFromUri(mockContext, uri)
+    verify(exactly = 1) {
+      mockContext.startService(
+        withArg {
+          assertEquals(MediaPlayerService::class.qualifiedName, it.component?.className)
+          assertEquals(PlaybackController.ACTION_PLAY_PRESET, it.action)
+          assertEquals(uri, it.data)
         }
       )
     }

@@ -1,5 +1,7 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.support.v4.media.session.PlaybackStateCompat
 import android.widget.Button
 import androidx.core.content.pm.ShortcutInfoCompat
@@ -12,6 +14,10 @@ import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
@@ -128,6 +134,35 @@ class PresetFragmentTest {
     )
 
     verify(exactly = 1) { PlaybackController.stop(any()) }
+  }
+
+  @Test
+  fun testRecyclerViewItem_shareOption() {
+    val presetUri = "test-preset-uri"
+    every { mockPreset.toUri() } returns Uri.parse(presetUri)
+
+    // open context menu
+    onView(withId(R.id.preset_list)).perform(
+      RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
+        hasDescendant(allOf(withId(R.id.title), withText("test"))),
+        EspressoX.clickInItem(R.id.menu_button)
+      )
+    )
+
+    try {
+      Intents.init()
+      onView(withText(R.string.share)).perform(click()) // select share option
+      intended(
+        EspressoX.hasIntentChooser(
+          allOf(
+            hasAction(Intent.ACTION_SEND),
+            hasExtra(Intent.EXTRA_TEXT, presetUri)
+          )
+        )
+      )
+    } finally {
+      Intents.release()
+    }
   }
 
   @Test
