@@ -141,7 +141,7 @@ object EspressoX {
   fun waitForView(
     vararg viewMatchers: Matcher<View>,
     retries: Int = 5,
-    wait: Long = 500L,
+    wait: Long = 1000L,
   ): ViewInteraction {
     require(retries > 0 && wait > 0)
     val viewMatcher = allOf(*viewMatchers)
