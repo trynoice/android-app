@@ -134,4 +134,35 @@
     <string name="intensity">Intensiteit</string>
     <string name="focus">Focus</string>
     <string name="dense">Dicht</string>
+    <string name="ignore_audio_focus_changes_summary_on">Reageer niet wanneer andere apps geluid afspelen</string>
+    <string name="ignore_audio_focus_changes_summary_off">Pauzeer wanneer andere apps geluid afspelen</string>
+    <string name="ignore_audio_focus_changes">Negeer wijzigingen in de audiofocus</string>
+    <string name="unsaved_preset">Niet-opgeslagen instelling</string>
+    <string name="skip_to_next">Volgende instelling</string>
+    <string name="skip_to_prev">Vorige instelling</string>
+    <string name="pinned_shortcut_created">Snelkoppeling is toegevoegd aan het startscherm!</string>
+    <string name="pinned_shortcut_creation_failed">Kan de snelkoppeling niet toevoegen aan het startscherm!</string>
+    <string name="sound_fade_duration_summary">Duur van geluidsvervaging voor het afspelen/stoppen van geluiden (in seconden)</string>
+    <string name="sound_fade_duration">Duur van geluidsvervaging</string>
+    <string name="appearance">Uiterlijk</string>
+    <string name="behavior">Gedrag</string>
+    <string name="saved_presets_as_home_screen">Opgeslagen instellingen als startscherm</string>
+    <string name="settings">Instellingen</string>
+    <string name="app_shortcut_creation_failed">Kan de instelling niet toevoegen aan app-snelkoppelingen!</string>
+    <string name="app_shortcut_created">Instelling is toegevoegd aan app-snelkoppelingen!</string>
+    <string name="app_shortcut_removed">Instelling is verwijderd uit app-snelkoppelingen!</string>
+    <string name="remove_from_app_shortcuts">Verwijderen van app-snelkoppelingen</string>
+    <string name="add_to_app_shortcuts">Toevoegen aan app-snelkoppelingen</string>
+    <string name="app_authors">Bekijk de lijst van Noice-auteurs</string>
+    <string name="in_app_feedback__title">Plaats een recensie</string>
+    <string name="in_app_feedback__description">We horen graag van je over de app. Neem even de tijd om onze GitHub-repository te bezoeken. Als je de app niet leuk vond, overweeg dan om een probleem in te dienen waarin je je zorgen uitlegt. Ook kunt u het project een ster geven om liefde en steun te tonen.</string>
+    <string name="cast_media">Cast media naar een ander apparaat</string>
+    <string name="support_development__why_description">- Om toekomstige updates mogelijk te maken
+\n- Om Noice voor altijd reclamevrij te houden
+\n</string>
+    <string name="support_development__why">Waarom zou je steunen\?</string>
+    <string name="support_development__share_description">Noice delen met vrienden is vergelijkbaar met geld doneren. Met hogere downloads kunnen we feedback ontvangen vanuit een aantal verschillende perspectieven die ons zullen helpen om Noice beter dan ooit te maken.</string>
+    <string name="support_development__donate_thank_you_description">Wij danken u van harte voor uw genereuze bijdrage aan het Noice-project.</string>
+    <string name="support_development__donate_thank_you">Dank u!</string>
+    <string name="support_development__donate_google_play_description">Uw betaling wordt veilig afgehandeld door Google Play. Het bedrag wordt omgerekend naar uw lokale valuta. Afhankelijk van uw locatie kunnen er extra belastingen worden toegevoegd aan het uiteindelijke bedrag.</string>
 </resources>
