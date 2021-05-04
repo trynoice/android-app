@@ -80,4 +80,58 @@
     <string name="submit_feedback">Feedback indienen</string>
     <string name="support_development">Ondersteun de ontwikkeling</string>
     <string name="help">Hulp</string>
+    <string name="support_development__donate_description">Donaties zullen ons helpen met
+\n- het investeren in nieuwe mogelijkheden
+\n- het samenstellen van betere geluiden
+\n- koffie kopen
+\n</string>
+    <string name="appintro__timer_title">Moeite met in slaap vallen of wakker worden\?</string>
+    <string name="appintro__timer_desc">Een beetje sfeer kan u helpen om moeiteloos in slaap te vallen. Gebruik de slaaptimer om Noice zichzelf uit te laten schakelen. Gebruik de wekker om het alarm in te stellen om wakker te worden in een rustige omgeving.</string>
+    <string name="appintro__sound_library_title">Creëer uw perfecte omgeving</string>
+    <string name="appintro__sound_library_desc">Gebruik de volumeregelaar om het geluidsvolume aan te passen. Bij elke herhaling van enkel afspelende geluiden wordt willekeurig een vertragingsperiode geselecteerd uit het bereik dat is ingesteld met de tijdregelaar.</string>
+    <string name="appintro__preset_title">Bewaar uw favoriete mixen</string>
+    <string name="appintro__preset_desc">Nadat je een paar geluiden hebt gespeeld, kun je de knop in de onderste hoek gebruiken om je mix op te slaan. Om een opgeslagen mix opnieuw te gebruiken, kunt u de lijst met instellingen in het app-menu bezoeken.</string>
+    <string name="appintro__getting_started_desc_0">Veeg naar links om alle functies te leren kennen!</string>
+    <string name="appintro__chromecast_title">Chromecast ingeschakeld</string>
+    <string name="appintro__chromecast_desc">Gebruik Noice om sfeer over te brengen op andere Chromecast-apparaten, zoals luidsprekers, tv\'s, enz.</string>
+    <string name="should_update_media_volume">Werk het mediavolume van het apparaat bij voordat u de instelling start</string>
+    <string name="device_media_volume">Apparaat mediavolume</string>
+    <string name="wake_up_timer_description">Noice start de geselecteerde instelling wanneer de timer afloopt. Gebruik de onderstaande knoppen om een instelling te selecteren en de gewenste tijd in te stellen om de timer te starten.</string>
+    <plurals name="time_minutes">
+        <item quantity="one">%1$d minuut</item>
+        <item quantity="other">%1$d minuten</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one">%1$d uur</item>
+        <item quantity="other">%1$d uren</item>
+    </plurals>
+    <string name="time_bridge">en</string>
+    <string name="wake_up_timer_schedule_set">Het alarm gaat af over %1$s %2$s %3$s</string>
+    <string name="select_preset">Selecteer Instelling</string>
+    <string name="saved_presets_as_home_screen_summary">Toon opgeslagen instellingen bij het opstarten van de app</string>
+    <string name="pinned_shortcuts_not_supported">Uw standaard launcher biedt geen ondersteuning voor het toevoegen van snelkoppelingen.</string>
+    <string name="preset_info__description">U heeft nog geen instellingen gemaakt. Om een instelling te maken, gaat u naar de bibliotheek en speelt u geluiden af. Klik vervolgens op de knop Opslaan die in de benedenhoek van het scherm verschijnt.</string>
+    <string name="preset_does_not_exist">Instelling bestaat niet. Het is mogelijk verwijderd!</string>
+    <string name="add_to_home_screen">Toevoegen aan startscherm</string>
+    <string name="water_hose">Tuinslang</string>
+    <string name="walking_through_the_snow">Lopen door de sneeuw</string>
+    <string name="screeching_seagulls">Krijsende zeemeeuwen</string>
+    <string name="quiet_conversation">Stille conversatie</string>
+    <string name="purring_cat">Spinnende kat</string>
+    <string name="public_library">Bibliotheek</string>
+    <string name="human_heartbeat">Menselijke hartslag</string>
+    <string name="howling_wolf">Huilende wolf</string>
+    <string name="creaking_ship">Krakend schip</string>
+    <string name="sound_group__times_of_day">Tijdstippen</string>
+    <string name="sound_group__raw_noise">Pure ruis</string>
+    <string name="sound_group__public_gatherings">Publieke bijeenkomsten</string>
+    <string name="sound_group__monsoon">Moesson</string>
+    <string name="sound_group__life">Leven</string>
+    <string name="preset_already_exists">Instelling met de opgegeven naam bestaat al!</string>
+    <string name="random_preset">Willekeurige instelling</string>
+    <string name="mood">Stemming</string>
+    <string name="random_preset_description">Gegenereerde willekeurige instellingen bevatten geluiden die overeenkomen met de gekozen stemming. Bovendien zullen dichte instellingen proberen om meer geluiden tegelijkertijd af te spelen.</string>
+    <string name="intensity">Intensiteit</string>
+    <string name="focus">Focus</string>
+    <string name="dense">Dicht</string>
 </resources>
