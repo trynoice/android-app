@@ -189,4 +189,7 @@
     <string name="settings">Einstellungen</string>
     <string name="app_shortcut_created">Voreinstellung wurde zu den Anwendungsverknüpfungen hinzugefügt!</string>
     <string name="app_shortcut_removed">Die Voreinstellung wurde aus den Anwendungsverknüpfungen entfernt!</string>
+    <string name="unsaved_preset">Nicht gespeicherte Voreinstellung</string>
+    <string name="skip_to_next">Nächste Voreinstellung</string>
+    <string name="skip_to_prev">Vorherige Voreinstellung</string>
 </resources>
