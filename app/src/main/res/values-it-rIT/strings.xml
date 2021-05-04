@@ -159,4 +159,7 @@
     <string name="settings">Impostazioni</string>
     <string name="app_shortcut_created">La preimpostazione è stata aggiunta alle scorciatoie delle app!</string>
     <string name="app_shortcut_removed">La preimpostazione è stata rimossa dalle scorciatoie delle app!</string>
+    <string name="unsaved_preset">Preimpostazione non salvata</string>
+    <string name="skip_to_next">Preimpostazione successiva</string>
+    <string name="skip_to_prev">Preimpostazione precedente</string>
 </resources>

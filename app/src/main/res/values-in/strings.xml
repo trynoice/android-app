@@ -178,4 +178,16 @@
     <string name="time_bridge">dan</string>
     <string name="wake_up_timer_schedule_set">Alarm akan mati dalam %1$s %2$s %3$s</string>
     <string name="random_preset_description">Preset acak yang dihasilkan akan memiliki suara sesuai dengan suasana yang dipilih. Selain itu, preset padat akan berusaha memainkan lebih banyak suara secara bersamaan.</string>
+    <string name="unsaved_preset">Preset Belum Tersimpan</string>
+    <string name="skip_to_next">Preset berikutnya</string>
+    <string name="skip_to_prev">Preset sebelumnya</string>
+    <string name="pinned_shortcut_created">Pintasan telah ditambahkan ke layar beranda!</string>
+    <string name="pinned_shortcut_creation_failed">Gagal menambahkan pintasan ke layar beranda!</string>
+    <string name="sound_fade_duration_summary">Durasi fade in/out untuk memutar/menghentikan suara (dalam detik)</string>
+    <string name="sound_fade_duration">Durasi suara memudar</string>
+    <string name="appearance">Tampilan</string>
+    <string name="behavior">Perilaku</string>
+    <string name="settings">Pengaturan</string>
+    <string name="remove_from_app_shortcuts">Hapus dari pintasan aplikasi</string>
+    <string name="add_to_app_shortcuts">Tambah ke pintasan aplikasi</string>
 </resources>

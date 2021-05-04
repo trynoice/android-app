@@ -121,12 +121,8 @@
     <string name="support_development__donate_thank_you_description">
     Le agradecemos de todo corazón su generosa contribución al proyecto Noise.
   </string>
-    <string name="support_development__share">Compartir con friends</string>
-    <string name="support_development__share_description">
-    Comparte Noice con amigos es una alternativa a las donaciones. Con descargas más altas, podremos
-    recibir comentarios desde diferentes perspectivas que nos ayudará a hacer de Noice mejor que
-    nunca.
-  </string>
+    <string name="support_development__share">Compartir con amigos</string>
+    <string name="support_development__share_description">Comparte Noice con amigos es una alternativa a las donaciones. Cuantas mas descargas, podremos recibir comentarios desde diferentes perspectivas que nos ayudará a hacer de Noice mejor que nunca.</string>
     <string name="support_development__why">¿Por qué debería apoyar\?</string>
     <string name="support_development__why_description">- Para garantizar futuras actualizaciones
 \n- Para mantener Noice libre de anuncios siempre
@@ -176,4 +172,19 @@
     <string name="settings">Configuración</string>
     <string name="remove_from_app_shortcuts">Quitar de atajos de aplicación</string>
     <string name="add_to_app_shortcuts">Añadir a atajos de aplicación</string>
+    <string name="invalid_import_file_format">¡El formato del archivo de importación no es valido!</string>
+    <string name="import_presets">Importar desde un archivo</string>
+    <string name="export_presets_summary">Exportar la instantánea actual de preajustes guardados a un archivo externo</string>
+    <string name="export_presets">Exportar a un archivo</string>
+    <string name="share">Compartir</string>
+    <string name="ignore_audio_focus_changes_summary_on">No hacer nada cuando otras aplicaciones reproduzcan audio</string>
+    <string name="ignore_audio_focus_changes_summary_off">Pausar cuando otras aplicaciones reproduzcan audio</string>
+    <string name="unsaved_preset">Preajuste sin guardar</string>
+    <string name="skip_to_next">Preajuste siguiente</string>
+    <string name="skip_to_prev">Preajuste anterior</string>
+    <string name="pinned_shortcut_created">¡Se ha añadido un acceso directo a la pantalla de inicio!</string>
+    <string name="pinned_shortcut_creation_failed">¡No se pudo añadir el acceso directo a la pantalla de inicio!</string>
+    <string name="app_shortcut_creation_failed">¡No se pudo añadir el preajuste a los accesos directos de la aplicación!</string>
+    <string name="app_shortcut_created">¡Se ha añadido un preajuste a los accesos directos de la aplicación!</string>
+    <string name="app_shortcut_removed">¡Se ha eliminado el preajuste de los accesos directos a aplicaciones!</string>
 </resources>

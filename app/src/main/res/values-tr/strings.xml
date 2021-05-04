@@ -199,4 +199,11 @@
     <string name="behavior">Davranış</string>
     <string name="saved_presets_as_home_screen">Ana ekrana kaydedilen kayıtlar</string>
     <string name="settings">Ayarlar</string>
+    <string name="share">Paylaş</string>
+    <string name="ignore_audio_focus_changes_summary_on">Diğer uygulamalar ses oynatırken tepki verme</string>
+    <string name="ignore_audio_focus_changes_summary_off">Diğer uygulamalar ses oynatırken duraklat</string>
+    <string name="ignore_audio_focus_changes">Ses odaklanma değişikliklerini yok say</string>
+    <string name="unsaved_preset">Kaydedilmemiş Kayıt</string>
+    <string name="skip_to_next">Sonraki kayıt</string>
+    <string name="skip_to_prev">Önceki kayıt</string>
 </resources>
