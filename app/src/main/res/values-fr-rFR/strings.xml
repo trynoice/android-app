@@ -146,7 +146,7 @@
     <string name="mood">Ambiance</string>
     <string name="light">Clair</string>
     <string name="intensity">Intensité</string>
-    <string name="dense">Dense</string>
+    <string name="dense">Intense</string>
     <string name="submit_feedback">Soumettre une évaluation</string>
     <string name="in_app_feedback__description">Nous aimerions connaître votre avis sur l\'application. Nous vous prions de consulter notre GitHub. Si vous n\'aimez pas l\'application, nous vous prions d\'ouvrir un billet « issue » afin de nous expliquer vos critiques. Autrement, nous vous prions de noter le projet pour nous montrer votre reconnaissance.</string>
     <string name="should_update_media_volume">Ajustez le volume de l\'appareil avant de lancer la préconfiguration</string>
@@ -159,7 +159,7 @@
     <string name="later">Plus tard</string>
     <string name="in_app_feedback__title">Soumettre une évaluation</string>
     <string name="any">N\'importe</string>
-    <string name="focus">Focus</string>
+    <string name="focus">Concentré</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minute</item>
         <item quantity="other">%1$d minutes</item>
@@ -185,4 +185,10 @@
     <string name="saved_presets_as_home_screen">Préréglages enregistrés comme écran d\'accueil</string>
     <string name="settings">Paramètres</string>
     <string name="app_shortcut_created">Le préréglage a été ajouté aux raccourcis de l\'application !</string>
+    <string name="ignore_audio_focus_changes_summary_on">Ne pas réagir lorsque d\'autres applications jouent de l\'audio</string>
+    <string name="ignore_audio_focus_changes_summary_off">Mettre en pause lorsque d\'autres applications diffusent de l\'audio</string>
+    <string name="ignore_audio_focus_changes">Ignorer les changements de focus audio</string>
+    <string name="unsaved_preset">Réglage non-enregistré</string>
+    <string name="skip_to_next">Réglage suivant</string>
+    <string name="skip_to_prev">Réglage précédent</string>
 </resources>
