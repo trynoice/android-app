@@ -24,4 +24,7 @@
   <string name="sound_fade_duration_key">sound_fade_duration</string>
   <string name="app_theme_key">app_theme</string>
   <string name="ignore_audio_focus_changes_key">ignore_audio_focus_changes</string>
+  <string name="import_presets_key">import_presets</string>
+  <string name="export_presets_key">export_presets</string>
+  <string name="remove_all_app_shortcuts_key">remove_all_app_shortcuts</string>
 </resources>

@@ -30,6 +30,27 @@
 
   </PreferenceCategory>
 
+  <PreferenceCategory android:title="@string/saved_presets">
+
+    <Preference
+      android:icon="@drawable/ic_settings_export"
+      android:key="@string/export_presets_key"
+      android:summary="@string/export_presets_summary"
+      android:title="@string/export_presets" />
+
+    <Preference
+      android:icon="@drawable/ic_settings_import"
+      android:key="@string/import_presets_key"
+      android:summary="@string/import_presets_summary"
+      android:title="@string/import_presets" />
+
+    <Preference
+      android:icon="@drawable/ic_settings_delete_sweep"
+      android:key="@string/remove_all_app_shortcuts_key"
+      android:title="@string/remove_all_app_shortcuts" />
+
+  </PreferenceCategory>
+
   <PreferenceCategory android:title="@string/appearance">
 
     <Preference

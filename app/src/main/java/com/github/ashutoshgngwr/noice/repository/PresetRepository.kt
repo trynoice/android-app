@@ -9,8 +9,14 @@ import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.repository.PresetRepository.Companion.PREFERENCE_KEY
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonIOException
+import com.google.gson.JsonSyntaxException
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.io.OutputStream
+import java.io.OutputStreamWriter
 import java.util.*
 import kotlin.math.round
 import kotlin.random.Random
@@ -31,6 +37,12 @@ class PresetRepository private constructor(context: Context) {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     const val PREFERENCE_KEY = PREF_V1
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    const val EXPORT_VERSION_KEY = "version"
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    const val EXPORT_DATA_KEY = "data"
 
     /**
      * Creates a new instance of [PresetRepository]. Needed because mockk is unable to mock
@@ -120,6 +132,37 @@ class PresetRepository private constructor(context: Context) {
     val result = presets.removeAll { it.id == id }
     commit(presets.toTypedArray())
     return result
+  }
+
+  /**
+   * Writes all saved presets present in the storage to the given [OutputStream]. The output format
+   * is JSON.
+   */
+  @Throws(JsonIOException::class)
+  fun exportTo(stream: OutputStream) {
+    val data = mapOf(
+      EXPORT_VERSION_KEY to PREFERENCE_KEY,
+      EXPORT_DATA_KEY to prefs.getString(PREFERENCE_KEY, "[]")
+    )
+
+    OutputStreamWriter(stream).use { gson.toJson(data, it) }
+  }
+
+  /**
+   * Reads and saves the presets from an [InputStream] that has the data that was exported using
+   * [exportTo]. It overwrites any existing presets in the storage.
+   */
+  @Throws(JsonIOException::class, JsonSyntaxException::class, IllegalArgumentException::class)
+  fun importFrom(stream: InputStream) {
+    val data = InputStreamReader(stream).use {
+      gson.fromJson(it, hashMapOf<String, String?>()::class.java)
+    }
+
+    val version = data?.get(EXPORT_VERSION_KEY)
+    version ?: throw IllegalArgumentException("'version' is missing")
+
+    prefs.edit(commit = true) { putString(version, data[EXPORT_DATA_KEY]) }
+    migrate()
   }
 
   private fun commit(presets: Array<Preset>) {

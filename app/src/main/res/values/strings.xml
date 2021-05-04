@@ -202,4 +202,14 @@
     <string name="ignore_audio_focus_changes_summary_off">Pause when other apps play audio</string>
     <string name="ignore_audio_focus_changes_summary_on">Do not react when other apps play audio</string>
     <string name="share">Share</string>
+    <string name="export_presets">Export to a file</string>
+    <string name="export_presets_summary">Export the current snapshot of the saved presets to an external file</string>
+    <string name="import_presets">Import from a file</string>
+    <string name="import_presets_summary">Importing saved presets from an external file will overwrite existing presets, if any</string>
+    <string name="remove_all_app_shortcuts">Remove all app shortcuts</string>
+    <string name="remove_all_app_shortcuts_confirmation">It will remove all preset shortcuts from the app shortcut menu. Do you want to proceed?</string>
+    <string name="all_app_shortcuts_removed">All app shortcuts have been removed!</string>
+    <string name="failed_to_write_file">Failure on writing to the selected file!</string>
+    <string name="failed_to_read_file">Failure on reading the selected file!</string>
+    <string name="invalid_import_file_format">Import file format is invalid!</string>
 </resources>

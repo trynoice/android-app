@@ -20,6 +20,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.skyscreamer.jsonassert.JSONAssert
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
@@ -231,7 +233,34 @@ class PresetRepositoryTest {
   }
 
   @Test
-  fun testMigrate() {
+  fun testExportTo() {
+    val presetData = "test-data"
+    every { prefs.getString(PresetRepository.PREFERENCE_KEY, any()) } returns presetData
+    val stream = ByteArrayOutputStream()
+    repository.exportTo(stream)
+
+    val expectedOutput = """{
+      "${PresetRepository.EXPORT_VERSION_KEY}": "${PresetRepository.PREFERENCE_KEY}",
+      "${PresetRepository.EXPORT_DATA_KEY}": "$presetData"
+    }""".trimIndent()
+    JSONAssert.assertEquals(expectedOutput, stream.toString(), true)
+  }
+
+  @Test
+  fun importFrom() {
+    val presetData = "test-data"
+    val input = """{
+      "${PresetRepository.EXPORT_VERSION_KEY}": "${PresetRepository.PREFERENCE_KEY}",
+      "${PresetRepository.EXPORT_DATA_KEY}": "$presetData"
+    }"""
+
+    every { prefs.getString(any(), any()) } returns null
+    repository.importFrom(ByteArrayInputStream(input.toByteArray()))
+    verify(exactly = 1) { prefsEditor.putString(PresetRepository.PREFERENCE_KEY, presetData) }
+  }
+
+  @Test
+  fun testMigrateToV1() {
     every { prefsEditor.remove(PresetRepository.PREF_V0) } returns prefsEditor
     every { prefs.getString(PresetRepository.PREF_V0, any()) } returns """
         [{
