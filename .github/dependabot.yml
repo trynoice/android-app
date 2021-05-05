@@ -1,0 +1,21 @@
+version: 2
+updates:
+  - package-ecosystem: gradle
+    directory: "/"
+    schedule:
+      interval: weekly
+      time: "23:30"
+    open-pull-requests-limit: 10
+  - package-ecosystem: bundler
+    directory: "/"
+    schedule:
+      interval: weekly
+      time: "23:30"
+    open-pull-requests-limit: 10
+  - package-ecosystem: npm
+    directory: "/cast-receiver"
+    schedule:
+      interval: weekly
+      time: "23:30"
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
