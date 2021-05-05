@@ -206,4 +206,14 @@
     <string name="unsaved_preset">Kaydedilmemiş Kayıt</string>
     <string name="skip_to_next">Sonraki kayıt</string>
     <string name="skip_to_prev">Önceki kayıt</string>
+    <string name="invalid_import_file_format">İçe aktarma dosya biçimi geçersiz!</string>
+    <string name="failed_to_read_file">Seçili dosyayı okuma başarısız oldu!</string>
+    <string name="failed_to_write_file">Seçili dosyaya yazma başarısız oldu!</string>
+    <string name="all_app_shortcuts_removed">Tüm uygulama kısayolları kaldırıldı!</string>
+    <string name="remove_all_app_shortcuts_confirmation">Tüm kayıt kısayolları uygulama kısayol menüsünden kaldırılacaktır. Devam etmek istiyor musunuz\?</string>
+    <string name="remove_all_app_shortcuts">Tüm uygulama kısayollarını kaldır</string>
+    <string name="import_presets_summary">Kaydedilmiş kayıtları harici bir dosyadan içe aktarmak, varsa mevcut kayıtların üzerine yazacaktır</string>
+    <string name="import_presets">Bir dosyadan içe aktar</string>
+    <string name="export_presets_summary">Kaydedilen kayıtların mevcut anlık görüntüsünü harici bir dosyaya aktarın</string>
+    <string name="export_presets">Bir dosyaya aktar</string>
 </resources>
