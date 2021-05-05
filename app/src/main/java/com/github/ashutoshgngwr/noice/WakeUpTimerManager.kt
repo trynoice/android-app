@@ -104,7 +104,7 @@ object WakeUpTimerManager {
   /**
    * [saveLastUsedPresetID] saves the ID of the preset last used by the user in a Wake-up timer.
    */
-  fun saveLastUsedPresetID(context: Context, selectedPresetID: String) {
+  fun saveLastUsedPresetID(context: Context, selectedPresetID: String?) {
     val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
     with(sharedPrefs.edit()) {
       putString(PREF_LAST_USED_PRESET_ID, selectedPresetID)

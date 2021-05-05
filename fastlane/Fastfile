@@ -44,9 +44,6 @@ default_platform(:android)
   lane :generate_screenshots do
     locales = sh("LOCALES=$(find metadata/android -mindepth 1 -maxdepth 1 -type d -exec basename {}  \\; | sort); printf ${LOCALES\/\/$'\\n'\/','}")
     gradle(
-      task: "clean"
-    )
-    gradle(
       task: "assemble",
       flavor: "Playstore",
       build_type: "Debug",

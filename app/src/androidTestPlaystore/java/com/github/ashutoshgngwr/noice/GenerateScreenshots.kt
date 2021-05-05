@@ -181,46 +181,57 @@ class GenerateScreenshots {
     onView(withId(R.id.sound_list)).perform(
       actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.light_rain))),
-        EspressoX.clickInItem(R.id.play_button)
+        click()
       )
     )
 
     onView(withId(R.id.sound_list)).perform(
       actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.light_rain))),
-        EspressoX.slideInItem(
-          R.id.volume_slider,
-          Player.MAX_VOLUME.toFloat() - Player.DEFAULT_VOLUME
-        )
+        EspressoX.clickInItem(R.id.volume_button)
       )
     )
+
+    EspressoX.waitForView(withId(R.id.volume_slider))
+      .perform(EspressoX.slide(Player.MAX_VOLUME.toFloat() - Player.DEFAULT_VOLUME))
+
+    onView(withId(R.id.positive))
+      .perform(click())
 
     onView(withId(R.id.sound_list)).perform(
       actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(
           allOf(withId(R.id.title), withText(R.string.distant_thunder))
         ),
-        EspressoX.clickInItem(R.id.play_button)
+        click()
       )
     )
 
     onView(withId(R.id.sound_list)).perform(
       actionOnItem<RecyclerView.ViewHolder>(
-        ViewMatchers.hasDescendant(
-          allOf(withId(R.id.title), withText(R.string.distant_thunder))
-        ),
-        EspressoX.slideInItem(R.id.volume_slider, Player.MAX_VOLUME.toFloat())
+        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.distant_thunder))),
+        EspressoX.clickInItem(R.id.volume_button)
       )
     )
 
+    EspressoX.waitForView(withId(R.id.volume_slider))
+      .perform(EspressoX.slide(Player.MAX_VOLUME.toFloat()))
+
+    onView(withId(R.id.positive))
+      .perform(click())
+
     onView(withId(R.id.sound_list)).perform(
       actionOnItem<RecyclerView.ViewHolder>(
-        ViewMatchers.hasDescendant(
-          allOf(withId(R.id.title), withText(R.string.distant_thunder))
-        ),
-        EspressoX.slideInItem(R.id.time_period_slider, Player.MAX_TIME_PERIOD.toFloat() - 300)
+        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.distant_thunder))),
+        EspressoX.clickInItem(R.id.time_period_button)
       )
     )
+
+    EspressoX.waitForView(withId(R.id.time_period_slider))
+      .perform(EspressoX.slide(Player.MAX_TIME_PERIOD.toFloat() - 300))
+
+    onView(withId(R.id.positive))
+      .perform(click())
 
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("1")
@@ -252,7 +263,7 @@ class GenerateScreenshots {
     onView(withId(R.id.sound_list)).perform(
       actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        EspressoX.clickInItem(R.id.play_button)
+        click()
       )
     )
 

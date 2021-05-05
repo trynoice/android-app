@@ -4,8 +4,8 @@
   <string name="app_copyright">2019–21 the Noice Authors</string>
   <string name="app_license_url">https://github.com/ashutoshgngwr/noice/blob/master/LICENSE</string>
   <string name="app_authors_url">https://ashutoshgngwr.github.io/noice/contributors</string>
+  <string name="app_changelog">https://ashutoshgngwr.github.io/noice/CHANGELOG</string>
   <string name="app_website">https://ashutoshgngwr.github.io/noice</string>
-  <string name="app_github">ashutoshgngwr/noice</string>
   <string name="app_github_url">https://github.com/ashutoshgngwr/noice</string>
   <string name="app_issues_github_url">https://github.com/ashutoshgngwr/noice/issues</string>
   <string name="app_issues_form_url">

@@ -88,7 +88,7 @@ class WakeUpTimerFragment : Fragment() {
           selectedPresetID = presetIDs[choice]
           changedPreset = true
           notifyUpdate()
-          WakeUpTimerManager.saveLastUsedPresetID(requireContext(), selectedPresetID!!)
+          WakeUpTimerManager.saveLastUsedPresetID(requireContext(), selectedPresetID)
         }
         negativeButton(R.string.cancel)
       } else {

@@ -1,0 +1,9 @@
+- Added app settings
+- Added player style notifications and media button support
+- Added option to share presets
+- Added app shortcuts for saved presets
+- Updated app appearance
+- Fixed inability to pin home screen shortcuts below Android 8
+
+We're continuously working to make Noice better. Please turn on updates to never miss a thing!
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG.

@@ -81,22 +81,6 @@ object EspressoX {
   }
 
   /**
-   * [slideInItem] emulates a slide action on a [Slider] with given [sliderID] that is a descendant
-   * of the provided view.
-   */
-  fun slideInItem(@IdRes sliderID: Int, value: Float): ViewAction {
-    return object : ViewAction {
-      override fun getDescription() = "Emulate user input on a descendant slider"
-      override fun getConstraints() =
-        hasDescendant(allOf(withId(sliderID), instanceOf(Slider::class.java)))
-
-      override fun perform(uiController: UiController, view: View) {
-        slide(value).perform(uiController, view.findViewById<Slider>(sliderID))
-      }
-    }
-  }
-
-  /**
    * [withSliderValue] matches a [Slider] with the provided [expectedValue].
    */
   fun withSliderValue(expectedValue: Float): Matcher<View> {
