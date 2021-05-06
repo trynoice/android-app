@@ -23,7 +23,6 @@ exclude:
 # Markdown rendering
 markdown: kramdown
 
-baseurl: /noice
 permalink: /:path
 
 # configure community pages explicitly so that front-matter need not be added to
