@@ -70,7 +70,7 @@
     <string name="wind_in_palm_trees">Brisa palmeras</string>
     <string name="delete">Borrar</string>
     <string name="open_context_menu">Abrir menú contextual</string>
-    <string name="preset_delete_confirmation">¿Estás seguro de borrar \"%s\"?</string>
+    <string name="preset_delete_confirmation">¿Confirma que quiere eliminar «%s»\?</string>
     <string name="preset_deleted">¡Preajuste borrado!</string>
     <string name="preset_info__description">No ha creado ningún preajuste. Para crearlo, vaya a la biblioteca y reproduce los sonidos que quiera. Luego haga clic en el botón Guardar que aparece en la esquina inferior de la pantalla.</string>
     <string name="rename">Renombrar</string>

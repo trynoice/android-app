@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="about">Про додаток</string>
+    <string name="about">Про застосунок</string>
     <string name="app_theme">Тема</string>
     <string name="close_drawer">Закрити меню</string>
     <string name="help">Допомога</string>
     <string name="library">Бібліотека</string>
     <string name="open_drawer">Відкрити меню</string>
-    <string name="report_issue">Повідомити про проблему</string>
-    <string name="saved_presets">Збережені пресети</string>
+    <string name="report_issue">Повідомити про ваду</string>
+    <string name="saved_presets">Збережені поєднання</string>
     <string name="sleep_timer">Таймер сну</string>
     <string name="support_development">Підтримати розробку</string>
     <string name="wake_up_timer">Таймер пробудження</string>
-    <string name="okay">Добре</string>
+    <string name="okay">Гаразд</string>
     <string name="cancel">Скасувати</string>
-    <string name="dismiss">Прибрати</string>
+    <string name="dismiss">Відхилити</string>
     <string name="name">Назва</string>
     <string name="pause">Пауза</string>
-    <string name="preset_already_exists">Пресет з такою назвою вже існує!</string>
-    <string name="preset_name_cannot_be_empty">Назва пресету не може бути порожньою!</string>
-    <string name="preset_saved">Пресет збережено!</string>
+    <string name="preset_already_exists">Поєднання з такою назвою вже існує!</string>
+    <string name="preset_name_cannot_be_empty">Назва поєднання не може бути порожньою!</string>
+    <string name="preset_saved">Поєднання збережено!</string>
     <string name="save">Зберегти</string>
-    <string name="save_preset">Зберегти пресет</string>
+    <string name="save_preset">Зберегти поєднання</string>
     <string name="play">Відтворити</string>
-    <string name="play_pause">Програти або зупинити</string>
+    <string name="play_pause">відтворити або зупинити</string>
     <string name="repeat_time_period">Період повтору</string>
     <string name="stop">Стоп</string>
     <string name="volume">Гучність</string>
     <string name="sound_group__life">Життя</string>
     <string name="sound_group__monsoon">Мусон</string>
-    <string name="sound_group__public_gatherings">Громадські збори</string>
-    <string name="sound_group__raw_noise">Чистий шум</string>
+    <string name="sound_group__public_gatherings">Громадські місця</string>
+    <string name="sound_group__raw_noise">Необроблений шум</string>
     <string name="sound_group__times_of_day">Часи доби</string>
     <string name="sound_group__vehicles">Транспортні засоби</string>
     <string name="sound_group__water">Вода</string>
@@ -40,21 +40,21 @@
     <string name="bonfire">Багаття</string>
     <string name="brownian_noise">Броунівський шум</string>
     <string name="coffee_shop">Кав\'ярня</string>
-    <string name="creaking_ship">Скриплячий корабель</string>
+    <string name="creaking_ship">Скрипучий корабель</string>
     <string name="crickets">Цвіркуни</string>
     <string name="distant_thunder">Далекий грім</string>
-    <string name="electric_car">Електричний автомобіль</string>
+    <string name="electric_car">Електромобіль</string>
     <string name="heavy_rain">Злива</string>
     <string name="howling_wolf">Виття вовка</string>
     <string name="human_heartbeat">Серцебиття людини</string>
     <string name="light_rain">Невеликий дощ</string>
     <string name="moderate_rain">Помірний дощ</string>
-    <string name="morning_in_a_village">Ранок в селі</string>
+    <string name="morning_in_a_village">Ранок у селі</string>
     <string name="moving_train">Поїзд у русі</string>
     <string name="night">Ніч</string>
     <string name="office">Офіс</string>
     <string name="pink_noise">Рожевий шум</string>
-    <string name="public_library">Публічна бібліотека</string>
+    <string name="public_library">Громадська бібліотека</string>
     <string name="purring_cat">Муркотіння кота</string>
     <string name="quiet_conversation">Тиха розмова</string>
     <string name="rolling_thunder">Гуркіт грому</string>
@@ -62,7 +62,7 @@
     <string name="seaside">Морський берег</string>
     <string name="soft_wind">Легкий вітер</string>
     <string name="thunder_crack">Тріск грому</string>
-    <string name="train_horn">Гудок поїзду</string>
+    <string name="train_horn">Гудок потяга</string>
     <string name="walking_through_the_snow">Прогулянка по снігу</string>
     <string name="water_hose">Водяний шланг</string>
     <string name="water_stream">Потік води</string>
@@ -72,78 +72,47 @@
     <string name="delete">Видалити</string>
     <string name="open_context_menu">Відкрити контекстне меню</string>
     <string name="preset_delete_confirmation">Підтвердити видалення %s?</string>
-    <string name="preset_deleted">Пресет видалено!</string>
-    <string name="preset_info__description">Ви ще не створили пресети. Щоб створити пресети перейдіть до Бібліотеки та програйте звуки. Після цього натисніть на кнопку Зберегти яка з\'явиться у нижньому кутку екрану.</string>
+    <string name="preset_deleted">Поєднання видалено!</string>
+    <string name="preset_info__description">Ви ще не створили поєднання. Щоб створити його перейдіть до Бібліотеки та відтворіть звуки. Після цього натисніть на кнопку Зберегти яка з\'явиться у нижньому кутку екрана.</string>
     <string name="rename">Перейменувати</string>
     <string name="auto_sleep_schedule_cancelled">Автоматичний таймер сну скасовано!</string>
     <string name="reset">Скинути</string>
-    <string name="sleep_timer_description">
-    Noice вимкне себе коли закінчиться таймер. Використовуйте кнопки нижче для того, щоб додати час
-    та запустити таймер.
-  </string>
+    <string name="sleep_timer_description">Noice вимкне себе коли закінчиться таймер. Використовуйте кнопки знизу щоб додати час та запустити таймер.</string>
     <string name="schedule">Розклад</string>
-    <string name="select_preset">Обрати пресет</string>
-    <string name="wake_up_timer_description">
-    Noice увімкне обрані пресети коли таймер закінчиться. Використовуйте кнопки нижче для того, щоб
-    обрати пресет та встановити обраний час щоб запустити таймер пробудження.
-  </string>
-    <string name="app_theme_light">Світло</string>
-    <string name="app_theme_dark">Темний</string>
-    <string name="app_theme_system_default">Система за замовчуванням</string>
-    <string name="app_description">Розслабтесь та покращить продуктивність з мінімальним фоновим шумом.</string>
-    <string name="appintro__chromecast_desc">
-    Використовуйте Noice для того, щоб передати його атмосферу до інших Chromecast сумісних
-    пристроїв, таких як гучномовці, ТВ та інші.
-  </string>
+    <string name="select_preset">Вибрати поєднання</string>
+    <string name="wake_up_timer_description">Noice увімкне обрані поєднання коли таймер закінчиться. Використовуйте кнопки знизу щоб вибрати поєднання та встановити обраний час для запуску таймера пробудження.</string>
+    <string name="app_theme_light">Світла</string>
+    <string name="app_theme_dark">Темна</string>
+    <string name="app_theme_system_default">За системними налаштуваннями</string>
+    <string name="app_description">Розслабить та поліпшить продуктивність з найменшим фоновим шумом.</string>
+    <string name="appintro__chromecast_desc">Користуйтеся Noice щоб передати його атмосферу до інших Chromecast сумісних пристроїв, таких як гучномовці, ТВ тощо.</string>
     <string name="appintro__chromecast_title">Chromecast увімкнено</string>
     <string name="appintro__getting_started_desc_0">
     Проведіть пальцем ліворуч щоб дізнатись всі функції!
   </string>
     <string name="appintro__getting_started_desc_1">Почнімо!</string>
     <string name="appintro__getting_started_title">Вітаємо</string>
-    <string name="appintro__preset_desc">
-    Після відтворення декількох звуків Ви можете використовувати кнопку у нижньому кутку щоб
-    зберегти свої мікси. Щоб використати збережені мікси Ви можете відвідати список пресетів через
-    меню додатку.
-  </string>
+    <string name="appintro__preset_desc">Після відтворення кількох звуків ви можете користуватися кнопкою у нижньому куті, щоб зберегти свої мікси. Щоб застосувати збережені мікси ви можете відвідати список поєднань через меню застосунку.</string>
     <string name="appintro__preset_title">Збережіть свої улюблені мікси</string>
-    <string name="appintro__sound_library_desc">
-    Використовуйте повзунок гучності, щоб відрегулювати гучність звуків. При кожному програванні
-    нециклічних звуків період затримки обирається випадково з діапазону за допомогою повзунка часу.
-  </string>
+    <string name="appintro__sound_library_desc">Використовуйте повзунок гучності, щоб відрегулювати гучність звуків. За кожного програвання нециклічних звуків період затримки обирається випадково з діапазону за допомогою повзунка часу.</string>
     <string name="appintro__sound_library_title">Створіть своє ідеальне оточення</string>
-    <string name="appintro__timer_desc">
-    Маленька атмосфера може допомогти Вам заснути не докладаючи зусиль. Використовуйте таймер сну,
-    щоб дозволити Noice вимкнутися, та таймер пробудження, щоб поставити будильник і прокинутись у
-    спокійному оточенні.
-  </string>
+    <string name="appintro__timer_desc">Маленька атмосфера може допомогти вам заснути без зусиль. Скористайтеся таймером сну, щоб дозволити Noice вимкнутися та таймер пробудження, щоб встановити будильник і прокинутись у спокійному оточенні.</string>
     <string name="appintro__timer_title">Важко заснути або прокинутись?</string>
-    <string name="support_development__donate">Пожертвувати</string>
-    <string name="support_development__donate_description">
-    Пожертви допоможуть нам у\n
-    - інвестиціях у нові функції\n
-    - додавати кращі звукові зразки\n
-    - купувати каву\n
-  </string>
-    <string name="support_development__donate_google_play_description">
-    Ваш платіж буде безпечно проведений через Google Play. Суму буде конвертовано у вашу місцеву
-    валюту. Додаткові податки _можуть_ бути додані до кінцевої суми в залежності від вашого місця
-    знаходження.
-  </string>
+    <string name="support_development__donate">Допомогти</string>
+    <string name="support_development__donate_description">Внески допоможуть нам
+\n - інвестувати у нові функції
+\n - додавати кращі звукові зразки
+\n - купувати каву
+\n</string>
+    <string name="support_development__donate_google_play_description">Ваш платіж буде безпечно оброблено через Google Play. Суму буде конвертовано у вашу місцеву валюту. Додаткові податки _можуть_ бути додані до кінцевої суми в залежності від вашого місця перебування.</string>
     <string name="support_development__donate_thank_you">Дякуємо!</string>
-    <string name="support_development__donate_thank_you_description">
-    Ми з щирого серця дякуємо за вашу щедру пожертву до проєкту Noice.
-  </string>
+    <string name="support_development__donate_thank_you_description">Ми сердешно вдячні за ваш щедрий внесок до проєкту Noice.</string>
     <string name="support_development__share">Поділитися з друзями</string>
-    <string name="support_development__share_description">
-    Поділитися Noice з друзями схоже з грошовими пожертвами. З більшою кількістю завантажень ми
-    зможемо отримувати зворотний зв\'язок з різними точками зору що допоможе нам робити Noice краще.
-  </string>
-    <string name="support_development__why">Чому Вам потрібно підтримати?</string>
-    <string name="support_development__why_description">
-    - Щоб зробити можливими майбутні оновлення\n
-    - Щоб залишити Noice вільним від реклами назавжди\n
-  </string>
+    <string name="support_development__share_description">Поділитися Noice з друзями схоже з грошовими внесками. З більшою кількістю завантажень ми зможемо отримувати зворотний зв\'язок з різними точками зору що допоможе нам вдосконалити Noice.</string>
+    <string name="support_development__why">Чому вам варто підтримати\?</string>
+    <string name="support_development__why_description">- Щоб зробити можливими майбутні оновлення
+\n- Щоб залишити Noice вільним від реклами назавжди
+\n</string>
     <string name="cast_media">Транслювати медіа на інший пристрій</string>
     <string name="in_app_feedback__description">
     Ми хотіли б почути що Ви думаєте про додаток. Відвідайте, будь ласка, наш GitHub репозиторій.
@@ -155,31 +124,67 @@
     <string name="never">Ніколи</string>
     <string name="notification_channel_default__description">Регулювання відтворення звуків</string>
     <string name="notification_channel_default__name">Відтворення звуків</string>
-    <string name="light">Світла</string>
+    <string name="light">Легка</string>
     <string name="any">Будь-який</string>
-    <string name="use_24h_format">Використовувати 24-годинний формат</string>
+    <string name="use_24h_format">Застосувати 24-годинний формат</string>
     <plurals name="time_minutes">
-        <item quantity="one">%1$d хвилина</item>
-        <item quantity="few">%1$d хвилин</item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="one">%1$d хвилину</item>
+        <item quantity="few">%1$d хвилини</item>
+        <item quantity="many">%1$d хвилин</item>
+        <item quantity="other">%1$d хвилин</item>
     </plurals>
     <plurals name="time_hours">
-        <item quantity="one">%1$d година</item>
-        <item quantity="few">%1$d годин</item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="one">%1$d годину</item>
+        <item quantity="few">%1$d години</item>
+        <item quantity="many">%1$d годин</item>
+        <item quantity="other">%1$d годин</item>
     </plurals>
     <string name="time_bridge">та</string>
     <string name="wake_up_timer_schedule_set">Будильник спрацює через %1$s %2$s %3$s</string>
     <string name="wake_up_timer_cancelled">Таймер пробудження скасовано!</string>
     <string name="pinned_shortcuts_not_supported">Ваш лаунчер не підтримує додавання ярликів.</string>
     <string name="add_to_home_screen">Додати на головний екран</string>
-    <string name="relax">Розслабитися</string>
+    <string name="relax">Розслаблений</string>
     <string name="mood">Настрій</string>
-    <string name="random_preset_description">Згенеровані випадкові пресети міститимуть звуки, що відповідають вибраному настрою. Крім того, щільні пресети будуть намагатися відтворювати більше звуків одночасно.</string>
-    <string name="intensity">Інтенсивність</string>
-    <string name="focus">Фокус</string>
-    <string name="dense">Щільна</string>
+    <string name="random_preset_description">Згенеровані випадкові поєднання міститимуть звуки, що відповідають вибраному настрою. Крім того, насичені поєднання намагатимуться відтворювати більше звуків одночасно.</string>
+    <string name="intensity">Насиченість</string>
+    <string name="focus">Зосереджений</string>
+    <string name="dense">Насичена</string>
     <string name="submit_feedback">Надіслати відгук</string>
+    <string name="invalid_import_file_format">Неприпустимий формат файлу імпорту!</string>
+    <string name="failed_to_read_file">Помилка під час читання вибраного файлу!</string>
+    <string name="failed_to_write_file">Помилка під час запису до вибраного файлу!</string>
+    <string name="all_app_shortcuts_removed">Усі ярлики застосунку вилучено!</string>
+    <string name="remove_all_app_shortcuts_confirmation">Це вилучить всі ярлики поєднань з контекстного меню застосунку. Продовжити\?</string>
+    <string name="remove_all_app_shortcuts">Вилучити всі ярлики застосунків</string>
+    <string name="import_presets_summary">Імпорт збережених поєднань із зовнішнього файлу призведе до перезаписування наявних поєднань, якщо вони є</string>
+    <string name="import_presets">Імпорт із файлу</string>
+    <string name="export_presets_summary">Експорт поточного набору збережених поєднань до зовнішнього файлу</string>
+    <string name="export_presets">Експорт до файлу</string>
+    <string name="share">Поділитись</string>
+    <string name="ignore_audio_focus_changes_summary_on">Не реагувати, коли інші застосунки відтворюють звук</string>
+    <string name="ignore_audio_focus_changes_summary_off">Призупинення відтворення звуку іншими застосунками</string>
+    <string name="ignore_audio_focus_changes">Нехтувати змінами фокусування звуку</string>
+    <string name="unsaved_preset">Незбережене поєднання</string>
+    <string name="skip_to_next">Наступне поєднання</string>
+    <string name="skip_to_prev">Попереднє поєднання</string>
+    <string name="pinned_shortcut_created">Ярлик додано на головний екран!</string>
+    <string name="pinned_shortcut_creation_failed">Не вдалося додати ярлик на головний екран!</string>
+    <string name="sound_fade_duration_summary">Тривалість появи/стишення для відтворення/зупинки звуків (у секундах)</string>
+    <string name="sound_fade_duration">Тривалість стишення звуку</string>
+    <string name="appearance">Зовнішній вигляд</string>
+    <string name="behavior">Поведінка</string>
+    <string name="saved_presets_as_home_screen">Збережені поєднання як головний екран</string>
+    <string name="settings">Налаштування</string>
+    <string name="app_shortcut_creation_failed">Не вдалося додати поєднання до ярликів застосунку!</string>
+    <string name="app_shortcut_created">Поєднання додано до ярликів застосунку!</string>
+    <string name="app_shortcut_removed">Поєднання вилучено з ярликів застосунку!</string>
+    <string name="remove_from_app_shortcuts">Вилучити з ярликів застосунку</string>
+    <string name="add_to_app_shortcuts">Додати до ярликів застосунку</string>
+    <string name="app_authors">Переглянути список авторів Noice</string>
+    <string name="should_update_media_volume">Оновити гучність медіа пристрою перед запуском поєднання</string>
+    <string name="device_media_volume">Гучність медіа пристрою</string>
+    <string name="saved_presets_as_home_screen_summary">Показувати збережені поєднання під час запуску застосунку</string>
+    <string name="preset_does_not_exist">Поєднання не існує. Можливо, його було видалено!</string>
+    <string name="random_preset">Випадкове поєднання</string>
 </resources>
