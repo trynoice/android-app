@@ -12,7 +12,8 @@
     <string name="support_development">Unterstütze die Entwicklung</string>
     <string name="wake_up_timer">Aufwach-Timer</string>
     <string name="submit_feedback">Feedback abgeben</string>
-    <string name="any">Zufall</string>
+    <string name="mood_any">Zufall</string>
+    <string name="intensity_any">Zufall</string>
     <string name="dense">Dicht</string>
     <string name="focus">Fokus</string>
     <string name="intensity">Intensität</string>

@@ -53,7 +53,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:minWidth="90dp"
-          android:text="@string/any" />
+          android:text="@string/mood_any" />
 
         <RadioButton
           android:id="@+id/preset_type__focus"
@@ -68,6 +68,7 @@
           android:layout_height="wrap_content"
           android:minWidth="90dp"
           android:text="@string/relax" />
+
       </com.hopenlib.flextools.FlexRadioGroup>
 
       <TextView
@@ -95,7 +96,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:minWidth="90dp"
-          android:text="@string/any" />
+          android:text="@string/intensity_any" />
 
         <RadioButton
           android:id="@+id/preset_intensity__light"
@@ -110,8 +111,11 @@
           android:layout_height="wrap_content"
           android:minWidth="90dp"
           android:text="@string/dense" />
+
       </com.hopenlib.flextools.FlexRadioGroup>
+
     </LinearLayout>
+
   </ScrollView>
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -127,6 +131,7 @@
     app:fabSize="normal"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

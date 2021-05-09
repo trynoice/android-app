@@ -61,7 +61,8 @@
     <string name="light">Chiaro</string>
     <string name="intensity">Intensità</string>
     <string name="dense">Denso</string>
-    <string name="any">Qualsiasi</string>
+    <string name="mood_any">Qualsiasi</string>
+    <string name="intensity_any">Qualsiasi</string>
     <string name="submit_feedback">Invia feedback</string>
     <string name="support_development">Supporta lo sviluppo</string>
     <string name="help">Aiuto</string>

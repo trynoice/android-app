@@ -162,7 +162,8 @@
     <string name="intensity">सघनता</string>
     <string name="focus">फोकस</string>
     <string name="dense">सघन</string>
-    <string name="any">कोई भी</string>
+    <string name="mood_any">कोई भी</string>
+    <string name="intensity_any">कोई भी</string>
     <string name="submit_feedback">प्रतिपुष्टि दें</string>
     <string name="wake_up_timer_schedule_set" tools:ignore="StringFormatCount">अलार्म %1$s %3$s में बजेगा</string>
     <plurals name="time_minutes">

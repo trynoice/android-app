@@ -61,7 +61,8 @@
     <string name="notification_channel_default__name">Mediauppspelning</string>
     <string name="okay">Okej</string>
     <string name="light">Ljust</string>
-    <string name="any">Vilken som helst</string>
+    <string name="mood_any">Vilken som helst</string>
+    <string name="intensity_any">Vilken som helst</string>
     <string name="submit_feedback">Skicka feedback</string>
     <string name="help">Hjälp</string>
 </resources>

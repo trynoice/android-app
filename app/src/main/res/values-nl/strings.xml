@@ -76,7 +76,8 @@
     <string name="relax">Ontspan</string>
     <string name="okay">Oké</string>
     <string name="light">Licht</string>
-    <string name="any">Elk</string>
+    <string name="mood_any">Elk</string>
+    <string name="intensity_any">Elk</string>
     <string name="submit_feedback">Feedback indienen</string>
     <string name="support_development">Ondersteun de ontwikkeling</string>
     <string name="help">Hulp</string>

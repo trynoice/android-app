@@ -105,7 +105,8 @@
     <string name="intensity">Ένταση</string>
     <string name="focus">Συγκέντρωση</string>
     <string name="dense">Ισχυρή</string>
-    <string name="any">Οποιαδήποτε</string>
+    <string name="mood_any">Οποιαδήποτε</string>
+    <string name="intensity_any">Οποιαδήποτε</string>
     <string name="submit_feedback">Υποβολή σχολίων</string>
     <string name="wake_up_timer">Χρονοδιακόπτης έγερσης</string>
     <string name="support_development">Υποστήριξη προγραμματιστή</string>

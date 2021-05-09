@@ -125,7 +125,8 @@
     <string name="notification_channel_default__description">Регулювання відтворення звуків</string>
     <string name="notification_channel_default__name">Відтворення звуків</string>
     <string name="light">Легка</string>
-    <string name="any">Будь-який</string>
+    <string name="mood_any">Будь-який</string>
+    <string name="intensity_any">Будь-який</string>
     <string name="use_24h_format">Застосувати 24-годинний формат</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d хвилину</item>

@@ -127,7 +127,8 @@
     <string name="light">Jasny</string>
     <string name="intensity">Intensywność</string>
     <string name="focus">Skupienie</string>
-    <string name="any">Jakikolwiek</string>
+    <string name="mood_any">Jakikolwiek</string>
+    <string name="intensity_any">Jakikolwiek</string>
     <string name="submit_feedback">Wyślij Opinie</string>
     <string name="help">Pomoc</string>
     <string name="sound_group__raw_noise">Czysty szum</string>

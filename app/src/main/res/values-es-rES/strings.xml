@@ -131,7 +131,8 @@
     <string name="notification_channel_default__description">Controles de reproducción de medios</string>
     <string name="notification_channel_default__name">Reproducción de medios</string>
     <string name="dense">Densa</string>
-    <string name="any">Cualquiera</string>
+    <string name="mood_any">Cualquiera</string>
+    <string name="intensity_any">Cualquiera</string>
     <string name="submit_feedback">Enviar Comentarios</string>
     <string name="intensity">Intensidad</string>
     <string name="relax">Relajado</string>

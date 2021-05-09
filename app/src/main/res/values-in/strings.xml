@@ -161,7 +161,8 @@
     <string name="mood">Suasana</string>
     <string name="light">Cahaya</string>
     <string name="focus">Fokus</string>
-    <string name="any">Apapun</string>
+    <string name="mood_any">Apapun</string>
+    <string name="intensity_any">Apapun</string>
     <string name="submit_feedback">Masukan Feedback</string>
     <string name="should_update_media_volume">Update volume media perangkat sebelum memulai preset</string>
     <string name="device_media_volume">Volume media perangkat</string>

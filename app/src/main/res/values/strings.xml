@@ -12,7 +12,8 @@
     <string name="support_development">Support Development</string>
     <string name="wake_up_timer">Wake-up Timer</string>
     <string name="submit_feedback">Submit Feedback</string>
-    <string name="any">Any</string>
+    <string name="mood_any">Any</string>
+    <string name="intensity_any">Any</string>
     <string name="dense">Dense</string>
     <string name="focus">Focus</string>
     <string name="intensity">Intensity</string>

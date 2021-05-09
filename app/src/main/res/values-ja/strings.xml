@@ -121,7 +121,8 @@
     <string name="intensity">音の多さ</string>
     <string name="focus">集中</string>
     <string name="dense">重なりの多い音</string>
-    <string name="any">指定しない</string>
+    <string name="mood_any">指定しない</string>
+    <string name="intensity_any">指定しない</string>
     <string name="submit_feedback">意見を送信する</string>
     <string name="wake_up_timer">起床タイマー</string>
     <string name="support_development">開発を支援する</string>

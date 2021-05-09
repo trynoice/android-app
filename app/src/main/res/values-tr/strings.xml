@@ -11,7 +11,8 @@
     <string name="sleep_timer">Uyku Zamanlayıcı</string>
     <string name="support_development">Geliştiriciyi Destekle</string>
     <string name="wake_up_timer">Uyandırma Zamanlayıcı</string>
-    <string name="any">Herhangi</string>
+    <string name="mood_any">Herhangi</string>
+    <string name="intensity_any">Herhangi</string>
     <string name="dense">Çeşitli</string>
     <string name="focus">Odaklanmak</string>
     <string name="intensity">Çeşitlilik</string>

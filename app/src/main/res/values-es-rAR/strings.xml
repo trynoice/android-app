@@ -56,7 +56,8 @@
     <string name="sound_group__water">Agua</string>
     <string name="sound_group__wind">Viento</string>
     <string name="dense">Denso</string>
-    <string name="any">Cualquier</string>
+    <string name="mood_any">Cualquier</string>
+    <string name="intensity_any">Cualquier</string>
     <string name="submit_feedback">Enviar comentarios</string>
     <string name="wake_up_timer">Temporizador de despertador</string>
     <string name="help">Ayuda</string>

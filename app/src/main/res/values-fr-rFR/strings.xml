@@ -158,7 +158,8 @@
     <string name="never">Jamais</string>
     <string name="later">Plus tard</string>
     <string name="in_app_feedback__title">Soumettre une évaluation</string>
-    <string name="any">N\'importe</string>
+    <string name="mood_any">N\'importe</string>
+    <string name="intensity_any">N\'importe</string>
     <string name="focus">Concentré</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minute</item>
