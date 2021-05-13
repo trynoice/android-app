@@ -75,6 +75,7 @@
 
     <activity
       android:name=".activity.ShortcutHandlerActivity"
+      android:exported="true"
       android:excludeFromRecents="true" />
 
     <service android:name=".MediaPlayerService" />
