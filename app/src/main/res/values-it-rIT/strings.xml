@@ -163,4 +163,17 @@
     <string name="unsaved_preset">Preimpostazione non salvata</string>
     <string name="skip_to_next">Preimpostazione successiva</string>
     <string name="skip_to_prev">Preimpostazione precedente</string>
+    <string name="invalid_import_file_format">Il formato del file di importazione non è valido!</string>
+    <string name="failed_to_read_file">Errore nella lettura del file selezionato!</string>
+    <string name="failed_to_write_file">Errore nella scrittura del file selezionato!</string>
+    <string name="all_app_shortcuts_removed">Tutte le scorciatoie app sono state rimosse!</string>
+    <string name="remove_all_app_shortcuts_confirmation">Rimuoverà tutte le scorciatoie preimpostate dal menù di scelta rapida dell\'app. Vuoi continuare\?</string>
+    <string name="remove_all_app_shortcuts">Rimuovi tutte le scorciatoie app</string>
+    <string name="import_presets_summary">L\'importazione di preimpostazioni salvate da un file esterno sovrascriverà le preimpostazioni esistenti, se c\'è ne</string>
+    <string name="import_presets">Importa da un file</string>
+    <string name="export_presets_summary">Esporta l\'istantanea attuale delle preimpostazioni salvate in un file esterno</string>
+    <string name="export_presets">Esporta in un file</string>
+    <string name="share">Condividi</string>
+    <string name="ignore_audio_focus_changes_summary_on">Non reagire quando altre app riproducino audio</string>
+    <string name="ignore_audio_focus_changes_summary_off">Metti in pausa quando altre app riproducono l\'audio</string>
 </resources>
