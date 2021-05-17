@@ -192,4 +192,9 @@
     <string name="unsaved_preset">Réglage non-enregistré</string>
     <string name="skip_to_next">Réglage suivant</string>
     <string name="skip_to_prev">Réglage précédent</string>
+    <string name="import_presets_summary">L’importation de préréglages enregistrés depuis un fichier externe écrasera les préréglages existants, le cas échéant.</string>
+    <string name="import_presets">Importer depuis un fichier</string>
+    <string name="export_presets_summary">Exporter l’instantané actuel des préréglages sauvegardés vers un fichier externe</string>
+    <string name="export_presets">Exporter dans un fichier</string>
+    <string name="share">Partager</string>
 </resources>
