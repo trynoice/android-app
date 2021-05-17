@@ -192,4 +192,15 @@
     <string name="unsaved_preset">Réglage non-enregistré</string>
     <string name="skip_to_next">Réglage suivant</string>
     <string name="skip_to_prev">Réglage précédent</string>
+    <string name="import_presets_summary">L’importation de préréglages enregistrés depuis un fichier externe écrasera les préréglages existants, le cas échéant</string>
+    <string name="import_presets">Importer depuis un fichier</string>
+    <string name="export_presets_summary">Exporter l’instantané actuel des préréglages sauvegardés vers un fichier externe</string>
+    <string name="export_presets">Exporter dans un fichier</string>
+    <string name="share">Partager</string>
+    <string name="invalid_import_file_format">Le format du fichier d’importation n’est pas valide !</string>
+    <string name="failed_to_read_file">Échec de la lecture du fichier sélectionné !</string>
+    <string name="failed_to_write_file">Échec de l’écriture dans le fichier sélectionné !</string>
+    <string name="all_app_shortcuts_removed">Tous les raccourcis d’applications ont été supprimés !</string>
+    <string name="remove_all_app_shortcuts_confirmation">Ça supprimera tous les raccourcis prédéfinis du menu des raccourcis de l’application. Voulez-vous continuer \?</string>
+    <string name="remove_all_app_shortcuts">Retirer tous les raccourcis de l’appli</string>
 </resources>

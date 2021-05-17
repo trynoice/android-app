@@ -128,9 +128,7 @@
     mata uang lokal Anda. Bergantung pada lokasi Anda, pajak tambahan mungkin ditambahkan ke jumlah akhir.
  </string>
     <string name="support_development__donate_thank_you">Terima kasih!</string>
-    <string name="support_development__donate_thank_you_description">
-    Kami dengan sepenuh hati berterima kasih atas kemurah hatian kontribusi Anda untuk proyek Noice.
- </string>
+    <string name="support_development__donate_thank_you_description">Kami berterima kasih dengan sepenuh hati atas kemurahhatian Anda untuk berkontribusi dalam proyek Noice.</string>
     <string name="support_development__share">Bagikan dengan teman</string>
     <string name="support_development__share_description">
     Berbagi Noice dengan teman sama dengan mendonasikan uang. Dengan unduhan yang lebih tinggi, kami
@@ -191,4 +189,22 @@
     <string name="settings">Pengaturan</string>
     <string name="remove_from_app_shortcuts">Hapus dari pintasan aplikasi</string>
     <string name="add_to_app_shortcuts">Tambah ke pintasan aplikasi</string>
+    <string name="invalid_import_file_format">Format berkas yang diimpor salah!</string>
+    <string name="failed_to_read_file">Gagal membaca berkas yang dipilih!</string>
+    <string name="failed_to_write_file">Gagal menulis di berkas yang telah dipilih!</string>
+    <string name="all_app_shortcuts_removed">Seluruh pintasan aplikasi telah dihapus!</string>
+    <string name="remove_all_app_shortcuts_confirmation">Tindakan ini akan menghapus semua pintasan preset dari daftar pintasan aplikasi. Yakin untuk melanjutkan\?</string>
+    <string name="remove_all_app_shortcuts">Hapus semua pintasan aplikasi</string>
+    <string name="import_presets_summary">Mengimpor preset dari berkas eksternal akan menimpa preset sebelumnya (jika ada)</string>
+    <string name="import_presets">Impor dari berkas</string>
+    <string name="export_presets_summary">Ekspor snapshot dari preset tersimpan saat ini ke berkas eksternal</string>
+    <string name="export_presets">Ekspor sebagai berkas</string>
+    <string name="share">Bagikan</string>
+    <string name="ignore_audio_focus_changes_summary_on">Jangan bereaksi ketika aplikasi lain memutar audio</string>
+    <string name="ignore_audio_focus_changes_summary_off">Jeda ketika aplikasi lain memutar audio</string>
+    <string name="ignore_audio_focus_changes">Abaikan perubahan fokus audio</string>
+    <string name="app_shortcut_creation_failed">Preset gagal ditambahkan ke pintasan aplikasi!</string>
+    <string name="app_shortcut_created">Preset telah ditambahkan ke pintasan aplikasi!</string>
+    <string name="app_shortcut_removed">Preset telah dihapus dari pintasan aplikasi!</string>
+    <string name="dense">Padat</string>
 </resources>
