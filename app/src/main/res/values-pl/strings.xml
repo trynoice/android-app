@@ -202,4 +202,5 @@
     <string name="time_bridge">i</string>
     <string name="wake_up_timer_schedule_set">Alarm włączy się za %1$s %2$s %3$s</string>
     <string name="wake_up_timer_cancelled">Anulowano Wake-up Timer!</string>
+    <string name="sound_group__monsoon">Monsun</string>
 </resources>
