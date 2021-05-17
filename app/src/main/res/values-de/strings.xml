@@ -205,4 +205,5 @@
     <string name="ignore_audio_focus_changes_summary_on">Nicht reagieren, wenn andere Anwendungen Audio abspielen</string>
     <string name="ignore_audio_focus_changes_summary_off">Pausieren, wenn andere Anwendungen Audio abspielen</string>
     <string name="ignore_audio_focus_changes">Änderungen des Audiofokus ignorieren</string>
+    <string name="sound_fade_duration_summary">Einblend-/Ausblenddauer für das Abspielen/Stoppen von Sounds (in Sekunden)</string>
 </resources>
