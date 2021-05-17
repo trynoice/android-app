@@ -175,4 +175,5 @@
     <string name="close_drawer">Đóng ngăn điều hướng</string>
     <string name="app_theme">Chủ đề</string>
     <string name="about">Giới thiệu</string>
+    <string name="notification_channel_default__name">Phát phương tiện</string>
 </resources>
