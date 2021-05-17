@@ -160,4 +160,46 @@
     <string name="mood">Nastrój</string>
     <string name="random_preset_description">Wygenerowane losowe ustawienia wstępne będą zawierały dźwięki odpowiadające wybranemu nastrojowi. Ponadto zwarte ustawienia wstępne spróbują odtwarzać więcej dźwięków jednocześnie.</string>
     <string name="dense">Gęsty</string>
+    <string name="invalid_import_file_format">Format importowanego pliku jest nieprawidłowy!</string>
+    <string name="failed_to_read_file">Błąd odczytu wybranego pliku!</string>
+    <string name="failed_to_write_file">Błąd zapisu do wybranego pliku!</string>
+    <string name="all_app_shortcuts_removed">Wszystkie skróty do aplikacji zostały usunięte!</string>
+    <string name="remove_all_app_shortcuts_confirmation">Spowoduje to usunięcie wszystkich gotowych skrótów z menu skrótów aplikacji. Czy chcesz kontynuować\?</string>
+    <string name="remove_all_app_shortcuts">Usuń wszystkie skróty aplikacji</string>
+    <string name="import_presets_summary">Importowanie zapisanych ustawień wstępnych z pliku zewnętrznego spowoduje nadpisanie istniejących ustawień wstępnych, jeśli takie istnieją</string>
+    <string name="import_presets">Importuj z pliku</string>
+    <string name="export_presets_summary">Wyeksportuj bieżącą migawkę zapisanych ustawień wstępnych do pliku zewnętrznego</string>
+    <string name="export_presets">Eksportuj do pliku</string>
+    <string name="share">Udostępnij</string>
+    <string name="ignore_audio_focus_changes_summary_on">Nie reaguj, gdy inne aplikacje odtwarzają dźwięk</string>
+    <string name="ignore_audio_focus_changes_summary_off">Wstrzymaj, gdy inne aplikacje odtwarzają dźwięk</string>
+    <string name="ignore_audio_focus_changes">Ignoruj zmiany ostrości audio</string>
+    <string name="unsaved_preset">Niezapisane ustawienie wstępne</string>
+    <string name="skip_to_next">Następne ustawienie wstępne</string>
+    <string name="skip_to_prev">Poprzednie ustawienie wstępne</string>
+    <string name="sound_fade_duration_summary">Czas wejścia/wyjścia dla odtwarzania/zatrzymywania dźwięków (w sekundach)</string>
+    <string name="sound_fade_duration">Czas zanikania dźwięku</string>
+    <string name="appearance">Wygląd</string>
+    <string name="saved_presets_as_home_screen">Zapisane ustawienia wstępne jako ekran główny</string>
+    <string name="app_shortcut_creation_failed">Nie udało się dodać ustawienia wstępnego do skrótów aplikacji!</string>
+    <string name="app_shortcut_created">Do skrótów aplikacji dodano ustawienie wstępne!</string>
+    <string name="app_shortcut_removed">Ustawienie wstępne zostało usunięte ze skrótów do aplikacji!</string>
+    <string name="remove_from_app_shortcuts">Usuń ze skrótów aplikacji</string>
+    <string name="app_authors">Zobacz listę autorów Noice</string>
+    <string name="device_media_volume">Głośność multimediów urządzenia</string>
+    <plurals name="time_minutes">
+        <item quantity="one">%1$d minuta</item>
+        <item quantity="few">%1$d minut</item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one">%1$d godzina</item>
+        <item quantity="few">%1$d godzin</item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="time_bridge">i</string>
+    <string name="wake_up_timer_schedule_set">Alarm włączy się za %1$s %2$s %3$s</string>
+    <string name="wake_up_timer_cancelled">Anulowano Wake-up Timer!</string>
 </resources>
