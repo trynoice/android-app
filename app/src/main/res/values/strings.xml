@@ -212,5 +212,5 @@
     <string name="all_app_shortcuts_removed">All app shortcuts have been removed!</string>
     <string name="failed_to_write_file">Failure on writing to the selected file!</string>
     <string name="failed_to_read_file">Failure on reading the selected file!</string>
-    <string name="invalid_import_file_format">Import file format is invalid!</string>
+    <string name="invalid_import_file_format">The import file format is invalid!</string>
 </resources>
