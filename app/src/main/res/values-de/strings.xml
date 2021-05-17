@@ -193,4 +193,16 @@
     <string name="unsaved_preset">Nicht gespeicherte Voreinstellung</string>
     <string name="skip_to_next">Nächste Voreinstellung</string>
     <string name="skip_to_prev">Vorherige Voreinstellung</string>
+    <string name="invalid_import_file_format">Das Format der Importdatei ist ungültig!</string>
+    <string name="failed_to_read_file">Fehler beim Lesen der ausgewählten Datei!</string>
+    <string name="failed_to_write_file">Fehler beim Schreiben in die ausgewählte Datei!</string>
+    <string name="remove_all_app_shortcuts">Alle Anwendungsverknüpfungen entfernen</string>
+    <string name="import_presets_summary">Das Importieren von gespeicherten Voreinstellungen aus einer externen Datei überschreibt vorhandene Voreinstellungen, falls vorhanden</string>
+    <string name="import_presets">Aus einer Datei importieren</string>
+    <string name="export_presets_summary">Aktuelle Schnappschusse der gespeicherten Voreinstellungen in eine externe Datei exportieren</string>
+    <string name="export_presets">In eine Datei exportieren</string>
+    <string name="share">Teilen</string>
+    <string name="ignore_audio_focus_changes_summary_on">Nicht reagieren, wenn andere Anwendungen Audio abspielen</string>
+    <string name="ignore_audio_focus_changes_summary_off">Pausieren, wenn andere Anwendungen Audio abspielen</string>
+    <string name="ignore_audio_focus_changes">Änderungen des Audiofokus ignorieren</string>
 </resources>
