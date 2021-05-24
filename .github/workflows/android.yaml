@@ -59,11 +59,13 @@ jobs:
     strategy:
       matrix:
         include:
-          - android: 28
-            target: default
-            gradleTask: createFdroidDebugCoverageReport
-          - android: 28
+          - android: 30
             target: google_apis
+            arch: x86_64
+            gradleTask: createFdroidDebugCoverageReport
+          - android: 30
+            target: google_apis
+            arch: x86_64
             gradleTask: createPlaystoreDebugCoverageReport
       fail-fast: false
     steps:
@@ -75,7 +77,7 @@ jobs:
         with:
           api-level: ${{ matrix.android }}
           target: ${{ matrix.target }}
-          arch: x86_64
+          arch: ${{ matrix.arch }}
           script: ./gradlew ${{ matrix.gradleTask }} --no-daemon --stacktrace
           emulator-options: >-
             -no-boot-anim -no-audio -no-snapshot -no-window -camera-back none
