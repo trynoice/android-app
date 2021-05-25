@@ -38,8 +38,5 @@
   "dependencies": {
     "howler": "^2.2.1",
     "normalize.css": "^8.0.1"
-  },
-  "resolutions": {
-    "node-forge": "^0.10.0"
   }
 }

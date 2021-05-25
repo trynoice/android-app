@@ -20,7 +20,8 @@ jest.mock("howler", () => {
   };
 });
 
-jest.useFakeTimers();
+// TODO: migrate to 'modern' timers.
+jest.useFakeTimers("legacy");
 
 describe("PlayerManager#handlePlayerEvent", () => {
   const statusCallback = jest.fn();
@@ -172,7 +173,7 @@ describe("PlayerManager#handlePlayerEvent", () => {
       stopTestPlayer();
       expect(mockHowl.fade).toHaveBeenCalledWith(1, 0, expect.anything());
       mockHowl.once.mock.calls[0][1](); // invoke callback
-      expect(mockHowl.stop).toHaveBeenCalled()
+      expect(mockHowl.stop).toHaveBeenCalled();
     });
 
     it("should stop playback on finishing fade-out", () => {
