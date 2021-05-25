@@ -77,11 +77,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // re-resuming the activity. adding this to prevent that.
     // This should implicitly init CastContext.
     castAPIWrapper = CastAPIWrapper.from(this, false)
-    super.onCreate(savedInstanceState)
 
     settingsRepository = SettingsRepository.newInstance(this)
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
 
+    super.onCreate(savedInstanceState)
     binding = MainActivityBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
