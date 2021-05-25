@@ -42,7 +42,7 @@ export default class PlayerManager {
   }
 
   /**
-   * initializes a new Howl instance with the given paramters.
+   * initializes a new Howl instance with the given parameters.
    * @param soundKey soundKey as passed by the sender app
    * @param isLooping whether the sound should loop
    * @param volume initial volume for the sound

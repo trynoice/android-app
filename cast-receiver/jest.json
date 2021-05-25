@@ -1,5 +1,6 @@
 {
   "verbose": true,
+  "testEnvironment": "jsdom",
   "clearMocks": true,
   "collectCoverage": true,
   "coverageDirectory": "coverage",
