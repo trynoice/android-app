@@ -190,7 +190,7 @@
     <string name="app_shortcut_removed">¡Se ha eliminado el preajuste de los accesos directos a aplicaciones!</string>
     <string name="all_app_shortcuts_removed">Se han quitado todos los atajos de la aplicación!</string>
     <string name="remove_all_app_shortcuts_confirmation">Se quitarán todos los atajos a los preajustes del menú de atajos de la aplicación. ¿Quiere continuar\?</string>
-    <string name="ignore_audio_focus_changes">Ignorar cambios de foco de audio</string>
+    <string name="ignore_audio_focus_changes">Ignorar cambios de foco del audio</string>
     <string name="remove_all_app_shortcuts">Eliminar todos los atajos de la aplicación</string>
     <string name="import_presets_summary">Importar preajustes desde un archivo externo sobreescribirá los existentes</string>
     <string name="failed_to_write_file">No se pudo escribir en el archivo seleccionado!</string>
