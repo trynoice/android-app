@@ -194,5 +194,5 @@
     <string name="remove_all_app_shortcuts">Eliminar todos los atajos de la aplicación</string>
     <string name="import_presets_summary">Importar preajustes desde un archivo externo sobreescribirá los existentes</string>
     <string name="failed_to_write_file">No se pudo escribir en el archivo seleccionado!</string>
-    <string name="failed_to_read_file">No se pudo leer el archivo seleccionado.</string>
+    <string name="failed_to_read_file">No se pudo leer el archivo seleccionado!</string>
 </resources>
