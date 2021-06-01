@@ -145,4 +145,9 @@
     <string name="app_theme_dark">深色</string>
     <string name="app_theme_light">浅色</string>
     <string name="random_preset_description">生成的随机预设将包含与所选情绪相对应的声音。此外，密集的预设将尝试同时播放更多的声音。</string>
+    <string name="app_shortcut_created">预设已被添加到应用快捷方式中!</string>
+    <string name="app_shortcut_removed">预设已从应用快捷方式中删除！</string>
+    <string name="remove_from_app_shortcuts">从应用快捷方式中删除</string>
+    <string name="add_to_app_shortcuts">添加到应用快捷方式</string>
+    <string name="app_authors">查看 Noice 作者名单</string>
 </resources>
