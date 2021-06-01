@@ -145,4 +145,5 @@
     <string name="cast_media">Přehrát na jiném zařízení</string>
     <string name="notification_channel_default__description">Ovladání přehrávače</string>
     <string name="notification_channel_default__name">Právě hraje</string>
+    <string name="submit_feedback">Odeslat zpětnou vazbu</string>
 </resources>
