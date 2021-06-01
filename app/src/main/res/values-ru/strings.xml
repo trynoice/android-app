@@ -181,4 +181,34 @@
     <string name="wake_up_timer_schedule_set" tools:ignore="StringFormatCount">Будильник выключится через %1$s %3$s</string>
     <string name="random_preset_description">Сгенерированные случайные пресеты будут содержать звуки, соответствующие выбранному настроению. Более того, плотные пресеты будут пытаться проигрывать больше звуков одновременно.</string>
     <string name="app_authors">Посмотреть список авторов Noice</string>
+    <string name="invalid_import_file_format">Неверный формат импортируемого файла!</string>
+    <string name="failed_to_read_file">Ошибка чтения выбранного файла!</string>
+    <string name="failed_to_write_file">Ошибка при записи в выбранный файл!</string>
+    <string name="all_app_shortcuts_removed">Все ярлыки приложения были удалены!</string>
+    <string name="remove_all_app_shortcuts_confirmation">Это удалит все ярлыки предустановок из контекстного меню приложения. Вы хотите продолжить\?</string>
+    <string name="remove_all_app_shortcuts">Удалить все ярлыки приложения</string>
+    <string name="import_presets_summary">Импорт сохраненных предустановок из внешнего файла приведет к перезаписи существующих предустановок, если таковые имеются</string>
+    <string name="import_presets">Импортировать из файла</string>
+    <string name="export_presets_summary">Экспорт текущего снимка сохраненных предустановок во внешний файл</string>
+    <string name="export_presets">Экспортировать в файл</string>
+    <string name="share">Поделиться</string>
+    <string name="ignore_audio_focus_changes_summary_on">Не реагировать, когда другие приложения воспроизводят звук</string>
+    <string name="ignore_audio_focus_changes_summary_off">Приостановить проигрывание, когда другие приложения воспроизводят звук</string>
+    <string name="ignore_audio_focus_changes">Игнорировать системные звуки</string>
+    <string name="unsaved_preset">Несохраненная предустановка</string>
+    <string name="skip_to_next">Следующая предустановка</string>
+    <string name="skip_to_prev">Предыдущая предустановка</string>
+    <string name="pinned_shortcut_created">Ярлык был добавлен на главный экран!</string>
+    <string name="pinned_shortcut_creation_failed">Не удалось добавить ярлык на главный экран!</string>
+    <string name="sound_fade_duration_summary">Продолжительность нарастания/затухания для проигрываемых/останавливаемых звуков (в секундах)</string>
+    <string name="sound_fade_duration">Продолжительность затухания звука</string>
+    <string name="appearance">Внешний вид</string>
+    <string name="behavior">Поведение</string>
+    <string name="saved_presets_as_home_screen">Сохраненные предустановки на главном экране</string>
+    <string name="settings">Настройки</string>
+    <string name="app_shortcut_creation_failed">Не удалось добавить предустановку в ярлыки приложений!</string>
+    <string name="app_shortcut_created">Предустановка была добавлена в ярлыки приложений!</string>
+    <string name="app_shortcut_removed">Предустановка была удалена из ярлыков приложений!</string>
+    <string name="remove_from_app_shortcuts">Удалить из ярлыков приложений</string>
+    <string name="add_to_app_shortcuts">Добавить в ярлыки приложений</string>
 </resources>

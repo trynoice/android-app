@@ -160,4 +160,6 @@
     <string name="notification_channel_default__name">Reprodução de audio</string>
     <string name="submit_feedback">Enviar Comentarios</string>
     <string name="relax">Relaxar</string>
+    <string name="intensity_any">Qualquer</string>
+    <string name="mood_any">Qualquer</string>
 </resources>
