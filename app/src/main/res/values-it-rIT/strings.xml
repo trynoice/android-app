@@ -176,4 +176,6 @@
     <string name="share">Condividi</string>
     <string name="ignore_audio_focus_changes_summary_on">Non reagire quando altre app riproducino audio</string>
     <string name="ignore_audio_focus_changes_summary_off">Metti in pausa quando altre app riproducono l\'audio</string>
+    <string name="ignore_audio_focus_changes">Ignora i cambiamenti di messa a fuoco dell\'audio</string>
+    <string name="sound_fade_duration_summary">Durata del fade in/out per la riproduzione/arresto dei suoni (in secondi)</string>
 </resources>
