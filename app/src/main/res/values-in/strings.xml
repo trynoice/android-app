@@ -207,4 +207,6 @@
     <string name="app_shortcut_created">Preset telah ditambahkan ke pintasan aplikasi!</string>
     <string name="app_shortcut_removed">Preset telah dihapus dari pintasan aplikasi!</string>
     <string name="dense">Padat</string>
+    <string name="saved_presets_as_home_screen">Preset tersimpan sebagai layar beranda</string>
+    <string name="app_authors">Lihat daftar Penulis Noice</string>
 </resources>
