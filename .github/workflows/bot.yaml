@@ -43,8 +43,17 @@ jobs:
           fetch-depth: 0
       - name: Generate changelog
         run: |
-          yarn global add auto-changelog
-          $(yarn global bin)/auto-changelog --template keepachangelog -o docs/CHANGELOG.md
+          export CHANGELOG_FILE="docs/CHANGELOG.md"
+          export RELEASE_URL="https://github.com/ashutoshgngwr/noice/releases/tag/%(tag)"
+          export GIT_TAG_FMT="## [v%(tag)]($RELEASE_URL)%0a%0a**Date:** %(creatordate)%0a%0a%(contents:body)"
+
+          echo "# Changelog" > $CHANGELOG_FILE
+          echo "" >> $CHANGELOG_FILE
+          echo "All notable changes to this project will be documented in this file." >> $CHANGELOG_FILE
+          echo "" >> $CHANGELOG_FILE
+          git tag --sort="-creatordate" --format="$GIT_TAG_FMT" --list >> $CHANGELOG_FILE
+
+          sed -i -E "s@(#)([0-9]+)@[\1\2](https://github.com/$GITHUB_REPOSITORY/issues/\2)@g" docs/CHANGELOG.md
       - name: Generate list of code authors
         run: |
           export LIST_PATH="docs/_data/authors/code.yaml"
