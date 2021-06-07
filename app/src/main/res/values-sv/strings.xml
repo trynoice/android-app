@@ -57,8 +57,8 @@
     <string name="app_theme_dark">Mörk</string>
     <string name="app_theme_system_default">Systemstandard</string>
     <string name="app_description">Koppla av och öka din koncentrationsförmåga med minimala bakgrundsljud.</string>
-    <string name="notification_channel_default__description">Inställningar för mediauppspelning</string>
-    <string name="notification_channel_default__name">Mediauppspelning</string>
+    <string name="notification_channel_default__description">Uppspelningskontroller för media</string>
+    <string name="notification_channel_default__name">Uppspelning av media</string>
     <string name="okay">Okej</string>
     <string name="light">Ljust</string>
     <string name="mood_any">Vilken som helst</string>
@@ -66,4 +66,102 @@
     <string name="submit_feedback">Skicka feedback</string>
     <string name="help">Hjälp</string>
     <string name="support_development">Stöd utveckling</string>
+    <string name="invalid_import_file_format">Formatet på den importerade filen är icke giltigt!</string>
+    <string name="failed_to_read_file">Läsning av den valda filen misslyckades!</string>
+    <string name="failed_to_write_file">Skrivning till den valda filen misslyckades!</string>
+    <string name="all_app_shortcuts_removed">Alla app-genvägar har tagits bort!</string>
+    <string name="remove_all_app_shortcuts_confirmation">Det kommer att ta bort alla förinställda genvägar från appens genvägsmeny. Vill du fortsätta\?</string>
+    <string name="remove_all_app_shortcuts">Ta bort alla app-genvägar</string>
+    <string name="import_presets_summary">Att importera sparade projekt från en extern fil kommer att , om det finns några skriva över befintliga förinställningar</string>
+    <string name="import_presets">Importera från en fil</string>
+    <string name="export_presets_summary">Exportera den aktuella ögonblicksbilden av de sparade förinställningarna till en extern fil</string>
+    <string name="export_presets">Exportera till en fil</string>
+    <string name="share">Dela</string>
+    <string name="ignore_audio_focus_changes_summary_on">Reagera inte när andra appar spelar ljud</string>
+    <string name="ignore_audio_focus_changes_summary_off">Pausa när andra appar spelar ljud</string>
+    <string name="unsaved_preset">Icke sparad förinställning</string>
+    <string name="skip_to_next">Nästa förinställning</string>
+    <string name="skip_to_prev">Föregående förinställning</string>
+    <string name="pinned_shortcut_created">Genvägen har lagts till på hem-skärmen!</string>
+    <string name="pinned_shortcut_creation_failed">Misslyckades att lägga till genvägen till hem-skärmen!</string>
+    <string name="appearance">Utseende</string>
+    <string name="behavior">Beteende</string>
+    <string name="saved_presets_as_home_screen">Sparade förinställningar som hem-skärm</string>
+    <string name="settings">Inställningar</string>
+    <string name="app_shortcut_creation_failed">Misslyckades med att lägga till förinställningen i app-genvägar!</string>
+    <string name="app_shortcut_created">Förinställningen har lagts till i app-genvägar!</string>
+    <string name="app_shortcut_removed">Förinställningen har tagits bort från app-genvägar!</string>
+    <string name="remove_from_app_shortcuts">Ta bort från app-genvägar</string>
+    <string name="add_to_app_shortcuts">Lägg till i app-genvägar</string>
+    <string name="app_authors">Visa listan över Noice-författarna</string>
+    <string name="never">Aldrig</string>
+    <string name="later">Senare</string>
+    <string name="in_app_feedback__title">Skicka in en recension</string>
+    <string name="in_app_feedback__description">Vi skulle gärna vilja att du hörde av dig om appen. Vänligen ta en stund för att besöka vårat GitHub-filförråd. Om du inte tycker om appen, vänligen överväg att öppna en rapport som förklarar dina bekymmer. Vänligen ge projektet en stjärna annars för att visa kärlek och stöttning.</string>
+    <string name="support_development__why_description">- För att göra framtida uppdateringar möjliga
+\n- För att hålla Noice fritt från annonser för alltid
+\n</string>
+    <string name="support_development__why">Varför borde du stötta\?</string>
+    <string name="support_development__share_description">Att dela Noice med vänner är liknande som att donera pengar. Med större nerladdningar så kommer vi att ha möjlighet att ta emot feedback från ett antal olika perspektiv vilket kan hjälpa oss att göra Noice bättre än tidigare.</string>
+    <string name="support_development__share">Dela med vänner</string>
+    <string name="support_development__donate_thank_you_description">Vi tackar dig så hjärtligt för ditt generösa bidrag till Noice-projektet.</string>
+    <string name="support_development__donate_thank_you">Tack!</string>
+    <string name="support_development__donate_google_play_description">Din betalning kommer att hanteras av Google Play. Summan kommer att konverteras till din lokala valuta. Beroende på din plats så kan ytterligare skatt läggas till i slutsumman.</string>
+    <string name="support_development__donate_description">Donationer kommer att hjälpa oss att
+\n- investera i nya funktioner
+\n- organisera bättre ljudprover
+\n- köpa kaffe
+\n</string>
+    <string name="support_development__donate">Donera</string>
+    <string name="appintro__timer_title">Har du problem med att somna eller att vakna upp\?</string>
+    <string name="appintro__sound_library_title">Skapa dina perfekta omgivningar</string>
+    <string name="appintro__preset_title">Spara dina favorit-mixar</string>
+    <string name="appintro__getting_started_title">Välkommen</string>
+    <string name="appintro__getting_started_desc_1">Låt oss börja!</string>
+    <string name="appintro__getting_started_desc_0">Svep till vänster för att lära känna alla funktioner!</string>
+    <string name="appintro__chromecast_title">Chromecast aktiverat</string>
+    <string name="should_update_media_volume">Uppdatera enhetens mediavolym innan förinställningen startas</string>
+    <string name="device_media_volume">Mediavolym för enhet</string>
+    <string name="use_24h_format">Använd 24-timmarsformat</string>
+    <plurals name="time_minutes">
+        <item quantity="one">%1$d minut</item>
+        <item quantity="other">%1$d minuter</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one">%1$d timme</item>
+        <item quantity="other">%1$d timmar</item>
+    </plurals>
+    <string name="time_bridge">och</string>
+    <string name="wake_up_timer_cancelled">Timer för uppväckning avbröts!</string>
+    <string name="select_preset">Välj förinställning</string>
+    <string name="schedule">Schema</string>
+    <string name="saved_presets_as_home_screen_summary">Visa sparade förinställningar när appen startar upp</string>
+    <string name="preset_does_not_exist">Förinställningen existerar inte. Den kan ha blivit borttagen!</string>
+    <string name="add_to_home_screen">Lägg till på hemskärmen</string>
+    <string name="water_hose">Vattenslang</string>
+    <string name="walking_through_the_snow">Går genom snön</string>
+    <string name="screeching_seagulls">Skrikande måsar</string>
+    <string name="quiet_conversation">Tyst konversation</string>
+    <string name="purring_cat">Spinnande katt</string>
+    <string name="public_library">Publikt bibliotek</string>
+    <string name="human_heartbeat">Mänskligt hjärtslag</string>
+    <string name="howling_wolf">Ylande varg</string>
+    <string name="electric_car">Elektrisk bil</string>
+    <string name="crickets">Syrsor</string>
+    <string name="creaking_ship">Gnälligt skepp</string>
+    <string name="sound_group__wind">Vind</string>
+    <string name="sound_group__water">Vatten</string>
+    <string name="sound_group__vehicles">Fordon</string>
+    <string name="sound_group__times_of_day">Tider på dagen</string>
+    <string name="sound_group__raw_noise">Rått ljud</string>
+    <string name="sound_group__public_gatherings">Publika samlingar</string>
+    <string name="sound_group__monsoon">Monsun</string>
+    <string name="sound_group__life">Liv</string>
+    <string name="preset_already_exists">En förinställning med det angivna namnet existerar redan!</string>
+    <string name="relax">Slappna av</string>
+    <string name="random_preset">Slumpmässig förinställning</string>
+    <string name="mood">Humör</string>
+    <string name="intensity">Intensitet</string>
+    <string name="focus">Fokus</string>
+    <string name="dense">Tät</string>
 </resources>
