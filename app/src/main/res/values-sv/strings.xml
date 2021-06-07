@@ -164,4 +164,5 @@
     <string name="intensity">Intensitet</string>
     <string name="focus">Fokus</string>
     <string name="dense">Tät</string>
+    <string name="wake_up_timer">Timer för uppväckning</string>
 </resources>
