@@ -20,6 +20,7 @@ import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -47,18 +48,26 @@ class SoundLibraryFragmentTest {
 
   private lateinit var mockEventBus: EventBus
   private lateinit var mockPresetRepository: PresetRepository
+  private lateinit var mockSettingsRepository: SettingsRepository
   private lateinit var fragmentScenario: FragmentScenario<SoundLibraryFragment>
 
   @Before
   fun setup() {
-    mockkObject(InAppReviewFlowManager, PlaybackController, PresetRepository.Companion)
     mockkStatic(EventBus::class)
+    mockkObject(
+      InAppReviewFlowManager,
+      PlaybackController,
+      PresetRepository.Companion,
+      SettingsRepository.Companion
+    )
 
     mockEventBus = mockk(relaxed = true)
     mockPresetRepository = mockk(relaxed = true)
+    mockSettingsRepository = mockk(relaxed = true)
 
     every { EventBus.getDefault() } returns mockEventBus
     every { PresetRepository.newInstance(any()) } returns mockPresetRepository
+    every { SettingsRepository.newInstance(any()) } returns mockSettingsRepository
 
     fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
@@ -331,5 +340,25 @@ class SoundLibraryFragmentTest {
     }
 
     verify(exactly = 1) { InAppReviewFlowManager.maybeAskForReview(any()) }
+  }
+
+  @Test
+  fun testShouldDisplaySoundIcons() {
+    val inputs = arrayOf(false, true)
+    val outputs = arrayOf(Visibility.GONE, Visibility.VISIBLE)
+    for (i in inputs.indices) {
+      every { mockSettingsRepository.shouldDisplaySoundIcons() } returns inputs[i]
+      fragmentScenario.recreate()
+      onView(withId(R.id.sound_list))
+        .perform(
+          RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+            allOf(
+              hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
+              hasDescendant(allOf(withId(R.id.icon), withEffectiveVisibility(outputs[i])))
+            ),
+            EspressoX.noop()
+          ),
+        )
+    }
   }
 }

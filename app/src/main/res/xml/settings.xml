@@ -59,6 +59,12 @@
       android:title="@string/app_theme"
       tools:summary="Light" />
 
+    <SwitchPreferenceCompat
+      android:defaultValue="true"
+      android:icon="@drawable/ic_settings_sound_icon"
+      android:key="@string/should_display_sound_icons_key"
+      android:title="@string/should_display_sound_icons" />
+
   </PreferenceCategory>
 
 </PreferenceScreen>

@@ -124,4 +124,16 @@ class SettingsRepositoryTest {
       assertEquals(input, settingsRepository.shouldIgnoreAudioFocusChanges())
     }
   }
+
+  @Test
+  fun testShouldDisplaySoundIcons() {
+    val inputs = arrayOf(true, false)
+    for (input in inputs) {
+      every {
+        prefs.getBoolean(context.getString(R.string.should_display_sound_icons_key), any())
+      } returns input
+
+      assertEquals(input, settingsRepository.shouldDisplaySoundIcons())
+    }
+  }
 }

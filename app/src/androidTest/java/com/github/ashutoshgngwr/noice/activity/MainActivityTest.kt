@@ -371,7 +371,7 @@ class MainActivityTest {
       AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
     )
 
-    val mockRepo = mockk<SettingsRepository>()
+    val mockRepo = mockk<SettingsRepository>(relaxed = true)
     mockkObject(SettingsRepository)
     every { SettingsRepository.newInstance(any()) } returns mockRepo
     for (nightMode in nightModes) {

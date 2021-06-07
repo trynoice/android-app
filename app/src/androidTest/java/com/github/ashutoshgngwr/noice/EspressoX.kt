@@ -219,4 +219,15 @@ object EspressoX {
       hasExtra(`is`(Intent.EXTRA_INTENT), matcher)
     )
   }
+
+  /**
+   * [noop] returns a [ViewAction] that does nothing.
+   */
+  fun noop(): ViewAction {
+    return object : ViewAction {
+      override fun getDescription() = "no-op"
+      override fun getConstraints() = any(View::class.java)
+      override fun perform(uiController: UiController, view: View) = Unit
+    }
+  }
 }

@@ -76,4 +76,11 @@ class SettingsRepository private constructor(private val context: Context) {
   fun shouldIgnoreAudioFocusChanges(): Boolean {
     return prefs.getBoolean(context.getString(R.string.ignore_audio_focus_changes_key), false)
   }
+
+  /**
+   * Returns the value of switch preference with key [R.string.should_display_sound_icons_key].
+   */
+  fun shouldDisplaySoundIcons(): Boolean {
+    return prefs.getBoolean(context.getString(R.string.should_display_sound_icons_key), true)
+  }
 }

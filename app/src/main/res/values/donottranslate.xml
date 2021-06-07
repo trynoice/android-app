@@ -27,4 +27,5 @@
   <string name="import_presets_key">import_presets</string>
   <string name="export_presets_key">export_presets</string>
   <string name="remove_all_app_shortcuts_key">remove_all_app_shortcuts</string>
+  <string name="should_display_sound_icons_key">should_display_sound_icons</string>
 </resources>

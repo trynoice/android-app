@@ -23,6 +23,7 @@ import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -32,6 +33,7 @@ class SoundLibraryFragment : Fragment() {
 
   private lateinit var binding: SoundLibraryFragmentBinding
   private lateinit var presetRepository: PresetRepository
+  private lateinit var settingsRepository: SettingsRepository
 
   private var adapter: SoundListAdapter? = null
   private var players = emptyMap<String, Player>()
@@ -87,6 +89,7 @@ class SoundLibraryFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     presetRepository = PresetRepository.newInstance(requireContext())
+    settingsRepository = SettingsRepository.newInstance(requireContext())
     adapter = SoundListAdapter(requireContext())
     binding.soundList.also {
       it.adapter = adapter
@@ -195,11 +198,17 @@ class SoundLibraryFragment : Fragment() {
 
       with((holder as SoundListItemViewHolder).binding) {
         title.text = context.getString(sound.titleResID)
-        icon.setImageResource(sound.iconID)
         if (isPlaying) {
           playIndicator.visibility = View.VISIBLE
         } else {
           playIndicator.visibility = View.INVISIBLE
+        }
+
+        if (settingsRepository.shouldDisplaySoundIcons()) {
+          icon.visibility = View.VISIBLE
+          icon.setImageResource(sound.iconID)
+        } else {
+          icon.visibility = View.GONE
         }
 
         @SuppressLint("SetTextI18n")
