@@ -29,7 +29,7 @@ class LocalPlaybackStrategy(
 ) : PlaybackStrategy {
 
   companion object {
-    private const val FADE_VOLUME_STEP = 0.01f
+    private const val FADE_VOLUME_STEP = 0.005f
 
     // a smaller default used when changing volume of an active player.
     private const val VOLUME_ADJUSTMENT_FADE_DURATION = 750L

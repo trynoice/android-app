@@ -7,6 +7,7 @@ import androidx.core.os.HandlerCompat
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategy
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
+import kotlin.math.pow
 import kotlin.random.Random.Default.nextInt
 
 /**
@@ -20,7 +21,7 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
     private val DELAYED_PLAYBACK_CALLBACK_TOKEN = "${Player::class.simpleName}.playback_callback"
 
     const val DEFAULT_VOLUME = 4
-    const val MAX_VOLUME = 20
+    const val MAX_VOLUME = 25
     const val DEFAULT_TIME_PERIOD = 300
     const val MIN_TIME_PERIOD = 30
     const val MAX_TIME_PERIOD = 1200
@@ -35,7 +36,7 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
 
   private var isPlaying = false
   private var playbackStrategy = playbackStrategyFactory.newInstance(sound).also {
-    it.setVolume(volume.toFloat() / MAX_VOLUME)
+    it.setVolume(getScaledVolume())
   }
 
   private val handler = Handler(Looper.getMainLooper())
@@ -45,11 +46,17 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
    */
   fun setVolume(volume: Int) {
     this.volume = volume
-    this.playbackStrategy.setVolume(volume.toFloat() / MAX_VOLUME)
+    this.playbackStrategy.setVolume(getScaledVolume())
+  }
+
+  private fun getScaledVolume(): Float {
+    // return 0.5f * log(max(1, volume).toFloat(), 5f) // logarithmic
+    return (0.04f * volume.toFloat()).pow(2) // quadratic
+    // return (0.04f * volume.toFloat()).pow(3) // cubic
   }
 
   /**
-   * Starts playing the sound. If the sound is not loopable, it also schedules a delayed
+   * Starts playing the sound. If the sound is not looping, it also schedules a delayed
    * task to replay the sound. Delay period is randomised with guaranteed
    * [MIN_TIME_PERIOD][MIN_TIME_PERIOD].
    */
@@ -81,7 +88,7 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
 
   /**
    * Stops the [Player] without releasing the underlying media resource.
-   * If the sound is non-loopable, it also removes the randomised play callback.
+   * If the sound is non-looping, it also removes the randomised play callback.
    */
   internal fun pause() {
     isPlaying = false
@@ -93,7 +100,7 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
 
   /**
    * Stops the [Player] and releases the underlying media resource.
-   * If the sound is non-loopable, it also removes the randomised play callback.
+   * If the sound is non-looping, it also removes the randomised play callback.
    */
   internal fun stop() {
     isPlaying = false

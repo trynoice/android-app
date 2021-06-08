@@ -11,12 +11,13 @@ import io.mockk.unmockkAll
 import io.mockk.verify
 import io.mockk.verifySequence
 import org.junit.After
-import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLooper
+import kotlin.random.Random
 
 @RunWith(RobolectricTestRunner::class)
 class PlayerTest {
@@ -46,9 +47,14 @@ class PlayerTest {
 
   @Test
   fun testSetVolume() {
-    player.setVolume(16)
-    verify(exactly = 1) { mockPlaybackStrategy.setVolume(16f / Player.MAX_VOLUME) }
-    assertEquals(16, player.volume)
+    player.setVolume(0)
+    player.setVolume(Player.MAX_VOLUME)
+    player.setVolume(Random.nextInt(1, Player.MAX_VOLUME))
+    verifySequence {
+      mockPlaybackStrategy.setVolume(0f)
+      mockPlaybackStrategy.setVolume(1f)
+      mockPlaybackStrategy.setVolume(withArg { assertTrue(it > 0f && it < 1f) })
+    }
   }
 
   @Test
