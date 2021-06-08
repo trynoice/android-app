@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
+import com.github.ashutoshgngwr.noice.playback.Player
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.InjectionLookupType
@@ -23,6 +24,7 @@ import org.skyscreamer.jsonassert.JSONAssert
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.util.*
+import kotlin.math.roundToInt
 
 @RunWith(RobolectricTestRunner::class)
 class PresetRepositoryTest {
@@ -286,7 +288,7 @@ class PresetRepositoryTest {
         "playerStates": [{
           "soundKey": "test-1",
           "timePeriod": 60,
-          "volume": 15
+          "volume": ${(0.75f * Player.MAX_VOLUME).roundToInt()}
         }]
       }]
     """

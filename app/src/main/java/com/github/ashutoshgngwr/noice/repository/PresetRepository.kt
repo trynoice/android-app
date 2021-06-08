@@ -19,6 +19,7 @@ import java.io.OutputStream
 import java.io.OutputStreamWriter
 import java.util.*
 import kotlin.math.round
+import kotlin.math.roundToInt
 import kotlin.random.Random
 import kotlin.random.nextInt
 
@@ -206,7 +207,7 @@ class PresetRepository private constructor(context: Context) {
           Preset.PlayerState(
             soundKey = state.getString("a"),
             // with corrections from the old deserializers
-            volume = round(state.getDouble("b") * Player.MAX_VOLUME).toInt(),
+            volume = round(state.getDouble("b") * Player.MAX_VOLUME).roundToInt(),
             timePeriod = state.getInt("c") + Player.MIN_TIME_PERIOD
           )
         )
