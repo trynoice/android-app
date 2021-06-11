@@ -203,4 +203,5 @@
     <string name="all_app_shortcuts_removed">Tous les raccourcis d’applications ont été supprimés !</string>
     <string name="remove_all_app_shortcuts_confirmation">Ça supprimera tous les raccourcis prédéfinis du menu des raccourcis de l’application. Voulez-vous continuer \?</string>
     <string name="remove_all_app_shortcuts">Retirer tous les raccourcis de l’appli</string>
+    <string name="should_display_sound_icons">Afficher les icônes de son</string>
 </resources>
