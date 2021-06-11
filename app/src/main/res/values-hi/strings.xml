@@ -207,4 +207,5 @@
     <string name="behavior">व्यवहार</string>
     <string name="saved_presets_as_home_screen">होम स्क्रीन पर सहजे हुए प्रीसेट्स देंखे</string>
     <string name="settings">सेटिंग्स</string>
+    <string name="should_display_sound_icons">ध्वनि चिह्न दिखाएं</string>
 </resources>
