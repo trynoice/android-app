@@ -217,4 +217,5 @@
     <string name="import_presets">Bir dosyadan içe aktar</string>
     <string name="export_presets_summary">Kaydedilen kayıtların mevcut anlık görüntüsünü harici bir dosyaya aktarın</string>
     <string name="export_presets">Bir dosyaya aktar</string>
+    <string name="should_display_sound_icons">Ses simgelerini göster</string>
 </resources>
