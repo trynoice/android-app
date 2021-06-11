@@ -29,9 +29,14 @@ Noice is an app that allows you to create your own set of background sounds by m
 
 ## Documentation
 
-1. See [`docs/CHANGELOG.md`](docs/CHANGELOG.md) for a brief history of the project
-2. See [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) for workflow, app architecture and translation related documentation
-3. See [`docs/CODE_OF_CONDUCT.md`](docs/CODE_OF_CONDUCT.md) for communication norms
+1. [All notable changes](https://ashutoshgngwr.github.io/noice/CHANGELOG) to the
+   project over time
+2. The [list of
+   contributors](https://ashutoshgngwr.github.io/noice/contributors).
+3. [How can you contribute?](https://ashutoshgngwr.github.io/noice/contributing)
+4. [Code of Conduct](https://ashutoshgngwr.github.io/noice/code-of-conduct)
+5. [Privacy Policy](https://ashutoshgngwr.github.io/noice/privacy-policy) for
+   application users.
 
 ## License
 
