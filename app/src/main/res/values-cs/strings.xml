@@ -146,4 +146,15 @@
     <string name="notification_channel_default__description">Ovladání přehrávače</string>
     <string name="notification_channel_default__name">Právě hraje</string>
     <string name="submit_feedback">Odeslat zpětnou vazbu</string>
+    <string name="invalid_import_file_format">Formát souboru pro import je neplatný!</string>
+    <string name="failed_to_read_file">Čtení vybraného souboru se nezdařilo!</string>
+    <string name="failed_to_write_file">Zápis do vybraného souboru se nezdařil!</string>
+    <string name="all_app_shortcuts_removed">Všechny zástupce aplikace byly odstraněny!</string>
+    <string name="remove_all_app_shortcuts">Odstranit všechny zástupce aplikace</string>
+    <string name="import_presets">Import ze souboru</string>
+    <string name="export_presets">Export do souboru</string>
+    <string name="share">Sdílet</string>
+    <string name="ignore_audio_focus_changes_summary_on">Nereagovat, když jiné aplikace budou přehrávat zvuk</string>
+    <string name="ignore_audio_focus_changes_summary_off">Pozastavit, když jiné aplikace začnou přehrávat zvuk</string>
+    <string name="appearance">Vzhled</string>
 </resources>

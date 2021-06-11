@@ -1,0 +1,34 @@
+Với nhiều người, những âm thanh êm dịu rất hữu ích để thư giãn và tập trung. Đồng thời, chúng cũng giúp tăng năng suất làm việc. Những âm thanh êm dịu cũng có thể giúp giảm căng thẳng.
+
+Noice là ứng dụng cho phép bạn tạo những âm thanh êm dịu từ những tiếng động của một trường. Kết hợp nhiều tiếng động khác nhau để tạo ra âm thanh hoàn hảo giúp xua đi sự xao nhãng giúp bạn tập trung vào công việc của mình hoặc tạo ra môi trường tốt nhất giúp bạn thư giãn và dễ dàng chìm vào giấc ngủ.
+
+
+<b>Tính năng</b>
+- 35 âm thanh thu sẵn
+- Hỗ trợ Google Cast (Chromecast) [Playstore]
+- Hẹn giờ báo thức
+- Tạo âm thanh ngẫu nhiên
+- Tạo và lưu hợp âm yêu thích
+- Sử dụng cùng với các trình phát nhạc kahcs
+- Điều chỉnh âm lượng riêng cho mỗi nguồn âm
+- Phát lại ngoài tuyến
+- Chủ đề sáng/tối
+
+<b>Thư viện âm thanh</b>
+- Bộ thường ngày (tiếng chim, hoạt động thể thao, nhịp tim, ...)
+- Bộ rừng rậm (lửa trại, gió, lá cây,...)
+- Bộ mưa nhiệt đới (tất nhiên là tiếng mưa rồi, có cả sấm nữa...)
+- Địa điểm ngoài (quán cà phê, thư viện, văn phòng, bờ biển,...)
+- Tiếng xe (tàu đang chạy, thuyền, máy bay, xe điện,...)
+- Tiếng ồn ( ừ là tiếng ồn đấy)
+
+<b>Cấp quyền</b>
+- <b>Ngăn thiết bị ngủ</b>: để giữ thiết bị hoạt động khi đang phát
+- <b>Chạy tiến trình ngoài</b>: chạy các tiến trình khác ngoài giao diện
+- <b>Chạy khi khởi động</b>: đảm bảo báo thức chạy cả sau khi thiết bị khởi động lại
+- <b>Truy cập mạng</b>: Chromecast và các chức năng khác
+- <b>Xem kết nối mạng</b>: cái này phải thêm vào mới chạy được, không để làm gì nhưng không bỏ được :))
+- <b>Dịch vụ thanh toán Google</b>: nếu các bạn muốn ủng hộ tụi mình nè
+
+Noice là một phần mềm mã nguồn mở miễn phí.
+https://github.com/ashutoshgngwr/noice
