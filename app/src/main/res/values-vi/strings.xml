@@ -16,11 +16,11 @@
     <string name="ignore_audio_focus_changes">Bỏ qua các thay đổi tập trung âm thanh</string>
     <string name="unsaved_preset">Thiết lập trước chưa được lưu</string>
     <string name="skip_to_next">Thiết lập trước tiếp theo</string>
-    <string name="skip_to_prev">Thiết lập trước trước đó</string>
+    <string name="skip_to_prev">Thiết lập trước đó</string>
     <string name="pinned_shortcut_created">Lối tắt đã được thêm vào màn hình chính!</string>
     <string name="pinned_shortcut_creation_failed">Thêm lối tắt vào màn hình chính thất bại!</string>
-    <string name="sound_fade_duration_summary">Thời gian tăng/giảm từ từ cho việc phát/dừng âm thanh (tính bằng giây)</string>
-    <string name="sound_fade_duration">Thời gian tăng/giảm âm thanh từ từ</string>
+    <string name="sound_fade_duration_summary">Thời lượng âm thanh lớn/nhỏ dần khi phát/dừng (giây)</string>
+    <string name="sound_fade_duration">Thời gian giảm dần âm thanh</string>
     <string name="appearance">Ngoại hình</string>
     <string name="behavior">Hành vi</string>
     <string name="saved_presets_as_home_screen">Đã lưu các thiết lập trước làm màn hình chính</string>
@@ -37,8 +37,8 @@
     <string name="in_app_feedback__title">Gửi đi một bài đánh giá</string>
     <string name="in_app_feedback__description">Chúng tôi rất muốn nghe phản hồi của bạn về ứng dụng này. Hãy vui lòng dành ra một lúc để đi đến kho GitHub của chúng tôi. Nếu bạn đã không thích ứng dụng này, hãy vui lòng mở một vấn đề giải thích sự lo ngại của bạn. Nếu không, hãy vui lòng gắn sao cho dự án để bày tỏ sự yêu thích và sự hỗ trợ.</string>
     <string name="cast_media">Truyền phương tiện đến một thiết bị khác</string>
-    <string name="support_development__why_description">- Để làm cho các bản cập nhật trong tương lai có thể làm được
-\n- Để giữ cho Noice không có quảng cáo mãi mãi
+    <string name="support_development__why_description">- Giúp chúng tôi làm tiếp các bản cập nhật trong tương lai
+\n- Giữ cho Noice tránh xa các quảng cáo
 \n</string>
     <string name="support_development__why">Tại sao bạn nên hỗ trợ\?</string>
     <string name="support_development__share_description">Việc chia sẻ Noice với các bạn cũng tương tự như quyên góp tiền. Với lượt tải xuống cao hơn, chúng tôi sẽ có thể nhận phản hồi từ một số lượng những cách nhìn khác nhau, phản hồi đó sẽ giúp chúng tôi trong việc làm cho Noice tốt hơn bao giờ hết.</string>
@@ -53,7 +53,7 @@
 \n</string>
     <string name="support_development__donate">Quyên góp</string>
     <string name="appintro__timer_title">Gặp khó khăn khi ngủ hoặc thức dậy\?</string>
-    <string name="appintro__timer_desc">Một chút sự bao quanh có thể giúp bạn chìm vào giấc ngủ dễ dàng. Sử dụng hẹn giờ ngủ để để cho Noice tự tắt. Tương tự, để đánh thức một môi trường tĩnh lặng, hãy sử dụng hẹn giờ thức dậy để đặt báo thức.</string>
+    <string name="appintro__timer_desc">Sự tĩnh lặng có thể giúp bạn đi vào giấc ngủ dễ dàng hơn. Dùng tính năng hẹn giờ ngủ để Noice tự động tắt. Bạn cũng có thể dùng tính năng hẹn giờ thức dậy để đặt báo thức.</string>
     <string name="appintro__sound_library_title">Tạo vùng bao quanh hoàn hảo của bạn</string>
     <string name="appintro__sound_library_desc">Sử dụng cần trượt âm lượng để điều chỉnh âm lượng âm thanh. Tại mỗi lần lặp lại các âm thanh không tạo thành vòng lặp, một khoảng thời gian trì hoãn được chọn ngẫu nhiên từ phạm vi được cần trượt thời gian đặt.</string>
     <string name="appintro__preset_title">Lưu các bản pha trộn yêu thích của bạn</string>
@@ -108,7 +108,7 @@
     <string name="screeching_seagulls">Mòng biển kêu</string>
     <string name="rolling_thunder">Tiếng sấm cuộn</string>
     <string name="quiet_conversation">Cuộc trò chuyện im lặng</string>
-    <string name="purring_cat">Con mèo kêu rừ rừ</string>
+    <string name="purring_cat">Tiếng mèo rên</string>
     <string name="public_library">Thư viện công cộng</string>
     <string name="pink_noise">Tiếng ồn màu hồng</string>
     <string name="office">Văn phòng</string>
@@ -176,4 +176,5 @@
     <string name="app_theme">Chủ đề</string>
     <string name="about">Giới thiệu</string>
     <string name="notification_channel_default__name">Phát phương tiện</string>
+    <string name="should_display_sound_icons">Hiện biểu tượng âm thanh</string>
 </resources>
