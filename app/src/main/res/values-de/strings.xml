@@ -208,4 +208,5 @@
     <string name="sound_fade_duration_summary">Einblend-/Ausblenddauer für das Abspielen/Stoppen von Sounds (in Sekunden)</string>
     <string name="all_app_shortcuts_removed">Alle Anwendungsverknüpfungen wurden entfernt!</string>
     <string name="remove_all_app_shortcuts_confirmation">Es werden alle voreingestellten Verknüpfungen aus dem Anwendungsverknüpfungsmenü entfernt. Möchten Sie fortfahren\?</string>
+    <string name="should_display_sound_icons">Tonsymbole anzeigen</string>
 </resources>
