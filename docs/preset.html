@@ -4,16 +4,68 @@ exclude_from_sitemap: true
 ---
 
 <h1 id="shared-preset">Shared Preset</h1>
-<p>
-  You should have opened this link using the Noice Android app, rather than your
-  browser. Please <a class="preset-intent">click here</a> to open the Noice app
-  and play the <q class="preset-title">unnamed</q> preset.
+<p style="text-align: center">
+  <a class="preset-intent"
+    >Play <q class="preset-title">unnamed</q> using Noice</a
+  >
 </p>
+<p>
+  <b>Note:</b>
+  You should open these links using the Noice Android app, rather than your
+  browser.
+</p>
+<h2>Download app</h2>
+<p class="download-links">
+  {% if site.playstore_link and site.playstore_link != empty %}
+  <a href="{{ site.playstore_link }}">
+    <img src="{{ '/assets/playstore.png' | relative_link }}" />
+  </a>
+  {% endif %}
+  {% if site.fdroid_link and site.fdroid_link != empty %}
+  <a href="{{ site.fdroid_link }}">
+    <img src="{{ '/assets/fdroid.png' | relative_link }}" />
+  </a>
+  {% endif %}
+</p>
+<style>
+  a.preset-intent {
+    background: #333;
+    border-radius: 0.75rem;
+    padding: 1.5rem 4rem;
+    color: #fff;
+    display: inline-block;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  a.preset-intent:hover {
+    text-decoration: none;
+    background: #444;
+  }
+
+  a.preset-intent:active {
+    background: #222;
+  }
+
+  p.download-links {
+    text-align: center;
+    margin: 2rem auto;
+  }
+
+  p.download-links > a > img {
+    margin: 1rem;
+    max-width: 22rem;
+    width: 100%;
+  }
+</style>
 <script>
   addEventListener("load", function () {
     var uri = new URL("noice://preset" + window.location.search);
     document.querySelector(".preset-intent").href = uri;
     var params = new URLSearchParams(window.location.search);
-    document.querySelector(".preset-title").innerHTML = params.get("name");
+    document.querySelectorAll(".preset-title").forEach(function (e) {
+      e.innerHTML = params.get("name");
+    });
   });
 </script>
