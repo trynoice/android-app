@@ -18,12 +18,12 @@ exclude_from_sitemap: true
 <p class="download-links">
   {% if site.playstore_link and site.playstore_link != empty %}
   <a href="{{ site.playstore_link }}">
-    <img src="{{ '/assets/playstore.png' | relative_link }}" />
+    <img src="{{ '/assets/playstore.png' | relative_url }}" />
   </a>
   {% endif %}
   {% if site.fdroid_link and site.fdroid_link != empty %}
   <a href="{{ site.fdroid_link }}">
-    <img src="{{ '/assets/fdroid.png' | relative_link }}" />
+    <img src="{{ '/assets/fdroid.png' | relative_url }}" />
   </a>
   {% endif %}
 </p>
