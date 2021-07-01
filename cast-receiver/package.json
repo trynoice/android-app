@@ -18,7 +18,7 @@
     "@babel/core": "^7.14.3",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.14.4",
-    "@babel/preset-typescript": "^7.13.0",
+    "@babel/preset-typescript": "^7.14.5",
     "@types/chromecast-caf-receiver": "^5.0.13",
     "@types/howler": "^2.2.2",
     "@types/jest": "^26.0.23",
