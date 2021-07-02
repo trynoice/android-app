@@ -33,7 +33,7 @@
     "parcel-plugin-svg-sprite": "^1.4.1",
     "prettier": "^2.3.0",
     "sass": "^1.34.0",
-    "typescript": "^4.3.2"
+    "typescript": "^4.3.5"
   },
   "dependencies": {
     "howler": "^2.2.1",
