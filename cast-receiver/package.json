@@ -15,7 +15,7 @@
     "test": "yarn test:single --watchAll"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.3",
+    "@babel/core": "^7.14.6",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.14.4",
     "@babel/preset-typescript": "^7.14.5",
