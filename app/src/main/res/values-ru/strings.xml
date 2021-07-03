@@ -211,4 +211,5 @@
     <string name="app_shortcut_removed">Предустановка была удалена из ярлыков приложений!</string>
     <string name="remove_from_app_shortcuts">Удалить из ярлыков приложений</string>
     <string name="add_to_app_shortcuts">Добавить в ярлыки приложений</string>
+    <string name="should_display_sound_icons">Отображать звуковые значки</string>
 </resources>
