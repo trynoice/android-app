@@ -1356,10 +1356,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/howler@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@types/howler/-/howler-2.2.2.tgz#54f621983c3635e2e071a95644ba28eea84814c2"
-  integrity sha512-/znab/CjipQ25epk7YcsoEsR96rB77Y/fCLMaNtIzV5oPeUeilc7dYGyMjYi+OQklkllADLM+jGZRSt3d6lhiA==
+"@types/howler@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@types/howler/-/howler-2.2.3.tgz#236ff8ba2da2ed25b0b0ab959ad2f15effc93dff"
+  integrity sha512-rzIE56NmGh7t8LdZT/zuBMa9iZvwqVmB65gNhwNLtrGEIHdWkEDp1fVmoM/zctR4UJZFe0uP01AmPuPzOwhecA==
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.3"
