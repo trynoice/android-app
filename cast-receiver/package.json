@@ -36,7 +36,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "howler": "^2.2.1",
+    "howler": "^2.2.3",
     "normalize.css": "^8.0.1"
   }
 }
