@@ -4,7 +4,7 @@ apply plugin: 'jacoco'
 
 jacoco {
   // https://bintray.com/bintray/jcenter/org.jacoco:org.jacoco.core
-  toolVersion = "0.8.5"
+  toolVersion = '0.8.7'
 }
 
 android {
@@ -24,7 +24,7 @@ project.afterEvaluate {
     def taskName = "test${variant.name.capitalize()}Coverage"
     def testTask = "test${variant.name.capitalize()}UnitTest"
     tasks.create(name: "${taskName}", type: JacocoReport, dependsOn: "${testTask}") {
-      group = "Reporting"
+      group = 'Reporting'
       description = "Generate Jacoco coverage reports for the ${variant.name} build variant."
 
       def sourceDirs = ['src/main/java'] + android.sourceSets[variant.name].java.srcDirs
@@ -51,9 +51,9 @@ project.afterEvaluate {
     }
   }
 
-  tasks.create(name: "testCoverage", type: JacocoReport) {
-    group = "Reporting"
-    description = "Generate Jacoco coverage reports for the all build variants."
+  tasks.create(name: 'testCoverage', type: JacocoReport) {
+    group = 'Reporting'
+    description = 'Generate Jacoco coverage reports for the all build variants.'
 
     android.applicationVariants.all { variant ->
       dependsOn "test${variant.name.capitalize()}Coverage"
