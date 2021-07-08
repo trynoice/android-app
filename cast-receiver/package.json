@@ -21,7 +21,7 @@
     "@babel/preset-typescript": "^7.14.5",
     "@types/chromecast-caf-receiver": "^5.0.13",
     "@types/howler": "^2.2.3",
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^26.0.24",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
     "babel-jest": "^27.0.6",
