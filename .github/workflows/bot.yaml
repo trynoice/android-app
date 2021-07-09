@@ -61,6 +61,7 @@ jobs:
           git log --pretty="%b" | grep "Co-authored-by:" >> "$LIST_PATH"
           sed -i -e 's/Co-authored-by:/-/g' -e 's/\r$//' "$LIST_PATH"
           sort -u -o "$LIST_PATH" "$LIST_PATH"
+          sed -i -e '/noreply@github.com/d' -e '/hosted@weblate.org/d' -e '/\[bot\]/d' "$LIST_PATH"
           sed -i -E 's/(.*) <(.*)>/\1 | [\2](mailto:\2)/g' "$LIST_PATH"
       - name: Commit changes
         run: |
