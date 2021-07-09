@@ -3,7 +3,9 @@
 
   <uses-permission android:name="com.android.vending.BILLING" />
 
-  <application tools:ignore="AllowBackup">
+  <application
+    android:name="com.github.ashutoshgngwr.noice.PlaystoreNoiceApplication"
+    tools:ignore="AllowBackup">
 
     <meta-data
       android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"

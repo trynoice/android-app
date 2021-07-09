@@ -16,7 +16,6 @@ import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.contrib.DrawerMatchers.isClosed
@@ -308,7 +307,7 @@ class MainActivityTest {
     }
 
     // shouldn't be displayed by default
-    onView(withId(R.id.action_play_pause_toggle)).check(doesNotExist())
+    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), not(isDisplayed()))
 
     // with ongoing playback
     activityScenario.onActivity {

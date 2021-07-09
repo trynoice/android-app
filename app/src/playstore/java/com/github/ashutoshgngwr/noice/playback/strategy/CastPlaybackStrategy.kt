@@ -1,7 +1,6 @@
-package com.github.ashutoshgngwr.noice.cast.playback.strategy
+package com.github.ashutoshgngwr.noice.playback.strategy
 
 import com.github.ashutoshgngwr.noice.model.Sound
-import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategy
 import com.google.android.gms.cast.framework.CastSession
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose

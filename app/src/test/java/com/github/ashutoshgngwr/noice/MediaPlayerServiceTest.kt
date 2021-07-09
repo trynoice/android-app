@@ -2,7 +2,7 @@ package com.github.ashutoshgngwr.noice
 
 import android.content.Intent
 import android.support.v4.media.session.PlaybackStateCompat
-import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
+import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.PlaybackUpdateListener
 import com.github.ashutoshgngwr.noice.playback.Player
@@ -38,9 +38,13 @@ class MediaPlayerServiceTest {
 
   @Before
   fun setup() {
-    // mock so that service is created (onCreate calls CastAPIWrapper constructor via PlayerManager).
-    mockkObject(CastAPIWrapper.Companion)
-    every { CastAPIWrapper.from(any(), any()) } returns mockk(relaxed = true)
+    // mock so that service is created (onCreate calls PlaystoreCastAPIProvider constructor via PlayerManager).
+    ApplicationProvider.getApplicationContext<NoiceApplication>()
+      .setCastAPIProviderFactory(
+        mockk {
+          every { newInstance(any()) } returns mockk(relaxed = true)
+        }
+      )
 
     mockkStatic(EventBus::class)
     mockEventBus = mockk(relaxed = true)

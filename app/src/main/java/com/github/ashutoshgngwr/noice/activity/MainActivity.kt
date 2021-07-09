@@ -19,8 +19,9 @@ import androidx.core.view.GravityCompat
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
+import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
   private lateinit var binding: MainActivityBinding
   private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-  private lateinit var castAPIWrapper: CastAPIWrapper
+  private lateinit var castAPIProvider: CastAPIProvider
   private lateinit var customTabsIntent: CustomTabsIntent
   private lateinit var settingsRepository: SettingsRepository
 
@@ -76,7 +77,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // because cast context is lazy initialized, cast menu item wouldn't show up until
     // re-resuming the activity. adding this to prevent that.
     // This should implicitly init CastContext.
-    castAPIWrapper = CastAPIWrapper.from(this, false)
+    castAPIProvider = (application as NoiceApplication)
+      .getCastAPIProviderFactory()
+      .newInstance(this)
 
     settingsRepository = SettingsRepository.newInstance(this)
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
@@ -177,9 +180,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     super.onPause()
   }
 
+  override fun onDestroy() {
+    castAPIProvider.clearSessionCallbacks()
+    super.onDestroy()
+  }
+
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     super.onCreateOptionsMenu(menu)
-    castAPIWrapper.setUpMenuItem(menu, R.string.cast_media)
+    castAPIProvider.addMenuItem(menu, R.string.cast_media)
     menu.add(0, R.id.action_play_pause_toggle, 0, R.string.play_pause).also {
       it.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
       it.isVisible = PlaybackStateCompat.STATE_STOPPED != playerManagerState

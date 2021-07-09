@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.cast
+package com.github.ashutoshgngwr.noice.provider
 
 import androidx.annotation.VisibleForTesting
 import androidx.media.VolumeProviderCompat

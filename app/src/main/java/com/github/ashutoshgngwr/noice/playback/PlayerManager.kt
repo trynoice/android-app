@@ -13,7 +13,7 @@ import androidx.core.os.HandlerCompat
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
-import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.strategy.LocalPlaybackStrategyFactory
@@ -76,25 +76,28 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
         or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
     )
 
-  private val castAPIWrapper = CastAPIWrapper.from(context, true).apply {
-    onSessionBegin {
-      Log.d(TAG, "onSessionBegin(): switching playback to CastPlaybackStrategy")
-      playbackStrategyFactory = newCastPlaybackStrategyFactory()
-      updatePlaybackStrategies()
-      mediaSession.setPlaybackToRemote(newCastVolumeProvider())
-    }
-
-    onSessionEnd {
-      // onSessionEnded gets called when restarting the activity. So need to ensure that we're not
-      // recreating the LocalPlaybackStrategyFactory again because it will cause [PlaybackStrategy]s to be
-      // recreated resulting glitches in playback.
-      if (playbackStrategyFactory !is LocalPlaybackStrategyFactory) {
-        Log.d(TAG, "onSessionEnd(): switching playback to LocalPlaybackStrategy")
-        playbackStrategyFactory = LocalPlaybackStrategyFactory(context, audioAttributes)
-        mediaSession.setPlaybackToLocal(AudioManager.STREAM_MUSIC)
+  private val castAPIProvider = (context.applicationContext as NoiceApplication)
+    .getCastAPIProviderFactory()
+    .newInstance(context)
+    .apply {
+      onSessionBegin {
+        Log.d(TAG, "onSessionBegin(): switching playback to CastPlaybackStrategy")
+        playbackStrategyFactory = getPlaybackStrategyFactory()
         updatePlaybackStrategies()
+        mediaSession.setPlaybackToRemote(getVolumeProvider())
       }
-    }
+
+      onSessionEnd {
+        // onSessionEnded gets called when restarting the activity. So need to ensure that we're not
+        // recreating the LocalPlaybackStrategyFactory again because it will cause [PlaybackStrategy]s to be
+        // recreated resulting glitches in playback.
+        if (playbackStrategyFactory !is LocalPlaybackStrategyFactory) {
+          Log.d(TAG, "onSessionEnd(): switching playback to LocalPlaybackStrategy")
+          playbackStrategyFactory = LocalPlaybackStrategyFactory(context, audioAttributes)
+          mediaSession.setPlaybackToLocal(AudioManager.STREAM_MUSIC)
+          updatePlaybackStrategies()
+        }
+      }
   }
 
   init {
@@ -308,7 +311,7 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
    */
   fun cleanup() {
     stop()
-    castAPIWrapper.clearSessionCallbacks()
+    castAPIProvider.clearSessionCallbacks()
   }
 
   /**

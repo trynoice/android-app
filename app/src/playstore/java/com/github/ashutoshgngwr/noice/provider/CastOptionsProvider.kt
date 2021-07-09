@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.cast
+package com.github.ashutoshgngwr.noice.provider
 
 import android.content.Context
 import com.github.ashutoshgngwr.noice.BuildConfig

@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.cast
+package com.github.ashutoshgngwr.noice.provider
 
 import com.google.android.gms.cast.framework.CastSession
 import io.mockk.MockKAnnotations

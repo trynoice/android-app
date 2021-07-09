@@ -28,14 +28,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.ashutoshgngwr.noice.activity.AppIntroActivity
 import com.github.ashutoshgngwr.noice.activity.MainActivity
-import com.github.ashutoshgngwr.noice.cast.CastAPIWrapper
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
-import io.mockk.unmockkObject
 import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.AfterClass
@@ -162,20 +159,21 @@ class GenerateScreenshots {
   @Test
   fun soundLibrary() {
     // add a fake Cast button since we can't make the real one appear on an emulator.
-    mockkObject(CastAPIWrapper.Companion)
-    every { CastAPIWrapper.from(any(), any()) } returns mockk(relaxed = true) {
-      every { setUpMenuItem(any(), any()) } answers {
-        firstArg<Menu>().add("fake-cast-button")
-          .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS)
-          .setIcon(R.drawable.cast_ic_notification_small_icon)
-          .setIconTintList(
-            ColorStateList.valueOf(
-              ApplicationProvider.getApplicationContext<Context>()
-                .getColor(R.color.action_menu_item)
-            )
-          )
-      }
-    }
+    ApplicationProvider.getApplicationContext<NoiceApplication>()
+      .setCastAPIProviderFactory(mockk {
+        every { newInstance(any()) } returns mockk(relaxed = true) {
+          every { addMenuItem(any(), any()) } answers {
+            firstArg<Menu>().add("fake-cast-button").apply {
+              setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS)
+              setIcon(R.drawable.cast_ic_notification_small_icon)
+              iconTintList = ColorStateList.valueOf(
+                ApplicationProvider.getApplicationContext<Context>()
+                  .getColor(R.color.action_menu_item)
+              )
+            }
+          }
+        }
+      })
 
     activityScenarioRule.scenario.recreate()
     onView(withId(R.id.sound_list)).perform(
@@ -235,7 +233,6 @@ class GenerateScreenshots {
 
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("1")
-    unmockkObject(CastAPIWrapper.Companion)
   }
 
   @Test
