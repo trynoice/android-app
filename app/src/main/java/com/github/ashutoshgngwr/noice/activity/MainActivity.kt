@@ -17,11 +17,8 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import com.github.ashutoshgngwr.noice.BuildConfig
-import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
@@ -32,6 +29,8 @@ import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment
 import com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
+import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.navigation.NavigationView
 import org.greenrobot.eventbus.EventBus
@@ -77,9 +76,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // because cast context is lazy initialized, cast menu item wouldn't show up until
     // re-resuming the activity. adding this to prevent that.
     // This should implicitly init CastContext.
-    castAPIProvider = (application as NoiceApplication)
-      .getCastAPIProviderFactory()
-      .newInstance(this)
+    castAPIProvider = CastAPIProvider.of(this)
 
     settingsRepository = SettingsRepository.newInstance(this)
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
@@ -133,7 +130,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       AppIntroActivity.maybeStart(this) // show app intro if user hasn't already seen it
     }
 
-    InAppReviewFlowManager.init(this)
+    ReviewFlowProvider.of(application).init(this)
     customTabsIntent = CustomTabsIntent.Builder()
       .setDefaultColorSchemeParams(
         CustomTabColorSchemeParams.Builder()

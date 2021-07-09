@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice
+package com.github.ashutoshgngwr.noice.provider
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
@@ -20,7 +20,7 @@ import org.robolectric.shadows.ShadowLooper
 import kotlin.random.Random
 
 @RunWith(RobolectricTestRunner::class)
-class InAppReviewFlowManagerTest {
+class GitHubReviewFlowProviderTest {
 
   private lateinit var fragmentActivity: FragmentActivity
   private lateinit var mockPrefs: SharedPreferences
@@ -40,20 +40,14 @@ class InAppReviewFlowManagerTest {
     unmockkAll()
   }
 
-  // These are rather shallow tests. These don't check the correctness of the review dialog but only
-  // check if it was shown. This is me being lazy because interacting with dialog would require me
-  // to add another dependency to this source set. For that I'd have to open 'app/build.gradle' and
-  // stuff so just let it go. okay? besides, I have manually tested the shit out of it.
-  // For future me: https://imgur.com/a/ApXEmpZ
-
   @Test
   fun testMaybeAskForReview_whenUnlucky() {
     every { Random.Default.nextInt(any()) } returns 1 // expecting 0 but return something else
     every {
-      mockPrefs.getBoolean(InAppReviewFlowManager.PREF_FLOW_SUCCESSFULLY_COMPLETED, any())
+      mockPrefs.getBoolean(GitHubReviewFlowProvider.PREF_FLOW_SUCCESSFULLY_COMPLETED, any())
     } returns false
 
-    InAppReviewFlowManager.maybeAskForReview(fragmentActivity)
+    GitHubReviewFlowProvider.maybeAskForReview(fragmentActivity)
 
     // dialog fragment should not be shown
     assertEquals(0, fragmentActivity.supportFragmentManager.fragments.size)
@@ -63,10 +57,10 @@ class InAppReviewFlowManagerTest {
   fun testMaybeAskForReview_whenLucky() {
     every { Random.Default.nextInt(any()) } returns 0 // returns the expected value
     every {
-      mockPrefs.getBoolean(InAppReviewFlowManager.PREF_FLOW_SUCCESSFULLY_COMPLETED, any())
+      mockPrefs.getBoolean(GitHubReviewFlowProvider.PREF_FLOW_SUCCESSFULLY_COMPLETED, any())
     } returns false
 
-    InAppReviewFlowManager.maybeAskForReview(fragmentActivity)
+    GitHubReviewFlowProvider.maybeAskForReview(fragmentActivity)
     ShadowLooper.idleMainLooper()
 
     // dialog fragment should be shown
@@ -77,14 +71,14 @@ class InAppReviewFlowManagerTest {
   fun testMaybeAskForReview_whenUserHasCompletedReviewFlow() {
     every { Random.Default.nextInt(any()) } returns 0 // returns the expected value
     every {
-      mockPrefs.getBoolean(InAppReviewFlowManager.PREF_FLOW_SUCCESSFULLY_COMPLETED, any())
+      mockPrefs.getBoolean(GitHubReviewFlowProvider.PREF_FLOW_SUCCESSFULLY_COMPLETED, any())
     } returns true
 
     PreferenceManager.getDefaultSharedPreferences(fragmentActivity).edit(commit = true) {
-      putBoolean(InAppReviewFlowManager.PREF_FLOW_SUCCESSFULLY_COMPLETED, true)
+      putBoolean(GitHubReviewFlowProvider.PREF_FLOW_SUCCESSFULLY_COMPLETED, true)
     }
 
-    InAppReviewFlowManager.maybeAskForReview(fragmentActivity)
+    GitHubReviewFlowProvider.maybeAskForReview(fragmentActivity)
 
     // dialog fragment should not be shown
     assertEquals(0, fragmentActivity.supportFragmentManager.fragments.size)

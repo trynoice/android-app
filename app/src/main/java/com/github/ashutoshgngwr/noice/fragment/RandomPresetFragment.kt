@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
-import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetFragmentBinding
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 
 class RandomPresetFragment : Fragment() {
 
@@ -57,7 +57,7 @@ class RandomPresetFragment : Fragment() {
       PlaybackController.playRandomPreset(requireContext(), tag, intensity)
 
       // maybe show in-app review dialog to the user
-      InAppReviewFlowManager.maybeAskForReview(requireActivity())
+      ReviewFlowProvider.of(requireContext()).maybeAskForReview(requireActivity())
     }
   }
 }

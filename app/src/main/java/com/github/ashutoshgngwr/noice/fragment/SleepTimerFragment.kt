@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SleepTimerFragmentBinding
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.google.android.material.snackbar.Snackbar
 
 class SleepTimerFragment : Fragment() {
@@ -52,6 +52,6 @@ class SleepTimerFragment : Fragment() {
     binding.durationPicker.setResetButtonEnabled(enableResetButton)
     binding.countdownView.startCountdown(remaining)
     // maybe show in-app review dialog to the user
-    InAppReviewFlowManager.maybeAskForReview(requireActivity())
+    ReviewFlowProvider.of(requireContext()).maybeAskForReview(requireActivity())
   }
 }

@@ -38,7 +38,7 @@ class MediaPlayerServiceTest {
 
   @Before
   fun setup() {
-    // mock so that service is created (onCreate calls PlaystoreCastAPIProvider constructor via PlayerManager).
+    // mock so that service is created (onCreate calls CastAPIProvider constructor via PlayerManager).
     ApplicationProvider.getApplicationContext<NoiceApplication>()
       .setCastAPIProviderFactory(
         mockk {

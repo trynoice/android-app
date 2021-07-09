@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice
+package com.github.ashutoshgngwr.noice.provider
 
 import android.content.Context
 import android.util.Log
@@ -12,17 +12,12 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import java.util.concurrent.TimeUnit
 
 /**
- * [InAppReviewFlowManager] manages the complete lifecycle of in-app review API from the Google Play
- * Core API group.
- *
- * It needs to be initialized via [InAppReviewFlowManager.init] before the review flow can be shown
- * to the user using [InAppReviewFlowManager.maybeAskForReview]. The review flow will not always be
- * shown. All original quota restrictions apply from the API. In addition to this,
- * [InAppReviewFlowManager] drops all request to display review flow within a week of a successful
- * launch review flow API call.
+ * [PlaystoreReviewFlowProvider] provides the Google Play Store In-App review flow. The review flow
+ * will not always be shown. All original quota restrictions apply from the API. Additionally
+ * [PlaystoreReviewFlowProvider] drops all request to display review flow within a week of a
+ * successful launch review flow API call (without guarantees that the flow was shown).
  */
-object InAppReviewFlowManager {
-
+object PlaystoreReviewFlowProvider : ReviewFlowProvider {
   private val TAG = this::class.simpleName
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -34,7 +29,7 @@ object InAppReviewFlowManager {
   /**
    * [init] initializes the [ReviewManager] and requests the [ReviewInfo] from the [ReviewManager].
    */
-  fun init(context: Context) {
+  override fun init(context: Context) {
     reviewManager = ReviewManagerFactory.create(context)
     reviewManager.requestReviewFlow()
       .addOnFailureListener {
@@ -50,7 +45,7 @@ object InAppReviewFlowManager {
    * successfully completed the review flow within past 7 days. If both conditions are false,
    * it requests the Google Play API to launch the review flow.
    */
-  fun maybeAskForReview(activity: FragmentActivity) {
+  override fun maybeAskForReview(activity: FragmentActivity) {
     if (!this::reviewInfo.isInitialized) {
       Log.d(TAG, "review info isn't initialized. can not launch review flow!")
       return

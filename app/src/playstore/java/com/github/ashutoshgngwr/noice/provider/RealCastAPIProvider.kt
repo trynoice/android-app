@@ -16,14 +16,14 @@ import com.google.android.gms.cast.framework.CastSession
 import com.google.android.gms.cast.framework.SessionManagerListener
 
 /**
- * [PlaystoreCastAPIProvider] wraps all the Google Cast API functionality used by the application
+ * [RealCastAPIProvider] wraps all the Google Cast API functionality used by the application
  * for the Play Store build variant.
  */
-class PlaystoreCastAPIProvider private constructor(val context: Context) : CastAPIProvider {
+class RealCastAPIProvider private constructor(val context: Context) : CastAPIProvider {
 
   companion object {
     val FACTORY = object : CastAPIProvider.Factory {
-      override fun newInstance(context: Context) = PlaystoreCastAPIProvider(context)
+      override fun newInstance(context: Context) = RealCastAPIProvider(context)
     }
   }
 
@@ -90,7 +90,7 @@ class PlaystoreCastAPIProvider private constructor(val context: Context) : CastA
   }
 
   /**
-   * Removes the [CastSessionManagerListener] that is registered in when [PlaystoreCastAPIProvider] instance
+   * Removes the [CastSessionManagerListener] that is registered in when [RealCastAPIProvider] instance
    * is created.
    */
   override fun clearSessionCallbacks() {

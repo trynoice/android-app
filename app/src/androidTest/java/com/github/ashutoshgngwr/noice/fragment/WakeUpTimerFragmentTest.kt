@@ -18,11 +18,12 @@ import androidx.test.espresso.contrib.PickerActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
-import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import io.mockk.clearMocks
 import io.mockk.every
@@ -48,11 +49,17 @@ class WakeUpTimerFragmentTest {
   val retryTestRule = RetryTestRule(5)
 
   private lateinit var mockPresetRepository: PresetRepository
+  private lateinit var mockReviewFlowProvider: ReviewFlowProvider
   private lateinit var fragmentScenario: FragmentScenario<WakeUpTimerFragment>
 
   @Before
   fun setup() {
-    mockkObject(InAppReviewFlowManager, PresetRepository.Companion, WakeUpTimerManager)
+    mockkObject(PresetRepository.Companion, WakeUpTimerManager)
+
+    mockReviewFlowProvider = mockk(relaxed = true)
+    ApplicationProvider.getApplicationContext<NoiceApplication>()
+      .setReviewFlowProvider(mockReviewFlowProvider)
+
     mockPresetRepository = mockk {
       every { get(null) } returns null
       every { list() } returns emptyArray()
@@ -223,10 +230,10 @@ class WakeUpTimerFragmentTest {
       try {
         verify(exactly = 1) {
           WakeUpTimerManager.set(any(), capture(timerSlot))
-          InAppReviewFlowManager.maybeAskForReview(any())
+          mockReviewFlowProvider.maybeAskForReview(any())
         }
       } finally {
-        clearMocks(WakeUpTimerManager, InAppReviewFlowManager)
+        clearMocks(WakeUpTimerManager, mockReviewFlowProvider)
       }
 
       calendar.timeInMillis = timerSlot.captured.atMillis

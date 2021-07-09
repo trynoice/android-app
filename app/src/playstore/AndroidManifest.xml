@@ -9,7 +9,7 @@
 
     <meta-data
       android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
-      android:value="com.github.ashutoshgngwr.noice.cast.CastOptionsProvider" />
+      android:value="com.github.ashutoshgngwr.noice.provider.CastOptionsProvider" />
 
     <activity
       android:name="com.github.ashutoshgngwr.noice.activity.DonateActivity"

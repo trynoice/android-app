@@ -8,6 +8,7 @@ import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
@@ -21,13 +22,14 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
-import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.Player
+import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import io.mockk.clearStaticMockk
 import io.mockk.every
@@ -55,16 +57,20 @@ class PresetFragmentTest {
   private lateinit var fragmentScenario: FragmentScenario<PresetFragment>
   private lateinit var mockPreset: Preset
   private lateinit var mockPresetRepository: PresetRepository
+  private lateinit var mockReviewFlowProvider: ReviewFlowProvider
 
   @Before
   fun setup() {
     mockkStatic(ShortcutManagerCompat::class)
     mockkObject(
-      InAppReviewFlowManager,
       Preset.Companion,
       PlaybackController,
       PresetRepository.Companion
     )
+
+    mockReviewFlowProvider = mockk(relaxed = true)
+    ApplicationProvider.getApplicationContext<NoiceApplication>()
+      .setReviewFlowProvider(mockReviewFlowProvider)
 
     mockPreset = mockk(relaxed = true) {
       every { id } returns "test-id"
@@ -185,7 +191,7 @@ class PresetFragmentTest {
     verify(exactly = 1) {
       mockPresetRepository.delete("test-id")
       ShortcutManagerCompat.removeDynamicShortcuts(any(), listOf("test-id"))
-      InAppReviewFlowManager.maybeAskForReview(any())
+      mockReviewFlowProvider.maybeAskForReview(any())
     }
   }
 
@@ -249,7 +255,7 @@ class PresetFragmentTest {
     verify(exactly = 1) {
       mockPreset.name = "test-does-not-exists"
       mockPresetRepository.update(capture(presetSlot))
-      InAppReviewFlowManager.maybeAskForReview(any())
+      mockReviewFlowProvider.maybeAskForReview(any())
     }
 
     assertEquals(mockPreset, presetSlot.captured)

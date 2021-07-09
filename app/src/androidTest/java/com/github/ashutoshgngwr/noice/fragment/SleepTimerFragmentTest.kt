@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.fragment
 import android.os.SystemClock
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
@@ -10,12 +11,13 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
-import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.databinding.SleepTimerFragmentBinding
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import io.mockk.every
+import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkAll
 import io.mockk.verify
@@ -39,8 +41,11 @@ class SleepTimerFragmentTest {
 
   @Before
   fun setup() {
-    mockkObject(InAppReviewFlowManager, PlaybackController)
+    mockkObject(PlaybackController)
     every { PlaybackController.scheduleAutoStop(any(), any()) } returns Unit
+
+    ApplicationProvider.getApplicationContext<NoiceApplication>()
+      .setReviewFlowProvider(mockk(relaxed = true))
 
     fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
@@ -53,7 +58,7 @@ class SleepTimerFragmentTest {
   @Test
   fun testDurationPickerListener_onSleepPreScheduled() {
     val before = SystemClock.uptimeMillis()
-    every { PlaybackController.getScheduledAutoStopRemainingDurationMillis(any()) } returns 60 * 1000
+    every { PlaybackController.getScheduledAutoStopRemainingDurationMillis(any()) } returns 60L * 1000
     onView(withId(R.id.duration_picker)).perform(EspressoX.addDurationToPicker(60))
     verify(exactly = 1) {
       PlaybackController.scheduleAutoStop(any(), withArg {

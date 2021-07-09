@@ -4,6 +4,7 @@ import android.support.v4.media.session.PlaybackStateCompat
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
@@ -12,13 +13,14 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
-import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.Player
+import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import io.mockk.every
@@ -49,17 +51,21 @@ class SoundLibraryFragmentTest {
   private lateinit var mockEventBus: EventBus
   private lateinit var mockPresetRepository: PresetRepository
   private lateinit var mockSettingsRepository: SettingsRepository
+  private lateinit var mockReviewFlowProvider: ReviewFlowProvider
   private lateinit var fragmentScenario: FragmentScenario<SoundLibraryFragment>
 
   @Before
   fun setup() {
     mockkStatic(EventBus::class)
     mockkObject(
-      InAppReviewFlowManager,
       PlaybackController,
       PresetRepository.Companion,
       SettingsRepository.Companion
     )
+
+    mockReviewFlowProvider = mockk(relaxed = true)
+    ApplicationProvider.getApplicationContext<NoiceApplication>()
+      .setReviewFlowProvider(mockReviewFlowProvider)
 
     mockEventBus = mockk(relaxed = true)
     mockPresetRepository = mockk(relaxed = true)
@@ -339,7 +345,7 @@ class SoundLibraryFragmentTest {
       assertEquals(mockPlayers[playerState.soundKey]?.timePeriod, playerState.timePeriod)
     }
 
-    verify(exactly = 1) { InAppReviewFlowManager.maybeAskForReview(any()) }
+    verify(exactly = 1) { mockReviewFlowProvider.maybeAskForReview(any()) }
   }
 
   @Test

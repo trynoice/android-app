@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.media.AudioManagerCompat
-import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.databinding.WakeUpTimerFragmentBinding
+import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
@@ -130,7 +130,7 @@ class WakeUpTimerFragment : Fragment() {
     notifyScheduleLeftTime()
 
     // maybe show in-app review dialog to the user
-    InAppReviewFlowManager.maybeAskForReview(requireActivity())
+    ReviewFlowProvider.of(requireContext()).maybeAskForReview(requireActivity())
   }
 
   /**

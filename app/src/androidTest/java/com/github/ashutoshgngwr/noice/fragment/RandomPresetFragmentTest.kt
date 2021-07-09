@@ -2,16 +2,18 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.ashutoshgngwr.noice.InAppReviewFlowManager
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import io.mockk.clearMocks
+import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkAll
 import io.mockk.verify
@@ -32,7 +34,10 @@ class RandomPresetFragmentTest {
 
   @Before
   fun setup() {
-    mockkObject(InAppReviewFlowManager, PlaybackController)
+    mockkObject(PlaybackController)
+    ApplicationProvider.getApplicationContext<NoiceApplication>()
+      .setReviewFlowProvider(mockk(relaxed = true))
+
     fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
 
