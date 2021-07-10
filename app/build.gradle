@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+
+apply plugin: 'com.google.gms.google-services' // sed:fdroid-build:remove
+apply plugin: 'com.google.firebase.crashlytics' // sed:fdroid-build:remove
+
 apply from: 'jacoco.gradle'
 
 android {
@@ -37,7 +41,7 @@ android {
       shrinkResources true
       minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-      signingConfig = signingConfigs.release
+      signingConfig = signingConfigs.release // sed:fdroid-build:remove
     }
   }
 
@@ -105,6 +109,10 @@ dependencies {
   playstoreImplementation 'com.anjlab.android.iab.v3:library:1.1.0'
   playstoreImplementation 'com.google.android.gms:play-services-cast-framework:20.0.0'
   playstoreImplementation 'com.google.android.play:core:1.10.0'
+  playstoreImplementation platform('com.google.firebase:firebase-bom:28.2.0')
+  playstoreImplementation 'com.google.firebase:firebase-analytics-ktx'
+  playstoreImplementation 'com.google.firebase:firebase-crashlytics-ktx'
+
 
   testImplementation "androidx.test:core:$testCoreVersion"
   testImplementation "io.mockk:mockk:$mockkVersion"

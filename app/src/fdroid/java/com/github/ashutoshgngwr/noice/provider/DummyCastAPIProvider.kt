@@ -9,12 +9,10 @@ import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
  * [DummyCastAPIProvider] is a dummy concrete [CastAPIProvider] implementation used by the F-Droid
  * variant, to compile without actual non-free Google Cast API dependency.
  */
-class DummyCastAPIProvider private constructor() : CastAPIProvider {
+object DummyCastAPIProvider : CastAPIProvider {
 
-  companion object {
-    val FACTORY = object : CastAPIProvider.Factory {
-      override fun newInstance(context: Context) = DummyCastAPIProvider()
-    }
+  val FACTORY = object : CastAPIProvider.Factory {
+    override fun newInstance(context: Context) = DummyCastAPIProvider
   }
 
   override fun addMenuItem(menu: Menu, titleResId: Int) = Unit

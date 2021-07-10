@@ -23,17 +23,19 @@ import androidx.test.espresso.contrib.NavigationViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.*
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.EspressoX
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.navigation.NavigationView
 import io.mockk.clearMocks
@@ -65,6 +67,7 @@ class MainActivityTest {
     PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
       .edit(commit = true) {
         putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true)
+        putBoolean(MainActivity.PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true)
       }
 
     activityScenario = launch(MainActivity::class.java)
@@ -399,6 +402,33 @@ class MainActivityTest {
       activityScenario = launch(intent)
       verify(exactly = 1) { PlaybackController.playPresetFromUri(any(), uri) }
       clearMocks(PlaybackController)
+    }
+  }
+
+  @Test
+  fun testUsageDataCollectionDialog() {
+    val mockAnalyticsProvider: AnalyticsProvider = mockk(relaxed = true)
+    val mockCrashlyticsProvider: CrashlyticsProvider = mockk(relaxed = true)
+
+    ApplicationProvider.getApplicationContext<NoiceApplication>().apply {
+      setAnalyticsProvider(mockAnalyticsProvider)
+      setCrashlyticsProvider(mockCrashlyticsProvider)
+    }
+
+    PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
+      .edit { remove(MainActivity.PREF_HAS_SEEN_DATA_COLLECTION_CONSENT) }
+
+    activityScenario.recreate()
+    if (!BuildConfig.IS_PLAY_STORE_BUILD) {
+      EspressoX.waitForView(withText(R.string.share_usage_data_consent_title), not(isDisplayed()))
+      return
+    }
+
+    EspressoX.waitForView(withText(R.string.share_usage_data_consent_title), isDisplayed())
+    onView(withText(R.string.accept)).perform(click())
+    verify(exactly = 1) {
+      mockAnalyticsProvider.setCollectionEnabled(true)
+      mockCrashlyticsProvider.setCollectionEnabled(true)
     }
   }
 }

@@ -8,8 +8,14 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreferenceCompat
+import com.github.ashutoshgngwr.noice.BuildConfig
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.snackbar.Snackbar
@@ -28,6 +34,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
   private lateinit var settingsRepository: SettingsRepository
   private lateinit var presetRepository: PresetRepository
+  private lateinit var crashlyticsProvider: CrashlyticsProvider
+  private lateinit var analyticsProvider: AnalyticsProvider
 
   private val createDocumentActivityLauncher = registerForActivityResult(
     ActivityResultContracts.CreateDocument(),
@@ -43,6 +51,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
     setPreferencesFromResource(R.xml.settings, rootKey)
     settingsRepository = SettingsRepository.newInstance(requireContext())
     presetRepository = PresetRepository.newInstance(requireContext())
+    val app = NoiceApplication.of(requireContext())
+    crashlyticsProvider = app.getCrashlyticsProvider()
+    analyticsProvider = app.getAnalyticsProvider()
 
     findPreference<Preference>(R.string.export_presets_key).setOnPreferenceClickListener {
       createDocumentActivityLauncher.launch("noice-saved-presets.json")
@@ -88,6 +99,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
         true
       }
     }
+
+    findPreference<PreferenceCategory>(R.string.others_key)
+      .isVisible = BuildConfig.IS_PLAY_STORE_BUILD
+
+    findPreference<SwitchPreferenceCompat>(R.string.should_share_usage_data_key)
+      .setOnPreferenceChangeListener { _, checked ->
+        if (checked is Boolean) {
+          crashlyticsProvider.setCollectionEnabled(checked)
+          analyticsProvider.setCollectionEnabled(checked)
+        }
+
+        true
+      }
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -98,11 +122,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
         presetRepository.exportTo(FileOutputStream(it.fileDescriptor))
       }
     } catch (e: Throwable) {
-      Log.i(TAG, e.stackTraceToString())
+      Log.w(TAG, "failed to export saved presets", e)
       when (e) {
         is FileNotFoundException,
         is IOException,
-        is JsonIOException -> showSnackBar(R.string.failed_to_write_file)
+        is JsonIOException -> {
+          showSnackBar(R.string.failed_to_write_file)
+          crashlyticsProvider.apply {
+            log("failed to export saved presets")
+            recordException(e)
+          }
+        }
         else -> throw e
       }
     }
@@ -121,7 +151,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
       when (e) {
         is FileNotFoundException,
         is IOException,
-        is JsonIOException -> showSnackBar(R.string.failed_to_read_file)
+        is JsonIOException -> {
+          showSnackBar(R.string.failed_to_read_file)
+          crashlyticsProvider.apply {
+            log("failed to import saved presets")
+            recordException(e)
+          }
+        }
         is JsonSyntaxException,
         is IllegalArgumentException -> showSnackBar(R.string.invalid_import_file_format)
         else -> throw e

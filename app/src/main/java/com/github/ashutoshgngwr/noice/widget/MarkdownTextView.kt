@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice.widget
 
 import android.content.Context
+import android.text.method.LinkMovementMethod
 import android.util.AttributeSet
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
@@ -16,6 +17,10 @@ class MarkdownTextView : AppCompatTextView {
   constructor(@NonNull context: Context, @Nullable attrs: AttributeSet, defStyleAttr: Int) : super(
     context, attrs, defStyleAttr
   )
+
+  init {
+    movementMethod = LinkMovementMethod.getInstance()
+  }
 
   override fun setText(text: CharSequence?, type: BufferType?) {
     text ?: return

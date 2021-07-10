@@ -20,9 +20,9 @@ import androidx.fragment.app.viewModels
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.DialogFragmentBaseBinding
 import com.github.ashutoshgngwr.noice.databinding.DialogFragmentTextInputBinding
+import com.github.ashutoshgngwr.noice.widget.MarkdownTextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.slider.Slider
-import com.google.android.material.textview.MaterialTextView
 
 
 /**
@@ -134,16 +134,19 @@ class DialogFragment : BottomSheetDialogFragment() {
   private fun show(fragmentManager: FragmentManager, options: DialogFragment.() -> Unit = { }) {
     showNow(fragmentManager, this::class.simpleName)
     viewModel.displayOptions = options // save state for configuration changes.
-    onViewCreated(requireView(), null) // need to manually invoke the callback
+
+    // manually invoke the callback to apply display options.
+    // fragment may be added to the stack before its owner activity is created/visible.
+    view?.also { onViewCreated(it, null) }
   }
 
   /**
-   * Creates a [MaterialTextView] with given string resource and adds it to [R.id.content] layout
-   * in the dialog
+   * Creates a [MarkdownTextView] with given string resource and adds it to [R.id.content] layout
+   * in the dialog.
    */
   fun message(@StringRes resId: Int, vararg formatArgs: Any) {
     addContentView(
-      MaterialTextView(requireContext()).apply {
+      MarkdownTextView(requireContext()).apply {
         val textAppearance = android.R.attr.textAppearance.resolveAttributeValue()
         TextViewCompat.setTextAppearance(this, textAppearance)
         text = getString(resId, *formatArgs)

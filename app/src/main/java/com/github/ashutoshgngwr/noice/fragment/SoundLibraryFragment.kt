@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.MediaPlayerService
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SoundGroupListItemBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundLibraryFragmentBinding
@@ -21,7 +22,6 @@ import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.Player
-import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.snackbar.Snackbar
@@ -123,7 +123,9 @@ class SoundLibraryFragment : Fragment() {
           PlaybackController.requestUpdateEvent(requireContext())
 
           // maybe show in-app review dialog to the user
-          ReviewFlowProvider.of(requireContext()).maybeAskForReview(requireActivity())
+          NoiceApplication.of(requireContext())
+            .getReviewFlowProvider()
+            .maybeAskForReview(requireActivity())
         }
       }
     }

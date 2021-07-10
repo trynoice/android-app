@@ -14,13 +14,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
+import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.MediaPlayerService
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
+import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.fragment.PresetFragment
 import com.github.ashutoshgngwr.noice.fragment.RandomPresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SettingsFragment
@@ -30,7 +34,6 @@ import com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment
 import com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
-import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.navigation.NavigationView
 import org.greenrobot.eventbus.EventBus
@@ -62,6 +65,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       R.id.about to AboutFragment::class.java,
       R.id.support_development to SupportDevelopmentFragment::class.java
     )
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    const val PREF_HAS_SEEN_DATA_COLLECTION_CONSENT = "has_seen_data_collection_consent"
   }
 
   private lateinit var binding: MainActivityBinding
@@ -76,7 +82,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // because cast context is lazy initialized, cast menu item wouldn't show up until
     // re-resuming the activity. adding this to prevent that.
     // This should implicitly init CastContext.
-    castAPIProvider = CastAPIProvider.of(this)
+    castAPIProvider = NoiceApplication.of(this).getCastAPIProviderFactory().newInstance(this)
 
     settingsRepository = SettingsRepository.newInstance(this)
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
@@ -130,7 +136,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       AppIntroActivity.maybeStart(this) // show app intro if user hasn't already seen it
     }
 
-    ReviewFlowProvider.of(application).init(this)
+    NoiceApplication.of(application).getReviewFlowProvider().init(this)
     customTabsIntent = CustomTabsIntent.Builder()
       .setDefaultColorSchemeParams(
         CustomTabColorSchemeParams.Builder()
@@ -138,6 +144,41 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
           .build()
       )
       .build()
+
+    if (BuildConfig.IS_PLAY_STORE_BUILD) {
+      maybeShowDataCollectionConsent()
+    }
+  }
+
+  private fun maybeShowDataCollectionConsent() {
+    val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+    if (prefs.getBoolean(PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, false)) {
+      return
+    }
+
+    val app = NoiceApplication.of(this)
+    val analyticsProvider = app.getAnalyticsProvider()
+    val crashlyticsProvider = app.getCrashlyticsProvider()
+
+    DialogFragment.show(supportFragmentManager) {
+      isCancelable = false
+      title(R.string.share_usage_data_consent_title)
+      message(R.string.share_usage_data_consent_message)
+
+      positiveButton(R.string.accept) {
+        settingsRepository.setShouldShareUsageData(true)
+        analyticsProvider.setCollectionEnabled(true)
+        crashlyticsProvider.setCollectionEnabled(true)
+        prefs.edit { putBoolean(PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true) }
+      }
+
+      negativeButton(R.string.decline) {
+        settingsRepository.setShouldShareUsageData(false)
+        analyticsProvider.setCollectionEnabled(false)
+        crashlyticsProvider.setCollectionEnabled(false)
+        prefs.edit { putBoolean(PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true) }
+      }
+    }
   }
 
   override fun onNewIntent(intent: Intent) {

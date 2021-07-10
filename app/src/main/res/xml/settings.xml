@@ -67,4 +67,17 @@
 
   </PreferenceCategory>
 
+  <PreferenceCategory
+    android:key="@string/others_key"
+    android:title="@string/others">
+
+    <SwitchPreferenceCompat
+      android:defaultValue="false"
+      android:icon="@drawable/ic_settings_analytics"
+      android:key="@string/should_share_usage_data_key"
+      android:summary="@string/should_share_usage_data_summary"
+      android:title="@string/should_share_usage_data" />
+
+  </PreferenceCategory>
+
 </PreferenceScreen>

@@ -214,4 +214,17 @@
     <string name="failed_to_read_file">Failure on reading the selected file!</string>
     <string name="invalid_import_file_format">The import file format is invalid!</string>
     <string name="should_display_sound_icons">Display sound icons</string>
+    <string name="share_usage_data_consent_title">Data Sharing Preferences</string>
+    <string name="share_usage_data_consent_message"><![CDATA[
+        We collect app usage data to improve user experience. We also collect app behaviour data to
+        analyse and diagnose errors encountered during app usage. Read our
+        [privacy policy](https://ashutoshgngwr.github.io/noice/privacy-policy) for further information.\n\n
+        You can configure automatic data sharing at any time inside the app by going to \"**Settings**
+        > **Share usage and behaviour data**\".]]>
+    </string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+    <string name="others">Others</string>
+    <string name="should_share_usage_data">Share usage and behaviour data</string>
+    <string name="should_share_usage_data_summary">Automatically share usage and behaviour data with the developers</string>
 </resources>

@@ -136,4 +136,30 @@ class SettingsRepositoryTest {
       assertEquals(input, settingsRepository.shouldDisplaySoundIcons())
     }
   }
+
+  @Test
+  fun testShouldShareUsageData() {
+    val inputs = arrayOf(true, false)
+    for (input in inputs) {
+      every {
+        prefs.getBoolean(context.getString(R.string.should_share_usage_data_key), any())
+      } returns input
+
+      assertEquals(input, settingsRepository.shouldShareUsageData())
+    }
+  }
+
+  @Test
+  fun testSetShouldShareUsageData() {
+    val inputs = arrayOf(true, false)
+    every { prefsEditor.putBoolean(any(), any()) } returns prefsEditor
+    every { prefsEditor.apply() } returns Unit
+
+    for (input in inputs) {
+      settingsRepository.setShouldShareUsageData(input)
+      verify(exactly = 1) {
+        prefsEditor.putBoolean(context.getString(R.string.should_share_usage_data_key), input)
+      }
+    }
+  }
 }

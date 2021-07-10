@@ -83,4 +83,18 @@ class SettingsRepository private constructor(private val context: Context) {
   fun shouldDisplaySoundIcons(): Boolean {
     return prefs.getBoolean(context.getString(R.string.should_display_sound_icons_key), true)
   }
+
+  /**
+   * Returns the value of switch preference with key [R.string.should_share_usage_data_key].
+   */
+  fun shouldShareUsageData(): Boolean {
+    return prefs.getBoolean(context.getString(R.string.should_share_usage_data_key), false)
+  }
+
+  /**
+   * Sets the value of switch preference with key [R.string.should_share_usage_data_key].
+   */
+  fun setShouldShareUsageData(enabled: Boolean) {
+    prefs.edit { putBoolean(context.getString(R.string.should_share_usage_data_key), enabled) }
+  }
 }

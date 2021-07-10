@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.MediaPlayerService
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
@@ -24,7 +25,6 @@ import com.github.ashutoshgngwr.noice.databinding.PresetListFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.PresetListItemBinding
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
-import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus
@@ -105,6 +105,8 @@ class PresetFragment : Fragment() {
 
   inner class ViewHolder(val binding: PresetListItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
+
+    private val reviewFlowProvider = NoiceApplication.of(requireContext()).getReviewFlowProvider()
 
     init {
       binding.playButton.setOnClickListener {
@@ -231,7 +233,7 @@ class PresetFragment : Fragment() {
           PlaybackController.requestUpdateEvent(requireContext())
 
           // maybe show in-app review dialog to the user
-          ReviewFlowProvider.of(requireContext()).maybeAskForReview(requireActivity())
+          reviewFlowProvider.maybeAskForReview(requireActivity())
         }
       }
     }
@@ -260,7 +262,7 @@ class PresetFragment : Fragment() {
           showSnackBar(R.string.preset_deleted)
 
           // maybe show in-app review dialog to the user
-          ReviewFlowProvider.of(requireContext()).maybeAskForReview(requireActivity())
+          reviewFlowProvider.maybeAskForReview(requireActivity())
         }
       }
     }
