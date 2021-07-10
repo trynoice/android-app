@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.databinding.LibraryFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundGroupListItemBinding
-import com.github.ashutoshgngwr.noice.databinding.SoundLibraryFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundListItemBinding
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
@@ -29,9 +29,9 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class SoundLibraryFragment : Fragment() {
+class LibraryFragment : Fragment() {
 
-  private lateinit var binding: SoundLibraryFragmentBinding
+  private lateinit var binding: LibraryFragmentBinding
   private lateinit var presetRepository: PresetRepository
   private lateinit var settingsRepository: SettingsRepository
 
@@ -83,7 +83,7 @@ class SoundLibraryFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View {
-    binding = SoundLibraryFragmentBinding.inflate(inflater, container, false)
+    binding = LibraryFragmentBinding.inflate(inflater, container, false)
     return binding.root
   }
 

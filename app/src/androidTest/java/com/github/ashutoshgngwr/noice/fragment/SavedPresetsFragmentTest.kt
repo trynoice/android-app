@@ -48,13 +48,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class PresetFragmentTest {
+class SavedPresetsFragmentTest {
 
   @Rule
   @JvmField
   val retryTestRule = RetryTestRule(5)
 
-  private lateinit var fragmentScenario: FragmentScenario<PresetFragment>
+  private lateinit var fragmentScenario: FragmentScenario<SavedPresetsFragment>
   private lateinit var mockPreset: Preset
   private lateinit var mockPresetRepository: PresetRepository
   private lateinit var mockReviewFlowProvider: ReviewFlowProvider
@@ -112,8 +112,8 @@ class PresetFragmentTest {
     // stub the original method. Without stubbing, mockk will also run the real implementation.
     every { PlaybackController.playPreset(any(), any()) } returns Unit
 
-    onView(withId(R.id.preset_list)).perform(
-      RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
+    onView(withId(R.id.list)).perform(
+      RecyclerViewActions.actionOnItem<SavedPresetsFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
         EspressoX.clickInItem(R.id.play_button)
       )
@@ -124,7 +124,7 @@ class PresetFragmentTest {
 
   @Test
   fun testRecyclerViewItem_stopButton() {
-    // ensure that PresetFragment assumes it is playing a preset
+    // ensure that SavedPresetsFragment assumes it is playing a preset
     every { Preset.from(any(), any()) } returns mockPreset
     fragmentScenario.onFragment {
       it.onPlayerManagerUpdate(mockk(relaxed = true) {
@@ -132,8 +132,8 @@ class PresetFragmentTest {
       })
     }
 
-    onView(withId(R.id.preset_list)).perform(
-      RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
+    onView(withId(R.id.list)).perform(
+      RecyclerViewActions.actionOnItem<SavedPresetsFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
         EspressoX.clickInItem(R.id.play_button)
       )
@@ -148,8 +148,8 @@ class PresetFragmentTest {
     every { mockPreset.toUri() } returns Uri.parse(presetUri)
 
     // open context menu
-    onView(withId(R.id.preset_list)).perform(
-      RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
+    onView(withId(R.id.list)).perform(
+      RecyclerViewActions.actionOnItem<SavedPresetsFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
         EspressoX.clickInItem(R.id.menu_button)
       )
@@ -176,8 +176,8 @@ class PresetFragmentTest {
     every { mockPresetRepository.delete(any()) } returns true
 
     // open context menu
-    onView(withId(R.id.preset_list)).perform(
-      RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
+    onView(withId(R.id.list)).perform(
+      RecyclerViewActions.actionOnItem<SavedPresetsFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
         EspressoX.clickInItem(R.id.menu_button)
       )
@@ -197,7 +197,7 @@ class PresetFragmentTest {
 
   @Test
   fun testRecyclerViewItem_deleteOption_onPresetPlaying() {
-    // ensure that PresetFragment assumes it is playing a preset
+    // ensure that SavedPresetsFragment assumes it is playing a preset
     every { Preset.from(any(), any()) } returns mockPreset
     every { mockPresetRepository.delete(any()) } returns true
 
@@ -208,8 +208,8 @@ class PresetFragmentTest {
     }
 
     // open context menu
-    onView(withId(R.id.preset_list)).perform(
-      RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
+    onView(withId(R.id.list)).perform(
+      RecyclerViewActions.actionOnItem<SavedPresetsFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
         EspressoX.clickInItem(R.id.menu_button)
       )
@@ -228,8 +228,8 @@ class PresetFragmentTest {
     every { mockPresetRepository.update(any()) } returns Unit
 
     // open context menu
-    onView(withId(R.id.preset_list)).perform(
-      RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
+    onView(withId(R.id.list)).perform(
+      RecyclerViewActions.actionOnItem<SavedPresetsFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
         EspressoX.clickInItem(R.id.menu_button)
       )
@@ -274,8 +274,8 @@ class PresetFragmentTest {
       } returns pinShortcutSupportedExpectations[i]
 
       // open context menu
-      onView(withId(R.id.preset_list)).perform(
-        RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
+      onView(withId(R.id.list)).perform(
+        RecyclerViewActions.actionOnItem<SavedPresetsFragment.ViewHolder>(
           hasDescendant(allOf(withId(R.id.title), withText("test"))),
           EspressoX.clickInItem(R.id.menu_button)
         )
@@ -321,8 +321,8 @@ class PresetFragmentTest {
     every { ShortcutManagerCompat.getDynamicShortcuts(any()) } returns mutableListOf()
 
     // open context menu
-    onView(withId(R.id.preset_list)).perform(
-      RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
+    onView(withId(R.id.list)).perform(
+      RecyclerViewActions.actionOnItem<SavedPresetsFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
         EspressoX.clickInItem(R.id.menu_button)
       )
@@ -348,8 +348,8 @@ class PresetFragmentTest {
     )
 
     // open context menu
-    onView(withId(R.id.preset_list)).perform(
-      RecyclerViewActions.actionOnItem<PresetFragment.ViewHolder>(
+    onView(withId(R.id.list)).perform(
+      RecyclerViewActions.actionOnItem<SavedPresetsFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
         EspressoX.clickInItem(R.id.menu_button)
       )

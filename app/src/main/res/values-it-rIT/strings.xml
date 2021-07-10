@@ -114,10 +114,10 @@
 \n</string>
     <string name="appintro__timer_title">Hai problemi a coricarti o a risvegliarti\?</string>
     <string name="appintro__timer_desc">Un po\' di atmosfera può aiutarti ad addormentarti senza fatica. Usa il timer di spegnimento per permettere a Noice di spegnersi automaticamente. Allo stesso modo, per risvegliarti in un ambiente tranquillo, puoi usare il timer di risveglio per impostare la sveglia.</string>
-    <string name="appintro__sound_library_title">Crea i tuoi ambienti perfetti</string>
-    <string name="appintro__sound_library_desc">Usa il potenziometro del volume per adeguare il volume dei suoni. Ad ogni ripetizioni di suoni non in loop, verrà casualmente selezionato un tempo di ritardo nel range impostato dal potenziometro del tempo.</string>
-    <string name="appintro__preset_title">Salva i tuoi missaggi preferiti</string>
-    <string name="appintro__preset_desc">Dopo aver riprodotto alcuni suoni, puoi usare il pulsante nell\'angolo in basso per salvare il tuo missaggio. Per riutilizzare un missaggio salvato, puoi consultare la lista dei preset dal menu dell\'app.</string>
+    <string name="appintro__library_title">Crea i tuoi ambienti perfetti</string>
+    <string name="appintro__library_desc">Usa il potenziometro del volume per adeguare il volume dei suoni. Ad ogni ripetizioni di suoni non in loop, verrà casualmente selezionato un tempo di ritardo nel range impostato dal potenziometro del tempo.</string>
+    <string name="appintro__saved_presets_title">Salva i tuoi missaggi preferiti</string>
+    <string name="appintro__saved_presets_desc">Dopo aver riprodotto alcuni suoni, puoi usare il pulsante nell\'angolo in basso per salvare il tuo missaggio. Per riutilizzare un missaggio salvato, puoi consultare la lista dei preset dal menu dell\'app.</string>
     <string name="appintro__getting_started_desc_0">Scorri a sinistra per conoscere tutte le funzionalità!</string>
     <string name="appintro__chromecast_title">Abilitato a Chromecast</string>
     <string name="appintro__chromecast_desc">Usa Noice per trasmettere l\'atmosfera ad altri dispositivi abilitati a Chromecast, come altoparlanti, TV, ecc.</string>

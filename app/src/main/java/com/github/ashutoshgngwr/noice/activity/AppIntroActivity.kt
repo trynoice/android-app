@@ -56,9 +56,9 @@ class AppIntroActivity : AppIntro() {
     )
     addSlide(
       AppIntroFragment.newInstance(
-        title = getString(R.string.appintro__sound_library_title),
-        description = getString(R.string.appintro__sound_library_desc),
-        imageDrawable = R.drawable.ic_appintro_sound_library,
+        title = getString(R.string.appintro__library_title),
+        description = getString(R.string.appintro__library_desc),
+        imageDrawable = R.drawable.ic_appintro_library,
         titleColor = ActivityCompat.getColor(this, R.color.appintro__text_color),
         descriptionColor = ActivityCompat.getColor(this, R.color.appintro__text_color),
         backgroundColor = ActivityCompat.getColor(this, R.color.appintro_slide_1__background)
@@ -66,9 +66,9 @@ class AppIntroActivity : AppIntro() {
     )
     addSlide(
       AppIntroFragment.newInstance(
-        title = getString(R.string.appintro__preset_title),
-        description = getString(R.string.appintro__preset_desc),
-        imageDrawable = R.drawable.ic_appintro_preset,
+        title = getString(R.string.appintro__saved_presets_title),
+        description = getString(R.string.appintro__saved_presets_desc),
+        imageDrawable = R.drawable.ic_appintro_saved_presets,
         titleColor = ActivityCompat.getColor(this, R.color.appintro__text_color),
         descriptionColor = ActivityCompat.getColor(this, R.color.appintro__text_color),
         backgroundColor = ActivityCompat.getColor(this, R.color.appintro_slide_2__background)

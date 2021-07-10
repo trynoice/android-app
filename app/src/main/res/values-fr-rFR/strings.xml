@@ -97,13 +97,13 @@
     <string name="appintro__getting_started_desc_0">Glissez vers la gauche pour connaître toutes les fonctionnalités !</string>
     <string name="appintro__getting_started_desc_1">C\'est parti !</string>
     <string name="appintro__getting_started_title">Bienvenue</string>
-    <string name="appintro__preset_desc">
+    <string name="appintro__saved_presets_desc">
     Après avoir joué quelques sons, vous pouvez utiliser le bouton en bas à droite pour sauvegarder le mix.
     Pour réutiliser un mix sauvegardé, allez dans la liste des réglages depuis le menu de l\'application.
   </string>
-    <string name="appintro__preset_title">Sauvegardez vos mix préférés</string>
-    <string name="appintro__sound_library_desc">Utilisez les boutons de volume pour régler le volume des sons. À chaque répétition d\'un son sans-boucle, un délai aléatoire sera généré dans la plage établie par le curseur de temps.</string>
-    <string name="appintro__sound_library_title">Créez votre environnement idéal</string>
+    <string name="appintro__saved_presets_title">Sauvegardez vos mix préférés</string>
+    <string name="appintro__library_desc">Utilisez les boutons de volume pour régler le volume des sons. À chaque répétition d\'un son sans-boucle, un délai aléatoire sera généré dans la plage établie par le curseur de temps.</string>
+    <string name="appintro__library_title">Créez votre environnement idéal</string>
     <string name="appintro__timer_desc">
     Une ambiance légère peut vous aider à vous endormir plus facilement. Utilisez la minuterie pour laisser Noice
     s\'eteindre tout seul. De la même manière, pour se réveiller au calme, utilisez le réveil pour régler l\'alarme.

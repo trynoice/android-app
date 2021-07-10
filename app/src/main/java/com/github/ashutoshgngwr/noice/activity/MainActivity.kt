@@ -25,11 +25,11 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
-import com.github.ashutoshgngwr.noice.fragment.PresetFragment
+import com.github.ashutoshgngwr.noice.fragment.LibraryFragment
+import com.github.ashutoshgngwr.noice.fragment.SavedPresetsFragment
 import com.github.ashutoshgngwr.noice.fragment.RandomPresetFragment
 import com.github.ashutoshgngwr.noice.fragment.SettingsFragment
 import com.github.ashutoshgngwr.noice.fragment.SleepTimerFragment
-import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
 import com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment
 import com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
@@ -56,8 +56,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // menu item is clicked in the navigation drawer.
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     val NAVIGATED_FRAGMENTS = mapOf(
-      R.id.library to SoundLibraryFragment::class.java,
-      R.id.saved_presets to PresetFragment::class.java,
+      R.id.library to LibraryFragment::class.java,
+      R.id.saved_presets to SavedPresetsFragment::class.java,
       R.id.sleep_timer to SleepTimerFragment::class.java,
       R.id.wake_up_timer to WakeUpTimerFragment::class.java,
       R.id.random_preset to RandomPresetFragment::class.java,
@@ -123,8 +123,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       }
     }
 
-    // set sound library fragment when activity is created initially (screen-orientation change
-    // will recall onCreate which will cause weird and unexpected fragment changes otherwise).
+    // set library fragment when activity is created initially (screen-orientation change will recall
+    // onCreate which will cause weird and unexpected fragment changes otherwise).
     if (supportFragmentManager.backStackEntryCount < 1) {
       var defaultFragmentID = R.id.library
       if (settingsRepository.shouldDisplaySavedPresetsAsHomeScreen()) {

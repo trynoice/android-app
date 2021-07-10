@@ -31,8 +31,8 @@ import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
-import com.github.ashutoshgngwr.noice.fragment.PresetFragment
-import com.github.ashutoshgngwr.noice.fragment.SoundLibraryFragment
+import com.github.ashutoshgngwr.noice.fragment.SavedPresetsFragment
+import com.github.ashutoshgngwr.noice.fragment.LibraryFragment
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
@@ -83,10 +83,10 @@ class MainActivityTest {
   }
 
   @Test
-  fun testIfSoundLibraryIsVisibleOnStart() {
+  fun testIfLibraryIsVisibleOnStart() {
     activityScenario.onActivity {
       assertEquals(
-        SoundLibraryFragment::class.java.simpleName,
+        LibraryFragment::class.java.simpleName,
         it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
       )
 
@@ -109,7 +109,7 @@ class MainActivityTest {
     activityScenario = launch(MainActivity::class.java)
     activityScenario.onActivity {
       assertEquals(
-        PresetFragment::class.java.simpleName,
+        SavedPresetsFragment::class.java.simpleName,
         it.supportFragmentManager.getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1).name
       )
 
@@ -237,7 +237,7 @@ class MainActivityTest {
     activityScenario.onActivity {
       it.onBackPressed()
       assertEquals(
-        PresetFragment::class.java.simpleName,
+        SavedPresetsFragment::class.java.simpleName,
         it.supportFragmentManager
           .getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1)
           .name
@@ -245,7 +245,7 @@ class MainActivityTest {
 
       it.onBackPressed()
       assertEquals(
-        SoundLibraryFragment::class.java.simpleName,
+        LibraryFragment::class.java.simpleName,
         it.supportFragmentManager
           .getBackStackEntryAt(it.supportFragmentManager.backStackEntryCount - 1)
           .name
@@ -261,7 +261,7 @@ class MainActivityTest {
 
       assertFalse(
         it.supportFragmentManager.popBackStackImmediate(
-          PresetFragment::class.java.simpleName,
+          SavedPresetsFragment::class.java.simpleName,
           FragmentManager.POP_BACK_STACK_INCLUSIVE
         )
       )

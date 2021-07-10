@@ -130,16 +130,16 @@
     <string name="appintro__getting_started_desc_0">Swipe left to get to know all the features!</string>
     <string name="appintro__getting_started_desc_1">Let\'s get started!</string>
     <string name="appintro__getting_started_title">Welcome</string>
-    <string name="appintro__preset_desc">
+    <string name="appintro__saved_presets_desc">
     After playing a few sounds, you can use the button in the bottom end corner to save your mix.
     To reuse a stored mix, you can visit the preset list from the app menu.
   </string>
-    <string name="appintro__preset_title">Save your favourite mixes</string>
-    <string name="appintro__sound_library_desc">
+    <string name="appintro__saved_presets_title">Save your favourite mixes</string>
+    <string name="appintro__library_desc">
     Use the volume slider to adjust sound volumes. At each repetition of non-looping sounds, a delay
     period is selected randomly from the range set by the time slider.
   </string>
-    <string name="appintro__sound_library_title">Create your perfect surroundings</string>
+    <string name="appintro__library_title">Create your perfect surroundings</string>
     <string name="appintro__timer_desc">
     A little ambience can help you fall asleep effortlessly. Use the sleep timer to let Noice shut
     itself down. Similarly, to wake up to a calm environment, use the wake-up timer to set the alarm.

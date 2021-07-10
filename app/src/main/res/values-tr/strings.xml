@@ -114,17 +114,17 @@
     <string name="appintro__getting_started_desc_0">Tüm özellikleri öğrenmek için sola kaydırın!</string>
     <string name="appintro__getting_started_desc_1">Hadi başlayalım!</string>
     <string name="appintro__getting_started_title">Hoş geldiniz</string>
-    <string name="appintro__preset_desc">
+    <string name="appintro__saved_presets_desc">
     Birkaç ses oynattıktan sonra alttaki tuşu kullanarak karışımınızı
     kaydedeblirsiniz. Kaydettiğiniz bir karışımı yeniden kullanmak için gezinti
     çubuğundan Kayıtlar listesini ziyaret edebilirsiniz.
   </string>
-    <string name="appintro__preset_title">En sevdiğin karışımları kaydet</string>
-    <string name="appintro__sound_library_desc">
+    <string name="appintro__saved_presets_title">En sevdiğin karışımları kaydet</string>
+    <string name="appintro__library_desc">
     Ses ayarıyla sese özel ses seviyesini ayarlayabilirken, zaman ayarıyla
     döngüdeki seslerin tekrar etme sıklığını ayarlayabilirsiniz.
   </string>
-    <string name="appintro__sound_library_title">Mükemmel ortamınızı yaratın</string>
+    <string name="appintro__library_title">Mükemmel ortamınızı yaratın</string>
     <string name="appintro__timer_desc">
     Ufak bir ambiyans uyumanızda yardımcı olabilir. Uyku Zamanlayıcı ile sesin
     kendiliğinden kesilmesini sağlayabilir, sakin bir ortamda uyanmak içinse

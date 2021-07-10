@@ -114,8 +114,8 @@
 \n</string>
     <string name="support_development__donate">Donera</string>
     <string name="appintro__timer_title">Har du problem med att somna eller att vakna upp\?</string>
-    <string name="appintro__sound_library_title">Skapa dina perfekta omgivningar</string>
-    <string name="appintro__preset_title">Spara dina favorit-mixar</string>
+    <string name="appintro__library_title">Skapa dina perfekta omgivningar</string>
+    <string name="appintro__saved_presets_title">Spara dina favorit-mixar</string>
     <string name="appintro__getting_started_title">Välkommen</string>
     <string name="appintro__getting_started_desc_1">Låt oss börja!</string>
     <string name="appintro__getting_started_desc_0">Svep till vänster för att lära känna alla funktioner!</string>

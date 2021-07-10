@@ -54,10 +54,10 @@
     <string name="support_development__donate">Quyên góp</string>
     <string name="appintro__timer_title">Gặp khó khăn khi ngủ hoặc thức dậy\?</string>
     <string name="appintro__timer_desc">Sự tĩnh lặng có thể giúp bạn đi vào giấc ngủ dễ dàng hơn. Dùng tính năng hẹn giờ ngủ để Noice tự động tắt. Bạn cũng có thể dùng tính năng hẹn giờ thức dậy để đặt báo thức.</string>
-    <string name="appintro__sound_library_title">Tạo vùng bao quanh hoàn hảo của bạn</string>
-    <string name="appintro__sound_library_desc">Sử dụng cần trượt âm lượng để điều chỉnh âm lượng âm thanh. Tại mỗi lần lặp lại các âm thanh không tạo thành vòng lặp, một khoảng thời gian trì hoãn được chọn ngẫu nhiên từ phạm vi được cần trượt thời gian đặt.</string>
-    <string name="appintro__preset_title">Lưu các bản pha trộn yêu thích của bạn</string>
-    <string name="appintro__preset_desc">Sau khi phát một vài âm thanh, bạn có thể sử dụng nút ở góc dưới cùng để lưu bản pha trộn của bạn. Để sử dụng lại một bản pha trộn đã lưu trữ, bạn có thể đi đến danh sách các thiết lập trước từ menu ứng dụng.</string>
+    <string name="appintro__library_title">Tạo vùng bao quanh hoàn hảo của bạn</string>
+    <string name="appintro__library_desc">Sử dụng cần trượt âm lượng để điều chỉnh âm lượng âm thanh. Tại mỗi lần lặp lại các âm thanh không tạo thành vòng lặp, một khoảng thời gian trì hoãn được chọn ngẫu nhiên từ phạm vi được cần trượt thời gian đặt.</string>
+    <string name="appintro__saved_presets_title">Lưu các bản pha trộn yêu thích của bạn</string>
+    <string name="appintro__saved_presets_desc">Sau khi phát một vài âm thanh, bạn có thể sử dụng nút ở góc dưới cùng để lưu bản pha trộn của bạn. Để sử dụng lại một bản pha trộn đã lưu trữ, bạn có thể đi đến danh sách các thiết lập trước từ menu ứng dụng.</string>
     <string name="appintro__getting_started_title">Chào mừng</string>
     <string name="appintro__getting_started_desc_1">Hãy bắt đầu nào!</string>
     <string name="appintro__getting_started_desc_0">Vuốt sang trái để biết tất cả tính năng!</string>

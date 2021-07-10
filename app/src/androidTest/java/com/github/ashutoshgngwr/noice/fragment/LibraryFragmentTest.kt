@@ -42,7 +42,7 @@ import org.junit.runner.RunWith
 import kotlin.random.Random
 
 @RunWith(AndroidJUnit4::class)
-class SoundLibraryFragmentTest {
+class LibraryFragmentTest {
 
   @Rule
   @JvmField
@@ -52,7 +52,7 @@ class SoundLibraryFragmentTest {
   private lateinit var mockPresetRepository: PresetRepository
   private lateinit var mockSettingsRepository: SettingsRepository
   private lateinit var mockReviewFlowProvider: ReviewFlowProvider
-  private lateinit var fragmentScenario: FragmentScenario<SoundLibraryFragment>
+  private lateinit var fragmentScenario: FragmentScenario<LibraryFragment>
 
   @Before
   fun setup() {

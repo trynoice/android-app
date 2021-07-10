@@ -106,7 +106,7 @@
     <string name="later">Pózniej</string>
     <string name="in_app_feedback__title">Wyślij recenzje</string>
     <string name="appintro__timer_title">Problem z zasypianiem albo wstawaniem\?</string>
-    <string name="appintro__preset_title">Zapisz swoje ulubione miksy</string>
+    <string name="appintro__saved_presets_title">Zapisz swoje ulubione miksy</string>
     <string name="appintro__getting_started_title">Witaj</string>
     <string name="appintro__getting_started_desc_1">Zaczynajmy!</string>
     <string name="appintro__getting_started_desc_0">Przesuń w lewo aby poznać wszystkie funkcje!</string>
@@ -141,9 +141,9 @@
     <string name="add_to_app_shortcuts">Dodaj do skrótów aplikacji</string>
     <string name="in_app_feedback__description">Chcielibyśmy usłyszeć od Ciebie o aplikacji. Poświęć chwilę, aby odwiedzić nasze repozytorium GitHub. Jeśli nie podobała Ci się aplikacja, rozważ otwarcie problemu, w którym wyjaśnisz swoje obawy. W przeciwnym razie oznacz projekt gwiazdką, aby okazać miłość i wsparcie.</string>
     <string name="appintro__timer_desc">Odrobina atmosfery może pomóc Ci bez wysiłku zasnąć. Użyj wyłącznika czasowego, aby Noice wyłączył się. Podobnie, aby obudzić się w spokojnym otoczeniu, użyj budzika do ustawienia alarmu.</string>
-    <string name="appintro__sound_library_title">Stwórz swoje idealne otoczenie</string>
-    <string name="appintro__sound_library_desc">Użyj suwaka głośności, aby dostosować głośność dźwięku. Przy każdym powtórzeniu dźwięków niezapętlonych okres opóźnienia jest wybierany losowo z zakresu ustawionego przez suwak czasu.</string>
-    <string name="appintro__preset_desc">Po odtworzeniu kilku dźwięków możesz użyć przycisku w dolnym rogu, aby zapisać swój miks. Aby ponownie użyć zapisanej składanki, możesz przejść do listy ustawień wstępnych w menu aplikacji.</string>
+    <string name="appintro__library_title">Stwórz swoje idealne otoczenie</string>
+    <string name="appintro__library_desc">Użyj suwaka głośności, aby dostosować głośność dźwięku. Przy każdym powtórzeniu dźwięków niezapętlonych okres opóźnienia jest wybierany losowo z zakresu ustawionego przez suwak czasu.</string>
+    <string name="appintro__saved_presets_desc">Po odtworzeniu kilku dźwięków możesz użyć przycisku w dolnym rogu, aby zapisać swój miks. Aby ponownie użyć zapisanej składanki, możesz przejść do listy ustawień wstępnych w menu aplikacji.</string>
     <string name="appintro__chromecast_desc">Użyj Noice, aby przesłać atmosferę do innych urządzeń obsługujących Chromecast, takich jak głośniki, telewizory itp.</string>
     <string name="should_update_media_volume">Zaktualizuj głośność multimediów urządzenia przed uruchomieniem ustawień wstępnych</string>
     <string name="saved_presets_as_home_screen_summary">Pokaż zapisane ustawienia po uruchomieniu</string>

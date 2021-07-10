@@ -101,16 +101,16 @@
     <string name="appintro__getting_started_desc_0">Geser ke kiri untuk mengenal semua fitur!</string>
     <string name="appintro__getting_started_desc_1">Mari kita mulai!</string>
     <string name="appintro__getting_started_title">Selamat Datang</string>
-    <string name="appintro__preset_desc">
+    <string name="appintro__saved_presets_desc">
     Setelah memainkan beberapa suara, Anda dapat menggunakan tombol di sudut ujung bawah untuk menyimpan campuran Anda.
     Untuk menggunakan kembali campuran yang disimpan, Anda dapat mengunjungi daftar prasetel dari menu aplikasi.
  </string>
-    <string name="appintro__preset_title">Simpan campuran favorit Anda</string>
-    <string name="appintro__sound_library_desc">
+    <string name="appintro__saved_presets_title">Simpan campuran favorit Anda</string>
+    <string name="appintro__library_desc">
     Gunakan penggeser volume untuk menyesuaikan volume suara. Pada setiap pengulangan suara non-looping, terjadi penundaan
     periode dipilih secara acak dari rentang yang ditetapkan oleh penggeser waktu.
  </string>
-    <string name="appintro__sound_library_title">Ciptakan lingkungan Anda yang sempurna</string>
+    <string name="appintro__library_title">Ciptakan lingkungan Anda yang sempurna</string>
     <string name="appintro__timer_desc">
     Sedikit suasana dapat membantu Anda tertidur dengan mudah. Gunakan pengatur waktu tidur untuk menutup Noice
     secara otomatis. Demikian pula, untuk bangun di lingkungan yang tenang, gunakan pengatur waktu bangun untuk menyetel alarm.

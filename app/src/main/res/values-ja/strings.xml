@@ -14,10 +14,10 @@
     <string name="support_development__donate">寄付</string>
     <string name="appintro__timer_title">眠りにつきにくかったり、起床しにくかったりしませんか\?</string>
     <string name="appintro__timer_desc">少しの環境音で、眠りにつきやすくなります。スリープタイマーを使うことで、Noiceを自動的にシャットダウンできます。同様に、穏やかな環境で目を覚ましたいときには、起床タイマーを使ってアラームをセットできます。</string>
-    <string name="appintro__sound_library_title">完璧なサラウンドを作成</string>
-    <string name="appintro__sound_library_desc">音量スライダーを利用して音の大きさを調節できます。ループしない音の繰り返しごとに、タイムスライダーで設定した範囲からランダムに遅延時間が選択されます。</string>
-    <string name="appintro__preset_title">あなたのお気に入りのミックスを保存</string>
-    <string name="appintro__preset_desc">いくつかの音を再生した後、下端にあるボタンを使ってミックスを保存することができます。保存したミックスを再生するには、メニューからプリセットリストに移動します。</string>
+    <string name="appintro__library_title">完璧なサラウンドを作成</string>
+    <string name="appintro__library_desc">音量スライダーを利用して音の大きさを調節できます。ループしない音の繰り返しごとに、タイムスライダーで設定した範囲からランダムに遅延時間が選択されます。</string>
+    <string name="appintro__saved_presets_title">あなたのお気に入りのミックスを保存</string>
+    <string name="appintro__saved_presets_desc">いくつかの音を再生した後、下端にあるボタンを使ってミックスを保存することができます。保存したミックスを再生するには、メニューからプリセットリストに移動します。</string>
     <string name="appintro__getting_started_title">ようこそ</string>
     <string name="appintro__getting_started_desc_1">さあ、はじめよう!</string>
     <string name="appintro__getting_started_desc_0">左へスワイプすることで全機能を確認することができます!</string>

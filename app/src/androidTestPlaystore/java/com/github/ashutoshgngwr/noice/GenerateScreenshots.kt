@@ -28,7 +28,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.ashutoshgngwr.noice.activity.AppIntroActivity
 import com.github.ashutoshgngwr.noice.activity.MainActivity
-import com.github.ashutoshgngwr.noice.fragment.PresetFragment
+import com.github.ashutoshgngwr.noice.fragment.SavedPresetsFragment
 import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import io.mockk.every
@@ -157,7 +157,7 @@ class GenerateScreenshots {
   }
 
   @Test
-  fun soundLibrary() {
+  fun library() {
     // add a fake Cast button since we can't make the real one appear on an emulator.
     ApplicationProvider.getApplicationContext<NoiceApplication>()
       .setCastAPIProviderFactory(mockk {
@@ -244,9 +244,9 @@ class GenerateScreenshots {
     EspressoX.waitForView(withId(R.id.navigation_drawer))
       .perform(NavigationViewActions.navigateTo(R.id.saved_presets))
 
-    EspressoX.waitForView(withId(R.id.preset_list))
+    EspressoX.waitForView(withId(R.id.list))
       .perform(
-        actionOnItemAtPosition<PresetFragment.ViewHolder>(
+        actionOnItemAtPosition<SavedPresetsFragment.ViewHolder>(
           1, EspressoX.clickInItem(R.id.play_button)
         )
       )

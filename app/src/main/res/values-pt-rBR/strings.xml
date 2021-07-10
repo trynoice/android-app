@@ -104,16 +104,16 @@
   </string>
     <string name="appintro__getting_started_desc_1">Vamos começar!</string>
     <string name="appintro__getting_started_title">Bem-vindo</string>
-    <string name="appintro__preset_desc">
+    <string name="appintro__saved_presets_desc">
     Depois de tocar alguns sons, você pode usar o botão no canto inferior para salvar sua mixagem.
     Para reutilizar um mix armazenado, pode visitar a lista de ajustes no menu do aplicativo.
   </string>
-    <string name="appintro__preset_title">Salve seus mixes favoritos</string>
-    <string name="appintro__sound_library_desc">
+    <string name="appintro__saved_presets_title">Salve seus mixes favoritos</string>
+    <string name="appintro__library_desc">
     Use a barra de volume para ajustar o volume dos sons. A cada repetição de sons sem loop, um
     período de atraso é selecionado aleatoriamente a partir do intervalo definido na barra de tempo.
   </string>
-    <string name="appintro__sound_library_title">Crie seu ambiente perfeito</string>
+    <string name="appintro__library_title">Crie seu ambiente perfeito</string>
     <string name="appintro__timer_desc">
     Um pouco de ambiente pode ajudá-lo a adormecer sem esforço. Use o temporizador para deixar
     o Noice desligar-se sozinho. Da mesma forma, para acordar com um ambiente calmo,

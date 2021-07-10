@@ -24,10 +24,10 @@
     <string name="support_development__donate">捐助</string>
     <string name="appintro__timer_title">入睡或醒来有困难？</string>
     <string name="appintro__timer_desc">小小的环境可以帮助你毫不费力地入睡。使用睡眠定时器，让Noice自动关闭。同样，要想在平静的环境中醒来，可以使用唤醒定时器来设置闹钟。</string>
-    <string name="appintro__sound_library_title">创造完美的环境</string>
-    <string name="appintro__sound_library_desc">使用音量滑块调整音量。每重复一次非循环声音时，从时间滑块设置的范围中随机选择一个延迟期。</string>
-    <string name="appintro__preset_title">保存你最喜欢的混音</string>
-    <string name="appintro__preset_desc">在播放几个声音后，你可以使用底端角落的按钮来保存你的混音。要重新使用存储的混音，可以从应用菜单中访问预设列表。</string>
+    <string name="appintro__library_title">创造完美的环境</string>
+    <string name="appintro__library_desc">使用音量滑块调整音量。每重复一次非循环声音时，从时间滑块设置的范围中随机选择一个延迟期。</string>
+    <string name="appintro__saved_presets_title">保存你最喜欢的混音</string>
+    <string name="appintro__saved_presets_desc">在播放几个声音后，你可以使用底端角落的按钮来保存你的混音。要重新使用存储的混音，可以从应用菜单中访问预设列表。</string>
     <string name="appintro__getting_started_title">欢迎</string>
     <string name="appintro__getting_started_desc_1">我们开始吧！</string>
     <string name="appintro__getting_started_desc_0">向左滑动即可了解所有功能!</string>
