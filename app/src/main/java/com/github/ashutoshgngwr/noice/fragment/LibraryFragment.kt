@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +23,7 @@ import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.Player
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.snackbar.Snackbar
@@ -34,6 +36,7 @@ class LibraryFragment : Fragment() {
   private lateinit var binding: LibraryFragmentBinding
   private lateinit var presetRepository: PresetRepository
   private lateinit var settingsRepository: SettingsRepository
+  private lateinit var analyticsProvider: AnalyticsProvider
 
   private var adapter: SoundListAdapter? = null
   private var players = emptyMap<String, Player>()
@@ -90,6 +93,7 @@ class LibraryFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     presetRepository = PresetRepository.newInstance(requireContext())
     settingsRepository = SettingsRepository.newInstance(requireContext())
+    analyticsProvider = NoiceApplication.of(requireContext()).getAnalyticsProvider()
     adapter = SoundListAdapter(requireContext())
     binding.soundList.also {
       it.adapter = adapter
@@ -103,6 +107,7 @@ class LibraryFragment : Fragment() {
     }
 
     binding.savePresetButton.setOnClickListener {
+      val params = bundleOf("success" to false)
       DialogFragment.show(childFragmentManager) {
         val presets = presetRepository.list()
         title(R.string.save_preset)
@@ -116,21 +121,28 @@ class LibraryFragment : Fragment() {
 
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
-          val preset = Preset.from(getInputText(), players.values)
+          val name = getInputText()
+          val preset = Preset.from(name, players.values)
           presetRepository.create(preset)
           binding.savePresetButton.hide()
           showPresetSavedMessage()
           PlaybackController.requestUpdateEvent(requireContext())
 
+          params.putBoolean("success", true)
+          params.putInt("name_length", name.length)
+          params.putInt("sound_count", preset.playerStates.size)
           // maybe show in-app review dialog to the user
           NoiceApplication.of(requireContext())
             .getReviewFlowProvider()
             .maybeAskForReview(requireActivity())
         }
+
+        onDismiss { analyticsProvider.logEvent("save_preset_form", params) }
       }
     }
 
     eventBus.register(this)
+    analyticsProvider.setCurrentScreen("library", LibraryFragment::class)
   }
 
   override fun onDestroyView() {
@@ -281,6 +293,8 @@ class LibraryFragment : Fragment() {
         positiveButton(R.string.okay)
         onDismiss { PlaybackController.requestUpdateEvent(requireContext()) }
       }
+
+      analyticsProvider.logEvent("open_sound_controls", bundleOf("sound_key" to listItem.data))
     }
   }
 }

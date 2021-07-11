@@ -16,6 +16,7 @@ import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.BuildConfig
@@ -26,14 +27,16 @@ import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.fragment.LibraryFragment
-import com.github.ashutoshgngwr.noice.fragment.SavedPresetsFragment
 import com.github.ashutoshgngwr.noice.fragment.RandomPresetFragment
+import com.github.ashutoshgngwr.noice.fragment.SavedPresetsFragment
 import com.github.ashutoshgngwr.noice.fragment.SettingsFragment
 import com.github.ashutoshgngwr.noice.fragment.SleepTimerFragment
 import com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment
 import com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
+import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.navigation.NavigationView
 import org.greenrobot.eventbus.EventBus
@@ -75,6 +78,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   private lateinit var castAPIProvider: CastAPIProvider
   private lateinit var customTabsIntent: CustomTabsIntent
   private lateinit var settingsRepository: SettingsRepository
+  private lateinit var analyticsProvider: AnalyticsProvider
+  private lateinit var crashlyticsProvider: CrashlyticsProvider
 
   private var playerManagerState = PlaybackStateCompat.STATE_STOPPED
 
@@ -82,10 +87,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // because cast context is lazy initialized, cast menu item wouldn't show up until
     // re-resuming the activity. adding this to prevent that.
     // This should implicitly init CastContext.
-    castAPIProvider = NoiceApplication.of(this).getCastAPIProviderFactory().newInstance(this)
+    val app = NoiceApplication.of(this)
+    castAPIProvider = app.getCastAPIProviderFactory().newInstance(this)
 
     settingsRepository = SettingsRepository.newInstance(this)
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
+
+    analyticsProvider = app.getAnalyticsProvider()
+    crashlyticsProvider = app.getCrashlyticsProvider()
+
+    analyticsProvider.logEvent("app_theme", bundleOf("theme" to settingsRepository.getAppTheme()))
 
     super.onCreate(savedInstanceState)
     binding = MainActivityBinding.inflate(layoutInflater)
@@ -155,10 +166,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     if (prefs.getBoolean(PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, false)) {
       return
     }
-
-    val app = NoiceApplication.of(this)
-    val analyticsProvider = app.getAnalyticsProvider()
-    val crashlyticsProvider = app.getCrashlyticsProvider()
 
     DialogFragment.show(supportFragmentManager) {
       isCancelable = false
@@ -261,6 +268,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       in NAVIGATED_FRAGMENTS -> setFragment(item.itemId)
       R.id.help -> {
         startActivity(Intent(this, AppIntroActivity::class.java))
+        analyticsProvider.logEvent("open_help", bundleOf())
       }
       R.id.report_issue -> {
         var url = getString(R.string.app_issues_github_url)
@@ -269,9 +277,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         customTabsIntent.launchUrl(this, Uri.parse(url))
+        analyticsProvider.logEvent("open_issue_tracker", bundleOf())
       }
       R.id.submit_feedback -> {
         customTabsIntent.launchUrl(this, Uri.parse(getString(R.string.feedback_form_url)))
+        analyticsProvider.logEvent("open_feedback_form", bundleOf())
       }
     }
 

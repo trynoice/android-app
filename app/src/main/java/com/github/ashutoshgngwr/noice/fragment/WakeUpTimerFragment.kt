@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.getSystemService
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.media.AudioManagerCompat
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.databinding.WakeUpTimerFragmentBinding
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
@@ -23,6 +25,7 @@ class WakeUpTimerFragment : Fragment() {
   private lateinit var audioManager: AudioManager
   private lateinit var binding: WakeUpTimerFragmentBinding
   private lateinit var presetRepository: PresetRepository
+  private lateinit var analyticsProvider: AnalyticsProvider
 
   private var selectedPresetID: String? = null
   private var selectedTime: Long = 0
@@ -75,6 +78,9 @@ class WakeUpTimerFragment : Fragment() {
     }
 
     notifyUpdate()
+
+    analyticsProvider = NoiceApplication.of(requireContext()).getAnalyticsProvider()
+    analyticsProvider.setCurrentScreen("wake_up_timer", WakeUpTimerFragment::class)
   }
 
   private fun onSelectPresetClicked() {
@@ -129,6 +135,13 @@ class WakeUpTimerFragment : Fragment() {
     notifyUpdate()
     notifyScheduleLeftTime()
 
+    val params = bundleOf(
+      "hour" to calendar.get(Calendar.HOUR_OF_DAY),
+      "minute" to calendar.get(Calendar.MINUTE),
+      "remaining_ms" to calendar.timeInMillis - System.currentTimeMillis()
+    )
+
+    analyticsProvider.logEvent("set_wake_up_timer", params)
     // maybe show in-app review dialog to the user
     NoiceApplication.of(requireContext())
       .getReviewFlowProvider()

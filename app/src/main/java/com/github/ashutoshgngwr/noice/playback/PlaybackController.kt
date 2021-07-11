@@ -6,12 +6,15 @@ import android.content.Intent
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
+import androidx.core.os.bundleOf
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.model.Sound
 import kotlin.math.max
 
@@ -160,6 +163,13 @@ object PlaybackController {
 
         intent.getStringExtra(EXTRA_PRESET_ID)?.also { playerManager.playPreset(it) }
         intent.data?.also { playerManager.playPreset(it) }
+
+        val params = bundleOf(
+          "is_alarm" to (mediaVol >= 0),
+          "sound_count" to playerManager.playerCount(),
+        )
+
+        logEvent(context, "play_preset", params)
       }
 
       ACTION_PLAY_RANDOM_PRESET -> {
@@ -171,6 +181,14 @@ object PlaybackController {
         }
 
         playerManager.playRandomPreset(tag, minSounds..maxSounds)
+
+        val params = bundleOf(
+          "min_sound_count" to minSounds,
+          "max_sound_count" to maxSounds,
+          "tag" to tag,
+        )
+
+        logEvent(context, "play_random_preset", params)
       }
 
       ACTION_SCHEDULE_STOP_PLAYBACK -> {
@@ -181,10 +199,13 @@ object PlaybackController {
           handler.postAtTime({ playerManager.pause() }, AUTO_STOP_CALLBACK_TOKEN, atUptime)
         }
       }
+
       ACTION_SKIP_PRESET -> {
         val skipDirection = intent.getIntExtra(EXTRA_SKIP_DIRECTION, 1)
         playerManager.skipPreset(skipDirection)
+        logEvent(context, "skip_preset", bundleOf("direction" to skipDirection))
       }
+
       ACTION_REQUEST_UPDATE_EVENT -> {
         playerManager.callPlaybackUpdateListener()
       }
@@ -194,6 +215,12 @@ object PlaybackController {
   private fun getSoundKeyExtra(intent: Intent): String {
     return intent.getStringExtra(EXTRA_SOUND_KEY)
       ?: throw IllegalArgumentException("'EXTRA_SOUND_KEY' must not be null")
+  }
+
+  private fun logEvent(context: Context, name: String, params: Bundle) {
+    NoiceApplication.of(context)
+      .getAnalyticsProvider()
+      .logEvent(name, params)
   }
 
   /**

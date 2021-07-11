@@ -1,7 +1,12 @@
 package com.github.ashutoshgngwr.noice.provider
 
+import android.os.Bundle
+import androidx.core.os.bundleOf
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.setConsent
 import com.google.firebase.ktx.Firebase
+import kotlin.reflect.KClass
 
 /**
  * [RealAnalyticsProvider] provides a real concrete implementation of the Firebase Analytics API.
@@ -10,7 +15,29 @@ object RealAnalyticsProvider : AnalyticsProvider {
 
   private val fa = Firebase.analytics
 
+  init {
+    fa.setConsent {
+      adStorage = FirebaseAnalytics.ConsentStatus.DENIED
+      analyticsStorage = FirebaseAnalytics.ConsentStatus.GRANTED
+    }
+  }
+
   override fun setCollectionEnabled(e: Boolean) {
     fa.setAnalyticsCollectionEnabled(e)
+  }
+
+  override fun setCurrentScreen(name: String, clazz: KClass<out Any>, params: Bundle?) {
+    val p = params ?: bundleOf()
+    p.putString(FirebaseAnalytics.Param.SCREEN_NAME, name)
+    clazz.simpleName?.also {
+      p.putString(FirebaseAnalytics.Param.SCREEN_CLASS, it)
+    }
+
+    fa.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, p)
+  }
+
+
+  override fun logEvent(name: String, params: Bundle) {
+    fa.logEvent(name, params)
   }
 }

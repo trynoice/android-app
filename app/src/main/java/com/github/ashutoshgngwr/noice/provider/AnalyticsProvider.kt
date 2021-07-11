@@ -1,5 +1,8 @@
 package com.github.ashutoshgngwr.noice.provider
 
+import android.os.Bundle
+import kotlin.reflect.KClass
+
 /**
  * [AnalyticsProvider] is an abstract declaration of Firebase Analytics APIs used by the app.
  * This interface abstracts concrete implementations and thus allowing F-Droid flavored builds to be
@@ -12,4 +15,14 @@ interface AnalyticsProvider {
    * persisted across app sessions.
    */
   fun setCollectionEnabled(e: Boolean)
+
+  /**
+   * Logs a new event with provided [name] and [params].
+   */
+  fun logEvent(name: String, params: Bundle)
+
+  /**
+   * Logs a screen view event.
+   */
+  fun setCurrentScreen(name: String, clazz: KClass<out Any>, params: Bundle? = null)
 }

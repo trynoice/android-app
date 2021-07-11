@@ -10,6 +10,7 @@ import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
 import androidx.core.content.getSystemService
 import androidx.core.os.HandlerCompat
+import androidx.core.os.bundleOf
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
@@ -45,11 +46,17 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
   private var playbackDelayed = false
   private var resumeOnFocusGain = false
   private var playbackUpdateListener: PlaybackUpdateListener? = null
+  private var playbackStartTime = -1L
+  private var castSessionStartTime = -1L
 
   private val players = HashMap<String, Player>(Sound.LIBRARY.size)
   private val handler = Handler(Looper.getMainLooper())
   private val presetRepository = PresetRepository.newInstance(context)
   private val settingsRepository = SettingsRepository.newInstance(context)
+
+  private val playerStartTimes = mutableMapOf<String, Long>()
+  private val analyticsProvider = NoiceApplication.of(context).getAnalyticsProvider()
+
   private val audioManager = requireNotNull(context.getSystemService<AudioManager>())
   private val audioAttributes = AudioAttributesCompat.Builder()
     .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)
@@ -85,6 +92,7 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
         playbackStrategyFactory = getPlaybackStrategyFactory()
         updatePlaybackStrategies()
         mediaSession.setPlaybackToRemote(getVolumeProvider())
+        castSessionStartTime = System.currentTimeMillis()
       }
 
       onSessionEnd {
@@ -96,6 +104,7 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
           playbackStrategyFactory = LocalPlaybackStrategyFactory(context, audioAttributes)
           mediaSession.setPlaybackToLocal(AudioManager.STREAM_MUSIC)
           updatePlaybackStrategies()
+          logCastSessionDurationEvent()
         }
       }
   }
@@ -226,6 +235,7 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
     state = PlaybackStateCompat.STATE_PLAYING
     requireNotNull(players[soundKey]).play()
     notifyChanges()
+    playerStartTimes[soundKey] = System.currentTimeMillis()
   }
 
   /**
@@ -245,6 +255,7 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
     }
 
     notifyChanges()
+    logSoundDurationEvent(soundKey)
   }
 
   /**
@@ -267,6 +278,7 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
     state = PlaybackStateCompat.STATE_PAUSED
     players.values.forEach { it.pause() }
     notifyChanges()
+    playerStartTimes.keys.forEach { logSoundDurationEvent(it) }
   }
 
   /**
@@ -292,6 +304,7 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
       state = PlaybackStateCompat.STATE_PLAYING
       players.values.forEach { it.play() }
       notifyChanges()
+      playerStartTimes.keys.forEach { playerStartTimes[it] = System.currentTimeMillis() }
     } else if (!playbackDelayed) {
       // request audio focus only if audio focus is not delayed from any previous requests
       requestAudioFocus()
@@ -342,6 +355,9 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
    * ensures that [playbackUpdateListener] is invoked only once for any given [Preset].
    */
   internal fun playPreset(preset: Preset) {
+    // log durations for previous playbacks
+    playerStartTimes.keys.forEach { logSoundDurationEvent(it) }
+
     // stop players that are not present in preset state
     players.keys.subtract(preset.playerStates.map { it.soundKey }).forEach {
       players.remove(it)?.stop()
@@ -378,6 +394,20 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
     playbackStateBuilder.setState(state, PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN, speed)
     mediaSession.setPlaybackState(playbackStateBuilder.build())
     callPlaybackUpdateListener()
+
+    if (playbackStartTime <= 0 && state == PlaybackStateCompat.STATE_PLAYING) {
+      playbackStartTime = System.currentTimeMillis()
+    }
+
+    if (state == PlaybackStateCompat.STATE_STOPPED) {
+      logCastSessionDurationEvent()
+
+      if (playbackStartTime > 0) {
+        val params = bundleOf("duration_ms" to System.currentTimeMillis() - playbackStartTime)
+        analyticsProvider.logEvent("total_playback_duration", params)
+        playbackStartTime = -1L
+      }
+    }
   }
 
   fun skipPreset(skipDirection: Int) {
@@ -403,5 +433,26 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
     }
 
     playPreset(presets[nextPresetIndex])
+  }
+
+  fun playerCount(): Int {
+    return players.size
+  }
+
+  private fun logSoundDurationEvent(soundKey: String) {
+    val startTime = playerStartTimes.remove(soundKey) ?: return
+    val duration = System.currentTimeMillis() - startTime
+    val params = bundleOf("sound_key" to soundKey, "duration_ms" to duration)
+    analyticsProvider.logEvent("sound_playback_duration", params)
+  }
+
+  private fun logCastSessionDurationEvent() {
+    if (castSessionStartTime < 0) {
+      return
+    }
+
+    val params = bundleOf("duration_ms" to System.currentTimeMillis() - castSessionStartTime)
+    analyticsProvider.logEvent("cast_session", params)
+    castSessionStartTime = -1L
   }
 }

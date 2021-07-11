@@ -10,7 +10,7 @@
 
 -keep enum org.greenrobot.eventbus.ThreadMode { *; }
 
-# GSON rules
+# GSON rules https://github.com/google/gson/blob/master/examples/android-proguard-example/proguard.cfg
 # Gson uses generic type information stored in a class file when working with fields. Proguard
 # removes such information by default, so configure it to keep all of it.
 -keepattributes Signature
@@ -28,12 +28,10 @@
 -keep class * implements com.google.gson.JsonSerializer
 -keep class * implements com.google.gson.JsonDeserializer
 
-# Prevent R8 from leaving Data object members always null
--keepclassmembers,allowobfuscation class * {
-  @com.google.gson.annotations.SerializedName <fields>;
-}
-
-# keep field names for fields annotated with Expose
+# Since we only serialise/deserialise @Expose fields in Noice, keep all will with members annotated as such.
 -keepclassmembers class * {
   @com.google.gson.annotations.Expose <fields>;
 }
+
+# Preserve names of all fragment classes for analytics
+-keepnames class com.github.ashutoshgngwr.noice.fragment.*

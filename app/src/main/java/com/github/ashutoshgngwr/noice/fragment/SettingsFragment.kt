@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.os.bundleOf
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
@@ -57,11 +58,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     findPreference<Preference>(R.string.export_presets_key).setOnPreferenceClickListener {
       createDocumentActivityLauncher.launch("noice-saved-presets.json")
+      analyticsProvider.logEvent("start_export_presets_flow", bundleOf())
       true
     }
 
     findPreference<Preference>(R.string.import_presets_key).setOnPreferenceClickListener {
       openDocumentActivityLauncher.launch(arrayOf("application/json"))
+      analyticsProvider.logEvent("start_import_presets_flow", bundleOf())
       true
     }
 
@@ -73,6 +76,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         positiveButton(R.string.okay) {
           ShortcutManagerCompat.removeAllDynamicShortcuts(requireContext())
           showSnackBar(R.string.all_app_shortcuts_removed)
+          analyticsProvider.logEvent("remove_all_app_shortcuts", bundleOf())
         }
       }
 
@@ -91,6 +95,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
               settingsRepository.setAppTheme(theme)
               summary = getAppThemeString()
               requireActivity().recreate()
+              analyticsProvider.logEvent("set_theme", bundleOf("theme" to theme))
             }
           )
           negativeButton(R.string.cancel)
@@ -112,15 +117,23 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         true
       }
+
+    analyticsProvider.setCurrentScreen("settings", SettingsFragment::class)
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun onCreateDocumentResult(result: Uri?) {
-    result ?: return
+    var success = false
     try {
+      if (result == null) { // inside try to force run finally block.
+        return
+      }
+
       requireContext().contentResolver.openFileDescriptor(result, "w")?.use {
         presetRepository.exportTo(FileOutputStream(it.fileDescriptor))
       }
+
+      success = true
     } catch (e: Throwable) {
       Log.w(TAG, "failed to export saved presets", e)
       when (e) {
@@ -135,17 +148,24 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
         else -> throw e
       }
+    } finally {
+      analyticsProvider.logEvent("finish_export_presets_flow", bundleOf("success" to success))
     }
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun onOpenDocumentResult(result: Uri?) {
-    result ?: return
-
+    var success = false
     try {
+      if (result == null) { // inside try to force run finally block.
+        return
+      }
+
       requireContext().contentResolver.openFileDescriptor(result, "r")?.use {
         presetRepository.importFrom(FileInputStream(it.fileDescriptor))
       }
+
+      success = true
     } catch (e: Throwable) {
       Log.i(TAG, e.stackTraceToString())
       when (e) {
@@ -162,6 +182,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         is IllegalArgumentException -> showSnackBar(R.string.invalid_import_file_format)
         else -> throw e
       }
+    } finally {
+      analyticsProvider.logEvent("finish_import_presets_flow", bundleOf("success" to success))
     }
   }
 

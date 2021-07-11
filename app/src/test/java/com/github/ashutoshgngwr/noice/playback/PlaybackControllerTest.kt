@@ -20,7 +20,7 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import io.mockk.verify
-import io.mockk.verifySequence
+import io.mockk.verifyOrder
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -193,7 +193,7 @@ class PlaybackControllerTest {
       mockk()
     )
 
-    verifySequence {
+    verifyOrder {
       mockPlayerManager.playPreset(presetID)
       mockPlayerManager.playPreset(uri)
     }
@@ -221,7 +221,7 @@ class PlaybackControllerTest {
       mockk()
     )
 
-    verifySequence { mockPlayerManager.playRandomPreset(tag, minSounds..maxSounds) }
+    verify(exactly = 1) { mockPlayerManager.playRandomPreset(tag, minSounds..maxSounds) }
   }
 
   @Test

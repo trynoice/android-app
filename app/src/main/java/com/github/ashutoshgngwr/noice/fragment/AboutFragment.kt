@@ -12,6 +12,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.BuildConfig
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import mehdi.sakout.aboutpage.AboutPage
 import mehdi.sakout.aboutpage.Element
@@ -94,6 +95,12 @@ class AboutFragment : Fragment() {
 
       create()
     }
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    NoiceApplication.of(requireContext())
+      .getAnalyticsProvider()
+      .setCurrentScreen("about", AboutFragment::class)
   }
 
   private fun buildElement(

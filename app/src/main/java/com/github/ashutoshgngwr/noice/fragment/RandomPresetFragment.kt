@@ -61,5 +61,9 @@ class RandomPresetFragment : Fragment() {
         .getReviewFlowProvider()
         .maybeAskForReview(requireActivity())
     }
+
+    NoiceApplication.of(requireContext())
+      .getAnalyticsProvider()
+      .setCurrentScreen("random_preset", RandomPresetFragment::class)
   }
 }

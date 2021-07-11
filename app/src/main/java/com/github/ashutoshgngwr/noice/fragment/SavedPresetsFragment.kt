@@ -13,6 +13,7 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,7 @@ import com.github.ashutoshgngwr.noice.databinding.SavedPresetsFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SavedPresetsListItemBinding
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus
@@ -36,6 +38,7 @@ class SavedPresetsFragment : Fragment() {
 
   private lateinit var binding: SavedPresetsFragmentBinding
   private lateinit var presetRepository: PresetRepository
+  private lateinit var analyticsProvider: AnalyticsProvider
 
   private var adapter: PresetListAdapter? = null
   private var activePresetPos = -1
@@ -52,6 +55,7 @@ class SavedPresetsFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     presetRepository = PresetRepository.newInstance(requireContext())
+    analyticsProvider = NoiceApplication.of(requireContext()).getAnalyticsProvider()
     dataSet = presetRepository.list().toMutableList()
     adapter = PresetListAdapter(requireContext())
     binding.list.also {
@@ -62,6 +66,9 @@ class SavedPresetsFragment : Fragment() {
 
     EventBus.getDefault().register(this)
     updateEmptyListIndicatorVisibility()
+
+    val params = bundleOf("preset_count" to dataSet.size)
+    analyticsProvider.setCurrentScreen("saved_presets", SavedPresetsFragment::class, params)
   }
 
   override fun onDestroyView() {
@@ -139,15 +146,21 @@ class SavedPresetsFragment : Fragment() {
           it.setOnMenuItemClickListener(onMenuItemClickListener)
           it.show()
         }
+
+        analyticsProvider.logEvent("open_preset_context_menu", bundleOf())
       }
     }
 
     private fun showShareIntentSender() {
+      val uri = dataSet[adapterPosition].toUri().toString()
       ShareCompat.IntentBuilder.from(requireActivity())
         .setType("text/plain")
         .setChooserTitle(R.string.share)
-        .setText(dataSet[adapterPosition].toUri().toString())
+        .setText(uri)
         .startChooser()
+
+
+      analyticsProvider.logEvent("share_preset", bundleOf("uri_length" to uri.length))
     }
 
     private fun createPinnedShortcut() {
@@ -163,6 +176,9 @@ class SavedPresetsFragment : Fragment() {
       } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
         showSnackBar(R.string.pinned_shortcut_created)
       }
+
+      val params = bundleOf("success" to result, "type" to "pinned")
+      analyticsProvider.logEvent("create_preset_shortcut", params)
     }
 
     private fun createAppShortcut() {
@@ -170,17 +186,22 @@ class SavedPresetsFragment : Fragment() {
       val presetID = dataSet[adapterPosition].id
       list.add(buildShortcutInfo(presetID))
 
-      if (ShortcutManagerCompat.addDynamicShortcuts(requireContext(), list)) {
+      val result = ShortcutManagerCompat.addDynamicShortcuts(requireContext(), list)
+      if (result) {
         showSnackBar(R.string.app_shortcut_created)
       } else {
         showSnackBar(R.string.app_shortcut_creation_failed)
       }
+
+      val params = bundleOf("success" to result, "type" to "app")
+      analyticsProvider.logEvent("create_preset_shortcut", params)
     }
 
     private fun removeAppShortcut() {
       val presetID = dataSet[adapterPosition].id
       ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(presetID))
       showSnackBar(R.string.app_shortcut_removed)
+      analyticsProvider.logEvent("remove_preset_shortcut", bundleOf("type" to "app"))
     }
 
     private fun hasAppShortcut(): Boolean {
@@ -210,6 +231,7 @@ class SavedPresetsFragment : Fragment() {
     }
 
     private fun showRenamePresetInput() {
+      val params = bundleOf("success" to false)
       DialogFragment.show(childFragmentManager) {
         title(R.string.rename)
         input(
@@ -227,18 +249,24 @@ class SavedPresetsFragment : Fragment() {
 
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
-          dataSet[adapterPosition].name = getInputText()
+          val name = getInputText()
+          dataSet[adapterPosition].name = name
           presetRepository.update(dataSet[adapterPosition])
           adapter?.notifyItemChanged(adapterPosition)
           PlaybackController.requestUpdateEvent(requireContext())
 
           // maybe show in-app review dialog to the user
           reviewFlowProvider.maybeAskForReview(requireActivity())
+          params.putBoolean("success", true)
+          params.putInt("name_length", name.length)
         }
+
+        onDismiss { analyticsProvider.logEvent("rename_preset", params) }
       }
     }
 
     private fun showDeletePresetConfirmation() {
+      val params = bundleOf("success" to false)
       DialogFragment.show(requireActivity().supportFragmentManager) {
         title(R.string.delete)
         message(R.string.preset_delete_confirmation, dataSet[adapterPosition].name)
@@ -261,9 +289,12 @@ class SavedPresetsFragment : Fragment() {
           updateEmptyListIndicatorVisibility()
           showSnackBar(R.string.preset_deleted)
 
+          params.putBoolean("success", true)
           // maybe show in-app review dialog to the user
           reviewFlowProvider.maybeAskForReview(requireActivity())
         }
+
+        onDismiss { analyticsProvider.logEvent("delete_preset", params) }
       }
     }
 

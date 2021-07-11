@@ -6,10 +6,12 @@ import android.os.Bundle
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.github.appintro.AppIntro
 import com.github.appintro.AppIntroPageTransformerType
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.fragment.AppIntroFragment
 
@@ -113,19 +115,22 @@ class AppIntroActivity : AppIntro() {
 
   public override fun onSkipPressed(currentFragment: Fragment?) {
     super.onSkipPressed(currentFragment)
-    markSeenInPrefsAndFinish()
+    markSeenInPrefsAndFinish(true)
   }
 
   public override fun onDonePressed(currentFragment: Fragment?) {
     super.onDonePressed(currentFragment)
-    markSeenInPrefsAndFinish()
+    markSeenInPrefsAndFinish(false)
   }
 
-  private fun markSeenInPrefsAndFinish() {
+  private fun markSeenInPrefsAndFinish(isSkipped: Boolean) {
     PreferenceManager.getDefaultSharedPreferences(this).edit {
       putBoolean(PREF_HAS_USER_SEEN_APP_INTRO, true)
     }
 
     finish()
+    NoiceApplication.of(this)
+      .getAnalyticsProvider()
+      .logEvent("app_intro_finished", bundleOf("is_skipped" to isSkipped))
   }
 }
