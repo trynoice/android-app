@@ -40,7 +40,7 @@ Noice is an app that allows you to create your own set of background sounds by m
 
 ## License
 
-[MIT](LICENSE)
+[GNU GPL v3](LICENSE)
 
 [google-play-link]: https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice&referrer=utm_source%3DGitHub%26utm_campaign%3DREADME
 [f-droid-link]: https://f-droid.org/app/com.github.ashutoshgngwr.noice
