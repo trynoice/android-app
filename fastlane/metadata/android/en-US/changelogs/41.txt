@@ -1,0 +1,9 @@
+- Update license to GNU GPL v3
+- Add non-linear volume slider
+- Add option to disable sound icons
+- Add option to disable skip buttons in the player notification for unsaved presets
+- Fix "App isn't installed" errors for preset shortcuts
+- Add analytics and update privacy policy for Play Store users
+
+We're continuously working to make Noice better. Please turn on updates to never miss a thing!
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG
