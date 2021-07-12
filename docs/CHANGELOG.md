@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.0.0](https://github.com/ashutoshgngwr/noice/releases/tag/1.0.0)
+
+**Date:** Mon Jul 12 23:30:59 2021 +0530
+
+- Update license to GNU GPL v3
+- Add non-linear volume slider ([#660](https://github.com/ashutoshgngwr/noice/issues/660))
+- Add option to disable sound icons
+- Add option to disable skip buttons in player notification for unsaved presets ([#683](https://github.com/ashutoshgngwr/noice/issues/683))
+- Add analytics and update privacy policy for Play Store users
+- Fix "App isn't installed" errors for preset shortcuts ([#651](https://github.com/ashutoshgngwr/noice/issues/651))
+
 ## [v0.17.0](https://github.com/ashutoshgngwr/noice/releases/tag/0.17.0)
 
 **Date:** Wed May 5 19:13:20 2021 +0530
