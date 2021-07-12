@@ -30,4 +30,5 @@
   <string name="should_display_sound_icons_key">should_display_sound_icons</string>
   <string name="others_key">others</string>
   <string name="should_share_usage_data_key">should_share_usage_data</string>
+  <string name="should_allow_skipping_unsaved_presets_key">should_allow_skipping_unsaved_presets</string>
 </resources>

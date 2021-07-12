@@ -97,4 +97,13 @@ class SettingsRepository private constructor(private val context: Context) {
   fun setShouldShareUsageData(enabled: Boolean) {
     prefs.edit { putBoolean(context.getString(R.string.should_share_usage_data_key), enabled) }
   }
+
+  /**
+   * Returns the value of switch preference with key [R.string.should_allow_skipping_unsaved_presets_key]
+   */
+  fun shouldAllowSkippingUnsavedPresets(): Boolean {
+    return prefs.getBoolean(
+      context.getString(R.string.should_allow_skipping_unsaved_presets_key), true
+    )
+  }
 }

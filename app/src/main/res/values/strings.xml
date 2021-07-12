@@ -227,4 +227,6 @@
     <string name="others">Others</string>
     <string name="should_share_usage_data">Share usage and behaviour data</string>
     <string name="should_share_usage_data_summary">Automatically share usage and behaviour data with the developers</string>
+    <string name="should_allow_skipping_unsaved_presets">Allow skipping unsaved presets</string>
+    <string name="should_allow_skipping_unsaved_presets_summary">When playing unsaved presets, enable skip buttons in player notification to generate random presets</string>
 </resources>

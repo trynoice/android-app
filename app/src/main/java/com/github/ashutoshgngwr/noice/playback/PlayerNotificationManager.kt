@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.playback
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.os.Build
 import android.support.v4.media.session.MediaSessionCompat
@@ -37,7 +38,8 @@ object PlayerNotificationManager {
   fun createNotification(
     context: Context,
     mediaSession: MediaSessionCompat,
-    title: String
+    title: String,
+    enableSkipButtons: Boolean,
   ): Notification {
     return with(NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)) {
       color = ContextCompat.getColor(context, R.color.primary_dark)
@@ -57,11 +59,16 @@ object PlayerNotificationManager {
         }
       )
 
+      var skipPrevIntent: PendingIntent? = null
+      if (enableSkipButtons) {
+        skipPrevIntent = PlaybackController.buildSkipPrevActionPendingIntent(context)
+      }
+
       addAction(
         NotificationCompat.Action(
           R.drawable.ic_noti_prev,
           context.getString(R.string.skip_to_prev),
-          PlaybackController.buildSkipPrevActionPendingIntent(context)
+          skipPrevIntent
         )
       )
 
@@ -83,11 +90,16 @@ object PlayerNotificationManager {
         )
       }
 
+      var skipNextIntent: PendingIntent? = null
+      if (enableSkipButtons) {
+        skipNextIntent = PlaybackController.buildSkipNextActionPendingIntent(context)
+      }
+
       addAction(
         NotificationCompat.Action(
           R.drawable.ic_noti_next,
           context.getString(R.string.skip_to_next),
-          PlaybackController.buildSkipNextActionPendingIntent(context)
+          skipNextIntent
         )
       )
 

@@ -24,6 +24,7 @@ import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.playback.PlayerManager
 import com.github.ashutoshgngwr.noice.playback.PlayerNotificationManager
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import org.greenrobot.eventbus.EventBus
 import java.util.concurrent.TimeUnit
 
@@ -49,6 +50,7 @@ class MediaPlayerService : Service() {
   private lateinit var mediaSession: MediaSessionCompat
   private lateinit var playerManager: PlayerManager
   private lateinit var presetRepository: PresetRepository
+  private lateinit var settingsRepository: SettingsRepository
 
   private val handler = Handler(Looper.getMainLooper())
 
@@ -90,6 +92,7 @@ class MediaPlayerService : Service() {
     playerManager.setPlaybackUpdateListener(this::onPlaybackUpdate)
 
     presetRepository = PresetRepository.newInstance(this)
+    settingsRepository = SettingsRepository.newInstance(this)
     PlayerNotificationManager.createChannel(this)
     registerReceiver(becomingNoisyReceiver, IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY))
   }
@@ -97,7 +100,8 @@ class MediaPlayerService : Service() {
   private fun onPlaybackUpdate(state: Int, players: Map<String, Player>) {
     EventBus.getDefault().postSticky(PlaybackUpdateEvent(state, players))
 
-    val title = getCurrentPresetName(players.values)
+    val currentPreset = getCurrentPreset(players.values)
+    val title = currentPreset?.name ?: getString(R.string.unsaved_preset)
     mediaSession.setMetadata(
       MediaMetadataCompat.Builder()
         .putString(MediaMetadataCompat.METADATA_KEY_TITLE, title)
@@ -111,19 +115,21 @@ class MediaPlayerService : Service() {
       wakeLock.acquire(WAKELOCK_TIMEOUT)
       startForeground(
         FOREGROUND_ID,
-        PlayerNotificationManager.createNotification(this, mediaSession, title)
+        PlayerNotificationManager.createNotification(
+          this, mediaSession, title,
+          currentPreset != null || settingsRepository.shouldAllowSkippingUnsavedPresets()
+        )
       )
     }
   }
 
-  private fun getCurrentPresetName(players: Collection<Player>): String {
-    val name = getString(R.string.unsaved_preset)
+  private fun getCurrentPreset(players: Collection<Player>): Preset? {
     if (players.isEmpty()) {
-      return name
+      return null
     }
 
     return Preset.from("", players).let {
-      presetRepository.list().find { p -> p == it }?.name ?: name
+      presetRepository.list().find { p -> p == it }
     }
   }
 

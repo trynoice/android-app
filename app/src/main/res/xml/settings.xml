@@ -28,6 +28,13 @@
       android:summaryOn="@string/ignore_audio_focus_changes_summary_on"
       android:title="@string/ignore_audio_focus_changes" />
 
+    <SwitchPreferenceCompat
+      android:defaultValue="true"
+      android:icon="@drawable/ic_settings_skip_unsaved_presets"
+      android:key="@string/should_allow_skipping_unsaved_presets_key"
+      android:summary="@string/should_allow_skipping_unsaved_presets_summary"
+      android:title="@string/should_allow_skipping_unsaved_presets" />
+
   </PreferenceCategory>
 
   <PreferenceCategory android:title="@string/saved_presets">
