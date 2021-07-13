@@ -14,6 +14,10 @@ import kotlin.reflect.KClass
 object RealAnalyticsProvider : AnalyticsProvider {
 
   private val fa = Firebase.analytics
+  private val playerStartTimes = mutableMapOf<String, Long>()
+
+  private var playbackStartTime = -1L
+  private var castSessionStartTime = -1L
 
   init {
     fa.setConsent {
@@ -26,18 +30,54 @@ object RealAnalyticsProvider : AnalyticsProvider {
     fa.setAnalyticsCollectionEnabled(e)
   }
 
-  override fun setCurrentScreen(name: String, clazz: KClass<out Any>, params: Bundle?) {
-    val p = params ?: bundleOf()
-    p.putString(FirebaseAnalytics.Param.SCREEN_NAME, name)
+  override fun setCurrentScreen(name: String, clazz: KClass<out Any>, params: Bundle) {
+    params.putString(FirebaseAnalytics.Param.SCREEN_NAME, name)
     clazz.simpleName?.also {
-      p.putString(FirebaseAnalytics.Param.SCREEN_CLASS, it)
+      params.putString(FirebaseAnalytics.Param.SCREEN_CLASS, it)
     }
 
-    fa.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, p)
+    fa.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, params)
   }
 
 
   override fun logEvent(name: String, params: Bundle) {
     fa.logEvent(name, params)
+  }
+
+  override fun logPlayerStartEvent(key: String) {
+    if (key !in playerStartTimes) {
+      playerStartTimes[key] = System.currentTimeMillis()
+    }
+
+    if (playbackStartTime <= 0) {
+      playbackStartTime = System.currentTimeMillis()
+    }
+  }
+
+  override fun logPlayerStopEvent(key: String) {
+    playerStartTimes.remove(key)?.also {
+      val duration = System.currentTimeMillis() - it
+      fa.logEvent("sound_playback_duration", bundleOf("duration_ms" to duration))
+    }
+
+    if (playerStartTimes.isEmpty() && playbackStartTime > 0) {
+      val duration = System.currentTimeMillis() - playbackStartTime
+      fa.logEvent("total_playback_duration", bundleOf("duration_ms" to duration))
+      playbackStartTime = -1L
+    }
+  }
+
+  override fun logCastSessionStartEvent() {
+    castSessionStartTime = System.currentTimeMillis()
+  }
+
+  override fun logCastSessionEndEvent() {
+    if (castSessionStartTime <= 0) {
+      return
+    }
+
+    val params = bundleOf("duration_ms" to System.currentTimeMillis() - castSessionStartTime)
+    fa.logEvent("cast_session_duration", params)
+    castSessionStartTime = -1
   }
 }
