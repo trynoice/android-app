@@ -149,7 +149,7 @@ class DialogFragment : BottomSheetDialogFragment() {
       MarkdownTextView(requireContext()).apply {
         val textAppearance = android.R.attr.textAppearance.resolveAttributeValue()
         TextViewCompat.setTextAppearance(this, textAppearance)
-        text = getString(resId, *formatArgs)
+        setMarkdown(getString(resId, *formatArgs))
       }
     )
   }

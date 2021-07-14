@@ -12,10 +12,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.browser.customtabs.CustomTabColorSchemeParams
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.edit
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.preference.PreferenceManager
@@ -24,6 +21,7 @@ import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
+import com.github.ashutoshgngwr.noice.ext.launchInCustomTab
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.fragment.LibraryFragment
@@ -76,7 +74,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   private lateinit var binding: MainActivityBinding
   private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
   private lateinit var castAPIProvider: CastAPIProvider
-  private lateinit var customTabsIntent: CustomTabsIntent
   private lateinit var settingsRepository: SettingsRepository
   private lateinit var analyticsProvider: AnalyticsProvider
   private lateinit var crashlyticsProvider: CrashlyticsProvider
@@ -148,14 +145,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     NoiceApplication.of(application).getReviewFlowProvider().init(this)
-    customTabsIntent = CustomTabsIntent.Builder()
-      .setDefaultColorSchemeParams(
-        CustomTabColorSchemeParams.Builder()
-          .setToolbarColor(ResourcesCompat.getColor(resources, R.color.action_bar, theme))
-          .build()
-      )
-      .build()
-
     if (BuildConfig.IS_PLAY_STORE_BUILD) {
       maybeShowDataCollectionConsent()
     }
@@ -276,11 +265,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
           url = getString(R.string.app_issues_form_url)
         }
 
-        customTabsIntent.launchUrl(this, Uri.parse(url))
+        Uri.parse(url).launchInCustomTab(this)
         analyticsProvider.logEvent("open_issue_tracker", bundleOf())
       }
       R.id.submit_feedback -> {
-        customTabsIntent.launchUrl(this, Uri.parse(getString(R.string.feedback_form_url)))
+        Uri.parse(getString(R.string.feedback_form_url)).launchInCustomTab(this)
         analyticsProvider.logEvent("open_feedback_form", bundleOf())
       }
     }

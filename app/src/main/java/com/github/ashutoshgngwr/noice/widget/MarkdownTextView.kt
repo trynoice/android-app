@@ -1,34 +1,37 @@
 package com.github.ashutoshgngwr.noice.widget
 
 import android.content.Context
-import android.text.method.LinkMovementMethod
+import android.net.Uri
 import android.util.AttributeSet
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
-import androidx.appcompat.widget.AppCompatTextView
+import com.github.ashutoshgngwr.noice.ext.launchInCustomTab
+import com.google.android.material.textview.MaterialTextView
+import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
+import io.noties.markwon.MarkwonConfiguration
 
-class MarkdownTextView : AppCompatTextView {
+class MarkdownTextView : MaterialTextView {
 
-  private lateinit var markwon: Markwon
+  private val markwon = Markwon.builder(context)
+    .usePlugin(
+      object : AbstractMarkwonPlugin() {
+        override fun configureConfiguration(builder: MarkwonConfiguration.Builder) {
+          builder.linkResolver { _, link -> Uri.parse(link).launchInCustomTab(context) }
+        }
+      }
+    )
+    .build()
 
-  constructor(@NonNull context: Context) : super(context)
-  constructor(@NonNull context: Context, @Nullable attrs: AttributeSet) : super(context, attrs)
-  constructor(@NonNull context: Context, @Nullable attrs: AttributeSet, defStyleAttr: Int) : super(
+  constructor(context: Context) : super(context)
+  constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+  constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
     context, attrs, defStyleAttr
   )
 
   init {
-    movementMethod = LinkMovementMethod.getInstance()
+    setMarkdown(text.toString()) // if text is set via XML
   }
 
-  override fun setText(text: CharSequence?, type: BufferType?) {
-    text ?: return
-    if (!this::markwon.isInitialized) {
-      markwon = Markwon.create(context)
-    }
-
-    val spannedText = markwon.toMarkdown(text.toString())
-    super.setText(spannedText, type)
+  fun setMarkdown(source: String) {
+    markwon.setMarkdown(this, source)
   }
 }

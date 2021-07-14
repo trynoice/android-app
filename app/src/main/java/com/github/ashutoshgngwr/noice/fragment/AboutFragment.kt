@@ -7,39 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.browser.customtabs.CustomTabColorSchemeParams
-import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.ext.launchInCustomTab
 import mehdi.sakout.aboutpage.AboutPage
 import mehdi.sakout.aboutpage.Element
 
 class AboutFragment : Fragment() {
-
-  private lateinit var customTabsIntent: CustomTabsIntent
 
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    customTabsIntent = CustomTabsIntent.Builder()
-      .setDefaultColorSchemeParams(
-        CustomTabColorSchemeParams.Builder()
-          .setToolbarColor(
-            ResourcesCompat.getColor(
-              resources,
-              R.color.action_bar,
-              requireContext().theme
-            )
-          )
-          .build()
-      )
-      .build()
-
     return AboutPage(context).run {
       setImage(R.drawable.app_banner)
       setDescription(getString(R.string.app_description))
@@ -114,8 +96,6 @@ class AboutFragment : Fragment() {
   private fun buildElement(@DrawableRes iconId: Int, title: String, url: String): Element {
     return Element(title, iconId)
       .setAutoApplyIconTint(true)
-      .setOnClickListener {
-        customTabsIntent.launchUrl(requireContext(), Uri.parse(url))
-      }
+      .setOnClickListener { Uri.parse(url).launchInCustomTab(requireContext()) }
   }
 }
