@@ -1,49 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  app:alignContent="stretch"
-  app:alignItems="stretch"
-  app:flexWrap="wrap"
-  app:justifyContent="space_evenly">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <com.github.ashutoshgngwr.noice.widget.MarkdownTextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="10dp"
-    android:lineSpacingMultiplier="1.1"
+    android:lineSpacingMultiplier="1.25"
     android:text="@string/support_development__donate_google_play_description"
     android:textAppearance="?attr/textAppearanceBody1" />
 
-  <Button
-    android:id="@+id/one_usd_button"
-    style="@style/Widget.App.DonateView.DonateButton"
-    android:text="@string/support_development__donate_usd1" />
+  <ProgressBar
+    android:id="@+id/progress_circle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:indeterminate="true" />
 
-  <Button
-    android:id="@+id/two_usd_button"
-    style="@style/Widget.App.DonateView.DonateButton"
-    android:text="@string/support_development__donate_usd2" />
+  <TextView
+    android:id="@+id/error"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:drawablePadding="10dp"
+    android:textColor="@color/error"
+    app:drawableStartCompat="@drawable/ic_error_24dp"
+    app:drawableTint="@color/error" />
 
-  <Button
-    android:id="@+id/five_usd_button"
-    style="@style/Widget.App.DonateView.DonateButton"
-    android:text="@string/support_development__donate_usd5" />
+  <com.google.android.flexbox.FlexboxLayout
+    android:id="@+id/button_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:alignContent="stretch"
+    app:alignItems="stretch"
+    app:flexWrap="wrap"
+    app:justifyContent="space_evenly" />
 
-  <Button
-    android:id="@+id/ten_usd_button"
-    style="@style/Widget.App.DonateView.DonateButton"
-    android:text="@string/support_development__donate_usd10" />
-
-  <Button
-    android:id="@+id/fifteen_usd_button"
-    style="@style/Widget.App.DonateView.DonateButton"
-    android:text="@string/support_development__donate_usd15" />
-
-  <Button
-    android:id="@+id/twentyfive_usd_button"
-    style="@style/Widget.App.DonateView.DonateButton"
-    android:text="@string/support_development__donate_usd25" />
-
-</com.google.android.flexbox.FlexboxLayout>
+</merge>

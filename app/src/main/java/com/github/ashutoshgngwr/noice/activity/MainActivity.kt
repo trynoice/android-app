@@ -33,15 +33,18 @@ import com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment
 import com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.BillingProvider
 import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+  BillingProvider.PurchaseListener {
 
   companion object {
     /**
@@ -77,6 +80,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   private lateinit var settingsRepository: SettingsRepository
   private lateinit var analyticsProvider: AnalyticsProvider
   private lateinit var crashlyticsProvider: CrashlyticsProvider
+  private lateinit var billingProvider: BillingProvider
 
   private var playerManagerState = PlaybackStateCompat.STATE_STOPPED
 
@@ -92,6 +96,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     analyticsProvider = app.getAnalyticsProvider()
     crashlyticsProvider = app.getCrashlyticsProvider()
+    billingProvider = app.getBillingProvider()
 
     analyticsProvider.logEvent("app_theme", bundleOf("theme" to settingsRepository.getAppTheme()))
 
@@ -148,6 +153,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     if (BuildConfig.IS_PLAY_STORE_BUILD) {
       maybeShowDataCollectionConsent()
     }
+
+    billingProvider.init(this, this)
   }
 
   private fun maybeShowDataCollectionConsent() {
@@ -216,6 +223,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
   override fun onDestroy() {
     castAPIProvider.clearSessionCallbacks()
+    billingProvider.close()
     super.onDestroy()
   }
 
@@ -325,6 +333,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         .replace(R.id.fragment_container, fragmentClass.newInstance(), tag)
         .addToBackStack(tag)
         .commit()
+    }
+  }
+
+  override fun onPending(skus: List<String>) {
+    Snackbar.make(binding.fragmentContainer, R.string.payment_pending, Snackbar.LENGTH_LONG).show()
+    analyticsProvider.logEvent("pending_purchase", bundleOf())
+  }
+
+  override fun onComplete(skus: List<String>, orderId: String) {
+    billingProvider.consumePurchase(orderId)
+    DialogFragment.show(supportFragmentManager) {
+      title(R.string.support_development__donate_thank_you)
+      message(R.string.support_development__donate_thank_you_description)
+      positiveButton(R.string.okay)
     }
   }
 }

@@ -1,46 +1,73 @@
 package com.github.ashutoshgngwr.noice.widget
 
-import android.app.Application
+import android.app.Activity
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.children
-import androidx.test.core.app.ApplicationProvider
-import com.github.ashutoshgngwr.noice.activity.DonateActivity
-import com.github.ashutoshgngwr.noice.databinding.DonateViewBinding
+import com.android.billingclient.api.SkuDetails
+import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.provider.RealBillingProvider
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.verify
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadows.ShadowLooper
 
 @RunWith(RobolectricTestRunner::class)
 class DonateViewTest {
 
-  private lateinit var application: Application
+  private lateinit var activity: Activity
   private lateinit var view: DonateView
-  private lateinit var binding: DonateViewBinding
+  private lateinit var testScope: CoroutineScope
 
   @Before
   fun setup() {
-    application = ApplicationProvider.getApplicationContext()
-    view = DonateView(application)
-    binding = DonateViewBinding.bind(view.children.first())
+    mockkObject(RealBillingProvider)
+    activity = Robolectric.buildActivity(Activity::class.java).create().get()
+    testScope = TestCoroutineScope()
+    view = DonateView(activity, testScope)
   }
 
   @Test
-  fun testOnClick() {
-    mapOf(
-      binding.oneUsdButton to DonateActivity.DONATE_AMOUNT_1USD,
-      binding.twoUsdButton to DonateActivity.DONATE_AMOUNT_2USD,
-      binding.fiveUsdButton to DonateActivity.DONATE_AMOUNT_5USD,
-      binding.tenUsdButton to DonateActivity.DONATE_AMOUNT_10USD,
-      binding.fifteenUsdButton to DonateActivity.DONATE_AMOUNT_15USD,
-      binding.twentyfiveUsdButton to DonateActivity.DONATE_AMOUNT_25USD
-    ).forEach { testCase ->
-      testCase.key.performClick()
-      shadowOf(application).nextStartedActivity.also {
-        assertEquals(DonateActivity::class.qualifiedName, it.component?.className)
-        assertEquals(testCase.value, it.getStringExtra(DonateActivity.EXTRA_DONATE_AMOUNT))
-      }
+  fun testQueryDetailsFailed() = runBlockingTest {
+    coEvery {
+      RealBillingProvider.queryDetails(any(), any())
+    } throws RealBillingProvider.QueryDetailsException("test-error")
+
+    view.loadSkuDetails()
+    ShadowLooper.idleMainLooper()
+    assertEquals(
+      activity.getString(R.string.failed_to_load_inapp_purchases),
+      view.findViewById<TextView>(R.id.error).text,
+    )
+  }
+
+  @Test
+  fun testOnInAppItemClick() = runBlockingTest {
+    val skuDetailsList = listOf<SkuDetails>(
+      mockk(relaxed = true) { every { price } returns "price-1" },
+      mockk(relaxed = true) { every { price } returns "price-2" }
+    )
+
+    coEvery { RealBillingProvider.queryDetails(any(), any()) } answers { skuDetailsList }
+    view.loadSkuDetails()
+    ShadowLooper.idleMainLooper()
+
+    every { RealBillingProvider.purchase(any(), any()) } returns true
+    val container = view.findViewById<ViewGroup>(R.id.button_container)
+    container.children.forEach { it.performClick() }
+    skuDetailsList.forEach {
+      verify { RealBillingProvider.purchase(any(), it) }
     }
   }
 }

@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice
 
+import com.github.ashutoshgngwr.noice.provider.RealBillingProvider
 import com.github.ashutoshgngwr.noice.provider.PlaystoreReviewFlowProvider
 import com.github.ashutoshgngwr.noice.provider.RealAnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.RealCastAPIProvider
@@ -16,5 +17,6 @@ class PlaystoreNoiceApplication : NoiceApplication() {
     setReviewFlowProvider(PlaystoreReviewFlowProvider)
     setCrashlyticsProvider(RealCrashlyticsProvider)
     setAnalyticsProvider(RealAnalyticsProvider)
+    setBillingProvider(RealBillingProvider)
   }
 }

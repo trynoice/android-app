@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.BillingProvider
 import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
@@ -21,6 +22,7 @@ abstract class NoiceApplication : android.app.Application() {
   private lateinit var reviewFlowProvider: ReviewFlowProvider
   private lateinit var crashlyticsProvider: CrashlyticsProvider
   private lateinit var analyticsProvider: AnalyticsProvider
+  private lateinit var billingProvider: BillingProvider
   private lateinit var settingsRepository: SettingsRepository
 
   override fun onCreate() {
@@ -57,4 +59,11 @@ abstract class NoiceApplication : android.app.Application() {
   }
 
   fun getAnalyticsProvider(): AnalyticsProvider = analyticsProvider
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+  fun setBillingProvider(provider: BillingProvider) {
+    billingProvider = provider
+  }
+
+  fun getBillingProvider(): BillingProvider = billingProvider
 }

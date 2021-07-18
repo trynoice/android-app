@@ -31,10 +31,11 @@ import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.fragment.AboutFragment
-import com.github.ashutoshgngwr.noice.fragment.SavedPresetsFragment
 import com.github.ashutoshgngwr.noice.fragment.LibraryFragment
+import com.github.ashutoshgngwr.noice.fragment.SavedPresetsFragment
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.BillingProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.navigation.NavigationView
@@ -42,6 +43,7 @@ import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
+import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
 import org.hamcrest.Matchers.not
@@ -430,5 +432,39 @@ class MainActivityTest {
       mockAnalyticsProvider.setCollectionEnabled(true)
       mockCrashlyticsProvider.setCollectionEnabled(true)
     }
+  }
+
+  @Test
+  fun testBillingProviderListener() {
+    if (!BuildConfig.IS_PLAY_STORE_BUILD) {
+      // F-Droid flavor doesn't have a billing provider scenario
+      return
+    }
+
+    val mockBillingProvider: BillingProvider = mockk(relaxed = true)
+    ApplicationProvider.getApplicationContext<NoiceApplication>()
+      .setBillingProvider(mockBillingProvider)
+
+    activityScenario.recreate()
+
+    val slot = slot<BillingProvider.PurchaseListener>()
+    verify { mockBillingProvider.init(any(), capture(slot)) }
+    assertTrue(slot.isCaptured)
+
+    activityScenario.onActivity {
+      slot.captured.onPending(listOf("test-sku"))
+    }
+
+    EspressoX.waitForView(withText(R.string.payment_pending), isDisplayed())
+
+    val testOrderID = "test-order-id"
+    activityScenario.onActivity {
+      slot.captured.onComplete(listOf(), testOrderID)
+    }
+
+    EspressoX.waitForView(withText(R.string.support_development__donate_thank_you))
+    onView(withId(R.id.positive)).perform(click()) // close the dialog
+
+    verify { mockBillingProvider.consumePurchase(testOrderID) }
   }
 }

@@ -1,8 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools">
 
-  <uses-permission android:name="com.android.vending.BILLING" />
-
   <application
     android:name="com.github.ashutoshgngwr.noice.PlaystoreNoiceApplication"
     tools:ignore="AllowBackup">
@@ -30,10 +28,6 @@
     <meta-data
       android:name="google_analytics_automatic_screen_reporting_enabled"
       android:value="false" />
-
-    <activity
-      android:name="com.github.ashutoshgngwr.noice.activity.DonateActivity"
-      android:theme="@style/Theme.App.Translucent" />
 
   </application>
 

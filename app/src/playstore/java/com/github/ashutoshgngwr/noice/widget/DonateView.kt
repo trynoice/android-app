@@ -1,46 +1,123 @@
 package com.github.ashutoshgngwr.noice.widget
 
+import android.app.Activity
 import android.content.Context
-import android.content.Intent
+import android.content.ContextWrapper
 import android.util.AttributeSet
+import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View.OnClickListener
-import android.widget.FrameLayout
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
-import com.github.ashutoshgngwr.noice.activity.DonateActivity
+import android.view.View
+import androidx.annotation.VisibleForTesting
+import androidx.appcompat.widget.LinearLayoutCompat
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.SkuDetails
+import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.DonateViewBinding
+import com.github.ashutoshgngwr.noice.provider.RealBillingProvider
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
-class DonateView : FrameLayout {
+class DonateView : LinearLayoutCompat {
 
-  private val binding: DonateViewBinding
+  private lateinit var defaultScope: CoroutineScope
 
-  constructor(@NonNull context: Context) : super(context)
-  constructor(@NonNull context: Context, @Nullable attrs: AttributeSet) : super(context, attrs)
-  constructor(@NonNull context: Context, @Nullable attrs: AttributeSet, defStyleAttr: Int) : super(
+  private val binding: DonateViewBinding =
+    DonateViewBinding.inflate(LayoutInflater.from(context), this)
+
+  constructor(context: Context) : super(context)
+  constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+  constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
     context, attrs, defStyleAttr
   )
 
-  init {
-    LayoutInflater.from(context).also {
-      binding = DonateViewBinding.inflate(it, this, true)
-    }
-
-    binding.oneUsdButton.setOnClickListener(clickListenerFor(DonateActivity.DONATE_AMOUNT_1USD))
-    binding.twoUsdButton.setOnClickListener(clickListenerFor(DonateActivity.DONATE_AMOUNT_2USD))
-    binding.fiveUsdButton.setOnClickListener(clickListenerFor(DonateActivity.DONATE_AMOUNT_5USD))
-    binding.tenUsdButton.setOnClickListener(clickListenerFor(DonateActivity.DONATE_AMOUNT_10USD))
-    binding.fifteenUsdButton.setOnClickListener(clickListenerFor(DonateActivity.DONATE_AMOUNT_15USD))
-    binding.twentyfiveUsdButton.setOnClickListener(clickListenerFor(DonateActivity.DONATE_AMOUNT_25USD))
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal constructor(context: Context, defaultScope: CoroutineScope) : this(context) {
+    this.defaultScope = defaultScope
   }
 
-  private fun clickListenerFor(donateAmount: String): OnClickListener {
-    return OnClickListener {
-      Intent(context, DonateActivity::class.java).also {
-        it.putExtra(DonateActivity.EXTRA_DONATE_AMOUNT, donateAmount)
-        it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(it)
+  init {
+    orientation = VERTICAL
+    gravity = Gravity.CENTER
+  }
+
+  override fun onAttachedToWindow() {
+    super.onAttachedToWindow()
+    binding.progressCircle.visibility = View.VISIBLE
+    binding.error.visibility = View.GONE
+    binding.buttonContainer.visibility = View.GONE
+
+    defaultScope = CoroutineScope(Job() + CoroutineName("DonateViewScope"))
+    defaultScope.launch(Dispatchers.IO) { loadSkuDetails() }
+  }
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal suspend fun loadSkuDetails() {
+    try {
+      val detailsList = RealBillingProvider.queryDetails(
+        BillingClient.SkuType.INAPP, listOf(
+          "donate_usd1", "donate_usd2", "donate_usd5",
+          "donate_usd10", "donate_usd15", "donate_usd25",
+        )
+      )
+
+      defaultScope.launch(Dispatchers.Main) {
+        setDetails(detailsList.sortedBy { it.priceAmountMicros })
       }
+    } catch (e: RealBillingProvider.QueryDetailsException) {
+      Log.w(this::class.simpleName, "failed to load sku details", e)
+      defaultScope.launch(Dispatchers.Main) { setQueryDetailsFailedError() }
     }
+  }
+
+  private fun setDetails(detailsList: List<SkuDetails>) {
+    binding.progressCircle.visibility = View.GONE
+    binding.error.visibility = View.GONE
+    binding.buttonContainer.visibility = View.VISIBLE
+    binding.buttonContainer.removeAllViews()
+
+    detailsList.forEach { details ->
+      val b = MaterialButton(context, null, R.attr.materialButtonOutlinedStyle)
+      b.text = details.price
+      b.setOnClickListener {
+        if (!RealBillingProvider.purchase(getActivity(), details)) {
+          Snackbar.make(this, R.string.failed_to_purchase, Snackbar.LENGTH_LONG).show()
+        }
+      }
+      binding.buttonContainer.addView(b)
+    }
+  }
+
+  private fun setQueryDetailsFailedError() {
+    binding.progressCircle.visibility = View.GONE
+    binding.buttonContainer.visibility = View.GONE
+    binding.error.visibility = View.VISIBLE
+    binding.error.setText(R.string.failed_to_load_inapp_purchases)
+  }
+
+  // https://android.googlesource.com/platform/frameworks/support/+/refs/heads/marshmallow-release/v7/mediarouter/src/android/support/v7/app/MediaRouteButton.java#262
+  private fun getActivity(): Activity {
+    // Gross way of unwrapping the Activity
+    var context = context
+    while (context is ContextWrapper) {
+      if (context is Activity) {
+        return context
+      }
+
+      context = context.baseContext
+    }
+
+    throw IllegalStateException("unable to find activity that owns this donate view")
+  }
+
+  override fun onDetachedFromWindow() {
+    defaultScope.cancel()
+    super.onDetachedFromWindow()
   }
 }
