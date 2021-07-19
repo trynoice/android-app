@@ -19,6 +19,11 @@
     android:name="android.permission.CHANGE_CONFIGURATION"
     tools:ignore="ProtectedPermissions" />
 
+  <!-- Allows changing SystemUI demo mode -->
+  <uses-permission
+    android:name="android.permission.DUMP"
+    tools:ignore="ProtectedPermissions" />
+
   <!-- /screengrab-permissions -->
 
   <application tools:ignore="AllowBackup" />

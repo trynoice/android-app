@@ -45,6 +45,7 @@ import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.junit.runners.model.Statement
 import tools.fastlane.screengrab.Screengrab
+import tools.fastlane.screengrab.cleanstatusbar.CleanStatusBar
 import tools.fastlane.screengrab.locale.LocaleTestRule
 import java.util.*
 
@@ -62,11 +63,14 @@ class GenerateScreenshots {
     @JvmStatic
     @BeforeClass
     fun setupAll() {
-      // prevent app intro from showing up
+      CleanStatusBar.enableWithDefaults()
+
+      // prevent app intro and data consent from showing up
       PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
         .edit(commit = true) {
           clear() // clear any existing preferences.
           putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true)
+          putBoolean(MainActivity.PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true)
         }
 
       // using mocks to save a few presets for screenshots
@@ -122,6 +126,8 @@ class GenerateScreenshots {
     @JvmStatic
     @AfterClass
     fun teardownAll() {
+      CleanStatusBar.disable()
+
       // clear saved presets
       PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
         .edit { clear() }
