@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.0.1](https://github.com/ashutoshgngwr/noice/releases/tag/1.0.1)
+
+**Date:** Mon Jul 19 23:23:52 2021 +0530
+
+- Fix incorrect text rendering in "Support Development"
+- Fix issues with analytics
+- Other minor improvements
+
 ## [v1.0.0](https://github.com/ashutoshgngwr/noice/releases/tag/1.0.0)
 
 **Date:** Mon Jul 12 23:30:59 2021 +0530
