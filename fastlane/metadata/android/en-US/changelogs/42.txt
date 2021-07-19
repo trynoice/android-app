@@ -1,0 +1,6 @@
+- Fix incorrect text rendering in "Support Development"
+- Fix issues with analytics
+- Other minor improvements
+
+We're continuously working to make Noice better. Please turn on updates to never miss a thing!
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG
