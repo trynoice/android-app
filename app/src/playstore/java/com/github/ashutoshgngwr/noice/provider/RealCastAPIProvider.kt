@@ -52,7 +52,7 @@ class RealCastAPIProvider private constructor(val context: Context) : CastAPIPro
    */
   override fun addMenuItem(menu: Menu, @StringRes titleResId: Int) {
     menu.add(titleResId).also {
-      it.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+      it.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
       MenuItemCompat.setActionProvider(it, MediaRouteActionProvider(context))
       CastButtonFactory.setUpMediaRouteButton(context, menu, it.itemId)
     }

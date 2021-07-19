@@ -11,9 +11,6 @@
   <color name="sound_icon">@color/shark_0</color>
   <color name="error">@color/red</color>
 
-  <!-- Following is needed because AboutPage doesn't have any way to define custom style.
-  This is supposed to override its default background color -->
-  <color name="about_background_color">@color/background</color>
   <color name="ic_launcher_background">@color/white_0</color>
   <color name="ic_preset_shortcut_background">@color/white_0</color>
 

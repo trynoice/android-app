@@ -170,7 +170,7 @@
     - To make future updates possible\n
     - To keep Noice ad-free forever\n
   </string>
-    <string name="cast_media">Cast media to another device</string>
+    <string name="cast_media">Connect to Chromecast</string>
     <string name="in_app_feedback__description">
     We\'d love to hear from you about the app. Please take a moment to visit our GitHub repository.
     If you didn\'t love the app, please consider opening up an issue explaining your concerns.

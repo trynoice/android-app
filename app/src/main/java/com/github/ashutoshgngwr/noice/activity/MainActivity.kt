@@ -231,7 +231,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     super.onCreateOptionsMenu(menu)
     castAPIProvider.addMenuItem(menu, R.string.cast_media)
     menu.add(0, R.id.action_play_pause_toggle, 0, R.string.play_pause).also {
-      it.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+      it.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
       it.isVisible = PlaybackStateCompat.STATE_STOPPED != playerManagerState
       if (PlaybackStateCompat.STATE_PLAYING == playerManagerState) {
         it.setIcon(R.drawable.ic_action_play_to_pause)

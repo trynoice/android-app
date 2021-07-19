@@ -117,8 +117,8 @@ class SavedPresetsFragment : Fragment() {
 
     init {
       binding.playButton.setOnClickListener {
-        if (adapterPosition != activePresetPos) {
-          PlaybackController.playPreset(requireContext(), dataSet[adapterPosition].id)
+        if (bindingAdapterPosition != activePresetPos) {
+          PlaybackController.playPreset(requireContext(), dataSet[bindingAdapterPosition].id)
         } else {
           PlaybackController.stop(requireContext())
         }
@@ -152,8 +152,8 @@ class SavedPresetsFragment : Fragment() {
     }
 
     private fun showShareIntentSender() {
-      val uri = dataSet[adapterPosition].toUri().toString()
-      ShareCompat.IntentBuilder.from(requireActivity())
+      val uri = dataSet[bindingAdapterPosition].toUri().toString()
+      ShareCompat.IntentBuilder(requireActivity())
         .setType("text/plain")
         .setChooserTitle(R.string.share)
         .setText(uri)
@@ -183,7 +183,7 @@ class SavedPresetsFragment : Fragment() {
 
     private fun createAppShortcut() {
       val list = ShortcutManagerCompat.getDynamicShortcuts(requireContext())
-      val presetID = dataSet[adapterPosition].id
+      val presetID = dataSet[bindingAdapterPosition].id
       list.add(buildShortcutInfo(presetID))
 
       val result = ShortcutManagerCompat.addDynamicShortcuts(requireContext(), list)
@@ -198,7 +198,7 @@ class SavedPresetsFragment : Fragment() {
     }
 
     private fun removeAppShortcut() {
-      val presetID = dataSet[adapterPosition].id
+      val presetID = dataSet[bindingAdapterPosition].id
       ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(presetID))
       showSnackBar(R.string.app_shortcut_removed)
       analyticsProvider.logEvent("remove_preset_shortcut", bundleOf("type" to "app"))
@@ -206,7 +206,7 @@ class SavedPresetsFragment : Fragment() {
 
     private fun hasAppShortcut(): Boolean {
       ShortcutManagerCompat.getDynamicShortcuts(requireContext()).forEach {
-        if (it.id == dataSet[adapterPosition].id) {
+        if (it.id == dataSet[bindingAdapterPosition].id) {
           return true
         }
       }
@@ -216,14 +216,14 @@ class SavedPresetsFragment : Fragment() {
 
     private fun buildShortcutInfo(shortcutID: String): ShortcutInfoCompat {
       return with(ShortcutInfoCompat.Builder(requireContext(), shortcutID)) {
-        setShortLabel(dataSet[adapterPosition].name)
+        setShortLabel(dataSet[bindingAdapterPosition].name)
         setIcon(IconCompat.createWithResource(requireContext(), R.mipmap.ic_preset_shortcut))
         setIntent(
           Intent(requireContext(), ShortcutHandlerActivity::class.java)
             .setAction(Intent.ACTION_VIEW)
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_ID, shortcutID)
-            .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, dataSet[adapterPosition].id)
+            .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, dataSet[bindingAdapterPosition].id)
         )
 
         build()
@@ -236,11 +236,11 @@ class SavedPresetsFragment : Fragment() {
         title(R.string.rename)
         input(
           hintRes = R.string.name,
-          preFillValue = dataSet[adapterPosition].name,
+          preFillValue = dataSet[bindingAdapterPosition].name,
           validator = {
             when {
               it.isBlank() -> R.string.preset_name_cannot_be_empty
-              dataSet[adapterPosition].name == it -> 0 // no error if the name didn't change
+              dataSet[bindingAdapterPosition].name == it -> 0 // no error if the name didn't change
               dataSet.any { p -> it == p.name } -> R.string.preset_already_exists
               else -> 0
             }
@@ -250,9 +250,9 @@ class SavedPresetsFragment : Fragment() {
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
           val name = getInputText()
-          dataSet[adapterPosition].name = name
-          presetRepository.update(dataSet[adapterPosition])
-          adapter?.notifyItemChanged(adapterPosition)
+          dataSet[bindingAdapterPosition].name = name
+          presetRepository.update(dataSet[bindingAdapterPosition])
+          adapter?.notifyItemChanged(bindingAdapterPosition)
           PlaybackController.requestUpdateEvent(requireContext())
 
           // maybe show in-app review dialog to the user
@@ -269,23 +269,23 @@ class SavedPresetsFragment : Fragment() {
       val params = bundleOf("success" to false)
       DialogFragment.show(requireActivity().supportFragmentManager) {
         title(R.string.delete)
-        message(R.string.preset_delete_confirmation, dataSet[adapterPosition].name)
+        message(R.string.preset_delete_confirmation, dataSet[bindingAdapterPosition].name)
         negativeButton(R.string.cancel)
         positiveButton(R.string.delete) {
-          val preset = dataSet.removeAt(adapterPosition)
+          val preset = dataSet.removeAt(bindingAdapterPosition)
           presetRepository.delete(preset.id)
           // then stop playback if recently deleted preset was playing
-          if (adapterPosition == activePresetPos) {
+          if (bindingAdapterPosition == activePresetPos) {
             PlaybackController.stop(requireContext())
           }
 
-          if (adapterPosition < activePresetPos) {
+          if (bindingAdapterPosition < activePresetPos) {
             activePresetPos -= 1 // account for recent deletion
           }
 
           cancelWakeUpTimerIfScheduled(preset.id)
           ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
-          adapter?.notifyItemRemoved(adapterPosition)
+          adapter?.notifyItemRemoved(bindingAdapterPosition)
           updateEmptyListIndicatorVisibility()
           showSnackBar(R.string.preset_deleted)
 

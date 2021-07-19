@@ -32,7 +32,7 @@ class SupportDevelopmentFragment : Fragment() {
     binding.shareButton.setOnClickListener {
       val text = getString(R.string.app_description)
       val targetURL = getString(R.string.support_development__share_url)
-      ShareCompat.IntentBuilder.from(requireActivity())
+      ShareCompat.IntentBuilder(requireActivity())
         .setChooserTitle(R.string.support_development__share)
         .setType("text/plain")
         .setText("$text\n\n$targetURL")

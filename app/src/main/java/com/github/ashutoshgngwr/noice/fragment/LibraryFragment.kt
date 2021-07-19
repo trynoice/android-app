@@ -249,7 +249,7 @@ class LibraryFragment : Fragment() {
 
     init {
       binding.root.setOnClickListener {
-        dataSet.getOrNull(adapterPosition)?.also {
+        dataSet.getOrNull(bindingAdapterPosition)?.also {
           if (players.containsKey(it.data)) {
             PlaybackController.stop(requireContext(), it.data)
           } else {
@@ -263,7 +263,7 @@ class LibraryFragment : Fragment() {
     }
 
     private fun showSoundControlDialog() {
-      val listItem = dataSet.getOrNull(adapterPosition) ?: return
+      val listItem = dataSet.getOrNull(bindingAdapterPosition) ?: return
       val player = players[listItem.data] ?: return
       val sound = Sound.get(listItem.data)
 

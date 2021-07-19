@@ -72,7 +72,7 @@ class DialogFragment : BottomSheetDialogFragment() {
   /**
    * Adds given [View] to the [R.id.content] layout in the dialog
    */
-  fun addContentView(view: View) {
+  private fun addContentView(view: View) {
     baseBinding.content.addView(view)
   }
 
