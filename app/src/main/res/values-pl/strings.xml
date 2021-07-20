@@ -189,15 +189,15 @@
     <string name="device_media_volume">Głośność multimediów urządzenia</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minuta</item>
-        <item quantity="few">%1$d minut</item>
-        <item quantity="many"/>
-        <item quantity="other"/>
+        <item quantity="few">%1$d minuty</item>
+        <item quantity="many">%1$d minut</item>
+        <item quantity="other">%1$d minut</item>
     </plurals>
     <plurals name="time_hours">
         <item quantity="one">%1$d godzina</item>
-        <item quantity="few">%1$d godzin</item>
-        <item quantity="many"/>
-        <item quantity="other"/>
+        <item quantity="few">%1$d godziny</item>
+        <item quantity="many">%1$d godzin</item>
+        <item quantity="other">%1$d godzin</item>
     </plurals>
     <string name="time_bridge">i</string>
     <string name="wake_up_timer_schedule_set">Alarm włączy się za %1$s %2$s %3$s</string>
