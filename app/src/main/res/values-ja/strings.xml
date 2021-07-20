@@ -141,8 +141,7 @@
     <string name="never">二度と表示しない</string>
     <string name="later">後にする</string>
     <string name="in_app_feedback__title">レビューを投稿</string>
-    <string name="in_app_feedback__description">アプリについてのご意見をお待ちしています。私たちのGitHubリポジトリをご覧ください。アプリが気に入らなかった場合、気になる点を説明するためにissueの作成をご検討ください。
-\nそうでなければ、あなたの愛とサポートを示すためにぜひプロジェクトにスターを付けてください。</string>
+    <string name="in_app_feedback__description">アプリについてのご意見をお待ちしています。私たちのGitHubリポジトリをご覧ください。アプリが気に入らなかった場合、気になる点を説明するためにissueの作成をご検討ください。そうでなければ、あなたの愛とサポートを示すためにぜひプロジェクトにスターを付けてください。</string>
     <string name="cast_media">他のデバイスにメディアをキャスト</string>
     <string name="support_development__why_description">- 将来のアップデートを継続するため
 \n- Noiceを永遠に広告無しのアプリとして継続するため

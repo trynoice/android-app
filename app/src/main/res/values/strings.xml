@@ -152,9 +152,7 @@
     - curating better sound samples\n
     - buying coffee\n
   </string>
-    <string name="support_development__donate_google_play_description">
-    Your payment will be securely handled by the Google Play. Depending on your location, additional taxes _may be_ added to the final amount.
-  </string>
+    <string name="support_development__donate_google_play_description">Your payment will be securely handled by Google Play. Depending on your location, additional taxes _may be_ added to the final amount.</string>
     <string name="support_development__donate_thank_you">Thank you!</string>
     <string name="support_development__donate_thank_you_description">
     We wholeheartedly thank you for your generous contribution to the Noice project.
@@ -219,7 +217,7 @@
         analyse and diagnose errors encountered during app usage. Read our [privacy
         policy](https://ashutoshgngwr.github.io/noice/privacy-policy) for further information.\n\n
         You can configure automatic data sharing at any time inside the app by going to \"**Settings**
-        > **Share usage and behaviour data**\".
+        &gt; **Share usage and behaviour data**\".
     </string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
