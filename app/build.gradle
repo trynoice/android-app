@@ -1,8 +1,12 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+plugins {
+  id 'com.android.application'
+  id 'kotlin-android'
 
-apply plugin: 'com.google.gms.google-services' // sed:fdroid-build:remove
-apply plugin: 'com.google.firebase.crashlytics' // sed:fdroid-build:remove
+  id 'com.google.gms.google-services' // sed:fdroid-build:remove
+  id 'com.google.firebase.crashlytics' // sed:fdroid-build:remove
+
+  id 'com.adarshr.test-logger' version '3.0.0'
+}
 
 apply from: 'jacoco.gradle'
 
@@ -72,6 +76,11 @@ android {
   testOptions {
     unitTests {
       includeAndroidResources = true
+      all {
+        testlogger {
+          theme 'mocha'
+        }
+      }
     }
   }
 }
