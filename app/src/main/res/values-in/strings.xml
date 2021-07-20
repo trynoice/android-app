@@ -209,4 +209,5 @@
     <string name="dense">Padat</string>
     <string name="saved_presets_as_home_screen">Preset tersimpan sebagai layar beranda</string>
     <string name="app_authors">Lihat daftar Penulis Noice</string>
+    <string name="should_display_sound_icons">Tunjukkan ikon suara</string>
 </resources>
