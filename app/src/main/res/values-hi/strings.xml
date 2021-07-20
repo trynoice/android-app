@@ -165,7 +165,7 @@
     <string name="wake_up_timer_schedule_set" tools:ignore="StringFormatCount">अलार्म %1$s %3$s में बजेगा</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d मिनट</item>
-        <item quantity="other">%1$d मिनट</item>
+        <item quantity="other">%1$d मिनटों</item>
     </plurals>
     <plurals name="time_hours">
         <item quantity="one">%1$d घंटा</item>
