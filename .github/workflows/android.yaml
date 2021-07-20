@@ -76,7 +76,7 @@ jobs:
           api-level: ${{ matrix.android }}
           target: ${{ matrix.target }}
           arch: x86_64
-          script: ./gradlew ${{ matrix.gradleTask }} --no-daemon --info --stacktrace
+          script: ./gradlew ${{ matrix.gradleTask }} --no-daemon --stacktrace
           emulator-options: >-
             -no-boot-anim -no-audio -no-snapshot -no-window -camera-back none
             -camera-front none -gpu swiftshader_indirect -memory 3583
