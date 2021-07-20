@@ -204,4 +204,15 @@
     <string name="remove_all_app_shortcuts_confirmation">Ça supprimera tous les raccourcis prédéfinis du menu des raccourcis de l’application. Voulez-vous continuer \?</string>
     <string name="remove_all_app_shortcuts">Retirer tous les raccourcis de l’appli</string>
     <string name="should_display_sound_icons">Afficher les icônes de son</string>
+    <string name="should_allow_skipping_unsaved_presets_summary">Lors de la lecture de préréglages non sauvegardés, activez les boutons de saut dans la notification du lecteur pour générer des préréglages aléatoires</string>
+    <string name="should_allow_skipping_unsaved_presets">Permettre de sauter les préréglages non sauvegardés</string>
+    <string name="should_share_usage_data_summary">Partager automatiquement les données d\'utilisation et de comportement avec les développeurs</string>
+    <string name="should_share_usage_data">Partager les données d\'utilisation et de comportement</string>
+    <string name="others">Autres</string>
+    <string name="decline">Refuser</string>
+    <string name="accept">Accepter</string>
+    <string name="share_usage_data_consent_message">Nous recueillons des données sur l\'utilisation des applications afin d\'améliorer l\'expérience des utilisateurs. Nous recueillons également des données sur le comportement de l\'application pour analyser et diagnostiquer les erreurs rencontrées lors de son utilisation. Lisez notre [politique de confidentialité] (https://ashutoshgngwr.github.io/noice/privacy-policy) pour plus d\'informations.
+\n
+\n Vous pouvez configurer le partage automatique des données à tout moment dans l\'application en allant dans « **Paramètres** &gt; **Partager les données d\'utilisation et de comportement** ».</string>
+    <string name="share_usage_data_consent_title">Préférences de partage des données</string>
 </resources>

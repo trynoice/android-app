@@ -121,10 +121,7 @@
     - बेहतर ध्वनि नमूनों पर अंकुश लगाना\n
     - कॉफी खरीदना\n
   </string>
-    <string name="support_development__donate_google_play_description">
-       आपका भुगतान गूगल प्ले द्वारा सुरक्षित रूप से नियंत्रित किया जाएगा। राशि को आपकी स्थानीय मुद्रा में परिवर्तित
-       किया जाएगा। आपके स्थान के आधार पर, अतिरिक्त करों को अंतिम राशि में जोड़ा जा सकता है।
-  </string>
+    <string name="support_development__donate_google_play_description">आपका भुगतान गूगल प्ले द्वारा सुरक्षित रूप से नियंत्रित किया जाएगा। आपके स्थान के आधार पर, अतिरिक्त करों को अंतिम राशि में जोड़ा जा सकता है।</string>
     <string name="support_development__donate_thank_you">धन्यवाद!</string>
     <string name="support_development__donate_thank_you_description">
        हम इस परियोजना में आपके उदार योगदान के लिए तहे दिल से शुक्रिया अदा करते हैं।
@@ -139,7 +136,7 @@
     - भविष्य के अपडेट को संभव बनाने के लिए\n
     - Noice को हमेशा विज्ञापन मुक्त रखने के लिए\n
   </string>
-    <string name="cast_media">किसी अन्य डिवाइस पर मीडिया कास्ट करें</string>
+    <string name="cast_media">क्रोमकास्ट से कनेक्ट करें</string>
     <string name="notification_channel_default__description">मीडिया प्लेबैक नियंत्रण</string>
     <string name="notification_channel_default__name">मीडिया प्लेबैक</string>
     <string name="pinned_shortcuts_not_supported">आपका डिफ़ॉल्ट लॉन्चर शॉर्टकट जोड़ने का समर्थन नहीं करता है।</string>
@@ -208,4 +205,18 @@
     <string name="saved_presets_as_home_screen">होम स्क्रीन पर सहजे हुए प्रीसेट्स देंखे</string>
     <string name="settings">सेटिंग्स</string>
     <string name="should_display_sound_icons">ध्वनि चिह्न दिखाएं</string>
+    <string name="payment_pending">जैसे ही हम आपका भुगतान संसाधित कर लेंगे, हम आपको सूचित करेंगे।</string>
+    <string name="failed_to_purchase">भुगतान प्रवाह प्रारंभ करने में विफल. कृपया बाद में पुन: प्रयास करें!</string>
+    <string name="failed_to_load_inapp_purchases">इन-ऐप खरीदारी विवरण लोड करने में विफल। कृपया बाद में पुन: प्रयास करें!</string>
+    <string name="should_allow_skipping_unsaved_presets_summary">सहेजे नहीं गए प्रीसेट चलाते समय, यादृच्छिक प्रीसेट जेनरेट करने के लिए प्लेयर नोटिफिकेशन में स्किप बटन सक्षम करें</string>
+    <string name="should_allow_skipping_unsaved_presets">सहेजे नहीं गए प्रीसेट को छोड़ने की अनुमति दें</string>
+    <string name="should_share_usage_data_summary">डेवलपर्स के साथ स्वचालित रूप से उपयोग और व्यवहार डेटा साझा करें</string>
+    <string name="should_share_usage_data">शेयर यूसेज एंड बिहेवियर डेटा</string>
+    <string name="others">अन्य</string>
+    <string name="decline">अस्वीकार करें</string>
+    <string name="accept">स्वीकार करें</string>
+    <string name="share_usage_data_consent_message">हम उपयोगकर्ता अनुभव को बेहतर बनाने के लिए ऐप उपयोग डेटा एकत्र करते हैं। हम ऐप के उपयोग के दौरान आने वाली त्रुटियों का विश्लेषण और निदान करने के लिए ऐप व्यवहार डेटा भी एकत्र करते हैं। अधिक जानकारी के लिए हमारी [गोपनीयता नीति](https://ashutoshgngwr.github.io/noice/privacy-policy) पढ़ें।
+\n
+\nआप \"**सेटिंग्स** &gt; **शेयर उपयोग और व्यवहार डेटा**\" पर जाकर ऐप के अंदर किसी भी समय स्वचालित डेटा साझाकरण को कॉन्फ़िगर कर सकते हैं।</string>
+    <string name="share_usage_data_consent_title">डेटा साझाकरण प्राथमिकताएं</string>
 </resources>

@@ -104,7 +104,7 @@
 \n - додавати кращі звукові зразки
 \n - купувати каву
 \n</string>
-    <string name="support_development__donate_google_play_description">Ваш платіж буде безпечно оброблено через Google Play. Суму буде конвертовано у вашу місцеву валюту. Додаткові податки _можуть_ бути додані до кінцевої суми в залежності від вашого місця перебування.</string>
+    <string name="support_development__donate_google_play_description">Ваш платіж буде безпечно оброблено через Google Play. Додаткові податки _можуть_ бути додані до кінцевої суми в залежності від вашого місця перебування.</string>
     <string name="support_development__donate_thank_you">Дякуємо!</string>
     <string name="support_development__donate_thank_you_description">Ми сердешно вдячні за ваш щедрий внесок до проєкту Noice.</string>
     <string name="support_development__share">Поділитися з друзями</string>
@@ -113,7 +113,7 @@
     <string name="support_development__why_description">- Щоб зробити можливими майбутні оновлення
 \n- Щоб залишити Noice вільним від реклами назавжди
 \n</string>
-    <string name="cast_media">Транслювати медіа на інший пристрій</string>
+    <string name="cast_media">Під\'єднатись до Chromecast</string>
     <string name="in_app_feedback__description">
     Ми хотіли б почути що Ви думаєте про додаток. Відвідайте, будь ласка, наш GitHub репозиторій.
     Якщо Вам не сподобався додаток, будь ласка, відкрийте issue з поясненням. В іншому випадку, будь
@@ -189,4 +189,18 @@
     <string name="preset_does_not_exist">Поєднання не існує. Можливо, його було видалено!</string>
     <string name="random_preset">Випадкове поєднання</string>
     <string name="should_display_sound_icons">Показувати піктограми звуків</string>
+    <string name="payment_pending">Ми повідомимо вас, щойно завершимо обробку платежу.</string>
+    <string name="failed_to_purchase">Не вдалося запустити потік платежів. Повторіть спробу пізніше!</string>
+    <string name="failed_to_load_inapp_purchases">Не вдалося завантажити відомості про придбання через застосунок. Повторіть спробу пізніше!</string>
+    <string name="should_allow_skipping_unsaved_presets_summary">Під час відтворення незбереженого поєднання вмикати кнопки пропуску в сповіщенні програвача для створення поєднань</string>
+    <string name="should_allow_skipping_unsaved_presets">Дозволити пропускати незбережені поєднання</string>
+    <string name="should_share_usage_data_summary">Автоматично надсилати розробникам дані про користування та поведінку</string>
+    <string name="should_share_usage_data">Надсилання даних про користування та поведінку</string>
+    <string name="others">Інші</string>
+    <string name="decline">Відхилити</string>
+    <string name="accept">Погодитися</string>
+    <string name="share_usage_data_consent_message">Ми збираємо дані про користування застосунком, щоб покращити роботу. Ми також збираємо дані про поведінку застосунків, щоб аналізувати й діагностувати помилки, які сталися під час користування застосунком. Докладніше у нашій [політиці приватності](https://ashutoshgngwr.github.io/noice/privacy-policy).
+\n
+\nВи можете налаштувати автоматичне надсилання даних у будь-який час всередині застосунку, за допомогою \"**Налаштування** &gt; **Надсилання даних про користування та поведінку**\".</string>
+    <string name="share_usage_data_consent_title">Параметри спільного доступу до даних</string>
 </resources>

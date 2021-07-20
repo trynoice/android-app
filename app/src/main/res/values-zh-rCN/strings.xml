@@ -150,4 +150,7 @@
     <string name="remove_from_app_shortcuts">从应用快捷方式中删除</string>
     <string name="add_to_app_shortcuts">添加到应用快捷方式</string>
     <string name="app_authors">查看 Noice 作者名单</string>
+    <string name="behavior">行为</string>
+    <string name="settings">设置</string>
+    <string name="app_shortcut_creation_failed">未能将预设添加到应用程序的快捷方式中!</string>
 </resources>
