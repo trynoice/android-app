@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.0.2](https://github.com/ashutoshgngwr/noice/releases/tag/1.0.2)
+
+**Date:** Tue Jul 20 23:27:11 2021 +0530
+
+- Fix a minor issue with analytics event logging
+- Update translations
+
 ## [v1.0.1](https://github.com/ashutoshgngwr/noice/releases/tag/1.0.1)
 
 **Date:** Mon Jul 19 23:23:52 2021 +0530
