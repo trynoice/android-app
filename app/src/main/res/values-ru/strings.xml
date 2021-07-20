@@ -212,4 +212,7 @@
     <string name="remove_from_app_shortcuts">Удалить из ярлыков приложений</string>
     <string name="add_to_app_shortcuts">Добавить в ярлыки приложений</string>
     <string name="should_display_sound_icons">Отображать звуковые значки</string>
+    <string name="others">Другие</string>
+    <string name="decline">Отказать</string>
+    <string name="accept">Принять</string>
 </resources>
