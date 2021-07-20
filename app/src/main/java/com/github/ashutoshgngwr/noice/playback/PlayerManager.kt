@@ -240,7 +240,8 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
   fun stop(soundKey: String) {
     players[soundKey]?.also {
       it.stop()
-      players.remove(it.soundKey)
+      players.remove(soundKey)
+      analyticsProvider.logPlayerStopEvent(soundKey)
     }
 
     if (players.isEmpty()) {
@@ -250,7 +251,6 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
     }
 
     notifyChanges()
-    analyticsProvider.logPlayerStopEvent(soundKey)
   }
 
   /**
@@ -258,7 +258,11 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
    */
   fun stop() {
     state = PlaybackStateCompat.STATE_STOPPED
-    players.values.forEach { it.stop() }
+    players.values.forEach {
+      it.stop()
+      analyticsProvider.logPlayerStopEvent(it.soundKey)
+    }
+
     players.clear()
     Log.d(TAG, "stop(): abandoning audio focus")
     abandonAudioFocus()
