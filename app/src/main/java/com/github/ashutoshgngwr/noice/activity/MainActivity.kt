@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     crashlyticsProvider = app.getCrashlyticsProvider()
     billingProvider = app.getBillingProvider()
 
-    analyticsProvider.logEvent("app_theme", bundleOf("theme" to settingsRepository.getAppTheme()))
+    analyticsProvider.logEvent("ui_open", bundleOf("theme" to settingsRepository.getAppTheme()))
 
     super.onCreate(savedInstanceState)
     binding = MainActivityBinding.inflate(layoutInflater)
@@ -265,7 +265,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
       in NAVIGATED_FRAGMENTS -> setFragment(item.itemId)
       R.id.help -> {
         startActivity(Intent(this, AppIntroActivity::class.java))
-        analyticsProvider.logEvent("open_help", bundleOf())
+        analyticsProvider.logEvent("help_open", bundleOf())
       }
       R.id.report_issue -> {
         var url = getString(R.string.app_issues_github_url)
@@ -274,11 +274,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         Uri.parse(url).launchInCustomTab(this)
-        analyticsProvider.logEvent("open_issue_tracker", bundleOf())
+        analyticsProvider.logEvent("issue_tracker_open", bundleOf())
       }
       R.id.submit_feedback -> {
         Uri.parse(getString(R.string.feedback_form_url)).launchInCustomTab(this)
-        analyticsProvider.logEvent("open_feedback_form", bundleOf())
+        analyticsProvider.logEvent("feedback_form_open", bundleOf())
       }
     }
 
@@ -338,10 +338,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
   override fun onPending(skus: List<String>) {
     Snackbar.make(binding.fragmentContainer, R.string.payment_pending, Snackbar.LENGTH_LONG).show()
-    analyticsProvider.logEvent("pending_purchase", bundleOf())
+    analyticsProvider.logEvent("purchase_pending", bundleOf())
   }
 
   override fun onComplete(skus: List<String>, orderId: String) {
+    analyticsProvider.logEvent("purchase_complete", bundleOf())
     billingProvider.consumePurchase(orderId)
     DialogFragment.show(supportFragmentManager) {
       title(R.string.support_development__donate_thank_you)

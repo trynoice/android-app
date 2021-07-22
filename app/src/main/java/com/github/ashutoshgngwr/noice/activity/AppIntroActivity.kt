@@ -131,6 +131,6 @@ class AppIntroActivity : AppIntro() {
     finish()
     NoiceApplication.of(this)
       .getAnalyticsProvider()
-      .logEvent("app_intro_finished", bundleOf("is_skipped" to isSkipped))
+      .logEvent("app_intro_complete", bundleOf("success" to !isSkipped))
   }
 }

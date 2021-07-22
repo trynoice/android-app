@@ -208,7 +208,7 @@ class PlaybackControllerTest {
 
   @Test
   fun testHandleServiceIntent_withPlayRandomPresetAction() {
-    val tag = mockk<Sound.Tag>()
+    val tag = mockk<Sound.Tag>(relaxed = true)
     val minSounds = Random.nextInt()
     val maxSounds = Random.nextInt(minSounds, minSounds + 10)
     PlaybackController.handleServiceIntent(

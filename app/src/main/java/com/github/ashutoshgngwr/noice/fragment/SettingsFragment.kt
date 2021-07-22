@@ -58,13 +58,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     findPreference<Preference>(R.string.export_presets_key).setOnPreferenceClickListener {
       createDocumentActivityLauncher.launch("noice-saved-presets.json")
-      analyticsProvider.logEvent("start_export_presets_flow", bundleOf())
+      analyticsProvider.logEvent("presets_export_begin", bundleOf())
       true
     }
 
     findPreference<Preference>(R.string.import_presets_key).setOnPreferenceClickListener {
       openDocumentActivityLauncher.launch(arrayOf("application/json"))
-      analyticsProvider.logEvent("start_import_presets_flow", bundleOf())
+      analyticsProvider.logEvent("presets_import_begin", bundleOf())
       true
     }
 
@@ -76,7 +76,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         positiveButton(R.string.okay) {
           ShortcutManagerCompat.removeAllDynamicShortcuts(requireContext())
           showSnackBar(R.string.all_app_shortcuts_removed)
-          analyticsProvider.logEvent("remove_all_app_shortcuts", bundleOf())
+          analyticsProvider.logEvent("preset_shortcut_remove_all", bundleOf())
         }
       }
 
@@ -95,7 +95,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
               settingsRepository.setAppTheme(theme)
               summary = getAppThemeString()
               requireActivity().recreate()
-              analyticsProvider.logEvent("set_theme", bundleOf("theme" to theme))
+              analyticsProvider.logEvent("theme_set", bundleOf("theme" to theme))
             }
           )
           negativeButton(R.string.cancel)
@@ -149,7 +149,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         else -> throw e
       }
     } finally {
-      analyticsProvider.logEvent("finish_export_presets_flow", bundleOf("success" to success))
+      analyticsProvider.logEvent("presets_export_complete", bundleOf("success" to success))
     }
   }
 
@@ -183,7 +183,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         else -> throw e
       }
     } finally {
-      analyticsProvider.logEvent("finish_import_presets_flow", bundleOf("success" to success))
+      analyticsProvider.logEvent("presets_import_complete", bundleOf("success" to success))
     }
   }
 

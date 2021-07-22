@@ -37,14 +37,13 @@ class SleepTimerFragment : Fragment() {
       binding.countdownView.startCountdown(duration)
     }
 
-    val params = bundleOf("is_scheduled" to (duration > 0))
-    analyticsProvider.setCurrentScreen("sleep_timer", SleepTimerFragment::class, params)
+    analyticsProvider.setCurrentScreen("sleep_timer", SleepTimerFragment::class)
   }
 
   override fun onDestroyView() {
     val duration = PlaybackController.getScheduledAutoStopRemainingDurationMillis(requireContext())
     if (duration > 0) {
-      analyticsProvider.logEvent("set_sleep_timer", bundleOf("duration_ms" to duration))
+      analyticsProvider.logEvent("sleep_timer_set", bundleOf("duration_ms" to duration))
     }
 
     super.onDestroyView()
@@ -55,6 +54,7 @@ class SleepTimerFragment : Fragment() {
     var enableResetButton = false
     if (duration < 0) { // duration picker reset
       PlaybackController.clearScheduledAutoStop(requireContext())
+      analyticsProvider.logEvent("sleep_timer_cancel", bundleOf())
       Snackbar.make(requireView(), R.string.auto_sleep_schedule_cancelled, Snackbar.LENGTH_SHORT)
         .show()
     } else {
@@ -62,6 +62,7 @@ class SleepTimerFragment : Fragment() {
       remaining += duration
       PlaybackController.scheduleAutoStop(requireContext(), remaining)
       enableResetButton = true
+      analyticsProvider.logEvent("sleep_timer_add_duration", bundleOf("duration_ms" to duration))
     }
 
     binding.durationPicker.setResetButtonEnabled(enableResetButton)

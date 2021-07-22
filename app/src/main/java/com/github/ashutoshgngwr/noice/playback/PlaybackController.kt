@@ -163,13 +163,7 @@ object PlaybackController {
 
         intent.getStringExtra(EXTRA_PRESET_ID)?.also { playerManager.playPreset(it) }
         intent.data?.also { playerManager.playPreset(it) }
-
-        val params = bundleOf(
-          "is_alarm" to (mediaVol >= 0),
-          "sound_count" to playerManager.playerCount(),
-        )
-
-        logEvent(context, "play_preset", params)
+        logEvent(context, "preset_playback", bundleOf("items_count" to playerManager.playerCount()))
       }
 
       ACTION_PLAY_RANDOM_PRESET -> {
@@ -181,14 +175,14 @@ object PlaybackController {
         }
 
         playerManager.playRandomPreset(tag, minSounds..maxSounds)
-
         val params = bundleOf(
-          "min_sound_count" to minSounds,
-          "max_sound_count" to maxSounds,
-          "tag" to tag,
+          "min_items_count" to minSounds,
+          "max_items_count" to maxSounds,
+          "items_count" to playerManager.playerCount(),
+          "sound_tag" to (tag?.name ?: "NONE"),
         )
 
-        logEvent(context, "play_random_preset", params)
+        logEvent(context, "random_preset_playback", params)
       }
 
       ACTION_SCHEDULE_STOP_PLAYBACK -> {
@@ -203,7 +197,7 @@ object PlaybackController {
       ACTION_SKIP_PRESET -> {
         val skipDirection = intent.getIntExtra(EXTRA_SKIP_DIRECTION, 1)
         playerManager.skipPreset(skipDirection)
-        logEvent(context, "skip_preset", bundleOf("direction" to skipDirection))
+        logEvent(context, "preset_skip", bundleOf("skip_direction" to skipDirection))
       }
 
       ACTION_REQUEST_UPDATE_EVENT -> {

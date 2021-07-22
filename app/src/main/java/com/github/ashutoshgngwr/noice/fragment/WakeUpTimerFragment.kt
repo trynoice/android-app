@@ -108,6 +108,7 @@ class WakeUpTimerFragment : Fragment() {
     resetControls()
     notifyUpdate()
     Snackbar.make(requireView(), R.string.wake_up_timer_cancelled, Snackbar.LENGTH_LONG).show()
+    analyticsProvider.logEvent("wake_up_timer_cancel", bundleOf())
   }
 
   private fun onSetTimeClicked() {
@@ -138,10 +139,10 @@ class WakeUpTimerFragment : Fragment() {
     val params = bundleOf(
       "hour" to calendar.get(Calendar.HOUR_OF_DAY),
       "minute" to calendar.get(Calendar.MINUTE),
-      "remaining_ms" to calendar.timeInMillis - System.currentTimeMillis()
+      "duration_ms" to calendar.timeInMillis - System.currentTimeMillis()
     )
 
-    analyticsProvider.logEvent("set_wake_up_timer", params)
+    analyticsProvider.logEvent("wake_up_timer_set", params)
     // maybe show in-app review dialog to the user
     NoiceApplication.of(requireContext())
       .getReviewFlowProvider()

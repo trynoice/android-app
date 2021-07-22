@@ -129,15 +129,16 @@ class LibraryFragment : Fragment() {
           PlaybackController.requestUpdateEvent(requireContext())
 
           params.putBoolean("success", true)
-          params.putInt("name_length", name.length)
-          params.putInt("sound_count", preset.playerStates.size)
+          analyticsProvider.logEvent("preset_name", bundleOf("item_length" to name.length))
+          val soundCount = preset.playerStates.size
+          analyticsProvider.logEvent("preset_sounds", bundleOf("items_count" to soundCount))
           // maybe show in-app review dialog to the user
           NoiceApplication.of(requireContext())
             .getReviewFlowProvider()
             .maybeAskForReview(requireActivity())
         }
 
-        onDismiss { analyticsProvider.logEvent("save_preset_form", params) }
+        onDismiss { analyticsProvider.logEvent("preset_create", params) }
       }
     }
 
@@ -294,7 +295,7 @@ class LibraryFragment : Fragment() {
         onDismiss { PlaybackController.requestUpdateEvent(requireContext()) }
       }
 
-      analyticsProvider.logEvent("open_sound_controls", bundleOf("sound_key" to listItem.data))
+      analyticsProvider.logEvent("sound_controls_open", bundleOf("sound_key" to listItem.data))
     }
   }
 }

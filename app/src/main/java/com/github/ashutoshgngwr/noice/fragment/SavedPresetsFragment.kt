@@ -67,7 +67,7 @@ class SavedPresetsFragment : Fragment() {
     EventBus.getDefault().register(this)
     updateEmptyListIndicatorVisibility()
 
-    val params = bundleOf("preset_count" to dataSet.size)
+    val params = bundleOf("items_count" to dataSet.size)
     analyticsProvider.setCurrentScreen("saved_presets", SavedPresetsFragment::class, params)
   }
 
@@ -147,7 +147,7 @@ class SavedPresetsFragment : Fragment() {
           it.show()
         }
 
-        analyticsProvider.logEvent("open_preset_context_menu", bundleOf())
+        analyticsProvider.logEvent("preset_context_menu_open", bundleOf())
       }
     }
 
@@ -159,8 +159,7 @@ class SavedPresetsFragment : Fragment() {
         .setText(uri)
         .startChooser()
 
-
-      analyticsProvider.logEvent("share_preset", bundleOf("uri_length" to uri.length))
+      analyticsProvider.logEvent("share_preset_uri", bundleOf("item_length" to uri.length))
     }
 
     private fun createPinnedShortcut() {
@@ -169,7 +168,7 @@ class SavedPresetsFragment : Fragment() {
         return
       }
 
-      val info = buildShortcutInfo(UUID.randomUUID().toString())
+      val info = buildShortcutInfo(UUID.randomUUID().toString(), "pinned")
       val result = ShortcutManagerCompat.requestPinShortcut(requireContext(), info, null)
       if (!result) {
         showSnackBar(R.string.pinned_shortcut_creation_failed)
@@ -177,14 +176,14 @@ class SavedPresetsFragment : Fragment() {
         showSnackBar(R.string.pinned_shortcut_created)
       }
 
-      val params = bundleOf("success" to result, "type" to "pinned")
-      analyticsProvider.logEvent("create_preset_shortcut", params)
+      val params = bundleOf("success" to result, "shortcut_type" to "pinned")
+      analyticsProvider.logEvent("preset_shortcut_create", params)
     }
 
     private fun createAppShortcut() {
       val list = ShortcutManagerCompat.getDynamicShortcuts(requireContext())
       val presetID = dataSet[bindingAdapterPosition].id
-      list.add(buildShortcutInfo(presetID))
+      list.add(buildShortcutInfo(presetID, "app"))
 
       val result = ShortcutManagerCompat.addDynamicShortcuts(requireContext(), list)
       if (result) {
@@ -193,15 +192,15 @@ class SavedPresetsFragment : Fragment() {
         showSnackBar(R.string.app_shortcut_creation_failed)
       }
 
-      val params = bundleOf("success" to result, "type" to "app")
-      analyticsProvider.logEvent("create_preset_shortcut", params)
+      val params = bundleOf("success" to result, "shortcut_type" to "app")
+      analyticsProvider.logEvent("preset_shortcut_create", params)
     }
 
     private fun removeAppShortcut() {
       val presetID = dataSet[bindingAdapterPosition].id
       ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(presetID))
       showSnackBar(R.string.app_shortcut_removed)
-      analyticsProvider.logEvent("remove_preset_shortcut", bundleOf("type" to "app"))
+      analyticsProvider.logEvent("preset_shortcut_remove", bundleOf("shortcut_type" to "app"))
     }
 
     private fun hasAppShortcut(): Boolean {
@@ -214,7 +213,7 @@ class SavedPresetsFragment : Fragment() {
       return false
     }
 
-    private fun buildShortcutInfo(shortcutID: String): ShortcutInfoCompat {
+    private fun buildShortcutInfo(shortcutID: String, type: String): ShortcutInfoCompat {
       return with(ShortcutInfoCompat.Builder(requireContext(), shortcutID)) {
         setShortLabel(dataSet[bindingAdapterPosition].name)
         setIcon(IconCompat.createWithResource(requireContext(), R.mipmap.ic_preset_shortcut))
@@ -223,6 +222,7 @@ class SavedPresetsFragment : Fragment() {
             .setAction(Intent.ACTION_VIEW)
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_ID, shortcutID)
+            .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_TYPE, type)
             .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, dataSet[bindingAdapterPosition].id)
         )
 
@@ -258,10 +258,10 @@ class SavedPresetsFragment : Fragment() {
           // maybe show in-app review dialog to the user
           reviewFlowProvider.maybeAskForReview(requireActivity())
           params.putBoolean("success", true)
-          params.putInt("name_length", name.length)
+          analyticsProvider.logEvent("preset_name", bundleOf("item_length" to name.length))
         }
 
-        onDismiss { analyticsProvider.logEvent("rename_preset", params) }
+        onDismiss { analyticsProvider.logEvent("preset_rename", params) }
       }
     }
 
@@ -294,7 +294,7 @@ class SavedPresetsFragment : Fragment() {
           reviewFlowProvider.maybeAskForReview(requireActivity())
         }
 
-        onDismiss { analyticsProvider.logEvent("delete_preset", params) }
+        onDismiss { analyticsProvider.logEvent("preset_delete", params) }
       }
     }
 
