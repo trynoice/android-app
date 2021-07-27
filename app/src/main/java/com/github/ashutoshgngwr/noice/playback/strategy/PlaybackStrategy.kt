@@ -1,5 +1,7 @@
 package com.github.ashutoshgngwr.noice.playback.strategy
 
+import androidx.media.AudioAttributesCompat
+
 /**
  * [PlaybackStrategy] interface is the generic type used by the SoundPlayer class to control the
  * underlying playback mechanism
@@ -26,4 +28,9 @@ interface PlaybackStrategy {
    * stops playing the sound and releases the underlying sound resource.
    */
   fun stop()
+
+  /**
+   * Sets audio attributes for the underlying playback mechanism.
+   */
+  fun setAudioAttributes(attrs: AudioAttributesCompat)
 }

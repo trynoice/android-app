@@ -3,12 +3,11 @@ package com.github.ashutoshgngwr.noice.playback
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.media.AudioManager
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
-import androidx.core.content.getSystemService
+import androidx.media.AudioAttributesCompat
 import androidx.preference.PreferenceManager
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.MediaPlayerService
@@ -114,23 +113,16 @@ class PlaybackControllerTest {
   @Test
   fun testBuildAlarmPendingIntent() {
     val inputShouldUpdateMediaVolume = arrayOf(true, false)
-    val outputVolumes = arrayOf(10, -1)
     for (i in inputShouldUpdateMediaVolume.indices) {
       val presetID = "test-preset-id"
-      val volume = 10
       val pendingIntent = PlaybackController.buildAlarmPendingIntent(
-        ApplicationProvider.getApplicationContext(),
-        presetID, inputShouldUpdateMediaVolume[i], volume
+        ApplicationProvider.getApplicationContext(), presetID
       )
 
       val intent = shadowOf(pendingIntent).savedIntent
       assertEquals(MediaPlayerService::class.qualifiedName, intent.component?.className)
       assertEquals(PlaybackController.ACTION_PLAY_PRESET, intent.action)
       assertEquals(presetID, intent.getStringExtra(PlaybackController.EXTRA_PRESET_ID))
-      assertEquals(
-        outputVolumes[i],
-        intent.getIntExtra(PlaybackController.EXTRA_DEVICE_MEDIA_VOLUME, -1)
-      )
     }
   }
 
@@ -173,37 +165,31 @@ class PlaybackControllerTest {
   @Test
   fun testHandleServiceIntent_withPlayPresetAction() {
     val presetID = "test-id"
-    val volume = Random.nextInt(10)
 
     PlaybackController.handleServiceIntent(
       ApplicationProvider.getApplicationContext(),
       mockPlayerManager,
       Intent(PlaybackController.ACTION_PLAY_PRESET)
-        .putExtra(PlaybackController.EXTRA_PRESET_ID, presetID)
-        .putExtra(PlaybackController.EXTRA_DEVICE_MEDIA_VOLUME, volume),
+        .putExtra(PlaybackController.EXTRA_PRESET_ID, presetID),
       mockk()
     )
 
     val uri = Uri.parse("test")
+    val audioUsage = AudioAttributesCompat.USAGE_ALARM
     PlaybackController.handleServiceIntent(
       ApplicationProvider.getApplicationContext(),
       mockPlayerManager,
       Intent(PlaybackController.ACTION_PLAY_PRESET)
-        .setData(uri),
+        .setData(uri)
+        .putExtra(PlaybackController.EXTRA_AUDIO_USAGE, audioUsage),
       mockk()
     )
 
     verifyOrder {
       mockPlayerManager.playPreset(presetID)
+      mockPlayerManager.setAudioUsage(audioUsage)
       mockPlayerManager.playPreset(uri)
     }
-
-    assertEquals(
-      volume,
-      ApplicationProvider.getApplicationContext<Context>()
-        .getSystemService<AudioManager>()
-        ?.getStreamVolume(AudioManager.STREAM_MUSIC)
-    )
   }
 
   @Test
@@ -315,6 +301,19 @@ class PlaybackControllerTest {
     )
 
     verify(exactly = 1) { mockPlayerManager.callPlaybackUpdateListener() }
+  }
+
+  fun testHandleServiceIntent_withSetAudioUsageAction() {
+    val audioUsage = AudioAttributesCompat.USAGE_ALARM
+    PlaybackController.handleServiceIntent(
+      ApplicationProvider.getApplicationContext(),
+      mockPlayerManager,
+      Intent(PlaybackController.ACTION_SET_AUDIO_USAGE)
+        .putExtra(PlaybackController.EXTRA_AUDIO_USAGE, audioUsage),
+      mockk()
+    )
+
+    verify(exactly = 1) { mockPlayerManager.setAudioUsage(audioUsage) }
   }
 
   @Test
@@ -552,6 +551,22 @@ class PlaybackControllerTest {
         withArg {
           assertEquals(MediaPlayerService::class.qualifiedName, it.component?.className)
           assertEquals(PlaybackController.ACTION_REQUEST_UPDATE_EVENT, it.action)
+        }
+      )
+    }
+  }
+
+  @Test
+  fun testSetAudioUsage() {
+    val mockContext = mockk<Context>(relaxed = true)
+    val audioUsage = AudioAttributesCompat.USAGE_ALARM
+    PlaybackController.setAudioUsage(mockContext, audioUsage)
+    verify(exactly = 1) {
+      mockContext.startService(
+        withArg {
+          assertEquals(MediaPlayerService::class.qualifiedName, it.component?.className)
+          assertEquals(PlaybackController.ACTION_SET_AUDIO_USAGE, it.action)
+          assertEquals(audioUsage, it.getIntExtra(PlaybackController.EXTRA_AUDIO_USAGE, -1))
         }
       )
     }

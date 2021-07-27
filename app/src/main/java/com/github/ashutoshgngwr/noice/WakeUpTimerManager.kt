@@ -20,12 +20,7 @@ object WakeUpTimerManager {
   /**
    * [Timer] declares fields necessary to schedule a Wake-up timer.
    */
-  data class Timer(
-    @Expose var presetID: String,
-    @Expose var atMillis: Long,
-    @Expose var shouldUpdateMediaVolume: Boolean,
-    @Expose var mediaVolume: Int
-  )
+  data class Timer(@Expose var presetID: String, @Expose var atMillis: Long)
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   const val PREF_WAKE_UP_TIMER = "wake_up_timer"
@@ -67,12 +62,7 @@ object WakeUpTimerManager {
     withAlarmManager(context) {
       it.setAlarmClock(
         AlarmManager.AlarmClockInfo(timer.atMillis, getPendingIntentForActivity(context)),
-        PlaybackController.buildAlarmPendingIntent(
-          context,
-          timer.presetID,
-          timer.shouldUpdateMediaVolume,
-          timer.mediaVolume
-        )
+        PlaybackController.buildAlarmPendingIntent(context, timer.presetID)
       )
     }
   }
@@ -87,7 +77,7 @@ object WakeUpTimerManager {
 
     withAlarmManager(context) {
       // don't need concrete timer value for cancelling the alarm.
-      it.cancel(PlaybackController.buildAlarmPendingIntent(context, null, false, -1))
+      it.cancel(PlaybackController.buildAlarmPendingIntent(context, null))
     }
   }
 

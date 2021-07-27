@@ -4,6 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.core.os.HandlerCompat
+import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategy
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
@@ -110,6 +111,10 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
     }
   }
 
+  internal fun setAudioAttributes(attrs: AudioAttributesCompat) {
+    playbackStrategy.setAudioAttributes(attrs)
+  }
+
   /**
    * [updatePlaybackStrategy] updates the [PlaybackStrategy] used by the [Player] instance. All subsequent
    * player control commands are sent to the new [PlaybackStrategy]. It also sends setVolume command
@@ -117,8 +122,6 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
    * command on the new [PlaybackStrategy].
    */
   internal fun updatePlaybackStrategy(playbackStrategyFactory: PlaybackStrategyFactory) {
-    // pause then stop just to prevent the fade-out transition from LocalSoundPlayer
-    playbackStrategy.pause()
     playbackStrategy.stop()
     playbackStrategy = playbackStrategyFactory.newInstance(sound).also {
       it.setVolume(volume.toFloat() / MAX_VOLUME)

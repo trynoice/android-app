@@ -117,7 +117,6 @@ class PlayerTest {
     }
 
     verifySequence {
-      mockPlaybackStrategy.pause()
       mockPlaybackStrategy.stop()
       strategy2.setVolume(any())
     }
@@ -136,7 +135,6 @@ class PlayerTest {
 
     verifySequence {
       mockPlaybackStrategy.play() // from initial play call
-      mockPlaybackStrategy.pause()
       mockPlaybackStrategy.stop()
       strategy2.setVolume(any())
     }
@@ -163,7 +161,6 @@ class PlayerTest {
 
     verifySequence {
       mockPlaybackStrategy.play() // from initial play call
-      mockPlaybackStrategy.pause()
       mockPlaybackStrategy.stop()
       strategy2.setVolume(any())
       strategy2.play()

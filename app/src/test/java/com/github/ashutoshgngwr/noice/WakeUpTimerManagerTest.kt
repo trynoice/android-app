@@ -25,7 +25,6 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowAlarmManager
-import org.robolectric.shadows.ShadowPendingIntent
 
 @RunWith(RobolectricTestRunner::class)
 class WakeUpTimerManagerTest {
@@ -59,46 +58,31 @@ class WakeUpTimerManagerTest {
   fun testSet() {
     val expectedTime = System.currentTimeMillis() + 10000L
     val expectedPresetID = "test-preset-id"
-    val expectedVolume = 10
+    val expectedTimer = WakeUpTimerManager.Timer(expectedPresetID, expectedTime)
+    val expectedJSON = GsonBuilder()
+      .excludeFieldsWithoutExposeAnnotation()
+      .create()
+      .toJson(expectedTimer)
 
-    for (shouldUpdateMediaVolume in arrayOf(true, false)) {
-      ShadowPendingIntent.reset()
-      val expectedTimer = WakeUpTimerManager.Timer(
-        expectedPresetID, expectedTime, shouldUpdateMediaVolume, expectedVolume
-      )
-
-      val expectedJSON = GsonBuilder()
-        .excludeFieldsWithoutExposeAnnotation()
-        .create()
-        .toJson(expectedTimer)
-
-      val mockPrefsEditor = mockk<SharedPreferences.Editor>(relaxed = true) {
-        every { putString(any(), any()) } returns this
-      }
-
-      every { mockPrefs.edit() } returns mockPrefsEditor
-      every { mockPresetRepository.get(expectedPresetID) } returns mockk()
-
-      WakeUpTimerManager.set(ApplicationProvider.getApplicationContext(), expectedTimer)
-
-      verifyOrder {
-        mockPrefs.edit()
-        mockPrefsEditor.putString(WakeUpTimerManager.PREF_WAKE_UP_TIMER, expectedJSON)
-        mockPrefsEditor.apply()
-      }
-
-      val alarm = shadowAlarmManager.nextScheduledAlarm
-      val i = shadowOf(alarm.operation).savedIntent
-      assertEquals(expectedTime, alarm.triggerAtTime)
-      assertEquals(expectedPresetID, i.getStringExtra(PlaybackController.EXTRA_PRESET_ID))
-
-      val vol = i.getIntExtra(PlaybackController.EXTRA_DEVICE_MEDIA_VOLUME, -1)
-      if (shouldUpdateMediaVolume) {
-        assertEquals(expectedVolume, vol)
-      } else {
-        assertEquals(-1, vol)
-      }
+    val mockPrefsEditor = mockk<SharedPreferences.Editor>(relaxed = true) {
+      every { putString(any(), any()) } returns this
     }
+
+    every { mockPrefs.edit() } returns mockPrefsEditor
+    every { mockPresetRepository.get(expectedPresetID) } returns mockk()
+
+    WakeUpTimerManager.set(ApplicationProvider.getApplicationContext(), expectedTimer)
+
+    verifyOrder {
+      mockPrefs.edit()
+      mockPrefsEditor.putString(WakeUpTimerManager.PREF_WAKE_UP_TIMER, expectedJSON)
+      mockPrefsEditor.apply()
+    }
+
+    val alarm = shadowAlarmManager.nextScheduledAlarm
+    val i = shadowOf(alarm.operation).savedIntent
+    assertEquals(expectedTime, alarm.triggerAtTime)
+    assertEquals(expectedPresetID, i.getStringExtra(PlaybackController.EXTRA_PRESET_ID))
   }
 
   @Test
@@ -132,7 +116,6 @@ class WakeUpTimerManagerTest {
     val timer = WakeUpTimerManager.get(ApplicationProvider.getApplicationContext())
     assertEquals(1L, timer?.atMillis)
     assertEquals("test", timer?.presetID)
-    assertEquals(10, timer?.mediaVolume)
   }
 
   @Test

@@ -1,13 +1,9 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.content.Context
 import android.icu.util.Calendar
-import android.media.AudioManager
 import androidx.core.content.edit
-import androidx.core.content.getSystemService
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.media.AudioManagerCompat
 import androidx.preference.PreferenceManager
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
@@ -39,7 +35,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import kotlin.random.Random
 
 @RunWith(AndroidJUnit4::class)
 class WakeUpTimerFragmentTest {
@@ -95,7 +90,6 @@ class WakeUpTimerFragmentTest {
   fun testInitialLayout_whenTimerIsPreScheduled() {
     val expectedPresetID = "test-preset-id"
     val expectedPresetName = "test-preset-name"
-    val expectedMediaVolume = 10
     every { mockPresetRepository.get(expectedPresetID) } returns mockk {
       every { name } returns expectedPresetName
     }
@@ -103,8 +97,6 @@ class WakeUpTimerFragmentTest {
     every { WakeUpTimerManager.get(any()) } returns mockk {
       every { presetID } returns expectedPresetID
       every { atMillis } returns System.currentTimeMillis() + 10000L
-      every { shouldUpdateMediaVolume } returns true
-      every { mediaVolume } returns expectedMediaVolume
     }
 
     // fragmentScenario.recreate() // for whatever reasons, doesn't invoke Fragment.onViewCreated().
@@ -113,13 +105,6 @@ class WakeUpTimerFragmentTest {
     onView(withId(R.id.select_preset_button))
       .check(matches(isEnabled()))
       .check(matches(withText(expectedPresetName)))
-
-    onView(withId(R.id.should_update_media_volume))
-      .check(matches(isChecked()))
-
-    onView(withId(R.id.media_volume_slider))
-      .check(matches(isEnabled()))
-      .check(matches(EspressoX.withSliderValue(expectedMediaVolume.toFloat())))
 
     onView(withId(R.id.set_time_button))
       .check(matches(isEnabled()))
@@ -134,8 +119,6 @@ class WakeUpTimerFragmentTest {
     every { WakeUpTimerManager.get(any()) } returns mockk {
       every { presetID } returns "test"
       every { atMillis } returns System.currentTimeMillis() + 10000L
-      every { shouldUpdateMediaVolume } returns false
-      every { mediaVolume } returns 1
     }
 
     fragmentScenario.recreate()
@@ -147,12 +130,6 @@ class WakeUpTimerFragmentTest {
       .check(matches(not(isEnabled())))
 
     onView(withId(R.id.reset_time_button))
-      .check(matches(not(isEnabled())))
-
-    onView(withId(R.id.should_update_media_volume))
-      .check(matches(isNotChecked()))
-
-    onView(withId(R.id.media_volume_slider))
       .check(matches(not(isEnabled())))
   }
 
@@ -183,74 +160,49 @@ class WakeUpTimerFragmentTest {
       }
     )
 
-    val am = ApplicationProvider.getApplicationContext<Context>().getSystemService<AudioManager>()
-    requireNotNull(am)
-    val maxVol = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-    val minVol = AudioManagerCompat.getStreamMinVolume(am, AudioManager.STREAM_MUSIC)
-    val expectedVolume = Random.nextInt(minVol, maxVol)
 
-    for (shouldUpdateMediaVolume in arrayOf(true, false)) {
-      onView(withId(R.id.select_preset_button))
-        .perform(click())
+    onView(withId(R.id.select_preset_button))
+      .perform(click())
 
-      EspressoX.waitForView(withId(android.R.id.list))
-        .check(matches(withChild(withText("test-1"))))
-        .check(matches(withChild(withText("test-2"))))
+    EspressoX.waitForView(withId(android.R.id.list))
+      .check(matches(withChild(withText("test-1"))))
+      .check(matches(withChild(withText("test-2"))))
 
-      onView(withText("test-1"))
-        .perform(click())
+    onView(withText("test-1"))
+      .perform(click())
 
-      onView(withId(R.id.select_preset_button))
-        .check(matches(withText("test-1")))
+    onView(withId(R.id.select_preset_button))
+      .check(matches(withText("test-1")))
 
-      verify(exactly = 0) { WakeUpTimerManager.set(any(), any()) }
+    verify(exactly = 0) { WakeUpTimerManager.set(any(), any()) }
 
-      onView(withId(R.id.time_picker))
-        .perform(PickerActions.setTime(1, 2))
+    onView(withId(R.id.time_picker))
+      .perform(PickerActions.setTime(1, 2))
 
-      onView(withId(R.id.should_update_media_volume))
-        .perform(scrollTo(), EspressoX.setChecked(shouldUpdateMediaVolume))
+    onView(withId(R.id.set_time_button))
+      .check(matches(isEnabled()))
+      .perform(scrollTo(), click())
 
-      if (shouldUpdateMediaVolume) {
-        onView(withId(R.id.media_volume_slider))
-          .check(matches(isEnabled()))
-          .perform(scrollTo(), EspressoX.slide(expectedVolume.toFloat()))
-      } else {
-        onView(withId(R.id.media_volume_slider))
-          .check(matches(not(isEnabled())))
+    val calendar = Calendar.getInstance()
+    val timerSlot = slot<WakeUpTimerManager.Timer>()
+
+    try {
+      verify(exactly = 1) {
+        WakeUpTimerManager.set(any(), capture(timerSlot))
+        mockReviewFlowProvider.maybeAskForReview(any())
       }
-
-      onView(withId(R.id.set_time_button))
-        .check(matches(isEnabled()))
-        .perform(scrollTo(), click())
-
-      val calendar = Calendar.getInstance()
-      val timerSlot = slot<WakeUpTimerManager.Timer>()
-
-      try {
-        verify(exactly = 1) {
-          WakeUpTimerManager.set(any(), capture(timerSlot))
-          mockReviewFlowProvider.maybeAskForReview(any())
-        }
-      } finally {
-        clearMocks(WakeUpTimerManager, mockReviewFlowProvider)
-      }
-
-      calendar.timeInMillis = timerSlot.captured.atMillis
-      assertEquals(1, calendar.get(Calendar.HOUR_OF_DAY))
-      assertEquals(2, calendar.get(Calendar.MINUTE))
-      assertEquals("test-id-1", timerSlot.captured.presetID)
-      assertEquals(shouldUpdateMediaVolume, timerSlot.captured.shouldUpdateMediaVolume)
-      if (shouldUpdateMediaVolume) {
-        assertEquals(expectedVolume, timerSlot.captured.mediaVolume)
-      }
-
-      onView(withId(R.id.reset_time_button)).check(matches(isEnabled()))
-      onView(withSubstring("The alarm will go off in"))
-        .check(matches(isDisplayed()))
-
-      fragmentScenario.recreate()
+    } finally {
+      clearMocks(WakeUpTimerManager, mockReviewFlowProvider)
     }
+
+    calendar.timeInMillis = timerSlot.captured.atMillis
+    assertEquals(1, calendar.get(Calendar.HOUR_OF_DAY))
+    assertEquals(2, calendar.get(Calendar.MINUTE))
+    assertEquals("test-id-1", timerSlot.captured.presetID)
+
+    onView(withId(R.id.reset_time_button)).check(matches(isEnabled()))
+    onView(withSubstring("The alarm will go off in"))
+      .check(matches(isDisplayed()))
   }
 
   @Test
@@ -262,8 +214,6 @@ class WakeUpTimerFragmentTest {
     every { WakeUpTimerManager.get(any()) } returns mockk {
       every { presetID } returns "test-id"
       every { atMillis } returns System.currentTimeMillis() + 10000L
-      every { shouldUpdateMediaVolume } returns false
-      every { mediaVolume } returns 1
     }
 
     fragmentScenario.recreate()
