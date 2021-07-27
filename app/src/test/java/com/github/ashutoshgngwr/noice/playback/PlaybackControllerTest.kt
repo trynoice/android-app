@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
 import android.os.SystemClock
 import androidx.media.AudioAttributesCompat
 import androidx.preference.PreferenceManager
@@ -132,7 +130,6 @@ class PlaybackControllerTest {
       ApplicationProvider.getApplicationContext(),
       mockPlayerManager,
       Intent(PlaybackController.ACTION_RESUME_PLAYBACK),
-      mockk()
     )
 
     verify(exactly = 1) { mockPlayerManager.resume() }
@@ -144,7 +141,6 @@ class PlaybackControllerTest {
       ApplicationProvider.getApplicationContext(),
       mockPlayerManager,
       Intent(PlaybackController.ACTION_PAUSE_PLAYBACK),
-      mockk()
     )
 
     verify(exactly = 1) { mockPlayerManager.pause() }
@@ -156,7 +152,6 @@ class PlaybackControllerTest {
       ApplicationProvider.getApplicationContext(),
       mockPlayerManager,
       Intent(PlaybackController.ACTION_STOP_PLAYBACK),
-      mockk()
     )
 
     verify(exactly = 1) { mockPlayerManager.stop() }
@@ -171,7 +166,6 @@ class PlaybackControllerTest {
       mockPlayerManager,
       Intent(PlaybackController.ACTION_PLAY_PRESET)
         .putExtra(PlaybackController.EXTRA_PRESET_ID, presetID),
-      mockk()
     )
 
     val uri = Uri.parse("test")
@@ -182,7 +176,6 @@ class PlaybackControllerTest {
       Intent(PlaybackController.ACTION_PLAY_PRESET)
         .setData(uri)
         .putExtra(PlaybackController.EXTRA_AUDIO_USAGE, audioUsage),
-      mockk()
     )
 
     verifyOrder {
@@ -204,7 +197,6 @@ class PlaybackControllerTest {
         .putExtra(PlaybackController.EXTRA_FILTER_SOUNDS_BY_TAG, tag)
         .putExtra(PlaybackController.EXTRA_RANDOM_PRESET_MIN_SOUNDS, minSounds)
         .putExtra(PlaybackController.EXTRA_RANDOM_PRESET_MAX_SOUNDS, maxSounds),
-      mockk()
     )
 
     verify(exactly = 1) { mockPlayerManager.playRandomPreset(tag, minSounds..maxSounds) }
@@ -218,7 +210,6 @@ class PlaybackControllerTest {
       mockPlayerManager,
       Intent(PlaybackController.ACTION_PLAY_SOUND)
         .putExtra(PlaybackController.EXTRA_SOUND_KEY, soundKey),
-      mockk()
     )
 
     verify(exactly = 1) { mockPlayerManager.play(soundKey) }
@@ -232,7 +223,6 @@ class PlaybackControllerTest {
       mockPlayerManager,
       Intent(PlaybackController.ACTION_STOP_SOUND)
         .putExtra(PlaybackController.EXTRA_SOUND_KEY, soundKey),
-      mockk()
     )
 
     verify(exactly = 1) { mockPlayerManager.stop(soundKey) }
@@ -245,7 +235,6 @@ class PlaybackControllerTest {
       mockPlayerManager,
       Intent(PlaybackController.ACTION_SCHEDULE_STOP_PLAYBACK)
         .putExtra(PlaybackController.EXTRA_AT_UPTIME_MILLIS, SystemClock.uptimeMillis() + 100),
-      Handler(Looper.getMainLooper())
     )
 
     verify { mockPlayerManager wasNot called }
@@ -255,13 +244,11 @@ class PlaybackControllerTest {
 
   @Test
   fun testHandleServiceIntent_withScheduleStopPlaybackAction_onCancel() {
-    val handler = Handler(Looper.getMainLooper())
     PlaybackController.handleServiceIntent(
       ApplicationProvider.getApplicationContext(),
       mockPlayerManager,
       Intent(PlaybackController.ACTION_SCHEDULE_STOP_PLAYBACK)
         .putExtra(PlaybackController.EXTRA_AT_UPTIME_MILLIS, SystemClock.uptimeMillis() + 1000),
-      handler
     )
 
     PlaybackController.handleServiceIntent(
@@ -269,7 +256,6 @@ class PlaybackControllerTest {
       mockPlayerManager,
       Intent(PlaybackController.ACTION_SCHEDULE_STOP_PLAYBACK)
         .putExtra(PlaybackController.EXTRA_AT_UPTIME_MILLIS, SystemClock.uptimeMillis() - 1000),
-      handler
     )
 
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
@@ -284,7 +270,6 @@ class PlaybackControllerTest {
         mockPlayerManager,
         Intent(PlaybackController.ACTION_SKIP_PRESET)
           .putExtra(PlaybackController.EXTRA_SKIP_DIRECTION, input),
-        mockk()
       )
 
       verify(exactly = 1) { mockPlayerManager.skipPreset(input) }
@@ -297,7 +282,6 @@ class PlaybackControllerTest {
       ApplicationProvider.getApplicationContext(),
       mockPlayerManager,
       Intent(PlaybackController.ACTION_REQUEST_UPDATE_EVENT),
-      mockk()
     )
 
     verify(exactly = 1) { mockPlayerManager.callPlaybackUpdateListener() }
@@ -310,7 +294,6 @@ class PlaybackControllerTest {
       mockPlayerManager,
       Intent(PlaybackController.ACTION_SET_AUDIO_USAGE)
         .putExtra(PlaybackController.EXTRA_AUDIO_USAGE, audioUsage),
-      mockk()
     )
 
     verify(exactly = 1) { mockPlayerManager.setAudioUsage(audioUsage) }
@@ -322,7 +305,6 @@ class PlaybackControllerTest {
       ApplicationProvider.getApplicationContext(),
       mockPlayerManager,
       Intent(),
-      mockk()
     )
 
     verify { mockPlayerManager wasNot called }
@@ -528,16 +510,14 @@ class PlaybackControllerTest {
 
   @Test
   fun testClearAutoStopCallback() {
-    val handler = Handler(Looper.getMainLooper())
     PlaybackController.handleServiceIntent(
       mockk(),
       mockPlayerManager,
       Intent(PlaybackController.ACTION_SCHEDULE_STOP_PLAYBACK)
         .putExtra(PlaybackController.EXTRA_AT_UPTIME_MILLIS, SystemClock.uptimeMillis() + 1000),
-      handler
     )
 
-    PlaybackController.clearAutoStopCallback(handler)
+    PlaybackController.clearAutoStopCallback()
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     verify { mockPlayerManager wasNot called }
   }

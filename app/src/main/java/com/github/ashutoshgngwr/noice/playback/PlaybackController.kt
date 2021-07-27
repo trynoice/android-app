@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
@@ -50,6 +51,8 @@ object PlaybackController {
   private const val RC_RESUME = 0x3C
   private const val RC_PAUSE = 0x3D
   private const val RC_STOP = 0x3E
+
+  private val handler = Handler(Looper.getMainLooper())
 
   fun buildResumeActionPendingIntent(context: Context): PendingIntent {
     return buildSimpleActionPendingIntent(context, ACTION_RESUME_PLAYBACK, RC_RESUME)
@@ -117,12 +120,7 @@ object PlaybackController {
     }
   }
 
-  fun handleServiceIntent(
-    context: Context,
-    playerManager: PlayerManager,
-    intent: Intent,
-    handler: Handler
-  ) {
+  fun handleServiceIntent(context: Context, playerManager: PlayerManager, intent: Intent) {
     when (intent.action) {
       ACTION_RESUME_PLAYBACK -> {
         playerManager.resume()
@@ -330,7 +328,7 @@ object PlaybackController {
     return max(atUptimeMillis - SystemClock.uptimeMillis(), 0)
   }
 
-  fun clearAutoStopCallback(handler: Handler) {
+  fun clearAutoStopCallback() {
     handler.removeCallbacksAndMessages(AUTO_STOP_CALLBACK_TOKEN)
   }
 

@@ -7,9 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.AudioManager
-import android.os.Handler
 import android.os.IBinder
-import android.os.Looper
 import android.os.PowerManager
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
@@ -51,8 +49,6 @@ class MediaPlayerService : Service() {
   private lateinit var playerManager: PlayerManager
   private lateinit var presetRepository: PresetRepository
   private lateinit var settingsRepository: SettingsRepository
-
-  private val handler = Handler(Looper.getMainLooper())
 
   private val becomingNoisyReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -134,7 +130,7 @@ class MediaPlayerService : Service() {
   }
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-    intent?.also { PlaybackController.handleServiceIntent(this, playerManager, it, handler) }
+    intent?.also { PlaybackController.handleServiceIntent(this, playerManager, it) }
     return START_STICKY
   }
 
@@ -142,7 +138,7 @@ class MediaPlayerService : Service() {
     unregisterReceiver(becomingNoisyReceiver)
     playerManager.cleanup()
     mediaSession.release()
-    PlaybackController.clearAutoStopCallback(handler)
+    PlaybackController.clearAutoStopCallback()
     wakeLock.release()
     super.onDestroy()
   }

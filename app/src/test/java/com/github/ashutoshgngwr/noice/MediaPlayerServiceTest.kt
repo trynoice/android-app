@@ -101,7 +101,7 @@ class MediaPlayerServiceTest {
     serviceController.create().destroy()
     ShadowLooper.idleMainLooper()
     assertFalse(ShadowPowerManager.getLatestWakeLock().isHeld)
-    verify(exactly = 1) { PlaybackController.clearAutoStopCallback(any()) }
+    verify(exactly = 1) { PlaybackController.clearAutoStopCallback() }
   }
 
   @Test
@@ -109,7 +109,7 @@ class MediaPlayerServiceTest {
     mockkObject(PlaybackController)
     serviceController.create().startCommand(0, 0)
     verify(exactly = 1) {
-      PlaybackController.handleServiceIntent(any(), any(), mockServiceIntent, any())
+      PlaybackController.handleServiceIntent(any(), any(), mockServiceIntent)
     }
   }
 }
