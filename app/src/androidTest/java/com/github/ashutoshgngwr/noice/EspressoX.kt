@@ -2,7 +2,6 @@ package com.github.ashutoshgngwr.noice
 
 import android.content.Intent
 import android.view.View
-import android.widget.CompoundButton
 import android.widget.TimePicker
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
@@ -14,7 +13,6 @@ import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.MotionEvents
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
-import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.util.TreeIterables
 import com.github.ashutoshgngwr.noice.widget.DurationPicker
@@ -80,21 +78,6 @@ object EspressoX {
     }
   }
 
-  /**
-   * [withSliderValue] matches a [Slider] with the provided [expectedValue].
-   */
-  fun withSliderValue(expectedValue: Float): Matcher<View> {
-    return object : BoundedMatcher<View, Slider>(Slider::class.java) {
-      override fun describeTo(description: Description) {
-        description.appendText("Slider with value $expectedValue")
-      }
-
-      override fun matchesSafely(slider: Slider): Boolean {
-        return expectedValue == slider.value
-      }
-    }
-  }
-
   private fun searchForView(viewMatcher: Matcher<View>): ViewAction {
     return object : ViewAction {
       override fun getConstraints() = isRoot()
@@ -129,7 +112,8 @@ object EspressoX {
   ): ViewInteraction {
     require(retries > 0 && wait > 0)
     val viewMatcher = allOf(*viewMatchers)
-    for (i in 0 until retries) {
+    var i = 0
+    while(i++ < retries) {
       try {
         onView(isRoot()).perform(searchForView(viewMatcher))
         break
@@ -190,22 +174,6 @@ object EspressoX {
       override fun describeTo(description: Description?) = Unit
       override fun matchesSafely(item: View?): Boolean {
         return item is TimePicker && item.is24HourView
-      }
-    }
-  }
-
-  /**
-   * [setChecked] returns a [ViewAction] to set the checked state of a [CompoundButton].
-   */
-  fun setChecked(checked: Boolean): ViewAction {
-    return object : ViewAction {
-      override fun getDescription() = "check/uncheck compound buttons"
-      override fun getConstraints() = instanceOf<View>(CompoundButton::class.java)
-
-      override fun perform(uiController: UiController, view: View) {
-        if (view is CompoundButton) {
-          view.isChecked = checked
-        }
       }
     }
   }

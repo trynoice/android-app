@@ -109,22 +109,6 @@ class PlaybackControllerTest {
   }
 
   @Test
-  fun testBuildAlarmPendingIntent() {
-    val inputShouldUpdateMediaVolume = arrayOf(true, false)
-    for (i in inputShouldUpdateMediaVolume.indices) {
-      val presetID = "test-preset-id"
-      val pendingIntent = PlaybackController.buildAlarmPendingIntent(
-        ApplicationProvider.getApplicationContext(), presetID
-      )
-
-      val intent = shadowOf(pendingIntent).savedIntent
-      assertEquals(MediaPlayerService::class.qualifiedName, intent.component?.className)
-      assertEquals(PlaybackController.ACTION_PLAY_PRESET, intent.action)
-      assertEquals(presetID, intent.getStringExtra(PlaybackController.EXTRA_PRESET_ID))
-    }
-  }
-
-  @Test
   fun testHandleServiceIntent_withResumePlaybackAction() {
     PlaybackController.handleServiceIntent(
       ApplicationProvider.getApplicationContext(),
@@ -169,18 +153,15 @@ class PlaybackControllerTest {
     )
 
     val uri = Uri.parse("test")
-    val audioUsage = AudioAttributesCompat.USAGE_ALARM
     PlaybackController.handleServiceIntent(
       ApplicationProvider.getApplicationContext(),
       mockPlayerManager,
       Intent(PlaybackController.ACTION_PLAY_PRESET)
-        .setData(uri)
-        .putExtra(PlaybackController.EXTRA_AUDIO_USAGE, audioUsage),
+        .setData(uri),
     )
 
     verifyOrder {
       mockPlayerManager.playPreset(presetID)
-      mockPlayerManager.setAudioUsage(audioUsage)
       mockPlayerManager.playPreset(uri)
     }
   }

@@ -9,8 +9,8 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
+import com.github.ashutoshgngwr.noice.activity.AlarmRingerActivity
 import com.github.ashutoshgngwr.noice.activity.MainActivity
-import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
@@ -62,7 +62,7 @@ object WakeUpTimerManager {
     withAlarmManager(context) {
       it.setAlarmClock(
         AlarmManager.AlarmClockInfo(timer.atMillis, getPendingIntentForActivity(context)),
-        PlaybackController.buildAlarmPendingIntent(context, timer.presetID)
+        AlarmRingerActivity.getPendingIntent(context, timer.presetID)
       )
     }
   }
@@ -77,7 +77,7 @@ object WakeUpTimerManager {
 
     withAlarmManager(context) {
       // don't need concrete timer value for cancelling the alarm.
-      it.cancel(PlaybackController.buildAlarmPendingIntent(context, null))
+      it.cancel(AlarmRingerActivity.getPendingIntent(context, null))
     }
   }
 

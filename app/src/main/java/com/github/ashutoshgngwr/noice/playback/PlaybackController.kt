@@ -45,7 +45,6 @@ object PlaybackController {
 
   internal val PREF_LAST_SCHEDULED_STOP_TIME = "${TAG}.scheduled_stop_time"
 
-  private const val RC_ALARM = 0x39
   private const val RC_SKIP_PREV = 0x3A
   private const val RC_SKIP_NEXT = 0x3B
   private const val RC_RESUME = 0x3C
@@ -97,15 +96,6 @@ object PlaybackController {
     return buildPendingIntent(context, intent, requestCode)
   }
 
-  fun buildAlarmPendingIntent(context: Context, presetID: String?): PendingIntent {
-    val intent = Intent(context, MediaPlayerService::class.java)
-      .setAction(ACTION_PLAY_PRESET)
-      .putExtra(EXTRA_PRESET_ID, presetID)
-      .putExtra(EXTRA_AUDIO_USAGE, AudioAttributesCompat.USAGE_ALARM)
-
-    return buildPendingIntent(context, intent, RC_ALARM)
-  }
-
   private fun buildPendingIntent(
     context: Context,
     intent: Intent,
@@ -143,11 +133,6 @@ object PlaybackController {
       }
 
       ACTION_PLAY_PRESET -> {
-        // update stream before playing preset. This will cause a sudden volume change if the
-        // something is already playing via different audio stream.
-        val audioUsage = intent.getIntExtra(EXTRA_AUDIO_USAGE, AudioAttributesCompat.USAGE_MEDIA)
-        playerManager.setAudioUsage(audioUsage)
-
         intent.getStringExtra(EXTRA_PRESET_ID)?.also { playerManager.playPreset(it) }
         intent.data?.also { playerManager.playPreset(it) }
         logEvent(context, "preset_playback", bundleOf("items_count" to playerManager.playerCount()))
@@ -264,7 +249,7 @@ object PlaybackController {
   /**
    * Sends the start command to the service with [ACTION_PLAY_PRESET].
    */
-  fun playPreset(context: Context, presetID: String?) {
+  fun playPreset(context: Context, presetID: String) {
     context.startService(
       Intent(context, MediaPlayerService::class.java)
         .setAction(ACTION_PLAY_PRESET)

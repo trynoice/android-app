@@ -64,7 +64,6 @@
 
       </intent-filter>
 
-
     </activity>
 
     <activity
@@ -73,8 +72,13 @@
 
     <activity
       android:name=".activity.ShortcutHandlerActivity"
-      android:exported="true"
-      android:excludeFromRecents="true" />
+      android:excludeFromRecents="true"
+      android:exported="true" />
+
+    <activity
+      android:name=".activity.AlarmRingerActivity"
+      android:excludeFromRecents="true"
+      android:launchMode="singleInstance" />
 
     <service android:name=".MediaPlayerService" />
 

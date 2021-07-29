@@ -138,6 +138,7 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
       return
     }
 
+    Log.d(TAG, "setAudioUsage(): usage = $usage")
     audioAttributes = AudioAttributesCompat.Builder()
       .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)
       .setUsage(usage)
@@ -157,6 +158,9 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
 
     if (hasAudioFocus) {
       abandonAudioFocus()
+    }
+
+    if (state == PlaybackStateCompat.STATE_PLAYING) {
       requestAudioFocus()
     }
   }
@@ -291,6 +295,10 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
    * It doesn't release any underlying resources.
    */
   private fun pauseIndefinitely() {
+    if (players.isEmpty() && state != PlaybackStateCompat.STATE_PLAYING) {
+      return
+    }
+
     state = PlaybackStateCompat.STATE_PAUSED
     players.values.forEach {
       it.pause()
@@ -305,6 +313,10 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
    * delayed callback to release all underlying resources after 5 minutes.
    */
   fun pause() {
+    if (players.isEmpty() && state != PlaybackStateCompat.STATE_PLAYING) {
+      return
+    }
+
     pauseIndefinitely()
     Log.d(TAG, "pause(): scheduling stop callback")
     handler.removeCallbacksAndMessages(DELAYED_STOP_CALLBACK_TOKEN) // clear previous callbacks
