@@ -140,7 +140,7 @@ class WakeUpTimerFragmentTest {
       .check(matches(withText(R.string.select_preset)))
       .perform(click())
 
-    EspressoX.waitForView(withText(R.string.preset_info__description))
+    onView(withText(R.string.preset_info__description))
       .check(matches(isDisplayed()))
   }
 
@@ -164,7 +164,7 @@ class WakeUpTimerFragmentTest {
     onView(withId(R.id.select_preset_button))
       .perform(click())
 
-    EspressoX.waitForView(withId(android.R.id.list))
+    onView(withId(android.R.id.list))
       .check(matches(withChild(withText("test-1"))))
       .check(matches(withChild(withText("test-2"))))
 
