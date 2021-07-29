@@ -67,4 +67,16 @@
     android:layout_height="0dp"
     android:layout_weight="1" />
 
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="end"
+    android:drawablePadding="4dp"
+    android:gravity="center_vertical"
+    android:text="@string/app_name"
+    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+    android:textColor="@color/material_on_background_disabled"
+    app:drawableEndCompat="@drawable/ic_launcher_24dp"
+    app:drawableTint="@color/material_on_background_disabled" />
+
 </LinearLayout>

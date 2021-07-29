@@ -5,19 +5,23 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Window
 import android.view.WindowManager
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.MediaPlayerService
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.databinding.AlarmRingerActivityBinding
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.ncorti.slidetoact.SlideToActView
 
@@ -28,6 +32,7 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     internal const val EXTRA_PRESET_ID = "preset_id"
 
     private const val RC_ALARM = 0x39
+    private val LOG_TAG = AlarmRingerActivity::class.simpleName
 
     fun getPendingIntent(context: Context, presetID: String?): PendingIntent {
       return Intent(context, AlarmRingerActivity::class.java)
@@ -38,22 +43,24 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
 
   private lateinit var binding: AlarmRingerActivityBinding
   private lateinit var settingsRepository: SettingsRepository
-
-  private var shouldPausePlaybackOnStop = false
+  private lateinit var analyticsProvider: AnalyticsProvider
+  private var ringerStartTime: Long = 0L
 
   override fun onCreate(savedInstanceState: Bundle?) {
     settingsRepository = SettingsRepository.newInstance(this)
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
     super.onCreate(savedInstanceState)
 
-    requestWindowFeature(Window.FEATURE_NO_TITLE);
+    supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
     binding = AlarmRingerActivityBinding.inflate(layoutInflater)
     binding.dismissSlider.onSlideCompleteListener = this
     setContentView(binding.root)
     showWhenLocked()
-    enableImmersiveMode()
 
     handleNewIntent()
+
+    analyticsProvider = NoiceApplication.of(this).getAnalyticsProvider()
+    ringerStartTime = System.currentTimeMillis()
   }
 
   override fun onNewIntent(intent: Intent?) {
@@ -62,14 +69,23 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     handleNewIntent()
   }
 
+  override fun onResume() {
+    super.onResume()
+    enableImmersiveMode()
+  }
+
   override fun onStop() {
     super.onStop()
-
-    if (shouldPausePlaybackOnStop) {
-      PlaybackController.pause(this)
-      PlaybackController.setAudioUsage(this, AudioAttributesCompat.USAGE_MEDIA)
-      shouldPausePlaybackOnStop = false
+    if (!isFinishing) {
+      return
     }
+
+    Log.d(LOG_TAG, "onStop(): pausing playback")
+    PlaybackController.pause(this)
+    PlaybackController.setAudioUsage(this, AudioAttributesCompat.USAGE_MEDIA)
+
+    val duration = System.currentTimeMillis() - ringerStartTime
+    analyticsProvider.logEvent("alarm_ringer_session", bundleOf("duration_ms" to duration))
   }
 
   override fun onBackPressed() = Unit
@@ -109,6 +125,7 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
   private fun handleNewIntent() {
     val presetID = intent.getStringExtra(EXTRA_PRESET_ID)
     if (presetID == null) {
+      Log.d(LOG_TAG, "handleNewIntent(): presetID is null")
       finish()
       return
     }
@@ -122,8 +139,8 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     // be certain that playPreset action will bring it to foreground before Android System kills it.
     ContextCompat.startForegroundService(this, Intent(this, MediaPlayerService::class.java))
 
+    Log.d(LOG_TAG, "handleNewIntent(): starting preset")
     PlaybackController.setAudioUsage(this, AudioAttributesCompat.USAGE_ALARM)
     PlaybackController.playPreset(this, presetID)
-    shouldPausePlaybackOnStop = true
   }
 }
