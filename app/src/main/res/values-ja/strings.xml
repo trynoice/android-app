@@ -5,7 +5,7 @@
     <string name="support_development__share">友達に共有</string>
     <string name="support_development__donate_thank_you_description">Noiceプロジェクトに多大なご協力をいただき、心より感謝申し上げます。</string>
     <string name="support_development__donate_thank_you">ありがとうございます!</string>
-    <string name="support_development__donate_google_play_description">あなたの購入はGoogle Playを介して安全に処理されます。金額はあなたの国の通貨に変換されます。地域によっては、_もしかすると_最終的に追加の税金が付加されるかもしれません。</string>
+    <string name="support_development__donate_google_play_description">あなたの購入はGoogle Playを介して安全に処理されます。地域によっては、_もしかすると_最終的に追加の税金が付加されるかもしれません。</string>
     <string name="support_development__donate_description">寄付することで以下のような形で開発者を手助けすることができます
 \n- 新機能の開発
 \n- より高品質なサウンドサンプルの採用
@@ -142,8 +142,53 @@
     <string name="later">後にする</string>
     <string name="in_app_feedback__title">レビューを投稿</string>
     <string name="in_app_feedback__description">アプリについてのご意見をお待ちしています。私たちのGitHubリポジトリをご覧ください。アプリが気に入らなかった場合、気になる点を説明するためにissueの作成をご検討ください。そうでなければ、あなたの愛とサポートを示すためにぜひプロジェクトにスターを付けてください。</string>
-    <string name="cast_media">他のデバイスにメディアをキャスト</string>
+    <string name="cast_media">Chromecastに接続</string>
     <string name="support_development__why_description">- 将来のアップデートを継続するため
 \n- Noiceを永遠に広告無しのアプリとして継続するため
 \n</string>
+    <string name="saved_presets_as_home_screen">プリセットをホーム画面として保存</string>
+    <string name="payment_pending">お支払いの処理が完了したら、すぐにお知らせします。</string>
+    <string name="failed_to_purchase">支払フローを開始できませんでした。後でもう一度お試しください!</string>
+    <string name="failed_to_load_inapp_purchases">アプリ内課金の詳細を読み込めませんでした。後でもう一度お試しください!</string>
+    <string name="should_allow_skipping_unsaved_presets_summary">保存されていないプリセットを再生する場合、プレーヤー通知にランダムプリセットを生成するためのスキップボタンを有効化する</string>
+    <string name="should_allow_skipping_unsaved_presets">保存されていないプリセットのスキップを許可</string>
+    <string name="should_share_usage_data_summary">使用状況と動作データを開発者と共有する</string>
+    <string name="should_share_usage_data">使用状況と動作データの共有</string>
+    <string name="others">その他</string>
+    <string name="decline">拒否</string>
+    <string name="accept">承認</string>
+    <string name="share_usage_data_consent_message">開発チームは、ユーザー体験を向上させるためにアプリの使用データを収集します。また、アプリの使用中に発生したエラーを分析・診断するために、アプリの動作データを収集しています。詳細については、当社の[プライバシーポリシー](https://ashutoshgngwr.github.io/noice/privacy-policy)をご覧ください。
+\n
+\n お客様は、アプリ内の「**設定** &gt; **使用状況と動作データの共有**」で、いつでも自動データ共有を設定することができます。</string>
+    <string name="share_usage_data_consent_title">データ共有の設定</string>
+    <string name="should_display_sound_icons">サウンドアイコンの表示</string>
+    <string name="invalid_import_file_format">インポートファイルの形式が無効です!</string>
+    <string name="failed_to_read_file">選択したファイルの読み込みに失敗しました!</string>
+    <string name="failed_to_write_file">選択したファイルへの書き込みに失敗しました!</string>
+    <string name="all_app_shortcuts_removed">すべてのアプリショートカットが削除されました!</string>
+    <string name="remove_all_app_shortcuts_confirmation">アプリのショートカットメニューからプリセットのショートカットがすべて削除されます。続行しますか\?</string>
+    <string name="remove_all_app_shortcuts">すべてのアプリショートカットを削除</string>
+    <string name="import_presets_summary">保存したプリセットを外部ファイルから読み込む場合、既存のプリセットは上書きされます。</string>
+    <string name="import_presets">ファイルからインポート</string>
+    <string name="export_presets_summary">保存したプリセットの現在の状態を外部ファイルにエクスポート</string>
+    <string name="export_presets">ファイルにエクスポート</string>
+    <string name="share">共有</string>
+    <string name="ignore_audio_focus_changes_summary_on">他のアプリがオーディオを再生しても一時停止しない</string>
+    <string name="ignore_audio_focus_changes_summary_off">他のアプリがオーディオ再生したときに一時停止</string>
+    <string name="ignore_audio_focus_changes">オーディオのフォーカス変更を無視</string>
+    <string name="unsaved_preset">未保存のプリセット</string>
+    <string name="skip_to_next">次のプリセット</string>
+    <string name="skip_to_prev">前のプリセット</string>
+    <string name="pinned_shortcut_created">ホーム画面にショートカットが追加されました!</string>
+    <string name="pinned_shortcut_creation_failed">ホーム画面へのショートカットの追加に失敗しました!</string>
+    <string name="sound_fade_duration_summary">音の再生/停止のフェードイン/アウト時間 (秒)</string>
+    <string name="sound_fade_duration">サウンドのフェード時間</string>
+    <string name="appearance">見た目</string>
+    <string name="behavior">ふるまい</string>
+    <string name="settings">設定</string>
+    <string name="app_shortcut_creation_failed">プリセットをアプリショートカットに追加できません!</string>
+    <string name="app_shortcut_created">プリセットがアプリショートカットに追加されました!</string>
+    <string name="app_shortcut_removed">アプリショートカットからプリセットが削除されました!</string>
+    <string name="remove_from_app_shortcuts">アプリショートカットから削除</string>
+    <string name="add_to_app_shortcuts">アプリショートカットに追加</string>
 </resources>
