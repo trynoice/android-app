@@ -36,7 +36,7 @@
     <string name="later">Để sau</string>
     <string name="in_app_feedback__title">Gửi đi một bài đánh giá</string>
     <string name="in_app_feedback__description">Chúng tôi rất muốn nghe phản hồi của bạn về ứng dụng này. Hãy vui lòng dành ra một lúc để đi đến kho GitHub của chúng tôi. Nếu bạn đã không thích ứng dụng này, hãy vui lòng mở một vấn đề giải thích sự lo ngại của bạn. Nếu không, hãy vui lòng gắn sao cho dự án để bày tỏ sự yêu thích và sự hỗ trợ.</string>
-    <string name="cast_media">Truyền phương tiện đến một thiết bị khác</string>
+    <string name="cast_media">Kết nối đến Chromecast</string>
     <string name="support_development__why_description">- Giúp chúng tôi làm tiếp các bản cập nhật trong tương lai
 \n- Giữ cho Noice tránh xa các quảng cáo
 \n</string>
@@ -45,7 +45,7 @@
     <string name="support_development__share">Chia sẻ với các bạn</string>
     <string name="support_development__donate_thank_you_description">Chúng tôi thật lòng cảm ơn bạn vì sự quyên góp hào phóng của bạn cho dự án Noice.</string>
     <string name="support_development__donate_thank_you">Cảm ơn bạn!</string>
-    <string name="support_development__donate_google_play_description">Thanh toán của bạn sẽ được Google Play xử lý một cách bảo mật. Số lượng sẽ được chuyển đổi thành tiền tệ địa phương. Tuỳ vào vị trí của bạn, các thuế bổ sung _có thể_ được thêm vào khoản cuối cùng.</string>
+    <string name="support_development__donate_google_play_description">Thanh toán của bạn sẽ được Google Play xử lý một cách bảo mật. Tuỳ vào vị trí của bạn, các thuế bổ sung _có thể_ được thêm vào khoản cuối cùng.</string>
     <string name="support_development__donate_description">Các sự quyên góp sẽ giúp chúng tôi trong việc
 \n- đầu tư vào các tính năng mới
 \n- chọn các mẫu âm thanh tốt hơn
@@ -177,4 +177,18 @@
     <string name="about">Giới thiệu</string>
     <string name="notification_channel_default__name">Phát phương tiện</string>
     <string name="should_display_sound_icons">Hiện biểu tượng âm thanh</string>
+    <string name="payment_pending">Chúng tôi sẽ thông báo cho bạn ngay sau khi chúng tôi hoàn tất xử lý thanh toán của bạn.</string>
+    <string name="failed_to_purchase">Khởi động dòng chảy thanh toán thất bại. Vui lòng thử lại sau!</string>
+    <string name="failed_to_load_inapp_purchases">Tải chi tiết mua hàng trong ứng dụng thất bại. Vui lòng thử lại sau!</string>
+    <string name="should_allow_skipping_unsaved_presets_summary">Khi phát các thiết lập trước chưa được lưu, bật các nút bỏ qua trong thông báo trình phát để tạo các thiết lập trước ngẫu nhiên</string>
+    <string name="should_allow_skipping_unsaved_presets">Cho phép bỏ qua các thiết lập trước chưa được lưu</string>
+    <string name="should_share_usage_data_summary">Tự động chia sẻ dữ liệu sử dụng và hành vi với những nhà phát triển</string>
+    <string name="should_share_usage_data">Chia sẻ dữ liệu sử dụng và hành vi</string>
+    <string name="others">Khác</string>
+    <string name="decline">Từ chối</string>
+    <string name="accept">Chấp nhận</string>
+    <string name="share_usage_data_consent_message">Chúng tôi thu thập dữ liệu sử dụng ứng dụng để cải thiện trải nghiệm người dùng. Chúng tôi cũng thu thập dữ liệu hành vi của ứng dụng để phân tích và chẩn đoán các lỗi gặp phải trong khi sử dụng ứng dụng. Hãy đọc [chính sách riêng tư](https://ashutoshgngwr.github.io/noice/privacy-policy) của chúng tôi để biết thêm thông tin.
+\n
+\n Bạn có thể thiết lập tự động chia sẻ dữ liệu tại bất cứ lúc nào ở trong ứng dụng bằng cách đi đến \"**Cài đặt** &gt; **Chia sẻ dữ liệu sử dụng và hành vi**\".</string>
+    <string name="share_usage_data_consent_title">Cài đặt chia sẻ dữ liệu</string>
 </resources>

@@ -157,7 +157,7 @@
     <string name="app_authors">Bekijk de lijst van Noice-auteurs</string>
     <string name="in_app_feedback__title">Plaats een recensie</string>
     <string name="in_app_feedback__description">We horen graag van je over de app. Neem even de tijd om onze GitHub-repository te bezoeken. Als je de app niet leuk vond, overweeg dan om een probleem in te dienen waarin je zorgen uitlegt. Ook kunt u het project een ster geven om liefde en steun te tonen.</string>
-    <string name="cast_media">Cast media naar een ander apparaat</string>
+    <string name="cast_media">Verbinding met Chromecast</string>
     <string name="support_development__why_description">- Om toekomstige updates mogelijk te maken
 \n- Om Noice voor altijd reclamevrij te houden
 \n</string>
@@ -166,4 +166,10 @@
     <string name="support_development__donate_thank_you_description">Wij danken u van harte voor uw genereuze bijdrage aan het Noice-project.</string>
     <string name="support_development__donate_thank_you">Dank u!</string>
     <string name="support_development__donate_google_play_description">Uw betaling wordt veilig afgehandeld door Google Play. Het bedrag wordt omgerekend naar uw lokale valuta. Afhankelijk van uw locatie kunnen er extra belastingen worden toegevoegd aan het uiteindelijke bedrag.</string>
+    <string name="all_app_shortcuts_removed">Alle snelkoppelingen zijn verwijderd!</string>
+    <string name="remove_all_app_shortcuts">Verwijder alle snelkoppelingen</string>
+    <string name="import_presets">Importeer een bestand</string>
+    <string name="export_presets">Exporteren naar bestand</string>
+    <string name="share">Delen</string>
+    <string name="wake_up_timer">Alarmklok</string>
 </resources>

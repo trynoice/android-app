@@ -1,0 +1,35 @@
+Voor veel mensen is een beetje achtergrondgeluid nuttig om te kalmeren en zich te concentreren. In sommige gevallen is het ook een boost voor de productiviteit. Achtergrondgeluid (sfeer) kan ook helpen de effecten van stress te minimaliseren.
+
+Noice is een app waarmee je een aangepaste sfeer kunt creëren met clips van omgevingsgeluidsbronnen. Creëer uw perfecte omgeving door verschillende geluiden te combineren om afleiding te overstemmen, zodat u zich op uw werk kunt concentreren, of creëer een serene, vredige omgeving die u aanmoedigt om in slaap te vallen.
+
+<b>Functies</b>
+- 35 opgenomen geluiden
+- Google Cast (Chromecast) ingeschakeld [alleen Play Store-release]
+- Automatische slaaptimer
+- Wektimer (wekker)
+- Genereer willekeurige mixen
+- Maak een aangepaste mix
+- Bewaar je favoriete mixen
+- Speel samen met andere muziekspelers
+- Individuele volumeregeling voor elke geluidsbron
+- Offline afspelen
+- Lichte en donkere app-themavarianten
+
+<b>Ruisbibliotheek</b>
+- Levensset (vogels, krekels, wolf, menselijke hartslag, enz.)
+- Bosset (vreugdevuur, nacht, wind, palmbomen, etc.)
+- Moessonset (regen, onweer)
+- Teleportatieset (koffiebar, bibliotheek, kantoor, kust, rivieroever, enz.)
+- Voertuigset (rijdende trein, in-flight, krakend schip, elektrische auto, etc.)
+- Ruwe ruis (wit, roze, bruin)
+
+<b>Rechten</b>
+- <b>voorkomen dat het apparaat slaapt</b>: om de CPU van het apparaat wakker te houden tijdens het afspelen
+- <b>voer voorgrondservice uit</b>: om het afspeelproces uit te voeren (anders dan de gebruikersinterface)
+- <b>uitvoeren bij opstarten</b>: om ervoor te zorgen dat de wektimers blijven bestaan tijdens het opnieuw opstarten
+- <b>volledige netwerktoegang</b>: om Chromecast en financiële bijdragen in te schakelen
+- <b>netwerkverbindingen bekijken</b>: toegevoegd door een afhankelijkheid, momenteel niet in gebruik
+- <b>Google Play-factureringsservice</b>: om financiële bijdragen mogelijk te maken ter ondersteuning van ontwikkeling
+
+Noice is gratis en open source software.
+https://github.com/ashutoshgngwr/noice
