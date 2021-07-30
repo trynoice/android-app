@@ -27,6 +27,9 @@ on:
       - "gradlew"
       - "gradlew.bat"
 
+env:
+  JAVA_VERSION: 11
+
 jobs:
   validate-gradle-wrapper:
     name: Validate Gradle Wrapper
@@ -43,9 +46,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v2
         with:
-          java-version: 10
+          distribution: adopt
+          java-version: ${{ env.JAVA_VERSION }}
       - run: ./gradlew testCoverage --no-daemon --stacktrace
       - uses: codecov/codecov-action@v1
         with:
@@ -68,9 +72,10 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v2
         with:
-          java-version: 10
+          distribution: adopt
+          java-version: ${{ env.JAVA_VERSION }}
       - uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.android }}
@@ -95,9 +100,10 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v2
         with:
-          java-version: 10
+          distribution: adopt
+          java-version: ${{ env.JAVA_VERSION }}
       - run: |
           echo "$SERVICE_ACCOUNT_KEY" > service-account-key.json
           echo "$JKS_STORE" | base64 --decode > keystore.jks
@@ -125,9 +131,10 @@ jobs:
       FDROID_MAPPING: noice-fdroid-mapping.txt
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v2
         with:
-          java-version: 10
+          distribution: adopt
+          java-version: ${{ env.JAVA_VERSION }}
       - run: |
           echo "$JKS_STORE" | base64 --decode > keystore.jks
           ./gradlew assemblePlaystoreRelease --stacktrace

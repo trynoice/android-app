@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.playback
 
 import android.content.Context
 import android.media.AudioManager
+import android.media.VolumeProvider
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.media.AudioAttributesCompat
@@ -27,7 +28,6 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.slot
-import io.mockk.spyk
 import io.mockk.unmockkAll
 import io.mockk.verify
 import org.junit.After
@@ -274,12 +274,15 @@ class PlayerManagerTest {
     }
 
     val mockPlaybackStrategy = mockk<PlaybackStrategyFactory>(relaxed = true)
-    val spyVolumeProvider = spyk<VolumeProviderCompat>()
+    val mockVolumeProvider = mockk<VolumeProviderCompat>() {
+      every { volumeProvider } returns mockk<VolumeProvider>(relaxed = true)
+    }
+
     every { mockCastAPIProvider.getPlaybackStrategyFactory() } returns mockPlaybackStrategy
-    every { mockCastAPIProvider.getVolumeProvider() } returns spyVolumeProvider
+    every { mockCastAPIProvider.getVolumeProvider() } returns mockVolumeProvider
     beginCallbackSlot.invoke() // invoke the session begin callback
     verify(exactly = 1) { players.getValue("test").updatePlaybackStrategy(mockPlaybackStrategy) }
-    assertEquals(spyVolumeProvider, ShadowMediaSessionCompat.currentVolumeProvider)
+    assertEquals(mockVolumeProvider, ShadowMediaSessionCompat.currentVolumeProvider)
     clearMocks(mockPlaybackStrategy, players.getValue("test"))
 
     endCallbackSlot.invoke()
