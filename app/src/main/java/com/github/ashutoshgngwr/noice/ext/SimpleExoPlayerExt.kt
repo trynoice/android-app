@@ -8,11 +8,12 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioAttributes
 import kotlin.math.abs
 import kotlin.math.ceil
+import kotlin.math.max
 import kotlin.math.min
 
 
-private const val FADE_CALLBACK_TOKEN = "SimpleExoPlayer.fadeCallbackToken"
-private const val FADE_VOLUME_STEP = 0.005f
+private const val FADE_VOLUME_STEP = 0.001f
+private val handler = Handler(Looper.getMainLooper())
 
 /**
  * Fade in and out effect for [SimpleExoPlayer].
@@ -32,8 +33,7 @@ fun SimpleExoPlayer.fade(
   //  previous transition (if on-going) when a new one is scheduled, thus also cancelling its
   //  callback. This behaviour might not be desired.
 
-  val handler = Handler(Looper.getMainLooper())
-  handler.removeCallbacksAndMessages(FADE_CALLBACK_TOKEN)
+  handler.removeCallbacksAndMessages(this)
   if (!playWhenReady && !isPlaying) {
     // edge case where fade is requested but playback is not playing.
     volume = toVolume
@@ -48,32 +48,30 @@ fun SimpleExoPlayer.fade(
   for (i in 0 until steps) {
     HandlerCompat.postDelayed(
       handler,
-      { volume = min(1f, volume + (sign * FADE_VOLUME_STEP)) },
+      { volume = max(0f, min(1f, volume + (sign * FADE_VOLUME_STEP))) },
       this,
       i * period
     )
   }
 
   HandlerCompat.postDelayed(handler, {
-    volume = toVolume
+    volume = max(0f, min(1f, toVolume))
     callback?.invoke()
-  }, FADE_CALLBACK_TOKEN, duration + 1)
+  }, this, duration + 50)
 }
 
 /**
  * Implicitly translates [AudioAttributesCompat] to [AudioAttributes] and sets them on the provided
  * [SimpleExoPlayer] receiver instance.
  */
-fun SimpleExoPlayer.setAudioAttributesCompat(
-  attrs: AudioAttributesCompat,
-  handleAudioFocus: Boolean
-) {
-  setAudioAttributes(
-    AudioAttributes.Builder()
-      .setContentType(attrs.contentType)
-      .setFlags(attrs.flags)
-      .setUsage(attrs.usage)
-      .build(),
-    handleAudioFocus,
-  )
+fun SimpleExoPlayer.setAudioAttributesCompat(compatAttrs: AudioAttributesCompat) {
+  val attrs = AudioAttributes.Builder()
+    .setContentType(compatAttrs.contentType)
+    .setFlags(compatAttrs.flags)
+    .setUsage(compatAttrs.usage)
+    .build()
+
+  if (attrs != audioAttributes) {
+    audioAttributes = attrs
+  }
 }

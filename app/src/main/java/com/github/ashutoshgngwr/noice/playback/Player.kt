@@ -19,7 +19,6 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
 
   companion object {
     private val TAG = Player::class.simpleName
-    private val DELAYED_PLAYBACK_CALLBACK_TOKEN = "${Player::class.simpleName}.playback_callback"
 
     const val DEFAULT_VOLUME = 4
     const val MAX_VOLUME = 25
@@ -82,9 +81,7 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
     playbackStrategy.play()
     val delay = nextInt(MIN_TIME_PERIOD, 1 + timePeriod) * 1000L
     Log.d(TAG, "scheduling delayed playback with ${delay}ms delay")
-    HandlerCompat.postDelayed(
-      handler, this::playAndRegisterDelayedCallback, DELAYED_PLAYBACK_CALLBACK_TOKEN, delay
-    )
+    HandlerCompat.postDelayed(handler, this::playAndRegisterDelayedCallback, this, delay)
   }
 
   /**
@@ -95,7 +92,7 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
     isPlaying = false
     playbackStrategy.pause()
     if (!sound.isLooping) {
-      handler.removeCallbacksAndMessages(DELAYED_PLAYBACK_CALLBACK_TOKEN)
+      handler.removeCallbacksAndMessages(this)
     }
   }
 
@@ -107,7 +104,7 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
     isPlaying = false
     playbackStrategy.stop()
     if (!sound.isLooping) {
-      handler.removeCallbacksAndMessages(DELAYED_PLAYBACK_CALLBACK_TOKEN)
+      handler.removeCallbacksAndMessages(this)
     }
   }
 

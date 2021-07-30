@@ -96,6 +96,6 @@ class LocalPlaybackStrategy(
   }
 
   override fun setAudioAttributes(attrs: AudioAttributesCompat) {
-    players.forEach { it.setAudioAttributesCompat(attrs, false) }
+    players.forEach { it.setAudioAttributesCompat(attrs) }
   }
 }
