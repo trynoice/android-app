@@ -169,7 +169,7 @@
     <string name="should_update_media_volume">Kaydı başlatmadan önce cihaz sesini güncelle</string>
     <string name="device_media_volume">Cihaz ses düzeyi</string>
     <string name="use_24h_format">24 saat formatını kullan</string>
-    <string name="saved_presets_as_home_screen_summary">Açılışta mevcut kayıtları göster</string>
+    <string name="saved_presets_as_home_screen_summary">Açılışta \"mevcut kayıtları\" göster</string>
     <string name="submit_feedback">Geri Bildirim Gönder</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d dakika</item>
@@ -194,7 +194,7 @@
     <string name="sound_fade_duration">Ses geçiş süresi</string>
     <string name="appearance">Görünüm</string>
     <string name="behavior">Davranış</string>
-    <string name="saved_presets_as_home_screen">Ana ekrana kaydedilen kayıtlar</string>
+    <string name="saved_presets_as_home_screen">Ana ekrana \"kaydedilen kayıtlar\"</string>
     <string name="settings">Ayarlar</string>
     <string name="share">Paylaş</string>
     <string name="ignore_audio_focus_changes_summary_on">Diğer uygulamalar ses oynatırken tepki verme</string>
