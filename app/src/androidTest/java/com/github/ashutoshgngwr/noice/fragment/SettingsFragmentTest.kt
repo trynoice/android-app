@@ -13,12 +13,12 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import io.mockk.mockkStatic
 import io.mockk.verify
+import org.hamcrest.Matchers.allOf
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -69,7 +69,7 @@ class SettingsFragmentTest {
         )
       )
 
-    EspressoX.waitForView(withId(R.id.positive), withText(R.string.okay))
+    onView(allOf(withId(R.id.positive), withText(R.string.okay)))
       .perform(click())
 
     verify(exactly = 1) { ShortcutManagerCompat.removeAllDynamicShortcuts(any()) }

@@ -67,7 +67,7 @@ class GenerateScreenshots {
 
       // prevent app intro and data consent from showing up
       PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
-        .edit(commit = true) {
+        .edit {
           clear() // clear any existing preferences.
           putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true)
           putBoolean(MainActivity.PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true)
@@ -196,7 +196,7 @@ class GenerateScreenshots {
       )
     )
 
-    EspressoX.waitForView(withId(R.id.volume_slider))
+    onView(withId(R.id.volume_slider))
       .perform(EspressoX.slide(Player.MAX_VOLUME.toFloat() - Player.DEFAULT_VOLUME))
 
     onView(withId(R.id.positive))
@@ -218,7 +218,7 @@ class GenerateScreenshots {
       )
     )
 
-    EspressoX.waitForView(withId(R.id.volume_slider))
+    onView(withId(R.id.volume_slider))
       .perform(EspressoX.slide(Player.MAX_VOLUME.toFloat()))
 
     onView(withId(R.id.positive))
@@ -231,7 +231,7 @@ class GenerateScreenshots {
       )
     )
 
-    EspressoX.waitForView(withId(R.id.time_period_slider))
+    onView(withId(R.id.time_period_slider))
       .perform(EspressoX.slide(Player.MAX_TIME_PERIOD.toFloat() - 300))
 
     onView(withId(R.id.positive))
@@ -247,10 +247,10 @@ class GenerateScreenshots {
       .check(matches(DrawerMatchers.isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
 
-    EspressoX.waitForView(withId(R.id.navigation_drawer))
+    onView(withId(R.id.navigation_drawer))
       .perform(NavigationViewActions.navigateTo(R.id.saved_presets))
 
-    EspressoX.waitForView(withId(R.id.list))
+    onView(withId(R.id.list))
       .perform(
         actionOnItemAtPosition<SavedPresetsFragment.ViewHolder>(
           1, EspressoX.clickInItem(R.id.play_button)
@@ -274,7 +274,7 @@ class GenerateScreenshots {
       .check(matches(DrawerMatchers.isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
 
-    EspressoX.waitForView(withId(R.id.navigation_drawer))
+    onView(withId(R.id.navigation_drawer))
       .perform(NavigationViewActions.navigateTo(R.id.sleep_timer))
 
     onView(withId(R.id.duration_picker)).perform(
@@ -294,13 +294,13 @@ class GenerateScreenshots {
       .check(matches(DrawerMatchers.isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
 
-    EspressoX.waitForView(withId(R.id.navigation_drawer))
+    onView(withId(R.id.navigation_drawer))
       .perform(NavigationViewActions.navigateTo(R.id.wake_up_timer))
 
-    EspressoX.waitForView(withId(R.id.select_preset_button))
+    onView(withId(R.id.select_preset_button))
       .perform(scrollTo(), click())
 
-    EspressoX.waitForView(withText("Airplane"))
+    onView(withText("Airplane"))
       .perform(scrollTo(), click())
 
     onView(withId(R.id.time_picker))
@@ -322,10 +322,10 @@ class GenerateScreenshots {
       .check(matches(DrawerMatchers.isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
 
-    EspressoX.waitForView(withId(R.id.navigation_drawer))
+    onView(withId(R.id.navigation_drawer))
       .perform(NavigationViewActions.navigateTo(R.id.about))
 
-    EspressoX.waitForView(withText(R.string.app_description))
+    onView(withText(R.string.app_description))
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("5")
   }
@@ -336,7 +336,7 @@ class GenerateScreenshots {
       .check(matches(DrawerMatchers.isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
 
-    EspressoX.waitForView(withId(R.id.layout_main), DrawerMatchers.isOpen())
+    onView(withId(R.id.layout_main)).check(matches(DrawerMatchers.isOpen()))
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("6")
   }
@@ -347,10 +347,10 @@ class GenerateScreenshots {
       .check(matches(DrawerMatchers.isClosed(Gravity.START)))
       .perform(DrawerActions.open(Gravity.START))
 
-    EspressoX.waitForView(withId(R.id.navigation_drawer))
+    onView(withId(R.id.navigation_drawer))
       .perform(NavigationViewActions.navigateTo(R.id.settings))
 
-    EspressoX.waitForView(withId(R.id.navigation_drawer), DrawerMatchers.isClosed())
+    onView(withId(R.id.navigation_drawer)).check(matches(DrawerMatchers.isClosed()))
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("7")
   }

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:gravity="center"
+  android:orientation="vertical"
+  android:padding="16dp">
+
+  <Space
+    android:layout_width="wrap_content"
+    android:layout_height="0dp"
+    android:layout_weight="1" />
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/wake_up_timer"
+    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+
+  <Space
+    android:layout_width="wrap_content"
+    android:layout_height="16dp" />
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal|bottom"
+    android:orientation="horizontal">
+
+    <TextClock
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:format12Hour="hh:mm"
+      android:format24Hour="hh:mm"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
+      tools:text="03:10" />
+
+    <TextClock
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:drawableTop="@drawable/ic_nav_wake_up_timer"
+      android:format12Hour=" a"
+      android:format24Hour=""
+      android:textAllCaps="true"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+      android:textStyle="bold"
+      tools:text=" pm" />
+
+  </LinearLayout>
+
+  <Space
+    android:layout_width="wrap_content"
+    android:layout_height="0dp"
+    android:layout_weight="1" />
+
+  <com.ncorti.slidetoact.SlideToActView
+    android:id="@+id/dismiss_slider"
+    style="@style/Widget.App.AlarmRinger.DismissSlider"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:text="@string/dismiss" />
+
+  <Space
+    android:layout_width="wrap_content"
+    android:layout_height="0dp"
+    android:layout_weight="1" />
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="end"
+    android:drawablePadding="4dp"
+    android:gravity="center_vertical"
+    android:text="@string/app_name"
+    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+    android:textColor="@color/material_on_background_disabled"
+    app:drawableEndCompat="@drawable/ic_launcher_24dp"
+    app:drawableTint="@color/material_on_background_disabled" />
+
+</LinearLayout>

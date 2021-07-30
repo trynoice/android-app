@@ -74,7 +74,7 @@ class GitHubReviewFlowProviderTest {
       mockPrefs.getBoolean(GitHubReviewFlowProvider.PREF_FLOW_SUCCESSFULLY_COMPLETED, any())
     } returns true
 
-    PreferenceManager.getDefaultSharedPreferences(fragmentActivity).edit(commit = true) {
+    PreferenceManager.getDefaultSharedPreferences(fragmentActivity).edit {
       putBoolean(GitHubReviewFlowProvider.PREF_FLOW_SUCCESSFULLY_COMPLETED, true)
     }
 

@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice.activity
 
 import androidx.core.content.edit
+import androidx.lifecycle.Lifecycle
 import androidx.preference.PreferenceManager
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
@@ -8,6 +9,7 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.RetryTestRule
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -33,20 +35,18 @@ class AppIntroActivityTest {
 
   @After
   fun teardown() {
-    activityScenario.close()
     PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
-      .edit(commit = true) {
-        clear()
-      }
+      .edit { clear() }
   }
 
   @Test
   fun testOnSkipPressed() {
     activityScenario.onActivity {
       it.onSkipPressed(null)
+    }
 
-      // should destroy the activity
-      assertTrue(it.isFinishing || it.isDestroyed)
+    EspressoX.retryWithWaitOnError(AssertionError::class) {
+      assertEquals(Lifecycle.State.DESTROYED, activityScenario.state)
     }
 
     // should update the preferences
@@ -60,9 +60,10 @@ class AppIntroActivityTest {
   fun testOnDonePressed() {
     activityScenario.onActivity {
       it.onDonePressed(null)
+    }
 
-      // should destroy the activity
-      assertTrue(it.isFinishing || it.isDestroyed)
+    EspressoX.retryWithWaitOnError(AssertionError::class) {
+      assertEquals(Lifecycle.State.DESTROYED, activityScenario.state)
     }
 
     // should update the preferences
@@ -94,9 +95,7 @@ class AppIntroActivityTest {
       // when user has already seen the activity once, i.e., if the preference is present in the
       // storage, maybeStart shouldn't start the activity.
       PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
-        .edit(commit = true) {
-          putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true)
-        }
+        .edit { putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true) }
 
       activityScenario.onActivity {
         AppIntroActivity.maybeStart(it)

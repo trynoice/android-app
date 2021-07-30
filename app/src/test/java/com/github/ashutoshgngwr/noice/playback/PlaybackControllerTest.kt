@@ -3,12 +3,9 @@ package com.github.ashutoshgngwr.noice.playback
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.media.AudioManager
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
 import android.os.SystemClock
-import androidx.core.content.getSystemService
+import androidx.media.AudioAttributesCompat
 import androidx.preference.PreferenceManager
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.MediaPlayerService
@@ -112,35 +109,11 @@ class PlaybackControllerTest {
   }
 
   @Test
-  fun testBuildAlarmPendingIntent() {
-    val inputShouldUpdateMediaVolume = arrayOf(true, false)
-    val outputVolumes = arrayOf(10, -1)
-    for (i in inputShouldUpdateMediaVolume.indices) {
-      val presetID = "test-preset-id"
-      val volume = 10
-      val pendingIntent = PlaybackController.buildAlarmPendingIntent(
-        ApplicationProvider.getApplicationContext(),
-        presetID, inputShouldUpdateMediaVolume[i], volume
-      )
-
-      val intent = shadowOf(pendingIntent).savedIntent
-      assertEquals(MediaPlayerService::class.qualifiedName, intent.component?.className)
-      assertEquals(PlaybackController.ACTION_PLAY_PRESET, intent.action)
-      assertEquals(presetID, intent.getStringExtra(PlaybackController.EXTRA_PRESET_ID))
-      assertEquals(
-        outputVolumes[i],
-        intent.getIntExtra(PlaybackController.EXTRA_DEVICE_MEDIA_VOLUME, -1)
-      )
-    }
-  }
-
-  @Test
   fun testHandleServiceIntent_withResumePlaybackAction() {
     PlaybackController.handleServiceIntent(
       ApplicationProvider.getApplicationContext(),
       mockPlayerManager,
       Intent(PlaybackController.ACTION_RESUME_PLAYBACK),
-      mockk()
     )
 
     verify(exactly = 1) { mockPlayerManager.resume() }
@@ -152,7 +125,6 @@ class PlaybackControllerTest {
       ApplicationProvider.getApplicationContext(),
       mockPlayerManager,
       Intent(PlaybackController.ACTION_PAUSE_PLAYBACK),
-      mockk()
     )
 
     verify(exactly = 1) { mockPlayerManager.pause() }
@@ -164,7 +136,6 @@ class PlaybackControllerTest {
       ApplicationProvider.getApplicationContext(),
       mockPlayerManager,
       Intent(PlaybackController.ACTION_STOP_PLAYBACK),
-      mockk()
     )
 
     verify(exactly = 1) { mockPlayerManager.stop() }
@@ -173,15 +144,12 @@ class PlaybackControllerTest {
   @Test
   fun testHandleServiceIntent_withPlayPresetAction() {
     val presetID = "test-id"
-    val volume = Random.nextInt(10)
 
     PlaybackController.handleServiceIntent(
       ApplicationProvider.getApplicationContext(),
       mockPlayerManager,
       Intent(PlaybackController.ACTION_PLAY_PRESET)
-        .putExtra(PlaybackController.EXTRA_PRESET_ID, presetID)
-        .putExtra(PlaybackController.EXTRA_DEVICE_MEDIA_VOLUME, volume),
-      mockk()
+        .putExtra(PlaybackController.EXTRA_PRESET_ID, presetID),
     )
 
     val uri = Uri.parse("test")
@@ -190,20 +158,12 @@ class PlaybackControllerTest {
       mockPlayerManager,
       Intent(PlaybackController.ACTION_PLAY_PRESET)
         .setData(uri),
-      mockk()
     )
 
     verifyOrder {
       mockPlayerManager.playPreset(presetID)
       mockPlayerManager.playPreset(uri)
     }
-
-    assertEquals(
-      volume,
-      ApplicationProvider.getApplicationContext<Context>()
-        .getSystemService<AudioManager>()
-        ?.getStreamVolume(AudioManager.STREAM_MUSIC)
-    )
   }
 
   @Test
@@ -218,7 +178,6 @@ class PlaybackControllerTest {
         .putExtra(PlaybackController.EXTRA_FILTER_SOUNDS_BY_TAG, tag)
         .putExtra(PlaybackController.EXTRA_RANDOM_PRESET_MIN_SOUNDS, minSounds)
         .putExtra(PlaybackController.EXTRA_RANDOM_PRESET_MAX_SOUNDS, maxSounds),
-      mockk()
     )
 
     verify(exactly = 1) { mockPlayerManager.playRandomPreset(tag, minSounds..maxSounds) }
@@ -232,7 +191,6 @@ class PlaybackControllerTest {
       mockPlayerManager,
       Intent(PlaybackController.ACTION_PLAY_SOUND)
         .putExtra(PlaybackController.EXTRA_SOUND_KEY, soundKey),
-      mockk()
     )
 
     verify(exactly = 1) { mockPlayerManager.play(soundKey) }
@@ -246,7 +204,6 @@ class PlaybackControllerTest {
       mockPlayerManager,
       Intent(PlaybackController.ACTION_STOP_SOUND)
         .putExtra(PlaybackController.EXTRA_SOUND_KEY, soundKey),
-      mockk()
     )
 
     verify(exactly = 1) { mockPlayerManager.stop(soundKey) }
@@ -259,7 +216,6 @@ class PlaybackControllerTest {
       mockPlayerManager,
       Intent(PlaybackController.ACTION_SCHEDULE_STOP_PLAYBACK)
         .putExtra(PlaybackController.EXTRA_AT_UPTIME_MILLIS, SystemClock.uptimeMillis() + 100),
-      Handler(Looper.getMainLooper())
     )
 
     verify { mockPlayerManager wasNot called }
@@ -269,13 +225,11 @@ class PlaybackControllerTest {
 
   @Test
   fun testHandleServiceIntent_withScheduleStopPlaybackAction_onCancel() {
-    val handler = Handler(Looper.getMainLooper())
     PlaybackController.handleServiceIntent(
       ApplicationProvider.getApplicationContext(),
       mockPlayerManager,
       Intent(PlaybackController.ACTION_SCHEDULE_STOP_PLAYBACK)
         .putExtra(PlaybackController.EXTRA_AT_UPTIME_MILLIS, SystemClock.uptimeMillis() + 1000),
-      handler
     )
 
     PlaybackController.handleServiceIntent(
@@ -283,7 +237,6 @@ class PlaybackControllerTest {
       mockPlayerManager,
       Intent(PlaybackController.ACTION_SCHEDULE_STOP_PLAYBACK)
         .putExtra(PlaybackController.EXTRA_AT_UPTIME_MILLIS, SystemClock.uptimeMillis() - 1000),
-      handler
     )
 
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
@@ -298,7 +251,6 @@ class PlaybackControllerTest {
         mockPlayerManager,
         Intent(PlaybackController.ACTION_SKIP_PRESET)
           .putExtra(PlaybackController.EXTRA_SKIP_DIRECTION, input),
-        mockk()
       )
 
       verify(exactly = 1) { mockPlayerManager.skipPreset(input) }
@@ -311,10 +263,21 @@ class PlaybackControllerTest {
       ApplicationProvider.getApplicationContext(),
       mockPlayerManager,
       Intent(PlaybackController.ACTION_REQUEST_UPDATE_EVENT),
-      mockk()
     )
 
     verify(exactly = 1) { mockPlayerManager.callPlaybackUpdateListener() }
+  }
+
+  fun testHandleServiceIntent_withSetAudioUsageAction() {
+    val audioUsage = AudioAttributesCompat.USAGE_ALARM
+    PlaybackController.handleServiceIntent(
+      ApplicationProvider.getApplicationContext(),
+      mockPlayerManager,
+      Intent(PlaybackController.ACTION_SET_AUDIO_USAGE)
+        .putExtra(PlaybackController.EXTRA_AUDIO_USAGE, audioUsage),
+    )
+
+    verify(exactly = 1) { mockPlayerManager.setAudioUsage(audioUsage) }
   }
 
   @Test
@@ -323,7 +286,6 @@ class PlaybackControllerTest {
       ApplicationProvider.getApplicationContext(),
       mockPlayerManager,
       Intent(),
-      mockk()
     )
 
     verify { mockPlayerManager wasNot called }
@@ -529,16 +491,14 @@ class PlaybackControllerTest {
 
   @Test
   fun testClearAutoStopCallback() {
-    val handler = Handler(Looper.getMainLooper())
     PlaybackController.handleServiceIntent(
       mockk(),
       mockPlayerManager,
       Intent(PlaybackController.ACTION_SCHEDULE_STOP_PLAYBACK)
         .putExtra(PlaybackController.EXTRA_AT_UPTIME_MILLIS, SystemClock.uptimeMillis() + 1000),
-      handler
     )
 
-    PlaybackController.clearAutoStopCallback(handler)
+    PlaybackController.clearAutoStopCallback()
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     verify { mockPlayerManager wasNot called }
   }
@@ -552,6 +512,22 @@ class PlaybackControllerTest {
         withArg {
           assertEquals(MediaPlayerService::class.qualifiedName, it.component?.className)
           assertEquals(PlaybackController.ACTION_REQUEST_UPDATE_EVENT, it.action)
+        }
+      )
+    }
+  }
+
+  @Test
+  fun testSetAudioUsage() {
+    val mockContext = mockk<Context>(relaxed = true)
+    val audioUsage = AudioAttributesCompat.USAGE_ALARM
+    PlaybackController.setAudioUsage(mockContext, audioUsage)
+    verify(exactly = 1) {
+      mockContext.startService(
+        withArg {
+          assertEquals(MediaPlayerService::class.qualifiedName, it.component?.className)
+          assertEquals(PlaybackController.ACTION_SET_AUDIO_USAGE, it.action)
+          assertEquals(audioUsage, it.getIntExtra(PlaybackController.EXTRA_AUDIO_USAGE, -1))
         }
       )
     }

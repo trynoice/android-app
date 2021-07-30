@@ -60,7 +60,7 @@ class ShortcutHandlerActivityTest {
         Intent(ApplicationProvider.getApplicationContext(), ShortcutHandlerActivity::class.java)
           .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_ID, presetIDExpectations[i])
           .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, presetIDExpectations[i])
-          .also { ActivityScenario.launch<ShortcutHandlerActivity>(it).close() }
+          .also { ActivityScenario.launch<ShortcutHandlerActivity>(it) }
 
         Intents.intended(
           allOf(

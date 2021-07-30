@@ -29,7 +29,7 @@ typealias PlaybackUpdateListener = (state: Int, players: Map<String, Player>) ->
  * It manages Android's audio focus implicitly. It also manages Playback routing to
  * cast enabled devices on-demand.
  */
-class PlayerManager(context: Context, private val mediaSession: MediaSessionCompat) :
+class PlayerManager(private val context: Context, private val mediaSession: MediaSessionCompat) :
   AudioManager.OnAudioFocusChangeListener {
 
   companion object {
@@ -46,28 +46,16 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
   private var resumeOnFocusGain = false
   private var playbackUpdateListener: PlaybackUpdateListener? = null
 
+  private lateinit var audioAttributes: AudioAttributesCompat
+  private lateinit var audioFocusRequest: AudioFocusRequestCompat
+  private lateinit var playbackStrategyFactory: PlaybackStrategyFactory
+
   private val players = HashMap<String, Player>(Sound.LIBRARY.size)
   private val handler = Handler(Looper.getMainLooper())
   private val presetRepository = PresetRepository.newInstance(context)
   private val settingsRepository = SettingsRepository.newInstance(context)
   private val analyticsProvider = NoiceApplication.of(context).getAnalyticsProvider()
-
   private val audioManager = requireNotNull(context.getSystemService<AudioManager>())
-  private val audioAttributes = AudioAttributesCompat.Builder()
-    .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)
-    .setUsage(AudioAttributesCompat.USAGE_GAME)
-    .setLegacyStreamType(AudioManager.STREAM_MUSIC)
-    .build()
-
-  private val audioFocusRequest = AudioFocusRequestCompat
-    .Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
-    .setAudioAttributes(audioAttributes)
-    .setOnAudioFocusChangeListener(this, handler)
-    .setWillPauseWhenDucked(false)
-    .build()
-
-  private var playbackStrategyFactory: PlaybackStrategyFactory =
-    LocalPlaybackStrategyFactory(context, audioAttributes)
 
   private val playbackStateBuilder = PlaybackStateCompat.Builder()
     .setActions(
@@ -85,7 +73,7 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
       onSessionBegin {
         Log.d(TAG, "onSessionBegin(): switching playback to CastPlaybackStrategy")
         playbackStrategyFactory = getPlaybackStrategyFactory()
-        updatePlaybackStrategies()
+        players.values.forEach { it.updatePlaybackStrategy(playbackStrategyFactory) }
         mediaSession.setPlaybackToRemote(getVolumeProvider())
         analyticsProvider.logCastSessionStartEvent()
       }
@@ -97,14 +85,15 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
         if (playbackStrategyFactory !is LocalPlaybackStrategyFactory) {
           Log.d(TAG, "onSessionEnd(): switching playback to LocalPlaybackStrategy")
           playbackStrategyFactory = LocalPlaybackStrategyFactory(context, audioAttributes)
+          players.values.forEach { it.updatePlaybackStrategy(playbackStrategyFactory) }
           mediaSession.setPlaybackToLocal(AudioManager.STREAM_MUSIC)
-          updatePlaybackStrategies()
           analyticsProvider.logCastSessionEndEvent()
         }
       }
     }
 
   init {
+    setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
     mediaSession.setCallback(object : MediaSessionCompat.Callback() {
       override fun onPlay() = resume()
       override fun onStop() = stop()
@@ -141,6 +130,38 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
         playbackDelayed = false
         pauseIndefinitely()
       }
+    }
+  }
+
+  internal fun setAudioUsage(@AudioAttributesCompat.AttributeUsage usage: Int) {
+    if (this::audioAttributes.isInitialized && usage == audioAttributes.usage) {
+      return
+    }
+
+    Log.d(TAG, "setAudioUsage(): usage = $usage")
+    audioAttributes = AudioAttributesCompat.Builder()
+      .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)
+      .setUsage(usage)
+      .build()
+
+    audioFocusRequest = AudioFocusRequestCompat
+      .Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+      .setAudioAttributes(audioAttributes)
+      .setOnAudioFocusChangeListener(this, handler)
+      .setWillPauseWhenDucked(false)
+      .build()
+
+    players.values.forEach { it.setAudioAttributes(audioAttributes) }
+    if (!this::playbackStrategyFactory.isInitialized || playbackStrategyFactory is LocalPlaybackStrategyFactory) {
+      playbackStrategyFactory = LocalPlaybackStrategyFactory(context, audioAttributes)
+    }
+
+    if (hasAudioFocus) {
+      abandonAudioFocus()
+    }
+
+    if (state == PlaybackStateCompat.STATE_PLAYING) {
+      requestAudioFocus()
     }
   }
 
@@ -274,6 +295,10 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
    * It doesn't release any underlying resources.
    */
   private fun pauseIndefinitely() {
+    if (players.isEmpty() && state != PlaybackStateCompat.STATE_PLAYING) {
+      return
+    }
+
     state = PlaybackStateCompat.STATE_PAUSED
     players.values.forEach {
       it.pause()
@@ -288,6 +313,10 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
    * delayed callback to release all underlying resources after 5 minutes.
    */
   fun pause() {
+    if (players.isEmpty() && state != PlaybackStateCompat.STATE_PLAYING) {
+      return
+    }
+
     pauseIndefinitely()
     Log.d(TAG, "pause(): scheduling stop callback")
     handler.removeCallbacksAndMessages(DELAYED_STOP_CALLBACK_TOKEN) // clear previous callbacks
@@ -314,14 +343,6 @@ class PlayerManager(context: Context, private val mediaSession: MediaSessionComp
       // request audio focus only if audio focus is not delayed from any previous requests
       requestAudioFocus()
     }
-  }
-
-  /**
-   * Attempts to recreate the [PlaybackStrategyFactory] for all [Player]s using the current
-   * [PlaybackStrategyFactory] instance
-   */
-  private fun updatePlaybackStrategies() {
-    players.values.forEach { it.updatePlaybackStrategy(playbackStrategyFactory) }
   }
 
   /**

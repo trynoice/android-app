@@ -3,15 +3,15 @@ package com.github.ashutoshgngwr.noice.playback
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import androidx.core.content.edit
-import androidx.core.content.getSystemService
 import androidx.core.os.bundleOf
+import androidx.media.AudioAttributesCompat
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.NoiceApplication
@@ -28,7 +28,6 @@ object PlaybackController {
   internal const val EXTRA_SOUND_KEY = "sound_key"
   internal const val ACTION_PLAY_PRESET = "play_preset"
   internal const val EXTRA_PRESET_ID = "preset_id"
-  internal const val EXTRA_DEVICE_MEDIA_VOLUME = "device_media_volume"
   internal const val ACTION_PLAY_RANDOM_PRESET = "play_random_preset"
   internal const val EXTRA_FILTER_SOUNDS_BY_TAG = "filter_sounds_by_tag"
   internal const val EXTRA_RANDOM_PRESET_MIN_SOUNDS = "preset_intensity_lower"
@@ -38,18 +37,21 @@ object PlaybackController {
   internal const val ACTION_SKIP_PRESET = "skip_preset"
   internal const val EXTRA_SKIP_DIRECTION = "skip_direction"
   internal const val ACTION_REQUEST_UPDATE_EVENT = "request_update_event"
+  internal const val ACTION_SET_AUDIO_USAGE = "set_audio_usage"
+  internal const val EXTRA_AUDIO_USAGE = "audio_usage"
 
   private val TAG = PlaybackController::class.simpleName
   private val AUTO_STOP_CALLBACK_TOKEN = "${TAG}.auto_stop_cb"
 
   internal val PREF_LAST_SCHEDULED_STOP_TIME = "${TAG}.scheduled_stop_time"
 
-  private const val RC_ALARM = 0x39
   private const val RC_SKIP_PREV = 0x3A
   private const val RC_SKIP_NEXT = 0x3B
   private const val RC_RESUME = 0x3C
   private const val RC_PAUSE = 0x3D
   private const val RC_STOP = 0x3E
+
+  private val handler = Handler(Looper.getMainLooper())
 
   fun buildResumeActionPendingIntent(context: Context): PendingIntent {
     return buildSimpleActionPendingIntent(context, ACTION_RESUME_PLAYBACK, RC_RESUME)
@@ -94,25 +96,6 @@ object PlaybackController {
     return buildPendingIntent(context, intent, requestCode)
   }
 
-  fun buildAlarmPendingIntent(
-    context: Context,
-    presetID: String?,
-    shouldUpdateMediaVolume: Boolean,
-    mediaVolume: Int
-  ): PendingIntent {
-    val intent = Intent(context, MediaPlayerService::class.java)
-      .setAction(ACTION_PLAY_PRESET)
-      .putExtra(EXTRA_PRESET_ID, presetID)
-
-    if (shouldUpdateMediaVolume) {
-      intent.putExtra(EXTRA_DEVICE_MEDIA_VOLUME, mediaVolume)
-    } else {
-      intent.putExtra(EXTRA_DEVICE_MEDIA_VOLUME, -1)
-    }
-
-    return buildPendingIntent(context, intent, RC_ALARM)
-  }
-
   private fun buildPendingIntent(
     context: Context,
     intent: Intent,
@@ -127,12 +110,7 @@ object PlaybackController {
     }
   }
 
-  fun handleServiceIntent(
-    context: Context,
-    playerManager: PlayerManager,
-    intent: Intent,
-    handler: Handler
-  ) {
+  fun handleServiceIntent(context: Context, playerManager: PlayerManager, intent: Intent) {
     when (intent.action) {
       ACTION_RESUME_PLAYBACK -> {
         playerManager.resume()
@@ -155,12 +133,6 @@ object PlaybackController {
       }
 
       ACTION_PLAY_PRESET -> {
-        val mediaVol = intent.getIntExtra(EXTRA_DEVICE_MEDIA_VOLUME, -1)
-        if (mediaVol >= 0) {
-          requireNotNull(context.getSystemService<AudioManager>())
-            .setStreamVolume(AudioManager.STREAM_MUSIC, mediaVol, 0)
-        }
-
         intent.getStringExtra(EXTRA_PRESET_ID)?.also { playerManager.playPreset(it) }
         intent.data?.also { playerManager.playPreset(it) }
         logEvent(context, "preset_playback", bundleOf("items_count" to playerManager.playerCount()))
@@ -202,6 +174,11 @@ object PlaybackController {
 
       ACTION_REQUEST_UPDATE_EVENT -> {
         playerManager.callPlaybackUpdateListener()
+      }
+
+      ACTION_SET_AUDIO_USAGE -> {
+        val audioUsage = intent.getIntExtra(EXTRA_AUDIO_USAGE, AudioAttributesCompat.USAGE_MEDIA)
+        playerManager.setAudioUsage(audioUsage)
       }
     }
   }
@@ -272,7 +249,7 @@ object PlaybackController {
   /**
    * Sends the start command to the service with [ACTION_PLAY_PRESET].
    */
-  fun playPreset(context: Context, presetID: String?) {
+  fun playPreset(context: Context, presetID: String) {
     context.startService(
       Intent(context, MediaPlayerService::class.java)
         .setAction(ACTION_PLAY_PRESET)
@@ -336,7 +313,7 @@ object PlaybackController {
     return max(atUptimeMillis - SystemClock.uptimeMillis(), 0)
   }
 
-  fun clearAutoStopCallback(handler: Handler) {
+  fun clearAutoStopCallback() {
     handler.removeCallbacksAndMessages(AUTO_STOP_CALLBACK_TOKEN)
   }
 
@@ -344,6 +321,14 @@ object PlaybackController {
     context.startService(
       Intent(context, MediaPlayerService::class.java)
         .setAction(ACTION_REQUEST_UPDATE_EVENT)
+    )
+  }
+
+  fun setAudioUsage(context: Context, @AudioAttributesCompat.AttributeUsage usage: Int) {
+    context.startService(
+      Intent(context, MediaPlayerService::class.java)
+        .setAction(ACTION_SET_AUDIO_USAGE)
+        .putExtra(EXTRA_AUDIO_USAGE, usage)
     )
   }
 }

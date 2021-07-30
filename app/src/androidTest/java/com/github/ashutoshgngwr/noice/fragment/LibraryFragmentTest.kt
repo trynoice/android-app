@@ -276,10 +276,7 @@ class LibraryFragmentTest {
 
     onView(withId(R.id.positive)).perform(click())
     verify(exactly = 1) { requireNotNull(mockPlayers["birds"]).setVolume(6) }
-    EspressoX.waitForView(
-      withId(R.id.save_preset_button),
-      withEffectiveVisibility(Visibility.VISIBLE)
-    )
+    onView(allOf(withId(R.id.save_preset_button), withEffectiveVisibility(Visibility.VISIBLE)))
   }
 
   @Test

@@ -14,7 +14,7 @@ class RetryTestRule(private val retryCount: Int = 5) : TestRule {
           break
         } catch (t: Throwable) {
           if (i == retryCount) {
-            throw Exception("Test failed after $retryCount retries", t)
+            throw t
           }
         }
       }

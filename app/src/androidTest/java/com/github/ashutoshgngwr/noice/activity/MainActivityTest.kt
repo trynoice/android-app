@@ -15,7 +15,9 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.contrib.DrawerMatchers.isClosed
@@ -46,7 +48,7 @@ import io.mockk.mockkObject
 import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
-import org.hamcrest.Matchers.not
+import junit.framework.AssertionFailedError
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -67,7 +69,7 @@ class MainActivityTest {
   fun setup() {
     // mark app intro as seen to run main activity tests in peace
     PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
-      .edit(commit = true) {
+      .edit {
         putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true)
         putBoolean(MainActivity.PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true)
       }
@@ -77,11 +79,9 @@ class MainActivityTest {
 
   @After
   fun teardown() {
-    activityScenario.close()
     unmockkAll()
-
     PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
-      .edit(commit = true) { clear() }
+      .edit { clear() }
   }
 
   @Test
@@ -107,7 +107,6 @@ class MainActivityTest {
     }
 
     // recreate activity with null bundle
-    activityScenario.close()
     activityScenario = launch(MainActivity::class.java)
     activityScenario.onActivity {
       assertEquals(
@@ -132,7 +131,10 @@ class MainActivityTest {
       onView(withId(R.id.navigation_drawer))
         .perform(NavigationViewActions.navigateTo(menuItemID))
 
-      EspressoX.waitForView(withId(R.id.navigation_drawer), isClosed())
+      EspressoX.retryWithWaitOnError(AssertionFailedError::class) {
+        onView(withId(R.id.layout_main)).check(matches(isClosed(Gravity.START)))
+      }
+
       activityScenario.onActivity {
         assertEquals(
           fragmentClass.simpleName,
@@ -227,14 +229,19 @@ class MainActivityTest {
     onView(withId(R.id.navigation_drawer))
       .perform(NavigationViewActions.navigateTo(R.id.saved_presets))
 
-    EspressoX.waitForView(withId(R.id.layout_main), isClosed(Gravity.START))
-      .perform(DrawerActions.open(Gravity.START))
+    EspressoX.retryWithWaitOnError(AssertionFailedError::class) {
+      onView(withId(R.id.layout_main))
+        .check(matches(isClosed(Gravity.START)))
+        .perform(DrawerActions.open(Gravity.START))
+    }
 
     onView(withId(R.id.navigation_drawer))
       .perform(NavigationViewActions.navigateTo(R.id.about))
 
-    EspressoX.waitForView(withId(R.id.layout_main), isClosed(Gravity.START))
-      .check(matches(isClosed(Gravity.START)))
+    EspressoX.retryWithWaitOnError(AssertionFailedError::class) {
+      onView(withId(R.id.layout_main))
+        .check(matches(isClosed(Gravity.START)))
+    }
 
     activityScenario.onActivity {
       it.onBackPressed()
@@ -291,8 +298,11 @@ class MainActivityTest {
       assertEquals(2, it.supportFragmentManager.backStackEntryCount)
     }
 
-    EspressoX.waitForView(withId(R.id.layout_main), isClosed(Gravity.START))
-      .perform(DrawerActions.open(Gravity.START))
+    EspressoX.retryWithWaitOnError(AssertionFailedError::class) {
+      onView(withId(R.id.layout_main))
+        .check(matches(isClosed(Gravity.START)))
+        .perform(DrawerActions.open(Gravity.START))
+    }
 
     // try to reselect the same nav item
     onView(withId(R.id.navigation_drawer)).perform(NavigationViewActions.navigateTo(R.id.about))
@@ -305,14 +315,10 @@ class MainActivityTest {
   @Test
   fun testPlayPauseToggleMenuItem() {
     mockkObject(PlaybackController)
-    activityScenario.onActivity {
-      it.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlaybackStateCompat.STATE_STOPPED
-      })
-    }
+    every { PlaybackController.resume(any()) } returns Unit
 
     // shouldn't be displayed by default
-    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), not(isDisplayed()))
+    onView(withId(R.id.action_play_pause_toggle)).check(doesNotExist())
 
     // with ongoing playback
     activityScenario.onActivity {
@@ -321,8 +327,11 @@ class MainActivityTest {
       })
     }
 
-    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), isDisplayed())
-      .perform(click())
+    EspressoX.retryWithWaitOnError(NoMatchingViewException::class) {
+      onView(withId(R.id.action_play_pause_toggle))
+        .check(matches(isDisplayed()))
+        .perform(click())
+    }
 
     verify(exactly = 1) { PlaybackController.pause(any()) }
 
@@ -333,8 +342,11 @@ class MainActivityTest {
       })
     }
 
-    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), isDisplayed())
-      .perform(click())
+    EspressoX.retryWithWaitOnError(NoMatchingViewException::class) {
+      onView(withId(R.id.action_play_pause_toggle))
+        .check(matches(isDisplayed()))
+        .perform(click())
+    }
 
     verify(exactly = 1) { PlaybackController.resume(any()) }
 
@@ -345,12 +357,13 @@ class MainActivityTest {
       })
     }
 
-    EspressoX.waitForView(withId(R.id.action_play_pause_toggle), not(isDisplayed()))
+    EspressoX.retryWithWaitOnError(AssertionFailedError::class) {
+      onView(withId(R.id.action_play_pause_toggle)).check(doesNotExist())
+    }
   }
 
   @Test
   fun testNavigatedFragmentIntentExtra() {
-    activityScenario.close()
     activityScenario = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
       .let {
         it.putExtra(MainActivity.EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.about)
@@ -394,7 +407,7 @@ class MainActivityTest {
     )
 
     for (input in inputs) {
-      activityScenario.close()
+      every { PlaybackController.playPresetFromUri(any(), any()) } returns Unit
 
       val uri = Uri.parse(input)
       val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
@@ -422,11 +435,13 @@ class MainActivityTest {
 
     activityScenario.recreate()
     if (!BuildConfig.IS_PLAY_STORE_BUILD) {
-      EspressoX.waitForView(withText(R.string.share_usage_data_consent_title), not(isDisplayed()))
+      onView(withText(R.string.share_usage_data_consent_title)).check(doesNotExist())
       return
     }
 
-    EspressoX.waitForView(withText(R.string.share_usage_data_consent_title), isDisplayed())
+    onView(withText(R.string.share_usage_data_consent_title))
+      .check(matches(isDisplayed()))
+
     onView(withText(R.string.accept)).perform(click())
     verify(exactly = 1) {
       mockAnalyticsProvider.setCollectionEnabled(true)
@@ -455,16 +470,15 @@ class MainActivityTest {
       slot.captured.onPending(listOf("test-sku"))
     }
 
-    EspressoX.waitForView(withText(R.string.payment_pending), isDisplayed())
+    onView(withText(R.string.payment_pending))
+      .check(matches(isDisplayed()))
 
     val testOrderID = "test-order-id"
     activityScenario.onActivity {
       slot.captured.onComplete(listOf(), testOrderID)
     }
 
-    EspressoX.waitForView(withText(R.string.support_development__donate_thank_you))
     onView(withId(R.id.positive)).perform(click()) // close the dialog
-
     verify { mockBillingProvider.consumePurchase(testOrderID) }
   }
 }

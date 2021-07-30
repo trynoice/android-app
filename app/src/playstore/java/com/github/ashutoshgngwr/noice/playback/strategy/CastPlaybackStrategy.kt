@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.playback.strategy
 
+import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.google.android.gms.cast.framework.CastSession
 import com.google.gson.GsonBuilder
@@ -59,6 +60,8 @@ class CastPlaybackStrategy(
   override fun stop() {
     notifyChanges(ACTION_STOP)
   }
+
+  override fun setAudioAttributes(attrs: AudioAttributesCompat) = Unit
 
   private fun notifyChanges(action: String?) {
     session.sendMessage(

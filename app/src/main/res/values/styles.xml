@@ -112,4 +112,18 @@
     <item name="aboutElementIconTint">@color/primary_dark</item>
   </style>
 
+  <style name="Widget.App.AlarmRinger.DismissSlider" parent="SlideToActView">
+    <item name="slider_height">72dp</item>
+    <item name="border_radius">28dp</item>
+    <item name="inner_color">@color/background</item>
+    <item name="outer_color">@color/accent</item>>
+    <item name="text_appearance">@style/TextAppearance.App.AlarmRinger.DismissSlider</item>
+  </style>
+
+  <style name="TextAppearance.App.AlarmRinger.DismissSlider" parent="TextAppearance.MaterialComponents.Headline6">
+    <item name="android:textColor">@color/background</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:letterSpacing">0.1</item>
+  </style>
+
 </resources>
