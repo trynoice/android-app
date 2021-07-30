@@ -140,10 +140,7 @@
     - bessere Audiosamples zu kuratieren\n
     - Kaffee zu kaufen\n
   </string>
-    <string name="support_development__donate_google_play_description">
-    Deine Spende wird sicher über Google Play abgewickelt. Der Betrag wird in deine lokale Währung
-    umgewandelt. Je nach Land _können_ weitere Steuern zum Endbetrag hinzukommen.
-  </string>
+    <string name="support_development__donate_google_play_description">Deine Spende wird sicher über Google Play abgewickelt. Je nach Land _können_ weitere Steuern zum Endbetrag hinzukommen.</string>
     <string name="support_development__donate_thank_you">Vielen Dank!</string>
     <string name="support_development__donate_thank_you_description">
     Wir danken dir von ganzem Herzen für deine großzügige Spende an das Noice-Projekt.
@@ -155,7 +152,7 @@
     - Um zukünftige Updates zu ermöglichen\n
     - Um Noice für immer werbefrei zu halten\n
   </string>
-    <string name="cast_media">Übertrage das Medium auf ein anderes Gerät</string>
+    <string name="cast_media">Mit Chromecast verbinden</string>
     <string name="in_app_feedback__description">
     Wir würden uns freuen von Ihnen über die App zu hören. Bitte nehmen Sie sich einen Moment um das Github Repositorie zu besuchen.
     Wenn Sie die App nicht mögen, bitte erwägen Sie ein Issue aufzumachen um Ihre Bedenken zu erklären.
