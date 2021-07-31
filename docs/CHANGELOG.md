@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.1.0](https://github.com/ashutoshgngwr/noice/releases/tag/1.1.0)
+
+**Date:** Sat Jul 31 17:32:07 2021 +0530
+
+- Add alarm ringer UI ([#729](https://github.com/ashutoshgngwr/noice/issues/729))
+- Use alarm ringer volume in wake-up timers ([#729](https://github.com/ashutoshgngwr/noice/issues/729))
+- Update translations ([#730](https://github.com/ashutoshgngwr/noice/issues/730), [#731](https://github.com/ashutoshgngwr/noice/issues/731))
+
 ## [v1.0.2](https://github.com/ashutoshgngwr/noice/releases/tag/1.0.2)
 
 **Date:** Tue Jul 20 23:27:11 2021 +0530
