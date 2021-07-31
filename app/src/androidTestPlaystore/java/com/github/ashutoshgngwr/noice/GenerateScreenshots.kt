@@ -325,7 +325,9 @@ class GenerateScreenshots {
     onView(withId(R.id.navigation_drawer))
       .perform(NavigationViewActions.navigateTo(R.id.about))
 
-    onView(withText(R.string.app_description))
+    onView(withId(R.id.layout_main))
+      .check(matches(DrawerMatchers.isClosed(Gravity.START)))
+
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("5")
   }
@@ -350,7 +352,9 @@ class GenerateScreenshots {
     onView(withId(R.id.navigation_drawer))
       .perform(NavigationViewActions.navigateTo(R.id.settings))
 
-    onView(withId(R.id.navigation_drawer)).check(matches(DrawerMatchers.isClosed()))
+    onView(withId(R.id.layout_main))
+      .check(matches(DrawerMatchers.isClosed(Gravity.START)))
+
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("7")
   }
