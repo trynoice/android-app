@@ -4,7 +4,6 @@ on:
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
 
-# generate and push changelogs to master only
 jobs:
   create-release:
     name: Create GitHub Release
