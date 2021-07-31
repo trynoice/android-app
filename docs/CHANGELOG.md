@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.1.1](https://github.com/ashutoshgngwr/noice/releases/tag/1.1.1)
+
+**Saturday, 31 July 2021**
+
+- Publish APKs on GitHub ([#732](https://github.com/ashutoshgngwr/noice/issues/732))
+
 ## [v1.1.0](https://github.com/ashutoshgngwr/noice/releases/tag/1.1.0)
 
 **Saturday, 31 July 2021**
