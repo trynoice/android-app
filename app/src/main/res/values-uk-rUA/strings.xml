@@ -175,7 +175,7 @@
     <string name="sound_fade_duration">Тривалість стишення звуку</string>
     <string name="appearance">Зовнішній вигляд</string>
     <string name="behavior">Поведінка</string>
-    <string name="saved_presets_as_home_screen">Збережені поєднання як головний екран</string>
+    <string name="saved_presets_as_home_screen">«Збережені поєднання» як головний екран</string>
     <string name="settings">Налаштування</string>
     <string name="app_shortcut_creation_failed">Не вдалося додати поєднання до ярликів застосунку!</string>
     <string name="app_shortcut_created">Поєднання додано до ярликів застосунку!</string>
@@ -185,7 +185,7 @@
     <string name="app_authors">Переглянути список авторів Noice</string>
     <string name="should_update_media_volume">Оновити гучність медіа пристрою перед запуском поєднання</string>
     <string name="device_media_volume">Гучність медіа пристрою</string>
-    <string name="saved_presets_as_home_screen_summary">Показувати збережені поєднання під час запуску застосунку</string>
+    <string name="saved_presets_as_home_screen_summary">Показувати «збережені поєднання» під час запуску застосунку</string>
     <string name="preset_does_not_exist">Поєднання не існує. Можливо, його було видалено!</string>
     <string name="random_preset">Випадкове поєднання</string>
     <string name="should_display_sound_icons">Показувати піктограми звуків</string>
