@@ -98,9 +98,9 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 10
-      - run: >-
-          echo "$SERVICE_ACCOUNT_KEY" > service-account-key.json;
-          echo "$JKS_STORE" | base64 --decode > keystore.jks;
+      - run: |
+          echo "$SERVICE_ACCOUNT_KEY" > service-account-key.json
+          echo "$JKS_STORE" | base64 --decode > keystore.jks
         env:
           SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
           JKS_STORE: ${{ secrets.JKS_STORE }}
@@ -111,3 +111,48 @@ jobs:
           KEY_PASSWORD: ${{ secrets.JKS_ALIAS_PASSWORD }}
       - if: ${{ always() }}
         run: rm -f service-account-key.json keystore.jks
+
+  github-release:
+    name: GitHub Release
+    if: github.repository == 'ashutoshgngwr/noice' && github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    needs: [unit-tests, ui-tests]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PLAYSTORE_APK: noice-playstore.apk
+      PLAYSTORE_MAPPING: noice-playstore-mapping.txt
+      FDROID_APK: noice-fdroid.apk
+      FDROID_MAPPING: noice-fdroid-mapping.txt
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 10
+      - run: |
+          echo "$JKS_STORE" | base64 --decode > keystore.jks
+          ./gradlew assemblePlaystoreRelease --stacktrace
+
+          # remove non-free deps from the f-droid build but keep signingConfig
+          sed -i -r -e 's@^(.*)signingConfig(.*)\/\/.*$@\1signingConfig\2@' app/build.gradle
+          sed -i -e '/sed:fdroid-build:remove/d' build.gradle app/build.gradle
+          ./gradlew assembleFdroidRelease --stacktrace
+
+          # move files here and there.
+          mv -f app/build/outputs/apk/playstore/release/app-playstore-release.apk "$PLAYSTORE_APK"
+          mv -f app/build/outputs/mapping/playstoreRelease/mapping.txt "$PLAYSTORE_MAPPING"
+          mv -f app/build/outputs/apk/fdroid/release/app-fdroid-release.apk "$FDROID_APK"
+          mv -f app/build/outputs/mapping/fdroidRelease/mapping.txt "$FDROID_MAPPING"
+        env:
+          JKS_STORE: ${{ secrets.JKS_STORE }}
+          STORE_PASSWORD: ${{ secrets.JKS_STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.JKS_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.JKS_ALIAS_PASSWORD }}
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ${{ env.FDROID_APK }}
+            ${{ env.FDROID_MAPPING }}
+            ${{ env.PLAYSTORE_APK }}
+            ${{ env.PLAYSTORE_MAPPING }}
+      - if: ${{ always() }}
+        run: rm -f keystore.jks

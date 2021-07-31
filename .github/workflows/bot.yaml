@@ -14,22 +14,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: git fetch --prune --unshallow --tags -f
-      - id: get_tag_message
+      - id: tag_info
         run: |
-          export TAG_BODY="$(git tag  --list --format='%(contents:body)' ${GITHUB_REF/'refs/tags/'/''})"
+          export TAG_NAME="${GITHUB_REF/'refs/tags/'/''}"
+          export TAG_BODY="$(git tag  --list --format='%(contents:body)' $TAG_NAME)"
           export TAG_BODY="${TAG_BODY//'%'/'%25'}"
           export TAG_BODY="${TAG_BODY//$'\n'/'%0A'}"
           export TAG_BODY="${TAG_BODY//$'\r'/'%0D'}"
-          echo "::set-output name=message::${TAG_BODY}"
-      - uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          echo "::set-output name=name::${TAG_NAME}"
+          echo "::set-output name=body::${TAG_BODY}"
+      - uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: v${{ github.ref }}
-          body: ${{ steps.get_tag_message.outputs.message }}
-          draft: false
-          prerelease: false
+          name: v${{ steps.tag_info.outputs.name }}
+          body: ${{ steps.tag_info.outputs.body }}
 
   generate-docs:
     name: Generate Docs
