@@ -45,7 +45,7 @@ jobs:
         run: |
           export CHANGELOG_FILE="docs/CHANGELOG.md"
           export RELEASE_URL="https://github.com/ashutoshgngwr/noice/releases/tag/%(tag)"
-          export GIT_TAG_FMT="## [v%(tag)]($RELEASE_URL)%0a%0a**Date:** %(creatordate)%0a%0a%(contents:body)"
+          export GIT_TAG_FMT="## [v%(tag)]($RELEASE_URL)%0a%0a**%(creatordate:format:%A, %-d %B %Y)**%0a%0a%(contents:body)"
 
           echo "# Changelog" > $CHANGELOG_FILE
           echo "" >> $CHANGELOG_FILE
