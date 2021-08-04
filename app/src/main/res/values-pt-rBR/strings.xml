@@ -162,4 +162,29 @@
     <string name="relax">Relaxar</string>
     <string name="intensity_any">Qualquer</string>
     <string name="mood_any">Qualquer</string>
+    <string name="should_update_media_volume">Atualizar o volume de mídia antes de iniciar a predefinição</string>
+    <string name="device_media_volume">Volume de mídia do dispositivo</string>
+    <string name="use_24h_format">Usar formato de 24 horas</string>
+    <plurals name="time_minutes">
+        <item quantity="one">%1$d minuto</item>
+        <item quantity="other">%1$d minutos</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one">%1$d hora</item>
+        <item quantity="other">%1$d horas</item>
+    </plurals>
+    <string name="time_bridge">e</string>
+    <string name="wake_up_timer_schedule_set">O alarme vai disparar em %1$s %2$s %3$s</string>
+    <string name="wake_up_timer_cancelled">Despertador cancelado!</string>
+    <string name="saved_presets_as_home_screen_summary">Mostrar \"predefinições salvas\" na inicialização do aplicativo</string>
+    <string name="pinned_shortcuts_not_supported">Seu lançador padrão não suporta a adição de atalhos.</string>
+    <string name="preset_does_not_exist">Predefinição não existe. Ela pode ter sido deletada!</string>
+    <string name="add_to_home_screen">Adicionar à tela inicial</string>
+    <string name="random_preset">Predefinição Aleatória</string>
+    <string name="mood">Atmosfera</string>
+    <string name="light">Leve</string>
+    <string name="random_preset_description">Predefinições geradas aleatoriamente conterão sons correspondendo à atmosfera selecionada. Além disso, pré-definições densas tentarão reproduzir mais sons simultaneamente.</string>
+    <string name="intensity">Intensidade</string>
+    <string name="focus">Foco</string>
+    <string name="dense">Denso</string>
 </resources>
