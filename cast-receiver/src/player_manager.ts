@@ -179,10 +179,6 @@ export default class PlayerManager {
   handlePlayerEvent(event: PlayerControlEvent): void {
     event.src.forEach((soundKey: string) => {
       if (this.players.has(soundKey) === false) {
-        if (event.action === undefined || event.action === null) {
-          return;
-        }
-
         if (event.action !== PlayerAction.Create) {
           // shouldn't be here?
           return;
