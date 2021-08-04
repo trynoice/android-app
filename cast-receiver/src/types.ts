@@ -18,6 +18,7 @@ export interface PlayerControlEvent {
   isLooping: boolean;
   action?: PlayerAction;
   volume: number;
+  fadeInDuration?: number;
 }
 
 /**

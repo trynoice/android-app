@@ -86,6 +86,10 @@ export default class StatusUIHandler {
     }
 
     const element = this.statusElements.get(statusID);
+    if (!element) {
+      return;
+    }
+
     if (enabled) {
       this.container.appendChild(element);
     } else {

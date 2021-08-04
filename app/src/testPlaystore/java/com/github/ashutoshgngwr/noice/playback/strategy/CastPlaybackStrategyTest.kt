@@ -1,5 +1,7 @@
 package com.github.ashutoshgngwr.noice.playback.strategy
 
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.google.android.gms.cast.framework.CastSession
 import io.mockk.CapturingSlot
@@ -20,8 +22,8 @@ class CastPlaybackStrategyTest {
 
   private val namespace = "test"
 
+  private lateinit var context: Context
   private lateinit var session: CastSession
-
   private lateinit var sound: Sound
 
   @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
@@ -31,6 +33,7 @@ class CastPlaybackStrategyTest {
 
   @Before
   fun setup() {
+    context = ApplicationProvider.getApplicationContext()
     jsonSlot = slot()
     sound = mockk(relaxed = true) {
       every { src } returns arrayOf("test")
@@ -47,12 +50,13 @@ class CastPlaybackStrategyTest {
   @Test
   fun testInit() {
     // should send ACTION_CREATE on init
-    val expectedJSON = "{" +
-      "  \"src\": [\"test\"]," +
-      "  \"isLooping\": false," +
-      "  \"volume\": 0.0," +
-      "  \"action\": \"create\"" +
-      "}"
+    val expectedJSON = """{
+      "src": ["test"],
+      "isLooping": false,
+      "volume": 0.0,
+      "action": "create",
+      "fadeInDuration": 1000
+    }""".trimIndent()
 
     JSONAssert.assertEquals(expectedJSON, jsonSlot.captured, false)
   }
@@ -60,11 +64,12 @@ class CastPlaybackStrategyTest {
   @Test
   fun testSetVolume() {
     playbackStrategy.setVolume(1f)
-    val expectedJSON = "{" +
-      "  \"src\": [\"test\"]," +
-      "  \"isLooping\": false," +
-      "  \"volume\": 1.0" +
-      "}"
+    val expectedJSON = """{
+      "src": ["test"],
+      "isLooping": false,
+      "volume": 1.0,
+      "fadeInDuration": 1000
+    }""".trimIndent()
 
     JSONAssert.assertEquals(expectedJSON, jsonSlot.captured, false)
   }
@@ -74,12 +79,13 @@ class CastPlaybackStrategyTest {
     every { sound.isLooping } returns true
 
     playbackStrategy.play()
-    val expectedJSON = "{" +
-      "  \"src\": [\"test\"]," +
-      "  \"isLooping\": true," +
-      "  \"volume\": 0.0," +
-      "  \"action\": \"play\"" +
-      "}"
+    val expectedJSON = """{
+      "src": ["test"],
+      "isLooping": true,
+      "volume": 0.0,
+      "action": "play",
+      "fadeInDuration": 1000
+    }""".trimIndent()
 
     JSONAssert.assertEquals(expectedJSON, jsonSlot.captured, false)
   }
@@ -87,12 +93,13 @@ class CastPlaybackStrategyTest {
   @Test
   fun testPlay_withNonLoopingSound() {
     playbackStrategy.play()
-    val expectedJSON = "{" +
-      "  \"src\": [\"test\"]," +
-      "  \"isLooping\": false," +
-      "  \"volume\": 0.0," +
-      "  \"action\": \"play\"" +
-      "}"
+    val expectedJSON = """{
+      "src": ["test"],
+      "isLooping": false,
+      "volume": 0.0,
+      "action": "play",
+      "fadeInDuration": 1000
+    }""".trimIndent()
 
     JSONAssert.assertEquals(expectedJSON, jsonSlot.captured, false)
   }
@@ -100,12 +107,13 @@ class CastPlaybackStrategyTest {
   @Test
   fun testPause() {
     playbackStrategy.pause()
-    val expectedJSON = "{" +
-      "  \"src\": [\"test\"]," +
-      "  \"isLooping\": false," +
-      "  \"volume\": 0.0," +
-      "  \"action\": \"pause\"" +
-      "}"
+    val expectedJSON = """{
+      "src": ["test"],
+      "isLooping": false,
+      "volume": 0.0,
+      "action": "pause",
+      "fadeInDuration": 1000
+    }""".trimIndent()
 
     JSONAssert.assertEquals(expectedJSON, jsonSlot.captured, false)
   }
@@ -113,12 +121,13 @@ class CastPlaybackStrategyTest {
   @Test
   fun testStop() {
     playbackStrategy.stop()
-    val expectedJSON = "{" +
-      "  \"src\": [\"test\"]," +
-      "  \"isLooping\": false," +
-      "  \"volume\": 0.0," +
-      "  \"action\": \"stop\"" +
-      "}"
+    val expectedJSON = """{
+      "src": ["test"],
+      "isLooping": false,
+      "volume": 0.0,
+      "action": "stop",
+      "fadeInDuration": 1000
+    }""".trimIndent()
 
     JSONAssert.assertEquals(expectedJSON, jsonSlot.captured, false)
   }
