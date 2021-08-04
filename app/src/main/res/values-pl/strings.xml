@@ -177,7 +177,6 @@
     <string name="unsaved_preset">Niezapisane ustawienie wstępne</string>
     <string name="skip_to_next">Następne ustawienie wstępne</string>
     <string name="skip_to_prev">Poprzednie ustawienie wstępne</string>
-    <string name="sound_fade_duration_summary">Czas wejścia/wyjścia dla odtwarzania/zatrzymywania dźwięków (w sekundach)</string>
     <string name="sound_fade_duration">Czas zanikania dźwięku</string>
     <string name="appearance">Wygląd</string>
     <string name="saved_presets_as_home_screen">Zapisane ustawienia wstępne jako ekran główny</string>

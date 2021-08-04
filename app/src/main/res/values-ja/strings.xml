@@ -181,7 +181,6 @@
     <string name="skip_to_prev">前のプリセット</string>
     <string name="pinned_shortcut_created">ホーム画面にショートカットが追加されました!</string>
     <string name="pinned_shortcut_creation_failed">ホーム画面へのショートカットの追加に失敗しました!</string>
-    <string name="sound_fade_duration_summary">音の再生/停止のフェードイン/アウト時間 (秒)</string>
     <string name="sound_fade_duration">サウンドのフェード時間</string>
     <string name="appearance">見た目</string>
     <string name="behavior">ふるまい</string>

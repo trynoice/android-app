@@ -153,7 +153,6 @@
     <string name="add_to_app_shortcuts">Aggiungi alle scorciatoie delle app</string>
     <string name="pinned_shortcut_created">La scorciatoia è stata aggiunta alla schermata iniziale!</string>
     <string name="pinned_shortcut_creation_failed">Impossibile aggiungere la scorciatoia alla schermata iniziale!</string>
-    <string name="sound_fade_duration">Durata della dissolvenza del suono</string>
     <string name="appearance">Aspetto</string>
     <string name="behavior">Comportamento</string>
     <string name="saved_presets_as_home_screen">Preimpostazioni salvate come schermata iniziale</string>
@@ -177,5 +176,4 @@
     <string name="ignore_audio_focus_changes_summary_on">Non reagire quando altre app riproducino audio</string>
     <string name="ignore_audio_focus_changes_summary_off">Metti in pausa quando altre app riproducono l\'audio</string>
     <string name="ignore_audio_focus_changes">Ignora i cambiamenti di messa a fuoco dell\'audio</string>
-    <string name="sound_fade_duration_summary">Durata del fade in/out per la riproduzione/arresto dei suoni (in secondi)</string>
 </resources>

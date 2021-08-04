@@ -198,7 +198,6 @@
     <string name="skip_to_prev">पिछला प्रीसेट</string>
     <string name="pinned_shortcut_created">होम स्क्रीन पर शॉर्टकट जोड़ दिया गया है!</string>
     <string name="pinned_shortcut_creation_failed">होम स्क्रीन पर शॉर्टकट जोड़ने में विफल!</string>
-    <string name="sound_fade_duration_summary">ध्वनि बजाने/रोकने के लिए क्षीणन अवधि (सेकंड में)</string>
     <string name="sound_fade_duration">ध्वनि क्षीणन अवधि</string>
     <string name="appearance">दिखावट</string>
     <string name="behavior">व्यवहार</string>

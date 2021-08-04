@@ -180,7 +180,6 @@
     <string name="add_to_app_shortcuts">Zu Anwendungsverknüpfungen hinzufügen</string>
     <string name="pinned_shortcut_created">Dem Startbildschirm wurde eine Verknüpfung hinzugefügt!</string>
     <string name="pinned_shortcut_creation_failed">Fehler beim Hinzufügen der Verknüpfung zum Startbildschirm!</string>
-    <string name="sound_fade_duration">Dauer der Tonausblendung</string>
     <string name="appearance">Aussehen</string>
     <string name="behavior">Verhalten</string>
     <string name="saved_presets_as_home_screen">Voreinstellungen gespeichert als Startbildschirm</string>
@@ -202,7 +201,6 @@
     <string name="ignore_audio_focus_changes_summary_on">Nicht reagieren, wenn andere Anwendungen Audio abspielen</string>
     <string name="ignore_audio_focus_changes_summary_off">Pausieren, wenn andere Anwendungen Audio abspielen</string>
     <string name="ignore_audio_focus_changes">Änderungen des Audiofokus ignorieren</string>
-    <string name="sound_fade_duration_summary">Einblend-/Ausblenddauer für das Abspielen/Stoppen von Sounds (in Sekunden)</string>
     <string name="all_app_shortcuts_removed">Alle Anwendungsverknüpfungen wurden entfernt!</string>
     <string name="remove_all_app_shortcuts_confirmation">Es werden alle voreingestellten Verknüpfungen aus dem Anwendungsverknüpfungsmenü entfernt. Möchten Sie fortfahren\?</string>
     <string name="should_display_sound_icons">Tonsymbole anzeigen</string>

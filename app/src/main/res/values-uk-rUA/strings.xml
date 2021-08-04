@@ -171,7 +171,6 @@
     <string name="skip_to_prev">Попереднє поєднання</string>
     <string name="pinned_shortcut_created">Ярлик додано на головний екран!</string>
     <string name="pinned_shortcut_creation_failed">Не вдалося додати ярлик на головний екран!</string>
-    <string name="sound_fade_duration_summary">Тривалість появи/стишення для відтворення/зупинки звуків (у секундах)</string>
     <string name="sound_fade_duration">Тривалість стишення звуку</string>
     <string name="appearance">Зовнішній вигляд</string>
     <string name="behavior">Поведінка</string>

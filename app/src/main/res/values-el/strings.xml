@@ -166,7 +166,6 @@
     <string name="skip_to_prev">Προηγούμενη σύνθεση</string>
     <string name="pinned_shortcut_created">Η συντόμευση προστέθηκε στην αρχική οθόνη!</string>
     <string name="pinned_shortcut_creation_failed">Αποτυχία προσθήκης συντόμευσης στην αρχική οθόνη!</string>
-    <string name="sound_fade_duration_summary">Διάρκεια fade in/out για έναρξη/λήξη ήχων (σε δευτερόλεπτα)</string>
     <string name="sound_fade_duration">Διάρκεια σβησίματος ήχου</string>
     <string name="appearance">Εμφάνιση</string>
     <string name="behavior">Συμπεριφορά</string>

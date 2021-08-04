@@ -165,7 +165,6 @@
     <string name="should_update_media_volume">Actualice el volumen del dispositivo multimedia antes de que comience el preajuste</string>
     <string name="device_media_volume">Volumen del dispositivo multimedia</string>
     <string name="app_authors">Ver la lista de los autores de Noice</string>
-    <string name="sound_fade_duration_summary">Duración del fundido de entrada/salida para reproducir/detener sonidos (en segundos)</string>
     <string name="sound_fade_duration">Duración de la disminución del sonido</string>
     <string name="appearance">Apariencia</string>
     <string name="behavior">Comportamiento</string>

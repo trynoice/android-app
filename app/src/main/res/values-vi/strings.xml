@@ -19,7 +19,6 @@
     <string name="skip_to_prev">Thiết lập trước đó</string>
     <string name="pinned_shortcut_created">Lối tắt đã được thêm vào màn hình chính!</string>
     <string name="pinned_shortcut_creation_failed">Thêm lối tắt vào màn hình chính thất bại!</string>
-    <string name="sound_fade_duration_summary">Thời lượng âm thanh lớn/nhỏ dần khi phát/dừng (giây)</string>
     <string name="sound_fade_duration">Thời gian giảm dần âm thanh</string>
     <string name="appearance">Ngoại hình</string>
     <string name="behavior">Hành vi</string>
