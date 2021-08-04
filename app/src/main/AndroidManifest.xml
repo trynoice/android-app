@@ -25,6 +25,7 @@
 
     <activity
       android:name=".activity.MainActivity"
+      android:exported="true"
       android:launchMode="singleTask">
 
       <intent-filter>
@@ -82,7 +83,9 @@
 
     <service android:name=".MediaPlayerService" />
 
-    <receiver android:name=".WakeUpTimerManager$BootReceiver">
+    <receiver
+      android:name=".WakeUpTimerManager$BootReceiver"
+      android:exported="true">
 
       <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED" />

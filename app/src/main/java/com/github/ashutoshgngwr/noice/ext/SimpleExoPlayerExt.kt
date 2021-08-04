@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.ext
 
+import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
 import androidx.core.os.HandlerCompat
@@ -65,6 +66,8 @@ fun SimpleExoPlayer.fade(
  * [SimpleExoPlayer] receiver instance.
  */
 fun SimpleExoPlayer.setAudioAttributesCompat(compatAttrs: AudioAttributesCompat) {
+  // internally, both implementations borrow their constants from `android.media`.
+  @SuppressLint("WrongConstant")
   val attrs = AudioAttributes.Builder()
     .setContentType(compatAttrs.contentType)
     .setFlags(compatAttrs.flags)

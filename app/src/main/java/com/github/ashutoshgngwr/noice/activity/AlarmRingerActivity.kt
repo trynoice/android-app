@@ -35,9 +35,14 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     private val LOG_TAG = AlarmRingerActivity::class.simpleName
 
     fun getPendingIntent(context: Context, presetID: String?): PendingIntent {
+      var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE
+      }
+
       return Intent(context, AlarmRingerActivity::class.java)
         .putExtra(EXTRA_PRESET_ID, presetID)
-        .let { PendingIntent.getActivity(context, RC_ALARM, it, PendingIntent.FLAG_UPDATE_CURRENT) }
+        .let { PendingIntent.getActivity(context, RC_ALARM, it, piFlags) }
     }
   }
 
