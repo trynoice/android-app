@@ -149,8 +149,6 @@
     <string name="dense">Intense</string>
     <string name="submit_feedback">Soumettre une évaluation</string>
     <string name="in_app_feedback__description">Nous aimerions connaître votre avis sur l\'application. Nous vous prions de consulter notre GitHub. Si vous n\'aimez pas l\'application, nous vous prions d\'ouvrir un billet « issue » afin de nous expliquer vos critiques. Autrement, nous vous prions de noter le projet pour nous montrer votre reconnaissance.</string>
-    <string name="should_update_media_volume">Ajustez le volume de l\'appareil avant de lancer la préconfiguration</string>
-    <string name="device_media_volume">Volume de l\'appareil</string>
     <string name="use_24h_format">Utiliser le format 24 heures</string>
     <string name="wake_up_timer_cancelled">Minuterie du réveil annulée !</string>
     <string name="saved_presets_as_home_screen_summary">Afficher les configurations sauvegardées au lancement de l\'application</string>

@@ -121,8 +121,6 @@
     <string name="appintro__getting_started_desc_0">Scorri a sinistra per conoscere tutte le funzionalità!</string>
     <string name="appintro__chromecast_title">Abilitato a Chromecast</string>
     <string name="appintro__chromecast_desc">Usa Noice per trasmettere l\'atmosfera ad altri dispositivi abilitati a Chromecast, come altoparlanti, TV, ecc.</string>
-    <string name="should_update_media_volume">Aggiorna il volume del dispositivo multimediale prima dell\'avvio del preset</string>
-    <string name="device_media_volume">Volume del dispositivo multimediale</string>
     <string name="support_development__why_description">- Per rendere possibili aggiornamenti futuri
 \n- Per mantenere Noice privo di pubblicità
 \n</string>

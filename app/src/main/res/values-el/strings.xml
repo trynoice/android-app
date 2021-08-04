@@ -9,8 +9,6 @@
     <string name="app_theme_system_default">Συστήματος</string>
     <string name="app_theme_dark">Σκούρο</string>
     <string name="app_theme_light">Ανοικτό</string>
-    <string name="should_update_media_volume">Ενημέρωση της έντασης της συσκευής πριν την έναρξη της σύνθεσης</string>
-    <string name="device_media_volume">Ένταση ήχου συσκευής</string>
     <string name="use_24h_format">Χρήση 24ωρης μορφής</string>
     <string name="wake_up_timer_description">Η εφαρμογή θα ξεκινήσει την επιλεγμένη σύνθεση όταν λήξει ο χρονοδιακόπτης. Χρησιμοποιείστε τα παρακάτω κουμπιά για να επιλέξετε σύνθεση και την επιθυμητή ώρα έναρξης.</string>
     <plurals name="time_minutes">

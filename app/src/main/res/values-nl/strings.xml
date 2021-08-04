@@ -95,8 +95,6 @@
     <string name="appintro__getting_started_desc_0">Veeg naar links om alle functies te leren kennen!</string>
     <string name="appintro__chromecast_title">Chromecast ingeschakeld</string>
     <string name="appintro__chromecast_desc">Gebruik Noice om sfeer over te brengen op andere Chromecast-apparaten, zoals luidsprekers, tv\'s, enz.</string>
-    <string name="should_update_media_volume">Werk het mediavolume van het apparaat bij voordat u de instelling start</string>
-    <string name="device_media_volume">Apparaat mediavolume</string>
     <string name="wake_up_timer_description">Noice start de geselecteerde instelling wanneer de timer afloopt. Gebruik de onderstaande knoppen om een instelling te selecteren en de gewenste tijd in te stellen om de timer te starten.</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minuut</item>

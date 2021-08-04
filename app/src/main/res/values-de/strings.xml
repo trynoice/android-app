@@ -105,8 +105,6 @@
     hinzuzufügen.
   </string>
     <string name="use_24h_format">Benutze das 24-Stunden Format</string>
-    <string name="device_media_volume">Lautstärke des Gerätes</string>
-    <string name="should_update_media_volume">Aktualisieren Sie die Lautstärke des Gerätes, bevor Sie die Voreinstellung starten</string>
     <string name="app_theme_light">Hell</string>
     <string name="app_theme_dark">Dunkel</string>
     <string name="app_theme_system_default">Systemstandard</string>

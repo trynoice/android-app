@@ -120,8 +120,6 @@
     <string name="appintro__getting_started_desc_1">Låt oss börja!</string>
     <string name="appintro__getting_started_desc_0">Svep till vänster för att lära känna alla funktioner!</string>
     <string name="appintro__chromecast_title">Chromecast aktiverat</string>
-    <string name="should_update_media_volume">Uppdatera enhetens mediavolym innan förinställningen startas</string>
-    <string name="device_media_volume">Mediavolym för enhet</string>
     <string name="use_24h_format">Använd 24-timmarsformat</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minut</item>
