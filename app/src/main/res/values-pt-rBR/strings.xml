@@ -162,7 +162,6 @@
     <string name="relax">Relaxar</string>
     <string name="intensity_any">Qualquer</string>
     <string name="mood_any">Qualquer</string>
-    <string name="device_media_volume">Volume de mídia do dispositivo</string>
     <string name="use_24h_format">Usar formato de 24 horas</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minuto</item>
