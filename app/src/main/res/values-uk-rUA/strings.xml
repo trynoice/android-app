@@ -199,4 +199,6 @@
 \n
 \nВи можете налаштувати автоматичне надсилання даних у будь-який час всередині застосунку, за допомогою \"**Налаштування** &gt; **Надсилання даних про користування та поведінку**\".</string>
     <string name="share_usage_data_consent_title">Параметри спільного доступу до даних</string>
+    <string name="sound_fade_in_duration_summary">Тривалість стихання звуків (у секундах)</string>
+    <string name="sound_fade_in_duration">Тривалість стихання звуку</string>
 </resources>
