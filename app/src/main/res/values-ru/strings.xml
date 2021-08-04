@@ -196,7 +196,6 @@
     <string name="skip_to_prev">Предыдущая предустановка</string>
     <string name="pinned_shortcut_created">Ярлык был добавлен на главный экран!</string>
     <string name="pinned_shortcut_creation_failed">Не удалось добавить ярлык на главный экран!</string>
-    <string name="sound_fade_duration">Продолжительность затухания звука</string>
     <string name="appearance">Внешний вид</string>
     <string name="behavior">Поведение</string>
     <string name="saved_presets_as_home_screen">Сохраненные предустановки на главном экране</string>

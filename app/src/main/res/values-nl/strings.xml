@@ -143,7 +143,6 @@
     <string name="skip_to_prev">Vorige instelling</string>
     <string name="pinned_shortcut_created">Snelkoppeling is toegevoegd aan het startscherm!</string>
     <string name="pinned_shortcut_creation_failed">Kan de snelkoppeling niet toevoegen aan het startscherm!</string>
-    <string name="sound_fade_duration">Duur van geluidsvervaging</string>
     <string name="appearance">Uiterlijk</string>
     <string name="behavior">Gedrag</string>
     <string name="saved_presets_as_home_screen">Opgeslagen instellingen als startscherm</string>

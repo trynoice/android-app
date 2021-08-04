@@ -179,7 +179,6 @@
     <string name="app_shortcut_removed">Le préréglage a été supprimé des raccourcis d\'applications !</string>
     <string name="pinned_shortcut_created">Le raccourci a été ajouté à l\'écran d\'accueil !</string>
     <string name="pinned_shortcut_creation_failed">Échec de l\'ajout du raccourci à l\'écran d\'accueil !</string>
-    <string name="sound_fade_duration">Durée de l\'atténuation sonore</string>
     <string name="appearance">Apparence</string>
     <string name="behavior">Comportement</string>
     <string name="saved_presets_as_home_screen">Préréglages enregistrés comme écran d\'accueil</string>

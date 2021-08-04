@@ -19,7 +19,6 @@
     <string name="skip_to_prev">Thiết lập trước đó</string>
     <string name="pinned_shortcut_created">Lối tắt đã được thêm vào màn hình chính!</string>
     <string name="pinned_shortcut_creation_failed">Thêm lối tắt vào màn hình chính thất bại!</string>
-    <string name="sound_fade_duration">Thời gian giảm dần âm thanh</string>
     <string name="appearance">Ngoại hình</string>
     <string name="behavior">Hành vi</string>
     <string name="saved_presets_as_home_screen">Đã lưu các thiết lập trước làm màn hình chính</string>

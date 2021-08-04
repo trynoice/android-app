@@ -182,7 +182,6 @@
     <string name="skip_to_prev">Preset sebelumnya</string>
     <string name="pinned_shortcut_created">Pintasan telah ditambahkan ke layar beranda!</string>
     <string name="pinned_shortcut_creation_failed">Gagal menambahkan pintasan ke layar beranda!</string>
-    <string name="sound_fade_duration">Durasi suara memudar</string>
     <string name="appearance">Tampilan</string>
     <string name="behavior">Perilaku</string>
     <string name="settings">Pengaturan</string>

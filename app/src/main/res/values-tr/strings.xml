@@ -190,7 +190,6 @@
     <string name="add_to_app_shortcuts">Uygulama kısayollarına ekle</string>
     <string name="pinned_shortcut_created">Kısayol ana ekrana eklendi!</string>
     <string name="pinned_shortcut_creation_failed">Kısayol ana ekrana eklenemedi!</string>
-    <string name="sound_fade_duration">Ses geçiş süresi</string>
     <string name="appearance">Görünüm</string>
     <string name="behavior">Davranış</string>
     <string name="saved_presets_as_home_screen">Ana ekrana \"kaydedilen kayıtlar\"</string>
