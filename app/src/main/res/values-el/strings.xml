@@ -9,8 +9,6 @@
     <string name="app_theme_system_default">Συστήματος</string>
     <string name="app_theme_dark">Σκούρο</string>
     <string name="app_theme_light">Ανοικτό</string>
-    <string name="should_update_media_volume">Ενημέρωση της έντασης της συσκευής πριν την έναρξη της σύνθεσης</string>
-    <string name="device_media_volume">Ένταση ήχου συσκευής</string>
     <string name="use_24h_format">Χρήση 24ωρης μορφής</string>
     <string name="wake_up_timer_description">Η εφαρμογή θα ξεκινήσει την επιλεγμένη σύνθεση όταν λήξει ο χρονοδιακόπτης. Χρησιμοποιείστε τα παρακάτω κουμπιά για να επιλέξετε σύνθεση και την επιθυμητή ώρα έναρξης.</string>
     <plurals name="time_minutes">
@@ -166,8 +164,6 @@
     <string name="skip_to_prev">Προηγούμενη σύνθεση</string>
     <string name="pinned_shortcut_created">Η συντόμευση προστέθηκε στην αρχική οθόνη!</string>
     <string name="pinned_shortcut_creation_failed">Αποτυχία προσθήκης συντόμευσης στην αρχική οθόνη!</string>
-    <string name="sound_fade_duration_summary">Διάρκεια fade in/out για έναρξη/λήξη ήχων (σε δευτερόλεπτα)</string>
-    <string name="sound_fade_duration">Διάρκεια σβησίματος ήχου</string>
     <string name="appearance">Εμφάνιση</string>
     <string name="behavior">Συμπεριφορά</string>
     <string name="saved_presets_as_home_screen">Αρχική οθόνη οι αποθηκευμένες συνθέσεις</string>

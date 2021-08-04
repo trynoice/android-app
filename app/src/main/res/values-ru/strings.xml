@@ -156,8 +156,6 @@
     <string name="relax">Расслабиться</string>
     <string name="random_preset">Случайный пресет</string>
     <string name="mood">Настроение</string>
-    <string name="should_update_media_volume">Обновить громкость звуков устройства перед запуском предустановок</string>
-    <string name="device_media_volume">Громкость звука устройства</string>
     <string name="wake_up_timer_cancelled">Таймер пробуждения отменён!</string>
     <string name="pinned_shortcuts_not_supported">Ваш лаунчер по умолчанию не поддерживает добавление ярлыков.</string>
     <string name="focus">Фокус</string>
@@ -196,8 +194,6 @@
     <string name="skip_to_prev">Предыдущая предустановка</string>
     <string name="pinned_shortcut_created">Ярлык был добавлен на главный экран!</string>
     <string name="pinned_shortcut_creation_failed">Не удалось добавить ярлык на главный экран!</string>
-    <string name="sound_fade_duration_summary">Продолжительность нарастания/затухания для проигрываемых/останавливаемых звуков (в секундах)</string>
-    <string name="sound_fade_duration">Продолжительность затухания звука</string>
     <string name="appearance">Внешний вид</string>
     <string name="behavior">Поведение</string>
     <string name="saved_presets_as_home_screen">Сохраненные предустановки на главном экране</string>

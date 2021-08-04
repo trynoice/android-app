@@ -19,8 +19,6 @@
     <string name="skip_to_prev">Thiết lập trước đó</string>
     <string name="pinned_shortcut_created">Lối tắt đã được thêm vào màn hình chính!</string>
     <string name="pinned_shortcut_creation_failed">Thêm lối tắt vào màn hình chính thất bại!</string>
-    <string name="sound_fade_duration_summary">Thời lượng âm thanh lớn/nhỏ dần khi phát/dừng (giây)</string>
-    <string name="sound_fade_duration">Thời gian giảm dần âm thanh</string>
     <string name="appearance">Ngoại hình</string>
     <string name="behavior">Hành vi</string>
     <string name="saved_presets_as_home_screen">Đã lưu các thiết lập trước làm màn hình chính</string>
@@ -67,8 +65,6 @@
     <string name="app_theme_system_default">Mặc định hệ thống</string>
     <string name="app_theme_dark">Tối</string>
     <string name="app_theme_light">Sáng</string>
-    <string name="should_update_media_volume">Cập nhật âm lượng phương tiện của thiết bị trước khi bắt đầu thiết lập trước</string>
-    <string name="device_media_volume">Âm lượng phương tiện của thiết bị</string>
     <string name="use_24h_format">Sử dụng định dạng 24 giờ</string>
     <string name="wake_up_timer_description">Noice sẽ bắt đầu thiết lập trước đã chọn khi hẹn giờ kết thúc. Hãy sử dụng các nút ở dưới để chọn một thiết lập trước và chọn thời gian mong muốn để bắt đầu hẹn giờ thức dậy.</string>
     <plurals name="time_minutes">

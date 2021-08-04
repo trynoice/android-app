@@ -95,8 +95,6 @@
     <string name="appintro__getting_started_desc_0">Veeg naar links om alle functies te leren kennen!</string>
     <string name="appintro__chromecast_title">Chromecast ingeschakeld</string>
     <string name="appintro__chromecast_desc">Gebruik Noice om sfeer over te brengen op andere Chromecast-apparaten, zoals luidsprekers, tv\'s, enz.</string>
-    <string name="should_update_media_volume">Werk het mediavolume van het apparaat bij voordat u de instelling start</string>
-    <string name="device_media_volume">Apparaat mediavolume</string>
     <string name="wake_up_timer_description">Noice start de geselecteerde instelling wanneer de timer afloopt. Gebruik de onderstaande knoppen om een instelling te selecteren en de gewenste tijd in te stellen om de timer te starten.</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minuut</item>
@@ -143,8 +141,6 @@
     <string name="skip_to_prev">Vorige instelling</string>
     <string name="pinned_shortcut_created">Snelkoppeling is toegevoegd aan het startscherm!</string>
     <string name="pinned_shortcut_creation_failed">Kan de snelkoppeling niet toevoegen aan het startscherm!</string>
-    <string name="sound_fade_duration_summary">Duur van geluidsvervaging voor het afspelen/stoppen van geluiden (in seconden)</string>
-    <string name="sound_fade_duration">Duur van geluidsvervaging</string>
     <string name="appearance">Uiterlijk</string>
     <string name="behavior">Gedrag</string>
     <string name="saved_presets_as_home_screen">Opgeslagen instellingen als startscherm</string>
