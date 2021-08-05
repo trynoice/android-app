@@ -24,18 +24,16 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class DonateView : LinearLayoutCompat {
+class DonateView @JvmOverloads constructor(
+  context: Context,
+  attrs: AttributeSet? = null,
+  defStyleAttr: Int = 0
+) : LinearLayoutCompat(context, attrs, defStyleAttr) {
 
   private lateinit var defaultScope: CoroutineScope
 
   private val binding: DonateViewBinding =
     DonateViewBinding.inflate(LayoutInflater.from(context), this)
-
-  constructor(context: Context) : super(context)
-  constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-  constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-    context, attrs, defStyleAttr
-  )
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal constructor(context: Context, defaultScope: CoroutineScope) : this(context) {
