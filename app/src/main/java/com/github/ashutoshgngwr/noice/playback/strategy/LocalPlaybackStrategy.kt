@@ -25,7 +25,7 @@ class LocalPlaybackStrategy(
 
   companion object {
     // a smaller default used when changing volume of an active player.
-    private const val DEFAULT_FADE_DURATION = 1000L
+    internal const val DEFAULT_FADE_DURATION = 1000L
   }
 
   private val players = sound.src.map { initPlayer(context, it, sound.isLooping) }
