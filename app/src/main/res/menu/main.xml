@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <item
     android:id="@+id/library"
     android:checkable="true"
     android:icon="@drawable/ic_nav_library"
-    android:title="@string/library" />
+    android:title="@string/library"
+    tools:checked="true" />
 
   <item
     android:id="@+id/saved_presets"

@@ -21,6 +21,7 @@
     <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
     <item name="preferenceTheme">@style/PreferenceThemeOverlay.App</item>
     <item name="aboutStyle">@style/Widget.App.AboutPage</item>
+    <item name="navigationViewStyle">@style/Widget.App.NavigationView</item>
   </style>
 
   <style name="ThemeOverlay.App.ActionBar" parent="ThemeOverlay.MaterialComponents.ActionBar">
@@ -124,6 +125,22 @@
     <item name="android:textColor">@color/background</item>
     <item name="android:textAllCaps">true</item>
     <item name="android:letterSpacing">0.1</item>
+  </style>
+
+  <style name="Widget.App.NavigationView" parent="Widget.MaterialComponents.NavigationView">
+    <item name="itemShapeInsetStart">0dp</item>
+    <item name="itemShapeInsetTop">0dp</item>
+    <item name="itemShapeInsetBottom">0dp</item>
+    <item name="itemShapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.NavigationViewItem
+    </item>
+  </style>
+
+  <style name="ShapeAppearanceOverlay.App.NavigationViewItem" parent="">
+    <item name="cornerFamily">rounded</item>
+    <item name="cornerSizeTopRight">24dp</item>
+    <item name="cornerSizeTopLeft">0dp</item>
+    <item name="cornerSizeBottomRight">24dp</item>
+    <item name="cornerSizeBottomLeft">0dp</item>
   </style>
 
 </resources>
