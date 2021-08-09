@@ -211,4 +211,9 @@
 \n
 \n Vous pouvez configurer le partage automatique des données à tout moment dans l\'application en allant dans « **Paramètres** &gt; **Partager les données d\'utilisation et de comportement** ».</string>
     <string name="share_usage_data_consent_title">Préférences de partage des données</string>
+    <string name="payment_pending">Nous vous informerons dès que nous aurons fini de traiter votre paiement.</string>
+    <string name="failed_to_purchase">Échec du lancement du flux de paiement. Veuillez réessayer plus tard !</string>
+    <string name="failed_to_load_inapp_purchases">Impossible de charger les détails de l’achat interne à l’appli. Veuillez réessayer plus tard !</string>
+    <string name="sound_fade_in_duration_summary">Durée du fondu sonore (en secondes)</string>
+    <string name="sound_fade_in_duration">Durée du fondu sonore</string>
 </resources>
