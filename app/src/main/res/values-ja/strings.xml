@@ -127,10 +127,8 @@
     <string name="sleep_timer">スリープタイマー</string>
     <string name="saved_presets">保存したプリセット</string>
     <string name="report_issue">問題を報告</string>
-    <string name="open_drawer">ナビゲーションドロワーを開く</string>
     <string name="library">ライブラリ</string>
     <string name="help">ヘルプ</string>
-    <string name="close_drawer">ナビゲーションドロワーを閉じる</string>
     <string name="app_theme">テーマ</string>
     <string name="about">このアプリについて</string>
     <string name="app_authors">Noiceの作成者一覧を見る</string>

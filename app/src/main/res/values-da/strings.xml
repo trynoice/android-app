@@ -67,9 +67,7 @@
     <string name="sleep_timer">Sove Timer</string>
     <string name="saved_presets">Gemte forudindstillinger</string>
     <string name="report_issue">Rapporter problemer</string>
-    <string name="open_drawer">Åben navigation</string>
     <string name="help">Hjælp</string>
-    <string name="close_drawer">Luk navigation</string>
     <string name="app_theme">Tema</string>
     <string name="about">Om os</string>
 </resources>

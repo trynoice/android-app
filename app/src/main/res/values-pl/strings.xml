@@ -2,9 +2,7 @@
 <resources>
     <string name="about">O aplikacji</string>
     <string name="app_theme">Motyw</string>
-    <string name="close_drawer">Zamknij szufladę nawigacyjną</string>
     <string name="library">Biblioteka</string>
-    <string name="open_drawer">Otwórz szufladę nawigacyjną</string>
     <string name="report_issue">Zgłoś problem</string>
     <string name="saved_presets">Zapisane szablony</string>
     <string name="sleep_timer">Wyłącznik czasowy</string>

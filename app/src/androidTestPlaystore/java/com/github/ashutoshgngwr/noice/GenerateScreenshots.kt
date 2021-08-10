@@ -3,7 +3,6 @@ package com.github.ashutoshgngwr.noice
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.content.edit
@@ -11,12 +10,9 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.DrawerActions
-import androidx.test.espresso.contrib.DrawerMatchers
-import androidx.test.espresso.contrib.NavigationViewActions
 import androidx.test.espresso.contrib.PickerActions
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
@@ -243,13 +239,7 @@ class GenerateScreenshots {
 
   @Test
   fun savedPresets() {
-    onView(withId(R.id.layout_main))
-      .check(matches(DrawerMatchers.isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
-
-    onView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.saved_presets))
-
+    onView(withId(R.id.saved_presets)).perform(click())
     onView(withId(R.id.list))
       .perform(
         actionOnItemAtPosition<SavedPresetsFragment.ViewHolder>(
@@ -270,13 +260,7 @@ class GenerateScreenshots {
       )
     )
 
-    onView(withId(R.id.layout_main))
-      .check(matches(DrawerMatchers.isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
-
-    onView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.sleep_timer))
-
+    onView(withId(R.id.sleep_timer)).perform(click())
     onView(withId(R.id.duration_picker)).perform(
       EspressoX.addDurationToPicker(1800)
     )
@@ -290,12 +274,7 @@ class GenerateScreenshots {
     // cancel any previous alarms
     WakeUpTimerManager.cancel(ApplicationProvider.getApplicationContext())
 
-    onView(withId(R.id.layout_main))
-      .check(matches(DrawerMatchers.isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
-
-    onView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.wake_up_timer))
+    onView(withId(R.id.wake_up_timer)).perform(click())
 
     onView(withId(R.id.select_preset_button))
       .perform(scrollTo(), click())
@@ -318,44 +297,17 @@ class GenerateScreenshots {
 
   @Test
   fun about() {
-    onView(withId(R.id.layout_main))
-      .check(matches(DrawerMatchers.isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
-
-    onView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.about))
-
-    onView(withId(R.id.layout_main))
-      .check(matches(DrawerMatchers.isClosed(Gravity.START)))
-
+    openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext())
+    onView(withText(R.string.about)).perform(click())
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("5")
   }
 
   @Test
-  fun navigation() {
-    onView(withId(R.id.layout_main))
-      .check(matches(DrawerMatchers.isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
-
-    onView(withId(R.id.layout_main)).check(matches(DrawerMatchers.isOpen()))
+  fun settingsItem() {
+    openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext())
+    onView(withText(R.string.settings)).perform(click())
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("6")
-  }
-
-  @Test
-  fun settingsItem() {
-    onView(withId(R.id.layout_main))
-      .check(matches(DrawerMatchers.isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
-
-    onView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.settings))
-
-    onView(withId(R.id.layout_main))
-      .check(matches(DrawerMatchers.isClosed(Gravity.START)))
-
-    Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
-    Screengrab.screenshot("7")
   }
 }

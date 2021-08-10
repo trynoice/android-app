@@ -2,9 +2,7 @@
 <resources>
     <string name="about">Over</string>
     <string name="app_theme">Thema</string>
-    <string name="close_drawer">Navigatiemenu sluiten</string>
     <string name="library">Verzameling</string>
-    <string name="open_drawer">Navigatiemenu openen</string>
     <string name="report_issue">Problemen melden</string>
     <string name="saved_presets">Voorinstellingen</string>
     <string name="sleep_timer">Slaaptimer</string>

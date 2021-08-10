@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="open_drawer">ন্যাভিগেশন ড্রয়ার খুলো</string>
     <string name="library">গ্রন্থাগার</string>
     <string name="help">সহায়তা</string>
-    <string name="close_drawer">ন্যাভিগেশন ড্রয়ার বন্ধ করো</string>
     <string name="app_theme">থিম</string>
     <string name="about">সম্পর্কে</string>
 </resources>

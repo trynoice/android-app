@@ -2,10 +2,8 @@
 <resources>
     <string name="about">Hakkında</string>
     <string name="app_theme">Tema</string>
-    <string name="close_drawer">Gezinti çubuğunu kapat</string>
     <string name="help">Yardım</string>
     <string name="library">Kütüphane</string>
-    <string name="open_drawer">Gezinti çubuğunu aç</string>
     <string name="report_issue">Sorun Bildir</string>
     <string name="saved_presets">Kayıtlar</string>
     <string name="sleep_timer">Uyku Zamanlayıcı</string>

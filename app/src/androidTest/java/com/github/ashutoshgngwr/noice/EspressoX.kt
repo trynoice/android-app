@@ -12,6 +12,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.github.ashutoshgngwr.noice.widget.DurationPicker
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.slider.Slider
 import com.google.android.material.textfield.TextInputLayout
 import org.hamcrest.Description
@@ -169,6 +170,13 @@ object EspressoX {
 
         Thread.sleep(wait)
       }
+    }
+  }
+
+  fun withBottomNavSelectedItem(@IdRes id: Int): Matcher<View> = object : TypeSafeMatcher<View>() {
+    override fun describeTo(description: Description?) = Unit
+    override fun matchesSafely(item: View?): Boolean {
+      return item is BottomNavigationView && item.selectedItemId == id
     }
   }
 }

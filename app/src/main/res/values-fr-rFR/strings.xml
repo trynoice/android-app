@@ -2,10 +2,8 @@
 <resources>
     <string name="about">À propos</string>
     <string name="app_theme">Thème</string>
-    <string name="close_drawer">Fermer navigation</string>
     <string name="help">Aide</string>
     <string name="library">Bibliothèque</string>
-    <string name="open_drawer">Ouvrir navigation</string>
     <string name="report_issue">Signaler des problèmes</string>
     <string name="saved_presets">Réglages sauvegardés</string>
     <string name="sleep_timer">Minuterie</string>

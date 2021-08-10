@@ -2,10 +2,8 @@
 <resources>
     <string name="about">Про застосунок</string>
     <string name="app_theme">Тема</string>
-    <string name="close_drawer">Закрити меню</string>
     <string name="help">Допомога</string>
     <string name="library">Бібліотека</string>
-    <string name="open_drawer">Відкрити меню</string>
     <string name="report_issue">Повідомити про ваду</string>
     <string name="saved_presets">Збережені поєднання</string>
     <string name="sleep_timer">Таймер сну</string>

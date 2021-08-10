@@ -40,7 +40,7 @@
     <TextClock
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:drawableTop="@drawable/ic_nav_wake_up_timer"
+      android:drawableTop="@drawable/ic_action_wake_up_timer"
       android:format12Hour=" a"
       android:format24Hour=""
       android:textAllCaps="true"

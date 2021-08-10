@@ -2,10 +2,8 @@
 <resources>
     <string name="about">Über</string>
     <string name="app_theme">Theme</string>
-    <string name="close_drawer">Navigationsleiste schließen</string>
     <string name="help">Hilfe</string>
     <string name="library">Sammlung</string>
-    <string name="open_drawer">Navigationsleiste öffnen</string>
     <string name="report_issue">Fehler melden</string>
     <string name="saved_presets">Gespeicherte Voreinstellungen</string>
     <string name="sleep_timer">Einschlaftimer</string>
