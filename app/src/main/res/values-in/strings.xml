@@ -164,7 +164,7 @@
     <string name="submit_feedback">Masukan Feedback</string>
     <string name="use_24h_format">Pakai format 24-jam</string>
     <string name="wake_up_timer_cancelled">Timer Wake-up terbatalkan!</string>
-    <string name="saved_presets_as_home_screen_summary">Tunjukan Preset yang tersimpan pada permulaan aplikasi</string>
+    <string name="saved_presets_as_home_screen_summary">\"Tunjukan Preset\" yang tersimpan pada permulaan aplikasi</string>
     <string name="intensity">Intensitas</string>
     <plurals name="time_minutes">
         <item quantity="other">%1$d menit</item>
@@ -206,4 +206,13 @@
     <string name="saved_presets_as_home_screen">Preset tersimpan sebagai layar beranda</string>
     <string name="app_authors">Lihat daftar Penulis Noice</string>
     <string name="should_display_sound_icons">Tunjukkan ikon suara</string>
+    <string name="should_allow_skipping_unsaved_presets">Izinkan melewati preset tak tersimpan</string>
+    <string name="should_share_usage_data_summary">Secara otomatis berbagi data penggunaan dan perilaku dengan pengembang</string>
+    <string name="should_share_usage_data">Bagikan data penggunaan dan perilaku</string>
+    <string name="others">Lainnya</string>
+    <string name="decline">Tolak</string>
+    <string name="accept">Terima</string>
+    <string name="share_usage_data_consent_title">Preferensi Berbagi Data</string>
+    <string name="sound_fade_in_duration_summary">Durasi kelirihan bunyi (dalam detik)</string>
+    <string name="sound_fade_in_duration">Durasi kelirihan bunyi</string>
 </resources>
