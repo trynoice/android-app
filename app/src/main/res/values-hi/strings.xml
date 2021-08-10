@@ -2,10 +2,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="about">ऐप के बारे में</string>
     <string name="app_theme">दिखावट</string>
-    <string name="close_drawer">मार्गदर्शक ड्रॉवर बंद करें</string>
     <string name="help">सहायता</string>
     <string name="library">लाइब्रेरी</string>
-    <string name="open_drawer">मार्गदर्शक ड्रॉवर खोलें</string>
     <string name="report_issue">समस्या की सूचना दें</string>
     <string name="saved_presets">सहेजे गए प्रीसेट</string>
     <string name="sleep_timer">स्लीप टाइमर</string>

@@ -2,10 +2,8 @@
 <resources>
     <string name="about">Saiba mais</string>
     <string name="app_theme">Tema</string>
-    <string name="close_drawer">Fechar menu de navegação</string>
     <string name="help">Ajuda</string>
     <string name="library">Biblioteca</string>
-    <string name="open_drawer">Abrir menu de navegação</string>
     <string name="report_issue">Informar sobre problema</string>
     <string name="saved_presets">Ajustes salvos</string>
     <string name="sleep_timer">Temporizador</string>

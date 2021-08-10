@@ -2,9 +2,7 @@
 <resources>
     <string name="about">Om</string>
     <string name="app_theme">Tema</string>
-    <string name="close_drawer">Stäng navigationslåda</string>
     <string name="library">Bibliotek</string>
-    <string name="open_drawer">Öppna navigationslåda</string>
     <string name="report_issue">Rapportera problem</string>
     <string name="saved_presets">Sparade kombinationer</string>
     <string name="sleep_timer">Timer för nedstängning</string>

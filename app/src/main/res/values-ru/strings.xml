@@ -2,10 +2,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="about">О приложении</string>
     <string name="app_theme">Тема</string>
-    <string name="close_drawer">Закрыть меню</string>
     <string name="help">Помощь</string>
     <string name="library">Библиотека звуков</string>
-    <string name="open_drawer">Открыть меню</string>
     <string name="report_issue">Сообщить о проблеме</string>
     <string name="saved_presets">Сохраненные пресеты</string>
     <string name="sleep_timer">Таймер</string>

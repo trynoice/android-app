@@ -2,10 +2,8 @@
 <resources>
     <string name="about">Tentang</string>
     <string name="app_theme">Tema</string>
-    <string name="close_drawer">Tutup panel navigasi</string>
     <string name="help">Bantuan</string>
     <string name="library">Perpustakaan</string>
-    <string name="open_drawer">Buka panel navigasi</string>
     <string name="report_issue">Laporkan Masalah</string>
     <string name="saved_presets">Preset Tersimpan</string>
     <string name="sleep_timer">Pengatur Waktu Tidur</string>

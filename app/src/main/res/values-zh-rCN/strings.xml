@@ -126,10 +126,8 @@
     <string name="sleep_timer">睡眠定时器</string>
     <string name="saved_presets">保存的预设</string>
     <string name="report_issue">报告问题</string>
-    <string name="open_drawer">打开导航抽屉</string>
     <string name="library">图书馆</string>
     <string name="help">帮助</string>
-    <string name="close_drawer">关闭导航抽屉</string>
     <string name="app_theme">主题</string>
     <string name="wake_up_timer_schedule_set">闹铃将在 %1$s %2$s %3$s 后结束</string>
     <plurals name="time_minutes">

@@ -14,14 +14,14 @@
     <item name="colorAccent">@color/accent</item>
     <item name="actionBarStyle">@style/Widget.MaterialComponents.ActionBar.Solid</item>
     <item name="actionBarTheme">@style/ThemeOverlay.App.ActionBar</item>
+    <item name="actionBarPopupTheme">@style/Widget.App.PopupMenu</item>
     <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton</item>
     <item name="popupMenuStyle">@style/Widget.App.PopupMenu</item>
     <item name="bottomSheetDialogTheme">@style/Theme.App.BottomSheetDialog</item>
     <item name="mediaRouteTheme">@style/Theme.App.MediaRouter</item>
     <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
-    <item name="preferenceTheme">@style/PreferenceThemeOverlay.App</item>
     <item name="aboutStyle">@style/Widget.App.AboutPage</item>
-    <item name="navigationViewStyle">@style/Widget.App.NavigationView</item>
+    <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
   </style>
 
   <style name="ThemeOverlay.App.ActionBar" parent="ThemeOverlay.MaterialComponents.ActionBar">
@@ -44,6 +44,7 @@
 
   <style name="Widget.App.PopupMenu" parent="Widget.MaterialComponents.PopupMenu">
     <item name="android:popupBackground">@drawable/popup_menu_bg</item>
+    <item name="popupMenuBackground">?android:attr/popupBackground</item>
   </style>
 
   <style name="Theme.App.BottomSheetDialog" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
@@ -104,10 +105,6 @@
     <item name="mediaRouteControlPanelThemeOverlay">@style/ThemeOverlay.MediaRouter.Light</item>
   </style>
 
-  <style name="PreferenceThemeOverlay.App" parent="PreferenceThemeOverlay.v14.Material">
-    <item name="android:tint">?android:attr/textColorSecondary</item>
-  </style>
-
   <style name="Widget.App.AboutPage" parent="about_About">
     <item name="aboutBackground">@color/background</item>
     <item name="aboutElementIconTint">@color/primary_dark</item>
@@ -127,20 +124,9 @@
     <item name="android:letterSpacing">0.1</item>
   </style>
 
-  <style name="Widget.App.NavigationView" parent="Widget.MaterialComponents.NavigationView">
-    <item name="itemShapeInsetStart">0dp</item>
-    <item name="itemShapeInsetTop">0dp</item>
-    <item name="itemShapeInsetBottom">0dp</item>
-    <item name="itemShapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.NavigationViewItem
-    </item>
-  </style>
-
-  <style name="ShapeAppearanceOverlay.App.NavigationViewItem" parent="">
-    <item name="cornerFamily">rounded</item>
-    <item name="cornerSizeTopRight">24dp</item>
-    <item name="cornerSizeTopLeft">0dp</item>
-    <item name="cornerSizeBottomRight">24dp</item>
-    <item name="cornerSizeBottomLeft">0dp</item>
+  <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+    <item name="backgroundTint">@color/background_dark</item>
+    <item name="labelVisibilityMode">labeled</item>
   </style>
 
 </resources>

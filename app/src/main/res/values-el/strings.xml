@@ -111,10 +111,8 @@
     <string name="sleep_timer">Χρονοδιακόπτης ύπνου</string>
     <string name="saved_presets">Αποθηκευμένες συνθέσεις</string>
     <string name="report_issue">Αναφορά προβλήματος</string>
-    <string name="open_drawer">Άνοιγμα συρταριού περιήγησης</string>
     <string name="library">Βιβλιοθήκη</string>
     <string name="help">Βοήθεια</string>
-    <string name="close_drawer">Κλείσιμο συρταριού περιήγησης</string>
     <string name="app_theme">Θέμα</string>
     <string name="about">Περί</string>
     <string name="support_development__why_description">- Για να μπορούμε να αναβαθμίζουμε την εφαρμογή

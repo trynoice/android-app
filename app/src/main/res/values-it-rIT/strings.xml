@@ -2,9 +2,7 @@
 <resources>
     <string name="about">A proposito di</string>
     <string name="app_theme">Tema</string>
-    <string name="close_drawer">Chiudi menu di navigazione</string>
     <string name="library">Libreria</string>
-    <string name="open_drawer">Apri menù di navigazione</string>
     <string name="report_issue">Segnala i problemi</string>
     <string name="saved_presets">Preimpostazioni salvate</string>
     <string name="sleep_timer">Timer di spegnimento </string>

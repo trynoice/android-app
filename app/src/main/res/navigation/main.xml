@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  app:startDestination="@id/home">
+
+  <fragment
+    android:id="@+id/home"
+    android:name="com.github.ashutoshgngwr.noice.fragment.HomeFragment"
+    android:label="@string/app_name"
+    tools:layout="@layout/home_fragment" />
+
+  <fragment
+    android:id="@+id/sleep_timer"
+    android:name="com.github.ashutoshgngwr.noice.fragment.SleepTimerFragment"
+    android:label="@string/sleep_timer"
+    tools:layout="@layout/sleep_timer_fragment" />
+
+  <fragment
+    android:id="@+id/random_preset"
+    android:name="com.github.ashutoshgngwr.noice.fragment.RandomPresetFragment"
+    android:label="@string/random_preset"
+    tools:layout="@layout/random_preset_fragment" />
+
+  <fragment
+    android:id="@+id/settings"
+    android:name="com.github.ashutoshgngwr.noice.fragment.SettingsFragment"
+    android:label="@string/settings" />
+
+  <fragment
+    android:id="@+id/about"
+    android:name="com.github.ashutoshgngwr.noice.fragment.AboutFragment"
+    android:label="@string/about"
+    tools:layout="@layout/about_page" />
+
+  <fragment
+    android:id="@+id/support_development"
+    android:name="com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment"
+    android:label="@string/support_development"
+    tools:layout="@layout/support_development_fragment" />
+
+  <activity
+    android:id="@+id/help"
+    android:name="com.github.ashutoshgngwr.noice.activity.AppIntroActivity"
+    android:label="@string/help"
+    tools:layout="@layout/appintro_intro_layout" />
+
+</navigation>

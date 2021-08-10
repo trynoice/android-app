@@ -165,10 +165,8 @@
     <string name="sleep_timer">Hẹn giờ ngủ</string>
     <string name="saved_presets">Thiết lập trước đã lưu</string>
     <string name="report_issue">Báo cáo vấn đề</string>
-    <string name="open_drawer">Mở ngăn điều hướng</string>
     <string name="library">Thư viện</string>
     <string name="help">Trợ giúp</string>
-    <string name="close_drawer">Đóng ngăn điều hướng</string>
     <string name="app_theme">Chủ đề</string>
     <string name="about">Giới thiệu</string>
     <string name="notification_channel_default__name">Phát phương tiện</string>

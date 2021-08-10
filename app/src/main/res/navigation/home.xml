@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  app:startDestination="@id/library">
+
+  <fragment
+    android:id="@+id/library"
+    android:name="com.github.ashutoshgngwr.noice.fragment.LibraryFragment"
+    android:label="@string/library"
+    tools:layout="@layout/library_fragment" />
+
+  <fragment
+    android:id="@+id/saved_presets"
+    android:name="com.github.ashutoshgngwr.noice.fragment.SavedPresetsFragment"
+    android:label="@string/saved_presets"
+    tools:layout="@layout/saved_presets_fragment" />
+
+  <fragment
+    android:id="@+id/wake_up_timer"
+    android:name="com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment"
+    android:label="@string/wake_up_timer"
+    tools:layout="@layout/wake_up_timer_fragment" />
+
+</navigation>
