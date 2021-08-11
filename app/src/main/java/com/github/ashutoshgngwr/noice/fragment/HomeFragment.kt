@@ -1,6 +1,5 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.graphics.drawable.Animatable
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
@@ -13,6 +12,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -42,6 +42,10 @@ class HomeFragment : Fragment() {
   private lateinit var castAPIProvider: CastAPIProvider
 
   private var playerManagerState = PlaybackStateCompat.STATE_STOPPED
+
+  private val childNavDestChangeListener = { _: NavController, _: NavDestination, _: Bundle? ->
+    activity?.invalidateOptionsMenu() ?: Unit
+  }
 
   // Do not refresh user preference when reconstructing this fragment from a previously saved state.
   // For whatever reasons, it makes the bottom navigation view go out of sync.
@@ -85,33 +89,47 @@ class HomeFragment : Fragment() {
     }
 
     binding.bottomNav.setupWithNavController(childNavController)
+    childNavController.addOnDestinationChangedListener(childNavDestChangeListener)
+  }
+
+  override fun onDestroyView() {
+    childNavController.removeOnDestinationChangedListener(childNavDestChangeListener)
+    super.onDestroyView()
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     castAPIProvider.addMenuItem(menu, R.string.cast_media)
-    menu.add(0, R.id.action_play_pause_toggle, 0, R.string.play_pause).also {
-      it.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-      it.isVisible = PlaybackStateCompat.STATE_STOPPED != playerManagerState
+    val displayPlaybackControls = childNavController.currentDestination?.id != R.id.wake_up_timer
+    if (displayPlaybackControls && PlaybackStateCompat.STATE_STOPPED != playerManagerState) {
+      addPlaybackToggleMenuItem(menu)
+    }
+
+    inflater.inflate(R.menu.home_menu, menu)
+    menu.findItem(R.id.sleep_timer)?.isVisible = displayPlaybackControls
+    menu.findItem(R.id.random_preset)?.isVisible = displayPlaybackControls
+    super.onCreateOptionsMenu(menu, inflater)
+  }
+
+  private fun addPlaybackToggleMenuItem(menu: Menu): MenuItem {
+    return menu.add(0, R.id.action_playback_toggle, 0, R.string.play_pause).apply {
+      setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
       if (PlaybackStateCompat.STATE_PLAYING == playerManagerState) {
-        it.setIcon(R.drawable.ic_action_play_to_pause)
+        setIcon(R.drawable.ic_pause_24dp)
       } else {
-        it.setIcon(R.drawable.ic_action_pause_to_play)
+        setIcon(R.drawable.ic_play_arrow_24dp)
       }
 
-      (it.icon as Animatable).start()
-      it.setOnMenuItemClickListener {
+      setOnMenuItemClickListener {
         if (PlaybackStateCompat.STATE_PLAYING == playerManagerState) {
           PlaybackController.pause(requireContext())
         } else {
           PlaybackController.resume(requireContext())
         }
 
+        analyticsProvider.logEvent("playback_toggle_click", bundleOf())
         true
       }
     }
-
-    inflater.inflate(R.menu.home_menu, menu)
-    super.onCreateOptionsMenu(menu, inflater)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

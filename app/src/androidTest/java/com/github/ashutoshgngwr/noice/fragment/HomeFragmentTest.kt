@@ -93,12 +93,12 @@ class HomeFragmentTest {
   }
 
   @Test
-  fun testPlayPauseToggleMenuItem() {
+  fun testPlaybackToggleMenuItem() {
     mockkObject(PlaybackController)
     every { PlaybackController.resume(any()) } returns Unit
 
     // shouldn't be displayed by default
-    onView(withId(R.id.action_play_pause_toggle)).check(ViewAssertions.doesNotExist())
+    onView(withId(R.id.action_playback_toggle)).check(ViewAssertions.doesNotExist())
 
     // with ongoing playback
     onHomeFragment {
@@ -108,7 +108,7 @@ class HomeFragmentTest {
     }
 
     EspressoX.retryWithWaitOnError(NoMatchingViewException::class) {
-      onView(withId(R.id.action_play_pause_toggle))
+      onView(withId(R.id.action_playback_toggle))
         .check(matches(ViewMatchers.isDisplayed()))
         .perform(ViewActions.click())
     }
@@ -123,7 +123,7 @@ class HomeFragmentTest {
     }
 
     EspressoX.retryWithWaitOnError(NoMatchingViewException::class) {
-      onView(withId(R.id.action_play_pause_toggle))
+      onView(withId(R.id.action_playback_toggle))
         .check(matches(ViewMatchers.isDisplayed()))
         .perform(ViewActions.click())
     }
@@ -138,7 +138,7 @@ class HomeFragmentTest {
     }
 
     EspressoX.retryWithWaitOnError(AssertionFailedError::class) {
-      onView(withId(R.id.action_play_pause_toggle)).check(ViewAssertions.doesNotExist())
+      onView(withId(R.id.action_playback_toggle)).check(ViewAssertions.doesNotExist())
     }
   }
 

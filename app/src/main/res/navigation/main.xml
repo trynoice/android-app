@@ -16,7 +16,7 @@
     android:label="@string/sleep_timer"
     tools:layout="@layout/sleep_timer_fragment" />
 
-  <fragment
+  <dialog
     android:id="@+id/random_preset"
     android:name="com.github.ashutoshgngwr.noice.fragment.RandomPresetFragment"
     android:label="@string/random_preset"
