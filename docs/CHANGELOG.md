@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.0](https://github.com/ashutoshgngwr/noice/releases/tag/1.2.0)
+
+**Thursday, 12 August 2021**
+
+- Redesign app navigation and UI flows
+- Add user preferred fade-duration in Chromecast app
+- Add fixed duration for fade-out transitions
+- Fix playback glitch when dismissing alarm ringer
+- Disable SSAID collection for analytics (Play Store)
+- Update translations ([#749](https://github.com/ashutoshgngwr/noice/issues/749), [#750](https://github.com/ashutoshgngwr/noice/issues/750))
+
 ## [v1.1.1](https://github.com/ashutoshgngwr/noice/releases/tag/1.1.1)
 
 **Saturday, 31 July 2021**
