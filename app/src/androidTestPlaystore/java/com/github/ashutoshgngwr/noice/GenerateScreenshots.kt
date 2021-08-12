@@ -252,24 +252,6 @@ class GenerateScreenshots {
   }
 
   @Test
-  fun sleepTimer() {
-    onView(withId(R.id.sound_list)).perform(
-      actionOnItem<RecyclerView.ViewHolder>(
-        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        click()
-      )
-    )
-
-    onView(withId(R.id.sleep_timer)).perform(click())
-    onView(withId(R.id.duration_picker)).perform(
-      EspressoX.addDurationToPicker(1800)
-    )
-
-    Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
-    Screengrab.screenshot("3")
-  }
-
-  @Test
   fun wakeUpTimer() {
     // cancel any previous alarms
     WakeUpTimerManager.cancel(ApplicationProvider.getApplicationContext())
@@ -290,6 +272,25 @@ class GenerateScreenshots {
 
     onView(withText(R.string.wake_up_timer_description))
       .perform(scrollTo())
+
+    Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
+    Screengrab.screenshot("3")
+  }
+
+  @Test
+  fun sleepTimer() {
+    onView(withId(R.id.sound_list)).perform(
+      actionOnItem<RecyclerView.ViewHolder>(
+        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
+        click()
+      )
+    )
+
+    openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext())
+    onView(withText(R.string.sleep_timer)).perform(click())
+    onView(withId(R.id.duration_picker)).perform(
+      EspressoX.addDurationToPicker(1800)
+    )
 
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("4")

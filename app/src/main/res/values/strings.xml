@@ -225,4 +225,5 @@
     <string name="failed_to_load_inapp_purchases">Failed to load in-app purchase details. Please try again later!</string>
     <string name="failed_to_purchase">Failed to start payment flow. Please try again later!</string>
     <string name="payment_pending">We\'ll notify you as soon as we finish processing your payment.</string>
+    <string name="created_by">Created by</string>
 </resources>

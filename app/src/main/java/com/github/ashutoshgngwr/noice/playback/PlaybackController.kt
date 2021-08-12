@@ -252,7 +252,7 @@ object PlaybackController {
   /**
    * Sends the start command to the service with [ACTION_PLAY_PRESET].
    */
-  fun playPreset(context: Context, presetID: String) {
+  fun playPreset(context: Context, presetID: String?) {
     context.startService(
       Intent(context, MediaPlayerService::class.java)
         .setAction(ACTION_PLAY_PRESET)
