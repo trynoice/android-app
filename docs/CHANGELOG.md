@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.1](https://github.com/ashutoshgngwr/noice/releases/tag/1.2.1)
+
+**Friday, 13 August 2021**
+
+- CRITICAL: Fix crash on switching screens within the app
+
 ## [v1.2.0](https://github.com/ashutoshgngwr/noice/releases/tag/1.2.0)
 
 **Thursday, 12 August 2021**
