@@ -40,7 +40,7 @@ jobs:
       - name: Generate changelog
         run: |
           export CHANGELOG_FILE="docs/CHANGELOG.md"
-          export RELEASE_URL="https://github.com/ashutoshgngwr/noice/releases/tag/%(tag)"
+          export RELEASE_URL="https://github.com/$GITHUB_REPOSITORY/releases/tag/%(tag)"
           export GIT_TAG_FMT="## [v%(tag)]($RELEASE_URL)%0a%0a**%(creatordate:format:%A, %-d %B %Y)**%0a%0a%(contents:body)"
 
           echo "# Changelog" > $CHANGELOG_FILE
@@ -53,12 +53,14 @@ jobs:
       - name: Generate list of code authors
         run: |
           export LIST_PATH="docs/_data/authors/code.yaml"
+          export COMMIT_LIST_URL_FMT="https://github.com/$GITHUB_REPOSITORY/commits?author=\2"
+
           git log --pretty="- %an <%ae>%n- %cn <%ce>" > "$LIST_PATH"
           git log --pretty="%b" | grep "Co-authored-by:" >> "$LIST_PATH"
           sed -i -e 's/Co-authored-by:/-/g' -e 's/\r$//' "$LIST_PATH"
           sort -u -o "$LIST_PATH" "$LIST_PATH"
           sed -i -e '/noreply@github.com/d' -e '/hosted@weblate.org/d' -e '/\[bot\]/d' "$LIST_PATH"
-          sed -i -E 's/(.*) <(.*)>/\1 | [\2](mailto:\2)/g' "$LIST_PATH"
+          sed -i -E "s@- (.*) <(.*)>@- ['\1', '$COMMIT_LIST_URL_FMT']@g" "$LIST_PATH"
       - name: Commit changes
         run: |
           git config --local user.email "noreply@github.com"
