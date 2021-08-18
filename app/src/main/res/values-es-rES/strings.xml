@@ -196,4 +196,7 @@
     <string name="should_share_usage_data">Compartir datos de uso</string>
     <string name="others">Otros</string>
     <string name="accept">Aceptar</string>
+    <string name="decline">Descartar</string>
+    <string name="created_by">Creado por</string>
+    <string name="payment_pending">Te notificaremos en cuanto terminemos de procesar tu pago.</string>
 </resources>
