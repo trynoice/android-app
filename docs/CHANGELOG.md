@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.2](https://github.com/ashutoshgngwr/noice/releases/tag/1.2.2)
+
+**Wednesday, 18 August 2021**
+
+- Fix crash on opening preset shortcuts
+- Fix crash on viewing wake-up timers from the system bar
+- Fix fade glitch on re-opening the same preset shortcut
+- Update translations ([#754](https://github.com/ashutoshgngwr/noice/issues/754))
+
 ## [v1.2.1](https://github.com/ashutoshgngwr/noice/releases/tag/1.2.1)
 
 **Friday, 13 August 2021**
