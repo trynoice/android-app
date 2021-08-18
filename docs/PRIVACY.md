@@ -1,6 +1,6 @@
 # Privacy Policy
 
-_This policy is effective as of 13 July 2021._
+_This policy is effective as of 13 July 2021. Last updated on 18 August 2021._
 
 Noice is open-source software. It is provided at no cost and is intended for use
 as is.
@@ -9,12 +9,12 @@ This page informs users of policies regarding the collection, use and disclosure
 of information when using Noice. If you choose to use Noice, then you agree to
 the data collection and its use as ascribed in this policy.
 
-## Data collection and use
+## Information collection and use
 
-Noice collects app usage and behaviour data. We use the collected data to
-substantiate design decisions and analyse and diagnose faulty app behaviour.
-Please note that Noice does not collect data without first obtaining user
-consent.
+Noice collects app usage and behaviour data from users that download it from the
+Google Play Store. We use the collected data to substantiate design decisions
+and analyse and diagnose faulty app behaviour. Please note that Noice does not
+collect data without first obtaining user consent.
 
 ### Usage data
 
