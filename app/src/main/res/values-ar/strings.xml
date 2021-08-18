@@ -1,2 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="share">مشاركة</string>
+    <string name="appearance">مظهر</string>
+    <string name="behavior">سلوك</string>
+    <string name="settings">إعدادات</string>
+    <string name="later">لاحقًا</string>
+    <string name="support_development__share">مشاركة مع الأصدقاء</string>
+    <string name="support_development__donate_thank_you">شكرًا!</string>
+    <string name="support_development__donate">دعم</string>
+    <string name="appintro__getting_started_title">مرحبًا</string>
+    <string name="appintro__getting_started_desc_1">هيّا لنبدأ!</string>
+    <string name="app_theme_dark">داكن</string>
+    <string name="app_theme_light">فاتح</string>
+    <string name="time_bridge">و</string>
+    <string name="rename">إعادة تسمية</string>
+    <string name="delete">حذف</string>
+    <string name="quiet_conversation">محادثة هادئة</string>
+    <string name="public_library">مكتبة عامة</string>
+    <string name="office">مكتب</string>
+    <string name="night">ليل</string>
+    <string name="light_rain">مطر خفيف</string>
+    <string name="heavy_rain">مطر غزير</string>
+    <string name="electric_car">سيّارة كهربائيّة</string>
+    <string name="coffee_shop">مقهى</string>
+    <string name="birds">طيور</string>
+    <string name="sound_group__wind">رياح</string>
+    <string name="sound_group__water">مياه</string>
+    <string name="sound_group__times_of_day">أوقات اليوم</string>
+    <string name="stop">توقّف</string>
+    <string name="name">الاسم</string>
+    <string name="cancel">إلغاء</string>
+    <string name="okay">حسنًا</string>
+    <string name="mood">المزاج</string>
+    <string name="light">فاتح</string>
+    <string name="intensity">الشدّة</string>
+    <string name="support_development">ادعم التطوير</string>
+    <string name="help">مساعدة</string>
+    <string name="app_theme">السمة</string>
+</resources>
