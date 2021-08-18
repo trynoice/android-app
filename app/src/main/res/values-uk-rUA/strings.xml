@@ -179,7 +179,7 @@
     <string name="remove_from_app_shortcuts">Вилучити з ярликів застосунку</string>
     <string name="add_to_app_shortcuts">Додати до ярликів застосунку</string>
     <string name="app_authors">Переглянути список авторів Noice</string>
-    <string name="saved_presets_as_home_screen_summary">Показувати «збережені поєднання» під час запуску застосунку</string>
+    <string name="saved_presets_as_home_screen_summary">Показувати «збережені поєднання» під час запуску (потрібно перезапустити застосунок)</string>
     <string name="preset_does_not_exist">Поєднання не існує. Можливо, його було видалено!</string>
     <string name="random_preset">Випадкове поєднання</string>
     <string name="should_display_sound_icons">Показувати піктограми звуків</string>
@@ -199,4 +199,5 @@
     <string name="share_usage_data_consent_title">Параметри спільного доступу до даних</string>
     <string name="sound_fade_in_duration_summary">Тривалість стихання звуків (у секундах)</string>
     <string name="sound_fade_in_duration">Тривалість стихання звуку</string>
+    <string name="created_by">Створено</string>
 </resources>

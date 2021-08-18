@@ -154,7 +154,7 @@
     <string name="time_bridge">y</string>
     <string name="wake_up_timer_schedule_set">La alarma sonará en %1$s %2$s %3$s</string>
     <string name="wake_up_timer_cancelled">¡Despertador cancelado!</string>
-    <string name="saved_presets_as_home_screen_summary">Mostrar preajustes guardados al iniciar la aplicación</string>
+    <string name="saved_presets_as_home_screen_summary">Mostrar \"preajustes guardados\" al iniciar la aplicación (requiere reiniciar la aplicación)</string>
     <string name="preset_does_not_exist">El preajuste no existe. ¡Puede haber sido borrada!</string>
     <string name="add_to_home_screen">Añadir a la pantalla de inicio</string>
     <string name="okay">Vale</string>
@@ -189,4 +189,14 @@
     <string name="import_presets_summary">Importar preajustes desde un archivo externo sobreescribirá los existentes</string>
     <string name="failed_to_write_file">No se pudo escribir en el archivo seleccionado!</string>
     <string name="failed_to_read_file">No se pudo leer el archivo seleccionado!</string>
+    <string name="failed_to_purchase">No se ha podido iniciar el flujo de pagos. Vuelve a intentarlo más tarde!</string>
+    <string name="failed_to_load_inapp_purchases">No se han podido cargar los detalles de la compra en la aplicación. Vuelve a intentarlo más tarde!</string>
+    <string name="should_allow_skipping_unsaved_presets">Omitir preajustes no guardados</string>
+    <string name="should_share_usage_data_summary">Compartir automáticamente los datos de uso con los desarrolladores</string>
+    <string name="should_share_usage_data">Compartir datos de uso</string>
+    <string name="others">Otros</string>
+    <string name="accept">Aceptar</string>
+    <string name="decline">Descartar</string>
+    <string name="created_by">Creado por</string>
+    <string name="payment_pending">Te notificaremos en cuanto terminemos de procesar tu pago.</string>
 </resources>
