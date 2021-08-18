@@ -39,7 +39,7 @@ object WakeUpTimerManager {
 
   private fun getPendingIntentForActivity(context: Context) =
     Intent(context, MainActivity::class.java).let {
-      it.putExtra(MainActivity.EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.wake_up_timer)
+      it.putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.wake_up_timer)
       var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE

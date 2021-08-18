@@ -68,10 +68,10 @@ class MainActivityTest {
   }
 
   @Test
-  fun testNavigatedFragmentIntentExtra() {
+  fun testNavDestinationExtra() {
     activityScenario = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
       .let {
-        it.putExtra(MainActivity.EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.about)
+        it.putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.about)
         launch(it)
       }
 

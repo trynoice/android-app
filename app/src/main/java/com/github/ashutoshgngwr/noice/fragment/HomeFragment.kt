@@ -9,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -24,6 +25,7 @@ import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.HomeFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchInCustomTab
+import com.github.ashutoshgngwr.noice.navigation.Navigable
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
@@ -33,7 +35,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), Navigable {
 
   private lateinit var binding: HomeFragmentBinding
   private lateinit var navController: NavController
@@ -77,8 +79,8 @@ class HomeFragment : Fragment() {
 
   override fun onViewCreated(view: View, state: Bundle?) {
     navController = view.findNavController()
-    childNavController = childFragmentManager.findFragmentById(R.id.nav_host_fragment)
-      .let { (it as NavHostFragment).navController }
+    val navHostFragment = requireNotNull(binding.navHostFragment.getFragment<NavHostFragment>())
+    childNavController = navHostFragment.navController
 
     if (shouldDisplaySavedPresetsAsHomeScreen) {
       childNavController.navigate(
@@ -130,6 +132,12 @@ class HomeFragment : Fragment() {
         true
       }
     }
+  }
+
+  override fun onNavDestinationSelected(@IdRes destID: Int): Boolean {
+    return binding.bottomNav.menu.findItem(destID)?.let {
+      NavigationUI.onNavDestinationSelected(it, childNavController)
+    } ?: false
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

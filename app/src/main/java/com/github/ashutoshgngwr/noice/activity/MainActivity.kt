@@ -17,6 +17,7 @@ import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
+import com.github.ashutoshgngwr.noice.navigation.Navigable
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.BillingProvider
@@ -28,12 +29,12 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
 
   companion object {
     /**
-     * [EXTRA_CURRENT_NAVIGATED_FRAGMENT] declares the key for intent extra value that is passed to
-     * [MainActivity] for setting the given fragment to the top. The required value for this extra
-     * should be an integer representing the menu item's id in the navigation view corresponding to
-     * the fragment being requested.
+     * [EXTRA_NAV_DESTINATION] declares the key for intent extra value passed to [MainActivity] for
+     * setting the current destination on the [NavController]. The value for this extra should be an
+     * id resource representing the action/destination id present in the [main][R.navigation.main]
+     * or [home][R.navigation.home] navigation graphs.
      */
-    internal const val EXTRA_CURRENT_NAVIGATED_FRAGMENT = "current_fragment"
+    internal const val EXTRA_NAV_DESTINATION = "nav_destination"
 
     @VisibleForTesting
     internal const val PREF_HAS_SEEN_DATA_COLLECTION_CONSENT = "has_seen_data_collection_consent"
@@ -58,12 +59,11 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
     binding = MainActivityBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    navController = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-      .let { (it as NavHostFragment).navController }
+    val navHostFragment = requireNotNull(binding.navHostFragment.getFragment<NavHostFragment>())
+    navController = navHostFragment.navController
 
     setupActionBarWithNavController(navController, AppBarConfiguration(navController.graph))
 
-    handleNewIntent()
     AppIntroActivity.maybeStart(this)
     if (BuildConfig.IS_PLAY_STORE_BUILD) {
       maybeShowDataCollectionConsent()
@@ -101,6 +101,13 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
     }
   }
 
+  override fun onResume() {
+    super.onResume()
+
+    // Allow fragments to be initialised so that Navigable can work.
+    handleNewIntent()
+  }
+
   override fun onNewIntent(intent: Intent) {
     super.onNewIntent(intent)
     setIntent(intent)
@@ -109,8 +116,11 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
   }
 
   private fun handleNewIntent() {
-    if (intent.hasExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT)) {
-      navController.navigate(intent.getIntExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT, 0))
+    if (intent.hasExtra(EXTRA_NAV_DESTINATION)) {
+      val destID = intent.getIntExtra(EXTRA_NAV_DESTINATION, 0)
+      if (!Navigable.navigate(binding.navHostFragment.getFragment(), destID)) {
+        navController.navigate(destID)
+      }
     } else if (Intent.ACTION_APPLICATION_PREFERENCES == intent.action) {
       navController.navigate(R.id.settings)
     }
