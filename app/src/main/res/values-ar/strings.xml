@@ -37,4 +37,12 @@
     <string name="support_development">ادعم التطوير</string>
     <string name="help">مساعدة</string>
     <string name="app_theme">السمة</string>
+    <string name="play_pause">تشغيل أو إيقاف</string>
+    <string name="play">تشغيل</string>
+    <string name="save">حفظ</string>
+    <string name="pause">إيقاف</string>
+    <string name="dense">كثيف</string>
+    <string name="wake_up_timer">مؤقّت الاستيقاظ</string>
+    <string name="sleep_timer">مؤقّت النوم</string>
+    <string name="about">حول</string>
 </resources>
