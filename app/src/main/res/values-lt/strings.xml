@@ -1,2 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="play_pause">groti arba pristabdyti</string>
+    <string name="play">Groti</string>
+    <string name="save_preset">Išsaugoti parinktį</string>
+    <string name="save">Išsaugoti</string>
+    <string name="preset_saved">Parinktis išsaugota!</string>
+    <string name="preset_name_cannot_be_empty">Parinkties pavadinimas negali būti tuščias!</string>
+    <string name="preset_already_exists">Parinktis su tokiu pavadinimu jau egzistuoja!</string>
+    <string name="pause">Pristabdyti</string>
+    <string name="name">Pavadinimas</string>
+    <string name="dismiss">Nuleisti</string>
+    <string name="cancel">Atšaukti</string>
+    <string name="relax">Atpalaiduojanti</string>
+    <string name="random_preset">Atsitiktinė parinktis</string>
+    <string name="okay">Gerai</string>
+    <string name="mood">Nuotaika</string>
+    <string name="light">Lengvas</string>
+    <string name="random_preset_description">Sugeneruotuose atsitiktinėse parinktyse bus garsų, atitinkančių pasirinktą nuotaiką. Be to, tankūs išankstiniai nustatymai bandys vienu metu groti daugiau garsų.</string>
+    <string name="intensity">Intensyvumas</string>
+    <string name="focus">Sutelkianti dėmesį</string>
+    <string name="dense">Tankus</string>
+    <string name="intensity_any">Bet koks</string>
+    <string name="mood_any">Bet kokia</string>
+    <string name="submit_feedback">Pateikti atsiliepimą</string>
+    <string name="wake_up_timer">Pabudimo laikmatis</string>
+    <string name="support_development">Paremti kūrimą</string>
+    <string name="sleep_timer">Miego laikmatis</string>
+    <string name="saved_presets">Išsaugotos parinktys</string>
+    <string name="report_issue">Pranešti apie problemas</string>
+    <string name="library">Biblioteka</string>
+    <string name="help">Pagalba</string>
+    <string name="app_theme">Tema</string>
+    <string name="about">Apie</string>
+</resources>
