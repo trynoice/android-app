@@ -165,4 +165,12 @@
     <string name="sound_fade_in_duration_summary">مدت زمانی برای صداهایی که کم‌کم بلند می‌شوند (به ثانیه)</string>
     <string name="sound_fade_in_duration">مدت کم‌کم بلند شدن صدا</string>
     <string name="appearance">نما</string>
+    <string name="failed_to_read_file">ناتوانی در خواندن از فایل انتخاب شده!</string>
+    <string name="failed_to_write_file">ناتوانی در نوشتن به فایل انتخاب شده!</string>
+    <string name="all_app_shortcuts_removed">تمام میانبرهای برنامه حذف شده‌اند!</string>
+    <string name="remove_all_app_shortcuts_confirmation">این تمام میانبرهای گزینش‌ها را از منوی میانبر برنامه حذف می‌کند. آیا می‌خواهید ادامه دهید؟</string>
+    <string name="remove_all_app_shortcuts">حذف تمام میانبرهای برنامه</string>
+    <string name="import_presets_summary">وارد کردن گزینش‌های ذخیره شده از یک فایل خارج از برنامه موجب حذف تمام گزینش‌های موجود می‌شود</string>
+    <string name="import_presets">وارد کردن از فایل</string>
+    <string name="export_presets_summary">صادر کردن حالت فعلی گزینش‌های ذخیره شده به یک فایل خارج از برنامه</string>
 </resources>
