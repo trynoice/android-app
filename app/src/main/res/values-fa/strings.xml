@@ -26,7 +26,7 @@
     <string name="support_development__donate_thank_you">متشکریم!</string>
     <string name="support_development__donate_google_play_description">پرداخت شما بطور امن توسط Google Play ترتیب داده می‌شود. بسته به موقعیت شما، مالیات افزون بر آن _ممکن است_ به مبلغ نهایی اضافه شود.</string>
     <string name="support_development__donate_description">هدایا به ما کمک می‌کنند در
-\n - سرمایه‌گذاری در قابلیت‌های تازه
+\n - سرمایه‌گذاری در ویژگی‌های تازه
 \n - گردآوری نمونه‌های بهتر صدا
 \n - خریدن قهوه
 \n</string>
@@ -39,7 +39,7 @@
     <string name="appintro__saved_presets_desc">پس از پخش چند صدا، می‌توانید از دکمه‌ای که در گوشه‌ی پایین است برای ذخیره‌ی ترکیب خود استفاده کنید. برای بکارگیری مجدد یک ترکیب ذخیره شده، می‌توانید از منوی برنامه به فهرست گرینش‌ها بروید.</string>
     <string name="appintro__getting_started_title">خوش آمدید</string>
     <string name="appintro__getting_started_desc_1">بیایید آغاز کنیم!</string>
-    <string name="appintro__getting_started_desc_0">به چپ بکشید تا با تمام قابلیت‌ها آشنا شوید!</string>
+    <string name="appintro__getting_started_desc_0">به چپ بکشید تا با تمام ویژگی‌ها آشنا شوید!</string>
     <string name="appintro__chromecast_title">دارای Chromecast</string>
     <string name="appintro__chromecast_desc">از Noice برای انداختن صدای محیطی آن به دیگر وسایل دارای Chromecast مثل بلندگوها، تلویزیون و ... استفاده کنید.</string>
     <string name="app_description">آرامش بیابید و با مقدار کمی از سروصدای پس‌زمینه، بهره‌وری را بالا ببرید.</string>
