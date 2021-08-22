@@ -32,7 +32,7 @@
 \n</string>
     <string name="support_development__donate">هدیه دهید</string>
     <string name="appintro__timer_title">برای به خواب رفتن یا بیدار شدن مشکل دارید؟</string>
-    <string name="appintro__timer_desc">کمی صدای محیطی می‌تواند به شما کمک کند که بدون زحمت به خواب بروید. از زمان‌سنج خواب استفاده کنید تا به Noice اجازه دهید که خودش را خاموش کند. به همین صورت، برای بیدار شدن به یک محیط آرام، از زمان‌سنج خواب برای تنظیم هشدار استفاده کنید.</string>
+    <string name="appintro__timer_desc">کمی صدای محیطی می‌تواند به شما کمک کند که بدون زحمت به خواب بروید. از زمان‌سنج خواب استفاده کنید تا به Noice اجازه دهید که خودش را خاموش کند. به همین صورت، برای بیدار شدن به یک محیط آرام، از زمان‌سنج بیداری برای تنظیم هشدار استفاده کنید.</string>
     <string name="appintro__library_title">محیط دربرگیرنده‌ی مطلوب خود را ایجاد کنید</string>
     <string name="appintro__library_desc">از دکمه‌ی لغزنده‌ی صدا برای تنظیم حجم صدا استفاده کنید. در هر تکرار از صداهایی که دور نمی‌زنند، بطور تصادفی یک دوره‌ی تأخیر از محدوده‌ی تعیین شده توسط دکمه‌ی لغزنده‌ی زمان انتخاب می‌شود.</string>
     <string name="appintro__saved_presets_title">ذخیره‌ی ترکیب‌های مورد علاقه‌ی‌تان</string>
@@ -174,15 +174,15 @@
     <string name="import_presets">وارد کردن از فایل</string>
     <string name="export_presets_summary">صادر کردن حالت فعلی گزینش‌های ذخیره شده به یک فایل خارج از برنامه</string>
     <string name="should_allow_skipping_unsaved_presets">اجازه‌ی پرش از گزینش‌های ذخیره نشده</string>
-    <string name="should_share_usage_data_summary">به‌اشتراک‌گذاری خودکار داده‌های استفاده و رفتار با برنامه‌نویسان</string>
-    <string name="should_share_usage_data">به‌اشتراک‌گذاری داده‌های استفاده و رفتار</string>
+    <string name="should_share_usage_data_summary">اشتراک‌گذاری خودکار داده‌های استفاده و رفتار، با برنامه‌نویسان</string>
+    <string name="should_share_usage_data">اشتراک‌گذاری داده‌های استفاده و رفتار</string>
     <string name="others">دیگران</string>
     <string name="decline">رد</string>
     <string name="accept">پذیرش</string>
     <string name="share_usage_data_consent_message">ما داده‌های استفاده از برنامه را جمع‌آوری می‌کنیم تا رویارویی کاربر با آن را بهبود دهیم. ما همچنین داده‌های رفتار برنامه را جمع‌آوری می‌کنیم تا خطاهایی که در زمان استفاده از برنامه با آن مواجه شده را تحلیل کنیم و بشناسیم. برای کسب اطلاعات بیشتر [سیاست محرمانگی](https://ashutoshgngwr.github.io/noice/privacy-policy) ما را بخوانید.
 \n
-\n شما می‌توانید به‌اشتراک‌گذاری خودکار داده‌ها را در هر زمانی درون برنامه تنظیم کنید با رفتن به «**تنظیمات** &gt; **به‌اشتراک‌گذاری داده‌های استفاده و رفتار**».</string>
-    <string name="share_usage_data_consent_title">ترجیحات به‌اشتراک‌گذاری داده‌ها</string>
+\n شما می‌توانید اشتراک‌گذاری خودکار داده‌ها را در هر زمانی درون برنامه تنظیم کنید با رفتن به «**تنظیمات** &gt; **اشتراک‌گذاری داده‌های استفاده و رفتار**».</string>
+    <string name="share_usage_data_consent_title">ترجیحات اشتراک‌گذاری داده‌ها</string>
     <string name="should_display_sound_icons">نمایش نمادهای صدا</string>
     <string name="invalid_import_file_format">قالب فایل وارد شده نادرست است!</string>
     <string name="created_by">ساخته شده توسط</string>
