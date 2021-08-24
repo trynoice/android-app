@@ -26,20 +26,20 @@
     <string name="support_development__donate_thank_you">متشکریم!</string>
     <string name="support_development__donate_google_play_description">پرداخت شما بطور امن توسط Google Play ترتیب داده می‌شود. بسته به موقعیت شما، مالیات افزون بر آن _ممکن است_ به مبلغ نهایی اضافه شود.</string>
     <string name="support_development__donate_description">هدایا به ما کمک می‌کنند در
-\n - سرمایه‌گذاری در قابلیت‌های تازه
+\n - سرمایه‌گذاری در ویژگی‌های تازه
 \n - گردآوری نمونه‌های بهتر صدا
 \n - خریدن قهوه
 \n</string>
     <string name="support_development__donate">هدیه دهید</string>
     <string name="appintro__timer_title">برای به خواب رفتن یا بیدار شدن مشکل دارید؟</string>
-    <string name="appintro__timer_desc">کمی صدای محیطی می‌تواند به شما کمک کند که بدون زحمت به خواب بروید. از زمان‌سنج خواب استفاده کنید تا به Noice اجازه دهید که خودش را خاموش کند. به همین صورت، برای بیدار شدن به یک محیط آرام، از زمان‌سنج خواب برای تنظیم هشدار استفاده کنید.</string>
+    <string name="appintro__timer_desc">کمی صدای محیطی می‌تواند به شما کمک کند که بدون زحمت به خواب بروید. از زمان‌سنج خواب استفاده کنید تا به Noice اجازه دهید که خودش را خاموش کند. به همین صورت، برای بیدار شدن به یک محیط آرام، از زمان‌سنج بیداری برای تنظیم هشدار استفاده کنید.</string>
     <string name="appintro__library_title">محیط دربرگیرنده‌ی مطلوب خود را ایجاد کنید</string>
-    <string name="appintro__library_desc">از دکمه‌ی لغزنده‌ی صدا برای تنظیم بلندی صدا استفاده کنید. در هر تکرار از صداهایی که دور نمی‌زنند، بطور تصادفی یک دوره‌ی تأخیر از محدوده‌ی تعیین شده توسط دکمه‌ی لغزنده‌ی زمان انتخاب می‌شود.</string>
+    <string name="appintro__library_desc">از دکمه‌ی لغزنده‌ی صدا برای تنظیم حجم صدا استفاده کنید. در هر تکرار از صداهایی که دور نمی‌زنند، بطور تصادفی یک دوره‌ی تأخیر از محدوده‌ی تعیین شده توسط دکمه‌ی لغزنده‌ی زمان انتخاب می‌شود.</string>
     <string name="appintro__saved_presets_title">ذخیره‌ی ترکیب‌های مورد علاقه‌ی‌تان</string>
     <string name="appintro__saved_presets_desc">پس از پخش چند صدا، می‌توانید از دکمه‌ای که در گوشه‌ی پایین است برای ذخیره‌ی ترکیب خود استفاده کنید. برای بکارگیری مجدد یک ترکیب ذخیره شده، می‌توانید از منوی برنامه به فهرست گرینش‌ها بروید.</string>
     <string name="appintro__getting_started_title">خوش آمدید</string>
     <string name="appintro__getting_started_desc_1">بیایید آغاز کنیم!</string>
-    <string name="appintro__getting_started_desc_0">به چپ بکشید تا با تمام قابلیت‌ها آشنا شوید!</string>
+    <string name="appintro__getting_started_desc_0">به چپ بکشید تا با تمام ویژگی‌ها آشنا شوید!</string>
     <string name="appintro__chromecast_title">دارای Chromecast</string>
     <string name="appintro__chromecast_desc">از Noice برای انداختن صدای محیطی آن به دیگر وسایل دارای Chromecast مثل بلندگوها، تلویزیون و ... استفاده کنید.</string>
     <string name="app_description">آرامش بیابید و با مقدار کمی از سروصدای پس‌زمینه، بهره‌وری را بالا ببرید.</string>
@@ -57,7 +57,7 @@
         <item quantity="other">%1$d ساعت</item>
     </plurals>
     <string name="time_bridge">و</string>
-    <string name="wake_up_timer_schedule_set">هشدار در %1$s %2$s %3$s آغاز می‌شود.</string>
+    <string name="wake_up_timer_schedule_set">هشدار در %1$s %2$s %3$s آغاز می‌شود</string>
     <string name="wake_up_timer_cancelled">زمان‌سنج بیداری لغو شد!</string>
     <string name="select_preset">انتخاب گزینش</string>
     <string name="schedule">زمان‌بندی</string>
@@ -117,7 +117,7 @@
     <string name="sound_group__public_gatherings">گردهمایی‌های عمومی</string>
     <string name="sound_group__monsoon">باران موسمی</string>
     <string name="sound_group__life">زندگی</string>
-    <string name="volume">بلندی صدا</string>
+    <string name="volume">حجم صدا</string>
     <string name="stop">ایست</string>
     <string name="repeat_time_period">تکرار دوره‌ی زمانی</string>
     <string name="play_pause">پخش یا مکث</string>
@@ -173,16 +173,21 @@
     <string name="import_presets_summary">وارد کردن گزینش‌های ذخیره شده از یک فایل خارج از برنامه موجب حذف تمام گزینش‌های موجود می‌شود</string>
     <string name="import_presets">وارد کردن از فایل</string>
     <string name="export_presets_summary">صادر کردن حالت فعلی گزینش‌های ذخیره شده به یک فایل خارج از برنامه</string>
-    <string name="should_allow_skipping_unsaved_presets">اجازه‌ی فروگذاری گزینش‌های ذخیره نشده</string>
-    <string name="should_share_usage_data_summary">به‌اشتراک‌گذاری خودکار داده‌های استفاده و رفتار با برنامه‌نویسان</string>
-    <string name="should_share_usage_data">به‌اشتراک‌گذاری داده‌های استفاده و رفتار</string>
+    <string name="should_allow_skipping_unsaved_presets">اجازه‌ی پرش از گزینش‌های ذخیره نشده</string>
+    <string name="should_share_usage_data_summary">اشتراک‌گذاری خودکار داده‌های استفاده و رفتار، با برنامه‌نویسان</string>
+    <string name="should_share_usage_data">اشتراک‌گذاری داده‌های استفاده و رفتار</string>
     <string name="others">دیگران</string>
     <string name="decline">رد</string>
     <string name="accept">پذیرش</string>
     <string name="share_usage_data_consent_message">ما داده‌های استفاده از برنامه را جمع‌آوری می‌کنیم تا رویارویی کاربر با آن را بهبود دهیم. ما همچنین داده‌های رفتار برنامه را جمع‌آوری می‌کنیم تا خطاهایی که در زمان استفاده از برنامه با آن مواجه شده را تحلیل کنیم و بشناسیم. برای کسب اطلاعات بیشتر [سیاست محرمانگی](https://ashutoshgngwr.github.io/noice/privacy-policy) ما را بخوانید.
 \n
-\n شما می‌توانید به‌اشتراک‌گذاری خودکار داده‌ها را در هر زمانی درون برنامه تنظیم کنید با رفتن به «**تنظیمات** &gt; **به‌اشتراک‌گذاری داده‌های استفاده و رفتار**».</string>
-    <string name="share_usage_data_consent_title">ترجیحات اشتراک‌گذاری اطلاعات</string>
+\n شما می‌توانید اشتراک‌گذاری خودکار داده‌ها را در هر زمانی درون برنامه تنظیم کنید با رفتن به «**تنظیمات** &gt; **اشتراک‌گذاری داده‌های استفاده و رفتار**».</string>
+    <string name="share_usage_data_consent_title">ترجیحات اشتراک‌گذاری داده‌ها</string>
     <string name="should_display_sound_icons">نمایش نمادهای صدا</string>
     <string name="invalid_import_file_format">قالب فایل وارد شده نادرست است!</string>
+    <string name="created_by">ساخته شده توسط</string>
+    <string name="payment_pending">ما به محض پایان پردازش پرداخت شما، به شما خبر می‌دهیم.</string>
+    <string name="failed_to_purchase">نتوانست روند پرداخت را آغاز کند. لطفاً بعداً دوباره تلاش کنید!</string>
+    <string name="failed_to_load_inapp_purchases">نتوانست جزئیات خرید درون‌برنامه‌ای را بارگذاری کند. لطفاً بعداً دوباره تلاش کنید!</string>
+    <string name="should_allow_skipping_unsaved_presets_summary">فعال بودن دکمه‌های پرش در اعلان پخش برای ایجاد گزینش‌های تصادفی، در زمان پخش گزینش‌های ذخیره نشده</string>
 </resources>
