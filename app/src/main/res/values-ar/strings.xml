@@ -103,4 +103,83 @@
     <string name="dismiss">تجاهل</string>
     <string name="relax">استرخاء</string>
     <string name="random_preset">إعداد مسبق عشوائي</string>
+    <string name="created_by">تم إنشاؤه بواسطة</string>
+    <string name="payment_pending">سنعلمك بمجرد الانتهاء من معالجة الدفع.</string>
+    <string name="failed_to_purchase">فشل بدء تدفق الدفع. الرجاء معاودة المحاولة في وقت لاحق!</string>
+    <string name="failed_to_load_inapp_purchases">فشل تحميل تفاصيل الشراء داخل التطبيق. الرجاء المحاولة مرة أخرى لاحقا!</string>
+    <string name="should_allow_skipping_unsaved_presets_summary">عند تشغيل الإعدادات المسبقة غير المحفوظة ، قم بتمكين أزرار التخطي في إشعار المشغل لإنشاء إعدادات مسبقة عشوائية</string>
+    <string name="should_allow_skipping_unsaved_presets">السماح بتخطي الإعدادات المسبقة غير المحفوظة</string>
+    <string name="should_share_usage_data_summary">مشاركة بيانات الاستخدام والسلوك تلقائيا مع المطورين</string>
+    <string name="should_share_usage_data">مشاركة بيانات الاستخدام والسلوك</string>
+    <string name="others">الاخرين</string>
+    <string name="decline">رفض</string>
+    <string name="accept">قبول</string>
+    <string name="share_usage_data_consent_message">نقوم بجمع بيانات استخدام التطبيق لتحسين تجربة المستخدم. نقوم أيضًا بجمع بيانات سلوك التطبيق لتحليل وتشخيص الأخطاء التي تمت مواجهتها أثناء استخدام التطبيق. اقرأ [سياسة الخصوصية] (https://ashutoshgngwr.github.io/noice/privacy-policy) للحصول على مزيد من المعلومات.
+\n
+\n يمكنك تكوين المشاركة التلقائية للبيانات في أي وقت داخل التطبيق من خلال الانتقال إلى \"** الإعدادات **&gt; ** مشاركة بيانات الاستخدام والسلوك **.</string>
+    <string name="share_usage_data_consent_title">تفضيلات مشاركة البيانات</string>
+    <string name="should_display_sound_icons">عرض رموز الصوت</string>
+    <string name="invalid_import_file_format">تنسيق ملف الاستيراد غير صالح!</string>
+    <string name="failed_to_read_file">فشل في قراءة الملف المحدد!</string>
+    <string name="failed_to_write_file">فشل في الكتابة إلى الملف المحدد!</string>
+    <string name="all_app_shortcuts_removed">تمت إزالة جميع اختصارات التطبيق!</string>
+    <string name="remove_all_app_shortcuts_confirmation">سيؤدي ذلك إلى إزالة جميع الاختصارات المعينة مسبقًا من قائمة اختصارات التطبيق. هل تريد المتابعة؟</string>
+    <string name="remove_all_app_shortcuts">قم بإزالة جميع اختصارات التطبيق</string>
+    <string name="import_presets_summary">سيؤدي استيراد الإعدادات المسبقة المحفوظة من ملف خارجي إلى الكتابة فوق الإعدادات المسبقة الموجودة، إن وجدت</string>
+    <string name="import_presets">استيراد من ملف</string>
+    <string name="export_presets_summary">قم بتصدير اللقطة الحالية للإعدادات المسبقة المحفوظة إلى ملف خارجي</string>
+    <string name="export_presets">تصدير إلى ملف</string>
+    <string name="ignore_audio_focus_changes_summary_on">لا تتفاعل عندما تقوم التطبيقات الأخرى بتشغيل الصوت</string>
+    <string name="ignore_audio_focus_changes_summary_off">توقف مؤقتًا عندما تقوم التطبيقات الأخرى بتشغيل الصوت</string>
+    <string name="ignore_audio_focus_changes">تجاهل تغييرات التركيز الصوتي</string>
+    <string name="unsaved_preset">إعداد مسبق غير محفوظ</string>
+    <string name="skip_to_next">الإعداد المسبق التالي</string>
+    <string name="skip_to_prev">الإعداد المسبق السابق</string>
+    <string name="pinned_shortcut_created">تمت إضافة الاختصار إلى الشاشة الرئيسية!</string>
+    <string name="pinned_shortcut_creation_failed">فشل في إضافة الاختصار إلى الشاشة الرئيسية!</string>
+    <string name="sound_fade_in_duration_summary">المدة الزمنية للأصوات الباهتة (بالثواني)</string>
+    <string name="sound_fade_in_duration">مدة تلاشي الصوت</string>
+    <string name="saved_presets_as_home_screen">\"الإعدادات المسبقة المحفوظة\" كشاشة الرئيسية</string>
+    <string name="app_shortcut_creation_failed">فشل في إضافة الإعداد المسبق إلى اختصارات التطبيق!</string>
+    <string name="app_shortcut_created">تمت إضافة الإعداد المسبق إلى اختصارات التطبيق!</string>
+    <string name="app_shortcut_removed">تمت إزالة الإعداد المسبق من اختصارات التطبيق!</string>
+    <string name="remove_from_app_shortcuts">إزالة من اختصارات التطبيق</string>
+    <string name="add_to_app_shortcuts">أضف إلى اختصارات التطبيق</string>
+    <string name="app_authors">عرض قائمة المؤلفين Noice</string>
+    <string name="notification_channel_default__name">تشغيل الوسائط</string>
+    <string name="notification_channel_default__description">عناصر التحكم في تشغيل الوسائط</string>
+    <string name="never">أبدا</string>
+    <string name="in_app_feedback__title">إرسال مراجعة</string>
+    <string name="in_app_feedback__description">نود أن نسمع منك عن التطبيق. يرجى قضاء بعض الوقت لزيارة مستودع GitHub الخاص بنا. إذا لم يعجبك التطبيق ، فيرجى التفكير في فتح مشكلة تشرح مخاوفك. بخلاف ذلك ، يرجى تمييز المشروع بنجمة لإظهار الحب والدعم.</string>
+    <string name="cast_media">اتصل بجهاز Chromecast</string>
+    <string name="support_development__why_description">- لجعل التحديثات المستقبلية ممكنة
+\n - لإبقاء Noice خاليا من الإعلانات إلى الأبد
+\n</string>
+    <string name="support_development__why">لماذا يجب أن تدعم؟</string>
+    <string name="support_development__share_description">مشاركة Noice مع الأصدقاء التبرع بالمال. و بالتنزيلات عالية ، سنتمكن من تلقي التعليقات من عدد من وجهات النظر المختلفة والتي ستساعدنا في جعل Noice أفضل من أي وقت مضى.</string>
+    <string name="support_development__donate_thank_you_description">نشكرك من صميم القلب على مساهمتك السخية في مشروع Noice.</string>
+    <string name="support_development__donate_google_play_description">سيتم التعامل مع دفعتك بأمان بواسطة Google Play. اعتمادًا على موقعك ، يمكن إضافة ضرائب إضافية إلى المبلغ النهائي.</string>
+    <string name="support_development__donate_description">سوف تساعدنا التبرعات في
+\n - الاستثمار في ميزات جديدة
+\n - تنسيق عينات صوت أفضل
+\n - شراء القهوة
+\n</string>
+    <string name="appintro__timer_title">صعوبة في النوم أو الاستيقاظ؟</string>
+    <string name="appintro__timer_desc">يمكن أن يساعدك على النوم و بمجهود قليل من الأجواء على النوم . استخدم مؤقت النوم للسماح لـ Noice بإغلاق نفسها. وبالمثل ، للاستيقاظ في بيئة هادئة ، استخدم مؤقت الاستيقاظ لضبط المنبه.</string>
+    <string name="appintro__library_title">اصنع محيطك المثالي</string>
+    <string name="appintro__library_desc">استخدم شريط تمرير مستوى الصوت لضبط مستويات الصوت. عند كل تكرار للأصوات غير الحلقية ، يتم تحديد فترة تأخير بشكل عشوائي من النطاق الذي يحدده شريط تمرير الوقت.</string>
+    <string name="appintro__saved_presets_title">احفظ المزيج المفضل لديك</string>
+    <string name="appintro__saved_presets_desc">بعد تشغيل بعض الأصوات ، يمكنك استخدام الزر الموجود في الزاوية السفلية لحفظ مزيجك. لإعادة استخدام مزيج مخزّن ، يمكنك زيارة قائمة الإعداد المسبق من قائمة التطبيق.</string>
+    <string name="appintro__getting_started_desc_0">اسحب لليسار للتعرف على جميع الميزات!</string>
+    <string name="appintro__chromecast_title">تم تمكين Chromecast</string>
+    <string name="appintro__chromecast_desc">استخدم Noice لإرسال أجواءه إلى الأجهزة الأخرى التي تدعم Chromecast مثل مكبرات الصوت وأجهزة التلفزيون وما إلى ذلك.</string>
+    <string name="app_description">استرخ وعزز الإنتاجية مع الحد الأدنى من الضوضاء في الخلفية.</string>
+    <string name="app_theme_system_default">الإعدادات الإفتراضية</string>
+    <string name="use_24h_format">استخدام تنسيق 24 ساعة</string>
+    <string name="wake_up_timer_description">سيبدأ Noice في الإعداد المسبق المحدد عندما ينتهي المؤقت. استخدم الأزرار أدناه لتحديد إعداد مسبق وضبط الوقت المطلوب لبدء مؤقت الاستيقاظ.</string>
+    <string name="wake_up_timer_schedule_set">سوف ينطلق الإنذار في %1$s %2$s %3$s</string>
+    <string name="wake_up_timer_cancelled">تم إلغاء مؤقت الاستيقاظ!</string>
+    <string name="select_preset">تحديد الإعداد المسبق</string>
+    <string name="schedule">جدول</string>
+    <string name="sleep_timer_description">سوف يوقف Noice نفسه عند انتهاء المؤقت. استخدم الأزرار أدناه لإضافة الوقت وبدء تشغيل المؤقت.</string>
 </resources>
