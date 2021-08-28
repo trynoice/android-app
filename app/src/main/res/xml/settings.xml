@@ -13,11 +13,11 @@
 
     <SeekBarPreference
       android:defaultValue="1"
-      android:icon="@drawable/ic_settings_fade_duration"
-      android:key="@string/sound_fade_duration_key"
+      android:icon="@drawable/ic_settings_fade_in_duration"
+      android:key="@string/sound_fade_in_duration_key"
       android:max="10"
-      android:summary="@string/sound_fade_duration_summary"
-      android:title="@string/sound_fade_duration"
+      android:summary="@string/sound_fade_in_duration_summary"
+      android:title="@string/sound_fade_in_duration"
       app:min="0"
       app:showSeekBarValue="true" />
 

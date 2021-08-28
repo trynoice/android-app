@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.AudioManager
+import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
 import android.support.v4.media.MediaMetadataCompat
@@ -70,12 +71,14 @@ class MediaPlayerService : Service() {
     }
 
     mediaSession = MediaSessionCompat(this, "$TAG.mediaSession").also {
+      var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE
+      }
+
       it.setSessionActivity(
         PendingIntent.getActivity(
-          this,
-          RC_MAIN_ACTIVITY,
-          Intent(this, MainActivity::class.java),
-          PendingIntent.FLAG_UPDATE_CURRENT
+          this, RC_MAIN_ACTIVITY, Intent(this, MainActivity::class.java), piFlags
         )
       )
 

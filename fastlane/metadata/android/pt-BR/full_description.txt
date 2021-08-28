@@ -1,18 +1,19 @@
-Para muitos, os "barulhos de fundo" podem ajudar na concentração, a se acalmar, melhorar a produtividade, ou até mesmo minimizar os efeitos do estresse.
+Para muitos, um pouco de barulho de fundo pode ajudar a manter a calma e o foco. Em alguns casos, também há aumento de produtividade. O ruído de fundo (ambiente) também pode minimizar os efeitos do estresse.
 
-Noice é um aplicativo que lhe permite simular seu próprio "ambiente sonoro" usando sons pré-definidos. Dessa forma, você pode se livrar de distrações, focar melhor em seu trabalho, ou mesmo criar um clima relaxante para ajudar no sono.
+Noice é um aplicativo que lhe permite criar seu próprio ambiente sonoro usando sons pré-definidos de fontes de som ambiente. Crie seus ambientes sonoros perfeitos ao combinar diferentes sons para eliminar distrações para que você consiga focar no seu trabalho ou gerar um ambiente relaxante e pacífico que te estimula a dormir.
 
 <b>Funções</b>
-- 35 sons disponíveis
+- 35 sons gravados
 - Google Cast (Chromecast) ativado [apenas na versão Play Store]
-- Temporizador
-- Despertador
-- Faça um mix personalizado
-- Salve seus ajustes para uso futuro
-- Funciona em conjunto com qualquer aplicativo de música
-- Ajuste o volume de cada som individualmente
-- Não precisa de internet
-- Variações de tema claro e escuro
+- Temporizador de sono automático
+- Temporizador de despertar (Relógio Despertador)
+- Gere mixes aleatórios
+- Crie um mix personalizado
+- Salve seus mixes favoritos
+- Funciona em conjunto com outros reprodutores de música
+- Controle de volume individual para cada fonte de ruído
+- Reprodução offline
+- Variações de tema do aplicativo claro e escuro
 
 <b>Bibliotecas de ruídos</b>
 - Vida (pássaros, grilos, lobo, batimento cardíaco humano, etc.)
@@ -20,15 +21,15 @@ Noice é um aplicativo que lhe permite simular seu próprio "ambiente sonoro" us
 - Monção (chuva, trovões)
 - Teleportação (cafeteria, biblioteca, escritório, beira-mar, margem do rio, etc.)
 - Veículo (trem em movimento, avião em voo, navio rangendo, carro elétrico, etc.)
-- Ruído bruto (branco, rosa, vermelho)
+- Ruído bruto (branco, rosa, browniano)
 
 <b>Permissões</b>
 - <b>impedir modo de inatividade do telefone</b>: para manter a CPU do dispositivo ativa durante a reprodução
-- <b>executar serviço em primeiro plano</b>: para executar o processo do player (diferente da IU)
+- <b>executar serviço em primeiro plano</b>: para executar o processo do reprodutor (diferente da IU)
 - <b>executar na inicialização</b>: para garantir que os despertadores persistam durante reinicializações
 - <b>acesso total à rede</b>: para habilitar o Chromecast e contribuições financeiras
 - <b>ver conexões de rede</b>: adicionado por uma dependência, atualmente não está em uso
 - <b>Sistema de faturamento do Google Play</b>: para permitir contribuições financeiras para apoiar o desenvolvimento
 
-Noice é um aplicativo livre e de código aberto.
+Noice é um software livre e de código aberto.
 https://github.com/ashutoshgngwr/noice

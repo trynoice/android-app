@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.FrameLayout
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import androidx.annotation.VisibleForTesting
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.DurationPickerViewBinding
@@ -18,18 +16,16 @@ import com.github.ashutoshgngwr.noice.databinding.DurationPickerViewBinding
  * in milliseconds. If reset button is clicked, it invokes [onDurationAddedListener] with a negative
  * duration value.
  */
-class DurationPicker : FrameLayout {
+class DurationPicker @JvmOverloads constructor(
+  context: Context,
+  attrs: AttributeSet? = null,
+  defStyleAttr: Int = 0
+) : FrameLayout(context, attrs, defStyleAttr) {
 
   private val binding: DurationPickerViewBinding
   private val buttons: Array<View>
 
   private var onDurationAddedListener: ((Long) -> Unit)? = null
-
-  constructor(@NonNull context: Context) : super(context)
-  constructor(@NonNull context: Context, @Nullable attrs: AttributeSet) : super(context, attrs)
-  constructor(@NonNull context: Context, @Nullable attrs: AttributeSet, defStyleAttr: Int) : super(
-    context, attrs, defStyleAttr
-  )
 
   init {
     LayoutInflater.from(context).also {

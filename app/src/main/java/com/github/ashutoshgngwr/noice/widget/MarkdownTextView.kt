@@ -9,7 +9,11 @@ import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
 import io.noties.markwon.MarkwonConfiguration
 
-class MarkdownTextView : MaterialTextView {
+class MarkdownTextView @JvmOverloads constructor(
+  context: Context,
+  attrs: AttributeSet? = null,
+  defStyleAttr: Int = 0
+) : MaterialTextView(context, attrs, defStyleAttr) {
 
   private val markwon = Markwon.builder(context)
     .usePlugin(
@@ -20,12 +24,6 @@ class MarkdownTextView : MaterialTextView {
       }
     )
     .build()
-
-  constructor(context: Context) : super(context)
-  constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-  constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-    context, attrs, defStyleAttr
-  )
 
   init {
     setMarkdown(text.toString()) // if text is set via XML

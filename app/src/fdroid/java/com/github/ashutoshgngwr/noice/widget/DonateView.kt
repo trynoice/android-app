@@ -5,18 +5,14 @@ import android.content.Intent
 import android.net.Uri
 import android.util.AttributeSet
 import android.util.TypedValue
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import androidx.appcompat.widget.AppCompatImageButton
 import com.github.ashutoshgngwr.noice.R
 
-class DonateView : AppCompatImageButton {
-
-  constructor(@NonNull context: Context) : super(context)
-  constructor(@NonNull context: Context, @Nullable attrs: AttributeSet) : super(context, attrs)
-  constructor(@NonNull context: Context, @Nullable attrs: AttributeSet, defStyleAttr: Int) : super(
-    context, attrs, defStyleAttr
-  )
+class DonateView @JvmOverloads constructor(
+  context: Context,
+  attrs: AttributeSet? = null,
+  defStyleAttr: Int = 0
+) : AppCompatImageButton(context, attrs, defStyleAttr) {
 
   init {
     val background = TypedValue()

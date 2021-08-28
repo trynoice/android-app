@@ -2,10 +2,8 @@
 <resources>
     <string name="about">Про застосунок</string>
     <string name="app_theme">Тема</string>
-    <string name="close_drawer">Закрити меню</string>
     <string name="help">Допомога</string>
     <string name="library">Бібліотека</string>
-    <string name="open_drawer">Відкрити меню</string>
     <string name="report_issue">Повідомити про ваду</string>
     <string name="saved_presets">Збережені поєднання</string>
     <string name="sleep_timer">Таймер сну</string>
@@ -171,8 +169,6 @@
     <string name="skip_to_prev">Попереднє поєднання</string>
     <string name="pinned_shortcut_created">Ярлик додано на головний екран!</string>
     <string name="pinned_shortcut_creation_failed">Не вдалося додати ярлик на головний екран!</string>
-    <string name="sound_fade_duration_summary">Тривалість появи/стишення для відтворення/зупинки звуків (у секундах)</string>
-    <string name="sound_fade_duration">Тривалість стишення звуку</string>
     <string name="appearance">Зовнішній вигляд</string>
     <string name="behavior">Поведінка</string>
     <string name="saved_presets_as_home_screen">«Збережені поєднання» як головний екран</string>
@@ -183,9 +179,7 @@
     <string name="remove_from_app_shortcuts">Вилучити з ярликів застосунку</string>
     <string name="add_to_app_shortcuts">Додати до ярликів застосунку</string>
     <string name="app_authors">Переглянути список авторів Noice</string>
-    <string name="should_update_media_volume">Оновити гучність медіа пристрою перед запуском поєднання</string>
-    <string name="device_media_volume">Гучність медіа пристрою</string>
-    <string name="saved_presets_as_home_screen_summary">Показувати «збережені поєднання» під час запуску застосунку</string>
+    <string name="saved_presets_as_home_screen_summary">Показувати «збережені поєднання» під час запуску (потрібно перезапустити застосунок)</string>
     <string name="preset_does_not_exist">Поєднання не існує. Можливо, його було видалено!</string>
     <string name="random_preset">Випадкове поєднання</string>
     <string name="should_display_sound_icons">Показувати піктограми звуків</string>
@@ -203,4 +197,7 @@
 \n
 \nВи можете налаштувати автоматичне надсилання даних у будь-який час всередині застосунку, за допомогою \"**Налаштування** &gt; **Надсилання даних про користування та поведінку**\".</string>
     <string name="share_usage_data_consent_title">Параметри спільного доступу до даних</string>
+    <string name="sound_fade_in_duration_summary">Тривалість стихання звуків (у секундах)</string>
+    <string name="sound_fade_in_duration">Тривалість стихання звуку</string>
+    <string name="created_by">Створено</string>
 </resources>

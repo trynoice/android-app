@@ -27,8 +27,6 @@
     <string name="app_theme_system_default">システム設定のデフォルト</string>
     <string name="app_theme_dark">ダーク</string>
     <string name="app_theme_light">ライト</string>
-    <string name="should_update_media_volume">プリセット開始前に端末のメディア音量を変更する</string>
-    <string name="device_media_volume">端末のメディア音量</string>
     <string name="use_24h_format">24時間フォーマットを使用</string>
     <string name="wake_up_timer_description">タイマーが終了後、Noiceは選択されたプリセットを再生します。下のボタンでプリセットを選択し、起床タイマーを開始する時間を設定してください。</string>
     <plurals name="time_minutes">
@@ -129,10 +127,8 @@
     <string name="sleep_timer">スリープタイマー</string>
     <string name="saved_presets">保存したプリセット</string>
     <string name="report_issue">問題を報告</string>
-    <string name="open_drawer">ナビゲーションドロワーを開く</string>
     <string name="library">ライブラリ</string>
     <string name="help">ヘルプ</string>
-    <string name="close_drawer">ナビゲーションドロワーを閉じる</string>
     <string name="app_theme">テーマ</string>
     <string name="about">このアプリについて</string>
     <string name="app_authors">Noiceの作成者一覧を見る</string>
@@ -181,8 +177,6 @@
     <string name="skip_to_prev">前のプリセット</string>
     <string name="pinned_shortcut_created">ホーム画面にショートカットが追加されました!</string>
     <string name="pinned_shortcut_creation_failed">ホーム画面へのショートカットの追加に失敗しました!</string>
-    <string name="sound_fade_duration_summary">音の再生/停止のフェードイン/アウト時間 (秒)</string>
-    <string name="sound_fade_duration">サウンドのフェード時間</string>
     <string name="appearance">見た目</string>
     <string name="behavior">ふるまい</string>
     <string name="settings">設定</string>

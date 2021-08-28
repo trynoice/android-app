@@ -2,10 +2,8 @@
 <resources>
     <string name="about">Tentang</string>
     <string name="app_theme">Tema</string>
-    <string name="close_drawer">Tutup panel navigasi</string>
     <string name="help">Bantuan</string>
     <string name="library">Perpustakaan</string>
-    <string name="open_drawer">Buka panel navigasi</string>
     <string name="report_issue">Laporkan Masalah</string>
     <string name="saved_presets">Preset Tersimpan</string>
     <string name="sleep_timer">Pengatur Waktu Tidur</string>
@@ -162,11 +160,9 @@
     <string name="mood_any">Apapun</string>
     <string name="intensity_any">Apapun</string>
     <string name="submit_feedback">Masukan Feedback</string>
-    <string name="should_update_media_volume">Update volume media perangkat sebelum memulai preset</string>
-    <string name="device_media_volume">Volume media perangkat</string>
     <string name="use_24h_format">Pakai format 24-jam</string>
     <string name="wake_up_timer_cancelled">Timer Wake-up terbatalkan!</string>
-    <string name="saved_presets_as_home_screen_summary">Tunjukan Preset yang tersimpan pada permulaan aplikasi</string>
+    <string name="saved_presets_as_home_screen_summary">\"Tunjukan Preset\" yang tersimpan pada permulaan aplikasi</string>
     <string name="intensity">Intensitas</string>
     <plurals name="time_minutes">
         <item quantity="other">%1$d menit</item>
@@ -182,8 +178,6 @@
     <string name="skip_to_prev">Preset sebelumnya</string>
     <string name="pinned_shortcut_created">Pintasan telah ditambahkan ke layar beranda!</string>
     <string name="pinned_shortcut_creation_failed">Gagal menambahkan pintasan ke layar beranda!</string>
-    <string name="sound_fade_duration_summary">Durasi fade in/out untuk memutar/menghentikan suara (dalam detik)</string>
-    <string name="sound_fade_duration">Durasi suara memudar</string>
     <string name="appearance">Tampilan</string>
     <string name="behavior">Perilaku</string>
     <string name="settings">Pengaturan</string>
@@ -210,4 +204,13 @@
     <string name="saved_presets_as_home_screen">Preset tersimpan sebagai layar beranda</string>
     <string name="app_authors">Lihat daftar Penulis Noice</string>
     <string name="should_display_sound_icons">Tunjukkan ikon suara</string>
+    <string name="should_allow_skipping_unsaved_presets">Izinkan melewati preset tak tersimpan</string>
+    <string name="should_share_usage_data_summary">Secara otomatis berbagi data penggunaan dan perilaku dengan pengembang</string>
+    <string name="should_share_usage_data">Bagikan data penggunaan dan perilaku</string>
+    <string name="others">Lainnya</string>
+    <string name="decline">Tolak</string>
+    <string name="accept">Terima</string>
+    <string name="share_usage_data_consent_title">Preferensi Berbagi Data</string>
+    <string name="sound_fade_in_duration_summary">Durasi kelirihan bunyi (dalam detik)</string>
+    <string name="sound_fade_in_duration">Durasi kelirihan bunyi</string>
 </resources>

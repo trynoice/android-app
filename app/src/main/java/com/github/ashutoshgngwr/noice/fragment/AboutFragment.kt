@@ -75,6 +75,8 @@ class AboutFragment : Fragment() {
         )
       )
 
+      addGroup(getString(R.string.created_by))
+      addTwitter(creatorTwitter, creatorTwitter)
       create()
     }
   }
@@ -97,5 +99,9 @@ class AboutFragment : Fragment() {
     return Element(title, iconId)
       .setAutoApplyIconTint(true)
       .setOnClickListener { Uri.parse(url).launchInCustomTab(requireContext()) }
+  }
+
+  companion object {
+    private const val creatorTwitter = "ashutoshgngwr"
   }
 }
