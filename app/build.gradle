@@ -11,12 +11,12 @@ plugins {
 apply from: 'jacoco.gradle'
 
 android {
-  compileSdkVersion 30
+  compileSdkVersion 31
 
   defaultConfig {
     applicationId 'com.github.ashutoshgngwr.noice'
     minSdkVersion 21
-    targetSdkVersion 30
+    targetSdkVersion 31
     versionCode 48
     versionName '1.2.2'
     testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
