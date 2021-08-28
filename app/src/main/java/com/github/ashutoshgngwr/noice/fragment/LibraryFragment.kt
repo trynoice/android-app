@@ -152,9 +152,7 @@ class LibraryFragment : Fragment() {
   }
 
   private fun showPresetSavedMessage() {
-    Snackbar.make(requireView(), R.string.preset_saved, Snackbar.LENGTH_LONG)
-      .setAction(R.string.dismiss) { }
-      .show()
+    Snackbar.make(requireView(), R.string.preset_saved, Snackbar.LENGTH_LONG).show()
   }
 
   private class SoundListItem(@LayoutRes val layoutID: Int, val data: String)

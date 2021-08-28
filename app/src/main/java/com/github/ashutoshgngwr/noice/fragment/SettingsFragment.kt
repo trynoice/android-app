@@ -193,9 +193,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
   }
 
   private fun showSnackBar(@StringRes message: Int) {
-    Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG)
-      .setAction(R.string.dismiss) { }
-      .show()
+    Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).show()
   }
 
   private fun getAppThemeString(): String {
