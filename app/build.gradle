@@ -128,7 +128,7 @@ dependencies {
   playstoreImplementation 'com.android.billingclient:billing-ktx:4.0.0'
   playstoreImplementation 'com.google.android.gms:play-services-cast-framework:20.0.0'
   playstoreImplementation 'com.google.android.play:core:1.10.0'
-  playstoreImplementation platform('com.google.firebase:firebase-bom:28.3.0')
+  playstoreImplementation platform('com.google.firebase:firebase-bom:28.4.0')
   playstoreImplementation 'com.google.firebase:firebase-analytics-ktx'
   playstoreImplementation 'com.google.firebase:firebase-crashlytics-ktx'
   playstoreImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
