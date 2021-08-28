@@ -3,7 +3,6 @@ package com.github.ashutoshgngwr.noice
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.content.edit
@@ -11,12 +10,9 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.DrawerActions
-import androidx.test.espresso.contrib.DrawerMatchers
-import androidx.test.espresso.contrib.NavigationViewActions
 import androidx.test.espresso.contrib.PickerActions
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
@@ -67,7 +63,7 @@ class GenerateScreenshots {
 
       // prevent app intro and data consent from showing up
       PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
-        .edit(commit = true) {
+        .edit {
           clear() // clear any existing preferences.
           putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true)
           putBoolean(MainActivity.PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true)
@@ -196,7 +192,7 @@ class GenerateScreenshots {
       )
     )
 
-    EspressoX.waitForView(withId(R.id.volume_slider))
+    onView(withId(R.id.volume_slider))
       .perform(EspressoX.slide(Player.MAX_VOLUME.toFloat() - Player.DEFAULT_VOLUME))
 
     onView(withId(R.id.positive))
@@ -218,7 +214,7 @@ class GenerateScreenshots {
       )
     )
 
-    EspressoX.waitForView(withId(R.id.volume_slider))
+    onView(withId(R.id.volume_slider))
       .perform(EspressoX.slide(Player.MAX_VOLUME.toFloat()))
 
     onView(withId(R.id.positive))
@@ -231,7 +227,7 @@ class GenerateScreenshots {
       )
     )
 
-    EspressoX.waitForView(withId(R.id.time_period_slider))
+    onView(withId(R.id.time_period_slider))
       .perform(EspressoX.slide(Player.MAX_TIME_PERIOD.toFloat() - 300))
 
     onView(withId(R.id.positive))
@@ -243,14 +239,8 @@ class GenerateScreenshots {
 
   @Test
   fun savedPresets() {
-    onView(withId(R.id.layout_main))
-      .check(matches(DrawerMatchers.isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
-
-    EspressoX.waitForView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.saved_presets))
-
-    EspressoX.waitForView(withId(R.id.list))
+    onView(withId(R.id.saved_presets)).perform(click())
+    onView(withId(R.id.list))
       .perform(
         actionOnItemAtPosition<SavedPresetsFragment.ViewHolder>(
           1, EspressoX.clickInItem(R.id.play_button)
@@ -262,45 +252,16 @@ class GenerateScreenshots {
   }
 
   @Test
-  fun sleepTimer() {
-    onView(withId(R.id.sound_list)).perform(
-      actionOnItem<RecyclerView.ViewHolder>(
-        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        click()
-      )
-    )
-
-    onView(withId(R.id.layout_main))
-      .check(matches(DrawerMatchers.isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
-
-    EspressoX.waitForView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.sleep_timer))
-
-    onView(withId(R.id.duration_picker)).perform(
-      EspressoX.addDurationToPicker(1800)
-    )
-
-    Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
-    Screengrab.screenshot("3")
-  }
-
-  @Test
   fun wakeUpTimer() {
     // cancel any previous alarms
     WakeUpTimerManager.cancel(ApplicationProvider.getApplicationContext())
 
-    onView(withId(R.id.layout_main))
-      .check(matches(DrawerMatchers.isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
+    onView(withId(R.id.wake_up_timer)).perform(click())
 
-    EspressoX.waitForView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.wake_up_timer))
-
-    EspressoX.waitForView(withId(R.id.select_preset_button))
+    onView(withId(R.id.select_preset_button))
       .perform(scrollTo(), click())
 
-    EspressoX.waitForView(withText("Airplane"))
+    onView(withText("Airplane"))
       .perform(scrollTo(), click())
 
     onView(withId(R.id.time_picker))
@@ -313,45 +274,41 @@ class GenerateScreenshots {
       .perform(scrollTo())
 
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
+    Screengrab.screenshot("3")
+  }
+
+  @Test
+  fun sleepTimer() {
+    onView(withId(R.id.sound_list)).perform(
+      actionOnItem<RecyclerView.ViewHolder>(
+        ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
+        click()
+      )
+    )
+
+    openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext())
+    onView(withText(R.string.sleep_timer)).perform(click())
+    onView(withId(R.id.duration_picker)).perform(
+      EspressoX.addDurationToPicker(1800)
+    )
+
+    Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("4")
   }
 
   @Test
   fun about() {
-    onView(withId(R.id.layout_main))
-      .check(matches(DrawerMatchers.isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
-
-    EspressoX.waitForView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.about))
-
-    EspressoX.waitForView(withText(R.string.app_description))
+    openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext())
+    onView(withText(R.string.about)).perform(click())
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("5")
   }
 
   @Test
-  fun navigation() {
-    onView(withId(R.id.layout_main))
-      .check(matches(DrawerMatchers.isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
-
-    EspressoX.waitForView(withId(R.id.layout_main), DrawerMatchers.isOpen())
+  fun settingsItem() {
+    openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext())
+    onView(withText(R.string.settings)).perform(click())
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
     Screengrab.screenshot("6")
-  }
-
-  @Test
-  fun settingsItem() {
-    onView(withId(R.id.layout_main))
-      .check(matches(DrawerMatchers.isClosed(Gravity.START)))
-      .perform(DrawerActions.open(Gravity.START))
-
-    EspressoX.waitForView(withId(R.id.navigation_drawer))
-      .perform(NavigationViewActions.navigateTo(R.id.settings))
-
-    EspressoX.waitForView(withId(R.id.navigation_drawer), DrawerMatchers.isClosed())
-    Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
-    Screengrab.screenshot("7")
   }
 }

@@ -7,9 +7,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.AudioManager
-import android.os.Handler
+import android.os.Build
 import android.os.IBinder
-import android.os.Looper
 import android.os.PowerManager
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
@@ -52,8 +51,6 @@ class MediaPlayerService : Service() {
   private lateinit var presetRepository: PresetRepository
   private lateinit var settingsRepository: SettingsRepository
 
-  private val handler = Handler(Looper.getMainLooper())
-
   private val becomingNoisyReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
       if (intent?.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
@@ -74,12 +71,14 @@ class MediaPlayerService : Service() {
     }
 
     mediaSession = MediaSessionCompat(this, "$TAG.mediaSession").also {
+      var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE
+      }
+
       it.setSessionActivity(
         PendingIntent.getActivity(
-          this,
-          RC_MAIN_ACTIVITY,
-          Intent(this, MainActivity::class.java),
-          PendingIntent.FLAG_UPDATE_CURRENT
+          this, RC_MAIN_ACTIVITY, Intent(this, MainActivity::class.java), piFlags
         )
       )
 
@@ -134,7 +133,7 @@ class MediaPlayerService : Service() {
   }
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-    intent?.also { PlaybackController.handleServiceIntent(this, playerManager, it, handler) }
+    intent?.also { PlaybackController.handleServiceIntent(this, playerManager, it) }
     return START_STICKY
   }
 
@@ -142,7 +141,7 @@ class MediaPlayerService : Service() {
     unregisterReceiver(becomingNoisyReceiver)
     playerManager.cleanup()
     mediaSession.release()
-    PlaybackController.clearAutoStopCallback(handler)
+    PlaybackController.clearAutoStopCallback()
     wakeLock.release()
     super.onDestroy()
   }

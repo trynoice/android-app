@@ -16,6 +16,11 @@ class ShortcutHandlerActivity : AppCompatActivity() {
   companion object {
     const val EXTRA_PRESET_ID = "preset_name"
     const val EXTRA_SHORTCUT_ID = "shortcut_id"
+
+    /**
+     * Non-critical metadata; used for analytics.
+     */
+    const val EXTRA_SHORTCUT_TYPE = "shortcut_type"
   }
 
   private val analyticsProvider by lazy { NoiceApplication.of(this).getAnalyticsProvider() }
@@ -31,19 +36,21 @@ class ShortcutHandlerActivity : AppCompatActivity() {
 
       if (PresetRepository.newInstance(this).get(it) == null) {
         Toast.makeText(this, R.string.preset_does_not_exist, Toast.LENGTH_LONG).show()
-        params.putBoolean("is_missing", true)
+        params.putBoolean("success", false)
       } else {
         PlaybackController.playPreset(this, it)
-        params.putBoolean("is_missing", false)
+        params.putBoolean("success", true)
       }
     }
 
     Intent(this, MainActivity::class.java)
-      .putExtra(MainActivity.EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.saved_presets)
+      .putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.saved_presets)
       .also { startActivity(it) }
 
     finish()
-    analyticsProvider.logEvent("preset_shortcut_click", params)
+
+    params.putString("shortcut_type", intent.getStringExtra(EXTRA_SHORTCUT_TYPE))
+    analyticsProvider.logEvent("preset_shortcut_open", params)
   }
 
   private fun reportShortcutUsage(shortcutID: String) {

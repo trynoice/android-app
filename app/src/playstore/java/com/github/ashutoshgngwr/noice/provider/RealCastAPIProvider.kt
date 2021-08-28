@@ -64,6 +64,7 @@ class RealCastAPIProvider private constructor(val context: Context) : CastAPIPro
    */
   override fun getPlaybackStrategyFactory(): PlaybackStrategyFactory =
     CastPlaybackStrategyFactory(
+      context,
       requireNotNull(castContext.sessionManager.currentCastSession),
       context.getString(R.string.cast_namespace__default)
     )

@@ -1,0 +1,9 @@
+- Redesign app navigation and UI flows
+- Add user preferred fade-duration in Chromecast app
+- Add fixed duration for fade-out transitions
+- Fix playback glitch when dismissing alarm ringer
+- Disable SSAID collection for analytics (Play Store)
+- Update translations
+
+We're continuously working to make Noice better. Please turn on updates to never miss a thing!
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG

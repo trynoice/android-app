@@ -5,12 +5,13 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
+import com.github.ashutoshgngwr.noice.activity.AlarmRingerActivity
 import com.github.ashutoshgngwr.noice.activity.MainActivity
-import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
@@ -20,12 +21,7 @@ object WakeUpTimerManager {
   /**
    * [Timer] declares fields necessary to schedule a Wake-up timer.
    */
-  data class Timer(
-    @Expose var presetID: String,
-    @Expose var atMillis: Long,
-    @Expose var shouldUpdateMediaVolume: Boolean,
-    @Expose var mediaVolume: Int
-  )
+  data class Timer(@Expose var presetID: String, @Expose var atMillis: Long)
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   const val PREF_WAKE_UP_TIMER = "wake_up_timer"
@@ -43,8 +39,13 @@ object WakeUpTimerManager {
 
   private fun getPendingIntentForActivity(context: Context) =
     Intent(context, MainActivity::class.java).let {
-      it.putExtra(MainActivity.EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.wake_up_timer)
-      PendingIntent.getActivity(context, RC_MAIN_ACTIVITY, it, PendingIntent.FLAG_UPDATE_CURRENT)
+      it.putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.wake_up_timer)
+      var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE
+      }
+
+      PendingIntent.getActivity(context, RC_MAIN_ACTIVITY, it, piFlags)
     }
 
   /**
@@ -67,12 +68,7 @@ object WakeUpTimerManager {
     withAlarmManager(context) {
       it.setAlarmClock(
         AlarmManager.AlarmClockInfo(timer.atMillis, getPendingIntentForActivity(context)),
-        PlaybackController.buildAlarmPendingIntent(
-          context,
-          timer.presetID,
-          timer.shouldUpdateMediaVolume,
-          timer.mediaVolume
-        )
+        AlarmRingerActivity.getPendingIntent(context, timer.presetID)
       )
     }
   }
@@ -87,7 +83,7 @@ object WakeUpTimerManager {
 
     withAlarmManager(context) {
       // don't need concrete timer value for cancelling the alarm.
-      it.cancel(PlaybackController.buildAlarmPendingIntent(context, null, false, -1))
+      it.cancel(AlarmRingerActivity.getPendingIntent(context, null))
     }
   }
 

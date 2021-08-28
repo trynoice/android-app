@@ -43,29 +43,9 @@
       android:text="@string/use_24h_format"
       app:switchPadding="15dp" />
 
-    <TextView
+    <Space
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="15dp"
-      android:drawablePadding="5dp"
-      android:text="@string/device_media_volume"
-      android:textAppearance="?textAppearanceBody1"
-      app:drawableStartCompat="@drawable/ic_action_volume"
-      app:drawableTint="@color/primary" />
-
-    <CheckBox
-      android:id="@+id/should_update_media_volume"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="15dp"
-      android:paddingHorizontal="5dp"
-      android:text="@string/should_update_media_volume" />
-
-    <com.google.android.material.slider.Slider
-      android:id="@+id/media_volume_slider"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginVertical="10dp" />
+      android:layout_height="24dp" />
 
     <LinearLayout
       android:layout_width="match_parent"

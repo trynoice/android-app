@@ -60,12 +60,12 @@ class ShortcutHandlerActivityTest {
         Intent(ApplicationProvider.getApplicationContext(), ShortcutHandlerActivity::class.java)
           .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_ID, presetIDExpectations[i])
           .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, presetIDExpectations[i])
-          .also { ActivityScenario.launch<ShortcutHandlerActivity>(it).close() }
+          .also { ActivityScenario.launch<ShortcutHandlerActivity>(it) }
 
         Intents.intended(
           allOf(
             hasComponent(MainActivity::class.qualifiedName),
-            hasExtra(MainActivity.EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.saved_presets)
+            hasExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.saved_presets)
           ),
           Intents.times(1)
         )

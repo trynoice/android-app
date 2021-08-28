@@ -1,7 +1,7 @@
 {
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "include": ["./types", "./src/**/*"],
   "compilerOptions": {
-    "baseUrl": "./src",
-    "lib": ["ES2015", "DOM"]
-  },
-  "include": ["src/**/*"]
+    "typeRoots": ["./types", "./node_modules/@types"]
+  }
 }

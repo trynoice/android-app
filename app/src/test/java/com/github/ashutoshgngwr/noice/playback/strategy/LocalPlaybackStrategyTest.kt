@@ -11,8 +11,6 @@ import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.mockk
 import io.mockk.verify
 import io.mockk.verifyOrder
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -51,13 +49,7 @@ class LocalPlaybackStrategyTest {
     every { mockPlayer.repeatMode } returns ExoPlayer.REPEAT_MODE_ONE
     playbackStrategy.setVolume(1f)
     playbackStrategy.play()
-
-    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     verify(exactly = 1) { mockPlayer.playWhenReady = true }
-    val volumeSlots = mutableListOf<Float>()
-    verify { mockPlayer.volume = capture(volumeSlots) }
-    assertTrue("volume should increase with each step", volumeSlots.first() < volumeSlots.last())
-    assertEquals("volume should be set to desired value on finish", 1f, volumeSlots.last())
   }
 
   @Test
@@ -98,10 +90,5 @@ class LocalPlaybackStrategyTest {
       mockPlayer.playWhenReady = false
       mockPlayer.release()
     }
-
-    val volumeSlots = mutableListOf<Float>()
-    verify(atLeast = 3) { mockPlayer.volume = capture(volumeSlots) }
-    assertTrue("volume should decrease with each step", volumeSlots.first() > volumeSlots.last())
-    assertEquals("volume should be set to desired value on finish", 0f, volumeSlots.last())
   }
 }

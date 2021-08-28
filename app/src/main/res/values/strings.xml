@@ -2,10 +2,8 @@
 <resources>
     <string name="about">About</string>
     <string name="app_theme">Theme</string>
-    <string name="close_drawer">Close navigation drawer</string>
     <string name="help">Help</string>
     <string name="library">Library</string>
-    <string name="open_drawer">Open navigation drawer</string>
     <string name="report_issue">Report Issues</string>
     <string name="saved_presets">Saved Presets</string>
     <string name="sleep_timer">Sleep Timer</string>
@@ -92,7 +90,7 @@
   </string>
     <string name="rename">Rename</string>
     <string name="pinned_shortcuts_not_supported">Your default launcher does not support adding shortcuts.</string>
-    <string name="saved_presets_as_home_screen_summary">Show saved presets on app startup</string>
+    <string name="saved_presets_as_home_screen_summary">Show \"saved presets\" on app startup (requires app restart)</string>
     <string name="auto_sleep_schedule_cancelled">Auto sleep timer cancelled!</string>
     <string name="reset">Reset</string>
     <string name="sleep_timer_description">
@@ -117,8 +115,6 @@
     preset and set the desired time to start the wake-up timer.
   </string>
     <string name="use_24h_format">Use 24-hour format</string>
-    <string name="device_media_volume">Device media volume</string>
-    <string name="should_update_media_volume">Update device media volume before starting preset</string>
     <string name="app_theme_light">Light</string>
     <string name="app_theme_dark">Dark</string>
     <string name="app_theme_system_default">System default</string>
@@ -152,9 +148,7 @@
     - curating better sound samples\n
     - buying coffee\n
   </string>
-    <string name="support_development__donate_google_play_description">
-    Your payment will be securely handled by the Google Play. Depending on your location, additional taxes _may be_ added to the final amount.
-  </string>
+    <string name="support_development__donate_google_play_description">Your payment will be securely handled by Google Play. Depending on your location, additional taxes _may be_ added to the final amount.</string>
     <string name="support_development__donate_thank_you">Thank you!</string>
     <string name="support_development__donate_thank_you_description">
     We wholeheartedly thank you for your generous contribution to the Noice project.
@@ -188,11 +182,11 @@
     <string name="app_shortcut_created">Preset has been added to app shortcuts!</string>
     <string name="app_shortcut_creation_failed">Failed to add the preset to app shortcuts!</string>
     <string name="settings">Settings</string>
-    <string name="saved_presets_as_home_screen">Saved presets as home screen</string>
+    <string name="saved_presets_as_home_screen">\"Saved presets\" as home screen</string>
     <string name="behavior">Behavior</string>
     <string name="appearance">Appearance</string>
-    <string name="sound_fade_duration">Sound fade duration</string>
-    <string name="sound_fade_duration_summary">Fade in/out duration for playing/stopping sounds (in seconds)</string>
+    <string name="sound_fade_in_duration">Sound fade-in duration</string>
+    <string name="sound_fade_in_duration_summary">Time duration for fading-in sounds (in seconds)</string>
     <string name="pinned_shortcut_creation_failed">Failed to add the shortcut to the home screen!</string>
     <string name="pinned_shortcut_created">Shortcut has been added to the home screen!</string>
     <string name="skip_to_prev">Previous preset</string>
@@ -219,7 +213,7 @@
         analyse and diagnose errors encountered during app usage. Read our [privacy
         policy](https://ashutoshgngwr.github.io/noice/privacy-policy) for further information.\n\n
         You can configure automatic data sharing at any time inside the app by going to \"**Settings**
-        > **Share usage and behaviour data**\".
+        &gt; **Share usage and behaviour data**\".
     </string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
@@ -231,4 +225,5 @@
     <string name="failed_to_load_inapp_purchases">Failed to load in-app purchase details. Please try again later!</string>
     <string name="failed_to_purchase">Failed to start payment flow. Please try again later!</string>
     <string name="payment_pending">We\'ll notify you as soon as we finish processing your payment.</string>
+    <string name="created_by">Created by</string>
 </resources>

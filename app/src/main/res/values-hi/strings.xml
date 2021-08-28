@@ -2,10 +2,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="about">ऐप के बारे में</string>
     <string name="app_theme">दिखावट</string>
-    <string name="close_drawer">मार्गदर्शक ड्रॉवर बंद करें</string>
     <string name="help">सहायता</string>
     <string name="library">लाइब्रेरी</string>
-    <string name="open_drawer">मार्गदर्शक ड्रॉवर खोलें</string>
     <string name="report_issue">समस्या की सूचना दें</string>
     <string name="saved_presets">सहेजे गए प्रीसेट</string>
     <string name="sleep_timer">स्लीप टाइमर</string>
@@ -121,10 +119,7 @@
     - बेहतर ध्वनि नमूनों पर अंकुश लगाना\n
     - कॉफी खरीदना\n
   </string>
-    <string name="support_development__donate_google_play_description">
-       आपका भुगतान गूगल प्ले द्वारा सुरक्षित रूप से नियंत्रित किया जाएगा। राशि को आपकी स्थानीय मुद्रा में परिवर्तित
-       किया जाएगा। आपके स्थान के आधार पर, अतिरिक्त करों को अंतिम राशि में जोड़ा जा सकता है।
-  </string>
+    <string name="support_development__donate_google_play_description">आपका भुगतान गूगल प्ले द्वारा सुरक्षित रूप से नियंत्रित किया जाएगा। आपके स्थान के आधार पर, अतिरिक्त करों को अंतिम राशि में जोड़ा जा सकता है।</string>
     <string name="support_development__donate_thank_you">धन्यवाद!</string>
     <string name="support_development__donate_thank_you_description">
        हम इस परियोजना में आपके उदार योगदान के लिए तहे दिल से शुक्रिया अदा करते हैं।
@@ -139,7 +134,7 @@
     - भविष्य के अपडेट को संभव बनाने के लिए\n
     - Noice को हमेशा विज्ञापन मुक्त रखने के लिए\n
   </string>
-    <string name="cast_media">किसी अन्य डिवाइस पर मीडिया कास्ट करें</string>
+    <string name="cast_media">क्रोमकास्ट से कनेक्ट करें</string>
     <string name="notification_channel_default__description">मीडिया प्लेबैक नियंत्रण</string>
     <string name="notification_channel_default__name">मीडिया प्लेबैक</string>
     <string name="pinned_shortcuts_not_supported">आपका डिफ़ॉल्ट लॉन्चर शॉर्टकट जोड़ने का समर्थन नहीं करता है।</string>
@@ -147,11 +142,9 @@
     <string name="later">बाद में</string>
     <string name="in_app_feedback__title">समीक्षा जमा करें</string>
     <string name="in_app_feedback__description">हम आपसे ऐप के बारे में सुनना पसंद करेंगे। कृपया हमारे गिटहब रिपॉजिटरी पर जाने के लिए एक क्षण लें। यदि आपको ऐप पसंद नहीं है, तो कृपया अपनी चिंताओं को बताते हुए एक मुद्दे को खोलने पर विचार करें। अन्यथा प्यार और समर्थन दिखाने के लिए, कृपया प्रोजेक्ट को स्टार करें।</string>
-    <string name="should_update_media_volume">प्रीसेट शुरू करने से पहले डिवाइस मीडिया वॉल्यूम अपडेट करें</string>
-    <string name="device_media_volume">डिवाइस मीडिया वॉल्यूम</string>
     <string name="use_24h_format">२४-घंटे के समय प्रारूप का उपयोग करें</string>
     <string name="wake_up_timer_cancelled">वेक-अप टाइमर रद्द कर दिया!</string>
-    <string name="saved_presets_as_home_screen_summary">ऐप स्टार्टअप पर सहेजे गए प्रीसेट दिखाएं</string>
+    <string name="saved_presets_as_home_screen_summary">ऐप स्टार्टअप पर \"सहेजे गए प्रीसेट\" दिखाएं (ऐप को पुनरारंभ करने की आवश्यकता होगी)</string>
     <string name="preset_does_not_exist">प्रीसेट मौजूद नहीं है। यह संभव है कि इसे हटा दिया गया हो!</string>
     <string name="add_to_home_screen">होम स्क्रीन में शामिल करें</string>
     <string name="relax">शांतिदायक</string>
@@ -168,7 +161,7 @@
     <string name="wake_up_timer_schedule_set" tools:ignore="StringFormatCount">अलार्म %1$s %3$s में बजेगा</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d मिनट</item>
-        <item quantity="other">%1$d मिनट</item>
+        <item quantity="other">%1$d मिनटों</item>
     </plurals>
     <plurals name="time_hours">
         <item quantity="one">%1$d घंटा</item>
@@ -201,11 +194,26 @@
     <string name="skip_to_prev">पिछला प्रीसेट</string>
     <string name="pinned_shortcut_created">होम स्क्रीन पर शॉर्टकट जोड़ दिया गया है!</string>
     <string name="pinned_shortcut_creation_failed">होम स्क्रीन पर शॉर्टकट जोड़ने में विफल!</string>
-    <string name="sound_fade_duration_summary">ध्वनि बजाने/रोकने के लिए क्षीणन अवधि (सेकंड में)</string>
-    <string name="sound_fade_duration">ध्वनि क्षीणन अवधि</string>
     <string name="appearance">दिखावट</string>
     <string name="behavior">व्यवहार</string>
-    <string name="saved_presets_as_home_screen">होम स्क्रीन पर सहजे हुए प्रीसेट्स देंखे</string>
+    <string name="saved_presets_as_home_screen">होम स्क्रीन पर \"सहजे हुए प्रीसेट्स\" देंखे</string>
     <string name="settings">सेटिंग्स</string>
     <string name="should_display_sound_icons">ध्वनि चिह्न दिखाएं</string>
+    <string name="payment_pending">जैसे ही हम आपका भुगतान संसाधित कर लेंगे, हम आपको सूचित करेंगे।</string>
+    <string name="failed_to_purchase">भुगतान प्रवाह प्रारंभ करने में विफल. कृपया बाद में पुन: प्रयास करें!</string>
+    <string name="failed_to_load_inapp_purchases">इन-ऐप खरीदारी विवरण लोड करने में विफल। कृपया बाद में पुन: प्रयास करें!</string>
+    <string name="should_allow_skipping_unsaved_presets_summary">सहेजे नहीं गए प्रीसेट चलाते समय, यादृच्छिक प्रीसेट जेनरेट करने के लिए प्लेयर नोटिफिकेशन में स्किप बटन सक्षम करें</string>
+    <string name="should_allow_skipping_unsaved_presets">सहेजे नहीं गए प्रीसेट को छोड़ने की अनुमति दें</string>
+    <string name="should_share_usage_data_summary">डेवलपर्स के साथ स्वचालित रूप से उपयोग और व्यवहार डेटा साझा करें</string>
+    <string name="should_share_usage_data">शेयर यूसेज एंड बिहेवियर डेटा</string>
+    <string name="others">अन्य</string>
+    <string name="decline">अस्वीकार करें</string>
+    <string name="accept">स्वीकार करें</string>
+    <string name="share_usage_data_consent_message">हम उपयोगकर्ता अनुभव को बेहतर बनाने के लिए ऐप उपयोग डेटा एकत्र करते हैं। हम ऐप के उपयोग के दौरान आने वाली त्रुटियों का विश्लेषण और निदान करने के लिए ऐप व्यवहार डेटा भी एकत्र करते हैं। अधिक जानकारी के लिए हमारी [गोपनीयता नीति](https://ashutoshgngwr.github.io/noice/privacy-policy) पढ़ें।
+\n
+\nआप \"**सेटिंग्स** &gt; **शेयर उपयोग और व्यवहार डेटा**\" पर जाकर ऐप के अंदर किसी भी समय स्वचालित डेटा साझाकरण को कॉन्फ़िगर कर सकते हैं।</string>
+    <string name="share_usage_data_consent_title">डेटा साझाकरण प्राथमिकताएं</string>
+    <string name="sound_fade_in_duration_summary">ध्वनि फ़ेड-इन के लिए समय अवधि (सेकंड में)</string>
+    <string name="sound_fade_in_duration">ध्वनि क्षीणन अवधि</string>
+    <string name="created_by">निर्माता</string>
 </resources>

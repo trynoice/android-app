@@ -4,14 +4,15 @@ import android.content.Context
 import android.media.AudioManager
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import androidx.media.AudioAttributesCompat
 import androidx.media.AudioManagerCompat
 import androidx.media.VolumeProviderCompat
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.NoiceApplication
-import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
+import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.shadow.ShadowMediaSession
 import com.github.ashutoshgngwr.noice.shadow.ShadowMediaSessionCompat
@@ -342,5 +343,17 @@ class PlayerManagerTest {
     playerManager.setPlaybackUpdateListener(listener)
     playerManager.callPlaybackUpdateListener()
     verify(exactly = 1) { listener.invoke(any(), any()) }
+  }
+
+  @Test
+  fun testSetAudioUsage() {
+    val mockPlayer = players.getValue("test")
+    val audioUsage = AudioAttributesCompat.USAGE_ALARM
+    playerManager.setAudioUsage(audioUsage)
+    verify(exactly = 1) {
+      mockPlayer.setAudioAttributes(withArg {
+        assertEquals(audioUsage, it.usage)
+      })
+    }
   }
 }

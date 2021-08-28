@@ -2,28 +2,24 @@ package com.github.ashutoshgngwr.noice
 
 import android.content.Intent
 import android.view.View
-import android.widget.CompoundButton
 import android.widget.TimePicker
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
-import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.MotionEvents
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
-import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.espresso.util.TreeIterables
 import com.github.ashutoshgngwr.noice.widget.DurationPicker
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.slider.Slider
 import com.google.android.material.textfield.TextInputLayout
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.*
 import org.hamcrest.TypeSafeMatcher
+import kotlin.reflect.KClass
 
 /**
  * [EspressoX] contains the custom extended util implementations for Espresso.
@@ -81,71 +77,6 @@ object EspressoX {
   }
 
   /**
-   * [withSliderValue] matches a [Slider] with the provided [expectedValue].
-   */
-  fun withSliderValue(expectedValue: Float): Matcher<View> {
-    return object : BoundedMatcher<View, Slider>(Slider::class.java) {
-      override fun describeTo(description: Description) {
-        description.appendText("Slider with value $expectedValue")
-      }
-
-      override fun matchesSafely(slider: Slider): Boolean {
-        return expectedValue == slider.value
-      }
-    }
-  }
-
-  private fun searchForView(viewMatcher: Matcher<View>): ViewAction {
-    return object : ViewAction {
-      override fun getConstraints() = isRoot()
-      override fun getDescription() = "search for view with $viewMatcher in the root view"
-
-      override fun perform(uiController: UiController, view: View) {
-        TreeIterables.breadthFirstViewTraversal(view).forEach {
-          if (viewMatcher.matches(it)) {
-            return
-          }
-        }
-
-        throw NoMatchingViewException.Builder()
-          .withRootView(view)
-          .withViewMatcher(viewMatcher)
-          .build()
-      }
-    }
-  }
-
-  /**
-   * [waitForView] tries to find a view with given [viewMatchers]. If found, it returns the
-   * [ViewInteraction] for given [viewMatchers]. If not found, it waits for given [wait]
-   * before attempting to find the view again. It reties for given number of [retries].
-   *
-   * Adaptation of the [StackOverflow post by manbradcalf](https://stackoverflow.com/a/56499223/2410641)
-   */
-  fun waitForView(
-    vararg viewMatchers: Matcher<View>,
-    retries: Int = 5,
-    wait: Long = 1000L,
-  ): ViewInteraction {
-    require(retries > 0 && wait > 0)
-    val viewMatcher = allOf(*viewMatchers)
-    for (i in 0 until retries) {
-      try {
-        onView(isRoot()).perform(searchForView(viewMatcher))
-        break
-      } catch (e: NoMatchingViewException) {
-        if (i == retries) {
-          throw e
-        }
-
-        Thread.sleep(wait)
-      }
-    }
-
-    return onView(viewMatcher)
-  }
-
-  /**
    * Returns a [ViewAction] that invokes [DurationPicker.onDurationAddedListener] with the given
    * [durationSecs].
    */
@@ -195,22 +126,6 @@ object EspressoX {
   }
 
   /**
-   * [setChecked] returns a [ViewAction] to set the checked state of a [CompoundButton].
-   */
-  fun setChecked(checked: Boolean): ViewAction {
-    return object : ViewAction {
-      override fun getDescription() = "check/uncheck compound buttons"
-      override fun getConstraints() = instanceOf<View>(CompoundButton::class.java)
-
-      override fun perform(uiController: UiController, view: View) {
-        if (view is CompoundButton) {
-          view.isChecked = checked
-        }
-      }
-    }
-  }
-
-  /**
    * Returns a matcher that matches the nested intent sent with an Intent chooser.
    */
   fun hasIntentChooser(matcher: Matcher<Intent>): Matcher<Intent> {
@@ -228,6 +143,40 @@ object EspressoX {
       override fun getDescription() = "no-op"
       override fun getConstraints() = any(View::class.java)
       override fun perform(uiController: UiController, view: View) = Unit
+    }
+  }
+
+  /**
+   * Retries the given [block] by catching the [expectedErrors] until all [retries] are exhausted.
+   * It waits for a defined [wait] period between each retry.
+   */
+  inline fun retryWithWaitOnError(
+    vararg expectedErrors: KClass<out Throwable>,
+    retries: Int = 15,
+    wait: Long = 500,
+    block: () -> Unit,
+  ) {
+    require(retries > 0 && wait > 0)
+
+    var i = 0
+    while (i++ < retries) {
+      try {
+        block.invoke()
+        break
+      } catch (e: Throwable) {
+        if (!expectedErrors.any { it.isInstance(e) } || i == retries) {
+          throw e
+        }
+
+        Thread.sleep(wait)
+      }
+    }
+  }
+
+  fun withBottomNavSelectedItem(@IdRes id: Int): Matcher<View> = object : TypeSafeMatcher<View>() {
+    override fun describeTo(description: Description?) = Unit
+    override fun matchesSafely(item: View?): Boolean {
+      return item is BottomNavigationView && item.selectedItemId == id
     }
   }
 }

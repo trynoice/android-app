@@ -2,10 +2,8 @@
 <resources>
     <string name="about">O aplikaci</string>
     <string name="app_theme">Motiv</string>
-    <string name="close_drawer">Zavřít navigační lištu</string>
     <string name="help">Nápověda</string>
     <string name="library">Knihovna</string>
-    <string name="open_drawer">Otevřít navigační lištu</string>
     <string name="report_issue">Nahlásit chybu</string>
     <string name="saved_presets">Uložené předvolby</string>
     <string name="sleep_timer">Časovač vypnutí</string>
@@ -157,4 +155,20 @@
     <string name="ignore_audio_focus_changes_summary_on">Nereagovat, když jiné aplikace budou přehrávat zvuk</string>
     <string name="ignore_audio_focus_changes_summary_off">Pozastavit, když jiné aplikace začnou přehrávat zvuk</string>
     <string name="appearance">Vzhled</string>
+    <string name="time_bridge">a</string>
+    <string name="wake_up_timer_schedule_set">Alarm se spustí za %1$s %2$s %3$s</string>
+    <string name="wake_up_timer_cancelled">Časovač k probuzení zrušen!</string>
+    <string name="saved_presets_as_home_screen_summary">Ukázat uložené předvolby při spuštění aplikace</string>
+    <string name="preset_does_not_exist">Předvolba neexistuje. Mohla být smazána!</string>
+    <string name="add_to_home_screen">Přidat na domovskou obrazovky</string>
+    <string name="relax">Uvolnění</string>
+    <string name="random_preset">Náhodná předvolba</string>
+    <string name="okay">Dobře</string>
+    <string name="mood">Nálada</string>
+    <string name="light">Lehká</string>
+    <string name="intensity">Intenzita</string>
+    <string name="focus">Soustředění</string>
+    <string name="dense">Hustá</string>
+    <string name="intensity_any">Jakákoliv</string>
+    <string name="mood_any">Jakákoliv</string>
 </resources>

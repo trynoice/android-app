@@ -2,10 +2,8 @@
 <resources>
     <string name="about">À propos</string>
     <string name="app_theme">Thème</string>
-    <string name="close_drawer">Fermer navigation</string>
     <string name="help">Aide</string>
     <string name="library">Bibliothèque</string>
-    <string name="open_drawer">Ouvrir navigation</string>
     <string name="report_issue">Signaler des problèmes</string>
     <string name="saved_presets">Réglages sauvegardés</string>
     <string name="sleep_timer">Minuterie</string>
@@ -116,10 +114,7 @@
     - la recherche d\'échantillons sonores de qualité\n
     - l\'achat de café\n
   </string>
-    <string name="support_development__donate_google_play_description">
-    Votre paiement sera effectué en toute sécurité par Google Play. Le montant sera converti dans votre
-    monnaie locale. Selon votre lieu de résidence, des taxes supplémentaires _peuvent être_ ajoutées au montant final.
-  </string>
+    <string name="support_development__donate_google_play_description">Votre paiement sera traité de manière sécurisée par Google Play. En fonction de votre localisation, des taxes supplémentaires _peuvent être_ ajoutées au montant final.</string>
     <string name="support_development__donate_thank_you">Merci !</string>
     <string name="support_development__donate_thank_you_description">
     Nous vous remercions de tout cœur pour votre généreuse contribution au projet Noice.
@@ -135,7 +130,7 @@
     - Pour rendre possible les futures mises à jour\n
     - Pour que Noice reste toujours sans publicité\n
   </string>
-    <string name="cast_media">Envoyer le son vers un autre appareil</string>
+    <string name="cast_media">Se connecter à Chromecast</string>
     <string name="notification_channel_default__description">Contrôles de lecture</string>
     <string name="notification_channel_default__name">Lecture audio</string>
     <string name="preset_does_not_exist">Cette préconfiguration n\'existe pas. Peut-être a-t-elle été effacée !</string>
@@ -149,11 +144,9 @@
     <string name="dense">Intense</string>
     <string name="submit_feedback">Soumettre une évaluation</string>
     <string name="in_app_feedback__description">Nous aimerions connaître votre avis sur l\'application. Nous vous prions de consulter notre GitHub. Si vous n\'aimez pas l\'application, nous vous prions d\'ouvrir un billet « issue » afin de nous expliquer vos critiques. Autrement, nous vous prions de noter le projet pour nous montrer votre reconnaissance.</string>
-    <string name="should_update_media_volume">Ajustez le volume de l\'appareil avant de lancer la préconfiguration</string>
-    <string name="device_media_volume">Volume de l\'appareil</string>
     <string name="use_24h_format">Utiliser le format 24 heures</string>
     <string name="wake_up_timer_cancelled">Minuterie du réveil annulée !</string>
-    <string name="saved_presets_as_home_screen_summary">Afficher les configurations sauvegardées au lancement de l\'application</string>
+    <string name="saved_presets_as_home_screen_summary">Afficher les « préréglages enregistrés » au démarrage de l\'application (nécessite un redémarrage de l\'application)</string>
     <string name="pinned_shortcuts_not_supported">Votre lanceur par défaut ne supporte pas l\'ajout de raccourcis.</string>
     <string name="never">Jamais</string>
     <string name="later">Plus tard</string>
@@ -179,11 +172,9 @@
     <string name="app_shortcut_removed">Le préréglage a été supprimé des raccourcis d\'applications !</string>
     <string name="pinned_shortcut_created">Le raccourci a été ajouté à l\'écran d\'accueil !</string>
     <string name="pinned_shortcut_creation_failed">Échec de l\'ajout du raccourci à l\'écran d\'accueil !</string>
-    <string name="sound_fade_duration_summary">Durée du fondu graduel pour la lecture / l\'arrêt des sons (en secondes)</string>
-    <string name="sound_fade_duration">Durée de l\'atténuation sonore</string>
     <string name="appearance">Apparence</string>
     <string name="behavior">Comportement</string>
-    <string name="saved_presets_as_home_screen">Préréglages enregistrés comme écran d\'accueil</string>
+    <string name="saved_presets_as_home_screen">« Préréglages enregistrés » comme écran d\'accueil</string>
     <string name="settings">Paramètres</string>
     <string name="app_shortcut_created">Le préréglage a été ajouté aux raccourcis de l\'application !</string>
     <string name="ignore_audio_focus_changes_summary_on">Ne pas réagir lorsque d\'autres applications jouent de l\'audio</string>
@@ -204,4 +195,21 @@
     <string name="remove_all_app_shortcuts_confirmation">Ça supprimera tous les raccourcis prédéfinis du menu des raccourcis de l’application. Voulez-vous continuer \?</string>
     <string name="remove_all_app_shortcuts">Retirer tous les raccourcis de l’appli</string>
     <string name="should_display_sound_icons">Afficher les icônes de son</string>
+    <string name="should_allow_skipping_unsaved_presets_summary">Lors de la lecture de préréglages non sauvegardés, activez les boutons de saut dans la notification du lecteur pour générer des préréglages aléatoires</string>
+    <string name="should_allow_skipping_unsaved_presets">Permettre de sauter les préréglages non sauvegardés</string>
+    <string name="should_share_usage_data_summary">Partager automatiquement les données d\'utilisation et de comportement avec les développeurs</string>
+    <string name="should_share_usage_data">Partager les données d\'utilisation et de comportement</string>
+    <string name="others">Autres</string>
+    <string name="decline">Refuser</string>
+    <string name="accept">Accepter</string>
+    <string name="share_usage_data_consent_message">Nous recueillons des données sur l\'utilisation des applications afin d\'améliorer l\'expérience des utilisateurs. Nous recueillons également des données sur le comportement de l\'application pour analyser et diagnostiquer les erreurs rencontrées lors de son utilisation. Lisez notre [politique de confidentialité] (https://ashutoshgngwr.github.io/noice/privacy-policy) pour plus d\'informations.
+\n
+\n Vous pouvez configurer le partage automatique des données à tout moment dans l\'application en allant dans « **Paramètres** &gt; **Partager les données d\'utilisation et de comportement** ».</string>
+    <string name="share_usage_data_consent_title">Préférences de partage des données</string>
+    <string name="payment_pending">Nous vous informerons dès que nous aurons fini de traiter votre paiement.</string>
+    <string name="failed_to_purchase">Échec du lancement du flux de paiement. Veuillez réessayer plus tard !</string>
+    <string name="failed_to_load_inapp_purchases">Impossible de charger les détails de l’achat interne à l’appli. Veuillez réessayer plus tard !</string>
+    <string name="sound_fade_in_duration_summary">Durée du fondu sonore (en secondes)</string>
+    <string name="sound_fade_in_duration">Durée du fondu sonore</string>
+    <string name="created_by">Créé par</string>
 </resources>

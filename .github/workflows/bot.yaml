@@ -4,7 +4,6 @@ on:
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
 
-# generate and push changelogs to master only
 jobs:
   create-release:
     name: Create GitHub Release
@@ -14,22 +13,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: git fetch --prune --unshallow --tags -f
-      - id: get_tag_message
+      - id: tag_info
         run: |
-          export TAG_BODY="$(git tag  --list --format='%(contents:body)' ${GITHUB_REF/'refs/tags/'/''})"
+          export TAG_NAME="${GITHUB_REF/'refs/tags/'/''}"
+          export TAG_BODY="$(git tag  --list --format='%(contents:body)' $TAG_NAME)"
           export TAG_BODY="${TAG_BODY//'%'/'%25'}"
           export TAG_BODY="${TAG_BODY//$'\n'/'%0A'}"
           export TAG_BODY="${TAG_BODY//$'\r'/'%0D'}"
-          echo "::set-output name=message::${TAG_BODY}"
-      - uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          echo "::set-output name=name::${TAG_NAME}"
+          echo "::set-output name=body::${TAG_BODY}"
+      - uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: v${{ github.ref }}
-          body: ${{ steps.get_tag_message.outputs.message }}
-          draft: false
-          prerelease: false
+          name: v${{ steps.tag_info.outputs.name }}
+          body: ${{ steps.tag_info.outputs.body }}
 
   generate-docs:
     name: Generate Docs
@@ -44,8 +40,8 @@ jobs:
       - name: Generate changelog
         run: |
           export CHANGELOG_FILE="docs/CHANGELOG.md"
-          export RELEASE_URL="https://github.com/ashutoshgngwr/noice/releases/tag/%(tag)"
-          export GIT_TAG_FMT="## [v%(tag)]($RELEASE_URL)%0a%0a**Date:** %(creatordate)%0a%0a%(contents:body)"
+          export RELEASE_URL="https://github.com/$GITHUB_REPOSITORY/releases/tag/%(tag)"
+          export GIT_TAG_FMT="## [v%(tag)]($RELEASE_URL)%0a%0a**%(creatordate:format:%A, %-d %B %Y)**%0a%0a%(contents:body)"
 
           echo "# Changelog" > $CHANGELOG_FILE
           echo "" >> $CHANGELOG_FILE
@@ -57,12 +53,14 @@ jobs:
       - name: Generate list of code authors
         run: |
           export LIST_PATH="docs/_data/authors/code.yaml"
+          export COMMIT_LIST_URL_FMT="https://github.com/$GITHUB_REPOSITORY/commits?author=\2"
+
           git log --pretty="- %an <%ae>%n- %cn <%ce>" > "$LIST_PATH"
           git log --pretty="%b" | grep "Co-authored-by:" >> "$LIST_PATH"
           sed -i -e 's/Co-authored-by:/-/g' -e 's/\r$//' "$LIST_PATH"
           sort -u -o "$LIST_PATH" "$LIST_PATH"
           sed -i -e '/noreply@github.com/d' -e '/hosted@weblate.org/d' -e '/\[bot\]/d' "$LIST_PATH"
-          sed -i -E 's/(.*) <(.*)>/\1 | [\2](mailto:\2)/g' "$LIST_PATH"
+          sed -i -E "s@- (.*) <(.*)>@- ['\1', '$COMMIT_LIST_URL_FMT']@g" "$LIST_PATH"
       - name: Commit changes
         run: |
           git config --local user.email "noreply@github.com"

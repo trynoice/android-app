@@ -1,15 +1,12 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.getSystemService
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.media.AudioManagerCompat
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
@@ -22,7 +19,6 @@ import java.util.concurrent.TimeUnit
 
 class WakeUpTimerFragment : Fragment() {
 
-  private lateinit var audioManager: AudioManager
   private lateinit var binding: WakeUpTimerFragmentBinding
   private lateinit var presetRepository: PresetRepository
   private lateinit var analyticsProvider: AnalyticsProvider
@@ -48,27 +44,12 @@ class WakeUpTimerFragment : Fragment() {
       binding.timePicker.setIs24HourView(enabled)
     }
 
-    binding.shouldUpdateMediaVolume.setOnCheckedChangeListener { _, enabled ->
-      binding.mediaVolumeSlider.isEnabled = enabled
-    }
-
-    audioManager = requireNotNull(requireContext().getSystemService())
     presetRepository = PresetRepository.newInstance(requireContext())
-    val max = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-    val min = AudioManagerCompat.getStreamMinVolume(audioManager, AudioManager.STREAM_MUSIC)
-
-    binding.mediaVolumeSlider.isEnabled = binding.shouldUpdateMediaVolume.isChecked
-    binding.mediaVolumeSlider.valueFrom = min.toFloat()
-    binding.mediaVolumeSlider.valueTo = max.toFloat()
-    binding.mediaVolumeSlider.stepSize = 1f
-    binding.mediaVolumeSlider.setLabelFormatter { "${(it * 100).toInt() / max}%" }
 
     WakeUpTimerManager.get(requireContext())?.also {
       if (it.atMillis > System.currentTimeMillis()) {
         selectedPresetID = it.presetID
         selectedTime = it.atMillis
-        binding.shouldUpdateMediaVolume.isChecked = it.shouldUpdateMediaVolume
-        binding.mediaVolumeSlider.value = it.mediaVolume.toFloat()
       }
     }
 
@@ -108,6 +89,7 @@ class WakeUpTimerFragment : Fragment() {
     resetControls()
     notifyUpdate()
     Snackbar.make(requireView(), R.string.wake_up_timer_cancelled, Snackbar.LENGTH_LONG).show()
+    analyticsProvider.logEvent("wake_up_timer_cancel", bundleOf())
   }
 
   private fun onSetTimeClicked() {
@@ -138,10 +120,10 @@ class WakeUpTimerFragment : Fragment() {
     val params = bundleOf(
       "hour" to calendar.get(Calendar.HOUR_OF_DAY),
       "minute" to calendar.get(Calendar.MINUTE),
-      "remaining_ms" to calendar.timeInMillis - System.currentTimeMillis()
+      "duration_ms" to calendar.timeInMillis - System.currentTimeMillis()
     )
 
-    analyticsProvider.logEvent("set_wake_up_timer", params)
+    analyticsProvider.logEvent("wake_up_timer_set", params)
     // maybe show in-app review dialog to the user
     NoiceApplication.of(requireContext())
       .getReviewFlowProvider()
@@ -168,12 +150,7 @@ class WakeUpTimerFragment : Fragment() {
     if (isTimerValid) {
       WakeUpTimerManager.set(
         requireContext(),
-        WakeUpTimerManager.Timer(
-          requireNotNull(selectedPresetID),
-          selectedTime,
-          binding.shouldUpdateMediaVolume.isChecked,
-          binding.mediaVolumeSlider.value.toInt()
-        )
+        WakeUpTimerManager.Timer(requireNotNull(selectedPresetID), selectedTime)
       )
     } else {
       WakeUpTimerManager.cancel(requireContext())
@@ -263,8 +240,5 @@ class WakeUpTimerFragment : Fragment() {
   private fun resetControls() {
     loadSelectedPresetID()
     selectedTime = 0
-    binding.shouldUpdateMediaVolume.isChecked = false
-    binding.mediaVolumeSlider.value =
-      audioManager.getStreamVolume(AudioManager.STREAM_MUSIC).toFloat()
   }
 }

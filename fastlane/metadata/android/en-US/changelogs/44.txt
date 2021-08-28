@@ -1,0 +1,6 @@
+- Add alarm ringer UI
+- Use alarm ringer volume in wake-up timers
+- Update translations
+
+We're continuously working to make Noice better. Please turn on updates to never miss a thing!
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG

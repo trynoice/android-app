@@ -2,9 +2,7 @@
 <resources>
     <string name="about">Over</string>
     <string name="app_theme">Thema</string>
-    <string name="close_drawer">Navigatiemenu sluiten</string>
     <string name="library">Verzameling</string>
-    <string name="open_drawer">Navigatiemenu openen</string>
     <string name="report_issue">Problemen melden</string>
     <string name="saved_presets">Voorinstellingen</string>
     <string name="sleep_timer">Slaaptimer</string>
@@ -95,8 +93,6 @@
     <string name="appintro__getting_started_desc_0">Veeg naar links om alle functies te leren kennen!</string>
     <string name="appintro__chromecast_title">Chromecast ingeschakeld</string>
     <string name="appintro__chromecast_desc">Gebruik Noice om sfeer over te brengen op andere Chromecast-apparaten, zoals luidsprekers, tv\'s, enz.</string>
-    <string name="should_update_media_volume">Werk het mediavolume van het apparaat bij voordat u de instelling start</string>
-    <string name="device_media_volume">Apparaat mediavolume</string>
     <string name="wake_up_timer_description">Noice start de geselecteerde instelling wanneer de timer afloopt. Gebruik de onderstaande knoppen om een instelling te selecteren en de gewenste tijd in te stellen om de timer te starten.</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minuut</item>
@@ -143,8 +139,6 @@
     <string name="skip_to_prev">Vorige instelling</string>
     <string name="pinned_shortcut_created">Snelkoppeling is toegevoegd aan het startscherm!</string>
     <string name="pinned_shortcut_creation_failed">Kan de snelkoppeling niet toevoegen aan het startscherm!</string>
-    <string name="sound_fade_duration_summary">Duur van geluidsvervaging voor het afspelen/stoppen van geluiden (in seconden)</string>
-    <string name="sound_fade_duration">Duur van geluidsvervaging</string>
     <string name="appearance">Uiterlijk</string>
     <string name="behavior">Gedrag</string>
     <string name="saved_presets_as_home_screen">Opgeslagen instellingen als startscherm</string>
@@ -156,8 +150,8 @@
     <string name="add_to_app_shortcuts">Toevoegen aan app-snelkoppelingen</string>
     <string name="app_authors">Bekijk de lijst van Noice-auteurs</string>
     <string name="in_app_feedback__title">Plaats een recensie</string>
-    <string name="in_app_feedback__description">We horen graag van je over de app. Neem even de tijd om onze GitHub-repository te bezoeken. Als je de app niet leuk vond, overweeg dan om een probleem in te dienen waarin je je zorgen uitlegt. Ook kunt u het project een ster geven om liefde en steun te tonen.</string>
-    <string name="cast_media">Cast media naar een ander apparaat</string>
+    <string name="in_app_feedback__description">We horen graag van je over de app. Neem even de tijd om onze GitHub-repository te bezoeken. Als je de app niet leuk vond, overweeg dan om een probleem in te dienen waarin je zorgen uitlegt. Ook kunt u het project een ster geven om liefde en steun te tonen.</string>
+    <string name="cast_media">Verbinding met Chromecast</string>
     <string name="support_development__why_description">- Om toekomstige updates mogelijk te maken
 \n- Om Noice voor altijd reclamevrij te houden
 \n</string>
@@ -166,4 +160,10 @@
     <string name="support_development__donate_thank_you_description">Wij danken u van harte voor uw genereuze bijdrage aan het Noice-project.</string>
     <string name="support_development__donate_thank_you">Dank u!</string>
     <string name="support_development__donate_google_play_description">Uw betaling wordt veilig afgehandeld door Google Play. Het bedrag wordt omgerekend naar uw lokale valuta. Afhankelijk van uw locatie kunnen er extra belastingen worden toegevoegd aan het uiteindelijke bedrag.</string>
+    <string name="all_app_shortcuts_removed">Alle snelkoppelingen zijn verwijderd!</string>
+    <string name="remove_all_app_shortcuts">Verwijder alle snelkoppelingen</string>
+    <string name="import_presets">Importeer een bestand</string>
+    <string name="export_presets">Exporteren naar bestand</string>
+    <string name="share">Delen</string>
+    <string name="wake_up_timer">Alarmklok</string>
 </resources>

@@ -5,11 +5,16 @@
 The following list is auto-generated from the Git history, and it is prone to
 duplicates.
 
-| Author | Email |
-| :----- | :---: |
+{% assign authorsByLetter = site.data.authors.code | group_by_exp: "author", "author[0] | split: '' | first | upcase" -%}
+|   #   | Name |
+| :---: | ---- |
 
-{%- for author in site.data.authors.code %}
-| {{ author | escape_once }} |
+{%- for letter in authorsByLetter %}
+{%- for author in letter.items %}
+| {%- if currentLetter != letter.name -%}{{ letter.name }}{%- endif -%}
+| [{{ author[0] | escape_once }}]({{ author[1] }}) |
+{%- assign currentLetter = letter.name -%}
+{%- endfor %}
 {%- endfor %}
 
 ## Sounds

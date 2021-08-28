@@ -2,9 +2,56 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.2](https://github.com/ashutoshgngwr/noice/releases/tag/1.2.2)
+
+**Wednesday, 18 August 2021**
+
+- Fix crash on opening preset shortcuts
+- Fix crash on viewing wake-up timers from the system bar
+- Fix fade glitch on re-opening the same preset shortcut
+- Update translations ([#754](https://github.com/ashutoshgngwr/noice/issues/754))
+
+## [v1.2.1](https://github.com/ashutoshgngwr/noice/releases/tag/1.2.1)
+
+**Friday, 13 August 2021**
+
+- CRITICAL: Fix crash on switching screens within the app
+
+## [v1.2.0](https://github.com/ashutoshgngwr/noice/releases/tag/1.2.0)
+
+**Thursday, 12 August 2021**
+
+- Redesign app navigation and UI flows
+- Add user preferred fade-duration in Chromecast app
+- Add fixed duration for fade-out transitions
+- Fix playback glitch when dismissing alarm ringer
+- Disable SSAID collection for analytics (Play Store)
+- Update translations ([#749](https://github.com/ashutoshgngwr/noice/issues/749), [#750](https://github.com/ashutoshgngwr/noice/issues/750))
+
+## [v1.1.1](https://github.com/ashutoshgngwr/noice/releases/tag/1.1.1)
+
+**Saturday, 31 July 2021**
+
+- Publish APKs on GitHub ([#732](https://github.com/ashutoshgngwr/noice/issues/732))
+
+## [v1.1.0](https://github.com/ashutoshgngwr/noice/releases/tag/1.1.0)
+
+**Saturday, 31 July 2021**
+
+- Add alarm ringer UI ([#729](https://github.com/ashutoshgngwr/noice/issues/729))
+- Use alarm ringer volume in wake-up timers ([#729](https://github.com/ashutoshgngwr/noice/issues/729))
+- Update translations ([#730](https://github.com/ashutoshgngwr/noice/issues/730), [#731](https://github.com/ashutoshgngwr/noice/issues/731))
+
+## [v1.0.2](https://github.com/ashutoshgngwr/noice/releases/tag/1.0.2)
+
+**Tuesday, 20 July 2021**
+
+- Fix a minor issue with analytics event logging
+- Update translations
+
 ## [v1.0.1](https://github.com/ashutoshgngwr/noice/releases/tag/1.0.1)
 
-**Date:** Mon Jul 19 23:23:52 2021 +0530
+**Monday, 19 July 2021**
 
 - Fix incorrect text rendering in "Support Development"
 - Fix issues with analytics
@@ -12,7 +59,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.0.0](https://github.com/ashutoshgngwr/noice/releases/tag/1.0.0)
 
-**Date:** Mon Jul 12 23:30:59 2021 +0530
+**Monday, 12 July 2021**
 
 - Update license to GNU GPL v3
 - Add non-linear volume slider ([#660](https://github.com/ashutoshgngwr/noice/issues/660))
@@ -23,7 +70,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.17.0](https://github.com/ashutoshgngwr/noice/releases/tag/0.17.0)
 
-**Date:** Wed May 5 19:13:20 2021 +0530
+**Wednesday, 5 May 2021**
 
 - Added app settings ([#462](https://github.com/ashutoshgngwr/noice/issues/462), [#578](https://github.com/ashutoshgngwr/noice/issues/578), [#602](https://github.com/ashutoshgngwr/noice/issues/602))
 - Added player style notifications and media button support ([#607](https://github.com/ashutoshgngwr/noice/issues/607))
@@ -34,7 +81,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.16.1](https://github.com/ashutoshgngwr/noice/releases/tag/0.16.1)
 
-**Date:** Fri Apr 23 12:03:18 2021 +0530
+**Friday, 23 April 2021**
 
 - Fix moderate rain sound ([#600](https://github.com/ashutoshgngwr/noice/issues/600))
 - Fix preset stop button misbehaviour ([#593](https://github.com/ashutoshgngwr/noice/issues/593), [#594](https://github.com/ashutoshgngwr/noice/issues/594))
@@ -42,7 +89,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.16.0](https://github.com/ashutoshgngwr/noice/releases/tag/0.16.0)
 
-**Date:** Thu Apr 15 19:13:02 2021 +0530
+**Thursday, 15 April 2021**
 
 - Add visual confirmation on setting a wake-up timer ([#554](https://github.com/ashutoshgngwr/noice/issues/554))
 - Move random preset button to navigation drawer menu ([#559](https://github.com/ashutoshgngwr/noice/issues/559))
@@ -53,7 +100,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.15.0](https://github.com/ashutoshgngwr/noice/releases/tag/0.15.0)
 
-**Date:** Wed Feb 10 03:43:26 2021 +0530
+**Wednesday, 10 February 2021**
 
 - Add option to set "Saved Preset" as default app screen
 - Add 24 hour time picker and global volume controller to Wake-up timer
@@ -66,7 +113,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.14.0](https://github.com/ashutoshgngwr/noice/releases/tag/0.14.0)
 
-**Date:** Mon Dec 14 20:20:18 2020 +0530
+**Monday, 14 December 2020**
 
 - Fix app stuck in "Pause" mode after unplugging headphones ([#426](https://github.com/ashutoshgngwr/noice/issues/426))
 - Add Turkish translations (by Berkay Gündüz) ([#428](https://github.com/ashutoshgngwr/noice/issues/428), [#441](https://github.com/ashutoshgngwr/noice/issues/441))
@@ -74,7 +121,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.13.0](https://github.com/ashutoshgngwr/noice/releases/tag/0.13.0)
 
-**Date:** Thu Dec 3 22:48:21 2020 +0530
+**Thursday, 3 December 2020**
 
 - Add button to play a random mix (preset) ([#424](https://github.com/ashutoshgngwr/noice/issues/424))
 - Add "Add to home screen" option for presets ([#425](https://github.com/ashutoshgngwr/noice/issues/425))
@@ -83,7 +130,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.12.0](https://github.com/ashutoshgngwr/noice/releases/tag/0.12.0)
 
-**Date:** Sun Oct 18 19:59:42 2020 +0530
+**Sunday, 18 October 2020**
 
 - Added Ukranian translations ([#354](https://github.com/ashutoshgngwr/noice/issues/354))
 - Added Indonesian translations ([#369](https://github.com/ashutoshgngwr/noice/issues/369))
@@ -92,13 +139,13 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.11.1](https://github.com/ashutoshgngwr/noice/releases/tag/0.11.1)
 
-**Date:** Sat Sep 26 22:44:32 2020 +0530
+**Saturday, 26 September 2020**
 
 - CRITICAL: Remove unwanted gap in looping sounds ([#344](https://github.com/ashutoshgngwr/noice/issues/344), [#345](https://github.com/ashutoshgngwr/noice/issues/345))
 
 ## [v0.11.0](https://github.com/ashutoshgngwr/noice/releases/tag/0.11.0)
 
-**Date:** Fri Sep 18 14:45:53 2020 +0530
+**Friday, 18 September 2020**
 
 - Added flow to provide review inside the app ([#336](https://github.com/ashutoshgngwr/noice/issues/336))
 - Updated French translations ([#326](https://github.com/ashutoshgngwr/noice/issues/326))
@@ -106,7 +153,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.10.1](https://github.com/ashutoshgngwr/noice/releases/tag/0.10.1)
 
-**Date:** Thu Sep 10 15:21:51 2020 +0530
+**Thursday, 10 September 2020**
 
 - Fixed Brownian noise sample ([#325](https://github.com/ashutoshgngwr/noice/issues/325))
 - Updated Hindi translations ([#324](https://github.com/ashutoshgngwr/noice/issues/324))
@@ -114,7 +161,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.10.0](https://github.com/ashutoshgngwr/noice/releases/tag/0.10.0)
 
-**Date:** Sun Sep 6 00:46:56 2020 +0530
+**Sunday, 6 September 2020**
 
 - Compressed sound library disk size by ~42% ([#62](https://github.com/ashutoshgngwr/noice/issues/62), [#286](https://github.com/ashutoshgngwr/noice/issues/286))
 - Added 11 new sounds ([#115](https://github.com/ashutoshgngwr/noice/issues/115), [#139](https://github.com/ashutoshgngwr/noice/issues/139), [#157](https://github.com/ashutoshgngwr/noice/issues/157), [#164](https://github.com/ashutoshgngwr/noice/issues/164), [#215](https://github.com/ashutoshgngwr/noice/issues/215), [#305](https://github.com/ashutoshgngwr/noice/issues/305))
@@ -125,7 +172,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.9.1](https://github.com/ashutoshgngwr/noice/releases/tag/0.9.1)
 
-**Date:** Thu Jul 30 11:34:04 2020 +0530
+**Thursday, 30 July 2020**
 
 - Fixed duplicate entries appearing in Preset list ([#252](https://github.com/ashutoshgngwr/noice/issues/252))
 - Updated German translations ([#244](https://github.com/ashutoshgngwr/noice/issues/244))
@@ -134,7 +181,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.9.0](https://github.com/ashutoshgngwr/noice/releases/tag/0.9.0)
 
-**Date:** Mon Jul 20 12:02:53 2020 +0530
+**Monday, 20 July 2020**
 
 - Enabled fade effects for sound volume adjustments
 - Fixed playback not resuming after short interruptions
@@ -144,14 +191,14 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.8.1](https://github.com/ashutoshgngwr/noice/releases/tag/0.8.1)
 
-**Date:** Sat Jul 4 13:19:02 2020 +0530
+**Saturday, 4 July 2020**
 
 - Fix minor bugs
 - Fix issues related to app store listings
 
 ## [v0.8.0](https://github.com/ashutoshgngwr/noice/releases/tag/0.8.0)
 
-**Date:** Thu Jun 25 17:43:17 2020 +0530
+**Thursday, 25 June 2020**
 
 - Add Wake-up timer
 - Add experimental support for Chromecast (Play Store release only)
@@ -167,7 +214,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.7.2](https://github.com/ashutoshgngwr/noice/releases/tag/0.7.2)
 
-**Date:** Wed May 27 21:32:48 2020 +0530
+**Wednesday, 27 May 2020**
 
 - Fixed crash on resuming app from background
 - Fixed save preset button not showing up sometimes
@@ -176,7 +223,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.7.1](https://github.com/ashutoshgngwr/noice/releases/tag/0.7.1)
 
-**Date:** Thu May 21 15:49:25 2020 +0530
+**Thursday, 21 May 2020**
 
 - Remove cracking noise from heavy rain sound
 - Fix play buttons in UI not responding
@@ -185,7 +232,7 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.7.0](https://github.com/ashutoshgngwr/noice/releases/tag/0.7.0)
 
-**Date:** Tue May 12 16:38:37 2020 +0530
+**Tuesday, 12 May 2020**
 
 - Added French translations
 - Minor bug fixes
@@ -195,7 +242,7 @@ on F-Droid.
 
 ## [v0.6.0](https://github.com/ashutoshgngwr/noice/releases/tag/0.6.0)
 
-**Date:** Tue May 5 00:47:31 2020 +0530
+**Tuesday, 5 May 2020**
 
 - Added rename option to Preset list
 - Added italian translations
@@ -205,7 +252,7 @@ on F-Droid.
 
 ## [v0.5.0](https://github.com/ashutoshgngwr/noice/releases/tag/0.5.0)
 
-**Date:** Fri Apr 24 00:16:34 2020 +0530
+**Friday, 24 April 2020**
 
 - Added German translations
 - Minor UI improvements
@@ -213,7 +260,7 @@ on F-Droid.
 
 ## [v0.4.0](https://github.com/ashutoshgngwr/noice/releases/tag/0.4.0)
 
-**Date:** Wed Apr 15 14:07:33 2020 +0530
+**Wednesday, 15 April 2020**
 
 - Added fade in/out effects for playbacks
 - Added airplane sounds to the library
@@ -224,7 +271,7 @@ on F-Droid.
 
 ## [v0.3.4](https://github.com/ashutoshgngwr/noice/releases/tag/0.3.4)
 
-**Date:** Mon Mar 30 12:24:38 2020 +0530
+**Monday, 30 March 2020**
 
 - Fixes issues with saved preset caused after upgrading from 0.2.7
 - Adds spanish (argentinian) translations
@@ -232,21 +279,21 @@ on F-Droid.
 
 ## [v0.3.3](https://github.com/ashutoshgngwr/noice/releases/tag/0.3.3)
 
-**Date:** Mon Mar 23 17:25:45 2020 +0530
+**Monday, 23 March 2020**
 
 - Fixes a force close when opening preset library
 - Adds office ambiance to the sound library
 
 ## [v0.3.2](https://github.com/ashutoshgngwr/noice/releases/tag/0.3.2)
 
-**Date:** Sun Mar 22 22:06:35 2020 +0530
+**Sunday, 22 March 2020**
 
 - Fix a force close in sleep timer
 - Add light theme variant along with a theme selector
 
 ## [v0.3.1](https://github.com/ashutoshgngwr/noice/releases/tag/0.3.1)
 
-**Date:** Wed Mar 18 23:56:21 2020 +0530
+**Wednesday, 18 March 2020**
 
 - Add auto sleep timer
 - Add high fidelity sound library
@@ -255,7 +302,7 @@ on F-Droid.
 
 ## [v0.3.0-rc](https://github.com/ashutoshgngwr/noice/releases/tag/0.3.0-rc)
 
-**Date:** Tue Mar 17 05:31:11 2020 +0530
+**Tuesday, 17 March 2020**
 
 - Add auto sleep timer
 - Add high fidelity sound library
@@ -263,74 +310,74 @@ on F-Droid.
 
 ## [v0.2.8-rc](https://github.com/ashutoshgngwr/noice/releases/tag/0.2.8-rc)
 
-**Date:** Sun Nov 17 18:17:20 2019 +0530
+**Sunday, 17 November 2019**
 
 - Fixes minor issues
 - Updates dependencies
 
 ## [v0.2.7](https://github.com/ashutoshgngwr/noice/releases/tag/0.2.7)
 
-**Date:** Sun Nov 10 00:29:53 2019 +0530
+**Sunday, 10 November 2019**
 
 
 ## [v0.2.6](https://github.com/ashutoshgngwr/noice/releases/tag/0.2.6)
 
-**Date:** Tue Aug 27 14:02:03 2019 +0530
+**Tuesday, 27 August 2019**
 
 
 ## [v0.2.5](https://github.com/ashutoshgngwr/noice/releases/tag/0.2.5)
 
-**Date:** Fri Jul 5 18:41:31 2019 +0530
+**Friday, 5 July 2019**
 
 
 ## [v0.2.4-rc](https://github.com/ashutoshgngwr/noice/releases/tag/0.2.4-rc)
 
-**Date:** Sun Jun 30 16:45:36 2019 +0530
+**Sunday, 30 June 2019**
 
 
 ## [v0.2.3-rc](https://github.com/ashutoshgngwr/noice/releases/tag/0.2.3-rc)
 
-**Date:** Fri Jun 28 17:10:05 2019 +0530
+**Friday, 28 June 2019**
 
 
 ## [v0.2.2](https://github.com/ashutoshgngwr/noice/releases/tag/0.2.2)
 
-**Date:** Wed Jun 26 01:25:39 2019 +0530
+**Wednesday, 26 June 2019**
 
 
 ## [v0.2.1](https://github.com/ashutoshgngwr/noice/releases/tag/0.2.1)
 
-**Date:** Wed Jun 19 22:20:34 2019 +0530
+**Wednesday, 19 June 2019**
 
 
 ## [v0.2.1-rc](https://github.com/ashutoshgngwr/noice/releases/tag/0.2.1-rc)
 
-**Date:** Wed Jun 19 17:57:25 2019 +0530
+**Wednesday, 19 June 2019**
 
 
 ## [v0.2.0-rc](https://github.com/ashutoshgngwr/noice/releases/tag/0.2.0-rc)
 
-**Date:** Tue Jun 18 16:54:25 2019 +0530
+**Tuesday, 18 June 2019**
 
 
 ## [v0.1.0](https://github.com/ashutoshgngwr/noice/releases/tag/0.1.0)
 
-**Date:** Thu Jun 13 15:57:09 2019 +0530
+**Thursday, 13 June 2019**
 
 
 ## [v0.1.0-rc1](https://github.com/ashutoshgngwr/noice/releases/tag/0.1.0-rc1)
 
-**Date:** Thu Jun 13 15:46:09 2019 +0530
+**Thursday, 13 June 2019**
 
 
 ## [v0.1.0-rc0](https://github.com/ashutoshgngwr/noice/releases/tag/0.1.0-rc0)
 
-**Date:** Sun Jun 9 11:45:03 2019 +0530
+**Sunday, 9 June 2019**
 
 - Push inital release to Google Play beta track
 
 ## [v0.0.1-rc0](https://github.com/ashutoshgngwr/noice/releases/tag/0.0.1-rc0)
 
-**Date:** Fri Jun 7 07:00:28 2019 +0530
+**Friday, 7 June 2019**
 
 

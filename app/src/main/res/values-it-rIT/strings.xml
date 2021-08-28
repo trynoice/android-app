@@ -2,9 +2,7 @@
 <resources>
     <string name="about">A proposito di</string>
     <string name="app_theme">Tema</string>
-    <string name="close_drawer">Chiudi menu di navigazione</string>
     <string name="library">Libreria</string>
-    <string name="open_drawer">Apri menù di navigazione</string>
     <string name="report_issue">Segnala i problemi</string>
     <string name="saved_presets">Preimpostazioni salvate</string>
     <string name="sleep_timer">Timer di spegnimento </string>
@@ -102,7 +100,7 @@
     <string name="relax">Lenitivo</string>
     <string name="wake_up_timer">Timer risveglio</string>
     <string name="sleep_timer_description">Noice si riavvierà allo scadere del tempo. Usa i pulsanti sotto per aggiungere del tempo e avviare il timer.</string>
-    <string name="saved_presets_as_home_screen_summary">Mostra i preset salvati all\'avvio dell\'app</string>
+    <string name="saved_presets_as_home_screen_summary">Mostra \"preset salvati\" all\'avvio dell\'app (necessita il riavvio dell\'app)</string>
     <string name="pinned_shortcuts_not_supported">Il tuo launcher predefinito non supporta l\'aggiunta di scorciatoie.</string>
     <string name="wake_up_timer_description">Noice eseguirà il preset selezionato allo scadere del tempo. Usa i pulsanti sotto per selezionare un preset e impostare il tempo desiderato per il timer di risveglio.</string>
     <string name="wake_up_timer_cancelled">Timer di risveglio annullato!</string>
@@ -121,8 +119,6 @@
     <string name="appintro__getting_started_desc_0">Scorri a sinistra per conoscere tutte le funzionalità!</string>
     <string name="appintro__chromecast_title">Abilitato a Chromecast</string>
     <string name="appintro__chromecast_desc">Usa Noice per trasmettere l\'atmosfera ad altri dispositivi abilitati a Chromecast, come altoparlanti, TV, ecc.</string>
-    <string name="should_update_media_volume">Aggiorna il volume del dispositivo multimediale prima dell\'avvio del preset</string>
-    <string name="device_media_volume">Volume del dispositivo multimediale</string>
     <string name="support_development__why_description">- Per rendere possibili aggiornamenti futuri
 \n- Per mantenere Noice privo di pubblicità
 \n</string>
@@ -135,7 +131,7 @@
     <string name="later">Più tardi</string>
     <string name="in_app_feedback__title">Sottoponi una recensione</string>
     <string name="in_app_feedback__description">Ci piacerebbe che ci inviassi commenti sulla app. Ti preghiamo di prenderti un attimo per visitare il repository su Github. Se invece non ti è piaciuta, ti preghiamo di aprire una discussione, ed esprimere il tuo disappunto. Altrimenti, ti chiediamo di cliccare sulla stella per mostrare il tuo affetto e supporto al progetto.</string>
-    <string name="cast_media">Riproduci il supporto su un altro dispositivo</string>
+    <string name="cast_media">Connettiti a Chromecast</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minuto</item>
         <item quantity="other">%1$d minuti</item>
@@ -153,10 +149,9 @@
     <string name="add_to_app_shortcuts">Aggiungi alle scorciatoie delle app</string>
     <string name="pinned_shortcut_created">La scorciatoia è stata aggiunta alla schermata iniziale!</string>
     <string name="pinned_shortcut_creation_failed">Impossibile aggiungere la scorciatoia alla schermata iniziale!</string>
-    <string name="sound_fade_duration">Durata della dissolvenza del suono</string>
     <string name="appearance">Aspetto</string>
     <string name="behavior">Comportamento</string>
-    <string name="saved_presets_as_home_screen">Preimpostazioni salvate come schermata iniziale</string>
+    <string name="saved_presets_as_home_screen">«Preimpostazioni salvate» come schermata iniziale</string>
     <string name="settings">Impostazioni</string>
     <string name="app_shortcut_created">La preimpostazione è stata aggiunta alle scorciatoie delle app!</string>
     <string name="app_shortcut_removed">La preimpostazione è stata rimossa dalle scorciatoie delle app!</string>
@@ -177,5 +172,20 @@
     <string name="ignore_audio_focus_changes_summary_on">Non reagire quando altre app riproducino audio</string>
     <string name="ignore_audio_focus_changes_summary_off">Metti in pausa quando altre app riproducono l\'audio</string>
     <string name="ignore_audio_focus_changes">Ignora i cambiamenti di messa a fuoco dell\'audio</string>
-    <string name="sound_fade_duration_summary">Durata del fade in/out per la riproduzione/arresto dei suoni (in secondi)</string>
+    <string name="created_by">Creato da</string>
+    <string name="payment_pending">Ti avviseremo non appena avremo finito di elaborare il tuo pagamento.</string>
+    <string name="failed_to_purchase">Impossibile avviare il flusso di pagamento. Si prega di riprovare più tardi!</string>
+    <string name="failed_to_load_inapp_purchases">Impossibile caricare i dettagli dell\'acquisto in-app. Si prega di riprovare più tardi!</string>
+    <string name="should_allow_skipping_unsaved_presets_summary">Durante la riproduzione di preimpostazioni non salvate, abilita i pulsanti di salto nella notifica del lettore per generare preimposatzioni casuali</string>
+    <string name="should_allow_skipping_unsaved_presets">Permetti di saltare le preimpostazioni non salvate</string>
+    <string name="should_share_usage_data_summary">Condividi automaticamente i dati di utilizzo e di comportamento con gli sviluppatori</string>
+    <string name="should_share_usage_data">Condividi i dati sull\'uso e sul comportamento</string>
+    <string name="others">Altri</string>
+    <string name="decline">Rifiuta</string>
+    <string name="accept">Accetta</string>
+    <string name="share_usage_data_consent_message">Raccogliamo i dati di utilizzo dell\'applicazione per migliorare l\'esperienza dell\'utente. Raccogliamo anche dati sul comportamento dell\'app per analizzare e diagnosticare gli errori riscontrati durante l\'uso dell\'app. Leggi la nostra [informativa sulla riservatezza](https://ashutoshgngwr.github.io/noice/privacy-policy) per ulteriori informazioni.
+\n
+\n Puoi configurare la condivisione automatica dei dati in qualsiasi momento all\'interno dell\'app andando su «**Impostazioni** &gt; **Condividi dati di utilizzo e comportamento**».</string>
+    <string name="share_usage_data_consent_title">Preferenze di condivisione dei dati</string>
+    <string name="should_display_sound_icons">Visualizza le icone di suono</string>
 </resources>

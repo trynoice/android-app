@@ -23,10 +23,8 @@
     <string name="support_development">Støtt utviklingen</string>
     <string name="sleep_timer">Søvntidsur</string>
     <string name="report_issue">Innrapporter problemer</string>
-    <string name="open_drawer">Åpne navigasjonsskuff</string>
     <string name="library">Bibliotek</string>
     <string name="help">Hjelp</string>
-    <string name="close_drawer">Lukk navigasjonsskuff</string>
     <string name="app_theme">Drakt</string>
     <string name="about">Om</string>
     <string name="appintro__getting_started_title">Velkommen</string>

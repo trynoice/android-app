@@ -1,6 +1,6 @@
 Pek çok insan için, ufak bir arka plan sesi sakinleşmeye ve odaklanmaya yardımcı oluyor. Bazı durumlarda üretkenliği bile arttırıyor. Ayrıca arka plan sesi (ambiyans) stresin etkilerini azaltmaya da yardımcı olabiliyor.
 
-Noice çevresel sesleri kullanarak kendi ambiyansınızı oluşturmanızı sağlayan bir uygulamadır. İşinize odaklanmak ya da sakin, barış dolu bir ortamda uyumak için rahatsız edici sesleri baskılayacak mükemmel ambiyansınızı oluşturun.
+Noice çevresel sesleri kullanarak kendi ambiyansınızı oluşturmanızı sağlayan bir uygulamadır. İşinize odaklanmak veya sakin, barış dolu bir ortamda uyumak için rahatsız edici sesleri baskılayacak mükemmel ambiyansınızı oluşturun.
 
 <b>Özellikler</b>
 - 35 kaydedilmiş ses
@@ -13,7 +13,7 @@ Noice çevresel sesleri kullanarak kendi ambiyansınızı oluşturmanızı sağl
 - Diğer müzik oynatıcılarında oynatabilme
 - Her ses için ayrı ses seviyesi
 - Çevrim dışı oynatma
-- Açık ve karanlık tema
+- Açık ve koyu uygulama teması çeşitleri
 
 <b>Ses Kütüphanesi</b>
 - Yaşam (kuşlar, cırcır böcekleri, kurt, insan kalp atışı vb.)
@@ -24,12 +24,12 @@ Noice çevresel sesleri kullanarak kendi ambiyansınızı oluşturmanızı sağl
 - Kuru gürültü (beyaz, pembe, kayverengi)
 
 <b>İzinler</b>
-- <b>cihazın uyumasını önle</b>: oynatıcı için cihazı açık tutma
-- <b>ön plan işlemlerini yürüt</b>: oynatıcıyı çalıştırma (arayüzden farklı)
-- <b>açılışta başlat</b>: yeniden başlatmalarda alarmın çalıştığından emin olma
-- <b>tam ağ erişimi</b>: Chromecast ve maddi katkıları etkinleştirme
-- <b>ağ bağlantılarını gör</b>: gereklilik adına eklendi, şaunda kullanılmıyor
-- <b>Google Play ödeme servisi</b>: destek adına maddi katkıda bulunulma imkanı
+- <b>aygıtın uyumasını önle</b>: oynatıcı için aygıtı açık tutmak için
+- <b>ön plan işlemlerini yürüt</b>: oynatıcıyı çalıştırmak için (arayüzden farklı)
+- <b>açılışta başlat</b>: yeniden başlatmalarda alarmın çalıştığından emin olmak için
+- <b>tam ağ erişimi</b>: Chromecast ve maddi olarak katkıda bulunmayı etkinleştirmek için
+- <b>ağ bağlantılarını gör</b>: bir bağımlılık tarafından eklendi, şu anda kullanılmıyor
+- <b>Google Play ödeme hizmeti</b>: geliştirilmesini desteklemek üzere maddi olarak katkıda bulunmayı etkinleştirmek için
 
-Noice özgür ve açık kaynak kodlu bir yazılımdır.
+Noice özgür ve açık kaynaklı bir yazılımdır.
 https://github.com/ashutoshgngwr/noice

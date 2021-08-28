@@ -17,10 +17,8 @@
     <string name="intensity_any">Edozein</string>
     <string name="support_development">Garapena babestu</string>
     <string name="report_issue">Arazoen berri eman</string>
-    <string name="open_drawer">Nabigazio menua ireki</string>
     <string name="library">Liburutegia</string>
     <string name="help">Laguntza</string>
-    <string name="close_drawer">Nabigazio menua itxi</string>
     <string name="app_theme">Itxura</string>
     <string name="about">Honi buruz</string>
 </resources>

@@ -2,10 +2,8 @@
 <resources>
     <string name="about">Hakkında</string>
     <string name="app_theme">Tema</string>
-    <string name="close_drawer">Gezinti çubuğunu kapat</string>
     <string name="help">Yardım</string>
     <string name="library">Kütüphane</string>
-    <string name="open_drawer">Gezinti çubuğunu aç</string>
     <string name="report_issue">Sorun Bildir</string>
     <string name="saved_presets">Kayıtlar</string>
     <string name="sleep_timer">Uyku Zamanlayıcı</string>
@@ -138,11 +136,7 @@
     - daha iyi ve kaliteli sesler\n
     - kahve almak\n
   </string>
-    <string name="support_development__donate_google_play_description">
-    Ödemeniz Google Play ile güvenli bir şekilde gerçekleşecektir. Tutar
-    otomatik olarak kendi ülkenizin para birimine çevrilecektir. Konumunuza
-    bağlı olarak son tutara _belki_ vergi eklenebilir.
-  </string>
+    <string name="support_development__donate_google_play_description">Ödemeniz Google Play ile güvenli bir şekilde gerçekleşecektir. Konumunuza bağlı olarak son tutara _belki_ vergi eklenebilir.</string>
     <string name="support_development__donate_thank_you">Teşekkür ederiz!</string>
     <string name="support_development__donate_thank_you_description">
     Noice projesine olan cömertçe katkınızdan dolayı tüm içtenliğimizle teşekkür ederiz.
@@ -158,7 +152,7 @@
     - Gelecek güncellemeleri mümkün kılmak için\n
     - Noice\'in reklamsız kalmasını sağlamak için\n
   </string>
-    <string name="cast_media">İçeriği başka bir cihaza yayınla</string>
+    <string name="cast_media">Chromecast\'e bağlan</string>
     <string name="in_app_feedback__description">
     GitHub adresimizi ziyaret edip düşüncelerinizi bizimle paylaşmanızdan
     mutluluk duyarız. Eğer uygulamayı beğenmediyseniz lütfen yeni bir sorun açıp
@@ -170,10 +164,8 @@
     <string name="never">Asla</string>
     <string name="notification_channel_default__description">Arka plan oynatıcı ayarları</string>
     <string name="notification_channel_default__name">Arka Plan Oynatıcı</string>
-    <string name="should_update_media_volume">Kaydı başlatmadan önce cihaz sesini güncelle</string>
-    <string name="device_media_volume">Cihaz ses düzeyi</string>
     <string name="use_24h_format">24 saat formatını kullan</string>
-    <string name="saved_presets_as_home_screen_summary">Açılışta mevcut kayıtları göster</string>
+    <string name="saved_presets_as_home_screen_summary">Açılışta \"mevcut kayıtları\" göster</string>
     <string name="submit_feedback">Geri Bildirim Gönder</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d dakika</item>
@@ -194,11 +186,9 @@
     <string name="add_to_app_shortcuts">Uygulama kısayollarına ekle</string>
     <string name="pinned_shortcut_created">Kısayol ana ekrana eklendi!</string>
     <string name="pinned_shortcut_creation_failed">Kısayol ana ekrana eklenemedi!</string>
-    <string name="sound_fade_duration_summary">Seslerin oynatılması/durdurulması için geçiş süresi (saniye cinsinden)</string>
-    <string name="sound_fade_duration">Ses geçiş süresi</string>
     <string name="appearance">Görünüm</string>
     <string name="behavior">Davranış</string>
-    <string name="saved_presets_as_home_screen">Ana ekrana kaydedilen kayıtlar</string>
+    <string name="saved_presets_as_home_screen">Ana ekrana \"kaydedilen kayıtlar\"</string>
     <string name="settings">Ayarlar</string>
     <string name="share">Paylaş</string>
     <string name="ignore_audio_focus_changes_summary_on">Diğer uygulamalar ses oynatırken tepki verme</string>
@@ -218,4 +208,18 @@
     <string name="export_presets_summary">Kaydedilen kayıtların mevcut anlık görüntüsünü harici bir dosyaya aktarın</string>
     <string name="export_presets">Bir dosyaya aktar</string>
     <string name="should_display_sound_icons">Ses simgelerini göster</string>
+    <string name="payment_pending">Ödemenizi işlemeyi bitirir bitirmez sizi bilgilendireceğiz.</string>
+    <string name="failed_to_purchase">Ödeme akışı başlatılamadı. Lütfen daha sonra tekrar deneyin!</string>
+    <string name="failed_to_load_inapp_purchases">Uygulama içi satın alma ayrıntıları yüklenemedi. Lütfen daha sonra tekrar deneyin!</string>
+    <string name="should_allow_skipping_unsaved_presets_summary">Kaydedilmemiş kayıtları oynatırken, rastgele kayıtlar oluşturmak için oynatıcı bildirimindeki atlama düğmelerini etkinleştirin</string>
+    <string name="should_allow_skipping_unsaved_presets">Kaydedilmemiş kayıtların atlanmasına izin ver</string>
+    <string name="should_share_usage_data_summary">Kullanım ve davranış verilerini geliştiricilerle otomatik olarak paylaşın</string>
+    <string name="should_share_usage_data">Kullanım ve davranış verilerini paylaş</string>
+    <string name="others">Diğer</string>
+    <string name="decline">Reddet</string>
+    <string name="accept">Kabul et</string>
+    <string name="share_usage_data_consent_message">Kullanıcı deneyimini iyileştirmek için uygulama kullanım verilerini topluyoruz. Ayrıca, uygulama kullanımı sırasında karşılaşılan hataları çözümlemek ve teşhis etmek için uygulama davranış verilerini topluyoruz. Daha fazla bilgi için [gizlilik politikamızı](https://ashutoshgngwr.github.io/noice/privacy-policy) okuyun.
+\n
+\n \"**Ayarlar** &gt; **Kullanım ve davranış verilerini paylaş**\" seçeneğine giderek uygulama içinde istediğiniz zaman otomatik veri paylaşımını yapılandırabilirsiniz.</string>
+    <string name="share_usage_data_consent_title">Veri Paylaşımı Tercihleri</string>
 </resources>

@@ -6,7 +6,7 @@
     <string name="later">之后</string>
     <string name="in_app_feedback__title">提交评论</string>
     <string name="in_app_feedback__description">我们很乐意听到你对该应用的意见。请花点时间访问我们的 GitHub 仓库。如果你不喜欢这个应用，请考虑开一个问题来解释你的担忧。否则，请给项目打星以示爱护和支持。</string>
-    <string name="cast_media">将媒体投到另一个设备上</string>
+    <string name="cast_media">媒体转投</string>
     <string name="support_development__why_description">- 为了使未来的更新成为可能
 \n - 为了让Noice永远没有广告
 \n</string>
@@ -15,7 +15,7 @@
     <string name="support_development__share">与朋友分享</string>
     <string name="support_development__donate_thank_you_description">我们衷心感谢你对Noice项目的慷慨捐助。</string>
     <string name="support_development__donate_thank_you">谢谢你！</string>
-    <string name="support_development__donate_google_play_description">你的付款将由Google Play安全处理。金额将被转换为你的当地货币。根据你所在的位置，最终金额可能会增加额外的税收。</string>
+    <string name="support_development__donate_google_play_description">您的支付将由Google Play安全接管。金额将被转换为你的当地货币。根据你所在的位置，最终金额可能会增加额外的税收。</string>
     <string name="support_development__donate_description">捐赠将帮助我们
 \n - 投资新功能
 \n - 策划更好的声音样本
@@ -34,8 +34,6 @@
     <string name="appintro__chromecast_title">已启用 Chromecast</string>
     <string name="appintro__chromecast_desc">使用Noice将其氛围投射到其他支持Chromecast的设备上，如扬声器、电视等。</string>
     <string name="app_description">在最小的背景噪音下，放松并提高工作效率。</string>
-    <string name="should_update_media_volume">启动预设前更新设备媒体音量</string>
-    <string name="device_media_volume">设备媒体音量</string>
     <string name="use_24h_format">使用24小时制</string>
     <string name="wake_up_timer_description">当定时器结束时，Noice将启动所选预设。使用下面的按钮选择预设并设置启动唤醒定时器的所需时间。</string>
     <string name="wake_up_timer_cancelled">唤醒定时器已取消！</string>
@@ -128,10 +126,8 @@
     <string name="sleep_timer">睡眠定时器</string>
     <string name="saved_presets">保存的预设</string>
     <string name="report_issue">报告问题</string>
-    <string name="open_drawer">打开导航抽屉</string>
     <string name="library">图书馆</string>
     <string name="help">帮助</string>
-    <string name="close_drawer">关闭导航抽屉</string>
     <string name="app_theme">主题</string>
     <string name="wake_up_timer_schedule_set">闹铃将在 %1$s %2$s %3$s 后结束</string>
     <plurals name="time_minutes">
@@ -150,4 +146,7 @@
     <string name="remove_from_app_shortcuts">从应用快捷方式中删除</string>
     <string name="add_to_app_shortcuts">添加到应用快捷方式</string>
     <string name="app_authors">查看 Noice 作者名单</string>
+    <string name="behavior">行为</string>
+    <string name="settings">设置</string>
+    <string name="app_shortcut_creation_failed">未能将预设添加到应用程序的快捷方式中!</string>
 </resources>

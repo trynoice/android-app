@@ -64,10 +64,14 @@ class SettingsRepository private constructor(private val context: Context) {
   }
 
   /**
-   * Returns the value of [R.string.sound_fade_duration_key] preference in milliseconds.
+   * Returns the value of [R.string.sound_fade_in_duration_key] preference in milliseconds.
    */
-  fun getSoundFadeDurationInMillis(): Long {
-    return prefs.getInt(context.getString(R.string.sound_fade_duration_key), 1) * 1000L
+  fun getSoundFadeInDurationMillis(): Long {
+    return prefs.getInt(
+      context.getString(R.string.sound_fade_in_duration_key),
+      // inherit fallback value from the deprecated preference.
+      prefs.getInt(context.getString(R.string.sound_fade_duration_key), 1)
+    ) * 1000L
   }
 
   /**

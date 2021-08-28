@@ -1,0 +1,35 @@
+Daugeliui žmonių šiek tiek foninio triukšmo padeda nusiraminti ir susikaupti. Kai kuriais atvejais jis taip pat padidina produktyvumą. Fono triukšmas (aplinka) taip pat gali padėti sumažinti streso poveikį.
+
+Noice - tai programėlė, leidžianti sukurti individualią aplinką naudojant aplinkos triukšmo šaltinių įrašus. Sukurkite tobulą aplinką derindami skirtingus garsus, kad užgožtumėte trukdžius ir galėtumėte susitelkti į darbą, arba sukurkite giedrą, ramią aplinką, kuri skatintų užmigti.
+
+<b>Funkcijos</b>
+- 35 įrašyti garsai
+- Įjungta „Google Cast“ („Chromecast“) įgalinta [tik „Play Store“ parduotuvės versija]
+- Automatinis miego laikmatis
+- Pabudimo laikmatis (žadintuvas)
+- Generuoti atsitiktinius mišinius
+- Sukurkite individualų miksą
+- Išsaugokite mėgstamiausius miksus, kaip parinktis
+- Groti kartu su kitais muzikos grotuvais
+- Individualus kiekvieno triukšmo šaltinio garsumo valdymas
+- Atkūrimas neprisijungus prie interneto
+- Šviesūs ir tamsūs programėlės temos variantai
+
+<b>Triukšmo biblioteka</b>
+- Gyvybės rinkinys (paukščiai, vikšrai, vilkas, žmogaus širdies plakimas ir t. t.)
+- Miško rinkinys (ugnis, naktis, vėjas, palmės ir t. t.)
+- Monsuno rinkinys (lietus, griaustinis)
+- Teleportacijos rinkinys (kavinė, biblioteka, biuras, pajūris, upės krantas ir t. t.)
+- Transporto priemonių rinkinys (važiuojantis traukinys, skrendantis, girgždantis laivas, elektrinis automobilis ir t. t.)
+- Neapdorotas triukšmas (baltasis, rožinis, rudasis)
+
+<b>Reikalingi leidimai</b>
+- <b>neleisti įrenginiui miegoti</b>: neleisti įrenginio procesoriui budėti atkūrimo metu
+- <b>paleisti priekinio fono paslaugą</b>: paleisti grotuvo procesą (kitokį nei vartotojo sąsaja)
+- <b>paleisti paleidimo metu</b>: užtikrinti, kad žadinimo laikmačiai išliktų per visus perkrovimus
+- <b>visiška tinklo prieiga</b>: įjungti „Chromecast“ ir finansinius įnašus
+- <b>peržiūrėti tinklo ryšius</b>: pridėta dėl priklausomybės, šiuo metu nenaudojama
+- <b>„Google Play“ atsiskaitymo paslauga</b>: įgalinti finansinius įnašus, skirtus plėtrai remti
+
+Noice yra nemokama atvirojo kodo programinė įranga.
+https://github.com/ashutoshgngwr/noice

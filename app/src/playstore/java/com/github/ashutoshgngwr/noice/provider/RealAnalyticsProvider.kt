@@ -56,13 +56,13 @@ object RealAnalyticsProvider : AnalyticsProvider {
 
   override fun logPlayerStopEvent(key: String) {
     playerStartTimes.remove(key)?.also {
-      val duration = System.currentTimeMillis() - it
-      fa.logEvent("sound_playback_duration", bundleOf("duration_ms" to duration))
+      val params = bundleOf("sound_key" to key, "duration_ms" to System.currentTimeMillis() - it)
+      fa.logEvent("sound_session", params)
     }
 
     if (playerStartTimes.isEmpty() && playbackStartTime > 0) {
       val duration = System.currentTimeMillis() - playbackStartTime
-      fa.logEvent("total_playback_duration", bundleOf("duration_ms" to duration))
+      fa.logEvent("playback_session", bundleOf("duration_ms" to duration))
       playbackStartTime = -1L
     }
   }
@@ -77,7 +77,7 @@ object RealAnalyticsProvider : AnalyticsProvider {
     }
 
     val params = bundleOf("duration_ms" to System.currentTimeMillis() - castSessionStartTime)
-    fa.logEvent("cast_session_duration", params)
+    fa.logEvent("cast_session", params)
     castSessionStartTime = -1
   }
 }

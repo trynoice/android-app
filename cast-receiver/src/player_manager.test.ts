@@ -20,14 +20,13 @@ jest.mock("howler", () => {
   };
 });
 
-// TODO: migrate to 'modern' timers.
-jest.useFakeTimers("legacy");
-
 describe("PlayerManager#handlePlayerEvent", () => {
-  const statusCallback = jest.fn();
+  let statusCallback: (s: PlayerManagerStatus) => void;
   let manager: PlayerManager;
 
   beforeEach(() => {
+    jest.useFakeTimers();
+    statusCallback = jest.fn();
     manager = new PlayerManager();
     manager.onStatusUpdate(statusCallback);
   });
@@ -65,11 +64,13 @@ describe("PlayerManager#handlePlayerEvent", () => {
 
   it("should stop idle timer on Create action", () => {
     createTestPlayer();
-    expect(window.clearTimeout).toHaveBeenCalled();
+    jest.runAllTimers();
+    expect(statusCallback).not.toHaveBeenCalledWith(
+      PlayerManagerStatus.IdleTimedOut
+    );
   });
 
   it("should invoke the status callback with an idle event on timeout", () => {
-    expect(window.setTimeout).toHaveBeenCalled();
     jest.runAllTimers();
     expect(statusCallback).toHaveBeenCalledWith(
       PlayerManagerStatus.IdleTimedOut
@@ -156,7 +157,10 @@ describe("PlayerManager#handlePlayerEvent", () => {
   });
 
   describe("Stop action", () => {
-    beforeEach(createTestPlayer);
+    beforeEach(() => {
+      jest.useFakeTimers();
+      createTestPlayer();
+    });
 
     function stopTestPlayer(): void {
       manager.handlePlayerEvent({
@@ -199,7 +203,10 @@ describe("PlayerManager#handlePlayerEvent", () => {
 
     it("should start idle timer if all players are stopped", () => {
       stopTestPlayer();
-      expect(window.setTimeout).toHaveBeenCalled();
+      jest.runAllTimers();
+      expect(statusCallback).toHaveBeenCalledWith(
+        PlayerManagerStatus.IdleTimedOut
+      );
     });
   });
 

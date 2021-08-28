@@ -109,7 +109,11 @@ class SettingsRepositoryTest {
         prefs.getInt(context.getString(R.string.sound_fade_duration_key), any())
       } returns input
 
-      assertEquals(input * 1000L, settingsRepository.getSoundFadeDurationInMillis())
+      every {
+        prefs.getInt(context.getString(R.string.sound_fade_in_duration_key), any())
+      } answers { secondArg() }
+
+      assertEquals(input * 1000L, settingsRepository.getSoundFadeInDurationMillis())
     }
   }
 

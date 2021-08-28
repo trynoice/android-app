@@ -11,12 +11,11 @@ import { PlayerControlEvent, PlayerAction, PlayerManagerStatus } from "./types";
  */
 export default class PlayerManager {
   private static readonly IDLE_TIMEOUT = 300 * 1000;
-  private static readonly FADE_IN_OUT_DURATION = 1500;
-  private static readonly VOLUME_ADJUSTMENT_FADE_DURATION = 750;
+  private static readonly DEFAULT_FADE_DURATION = 1000;
 
   private players: Map<string, Howl> = new Map();
   private bufferingState: Set<string> = new Set();
-  private idleTimer: number;
+  private idleTimer?: number;
   private onStatusUpdateCallback?: (status: PlayerManagerStatus) => void;
 
   constructor() {
@@ -69,12 +68,16 @@ export default class PlayerManager {
    * sound to be loaded before starting playback. It invokes the status callback
    * with a PlayerManagerStatusEvent.Playing event when the sound starts playing.
    */
-  private play(soundKey: string): void {
+  private play(soundKey: string, fadeDuration: number | undefined): void {
     if (this.players.has(soundKey) === false) {
       return;
     }
 
     const player = this.players.get(soundKey);
+    if (!player) {
+      return;
+    }
+
     if (player.playing() === false) {
       player.once("play", (): void => {
         this.bufferingState.delete(soundKey);
@@ -82,7 +85,11 @@ export default class PlayerManager {
         // fade-in only looping sounds because non-looping sounds need to
         // maintain their abruptness thingy.
         if (player.loop()) {
-          player.fade(0, player.volume(), PlayerManager.FADE_IN_OUT_DURATION);
+          player.fade(
+            0,
+            player.volume(),
+            fadeDuration ?? PlayerManager.DEFAULT_FADE_DURATION
+          );
         }
       });
 
@@ -99,8 +106,12 @@ export default class PlayerManager {
     }
 
     const player = this.players.get(soundKey);
+    if (!player) {
+      return;
+    }
+
     const originalVolume = player.volume();
-    player.fade(originalVolume, 0, PlayerManager.FADE_IN_OUT_DURATION);
+    player.fade(originalVolume, 0, PlayerManager.DEFAULT_FADE_DURATION);
     player.once("fade", () => {
       player.pause();
       player.volume(originalVolume);
@@ -119,8 +130,12 @@ export default class PlayerManager {
     const player = this.players.get(soundKey);
     this.players.delete(soundKey);
     this.bufferingState.delete(soundKey);
+    if (!player) {
+      return;
+    }
+
     if (player.playing()) {
-      player.fade(player.volume(), 0, PlayerManager.FADE_IN_OUT_DURATION);
+      player.fade(player.volume(), 0, PlayerManager.DEFAULT_FADE_DURATION);
       player.once("fade", () => {
         player.stop();
         player.unload();
@@ -141,12 +156,12 @@ export default class PlayerManager {
     }
 
     const player = this.players.get(soundKey);
+    if (!player) {
+      return;
+    }
+
     if (player.playing()) {
-      player.fade(
-        player.volume(),
-        volume,
-        PlayerManager.VOLUME_ADJUSTMENT_FADE_DURATION
-      );
+      player.fade(player.volume(), volume, PlayerManager.DEFAULT_FADE_DURATION);
     } else {
       player.volume(volume);
     }
@@ -164,10 +179,6 @@ export default class PlayerManager {
   handlePlayerEvent(event: PlayerControlEvent): void {
     event.src.forEach((soundKey: string) => {
       if (this.players.has(soundKey) === false) {
-        if (event.action === undefined || event.action === null) {
-          return;
-        }
-
         if (event.action !== PlayerAction.Create) {
           // shouldn't be here?
           return;
@@ -189,7 +200,7 @@ export default class PlayerManager {
       this.setVolume(soundKey, event.volume);
       switch (event.action) {
         case PlayerAction.Play:
-          this.play(soundKey);
+          this.play(soundKey, event.fadeInDuration);
           break;
         case PlayerAction.Pause:
           this.pause(soundKey);
