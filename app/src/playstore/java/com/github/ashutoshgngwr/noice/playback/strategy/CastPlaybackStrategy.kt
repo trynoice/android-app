@@ -1,7 +1,9 @@
 package com.github.ashutoshgngwr.noice.playback.strategy
 
+import android.content.Context
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.model.Sound
+import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.gms.cast.framework.CastSession
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
@@ -11,6 +13,7 @@ import com.google.gson.annotations.Expose
  * to the cast receiver application.
  */
 class CastPlaybackStrategy(
+  context: Context,
   private val session: CastSession,
   private val namespace: String,
   private val sound: Sound
@@ -28,13 +31,15 @@ class CastPlaybackStrategy(
     @Expose val src: Array<String>,
     @Expose val isLooping: Boolean,
     @Expose val volume: Float,
-    @Expose val action: String?
+    @Expose val action: String?,
+    @Expose val fadeInDuration: Long,
   )
 
   var volume: Float = 0.0f
     private set
 
   private val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+  private val settingsRepository = SettingsRepository.newInstance(context)
 
   init {
     notifyChanges(ACTION_CREATE)
@@ -64,8 +69,8 @@ class CastPlaybackStrategy(
   override fun setAudioAttributes(attrs: AudioAttributesCompat) = Unit
 
   private fun notifyChanges(action: String?) {
-    session.sendMessage(
-      namespace, gson.toJson(PlayerEvent(sound.src, sound.isLooping, volume, action))
-    )
+    val fadeInDuration = settingsRepository.getSoundFadeInDurationMillis()
+    val event = PlayerEvent(sound.src, sound.isLooping, volume, action, fadeInDuration)
+    session.sendMessage(namespace, gson.toJson(event))
   }
 }

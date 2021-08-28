@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <item name="action_play_pause_toggle" type="id" />
+  <item name="action_playback_toggle" type="id" />
   <item name="volume_slider" type="id" />
   <item name="time_period_slider" type="id" />
 </resources>

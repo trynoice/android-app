@@ -65,7 +65,7 @@ class ShortcutHandlerActivityTest {
         Intents.intended(
           allOf(
             hasComponent(MainActivity::class.qualifiedName),
-            hasExtra(MainActivity.EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.saved_presets)
+            hasExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.saved_presets)
           ),
           Intents.times(1)
         )

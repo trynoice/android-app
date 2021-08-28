@@ -17,8 +17,8 @@ android {
     applicationId 'com.github.ashutoshgngwr.noice'
     minSdkVersion 21
     targetSdkVersion 30
-    versionCode 45
-    versionName '1.1.1'
+    versionCode 48
+    versionName '1.2.2'
     testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
   }
 
@@ -93,17 +93,24 @@ dependencies {
   def espressoVersion = '3.3.0'
   def coroutinesVersion = '1.5.1'
 
-  implementation 'androidx.activity:activity-ktx:1.3.0'
-  implementation 'androidx.appcompat:appcompat:1.3.0'
+  // TODO: move this to stable release. The latest stable release (2.3.5) causes a crash with error
+  //  `java.lang.RuntimeException: Unknown animation name: x`
+  //  Although, the crash only occurs on the Play Store variant..?
+  def navVersion = '2.4.0-alpha06'
+
+  implementation 'androidx.activity:activity-ktx:1.3.1'
+  implementation 'androidx.appcompat:appcompat:1.3.1'
   implementation 'androidx.browser:browser:1.3.0'
   implementation 'androidx.cardview:cardview:1.0.0'
-  implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+  implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
   implementation 'androidx.core:core-ktx:1.6.0'
   implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
   implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
   implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
-  implementation 'androidx.media:media:1.3.1'
+  implementation 'androidx.media:media:1.4.1'
   implementation 'androidx.mediarouter:mediarouter:1.2.4'
+  implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+  implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
   implementation 'androidx.preference:preference-ktx:1.1.1'
   implementation 'androidx.recyclerview:recyclerview:1.2.1'
   implementation 'com.github.AppIntro:AppIntro:6.1.0'
@@ -111,7 +118,7 @@ dependencies {
   implementation 'com.google.android.exoplayer:exoplayer-core:2.11.8'
   implementation 'com.google.android:flexbox:2.0.1'
   implementation 'com.google.android.material:material:1.4.0'
-  implementation 'com.google.code.gson:gson:2.8.7'
+  implementation 'com.google.code.gson:gson:2.8.8'
   implementation 'com.hopenlib.library:flextools:1.0.1'
   implementation 'com.ncorti:slidetoact:0.9.0'
   implementation 'io.noties.markwon:core:4.6.2'
@@ -121,7 +128,7 @@ dependencies {
   playstoreImplementation 'com.android.billingclient:billing-ktx:4.0.0'
   playstoreImplementation 'com.google.android.gms:play-services-cast-framework:20.0.0'
   playstoreImplementation 'com.google.android.play:core:1.10.0'
-  playstoreImplementation platform('com.google.firebase:firebase-bom:28.3.0')
+  playstoreImplementation platform('com.google.firebase:firebase-bom:28.4.0')
   playstoreImplementation 'com.google.firebase:firebase-analytics-ktx'
   playstoreImplementation 'com.google.firebase:firebase-crashlytics-ktx'
   playstoreImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"

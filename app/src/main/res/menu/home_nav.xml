@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item
+    android:id="@+id/library"
+    android:icon="@drawable/ic_action_library"
+    android:title="@string/library" />
+
+  <item
+    android:id="@+id/saved_presets"
+    android:icon="@drawable/ic_action_saved_presets"
+    android:title="@string/saved_presets" />
+
+  <item
+    android:id="@+id/wake_up_timer"
+    android:icon="@drawable/ic_action_wake_up_timer"
+    android:title="@string/wake_up_timer" />
+
+</menu>

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
@@ -21,6 +22,7 @@ import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.databinding.AlarmRingerActivityBinding
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.playback.strategy.LocalPlaybackStrategy
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.ncorti.slidetoact.SlideToActView
@@ -35,9 +37,14 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     private val LOG_TAG = AlarmRingerActivity::class.simpleName
 
     fun getPendingIntent(context: Context, presetID: String?): PendingIntent {
+      var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE
+      }
+
       return Intent(context, AlarmRingerActivity::class.java)
         .putExtra(EXTRA_PRESET_ID, presetID)
-        .let { PendingIntent.getActivity(context, RC_ALARM, it, PendingIntent.FLAG_UPDATE_CURRENT) }
+        .let { PendingIntent.getActivity(context, RC_ALARM, it, piFlags) }
     }
   }
 
@@ -82,7 +89,11 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
 
     Log.d(LOG_TAG, "onStop(): pausing playback")
     PlaybackController.pause(this)
-    PlaybackController.setAudioUsage(this, AudioAttributesCompat.USAGE_MEDIA)
+
+    // TODO: find a better solution to wait for pause transition to finish before switching streams.
+    Handler(mainLooper).postDelayed({
+      PlaybackController.setAudioUsage(this, AudioAttributesCompat.USAGE_MEDIA)
+    }, LocalPlaybackStrategy.DEFAULT_FADE_DURATION)
 
     val duration = System.currentTimeMillis() - ringerStartTime
     analyticsProvider.logEvent("alarm_ringer_session", bundleOf("duration_ms" to duration))

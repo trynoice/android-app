@@ -2,10 +2,8 @@
 <resources>
     <string name="about">Hakkında</string>
     <string name="app_theme">Tema</string>
-    <string name="close_drawer">Gezinti çubuğunu kapat</string>
     <string name="help">Yardım</string>
     <string name="library">Kütüphane</string>
-    <string name="open_drawer">Gezinti çubuğunu aç</string>
     <string name="report_issue">Sorun Bildir</string>
     <string name="saved_presets">Kayıtlar</string>
     <string name="sleep_timer">Uyku Zamanlayıcı</string>
@@ -166,8 +164,6 @@
     <string name="never">Asla</string>
     <string name="notification_channel_default__description">Arka plan oynatıcı ayarları</string>
     <string name="notification_channel_default__name">Arka Plan Oynatıcı</string>
-    <string name="should_update_media_volume">Kaydı başlatmadan önce cihaz sesini güncelle</string>
-    <string name="device_media_volume">Cihaz ses düzeyi</string>
     <string name="use_24h_format">24 saat formatını kullan</string>
     <string name="saved_presets_as_home_screen_summary">Açılışta \"mevcut kayıtları\" göster</string>
     <string name="submit_feedback">Geri Bildirim Gönder</string>
@@ -190,8 +186,6 @@
     <string name="add_to_app_shortcuts">Uygulama kısayollarına ekle</string>
     <string name="pinned_shortcut_created">Kısayol ana ekrana eklendi!</string>
     <string name="pinned_shortcut_creation_failed">Kısayol ana ekrana eklenemedi!</string>
-    <string name="sound_fade_duration_summary">Seslerin oynatılması/durdurulması için geçiş süresi (saniye cinsinden)</string>
-    <string name="sound_fade_duration">Ses geçiş süresi</string>
     <string name="appearance">Görünüm</string>
     <string name="behavior">Davranış</string>
     <string name="saved_presets_as_home_screen">Ana ekrana \"kaydedilen kayıtlar\"</string>

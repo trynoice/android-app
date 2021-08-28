@@ -8,13 +8,14 @@ on:
       - "[0-9]+.[0-9]+.[0-9]+"
     paths:
       - "fastlane/**"
-      - ".github/workflows/**"
+      - ".github/workflows/fastlane-metadata.yaml"
   pull_request:
     branches:
       - main
       - "[0-9]+.[0-9]+.x"
     paths:
       - "fastlane/**"
+      - ".github/workflows/fastlane-metadata.yaml"
 
 jobs:
   validate:
@@ -24,6 +25,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ashutoshgngwr/validate-fastlane-supply-metadata@v1
+        with:
+          usePlayStoreLocales: true
 
   play-store-upload:
     name: Play Store Upload

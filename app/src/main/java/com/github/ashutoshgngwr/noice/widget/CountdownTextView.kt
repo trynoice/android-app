@@ -8,14 +8,17 @@ import android.os.SystemClock
 import android.text.Html
 import android.text.Spanned
 import android.util.AttributeSet
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import androidx.annotation.VisibleForTesting
 import com.github.ashutoshgngwr.noice.R
 import com.google.android.material.textview.MaterialTextView
 import java.util.concurrent.TimeUnit
 
-class CountdownTextView : MaterialTextView {
+class CountdownTextView @JvmOverloads constructor(
+  context: Context,
+  attrs: AttributeSet? = null,
+  defStyleAttr: Int = 0
+) : MaterialTextView(context, attrs, defStyleAttr) {
+
   companion object {
     /**
      * HTML template to use on the TextView. Countdown is set using [String.format] and [Html.fromHtml].
@@ -31,12 +34,6 @@ class CountdownTextView : MaterialTextView {
      */
     private const val UPDATE_INTERVAL = 500L
   }
-
-  constructor(@NonNull context: Context) : super(context)
-  constructor(@NonNull context: Context, @Nullable attrs: AttributeSet) : super(context, attrs)
-  constructor(@NonNull context: Context, @Nullable attrs: AttributeSet, defStyleAttr: Int) : super(
-    context, attrs, defStyleAttr
-  )
 
   /**
    * In Robolectric 4.4 onwards, the looper model has changed. Earlier, all tasks were posted on the

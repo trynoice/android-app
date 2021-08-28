@@ -1,0 +1,7 @@
+- Fix crash on opening preset shortcuts
+- Fix crash on viewing wake-up timers from the system bar
+- Fix fade glitch on re-opening the same preset shortcut
+- Update translations
+
+We're continuously working to make Noice better. Please turn on updates to never miss a thing!
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG

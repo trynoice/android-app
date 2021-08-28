@@ -101,12 +101,15 @@ object PlaybackController {
     intent: Intent,
     requestCode: Int
   ): PendingIntent {
+    var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE
+    }
+
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      PendingIntent.getForegroundService(
-        context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT
-      )
+      PendingIntent.getForegroundService(context, requestCode, intent, piFlags)
     } else {
-      PendingIntent.getService(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+      PendingIntent.getService(context, requestCode, intent, piFlags)
     }
   }
 
@@ -249,7 +252,7 @@ object PlaybackController {
   /**
    * Sends the start command to the service with [ACTION_PLAY_PRESET].
    */
-  fun playPreset(context: Context, presetID: String) {
+  fun playPreset(context: Context, presetID: String?) {
     context.startService(
       Intent(context, MediaPlayerService::class.java)
         .setAction(ACTION_PLAY_PRESET)

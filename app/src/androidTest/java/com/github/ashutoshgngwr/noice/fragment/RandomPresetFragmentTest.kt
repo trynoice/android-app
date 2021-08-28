@@ -1,6 +1,5 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
@@ -13,6 +12,7 @@ import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import io.mockk.clearMocks
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkAll
@@ -30,15 +30,12 @@ class RandomPresetFragmentTest {
   @JvmField
   val retryTestRule = RetryTestRule(5)
 
-  private lateinit var fragmentScenario: FragmentScenario<RandomPresetFragment>
-
   @Before
   fun setup() {
     mockkObject(PlaybackController)
+    every { PlaybackController.playRandomPreset(any(), any(), any()) } returns Unit
     ApplicationProvider.getApplicationContext<NoiceApplication>()
       .setReviewFlowProvider(mockk(relaxed = true))
-
-    fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }
 
   @After
@@ -62,10 +59,11 @@ class RandomPresetFragmentTest {
 
     for ((typeID, tag) in typeExpectations) {
       for ((intensityID, intensityRange) in intensityExpectations) {
+        launchFragmentInContainer<RandomPresetFragment>(null, R.style.Theme_App)
         Espresso.onView(withId(typeID)).perform(ViewActions.click())
         Espresso.onView(withId(intensityID)).perform(ViewActions.click())
 
-        Espresso.onView(withId(R.id.play_preset_button))
+        Espresso.onView(withId(R.id.play_button))
           .perform(ViewActions.click())
 
         verify(exactly = 1) { PlaybackController.playRandomPreset(any(), tag, intensityRange) }

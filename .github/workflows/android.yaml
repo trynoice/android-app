@@ -7,7 +7,7 @@ on:
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
     paths:
-      - ".github/workflows/**"
+      - ".github/workflows/android.yaml"
       - "app/**"
       - "gradle/**"
       - "**.gradle"
@@ -19,7 +19,7 @@ on:
       - main
       - "[0-9]+.[0-9]+.x"
     paths:
-      - ".github/workflows/**"
+      - ".github/workflows/android.yaml"
       - "app/**"
       - "gradle/**"
       - "**.gradle"
@@ -76,7 +76,9 @@ jobs:
           api-level: ${{ matrix.android }}
           target: ${{ matrix.target }}
           arch: x86_64
-          script: ./gradlew ${{ matrix.gradleTask }} --no-daemon --stacktrace
+          script: >-
+            adb shell settings put secure immersive_mode_confirmations confirmed;
+            ./gradlew ${{ matrix.gradleTask }} --no-daemon --stacktrace;
           emulator-options: >-
             -no-boot-anim -no-audio -no-snapshot -no-window -camera-back none
             -camera-front none -gpu swiftshader_indirect -memory 3583

@@ -2,10 +2,8 @@
 <resources>
     <string name="about">O aplikaci</string>
     <string name="app_theme">Motiv</string>
-    <string name="close_drawer">Zavřít navigační lištu</string>
     <string name="help">Nápověda</string>
     <string name="library">Knihovna</string>
-    <string name="open_drawer">Otevřít navigační lištu</string>
     <string name="report_issue">Nahlásit chybu</string>
     <string name="saved_presets">Uložené předvolby</string>
     <string name="sleep_timer">Časovač vypnutí</string>

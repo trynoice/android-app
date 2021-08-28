@@ -2,10 +2,8 @@
 <resources>
     <string name="about">Über</string>
     <string name="app_theme">Theme</string>
-    <string name="close_drawer">Navigationsleiste schließen</string>
     <string name="help">Hilfe</string>
     <string name="library">Sammlung</string>
-    <string name="open_drawer">Navigationsleiste öffnen</string>
     <string name="report_issue">Fehler melden</string>
     <string name="saved_presets">Gespeicherte Voreinstellungen</string>
     <string name="sleep_timer">Einschlaftimer</string>
@@ -92,7 +90,7 @@
   </string>
     <string name="rename">Umbenennen</string>
     <string name="pinned_shortcuts_not_supported">Ihr Standard-Launcher unterstützt das Hinzufügen von Verknüpfungen nicht.</string>
-    <string name="saved_presets_as_home_screen_summary">Gespeicherte Voreinstellungen beim Start der App anzeigen</string>
+    <string name="saved_presets_as_home_screen_summary">„Gespeicherte Voreinstellungen“ beim Start der Anwendung anzeigen (erfordert einen Neustart)</string>
     <string name="auto_sleep_schedule_cancelled">Automatischer Schlaftimer abgebrochen!</string>
     <string name="reset">Zurücksetzen</string>
     <string name="sleep_timer_description">Noice schaltet sich automatisch nach Ablauf des Timers aus. Nutze die Knöpfe weiter unten, um dem Timer Zeit hinzuzufügen oder abzuziehen.</string>
@@ -105,8 +103,6 @@
     hinzuzufügen.
   </string>
     <string name="use_24h_format">Benutze das 24-Stunden Format</string>
-    <string name="device_media_volume">Lautstärke des Gerätes</string>
-    <string name="should_update_media_volume">Aktualisieren Sie die Lautstärke des Gerätes, bevor Sie die Voreinstellung starten</string>
     <string name="app_theme_light">Hell</string>
     <string name="app_theme_dark">Dunkel</string>
     <string name="app_theme_system_default">Systemstandard</string>
@@ -180,10 +176,9 @@
     <string name="add_to_app_shortcuts">Zu Anwendungsverknüpfungen hinzufügen</string>
     <string name="pinned_shortcut_created">Dem Startbildschirm wurde eine Verknüpfung hinzugefügt!</string>
     <string name="pinned_shortcut_creation_failed">Fehler beim Hinzufügen der Verknüpfung zum Startbildschirm!</string>
-    <string name="sound_fade_duration">Dauer der Tonausblendung</string>
     <string name="appearance">Aussehen</string>
     <string name="behavior">Verhalten</string>
-    <string name="saved_presets_as_home_screen">Voreinstellungen gespeichert als Startbildschirm</string>
+    <string name="saved_presets_as_home_screen">„Voreinstellungen gespeichert“ als Startbildschirm</string>
     <string name="settings">Einstellungen</string>
     <string name="app_shortcut_created">Voreinstellung wurde zu den Anwendungsverknüpfungen hinzugefügt!</string>
     <string name="app_shortcut_removed">Die Voreinstellung wurde aus den Anwendungsverknüpfungen entfernt!</string>
@@ -202,7 +197,6 @@
     <string name="ignore_audio_focus_changes_summary_on">Nicht reagieren, wenn andere Anwendungen Audio abspielen</string>
     <string name="ignore_audio_focus_changes_summary_off">Pausieren, wenn andere Anwendungen Audio abspielen</string>
     <string name="ignore_audio_focus_changes">Änderungen des Audiofokus ignorieren</string>
-    <string name="sound_fade_duration_summary">Einblend-/Ausblenddauer für das Abspielen/Stoppen von Sounds (in Sekunden)</string>
     <string name="all_app_shortcuts_removed">Alle Anwendungsverknüpfungen wurden entfernt!</string>
     <string name="remove_all_app_shortcuts_confirmation">Es werden alle voreingestellten Verknüpfungen aus dem Anwendungsverknüpfungsmenü entfernt. Möchten Sie fortfahren\?</string>
     <string name="should_display_sound_icons">Tonsymbole anzeigen</string>
