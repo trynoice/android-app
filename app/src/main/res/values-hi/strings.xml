@@ -97,10 +97,7 @@
     <string name="appintro__getting_started_desc_0">सभी सुविधाओं को जानने के लिए बाएं स्वाइप करें!</string>
     <string name="appintro__getting_started_desc_1">आइए शुरू करते हैं!</string>
     <string name="appintro__getting_started_title">स्वागत है</string>
-    <string name="appintro__presets_desc">
-       कुछ ध्वनियों को चलाने के बाद, आप अपने मिक्स को सेव करने के लिए नीचे के कोने में स्थित बटन का उपयोग कर सकते हैं।
-       संग्रहीत मिक्स का पुन: उपयोग करने के लिए, आप ऐप मेनू से प्रीसेट सूची देख सकते हैं।
-  </string>
+    <string name="appintro__presets_desc">कुछ ध्वनियों को चलाने के बाद, आप अपने मिक्स को सेव करने के लिए नीचे के कोने में स्थित बटन का उपयोग कर सकते हैं। संग्रहीत मिक्स का पुन: उपयोग करने के लिए, आप ऐप मेनू से प्रीसेट सूची देख सकते हैं।</string>
     <string name="appintro__presets_title">अपने पसंदीदा मिक्स को सेव करें</string>
     <string name="appintro__library_desc">
        ध्वनि मात्रा समायोजित करने के लिए वॉल्यूम स्लाइडर का उपयोग करें। गैर-लूपिंग ध्वनियों के प्रत्येक पुनरावृत्ति में,
