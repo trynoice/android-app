@@ -239,7 +239,7 @@ class PresetRepositoryTest {
     val presetData = "test-data"
     every { prefs.getString(PresetRepository.PREFERENCE_KEY, any()) } returns presetData
     val stream = ByteArrayOutputStream()
-    repository.exportTo(stream)
+    repository.writeTo(stream)
 
     val expectedOutput = """{
       "${PresetRepository.EXPORT_VERSION_KEY}": "${PresetRepository.PREFERENCE_KEY}",
@@ -257,7 +257,7 @@ class PresetRepositoryTest {
     }"""
 
     every { prefs.getString(any(), any()) } returns null
-    repository.importFrom(ByteArrayInputStream(input.toByteArray()))
+    repository.readFrom(ByteArrayInputStream(input.toByteArray()))
     verify(exactly = 1) { prefsEditor.putString(PresetRepository.PREFERENCE_KEY, presetData) }
   }
 

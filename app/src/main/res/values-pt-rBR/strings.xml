@@ -5,7 +5,7 @@
     <string name="help">Ajuda</string>
     <string name="library">Biblioteca</string>
     <string name="report_issue">Informar sobre problema</string>
-    <string name="saved_presets">Ajustes salvos</string>
+    <string name="presets">Ajustes salvos</string>
     <string name="sleep_timer">Temporizador</string>
     <string name="support_development">Apoie o Desenvolvimento</string>
     <string name="wake_up_timer">Despertador</string>
@@ -102,11 +102,11 @@
   </string>
     <string name="appintro__getting_started_desc_1">Vamos começar!</string>
     <string name="appintro__getting_started_title">Bem-vindo</string>
-    <string name="appintro__saved_presets_desc">
+    <string name="appintro__presets_desc">
     Depois de tocar alguns sons, você pode usar o botão no canto inferior para salvar sua mixagem.
     Para reutilizar um mix armazenado, pode visitar a lista de ajustes no menu do aplicativo.
   </string>
-    <string name="appintro__saved_presets_title">Salve seus mixes favoritos</string>
+    <string name="appintro__presets_title">Salve seus mixes favoritos</string>
     <string name="appintro__library_desc">
     Use a barra de volume para ajustar o volume dos sons. A cada repetição de sons sem loop, um
     período de atraso é selecionado aleatoriamente a partir do intervalo definido na barra de tempo.
@@ -168,7 +168,7 @@
     <string name="time_bridge">e</string>
     <string name="wake_up_timer_schedule_set">O alarme vai disparar em %1$s %2$s %3$s</string>
     <string name="wake_up_timer_cancelled">Despertador cancelado!</string>
-    <string name="saved_presets_as_home_screen_summary">Mostrar \"predefinições salvas\" na inicialização do aplicativo</string>
+    <string name="presets_as_home_screen_summary">Mostrar \"predefinições salvas\" na inicialização do aplicativo</string>
     <string name="pinned_shortcuts_not_supported">Seu lançador padrão não suporta a adição de atalhos.</string>
     <string name="preset_does_not_exist">Predefinição não existe. Ela pode ter sido deletada!</string>
     <string name="add_to_home_screen">Adicionar à tela inicial</string>
@@ -214,7 +214,7 @@
     <string name="sound_fade_in_duration">Duração do fade-in sonoro</string>
     <string name="appearance">Aparência</string>
     <string name="behavior">Comportamento</string>
-    <string name="saved_presets_as_home_screen">\"Predefinições salvas\" como tela inicial</string>
+    <string name="presets_as_home_screen">\"Predefinições salvas\" como tela inicial</string>
     <string name="settings">Configurações</string>
     <string name="app_shortcut_creation_failed">Não foi possível adicionar a predefinição aos atalhos da aplicação!</string>
     <string name="app_shortcut_created">A predefinição foi adicionada aos atalhos da aplicação!</string>

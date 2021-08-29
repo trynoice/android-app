@@ -51,9 +51,9 @@ class HomeFragment : Fragment(), Navigable {
 
   // Do not refresh user preference when reconstructing this fragment from a previously saved state.
   // For whatever reasons, it makes the bottom navigation view go out of sync.
-  private val shouldDisplaySavedPresetsAsHomeScreen by lazy {
+  private val shouldDisplayPresetsAsHomeScreen by lazy {
     SettingsRepository.newInstance(requireContext())
-      .shouldDisplaySavedPresetsAsHomeScreen()
+      .shouldDisplayPresetsAsHomeScreen()
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,9 +82,9 @@ class HomeFragment : Fragment(), Navigable {
     val navHostFragment = requireNotNull(binding.navHostFragment.getFragment<NavHostFragment>())
     childNavController = navHostFragment.navController
 
-    if (shouldDisplaySavedPresetsAsHomeScreen) {
+    if (shouldDisplayPresetsAsHomeScreen) {
       childNavController.navigate(
-        R.id.saved_presets, null, NavOptions.Builder()
+        R.id.presets, null, NavOptions.Builder()
           .setPopUpTo(R.id.library, true)
           .build()
       )

@@ -134,7 +134,7 @@ class WakeUpTimerFragmentTest {
   }
 
   @Test
-  fun testSelectPreset_withoutSavedPresets() {
+  fun testSelectPreset_withoutPresets() {
     every { mockPresetRepository.list() } returns arrayOf()
     onView(withId(R.id.select_preset_button))
       .check(matches(withText(R.string.select_preset)))
@@ -235,7 +235,7 @@ class WakeUpTimerFragmentTest {
   }
 
   @Test
-  fun testLoadSavedPreset() {
+  fun testLoadPreset() {
     val savedPresetID = "test-saved-preset-id"
     val savedPreset = mockk<Preset>(relaxed = true) {
       every { id } returns savedPresetID

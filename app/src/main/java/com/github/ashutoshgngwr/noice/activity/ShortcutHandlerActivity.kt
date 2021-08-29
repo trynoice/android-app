@@ -44,7 +44,7 @@ class ShortcutHandlerActivity : AppCompatActivity() {
     }
 
     Intent(this, MainActivity::class.java)
-      .putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.saved_presets)
+      .putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.presets)
       .also { startActivity(it) }
 
     finish()

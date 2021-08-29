@@ -57,10 +57,10 @@ class SettingsRepository private constructor(private val context: Context) {
   }
 
   /**
-   * Returns the current value of switch preference with key [R.string.saved_presets_as_home_screen_key].
+   * Returns the current value of switch preference with key [R.string.presets_as_home_screen_key].
    */
-  fun shouldDisplaySavedPresetsAsHomeScreen(): Boolean {
-    return prefs.getBoolean(context.getString(R.string.saved_presets_as_home_screen_key), false)
+  fun shouldDisplayPresetsAsHomeScreen(): Boolean {
+    return prefs.getBoolean(context.getString(R.string.presets_as_home_screen_key), false)
   }
 
   /**

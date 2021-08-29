@@ -10,6 +10,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_margin="16dp"
+    android:drawablePadding="16dp"
     android:gravity="center"
     android:text="@string/preset_info__description"
     android:textAppearance="?attr/textAppearanceBody1"

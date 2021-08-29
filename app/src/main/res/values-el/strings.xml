@@ -27,7 +27,7 @@
     <string name="sleep_timer_description">Η εφαρμογή θα τερματιστεί όταν ο χρονοδιακόπτης λήξει. Χρησιμοποιήστε τα παρακάτω κουμπιά για να προσθέσετε χρόνο και να τον ξεκινήσετε.</string>
     <string name="reset">Επαναφορά</string>
     <string name="auto_sleep_schedule_cancelled">Ο χρονοδιακόπτης ύπνου ακυρώθηκε!</string>
-    <string name="saved_presets_as_home_screen_summary">Εμφάνιση των \"αποθηκευμένων συνθέσεων\" με την έναρξη (απαιτείται επανεκκίνηση της εφαρμογής)</string>
+    <string name="presets_as_home_screen_summary">Εμφάνιση των \"αποθηκευμένων συνθέσεων\" με την έναρξη (απαιτείται επανεκκίνηση της εφαρμογής)</string>
     <string name="pinned_shortcuts_not_supported">Η εφαρμογή αρχικής οθόνης σας δεν υποστηρίζει την προσθήκη συντομεύσεων.</string>
     <string name="rename">Μετονομασία</string>
     <string name="preset_info__description">Δεν έχετε δημιουργήσει ακόμα συνθέσεις. Για να δημιουργήσετε, πηγαίνετε στη Βιβλιοθήκη και αναπαράγετε κάποιους ήχους. Κατόπιν πατήστε το κουμπί Αποθήκευση στην κάτω δεξιά γωνία της οθόνης.</string>
@@ -109,7 +109,7 @@
     <string name="wake_up_timer">Χρονοδιακόπτης έγερσης</string>
     <string name="support_development">Υποστήριξη προγραμματιστή</string>
     <string name="sleep_timer">Χρονοδιακόπτης ύπνου</string>
-    <string name="saved_presets">Αποθηκευμένες συνθέσεις</string>
+    <string name="presets">Αποθηκευμένες συνθέσεις</string>
     <string name="report_issue">Αναφορά προβλήματος</string>
     <string name="library">Βιβλιοθήκη</string>
     <string name="help">Βοήθεια</string>
@@ -134,8 +134,8 @@
     <string name="appintro__timer_desc">Ένα ήρεμο περιβάλλον σας βοηθάει να κοιμηθείτε εύκολα. Χρησιμοποιήστε το χρονοδιακόπτη ύπνου για να αυτοτερματιστεί η εφαρμογή. Αντίστοιχα, για να ξυπνήσετε σε ένα ήρεμο περιβάλλον, χρησιμοποιήστε το χρονοδιακόπτη έγερσης για να ορίσετε το ξυπνητήρι.</string>
     <string name="appintro__library_title">Δημιουργήστε το τέλειο περιβάλλον</string>
     <string name="appintro__library_desc">Χρησιμοποιήστε το ρυθμιστικό για τη ρύθμιση της έντασης των ήχων. Στους επαναλαμβανόμενους ήχους επιλέγεται ένας τυχαίος χρόνος καθυστέρησης, από το επιλεγμένο εύρος με το αντίστοιχο ρυθμιστικό.</string>
-    <string name="appintro__saved_presets_title">Αποθηκεύστε τις αγαπημένες σας συνθέσεις</string>
-    <string name="appintro__saved_presets_desc">Αφού ξεκινήσετε κάποιους ήχους, μπορείτε να χρησιμοποιήσετε το κουμπί στην κάτω δεξιά γωνία για να αποθηκεύσετε τη σύνθεση σας. Για να την ξαναχρησιμοποιήσετε, ανατρέξτε στη λίστα των συνθέσεων από το μενού της εφαρμογής.</string>
+    <string name="appintro__presets_title">Αποθηκεύστε τις αγαπημένες σας συνθέσεις</string>
+    <string name="appintro__presets_desc">Αφού ξεκινήσετε κάποιους ήχους, μπορείτε να χρησιμοποιήσετε το κουμπί στην κάτω δεξιά γωνία για να αποθηκεύσετε τη σύνθεση σας. Για να την ξαναχρησιμοποιήσετε, ανατρέξτε στη λίστα των συνθέσεων από το μενού της εφαρμογής.</string>
     <string name="notification_channel_default__name">Αναπαραγωγή</string>
     <string name="notification_channel_default__description">Χειριστήρια αναπαραγωγής</string>
     <string name="never">Ποτέ</string>
@@ -164,7 +164,7 @@
     <string name="pinned_shortcut_creation_failed">Αποτυχία προσθήκης συντόμευσης στην αρχική οθόνη!</string>
     <string name="appearance">Εμφάνιση</string>
     <string name="behavior">Συμπεριφορά</string>
-    <string name="saved_presets_as_home_screen">Αρχική οθόνη οι \"αποθηκευμένες συνθέσεις\"</string>
+    <string name="presets_as_home_screen">Αρχική οθόνη οι \"αποθηκευμένες συνθέσεις\"</string>
     <string name="settings">Ρυθμίσεις</string>
     <string name="app_shortcut_creation_failed">Αποτυχία προσθήκης της σύνθεσης στις συντομεύσεις!</string>
     <string name="app_shortcut_created">Η σύνθεση προστέθηκε στις συντομεύσεις!</string>

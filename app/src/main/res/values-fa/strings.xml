@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="behavior">رفتار</string>
-    <string name="saved_presets_as_home_screen">«گزینش‌های ذخیره شده» به عنوان صفحه‌ی خانه</string>
+    <string name="presets_as_home_screen">«گزینش‌های ذخیره شده» به عنوان صفحه‌ی خانه</string>
     <string name="settings">تنظیمات</string>
     <string name="app_shortcut_creation_failed">نتوانست گزینش موردنظر را به میانبرهای برنامه بیافزاید!</string>
     <string name="app_shortcut_created">گزینش موردنظر به میانبرهای برنامه افزوده شده است!</string>
@@ -35,8 +35,8 @@
     <string name="appintro__timer_desc">کمی صدای محیطی می‌تواند به شما کمک کند که بدون زحمت به خواب بروید. از زمان‌سنج خواب استفاده کنید تا به Noice اجازه دهید که خودش را خاموش کند. به همین صورت، برای بیدار شدن به یک محیط آرام، از زمان‌سنج بیداری برای تنظیم هشدار استفاده کنید.</string>
     <string name="appintro__library_title">محیط دربرگیرنده‌ی مطلوب خود را ایجاد کنید</string>
     <string name="appintro__library_desc">از دکمه‌ی لغزنده‌ی صدا برای تنظیم حجم صدا استفاده کنید. در هر تکرار از صداهایی که دور نمی‌زنند، بطور تصادفی یک دوره‌ی تأخیر از محدوده‌ی تعیین شده توسط دکمه‌ی لغزنده‌ی زمان انتخاب می‌شود.</string>
-    <string name="appintro__saved_presets_title">ذخیره‌ی ترکیب‌های مورد علاقه‌ی‌تان</string>
-    <string name="appintro__saved_presets_desc">پس از پخش چند صدا، می‌توانید از دکمه‌ای که در گوشه‌ی پایین است برای ذخیره‌ی ترکیب خود استفاده کنید. برای بکارگیری مجدد یک ترکیب ذخیره شده، می‌توانید از منوی برنامه به فهرست گرینش‌ها بروید.</string>
+    <string name="appintro__presets_title">ذخیره‌ی ترکیب‌های مورد علاقه‌ی‌تان</string>
+    <string name="appintro__presets_desc">پس از پخش چند صدا، می‌توانید از دکمه‌ای که در گوشه‌ی پایین است برای ذخیره‌ی ترکیب خود استفاده کنید. برای بکارگیری مجدد یک ترکیب ذخیره شده، می‌توانید از منوی برنامه به فهرست گرینش‌ها بروید.</string>
     <string name="appintro__getting_started_title">خوش آمدید</string>
     <string name="appintro__getting_started_desc_1">بیایید آغاز کنیم!</string>
     <string name="appintro__getting_started_desc_0">به چپ بکشید تا با تمام ویژگی‌ها آشنا شوید!</string>
@@ -64,7 +64,7 @@
     <string name="sleep_timer_description">وقتی که زمان‌سنج پایان یابد Noice خودش را خاموش می‌کند. از دکمه‌های زیر برای افزودن زمان و آغاز زمان‌سنج استفاده کنید.</string>
     <string name="reset">بازنشانی</string>
     <string name="auto_sleep_schedule_cancelled">زمان‌سنج خودکار خواب لغو شد!</string>
-    <string name="saved_presets_as_home_screen_summary">نمایش «گزینش‌های ذخیره شده» در آغاز برنامه (نیازمند آغاز مجدد برنامه)</string>
+    <string name="presets_as_home_screen_summary">نمایش «گزینش‌های ذخیره شده» در آغاز برنامه (نیازمند آغاز مجدد برنامه)</string>
     <string name="pinned_shortcuts_not_supported">اجراکننده (Launcher) پیش‌فرض شما از افزودن میانبر پشتیبانی نمی‌کند.</string>
     <string name="rename">تغییر نام</string>
     <string name="preset_info__description">شما هنوز گزینشی ایجاد نکرده‌اید. برای ایجاد گزینش، به کتابخانه بروید و صداهایی پخش کنید. سپس دکمه‌ی ذخیره که در گوشه‌ی پایین صفحه نمایان می‌شود را بزنید.</string>
@@ -146,7 +146,7 @@
     <string name="wake_up_timer">زمان‌سنج بیداری</string>
     <string name="support_development">حمایت از ساخت</string>
     <string name="sleep_timer">زمان‌سنج خواب</string>
-    <string name="saved_presets">گزینش‌های ذخیره شده</string>
+    <string name="presets">گزینش‌های ذخیره شده</string>
     <string name="report_issue">گزارش مشکلات</string>
     <string name="library">کتابخانه</string>
     <string name="help">راهنما</string>

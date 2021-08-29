@@ -11,10 +11,10 @@
     tools:layout="@layout/library_fragment" />
 
   <fragment
-    android:id="@+id/saved_presets"
-    android:name="com.github.ashutoshgngwr.noice.fragment.SavedPresetsFragment"
-    android:label="@string/saved_presets"
-    tools:layout="@layout/saved_presets_fragment" />
+    android:id="@+id/presets"
+    android:name="com.github.ashutoshgngwr.noice.fragment.PresetsFragment"
+    android:label="@string/presets"
+    tools:layout="@layout/presets_fragment" />
 
   <fragment
     android:id="@+id/wake_up_timer"

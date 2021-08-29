@@ -5,7 +5,7 @@
     <string name="help">Nápověda</string>
     <string name="library">Knihovna</string>
     <string name="report_issue">Nahlásit chybu</string>
-    <string name="saved_presets">Uložené předvolby</string>
+    <string name="presets">Uložené předvolby</string>
     <string name="sleep_timer">Časovač vypnutí</string>
     <string name="support_development">Podpořit vývoj</string>
     <string name="wake_up_timer">Časovač spuštení</string>
@@ -97,11 +97,11 @@
     <string name="appintro__getting_started_desc_0">Zatáhněte doleva a my vám ukážeme, co vše Noice umí!</string>
     <string name="appintro__getting_started_desc_1">Začněme!</string>
     <string name="appintro__getting_started_title">Vítejte</string>
-    <string name="appintro__saved_presets_desc">
+    <string name="appintro__presets_desc">
     Při přehrávání vícero zvuků si můžete aktuálně přehrávaný mix uložit klepnutím na tlačítko v pravém dolním rohu.
     Pro znovupoužití vámi uloženého mixu, navštivte sekci Uložené předvolby v menu aplikace.
   </string>
-    <string name="appintro__saved_presets_title">Uložte si svůj oblíbený mix</string>
+    <string name="appintro__presets_title">Uložte si svůj oblíbený mix</string>
     <string name="appintro__library_desc">
     Posuvníky hlasitosti nastavujete hlasitost jednotlivých zvuků. Mezi každým opakováním nahrávek bez smyčky
     je vložena mezera o náhodné délce. Tu můžete nastavit posuvníkem prodlevy.
@@ -158,7 +158,7 @@
     <string name="time_bridge">a</string>
     <string name="wake_up_timer_schedule_set">Alarm se spustí za %1$s %2$s %3$s</string>
     <string name="wake_up_timer_cancelled">Časovač k probuzení zrušen!</string>
-    <string name="saved_presets_as_home_screen_summary">Ukázat uložené předvolby při spuštění aplikace</string>
+    <string name="presets_as_home_screen_summary">Ukázat uložené předvolby při spuštění aplikace</string>
     <string name="preset_does_not_exist">Předvolba neexistuje. Mohla být smazána!</string>
     <string name="add_to_home_screen">Přidat na domovskou obrazovky</string>
     <string name="relax">Uvolnění</string>

@@ -4,7 +4,7 @@
     <string name="app_theme">Motyw</string>
     <string name="library">Biblioteka</string>
     <string name="report_issue">Zgłoś problem</string>
-    <string name="saved_presets">Zapisane szablony</string>
+    <string name="presets">Zapisane szablony</string>
     <string name="sleep_timer">Wyłącznik czasowy</string>
     <string name="support_development">Wesprzyj rozwój</string>
     <string name="wake_up_timer">Budzik</string>
@@ -100,7 +100,7 @@
     <string name="later">Pózniej</string>
     <string name="in_app_feedback__title">Wyślij recenzje</string>
     <string name="appintro__timer_title">Problem z zasypianiem albo wstawaniem\?</string>
-    <string name="appintro__saved_presets_title">Zapisz swoje ulubione miksy</string>
+    <string name="appintro__presets_title">Zapisz swoje ulubione miksy</string>
     <string name="appintro__getting_started_title">Witaj</string>
     <string name="appintro__getting_started_desc_1">Zaczynajmy!</string>
     <string name="appintro__getting_started_desc_0">Przesuń w lewo aby poznać wszystkie funkcje!</string>
@@ -137,9 +137,9 @@
     <string name="appintro__timer_desc">Odrobina atmosfery może pomóc Ci bez wysiłku zasnąć. Użyj wyłącznika czasowego, aby Noice wyłączył się. Podobnie, aby obudzić się w spokojnym otoczeniu, użyj budzika do ustawienia alarmu.</string>
     <string name="appintro__library_title">Stwórz swoje idealne otoczenie</string>
     <string name="appintro__library_desc">Użyj suwaka głośności, aby dostosować głośność dźwięku. Przy każdym powtórzeniu dźwięków niezapętlonych okres opóźnienia jest wybierany losowo z zakresu ustawionego przez suwak czasu.</string>
-    <string name="appintro__saved_presets_desc">Po odtworzeniu kilku dźwięków możesz użyć przycisku w dolnym rogu, aby zapisać swój miks. Aby ponownie użyć zapisanej składanki, możesz przejść do listy ustawień wstępnych w menu aplikacji.</string>
+    <string name="appintro__presets_desc">Po odtworzeniu kilku dźwięków możesz użyć przycisku w dolnym rogu, aby zapisać swój miks. Aby ponownie użyć zapisanej składanki, możesz przejść do listy ustawień wstępnych w menu aplikacji.</string>
     <string name="appintro__chromecast_desc">Użyj Noice, aby przesłać atmosferę do innych urządzeń obsługujących Chromecast, takich jak głośniki, telewizory itp.</string>
-    <string name="saved_presets_as_home_screen_summary">Pokaż zapisane ustawienia po uruchomieniu (wymaga restartu aplikacji)</string>
+    <string name="presets_as_home_screen_summary">Pokaż zapisane ustawienia po uruchomieniu (wymaga restartu aplikacji)</string>
     <string name="preset_does_not_exist">Ustawienie wstępne nie istnieje. Mogło zostać usunięte!</string>
     <string name="water_hose">Hydrant</string>
     <string name="screeching_seagulls">Skrzeczące mewy</string>
@@ -171,7 +171,7 @@
     <string name="skip_to_next">Następne ustawienie wstępne</string>
     <string name="skip_to_prev">Poprzednie ustawienie wstępne</string>
     <string name="appearance">Wygląd</string>
-    <string name="saved_presets_as_home_screen">\"Zapisane ustawienia wstępne\" jako ekran główny</string>
+    <string name="presets_as_home_screen">\"Zapisane ustawienia wstępne\" jako ekran główny</string>
     <string name="app_shortcut_creation_failed">Nie udało się dodać ustawienia wstępnego do skrótów aplikacji!</string>
     <string name="app_shortcut_created">Do skrótów aplikacji dodano ustawienie wstępne!</string>
     <string name="app_shortcut_removed">Ustawienie wstępne zostało usunięte ze skrótów do aplikacji!</string>

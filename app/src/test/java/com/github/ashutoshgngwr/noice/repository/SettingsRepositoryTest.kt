@@ -90,14 +90,14 @@ class SettingsRepositoryTest {
   }
 
   @Test
-  fun testShouldDisplaySavedPresetsAsHomeScreen() {
+  fun testShouldDisplayPresetsAsHomeScreen() {
     val inputs = arrayOf(true, false)
     for (input in inputs) {
       every {
-        prefs.getBoolean(context.getString(R.string.saved_presets_as_home_screen_key), any())
+        prefs.getBoolean(context.getString(R.string.presets_as_home_screen_key), any())
       } returns input
 
-      assertEquals(input, settingsRepository.shouldDisplaySavedPresetsAsHomeScreen())
+      assertEquals(input, settingsRepository.shouldDisplayPresetsAsHomeScreen())
     }
   }
 

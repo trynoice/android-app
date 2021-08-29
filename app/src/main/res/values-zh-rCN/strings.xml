@@ -26,8 +26,8 @@
     <string name="appintro__timer_desc">小小的环境可以帮助你毫不费力地入睡。使用睡眠定时器，让Noice自动关闭。同样，要想在平静的环境中醒来，可以使用唤醒定时器来设置闹钟。</string>
     <string name="appintro__library_title">创造完美的环境</string>
     <string name="appintro__library_desc">使用音量滑块调整音量。每重复一次非循环声音时，从时间滑块设置的范围中随机选择一个延迟期。</string>
-    <string name="appintro__saved_presets_title">保存你最喜欢的混音</string>
-    <string name="appintro__saved_presets_desc">在播放几个声音后，你可以使用底端角落的按钮来保存你的混音。要重新使用存储的混音，可以从应用菜单中访问预设列表。</string>
+    <string name="appintro__presets_title">保存你最喜欢的混音</string>
+    <string name="appintro__presets_desc">在播放几个声音后，你可以使用底端角落的按钮来保存你的混音。要重新使用存储的混音，可以从应用菜单中访问预设列表。</string>
     <string name="appintro__getting_started_title">欢迎</string>
     <string name="appintro__getting_started_desc_1">我们开始吧！</string>
     <string name="appintro__getting_started_desc_0">向左滑动即可了解所有功能!</string>
@@ -42,7 +42,7 @@
     <string name="sleep_timer_description">计时器结束后，Noice将自动关闭。使用下面的按钮来添加时间和启动定时器。</string>
     <string name="reset">重置</string>
     <string name="auto_sleep_schedule_cancelled">自动睡眠定时器已取消！</string>
-    <string name="saved_presets_as_home_screen_summary">在应用启动时显示已保存的预设</string>
+    <string name="presets_as_home_screen_summary">在应用启动时显示已保存的预设</string>
     <string name="pinned_shortcuts_not_supported">你的默认启动器不支持添加快捷方式。</string>
     <string name="rename">重命名</string>
     <string name="preset_info__description">你还没有创建任何预设。要创建预设，请进入库并播放声音。然后点击屏幕下角出现的 \"保存 \"按钮。</string>
@@ -124,7 +124,7 @@
     <string name="wake_up_timer">唤醒定时器</string>
     <string name="support_development">支持开发</string>
     <string name="sleep_timer">睡眠定时器</string>
-    <string name="saved_presets">保存的预设</string>
+    <string name="presets">保存的预设</string>
     <string name="report_issue">报告问题</string>
     <string name="library">图书馆</string>
     <string name="help">帮助</string>

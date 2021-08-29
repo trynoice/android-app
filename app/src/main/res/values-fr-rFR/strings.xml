@@ -5,7 +5,7 @@
     <string name="help">Aide</string>
     <string name="library">Bibliothèque</string>
     <string name="report_issue">Signaler des problèmes</string>
-    <string name="saved_presets">Réglages sauvegardés</string>
+    <string name="presets">Réglages sauvegardés</string>
     <string name="sleep_timer">Minuterie</string>
     <string name="support_development">Soutenir le développement</string>
     <string name="wake_up_timer">Réveil</string>
@@ -95,11 +95,11 @@
     <string name="appintro__getting_started_desc_0">Glissez vers la gauche pour connaître toutes les fonctionnalités !</string>
     <string name="appintro__getting_started_desc_1">C\'est parti !</string>
     <string name="appintro__getting_started_title">Bienvenue</string>
-    <string name="appintro__saved_presets_desc">
+    <string name="appintro__presets_desc">
     Après avoir joué quelques sons, vous pouvez utiliser le bouton en bas à droite pour sauvegarder le mix.
     Pour réutiliser un mix sauvegardé, allez dans la liste des réglages depuis le menu de l\'application.
   </string>
-    <string name="appintro__saved_presets_title">Sauvegardez vos mix préférés</string>
+    <string name="appintro__presets_title">Sauvegardez vos mix préférés</string>
     <string name="appintro__library_desc">Utilisez les boutons de volume pour régler le volume des sons. À chaque répétition d\'un son sans-boucle, un délai aléatoire sera généré dans la plage établie par le curseur de temps.</string>
     <string name="appintro__library_title">Créez votre environnement idéal</string>
     <string name="appintro__timer_desc">
@@ -146,7 +146,7 @@
     <string name="in_app_feedback__description">Nous aimerions connaître votre avis sur l\'application. Nous vous prions de consulter notre GitHub. Si vous n\'aimez pas l\'application, nous vous prions d\'ouvrir un billet « issue » afin de nous expliquer vos critiques. Autrement, nous vous prions de noter le projet pour nous montrer votre reconnaissance.</string>
     <string name="use_24h_format">Utiliser le format 24 heures</string>
     <string name="wake_up_timer_cancelled">Minuterie du réveil annulée !</string>
-    <string name="saved_presets_as_home_screen_summary">Afficher les « préréglages enregistrés » au démarrage de l\'application (nécessite un redémarrage de l\'application)</string>
+    <string name="presets_as_home_screen_summary">Afficher les « préréglages enregistrés » au démarrage de l\'application (nécessite un redémarrage de l\'application)</string>
     <string name="pinned_shortcuts_not_supported">Votre lanceur par défaut ne supporte pas l\'ajout de raccourcis.</string>
     <string name="never">Jamais</string>
     <string name="later">Plus tard</string>
@@ -174,7 +174,7 @@
     <string name="pinned_shortcut_creation_failed">Échec de l\'ajout du raccourci à l\'écran d\'accueil !</string>
     <string name="appearance">Apparence</string>
     <string name="behavior">Comportement</string>
-    <string name="saved_presets_as_home_screen">« Préréglages enregistrés » comme écran d\'accueil</string>
+    <string name="presets_as_home_screen">« Préréglages enregistrés » comme écran d\'accueil</string>
     <string name="settings">Paramètres</string>
     <string name="app_shortcut_created">Le préréglage a été ajouté aux raccourcis de l\'application !</string>
     <string name="ignore_audio_focus_changes_summary_on">Ne pas réagir lorsque d\'autres applications jouent de l\'audio</string>

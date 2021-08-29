@@ -40,7 +40,7 @@ class SettingsFragmentTest {
   }
 
   @Test
-  fun testExportSavedPresets() {
+  fun testExportPresets() {
     // TODO: finish this implementation
 
     // skipping the part where we click the preference and then select a file
@@ -55,7 +55,7 @@ class SettingsFragmentTest {
   }
 
   @Test
-  fun testImportSavedPresets() {
+  fun testImportPresets() {
     // TODO: finish this implementation
   }
 

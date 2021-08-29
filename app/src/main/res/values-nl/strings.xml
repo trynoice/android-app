@@ -4,7 +4,7 @@
     <string name="app_theme">Thema</string>
     <string name="library">Verzameling</string>
     <string name="report_issue">Problemen melden</string>
-    <string name="saved_presets">Voorinstellingen</string>
+    <string name="presets">Voorinstellingen</string>
     <string name="sleep_timer">Slaaptimer</string>
     <string name="cancel">Annuleren</string>
     <string name="dismiss">Verwerpen</string>
@@ -88,8 +88,8 @@
     <string name="appintro__timer_desc">Een beetje sfeer kan u helpen om moeiteloos in slaap te vallen. Gebruik de slaaptimer om Noice zichzelf uit te laten schakelen. Gebruik de wekker om het alarm in te stellen om wakker te worden in een rustige omgeving.</string>
     <string name="appintro__library_title">Creëer uw perfecte omgeving</string>
     <string name="appintro__library_desc">Gebruik de volumeregelaar om het geluidsvolume aan te passen. Bij elke herhaling van enkel afspelende geluiden wordt willekeurig een vertragingsperiode geselecteerd uit het bereik dat is ingesteld met de tijdregelaar.</string>
-    <string name="appintro__saved_presets_title">Bewaar uw favoriete mixen</string>
-    <string name="appintro__saved_presets_desc">Nadat je een paar geluiden hebt gespeeld, kun je de knop in de onderste hoek gebruiken om je mix op te slaan. Om een opgeslagen mix opnieuw te gebruiken, kunt u de lijst met instellingen in het app-menu bezoeken.</string>
+    <string name="appintro__presets_title">Bewaar uw favoriete mixen</string>
+    <string name="appintro__presets_desc">Nadat je een paar geluiden hebt gespeeld, kun je de knop in de onderste hoek gebruiken om je mix op te slaan. Om een opgeslagen mix opnieuw te gebruiken, kunt u de lijst met instellingen in het app-menu bezoeken.</string>
     <string name="appintro__getting_started_desc_0">Veeg naar links om alle functies te leren kennen!</string>
     <string name="appintro__chromecast_title">Chromecast ingeschakeld</string>
     <string name="appintro__chromecast_desc">Gebruik Noice om sfeer over te brengen op andere Chromecast-apparaten, zoals luidsprekers, tv\'s, enz.</string>
@@ -105,7 +105,7 @@
     <string name="time_bridge">en</string>
     <string name="wake_up_timer_schedule_set">Het alarm gaat af over %1$s %2$s %3$s</string>
     <string name="select_preset">Selecteer Instelling</string>
-    <string name="saved_presets_as_home_screen_summary">Toon opgeslagen instellingen bij het opstarten van de app</string>
+    <string name="presets_as_home_screen_summary">Toon opgeslagen instellingen bij het opstarten van de app</string>
     <string name="pinned_shortcuts_not_supported">Uw standaard launcher biedt geen ondersteuning voor het toevoegen van snelkoppelingen.</string>
     <string name="preset_info__description">U heeft nog geen instellingen gemaakt. Om een instelling te maken, gaat u naar de bibliotheek en speelt u geluiden af. Klik vervolgens op de knop Opslaan die in de benedenhoek van het scherm verschijnt.</string>
     <string name="preset_does_not_exist">Instelling bestaat niet. Het is mogelijk verwijderd!</string>
@@ -141,7 +141,7 @@
     <string name="pinned_shortcut_creation_failed">Kan de snelkoppeling niet toevoegen aan het startscherm!</string>
     <string name="appearance">Uiterlijk</string>
     <string name="behavior">Gedrag</string>
-    <string name="saved_presets_as_home_screen">Opgeslagen instellingen als startscherm</string>
+    <string name="presets_as_home_screen">Opgeslagen instellingen als startscherm</string>
     <string name="settings">Instellingen</string>
     <string name="app_shortcut_creation_failed">Kan de instelling niet toevoegen aan app-snelkoppelingen!</string>
     <string name="app_shortcut_created">Instelling is toegevoegd aan app-snelkoppelingen!</string>

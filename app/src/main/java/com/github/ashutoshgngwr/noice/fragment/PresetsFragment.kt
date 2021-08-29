@@ -22,8 +22,8 @@ import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
-import com.github.ashutoshgngwr.noice.databinding.SavedPresetsFragmentBinding
-import com.github.ashutoshgngwr.noice.databinding.SavedPresetsListItemBinding
+import com.github.ashutoshgngwr.noice.databinding.PresetsFragmentBinding
+import com.github.ashutoshgngwr.noice.databinding.PresetsListItemBinding
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
@@ -34,9 +34,9 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
-class SavedPresetsFragment : Fragment() {
+class PresetsFragment : Fragment() {
 
-  private lateinit var binding: SavedPresetsFragmentBinding
+  private lateinit var binding: PresetsFragmentBinding
   private lateinit var presetRepository: PresetRepository
   private lateinit var analyticsProvider: AnalyticsProvider
 
@@ -49,7 +49,7 @@ class SavedPresetsFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View {
-    binding = SavedPresetsFragmentBinding.inflate(inflater, container, false)
+    binding = PresetsFragmentBinding.inflate(inflater, container, false)
     return binding.root
   }
 
@@ -68,7 +68,7 @@ class SavedPresetsFragment : Fragment() {
     updateEmptyListIndicatorVisibility()
 
     val params = bundleOf("items_count" to dataSet.size)
-    analyticsProvider.setCurrentScreen("saved_presets", SavedPresetsFragment::class, params)
+    analyticsProvider.setCurrentScreen("presets", PresetsFragment::class, params)
   }
 
   override fun onDestroyView() {
@@ -97,7 +97,7 @@ class SavedPresetsFragment : Fragment() {
     private val layoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-      return ViewHolder(SavedPresetsListItemBinding.inflate(layoutInflater, parent, false))
+      return ViewHolder(PresetsListItemBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -110,7 +110,7 @@ class SavedPresetsFragment : Fragment() {
     }
   }
 
-  inner class ViewHolder(val binding: SavedPresetsListItemBinding) :
+  inner class ViewHolder(val binding: PresetsListItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     private val reviewFlowProvider = NoiceApplication.of(requireContext()).getReviewFlowProvider()

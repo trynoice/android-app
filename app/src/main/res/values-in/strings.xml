@@ -5,7 +5,7 @@
     <string name="help">Bantuan</string>
     <string name="library">Perpustakaan</string>
     <string name="report_issue">Laporkan Masalah</string>
-    <string name="saved_presets">Preset Tersimpan</string>
+    <string name="presets">Preset Tersimpan</string>
     <string name="sleep_timer">Pengatur Waktu Tidur</string>
     <string name="support_development">Dukung Pengembangan</string>
     <string name="wake_up_timer">Pengatur Waktu Bangun</string>
@@ -99,11 +99,11 @@
     <string name="appintro__getting_started_desc_0">Geser ke kiri untuk mengenal semua fitur!</string>
     <string name="appintro__getting_started_desc_1">Mari kita mulai!</string>
     <string name="appintro__getting_started_title">Selamat Datang</string>
-    <string name="appintro__saved_presets_desc">
+    <string name="appintro__presets_desc">
     Setelah memainkan beberapa suara, Anda dapat menggunakan tombol di sudut ujung bawah untuk menyimpan campuran Anda.
     Untuk menggunakan kembali campuran yang disimpan, Anda dapat mengunjungi daftar prasetel dari menu aplikasi.
  </string>
-    <string name="appintro__saved_presets_title">Simpan campuran favorit Anda</string>
+    <string name="appintro__presets_title">Simpan campuran favorit Anda</string>
     <string name="appintro__library_desc">
     Gunakan penggeser volume untuk menyesuaikan volume suara. Pada setiap pengulangan suara non-looping, terjadi penundaan
     periode dipilih secara acak dari rentang yang ditetapkan oleh penggeser waktu.
@@ -162,7 +162,7 @@
     <string name="submit_feedback">Masukan Feedback</string>
     <string name="use_24h_format">Pakai format 24-jam</string>
     <string name="wake_up_timer_cancelled">Timer Wake-up terbatalkan!</string>
-    <string name="saved_presets_as_home_screen_summary">\"Tunjukan Preset\" yang tersimpan pada permulaan aplikasi</string>
+    <string name="presets_as_home_screen_summary">\"Tunjukan Preset\" yang tersimpan pada permulaan aplikasi</string>
     <string name="intensity">Intensitas</string>
     <plurals name="time_minutes">
         <item quantity="other">%1$d menit</item>
@@ -201,7 +201,7 @@
     <string name="app_shortcut_created">Preset telah ditambahkan ke pintasan aplikasi!</string>
     <string name="app_shortcut_removed">Preset telah dihapus dari pintasan aplikasi!</string>
     <string name="dense">Padat</string>
-    <string name="saved_presets_as_home_screen">Preset tersimpan sebagai layar beranda</string>
+    <string name="presets_as_home_screen">Preset tersimpan sebagai layar beranda</string>
     <string name="app_authors">Lihat daftar Penulis Noice</string>
     <string name="should_display_sound_icons">Tunjukkan ikon suara</string>
     <string name="should_allow_skipping_unsaved_presets">Izinkan melewati preset tak tersimpan</string>

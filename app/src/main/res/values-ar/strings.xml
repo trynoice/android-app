@@ -50,12 +50,12 @@
     <string name="intensity_any">الكل</string>
     <string name="mood_any">الكل</string>
     <string name="submit_feedback">إرسال ملاحظات</string>
-    <string name="saved_presets">الإعدادات المسبقة المحفوظة</string>
+    <string name="presets">الإعدادات المسبقة المحفوظة</string>
     <string name="report_issue">أبلغ عن خطأ</string>
     <string name="library">المكتبة</string>
     <string name="reset">إعادة تعيين</string>
     <string name="auto_sleep_schedule_cancelled">تم إلغاء مؤقت النوم التلقائي!</string>
-    <string name="saved_presets_as_home_screen_summary">إظهار \"الإعدادات المسبقة المحفوظة\" عند بدء تشغيل التطبيق (يتطلب إعادة تشغيل التطبيق)</string>
+    <string name="presets_as_home_screen_summary">إظهار \"الإعدادات المسبقة المحفوظة\" عند بدء تشغيل التطبيق (يتطلب إعادة تشغيل التطبيق)</string>
     <string name="pinned_shortcuts_not_supported">الواجهة الخاصة بك لا تدعم إضافة الاختصارات.</string>
     <string name="preset_info__description">لم تقم بإنشاء أي إعدادات مسبقة حتى الآن. لإنشاء إعداد مسبق ، انتقل إلى المكتبة وشغل الأصوات. ثم انقر فوق الزر \"حفظ\" الذي يظهر في الزاوية السفلية من الشاشة.</string>
     <string name="preset_does_not_exist">الإعداد المسبق غير موجود. ربما تم حذفه!</string>
@@ -139,7 +139,7 @@
     <string name="pinned_shortcut_creation_failed">فشل في إضافة الاختصار إلى الشاشة الرئيسية!</string>
     <string name="sound_fade_in_duration_summary">المدة الزمنية للأصوات الباهتة (بالثواني)</string>
     <string name="sound_fade_in_duration">مدة تلاشي الصوت</string>
-    <string name="saved_presets_as_home_screen">\"الإعدادات المسبقة المحفوظة\" كشاشة الرئيسية</string>
+    <string name="presets_as_home_screen">\"الإعدادات المسبقة المحفوظة\" كشاشة الرئيسية</string>
     <string name="app_shortcut_creation_failed">فشل في إضافة الإعداد المسبق إلى اختصارات التطبيق!</string>
     <string name="app_shortcut_created">تمت إضافة الإعداد المسبق إلى اختصارات التطبيق!</string>
     <string name="app_shortcut_removed">تمت إزالة الإعداد المسبق من اختصارات التطبيق!</string>
@@ -168,8 +168,8 @@
     <string name="appintro__timer_desc">يمكن أن يساعدك على النوم و بمجهود قليل من الأجواء على النوم . استخدم مؤقت النوم للسماح لـ Noice بإغلاق نفسها. وبالمثل ، للاستيقاظ في بيئة هادئة ، استخدم مؤقت الاستيقاظ لضبط المنبه.</string>
     <string name="appintro__library_title">اصنع محيطك المثالي</string>
     <string name="appintro__library_desc">استخدم شريط تمرير مستوى الصوت لضبط مستويات الصوت. عند كل تكرار للأصوات غير الحلقية ، يتم تحديد فترة تأخير بشكل عشوائي من النطاق الذي يحدده شريط تمرير الوقت.</string>
-    <string name="appintro__saved_presets_title">احفظ المزيج المفضل لديك</string>
-    <string name="appintro__saved_presets_desc">بعد تشغيل بعض الأصوات ، يمكنك استخدام الزر الموجود في الزاوية السفلية لحفظ مزيجك. لإعادة استخدام مزيج مخزّن ، يمكنك زيارة قائمة الإعداد المسبق من قائمة التطبيق.</string>
+    <string name="appintro__presets_title">احفظ المزيج المفضل لديك</string>
+    <string name="appintro__presets_desc">بعد تشغيل بعض الأصوات ، يمكنك استخدام الزر الموجود في الزاوية السفلية لحفظ مزيجك. لإعادة استخدام مزيج مخزّن ، يمكنك زيارة قائمة الإعداد المسبق من قائمة التطبيق.</string>
     <string name="appintro__getting_started_desc_0">اسحب لليسار للتعرف على جميع الميزات!</string>
     <string name="appintro__chromecast_title">تم تمكين Chromecast</string>
     <string name="appintro__chromecast_desc">استخدم Noice لإرسال أجواءه إلى الأجهزة الأخرى التي تدعم Chromecast مثل مكبرات الصوت وأجهزة التلفزيون وما إلى ذلك.</string>

@@ -7,9 +7,9 @@
 
     <SwitchPreferenceCompat
       android:icon="@drawable/ic_settings_home_screen"
-      android:key="@string/saved_presets_as_home_screen_key"
-      android:summary="@string/saved_presets_as_home_screen_summary"
-      android:title="@string/saved_presets_as_home_screen" />
+      android:key="@string/presets_as_home_screen_key"
+      android:summary="@string/presets_as_home_screen_summary"
+      android:title="@string/presets_as_home_screen" />
 
     <SeekBarPreference
       android:defaultValue="1"
@@ -37,7 +37,7 @@
 
   </PreferenceCategory>
 
-  <PreferenceCategory android:title="@string/saved_presets">
+  <PreferenceCategory android:title="@string/presets">
 
     <Preference
       android:icon="@drawable/ic_settings_export"

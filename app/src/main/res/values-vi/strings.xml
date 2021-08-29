@@ -21,7 +21,7 @@
     <string name="pinned_shortcut_creation_failed">Thêm lối tắt vào màn hình chính thất bại!</string>
     <string name="appearance">Ngoại hình</string>
     <string name="behavior">Hành vi</string>
-    <string name="saved_presets_as_home_screen">Đã lưu các thiết lập trước làm màn hình chính</string>
+    <string name="presets_as_home_screen">Đã lưu các thiết lập trước làm màn hình chính</string>
     <string name="settings">Cài đặt</string>
     <string name="app_shortcut_creation_failed">Thêm thiết lập trước vào lối tắt ứng dụng thất bại!</string>
     <string name="app_shortcut_created">Thiết lập trước đã được thêm vào lối tắt ứng dụng!</string>
@@ -54,8 +54,8 @@
     <string name="appintro__timer_desc">Sự tĩnh lặng có thể giúp bạn đi vào giấc ngủ dễ dàng hơn. Dùng tính năng hẹn giờ ngủ để Noice tự động tắt. Bạn cũng có thể dùng tính năng hẹn giờ thức dậy để đặt báo thức.</string>
     <string name="appintro__library_title">Tạo vùng bao quanh hoàn hảo của bạn</string>
     <string name="appintro__library_desc">Sử dụng cần trượt âm lượng để điều chỉnh âm lượng âm thanh. Tại mỗi lần lặp lại các âm thanh không tạo thành vòng lặp, một khoảng thời gian trì hoãn được chọn ngẫu nhiên từ phạm vi được cần trượt thời gian đặt.</string>
-    <string name="appintro__saved_presets_title">Lưu các bản pha trộn yêu thích của bạn</string>
-    <string name="appintro__saved_presets_desc">Sau khi phát một vài âm thanh, bạn có thể sử dụng nút ở góc dưới cùng để lưu bản pha trộn của bạn. Để sử dụng lại một bản pha trộn đã lưu trữ, bạn có thể đi đến danh sách các thiết lập trước từ menu ứng dụng.</string>
+    <string name="appintro__presets_title">Lưu các bản pha trộn yêu thích của bạn</string>
+    <string name="appintro__presets_desc">Sau khi phát một vài âm thanh, bạn có thể sử dụng nút ở góc dưới cùng để lưu bản pha trộn của bạn. Để sử dụng lại một bản pha trộn đã lưu trữ, bạn có thể đi đến danh sách các thiết lập trước từ menu ứng dụng.</string>
     <string name="appintro__getting_started_title">Chào mừng</string>
     <string name="appintro__getting_started_desc_1">Hãy bắt đầu nào!</string>
     <string name="appintro__getting_started_desc_0">Vuốt sang trái để biết tất cả tính năng!</string>
@@ -81,7 +81,7 @@
     <string name="sleep_timer_description">Noice sẽ tự tắt khi hẹn giờ kết thúc. Hãy sử dụng các nút ở dưới để thêm thời gian và bắt đầu hẹn giờ.</string>
     <string name="reset">Đặt lại</string>
     <string name="auto_sleep_schedule_cancelled">Đã huỷ hẹn giờ ngủ tự động!</string>
-    <string name="saved_presets_as_home_screen_summary">Hiện các thiết lập trước đã lưu khi khởi động ứng dụng</string>
+    <string name="presets_as_home_screen_summary">Hiện các thiết lập trước đã lưu khi khởi động ứng dụng</string>
     <string name="pinned_shortcuts_not_supported">Launcher mặc định của bạn không hỗ trợ việc thêm lối tắt.</string>
     <string name="rename">Đổi tên</string>
     <string name="preset_info__description">Bạn chưa tạo thiết lập trước nào. Để tạo một thiết lập trước, hãy đi đến Thư viện và phát các âm thanh. Sau đó nhấn nút Lưu hiện ra ở góc dưới cùng của màn hình.</string>
@@ -163,7 +163,7 @@
     <string name="wake_up_timer">Hẹn giờ đánh thức</string>
     <string name="support_development">Hỗ trợ sự phát triển</string>
     <string name="sleep_timer">Hẹn giờ ngủ</string>
-    <string name="saved_presets">Thiết lập trước đã lưu</string>
+    <string name="presets">Thiết lập trước đã lưu</string>
     <string name="report_issue">Báo cáo vấn đề</string>
     <string name="library">Thư viện</string>
     <string name="help">Trợ giúp</string>

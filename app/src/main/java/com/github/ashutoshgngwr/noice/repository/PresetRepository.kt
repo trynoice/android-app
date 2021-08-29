@@ -140,7 +140,7 @@ class PresetRepository private constructor(context: Context) {
    * is JSON.
    */
   @Throws(JsonIOException::class)
-  fun exportTo(stream: OutputStream) {
+  fun writeTo(stream: OutputStream) {
     val data = mapOf(
       EXPORT_VERSION_KEY to PREFERENCE_KEY,
       EXPORT_DATA_KEY to prefs.getString(PREFERENCE_KEY, "[]")
@@ -151,10 +151,10 @@ class PresetRepository private constructor(context: Context) {
 
   /**
    * Reads and saves the presets from an [InputStream] that has the data that was exported using
-   * [exportTo]. It overwrites any existing presets in the storage.
+   * [writeTo]. It overwrites any existing presets in the storage.
    */
   @Throws(JsonIOException::class, JsonSyntaxException::class, IllegalArgumentException::class)
-  fun importFrom(stream: InputStream) {
+  fun readFrom(stream: InputStream) {
     val data = InputStreamReader(stream).use {
       gson.fromJson(it, hashMapOf<String, String?>()::class.java)
     }

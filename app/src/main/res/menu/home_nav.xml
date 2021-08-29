@@ -7,9 +7,9 @@
     android:title="@string/library" />
 
   <item
-    android:id="@+id/saved_presets"
-    android:icon="@drawable/ic_action_saved_presets"
-    android:title="@string/saved_presets" />
+    android:id="@+id/presets"
+    android:icon="@drawable/ic_action_presets"
+    android:title="@string/presets" />
 
   <item
     android:id="@+id/wake_up_timer"

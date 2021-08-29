@@ -5,7 +5,7 @@
     <string name="help">Помощь</string>
     <string name="library">Библиотека звуков</string>
     <string name="report_issue">Сообщить о проблеме</string>
-    <string name="saved_presets">Сохраненные пресеты</string>
+    <string name="presets">Сохраненные пресеты</string>
     <string name="sleep_timer">Таймер</string>
     <string name="support_development">Поддержать разработку</string>
     <string name="wake_up_timer">Таймер пробуждения</string>
@@ -100,11 +100,11 @@
     <string name="appintro__getting_started_desc_0">Проведите влево чтобы узнать все функции!</string>
     <string name="appintro__getting_started_desc_1">Давайте начнем!</string>
     <string name="appintro__getting_started_title">Добро пожаловать</string>
-    <string name="appintro__saved_presets_desc">После воспроизведения нескольких звуков Вы можете использовать
+    <string name="appintro__presets_desc">После воспроизведения нескольких звуков Вы можете использовать
     кнопку внизу экрана чтобы сохранить микс. Чтобы использовать сохраненный микс, откройте список
     пресетов в меню приложения.
   </string>
-    <string name="appintro__saved_presets_title">Сохраните свои любимые миксы</string>
+    <string name="appintro__presets_title">Сохраните свои любимые миксы</string>
     <string name="appintro__library_desc">Используйте регулятор громкости чтобы отрегулировать громкость. На каждом повторе нецикличных звуков задержка выбирается случайно из диапазона регулятора времени.</string>
     <string name="appintro__library_title">Создайте свои идеальные окружения</string>
     <string name="appintro__timer_desc">
@@ -149,7 +149,7 @@
     <string name="dense">Плотный</string>
     <string name="mood_any">Любой</string>
     <string name="intensity_any">Любой</string>
-    <string name="saved_presets_as_home_screen_summary">Показывать «сохраненные пресеты» при запуске приложения (требуется перезапуск приложения)</string>
+    <string name="presets_as_home_screen_summary">Показывать «сохраненные пресеты» при запуске приложения (требуется перезапуск приложения)</string>
     <string name="preset_does_not_exist">Пресета не существует. Возможно, он был удален!</string>
     <string name="relax">Расслабиться</string>
     <string name="random_preset">Случайный пресет</string>
@@ -194,7 +194,7 @@
     <string name="pinned_shortcut_creation_failed">Не удалось добавить ярлык на главный экран!</string>
     <string name="appearance">Внешний вид</string>
     <string name="behavior">Поведение</string>
-    <string name="saved_presets_as_home_screen">Сохраненные предустановки на главном экране</string>
+    <string name="presets_as_home_screen">Сохраненные предустановки на главном экране</string>
     <string name="settings">Настройки</string>
     <string name="app_shortcut_creation_failed">Не удалось добавить предустановку в ярлыки приложений!</string>
     <string name="app_shortcut_created">Предустановка была добавлена в ярлыки приложений!</string>

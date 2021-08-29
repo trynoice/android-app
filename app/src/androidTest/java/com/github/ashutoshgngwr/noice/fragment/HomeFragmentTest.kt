@@ -80,15 +80,15 @@ class HomeFragmentTest {
 
     mockkObject(SettingsRepository)
     every { SettingsRepository.newInstance(any()) } returns mockk(relaxed = true) {
-      every { shouldDisplaySavedPresetsAsHomeScreen() } returns true
+      every { shouldDisplayPresetsAsHomeScreen() } returns true
     }
 
     setup() // haha!
     onView(withId(R.id.bottom_nav))
-      .check(matches(EspressoX.withBottomNavSelectedItem(R.id.saved_presets)))
+      .check(matches(EspressoX.withBottomNavSelectedItem(R.id.presets)))
 
     withChildNavController {
-      assertEquals(R.id.saved_presets, it.currentDestination?.id)
+      assertEquals(R.id.presets, it.currentDestination?.id)
     }
   }
 

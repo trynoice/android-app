@@ -71,9 +71,9 @@ class AppIntroActivity : AppIntro() {
     )
     addSlide(
       AppIntroFragment.newInstance(
-        title = getString(R.string.appintro__saved_presets_title),
-        description = getString(R.string.appintro__saved_presets_desc),
-        imageDrawable = R.drawable.ic_appintro_saved_presets,
+        title = getString(R.string.appintro__presets_title),
+        description = getString(R.string.appintro__presets_desc),
+        imageDrawable = R.drawable.ic_appintro_presets,
         titleColor = ActivityCompat.getColor(this, R.color.appintro__text_color),
         descriptionColor = ActivityCompat.getColor(this, R.color.appintro__text_color),
         backgroundColor = ActivityCompat.getColor(this, R.color.appintro_slide_2__background)

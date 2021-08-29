@@ -24,7 +24,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.ashutoshgngwr.noice.activity.AppIntroActivity
 import com.github.ashutoshgngwr.noice.activity.MainActivity
-import com.github.ashutoshgngwr.noice.fragment.SavedPresetsFragment
+import com.github.ashutoshgngwr.noice.fragment.PresetsFragment
 import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import io.mockk.every
@@ -238,11 +238,11 @@ class GenerateScreenshots {
   }
 
   @Test
-  fun savedPresets() {
-    onView(withId(R.id.saved_presets)).perform(click())
+  fun presets() {
+    onView(withId(R.id.presets)).perform(click())
     onView(withId(R.id.list))
       .perform(
-        actionOnItemAtPosition<SavedPresetsFragment.ViewHolder>(
+        actionOnItemAtPosition<PresetsFragment.ViewHolder>(
           1, EspressoX.clickInItem(R.id.play_button)
         )
       )

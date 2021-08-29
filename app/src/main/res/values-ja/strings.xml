@@ -16,8 +16,8 @@
     <string name="appintro__timer_desc">少しの環境音で、眠りにつきやすくなります。スリープタイマーを使うことで、Noiceを自動的にシャットダウンできます。同様に、穏やかな環境で目を覚ましたいときには、起床タイマーを使ってアラームをセットできます。</string>
     <string name="appintro__library_title">完璧なサラウンドを作成</string>
     <string name="appintro__library_desc">音量スライダーを利用して音の大きさを調節できます。ループしない音の繰り返しごとに、タイムスライダーで設定した範囲からランダムに遅延時間が選択されます。</string>
-    <string name="appintro__saved_presets_title">あなたのお気に入りのミックスを保存</string>
-    <string name="appintro__saved_presets_desc">いくつかの音を再生した後、下端にあるボタンを使ってミックスを保存することができます。保存したミックスを再生するには、メニューからプリセットリストに移動します。</string>
+    <string name="appintro__presets_title">あなたのお気に入りのミックスを保存</string>
+    <string name="appintro__presets_desc">いくつかの音を再生した後、下端にあるボタンを使ってミックスを保存することができます。保存したミックスを再生するには、メニューからプリセットリストに移動します。</string>
     <string name="appintro__getting_started_title">ようこそ</string>
     <string name="appintro__getting_started_desc_1">さあ、はじめよう!</string>
     <string name="appintro__getting_started_desc_0">左へスワイプすることで全機能を確認することができます!</string>
@@ -43,7 +43,7 @@
     <string name="sleep_timer_description">Noiceはタイマー終了時にアプリ自体をシャットダウンします。下のボタンで時間を追加してタイマーを開始できます。</string>
     <string name="reset">リセット</string>
     <string name="auto_sleep_schedule_cancelled">自動スリープタイマーがキャンセルされました!</string>
-    <string name="saved_presets_as_home_screen_summary">アプリ起動時に保存されたプリセットを表示する</string>
+    <string name="presets_as_home_screen_summary">アプリ起動時に保存されたプリセットを表示する</string>
     <string name="pinned_shortcuts_not_supported">あなたが利用しているデフォルトのランチャーは、ショートカットの追加をサポートしていません。</string>
     <string name="rename">名前を変更</string>
     <string name="preset_info__description">プリセットが作成されていません。プレイリストを作成するには,ライブラリに移動してサウンドを再生します。その後、画面の下隅に表示される保存ボタンをクリックします。</string>
@@ -125,7 +125,7 @@
     <string name="wake_up_timer">起床タイマー</string>
     <string name="support_development">開発を支援する</string>
     <string name="sleep_timer">スリープタイマー</string>
-    <string name="saved_presets">保存したプリセット</string>
+    <string name="presets">保存したプリセット</string>
     <string name="report_issue">問題を報告</string>
     <string name="library">ライブラリ</string>
     <string name="help">ヘルプ</string>
@@ -142,7 +142,7 @@
     <string name="support_development__why_description">- 将来のアップデートを継続するため
 \n- Noiceを永遠に広告無しのアプリとして継続するため
 \n</string>
-    <string name="saved_presets_as_home_screen">プリセットをホーム画面として保存</string>
+    <string name="presets_as_home_screen">プリセットをホーム画面として保存</string>
     <string name="payment_pending">お支払いの処理が完了したら、すぐにお知らせします。</string>
     <string name="failed_to_purchase">支払フローを開始できませんでした。後でもう一度お試しください!</string>
     <string name="failed_to_load_inapp_purchases">アプリ内課金の詳細を読み込めませんでした。後でもう一度お試しください!</string>

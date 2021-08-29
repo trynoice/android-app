@@ -130,7 +130,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
       }
 
       requireContext().contentResolver.openFileDescriptor(result, "w")?.use {
-        presetRepository.exportTo(FileOutputStream(it.fileDescriptor))
+        presetRepository.writeTo(FileOutputStream(it.fileDescriptor))
       }
 
       success = true
@@ -162,7 +162,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
       }
 
       requireContext().contentResolver.openFileDescriptor(result, "r")?.use {
-        presetRepository.importFrom(FileInputStream(it.fileDescriptor))
+        presetRepository.readFrom(FileInputStream(it.fileDescriptor))
       }
 
       success = true

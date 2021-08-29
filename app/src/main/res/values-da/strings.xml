@@ -65,7 +65,7 @@
     <string name="wake_up_timer">Vågn-op Timer</string>
     <string name="support_development">Støt udvikling</string>
     <string name="sleep_timer">Sove Timer</string>
-    <string name="saved_presets">Gemte forudindstillinger</string>
+    <string name="presets">Gemte forudindstillinger</string>
     <string name="report_issue">Rapporter problemer</string>
     <string name="help">Hjælp</string>
     <string name="app_theme">Tema</string>
