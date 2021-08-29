@@ -185,4 +185,7 @@
 \n
 \n Bạn có thể thiết lập tự động chia sẻ dữ liệu tại bất cứ lúc nào ở trong ứng dụng bằng cách đi đến \"**Cài đặt** &gt; **Chia sẻ dữ liệu sử dụng và hành vi**\".</string>
     <string name="share_usage_data_consent_title">Cài đặt chia sẻ dữ liệu</string>
+    <string name="created_by">Được tạo bởi</string>
+    <string name="sound_fade_in_duration_summary">Thời lượng để tăng âm lượng từ từ (tính bằng giây)</string>
+    <string name="sound_fade_in_duration">Thời lượng tăng âm lượng từ từ</string>
 </resources>
