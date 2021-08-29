@@ -171,7 +171,7 @@
     <string name="pinned_shortcut_creation_failed">Не вдалося додати ярлик на головний екран!</string>
     <string name="appearance">Зовнішній вигляд</string>
     <string name="behavior">Поведінка</string>
-    <string name="presets_as_home_screen">«Збережені поєднання» як головний екран</string>
+    <string name="presets_as_home_screen">«Поєднання» як головний екран</string>
     <string name="settings">Налаштування</string>
     <string name="app_shortcut_creation_failed">Не вдалося додати поєднання до ярликів застосунку!</string>
     <string name="app_shortcut_created">Поєднання додано до ярликів застосунку!</string>
