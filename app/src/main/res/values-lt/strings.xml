@@ -54,7 +54,7 @@
     <string name="pinned_shortcut_creation_failed">Nepavyko įtraukti nuorodos į pagrindinį ekraną!</string>
     <string name="appearance">Išvaizda</string>
     <string name="behavior">Elgsena</string>
-    <string name="presets_as_home_screen">„Išsaugotos parinktys“ kaip pagrindinis ekranas</string>
+    <string name="presets_as_home_screen">„Parinktys“ kaip pagrindinis ekranas</string>
     <string name="settings">Nustatymai</string>
     <string name="app_shortcut_creation_failed">Nepavyko pridėti parinkties į programėlių nuorodas!</string>
     <string name="app_shortcut_created">Parinktis buvo įtraukta į programėlių nuorodas!</string>
