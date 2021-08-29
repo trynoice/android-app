@@ -97,10 +97,7 @@
     <string name="appintro__getting_started_desc_0">Zatáhněte doleva a my vám ukážeme, co vše Noice umí!</string>
     <string name="appintro__getting_started_desc_1">Začněme!</string>
     <string name="appintro__getting_started_title">Vítejte</string>
-    <string name="appintro__presets_desc">
-    Při přehrávání vícero zvuků si můžete aktuálně přehrávaný mix uložit klepnutím na tlačítko v pravém dolním rohu.
-    Pro znovupoužití vámi uloženého mixu, navštivte sekci Uložené předvolby v menu aplikace.
-  </string>
+    <string name="appintro__presets_desc">Při přehrávání vícero zvuků si můžete aktuálně přehrávaný mix uložit klepnutím na tlačítko v pravém dolním rohu. Pro znovupoužití vámi uloženého mixu, navštivte sekci Uložené předvolby v menu aplikace.</string>
     <string name="appintro__presets_title">Uložte si svůj oblíbený mix</string>
     <string name="appintro__library_desc">
     Posuvníky hlasitosti nastavujete hlasitost jednotlivých zvuků. Mezi každým opakováním nahrávek bez smyčky
