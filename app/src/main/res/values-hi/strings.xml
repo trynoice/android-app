@@ -97,7 +97,7 @@
     <string name="appintro__getting_started_desc_0">सभी सुविधाओं को जानने के लिए बाएं स्वाइप करें!</string>
     <string name="appintro__getting_started_desc_1">आइए शुरू करते हैं!</string>
     <string name="appintro__getting_started_title">स्वागत है</string>
-    <string name="appintro__presets_desc">कुछ ध्वनियों को चलाने के बाद, आप अपने मिक्स को सेव करने के लिए नीचे के कोने में स्थित बटन का उपयोग कर सकते हैं। संग्रहीत मिक्स का पुन: उपयोग करने के लिए, आप ऐप मेनू से प्रीसेट सूची देख सकते हैं।</string>
+    <string name="appintro__presets_desc">कुछ ध्वनियों को चलाने के बाद, आप अपने मिक्स को सेव करने के लिए नीचे के कोने में स्थित बटन का उपयोग कर सकते हैं। संग्रहीत मिक्स का पुन: उपयोग करने के लिए, नीचे पट्टी से प्रीसेट सूची पर जाएं।</string>
     <string name="appintro__presets_title">अपने पसंदीदा मिक्स को सेव करें</string>
     <string name="appintro__library_desc">
        ध्वनि मात्रा समायोजित करने के लिए वॉल्यूम स्लाइडर का उपयोग करें। गैर-लूपिंग ध्वनियों के प्रत्येक पुनरावृत्ति में,
@@ -141,7 +141,7 @@
     <string name="in_app_feedback__description">हम आपसे ऐप के बारे में सुनना पसंद करेंगे। कृपया हमारे गिटहब रिपॉजिटरी पर जाने के लिए एक क्षण लें। यदि आपको ऐप पसंद नहीं है, तो कृपया अपनी चिंताओं को बताते हुए एक मुद्दे को खोलने पर विचार करें। अन्यथा प्यार और समर्थन दिखाने के लिए, कृपया प्रोजेक्ट को स्टार करें।</string>
     <string name="use_24h_format">२४-घंटे के समय प्रारूप का उपयोग करें</string>
     <string name="wake_up_timer_cancelled">वेक-अप टाइमर रद्द कर दिया!</string>
-    <string name="presets_as_home_screen_summary">ऐप स्टार्टअप पर \"सहेजे गए प्रीसेट\" दिखाएं (ऐप को पुनरारंभ करने की आवश्यकता होगी)</string>
+    <string name="presets_as_home_screen_summary">ऐप स्टार्टअप पर \"प्रीसेट\" दिखाएं (ऐप को पुनरारंभ करने की आवश्यकता होगी)</string>
     <string name="preset_does_not_exist">प्रीसेट मौजूद नहीं है। यह संभव है कि इसे हटा दिया गया हो!</string>
     <string name="add_to_home_screen">होम स्क्रीन में शामिल करें</string>
     <string name="relax">शांतिदायक</string>
@@ -193,7 +193,7 @@
     <string name="pinned_shortcut_creation_failed">होम स्क्रीन पर शॉर्टकट जोड़ने में विफल!</string>
     <string name="appearance">दिखावट</string>
     <string name="behavior">व्यवहार</string>
-    <string name="presets_as_home_screen">होम स्क्रीन पर \"सहजे हुए प्रीसेट्स\" देंखे</string>
+    <string name="presets_as_home_screen">होम स्क्रीन पर \"प्रीसेट्स\" देंखे</string>
     <string name="settings">सेटिंग्स</string>
     <string name="should_display_sound_icons">ध्वनि चिह्न दिखाएं</string>
     <string name="payment_pending">जैसे ही हम आपका भुगतान संसाधित कर लेंगे, हम आपको सूचित करेंगे।</string>
