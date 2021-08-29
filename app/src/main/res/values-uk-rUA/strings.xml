@@ -5,7 +5,7 @@
     <string name="help">Допомога</string>
     <string name="library">Бібліотека</string>
     <string name="report_issue">Повідомити про ваду</string>
-    <string name="presets">Збережені поєднання</string>
+    <string name="presets">Поєднання</string>
     <string name="sleep_timer">Таймер сну</string>
     <string name="support_development">Підтримати розробку</string>
     <string name="wake_up_timer">Таймер пробудження</string>
@@ -90,7 +90,7 @@
   </string>
     <string name="appintro__getting_started_desc_1">Почнімо!</string>
     <string name="appintro__getting_started_title">Вітаємо</string>
-    <string name="appintro__presets_desc">Після відтворення кількох звуків ви можете користуватися кнопкою у нижньому куті, щоб зберегти свої мікси. Щоб застосувати збережені мікси ви можете відвідати список поєднань через меню застосунку.</string>
+    <string name="appintro__presets_desc">Після відтворення кількох звуків ви можете натиснути кнопку у нижньому куті, щоб зберегти свої поєднання. Щоб застосувати їх ви можете перейти до списку поєднань через меню застосунку.</string>
     <string name="appintro__presets_title">Збережіть свої улюблені мікси</string>
     <string name="appintro__library_desc">Використовуйте повзунок гучності, щоб відрегулювати гучність звуків. За кожного програвання нециклічних звуків період затримки обирається випадково з діапазону за допомогою повзунка часу.</string>
     <string name="appintro__library_title">Створіть своє ідеальне оточення</string>
@@ -179,7 +179,7 @@
     <string name="remove_from_app_shortcuts">Вилучити з ярликів застосунку</string>
     <string name="add_to_app_shortcuts">Додати до ярликів застосунку</string>
     <string name="app_authors">Переглянути список авторів Noice</string>
-    <string name="presets_as_home_screen_summary">Показувати «збережені поєднання» під час запуску (потрібно перезапустити застосунок)</string>
+    <string name="presets_as_home_screen_summary">Показувати «поєднання» під час запуску (потрібно перезапустити застосунок)</string>
     <string name="preset_does_not_exist">Поєднання не існує. Можливо, його було видалено!</string>
     <string name="random_preset">Випадкове поєднання</string>
     <string name="should_display_sound_icons">Показувати піктограми звуків</string>
