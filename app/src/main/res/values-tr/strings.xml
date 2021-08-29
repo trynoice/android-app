@@ -184,7 +184,7 @@
     <string name="pinned_shortcut_creation_failed">Kısayol ana ekrana eklenemedi!</string>
     <string name="appearance">Görünüm</string>
     <string name="behavior">Davranış</string>
-    <string name="presets_as_home_screen">Ana ekrana \"kaydedilen kayıtlar\"</string>
+    <string name="presets_as_home_screen">Ana ekran olarak \"mevcut kayıtlar\"</string>
     <string name="settings">Ayarlar</string>
     <string name="share">Paylaş</string>
     <string name="ignore_audio_focus_changes_summary_on">Diğer uygulamalar ses oynatırken tepki verme</string>
@@ -218,4 +218,7 @@
 \n
 \n \"**Ayarlar** &gt; **Kullanım ve davranış verilerini paylaş**\" seçeneğine giderek uygulama içinde istediğiniz zaman otomatik veri paylaşımını yapılandırabilirsiniz.</string>
     <string name="share_usage_data_consent_title">Veri Paylaşımı Tercihleri</string>
+    <string name="created_by">Oluşturan</string>
+    <string name="sound_fade_in_duration_summary">Azalan sesler için süre (saniye cinsinden)</string>
+    <string name="sound_fade_in_duration">Ses azalma süresi</string>
 </resources>
