@@ -22,4 +22,10 @@
     android:label="@string/wake_up_timer"
     tools:layout="@layout/wake_up_timer_fragment" />
 
+  <dialog
+    android:id="@+id/random_preset"
+    android:name="com.github.ashutoshgngwr.noice.fragment.RandomPresetFragment"
+    android:label="@string/random_preset"
+    tools:layout="@layout/random_preset_fragment" />
+
 </navigation>

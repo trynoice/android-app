@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.MediaPlayerService
@@ -99,6 +100,15 @@ class LibraryFragment : Fragment() {
       it.adapter = adapter
       it.setHasFixedSize(true)
       it.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+    }
+
+    binding.randomPresetButton.setOnLongClickListener {
+      Toast.makeText(requireContext(), R.string.random_preset, Toast.LENGTH_LONG).show()
+      true
+    }
+
+    binding.randomPresetButton.setOnClickListener {
+      findNavController().navigate(R.id.random_preset)
     }
 
     binding.savePresetButton.setOnLongClickListener {

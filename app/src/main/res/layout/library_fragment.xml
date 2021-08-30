@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  android:animateLayoutChanges="true">
 
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/sound_list"
@@ -12,6 +13,7 @@
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton
     android:id="@+id/save_preset_button"
+    style="@style/Widget.App.FloatingActionButton.Primary"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
@@ -19,6 +21,16 @@
     android:src="@drawable/ic_action_save"
     android:visibility="gone"
     app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/random_preset_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:contentDescription="@string/save_preset"
+    android:src="@drawable/ic_action_shuffle"
+    app:layout_constraintBottom_toTopOf="@id/save_preset_button"
     app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -108,7 +108,6 @@ class HomeFragment : Fragment(), Navigable {
 
     inflater.inflate(R.menu.home_menu, menu)
     menu.findItem(R.id.sleep_timer)?.isVisible = displayPlaybackControls
-    menu.findItem(R.id.random_preset)?.isVisible = displayPlaybackControls
     super.onCreateOptionsMenu(menu, inflater)
   }
 

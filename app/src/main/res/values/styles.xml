@@ -30,8 +30,13 @@
   </style>
 
   <style name="Widget.App.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
-    <item name="tint">@android:color/primary_text_dark</item>
-    <item name="backgroundTint">?attr/colorAccent</item>
+    <item name="tint">?attr/colorOnBackground</item>
+    <item name="backgroundTint">@color/background_dark</item>
+  </style>
+
+  <style name="Widget.App.FloatingActionButton.Primary">
+    <item name="tint">?attr/colorOnPrimarySurface</item>
+    <item name="backgroundTint">?attr/colorPrimarySurface</item>
   </style>
 
   <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
