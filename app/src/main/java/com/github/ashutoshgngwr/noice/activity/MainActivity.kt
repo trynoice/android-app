@@ -47,6 +47,11 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
   private lateinit var billingProvider: BillingProvider
   private lateinit var navController: NavController
 
+  /**
+   * indicates whether the activity was delivered a new intent since it was last resumed.
+   */
+  private var hasNewIntent = false
+
   override fun onCreate(savedInstanceState: Bundle?) {
     val app = NoiceApplication.of(this)
     analyticsProvider = app.getAnalyticsProvider()
@@ -72,6 +77,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
     NoiceApplication.of(application).getReviewFlowProvider().init(this)
     billingProvider.init(this, this)
     analyticsProvider.logEvent("ui_open", bundleOf("theme" to settingsRepository.getAppTheme()))
+    hasNewIntent = true
   }
 
   private fun maybeShowDataCollectionConsent() {
@@ -105,6 +111,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
     super.onNewIntent(intent)
     setIntent(intent)
     navController.handleDeepLink(intent)
+    hasNewIntent = true
   }
 
   override fun onResume() {
@@ -112,6 +119,11 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
 
     // handle the new intent here since onResume() is guaranteed to be called after onNewIntent().
     // https://developer.android.com/reference/android/app/Activity#onNewIntent(android.content.Intent)
+    if (!hasNewIntent) {
+      return
+    }
+
+    hasNewIntent = false
     if (intent.hasExtra(EXTRA_NAV_DESTINATION)) {
       val destID = intent.getIntExtra(EXTRA_NAV_DESTINATION, 0)
       if (!Navigable.navigate(binding.navHostFragment.getFragment(), destID)) {
@@ -127,9 +139,6 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
     ) {
       intent.data?.also { PlaybackController.playPresetFromUri(this, it) }
     }
-
-    // prevent intent re-handling when activity re-resumes.
-    intent = Intent()
   }
 
   override fun onDestroy() {

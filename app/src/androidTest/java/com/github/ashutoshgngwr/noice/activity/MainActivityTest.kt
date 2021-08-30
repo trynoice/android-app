@@ -111,11 +111,14 @@ class MainActivityTest {
       every { PlaybackController.playPresetFromUri(any(), any()) } returns Unit
 
       val uri = Uri.parse(input)
-      val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
-        .setAction(Intent.ACTION_VIEW)
-        .setData(uri)
+      activityScenario.onActivity {
+        it.startActivity(
+          Intent(it, MainActivity::class.java)
+            .setAction(Intent.ACTION_VIEW)
+            .setData(uri)
+        )
+      }
 
-      activityScenario = launch(intent)
       verify(exactly = 1) { PlaybackController.playPresetFromUri(any(), uri) }
       clearMocks(PlaybackController)
     }
