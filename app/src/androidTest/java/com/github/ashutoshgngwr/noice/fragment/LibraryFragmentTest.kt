@@ -16,7 +16,6 @@ import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.Player
@@ -43,10 +42,6 @@ import kotlin.random.Random
 
 @RunWith(AndroidJUnit4::class)
 class LibraryFragmentTest {
-
-  @Rule
-  @JvmField
-  val retryTestRule = RetryTestRule(5)
 
   private lateinit var mockEventBus: EventBus
   private lateinit var mockPresetRepository: PresetRepository

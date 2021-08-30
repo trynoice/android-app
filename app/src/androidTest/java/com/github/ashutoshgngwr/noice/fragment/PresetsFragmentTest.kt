@@ -24,7 +24,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
@@ -43,16 +42,11 @@ import org.hamcrest.Matchers.*
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class PresetsFragmentTest {
-
-  @Rule
-  @JvmField
-  val retryTestRule = RetryTestRule(5)
 
   private lateinit var fragmentScenario: FragmentScenario<PresetsFragment>
   private lateinit var mockPreset: Preset

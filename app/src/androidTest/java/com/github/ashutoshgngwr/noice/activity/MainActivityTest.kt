@@ -18,7 +18,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.BillingProvider
@@ -35,16 +34,11 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
-
-  @Rule
-  @JvmField
-  val retryTestRule = RetryTestRule(5)
 
   private lateinit var activityScenario: ActivityScenario<MainActivity>
 
@@ -119,7 +113,7 @@ class MainActivityTest {
         )
       }
 
-      verify(exactly = 1) { PlaybackController.playPresetFromUri(any(), uri) }
+      verify(exactly = 1, timeout = 5000L) { PlaybackController.playPresetFromUri(any(), uri) }
       clearMocks(PlaybackController)
     }
   }

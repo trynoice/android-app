@@ -136,10 +136,6 @@ class GenerateScreenshots {
 
   @Rule
   @JvmField
-  val retryTestRule = RetryTestRule(5)
-
-  @Rule
-  @JvmField
   val screenshotRule = TestRule { base, _ ->
     object : Statement() {
       override fun evaluate() {

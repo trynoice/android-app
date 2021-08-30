@@ -13,25 +13,18 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.RetryTestRule
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.random.Random
 
-
 @RunWith(AndroidJUnit4::class)
 class DialogFragmentTest {
-
-  @Rule
-  @JvmField
-  val retryTestRule = RetryTestRule(5)
 
   private lateinit var emptyFragmentScenario: FragmentScenario<Fragment>
 
