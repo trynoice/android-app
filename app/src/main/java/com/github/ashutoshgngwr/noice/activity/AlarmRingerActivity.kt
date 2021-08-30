@@ -64,8 +64,6 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     setContentView(binding.root)
     showWhenLocked()
 
-    handleNewIntent()
-
     analyticsProvider = NoiceApplication.of(this).getAnalyticsProvider()
     ringerStartTime = System.currentTimeMillis()
   }
@@ -73,12 +71,33 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
   override fun onNewIntent(intent: Intent?) {
     super.onNewIntent(intent)
     setIntent(intent)
-    handleNewIntent()
   }
 
   override fun onResume() {
     super.onResume()
     enableImmersiveMode()
+
+    // handle the new intent here since onResume() is guaranteed to be called after onNewIntent().
+    // https://developer.android.com/reference/android/app/Activity#onNewIntent(android.content.Intent)
+    val presetID = intent.getStringExtra(EXTRA_PRESET_ID)
+    if (presetID == null) {
+      Log.d(LOG_TAG, "onResume(): presetID is null")
+      finish()
+      return
+    }
+
+    // Since activity takes a moment to actually show up, invoking `startService` from `onCreate` or
+    // `onResume` fails with `java.lang.IllegalStateException: Not allowed to start service Intent:
+    // app is in background` on recent Android version (O+). `PlaybackController` can not call
+    // `startForegroundService` since it doesn't know if an action will bring `MediaPlayerService`
+    // to foreground. To prevent `PlaybackController` from causing this error by invoking
+    // `startService`, we need to manually start `MediaPlayerService` in the foreground since we can
+    // be certain that playPreset action will bring it to foreground before Android System kills it.
+    ContextCompat.startForegroundService(this, Intent(this, MediaPlayerService::class.java))
+
+    Log.d(LOG_TAG, "onResume(): starting preset")
+    PlaybackController.setAudioUsage(this, AudioAttributesCompat.USAGE_ALARM)
+    PlaybackController.playPreset(this, presetID)
   }
 
   override fun onStop() {
@@ -130,28 +149,5 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
           WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
       )
     }
-  }
-
-
-  private fun handleNewIntent() {
-    val presetID = intent.getStringExtra(EXTRA_PRESET_ID)
-    if (presetID == null) {
-      Log.d(LOG_TAG, "handleNewIntent(): presetID is null")
-      finish()
-      return
-    }
-
-    // Since activity takes a moment to actually show up, invoking `startService` from `onCreate` or
-    // `onResume` fails with `java.lang.IllegalStateException: Not allowed to start service Intent:
-    // app is in background` on recent Android version (O+). `PlaybackController` can not call
-    // `startForegroundService` since it doesn't know if an action will bring `MediaPlayerService`
-    // to foreground. To prevent `PlaybackController` from causing this error by invoking
-    // `startService`, we need to manually start `MediaPlayerService` in the foreground since we can
-    // be certain that playPreset action will bring it to foreground before Android System kills it.
-    ContextCompat.startForegroundService(this, Intent(this, MediaPlayerService::class.java))
-
-    Log.d(LOG_TAG, "handleNewIntent(): starting preset")
-    PlaybackController.setAudioUsage(this, AudioAttributesCompat.USAGE_ALARM)
-    PlaybackController.playPreset(this, presetID)
   }
 }
