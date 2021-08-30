@@ -35,7 +35,6 @@ import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.random.Random
@@ -145,7 +144,7 @@ class LibraryFragmentTest {
         .perform(EspressoX.slide(expectedVolume.toFloat()))
 
       onView(withId(R.id.positive)).perform(click())
-      verify(exactly = 1) { mockPlayer.setVolume(expectedVolume) }
+      verify(exactly = 1, timeout = 5000L) { mockPlayer.setVolume(expectedVolume) }
     }
   }
 
