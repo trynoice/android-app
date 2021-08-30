@@ -49,9 +49,8 @@ class AlarmRingerActivityTest {
   @Test
   fun testWithoutPresetID() {
     val scenario = ActivityScenario.launch(AlarmRingerActivity::class.java)
-    EspressoX.retryWithWaitOnError(AssertionError::class) {
-      assertEquals(Lifecycle.State.DESTROYED, scenario.state)
-    }
+    verify(exactly = 1, timeout = 5000L) { PlaybackController.pause(any()) }
+    assertEquals(Lifecycle.State.DESTROYED, scenario.state)
   }
 
   @Test
