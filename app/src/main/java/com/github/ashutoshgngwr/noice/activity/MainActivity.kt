@@ -101,21 +101,17 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
     }
   }
 
-  override fun onResume() {
-    super.onResume()
-
-    // Allow fragments to be initialised so that Navigable can work.
-    handleNewIntent()
-  }
-
   override fun onNewIntent(intent: Intent) {
     super.onNewIntent(intent)
     setIntent(intent)
-    handleNewIntent()
     navController.handleDeepLink(intent)
   }
 
-  private fun handleNewIntent() {
+  override fun onResume() {
+    super.onResume()
+
+    // handle the new intent here since onResume() is guaranteed to be called after onNewIntent().
+    // https://developer.android.com/reference/android/app/Activity#onNewIntent(android.content.Intent)
     if (intent.hasExtra(EXTRA_NAV_DESTINATION)) {
       val destID = intent.getIntExtra(EXTRA_NAV_DESTINATION, 0)
       if (!Navigable.navigate(binding.navHostFragment.getFragment(), destID)) {
@@ -131,6 +127,9 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
     ) {
       intent.data?.also { PlaybackController.playPresetFromUri(this, it) }
     }
+
+    // prevent intent re-handling when activity re-resumes.
+    intent = Intent()
   }
 
   override fun onDestroy() {
