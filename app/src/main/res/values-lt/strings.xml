@@ -192,4 +192,6 @@
 \n
 \n Automatinį dalijimąsi duomenimis bet kuriuo metu galite konfigūruoti programėlėje, eidami į \"**Nustatymai** &gt; **Dalytis naudojimo ir elgsenos duomenimis**\".</string>
     <string name="share_usage_data_consent_title">Duomenų dalijimosi nuostatos</string>
+    <string name="import_presets_successful">Parinktys sėkmingai importuotos iš failo!</string>
+    <string name="export_presets_successful">Parinktys sėkmingai eksportuotos į failą!</string>
 </resources>
