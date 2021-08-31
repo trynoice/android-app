@@ -130,10 +130,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
       }
 
       requireContext().contentResolver.openFileDescriptor(result, "w")?.use {
-        presetRepository.writeTo(FileOutputStream(it.fileDescriptor))
+        val os = FileOutputStream(it.fileDescriptor)
+        os.channel.truncate(0L)
+        presetRepository.writeTo(os)
+        os.close()
       }
 
       success = true
+      showSnackBar(R.string.export_presets_successful)
     } catch (e: Throwable) {
       Log.w(TAG, "failed to export saved presets", e)
       when (e) {
@@ -166,6 +170,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
       }
 
       success = true
+      showSnackBar(R.string.import_presets_successful)
     } catch (e: Throwable) {
       Log.i(TAG, e.stackTraceToString())
       when (e) {

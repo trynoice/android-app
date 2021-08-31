@@ -204,8 +204,10 @@
     <string name="remove_all_app_shortcuts_confirmation">It will remove all preset shortcuts from the app shortcut menu. Do you want to proceed?</string>
     <string name="all_app_shortcuts_removed">All app shortcuts have been removed!</string>
     <string name="failed_to_write_file">Failure on writing to the selected file!</string>
+    <string name="export_presets_successful">Successfully exported presets to the file!</string>
     <string name="failed_to_read_file">Failure on reading the selected file!</string>
     <string name="invalid_import_file_format">The import file format is invalid!</string>
+    <string name="import_presets_successful">Successfully imported presets from the file!</string>
     <string name="should_display_sound_icons">Display sound icons</string>
     <string name="share_usage_data_consent_title">Data Sharing Preferences</string>
     <string name="share_usage_data_consent_message">
