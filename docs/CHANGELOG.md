@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.3.0](https://github.com/ashutoshgngwr/noice/releases/tag/1.3.0)
+
+**Wednesday, 1 September 2021**
+
+- Add default presets for new users
+- Reposition sleep timer button
+- Fix minor bugs in preset exports and preset urls
+- Update translations ([#755](https://github.com/ashutoshgngwr/noice/issues/755), [#756](https://github.com/ashutoshgngwr/noice/issues/756), [#757](https://github.com/ashutoshgngwr/noice/issues/757), [#780](https://github.com/ashutoshgngwr/noice/issues/780))
+
 ## [v1.2.2](https://github.com/ashutoshgngwr/noice/releases/tag/1.2.2)
 
 **Wednesday, 18 August 2021**
