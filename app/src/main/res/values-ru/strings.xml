@@ -100,10 +100,7 @@
     <string name="appintro__getting_started_desc_0">Проведите влево чтобы узнать все функции!</string>
     <string name="appintro__getting_started_desc_1">Давайте начнем!</string>
     <string name="appintro__getting_started_title">Добро пожаловать</string>
-    <string name="appintro__presets_desc">После воспроизведения нескольких звуков Вы можете использовать
-    кнопку внизу экрана чтобы сохранить микс. Чтобы использовать сохраненный микс, откройте список
-    пресетов в меню приложения.
-  </string>
+    <string name="appintro__presets_desc">После воспроизведения нескольких звуков Вы можете использовать кнопку внизу экрана чтобы сохранить микс. Чтобы использовать сохраненный микс, откройте список пресетов в меню приложения.</string>
     <string name="appintro__presets_title">Сохраните свои любимые миксы</string>
     <string name="appintro__library_desc">Используйте регулятор громкости чтобы отрегулировать громкость. На каждом повторе нецикличных звуков задержка выбирается случайно из диапазона регулятора времени.</string>
     <string name="appintro__library_title">Создайте свои идеальные окружения</string>

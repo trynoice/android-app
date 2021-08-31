@@ -26,7 +26,7 @@
     <string name="wake_up_timer">Pabudimo laikmatis</string>
     <string name="support_development">Paremti kūrimą</string>
     <string name="sleep_timer">Miego laikmatis</string>
-    <string name="presets">Išsaugotos parinktys</string>
+    <string name="presets">Parinktys</string>
     <string name="report_issue">Pranešti apie problemas</string>
     <string name="library">Biblioteka</string>
     <string name="help">Pagalba</string>
@@ -54,7 +54,7 @@
     <string name="pinned_shortcut_creation_failed">Nepavyko įtraukti nuorodos į pagrindinį ekraną!</string>
     <string name="appearance">Išvaizda</string>
     <string name="behavior">Elgsena</string>
-    <string name="presets_as_home_screen">„Išsaugotos parinktys“ kaip pagrindinis ekranas</string>
+    <string name="presets_as_home_screen">„Parinktys“ kaip pagrindinis ekranas</string>
     <string name="settings">Nustatymai</string>
     <string name="app_shortcut_creation_failed">Nepavyko pridėti parinkties į programėlių nuorodas!</string>
     <string name="app_shortcut_created">Parinktis buvo įtraukta į programėlių nuorodas!</string>
@@ -114,7 +114,7 @@
     <string name="sleep_timer_description">Noice išsijungs, kai laikmatis baigsis. Naudokite žemiau pateiktus mygtukus, kad pridėtumėte laiko ir paleistumėte laikmatį.</string>
     <string name="reset">Atstatyti</string>
     <string name="auto_sleep_schedule_cancelled">Automatinis miego laikmatis atšauktas!</string>
-    <string name="presets_as_home_screen_summary">Programos paleidimo metu rodyti „išsaugotos parinktys“ (reikia iš naujo paleisti programą)</string>
+    <string name="presets_as_home_screen_summary">Programos paleidimo metu rodyti „parinktys“ (reikia iš naujo paleisti programą)</string>
     <string name="pinned_shortcuts_not_supported">Jūsų numatytoji paleidimo programa nepalaiko nuorodų pridėjimo.</string>
     <string name="rename">Pervadinti</string>
     <string name="preset_info__description">Dar nesukūrėte jokių parinkčių. Norėdami sukurti parinktį, eikite į biblioteką ir paleiskite garsus. Tada spustelėkite apatiniame ekrano kampe rodomą mygtuką Išsaugoti.</string>
@@ -192,4 +192,6 @@
 \n
 \n Automatinį dalijimąsi duomenimis bet kuriuo metu galite konfigūruoti programėlėje, eidami į \"**Nustatymai** &gt; **Dalytis naudojimo ir elgsenos duomenimis**\".</string>
     <string name="share_usage_data_consent_title">Duomenų dalijimosi nuostatos</string>
+    <string name="import_presets_successful">Parinktys sėkmingai importuotos iš failo!</string>
+    <string name="export_presets_successful">Parinktys sėkmingai eksportuotos į failą!</string>
 </resources>

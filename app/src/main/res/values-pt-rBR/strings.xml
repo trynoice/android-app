@@ -102,10 +102,7 @@
   </string>
     <string name="appintro__getting_started_desc_1">Vamos começar!</string>
     <string name="appintro__getting_started_title">Bem-vindo</string>
-    <string name="appintro__presets_desc">
-    Depois de tocar alguns sons, você pode usar o botão no canto inferior para salvar sua mixagem.
-    Para reutilizar um mix armazenado, pode visitar a lista de ajustes no menu do aplicativo.
-  </string>
+    <string name="appintro__presets_desc">Depois de tocar alguns sons, você pode usar o botão no canto inferior para salvar sua mixagem. Para reutilizar um mix armazenado, pode visitar a lista de ajustes no menu do aplicativo.</string>
     <string name="appintro__presets_title">Salve seus mixes favoritos</string>
     <string name="appintro__library_desc">
     Use a barra de volume para ajustar o volume dos sons. A cada repetição de sons sem loop, um

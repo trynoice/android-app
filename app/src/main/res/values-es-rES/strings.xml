@@ -89,10 +89,7 @@
     <string name="appintro__getting_started_desc_0">¡Desliza hacia la izquierda para conocer todas las funciones!</string>
     <string name="appintro__getting_started_desc_1">¡Empecemos!</string>
     <string name="appintro__getting_started_title">Bienvenidos</string>
-    <string name="appintro__presets_desc">
-    Después de reproducir algunos sonidos, puede usar el botón en la esquina inferior para guardar su preset.
-    Para reutilizar un preset almacenado, puede visitar la lista predeterminada en el menú de la aplicación.
-  </string>
+    <string name="appintro__presets_desc">Después de reproducir algunos sonidos, puede usar el botón en la esquina inferior para guardar su preset. Para reutilizar un preset almacenado, puede visitar la lista predeterminada en el menú de la aplicación.</string>
     <string name="appintro__presets_title">Guarde sus mezclas preferidas</string>
     <string name="appintro__library_desc">
     Utilice el control deslizante de volumen para ajustar los volúmenes de sonido. En cada repetición de sonidos sin bucle, un periodo
