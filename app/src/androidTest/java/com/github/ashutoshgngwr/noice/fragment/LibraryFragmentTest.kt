@@ -203,20 +203,20 @@ class LibraryFragmentTest {
       PlaybackStateCompat.STATE_STOPPED
     )
 
-    for (state in states) {
-      every { mockUpdateEvent.state } returns state
+    val visibility = arrayOf(
+      Visibility.VISIBLE,
+      Visibility.GONE,
+      Visibility.GONE,
+    )
+
+    for (i in states.indices) {
+      every { mockUpdateEvent.state } returns states[i]
       fragmentScenario.onFragment {
         it.onPlayerManagerUpdate(mockUpdateEvent)
       }
 
-      // a non-playing state should keep the FAB hidden
-      var expectedVisibility = Visibility.GONE
-      if (state == PlaybackStateCompat.STATE_PLAYING) {
-        expectedVisibility = Visibility.VISIBLE
-      }
-
       onView(withId(R.id.save_preset_button))
-        .check(matches(withEffectiveVisibility(expectedVisibility)))
+        .check(matches(withEffectiveVisibility(visibility[i])))
     }
   }
 
