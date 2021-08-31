@@ -35,7 +35,6 @@ import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.random.Random
@@ -145,7 +144,7 @@ class LibraryFragmentTest {
         .perform(EspressoX.slide(expectedVolume.toFloat()))
 
       onView(withId(R.id.positive)).perform(click())
-      verify(exactly = 1) { mockPlayer.setVolume(expectedVolume) }
+      verify(exactly = 1, timeout = 5000L) { mockPlayer.setVolume(expectedVolume) }
     }
   }
 
@@ -204,20 +203,20 @@ class LibraryFragmentTest {
       PlaybackStateCompat.STATE_STOPPED
     )
 
-    for (state in states) {
-      every { mockUpdateEvent.state } returns state
+    val visibility = arrayOf(
+      Visibility.VISIBLE,
+      Visibility.GONE,
+      Visibility.GONE,
+    )
+
+    for (i in states.indices) {
+      every { mockUpdateEvent.state } returns states[i]
       fragmentScenario.onFragment {
         it.onPlayerManagerUpdate(mockUpdateEvent)
       }
 
-      // a non-playing state should keep the FAB hidden
-      var expectedVisibility = Visibility.GONE
-      if (state == PlaybackStateCompat.STATE_PLAYING) {
-        expectedVisibility = Visibility.VISIBLE
-      }
-
       onView(withId(R.id.save_preset_button))
-        .check(matches(withEffectiveVisibility(expectedVisibility)))
+        .check(matches(withEffectiveVisibility(visibility[i])))
     }
   }
 

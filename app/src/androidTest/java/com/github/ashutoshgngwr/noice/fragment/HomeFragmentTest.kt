@@ -91,9 +91,6 @@ class HomeFragmentTest {
     mockkObject(PlaybackController)
     every { PlaybackController.resume(any()) } returns Unit
 
-    // shouldn't be displayed by default
-    onView(withId(R.id.action_playback_toggle)).check(ViewAssertions.doesNotExist())
-
     // with ongoing playback
     onHomeFragment {
       it.onPlayerManagerUpdate(mockk(relaxed = true) {

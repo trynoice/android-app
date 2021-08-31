@@ -2,7 +2,7 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -39,30 +39,38 @@ class RandomPresetFragmentTest {
 
   @Test
   fun testRandomPresetButton_onClick() {
-    val intensityExpectations = mapOf(
+    val intensities = mapOf(
       R.id.preset_intensity__any to RandomPresetFragment.RANGE_INTENSITY_ANY,
       R.id.preset_intensity__dense to RandomPresetFragment.RANGE_INTENSITY_DENSE,
       R.id.preset_intensity__light to RandomPresetFragment.RANGE_INTENSITY_LIGHT
     )
 
-    val typeExpectations = mapOf(
+    val types = mapOf(
       R.id.preset_type__any to null,
       R.id.preset_type__focus to Sound.Tag.FOCUS,
       R.id.preset_type__relax to Sound.Tag.RELAX
     )
 
-    for ((typeID, tag) in typeExpectations) {
-      for ((intensityID, intensityRange) in intensityExpectations) {
-        launchFragmentInContainer<RandomPresetFragment>(null, R.style.Theme_App)
-        Espresso.onView(withId(typeID)).perform(ViewActions.click())
-        Espresso.onView(withId(intensityID)).perform(ViewActions.click())
+    for (i in 0 until 3) {
+      launchFragmentInContainer<RandomPresetFragment>(null, R.style.Theme_App)
 
-        Espresso.onView(withId(R.id.play_button))
-          .perform(ViewActions.click())
+      val intensityID = intensities.keys.random()
+      val typeID = types.keys.random()
 
-        verify(exactly = 1) { PlaybackController.playRandomPreset(any(), tag, intensityRange) }
-        clearMocks(PlaybackController)
+      onView(withId(typeID)).perform(ViewActions.click())
+      onView(withId(intensityID)).perform(ViewActions.click())
+
+      onView(withId(R.id.play_button))
+        .perform(ViewActions.click())
+
+      verify(exactly = 1) {
+        PlaybackController.playRandomPreset(
+          any(), types[typeID],
+          intensities[intensityID] ?: IntRange.EMPTY
+        )
       }
+
+      clearMocks(PlaybackController)
     }
   }
 }
