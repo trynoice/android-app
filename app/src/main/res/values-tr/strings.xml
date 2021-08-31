@@ -221,4 +221,6 @@
     <string name="created_by">Oluşturan</string>
     <string name="sound_fade_in_duration_summary">Azalan sesler için süre (saniye cinsinden)</string>
     <string name="sound_fade_in_duration">Ses azalma süresi</string>
+    <string name="import_presets_successful">Kayıtlar dosyadan başarıyla içe aktarıldı!</string>
+    <string name="export_presets_successful">Kayıtlar başarıyla dosyaya aktarıldı!</string>
 </resources>
