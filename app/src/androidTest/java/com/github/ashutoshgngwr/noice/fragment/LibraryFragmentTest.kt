@@ -130,7 +130,7 @@ class LibraryFragmentTest {
     } returns mockUpdateEvent
 
     fragmentScenario.onFragment { it.onPlayerManagerUpdate(mockUpdateEvent) }
-    val expectedVolumes = arrayOf(0, Player.MAX_VOLUME, Random.nextInt(1, Player.MAX_VOLUME))
+    val expectedVolumes = arrayOf(0, Player.MAX_VOLUME, 5)
     for (expectedVolume in expectedVolumes) {
       onView(withId(R.id.sound_list)).perform(
         RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
@@ -144,7 +144,7 @@ class LibraryFragmentTest {
         .perform(EspressoX.slide(expectedVolume.toFloat()))
 
       onView(withId(R.id.positive)).perform(click())
-      verify(exactly = 1, timeout = 5000L) { mockPlayer.setVolume(expectedVolume) }
+      verify(exactly = 1) { mockPlayer.setVolume(expectedVolume) }
     }
   }
 
