@@ -12,6 +12,8 @@ echo "waiting for a device..."
 adb wait-for-device
 
 echo "waiting for the device to boot..."
+
+# shellcheck disable=SC2016
 adb shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1s; done'
 
 echo "disabling animations..."
