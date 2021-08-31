@@ -200,4 +200,6 @@
     <string name="sound_fade_in_duration_summary">Тривалість стихання звуків (у секундах)</string>
     <string name="sound_fade_in_duration">Тривалість стихання звуку</string>
     <string name="created_by">Створено</string>
+    <string name="import_presets_successful">Поєднання успішно імпортовано з файлу!</string>
+    <string name="export_presets_successful">Поєднання успішно експортовано до файлу!</string>
 </resources>
