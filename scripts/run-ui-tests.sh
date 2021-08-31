@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+trap "exit" INT
+
 GRADLE_TASK=$1
 TEST_RUNNER_ERROR_LOGS=./test-runner-error-logs.txt
 
@@ -42,7 +44,7 @@ kill "$LOGCAT_PID"
 
 if [ $GRADLE_EXITCODE -ne 0 ];  then
   echo ""
-  echo "$GRADLE_TASK has failing tests!" >&2
+  echo "gradle task '$GRADLE_TASK' has failing tests!" >&2
   cat "$TEST_RUNNER_ERROR_LOGS" >&2
   exit 1
 fi
