@@ -10,7 +10,6 @@ import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
-import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -51,26 +50,22 @@ class RandomPresetFragmentTest {
       R.id.preset_type__relax to Sound.Tag.RELAX
     )
 
-    for (i in 0 until 3) {
-      launchFragmentInContainer<RandomPresetFragment>(null, R.style.Theme_App)
+    launchFragmentInContainer<RandomPresetFragment>(null, R.style.Theme_App)
 
-      val intensityID = intensities.keys.random()
-      val typeID = types.keys.random()
+    val intensityID = intensities.keys.random()
+    val typeID = types.keys.random()
 
-      onView(withId(typeID)).perform(ViewActions.click())
-      onView(withId(intensityID)).perform(ViewActions.click())
+    onView(withId(typeID)).perform(ViewActions.click())
+    onView(withId(intensityID)).perform(ViewActions.click())
 
-      onView(withId(R.id.play_button))
-        .perform(ViewActions.click())
+    onView(withId(R.id.play_button))
+      .perform(ViewActions.click())
 
-      verify(exactly = 1) {
-        PlaybackController.playRandomPreset(
-          any(), types[typeID],
-          intensities[intensityID] ?: IntRange.EMPTY
-        )
-      }
-
-      clearMocks(PlaybackController)
+    verify(exactly = 1) {
+      PlaybackController.playRandomPreset(
+        any(), types[typeID],
+        intensities[intensityID] ?: IntRange.EMPTY
+      )
     }
   }
 }
