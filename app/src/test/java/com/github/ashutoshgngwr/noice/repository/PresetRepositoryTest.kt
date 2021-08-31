@@ -235,7 +235,7 @@ class PresetRepositoryTest {
   }
 
   @Test
-  fun testExportTo() {
+  fun testWriteTo() {
     val presetData = "test-data"
     every { prefs.getString(PresetRepository.PREFERENCE_KEY, any()) } returns presetData
     val stream = ByteArrayOutputStream()
@@ -249,7 +249,7 @@ class PresetRepositoryTest {
   }
 
   @Test
-  fun importFrom() {
+  fun testReadFrom() {
     val presetData = "test-data"
     val input = """{
       "${PresetRepository.EXPORT_VERSION_KEY}": "${PresetRepository.PREFERENCE_KEY}",
