@@ -213,4 +213,6 @@
     <string name="sound_fade_in_duration_summary">ध्वनि फ़ेड-इन के लिए समय अवधि (सेकंड में)</string>
     <string name="sound_fade_in_duration">ध्वनि क्षीणन अवधि</string>
     <string name="created_by">निर्माता</string>
+    <string name="import_presets_successful">फ़ाइल से प्रीसेट सफलतापूर्वक आयात हो गए!</string>
+    <string name="export_presets_successful">प्रीसेट फ़ाइल में सफलतापूर्वक निर्यात हो गये!</string>
 </resources>
