@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# In summary, this script does the following.
+# 1. waits for a device to be available and booted.
+# 2. disables its animations, screen timeout and immersive mode confirmation.
+# 3. collect device error (E) logs with 'TestRunner' tag in the background.
+# 4. Run the specified Gradle test task
+# 5. Print collected logs if the Gradle test task fails.
+
 trap "exit" INT
 
 GRADLE_TASK=$1

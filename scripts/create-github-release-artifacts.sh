@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# In summary, this script does the following.
+# 1. Build and sign the play store APK variant.
+# 2. Remove non-free dependencies from Gradle scripts, and then build and sign
+#    the f-droid variant.
+# 3. Move output files to the specified destination paths.
+
 if [ -z "$JKS_STORE" ] || [ -z "$STORE_PASSWORD" ] || [ -z "$KEY_ALIAS" ] \
   || [ -z "$KEY_PASSWORD" ] || [ -z "$FDROID_APK" ] || [ -z "$FDROID_MAPPING" ] \
   || [ -z "$PLAYSTORE_APK" ] || [ -z "$PLAYSTORE_MAPPING" ];
