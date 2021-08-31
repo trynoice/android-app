@@ -282,8 +282,7 @@ class GenerateScreenshots {
       )
     )
 
-    openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext())
-    onView(withText(R.string.sleep_timer)).perform(click())
+    onView(withId(R.id.sleep_timer)).perform(click())
     onView(withId(R.id.duration_picker)).perform(
       EspressoX.addDurationToPicker(1800)
     )

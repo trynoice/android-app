@@ -38,7 +38,7 @@ jobs:
           ref: ${{ github.ref }}
           fetch-depth: 0
       - run: ./scripts/generate-docs.sh
-        with:
+        env:
           CHANGELOG_PATH: docs/CHANGELOG.md
           CONTRIBUTORS_YAML_PATH: docs/_data/authors/code.yaml
       - name: Push changes
