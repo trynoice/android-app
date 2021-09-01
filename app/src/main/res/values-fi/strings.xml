@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="submit_feedback">Lähetä palautetta</string>
+    <string name="support_development">Tue kehitystyötä</string>
+    <string name="sleep_timer">Uniajastin</string>
+    <string name="report_issue">Raportoi ongelmat</string>
+    <string name="library">Äänikirjasto</string>
+    <string name="help">Ohje</string>
+    <string name="app_theme">Teema</string>
+    <string name="about">Tietoja</string>
+</resources>
