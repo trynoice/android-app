@@ -8,4 +8,6 @@
     <string name="help">Ohje</string>
     <string name="app_theme">Teema</string>
     <string name="about">Tietoja</string>
+    <string name="wake_up_timer">Herätysajastin</string>
+    <string name="presets">Esiasetukset</string>
 </resources>
