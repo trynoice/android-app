@@ -81,7 +81,7 @@
     Noice s\'éteindra tout seul à la fin de la minuterie. Utilisez les boutons ci-dessous pour ajouter du temps et démarrer
     la minuterie.
   </string>
-    <string name="schedule">Plannifier</string>
+    <string name="schedule">Planifier</string>
     <string name="select_preset">Sélectionner le réglage</string>
     <string name="wake_up_timer_description">Noice peut démarrer un réglage au moment du réveil. Utilisez les boutons ci-dessous pour sélectionner un réglage et l\'heure voulue pour activer le réveil.</string>
     <string name="app_theme_light">Clair</string>
@@ -209,4 +209,6 @@
     <string name="sound_fade_in_duration_summary">Durée du fondu sonore (en secondes)</string>
     <string name="sound_fade_in_duration">Durée du fondu sonore</string>
     <string name="created_by">Créé par</string>
+    <string name="import_presets_successful">Préréglages importés avec succès depuis le fichier !</string>
+    <string name="export_presets_successful">Préréglages exportés avec succès vers le fichier !</string>
 </resources>
