@@ -76,6 +76,7 @@ jobs:
           api-level: ${{ matrix.android }}
           target: ${{ matrix.target }}
           arch: x86_64
+          ram-size: 4096M
           script: ./scripts/run-ui-tests.sh ${{ matrix.gradleTask }}
           emulator-options: >-
             -no-boot-anim -no-audio -no-snapshot -no-window -camera-back none

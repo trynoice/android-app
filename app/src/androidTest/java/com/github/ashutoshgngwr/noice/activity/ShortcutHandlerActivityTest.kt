@@ -35,6 +35,7 @@ class ShortcutHandlerActivityTest {
   @Test
   fun testOnCreate() {
     mockkObject(PresetRepository.Companion, PlaybackController)
+    every { PlaybackController.playPreset(any(), any()) } returns Unit
 
     val mockRepo = mockk<PresetRepository>()
     every { PresetRepository.newInstance(any()) } returns mockRepo
@@ -63,7 +64,7 @@ class ShortcutHandlerActivityTest {
           Intents.times(1)
         )
 
-        verify(exactly = playPresetCallCount[i]) {
+        verify(exactly = playPresetCallCount[i], timeout = 5000L) {
           PlaybackController.playPreset(any(), presetIDExpectations[i])
         }
       } finally {
