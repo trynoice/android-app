@@ -4,7 +4,9 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.fragment.app.testing.withFragment
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
@@ -35,24 +37,14 @@ class DialogFragmentTest {
 
   @Test
   fun testTitleText() {
-    emptyFragmentScenario.onFragment {
-      DialogFragment.show(it.childFragmentManager) {
-        title(R.string.app_name)
-      }
-    }
-
+    newDialog { title(R.string.app_name) }
     onView(allOf(withId(R.id.title), withText(R.string.app_name)))
       .check(matches(isDisplayed()))
   }
 
   @Test
   fun testPositiveButton() {
-    emptyFragmentScenario.onFragment {
-      DialogFragment.show(it.childFragmentManager) {
-        positiveButton(R.string.app_name)
-      }
-    }
-
+    newDialog { positiveButton(R.string.app_name) }
     onView(allOf(withId(R.id.positive), withText(R.string.app_name)))
       .perform(click())
 
@@ -61,12 +53,7 @@ class DialogFragmentTest {
 
   @Test
   fun testNegativeButton() {
-    emptyFragmentScenario.onFragment {
-      DialogFragment.show(it.childFragmentManager) {
-        negativeButton(R.string.app_name)
-      }
-    }
-
+    newDialog { negativeButton(R.string.app_name) }
     onView(allOf(withId(R.id.negative), withText(R.string.app_name)))
       .perform(click())
 
@@ -75,12 +62,7 @@ class DialogFragmentTest {
 
   @Test
   fun neutralButton() {
-    emptyFragmentScenario.onFragment {
-      DialogFragment.show(it.childFragmentManager) {
-        neutralButton(android.R.string.copy)
-      }
-    }
-
+    newDialog { neutralButton(android.R.string.copy) }
     onView(allOf(withId(R.id.neutral), withText(android.R.string.copy)))
       .perform(click())
 
@@ -89,12 +71,7 @@ class DialogFragmentTest {
 
   @Test
   fun testMessageText() {
-    emptyFragmentScenario.onFragment {
-      DialogFragment.show(it.childFragmentManager) {
-        message(R.string.app_name)
-      }
-    }
-
+    newDialog { message(R.string.app_name) }
     onView(allOf(isDescendantOfA(withId(R.id.content)), withText(R.string.app_name)))
       .check(matches(isDisplayed()))
   }
@@ -104,15 +81,12 @@ class DialogFragmentTest {
     val mockValidator = mockk<(String) -> Int>()
     every { mockValidator.invoke("invalid") } returns R.string.app_name
     every { mockValidator.invoke("test") } returns 0
-    var dialogFragment: DialogFragment? = null
-    emptyFragmentScenario.onFragment {
-      dialogFragment = DialogFragment.show(it.childFragmentManager) {
-        input(
-          hintRes = R.string.app_name,
-          preFillValue = "test",
-          validator = mockValidator
-        )
-      }
+    val dialogFragment = newDialog {
+      input(
+        hintRes = R.string.app_name,
+        preFillValue = "test",
+        validator = mockValidator
+      )
     }
 
     onView(allOf(isDescendantOfA(withId(R.id.content)), withId(R.id.editText)))
@@ -131,7 +105,7 @@ class DialogFragmentTest {
     onView(withId(R.id.textInputLayout))
       .check(matches(not(EspressoX.withErrorText(R.string.app_name))))
 
-    assertEquals("test", dialogFragment?.getInputText())
+    assertEquals("test", dialogFragment.getInputText())
   }
 
   @Test
@@ -139,11 +113,9 @@ class DialogFragmentTest {
     var selectedItem = 0
     val items = arrayOf("test-0", "test-1", "test-2")
 
-    emptyFragmentScenario.onFragment {
-      DialogFragment.show(it.childFragmentManager) {
-        singleChoiceItems(items, currentChoice = selectedItem) { choice ->
-          selectedItem = choice
-        }
+    newDialog {
+      singleChoiceItems(items, currentChoice = selectedItem) { choice ->
+        selectedItem = choice
       }
     }
 
@@ -165,18 +137,16 @@ class DialogFragmentTest {
     val expectedValue = Random.nextInt(10).toFloat()
     var value = 1.0f
 
-    emptyFragmentScenario.onFragment {
-      DialogFragment.show(it.childFragmentManager) {
-        slider(
-          viewID = id,
-          from = 0.0f,
-          to = 10.0f,
-          value = value,
-          changeListener = { v -> value = v },
-        )
+    newDialog {
+      slider(
+        viewID = id,
+        from = 0.0f,
+        to = 10.0f,
+        value = value,
+        changeListener = { v -> value = v },
+      )
 
-        positiveButton(R.string.okay)
-      }
+      positiveButton(R.string.okay)
     }
 
     onView(withId(id))
@@ -185,5 +155,19 @@ class DialogFragmentTest {
 
     onView(withId(R.id.positive)).perform(click())
     assertEquals(expectedValue, value)
+  }
+
+  private fun newDialog(options: DialogFragment.() -> Unit): DialogFragment {
+    val f = emptyFragmentScenario.withFragment {
+      DialogFragment.show(childFragmentManager, options)
+    }
+
+    // wait for dialog to be visible
+    EspressoX.retryWithWaitOnError(NoMatchingViewException::class) {
+      onView(withId(R.id.dialog_root))
+        .check(matches(isDisplayed()))
+    }
+
+    return f
   }
 }
