@@ -5,7 +5,7 @@
     <string name="help">Ajuda</string>
     <string name="library">Biblioteca</string>
     <string name="report_issue">Informar sobre problema</string>
-    <string name="presets">Ajustes salvos</string>
+    <string name="presets">Predefinições</string>
     <string name="sleep_timer">Temporizador</string>
     <string name="support_development">Apoie o Desenvolvimento</string>
     <string name="wake_up_timer">Despertador</string>
@@ -165,7 +165,7 @@
     <string name="time_bridge">e</string>
     <string name="wake_up_timer_schedule_set">O alarme vai disparar em %1$s %2$s %3$s</string>
     <string name="wake_up_timer_cancelled">Despertador cancelado!</string>
-    <string name="presets_as_home_screen_summary">Mostrar \"predefinições salvas\" na inicialização do aplicativo</string>
+    <string name="presets_as_home_screen_summary">Mostrar \"predefinições\" na inicialização do aplicativo (requer reinício do aplicativo)</string>
     <string name="pinned_shortcuts_not_supported">Seu lançador padrão não suporta a adição de atalhos.</string>
     <string name="preset_does_not_exist">Predefinição não existe. Ela pode ter sido deletada!</string>
     <string name="add_to_home_screen">Adicionar à tela inicial</string>

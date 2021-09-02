@@ -1,0 +1,35 @@
+Monille ihmisille pieni taustamelu auttaa rauhoittumaan ja keskittymään. Joissakin tapauksissa se myös lisää tuottavuutta. Taustamelu voi myös auttaa minimoimaan stressin vaikutuksia.
+
+Noice on sovellus, jonka avulla voit luoda räätälöidyn tunnelman käyttämällä ympäristön äänilähteistä otettuja pätkiä. Voit luoda täydellisen ääniympäristön yhdistelemällä erilaisia ääniä, jotka hukuttavat häiriötekijät, jotta voit keskittyä työhösi, tai luoda seesteisen, rauhallisen ympäristön, joka auttaa sinua nukahtamaan.
+
+<b>Ominaisuudet</b>
+- 35 äänitettyä ääntä
+- Google Cast (Chromecast) -toiminto käytössä [vain Play Store -julkaisu].
+- Automaattinen uniajastin
+- Herätysajastin (herätyskello)
+- Luo satunnaisia miksauksia
+- Tee räätälöity mix
+- Tallenna suosikkimiksejäsi
+- Toistaminen muiden musiikkisoittimien rinnalla
+- Yksilöllinen äänenvoimakkuuden säätö jokaiselle äänilähteelle
+- Toisto offline-tilassa
+- Sovelluksen vaaleat ja tummat teemavaihtoehdot
+
+<b>Äänikirjasto</b>
+- Life-sarja (linnut, sirkat, susi, ihmisen sydämenlyönti jne.).
+- Metsäsarja (nuotio, yö, tuuli, palmut jne.).
+- Monsuunisarja (sade, ukkonen)
+- Teleportaatio-setti (kahvila, kirjasto, toimisto, merenranta, jokiranta jne.).
+- Ajoneuvosarja (liikkuva juna, lennossa oleva, natiseva laiva, sähköauto jne.)
+- Raakakohina (valkoinen, vaaleanpunainen, ruskea)
+
+<b>Luvat</b>
+- <b>estää laitetta nukkumasta</b>: pitää laitteen suorittimen hereillä toiston aikana.
+- <b>suorita etualan palveluna</b>: soitinprosessin käyttäminen (eri kuin käyttöliittymä).
+- <b>suorita käynnistettäessä</b>: varmistaa, että heräämisajastimet säilyvät uudelleenkäynnistysten aikana.
+- <b>täysi verkkoyhteys</b>: Chromecastin ja rahallisen tukemisen mahdollistamiseksi.
+- <b>katsele verkkoyhteyksiä</b>: lisätty riippuvuuden kautta, ei tällä hetkellä käytössä.
+- <b>Google Play -laskutuspalvelu</b>: mahdollistaa rahallisen tukemisen kehityksen tukemiseksi.
+
+Noice on ilmainen ja avoimen lähdekoodin ohjelmisto.
+https://github.com/ashutoshgngwr/noice

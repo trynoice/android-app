@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="share">مشاركة</string>
-    <string name="appearance">مظهر</string>
-    <string name="behavior">سلوك</string>
+    <string name="appearance">المَظْهَر</string>
+    <string name="behavior">السلوك</string>
     <string name="settings">إعدادات</string>
     <string name="later">لاحقًا</string>
     <string name="support_development__share">مشاركة مع الأصدقاء</string>
-    <string name="support_development__donate_thank_you">شكرًا!</string>
+    <string name="support_development__donate_thank_you">شكرًا لك!</string>
     <string name="support_development__donate">دعم</string>
     <string name="appintro__getting_started_title">مرحبًا</string>
     <string name="appintro__getting_started_desc_1">هيّا لنبدأ!</string>
@@ -17,14 +17,14 @@
     <string name="delete">حذف</string>
     <string name="quiet_conversation">محادثة هادئة</string>
     <string name="public_library">مكتبة عامة</string>
-    <string name="office">مكتب</string>
-    <string name="night">ليل</string>
+    <string name="office">المكتب</string>
+    <string name="night">الليل</string>
     <string name="light_rain">مطر خفيف</string>
     <string name="heavy_rain">مطر غزير</string>
     <string name="electric_car">سيّارة كهربائيّة</string>
     <string name="coffee_shop">مقهى</string>
     <string name="birds">طيور</string>
-    <string name="sound_group__wind">رياح</string>
+    <string name="sound_group__wind">الرياح</string>
     <string name="sound_group__water">مياه</string>
     <string name="sound_group__times_of_day">أوقات اليوم</string>
     <string name="stop">توقّف</string>
@@ -68,7 +68,7 @@
     <string name="white_noise">ضوضاء بيضاء</string>
     <string name="water_stream">مياه جارية</string>
     <string name="water_hose">خرطوم المياه</string>
-    <string name="walking_through_the_snow">يمشي في الثلج</string>
+    <string name="walking_through_the_snow">المشي في الثلج</string>
     <string name="train_horn">بوق القطار</string>
     <string name="thunder_crack">صدع الرعد</string>
     <string name="soft_wind">الرياح الناعمة</string>
@@ -137,7 +137,7 @@
     <string name="skip_to_prev">الإعداد المسبق السابق</string>
     <string name="pinned_shortcut_created">تمت إضافة الاختصار إلى الشاشة الرئيسية!</string>
     <string name="pinned_shortcut_creation_failed">فشل في إضافة الاختصار إلى الشاشة الرئيسية!</string>
-    <string name="sound_fade_in_duration_summary">المدة الزمنية للأصوات الباهتة (بالثواني)</string>
+    <string name="sound_fade_in_duration_summary">المدة الزمنية للأصوات المتلاشية (بالثواني)</string>
     <string name="sound_fade_in_duration">مدة تلاشي الصوت</string>
     <string name="presets_as_home_screen">\"الإعدادات المسبقة المحفوظة\" كشاشة الرئيسية</string>
     <string name="app_shortcut_creation_failed">فشل في إضافة الإعداد المسبق إلى اختصارات التطبيق!</string>
@@ -155,7 +155,7 @@
     <string name="support_development__why_description">- لجعل التحديثات المستقبلية ممكنة
 \n - لإبقاء Noice خاليا من الإعلانات إلى الأبد
 \n</string>
-    <string name="support_development__why">لماذا يجب أن تدعم؟</string>
+    <string name="support_development__why">لماذا يجب أن تدعمنا؟</string>
     <string name="support_development__share_description">مشاركة Noice مع الأصدقاء التبرع بالمال. و بالتنزيلات عالية ، سنتمكن من تلقي التعليقات من عدد من وجهات النظر المختلفة والتي ستساعدنا في جعل Noice أفضل من أي وقت مضى.</string>
     <string name="support_development__donate_thank_you_description">نشكرك من صميم القلب على مساهمتك السخية في مشروع Noice.</string>
     <string name="support_development__donate_google_play_description">سيتم التعامل مع دفعتك بأمان بواسطة Google Play. اعتمادًا على موقعك ، يمكن إضافة ضرائب إضافية إلى المبلغ النهائي.</string>
@@ -165,7 +165,7 @@
 \n - شراء القهوة
 \n</string>
     <string name="appintro__timer_title">صعوبة في النوم أو الاستيقاظ؟</string>
-    <string name="appintro__timer_desc">يمكن أن يساعدك على النوم و بمجهود قليل من الأجواء على النوم . استخدم مؤقت النوم للسماح لـ Noice بإغلاق نفسها. وبالمثل ، للاستيقاظ في بيئة هادئة ، استخدم مؤقت الاستيقاظ لضبط المنبه.</string>
+    <string name="appintro__timer_desc">يمكن أن يساعدك على النوم و بمجهود قليل من الأجواء على النوم . استخدم مؤقت النوم للسماح لـ Noice بإغلاق نفسه. وبالمثل ، للاستيقاظ في بيئة هادئة ، استخدم مؤقت الاستيقاظ لضبط المنبه.</string>
     <string name="appintro__library_title">اصنع محيطك المثالي</string>
     <string name="appintro__library_desc">استخدم شريط تمرير مستوى الصوت لضبط مستويات الصوت. عند كل تكرار للأصوات غير الحلقية ، يتم تحديد فترة تأخير بشكل عشوائي من النطاق الذي يحدده شريط تمرير الوقت.</string>
     <string name="appintro__presets_title">احفظ المزيج المفضل لديك</string>
@@ -177,9 +177,11 @@
     <string name="app_theme_system_default">الإعدادات الإفتراضية</string>
     <string name="use_24h_format">استخدام تنسيق 24 ساعة</string>
     <string name="wake_up_timer_description">سيبدأ Noice في الإعداد المسبق المحدد عندما ينتهي المؤقت. استخدم الأزرار أدناه لتحديد إعداد مسبق وضبط الوقت المطلوب لبدء مؤقت الاستيقاظ.</string>
-    <string name="wake_up_timer_schedule_set">سوف ينطلق الإنذار في %1$s %2$s %3$s</string>
-    <string name="wake_up_timer_cancelled">تم إلغاء مؤقت الاستيقاظ!</string>
+    <string name="wake_up_timer_schedule_set">سوف ينطلق المنبه في %1$s %2$s %3$s</string>
+    <string name="wake_up_timer_cancelled">تم إلغاء منبه الاستيقاظ!</string>
     <string name="select_preset">تحديد الإعداد المسبق</string>
     <string name="schedule">جدول</string>
     <string name="sleep_timer_description">سوف يوقف Noice نفسه عند انتهاء المؤقت. استخدم الأزرار أدناه لإضافة الوقت وبدء تشغيل المؤقت.</string>
+    <string name="import_presets_successful">تم استيراد الإعدادات المسبقة بنجاح من الملف!</string>
+    <string name="export_presets_successful">تم تصدير الإعدادات المسبقة بنجاح إلى الملف!</string>
 </resources>
