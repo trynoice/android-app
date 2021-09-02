@@ -10,6 +10,7 @@
 # 1. github repo slug (username/repo)
 # 2. output path
 function changelog() {
+  echo "generating changelog from git tag history..."
   local tag_url_fmt="https://github.com/$1/releases/tag/%(tag)"
   local tag_body_fmt="## [v%(tag)]($tag_url_fmt)%0a%0a**%(creatordate:format:%A, %-d %B %Y)**%0a%0a%(contents:body)"
 
@@ -26,6 +27,8 @@ function changelog() {
 # 1. github repo slug (username/repo)
 # 2. output path
 function contributors_yaml() {
+  echo "generating contributor list from git commit history..."
+
   {
     git log --pretty="- %an <%ae>%n- %cn <%ce>"
     git log --pretty="%b" | grep "Co-authored-by:"
@@ -46,8 +49,11 @@ function commit_changes() {
 
   local author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
   if [ -n "$(git diff "$@")" ]; then
+    echo "found new changes! committing..."
     git add "$@"
     git commit -m "chore(project): update docs" --author "$author"
+  else
+    echo "no new changes to commit..."
   fi
 }
 

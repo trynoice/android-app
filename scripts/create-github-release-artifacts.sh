@@ -34,19 +34,23 @@ trap exit INT
 # decode java keystore
 echo "$JKS_STORE" | base64 --decode > keystore.jks
 
-# build playstore variant first
+# build play store variant first
+echo "building play store apk variant..."
 ./gradlew assemblePlaystoreRelease --stacktrace
 GRADLE_EXITCODE_PLAYSTORE=$?
 
 # remove non-free deps from the f-droid build but keep the signingConfig
+echo "removing non-free dependencies from gradle build scripts..."
 sed -i -r -e 's@^(.*)signingConfig(.*)\/\/.*$@\1signingConfig\2@' app/build.gradle
 sed -i -e '/sed:fdroid-build:remove/d' build.gradle app/build.gradle
 
 # build f-droid variant
+echo "building f-droid apk variant..."
 ./gradlew assembleFdroidRelease --stacktrace
 GRADLE_EXITCODE_FDROID=$?
 
 # revert gradle files back to their original state
+echo "restoring gradle build scripts to their original state..."
 git checkout -- build.gradle app/build.gradle
 
 if [ $GRADLE_EXITCODE_FDROID -ne 0 ];  then
@@ -60,6 +64,7 @@ if [ $GRADLE_EXITCODE_PLAYSTORE -ne 0 ];  then
 fi
 
 # move files to destination paths
+echo "moving artifacts to specified destination paths..."
 mv -vf app/build/outputs/apk/playstore/release/app-playstore-release.apk "$PLAYSTORE_APK"
 mv -vf app/build/outputs/mapping/playstoreRelease/mapping.txt "$PLAYSTORE_MAPPING"
 mv -vf app/build/outputs/apk/fdroid/release/app-fdroid-release.apk "$FDROID_APK"
