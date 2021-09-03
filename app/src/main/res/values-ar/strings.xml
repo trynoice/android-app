@@ -165,7 +165,7 @@
 \n - شراء القهوة
 \n</string>
     <string name="appintro__timer_title">صعوبة في النوم أو الاستيقاظ؟</string>
-    <string name="appintro__timer_desc">يمكن أن يساعدك على النوم و بمجهود قليل من الأجواء على النوم . استخدم مؤقت النوم للسماح لـ Noice بإغلاق نفسه. وبالمثل ، للاستيقاظ في بيئة هادئة ، استخدم مؤقت الاستيقاظ لضبط المنبه.</string>
+    <string name="appintro__timer_desc">يمكن أن يساعدك على النوم و بمجهود قليل من الأجواء على النوم . استخدم مؤقت النوم للسماح لتطبيق Noice بإغلاق نفسه. وبالمثل ، للاستيقاظ في بيئة هادئة ، استخدم مؤقت الاستيقاظ لضبط المنبه.</string>
     <string name="appintro__library_title">اصنع محيطك المثالي</string>
     <string name="appintro__library_desc">استخدم شريط تمرير مستوى الصوت لضبط مستويات الصوت. عند كل تكرار للأصوات غير الحلقية ، يتم تحديد فترة تأخير بشكل عشوائي من النطاق الذي يحدده شريط تمرير الوقت.</string>
     <string name="appintro__presets_title">احفظ المزيج المفضل لديك</string>
@@ -184,4 +184,20 @@
     <string name="sleep_timer_description">سوف يوقف Noice نفسه عند انتهاء المؤقت. استخدم الأزرار أدناه لإضافة الوقت وبدء تشغيل المؤقت.</string>
     <string name="import_presets_successful">تم استيراد الإعدادات المسبقة بنجاح من الملف!</string>
     <string name="export_presets_successful">تم تصدير الإعدادات المسبقة بنجاح إلى الملف!</string>
+    <plurals name="time_minutes">
+        <item quantity="zero">%1$d دقيقة</item>
+        <item quantity="one">%1$d دقيقة</item>
+        <item quantity="two">%1$d دقيقتان</item>
+        <item quantity="few">%1$d دقائق</item>
+        <item quantity="many">%1$d دقائق</item>
+        <item quantity="other">%1$d دقائق</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="zero">%1$d ساعة</item>
+        <item quantity="one">%1$d ساعة</item>
+        <item quantity="two">%1$d ساعتان</item>
+        <item quantity="few">%1$d ساعات</item>
+        <item quantity="many">%1$d ساعات</item>
+        <item quantity="other">%1$d ساعات</item>
+    </plurals>
 </resources>
