@@ -29,7 +29,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
     android:contentDescription="@string/save_preset"
-    android:src="@drawable/ic_action_shuffle"
+    android:src="@drawable/ic_shuffle_24dp"
     app:layout_constraintBottom_toTopOf="@id/save_preset_button"
     app:layout_constraintEnd_toEndOf="parent" />
 

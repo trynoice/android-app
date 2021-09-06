@@ -3,7 +3,6 @@ package com.github.ashutoshgngwr.noice.playback
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.os.Build
 import android.support.v4.media.session.MediaSessionCompat
@@ -59,18 +58,26 @@ object PlayerNotificationManager {
         }
       )
 
-      var skipPrevIntent: PendingIntent? = null
-      if (enableSkipButtons) {
-        skipPrevIntent = PlaybackController.buildSkipPrevActionPendingIntent(context)
+      if (!enableSkipButtons) {
+        addAction(
+          NotificationCompat.Action(
+            R.drawable.ic_shuffle_32dp,
+            context.getString(R.string.random_preset),
+            PlaybackController.buildRandomPresetActionPendingIntent(context)
+          )
+        )
       }
 
-      addAction(
-        NotificationCompat.Action(
-          R.drawable.ic_noti_prev,
-          context.getString(R.string.skip_to_prev),
-          skipPrevIntent
+      if (enableSkipButtons) {
+        addAction(
+          NotificationCompat.Action(
+            R.drawable.ic_noti_prev,
+            context.getString(R.string.skip_to_prev),
+            PlaybackController.buildSkipPrevActionPendingIntent(context)
+          )
         )
-      )
+      }
+
 
       if (PlaybackStateCompat.STATE_PLAYING == mediaSession.controller.playbackState?.state) {
         addAction(
@@ -90,18 +97,15 @@ object PlayerNotificationManager {
         )
       }
 
-      var skipNextIntent: PendingIntent? = null
       if (enableSkipButtons) {
-        skipNextIntent = PlaybackController.buildSkipNextActionPendingIntent(context)
-      }
-
-      addAction(
-        NotificationCompat.Action(
-          R.drawable.ic_noti_next,
-          context.getString(R.string.skip_to_next),
-          skipNextIntent
+        addAction(
+          NotificationCompat.Action(
+            R.drawable.ic_noti_next,
+            context.getString(R.string.skip_to_next),
+            PlaybackController.buildSkipNextActionPendingIntent(context)
+          )
         )
-      )
+      }
 
       addAction(
         NotificationCompat.Action(
