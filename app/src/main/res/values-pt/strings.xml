@@ -115,4 +115,81 @@
     <string name="preset_already_exists">Já existe uma mistura de sons com esse nome!</string>
     <string name="pause">Pausar</string>
     <string name="name">Nome</string>
+    <string name="created_by">Criado por</string>
+    <string name="payment_pending">Vamos notificá-lo assim que terminarmos o processamento do seu pagamento.</string>
+    <string name="failed_to_purchase">Não foi possível iniciar o processo de pagamento. Por favor,tente novamente mais tarde!</string>
+    <string name="failed_to_load_inapp_purchases">Não foi possível carregar os detalhes da compra na aplicação. Por favor tente de novo mais tarde!</string>
+    <string name="should_allow_skipping_unsaved_presets_summary">Ao reproduzir misturas de sons não guardadas, ativa os botões de ignorar na notificação do reprodutor de som para gerar misturas de sons aleatórias</string>
+    <string name="should_allow_skipping_unsaved_presets">Permitir ignorar misturas de sons não guardadas</string>
+    <string name="should_share_usage_data_summary">Partilhar automaticamente dados de utilização e comportamento com os programadores</string>
+    <string name="should_share_usage_data">Partilhar dados de utilização e comportamento</string>
+    <string name="others">Outros</string>
+    <string name="decline">Recusar</string>
+    <string name="accept">Aceitar</string>
+    <string name="share_usage_data_consent_message">Recolhemos dados de utilização da aplicação para melhorar a experiência do utilizador. Também recolhemos dados de comportamento da aplicação para analisar e diagnosticar erros encontrados durante a utilização da aplicação. Leia a nossa [política de privacidade] (https://ashutoshgngwr.github.io/noice/privacy-policy) para obter mais informações.
+\n
+\n Pode configurar a partilha automática de dados a qualquer momento dentro da aplicação em \"**Configurações** &gt; **Partilhar dados de utilização e comportamento**\".</string>
+    <string name="share_usage_data_consent_title">Preferências de partilha de dados</string>
+    <string name="should_display_sound_icons">Mostrar ícones dos sons</string>
+    <string name="import_presets_successful">Misturas de sons do ficheiro importadas com sucesso!</string>
+    <string name="invalid_import_file_format">O formato do ficheiro importado é inválido!</string>
+    <string name="failed_to_read_file">Não foi possível ler o ficheiro selecionado!</string>
+    <string name="export_presets_successful">Exportado com sucesso para o ficheiro!</string>
+    <string name="failed_to_write_file">Não foi possível guardar no ficheiro selecionado!</string>
+    <string name="all_app_shortcuts_removed">Todos os atalhos da aplicação foram eliminados!</string>
+    <string name="remove_all_app_shortcuts_confirmation">Isto irá eliminar todos os atalhos das misturas de sons do menu de atalhos da aplicação. Quer continuar\?</string>
+    <string name="remove_all_app_shortcuts">Eliminar todos os atalhos da aplicação</string>
+    <string name="import_presets_summary">Importar misturas de sons guardadas de um ficheiro externo irá substituir as misturas de sons existentes, se houver</string>
+    <string name="import_presets">Importar de um ficheiro</string>
+    <string name="export_presets_summary">Exporta as misturas de sons guardadas existentes para um ficheiro externo</string>
+    <string name="export_presets">Exportar para um ficheiro</string>
+    <string name="share">Partilhar</string>
+    <string name="ignore_audio_focus_changes_summary_on">Não reagir quando outras aplicações reproduzirem áudio</string>
+    <string name="ignore_audio_focus_changes_summary_off">Pausar quando outras aplicações reproduzirem áudio</string>
+    <string name="ignore_audio_focus_changes">Ignorar alterações no foco do áudio</string>
+    <string name="unsaved_preset">Mistura não guardada</string>
+    <string name="skip_to_next">Mistura seguinte</string>
+    <string name="skip_to_prev">Mistura anterior</string>
+    <string name="pinned_shortcut_created">O atalho foi adicionado ao ecrã inicial!</string>
+    <string name="pinned_shortcut_creation_failed">Não foi possível adicionar o atalho ao ecrã inicial!</string>
+    <string name="sound_fade_in_duration_summary">Duração temporal para o início gradual (fade-in) dos sons (em segundos)</string>
+    <string name="sound_fade_in_duration">Duração do início gradual do som</string>
+    <string name="appearance">Aparência</string>
+    <string name="behavior">Comportamento</string>
+    <string name="presets_as_home_screen">\"Misturas de sons\" como ecrã principal</string>
+    <string name="settings">Configurações</string>
+    <string name="app_shortcut_creation_failed">Não foi possível adicionar a mistura de sons aos atalhos da aplicação!</string>
+    <string name="app_shortcut_created">A mistura de sons foi adicionada aos atalhos da aplicação!</string>
+    <string name="app_shortcut_removed">A mistura de sons foi removida dos atalhos da aplicação!</string>
+    <string name="remove_from_app_shortcuts">Remover dos atalhos da aplicação</string>
+    <string name="add_to_app_shortcuts">Adicionar aos atalhos da aplicação</string>
+    <string name="app_authors">Ver lista dos autores do Noice</string>
+    <string name="notification_channel_default__name">Reprodução do áudio</string>
+    <string name="notification_channel_default__description">Controlos do áudio</string>
+    <string name="never">Nunca</string>
+    <string name="later">Mais tarde</string>
+    <string name="in_app_feedback__title">Enviar uma avaliação</string>
+    <string name="in_app_feedback__description">Adoraríamos saber a sua opinião sobre a aplicação. Reserve um momento para visitar o nosso repositório no GitHub. Se não gostou da aplicação, considere reportar um problema explicando as suas razões. Também pode avaliar o projeto com estrelas para mostrar amor e apoio.</string>
+    <string name="cast_media">Conectar ao Chromecast</string>
+    <string name="support_development__why_description">- Para possibilitar futuras atualizações
+\n - Para manter o Noice livre de anúncios para sempre
+\n</string>
+    <string name="support_development__why">Porque deve apoiar-nos\?</string>
+    <string name="support_development__share_description">Partilhar o Noice com amigos é semelhante a fazer um donativo monetário. Com mais descarregamentos da aplicação, seremos capazes de receber comentários e opiniões de uma série de pontos de vista diferentes que nos ajudarão a tornar o Noice melhor do que nunca.</string>
+    <string name="support_development__share">Partilhar com os amigos</string>
+    <string name="support_development__donate_thank_you_description">Agradecemos-lhe muito sinceramente a sua generosa contribuição para o projeto Noice.</string>
+    <string name="support_development__donate_thank_you">Obrigado!</string>
+    <string name="support_development__donate_google_play_description">O seu pagamento será tratado com segurança pelo Google Play. Dependendo da sua localização, _poderão_ ser aplicados impostos adicionais ao valor final.</string>
+    <string name="support_development__donate_description">Os donativos ajudam-nos a
+\n - investir em novos recursos
+\n - obter melhores amostras de som
+\n - comprar café
+\n</string>
+    <string name="support_development__donate">Fazer um donativo</string>
+    <string name="appintro__timer_title">Com problemas em adormecer ou acordar\?</string>
+    <string name="appintro__timer_desc">Um pouco de ambiente pode ajudá-lo a adormecer. Utilize a suspensão programada para que o Noice se desligue. Da mesma forma, para acordar com um ambiente calmo, utilize o despertador para configurar o alarme para acordar.</string>
+    <string name="appintro__library_title">Crie o seus ambiente perfeito</string>
+    <string name="appintro__library_desc">Use o controlo deslizante do volume para ajustar o volume de cada som. A cada repetição de sons não circulares (sem loop), é selecionado aleatoriamente um período de atraso a partir do intervalo definido pelo controlo deslizante de tempo.</string>
+    <string name="appintro__presets_title">Guarde as suas misturas de som favoritas</string>
+    <string name="appintro__presets_desc">Depois de reproduzir alguns sons, pode usar o botão \"Guardar\" no canto inferior do ecrã para guardar a sua mistura de sons. Para reutilizar uma mistura de sons armazenada, vá à lista de mistura de sons na barra inferior.</string>
 </resources>
