@@ -186,8 +186,6 @@
     <string name="payment_pending">Ми повідомимо вас, щойно завершимо обробку платежу.</string>
     <string name="failed_to_purchase">Не вдалося запустити потік платежів. Повторіть спробу пізніше!</string>
     <string name="failed_to_load_inapp_purchases">Не вдалося завантажити відомості про придбання через застосунок. Повторіть спробу пізніше!</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">Під час відтворення незбереженого поєднання вмикати кнопки пропуску в сповіщенні програвача для створення поєднань</string>
-    <string name="should_allow_skipping_unsaved_presets">Дозволити пропускати незбережені поєднання</string>
     <string name="should_share_usage_data_summary">Автоматично надсилати розробникам дані про користування та поведінку</string>
     <string name="should_share_usage_data">Надсилання даних про користування та поведінку</string>
     <string name="others">Інші</string>

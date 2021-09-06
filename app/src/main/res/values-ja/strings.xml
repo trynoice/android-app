@@ -146,8 +146,6 @@
     <string name="payment_pending">お支払いの処理が完了したら、すぐにお知らせします。</string>
     <string name="failed_to_purchase">支払フローを開始できませんでした。後でもう一度お試しください!</string>
     <string name="failed_to_load_inapp_purchases">アプリ内課金の詳細を読み込めませんでした。後でもう一度お試しください!</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">保存されていないプリセットを再生する場合、プレーヤー通知にランダムプリセットを生成するためのスキップボタンを有効化する</string>
-    <string name="should_allow_skipping_unsaved_presets">保存されていないプリセットのスキップを許可</string>
     <string name="should_share_usage_data_summary">使用状況と動作データを開発者と共有する</string>
     <string name="should_share_usage_data">使用状況と動作データの共有</string>
     <string name="others">その他</string>

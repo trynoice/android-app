@@ -174,8 +174,6 @@
     <string name="payment_pending">Chúng tôi sẽ thông báo cho bạn ngay sau khi chúng tôi hoàn tất xử lý thanh toán của bạn.</string>
     <string name="failed_to_purchase">Khởi động dòng chảy thanh toán thất bại. Vui lòng thử lại sau!</string>
     <string name="failed_to_load_inapp_purchases">Tải chi tiết mua hàng trong ứng dụng thất bại. Vui lòng thử lại sau!</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">Khi phát các thiết lập trước chưa được lưu, bật các nút bỏ qua trong thông báo trình phát để tạo các thiết lập trước ngẫu nhiên</string>
-    <string name="should_allow_skipping_unsaved_presets">Cho phép bỏ qua các thiết lập trước chưa được lưu</string>
     <string name="should_share_usage_data_summary">Tự động chia sẻ dữ liệu sử dụng và hành vi với những nhà phát triển</string>
     <string name="should_share_usage_data">Chia sẻ dữ liệu sử dụng và hành vi</string>
     <string name="others">Khác</string>

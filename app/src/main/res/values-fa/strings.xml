@@ -173,7 +173,6 @@
     <string name="import_presets_summary">وارد کردن گزینش‌های ذخیره شده از یک فایل خارج از برنامه موجب حذف تمام گزینش‌های موجود می‌شود</string>
     <string name="import_presets">وارد کردن از فایل</string>
     <string name="export_presets_summary">صادر کردن حالت فعلی گزینش‌های ذخیره شده به یک فایل خارج از برنامه</string>
-    <string name="should_allow_skipping_unsaved_presets">اجازه‌ی پرش از گزینش‌های ذخیره نشده</string>
     <string name="should_share_usage_data_summary">اشتراک‌گذاری خودکار داده‌های استفاده و رفتار، با برنامه‌نویسان</string>
     <string name="should_share_usage_data">اشتراک‌گذاری داده‌های استفاده و رفتار</string>
     <string name="others">دیگران</string>
@@ -189,5 +188,4 @@
     <string name="payment_pending">ما به محض پایان پردازش پرداخت شما، به شما خبر می‌دهیم.</string>
     <string name="failed_to_purchase">نتوانست روند پرداخت را آغاز کند. لطفاً بعداً دوباره تلاش کنید!</string>
     <string name="failed_to_load_inapp_purchases">نتوانست جزئیات خرید درون‌برنامه‌ای را بارگذاری کند. لطفاً بعداً دوباره تلاش کنید!</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">فعال بودن دکمه‌های پرش در اعلان پخش برای ایجاد گزینش‌های تصادفی، در زمان پخش گزینش‌های ذخیره نشده</string>
 </resources>

@@ -173,8 +173,6 @@
     <string name="add_to_app_shortcuts">Προσθήκη στις συντομεύσεις εφαρμογής</string>
     <string name="app_authors">Εμφάνιση των συντελεστών του Noice</string>
     <string name="should_display_sound_icons">Εμφάνιση εικονιδίων ήχων</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">Κατά την αναπαραγωγή μη αποθηκευμένων συνθέσεων, να επιτρέπεται η δημιουργία τυχαίων συνθέσεων, με το πάτημα του κουμπιού για το επόμενο κομμάτι στην ειδοποίηση της εφαρμογής</string>
-    <string name="should_allow_skipping_unsaved_presets">Να επιτρέπεται η παράκαμψη μη αποθηκευμένων συνθέσεων</string>
     <string name="should_share_usage_data_summary">Αυτόματη αποστολή δεδομένων χρήσης και συμπεριφοράς στον προγραμματιστή</string>
     <string name="should_share_usage_data">Αποστολή δεδομένων χρήσης και συμπεριφοράς</string>
     <string name="others">Αλλά</string>

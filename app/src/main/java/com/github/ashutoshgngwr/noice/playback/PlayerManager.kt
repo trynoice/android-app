@@ -95,11 +95,35 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
   init {
     setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
     mediaSession.setCallback(object : MediaSessionCompat.Callback() {
-      override fun onPlay() = resume()
-      override fun onStop() = stop()
-      override fun onPause() = pause()
-      override fun onSkipToPrevious() = skipPreset(SKIP_DIRECTION_PREV)
-      override fun onSkipToNext() = skipPreset(SKIP_DIRECTION_NEXT)
+      override fun onPlay() {
+        if (settingsRepository.isMediaButtonsEnabled()) {
+          resume()
+        }
+      }
+
+      override fun onStop() {
+        if (settingsRepository.isMediaButtonsEnabled()) {
+          stop()
+        }
+      }
+
+      override fun onPause() {
+        if (settingsRepository.isMediaButtonsEnabled()) {
+          pause()
+        }
+      }
+
+      override fun onSkipToPrevious() {
+        if (settingsRepository.isMediaButtonsEnabled()) {
+          skipPreset(SKIP_DIRECTION_PREV)
+        }
+      }
+
+      override fun onSkipToNext() {
+        if (settingsRepository.isMediaButtonsEnabled()) {
+          skipPreset(SKIP_DIRECTION_NEXT)
+        }
+      }
     })
   }
 
@@ -435,7 +459,6 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
     val presets = presetRepository.list()
     val currentPos = presets.indexOf(Preset.from("", players.values))
     if (currentPos < 0) {
-      playRandomPreset()
       return
     }
 

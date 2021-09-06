@@ -140,8 +140,6 @@
     <string name="payment_pending">Ilmoitamme sinulle heti, kun olemme käsitelleet maksusi.</string>
     <string name="failed_to_purchase">Maksuvirran käynnistäminen epäonnistui. Yritä myöhemmin uudelleen!</string>
     <string name="failed_to_load_inapp_purchases">Sovelluksen sisäisen oston tietoja ei onnistuttu lataamaan. Yritä myöhemmin uudelleen!</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">Kun toistat tallentamattomia esiasetuksia, ota käyttöön ohituspainikkeet soittimen ilmoituksessa satunnaisten esiasetusten luomiseksi</string>
-    <string name="should_allow_skipping_unsaved_presets">Salli tallentamattomien esiasetusten ohittaminen</string>
     <string name="should_share_usage_data_summary">Jaa käyttö- ja käyttäytymistiedot automaattisesti kehittäjien kanssa</string>
     <string name="should_share_usage_data">Jaa käyttö- ja käyttäytymistiedot</string>
     <string name="others">Muut</string>

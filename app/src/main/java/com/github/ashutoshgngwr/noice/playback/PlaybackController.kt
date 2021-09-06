@@ -50,6 +50,7 @@ object PlaybackController {
   private const val RC_RESUME = 0x3C
   private const val RC_PAUSE = 0x3D
   private const val RC_STOP = 0x3E
+  private const val RC_RANDOM_PRESET = 0x3F
 
   private val handler = Handler(Looper.getMainLooper())
 
@@ -63,6 +64,10 @@ object PlaybackController {
 
   fun buildStopActionPendingIntent(context: Context): PendingIntent {
     return buildSimpleActionPendingIntent(context, ACTION_STOP_PLAYBACK, RC_STOP)
+  }
+
+  fun buildRandomPresetActionPendingIntent(context: Context): PendingIntent {
+    return buildSimpleActionPendingIntent(context, ACTION_PLAY_RANDOM_PRESET, RC_RANDOM_PRESET)
   }
 
   private fun buildSimpleActionPendingIntent(
@@ -144,7 +149,7 @@ object PlaybackController {
       ACTION_PLAY_RANDOM_PRESET -> {
         val tag = intent.getSerializableExtra(EXTRA_FILTER_SOUNDS_BY_TAG) as Sound.Tag?
         val minSounds = intent.getIntExtra(EXTRA_RANDOM_PRESET_MIN_SOUNDS, 1)
-        val maxSounds = intent.getIntExtra(EXTRA_RANDOM_PRESET_MAX_SOUNDS, 0)
+        val maxSounds = intent.getIntExtra(EXTRA_RANDOM_PRESET_MAX_SOUNDS, 5)
         if (minSounds > maxSounds) {
           throw IllegalArgumentException("invalid range for number of sounds in random preset")
         }

@@ -199,8 +199,6 @@
     <string name="payment_pending">जैसे ही हम आपका भुगतान संसाधित कर लेंगे, हम आपको सूचित करेंगे।</string>
     <string name="failed_to_purchase">भुगतान प्रवाह प्रारंभ करने में विफल. कृपया बाद में पुन: प्रयास करें!</string>
     <string name="failed_to_load_inapp_purchases">इन-ऐप खरीदारी विवरण लोड करने में विफल। कृपया बाद में पुन: प्रयास करें!</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">सहेजे नहीं गए प्रीसेट चलाते समय, यादृच्छिक प्रीसेट जेनरेट करने के लिए प्लेयर नोटिफिकेशन में स्किप बटन सक्षम करें</string>
-    <string name="should_allow_skipping_unsaved_presets">सहेजे नहीं गए प्रीसेट को छोड़ने की अनुमति दें</string>
     <string name="should_share_usage_data_summary">डेवलपर्स के साथ स्वचालित रूप से उपयोग और व्यवहार डेटा साझा करें</string>
     <string name="should_share_usage_data">शेयर यूसेज एंड बिहेवियर डेटा</string>
     <string name="others">अन्य</string>

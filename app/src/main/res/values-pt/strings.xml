@@ -119,8 +119,6 @@
     <string name="payment_pending">Vamos notificá-lo assim que terminarmos o processamento do seu pagamento.</string>
     <string name="failed_to_purchase">Não foi possível iniciar o processo de pagamento. Por favor,tente novamente mais tarde!</string>
     <string name="failed_to_load_inapp_purchases">Não foi possível carregar os detalhes da compra na aplicação. Por favor tente de novo mais tarde!</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">Ao reproduzir misturas de sons não guardadas, ativa os botões de ignorar na notificação do reprodutor de som para gerar misturas de sons aleatórias</string>
-    <string name="should_allow_skipping_unsaved_presets">Permitir ignorar misturas de sons não guardadas</string>
     <string name="should_share_usage_data_summary">Partilhar automaticamente dados de utilização e comportamento com os programadores</string>
     <string name="should_share_usage_data">Partilhar dados de utilização e comportamento</string>
     <string name="others">Outros</string>

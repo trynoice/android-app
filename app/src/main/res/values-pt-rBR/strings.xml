@@ -179,8 +179,6 @@
     <string name="payment_pending">Notificaremos você assim que terminarmos de processar seu pagamento.</string>
     <string name="failed_to_purchase">Falha ao iniciar o fluxo de pagamento. Por favor, tente novamente mais tarde!</string>
     <string name="failed_to_load_inapp_purchases">Falha ao carregar os detalhes de compra no aplicativo. Por favor, tente novamente mais tarde!</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">Ao reproduzir predefinições não salvas, habilite os botões de pular na notificação do reprodutor de som para gerar predefinições aleatórias</string>
-    <string name="should_allow_skipping_unsaved_presets">Permitir pular predefinições não salvas</string>
     <string name="should_share_usage_data_summary">Compartilhar automaticamente dados de uso e comportamento com os desenvolvedores</string>
     <string name="should_share_usage_data">Compartilhar dados de uso e comportamento</string>
     <string name="others">Outros</string>
