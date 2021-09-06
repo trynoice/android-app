@@ -23,7 +23,7 @@
     <string name="help">Ajuda</string>
     <string name="app_theme">Tema</string>
     <string name="about">Sobre</string>
-    <string name="appintro__getting_started_title">Bem-vindo(a)</string>
+    <string name="appintro__getting_started_title">Bem-vindo</string>
     <string name="appintro__getting_started_desc_1">Vamos começar!</string>
     <string name="appintro__getting_started_desc_0">Arrastar para a esquerda para conhecer todas as funcionalidades!</string>
     <string name="appintro__chromecast_title">Chromecast ativado</string>
