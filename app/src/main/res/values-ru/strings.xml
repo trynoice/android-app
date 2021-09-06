@@ -205,8 +205,6 @@
     <string name="payment_pending">Мы сообщим вам, как только закончим обработку вашего платежа.</string>
     <string name="failed_to_purchase">Не удалось запустить поток платежей. Повторите попытку позже!</string>
     <string name="failed_to_load_inapp_purchases">Не удалось загрузить сведения о покупке в приложении. Пожалуйста, повторите попытку позже!</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">При воспроизведении несохраненных предустановок включите кнопки пропуска в уведомлении плеера, чтобы генерировать случайные предустановки</string>
-    <string name="should_allow_skipping_unsaved_presets">Разрешить пропуск несохраненных предустановок</string>
     <string name="should_share_usage_data_summary">Автоматически отправлять разработчикам данные об использовании и поведении</string>
     <string name="should_share_usage_data">Передача данных об использовании и поведении</string>
     <string name="share_usage_data_consent_message">Мы собираем данные об использовании приложения для улучшения пользовательского опыта. Мы также собираем данные о поведении приложения для анализа и диагностики ошибок, возникающих во время использования приложения. Для получения дополнительной информации ознакомьтесь с нашей [политикой конфиденциальности] (https://ashutoshgngwr.github.io/noice/privacy-policy).

@@ -107,8 +107,6 @@
     <string name="payment_pending">سنعلمك بمجرد الانتهاء من معالجة الدفع.</string>
     <string name="failed_to_purchase">فشل بدء تدفق الدفع. الرجاء معاودة المحاولة في وقت لاحق!</string>
     <string name="failed_to_load_inapp_purchases">فشل تحميل تفاصيل الشراء داخل التطبيق. الرجاء المحاولة مرة أخرى لاحقا!</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">عند تشغيل الإعدادات المسبقة غير المحفوظة ، قم بتمكين أزرار التخطي في إشعار المشغل لإنشاء إعدادات مسبقة عشوائية</string>
-    <string name="should_allow_skipping_unsaved_presets">السماح بتخطي الإعدادات المسبقة غير المحفوظة</string>
     <string name="should_share_usage_data_summary">مشاركة بيانات الاستخدام والسلوك تلقائيا مع المطورين</string>
     <string name="should_share_usage_data">مشاركة بيانات الاستخدام والسلوك</string>
     <string name="others">الاخرين</string>

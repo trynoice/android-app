@@ -176,8 +176,6 @@
     <string name="payment_pending">Ti avviseremo non appena avremo finito di elaborare il tuo pagamento.</string>
     <string name="failed_to_purchase">Impossibile avviare il flusso di pagamento. Si prega di riprovare più tardi!</string>
     <string name="failed_to_load_inapp_purchases">Impossibile caricare i dettagli dell\'acquisto in-app. Si prega di riprovare più tardi!</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">Durante la riproduzione di preimpostazioni non salvate, abilita i pulsanti di salto nella notifica del lettore per generare preimposatzioni casuali</string>
-    <string name="should_allow_skipping_unsaved_presets">Permetti di saltare le preimpostazioni non salvate</string>
     <string name="should_share_usage_data_summary">Condividi automaticamente i dati di utilizzo e di comportamento con gli sviluppatori</string>
     <string name="should_share_usage_data">Condividi i dati sull\'uso e sul comportamento</string>
     <string name="others">Altri</string>

@@ -103,11 +103,11 @@ class SettingsRepository private constructor(private val context: Context) {
   }
 
   /**
-   * Returns the value of switch preference with key [R.string.should_allow_skipping_unsaved_presets_key]
+   * Returns the value of switch preference with key [R.string.enable_media_buttons_key]
    */
-  fun shouldAllowSkippingUnsavedPresets(): Boolean {
+  fun isMediaButtonsEnabled(): Boolean {
     return prefs.getBoolean(
-      context.getString(R.string.should_allow_skipping_unsaved_presets_key), true
+      context.getString(R.string.enable_media_buttons_key), true
     )
   }
 }

@@ -188,7 +188,6 @@
     <string name="failed_to_read_file">No se pudo leer el archivo seleccionado!</string>
     <string name="failed_to_purchase">No se ha podido iniciar el flujo de pagos. Vuelve a intentarlo más tarde!</string>
     <string name="failed_to_load_inapp_purchases">No se han podido cargar los detalles de la compra en la aplicación. Vuelve a intentarlo más tarde!</string>
-    <string name="should_allow_skipping_unsaved_presets">Omitir preajustes no guardados</string>
     <string name="should_share_usage_data_summary">Compartir automáticamente los datos de uso con los desarrolladores</string>
     <string name="should_share_usage_data">Compartir datos de uso</string>
     <string name="others">Otros</string>

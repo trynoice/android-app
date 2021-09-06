@@ -116,7 +116,7 @@ class MediaPlayerService : Service() {
         FOREGROUND_ID,
         PlayerNotificationManager.createNotification(
           this, mediaSession, title,
-          currentPreset != null || settingsRepository.shouldAllowSkippingUnsavedPresets()
+          currentPreset != null
         )
       )
     }

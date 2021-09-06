@@ -207,8 +207,6 @@
     <string name="payment_pending">Ödemenizi işlemeyi bitirir bitirmez sizi bilgilendireceğiz.</string>
     <string name="failed_to_purchase">Ödeme akışı başlatılamadı. Lütfen daha sonra tekrar deneyin!</string>
     <string name="failed_to_load_inapp_purchases">Uygulama içi satın alma ayrıntıları yüklenemedi. Lütfen daha sonra tekrar deneyin!</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">Kaydedilmemiş kayıtları oynatırken, rastgele kayıtlar oluşturmak için oynatıcı bildirimindeki atlama düğmelerini etkinleştirin</string>
-    <string name="should_allow_skipping_unsaved_presets">Kaydedilmemiş kayıtların atlanmasına izin ver</string>
     <string name="should_share_usage_data_summary">Kullanım ve davranış verilerini geliştiricilerle otomatik olarak paylaşın</string>
     <string name="should_share_usage_data">Kullanım ve davranış verilerini paylaş</string>
     <string name="others">Diğer</string>

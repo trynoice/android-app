@@ -169,7 +169,6 @@
     <string name="sound_group__life">Gyvybė</string>
     <string name="volume">Garsumas</string>
     <string name="stop">Sustabdyti</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">Grojant neišsaugotas parinktis, įgalinkite praleidimo mygtukus grotuvo pranešime, kad būtų generuojamos atsitiktinės parinktys</string>
     <string name="sound_fade_in_duration_summary">Tolygaus garsėjimo pradžioje trukmė (sekundėmis)</string>
     <string name="sound_fade_in_duration">Garso tolygaus garsėjimo pradžioje trukmė</string>
     <string name="repeat_time_period">Pakartojimo laikotarpis</string>
@@ -182,7 +181,6 @@
         <item quantity="few">%1$d minutės</item>
         <item quantity="other">%1$d minučių</item>
     </plurals>
-    <string name="should_allow_skipping_unsaved_presets">Leisti praleisti neišsaugotas parinktis</string>
     <string name="should_share_usage_data_summary">Automatinis naudojimo ir elgsenos duomenų bendrinimas su kūrėjais</string>
     <string name="should_share_usage_data">Dalytis naudojimo ir elgsenos duomenimis</string>
     <string name="others">Kita</string>

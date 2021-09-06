@@ -201,7 +201,6 @@
     <string name="presets_as_home_screen">Preset tersimpan sebagai layar beranda</string>
     <string name="app_authors">Lihat daftar Penulis Noice</string>
     <string name="should_display_sound_icons">Tunjukkan ikon suara</string>
-    <string name="should_allow_skipping_unsaved_presets">Izinkan melewati preset tak tersimpan</string>
     <string name="should_share_usage_data_summary">Secara otomatis berbagi data penggunaan dan perilaku dengan pengembang</string>
     <string name="should_share_usage_data">Bagikan data penggunaan dan perilaku</string>
     <string name="others">Lainnya</string>

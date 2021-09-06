@@ -222,10 +222,10 @@
     <string name="others">Others</string>
     <string name="should_share_usage_data">Share usage and behaviour data</string>
     <string name="should_share_usage_data_summary">Automatically share usage and behaviour data with the developers</string>
-    <string name="should_allow_skipping_unsaved_presets">Allow skipping unsaved presets</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">When playing unsaved presets, enable skip buttons in player notification to generate random presets</string>
     <string name="failed_to_load_inapp_purchases">Failed to load in-app purchase details. Please try again later!</string>
     <string name="failed_to_purchase">Failed to start payment flow. Please try again later!</string>
     <string name="payment_pending">We\'ll notify you as soon as we finish processing your payment.</string>
     <string name="created_by">Created by</string>
+    <string name="enable_media_buttons">Enable media buttons</string>
+    <string name="enable_media_buttons_summary">Use hardware media buttons to skip presets when playing saved presets</string>
 </resources>
