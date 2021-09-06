@@ -1,0 +1,35 @@
+Para muitas pessoas, um pouco de ruído de fundo (som de ambiente) é útil para se acalmarem e se concentrarem. Em alguns casos, também aumenta a produtividade. O ruído de fundo também pode ajudar a minimizar os efeitos do stresse.
+
+Noice é uma aplicação que permite criar um ambiente personalizado usando sons de ambiente. Crie o ambiente perfeito combinando diferentes sons para abafar as distrações para que possa concentrar-se no trabalho ou crie ambientes serenos e pacíficos que ajudam a adormecer.
+
+<b>Recursos</b>
+- 35 sons gravados
+- Google Cast (Chromecast) ativado [apenas na versão Play Store]
+- Suspensão programada
+- Despertador programado
+- Gerar misturas aleatórias
+- Faça uma mistura de sons personalizada
+- Guarde as suas misturas de som favoritas
+- Reproduza sons de fundo simultaneamente com reprodutores de música
+- Controle do volume individual para cada fonte de som
+- Reprodução desligado da Internet
+- Vários temas claros e escuros
+
+<b>Biblioteca de sons</b>
+- Vida (pássaros, grilos, lobos, batimento do coração humano, etc.)
+- Floresta (fogueira, sons noturnos, vento, palmeiras, etc.)
+- Monções (chuva, trovões)
+- Ambiente (café, biblioteca, escritório, beira-mar, riacho, etc.)
+- Veículos (comboio em movimento, avião a voar, navio a ranger, carro elétrico, etc.)
+- Ruído em bruto (branco, rosa, vermelho)
+
+<b>Permissões</b>
+- <b>evitar que o dispositivo hiberne</b>: para manter a CPU do dispositivo ativa durante a reprodução
+- <b>executar serviço em primeiro plano</b>: para executar o processo do reprodutor de sem (diferente da interface)
+- <b>executar ao inicializar</b>: para garantir que os alarmes do despertador programados persistam durante as reinicializações
+- <b>acesso total à rede</b>: para ativar o Chromecast e contribuições financeiras
+- <b>ver conexões de rede</b>: adicionado por uma dependência, sem utilização atualmente
+- <b>serviço de faturação do Google Play</b>: para permitir contribuições financeiras para apoiar o desenvolvimento
+
+O Noice é um programa gratuito e de código-fonte aberto.
+https://github.com/ashutoshgngwr/noice
