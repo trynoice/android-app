@@ -2,4 +2,25 @@
 <resources>
     <string name="wake_up_timer">Despertador</string>
     <string name="presets">Misturas de sons</string>
+    <string name="dismiss">OK</string>
+    <string name="cancel">Cancelar</string>
+    <string name="relax">Relaxar</string>
+    <string name="random_preset">Mistura aleatória</string>
+    <string name="okay">OK</string>
+    <string name="mood">Atmosfera</string>
+    <string name="light">Ligeiro</string>
+    <string name="random_preset_description">As misturas de sons geradas de forma aleatória irão conter sons correspondentes à atmosfera escolhida. Além disso, as misturas de sons densas tentarão reproduzir mais sons em simultâneo.</string>
+    <string name="intensity">Intensidade</string>
+    <string name="focus">Foco</string>
+    <string name="dense">Denso</string>
+    <string name="intensity_any">Qualquer</string>
+    <string name="mood_any">Qualquer</string>
+    <string name="submit_feedback">Enviar comentários</string>
+    <string name="support_development">Apoiar desenvolvimento</string>
+    <string name="sleep_timer">Suspensão programada</string>
+    <string name="report_issue">Reportar problemas</string>
+    <string name="library">Biblioteca</string>
+    <string name="help">Ajuda</string>
+    <string name="app_theme">Tema</string>
+    <string name="about">Sobre</string>
 </resources>
