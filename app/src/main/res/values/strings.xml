@@ -227,5 +227,5 @@
     <string name="payment_pending">We\'ll notify you as soon as we finish processing your payment.</string>
     <string name="created_by">Created by</string>
     <string name="enable_media_buttons">Enable media buttons</string>
-    <string name="enable_media_buttons_summary">Use hardware media buttons to skip presets when playing saved presets</string>
+    <string name="enable_media_buttons_summary">Use hardware media buttons to control playback</string>
 </resources>
