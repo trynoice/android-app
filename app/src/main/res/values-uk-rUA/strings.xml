@@ -200,6 +200,6 @@
     <string name="created_by">Створено</string>
     <string name="import_presets_successful">Поєднання успішно імпортовано з файлу!</string>
     <string name="export_presets_successful">Поєднання успішно експортовано до файлу!</string>
-    <string name="enable_media_buttons_summary">Під час відтворення збережених поєднань користуйтесь апаратними медіакнопками</string>
+    <string name="enable_media_buttons_summary">Використовувати апаратні медіакнопки для керування відтворенням</string>
     <string name="enable_media_buttons">Увімкнути медіакнопки</string>
 </resources>
