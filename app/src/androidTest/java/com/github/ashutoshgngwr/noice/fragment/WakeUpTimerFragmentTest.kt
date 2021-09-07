@@ -13,7 +13,6 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.PickerActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
@@ -217,15 +216,6 @@ class WakeUpTimerFragmentTest {
       .perform(scrollTo(), click())
 
     verify(exactly = 1) { WakeUpTimerManager.cancel(any()) }
-  }
-
-  @Test
-  fun testIs24hView() {
-    onView(withId(R.id.time_picker)).check(matches(not(EspressoX.is24hViewEnabled())))
-    onView(withId(R.id.is_24h_view)).perform(click())
-    onView(withId(R.id.time_picker)).check(matches(EspressoX.is24hViewEnabled()))
-    onView(withId(R.id.is_24h_view)).perform(click())
-    onView(withId(R.id.time_picker)).check(matches(not(EspressoX.is24hViewEnabled())))
   }
 
   @Test

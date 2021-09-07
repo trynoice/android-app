@@ -32,16 +32,7 @@
       android:id="@+id/time_picker"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="15dp"
       android:timePickerMode="spinner" />
-
-    <androidx.appcompat.widget.SwitchCompat
-      android:id="@+id/is_24h_view"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="15dp"
-      android:text="@string/use_24h_format"
-      app:switchPadding="15dp" />
 
     <Space
       android:layout_width="wrap_content"

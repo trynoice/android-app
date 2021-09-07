@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import android.os.Build
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,9 +41,7 @@ class WakeUpTimerFragment : Fragment() {
     binding.selectPresetButton.setOnClickListener { onSelectPresetClicked() }
     binding.resetTimeButton.setOnClickListener { onResetTimeClicked() }
     binding.setTimeButton.setOnClickListener { onSetTimeClicked() }
-    binding.is24hView.setOnCheckedChangeListener { _, enabled ->
-      binding.timePicker.setIs24HourView(enabled)
-    }
+    binding.timePicker.setIs24HourView(DateFormat.is24HourFormat(requireContext()))
 
     presetRepository = PresetRepository.newInstance(requireContext())
 
