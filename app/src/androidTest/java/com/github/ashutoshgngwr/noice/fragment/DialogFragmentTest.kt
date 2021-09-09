@@ -9,15 +9,14 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
-import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.R
 import io.mockk.every
 import io.mockk.mockk
-import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -38,41 +37,41 @@ class DialogFragmentTest {
   @Test
   fun testTitleText() {
     newDialog { title(R.string.app_name) }
-    onView(allOf(withId(R.id.title), withText(R.string.app_name)))
+    EspressoX.onViewInDialog(withId(R.id.title), withText(R.string.app_name))
       .check(matches(isDisplayed()))
   }
 
   @Test
   fun testPositiveButton() {
     newDialog { positiveButton(R.string.app_name) }
-    onView(allOf(withId(R.id.positive), withText(R.string.app_name)))
+    EspressoX.onViewInDialog(withId(R.id.positive), withText(R.string.app_name))
       .perform(click())
 
-    onView(withId(R.id.positive)).check(doesNotExist())
+    onView(isRoot()).inRoot(not(isDialog()))
   }
 
   @Test
   fun testNegativeButton() {
     newDialog { negativeButton(R.string.app_name) }
-    onView(allOf(withId(R.id.negative), withText(R.string.app_name)))
+    EspressoX.onViewInDialog(withId(R.id.negative), withText(R.string.app_name))
       .perform(click())
 
-    onView(withId(R.id.negative)).check(doesNotExist())
+    onView(isRoot()).inRoot(not(isDialog()))
   }
 
   @Test
-  fun neutralButton() {
+  fun testNeutralButton() {
     newDialog { neutralButton(android.R.string.copy) }
-    onView(allOf(withId(R.id.neutral), withText(android.R.string.copy)))
+    EspressoX.onViewInDialog(withId(R.id.neutral), withText(android.R.string.copy))
       .perform(click())
 
-    onView(withId(R.id.neutral)).check(doesNotExist())
+    onView(isRoot()).inRoot(not(isDialog()))
   }
 
   @Test
   fun testMessageText() {
     newDialog { message(R.string.app_name) }
-    onView(allOf(isDescendantOfA(withId(R.id.content)), withText(R.string.app_name)))
+    EspressoX.onViewInDialog(isDescendantOfA(withId(R.id.content)), withText(R.string.app_name))
       .check(matches(isDisplayed()))
   }
 
@@ -89,20 +88,20 @@ class DialogFragmentTest {
       )
     }
 
-    onView(allOf(isDescendantOfA(withId(R.id.content)), withId(R.id.editText)))
+    EspressoX.onViewInDialog(isDescendantOfA(withId(R.id.content)), withId(R.id.editText))
       .check(matches(isDisplayed()))
       .perform(replaceText("invalid"))
 
-    onView(withId(R.id.textInputLayout))
+    EspressoX.onViewInDialog(withId(R.id.textInputLayout))
       .check(matches(EspressoX.withErrorText(R.string.app_name)))
 
-    onView(withId(R.id.positive))
+    EspressoX.onViewInDialog(withId(R.id.positive))
       .check(matches(not(isEnabled())))
 
-    onView(allOf(isDescendantOfA(withId(R.id.content)), withId(R.id.editText)))
+    EspressoX.onViewInDialog(isDescendantOfA(withId(R.id.content)), withId(R.id.editText))
       .perform(replaceText("test"))
 
-    onView(withId(R.id.textInputLayout))
+    EspressoX.onViewInDialog(withId(R.id.textInputLayout))
       .check(matches(not(EspressoX.withErrorText(R.string.app_name))))
 
     assertEquals("test", dialogFragment.getInputText())
@@ -120,14 +119,14 @@ class DialogFragmentTest {
     }
 
     items.forEach {
-      onView(allOf(isDescendantOfA(withId(android.R.id.list)), withText(it)))
+      EspressoX.onViewInDialog(isDescendantOfA(withId(android.R.id.list)), withText(it))
         .check(matches(isDisplayed()))
     }
 
-    onView(allOf(isDescendantOfA(withId(android.R.id.list)), withText(items[1])))
+    EspressoX.onViewInDialog(isDescendantOfA(withId(android.R.id.list)), withText(items[1]))
       .perform(click())
 
-    onView(withId(android.R.id.list)).check(doesNotExist())
+    onView(isRoot()).inRoot(not(isDialog()))
     assertEquals(1, selectedItem)
   }
 
@@ -149,11 +148,11 @@ class DialogFragmentTest {
       positiveButton(R.string.okay)
     }
 
-    onView(withId(id))
+    EspressoX.onViewInDialog(withId(id))
       .check(matches(isDisplayed()))
       .perform(EspressoX.slide(expectedValue))
 
-    onView(withId(R.id.positive)).perform(click())
+    EspressoX.onViewInDialog(withId(R.id.positive)).perform(click())
     assertEquals(expectedValue, value)
   }
 
@@ -164,7 +163,7 @@ class DialogFragmentTest {
 
     // wait for dialog to be visible
     EspressoX.retryWithWaitOnError(NoMatchingViewException::class) {
-      onView(withId(R.id.dialog_root))
+      EspressoX.onViewInDialog(withId(R.id.dialog_root))
         .check(matches(isDisplayed()))
     }
 

@@ -139,11 +139,11 @@ class LibraryFragmentTest {
         )
       )
 
-      onView(withId(R.id.volume_slider))
+      EspressoX.onViewInDialog(withId(R.id.volume_slider))
         .check(matches(isDisplayed()))
         .perform(EspressoX.slide(expectedVolume.toFloat()))
 
-      onView(withId(R.id.positive)).perform(click())
+      EspressoX.onViewInDialog(withId(R.id.positive)).perform(click())
       verify(exactly = 1) { mockPlayer.setVolume(expectedVolume) }
     }
   }
@@ -182,11 +182,11 @@ class LibraryFragmentTest {
           )
         )
 
-      onView(withId(R.id.time_period_slider))
+      EspressoX.onViewInDialog(withId(R.id.time_period_slider))
         .check(matches(isDisplayed()))
         .perform(EspressoX.slide(expectedTimePeriod.toFloat()))
 
-      onView(withId(R.id.positive)).perform(click())
+      EspressoX.onViewInDialog(withId(R.id.positive)).perform(click())
       verify(exactly = 1) { mockPlayer.timePeriod = expectedTimePeriod }
     }
   }
@@ -264,11 +264,11 @@ class LibraryFragmentTest {
       )
     )
 
-    onView(withId(R.id.volume_slider))
+    EspressoX.onViewInDialog(withId(R.id.volume_slider))
       .check(matches(isDisplayed()))
       .perform(EspressoX.slide(6f))
 
-    onView(withId(R.id.positive)).perform(click())
+    EspressoX.onViewInDialog(withId(R.id.positive)).perform(click())
     verify(exactly = 1) { requireNotNull(mockPlayers["birds"]).setVolume(6) }
     onView(allOf(withId(R.id.save_preset_button), withEffectiveVisibility(Visibility.VISIBLE)))
   }
@@ -305,28 +305,22 @@ class LibraryFragmentTest {
       .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
       .perform(click())
 
-    onView(allOf(withId(R.id.title), withText(R.string.save_preset)))
-      .check(matches(isDisplayed()))
-
     // should disable save button for duplicate names
-    onView(withId(R.id.editText))
+    EspressoX.onViewInDialog(withId(R.id.editText))
       .check(matches(isDisplayed()))
       .perform(replaceText("test-exists"))
 
-    onView(allOf(withId(R.id.positive), withText(R.string.save)))
+    EspressoX.onViewInDialog(withId(R.id.positive), withText(R.string.save))
       .check(matches(not(isEnabled())))
 
-    onView(withId(R.id.editText))
-      .check(matches(isDisplayed()))
+    EspressoX.onViewInDialog(withId(R.id.editText))
       .perform(replaceText("test-does-not-exists"))
 
-    onView(allOf(withId(R.id.positive), withText(R.string.save)))
+    EspressoX.onViewInDialog(withId(R.id.positive), withText(R.string.save))
       .check(matches(isEnabled()))
       .perform(click())
 
     onView(withId(R.id.save_preset_button)).check(matches(not(isDisplayed())))
-    onView(withId(com.google.android.material.R.id.snackbar_text))
-      .check(matches(withText(R.string.preset_saved)))
 
     val presetSlot = slot<Preset>()
     verify { mockPresetRepository.create(capture(presetSlot)) }

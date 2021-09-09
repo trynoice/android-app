@@ -16,6 +16,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.BuildConfig
+import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
@@ -176,7 +177,7 @@ class MainActivityTest {
       slot.captured.onComplete(listOf(), testOrderID)
     }
 
-    onView(withId(R.id.positive)).perform(click()) // close the dialog
+    EspressoX.onViewInDialog(withId(R.id.positive)).perform(click()) // close the dialog
     verify { mockBillingProvider.consumePurchase(testOrderID) }
   }
 }
