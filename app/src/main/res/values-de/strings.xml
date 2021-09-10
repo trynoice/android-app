@@ -114,7 +114,7 @@
     <string name="appintro__getting_started_desc_0">Wischen Sie nach links um alle Funktionen kennenzulernen!</string>
     <string name="appintro__getting_started_desc_1">Lass uns anfangen!</string>
     <string name="appintro__getting_started_title">Willkommen</string>
-    <string name="appintro__presets_desc">Nach ein paar gespielten Tönen, können Sie den Knopf in der unteren Ecke benutzen um Ihren Mix zu speichern. Um Ihren gespeicherten Mix wiederzuverwenden, können Sie Ihre voreingestellte Liste vom App Menu besuchen.</string>
+    <string name="appintro__presets_desc">Nach ein paar gespielten Tönen können Sie den Knopf in der unteren Ecke benutzen um Ihren Mix zu speichern. Um Ihren gespeicherten Mix wiederzuverwenden, können Sie Ihre voreingestellte Liste vom App Menu besuchen.</string>
     <string name="appintro__presets_title">Speichern Sie Ihre Lieblingsmischungen</string>
     <string name="appintro__library_desc">
     Benutzen Sie die Lautstärken Taste um die Lautstärke einzustellen. Bei jeder Wiederholung von sich nicht wiederholenden Geräuschen, ist eine Verspätungs
@@ -175,7 +175,7 @@
     <string name="pinned_shortcut_creation_failed">Fehler beim Hinzufügen der Verknüpfung zum Startbildschirm!</string>
     <string name="appearance">Aussehen</string>
     <string name="behavior">Verhalten</string>
-    <string name="presets_as_home_screen">„Voreinstellungen gespeichert“ als Startbildschirm</string>
+    <string name="presets_as_home_screen">„Gespeicherte Voreinstellungen“ als Startbildschirm</string>
     <string name="settings">Einstellungen</string>
     <string name="app_shortcut_created">Voreinstellung wurde zu den Anwendungsverknüpfungen hinzugefügt!</string>
     <string name="app_shortcut_removed">Die Voreinstellung wurde aus den Anwendungsverknüpfungen entfernt!</string>
@@ -199,4 +199,20 @@
     <string name="should_display_sound_icons">Tonsymbole anzeigen</string>
     <string name="decline">Ablehnen</string>
     <string name="accept">Akzeptieren</string>
+    <string name="enable_media_buttons_summary">Physische Knöpfe zum Überspringen gespeicherter Voreinstellungen beim Spielen gespeicherter Voreinstellungen verwenden</string>
+    <string name="enable_media_buttons">Medienknöpfe aktivieren</string>
+    <string name="payment_pending">Wir benachrichtigen Dich, sobald wir deine Zahlung verarbeitet haben.</string>
+    <string name="failed_to_purchase">Der Zahlungsfluss konnte nicht gestartet werden. Bitte versuche es später noch einmal!</string>
+    <string name="failed_to_load_inapp_purchases">Fehler beim Laden der In-App-Käufe. Bitte versuche es später noch einmal!</string>
+    <string name="should_share_usage_data_summary">Automatisch Nutzungs- und Verhaltensdaten mit den Entwicklern teilen</string>
+    <string name="should_share_usage_data">Nutzungs- und Verhaltensdaten teilen</string>
+    <string name="others">Andere</string>
+    <string name="share_usage_data_consent_message">Wir sammeln Nutzungsdaten der App um die Benutzererfahrung zu verbessern. Wir sammeln außerdem Verhaltensdaten der App um auftretende Fehler während der Verwendung zu analysieren und diagnostizieren. Lies unsere [Datenschutzbestimmungen] (https://ashutoshgngwr.github.io/noice/privacy-policy) für weitere Informationen.
+\n
+\nDu kannst das automatische Teilen von Daten jederzeit unter \"**Einstellungen** &gt; **Nutzungs- und Verhaltensdaten teilen**\" verwalten.</string>
+    <string name="share_usage_data_consent_title">Präferenzen beim Teilen von Daten</string>
+    <string name="import_presets_successful">Gespeicherte Voreinstellungen wurden erfolgreich aus der Datei geladen!</string>
+    <string name="export_presets_successful">Gespeicherte Voreinstellungen wurden erfolgreich exportiert!</string>
+    <string name="sound_fade_in_duration_summary">Dauer fürs Überblenden (in Sekunden)</string>
+    <string name="sound_fade_in_duration">Fade-In-Dauer des Geräuschs</string>
 </resources>

@@ -221,4 +221,6 @@
     <string name="sound_fade_in_duration">Ses azalma süresi</string>
     <string name="import_presets_successful">Kayıtlar dosyadan başarıyla içe aktarıldı!</string>
     <string name="export_presets_successful">Kayıtlar başarıyla dosyaya aktarıldı!</string>
+    <string name="enable_media_buttons_summary">Oynatmayı denetlemek için donanımsal ortam düğmelerini kullanın</string>
+    <string name="enable_media_buttons">Ortam düğmelerini etkinleştir</string>
 </resources>

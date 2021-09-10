@@ -213,4 +213,6 @@
     <string name="created_by">निर्माता</string>
     <string name="import_presets_successful">फ़ाइल से प्रीसेट सफलतापूर्वक आयात हो गए!</string>
     <string name="export_presets_successful">प्रीसेट फ़ाइल में सफलतापूर्वक निर्यात हो गये!</string>
+    <string name="enable_media_buttons_summary">प्लेबैक को नियंत्रित करने के लिए हार्डवेयर मीडिया बटन का उपयोग करें</string>
+    <string name="enable_media_buttons">मीडिया बटन सक्षम करें</string>
 </resources>

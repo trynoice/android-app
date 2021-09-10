@@ -198,4 +198,6 @@
         <item quantity="many">%1$d ساعات</item>
         <item quantity="other">%1$d ساعات</item>
     </plurals>
+    <string name="enable_media_buttons_summary">استخدم أزرار وسائط الجهاز للتحكم في التشغيل</string>
+    <string name="enable_media_buttons">تمكين أزرار الوسائط</string>
 </resources>

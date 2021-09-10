@@ -223,4 +223,6 @@
 \n Você pode configurar o compartilhamento automático de dados a qualquer momento dentro do aplicativo acessando \"**Configurações** &gt; **Compartilhar dados de uso e comportamento**\".</string>
     <string name="import_presets_successful">Predefinições importadas com sucesso do arquivo!</string>
     <string name="export_presets_successful">Predefinições exportadas com sucesso para o arquivo!</string>
+    <string name="enable_media_buttons_summary">Use botões de mídia de hardware para controlar a reprodução</string>
+    <string name="enable_media_buttons">Habilitar botões de mídia</string>
 </resources>
