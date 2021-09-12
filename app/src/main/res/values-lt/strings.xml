@@ -192,4 +192,6 @@
     <string name="share_usage_data_consent_title">Duomenų dalijimosi nuostatos</string>
     <string name="import_presets_successful">Parinktys sėkmingai importuotos iš failo!</string>
     <string name="export_presets_successful">Parinktys sėkmingai eksportuotos į failą!</string>
+    <string name="enable_media_buttons_summary">Atkūrimui valdyti naudokite fizinius įrenginio mygtukus</string>
+    <string name="enable_media_buttons">Įgalinti medijos mygtukus</string>
 </resources>
