@@ -40,11 +40,7 @@ class MediaPlayerServiceTest {
   fun setup() {
     // mock so that service is created (onCreate calls CastAPIProvider constructor via PlayerManager).
     ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .setCastAPIProviderFactory(
-        mockk {
-          every { newInstance(any()) } returns mockk(relaxed = true)
-        }
-      )
+      .castAPIProvider = mockk(relaxed = true)
 
     mockkStatic(EventBus::class)
     mockEventBus = mockk(relaxed = true)

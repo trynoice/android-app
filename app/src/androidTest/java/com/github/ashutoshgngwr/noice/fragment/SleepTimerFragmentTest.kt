@@ -39,7 +39,7 @@ class SleepTimerFragmentTest {
     every { PlaybackController.scheduleAutoStop(any(), any()) } returns Unit
 
     ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .setReviewFlowProvider(mockk(relaxed = true))
+      .reviewFlowProvider = mockk(relaxed = true)
 
     fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }

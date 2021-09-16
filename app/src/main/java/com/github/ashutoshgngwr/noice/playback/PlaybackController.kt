@@ -198,7 +198,7 @@ object PlaybackController {
 
   private fun logEvent(context: Context, name: String, params: Bundle) {
     NoiceApplication.of(context)
-      .getAnalyticsProvider()
+      .analyticsProvider
       .logEvent(name, params)
   }
 

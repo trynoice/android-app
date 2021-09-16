@@ -84,7 +84,6 @@ object RealBillingProvider : BillingProvider, BillingClientStateListener {
       .generatePublic(X509EncodedKeySpec(decodedKey))
   }
 
-
   override fun onBillingSetupFinished(result: BillingResult) {
     if (result.responseCode != BillingClient.BillingResponseCode.OK) {
       Log.w(LOG_TAG, "billing service connection failed: ${result.debugMessage}")

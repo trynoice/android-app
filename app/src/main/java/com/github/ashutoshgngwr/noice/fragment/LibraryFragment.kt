@@ -94,7 +94,7 @@ class LibraryFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     presetRepository = PresetRepository.newInstance(requireContext())
     settingsRepository = SettingsRepository.newInstance(requireContext())
-    analyticsProvider = NoiceApplication.of(requireContext()).getAnalyticsProvider()
+    analyticsProvider = NoiceApplication.of(requireContext()).analyticsProvider
     adapter = SoundListAdapter(requireContext())
     binding.soundList.also {
       it.adapter = adapter
@@ -144,7 +144,7 @@ class LibraryFragment : Fragment() {
           analyticsProvider.logEvent("preset_sounds", bundleOf("items_count" to soundCount))
           // maybe show in-app review dialog to the user
           NoiceApplication.of(requireContext())
-            .getReviewFlowProvider()
+            .reviewFlowProvider
             .maybeAskForReview(requireActivity())
         }
 

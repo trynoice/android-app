@@ -64,7 +64,7 @@ class PresetsFragmentTest {
 
     mockReviewFlowProvider = mockk(relaxed = true)
     ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .setReviewFlowProvider(mockReviewFlowProvider)
+      .reviewFlowProvider = mockReviewFlowProvider
 
     mockPreset = mockk(relaxed = true) {
       every { id } returns "test-id"

@@ -157,21 +157,19 @@ class GenerateScreenshots {
   @Test
   fun library() {
     // add a fake Cast button since we can't make the real one appear on an emulator.
-    ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .setCastAPIProviderFactory(mockk {
-        every { newInstance(any()) } returns mockk(relaxed = true) {
-          every { addMenuItem(any(), any()) } answers {
-            firstArg<Menu>().add("fake-cast-button").apply {
-              setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS)
-              setIcon(R.drawable.cast_ic_notification_small_icon)
-              iconTintList = ColorStateList.valueOf(
-                ApplicationProvider.getApplicationContext<Context>()
-                  .getColor(R.color.action_menu_item)
-              )
-            }
+    ApplicationProvider.getApplicationContext<NoiceApplication>().castAPIProvider =
+      mockk(relaxed = true) {
+        every { addMenuItem(any(), any(), any()) } answers {
+          secondArg<Menu>().add("fake-cast-button").apply {
+            setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS)
+            setIcon(R.drawable.cast_ic_notification_small_icon)
+            iconTintList = ColorStateList.valueOf(
+              ApplicationProvider.getApplicationContext<Context>()
+                .getColor(R.color.action_menu_item)
+            )
           }
         }
-      })
+      }
 
     activityScenarioRule.scenario.recreate()
     onView(withId(R.id.sound_list)).perform(

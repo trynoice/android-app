@@ -46,7 +46,7 @@ class WakeUpTimerFragmentTest {
 
     mockReviewFlowProvider = mockk(relaxed = true)
     ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .setReviewFlowProvider(mockReviewFlowProvider)
+      .reviewFlowProvider = mockReviewFlowProvider
 
     mockPresetRepository = mockk {
       every { get(null) } returns null

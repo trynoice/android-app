@@ -59,7 +59,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
 
       // maybe show in-app review dialog to the user
       NoiceApplication.of(requireContext())
-        .getReviewFlowProvider()
+        .reviewFlowProvider
         .maybeAskForReview(requireActivity())
     }
 
@@ -68,7 +68,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
     }
 
     NoiceApplication.of(requireContext())
-      .getAnalyticsProvider()
+      .analyticsProvider
       .setCurrentScreen("random_preset", RandomPresetFragment::class)
   }
 }

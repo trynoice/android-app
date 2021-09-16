@@ -50,3 +50,12 @@ interface BillingProvider {
     fun onComplete(skus: List<String>, orderId: String)
   }
 }
+
+/**
+ * A no-op billing provider for clients that don't have Google Mobile Services installed.
+ */
+object DummyBillingProvider : BillingProvider {
+  override fun init(context: Context, listener: BillingProvider.PurchaseListener?) = Unit
+  override fun close() = Unit
+  override fun consumePurchase(orderId: String) = Unit
+}

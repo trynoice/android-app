@@ -125,8 +125,8 @@ class MainActivityTest {
     val mockCrashlyticsProvider: CrashlyticsProvider = mockk(relaxed = true)
 
     ApplicationProvider.getApplicationContext<NoiceApplication>().apply {
-      setAnalyticsProvider(mockAnalyticsProvider)
-      setCrashlyticsProvider(mockCrashlyticsProvider)
+      analyticsProvider = mockAnalyticsProvider
+      crashlyticsProvider = mockCrashlyticsProvider
     }
 
     PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
@@ -157,7 +157,7 @@ class MainActivityTest {
 
     val mockBillingProvider: BillingProvider = mockk(relaxed = true)
     ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .setBillingProvider(mockBillingProvider)
+      .billingProvider = mockBillingProvider
 
     activityScenario.recreate()
 

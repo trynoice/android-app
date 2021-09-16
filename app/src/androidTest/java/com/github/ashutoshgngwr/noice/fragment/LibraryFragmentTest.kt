@@ -59,7 +59,7 @@ class LibraryFragmentTest {
 
     mockReviewFlowProvider = mockk(relaxed = true)
     ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .setReviewFlowProvider(mockReviewFlowProvider)
+      .reviewFlowProvider = mockReviewFlowProvider
 
     mockEventBus = mockk(relaxed = true)
     mockPresetRepository = mockk(relaxed = true)
@@ -167,7 +167,7 @@ class LibraryFragmentTest {
       Player.MIN_TIME_PERIOD,
       Player.MAX_TIME_PERIOD,
       // following because step size of the slider is 10s
-      Random.nextInt(Player.MIN_TIME_PERIOD / 10, Player.MAX_TIME_PERIOD / 10) * 10
+      Random.nextInt((Player.DEFAULT_TIME_PERIOD / 10) + 1, Player.MAX_TIME_PERIOD / 10) * 10
     )
 
     for (expectedTimePeriod in expectedTimePeriods) {

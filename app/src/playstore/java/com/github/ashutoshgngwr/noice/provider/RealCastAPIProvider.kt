@@ -4,53 +4,58 @@ import android.content.Context
 import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.core.view.MenuItemCompat
 import androidx.media.VolumeProviderCompat
 import androidx.mediarouter.app.MediaRouteActionProvider
+import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.playback.strategy.CastPlaybackStrategyFactory
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
 import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
+import com.google.android.gms.cast.framework.CastOptions
 import com.google.android.gms.cast.framework.CastSession
+import com.google.android.gms.cast.framework.OptionsProvider
 import com.google.android.gms.cast.framework.SessionManagerListener
+import com.google.android.gms.cast.framework.SessionProvider
+import com.google.android.gms.cast.framework.media.CastMediaOptions
+import kotlin.math.round
 
 /**
  * [RealCastAPIProvider] wraps all the Google Cast API functionality used by the application
  * for the Play Store build variant.
  */
-class RealCastAPIProvider private constructor(val context: Context) : CastAPIProvider {
+class RealCastAPIProvider(context: Context) : CastAPIProvider {
 
-  companion object {
-    val FACTORY = object : CastAPIProvider.Factory {
-      override fun newInstance(context: Context) = RealCastAPIProvider(context)
-    }
-  }
+  private val sessionListeners = mutableSetOf<CastAPIProvider.SessionListener>()
 
   private val castContext = CastContext.getSharedInstance(context)
-  private var sessionBeginCallback = { }
-  private var sessionEndCallback = { }
+  private val castSessionManagerListener = object : SessionManagerListener<CastSession> {
+    override fun onSessionStarted(session: CastSession, sessionId: String) {
+      sessionListeners.forEach { it.onSessionBegin() }
+    }
 
-  private val castSessionManagerListener = object : CastSessionManagerListener() {
+    override fun onSessionResumed(session: CastSession, wasSuspended: Boolean) {
+      sessionListeners.forEach { it.onSessionBegin() }
+    }
 
-    override fun onSessionStarted(session: CastSession, sessionId: String) = sessionBeginCallback()
-    override fun onSessionResumed(session: CastSession, wasSuspended: Boolean) =
-      sessionBeginCallback()
+    override fun onSessionEnded(session: CastSession, error: Int) {
+      sessionListeners.forEach { it.onSessionEnd() }
+    }
 
-    override fun onSessionEnded(session: CastSession, error: Int) = sessionEndCallback()
-  }
-
-  init {
-    castContext.sessionManager.addSessionManagerListener(
-      castSessionManagerListener,
-      CastSession::class.java
-    )
+    override fun onSessionResumeFailed(session: CastSession, error: Int) = Unit
+    override fun onSessionSuspended(session: CastSession, reason: Int) = Unit
+    override fun onSessionStarting(session: CastSession) = Unit
+    override fun onSessionResuming(session: CastSession, sessionId: String) = Unit
+    override fun onSessionEnding(session: CastSession) = Unit
+    override fun onSessionStartFailed(session: CastSession, error: Int) = Unit
   }
 
   /**
    * Sets up the cast media menu item on the given menu with given title resource.
    */
-  override fun addMenuItem(menu: Menu, @StringRes titleResId: Int) {
+  override fun addMenuItem(context: Context, menu: Menu, @StringRes titleResId: Int) {
     menu.add(titleResId).also {
       it.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
       MenuItemCompat.setActionProvider(it, MediaRouteActionProvider(context))
@@ -62,7 +67,7 @@ class RealCastAPIProvider private constructor(val context: Context) : CastAPIPro
    * Initializes a new [CastPlaybackStrategyFactory] instance and returns it as
    * [PlaybackStrategyFactory].
    */
-  override fun getPlaybackStrategyFactory(): PlaybackStrategyFactory =
+  override fun getPlaybackStrategyFactory(context: Context): PlaybackStrategyFactory =
     CastPlaybackStrategyFactory(
       context,
       requireNotNull(castContext.sessionManager.currentCastSession),
@@ -76,43 +81,86 @@ class RealCastAPIProvider private constructor(val context: Context) : CastAPIPro
   override fun getVolumeProvider(): VolumeProviderCompat =
     CastVolumeProvider(requireNotNull(castContext.sessionManager.currentCastSession))
 
-  /**
-   * Sets a convenience lambda that is called in session started and resumed callbacks.
-   */
-  override fun onSessionBegin(callback: () -> Unit) {
-    this.sessionBeginCallback = callback
+  override fun registerSessionListener(listener: CastAPIProvider.SessionListener) {
+    // add `castSessionManagerListener` only when the first `CastAPIProvider.SessionListener` is
+    // registered.
+    if (sessionListeners.isEmpty()) {
+      castContext.sessionManager.addSessionManagerListener(
+        castSessionManagerListener,
+        CastSession::class.java
+      )
+    }
+
+    sessionListeners.add(listener)
   }
 
-  /**
-   * Sets a convenience lambda that is called in session ended callbacks
-   */
-  override fun onSessionEnd(callback: () -> Unit) {
-    this.sessionEndCallback = callback
+  override fun unregisterSessionListener(listener: CastAPIProvider.SessionListener) {
+    sessionListeners.remove(listener)
+
+    // remove `castSessionManagerListener` when the last `CastAPIProvider.SessionListener` is
+    // unregistered.
+    if (sessionListeners.isEmpty()) {
+      castContext.sessionManager.removeSessionManagerListener(
+        castSessionManagerListener,
+        CastSession::class.java
+      )
+    }
+  }
+}
+
+@Suppress("unused") // Referred from 'AndroidManifest.xml'
+class CastOptionsProvider : OptionsProvider {
+
+  override fun getCastOptions(context: Context): CastOptions {
+    return CastOptions.Builder().run {
+      setReceiverApplicationId(
+        context.getString(
+          @Suppress("ConstantConditionIf")
+          if (BuildConfig.DEBUG) {
+            R.string.cast_app_id__debug
+          } else {
+            R.string.cast_app_id__release
+          }
+        )
+      )
+
+      setStopReceiverApplicationWhenEndingSession(true)
+      setCastMediaOptions(
+        CastMediaOptions.Builder()
+          .setMediaSessionEnabled(false)
+          .build()
+      )
+
+      build()
+    }
   }
 
-  /**
-   * Removes the [CastSessionManagerListener] that is registered in when [RealCastAPIProvider] instance
-   * is created.
-   */
-  override fun clearSessionCallbacks() {
-    castContext.sessionManager.removeSessionManagerListener(
-      castSessionManagerListener,
-      CastSession::class.java
-    )
+  override fun getAdditionalSessionProviders(context: Context?): List<SessionProvider>? = null
+}
+
+/**
+ * A [VolumeProviderCompat] implementation for adjusting cast device volume using active
+ * [MediaSession][android.support.v4.media.session.MediaSessionCompat]'s remote playback
+ * control.
+ */
+internal class CastVolumeProvider(private val session: CastSession) :
+  VolumeProviderCompat(VOLUME_CONTROL_ABSOLUTE, MAX_VOLUME, multiply(session.volume)) {
+
+  companion object {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    const val MAX_VOLUME = 15
+
+    private fun multiply(volume: Double): Int {
+      return round(volume * MAX_VOLUME).toInt()
+    }
   }
 
-  /**
-   * A helper class for allowing to implement the required methods wherever needed.
-   */
-  open class CastSessionManagerListener : SessionManagerListener<CastSession> {
-    override fun onSessionStarted(session: CastSession, sessionId: String) = Unit
-    override fun onSessionResumeFailed(session: CastSession, error: Int) = Unit
-    override fun onSessionSuspended(session: CastSession, reason: Int) = Unit
-    override fun onSessionEnded(session: CastSession, error: Int) = Unit
-    override fun onSessionResumed(session: CastSession, wasSuspended: Boolean) = Unit
-    override fun onSessionStarting(session: CastSession) = Unit
-    override fun onSessionResuming(session: CastSession, sessionId: String) = Unit
-    override fun onSessionEnding(session: CastSession) = Unit
-    override fun onSessionStartFailed(session: CastSession, error: Int) = Unit
+  override fun onSetVolumeTo(volume: Int) {
+    session.volume = volume.toDouble() / MAX_VOLUME
+    this.currentVolume = volume
+  }
+
+  override fun onAdjustVolume(direction: Int) {
+    onSetVolumeTo(this.currentVolume + direction)
   }
 }

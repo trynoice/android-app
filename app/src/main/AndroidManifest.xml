@@ -15,6 +15,7 @@
   <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
 
   <application
+    android:name="com.github.ashutoshgngwr.noice.NoiceApplication"
     android:allowBackup="true"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"

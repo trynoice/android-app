@@ -59,7 +59,7 @@ class WakeUpTimerFragment : Fragment() {
 
     notifyUpdate()
 
-    analyticsProvider = NoiceApplication.of(requireContext()).getAnalyticsProvider()
+    analyticsProvider = NoiceApplication.of(requireContext()).analyticsProvider
     analyticsProvider.setCurrentScreen("wake_up_timer", WakeUpTimerFragment::class)
   }
 
@@ -125,7 +125,7 @@ class WakeUpTimerFragment : Fragment() {
     analyticsProvider.logEvent("wake_up_timer_set", params)
     // maybe show in-app review dialog to the user
     NoiceApplication.of(requireContext())
-      .getReviewFlowProvider()
+      .reviewFlowProvider
       .maybeAskForReview(requireActivity())
   }
 

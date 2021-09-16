@@ -83,7 +83,7 @@ class AboutFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     NoiceApplication.of(requireContext())
-      .getAnalyticsProvider()
+      .analyticsProvider
       .setCurrentScreen("about", AboutFragment::class)
   }
 

@@ -55,7 +55,7 @@ class PresetsFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     presetRepository = PresetRepository.newInstance(requireContext())
-    analyticsProvider = NoiceApplication.of(requireContext()).getAnalyticsProvider()
+    analyticsProvider = NoiceApplication.of(requireContext()).analyticsProvider
     dataSet = presetRepository.list().toMutableList()
     adapter = PresetListAdapter(requireContext())
     binding.list.also {
@@ -113,7 +113,7 @@ class PresetsFragment : Fragment() {
   inner class ViewHolder(val binding: PresetsListItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    private val reviewFlowProvider = NoiceApplication.of(requireContext()).getReviewFlowProvider()
+    private val reviewFlowProvider = NoiceApplication.of(requireContext()).reviewFlowProvider
 
     init {
       binding.playButton.setOnClickListener {

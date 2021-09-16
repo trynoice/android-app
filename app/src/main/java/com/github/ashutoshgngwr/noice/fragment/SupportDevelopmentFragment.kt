@@ -27,7 +27,7 @@ class SupportDevelopmentFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    analyticsProvider = NoiceApplication.of(requireContext()).getAnalyticsProvider()
+    analyticsProvider = NoiceApplication.of(requireContext()).analyticsProvider
 
     binding.shareButton.setOnClickListener {
       val text = getString(R.string.app_description)

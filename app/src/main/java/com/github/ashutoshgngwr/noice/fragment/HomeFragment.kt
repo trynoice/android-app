@@ -27,8 +27,6 @@ import com.github.ashutoshgngwr.noice.databinding.HomeFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchInCustomTab
 import com.github.ashutoshgngwr.noice.navigation.Navigable
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -40,8 +38,7 @@ class HomeFragment : Fragment(), Navigable {
   private lateinit var binding: HomeFragmentBinding
   private lateinit var navController: NavController
   private lateinit var childNavController: NavController
-  private lateinit var analyticsProvider: AnalyticsProvider
-  private lateinit var castAPIProvider: CastAPIProvider
+  private lateinit var app: NoiceApplication
 
   private var playerManagerState = PlaybackStateCompat.STATE_STOPPED
 
@@ -60,15 +57,12 @@ class HomeFragment : Fragment(), Navigable {
     super.onCreate(savedInstanceState)
     setHasOptionsMenu(true)
 
-    val app = NoiceApplication.of(requireContext())
-    analyticsProvider = app.getAnalyticsProvider()
-    castAPIProvider = app.getCastAPIProviderFactory().newInstance(requireContext())
+    app = NoiceApplication.of(requireContext())
     EventBus.getDefault().register(this)
   }
 
   override fun onDestroy() {
     EventBus.getDefault().unregister(this)
-    castAPIProvider.clearSessionCallbacks()
     super.onDestroy()
   }
 
@@ -100,7 +94,7 @@ class HomeFragment : Fragment(), Navigable {
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    castAPIProvider.addMenuItem(menu, R.string.cast_media)
+    app.castAPIProvider.addMenuItem(requireContext(), menu, R.string.cast_media)
     val displayPlaybackControls = childNavController.currentDestination?.id != R.id.wake_up_timer
     if (displayPlaybackControls && PlaybackStateCompat.STATE_STOPPED != playerManagerState) {
       addPlaybackToggleMenuItem(menu)
@@ -127,7 +121,7 @@ class HomeFragment : Fragment(), Navigable {
           PlaybackController.resume(requireContext())
         }
 
-        analyticsProvider.logEvent("playback_toggle_click", bundleOf())
+        app.analyticsProvider.logEvent("playback_toggle_click", bundleOf())
         true
       }
     }
@@ -156,12 +150,12 @@ class HomeFragment : Fragment(), Navigable {
         }
 
         Uri.parse(url).launchInCustomTab(requireContext())
-        analyticsProvider.logEvent("issue_tracker_open", bundleOf())
+        app.analyticsProvider.logEvent("issue_tracker_open", bundleOf())
       }
 
       R.id.submit_feedback -> {
         Uri.parse(getString(R.string.feedback_form_url)).launchInCustomTab(requireContext())
-        analyticsProvider.logEvent("feedback_form_open", bundleOf())
+        app.analyticsProvider.logEvent("feedback_form_open", bundleOf())
       }
 
       else -> return super.onOptionsItemSelected(item)

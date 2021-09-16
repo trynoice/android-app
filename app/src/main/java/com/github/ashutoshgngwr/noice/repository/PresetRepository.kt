@@ -166,7 +166,10 @@ class PresetRepository private constructor(context: Context) {
    * Lists all [Preset]s present in the persistent storage.
    */
   fun list(): Array<Preset> {
-    return gson.fromJson(prefs.getString(PREFERENCE_KEY, DEFAULT_PRESETS), Array<Preset>::class.java)
+    return gson.fromJson(
+      prefs.getString(PREFERENCE_KEY, DEFAULT_PRESETS),
+      Array<Preset>::class.java
+    )
   }
 
   /**

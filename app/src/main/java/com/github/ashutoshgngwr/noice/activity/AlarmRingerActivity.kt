@@ -64,7 +64,7 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     setContentView(binding.root)
     showWhenLocked()
 
-    analyticsProvider = NoiceApplication.of(this).getAnalyticsProvider()
+    analyticsProvider = NoiceApplication.of(this).analyticsProvider
     ringerStartTime = System.currentTimeMillis()
   }
 

@@ -19,9 +19,7 @@ import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.navigation.Navigable
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.BillingProvider
-import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.snackbar.Snackbar
 
@@ -42,9 +40,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
 
   private lateinit var binding: MainActivityBinding
   private lateinit var settingsRepository: SettingsRepository
-  private lateinit var analyticsProvider: AnalyticsProvider
-  private lateinit var crashlyticsProvider: CrashlyticsProvider
-  private lateinit var billingProvider: BillingProvider
+  private lateinit var app: NoiceApplication
   private lateinit var navController: NavController
 
   /**
@@ -53,10 +49,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
   private var hasNewIntent = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    val app = NoiceApplication.of(this)
-    analyticsProvider = app.getAnalyticsProvider()
-    crashlyticsProvider = app.getCrashlyticsProvider()
-    billingProvider = app.getBillingProvider()
+    app = NoiceApplication.of(this)
     settingsRepository = SettingsRepository.newInstance(this)
 
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
@@ -74,9 +67,9 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
       maybeShowDataCollectionConsent()
     }
 
-    NoiceApplication.of(application).getReviewFlowProvider().init(this)
-    billingProvider.init(this, this)
-    analyticsProvider.logEvent("ui_open", bundleOf("theme" to settingsRepository.getAppTheme()))
+    app.reviewFlowProvider.init(this)
+    app.billingProvider.init(this, this)
+    app.analyticsProvider.logEvent("ui_open", bundleOf("theme" to settingsRepository.getAppTheme()))
     hasNewIntent = true
   }
 
@@ -93,15 +86,15 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
 
       positiveButton(R.string.accept) {
         settingsRepository.setShouldShareUsageData(true)
-        analyticsProvider.setCollectionEnabled(true)
-        crashlyticsProvider.setCollectionEnabled(true)
+        app.analyticsProvider.setCollectionEnabled(true)
+        app.crashlyticsProvider.setCollectionEnabled(true)
         prefs.edit { putBoolean(PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true) }
       }
 
       negativeButton(R.string.decline) {
         settingsRepository.setShouldShareUsageData(false)
-        analyticsProvider.setCollectionEnabled(false)
-        crashlyticsProvider.setCollectionEnabled(false)
+        app.analyticsProvider.setCollectionEnabled(false)
+        app.crashlyticsProvider.setCollectionEnabled(false)
         prefs.edit { putBoolean(PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true) }
       }
     }
@@ -142,7 +135,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
   }
 
   override fun onDestroy() {
-    billingProvider.close()
+    app.billingProvider.close()
     super.onDestroy()
   }
 
@@ -152,12 +145,12 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
 
   override fun onPending(skus: List<String>) {
     Snackbar.make(binding.navHostFragment, R.string.payment_pending, Snackbar.LENGTH_LONG).show()
-    analyticsProvider.logEvent("purchase_pending", bundleOf())
+    app.analyticsProvider.logEvent("purchase_pending", bundleOf())
   }
 
   override fun onComplete(skus: List<String>, orderId: String) {
-    analyticsProvider.logEvent("purchase_complete", bundleOf())
-    billingProvider.consumePurchase(orderId)
+    app.analyticsProvider.logEvent("purchase_complete", bundleOf())
+    app.billingProvider.consumePurchase(orderId)
     DialogFragment.show(supportFragmentManager) {
       title(R.string.support_development__donate_thank_you)
       message(R.string.support_development__donate_thank_you_description)

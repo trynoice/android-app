@@ -3,7 +3,8 @@
 
   <application
     android:name="com.github.ashutoshgngwr.noice.PlaystoreNoiceApplication"
-    tools:ignore="AllowBackup">
+    tools:ignore="AllowBackup"
+    tools:replace="name">
 
     <meta-data
       android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"

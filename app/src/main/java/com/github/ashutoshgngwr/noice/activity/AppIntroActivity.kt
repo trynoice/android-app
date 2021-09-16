@@ -110,7 +110,7 @@ class AppIntroActivity : AppIntro() {
       )
     )
 
-    analyticsProvider = NoiceApplication.of(this).getAnalyticsProvider()
+    analyticsProvider = NoiceApplication.of(this).analyticsProvider
     analyticsProvider.setCurrentScreen("app_intro", AppIntroActivity::class)
   }
 

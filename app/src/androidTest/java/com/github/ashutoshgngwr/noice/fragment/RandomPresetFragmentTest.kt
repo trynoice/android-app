@@ -28,7 +28,7 @@ class RandomPresetFragmentTest {
     mockkObject(PlaybackController)
     every { PlaybackController.playRandomPreset(any(), any(), any()) } returns Unit
     ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .setReviewFlowProvider(mockk(relaxed = true))
+      .reviewFlowProvider = mockk(relaxed = true)
   }
 
   @After

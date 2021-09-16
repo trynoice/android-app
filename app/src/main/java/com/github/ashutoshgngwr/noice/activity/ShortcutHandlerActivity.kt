@@ -23,7 +23,7 @@ class ShortcutHandlerActivity : AppCompatActivity() {
     const val EXTRA_SHORTCUT_TYPE = "shortcut_type"
   }
 
-  private val analyticsProvider by lazy { NoiceApplication.of(this).getAnalyticsProvider() }
+  private val analyticsProvider by lazy { NoiceApplication.of(this).analyticsProvider }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
