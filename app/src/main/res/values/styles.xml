@@ -132,6 +132,16 @@
   <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
     <item name="backgroundTint">@color/background_dark</item>
     <item name="labelVisibilityMode">labeled</item>
+    <item name="itemTextAppearanceInactive">
+      @style/TextAppearance.App.BottomNavigationView.Label
+    </item>
+    <item name="itemTextAppearanceActive">
+      @style/TextAppearance.App.BottomNavigationView.Label
+    </item>
+  </style>
+
+  <style name="TextAppearance.App.BottomNavigationView.Label" parent="TextAppearance.MaterialComponents.Caption">
+    <item name="fontFamily">sans-serif-medium</item>
   </style>
 
 </resources>
