@@ -1,4 +1,4 @@
-Mnoha lidem pomáhá nějaký slabý podkresový zvukový šum se uklidnit a soustředit se. V některých případech i dokáže nakopnout produktivitu o mnoho procent. Šum (ambientní zvuk) může navíc i minimalizovat projevy stresu. 
+Mnoha lidem pomáhá slabý podkresový zvukový šum se uklidnit a soustředit. V některých případech i dokáže nakopnout produktivitu o mnoho procent. Šum (ambientní zvuk) může navíc i minimalizovat projevy stresu. 
 
 Noice je aplikace, která vám umožní si vytvořit vlastní zvuková prostředí za pomoci smyček nahrávek klidných lokací. Vytvořte si vlastní dokonalou klidovou zónu kombinací různých šumů, abyste se odprostili od stimulů okolí a mohli se znovu soustředit na práci. Případně si vygenerovat prostředí, které vás ukolébá ke spánku.
 
@@ -21,12 +21,12 @@ Noice je aplikace, která vám umožní si vytvořit vlastní zvuková prostřed
 - Čistý šum (bílý, růžový, hnědý)
 
 <b>Vyžadovaná oprávnění</b>
-- WAKE_LOCK: k udržení procesoru vzhůru při přehrávání
-- FOREGROUND_SERVICE: potřebné pro proces přehrávače (jiný než UI)
-- RECEIVE_BOOT_COMPLETED: potřebné pro udržení časovače vypnutí/spuštění i po restartu zařízení
-- ACCESS_NETWORK_STATE: přidáno jednou z použitých knihoven, nijak zatím není využité
-- INTERNET: potřebné pro podporu Chromecastu a možnosti finanční podpory (jen při vašem manuálním příspěvku)
-- BILLING: dále potřebné pro možnost finanční podpory vývoje (jen při vašem manuálním příspěvku)
+- <b>bránění přechodu telefonu do režimu spánku</b>: k udržení procesoru vzhůru při přehrávání
+- <b>spouštění služeb na popředí</b>: potřebné pro proces přehrávače (jiný než UI)
+- <b>spouštění při startu</b>: potřebné pro udržení časovače vypnutí/spuštění i po restartu zařízení
+- <b>úplný přístup k síti</b>: potřebné pro podporu Chromecastu a možnosti finanční podpory
+- <b>zobrazování síťových připojení</b>: přidáno jednou z použitých knihoven, nijak zatím není využité
+- <b>Fakturační služba Google Play</b>: potřebné pro možnost finanční podpory vývoje
 
 Noice je nejen zdarma, ale je i open-source.
 https://github.com/ashutoshgngwr/noice
