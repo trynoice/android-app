@@ -14,6 +14,7 @@ import com.github.appintro.AppIntroPageTransformerType
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.fragment.AppIntroFragment
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 
 class AppIntroActivity : AppIntro() {
 
@@ -32,6 +33,8 @@ class AppIntroActivity : AppIntro() {
       }
     }
   }
+
+  private lateinit var analyticsProvider: AnalyticsProvider
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -68,9 +71,9 @@ class AppIntroActivity : AppIntro() {
     )
     addSlide(
       AppIntroFragment.newInstance(
-        title = getString(R.string.appintro__saved_presets_title),
-        description = getString(R.string.appintro__saved_presets_desc),
-        imageDrawable = R.drawable.ic_appintro_saved_presets,
+        title = getString(R.string.appintro__presets_title),
+        description = getString(R.string.appintro__presets_desc),
+        imageDrawable = R.drawable.ic_appintro_presets,
         titleColor = ActivityCompat.getColor(this, R.color.appintro__text_color),
         descriptionColor = ActivityCompat.getColor(this, R.color.appintro__text_color),
         backgroundColor = ActivityCompat.getColor(this, R.color.appintro_slide_2__background)
@@ -106,6 +109,9 @@ class AppIntroActivity : AppIntro() {
         backgroundColor = ActivityCompat.getColor(this, R.color.appintro_slide_5__background)
       )
     )
+
+    analyticsProvider = NoiceApplication.of(this).analyticsProvider
+    analyticsProvider.setCurrentScreen("app_intro", AppIntroActivity::class)
   }
 
   // make onSkipPressed and onDonePressed public so that these can be called directly from the
@@ -129,8 +135,6 @@ class AppIntroActivity : AppIntro() {
     }
 
     finish()
-    NoiceApplication.of(this)
-      .getAnalyticsProvider()
-      .logEvent("app_intro_complete", bundleOf("success" to !isSkipped))
+    analyticsProvider.logEvent("app_intro_complete", bundleOf("success" to !isSkipped))
   }
 }

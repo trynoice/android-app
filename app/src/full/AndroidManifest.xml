@@ -1,0 +1,39 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <application
+    android:name="com.github.ashutoshgngwr.noice.FullNoiceApplication"
+    tools:ignore="AllowBackup"
+    tools:replace="name">
+
+    <meta-data
+      android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
+      android:value="com.github.ashutoshgngwr.noice.provider.CastOptionsProvider" />
+
+    <meta-data
+      android:name="firebase_crashlytics_collection_enabled"
+      android:value="false" />
+
+    <meta-data
+      android:name="firebase_analytics_collection_enabled"
+      android:value="false" />
+
+    <meta-data
+      android:name="google_analytics_adid_collection_enabled"
+      android:value="false" />
+
+    <meta-data
+      android:name="google_analytics_ssaid_collection_enabled"
+      android:value="false" />
+
+    <meta-data
+      android:name="google_analytics_default_allow_ad_personalization_signals"
+      android:value="false" />
+
+    <meta-data
+      android:name="google_analytics_automatic_screen_reporting_enabled"
+      android:value="false" />
+
+  </application>
+
+</manifest>

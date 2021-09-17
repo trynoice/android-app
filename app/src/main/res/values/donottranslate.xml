@@ -20,8 +20,9 @@
   <string name="plus1h">1h</string>
   <string name="plus4h">4h</string>
   <string name="plus8h">8h</string>
-  <string name="saved_presets_as_home_screen_key">pref_saved_presets_as_homescreen</string>
+  <string name="presets_as_home_screen_key">pref_saved_presets_as_homescreen</string>
   <string name="sound_fade_duration_key">sound_fade_duration</string>
+  <string name="sound_fade_in_duration_key">sound_fade_in_duration</string>
   <string name="app_theme_key">app_theme</string>
   <string name="ignore_audio_focus_changes_key">ignore_audio_focus_changes</string>
   <string name="import_presets_key">import_presets</string>
@@ -30,5 +31,8 @@
   <string name="should_display_sound_icons_key">should_display_sound_icons</string>
   <string name="others_key">others</string>
   <string name="should_share_usage_data_key">should_share_usage_data</string>
-  <string name="should_allow_skipping_unsaved_presets_key">should_allow_skipping_unsaved_presets</string>
+  <string name="enable_media_buttons_key">enable_media_buttons</string>
+  <string name="open_collective_url">https://opencollective.com/noice</string>
+  <string name="play_store_url">https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice</string>
+  <string name="fdroid_url">https://f-droid.org/app/com.github.ashutoshgngwr.noice</string>
 </resources>

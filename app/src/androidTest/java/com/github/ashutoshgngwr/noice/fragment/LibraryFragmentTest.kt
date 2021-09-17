@@ -16,7 +16,6 @@ import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.Player
@@ -36,17 +35,12 @@ import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.random.Random
 
 @RunWith(AndroidJUnit4::class)
 class LibraryFragmentTest {
-
-  @Rule
-  @JvmField
-  val retryTestRule = RetryTestRule(5)
 
   private lateinit var mockEventBus: EventBus
   private lateinit var mockPresetRepository: PresetRepository
@@ -65,7 +59,7 @@ class LibraryFragmentTest {
 
     mockReviewFlowProvider = mockk(relaxed = true)
     ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .setReviewFlowProvider(mockReviewFlowProvider)
+      .reviewFlowProvider = mockReviewFlowProvider
 
     mockEventBus = mockk(relaxed = true)
     mockPresetRepository = mockk(relaxed = true)
@@ -136,7 +130,7 @@ class LibraryFragmentTest {
     } returns mockUpdateEvent
 
     fragmentScenario.onFragment { it.onPlayerManagerUpdate(mockUpdateEvent) }
-    val expectedVolumes = arrayOf(0, Player.MAX_VOLUME, Random.nextInt(1, Player.MAX_VOLUME))
+    val expectedVolumes = arrayOf(0, Player.MAX_VOLUME, 5)
     for (expectedVolume in expectedVolumes) {
       onView(withId(R.id.sound_list)).perform(
         RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
@@ -145,11 +139,11 @@ class LibraryFragmentTest {
         )
       )
 
-      onView(withId(R.id.volume_slider))
+      EspressoX.onViewInDialog(withId(R.id.volume_slider))
         .check(matches(isDisplayed()))
         .perform(EspressoX.slide(expectedVolume.toFloat()))
 
-      onView(withId(R.id.positive)).perform(click())
+      EspressoX.onViewInDialog(withId(R.id.positive)).perform(click())
       verify(exactly = 1) { mockPlayer.setVolume(expectedVolume) }
     }
   }
@@ -173,7 +167,7 @@ class LibraryFragmentTest {
       Player.MIN_TIME_PERIOD,
       Player.MAX_TIME_PERIOD,
       // following because step size of the slider is 10s
-      Random.nextInt(Player.MIN_TIME_PERIOD / 10, Player.MAX_TIME_PERIOD / 10) * 10
+      Random.nextInt((Player.DEFAULT_TIME_PERIOD / 10) + 1, Player.MAX_TIME_PERIOD / 10) * 10
     )
 
     for (expectedTimePeriod in expectedTimePeriods) {
@@ -188,11 +182,11 @@ class LibraryFragmentTest {
           )
         )
 
-      onView(withId(R.id.time_period_slider))
+      EspressoX.onViewInDialog(withId(R.id.time_period_slider))
         .check(matches(isDisplayed()))
         .perform(EspressoX.slide(expectedTimePeriod.toFloat()))
 
-      onView(withId(R.id.positive)).perform(click())
+      EspressoX.onViewInDialog(withId(R.id.positive)).perform(click())
       verify(exactly = 1) { mockPlayer.timePeriod = expectedTimePeriod }
     }
   }
@@ -209,20 +203,20 @@ class LibraryFragmentTest {
       PlaybackStateCompat.STATE_STOPPED
     )
 
-    for (state in states) {
-      every { mockUpdateEvent.state } returns state
+    val visibility = arrayOf(
+      Visibility.VISIBLE,
+      Visibility.GONE,
+      Visibility.GONE,
+    )
+
+    for (i in states.indices) {
+      every { mockUpdateEvent.state } returns states[i]
       fragmentScenario.onFragment {
         it.onPlayerManagerUpdate(mockUpdateEvent)
       }
 
-      // a non-playing state should keep the FAB hidden
-      var expectedVisibility = Visibility.GONE
-      if (state == PlaybackStateCompat.STATE_PLAYING) {
-        expectedVisibility = Visibility.VISIBLE
-      }
-
       onView(withId(R.id.save_preset_button))
-        .check(matches(withEffectiveVisibility(expectedVisibility)))
+        .check(matches(withEffectiveVisibility(visibility[i])))
     }
   }
 
@@ -270,11 +264,11 @@ class LibraryFragmentTest {
       )
     )
 
-    onView(withId(R.id.volume_slider))
+    EspressoX.onViewInDialog(withId(R.id.volume_slider))
       .check(matches(isDisplayed()))
       .perform(EspressoX.slide(6f))
 
-    onView(withId(R.id.positive)).perform(click())
+    EspressoX.onViewInDialog(withId(R.id.positive)).perform(click())
     verify(exactly = 1) { requireNotNull(mockPlayers["birds"]).setVolume(6) }
     onView(allOf(withId(R.id.save_preset_button), withEffectiveVisibility(Visibility.VISIBLE)))
   }
@@ -311,28 +305,22 @@ class LibraryFragmentTest {
       .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
       .perform(click())
 
-    onView(allOf(withId(R.id.title), withText(R.string.save_preset)))
-      .check(matches(isDisplayed()))
-
     // should disable save button for duplicate names
-    onView(withId(R.id.editText))
+    EspressoX.onViewInDialog(withId(R.id.editText))
       .check(matches(isDisplayed()))
       .perform(replaceText("test-exists"))
 
-    onView(allOf(withId(R.id.positive), withText(R.string.save)))
+    EspressoX.onViewInDialog(withId(R.id.positive), withText(R.string.save))
       .check(matches(not(isEnabled())))
 
-    onView(withId(R.id.editText))
-      .check(matches(isDisplayed()))
+    EspressoX.onViewInDialog(withId(R.id.editText))
       .perform(replaceText("test-does-not-exists"))
 
-    onView(allOf(withId(R.id.positive), withText(R.string.save)))
+    EspressoX.onViewInDialog(withId(R.id.positive), withText(R.string.save))
       .check(matches(isEnabled()))
       .perform(click())
 
     onView(withId(R.id.save_preset_button)).check(matches(not(isDisplayed())))
-    onView(withId(com.google.android.material.R.id.snackbar_text))
-      .check(matches(withText(R.string.preset_saved)))
 
     val presetSlot = slot<Preset>()
     verify { mockPresetRepository.create(capture(presetSlot)) }

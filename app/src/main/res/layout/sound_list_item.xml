@@ -62,7 +62,7 @@
     android:adjustViewBounds="true"
     android:alpha="0.2"
     android:elevation="-1dp"
-    android:maxHeight="175dp"
+    android:maxHeight="135dp"
     android:scaleType="fitEnd"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"

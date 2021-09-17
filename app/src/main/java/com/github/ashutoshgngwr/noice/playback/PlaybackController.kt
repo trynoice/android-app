@@ -50,6 +50,7 @@ object PlaybackController {
   private const val RC_RESUME = 0x3C
   private const val RC_PAUSE = 0x3D
   private const val RC_STOP = 0x3E
+  private const val RC_RANDOM_PRESET = 0x3F
 
   private val handler = Handler(Looper.getMainLooper())
 
@@ -63,6 +64,10 @@ object PlaybackController {
 
   fun buildStopActionPendingIntent(context: Context): PendingIntent {
     return buildSimpleActionPendingIntent(context, ACTION_STOP_PLAYBACK, RC_STOP)
+  }
+
+  fun buildRandomPresetActionPendingIntent(context: Context): PendingIntent {
+    return buildSimpleActionPendingIntent(context, ACTION_PLAY_RANDOM_PRESET, RC_RANDOM_PRESET)
   }
 
   private fun buildSimpleActionPendingIntent(
@@ -101,12 +106,15 @@ object PlaybackController {
     intent: Intent,
     requestCode: Int
   ): PendingIntent {
+    var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE
+    }
+
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      PendingIntent.getForegroundService(
-        context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT
-      )
+      PendingIntent.getForegroundService(context, requestCode, intent, piFlags)
     } else {
-      PendingIntent.getService(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+      PendingIntent.getService(context, requestCode, intent, piFlags)
     }
   }
 
@@ -141,7 +149,7 @@ object PlaybackController {
       ACTION_PLAY_RANDOM_PRESET -> {
         val tag = intent.getSerializableExtra(EXTRA_FILTER_SOUNDS_BY_TAG) as Sound.Tag?
         val minSounds = intent.getIntExtra(EXTRA_RANDOM_PRESET_MIN_SOUNDS, 1)
-        val maxSounds = intent.getIntExtra(EXTRA_RANDOM_PRESET_MAX_SOUNDS, 0)
+        val maxSounds = intent.getIntExtra(EXTRA_RANDOM_PRESET_MAX_SOUNDS, 5)
         if (minSounds > maxSounds) {
           throw IllegalArgumentException("invalid range for number of sounds in random preset")
         }
@@ -190,7 +198,7 @@ object PlaybackController {
 
   private fun logEvent(context: Context, name: String, params: Bundle) {
     NoiceApplication.of(context)
-      .getAnalyticsProvider()
+      .analyticsProvider
       .logEvent(name, params)
   }
 
@@ -249,7 +257,7 @@ object PlaybackController {
   /**
    * Sends the start command to the service with [ACTION_PLAY_PRESET].
    */
-  fun playPreset(context: Context, presetID: String) {
+  fun playPreset(context: Context, presetID: String?) {
     context.startService(
       Intent(context, MediaPlayerService::class.java)
         .setAction(ACTION_PLAY_PRESET)

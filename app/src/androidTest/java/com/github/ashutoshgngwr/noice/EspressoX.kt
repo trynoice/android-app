@@ -2,16 +2,19 @@ package com.github.ashutoshgngwr.noice
 
 import android.content.Intent
 import android.view.View
-import android.widget.TimePicker
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
+import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.MotionEvents
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
+import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.github.ashutoshgngwr.noice.widget.DurationPicker
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.slider.Slider
 import com.google.android.material.textfield.TextInputLayout
 import org.hamcrest.Description
@@ -113,18 +116,6 @@ object EspressoX {
   }
 
   /**
-   * [is24hViewEnabled] matches a [TimePicker] that has the field [TimePicker.is24HourView] enabled.
-   */
-  fun is24hViewEnabled(): Matcher<View> {
-    return object : TypeSafeMatcher<View>() {
-      override fun describeTo(description: Description?) = Unit
-      override fun matchesSafely(item: View?): Boolean {
-        return item is TimePicker && item.is24HourView
-      }
-    }
-  }
-
-  /**
    * Returns a matcher that matches the nested intent sent with an Intent chooser.
    */
   fun hasIntentChooser(matcher: Matcher<Intent>): Matcher<Intent> {
@@ -170,5 +161,19 @@ object EspressoX {
         Thread.sleep(wait)
       }
     }
+  }
+
+  fun withBottomNavSelectedItem(@IdRes id: Int): Matcher<View> = object : TypeSafeMatcher<View>() {
+    override fun describeTo(description: Description?) = Unit
+    override fun matchesSafely(item: View?): Boolean {
+      return item is BottomNavigationView && item.selectedItemId == id
+    }
+  }
+
+  /**
+   * Matches [matchers] in a root that [isDialog].
+   */
+  fun onViewInDialog(vararg matchers: Matcher<View>): ViewInteraction {
+    return onView(allOf(*matchers)).inRoot(isDialog())
   }
 }

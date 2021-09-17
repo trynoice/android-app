@@ -23,7 +23,7 @@ class ShortcutHandlerActivity : AppCompatActivity() {
     const val EXTRA_SHORTCUT_TYPE = "shortcut_type"
   }
 
-  private val analyticsProvider by lazy { NoiceApplication.of(this).getAnalyticsProvider() }
+  private val analyticsProvider by lazy { NoiceApplication.of(this).analyticsProvider }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -44,7 +44,7 @@ class ShortcutHandlerActivity : AppCompatActivity() {
     }
 
     Intent(this, MainActivity::class.java)
-      .putExtra(MainActivity.EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.saved_presets)
+      .putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.presets)
       .also { startActivity(it) }
 
     finish()

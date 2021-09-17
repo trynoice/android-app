@@ -25,7 +25,7 @@ class LocalPlaybackStrategy(
 
   companion object {
     // a smaller default used when changing volume of an active player.
-    private const val VOLUME_ADJUSTMENT_FADE_DURATION = 750L
+    internal const val DEFAULT_FADE_DURATION = 1000L
   }
 
   private val players = sound.src.map { initPlayer(context, it, sound.isLooping) }
@@ -57,26 +57,27 @@ class LocalPlaybackStrategy(
 
   override fun setVolume(volume: Float) {
     this.volume = volume
-    players.forEach { it.fade(it.volume, volume, duration = VOLUME_ADJUSTMENT_FADE_DURATION) }
+    players.forEach { it.fade(it.volume, volume, duration = DEFAULT_FADE_DURATION) }
   }
 
   override fun play() {
     for (player in players) {
-      if (player.repeatMode != ExoPlayer.REPEAT_MODE_ONE && !player.isPlaying) {
+      val wasPlaying = player.isPlaying
+      if (player.repeatMode != ExoPlayer.REPEAT_MODE_ONE && !wasPlaying) {
         player.seekTo(0)
       }
 
       player.playWhenReady = true
       // an internal feature of the LocalPlaybackStrategy is that it won't fade-in non-looping sounds
-      if (player.repeatMode == ExoPlayer.REPEAT_MODE_ONE) {
-        player.fade(0f, volume, settingsRepository.getSoundFadeDurationInMillis())
+      if (player.repeatMode == ExoPlayer.REPEAT_MODE_ONE && !wasPlaying) {
+        player.fade(0f, volume, settingsRepository.getSoundFadeInDurationMillis())
       }
     }
   }
 
   override fun pause() {
     players.forEach {
-      it.fade(it.volume, 0f, duration = VOLUME_ADJUSTMENT_FADE_DURATION) {
+      it.fade(it.volume, 0f, duration = DEFAULT_FADE_DURATION) {
         it.playWhenReady = false
       }
     }
@@ -88,7 +89,7 @@ class LocalPlaybackStrategy(
         continue
       }
 
-      player.fade(player.volume, 0f, settingsRepository.getSoundFadeDurationInMillis()) {
+      player.fade(player.volume, 0f, DEFAULT_FADE_DURATION) {
         player.playWhenReady = false
         player.release()
       }

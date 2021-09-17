@@ -56,13 +56,12 @@ class AboutFragment : Fragment() {
         )
       )
 
-      @Suppress("ConstantConditionIf")
-      if (BuildConfig.IS_PLAY_STORE_BUILD) {
+      if (NoiceApplication.of(requireContext()).isGoogleMobileServicesAvailable()) {
         addItem(
           buildElement(
             R.drawable.about_icon_google_play,
             R.string.about_play_store,
-            R.string.support_development__share_url,
+            R.string.play_store_url,
           )
         )
       }
@@ -75,13 +74,15 @@ class AboutFragment : Fragment() {
         )
       )
 
+      addGroup(getString(R.string.created_by))
+      addTwitter(creatorTwitter, creatorTwitter)
       create()
     }
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     NoiceApplication.of(requireContext())
-      .getAnalyticsProvider()
+      .analyticsProvider
       .setCurrentScreen("about", AboutFragment::class)
   }
 
@@ -97,5 +98,9 @@ class AboutFragment : Fragment() {
     return Element(title, iconId)
       .setAutoApplyIconTint(true)
       .setOnClickListener { Uri.parse(url).launchInCustomTab(requireContext()) }
+  }
+
+  companion object {
+    private const val creatorTwitter = "ashutoshgngwr"
   }
 }

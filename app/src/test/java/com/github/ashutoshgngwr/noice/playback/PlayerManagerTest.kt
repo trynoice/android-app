@@ -22,7 +22,6 @@ import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
-import io.mockk.invoke
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
@@ -54,11 +53,7 @@ class PlayerManagerTest {
   fun setup() {
     mockCastAPIProvider = mockk(relaxed = true)
     ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .setCastAPIProviderFactory(
-        mockk {
-          every { newInstance(any()) } returns mockCastAPIProvider
-        }
-      )
+      .castAPIProvider = mockCastAPIProvider
 
     // always have a fake player in manager's state
     players = hashMapOf("test" to mockk(relaxed = true) {
@@ -260,29 +255,27 @@ class PlayerManagerTest {
     assertEquals(0, players.size)
     verify(exactly = 1) {
       // should clear session callbacks
-      mockCastAPIProvider.clearSessionCallbacks()
+      mockCastAPIProvider.unregisterSessionListener(any())
     }
   }
 
   @Test
   fun testUpdatePlaybackStrategies() {
-    val beginCallbackSlot = slot<() -> Unit>()
-    val endCallbackSlot = slot<() -> Unit>()
+    val listenerSlot = slot<CastAPIProvider.SessionListener>()
     verify(exactly = 1) {
-      mockCastAPIProvider.onSessionBegin(capture(beginCallbackSlot))
-      mockCastAPIProvider.onSessionEnd(capture(endCallbackSlot))
+      mockCastAPIProvider.registerSessionListener(capture(listenerSlot))
     }
 
     val mockPlaybackStrategy = mockk<PlaybackStrategyFactory>(relaxed = true)
     val spyVolumeProvider = spyk<VolumeProviderCompat>()
-    every { mockCastAPIProvider.getPlaybackStrategyFactory() } returns mockPlaybackStrategy
+    every { mockCastAPIProvider.getPlaybackStrategyFactory(any()) } returns mockPlaybackStrategy
     every { mockCastAPIProvider.getVolumeProvider() } returns spyVolumeProvider
-    beginCallbackSlot.invoke() // invoke the session begin callback
+    listenerSlot.captured.onSessionBegin() // invoke the session begin callback
     verify(exactly = 1) { players.getValue("test").updatePlaybackStrategy(mockPlaybackStrategy) }
     assertEquals(spyVolumeProvider, ShadowMediaSessionCompat.currentVolumeProvider)
     clearMocks(mockPlaybackStrategy, players.getValue("test"))
 
-    endCallbackSlot.invoke()
+    listenerSlot.captured.onSessionEnd()
     verify(exactly = 1) { players.getValue("test").updatePlaybackStrategy(any()) }
     verify { mockPlaybackStrategy wasNot called }
   }

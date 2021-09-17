@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.MediaPlayerService
@@ -93,12 +94,21 @@ class LibraryFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     presetRepository = PresetRepository.newInstance(requireContext())
     settingsRepository = SettingsRepository.newInstance(requireContext())
-    analyticsProvider = NoiceApplication.of(requireContext()).getAnalyticsProvider()
+    analyticsProvider = NoiceApplication.of(requireContext()).analyticsProvider
     adapter = SoundListAdapter(requireContext())
     binding.soundList.also {
       it.adapter = adapter
       it.setHasFixedSize(true)
       it.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+    }
+
+    binding.randomPresetButton.setOnLongClickListener {
+      Toast.makeText(requireContext(), R.string.random_preset, Toast.LENGTH_LONG).show()
+      true
+    }
+
+    binding.randomPresetButton.setOnClickListener {
+      findNavController().navigate(R.id.random_preset)
     }
 
     binding.savePresetButton.setOnLongClickListener {
@@ -134,7 +144,7 @@ class LibraryFragment : Fragment() {
           analyticsProvider.logEvent("preset_sounds", bundleOf("items_count" to soundCount))
           // maybe show in-app review dialog to the user
           NoiceApplication.of(requireContext())
-            .getReviewFlowProvider()
+            .reviewFlowProvider
             .maybeAskForReview(requireActivity())
         }
 
@@ -152,9 +162,7 @@ class LibraryFragment : Fragment() {
   }
 
   private fun showPresetSavedMessage() {
-    Snackbar.make(requireView(), R.string.preset_saved, Snackbar.LENGTH_LONG)
-      .setAction(R.string.dismiss) { }
-      .show()
+    Snackbar.make(requireView(), R.string.preset_saved, Snackbar.LENGTH_LONG).show()
   }
 
   private class SoundListItem(@LayoutRes val layoutID: Int, val data: String)

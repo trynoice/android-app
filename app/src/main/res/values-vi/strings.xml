@@ -19,11 +19,9 @@
     <string name="skip_to_prev">Thiết lập trước đó</string>
     <string name="pinned_shortcut_created">Lối tắt đã được thêm vào màn hình chính!</string>
     <string name="pinned_shortcut_creation_failed">Thêm lối tắt vào màn hình chính thất bại!</string>
-    <string name="sound_fade_duration_summary">Thời lượng âm thanh lớn/nhỏ dần khi phát/dừng (giây)</string>
-    <string name="sound_fade_duration">Thời gian giảm dần âm thanh</string>
     <string name="appearance">Ngoại hình</string>
     <string name="behavior">Hành vi</string>
-    <string name="saved_presets_as_home_screen">Đã lưu các thiết lập trước làm màn hình chính</string>
+    <string name="presets_as_home_screen">Đã lưu các thiết lập trước làm màn hình chính</string>
     <string name="settings">Cài đặt</string>
     <string name="app_shortcut_creation_failed">Thêm thiết lập trước vào lối tắt ứng dụng thất bại!</string>
     <string name="app_shortcut_created">Thiết lập trước đã được thêm vào lối tắt ứng dụng!</string>
@@ -56,8 +54,8 @@
     <string name="appintro__timer_desc">Sự tĩnh lặng có thể giúp bạn đi vào giấc ngủ dễ dàng hơn. Dùng tính năng hẹn giờ ngủ để Noice tự động tắt. Bạn cũng có thể dùng tính năng hẹn giờ thức dậy để đặt báo thức.</string>
     <string name="appintro__library_title">Tạo vùng bao quanh hoàn hảo của bạn</string>
     <string name="appintro__library_desc">Sử dụng cần trượt âm lượng để điều chỉnh âm lượng âm thanh. Tại mỗi lần lặp lại các âm thanh không tạo thành vòng lặp, một khoảng thời gian trì hoãn được chọn ngẫu nhiên từ phạm vi được cần trượt thời gian đặt.</string>
-    <string name="appintro__saved_presets_title">Lưu các bản pha trộn yêu thích của bạn</string>
-    <string name="appintro__saved_presets_desc">Sau khi phát một vài âm thanh, bạn có thể sử dụng nút ở góc dưới cùng để lưu bản pha trộn của bạn. Để sử dụng lại một bản pha trộn đã lưu trữ, bạn có thể đi đến danh sách các thiết lập trước từ menu ứng dụng.</string>
+    <string name="appintro__presets_title">Lưu các bản pha trộn yêu thích của bạn</string>
+    <string name="appintro__presets_desc">Sau khi phát một vài âm thanh, bạn có thể sử dụng nút ở góc dưới cùng để lưu bản pha trộn của bạn. Để sử dụng lại một bản pha trộn đã lưu trữ, bạn có thể đi đến danh sách các thiết lập trước từ menu ứng dụng.</string>
     <string name="appintro__getting_started_title">Chào mừng</string>
     <string name="appintro__getting_started_desc_1">Hãy bắt đầu nào!</string>
     <string name="appintro__getting_started_desc_0">Vuốt sang trái để biết tất cả tính năng!</string>
@@ -67,8 +65,6 @@
     <string name="app_theme_system_default">Mặc định hệ thống</string>
     <string name="app_theme_dark">Tối</string>
     <string name="app_theme_light">Sáng</string>
-    <string name="should_update_media_volume">Cập nhật âm lượng phương tiện của thiết bị trước khi bắt đầu thiết lập trước</string>
-    <string name="device_media_volume">Âm lượng phương tiện của thiết bị</string>
     <string name="use_24h_format">Sử dụng định dạng 24 giờ</string>
     <string name="wake_up_timer_description">Noice sẽ bắt đầu thiết lập trước đã chọn khi hẹn giờ kết thúc. Hãy sử dụng các nút ở dưới để chọn một thiết lập trước và chọn thời gian mong muốn để bắt đầu hẹn giờ thức dậy.</string>
     <plurals name="time_minutes">
@@ -85,7 +81,7 @@
     <string name="sleep_timer_description">Noice sẽ tự tắt khi hẹn giờ kết thúc. Hãy sử dụng các nút ở dưới để thêm thời gian và bắt đầu hẹn giờ.</string>
     <string name="reset">Đặt lại</string>
     <string name="auto_sleep_schedule_cancelled">Đã huỷ hẹn giờ ngủ tự động!</string>
-    <string name="saved_presets_as_home_screen_summary">Hiện các thiết lập trước đã lưu khi khởi động ứng dụng</string>
+    <string name="presets_as_home_screen_summary">Hiện các thiết lập trước đã lưu khi khởi động ứng dụng</string>
     <string name="pinned_shortcuts_not_supported">Launcher mặc định của bạn không hỗ trợ việc thêm lối tắt.</string>
     <string name="rename">Đổi tên</string>
     <string name="preset_info__description">Bạn chưa tạo thiết lập trước nào. Để tạo một thiết lập trước, hãy đi đến Thư viện và phát các âm thanh. Sau đó nhấn nút Lưu hiện ra ở góc dưới cùng của màn hình.</string>
@@ -167,12 +163,10 @@
     <string name="wake_up_timer">Hẹn giờ đánh thức</string>
     <string name="support_development">Hỗ trợ sự phát triển</string>
     <string name="sleep_timer">Hẹn giờ ngủ</string>
-    <string name="saved_presets">Thiết lập trước đã lưu</string>
+    <string name="presets">Thiết lập trước đã lưu</string>
     <string name="report_issue">Báo cáo vấn đề</string>
-    <string name="open_drawer">Mở ngăn điều hướng</string>
     <string name="library">Thư viện</string>
     <string name="help">Trợ giúp</string>
-    <string name="close_drawer">Đóng ngăn điều hướng</string>
     <string name="app_theme">Chủ đề</string>
     <string name="about">Giới thiệu</string>
     <string name="notification_channel_default__name">Phát phương tiện</string>
@@ -180,8 +174,6 @@
     <string name="payment_pending">Chúng tôi sẽ thông báo cho bạn ngay sau khi chúng tôi hoàn tất xử lý thanh toán của bạn.</string>
     <string name="failed_to_purchase">Khởi động dòng chảy thanh toán thất bại. Vui lòng thử lại sau!</string>
     <string name="failed_to_load_inapp_purchases">Tải chi tiết mua hàng trong ứng dụng thất bại. Vui lòng thử lại sau!</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">Khi phát các thiết lập trước chưa được lưu, bật các nút bỏ qua trong thông báo trình phát để tạo các thiết lập trước ngẫu nhiên</string>
-    <string name="should_allow_skipping_unsaved_presets">Cho phép bỏ qua các thiết lập trước chưa được lưu</string>
     <string name="should_share_usage_data_summary">Tự động chia sẻ dữ liệu sử dụng và hành vi với những nhà phát triển</string>
     <string name="should_share_usage_data">Chia sẻ dữ liệu sử dụng và hành vi</string>
     <string name="others">Khác</string>
@@ -191,4 +183,7 @@
 \n
 \n Bạn có thể thiết lập tự động chia sẻ dữ liệu tại bất cứ lúc nào ở trong ứng dụng bằng cách đi đến \"**Cài đặt** &gt; **Chia sẻ dữ liệu sử dụng và hành vi**\".</string>
     <string name="share_usage_data_consent_title">Cài đặt chia sẻ dữ liệu</string>
+    <string name="created_by">Được tạo bởi</string>
+    <string name="sound_fade_in_duration_summary">Thời lượng để tăng âm lượng từ từ (tính bằng giây)</string>
+    <string name="sound_fade_in_duration">Thời lượng tăng âm lượng từ từ</string>
 </resources>

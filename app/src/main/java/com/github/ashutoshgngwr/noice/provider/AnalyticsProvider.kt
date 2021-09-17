@@ -6,7 +6,7 @@ import kotlin.reflect.KClass
 
 /**
  * [AnalyticsProvider] is an abstract declaration of Firebase Analytics APIs used by the app.
- * This interface abstracts concrete implementations and thus allowing F-Droid flavored builds to be
+ * This interface abstracts concrete implementations and thus allowing free flavored builds to be
  * compiled without adding the actual non-free GMS dependencies.
  */
 interface AnalyticsProvider {
@@ -46,4 +46,18 @@ interface AnalyticsProvider {
    * Logs the time when cast session ends.
    */
   fun logCastSessionEndEvent()
+}
+
+/**
+ * A no-op analytics provider for free (libre) build variant where non-free dependencies are not
+ * allowed.
+ */
+object DummyAnalyticsProvider : AnalyticsProvider {
+  override fun setCollectionEnabled(e: Boolean) = Unit
+  override fun logEvent(name: String, params: Bundle) = Unit
+  override fun setCurrentScreen(name: String, clazz: KClass<out Any>, params: Bundle) = Unit
+  override fun logPlayerStartEvent(key: String) = Unit
+  override fun logPlayerStopEvent(key: String) = Unit
+  override fun logCastSessionStartEvent() = Unit
+  override fun logCastSessionEndEvent() = Unit
 }

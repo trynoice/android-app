@@ -57,17 +57,21 @@ class SettingsRepository private constructor(private val context: Context) {
   }
 
   /**
-   * Returns the current value of switch preference with key [R.string.saved_presets_as_home_screen_key].
+   * Returns the current value of switch preference with key [R.string.presets_as_home_screen_key].
    */
-  fun shouldDisplaySavedPresetsAsHomeScreen(): Boolean {
-    return prefs.getBoolean(context.getString(R.string.saved_presets_as_home_screen_key), false)
+  fun shouldDisplayPresetsAsHomeScreen(): Boolean {
+    return prefs.getBoolean(context.getString(R.string.presets_as_home_screen_key), false)
   }
 
   /**
-   * Returns the value of [R.string.sound_fade_duration_key] preference in milliseconds.
+   * Returns the value of [R.string.sound_fade_in_duration_key] preference in milliseconds.
    */
-  fun getSoundFadeDurationInMillis(): Long {
-    return prefs.getInt(context.getString(R.string.sound_fade_duration_key), 1) * 1000L
+  fun getSoundFadeInDurationMillis(): Long {
+    return prefs.getInt(
+      context.getString(R.string.sound_fade_in_duration_key),
+      // inherit fallback value from the deprecated preference.
+      prefs.getInt(context.getString(R.string.sound_fade_duration_key), 1)
+    ) * 1000L
   }
 
   /**
@@ -99,11 +103,11 @@ class SettingsRepository private constructor(private val context: Context) {
   }
 
   /**
-   * Returns the value of switch preference with key [R.string.should_allow_skipping_unsaved_presets_key]
+   * Returns the value of switch preference with key [R.string.enable_media_buttons_key]
    */
-  fun shouldAllowSkippingUnsavedPresets(): Boolean {
+  fun isMediaButtonsEnabled(): Boolean {
     return prefs.getBoolean(
-      context.getString(R.string.should_allow_skipping_unsaved_presets_key), true
+      context.getString(R.string.enable_media_buttons_key), true
     )
   }
 }

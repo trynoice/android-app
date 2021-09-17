@@ -90,14 +90,14 @@ class SettingsRepositoryTest {
   }
 
   @Test
-  fun testShouldDisplaySavedPresetsAsHomeScreen() {
+  fun testShouldDisplayPresetsAsHomeScreen() {
     val inputs = arrayOf(true, false)
     for (input in inputs) {
       every {
-        prefs.getBoolean(context.getString(R.string.saved_presets_as_home_screen_key), any())
+        prefs.getBoolean(context.getString(R.string.presets_as_home_screen_key), any())
       } returns input
 
-      assertEquals(input, settingsRepository.shouldDisplaySavedPresetsAsHomeScreen())
+      assertEquals(input, settingsRepository.shouldDisplayPresetsAsHomeScreen())
     }
   }
 
@@ -109,7 +109,11 @@ class SettingsRepositoryTest {
         prefs.getInt(context.getString(R.string.sound_fade_duration_key), any())
       } returns input
 
-      assertEquals(input * 1000L, settingsRepository.getSoundFadeDurationInMillis())
+      every {
+        prefs.getInt(context.getString(R.string.sound_fade_in_duration_key), any())
+      } answers { secondArg() }
+
+      assertEquals(input * 1000L, settingsRepository.getSoundFadeInDurationMillis())
     }
   }
 

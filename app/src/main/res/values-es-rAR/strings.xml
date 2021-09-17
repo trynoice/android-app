@@ -2,11 +2,9 @@
 <resources>
     <string name="about">Acerca de</string>
     <string name="app_theme">Tema</string>
-    <string name="close_drawer">Cerrar el menú de navegación</string>
     <string name="library">Librería</string>
-    <string name="open_drawer">Abrir el menú de navegación</string>
     <string name="report_issue">Reportar Errores</string>
-    <string name="saved_presets">Preajustes Guardados</string>
+    <string name="presets">Preajustes Guardados</string>
     <string name="sleep_timer">Temporizador</string>
     <string name="cancel">Cancelar</string>
     <string name="dismiss">Descartar</string>

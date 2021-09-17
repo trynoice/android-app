@@ -2,8 +2,8 @@ plugins {
   id 'com.android.application'
   id 'kotlin-android'
 
-  id 'com.google.gms.google-services' // sed:fdroid-build:remove
-  id 'com.google.firebase.crashlytics' // sed:fdroid-build:remove
+  id 'com.google.gms.google-services' // sed:free-build:remove
+  id 'com.google.firebase.crashlytics' // sed:free-build:remove
 
   id 'com.adarshr.test-logger' version '3.0.0'
 }
@@ -17,8 +17,8 @@ android {
     applicationId 'com.github.ashutoshgngwr.noice'
     minSdkVersion 21
     targetSdkVersion 30
-    versionCode 44
-    versionName '1.1.0'
+    versionCode 49
+    versionName '1.3.0'
     testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
   }
 
@@ -45,20 +45,20 @@ android {
       shrinkResources true
       minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-      signingConfig = signingConfigs.release // sed:fdroid-build:remove
+      signingConfig = signingConfigs.release // sed:free-build:remove
     }
   }
 
-  flavorDimensions 'distribution_channel'
+  flavorDimensions 'tier'
   productFlavors {
-    fdroid {
-      dimension 'distribution_channel'
-      buildConfigField 'boolean', 'IS_PLAY_STORE_BUILD', 'false'
+    free {
+      dimension 'tier'
+      buildConfigField 'boolean', 'IS_FREE_BUILD', 'true'
     }
 
-    playstore {
-      dimension 'distribution_channel'
-      buildConfigField 'boolean', 'IS_PLAY_STORE_BUILD', 'true'
+    full {
+      dimension 'tier'
+      buildConfigField 'boolean', 'IS_FREE_BUILD', 'false'
     }
   }
 
@@ -86,24 +86,31 @@ android {
 }
 
 dependencies {
-  def fragmentVersion = '1.3.5'
+  def fragmentVersion = '1.3.6'
   def testCoreVersion = '1.3.0'
   def junitVersion = '4.13.2'
   def mockkVersion = '1.12.0'
   def espressoVersion = '3.3.0'
-  def coroutinesVersion = '1.5.1'
+  def coroutinesVersion = '1.5.2'
 
-  implementation 'androidx.activity:activity-ktx:1.2.3'
-  implementation 'androidx.appcompat:appcompat:1.3.0'
+  // TODO: move this to stable release. The latest stable release (2.3.5) causes a crash with error
+  //  `java.lang.RuntimeException: Unknown animation name: x`
+  //  Although, the crash only occurs on the Play Store variant..?
+  def navVersion = '2.4.0-alpha06'
+
+  implementation 'androidx.activity:activity-ktx:1.3.1'
+  implementation 'androidx.appcompat:appcompat:1.3.1'
   implementation 'androidx.browser:browser:1.3.0'
   implementation 'androidx.cardview:cardview:1.0.0'
-  implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+  implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
   implementation 'androidx.core:core-ktx:1.6.0'
   implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
   implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
   implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
-  implementation 'androidx.media:media:1.3.1'
-  implementation 'androidx.mediarouter:mediarouter:1.2.4'
+  implementation 'androidx.media:media:1.4.1'
+  implementation 'androidx.mediarouter:mediarouter:1.2.5'
+  implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+  implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
   implementation 'androidx.preference:preference-ktx:1.1.1'
   implementation 'androidx.recyclerview:recyclerview:1.2.1'
   implementation 'com.github.AppIntro:AppIntro:6.1.0'
@@ -111,20 +118,21 @@ dependencies {
   implementation 'com.google.android.exoplayer:exoplayer-core:2.11.8'
   implementation 'com.google.android:flexbox:2.0.1'
   implementation 'com.google.android.material:material:1.4.0'
-  implementation 'com.google.code.gson:gson:2.8.7'
+  implementation 'com.google.code.gson:gson:2.8.8'
   implementation 'com.hopenlib.library:flextools:1.0.1'
   implementation 'com.ncorti:slidetoact:0.9.0'
   implementation 'io.noties.markwon:core:4.6.2'
   implementation 'org.greenrobot:eventbus:3.1.1'
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-  playstoreImplementation 'com.android.billingclient:billing-ktx:4.0.0'
-  playstoreImplementation 'com.google.android.gms:play-services-cast-framework:20.0.0'
-  playstoreImplementation 'com.google.android.play:core:1.10.0'
-  playstoreImplementation platform('com.google.firebase:firebase-bom:28.2.0')
-  playstoreImplementation 'com.google.firebase:firebase-analytics-ktx'
-  playstoreImplementation 'com.google.firebase:firebase-crashlytics-ktx'
-  playstoreImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+  fullImplementation 'com.android.billingclient:billing-ktx:4.0.0'
+  fullImplementation 'com.google.android.gms:play-services-base:17.6.0'
+  fullImplementation 'com.google.android.gms:play-services-cast-framework:20.0.0'
+  fullImplementation 'com.google.android.play:core:1.10.1'
+  fullImplementation platform('com.google.firebase:firebase-bom:28.4.0')
+  fullImplementation 'com.google.firebase:firebase-analytics-ktx'
+  fullImplementation 'com.google.firebase:firebase-crashlytics-ktx'
+  fullImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
 
 
   testImplementation "androidx.test:core:$testCoreVersion"
@@ -133,7 +141,7 @@ dependencies {
   testImplementation 'org.robolectric:robolectric:4.5.1'
   testImplementation 'org.skyscreamer:jsonassert:1.5.0'
 
-  testPlaystoreImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
+  testFullImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
 
   androidTestImplementation "androidx.test:core:$testCoreVersion"
   androidTestImplementation "androidx.test:rules:1.4.0"
@@ -145,7 +153,7 @@ dependencies {
   androidTestImplementation "io.mockk:mockk-android:$mockkVersion"
   androidTestImplementation "junit:junit:$junitVersion"
 
-  androidTestPlaystoreImplementation 'tools.fastlane:screengrab:2.1.0'
+  androidTestFullImplementation 'tools.fastlane:screengrab:2.1.0'
 
   debugImplementation "androidx.fragment:fragment-testing:$fragmentVersion"
 }

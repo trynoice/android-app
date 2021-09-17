@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import android.os.Build
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,9 +41,7 @@ class WakeUpTimerFragment : Fragment() {
     binding.selectPresetButton.setOnClickListener { onSelectPresetClicked() }
     binding.resetTimeButton.setOnClickListener { onResetTimeClicked() }
     binding.setTimeButton.setOnClickListener { onSetTimeClicked() }
-    binding.is24hView.setOnCheckedChangeListener { _, enabled ->
-      binding.timePicker.setIs24HourView(enabled)
-    }
+    binding.timePicker.setIs24HourView(DateFormat.is24HourFormat(requireContext()))
 
     presetRepository = PresetRepository.newInstance(requireContext())
 
@@ -60,7 +59,7 @@ class WakeUpTimerFragment : Fragment() {
 
     notifyUpdate()
 
-    analyticsProvider = NoiceApplication.of(requireContext()).getAnalyticsProvider()
+    analyticsProvider = NoiceApplication.of(requireContext()).analyticsProvider
     analyticsProvider.setCurrentScreen("wake_up_timer", WakeUpTimerFragment::class)
   }
 
@@ -126,7 +125,7 @@ class WakeUpTimerFragment : Fragment() {
     analyticsProvider.logEvent("wake_up_timer_set", params)
     // maybe show in-app review dialog to the user
     NoiceApplication.of(requireContext())
-      .getReviewFlowProvider()
+      .reviewFlowProvider
       .maybeAskForReview(requireActivity())
   }
 

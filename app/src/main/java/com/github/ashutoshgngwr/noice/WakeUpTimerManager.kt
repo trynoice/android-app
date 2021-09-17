@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
@@ -38,8 +39,13 @@ object WakeUpTimerManager {
 
   private fun getPendingIntentForActivity(context: Context) =
     Intent(context, MainActivity::class.java).let {
-      it.putExtra(MainActivity.EXTRA_CURRENT_NAVIGATED_FRAGMENT, R.id.wake_up_timer)
-      PendingIntent.getActivity(context, RC_MAIN_ACTIVITY, it, PendingIntent.FLAG_UPDATE_CURRENT)
+      it.putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.wake_up_timer)
+      var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE
+      }
+
+      PendingIntent.getActivity(context, RC_MAIN_ACTIVITY, it, piFlags)
     }
 
   /**

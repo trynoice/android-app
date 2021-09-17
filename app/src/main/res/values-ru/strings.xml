@@ -2,12 +2,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="about">О приложении</string>
     <string name="app_theme">Тема</string>
-    <string name="close_drawer">Закрыть меню</string>
     <string name="help">Помощь</string>
     <string name="library">Библиотека звуков</string>
-    <string name="open_drawer">Открыть меню</string>
     <string name="report_issue">Сообщить о проблеме</string>
-    <string name="saved_presets">Сохраненные пресеты</string>
+    <string name="presets">Сохраненные пресеты</string>
     <string name="sleep_timer">Таймер</string>
     <string name="support_development">Поддержать разработку</string>
     <string name="wake_up_timer">Таймер пробуждения</string>
@@ -102,11 +100,8 @@
     <string name="appintro__getting_started_desc_0">Проведите влево чтобы узнать все функции!</string>
     <string name="appintro__getting_started_desc_1">Давайте начнем!</string>
     <string name="appintro__getting_started_title">Добро пожаловать</string>
-    <string name="appintro__saved_presets_desc">После воспроизведения нескольких звуков Вы можете использовать
-    кнопку внизу экрана чтобы сохранить микс. Чтобы использовать сохраненный микс, откройте список
-    пресетов в меню приложения.
-  </string>
-    <string name="appintro__saved_presets_title">Сохраните свои любимые миксы</string>
+    <string name="appintro__presets_desc">После воспроизведения нескольких звуков Вы можете использовать кнопку внизу экрана чтобы сохранить микс. Чтобы использовать сохраненный микс, откройте список пресетов в меню приложения.</string>
+    <string name="appintro__presets_title">Сохраните свои любимые миксы</string>
     <string name="appintro__library_desc">Используйте регулятор громкости чтобы отрегулировать громкость. На каждом повторе нецикличных звуков задержка выбирается случайно из диапазона регулятора времени.</string>
     <string name="appintro__library_title">Создайте свои идеальные окружения</string>
     <string name="appintro__timer_desc">
@@ -151,13 +146,11 @@
     <string name="dense">Плотный</string>
     <string name="mood_any">Любой</string>
     <string name="intensity_any">Любой</string>
-    <string name="saved_presets_as_home_screen_summary">Показывать сохранённые пресеты при старте приложения</string>
+    <string name="presets_as_home_screen_summary">Показывать «сохраненные пресеты» при запуске приложения (требуется перезапуск приложения)</string>
     <string name="preset_does_not_exist">Пресета не существует. Возможно, он был удален!</string>
     <string name="relax">Расслабиться</string>
     <string name="random_preset">Случайный пресет</string>
     <string name="mood">Настроение</string>
-    <string name="should_update_media_volume">Обновить громкость звуков устройства перед запуском предустановок</string>
-    <string name="device_media_volume">Громкость звука устройства</string>
     <string name="wake_up_timer_cancelled">Таймер пробуждения отменён!</string>
     <string name="pinned_shortcuts_not_supported">Ваш лаунчер по умолчанию не поддерживает добавление ярлыков.</string>
     <string name="focus">Фокус</string>
@@ -196,11 +189,9 @@
     <string name="skip_to_prev">Предыдущая предустановка</string>
     <string name="pinned_shortcut_created">Ярлык был добавлен на главный экран!</string>
     <string name="pinned_shortcut_creation_failed">Не удалось добавить ярлык на главный экран!</string>
-    <string name="sound_fade_duration_summary">Продолжительность нарастания/затухания для проигрываемых/останавливаемых звуков (в секундах)</string>
-    <string name="sound_fade_duration">Продолжительность затухания звука</string>
     <string name="appearance">Внешний вид</string>
     <string name="behavior">Поведение</string>
-    <string name="saved_presets_as_home_screen">Сохраненные предустановки на главном экране</string>
+    <string name="presets_as_home_screen">Сохраненные предустановки на главном экране</string>
     <string name="settings">Настройки</string>
     <string name="app_shortcut_creation_failed">Не удалось добавить предустановку в ярлыки приложений!</string>
     <string name="app_shortcut_created">Предустановка была добавлена в ярлыки приложений!</string>
@@ -211,4 +202,15 @@
     <string name="others">Другие</string>
     <string name="decline">Отказать</string>
     <string name="accept">Принять</string>
+    <string name="payment_pending">Мы сообщим вам, как только закончим обработку вашего платежа.</string>
+    <string name="failed_to_purchase">Не удалось запустить поток платежей. Повторите попытку позже!</string>
+    <string name="failed_to_load_inapp_purchases">Не удалось загрузить сведения о покупке в приложении. Пожалуйста, повторите попытку позже!</string>
+    <string name="should_share_usage_data_summary">Автоматически отправлять разработчикам данные об использовании и поведении</string>
+    <string name="should_share_usage_data">Передача данных об использовании и поведении</string>
+    <string name="share_usage_data_consent_message">Мы собираем данные об использовании приложения для улучшения пользовательского опыта. Мы также собираем данные о поведении приложения для анализа и диагностики ошибок, возникающих во время использования приложения. Для получения дополнительной информации ознакомьтесь с нашей [политикой конфиденциальности] (https://ashutoshgngwr.github.io/noice/privacy-policy).
+\n
+\n Вы можете настроить автоматический обмен данными в любое время в приложении, перейдя в раздел \"**Настройки** &gt; **Обмен данными об использовании и поведении**\".</string>
+    <string name="share_usage_data_consent_title">Параметры доступа к данным</string>
+    <string name="sound_fade_in_duration_summary">Продолжительность затухания звуков (в секундах)</string>
+    <string name="sound_fade_in_duration">Продолжительность затухания звука</string>
 </resources>

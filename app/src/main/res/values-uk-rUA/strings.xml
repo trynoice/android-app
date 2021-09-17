@@ -2,12 +2,10 @@
 <resources>
     <string name="about">Про застосунок</string>
     <string name="app_theme">Тема</string>
-    <string name="close_drawer">Закрити меню</string>
     <string name="help">Допомога</string>
     <string name="library">Бібліотека</string>
-    <string name="open_drawer">Відкрити меню</string>
     <string name="report_issue">Повідомити про ваду</string>
-    <string name="saved_presets">Збережені поєднання</string>
+    <string name="presets">Поєднання</string>
     <string name="sleep_timer">Таймер сну</string>
     <string name="support_development">Підтримати розробку</string>
     <string name="wake_up_timer">Таймер пробудження</string>
@@ -92,8 +90,8 @@
   </string>
     <string name="appintro__getting_started_desc_1">Почнімо!</string>
     <string name="appintro__getting_started_title">Вітаємо</string>
-    <string name="appintro__saved_presets_desc">Після відтворення кількох звуків ви можете користуватися кнопкою у нижньому куті, щоб зберегти свої мікси. Щоб застосувати збережені мікси ви можете відвідати список поєднань через меню застосунку.</string>
-    <string name="appintro__saved_presets_title">Збережіть свої улюблені мікси</string>
+    <string name="appintro__presets_desc">Після відтворення кількох звуків ви можете натиснути кнопку у нижньому куті, щоб зберегти свої поєднання. Щоб застосувати їх ви можете перейти до списку поєднань через меню застосунку.</string>
+    <string name="appintro__presets_title">Збережіть свої улюблені мікси</string>
     <string name="appintro__library_desc">Використовуйте повзунок гучності, щоб відрегулювати гучність звуків. За кожного програвання нециклічних звуків період затримки обирається випадково з діапазону за допомогою повзунка часу.</string>
     <string name="appintro__library_title">Створіть своє ідеальне оточення</string>
     <string name="appintro__timer_desc">Маленька атмосфера може допомогти вам заснути без зусиль. Скористайтеся таймером сну, щоб дозволити Noice вимкнутися та таймер пробудження, щоб встановити будильник і прокинутись у спокійному оточенні.</string>
@@ -171,11 +169,9 @@
     <string name="skip_to_prev">Попереднє поєднання</string>
     <string name="pinned_shortcut_created">Ярлик додано на головний екран!</string>
     <string name="pinned_shortcut_creation_failed">Не вдалося додати ярлик на головний екран!</string>
-    <string name="sound_fade_duration_summary">Тривалість появи/стишення для відтворення/зупинки звуків (у секундах)</string>
-    <string name="sound_fade_duration">Тривалість стишення звуку</string>
     <string name="appearance">Зовнішній вигляд</string>
     <string name="behavior">Поведінка</string>
-    <string name="saved_presets_as_home_screen">«Збережені поєднання» як головний екран</string>
+    <string name="presets_as_home_screen">«Поєднання» як головний екран</string>
     <string name="settings">Налаштування</string>
     <string name="app_shortcut_creation_failed">Не вдалося додати поєднання до ярликів застосунку!</string>
     <string name="app_shortcut_created">Поєднання додано до ярликів застосунку!</string>
@@ -183,17 +179,13 @@
     <string name="remove_from_app_shortcuts">Вилучити з ярликів застосунку</string>
     <string name="add_to_app_shortcuts">Додати до ярликів застосунку</string>
     <string name="app_authors">Переглянути список авторів Noice</string>
-    <string name="should_update_media_volume">Оновити гучність медіа пристрою перед запуском поєднання</string>
-    <string name="device_media_volume">Гучність медіа пристрою</string>
-    <string name="saved_presets_as_home_screen_summary">Показувати «збережені поєднання» під час запуску застосунку</string>
+    <string name="presets_as_home_screen_summary">Показувати «поєднання» під час запуску (потрібно перезапустити застосунок)</string>
     <string name="preset_does_not_exist">Поєднання не існує. Можливо, його було видалено!</string>
     <string name="random_preset">Випадкове поєднання</string>
     <string name="should_display_sound_icons">Показувати піктограми звуків</string>
     <string name="payment_pending">Ми повідомимо вас, щойно завершимо обробку платежу.</string>
     <string name="failed_to_purchase">Не вдалося запустити потік платежів. Повторіть спробу пізніше!</string>
     <string name="failed_to_load_inapp_purchases">Не вдалося завантажити відомості про придбання через застосунок. Повторіть спробу пізніше!</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">Під час відтворення незбереженого поєднання вмикати кнопки пропуску в сповіщенні програвача для створення поєднань</string>
-    <string name="should_allow_skipping_unsaved_presets">Дозволити пропускати незбережені поєднання</string>
     <string name="should_share_usage_data_summary">Автоматично надсилати розробникам дані про користування та поведінку</string>
     <string name="should_share_usage_data">Надсилання даних про користування та поведінку</string>
     <string name="others">Інші</string>
@@ -203,4 +195,11 @@
 \n
 \nВи можете налаштувати автоматичне надсилання даних у будь-який час всередині застосунку, за допомогою \"**Налаштування** &gt; **Надсилання даних про користування та поведінку**\".</string>
     <string name="share_usage_data_consent_title">Параметри спільного доступу до даних</string>
+    <string name="sound_fade_in_duration_summary">Тривалість стихання звуків (у секундах)</string>
+    <string name="sound_fade_in_duration">Тривалість стихання звуку</string>
+    <string name="created_by">Створено</string>
+    <string name="import_presets_successful">Поєднання успішно імпортовано з файлу!</string>
+    <string name="export_presets_successful">Поєднання успішно експортовано до файлу!</string>
+    <string name="enable_media_buttons_summary">Використовувати апаратні медіакнопки для керування відтворенням</string>
+    <string name="enable_media_buttons">Увімкнути медіакнопки</string>
 </resources>

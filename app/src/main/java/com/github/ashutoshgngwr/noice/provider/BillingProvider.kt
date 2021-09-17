@@ -1,10 +1,11 @@
 package com.github.ashutoshgngwr.noice.provider
 
+import android.app.Activity
 import android.content.Context
 
 /**
  * [BillingProvider] is an abstract declaration of Google Play Billing APIs used by the app. This
- * interface abstracts concrete implementations and thus allowing F-Droid flavored builds to be
+ * interface abstracts concrete implementations and thus allowing free flavored builds to be
  * compiled without adding Google Play Billing dependencies.
  *
  * [BillingProvider] is implemented as a Singleton. It implies that both [init] and [close] must be
@@ -30,6 +31,17 @@ interface BillingProvider {
   fun close()
 
   /**
+   * Query details for given [skus].
+   */
+  @Throws(QueryDetailsException::class)
+  suspend fun queryDetails(type: SkuType, skus: List<String>): List<SkuDetails>
+
+  /**
+   * Starts purchase flow for the given [sku].
+   */
+  fun purchase(activity: Activity, sku: SkuDetails): Boolean
+
+  /**
    * Consumes all SKUs in the given order.
    */
   fun consumePurchase(orderId: String)
@@ -49,4 +61,31 @@ interface BillingProvider {
      */
     fun onComplete(skus: List<String>, orderId: String)
   }
+
+  data class SkuDetails(val price: String, val priceAmountMicros: Long, val originalJSON: String)
+
+  enum class SkuType(val value: String) {
+    INAPP("inapp"),
+    SUBS("subs"),
+  }
+
+  class QueryDetailsException(msg: String) : Exception(msg)
+}
+
+/**
+ * A no-op billing provider for clients that don't have Google Mobile Services installed.
+ */
+object DummyBillingProvider : BillingProvider {
+  override fun init(context: Context, listener: BillingProvider.PurchaseListener?) = Unit
+  override fun close() = Unit
+
+  override suspend fun queryDetails(
+    type: BillingProvider.SkuType,
+    skus: List<String>
+  ): List<BillingProvider.SkuDetails> {
+    throw BillingProvider.QueryDetailsException("dummy billing provider doesn't implement query details")
+  }
+
+  override fun purchase(activity: Activity, sku: BillingProvider.SkuDetails): Boolean = false
+  override fun consumePurchase(orderId: String) = Unit
 }

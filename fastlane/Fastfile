@@ -28,7 +28,7 @@ default_platform(:android)
   lane :beta do
     gradle(
       task: "bundle",
-      flavor: "Playstore",
+      flavor: "Full",
       build_type: "Release",
       print_command: true
     )
@@ -45,13 +45,13 @@ default_platform(:android)
     locales = sh("LOCALES=$(find metadata/android -mindepth 1 -maxdepth 1 -type d -exec basename {}  \\; | sort); printf ${LOCALES\/\/$'\\n'\/','}")
     gradle(
       task: "assemble",
-      flavor: "Playstore",
+      flavor: "Full",
       build_type: "Debug",
       print_command: true
     )
     gradle(
       task: "assemble",
-      flavor: "Playstore",
+      flavor: "Full",
       build_type: "DebugAndroidTest",
       print_command: true
     )

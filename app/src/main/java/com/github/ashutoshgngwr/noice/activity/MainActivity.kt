@@ -1,160 +1,76 @@
 package com.github.ashutoshgngwr.noice.activity
 
 import android.content.Intent
-import android.graphics.drawable.Animatable
-import android.net.Uri
 import android.os.Bundle
-import android.support.v4.media.session.PlaybackStateCompat
-import android.view.Menu
-import android.view.MenuItem
-import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
-import androidx.core.view.GravityCompat
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.BuildConfig
-import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
-import com.github.ashutoshgngwr.noice.ext.launchInCustomTab
-import com.github.ashutoshgngwr.noice.fragment.AboutFragment
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
-import com.github.ashutoshgngwr.noice.fragment.LibraryFragment
-import com.github.ashutoshgngwr.noice.fragment.RandomPresetFragment
-import com.github.ashutoshgngwr.noice.fragment.SavedPresetsFragment
-import com.github.ashutoshgngwr.noice.fragment.SettingsFragment
-import com.github.ashutoshgngwr.noice.fragment.SleepTimerFragment
-import com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment
-import com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment
+import com.github.ashutoshgngwr.noice.navigation.Navigable
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.BillingProvider
-import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
-import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
-  BillingProvider.PurchaseListener {
+class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
 
   companion object {
     /**
-     * [EXTRA_CURRENT_NAVIGATED_FRAGMENT] declares the key for intent extra value that is passed to
-     * [MainActivity] for setting the given fragment to the top. The required value for this extra
-     * should be an integer representing the menu item's id in the navigation view corresponding to
-     * the fragment being requested.
+     * [EXTRA_NAV_DESTINATION] declares the key for intent extra value passed to [MainActivity] for
+     * setting the current destination on the [NavController]. The value for this extra should be an
+     * id resource representing the action/destination id present in the [main][R.navigation.main]
+     * or [home][R.navigation.home] navigation graphs.
      */
-    const val EXTRA_CURRENT_NAVIGATED_FRAGMENT = "current_fragment"
+    internal const val EXTRA_NAV_DESTINATION = "nav_destination"
 
-    // maps fragments that have a one-to-one mapping with a menu item in the navigation drawer.
-    // this map helps in reducing boilerplate for launching these fragments when appropriate
-    // menu item is clicked in the navigation drawer.
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val NAVIGATED_FRAGMENTS = mapOf(
-      R.id.library to LibraryFragment::class.java,
-      R.id.saved_presets to SavedPresetsFragment::class.java,
-      R.id.sleep_timer to SleepTimerFragment::class.java,
-      R.id.wake_up_timer to WakeUpTimerFragment::class.java,
-      R.id.random_preset to RandomPresetFragment::class.java,
-      R.id.settings to SettingsFragment::class.java,
-      R.id.about to AboutFragment::class.java,
-      R.id.support_development to SupportDevelopmentFragment::class.java
-    )
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val PREF_HAS_SEEN_DATA_COLLECTION_CONSENT = "has_seen_data_collection_consent"
+    @VisibleForTesting
+    internal const val PREF_HAS_SEEN_DATA_COLLECTION_CONSENT = "has_seen_data_collection_consent"
   }
 
   private lateinit var binding: MainActivityBinding
-  private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-  private lateinit var castAPIProvider: CastAPIProvider
   private lateinit var settingsRepository: SettingsRepository
-  private lateinit var analyticsProvider: AnalyticsProvider
-  private lateinit var crashlyticsProvider: CrashlyticsProvider
-  private lateinit var billingProvider: BillingProvider
+  private lateinit var app: NoiceApplication
+  private lateinit var navController: NavController
 
-  private var playerManagerState = PlaybackStateCompat.STATE_STOPPED
+  /**
+   * indicates whether the activity was delivered a new intent since it was last resumed.
+   */
+  private var hasNewIntent = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    // because cast context is lazy initialized, cast menu item wouldn't show up until
-    // re-resuming the activity. adding this to prevent that.
-    // This should implicitly init CastContext.
-    val app = NoiceApplication.of(this)
-    castAPIProvider = app.getCastAPIProviderFactory().newInstance(this)
-
+    app = NoiceApplication.of(this)
     settingsRepository = SettingsRepository.newInstance(this)
+
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
-
-    analyticsProvider = app.getAnalyticsProvider()
-    crashlyticsProvider = app.getCrashlyticsProvider()
-    billingProvider = app.getBillingProvider()
-
-    analyticsProvider.logEvent("ui_open", bundleOf("theme" to settingsRepository.getAppTheme()))
-
     super.onCreate(savedInstanceState)
     binding = MainActivityBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    // setup toolbar to display animated drawer toggle button
-    actionBarDrawerToggle = ActionBarDrawerToggle(
-      this,
-      binding.layoutMain,
-      R.string.open_drawer,
-      R.string.close_drawer
-    )
-    binding.layoutMain.addDrawerListener(actionBarDrawerToggle)
-    supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    actionBarDrawerToggle.syncState()
+    val navHostFragment = requireNotNull(binding.navHostFragment.getFragment<NavHostFragment>())
+    navController = navHostFragment.navController
 
-    // setup listener for navigation item clicks
-    binding.navigationDrawer.setNavigationItemSelectedListener(this)
+    setupActionBarWithNavController(navController, AppBarConfiguration(navController.graph))
 
-    // bind navigation drawer menu items checked state with fragment back stack
-    supportFragmentManager.addOnBackStackChangedListener {
-      val index = supportFragmentManager.backStackEntryCount - 1
-      val currentFragmentName = supportFragmentManager.getBackStackEntryAt(index).name
-      for ((id, fragment) in NAVIGATED_FRAGMENTS) {
-        if (fragment.simpleName == currentFragmentName) {
-          binding.navigationDrawer.setCheckedItem(id)
-          break
-        }
-      }
-
-      if (index == 0) {
-        supportActionBar?.setTitle(R.string.app_name)
-      } else {
-        supportActionBar?.title = binding.navigationDrawer.checkedItem?.title
-      }
-    }
-
-    // set library fragment when activity is created initially (screen-orientation change will recall
-    // onCreate which will cause weird and unexpected fragment changes otherwise).
-    if (supportFragmentManager.backStackEntryCount < 1) {
-      var defaultFragmentID = R.id.library
-      if (settingsRepository.shouldDisplaySavedPresetsAsHomeScreen()) {
-        defaultFragmentID = R.id.saved_presets
-      }
-
-      setFragment(defaultFragmentID) // default fragment must be in the back stack
-      handleNewIntent()
-      AppIntroActivity.maybeStart(this) // show app intro if user hasn't already seen it
-    }
-
-    NoiceApplication.of(application).getReviewFlowProvider().init(this)
-    if (BuildConfig.IS_PLAY_STORE_BUILD) {
+    AppIntroActivity.maybeStart(this)
+    if (!BuildConfig.IS_FREE_BUILD) {
       maybeShowDataCollectionConsent()
     }
 
-    billingProvider.init(this, this)
+    app.reviewFlowProvider.init(this)
+    app.billingProvider.init(this, this)
+    app.analyticsProvider.logEvent("ui_open", bundleOf("theme" to settingsRepository.getAppTheme()))
+    hasNewIntent = true
   }
 
   private fun maybeShowDataCollectionConsent() {
@@ -170,15 +86,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
       positiveButton(R.string.accept) {
         settingsRepository.setShouldShareUsageData(true)
-        analyticsProvider.setCollectionEnabled(true)
-        crashlyticsProvider.setCollectionEnabled(true)
+        app.analyticsProvider.setCollectionEnabled(true)
+        app.crashlyticsProvider.setCollectionEnabled(true)
         prefs.edit { putBoolean(PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true) }
       }
 
       negativeButton(R.string.decline) {
         settingsRepository.setShouldShareUsageData(false)
-        analyticsProvider.setCollectionEnabled(false)
-        crashlyticsProvider.setCollectionEnabled(false)
+        app.analyticsProvider.setCollectionEnabled(false)
+        app.crashlyticsProvider.setCollectionEnabled(false)
         prefs.edit { putBoolean(PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true) }
       }
     }
@@ -187,11 +103,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
   override fun onNewIntent(intent: Intent) {
     super.onNewIntent(intent)
     setIntent(intent)
-    handleNewIntent()
+    navController.handleDeepLink(intent)
+    hasNewIntent = true
   }
 
-  private fun handleNewIntent() {
-    setNavigatedFragment()
+  override fun onResume() {
+    super.onResume()
+
+    // handle the new intent here since onResume() is guaranteed to be called after onNewIntent().
+    // https://developer.android.com/reference/android/app/Activity#onNewIntent(android.content.Intent)
+    if (!hasNewIntent) {
+      return
+    }
+
+    hasNewIntent = false
+    if (intent.hasExtra(EXTRA_NAV_DESTINATION)) {
+      val destID = intent.getIntExtra(EXTRA_NAV_DESTINATION, 0)
+      if (!Navigable.navigate(binding.navHostFragment.getFragment(), destID)) {
+        navController.navigate(destID)
+      }
+    } else if (Intent.ACTION_APPLICATION_PREFERENCES == intent.action) {
+      navController.navigate(R.id.settings)
+    }
 
     if (Intent.ACTION_VIEW == intent.action &&
       (intent.dataString?.startsWith(getString(R.string.app_website)) == true ||
@@ -201,149 +134,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
   }
 
-  private fun setNavigatedFragment() {
-    intent?.also {
-      if (it.hasExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT)) {
-        setFragment(it.getIntExtra(EXTRA_CURRENT_NAVIGATED_FRAGMENT, 0))
-      } else if (Intent.ACTION_APPLICATION_PREFERENCES == it.action) {
-        setFragment(R.id.settings)
-      }
-    }
-  }
-
-  override fun onResume() {
-    super.onResume()
-    EventBus.getDefault().register(this)
-  }
-
-  override fun onPause() {
-    EventBus.getDefault().unregister(this)
-    super.onPause()
-  }
-
   override fun onDestroy() {
-    castAPIProvider.clearSessionCallbacks()
-    billingProvider.close()
+    app.billingProvider.close()
     super.onDestroy()
   }
 
-  override fun onCreateOptionsMenu(menu: Menu): Boolean {
-    super.onCreateOptionsMenu(menu)
-    castAPIProvider.addMenuItem(menu, R.string.cast_media)
-    menu.add(0, R.id.action_play_pause_toggle, 0, R.string.play_pause).also {
-      it.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-      it.isVisible = PlaybackStateCompat.STATE_STOPPED != playerManagerState
-      if (PlaybackStateCompat.STATE_PLAYING == playerManagerState) {
-        it.setIcon(R.drawable.ic_action_play_to_pause)
-      } else {
-        it.setIcon(R.drawable.ic_action_pause_to_play)
-      }
-
-      (it.icon as Animatable).start()
-      it.setOnMenuItemClickListener {
-        if (PlaybackStateCompat.STATE_PLAYING == playerManagerState) {
-          PlaybackController.pause(this)
-        } else {
-          PlaybackController.resume(this)
-        }
-
-        true
-      }
-    }
-
-    return true
-  }
-
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    if (actionBarDrawerToggle.onOptionsItemSelected(item))
-      return true
-    return super.onOptionsItemSelected(item)
-  }
-
-  override fun onNavigationItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-      in NAVIGATED_FRAGMENTS -> setFragment(item.itemId)
-      R.id.help -> {
-        startActivity(Intent(this, AppIntroActivity::class.java))
-        analyticsProvider.logEvent("help_open", bundleOf())
-      }
-      R.id.report_issue -> {
-        var url = getString(R.string.app_issues_github_url)
-        if (BuildConfig.IS_PLAY_STORE_BUILD) {
-          url = getString(R.string.app_issues_form_url)
-        }
-
-        Uri.parse(url).launchInCustomTab(this)
-        analyticsProvider.logEvent("issue_tracker_open", bundleOf())
-      }
-      R.id.submit_feedback -> {
-        Uri.parse(getString(R.string.feedback_form_url)).launchInCustomTab(this)
-        analyticsProvider.logEvent("feedback_form_open", bundleOf())
-      }
-    }
-
-    // hack to avoid stuttering in animations
-    binding.layoutMain.postDelayed({ binding.layoutMain.closeDrawer(GravityCompat.START) }, 150)
-    return true
-  }
-
-  override fun onBackPressed() {
-    if (binding.layoutMain.isDrawerOpen(GravityCompat.START)) {
-      binding.layoutMain.closeDrawer(GravityCompat.START)
-    } else {
-      // last fragment need not be removed, activity should be finished instead
-      if (supportFragmentManager.backStackEntryCount > 1) {
-        supportFragmentManager.popBackStackImmediate()
-      } else {
-        finish()
-      }
-    }
-  }
-
-  @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-  fun onPlayerManagerUpdate(event: MediaPlayerService.PlaybackUpdateEvent) {
-    if (playerManagerState == event.state) {
-      return
-    }
-
-    playerManagerState = event.state
-    invalidateOptionsMenu()
-  }
-
-  private fun setFragment(@IdRes navItemID: Int) {
-    val fragmentClass = NAVIGATED_FRAGMENTS[navItemID] ?: return
-    val tag = fragmentClass.simpleName
-
-    // show fragment if it isn't present in back stack.
-    // if it is present, pop back stack to bring it to front
-    // this seems to be the only way to avoid duplicate fragments
-    // in back stack without fighting the freaking framework
-    if (
-      !supportFragmentManager.popBackStackImmediate(tag, 0)
-      && supportFragmentManager.findFragmentByTag(tag) == null
-    ) {
-      supportFragmentManager
-        .beginTransaction()
-        .setCustomAnimations(
-          R.anim.enter_right,
-          R.anim.exit_left,
-          R.anim.enter_left,
-          R.anim.exit_right
-        )
-        .replace(R.id.fragment_container, fragmentClass.newInstance(), tag)
-        .addToBackStack(tag)
-        .commit()
-    }
+  override fun onSupportNavigateUp(): Boolean {
+    return navController.navigateUp() || super.onSupportNavigateUp()
   }
 
   override fun onPending(skus: List<String>) {
-    Snackbar.make(binding.fragmentContainer, R.string.payment_pending, Snackbar.LENGTH_LONG).show()
-    analyticsProvider.logEvent("purchase_pending", bundleOf())
+    Snackbar.make(binding.navHostFragment, R.string.payment_pending, Snackbar.LENGTH_LONG).show()
+    app.analyticsProvider.logEvent("purchase_pending", bundleOf())
   }
 
   override fun onComplete(skus: List<String>, orderId: String) {
-    analyticsProvider.logEvent("purchase_complete", bundleOf())
-    billingProvider.consumePurchase(orderId)
+    app.analyticsProvider.logEvent("purchase_complete", bundleOf())
+    app.billingProvider.consumePurchase(orderId)
     DialogFragment.show(supportFragmentManager) {
       title(R.string.support_development__donate_thank_you)
       message(R.string.support_development__donate_thank_you_description)

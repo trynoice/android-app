@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
-import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetFragmentBinding
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class RandomPresetFragment : Fragment() {
+class RandomPresetFragment : BottomSheetDialogFragment() {
 
   companion object {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -41,7 +41,7 @@ class RandomPresetFragment : Fragment() {
     binding.presetIntensityAny.isChecked = true
     binding.presetTypeAny.isChecked = true
 
-    binding.playPresetButton.setOnClickListener {
+    binding.playButton.setOnClickListener {
       val tag = when (binding.presetType.checkedRadioButtonId) {
         R.id.preset_type__focus -> Sound.Tag.FOCUS
         R.id.preset_type__relax -> Sound.Tag.RELAX
@@ -55,15 +55,20 @@ class RandomPresetFragment : Fragment() {
       }
 
       PlaybackController.playRandomPreset(requireContext(), tag, intensity)
+      dismiss()
 
       // maybe show in-app review dialog to the user
       NoiceApplication.of(requireContext())
-        .getReviewFlowProvider()
+        .reviewFlowProvider
         .maybeAskForReview(requireActivity())
     }
 
+    binding.cancelButton.setOnClickListener {
+      dismiss()
+    }
+
     NoiceApplication.of(requireContext())
-      .getAnalyticsProvider()
+      .analyticsProvider
       .setCurrentScreen("random_preset", RandomPresetFragment::class)
   }
 }

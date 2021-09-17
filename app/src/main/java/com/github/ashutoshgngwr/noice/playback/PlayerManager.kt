@@ -18,6 +18,7 @@ import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.strategy.LocalPlaybackStrategyFactory
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
+import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import java.util.concurrent.TimeUnit
@@ -54,7 +55,7 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
   private val handler = Handler(Looper.getMainLooper())
   private val presetRepository = PresetRepository.newInstance(context)
   private val settingsRepository = SettingsRepository.newInstance(context)
-  private val analyticsProvider = NoiceApplication.of(context).getAnalyticsProvider()
+  private val analyticsProvider = NoiceApplication.of(context).analyticsProvider
   private val audioManager = requireNotNull(context.getSystemService<AudioManager>())
 
   private val playbackStateBuilder = PlaybackStateCompat.Builder()
@@ -66,40 +67,65 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
         or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
     )
 
-  private val castAPIProvider = NoiceApplication.of(context)
-    .getCastAPIProviderFactory()
-    .newInstance(context)
-    .apply {
-      onSessionBegin {
-        Log.d(TAG, "onSessionBegin(): switching playback to CastPlaybackStrategy")
-        playbackStrategyFactory = getPlaybackStrategyFactory()
-        players.values.forEach { it.updatePlaybackStrategy(playbackStrategyFactory) }
-        mediaSession.setPlaybackToRemote(getVolumeProvider())
-        analyticsProvider.logCastSessionStartEvent()
-      }
-
-      onSessionEnd {
-        // onSessionEnded gets called when restarting the activity. So need to ensure that we're not
-        // recreating the LocalPlaybackStrategyFactory again because it will cause [PlaybackStrategy]s to be
-        // recreated resulting glitches in playback.
-        if (playbackStrategyFactory !is LocalPlaybackStrategyFactory) {
-          Log.d(TAG, "onSessionEnd(): switching playback to LocalPlaybackStrategy")
-          playbackStrategyFactory = LocalPlaybackStrategyFactory(context, audioAttributes)
-          players.values.forEach { it.updatePlaybackStrategy(playbackStrategyFactory) }
-          mediaSession.setPlaybackToLocal(AudioManager.STREAM_MUSIC)
-          analyticsProvider.logCastSessionEndEvent()
-        }
-      }
+  private val castAPIProvider = NoiceApplication.of(context).castAPIProvider
+  private val castSessionListener = object : CastAPIProvider.SessionListener {
+    override fun onSessionBegin() {
+      Log.d(TAG, "onSessionBegin(): switching playback to CastPlaybackStrategy")
+      playbackStrategyFactory = castAPIProvider.getPlaybackStrategyFactory(context)
+      players.values.forEach { it.updatePlaybackStrategy(playbackStrategyFactory) }
+      mediaSession.setPlaybackToRemote(castAPIProvider.getVolumeProvider())
+      analyticsProvider.logCastSessionStartEvent()
     }
 
+    override fun onSessionEnd() {
+      // onSessionEnded gets called when restarting the activity. So need to ensure that we're not
+      // recreating the LocalPlaybackStrategyFactory again because it will cause [PlaybackStrategy]s
+      // to be recreated resulting glitches in playback.
+      if (playbackStrategyFactory is LocalPlaybackStrategyFactory) {
+        return
+      }
+
+      Log.d(TAG, "onSessionEnd(): switching playback to LocalPlaybackStrategy")
+      playbackStrategyFactory = LocalPlaybackStrategyFactory(context, audioAttributes)
+      players.values.forEach { it.updatePlaybackStrategy(playbackStrategyFactory) }
+      mediaSession.setPlaybackToLocal(AudioManager.STREAM_MUSIC)
+      analyticsProvider.logCastSessionEndEvent()
+    }
+  }
+
   init {
+    castAPIProvider.registerSessionListener(castSessionListener)
     setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
     mediaSession.setCallback(object : MediaSessionCompat.Callback() {
-      override fun onPlay() = resume()
-      override fun onStop() = stop()
-      override fun onPause() = pause()
-      override fun onSkipToPrevious() = skipPreset(SKIP_DIRECTION_PREV)
-      override fun onSkipToNext() = skipPreset(SKIP_DIRECTION_NEXT)
+      override fun onPlay() {
+        if (settingsRepository.isMediaButtonsEnabled()) {
+          resume()
+        }
+      }
+
+      override fun onStop() {
+        if (settingsRepository.isMediaButtonsEnabled()) {
+          stop()
+        }
+      }
+
+      override fun onPause() {
+        if (settingsRepository.isMediaButtonsEnabled()) {
+          pause()
+        }
+      }
+
+      override fun onSkipToPrevious() {
+        if (settingsRepository.isMediaButtonsEnabled()) {
+          skipPreset(SKIP_DIRECTION_PREV)
+        }
+      }
+
+      override fun onSkipToNext() {
+        if (settingsRepository.isMediaButtonsEnabled()) {
+          skipPreset(SKIP_DIRECTION_NEXT)
+        }
+      }
     })
   }
 
@@ -350,7 +376,7 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
    */
   fun cleanup() {
     stop()
-    castAPIProvider.clearSessionCallbacks()
+    castAPIProvider.unregisterSessionListener(castSessionListener)
   }
 
   /**
@@ -435,7 +461,6 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
     val presets = presetRepository.list()
     val currentPos = presets.indexOf(Preset.from("", players.values))
     if (currentPos < 0) {
-      playRandomPreset()
       return
     }
 

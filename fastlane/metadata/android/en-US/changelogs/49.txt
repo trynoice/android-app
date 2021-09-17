@@ -1,0 +1,7 @@
+- Add default presets for new users
+- Reposition sleep timer button
+- Fix minor bugs in preset exports and preset urls
+- Update translations
+
+We're continuously working to make Noice better. Please turn on updates to never miss a thing!
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG

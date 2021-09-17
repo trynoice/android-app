@@ -10,6 +10,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.swipeRight
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import io.mockk.clearMocks
@@ -42,6 +43,7 @@ class AlarmRingerActivityTest {
   @Test
   fun testWithoutPresetID() {
     val scenario = ActivityScenario.launch(AlarmRingerActivity::class.java)
+    verify(exactly = 1, timeout = 5000L) { PlaybackController.pause(any()) }
     assertEquals(Lifecycle.State.DESTROYED, scenario.state)
   }
 
@@ -59,17 +61,21 @@ class AlarmRingerActivityTest {
       )
     }
 
-    verify(exactly = 1, timeout = 10000L) {
-      PlaybackController.setAudioUsage(any(), AudioAttributesCompat.USAGE_ALARM)
-      PlaybackController.playPreset(any(), presetID)
+    EspressoX.retryWithWaitOnError(AssertionError::class, wait = 1000L) {
+      verify(exactly = 1) {
+        PlaybackController.setAudioUsage(any(), AudioAttributesCompat.USAGE_ALARM)
+        PlaybackController.playPreset(any(), presetID)
+      }
     }
 
     clearMocks(PlaybackController)
     onView(withId(R.id.dismiss_slider)).perform(swipeRight())
 
-    verify(exactly = 1, timeout = 10000L) {
-      PlaybackController.setAudioUsage(any(), AudioAttributesCompat.USAGE_MEDIA)
-      PlaybackController.pause(any())
+    EspressoX.retryWithWaitOnError(AssertionError::class, wait = 1000L) {
+      verify(exactly = 1) {
+        PlaybackController.setAudioUsage(any(), AudioAttributesCompat.USAGE_MEDIA)
+        PlaybackController.pause(any())
+      }
     }
   }
 }

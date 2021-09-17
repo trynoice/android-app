@@ -8,7 +8,7 @@ import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
 
 /**
  * [CastAPIProvider] is an abstract declaration of the non-free Google Cast APIs that are used in the app.
- * It effectively hides upstream classes from its callers. This is ensure that F-Droid variant
+ * It effectively hides upstream classes from its callers. This is ensure that free variant
  * remains free of non-free Google Cast API dependency.
  */
 interface CastAPIProvider {
@@ -16,12 +16,12 @@ interface CastAPIProvider {
   /**
    * Adds a menu item to switch between local and cast playback to the given [menu].
    */
-  fun addMenuItem(menu: Menu, @StringRes titleResId: Int)
+  fun addMenuItem(context: Context, menu: Menu, @StringRes titleResId: Int)
 
   /**
    * Returns a [PlaybackStrategyFactory] that plays media on a cast device.
    */
-  fun getPlaybackStrategyFactory(): PlaybackStrategyFactory
+  fun getPlaybackStrategyFactory(context: Context): PlaybackStrategyFactory
 
   /**
    * Returns a [VolumeProviderCompat] that controls volume of the cast device.
@@ -29,24 +29,46 @@ interface CastAPIProvider {
   fun getVolumeProvider(): VolumeProviderCompat
 
   /**
-   * Registers on cast session begin callback.
+   * Registers a new [SessionListener]. It is a no-op if [SessionListener] was already registered.
    */
-  fun onSessionBegin(callback: () -> Unit)
+  fun registerSessionListener(listener: SessionListener)
 
   /**
-   * Registers on cast session end callback.
+   * Unregisters a registered [SessionListener]. It is a no-op if [SessionListener] wasn't
+   * registered.
    */
-  fun onSessionEnd(callback: () -> Unit)
+  fun unregisterSessionListener(listener: SessionListener)
 
   /**
-   * Clears all registered session callbacks.
+   * Declares a listener interface to listen for cast session callbacks.
    */
-  fun clearSessionCallbacks()
+  interface SessionListener {
+    /**
+     * Invoked when cast session begins.
+     */
+    fun onSessionBegin()
 
-  /**
-   * A [Factory] to create new concrete [CastAPIProvider] instances.
-   */
-  interface Factory {
-    fun newInstance(context: Context): CastAPIProvider
+    /**
+     * Invoked when cast session ends.
+     */
+    fun onSessionEnd()
   }
+}
+
+/**
+ * A no-op cast api provider for clients that don't have Google Mobile Services installed.
+ */
+object DummyCastAPIProvider : CastAPIProvider {
+
+  override fun getPlaybackStrategyFactory(context: Context): PlaybackStrategyFactory {
+    throw IllegalStateException("getPlaybackStrategyFactory() must not be invoked on DummyCastAPIProvider")
+  }
+
+  override fun getVolumeProvider(): VolumeProviderCompat {
+    throw IllegalStateException("getVolumeProvider() must not be invoked on DummyCastAPIProvider")
+  }
+
+  override fun addMenuItem(context: Context, menu: Menu, titleResId: Int) = Unit
+  override fun registerSessionListener(listener: CastAPIProvider.SessionListener) = Unit
+  override fun unregisterSessionListener(listener: CastAPIProvider.SessionListener) = Unit
 }

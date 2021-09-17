@@ -7,17 +7,17 @@
 
     <SwitchPreferenceCompat
       android:icon="@drawable/ic_settings_home_screen"
-      android:key="@string/saved_presets_as_home_screen_key"
-      android:summary="@string/saved_presets_as_home_screen_summary"
-      android:title="@string/saved_presets_as_home_screen" />
+      android:key="@string/presets_as_home_screen_key"
+      android:summary="@string/presets_as_home_screen_summary"
+      android:title="@string/presets_as_home_screen" />
 
     <SeekBarPreference
       android:defaultValue="1"
-      android:icon="@drawable/ic_settings_fade_duration"
-      android:key="@string/sound_fade_duration_key"
+      android:icon="@drawable/ic_settings_fade_in_duration"
+      android:key="@string/sound_fade_in_duration_key"
       android:max="10"
-      android:summary="@string/sound_fade_duration_summary"
-      android:title="@string/sound_fade_duration"
+      android:summary="@string/sound_fade_in_duration_summary"
+      android:title="@string/sound_fade_in_duration"
       app:min="0"
       app:showSeekBarValue="true" />
 
@@ -30,14 +30,14 @@
 
     <SwitchPreferenceCompat
       android:defaultValue="true"
-      android:icon="@drawable/ic_settings_skip_unsaved_presets"
-      android:key="@string/should_allow_skipping_unsaved_presets_key"
-      android:summary="@string/should_allow_skipping_unsaved_presets_summary"
-      android:title="@string/should_allow_skipping_unsaved_presets" />
+      android:icon="@drawable/ic_settings_media_buttons"
+      android:key="@string/enable_media_buttons_key"
+      android:summary="@string/enable_media_buttons_summary"
+      android:title="@string/enable_media_buttons" />
 
   </PreferenceCategory>
 
-  <PreferenceCategory android:title="@string/saved_presets">
+  <PreferenceCategory android:title="@string/presets">
 
     <Preference
       android:icon="@drawable/ic_settings_export"

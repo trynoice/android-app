@@ -2,11 +2,9 @@
 <resources>
     <string name="about">Om</string>
     <string name="app_theme">Tema</string>
-    <string name="close_drawer">Stäng navigationslåda</string>
     <string name="library">Bibliotek</string>
-    <string name="open_drawer">Öppna navigationslåda</string>
     <string name="report_issue">Rapportera problem</string>
-    <string name="saved_presets">Sparade kombinationer</string>
+    <string name="presets">Sparade kombinationer</string>
     <string name="sleep_timer">Timer för nedstängning</string>
     <string name="cancel">Avbryt</string>
     <string name="dismiss">Avfärda</string>
@@ -86,7 +84,7 @@
     <string name="pinned_shortcut_creation_failed">Misslyckades att lägga till genvägen till hem-skärmen!</string>
     <string name="appearance">Utseende</string>
     <string name="behavior">Beteende</string>
-    <string name="saved_presets_as_home_screen">Sparade förinställningar som hem-skärm</string>
+    <string name="presets_as_home_screen">Sparade förinställningar som hem-skärm</string>
     <string name="settings">Inställningar</string>
     <string name="app_shortcut_creation_failed">Misslyckades med att lägga till förinställningen i app-genvägar!</string>
     <string name="app_shortcut_created">Förinställningen har lagts till i app-genvägar!</string>
@@ -115,13 +113,11 @@
     <string name="support_development__donate">Donera</string>
     <string name="appintro__timer_title">Har du problem med att somna eller att vakna upp\?</string>
     <string name="appintro__library_title">Skapa dina perfekta omgivningar</string>
-    <string name="appintro__saved_presets_title">Spara dina favorit-mixar</string>
+    <string name="appintro__presets_title">Spara dina favorit-mixar</string>
     <string name="appintro__getting_started_title">Välkommen</string>
     <string name="appintro__getting_started_desc_1">Låt oss börja!</string>
     <string name="appintro__getting_started_desc_0">Svep till vänster för att lära känna alla funktioner!</string>
     <string name="appintro__chromecast_title">Chromecast aktiverat</string>
-    <string name="should_update_media_volume">Uppdatera enhetens mediavolym innan förinställningen startas</string>
-    <string name="device_media_volume">Mediavolym för enhet</string>
     <string name="use_24h_format">Använd 24-timmarsformat</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minut</item>
@@ -135,7 +131,7 @@
     <string name="wake_up_timer_cancelled">Timer för uppväckning avbröts!</string>
     <string name="select_preset">Välj förinställning</string>
     <string name="schedule">Schema</string>
-    <string name="saved_presets_as_home_screen_summary">Visa sparade förinställningar när appen startar upp</string>
+    <string name="presets_as_home_screen_summary">Visa sparade förinställningar när appen startar upp</string>
     <string name="preset_does_not_exist">Förinställningen existerar inte. Den kan ha blivit borttagen!</string>
     <string name="add_to_home_screen">Lägg till på hemskärmen</string>
     <string name="water_hose">Vattenslang</string>

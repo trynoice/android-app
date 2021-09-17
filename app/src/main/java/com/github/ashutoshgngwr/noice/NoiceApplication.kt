@@ -1,15 +1,23 @@
 package com.github.ashutoshgngwr.noice
 
 import android.content.Context
+import androidx.annotation.CallSuper
 import androidx.annotation.VisibleForTesting
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.BillingProvider
 import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
+import com.github.ashutoshgngwr.noice.provider.DonateViewProvider
+import com.github.ashutoshgngwr.noice.provider.DummyAnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.DummyBillingProvider
+import com.github.ashutoshgngwr.noice.provider.DummyCastAPIProvider
+import com.github.ashutoshgngwr.noice.provider.DummyCrashlyticsProvider
+import com.github.ashutoshgngwr.noice.provider.GitHubReviewFlowProvider
+import com.github.ashutoshgngwr.noice.provider.OpenCollectiveDonateViewProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 
-abstract class NoiceApplication : android.app.Application() {
+open class NoiceApplication : android.app.Application() {
 
   companion object {
     /**
@@ -18,52 +26,60 @@ abstract class NoiceApplication : android.app.Application() {
     fun of(context: Context): NoiceApplication = context.applicationContext as NoiceApplication
   }
 
-  private lateinit var castAPIProviderFactory: CastAPIProvider.Factory
-  private lateinit var reviewFlowProvider: ReviewFlowProvider
-  private lateinit var crashlyticsProvider: CrashlyticsProvider
-  private lateinit var analyticsProvider: AnalyticsProvider
-  private lateinit var billingProvider: BillingProvider
-  private lateinit var settingsRepository: SettingsRepository
+  lateinit var castAPIProvider: CastAPIProvider
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    internal set
+
+  lateinit var reviewFlowProvider: ReviewFlowProvider
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    internal set
+
+  lateinit var crashlyticsProvider: CrashlyticsProvider
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    internal set
+
+  lateinit var analyticsProvider: AnalyticsProvider
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    internal set
+
+  lateinit var billingProvider: BillingProvider
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    internal set
+
+  lateinit var donateViewProvider: DonateViewProvider
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    internal set
 
   override fun onCreate() {
     super.onCreate()
-    settingsRepository = SettingsRepository.newInstance(this)
+    initProviders()
+    SettingsRepository.newInstance(this)
+      .shouldShareUsageData()
+      .also {
+        analyticsProvider.setCollectionEnabled(it)
+        crashlyticsProvider.setCollectionEnabled(it)
+      }
   }
 
-  @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-  fun setCastAPIProviderFactory(factory: CastAPIProvider.Factory) {
-    castAPIProviderFactory = factory
+  /**
+   * [initProviders] is invoked when application is created (in [onCreate]). It can be overridden by
+   * a subclass to swap default implementations of [castAPIProvider], [reviewFlowProvider],
+   * [crashlyticsProvider], [analyticsProvider], [billingProvider] and [donateViewProvider].
+   */
+  @CallSuper
+  protected open fun initProviders() {
+    castAPIProvider = DummyCastAPIProvider
+    reviewFlowProvider = GitHubReviewFlowProvider
+    crashlyticsProvider = DummyCrashlyticsProvider
+    analyticsProvider = DummyAnalyticsProvider
+    billingProvider = DummyBillingProvider
+    donateViewProvider = OpenCollectiveDonateViewProvider
   }
 
-  fun getCastAPIProviderFactory(): CastAPIProvider.Factory = castAPIProviderFactory
-
-  @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-  fun setReviewFlowProvider(provider: ReviewFlowProvider) {
-    reviewFlowProvider = provider
+  /**
+   * Indicates if Google Mobile Services are available on the client device.
+   */
+  open fun isGoogleMobileServicesAvailable(): Boolean {
+    return false
   }
-
-  fun getReviewFlowProvider(): ReviewFlowProvider = reviewFlowProvider
-
-  @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-  fun setCrashlyticsProvider(provider: CrashlyticsProvider) {
-    crashlyticsProvider = provider
-    provider.setCollectionEnabled(settingsRepository.shouldShareUsageData())
-  }
-
-  fun getCrashlyticsProvider(): CrashlyticsProvider = crashlyticsProvider
-
-  @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-  fun setAnalyticsProvider(provider: AnalyticsProvider) {
-    analyticsProvider = provider
-    provider.setCollectionEnabled(settingsRepository.shouldShareUsageData())
-  }
-
-  fun getAnalyticsProvider(): AnalyticsProvider = analyticsProvider
-
-  @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-  fun setBillingProvider(provider: BillingProvider) {
-    billingProvider = provider
-  }
-
-  fun getBillingProvider(): BillingProvider = billingProvider
 }

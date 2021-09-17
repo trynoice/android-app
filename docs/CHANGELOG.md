@@ -2,6 +2,47 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.3.0](https://github.com/ashutoshgngwr/noice/releases/tag/1.3.0)
+
+**Wednesday, 1 September 2021**
+
+- Add default presets for new users
+- Reposition sleep timer button
+- Fix minor bugs in preset exports and preset urls
+- Update translations ([#755](https://github.com/ashutoshgngwr/noice/issues/755), [#756](https://github.com/ashutoshgngwr/noice/issues/756), [#757](https://github.com/ashutoshgngwr/noice/issues/757), [#780](https://github.com/ashutoshgngwr/noice/issues/780))
+
+## [v1.2.2](https://github.com/ashutoshgngwr/noice/releases/tag/1.2.2)
+
+**Wednesday, 18 August 2021**
+
+- Fix crash on opening preset shortcuts
+- Fix crash on viewing wake-up timers from the system bar
+- Fix fade glitch on re-opening the same preset shortcut
+- Update translations ([#754](https://github.com/ashutoshgngwr/noice/issues/754))
+
+## [v1.2.1](https://github.com/ashutoshgngwr/noice/releases/tag/1.2.1)
+
+**Friday, 13 August 2021**
+
+- CRITICAL: Fix crash on switching screens within the app
+
+## [v1.2.0](https://github.com/ashutoshgngwr/noice/releases/tag/1.2.0)
+
+**Thursday, 12 August 2021**
+
+- Redesign app navigation and UI flows
+- Add user preferred fade-duration in Chromecast app
+- Add fixed duration for fade-out transitions
+- Fix playback glitch when dismissing alarm ringer
+- Disable SSAID collection for analytics (Play Store)
+- Update translations ([#749](https://github.com/ashutoshgngwr/noice/issues/749), [#750](https://github.com/ashutoshgngwr/noice/issues/750))
+
+## [v1.1.1](https://github.com/ashutoshgngwr/noice/releases/tag/1.1.1)
+
+**Saturday, 31 July 2021**
+
+- Publish APKs on GitHub ([#732](https://github.com/ashutoshgngwr/noice/issues/732))
+
 ## [v1.1.0](https://github.com/ashutoshgngwr/noice/releases/tag/1.1.0)
 
 **Saturday, 31 July 2021**

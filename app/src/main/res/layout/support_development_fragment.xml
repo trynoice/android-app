@@ -104,10 +104,12 @@
           android:text="@string/support_development__donate_description"
           android:textAppearance="?attr/textAppearanceBody1" />
 
-        <com.github.ashutoshgngwr.noice.widget.DonateView
+        <FrameLayout
+          android:id="@+id/donate_view_container"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="5dp" />
+          android:layout_marginHorizontal="5dp"
+          android:layout_marginVertical="16dp" />
 
       </LinearLayout>
 

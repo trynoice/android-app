@@ -13,10 +13,8 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.PickerActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
@@ -32,16 +30,11 @@ import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class WakeUpTimerFragmentTest {
-
-  @Rule
-  @JvmField
-  val retryTestRule = RetryTestRule(5)
 
   private lateinit var mockPresetRepository: PresetRepository
   private lateinit var mockReviewFlowProvider: ReviewFlowProvider
@@ -53,7 +46,7 @@ class WakeUpTimerFragmentTest {
 
     mockReviewFlowProvider = mockk(relaxed = true)
     ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .setReviewFlowProvider(mockReviewFlowProvider)
+      .reviewFlowProvider = mockReviewFlowProvider
 
     mockPresetRepository = mockk {
       every { get(null) } returns null
@@ -134,7 +127,7 @@ class WakeUpTimerFragmentTest {
   }
 
   @Test
-  fun testSelectPreset_withoutSavedPresets() {
+  fun testSelectPreset_withoutPresets() {
     every { mockPresetRepository.list() } returns arrayOf()
     onView(withId(R.id.select_preset_button))
       .check(matches(withText(R.string.select_preset)))
@@ -226,16 +219,7 @@ class WakeUpTimerFragmentTest {
   }
 
   @Test
-  fun testIs24hView() {
-    onView(withId(R.id.time_picker)).check(matches(not(EspressoX.is24hViewEnabled())))
-    onView(withId(R.id.is_24h_view)).perform(click())
-    onView(withId(R.id.time_picker)).check(matches(EspressoX.is24hViewEnabled()))
-    onView(withId(R.id.is_24h_view)).perform(click())
-    onView(withId(R.id.time_picker)).check(matches(not(EspressoX.is24hViewEnabled())))
-  }
-
-  @Test
-  fun testLoadSavedPreset() {
+  fun testLoadPreset() {
     val savedPresetID = "test-saved-preset-id"
     val savedPreset = mockk<Preset>(relaxed = true) {
       every { id } returns savedPresetID

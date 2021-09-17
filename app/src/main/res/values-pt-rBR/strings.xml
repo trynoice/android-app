@@ -2,25 +2,23 @@
 <resources>
     <string name="about">Saiba mais</string>
     <string name="app_theme">Tema</string>
-    <string name="close_drawer">Fechar menu de navegação</string>
     <string name="help">Ajuda</string>
     <string name="library">Biblioteca</string>
-    <string name="open_drawer">Abrir menu de navegação</string>
     <string name="report_issue">Informar sobre problema</string>
-    <string name="saved_presets">Ajustes salvos</string>
+    <string name="presets">Predefinições</string>
     <string name="sleep_timer">Temporizador</string>
-    <string name="support_development">Apoie o Desenvolvimento</string>
+    <string name="support_development">Apoie o desenvolvimento</string>
     <string name="wake_up_timer">Despertador</string>
     <string name="okay">OK</string>
     <string name="cancel">Cancelar</string>
     <string name="dismiss">Dispensar</string>
     <string name="name">Nome</string>
     <string name="pause">Pausar</string>
-    <string name="preset_already_exists">Já existe um ajuste com o nome fornecido!</string>
-    <string name="preset_name_cannot_be_empty">Um ajuste não pode ter seu nome vazio!</string>
-    <string name="preset_saved">Ajuste salvo!</string>
+    <string name="preset_already_exists">Já existe uma predefinição com o nome fornecido!</string>
+    <string name="preset_name_cannot_be_empty">Uma predefinição não pode ter seu nome vazio!</string>
+    <string name="preset_saved">Predefinição salva!</string>
     <string name="save">Salvar</string>
-    <string name="save_preset">Salvar ajustes</string>
+    <string name="save_preset">Salvar predefinição</string>
     <string name="play">Tocar</string>
     <string name="play_pause">tocar ou pausar som</string>
     <string name="repeat_time_period">Período até repetir som</string>
@@ -28,9 +26,9 @@
     <string name="volume">Volume do som</string>
     <string name="sound_group__life">Vida</string>
     <string name="sound_group__monsoon">Monção</string>
-    <string name="sound_group__public_gatherings">Encontros Públicos</string>
-    <string name="sound_group__raw_noise">Ruído Bruto</string>
-    <string name="sound_group__times_of_day">Horas do Dia</string>
+    <string name="sound_group__public_gatherings">Encontros públicos</string>
+    <string name="sound_group__raw_noise">Ruído em bruto</string>
+    <string name="sound_group__times_of_day">Horas do dia</string>
     <string name="sound_group__vehicles">Veículos</string>
     <string name="sound_group__water">Água</string>
     <string name="sound_group__wind">Vento</string>
@@ -58,7 +56,7 @@
     <string name="purring_cat">Gato ronronando</string>
     <string name="quiet_conversation">Conversa reservada</string>
     <string name="rolling_thunder">Trovoada iminente</string>
-    <string name="screeching_seagulls">Gaivotas gritando</string>
+    <string name="screeching_seagulls">Gaivotas chilrando</string>
     <string name="seaside">Beira-mar</string>
     <string name="soft_wind">Vento leve</string>
     <string name="thunder_crack">Trovoada forte</string>
@@ -85,7 +83,7 @@
     Use os botões abaixo para acrescentar tempo e iniciar o temporizador.
   </string>
     <string name="schedule">Agendar</string>
-    <string name="select_preset">Selecionar Ajuste</string>
+    <string name="select_preset">Selecionar predefinição</string>
     <string name="wake_up_timer_description">
     Noice irá iniciar o ajuste selecionado quando o tempo acabar. Use os botões abaixo para
     selecionar um ajuste e definir a hora desejada para iniciar o despertador.
@@ -104,11 +102,8 @@
   </string>
     <string name="appintro__getting_started_desc_1">Vamos começar!</string>
     <string name="appintro__getting_started_title">Bem-vindo</string>
-    <string name="appintro__saved_presets_desc">
-    Depois de tocar alguns sons, você pode usar o botão no canto inferior para salvar sua mixagem.
-    Para reutilizar um mix armazenado, pode visitar a lista de ajustes no menu do aplicativo.
-  </string>
-    <string name="appintro__saved_presets_title">Salve seus mixes favoritos</string>
+    <string name="appintro__presets_desc">Depois de tocar alguns sons, você pode usar o botão no canto inferior para salvar sua mixagem. Para reutilizar um mix armazenado, vá para a lista de predefinições no menu do aplicativo.</string>
+    <string name="appintro__presets_title">Salve seus mixes favoritos</string>
     <string name="appintro__library_desc">
     Use a barra de volume para ajustar o volume dos sons. A cada repetição de sons sem loop, um
     período de atraso é selecionado aleatoriamente a partir do intervalo definido na barra de tempo.
@@ -127,11 +122,7 @@
     - selecionar melhores amostras de som\n
     - comprar café\n
   </string>
-    <string name="support_development__donate_google_play_description">
-    Seu pagamento será administrado com segurança pelo Google Play. A quantia será convertida para
-    sua moeda local. Dependendo de sua localização, impostos adicionais _podem_ ser adicionados ao
-    valor final.
-  </string>
+    <string name="support_development__donate_google_play_description">Seu pagamento será administrado com segurança pelo Google Play. Dependendo de sua localização, impostos adicionais _podem_ ser adicionados ao valor final.</string>
     <string name="support_development__donate_thank_you">Obrigado!</string>
     <string name="support_development__donate_thank_you_description">
     Agradecemos de todo o coração por sua generosa contribuição para o projeto Noice.
@@ -146,7 +137,7 @@
     - Para possibilitar futuras atualizações\n
     - Para manter o Noice livre de anúncios para sempre\n
   </string>
-    <string name="cast_media">Transmitir mídia para outro dispositivo</string>
+    <string name="cast_media">Conectar ao Chromecast</string>
     <string name="in_app_feedback__description">
     Gostaríamos muito de ouvir de você sobre o aplicativo. Por favor, reserve um momento para
     visitar nosso repositório no GitHub. Se você não gostou do aplicativo, considere criar uma
@@ -156,10 +147,82 @@
     <string name="in_app_feedback__title">Enviar uma avaliação</string>
     <string name="later">Mais tarde</string>
     <string name="never">Nunca</string>
-    <string name="notification_channel_default__description">Controles de audio</string>
-    <string name="notification_channel_default__name">Reprodução de audio</string>
-    <string name="submit_feedback">Enviar Comentarios</string>
+    <string name="notification_channel_default__description">Controles de áudio</string>
+    <string name="notification_channel_default__name">Reprodução de áudio</string>
+    <string name="submit_feedback">Enviar comentários</string>
     <string name="relax">Relaxar</string>
     <string name="intensity_any">Qualquer</string>
     <string name="mood_any">Qualquer</string>
+    <string name="use_24h_format">Usar formato de 24 horas</string>
+    <plurals name="time_minutes">
+        <item quantity="one">%1$d minuto</item>
+        <item quantity="other">%1$d minutos</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one">%1$d hora</item>
+        <item quantity="other">%1$d horas</item>
+    </plurals>
+    <string name="time_bridge">e</string>
+    <string name="wake_up_timer_schedule_set">O alarme vai disparar em %1$s %2$s %3$s</string>
+    <string name="wake_up_timer_cancelled">Despertador cancelado!</string>
+    <string name="presets_as_home_screen_summary">Mostrar \"predefinições\" na inicialização do aplicativo (requer reinício do aplicativo)</string>
+    <string name="pinned_shortcuts_not_supported">Seu lançador padrão não suporta a adição de atalhos.</string>
+    <string name="preset_does_not_exist">Predefinição não existe. Ela pode ter sido deletada!</string>
+    <string name="add_to_home_screen">Adicionar à tela inicial</string>
+    <string name="random_preset">Predefinição aleatória</string>
+    <string name="mood">Atmosfera</string>
+    <string name="light">Leve</string>
+    <string name="random_preset_description">Predefinições geradas aleatoriamente conterão sons correspondendo à atmosfera selecionada. Além disso, pré-definições densas tentarão reproduzir mais sons simultaneamente.</string>
+    <string name="intensity">Intensidade</string>
+    <string name="focus">Foco</string>
+    <string name="dense">Denso</string>
+    <string name="payment_pending">Notificaremos você assim que terminarmos de processar seu pagamento.</string>
+    <string name="failed_to_purchase">Falha ao iniciar o fluxo de pagamento. Por favor, tente novamente mais tarde!</string>
+    <string name="failed_to_load_inapp_purchases">Falha ao carregar os detalhes de compra no aplicativo. Por favor, tente novamente mais tarde!</string>
+    <string name="should_share_usage_data_summary">Compartilhar automaticamente dados de uso e comportamento com os desenvolvedores</string>
+    <string name="should_share_usage_data">Compartilhar dados de uso e comportamento</string>
+    <string name="others">Outros</string>
+    <string name="decline">Recusar</string>
+    <string name="accept">Aceitar</string>
+    <string name="share_usage_data_consent_title">Preferências de Compartilhamento de Dados</string>
+    <string name="should_display_sound_icons">Exibir ícones sonoros</string>
+    <string name="invalid_import_file_format">O formato de importação do arquivo é inválido!</string>
+    <string name="failed_to_read_file">Falha ao ler o arquivo selecionado!</string>
+    <string name="failed_to_write_file">Falha na escrita para o arquivo selecionado!</string>
+    <string name="all_app_shortcuts_removed">Todos os atalhos de aplicação foram removidos!</string>
+    <string name="remove_all_app_shortcuts_confirmation">Isso removerá todos os atalhos predefinidos do menu de atalhos do aplicativo. Você quer prosseguir\?</string>
+    <string name="remove_all_app_shortcuts">Remover todos os atalhos da aplicação</string>
+    <string name="import_presets_summary">Importar predefinições salvas de um arquivo externo substituirá as predefinições existentes, se houver</string>
+    <string name="import_presets">Importar de um arquivo</string>
+    <string name="export_presets_summary">Exportar o snapshot corrente das predefinições salvas para um arquivo externo</string>
+    <string name="export_presets">Exportar para um arquivo</string>
+    <string name="share">Compartilhar</string>
+    <string name="ignore_audio_focus_changes_summary_on">Não reagir quando outras aplicações reproduzem áudio</string>
+    <string name="ignore_audio_focus_changes_summary_off">Pausar quando outras aplicações reproduzem áudio</string>
+    <string name="ignore_audio_focus_changes">Ignorar mudanças no foco do áudio</string>
+    <string name="unsaved_preset">Predefinição não salva</string>
+    <string name="skip_to_next">Próxima predefinição</string>
+    <string name="skip_to_prev">Predefinição anterior</string>
+    <string name="pinned_shortcut_created">O atalho foi adicionado à tela de início!</string>
+    <string name="pinned_shortcut_creation_failed">Não foi possível adicionar o atalho na tela inicial!</string>
+    <string name="sound_fade_in_duration_summary">Duração de tempo para sons com fade-in (em segundos)</string>
+    <string name="sound_fade_in_duration">Duração do fade-in sonoro</string>
+    <string name="appearance">Aparência</string>
+    <string name="behavior">Comportamento</string>
+    <string name="presets_as_home_screen">\"Predefinições\" como tela inicial</string>
+    <string name="settings">Configurações</string>
+    <string name="app_shortcut_creation_failed">Não foi possível adicionar a predefinição aos atalhos da aplicação!</string>
+    <string name="app_shortcut_created">A predefinição foi adicionada aos atalhos da aplicação!</string>
+    <string name="app_shortcut_removed">A predefinição foi removida dos atalhos da aplicação!</string>
+    <string name="remove_from_app_shortcuts">Remover dos atalhos da aplicação</string>
+    <string name="add_to_app_shortcuts">Adicionar aos atalhos da aplicação</string>
+    <string name="app_authors">Visualizar lista dos autores do Noice</string>
+    <string name="created_by">Criado por</string>
+    <string name="share_usage_data_consent_message">Coletamos dados de uso do aplicativo para melhorar a experiência do usuário. Também coletamos dados de comportamento do aplicativo para analisar e diagnosticar erros encontrados durante o uso do aplicativo. Leia nossa [política de privacidade] (https://ashutoshgngwr.github.io/noice/privacy-policy) para obter mais informações.
+\n
+\n Você pode configurar o compartilhamento automático de dados a qualquer momento dentro do aplicativo acessando \"**Configurações** &gt; **Compartilhar dados de uso e comportamento**\".</string>
+    <string name="import_presets_successful">Predefinições importadas com sucesso do arquivo!</string>
+    <string name="export_presets_successful">Predefinições exportadas com sucesso para o arquivo!</string>
+    <string name="enable_media_buttons_summary">Use botões de mídia de hardware para controlar a reprodução</string>
+    <string name="enable_media_buttons">Habilitar botões de mídia</string>
 </resources>

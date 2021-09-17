@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <item
+    android:id="@+id/sleep_timer"
+    android:icon="@drawable/ic_timer_24dp"
+    android:title="@string/sleep_timer"
+    app:showAsAction="ifRoom" />
+
+  <item
+    android:id="@+id/settings"
+    android:title="@string/settings"
+    app:showAsAction="never" />
+
+  <item
+    android:id="@+id/support_development"
+    android:title="@string/support_development"
+    app:showAsAction="never" />
+
+  <item
+    android:id="@+id/about"
+    android:title="@string/about"
+    app:showAsAction="never" />
+
+  <item
+    android:id="@+id/help"
+    android:title="@string/help"
+    app:showAsAction="never" />
+
+  <item
+    android:id="@+id/report_issue"
+    android:title="@string/report_issue"
+    app:showAsAction="never" />
+
+  <item
+    android:id="@+id/submit_feedback"
+    android:title="@string/submit_feedback"
+    app:showAsAction="never" />
+
+</menu>

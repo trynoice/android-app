@@ -28,7 +28,7 @@ class SleepTimerFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    analyticsProvider = NoiceApplication.of(requireContext()).getAnalyticsProvider()
+    analyticsProvider = NoiceApplication.of(requireContext()).analyticsProvider
     binding.durationPicker.setResetButtonEnabled(false)
     binding.durationPicker.setOnDurationAddedListener(this::onDurationAdded)
 
@@ -69,7 +69,7 @@ class SleepTimerFragment : Fragment() {
     binding.countdownView.startCountdown(remaining)
     // maybe show in-app review dialog to the user
     NoiceApplication.of(requireContext())
-      .getReviewFlowProvider()
+      .reviewFlowProvider
       .maybeAskForReview(requireActivity())
   }
 }

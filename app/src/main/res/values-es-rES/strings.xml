@@ -2,12 +2,10 @@
 <resources>
     <string name="about">Acerca de</string>
     <string name="app_theme">Tema</string>
-    <string name="close_drawer">Cerrar menú de navegación</string>
     <string name="help">Ayuda</string>
     <string name="library">Biblioteca</string>
-    <string name="open_drawer">Abrir menú de navegación</string>
     <string name="report_issue">Informar de problemas</string>
-    <string name="saved_presets">Preajustes guardados</string>
+    <string name="presets">Preajustes guardados</string>
     <string name="sleep_timer">Temporizador</string>
     <string name="support_development">Apoyar al desarrollador</string>
     <string name="wake_up_timer">Despertador</string>
@@ -91,11 +89,8 @@
     <string name="appintro__getting_started_desc_0">¡Desliza hacia la izquierda para conocer todas las funciones!</string>
     <string name="appintro__getting_started_desc_1">¡Empecemos!</string>
     <string name="appintro__getting_started_title">Bienvenidos</string>
-    <string name="appintro__saved_presets_desc">
-    Después de reproducir algunos sonidos, puede usar el botón en la esquina inferior para guardar su preset.
-    Para reutilizar un preset almacenado, puede visitar la lista predeterminada en el menú de la aplicación.
-  </string>
-    <string name="appintro__saved_presets_title">Guarde sus mezclas preferidas</string>
+    <string name="appintro__presets_desc">Después de reproducir algunos sonidos, puede usar el botón en la esquina inferior para guardar su preset. Para reutilizar un preset almacenado, puede visitar la lista predeterminada en el menú de la aplicación.</string>
+    <string name="appintro__presets_title">Guarde sus mezclas preferidas</string>
     <string name="appintro__library_desc">
     Utilice el control deslizante de volumen para ajustar los volúmenes de sonido. En cada repetición de sonidos sin bucle, un periodo
     prolongado se selecciona aleatoriamente del rango establecido por el control deslizante de tiempo.
@@ -156,20 +151,16 @@
     <string name="time_bridge">y</string>
     <string name="wake_up_timer_schedule_set">La alarma sonará en %1$s %2$s %3$s</string>
     <string name="wake_up_timer_cancelled">¡Despertador cancelado!</string>
-    <string name="saved_presets_as_home_screen_summary">Mostrar preajustes guardados al iniciar la aplicación</string>
+    <string name="presets_as_home_screen_summary">Mostrar \"preajustes guardados\" al iniciar la aplicación (requiere reiniciar la aplicación)</string>
     <string name="preset_does_not_exist">El preajuste no existe. ¡Puede haber sido borrada!</string>
     <string name="add_to_home_screen">Añadir a la pantalla de inicio</string>
     <string name="okay">Vale</string>
     <string name="pinned_shortcuts_not_supported">Su aplicación de inicio predeterminada no admite añadir accesos directos.</string>
     <string name="random_preset_description">Los preajustes generados aleatoriamente contendrán sonidos correspondientes al ambiente elegido. Además, los preajustes densos intentarán reproducir más sonidos simultáneamente.</string>
-    <string name="should_update_media_volume">Actualice el volumen del dispositivo multimedia antes de que comience el preajuste</string>
-    <string name="device_media_volume">Volumen del dispositivo multimedia</string>
     <string name="app_authors">Ver la lista de los autores de Noice</string>
-    <string name="sound_fade_duration_summary">Duración del fundido de entrada/salida para reproducir/detener sonidos (en segundos)</string>
-    <string name="sound_fade_duration">Duración de la disminución del sonido</string>
     <string name="appearance">Apariencia</string>
     <string name="behavior">Comportamiento</string>
-    <string name="saved_presets_as_home_screen">Preajustes guardados como pantalla de inicio</string>
+    <string name="presets_as_home_screen">Preajustes guardados como pantalla de inicio</string>
     <string name="settings">Configuración</string>
     <string name="remove_from_app_shortcuts">Quitar de atajos de aplicación</string>
     <string name="add_to_app_shortcuts">Añadir a atajos de aplicación</string>
@@ -195,4 +186,13 @@
     <string name="import_presets_summary">Importar preajustes desde un archivo externo sobreescribirá los existentes</string>
     <string name="failed_to_write_file">No se pudo escribir en el archivo seleccionado!</string>
     <string name="failed_to_read_file">No se pudo leer el archivo seleccionado!</string>
+    <string name="failed_to_purchase">No se ha podido iniciar el flujo de pagos. Vuelve a intentarlo más tarde!</string>
+    <string name="failed_to_load_inapp_purchases">No se han podido cargar los detalles de la compra en la aplicación. Vuelve a intentarlo más tarde!</string>
+    <string name="should_share_usage_data_summary">Compartir automáticamente los datos de uso con los desarrolladores</string>
+    <string name="should_share_usage_data">Compartir datos de uso</string>
+    <string name="others">Otros</string>
+    <string name="accept">Aceptar</string>
+    <string name="decline">Descartar</string>
+    <string name="created_by">Creado por</string>
+    <string name="payment_pending">Te notificaremos en cuanto terminemos de procesar tu pago.</string>
 </resources>

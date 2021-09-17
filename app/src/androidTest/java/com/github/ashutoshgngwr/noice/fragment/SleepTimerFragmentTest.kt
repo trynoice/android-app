@@ -13,7 +13,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.RetryTestRule
 import com.github.ashutoshgngwr.noice.databinding.SleepTimerFragmentBinding
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import io.mockk.every
@@ -25,17 +24,12 @@ import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class SleepTimerFragmentTest {
-
-  @Rule
-  @JvmField
-  val retryTestRule = RetryTestRule(5)
 
   private lateinit var fragmentScenario: FragmentScenario<SleepTimerFragment>
 
@@ -45,7 +39,7 @@ class SleepTimerFragmentTest {
     every { PlaybackController.scheduleAutoStop(any(), any()) } returns Unit
 
     ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .setReviewFlowProvider(mockk(relaxed = true))
+      .reviewFlowProvider = mockk(relaxed = true)
 
     fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
   }

@@ -16,8 +16,8 @@
     <string name="appintro__timer_desc">少しの環境音で、眠りにつきやすくなります。スリープタイマーを使うことで、Noiceを自動的にシャットダウンできます。同様に、穏やかな環境で目を覚ましたいときには、起床タイマーを使ってアラームをセットできます。</string>
     <string name="appintro__library_title">完璧なサラウンドを作成</string>
     <string name="appintro__library_desc">音量スライダーを利用して音の大きさを調節できます。ループしない音の繰り返しごとに、タイムスライダーで設定した範囲からランダムに遅延時間が選択されます。</string>
-    <string name="appintro__saved_presets_title">あなたのお気に入りのミックスを保存</string>
-    <string name="appintro__saved_presets_desc">いくつかの音を再生した後、下端にあるボタンを使ってミックスを保存することができます。保存したミックスを再生するには、メニューからプリセットリストに移動します。</string>
+    <string name="appintro__presets_title">あなたのお気に入りのミックスを保存</string>
+    <string name="appintro__presets_desc">いくつかの音を再生した後、下端にあるボタンを使ってミックスを保存することができます。保存したミックスを再生するには、メニューからプリセットリストに移動します。</string>
     <string name="appintro__getting_started_title">ようこそ</string>
     <string name="appintro__getting_started_desc_1">さあ、はじめよう!</string>
     <string name="appintro__getting_started_desc_0">左へスワイプすることで全機能を確認することができます!</string>
@@ -27,8 +27,6 @@
     <string name="app_theme_system_default">システム設定のデフォルト</string>
     <string name="app_theme_dark">ダーク</string>
     <string name="app_theme_light">ライト</string>
-    <string name="should_update_media_volume">プリセット開始前に端末のメディア音量を変更する</string>
-    <string name="device_media_volume">端末のメディア音量</string>
     <string name="use_24h_format">24時間フォーマットを使用</string>
     <string name="wake_up_timer_description">タイマーが終了後、Noiceは選択されたプリセットを再生します。下のボタンでプリセットを選択し、起床タイマーを開始する時間を設定してください。</string>
     <plurals name="time_minutes">
@@ -45,7 +43,7 @@
     <string name="sleep_timer_description">Noiceはタイマー終了時にアプリ自体をシャットダウンします。下のボタンで時間を追加してタイマーを開始できます。</string>
     <string name="reset">リセット</string>
     <string name="auto_sleep_schedule_cancelled">自動スリープタイマーがキャンセルされました!</string>
-    <string name="saved_presets_as_home_screen_summary">アプリ起動時に保存されたプリセットを表示する</string>
+    <string name="presets_as_home_screen_summary">アプリ起動時に保存されたプリセットを表示する</string>
     <string name="pinned_shortcuts_not_supported">あなたが利用しているデフォルトのランチャーは、ショートカットの追加をサポートしていません。</string>
     <string name="rename">名前を変更</string>
     <string name="preset_info__description">プリセットが作成されていません。プレイリストを作成するには,ライブラリに移動してサウンドを再生します。その後、画面の下隅に表示される保存ボタンをクリックします。</string>
@@ -127,12 +125,10 @@
     <string name="wake_up_timer">起床タイマー</string>
     <string name="support_development">開発を支援する</string>
     <string name="sleep_timer">スリープタイマー</string>
-    <string name="saved_presets">保存したプリセット</string>
+    <string name="presets">保存したプリセット</string>
     <string name="report_issue">問題を報告</string>
-    <string name="open_drawer">ナビゲーションドロワーを開く</string>
     <string name="library">ライブラリ</string>
     <string name="help">ヘルプ</string>
-    <string name="close_drawer">ナビゲーションドロワーを閉じる</string>
     <string name="app_theme">テーマ</string>
     <string name="about">このアプリについて</string>
     <string name="app_authors">Noiceの作成者一覧を見る</string>
@@ -146,12 +142,10 @@
     <string name="support_development__why_description">- 将来のアップデートを継続するため
 \n- Noiceを永遠に広告無しのアプリとして継続するため
 \n</string>
-    <string name="saved_presets_as_home_screen">プリセットをホーム画面として保存</string>
+    <string name="presets_as_home_screen">プリセットをホーム画面として保存</string>
     <string name="payment_pending">お支払いの処理が完了したら、すぐにお知らせします。</string>
     <string name="failed_to_purchase">支払フローを開始できませんでした。後でもう一度お試しください!</string>
     <string name="failed_to_load_inapp_purchases">アプリ内課金の詳細を読み込めませんでした。後でもう一度お試しください!</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">保存されていないプリセットを再生する場合、プレーヤー通知にランダムプリセットを生成するためのスキップボタンを有効化する</string>
-    <string name="should_allow_skipping_unsaved_presets">保存されていないプリセットのスキップを許可</string>
     <string name="should_share_usage_data_summary">使用状況と動作データを開発者と共有する</string>
     <string name="should_share_usage_data">使用状況と動作データの共有</string>
     <string name="others">その他</string>
@@ -181,8 +175,6 @@
     <string name="skip_to_prev">前のプリセット</string>
     <string name="pinned_shortcut_created">ホーム画面にショートカットが追加されました!</string>
     <string name="pinned_shortcut_creation_failed">ホーム画面へのショートカットの追加に失敗しました!</string>
-    <string name="sound_fade_duration_summary">音の再生/停止のフェードイン/アウト時間 (秒)</string>
-    <string name="sound_fade_duration">サウンドのフェード時間</string>
     <string name="appearance">見た目</string>
     <string name="behavior">ふるまい</string>
     <string name="settings">設定</string>

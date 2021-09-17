@@ -2,12 +2,10 @@
 <resources>
     <string name="about">O aplikaci</string>
     <string name="app_theme">Motiv</string>
-    <string name="close_drawer">Zavřít navigační lištu</string>
     <string name="help">Nápověda</string>
     <string name="library">Knihovna</string>
-    <string name="open_drawer">Otevřít navigační lištu</string>
     <string name="report_issue">Nahlásit chybu</string>
-    <string name="saved_presets">Uložené mixy</string>
+    <string name="presets">Mixy</string>
     <string name="sleep_timer">Časovač vypnutí</string>
     <string name="support_development">Podpořit vývoj</string>
     <string name="wake_up_timer">Časovač spuštení</string>
@@ -92,7 +90,6 @@
   </string>
     <string name="rename">Přejmenovat</string>
     <string name="pinned_shortcuts_not_supported">Váš výchozí launcher nepodporuje přidávání nových zkratek aplikací.</string>
-    <string name="saved_presets_as_home_screen_summary">Zobazit \"uložené mixy\" při spuštění aplikace</string>
     <string name="auto_sleep_schedule_cancelled">Časovač vypnutí byl úspěšně zrušen!</string>
     <string name="reset">Resetovat</string>
     <string name="sleep_timer_description">
@@ -115,8 +112,6 @@
     Noice se sám spustí po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
   </string>
     <string name="use_24h_format">Používat 24-hodinový formát</string>
-    <string name="device_media_volume">Hlasitost médií dle zařízení</string>
-    <string name="should_update_media_volume">Upravit automaticky hlasitost před spuštěním mixu</string>
     <string name="app_theme_light">Světlý</string>
     <string name="app_theme_dark">Tmavý</string>
     <string name="app_theme_system_default">Dle nastavení systému</string>
@@ -129,11 +124,8 @@
     <string name="appintro__getting_started_desc_0">Zatáhněte doleva a my vám ukážeme, co vše Noice umí!</string>
     <string name="appintro__getting_started_desc_1">Začněme!</string>
     <string name="appintro__getting_started_title">Vítejte</string>
-    <string name="appintro__saved_presets_desc">
-    Při přehrávání vícero zvuků si můžete aktuálně přehrávaný mix uložit klepnutím na tlačítko v pravém dolním rohu.
-    Pro znovupoužití vámi uloženého mixu, navštivte sekci Uložené mixy v menu aplikace.
-  </string>
-    <string name="appintro__saved_presets_title">Uložte si svůj oblíbený mix</string>
+    <string name="appintro__presets_desc">Při přehrávání vícero zvuků si můžete aktuálně přehrávaný mix uložit klepnutím na tlačítko v pravém dolním rohu. Pro znovupoužití vámi uloženého mixu, navštivte sekci Uložené předvolby v menu aplikace.</string>
+    <string name="appintro__presets_title">Uložte si svůj oblíbený mix</string>
     <string name="appintro__library_desc">
     Posuvníky hlasitosti nastavujete hlasitost jednotlivých zvuků. Mezi každým opakováním nahrávek bez smyčky
     je vložena mezera o náhodné délce. Tu můžete nastavit posuvníkem prodlevy.
@@ -190,11 +182,8 @@
     <string name="app_shortcut_created">Mix byl přidán mezi zkratky aplikace!</string>
     <string name="app_shortcut_creation_failed">Nepodařilo se přidat mix mezi zkratky aplikace!</string>
     <string name="settings">Nastavení</string>
-    <string name="saved_presets_as_home_screen">Ukázat uložené mixy při spuštění aplikace</string>
     <string name="behavior">Chování</string>
     <string name="appearance">Vzhled</string>
-    <string name="sound_fade_duration">Rychlost náběhu</string>
-    <string name="sound_fade_duration_summary">Délka zesilování/utišování při přehrávání zvuků (v sekundách)</string>
     <string name="pinned_shortcut_creation_failed">Nepodařilo přidat zkratku aplikace na plochu!</string>
     <string name="pinned_shortcut_created">Zkratka byla přidána na plochu!</string>
     <string name="skip_to_prev">Předchozí mix</string>
@@ -228,9 +217,8 @@
     <string name="others">Ostatní</string>
     <string name="should_share_usage_data">Odesílat technická data o používání a chování</string>
     <string name="should_share_usage_data_summary">Automaticky sdílet s vývojáři data o používání a chování aplikace</string>
-    <string name="should_allow_skipping_unsaved_presets">Povolit přeskakování neuložených mixů</string>
-    <string name="should_allow_skipping_unsaved_presets_summary">Při přehrávání neuložených mixů, povolit tlačítko přeskočení v interaktivní notifikaci přehrávače, které bude generovat nové náhodné mixy.</string>
     <string name="failed_to_load_inapp_purchases">Nepodařilo se načíst data o platbě. Zkuste to, prosím, znovu!</string>
     <string name="failed_to_purchase">Nepodařilo se pustit kroky platby. Zkuste to, prosím, znovu!</string>
     <string name="payment_pending">Dáme vám vědět ihned, jak vaši platbu zpracujeme.</string>
+    <string name="presets_as_home_screen_summary">Ukázat uložené předvolby při spuštění aplikace</string>
 </resources>

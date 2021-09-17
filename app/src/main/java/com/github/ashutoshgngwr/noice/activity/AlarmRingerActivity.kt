@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
@@ -21,6 +22,7 @@ import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.databinding.AlarmRingerActivityBinding
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.playback.strategy.LocalPlaybackStrategy
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.ncorti.slidetoact.SlideToActView
@@ -35,9 +37,14 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     private val LOG_TAG = AlarmRingerActivity::class.simpleName
 
     fun getPendingIntent(context: Context, presetID: String?): PendingIntent {
+      var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE
+      }
+
       return Intent(context, AlarmRingerActivity::class.java)
         .putExtra(EXTRA_PRESET_ID, presetID)
-        .let { PendingIntent.getActivity(context, RC_ALARM, it, PendingIntent.FLAG_UPDATE_CURRENT) }
+        .let { PendingIntent.getActivity(context, RC_ALARM, it, piFlags) }
     }
   }
 
@@ -57,21 +64,40 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     setContentView(binding.root)
     showWhenLocked()
 
-    handleNewIntent()
-
-    analyticsProvider = NoiceApplication.of(this).getAnalyticsProvider()
+    analyticsProvider = NoiceApplication.of(this).analyticsProvider
     ringerStartTime = System.currentTimeMillis()
   }
 
   override fun onNewIntent(intent: Intent?) {
     super.onNewIntent(intent)
     setIntent(intent)
-    handleNewIntent()
   }
 
   override fun onResume() {
     super.onResume()
     enableImmersiveMode()
+
+    // handle the new intent here since onResume() is guaranteed to be called after onNewIntent().
+    // https://developer.android.com/reference/android/app/Activity#onNewIntent(android.content.Intent)
+    val presetID = intent.getStringExtra(EXTRA_PRESET_ID)
+    if (presetID == null) {
+      Log.d(LOG_TAG, "onResume(): presetID is null")
+      finish()
+      return
+    }
+
+    // Since activity takes a moment to actually show up, invoking `startService` from `onCreate` or
+    // `onResume` fails with `java.lang.IllegalStateException: Not allowed to start service Intent:
+    // app is in background` on recent Android version (O+). `PlaybackController` can not call
+    // `startForegroundService` since it doesn't know if an action will bring `MediaPlayerService`
+    // to foreground. To prevent `PlaybackController` from causing this error by invoking
+    // `startService`, we need to manually start `MediaPlayerService` in the foreground since we can
+    // be certain that playPreset action will bring it to foreground before Android System kills it.
+    ContextCompat.startForegroundService(this, Intent(this, MediaPlayerService::class.java))
+
+    Log.d(LOG_TAG, "onResume(): starting preset")
+    PlaybackController.setAudioUsage(this, AudioAttributesCompat.USAGE_ALARM)
+    PlaybackController.playPreset(this, presetID)
   }
 
   override fun onStop() {
@@ -82,7 +108,11 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
 
     Log.d(LOG_TAG, "onStop(): pausing playback")
     PlaybackController.pause(this)
-    PlaybackController.setAudioUsage(this, AudioAttributesCompat.USAGE_MEDIA)
+
+    // TODO: find a better solution to wait for pause transition to finish before switching streams.
+    Handler(mainLooper).postDelayed({
+      PlaybackController.setAudioUsage(this, AudioAttributesCompat.USAGE_MEDIA)
+    }, LocalPlaybackStrategy.DEFAULT_FADE_DURATION)
 
     val duration = System.currentTimeMillis() - ringerStartTime
     analyticsProvider.logEvent("alarm_ringer_session", bundleOf("duration_ms" to duration))
@@ -119,28 +149,5 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
           WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
       )
     }
-  }
-
-
-  private fun handleNewIntent() {
-    val presetID = intent.getStringExtra(EXTRA_PRESET_ID)
-    if (presetID == null) {
-      Log.d(LOG_TAG, "handleNewIntent(): presetID is null")
-      finish()
-      return
-    }
-
-    // Since activity takes a moment to actually show up, invoking `startService` from `onCreate` or
-    // `onResume` fails with `java.lang.IllegalStateException: Not allowed to start service Intent:
-    // app is in background` on recent Android version (O+). `PlaybackController` can not call
-    // `startForegroundService` since it doesn't know if an action will bring `MediaPlayerService`
-    // to foreground. To prevent `PlaybackController` from causing this error by invoking
-    // `startService`, we need to manually start `MediaPlayerService` in the foreground since we can
-    // be certain that playPreset action will bring it to foreground before Android System kills it.
-    ContextCompat.startForegroundService(this, Intent(this, MediaPlayerService::class.java))
-
-    Log.d(LOG_TAG, "handleNewIntent(): starting preset")
-    PlaybackController.setAudioUsage(this, AudioAttributesCompat.USAGE_ALARM)
-    PlaybackController.playPreset(this, presetID)
   }
 }
