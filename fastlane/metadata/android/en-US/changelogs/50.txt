@@ -1,0 +1,8 @@
+- Fix user setting for configuring HW media buttons
+- Fix crash on running full version without Play Store installed
+- Use device settings for showing 24-hour time pickers
+- Update translations
+- Minor bug fixes and improvements
+
+We're continuously working to make Noice better. Please turn on updates to never miss a thing!
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG

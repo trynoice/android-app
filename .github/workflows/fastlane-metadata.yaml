@@ -24,6 +24,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v2
+        with:
+          lfs: true
       - uses: ashutoshgngwr/validate-fastlane-supply-metadata@v1
         with:
           usePlayStoreLocales: true
@@ -36,6 +38,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v2
+        with:
+          lfs: true
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
