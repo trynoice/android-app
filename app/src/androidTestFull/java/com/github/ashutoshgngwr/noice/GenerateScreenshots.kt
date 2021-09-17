@@ -26,7 +26,6 @@ import com.github.ashutoshgngwr.noice.activity.AppIntroActivity
 import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.fragment.PresetsFragment
 import com.github.ashutoshgngwr.noice.playback.Player
-import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.Matchers.allOf
@@ -43,7 +42,6 @@ import org.junit.runners.model.Statement
 import tools.fastlane.screengrab.Screengrab
 import tools.fastlane.screengrab.cleanstatusbar.CleanStatusBar
 import tools.fastlane.screengrab.locale.LocaleTestRule
-import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 class GenerateScreenshots {
@@ -68,55 +66,6 @@ class GenerateScreenshots {
           putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true)
           putBoolean(MainActivity.PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true)
         }
-
-      // using mocks to save a few presets for screenshots
-      with(PresetRepository.newInstance(ApplicationProvider.getApplicationContext())) {
-        create(mockk {
-          every { id } returns UUID.randomUUID().toString()
-          every { name } returns "Airplane"
-          every { playerStates } returns arrayOf(
-            mockk {
-              every { soundKey } returns "airplane_inflight"
-              every { volume } returns Player.DEFAULT_VOLUME
-              every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
-            },
-            mockk {
-              every { soundKey } returns "airplane_seatbelt_beeps"
-              every { volume } returns Player.DEFAULT_VOLUME
-              every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
-            }
-          )
-        })
-
-        create(mockk {
-          every { id } returns UUID.randomUUID().toString()
-          every { name } returns "Night in the Jungle"
-          every { playerStates } returns arrayOf(
-            mockk {
-              every { soundKey } returns "night"
-              every { volume } returns Player.DEFAULT_VOLUME
-              every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
-            }
-          )
-        })
-
-        create(mockk {
-          every { id } returns UUID.randomUUID().toString()
-          every { name } returns "Windy Summer"
-          every { playerStates } returns arrayOf(
-            mockk {
-              every { soundKey } returns "soft_wind"
-              every { volume } returns Player.DEFAULT_VOLUME
-              every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
-            },
-            mockk {
-              every { soundKey } returns "wind_in_palm_trees"
-              every { volume } returns Player.DEFAULT_VOLUME
-              every { timePeriod } returns Player.DEFAULT_TIME_PERIOD
-            }
-          )
-        })
-      }
     }
 
     @JvmStatic
@@ -251,12 +200,6 @@ class GenerateScreenshots {
     WakeUpTimerManager.cancel(ApplicationProvider.getApplicationContext())
 
     onView(withId(R.id.wake_up_timer)).perform(click())
-
-    onView(withId(R.id.select_preset_button))
-      .perform(scrollTo(), click())
-
-    onView(withText("Airplane"))
-      .perform(scrollTo(), click())
 
     onView(withId(R.id.time_picker))
       .perform(PickerActions.setTime(12, 30))
