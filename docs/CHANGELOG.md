@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.3.1](https://github.com/ashutoshgngwr/noice/releases/tag/1.3.1)
+
+**Saturday, 18 September 2021**
+
+- Fix user setting for configuring HW media buttons ([#796](https://github.com/ashutoshgngwr/noice/issues/796))
+- Fix crash on running full version without Play Store installed
+- Use device settings for showing 24-hour time pickers ([#791](https://github.com/ashutoshgngwr/noice/issues/791))
+- Update translations ([#790](https://github.com/ashutoshgngwr/noice/issues/790), [#795](https://github.com/ashutoshgngwr/noice/issues/795), [#797](https://github.com/ashutoshgngwr/noice/issues/797), [#801](https://github.com/ashutoshgngwr/noice/issues/801), [#802](https://github.com/ashutoshgngwr/noice/issues/802), [#803](https://github.com/ashutoshgngwr/noice/issues/803))
+- Minor bug fixes and improvements
+
 ## [v1.3.0](https://github.com/ashutoshgngwr/noice/releases/tag/1.3.0)
 
 **Wednesday, 1 September 2021**
