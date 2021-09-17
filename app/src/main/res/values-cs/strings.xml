@@ -7,19 +7,31 @@
     <string name="library">Knihovna</string>
     <string name="open_drawer">Otevřít navigační lištu</string>
     <string name="report_issue">Nahlásit chybu</string>
-    <string name="saved_presets">Uložené předvolby</string>
+    <string name="saved_presets">Uložené mixy</string>
     <string name="sleep_timer">Časovač vypnutí</string>
     <string name="support_development">Podpořit vývoj</string>
     <string name="wake_up_timer">Časovač spuštení</string>
+    <string name="submit_feedback">Odeslat zpětnou vazbu</string>
+    <string name="mood_any">Jakákoliv</string>
+    <string name="intensity_any">Jakákoliv</string>
+    <string name="dense">Hutná</string>
+    <string name="focus">Soustředění</string>
+    <string name="intensity">Intenzita</string>
+    <string name="random_preset_description">Vygenerované náhodné mixy budou obsahovat zvuky korespondující s vaší náladou. Hutné mixy se navíc budou snažit přehrávat i více stop najednou.</string>
+    <string name="light">Lehká</string>
+    <string name="mood">Nálada</string>
+    <string name="okay">Budiž</string>
+    <string name="random_preset">Náhodný mix</string>
+    <string name="relax">Uvolnění</string>
     <string name="cancel">Zrušit</string>
     <string name="dismiss">Zahodit</string>
     <string name="name">Název</string>
     <string name="pause">Pauza</string>
-    <string name="preset_already_exists">Předvolba s tímto názvem již existuje!</string>
-    <string name="preset_name_cannot_be_empty">Název předvolby musí mít alespoň jedno písmeno!</string>
-    <string name="preset_saved">Předvolba uložena!</string>
+    <string name="preset_already_exists">Mix s tímto názvem již existuje!</string>
+    <string name="preset_name_cannot_be_empty">Název mixu musí mít alespoň jedno písmeno!</string>
+    <string name="preset_saved">Mix byl uložen!</string>
     <string name="save">Uložit</string>
-    <string name="save_preset">Uložit předvolbu</string>
+    <string name="save_preset">Uložit mix</string>
     <string name="play">Přehrát</string>
     <string name="play_pause">Přehrát/Pozastavit</string>
     <string name="repeat_time_period">Doba opakování</string>
@@ -27,7 +39,7 @@
     <string name="volume">Hlasitost</string>
     <string name="sound_group__life">Život</string>
     <string name="sound_group__monsoon">Monzun</string>
-    <string name="sound_group__public_gatherings">Veřejná shromáždění</string>
+    <string name="sound_group__public_gatherings">Civilizace</string>
     <string name="sound_group__raw_noise">Syntentický šum</string>
     <string name="sound_group__times_of_day">Denní doba</string>
     <string name="sound_group__vehicles">Vozidla</string>
@@ -68,25 +80,43 @@
     <string name="white_noise">Bílý šum</string>
     <string name="wind_in_chimes_of_shells">Vítr vanoucí zvonkohrou z mušlí</string>
     <string name="wind_in_palm_trees">Vítr vanoucí palmami</string>
+    <string name="add_to_home_screen">Přidat na domovskou obrazovku</string>
     <string name="delete">Odstranit</string>
     <string name="open_context_menu">Otevřít kontextovou nabídku</string>
     <string name="preset_delete_confirmation">Jste si jisti odstraněním %s?</string>
-    <string name="preset_deleted">Předvolba odstraněna!</string>
+    <string name="preset_deleted">Mix odstraněn!</string>
+    <string name="preset_does_not_exist">Mix neexistuje. Mohl být smazána!</string>
     <string name="preset_info__description">
-    Ještě si nevytvořili žádné předvolby namíchání zvuků. K vytvoření předvolby přejděte do Knihovny a pusťte si nějaký zvuk.
+    Ještě si nevytvořili žádné mixy. K vytvoření mixu přejděte do Knihovny a pusťte si nějaký zvuk.
     Poté klikněte na tlačítko Uložit, které se objeví v levém dolním rohu obrazovky.
   </string>
     <string name="rename">Přejmenovat</string>
+    <string name="pinned_shortcuts_not_supported">Váš výchozí launcher nepodporuje přidávání nových zkratek aplikací.</string>
+    <string name="saved_presets_as_home_screen_summary">Zobazit \"uložené mixy\" při spuštění aplikace</string>
     <string name="auto_sleep_schedule_cancelled">Časovač vypnutí byl úspěšně zrušen!</string>
     <string name="reset">Resetovat</string>
     <string name="sleep_timer_description">
     Noice se sám vypne po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
   </string>
     <string name="schedule">Nastavit</string>
-    <string name="select_preset">Zvolte předvolbu</string>
+    <string name="select_preset">Zvolte mix</string>
+    <string name="wake_up_timer_cancelled">Časovač k probuzení zrušen!</string>
+    <string name="wake_up_timer_schedule_set">Alarm se spustí za %1$s %2$s %3$s</string>
+    <string name="time_bridge">a</string>
+    <plurals name="time_hours">
+        <item quantity="one">%1$d hodina</item>
+        <item quantity="other">%1$d hodin(y)</item>
+    </plurals>
+    <plurals name="time_minutes">
+        <item quantity="one">%1$d minuta</item>
+        <item quantity="other">%1$d minut(y)</item>
+    </plurals>
     <string name="wake_up_timer_description">
     Noice se sám spustí po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
   </string>
+    <string name="use_24h_format">Používat 24-hodinový formát</string>
+    <string name="device_media_volume">Hlasitost médií dle zařízení</string>
+    <string name="should_update_media_volume">Upravit automaticky hlasitost před spuštěním mixu</string>
     <string name="app_theme_light">Světlý</string>
     <string name="app_theme_dark">Tmavý</string>
     <string name="app_theme_system_default">Dle nastavení systému</string>
@@ -101,7 +131,7 @@
     <string name="appintro__getting_started_title">Vítejte</string>
     <string name="appintro__saved_presets_desc">
     Při přehrávání vícero zvuků si můžete aktuálně přehrávaný mix uložit klepnutím na tlačítko v pravém dolním rohu.
-    Pro znovupoužití vámi uloženého mixu, navštivte sekci Uložené předvolby v menu aplikace.
+    Pro znovupoužití vámi uloženého mixu, navštivte sekci Uložené mixy v menu aplikace.
   </string>
     <string name="appintro__saved_presets_title">Uložte si svůj oblíbený mix</string>
     <string name="appintro__library_desc">
@@ -143,34 +173,64 @@
     - Pro udržení Noice nadále bez reklam\n
   </string>
     <string name="cast_media">Přehrát na jiném zařízení</string>
+    <string name="in_app_feedback__description">
+    Rádi bychom slyšeli váš názor na naší appku. Udělejte si, prosíme, na nás čas a navštivte náš GitHub.
+    Pokud se vám appka nelíbí, prosíme, zvažte založení nového issue s popisem vašeho problému.
+    V opačném případě, prosíme o hvězdičku k projektu, jako ukázku vaší podpory.
+  </string>
+    <string name="in_app_feedback__title">Odeslat hodnocení</string>
+    <string name="later">Později</string>
+    <string name="never">Nikdy</string>
     <string name="notification_channel_default__description">Ovladání přehrávače</string>
     <string name="notification_channel_default__name">Právě hraje</string>
-    <string name="submit_feedback">Odeslat zpětnou vazbu</string>
-    <string name="invalid_import_file_format">Formát souboru pro import je neplatný!</string>
-    <string name="failed_to_read_file">Čtení vybraného souboru se nezdařilo!</string>
-    <string name="failed_to_write_file">Zápis do vybraného souboru se nezdařil!</string>
-    <string name="all_app_shortcuts_removed">Všechny zástupce aplikace byly odstraněny!</string>
-    <string name="remove_all_app_shortcuts">Odstranit všechny zástupce aplikace</string>
-    <string name="import_presets">Import ze souboru</string>
-    <string name="export_presets">Export do souboru</string>
-    <string name="share">Sdílet</string>
-    <string name="ignore_audio_focus_changes_summary_on">Nereagovat, když jiné aplikace budou přehrávat zvuk</string>
-    <string name="ignore_audio_focus_changes_summary_off">Pozastavit, když jiné aplikace začnou přehrávat zvuk</string>
+    <string name="app_authors">Zobrazit seznam autorů Noice</string>
+    <string name="add_to_app_shortcuts">Přidat mezi zkratky aplikace</string>
+    <string name="remove_from_app_shortcuts">Odebrat ze zkratek aplikace</string>
+    <string name="app_shortcut_removed">Mix byl odebrán ze zkratek aplikace!</string>
+    <string name="app_shortcut_created">Mix byl přidán mezi zkratky aplikace!</string>
+    <string name="app_shortcut_creation_failed">Nepodařilo se přidat mix mezi zkratky aplikace!</string>
+    <string name="settings">Nastavení</string>
+    <string name="saved_presets_as_home_screen">Ukázat uložené mixy při spuštění aplikace</string>
+    <string name="behavior">Chování</string>
     <string name="appearance">Vzhled</string>
-    <string name="time_bridge">a</string>
-    <string name="wake_up_timer_schedule_set">Alarm se spustí za %1$s %2$s %3$s</string>
-    <string name="wake_up_timer_cancelled">Časovač k probuzení zrušen!</string>
-    <string name="saved_presets_as_home_screen_summary">Ukázat uložené předvolby při spuštění aplikace</string>
-    <string name="preset_does_not_exist">Předvolba neexistuje. Mohla být smazána!</string>
-    <string name="add_to_home_screen">Přidat na domovskou obrazovky</string>
-    <string name="relax">Uvolnění</string>
-    <string name="random_preset">Náhodná předvolba</string>
-    <string name="okay">Dobře</string>
-    <string name="mood">Nálada</string>
-    <string name="light">Lehká</string>
-    <string name="intensity">Intenzita</string>
-    <string name="focus">Soustředění</string>
-    <string name="dense">Hustá</string>
-    <string name="intensity_any">Jakákoliv</string>
-    <string name="mood_any">Jakákoliv</string>
+    <string name="sound_fade_duration">Rychlost náběhu</string>
+    <string name="sound_fade_duration_summary">Délka zesilování/utišování při přehrávání zvuků (v sekundách)</string>
+    <string name="pinned_shortcut_creation_failed">Nepodařilo přidat zkratku aplikace na plochu!</string>
+    <string name="pinned_shortcut_created">Zkratka byla přidána na plochu!</string>
+    <string name="skip_to_prev">Předchozí mix</string>
+    <string name="skip_to_next">Následující mix</string>
+    <string name="unsaved_preset">Neuložené mixy</string>
+    <string name="ignore_audio_focus_changes">Ignorovat změnu primárního přehrávače</string>
+    <string name="ignore_audio_focus_changes_summary_on">Pokračovat, i přesto, že jiná aplikace začne něco přehrávat</string>
+    <string name="ignore_audio_focus_changes_summary_off">Pozastavit, když jiná aplikace začne něco přehrávat</string>
+    <string name="share">Sdílet</string>
+    <string name="export_presets">Export do souboru</string>
+    <string name="export_presets_summary">Exportovat aktuální podobu mixů do externího souboru</string>
+    <string name="import_presets">Import ze souboru</string>
+    <string name="import_presets_summary">Importováním ze souboru budou přepsány všechny uložené mixy, pokud nějaké máte</string>
+    <string name="remove_all_app_shortcuts">Odstranit všechny zástupce aplikace</string>
+    <string name="remove_all_app_shortcuts_confirmation">Odstraní všechny aktuální zkratky z menu zkratek aplikace. Přejete si pokračovat?</string>
+    <string name="all_app_shortcuts_removed">Všechny zástupce aplikace byly odstraněny!</string>
+    <string name="failed_to_write_file">Zápis do vybraného souboru se nezdařil!</string>
+    <string name="failed_to_read_file">Čtení vybraného souboru se nezdařilo!</string>
+    <string name="invalid_import_file_format">Formát souboru pro import je neplatný!</string>
+    <string name="should_display_sound_icons">Zobrazovat ikony zvuku</string>
+    <string name="share_usage_data_consent_title">Nastavení sdílení dat</string>
+    <string name="share_usage_data_consent_message">
+        Pro vylepšení aplikace sbíráme data o jejím využívání. Také sbíráme data o chování aplikace
+        samotné, abychom mohli lépe analyzovat a diagnostikovat případné chyby, s nimiž byste se
+        mohli potkat. Pro více informací si přečtěte naše [zásady ochrany osobních údajů](https://ashutoshgngwr.github.io/noice/privacy-policy).\n\n
+        Předvolbu automatického sběru dat můžete kdykoliv změnit uvnitř aplikace, skrze \"**Nastavení**
+        &gt; **Odesílat technická data o používání a chování**\"
+    </string>
+    <string name="accept">Přijmout</string>
+    <string name="decline">Odmítnout</string>
+    <string name="others">Ostatní</string>
+    <string name="should_share_usage_data">Odesílat technická data o používání a chování</string>
+    <string name="should_share_usage_data_summary">Automaticky sdílet s vývojáři data o používání a chování aplikace</string>
+    <string name="should_allow_skipping_unsaved_presets">Povolit přeskakování neuložených mixů</string>
+    <string name="should_allow_skipping_unsaved_presets_summary">Při přehrávání neuložených mixů, povolit tlačítko přeskočení v interaktivní notifikaci přehrávače, které bude generovat nové náhodné mixy.</string>
+    <string name="failed_to_load_inapp_purchases">Nepodařilo se načíst data o platbě. Zkuste to, prosím, znovu!</string>
+    <string name="failed_to_purchase">Nepodařilo se pustit kroky platby. Zkuste to, prosím, znovu!</string>
+    <string name="payment_pending">Dáme vám vědět ihned, jak vaši platbu zpracujeme.</string>
 </resources>
