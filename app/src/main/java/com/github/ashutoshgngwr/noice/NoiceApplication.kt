@@ -7,11 +7,13 @@ import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.BillingProvider
 import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
+import com.github.ashutoshgngwr.noice.provider.DonateViewProvider
 import com.github.ashutoshgngwr.noice.provider.DummyAnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.DummyBillingProvider
 import com.github.ashutoshgngwr.noice.provider.DummyCastAPIProvider
 import com.github.ashutoshgngwr.noice.provider.DummyCrashlyticsProvider
 import com.github.ashutoshgngwr.noice.provider.GitHubReviewFlowProvider
+import com.github.ashutoshgngwr.noice.provider.OpenCollectiveDonateViewProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 
@@ -44,6 +46,10 @@ open class NoiceApplication : android.app.Application() {
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     internal set
 
+  lateinit var donateViewProvider: DonateViewProvider
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    internal set
+
   override fun onCreate() {
     super.onCreate()
     initProviders()
@@ -58,7 +64,7 @@ open class NoiceApplication : android.app.Application() {
   /**
    * [initProviders] is invoked when application is created (in [onCreate]). It can be overridden by
    * a subclass to swap default implementations of [castAPIProvider], [reviewFlowProvider],
-   * [crashlyticsProvider], [analyticsProvider] and [billingProvider].
+   * [crashlyticsProvider], [analyticsProvider], [billingProvider] and [donateViewProvider].
    */
   @CallSuper
   protected open fun initProviders() {
@@ -67,6 +73,7 @@ open class NoiceApplication : android.app.Application() {
     crashlyticsProvider = DummyCrashlyticsProvider
     analyticsProvider = DummyAnalyticsProvider
     billingProvider = DummyBillingProvider
+    donateViewProvider = OpenCollectiveDonateViewProvider
   }
 
   /**

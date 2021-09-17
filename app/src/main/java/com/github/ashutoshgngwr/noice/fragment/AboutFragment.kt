@@ -61,7 +61,7 @@ class AboutFragment : Fragment() {
           buildElement(
             R.drawable.about_icon_google_play,
             R.string.about_play_store,
-            R.string.support_development__share_url,
+            R.string.play_store_url,
           )
         )
       }

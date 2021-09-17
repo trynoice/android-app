@@ -140,6 +140,54 @@ object RealBillingProvider : BillingProvider, BillingClientStateListener {
     Log.d(LOG_TAG, "close: end connection")
   }
 
+  /**
+   * Query details of given [skus].
+   *
+   * @return List of [BillingProvider.SkuDetails] for provided [skus].
+   * @throws BillingProvider.QueryDetailsException when the query fails.
+   */
+  @Throws(BillingProvider.QueryDetailsException::class)
+  override suspend fun queryDetails(
+    type: BillingProvider.SkuType,
+    skus: List<String>
+  ): List<BillingProvider.SkuDetails> {
+    waitForBillingClientConnection()
+    if (!client.isReady) {
+      throw BillingProvider.QueryDetailsException("billing client is not ready")
+    }
+
+    val p = SkuDetailsParams.newBuilder()
+      .setSkusList(skus)
+      .setType(type.value)
+      .build()
+
+    val r = client.querySkuDetails(p)
+    if (r.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
+      throw BillingProvider.QueryDetailsException(r.billingResult.debugMessage)
+    }
+
+    return r.skuDetailsList?.map {
+      BillingProvider.SkuDetails(it.price, it.priceAmountMicros, it.originalJson)
+    } ?: throw BillingProvider.QueryDetailsException("sku details list is null")
+  }
+
+  /**
+   * Launch billing flow for the given [sku].
+   */
+  override fun purchase(activity: Activity, sku: BillingProvider.SkuDetails): Boolean {
+    val params = BillingFlowParams.newBuilder()
+      .setSkuDetails(SkuDetails(sku.originalJSON))
+      .build()
+
+    val result = client.launchBillingFlow(activity, params)
+    if (result.responseCode != BillingClient.BillingResponseCode.OK) {
+      Log.w(LOG_TAG, "failed to start billing flow: ${result.debugMessage}")
+      return false
+    }
+
+    return true
+  }
+
   override fun consumePurchase(orderId: String) {
     defaultScope.launch(Dispatchers.IO) {
       prefsMutex.withLock {
@@ -325,53 +373,6 @@ object RealBillingProvider : BillingProvider, BillingClientStateListener {
     }
   }
 
-  /**
-   * Query details of given [skus].
-   *
-   * @return List of [SkuDetails] for provided [skus].
-   * @throws ConsumePurchaseException when the consume query fails.
-   */
-  @Throws(QueryDetailsException::class)
-  suspend fun queryDetails(
-    @BillingClient.SkuType type: String,
-    skus: List<String>
-  ): List<SkuDetails> {
-    waitForBillingClientConnection()
-    if (!client.isReady) {
-      throw QueryDetailsException("billing client is not ready")
-    }
-
-    val p = SkuDetailsParams.newBuilder()
-      .setSkusList(skus)
-      .setType(type)
-      .build()
-
-    val r = client.querySkuDetails(p)
-    if (r.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
-      throw QueryDetailsException(r.billingResult.debugMessage)
-    }
-
-    return r.skuDetailsList ?: throw QueryDetailsException("sku details list is null")
-  }
-
-  /**
-   * Launch billing flow for the given [sku].
-   */
-  fun purchase(activity: Activity, sku: SkuDetails): Boolean {
-    val params = BillingFlowParams.newBuilder()
-      .setSkuDetails(sku)
-      .build()
-
-    val result = client.launchBillingFlow(activity, params)
-    if (result.responseCode != BillingClient.BillingResponseCode.OK) {
-      Log.w(LOG_TAG, "failed to start billing flow: ${result.debugMessage}")
-      return false
-    }
-
-    return true
-  }
-
-  class QueryDetailsException(msg: String) : Exception(msg)
   class QueryPurchasesException(msg: String) : Exception(msg)
   class AcknowledgePurchaseException(msg: String) : Exception(msg)
   class ConsumePurchaseException(msg: String) : Exception(msg)

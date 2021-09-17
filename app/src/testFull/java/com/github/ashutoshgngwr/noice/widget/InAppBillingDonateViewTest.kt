@@ -4,13 +4,12 @@ import android.app.Activity
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.children
-import com.android.billingclient.api.SkuDetails
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.provider.RealBillingProvider
+import com.github.ashutoshgngwr.noice.provider.BillingProvider
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.verify
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.test.TestCoroutineScope
@@ -24,25 +23,28 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLooper
 
 @RunWith(RobolectricTestRunner::class)
-class DonateViewTest {
+class InAppBillingDonateViewTest {
 
+  private lateinit var mockBillingProvider: BillingProvider
   private lateinit var activity: Activity
-  private lateinit var view: DonateView
+  private lateinit var view: InAppBillingDonateView
   private lateinit var testScope: CoroutineScope
 
   @Before
   fun setup() {
-    mockkObject(RealBillingProvider)
+    mockBillingProvider = mockk(relaxed = true)
     activity = Robolectric.buildActivity(Activity::class.java).create().get()
+    NoiceApplication.of(activity).billingProvider = mockBillingProvider
+
     testScope = TestCoroutineScope()
-    view = DonateView(activity, testScope)
+    view = InAppBillingDonateView(activity, testScope)
   }
 
   @Test
   fun testQueryDetailsFailed() = runBlockingTest {
     coEvery {
-      RealBillingProvider.queryDetails(any(), any())
-    } throws RealBillingProvider.QueryDetailsException("test-error")
+      mockBillingProvider.queryDetails(any(), any())
+    } throws BillingProvider.QueryDetailsException("test-error")
 
     view.loadSkuDetails()
     ShadowLooper.idleMainLooper()
@@ -54,20 +56,20 @@ class DonateViewTest {
 
   @Test
   fun testOnInAppItemClick() = runBlockingTest {
-    val skuDetailsList = listOf<SkuDetails>(
+    val skuDetailsList = listOf<BillingProvider.SkuDetails>(
       mockk(relaxed = true) { every { price } returns "price-1" },
       mockk(relaxed = true) { every { price } returns "price-2" }
     )
 
-    coEvery { RealBillingProvider.queryDetails(any(), any()) } answers { skuDetailsList }
+    coEvery { mockBillingProvider.queryDetails(any(), any()) } answers { skuDetailsList }
     view.loadSkuDetails()
     ShadowLooper.idleMainLooper()
 
-    every { RealBillingProvider.purchase(any(), any()) } returns true
+    every { mockBillingProvider.purchase(any(), any()) } returns true
     val container = view.findViewById<ViewGroup>(R.id.button_container)
     container.children.forEach { it.performClick() }
     skuDetailsList.forEach {
-      verify { RealBillingProvider.purchase(any(), it) }
+      verify { mockBillingProvider.purchase(any(), it) }
     }
   }
 }

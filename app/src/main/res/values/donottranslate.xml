@@ -32,4 +32,7 @@
   <string name="others_key">others</string>
   <string name="should_share_usage_data_key">should_share_usage_data</string>
   <string name="enable_media_buttons_key">enable_media_buttons</string>
+  <string name="open_collective_url">https://opencollective.com/noice</string>
+  <string name="play_store_url">https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice</string>
+  <string name="fdroid_url">https://f-droid.org/app/com.github.ashutoshgngwr.noice</string>
 </resources>

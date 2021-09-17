@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice
 
+import com.github.ashutoshgngwr.noice.provider.InAppBillingDonateViewProvider
 import com.github.ashutoshgngwr.noice.provider.PlaystoreReviewFlowProvider
 import com.github.ashutoshgngwr.noice.provider.RealAnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.RealBillingProvider
@@ -21,13 +22,11 @@ class FullNoiceApplication : NoiceApplication() {
     crashlyticsProvider = RealCrashlyticsProvider
     analyticsProvider = RealAnalyticsProvider
 
-    // TODO: do not use real billing provider when GMS is not available. Will need to redesign
-    //  donate view flow.
-    billingProvider = RealBillingProvider
-
     if (isGoogleMobileServicesAvailable()) {
       castAPIProvider = RealCastAPIProvider(this)
       reviewFlowProvider = PlaystoreReviewFlowProvider
+      billingProvider = RealBillingProvider
+      donateViewProvider = InAppBillingDonateViewProvider
     }
   }
 

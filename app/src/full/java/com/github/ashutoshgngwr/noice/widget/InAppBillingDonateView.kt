@@ -10,11 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.LinearLayoutCompat
-import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.SkuDetails
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.DonateViewBinding
-import com.github.ashutoshgngwr.noice.provider.RealBillingProvider
+import com.github.ashutoshgngwr.noice.provider.BillingProvider
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineName
@@ -24,7 +23,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class DonateView @JvmOverloads constructor(
+class InAppBillingDonateView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0
@@ -32,6 +31,7 @@ class DonateView @JvmOverloads constructor(
 
   private lateinit var defaultScope: CoroutineScope
 
+  private val billingProvider = NoiceApplication.of(context).billingProvider
   private val binding: DonateViewBinding =
     DonateViewBinding.inflate(LayoutInflater.from(context), this)
 
@@ -58,8 +58,8 @@ class DonateView @JvmOverloads constructor(
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal suspend fun loadSkuDetails() {
     try {
-      val detailsList = RealBillingProvider.queryDetails(
-        BillingClient.SkuType.INAPP, listOf(
+      val detailsList = billingProvider.queryDetails(
+        BillingProvider.SkuType.INAPP, listOf(
           "donate_usd1", "donate_usd2", "donate_usd5",
           "donate_usd10", "donate_usd15", "donate_usd25",
         )
@@ -68,13 +68,13 @@ class DonateView @JvmOverloads constructor(
       defaultScope.launch(Dispatchers.Main) {
         setDetails(detailsList.sortedBy { it.priceAmountMicros })
       }
-    } catch (e: RealBillingProvider.QueryDetailsException) {
+    } catch (e: BillingProvider.QueryDetailsException) {
       Log.w(this::class.simpleName, "failed to load sku details", e)
       defaultScope.launch(Dispatchers.Main) { setQueryDetailsFailedError() }
     }
   }
 
-  private fun setDetails(detailsList: List<SkuDetails>) {
+  private fun setDetails(detailsList: List<BillingProvider.SkuDetails>) {
     binding.progressCircle.visibility = View.GONE
     binding.error.visibility = View.GONE
     binding.buttonContainer.visibility = View.VISIBLE
@@ -84,7 +84,7 @@ class DonateView @JvmOverloads constructor(
       val b = MaterialButton(context, null, R.attr.materialButtonOutlinedStyle)
       b.text = details.price
       b.setOnClickListener {
-        if (!RealBillingProvider.purchase(getActivity(), details)) {
+        if (!billingProvider.purchase(getActivity(), details)) {
           Snackbar.make(this, R.string.failed_to_purchase, Snackbar.LENGTH_LONG).show()
         }
       }
