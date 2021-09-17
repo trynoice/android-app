@@ -109,7 +109,7 @@
     <string name="sound_group__times_of_day">Vuorokaudenajat</string>
     <string name="sound_group__raw_noise">Raakamelu</string>
     <string name="sound_group__public_gatherings">Julkiset tilaisuudet</string>
-    <string name="sound_group__monsoon">Sade</string>
+    <string name="sound_group__monsoon">Sääilmiö</string>
     <string name="sound_group__life">Elämä</string>
     <string name="volume">Äänenvoimakkuus</string>
     <string name="stop">Stop</string>
@@ -190,4 +190,6 @@
     <string name="in_app_feedback__title">Lähetä arvostelu</string>
     <string name="in_app_feedback__description">Haluaisimme kuulla sinun ajatuksiasi sovelluksesta. Vieraile hetki GitHub-sivuillamme. Jos sovellus ei miellyttänyt sinua, voit avata ongelman, jossa kerrot huolistasi. Muussa tapauksessa anna projektille tähtiä osoittaaksesi rakkautta ja tukea.</string>
     <string name="cast_media">Yhdistä Chromecastiin</string>
+    <string name="enable_media_buttons_summary">Käytä laitteiston mediapainikkeita ohjataksesi toistoa</string>
+    <string name="enable_media_buttons">Käytä media painikkeita</string>
 </resources>

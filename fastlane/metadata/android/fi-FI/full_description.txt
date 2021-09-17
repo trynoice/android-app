@@ -16,11 +16,11 @@ Noice on sovellus, jonka avulla voit luoda räätälöidyn tunnelman käyttämä
 - Sovelluksen vaaleat ja tummat teemavaihtoehdot
 
 <b>Äänikirjasto</b>
-- Life-sarja (linnut, sirkat, susi, ihmisen sydämenlyönti jne.).
-- Metsäsarja (nuotio, yö, tuuli, palmut jne.).
-- Monsuunisarja (sade, ukkonen)
+- Life (linnut, sirkat, susi, ihmisen sydämenlyönti jne.).
+- Metsä (nuotio, yö, tuuli, palmut jne.).
+- Sääilmiöt (sade, ukkonen)
 - Teleportaatio-setti (kahvila, kirjasto, toimisto, merenranta, jokiranta jne.).
-- Ajoneuvosarja (liikkuva juna, lennossa oleva, natiseva laiva, sähköauto jne.)
+- Ajoneuvot (liikkuva juna, lennossa oleva, natiseva laiva, sähköauto jne.)
 - Raakakohina (valkoinen, vaaleanpunainen, ruskea)
 
 <b>Luvat</b>

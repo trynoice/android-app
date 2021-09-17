@@ -1,12 +1,12 @@
-For a lot of people, a little background noise is helpful to calm down and focus. In some cases, it's also a boost to productivity. Background noise (ambience) can also help minimise the effects of stress.
+For a lot of people, a little background noise is helpful to calm down and focus. Background noise can help minimise the effects of stress. In some cases, it's also a boost to productivity. It also helps people in masking their tinnitus.
 
-Noice is an app that allows you to create a customised ambience using clips from environmental noise sources. Create your perfect surroundings by combining different sounds to drown out distractions so you can focus on your work, or generate serene, peaceful environments that encourage you to fall asleep.
+Noice is an app that allows you to create a customised ambience using clips from environmental noise sources. Create your perfect surroundings by combining different sounds to drown out distractions so you can focus on your work or generate peaceful environments for relaxation.
 
 <b>Features</b>
 - 35 recorded noises
-- Google Cast (Chromecast) enabled [Play Store release only]
+- Google Cast (Chromecast) enabled (on Play Store only)
 - Auto sleep timer
-- Wake-up timer (Alarm Clock)
+- Alarm Clock
 - Generate random mixes
 - Make a customised mix
 - Save your favourite mixes
