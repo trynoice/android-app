@@ -133,7 +133,7 @@ class MainActivityTest {
       .edit { remove(MainActivity.PREF_HAS_SEEN_DATA_COLLECTION_CONSENT) }
 
     activityScenario.recreate()
-    if (!BuildConfig.IS_PLAY_STORE_BUILD) {
+    if (BuildConfig.IS_FREE_BUILD) {
       onView(withText(R.string.share_usage_data_consent_title)).check(doesNotExist())
       return
     }
@@ -150,8 +150,7 @@ class MainActivityTest {
 
   @Test
   fun testBillingProviderListener() {
-    if (!BuildConfig.IS_PLAY_STORE_BUILD) {
-      // F-Droid flavor doesn't have a billing provider scenario
+    if (BuildConfig.IS_FREE_BUILD) { // free flavor doesn't have billing provider scenarios
       return
     }
 

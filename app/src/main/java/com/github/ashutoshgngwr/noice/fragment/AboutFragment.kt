@@ -56,8 +56,7 @@ class AboutFragment : Fragment() {
         )
       )
 
-      @Suppress("ConstantConditionIf")
-      if (BuildConfig.IS_PLAY_STORE_BUILD) {
+      if (NoiceApplication.of(requireContext()).isGoogleMobileServicesAvailable()) {
         addItem(
           buildElement(
             R.drawable.about_icon_google_play,

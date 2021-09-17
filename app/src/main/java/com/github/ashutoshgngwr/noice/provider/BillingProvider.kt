@@ -4,7 +4,7 @@ import android.content.Context
 
 /**
  * [BillingProvider] is an abstract declaration of Google Play Billing APIs used by the app. This
- * interface abstracts concrete implementations and thus allowing F-Droid flavored builds to be
+ * interface abstracts concrete implementations and thus allowing free flavored builds to be
  * compiled without adding Google Play Billing dependencies.
  *
  * [BillingProvider] is implemented as a Singleton. It implies that both [init] and [close] must be

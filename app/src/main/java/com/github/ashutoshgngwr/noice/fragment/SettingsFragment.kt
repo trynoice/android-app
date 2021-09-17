@@ -101,7 +101,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     findPreference<PreferenceCategory>(R.string.others_key)
-      .isVisible = BuildConfig.IS_PLAY_STORE_BUILD
+      .isVisible = !BuildConfig.IS_FREE_BUILD
 
     findPreference<SwitchPreferenceCompat>(R.string.should_share_usage_data_key)
       .setOnPreferenceChangeListener { _, checked ->

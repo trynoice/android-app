@@ -11,7 +11,7 @@ import com.google.firebase.FirebaseApp
 
 
 @Suppress("unused")
-class PlaystoreNoiceApplication : NoiceApplication() {
+class FullNoiceApplication : NoiceApplication() {
 
   override fun initProviders() {
     super.initProviders()

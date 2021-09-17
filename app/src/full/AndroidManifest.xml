@@ -2,7 +2,7 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <application
-    android:name="com.github.ashutoshgngwr.noice.PlaystoreNoiceApplication"
+    android:name="com.github.ashutoshgngwr.noice.FullNoiceApplication"
     tools:ignore="AllowBackup"
     tools:replace="name">
 

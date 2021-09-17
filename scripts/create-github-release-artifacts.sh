@@ -1,24 +1,24 @@
 #!/usr/bin/env bash
 
 # In summary, this script does the following.
-# 1. Build and sign the play store APK variant.
+# 1. Build and sign the full APK variant.
 # 2. Remove non-free dependencies from Gradle scripts, and then build and sign
-#    the f-droid variant.
+#    the free variant.
 # 3. Move output files to the specified destination paths.
 
 if [ -z "$JKS_STORE" ] || [ -z "$STORE_PASSWORD" ] || [ -z "$KEY_ALIAS" ] \
-  || [ -z "$KEY_PASSWORD" ] || [ -z "$FDROID_APK" ] || [ -z "$FDROID_MAPPING" ] \
-  || [ -z "$PLAYSTORE_APK" ] || [ -z "$PLAYSTORE_MAPPING" ];
+  || [ -z "$KEY_PASSWORD" ] || [ -z "$FREE_APK" ] || [ -z "$FREE_MAPPING" ] \
+  || [ -z "$FULL_APK" ] || [ -z "$FULL_MAPPING" ];
 then
   printf "missing at least one of the following required env variables!\n\n"
-  printf "JKS_STORE\t\tbase64 encoded java keystore for signing apks\n"
-  printf "STORE_PASSWORD\t\tkeystore's password\n"
-  printf "KEY_ALIAS\t\tsigning alias\n"
-  printf "KEY_PASSWORD\t\tpassword for the signing alias\n"
-  printf "PLAYSTORE_APK\t\toutput path for play store variant apk\n"
-  printf "PLAYSTORE_MAPPING\toutput path for mapping.txt of the play store variant apk\n"
-  printf "FDROID_APK\t\toutput path for f-droid variant apk\n"
-  printf "FDROID_MAPPING\t\toutput path for mapping.txt of the f-droid variant apk\n"
+  printf "JKS_STORE\tbase64 encoded java keystore for signing apks\n"
+  printf "STORE_PASSWORD\tkeystore's password\n"
+  printf "KEY_ALIAS\tsigning alias\n"
+  printf "KEY_PASSWORD\tpassword for the signing alias\n"
+  printf "FULL_APK\toutput path for full variant apk\n"
+  printf "FULL_MAPPING\toutput path for mapping.txt of the full variant apk\n"
+  printf "FREE_APK\toutput path for free variant apk\n"
+  printf "FREE_MAPPING\toutput path for mapping.txt of the free variant apk\n"
   exit 1
 fi
 
@@ -34,38 +34,38 @@ trap exit INT
 # decode java keystore
 echo "$JKS_STORE" | base64 --decode > keystore.jks
 
-# build play store variant first
-echo "building play store apk variant..."
-./gradlew assemblePlaystoreRelease --stacktrace
-GRADLE_EXITCODE_PLAYSTORE=$?
+# build full variant first
+echo "building full apk variant..."
+./gradlew assembleFullRelease --stacktrace
+GRADLE_EXITCODE_FULL=$?
 
-# remove non-free deps from the f-droid build but keep the signingConfig
+# remove non-free deps from the free build but keep the signingConfig
 echo "removing non-free dependencies from gradle build scripts..."
 sed -i -r -e 's@^(.*)signingConfig(.*)\/\/.*$@\1signingConfig\2@' app/build.gradle
-sed -i -e '/sed:fdroid-build:remove/d' build.gradle app/build.gradle
+sed -i -e '/sed:free-build:remove/d' build.gradle app/build.gradle
 
-# build f-droid variant
-echo "building f-droid apk variant..."
-./gradlew assembleFdroidRelease --stacktrace
-GRADLE_EXITCODE_FDROID=$?
+# build free variant
+echo "building free apk variant..."
+./gradlew assembleFreeRelease --stacktrace
+GRADLE_EXITCODE_FREE=$?
 
 # revert gradle files back to their original state
 echo "restoring gradle build scripts to their original state..."
 git checkout -- build.gradle app/build.gradle
 
-if [ $GRADLE_EXITCODE_FDROID -ne 0 ];  then
-  printf "\nfailed to build f-droid variant\n" >&2
+if [ $GRADLE_EXITCODE_FREE -ne 0 ];  then
+  printf "\nfailed to build free variant\n" >&2
   exit 1
 fi
 
-if [ $GRADLE_EXITCODE_PLAYSTORE -ne 0 ];  then
-  printf "\nfailed to build play store variant\n" >&2
+if [ $GRADLE_EXITCODE_FULL -ne 0 ];  then
+  printf "\nfailed to build full variant\n" >&2
   exit 1
 fi
 
 # move files to destination paths
 echo "moving artifacts to specified destination paths..."
-mv -vf app/build/outputs/apk/playstore/release/app-playstore-release.apk "$PLAYSTORE_APK"
-mv -vf app/build/outputs/mapping/playstoreRelease/mapping.txt "$PLAYSTORE_MAPPING"
-mv -vf app/build/outputs/apk/fdroid/release/app-fdroid-release.apk "$FDROID_APK"
-mv -vf app/build/outputs/mapping/fdroidRelease/mapping.txt "$FDROID_MAPPING"
+mv -vf app/build/outputs/apk/full/release/app-full-release.apk "$FULL_APK"
+mv -vf app/build/outputs/mapping/fullRelease/mapping.txt "$FULL_MAPPING"
+mv -vf app/build/outputs/apk/free/release/app-free-release.apk "$FREE_APK"
+mv -vf app/build/outputs/mapping/freeRelease/mapping.txt "$FREE_MAPPING"

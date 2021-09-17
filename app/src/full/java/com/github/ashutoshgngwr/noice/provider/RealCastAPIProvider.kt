@@ -24,7 +24,7 @@ import kotlin.math.round
 
 /**
  * [RealCastAPIProvider] wraps all the Google Cast API functionality used by the application
- * for the Play Store build variant.
+ * for the full build variant.
  */
 class RealCastAPIProvider(context: Context) : CastAPIProvider {
 

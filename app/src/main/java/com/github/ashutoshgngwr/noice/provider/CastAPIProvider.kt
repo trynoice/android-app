@@ -8,7 +8,7 @@ import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
 
 /**
  * [CastAPIProvider] is an abstract declaration of the non-free Google Cast APIs that are used in the app.
- * It effectively hides upstream classes from its callers. This is ensure that F-Droid variant
+ * It effectively hides upstream classes from its callers. This is ensure that free variant
  * remains free of non-free Google Cast API dependency.
  */
 interface CastAPIProvider {

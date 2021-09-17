@@ -6,7 +6,7 @@ import kotlin.reflect.KClass
 
 /**
  * [AnalyticsProvider] is an abstract declaration of Firebase Analytics APIs used by the app.
- * This interface abstracts concrete implementations and thus allowing F-Droid flavored builds to be
+ * This interface abstracts concrete implementations and thus allowing free flavored builds to be
  * compiled without adding the actual non-free GMS dependencies.
  */
 interface AnalyticsProvider {
@@ -49,7 +49,7 @@ interface AnalyticsProvider {
 }
 
 /**
- * A no-op analytics provider for libre (fdroid) build variant where non-free dependencies are not
+ * A no-op analytics provider for free (libre) build variant where non-free dependencies are not
  * allowed.
  */
 object DummyAnalyticsProvider : AnalyticsProvider {

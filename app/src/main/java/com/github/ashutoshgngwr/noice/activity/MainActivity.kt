@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
     setupActionBarWithNavController(navController, AppBarConfiguration(navController.graph))
 
     AppIntroActivity.maybeStart(this)
-    if (BuildConfig.IS_PLAY_STORE_BUILD) {
+    if (!BuildConfig.IS_FREE_BUILD) {
       maybeShowDataCollectionConsent()
     }
 
