@@ -1,12 +1,12 @@
-Pek çok insan için, ufak bir arka plan sesi sakinleşmeye ve odaklanmaya yardımcı oluyor. Bazı durumlarda üretkenliği bile arttırıyor. Ayrıca arka plan sesi (ambiyans) stresin etkilerini azaltmaya da yardımcı olabiliyor.
+Pek çok insan için, ufak bir arka plan sesi sakinleşmeye ve odaklanmaya yardımcı oluyor. Arka plan gürültüsü, stresin etkilerini azaltmaya yardımcı olabilir. Bazı durumlarda üretkenliği de artırır. Ayrıca insanların kulak çınlamasını maskelemelerine yardımcı olur.
 
-Noice çevresel sesleri kullanarak kendi ambiyansınızı oluşturmanızı sağlayan bir uygulamadır. İşinize odaklanmak veya sakin, barış dolu bir ortamda uyumak için rahatsız edici sesleri baskılayacak mükemmel ambiyansınızı oluşturun.
+Noice çevresel sesleri kullanarak kendi ambiyansınızı oluşturmanızı sağlayan bir uygulamadır. Dikkatinizi dağıtan şeyleri bastırmak için farklı sesleri birleştirerek mükemmel ortamınızı yaratın, böylece işinize odaklanabilir veya rahatlamak için huzurlu ortamlar oluşturabilirsiniz.
 
 <b>Özellikler</b>
 - 35 kaydedilmiş ses
-- Google Cast (Chromecast) kullanılabilir [sadece Play Store için]
+- Google Cast (Chromecast) kullanılabilir [yalnızca Play Store için]
 - Otomatik uyku zamanlayıcısı
-- Uyandırma zamanlayıcısı (Alarm)
+- Alarm saati
 - Rastgele karışımlar oluşturma
 - İstediğiniz türden karışımlar oluşturma
 - En sevdiğiniz karışımları kaydetme
