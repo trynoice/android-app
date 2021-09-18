@@ -159,7 +159,7 @@
     - Pro podporu dalšího vývoje\n
     - Pro udržení Noice nadále bez reklam\n
   </string>
-    <string name="cast_media">Přehrát na jiném zařízení</string>
+    <string name="cast_media">Propojit s Chromecast</string>
     <string name="in_app_feedback__description">
     Rádi bychom slyšeli váš názor na naší appku. Udělejte si, prosíme, na nás čas a navštivte náš GitHub.
     Pokud se vám appka nelíbí, prosíme, zvažte založení nového issue s popisem vašeho problému.
@@ -216,4 +216,5 @@
     <string name="failed_to_purchase">Nepodařilo se pustit kroky platby. Zkuste to, prosím, znovu!</string>
     <string name="payment_pending">Dáme vám vědět ihned, jak vaši platbu zpracujeme.</string>
     <string name="presets_as_home_screen_summary">Ukázat uložené mixy při spuštění aplikace</string>
+    <string name="presets_as_home_screen">\"Mixy\" jako domovská stránka</string>
 </resources>
