@@ -1,0 +1,8 @@
+- Donanımsal ortam düğmelerini yapılandırmak için kullanıcı ayarını düzelt
+- Play Store kurulu olmadan tam sürümü çalıştırırken çökmeyi düzelt
+- 24 saatlik zaman seçicileri göstermek için aygıt ayarlarını kullan
+- Çevirileri güncelle
+- Küçük hata düzeltmeleri ve iyileştirmeler
+
+Noice'i daha iyi hale getirmek için sürekli çalışıyoruz. Hiçbir şeyi kaçırmamak için lütfen güncellemeleri açın!
+https://ashutoshgngwr.github.io/noice/CHANGELOG adresinde ayrıntılı değişiklik günlüğüne bakın
