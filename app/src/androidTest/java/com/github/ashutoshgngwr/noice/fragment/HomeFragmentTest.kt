@@ -1,6 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.support.v4.media.session.PlaybackStateCompat
+import android.content.Context
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -10,25 +10,23 @@ import androidx.preference.PreferenceManager
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.NoMatchingViewException
-import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.activity.AppIntroActivity
 import com.github.ashutoshgngwr.noice.activity.MainActivity
+import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkAll
-import io.mockk.verify
-import junit.framework.AssertionFailedError
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -88,49 +86,31 @@ class HomeFragmentTest {
 
   @Test
   fun testPlaybackToggleMenuItem() {
-    mockkObject(PlaybackController)
-    every { PlaybackController.resume(any()) } returns Unit
+    onView(withId(R.id.action_pause))
+      .check(doesNotExist())
 
-    // with ongoing playback
-    onHomeFragment {
-      it.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlaybackStateCompat.STATE_PLAYING
-      })
-    }
+    onView(withId(R.id.action_resume))
+      .check(doesNotExist())
 
-    EspressoX.retryWithWaitOnError(NoMatchingViewException::class) {
-      onView(withId(R.id.action_playback_toggle))
-        .check(matches(ViewMatchers.isDisplayed()))
-        .perform(ViewActions.click())
-    }
+    // play a sound
+    val context = ApplicationProvider.getApplicationContext<Context>()
+    PlaybackController.play(context, Sound.LIBRARY.keys.first())
 
-    verify(exactly = 1) { PlaybackController.pause(any()) }
+    onView(withId(R.id.action_pause))
+      .check(matches(isDisplayed()))
+      .perform(click())
 
-    // with paused playback
-    onHomeFragment {
-      it.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlaybackStateCompat.STATE_PAUSED
-      })
-    }
+    onView(withId(R.id.action_pause))
+      .check(doesNotExist())
 
-    EspressoX.retryWithWaitOnError(NoMatchingViewException::class) {
-      onView(withId(R.id.action_playback_toggle))
-        .check(matches(ViewMatchers.isDisplayed()))
-        .perform(ViewActions.click())
-    }
+    onView(withId(R.id.action_resume))
+      .check(matches(isDisplayed()))
+      .perform(click())
 
-    verify(exactly = 1) { PlaybackController.resume(any()) }
+    onView(withId(R.id.action_resume))
+      .check(doesNotExist())
 
-    // with stopped playback
-    onHomeFragment {
-      it.onPlayerManagerUpdate(mockk(relaxed = true) {
-        every { state } returns PlaybackStateCompat.STATE_STOPPED
-      })
-    }
-
-    EspressoX.retryWithWaitOnError(AssertionFailedError::class) {
-      onView(withId(R.id.action_playback_toggle)).check(ViewAssertions.doesNotExist())
-    }
+    PlaybackController.stop(context)
   }
 
   private inline fun onHomeFragment(crossinline block: (HomeFragment) -> Unit) {

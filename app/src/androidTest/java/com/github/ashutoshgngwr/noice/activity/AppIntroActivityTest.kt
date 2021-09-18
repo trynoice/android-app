@@ -1,15 +1,21 @@
 package com.github.ashutoshgngwr.noice.activity
 
+import android.app.Activity
 import androidx.core.content.edit
-import androidx.lifecycle.Lifecycle
 import androidx.preference.PreferenceManager
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.swipeLeft
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.ashutoshgngwr.noice.EspressoX
+import com.github.ashutoshgngwr.noice.R
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -35,36 +41,44 @@ class AppIntroActivityTest {
 
   @Test
   fun testOnSkipPressed() {
-    activityScenario.onActivity {
-      it.onSkipPressed(null)
-    }
+    onView(withId(R.id.skip))
+      .check(matches(isDisplayed()))
+      .perform(click())
 
-    EspressoX.retryWithWaitOnError(AssertionError::class) {
-      assertEquals(Lifecycle.State.DESTROYED, activityScenario.state)
-    }
+    // not using activityScenario.state since it never transitions to destroyed without adding an
+    // arbitrary wait before assertions.
+    assertEquals(Activity.RESULT_CANCELED, activityScenario.result?.resultCode)
 
     // should update the preferences
     PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
-      .also {
-        assertTrue(it.getBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, false))
-      }
+      .getBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, false)
+      .also { assertTrue(it) }
   }
 
   @Test
   fun testOnDonePressed() {
-    activityScenario.onActivity {
-      it.onDonePressed(null)
+    while (true) {
+      try {
+        onView(withId(R.id.done))
+          .check(matches(isDisplayed()))
+          .perform(click())
+
+        break
+      } catch (e: AssertionError) {
+        onView(withId(R.id.view_pager))
+          .check(matches(isDisplayed()))
+          .perform(swipeLeft())
+      }
     }
 
-    EspressoX.retryWithWaitOnError(AssertionError::class) {
-      assertEquals(Lifecycle.State.DESTROYED, activityScenario.state)
-    }
+    // not using activityScenario.state since it never transitions to destroyed without adding an
+    // arbitrary wait before assertions.
+    assertEquals(Activity.RESULT_CANCELED, activityScenario.result?.resultCode)
 
     // should update the preferences
     PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
-      .also {
-        assertTrue(it.getBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, false))
-      }
+      .getBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, false)
+      .also { assertTrue(it) }
   }
 
   @Test

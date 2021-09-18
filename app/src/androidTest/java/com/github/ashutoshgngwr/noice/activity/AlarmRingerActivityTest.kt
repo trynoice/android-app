@@ -8,12 +8,12 @@ import androidx.media.AudioAttributesCompat
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.swipeRight
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
-import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockkObject
 import io.mockk.unmockkAll
@@ -61,21 +61,16 @@ class AlarmRingerActivityTest {
       )
     }
 
-    EspressoX.retryWithWaitOnError(AssertionError::class, wait = 1000L) {
-      verify(exactly = 1) {
-        PlaybackController.setAudioUsage(any(), AudioAttributesCompat.USAGE_ALARM)
-        PlaybackController.playPreset(any(), presetID)
-      }
+    onView(withId(R.id.dismiss_slider)).check(matches(isDisplayed()))
+    verify(exactly = 1, timeout = 5000L) {
+      PlaybackController.setAudioUsage(any(), AudioAttributesCompat.USAGE_ALARM)
+      PlaybackController.playPreset(any(), presetID)
     }
 
-    clearMocks(PlaybackController)
     onView(withId(R.id.dismiss_slider)).perform(swipeRight())
-
-    EspressoX.retryWithWaitOnError(AssertionError::class, wait = 1000L) {
-      verify(exactly = 1) {
-        PlaybackController.setAudioUsage(any(), AudioAttributesCompat.USAGE_MEDIA)
-        PlaybackController.pause(any())
-      }
+    verify(exactly = 1, timeout = 5000L) {
+      PlaybackController.setAudioUsage(any(), AudioAttributesCompat.USAGE_MEDIA)
+      PlaybackController.pause(any())
     }
   }
 }
