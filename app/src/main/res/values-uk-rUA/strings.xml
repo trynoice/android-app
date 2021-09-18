@@ -125,7 +125,6 @@
     <string name="light">Легка</string>
     <string name="mood_any">Будь-який</string>
     <string name="intensity_any">Будь-яка</string>
-    <string name="use_24h_format">Застосувати 24-годинний формат</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d хвилину</item>
         <item quantity="few">%1$d хвилини</item>

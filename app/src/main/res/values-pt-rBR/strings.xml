@@ -153,7 +153,6 @@
     <string name="relax">Relaxar</string>
     <string name="intensity_any">Qualquer</string>
     <string name="mood_any">Qualquer</string>
-    <string name="use_24h_format">Usar formato de 24 horas</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minuto</item>
         <item quantity="other">%1$d minutos</item>

@@ -46,7 +46,6 @@
     <string name="app_theme_system_default">پیش‌فرض سیستم</string>
     <string name="app_theme_dark">تیره</string>
     <string name="app_theme_light">روشن</string>
-    <string name="use_24h_format">استفاده از قالب ۲۴ ساعته</string>
     <string name="wake_up_timer_description">وقتی که زمان‌سنج پایان یابد Noice گزینش انتخاب شده را پخش می‌کند. از دکمه‌های زیر برای انتخاب گزینش و تنظیم زمان مطلوب استفاده کنید تا زمان‌سنج بیداری آغاز شود.</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d دقیقه</item>

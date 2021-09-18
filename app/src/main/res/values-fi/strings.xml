@@ -40,7 +40,6 @@
     <string name="app_theme_system_default">Järjestelmän oletus</string>
     <string name="app_theme_dark">Tumma</string>
     <string name="app_theme_light">Vaalea</string>
-    <string name="use_24h_format">Käytä 24-tunnin muotoa</string>
     <string name="wake_up_timer_description">Noice käynnistää valitun esiasetuksen, kun ajastin päättyy. Valitse esiasetus alla olevilla painikkeilla ja aseta haluamasi aika herätysajastimen käynnistymiselle.</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minuutti</item>

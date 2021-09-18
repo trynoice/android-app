@@ -111,7 +111,6 @@
     <string name="wake_up_timer_description">
     Noice se sám spustí po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
   </string>
-    <string name="use_24h_format">Používat 24-hodinový formát</string>
     <string name="app_theme_light">Světlý</string>
     <string name="app_theme_dark">Tmavý</string>
     <string name="app_theme_system_default">Dle nastavení systému</string>

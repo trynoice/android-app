@@ -173,7 +173,6 @@
     <string name="appintro__chromecast_desc">استخدم Noice لإرسال أجواءه إلى الأجهزة الأخرى التي تدعم Chromecast مثل مكبرات الصوت وأجهزة التلفزيون وما إلى ذلك.</string>
     <string name="app_description">استرخ وعزز الإنتاجية مع الحد الأدنى من الضوضاء في الخلفية.</string>
     <string name="app_theme_system_default">الإعدادات الإفتراضية</string>
-    <string name="use_24h_format">استخدام تنسيق 24 ساعة</string>
     <string name="wake_up_timer_description">سيبدأ Noice في الإعداد المسبق المحدد عندما ينتهي المؤقت. استخدم الأزرار أدناه لتحديد إعداد مسبق وضبط الوقت المطلوب لبدء مؤقت الاستيقاظ.</string>
     <string name="wake_up_timer_schedule_set">سوف ينطلق المنبه في %1$s %2$s %3$s</string>
     <string name="wake_up_timer_cancelled">تم إلغاء منبه الاستيقاظ!</string>

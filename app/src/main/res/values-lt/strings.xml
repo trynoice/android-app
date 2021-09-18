@@ -99,7 +99,6 @@
     <string name="app_theme_system_default">Sistemos numatytoji</string>
     <string name="app_theme_dark">Tamsi</string>
     <string name="app_theme_light">Šviesi</string>
-    <string name="use_24h_format">Naudoti 24 valandų formatą</string>
     <string name="wake_up_timer_description">Pasibaigus laikmačiui, Noice pradės pasirinktą parinktį. Naudokite žemiau esančius mygtukus, kad pasirinktumėte parinktį ir nustatytumėte norimą pabudimo laikmačio paleidimo laiką.</string>
     <plurals name="time_hours">
         <item quantity="one">%1$d valanda</item>

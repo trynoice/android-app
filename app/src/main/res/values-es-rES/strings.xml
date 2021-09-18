@@ -139,7 +139,6 @@
     <string name="later">Más tarde</string>
     <string name="in_app_feedback__title">Enviar una reseña</string>
     <string name="in_app_feedback__description">Nos encantaría saber que le parece la aplicación. Por favor, tómese un momento para visitar nuestro repositorio de GitHub. Si no le gustó la aplicación, considere abrir un reporte para explicar su malestar. De lo contrario, dele una estrella al proyecto para mostrar amor y apoyo.</string>
-    <string name="use_24h_format">Usar formato 24 horas</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minuto</item>
         <item quantity="other">%1$d minutos</item>

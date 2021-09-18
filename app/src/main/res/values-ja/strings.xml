@@ -27,7 +27,6 @@
     <string name="app_theme_system_default">システム設定のデフォルト</string>
     <string name="app_theme_dark">ダーク</string>
     <string name="app_theme_light">ライト</string>
-    <string name="use_24h_format">24時間フォーマットを使用</string>
     <string name="wake_up_timer_description">タイマーが終了後、Noiceは選択されたプリセットを再生します。下のボタンでプリセットを選択し、起床タイマーを開始する時間を設定してください。</string>
     <plurals name="time_minutes">
         <item quantity="other">%1$d 分</item>

@@ -102,7 +102,6 @@
     um eine Voreinstellung auszusuchen und die gewünschte Länge bis zum Start des Aufwach-Timers
     hinzuzufügen.
   </string>
-    <string name="use_24h_format">Benutze das 24-Stunden Format</string>
     <string name="app_theme_light">Hell</string>
     <string name="app_theme_dark">Dunkel</string>
     <string name="app_theme_system_default">Systemstandard</string>

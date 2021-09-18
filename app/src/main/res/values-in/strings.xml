@@ -157,7 +157,6 @@
     <string name="mood_any">Apapun</string>
     <string name="intensity_any">Apapun</string>
     <string name="submit_feedback">Masukan Feedback</string>
-    <string name="use_24h_format">Pakai format 24-jam</string>
     <string name="wake_up_timer_cancelled">Timer Wake-up terbatalkan!</string>
     <string name="presets_as_home_screen_summary">\"Tunjukan Preset\" yang tersimpan pada permulaan aplikasi</string>
     <string name="intensity">Intensitas</string>

@@ -32,7 +32,6 @@
     <string name="app_theme_system_default">Usado pelo sistema</string>
     <string name="app_theme_dark">Escuro</string>
     <string name="app_theme_light">Claro</string>
-    <string name="use_24h_format">Usar formato de 24 horas</string>
     <string name="wake_up_timer_description">O Noice irá iniciar a mistura de sons selecionada quando o tempo terminar. Use os botões abaixo para selecionar uma mistura de sons e definir a hora desejada para despertar.</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minuto</item>
