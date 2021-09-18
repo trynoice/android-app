@@ -217,4 +217,5 @@
     <string name="payment_pending">Dáme vám vědět ihned, jak vaši platbu zpracujeme.</string>
     <string name="presets_as_home_screen_summary">Ukázat uložené mixy při spuštění aplikace</string>
     <string name="presets_as_home_screen">\"Mixy\" jako domovská stránka</string>
+    <string name="sound_fade_in_duration">Rychlost náběhu zvuku</string>
 </resources>
