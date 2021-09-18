@@ -1,12 +1,13 @@
-Mnoha lidem pomáhá slabý podkresový zvukový šum se uklidnit a soustředit. V některých případech i dokáže nakopnout produktivitu o mnoho procent. Šum (ambientní zvuk) může navíc i minimalizovat projevy stresu. 
+Mnoha lidem pomáhá slabý podkresový zvukový šum se uklidnit a soustředit. V některých případech i dokáže nakopnout produktivitu o mnoho procent. Šum (ambientní zvuk) může navíc i minimalizovat projevy stresu.
 
 Noice je aplikace, která vám umožní si vytvořit vlastní zvuková prostředí za pomoci smyček nahrávek klidných lokací. Vytvořte si vlastní dokonalou klidovou zónu kombinací různých šumů, abyste se odprostili od stimulů okolí a mohli se znovu soustředit na práci. Případně si vygenerovat prostředí, které vás ukolébá ke spánku.
 
 <b>Funkce</b>
 - 35 zvukových smyček
-- podpora pro Google Cast (Chromecast) [jen na Google Play]
+- Google Cast/Chromecast (jen na Google Play)
 - Automatický časovač vypnutí pro spáče
-- Časovač zapnutí (Funkce budíku)
+- Funkce budíku
+- Automatické mixování
 - Vytvořte si vlastní mix
 - Uložte si vlastní mixy
 - Možnost přehrávat i při spuštěné hudbě z jiného přehrávače
@@ -14,10 +15,12 @@ Noice je aplikace, která vám umožní si vytvořit vlastní zvuková prostřed
 - Přehrávání je plně offline
 - Světlý i tmavý motiv aplikace
 
-<b>Knihovna šumu</b>
-- Zvuky lesa (ptáci, táborák, noc, vítr, palmy, atd.)
-- Zvuky monzunu (déšť, bouřka)
-- Zvuky lokací (kavárna, kancelář, jedoucí vlak, paluba letadla, pobřeží, říční tok, atd.)
+<b>Knihovna zvuků</b>
+- Zvuky života (ptáci, cvrčci, vlci, tep lidského srdce, atd.)
+- Zvuky lesa (táborák, noc, vítr, palmy, atd.)
+- Zvuky monzunu (déšť, bouřky)
+- Změna prostředí (kavárna, knihovna, kancelář, pobřeží, řeka, atd.)
+- Zvuky dopravních prostředků (jedoucí vlak, v letadle, vrzající loď, elektromobil, atd.)
 - Čistý šum (bílý, růžový, hnědý)
 
 <b>Vyžadovaná oprávnění</b>
