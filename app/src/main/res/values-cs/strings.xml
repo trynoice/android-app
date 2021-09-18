@@ -101,12 +101,14 @@
     <string name="wake_up_timer_schedule_set">Alarm se spustí za %1$s %2$s %3$s</string>
     <string name="time_bridge">a</string>
     <plurals name="time_hours">
-        <item quantity="one">%1$d hodina</item>
-        <item quantity="other">%1$d hodin(y)</item>
+        <item quantity="one">%1$d hodinu</item>
+        <item quantity="few">%1$d hodiny</item>
+        <item quantity="other">%1$d hodin</item>
     </plurals>
     <plurals name="time_minutes">
-        <item quantity="one">%1$d minuta</item>
-        <item quantity="other">%1$d minut(y)</item>
+        <item quantity="one">%1$d minutu</item>
+        <item quantity="few">%1$d minuty</item>
+        <item quantity="other">%1$d minut</item>
     </plurals>
     <string name="wake_up_timer_description">
     Noice se sám spustí po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
@@ -200,13 +202,9 @@
     <string name="invalid_import_file_format">Formát souboru pro import je neplatný!</string>
     <string name="should_display_sound_icons">Zobrazovat ikony zvuku</string>
     <string name="share_usage_data_consent_title">Nastavení sdílení dat</string>
-    <string name="share_usage_data_consent_message">
-        Pro vylepšení aplikace sbíráme data o jejím využívání. Také sbíráme data o chování aplikace
-        samotné, abychom mohli lépe analyzovat a diagnostikovat případné chyby, s nimiž byste se
-        mohli potkat. Pro více informací si přečtěte naše [zásady ochrany osobních údajů](https://ashutoshgngwr.github.io/noice/privacy-policy).\n\n
-        Předvolbu automatického sběru dat můžete kdykoliv změnit uvnitř aplikace, skrze \"**Nastavení**
-        &gt; **Odesílat technická data o používání a chování**\"
-    </string>
+    <string name="share_usage_data_consent_message">Pro vylepšení aplikace sbíráme data o jejím využívání. Také sbíráme data o chování aplikace samotné, abychom mohli lépe analyzovat a diagnostikovat případné chyby, s nimiž byste se mohli potkat. Pro více informací si přečtěte naše [zásady ochrany osobních údajů](https://ashutoshgngwr.github.io/noice/privacy-policy).
+\n
+\nPředvolbu automatického sběru dat můžete kdykoliv změnit uvnitř aplikace, skrze \"**Nastavení** &gt; **Odesílat technická data o používání a chování**\".</string>
     <string name="accept">Přijmout</string>
     <string name="decline">Odmítnout</string>
     <string name="others">Ostatní</string>
@@ -218,4 +216,10 @@
     <string name="presets_as_home_screen_summary">Ukázat uložené mixy při spuštění aplikace</string>
     <string name="presets_as_home_screen">\"Mixy\" jako domovská stránka</string>
     <string name="sound_fade_in_duration">Rychlost náběhu zvuku</string>
+    <string name="enable_media_buttons_summary">Umožnit ovládat přehrávání pomocí fyzických tlačítek zařízení</string>
+    <string name="enable_media_buttons">Povolit mediální tlačítka</string>
+    <string name="created_by">Autor</string>
+    <string name="import_presets_successful">Ze souboru byly úspěšně importovány vaše mixy!</string>
+    <string name="export_presets_successful">Mixy byly úspěšně exportovány do zvoleného souboru!</string>
+    <string name="sound_fade_in_duration_summary">Délka postupného náběhu dodatečných zvuků při přehrávání (v sekundách)</string>
 </resources>
