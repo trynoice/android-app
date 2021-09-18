@@ -143,11 +143,7 @@
     - zakoupení lepších nahrávek zvuků\n
     - koupit si kafe\n
   </string>
-    <string name="support_development__donate_google_play_description">
-    Vaše platba bude bezpečně zaštítěna službou Google Play. Výška daru bude převedena na vaši
-    lokální měnu. V závisloti na vaší poloze vám bude __možná__ bude přiúčtována daň z koupě,
-    dle vašich lokálních zákonů.
-  </string>
+    <string name="support_development__donate_google_play_description">Vaše platba bude bezpečně zaštítěna službou Google Play. V závisloti na vaší poloze vám __možná__ bude přiúčtována daň z koupě, dle vašich lokálních zákonů.</string>
     <string name="support_development__donate_thank_you">Děkujeme!</string>
     <string name="support_development__donate_thank_you_description">
     Zcela upřímně vám moc srdečně děkujeme za vaši finanční podporu projektu Noice.
