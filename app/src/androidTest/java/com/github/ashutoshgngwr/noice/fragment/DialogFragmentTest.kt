@@ -6,7 +6,6 @@ import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.fragment.app.testing.withFragment
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -162,10 +161,8 @@ class DialogFragmentTest {
     }
 
     // wait for dialog to be visible
-    EspressoX.retryWithWaitOnError(NoMatchingViewException::class) {
-      EspressoX.onViewInDialog(withId(R.id.dialog_root))
-        .check(matches(isDisplayed()))
-    }
+    EspressoX.onViewInDialog(withId(R.id.dialog_root))
+      .check(matches(isDisplayed()))
 
     return f
   }

@@ -21,7 +21,7 @@ import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.*
 import org.hamcrest.TypeSafeMatcher
-import kotlin.reflect.KClass
+
 
 /**
  * [EspressoX] contains the custom extended util implementations for Espresso.
@@ -133,33 +133,6 @@ object EspressoX {
       override fun getDescription() = "no-op"
       override fun getConstraints() = any(View::class.java)
       override fun perform(uiController: UiController, view: View) = Unit
-    }
-  }
-
-  /**
-   * Retries the given [block] by catching the [expectedErrors] until all [retries] are exhausted.
-   * It waits for a defined [wait] period between each retry.
-   */
-  inline fun retryWithWaitOnError(
-    vararg expectedErrors: KClass<out Throwable>,
-    retries: Int = 15,
-    wait: Long = 500,
-    block: () -> Unit,
-  ) {
-    require(retries > 0 && wait > 0)
-
-    var i = 0
-    while (i++ < retries) {
-      try {
-        block.invoke()
-        break
-      } catch (e: Throwable) {
-        if (!expectedErrors.any { it.isInstance(e) } || i == retries) {
-          throw e
-        }
-
-        Thread.sleep(wait)
-      }
     }
   }
 

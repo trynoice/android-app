@@ -106,23 +106,25 @@ class HomeFragment : Fragment(), Navigable {
   }
 
   private fun addPlaybackToggleMenuItem(menu: Menu): MenuItem {
-    return menu.add(0, R.id.action_playback_toggle, 0, R.string.play_pause).apply {
-      setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-      if (PlaybackStateCompat.STATE_PLAYING == playerManagerState) {
+    return if (PlaybackStateCompat.STATE_PLAYING == playerManagerState) {
+      menu.add(0, R.id.action_pause, 0, R.string.pause).apply {
+        setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
         setIcon(R.drawable.ic_pause_24dp)
-      } else {
-        setIcon(R.drawable.ic_play_arrow_24dp)
-      }
-
-      setOnMenuItemClickListener {
-        if (PlaybackStateCompat.STATE_PLAYING == playerManagerState) {
+        setOnMenuItemClickListener {
           PlaybackController.pause(requireContext())
-        } else {
-          PlaybackController.resume(requireContext())
+          app.analyticsProvider.logEvent("playback_toggle_click", bundleOf())
+          true
         }
-
-        app.analyticsProvider.logEvent("playback_toggle_click", bundleOf())
-        true
+      }
+    } else {
+      menu.add(0, R.id.action_resume, 0, R.string.play).apply {
+        setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+        setIcon(R.drawable.ic_play_arrow_24dp)
+        setOnMenuItemClickListener {
+          PlaybackController.resume(requireContext())
+          app.analyticsProvider.logEvent("playback_toggle_click", bundleOf())
+          true
+        }
       }
     }
   }
