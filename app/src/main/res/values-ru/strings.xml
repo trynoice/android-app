@@ -212,4 +212,9 @@
     <string name="share_usage_data_consent_title">Параметры доступа к данным</string>
     <string name="sound_fade_in_duration_summary">Продолжительность затухания звуков (в секундах)</string>
     <string name="sound_fade_in_duration">Продолжительность затухания звука</string>
+    <string name="enable_media_buttons_summary">Используйте аппаратные мультимедийные кнопки для управления воспроизведением</string>
+    <string name="enable_media_buttons">Включить мультимедийные кнопки</string>
+    <string name="created_by">Создано</string>
+    <string name="import_presets_successful">Пресеты успешно импортированы из файла!</string>
+    <string name="export_presets_successful">Пресеты успешно экспортированы в файл!</string>
 </resources>
