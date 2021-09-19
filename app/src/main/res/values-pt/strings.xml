@@ -2,7 +2,7 @@
 <resources>
     <string name="wake_up_timer">Despertador</string>
     <string name="presets">Misturas de sons</string>
-    <string name="dismiss">OK</string>
+    <string name="dismiss">Dispensar</string>
     <string name="cancel">Cancelar</string>
     <string name="relax">Relaxar</string>
     <string name="random_preset">Mistura aleatória</string>
@@ -189,4 +189,6 @@
     <string name="appintro__library_desc">Use o controlo deslizante do volume para ajustar o volume de cada som. A cada repetição de sons não circulares (sem loop), é selecionado aleatoriamente um período de atraso a partir do intervalo definido pelo controlo deslizante de tempo.</string>
     <string name="appintro__presets_title">Guarde as suas misturas de som favoritas</string>
     <string name="appintro__presets_desc">Depois de reproduzir alguns sons, pode usar o botão \"Guardar\" no canto inferior do ecrã para guardar a sua mistura de sons. Para reutilizar uma mistura de sons armazenada, vá à lista de mistura de sons na barra inferior.</string>
+    <string name="enable_media_buttons_summary">Usar os botões de média de hardware para controlar a reprodução</string>
+    <string name="enable_media_buttons">Ativar botões de média</string>
 </resources>
