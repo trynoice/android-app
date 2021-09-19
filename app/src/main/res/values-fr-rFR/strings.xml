@@ -208,4 +208,6 @@
     <string name="created_by">Créé par</string>
     <string name="import_presets_successful">Préréglages importés avec succès depuis le fichier !</string>
     <string name="export_presets_successful">Préréglages exportés avec succès vers le fichier !</string>
+    <string name="enable_media_buttons_summary">Utiliser les boutons multimédias physiques pour contrôler la lecture</string>
+    <string name="enable_media_buttons">Activer les boutons multimédias</string>
 </resources>
