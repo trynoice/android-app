@@ -35,6 +35,7 @@ class SleepTimerFragment : Fragment() {
     val duration = PlaybackController.getScheduledAutoStopRemainingDurationMillis(requireContext())
     if (duration > 0) {
       binding.countdownView.startCountdown(duration)
+      binding.durationPicker.setResetButtonEnabled(true)
     }
 
     analyticsProvider.setCurrentScreen("sleep_timer", SleepTimerFragment::class)
