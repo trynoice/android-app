@@ -13,7 +13,6 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
-import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -69,7 +68,6 @@ class ShortcutHandlerActivityTest {
         }
       } finally {
         Intents.release()
-        clearMocks(PlaybackController)
       }
     }
   }

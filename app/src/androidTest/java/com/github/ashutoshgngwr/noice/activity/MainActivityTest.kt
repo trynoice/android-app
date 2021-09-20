@@ -24,7 +24,6 @@ import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.BillingProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
-import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -115,7 +114,6 @@ class MainActivityTest {
       }
 
       verify(exactly = 1, timeout = 5000L) { PlaybackController.playPresetFromUri(any(), uri) }
-      clearMocks(PlaybackController)
     }
   }
 

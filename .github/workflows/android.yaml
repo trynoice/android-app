@@ -80,7 +80,7 @@ jobs:
           script: ./scripts/run-ui-tests.sh ${{ matrix.gradleTask }}
           emulator-options: >-
             -no-boot-anim -no-audio -no-snapshot -no-window -camera-back none
-            -camera-front none -gpu swiftshader_indirect -memory 3583
+            -camera-front none -gpu swiftshader_indirect
       - uses: codecov/codecov-action@v1
         with:
           flags: android

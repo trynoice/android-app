@@ -34,12 +34,13 @@ echo "disabling screen timeout..."
 adb shell svc power stayon true;
 adb shell input keyevent KEYCODE_WAKEUP;
 
-echo "disabling immersive mode confirmations..."
+echo "disabling immersive mode confirmations and spell-checker..."
 adb shell settings put secure immersive_mode_confirmations confirmed
+adb shell settings put secure spell_checker_enabled 0
 
 echo "begin collecting test runner logs..."
 adb logcat -c # truncate old logs
-adb logcat -v raw -v color -s "TestRunner:E" > "$TEST_RUNNER_ERROR_LOGS" &
+adb logcat -v raw -v color -s "TestRunner:*" > "$TEST_RUNNER_ERROR_LOGS" &
 LOGCAT_PID=$!
 
 echo "starting $GRADLE_TASK gradle task..."

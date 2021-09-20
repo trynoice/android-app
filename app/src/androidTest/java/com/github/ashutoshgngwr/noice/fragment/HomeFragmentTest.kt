@@ -96,21 +96,23 @@ class HomeFragmentTest {
     val context = ApplicationProvider.getApplicationContext<Context>()
     PlaybackController.play(context, Sound.LIBRARY.keys.first())
 
-    onView(withId(R.id.action_pause))
-      .check(matches(isDisplayed()))
-      .perform(click())
+    try {
+      onView(withId(R.id.action_pause))
+        .check(matches(isDisplayed()))
+        .perform(click())
 
-    onView(withId(R.id.action_pause))
-      .check(doesNotExist())
+      onView(withId(R.id.action_pause))
+        .check(doesNotExist())
 
-    onView(withId(R.id.action_resume))
-      .check(matches(isDisplayed()))
-      .perform(click())
+      onView(withId(R.id.action_resume))
+        .check(matches(isDisplayed()))
+        .perform(click())
 
-    onView(withId(R.id.action_resume))
-      .check(doesNotExist())
-
-    PlaybackController.stop(context)
+      onView(withId(R.id.action_resume))
+        .check(doesNotExist())
+    } finally {
+        PlaybackController.stop(context)
+    }
   }
 
   private inline fun onHomeFragment(crossinline block: (HomeFragment) -> Unit) {
