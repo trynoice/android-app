@@ -25,6 +25,10 @@ markdown: kramdown
 
 permalink: /:path
 
+collections:
+  news:
+    output: true
+
 # configure community pages explicitly so that front-matter need not be added to
 # them and they are rendered normally on GitHub.
 defaults:
