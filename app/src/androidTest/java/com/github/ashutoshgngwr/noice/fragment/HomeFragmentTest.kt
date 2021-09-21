@@ -112,7 +112,7 @@ class HomeFragmentTest {
       onView(withId(R.id.action_resume))
         .check(doesNotExist())
     } finally {
-        PlaybackController.stop(context)
+      PlaybackController.stop(context)
     }
   }
 

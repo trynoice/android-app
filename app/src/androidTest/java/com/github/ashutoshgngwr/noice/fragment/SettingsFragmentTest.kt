@@ -11,9 +11,9 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
@@ -22,7 +22,6 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.verify
-import org.hamcrest.Matchers.allOf
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -99,7 +98,7 @@ class SettingsFragmentTest {
         )
       )
 
-    onView(allOf(withId(R.id.positive), withText(R.string.okay)))
+    EspressoX.onViewInDialog(withId(R.id.positive))
       .perform(click())
 
     verify(exactly = 1) { ShortcutManagerCompat.removeAllDynamicShortcuts(any()) }
@@ -131,8 +130,7 @@ class SettingsFragmentTest {
           )
         )
 
-      onView(withText(themes[i]))
-        .inRoot(isDialog())
+      EspressoX.onViewInDialog(withText(themes[i]))
         .check(matches(isDisplayed()))
         .perform(click())
 
