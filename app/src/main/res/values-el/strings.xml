@@ -187,4 +187,8 @@
     <string name="sound_fade_in_duration_summary">Διάρκεια του fade-in των ήχων (σε δευτερόλεπτα)</string>
     <string name="sound_fade_in_duration">Διάρκεια fade-in ήχου</string>
     <string name="created_by">Δημιουργήθηκε από</string>
+    <string name="enable_media_buttons_summary">Χρήση φυσικών κουμπιών πολυμέσων για τον έλεγχο της αναπαραγωγής</string>
+    <string name="enable_media_buttons">Ενεργοποίηση κουμπιών πολυμέσων</string>
+    <string name="import_presets_successful">Επιτυχής εισαγωγή των συνθέσεων από το αρχείο!</string>
+    <string name="export_presets_successful">Επιτυχής εξαγωγή των συνθέσεων σε αρχείο!</string>
 </resources>

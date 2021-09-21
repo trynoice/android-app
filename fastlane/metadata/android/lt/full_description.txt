@@ -1,12 +1,12 @@
-Daugeliui žmonių šiek tiek foninio triukšmo padeda nusiraminti ir susikaupti. Kai kuriais atvejais jis taip pat padidina produktyvumą. Fono triukšmas (aplinka) taip pat gali padėti sumažinti streso poveikį.
+Daugeliui žmonių šiek tiek foninio triukšmo padeda nusiraminti ir susikaupti. Foninis triukšmas gali padėti sumažinti streso poveikį. Kai kuriais atvejais tai taip pat padidina produktyvumą. Tai taip pat padeda žmonėms užmaskuoti spengimą ausyse.
 
-Noice - tai programėlė, leidžianti sukurti individualią aplinką naudojant aplinkos triukšmo šaltinių įrašus. Sukurkite tobulą aplinką derindami skirtingus garsus, kad užgožtumėte trukdžius ir galėtumėte susitelkti į darbą, arba sukurkite giedrą, ramią aplinką, kuri skatintų užmigti.
+Noice - tai programėlė, leidžianti sukurti individualią aplinką naudojant aplinkos triukšmo šaltinių įrašus. Sukurkite tobulą aplinką derindami skirtingus garsus, kad užgožtumėte trukdžius ir galėtumėte susitelkti į darbą, arba sukurkite ramią aplinką atsipalaidavimui.
 
 <b>Funkcijos</b>
 - 35 įrašyti garsai
-- Įjungta „Google Cast“ („Chromecast“) įgalinta [tik „Play Store“ parduotuvės versija]
+- Įjungta „Google Cast“ („Chromecast“) įgalinta (tik „Play Store“ parduotuvėje)
 - Automatinis miego laikmatis
-- Pabudimo laikmatis (žadintuvas)
+- žadintuvas
 - Generuoti atsitiktinius mišinius
 - Sukurkite individualų miksą
 - Išsaugokite mėgstamiausius miksus, kaip parinktis
