@@ -3,9 +3,11 @@
   <string name="app_name">Noice</string>
   <string name="app_copyright">2019–21 the Noice Authors</string>
   <string name="app_license_url">https://github.com/ashutoshgngwr/noice/blob/master/LICENSE</string>
-  <string name="app_authors_url">https://ashutoshgngwr.github.io/noice/contributors</string>
-  <string name="app_changelog">https://ashutoshgngwr.github.io/noice/CHANGELOG</string>
-  <string name="app_website">https://ashutoshgngwr.github.io/noice</string>
+  <string name="app_authors_url">https://ashutoshgngwr.github.io/noice/contributors?ref=Android+App</string>
+  <string name="app_changelog_url">https://ashutoshgngwr.github.io/noice/CHANGELOG?ref=Android+App</string>
+  <string name="app_website_url">https://ashutoshgngwr.github.io/noice?ref=Android+App</string>
+  <string name="app_instagram_url">https://www.instagram.com/trynoice/</string>
+  <string name="app_twitter_url">https://twitter.com/trynoice</string>
   <string name="app_github_url">https://github.com/ashutoshgngwr/noice</string>
   <string name="app_issues_github_url">https://github.com/ashutoshgngwr/noice/issues</string>
   <string name="app_issues_form_url">
@@ -35,4 +37,6 @@
   <string name="open_collective_url">https://opencollective.com/noice</string>
   <string name="play_store_url">https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice</string>
   <string name="fdroid_url">https://f-droid.org/app/com.github.ashutoshgngwr.noice</string>
+  <string name="v2_announcement_title">v2 Announcement</string>
+  <string name="v2_announcement_message">We are making some radical changes to Noice. Please read more about them [here](https://ashutoshgngwr.github.io/noice/news/v2-announcement?ref=Android+App)!</string>
 </resources>

@@ -36,6 +36,9 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
 
     @VisibleForTesting
     internal const val PREF_HAS_SEEN_DATA_COLLECTION_CONSENT = "has_seen_data_collection_consent"
+
+    @VisibleForTesting
+    internal const val PREF_HAS_SEEN_V2_ANNOUNCEMENT = "has_seen_v2_announcement"
   }
 
   private lateinit var binding: MainActivityBinding
@@ -63,6 +66,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
     setupActionBarWithNavController(navController, AppBarConfiguration(navController.graph))
 
     AppIntroActivity.maybeStart(this)
+    maybeShowV2Announcement()
     if (!BuildConfig.IS_FREE_BUILD) {
       maybeShowDataCollectionConsent()
     }
@@ -71,6 +75,19 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
     app.billingProvider.init(this, this)
     app.analyticsProvider.logEvent("ui_open", bundleOf("theme" to settingsRepository.getAppTheme()))
     hasNewIntent = true
+  }
+
+  private fun maybeShowV2Announcement() {
+    val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+    if (prefs.getBoolean(PREF_HAS_SEEN_V2_ANNOUNCEMENT, false)) {
+      return
+    }
+
+    DialogFragment.show(supportFragmentManager) {
+      title(R.string.v2_announcement_title)
+      message(R.string.v2_announcement_message)
+      positiveButton(R.string.okay)
+    }
   }
 
   private fun maybeShowDataCollectionConsent() {
@@ -127,7 +144,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
     }
 
     if (Intent.ACTION_VIEW == intent.action &&
-      (intent.dataString?.startsWith(getString(R.string.app_website)) == true ||
+      (intent.dataString?.startsWith("https://ashutoshgngwr.github.io/noice/preset") == true ||
         intent.dataString?.startsWith("noice://preset") == true)
     ) {
       intent.data?.also { PlaybackController.playPresetFromUri(this, it) }

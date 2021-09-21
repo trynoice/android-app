@@ -49,6 +49,7 @@ class MainActivityTest {
       .edit {
         putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true)
         putBoolean(MainActivity.PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true)
+        putBoolean(MainActivity.PREF_HAS_SEEN_V2_ANNOUNCEMENT, true)
       }
 
     activityScenario = launch(MainActivity::class.java)
@@ -101,9 +102,8 @@ class MainActivityTest {
       "noice://preset?name=test&playerStates=[]"
     )
 
+    every { PlaybackController.playPresetFromUri(any(), any()) } returns Unit
     for (input in inputs) {
-      every { PlaybackController.playPresetFromUri(any(), any()) } returns Unit
-
       val uri = Uri.parse(input)
       activityScenario.onActivity {
         it.startActivity(

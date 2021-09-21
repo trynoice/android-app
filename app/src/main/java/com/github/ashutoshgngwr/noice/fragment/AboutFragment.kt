@@ -29,7 +29,7 @@ class AboutFragment : Fragment() {
         buildElement(
           R.drawable.ic_about_version,
           "v${BuildConfig.VERSION_NAME}",
-          getString(R.string.app_changelog)
+          getString(R.string.app_changelog_url)
         )
       )
 
@@ -40,19 +40,12 @@ class AboutFragment : Fragment() {
           R.string.app_license_url
         )
       )
+
       addItem(
         buildElement(
           R.drawable.ic_about_group,
           R.string.app_authors,
           R.string.app_authors_url
-        )
-      )
-
-      addItem(
-        buildElement(
-          R.drawable.about_icon_link,
-          R.string.about_website,
-          R.string.app_website
         )
       )
 
@@ -68,9 +61,33 @@ class AboutFragment : Fragment() {
 
       addItem(
         buildElement(
+          R.drawable.about_icon_instagram,
+          R.string.about_instagram,
+          R.string.app_instagram_url
+        )
+      )
+
+      addItem(
+        buildElement(
+          R.drawable.about_icon_twitter,
+          R.string.about_twitter,
+          R.string.app_twitter_url
+        )
+      )
+
+      addItem(
+        buildElement(
           R.drawable.about_icon_github,
           R.string.about_github,
           R.string.app_github_url
+        )
+      )
+
+      addItem(
+        buildElement(
+          R.drawable.about_icon_link,
+          R.string.about_website,
+          R.string.app_website_url
         )
       )
 

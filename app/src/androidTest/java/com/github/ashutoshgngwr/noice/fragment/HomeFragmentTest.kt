@@ -48,6 +48,7 @@ class HomeFragmentTest {
       .edit {
         putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true)
         putBoolean(MainActivity.PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true)
+        putBoolean(MainActivity.PREF_HAS_SEEN_V2_ANNOUNCEMENT, true)
       }
 
     activityScenario = ActivityScenario.launch(MainActivity::class.java)
