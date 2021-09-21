@@ -6,7 +6,7 @@ Noice - tai programėlė, leidžianti sukurti individualią aplinką naudojant a
 - 35 įrašyti garsai
 - Įjungta „Google Cast“ („Chromecast“) įgalinta (tik „Play Store“ parduotuvėje)
 - Automatinis miego laikmatis
-- +adintuvas
+- žadintuvas
 - Generuoti atsitiktinius mišinius
 - Sukurkite individualų miksą
 - Išsaugokite mėgstamiausius miksus, kaip parinktis
