@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.3.2](https://github.com/ashutoshgngwr/noice/releases/tag/1.3.2)
+
+**Tuesday, 21 September 2021**
+
+- Fix bug with reset button in sleep timer
+- Update translations ([#805](https://github.com/ashutoshgngwr/noice/issues/805), [#806](https://github.com/ashutoshgngwr/noice/issues/806))
+
+We're making some radical changes to Noice in the coming releases. Please read the full announcement at https://ashutoshgngwr.github.io/noice/news/v2-announcement
+
 ## [v1.3.1](https://github.com/ashutoshgngwr/noice/releases/tag/1.3.1)
 
 **Saturday, 18 September 2021**
