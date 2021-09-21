@@ -1,0 +1,7 @@
+- Fix bug with reset button in sleep timer
+- Update translations
+
+We're making some radical changes to Noice in the coming releases. Please read the full announcement at https://ashutoshgngwr.github.io/noice/news/v2-announcement
+
+We're continuously working to make Noice better. Please turn on updates to never miss a thing!
+See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG
