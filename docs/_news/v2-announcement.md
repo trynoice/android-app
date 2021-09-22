@@ -51,6 +51,17 @@ decided to offer paid subscriptions. Noice will remain open-source, and whatever
 was free before will be free forever, but many new features will require an
 active subscription.
 
+<div style="display: flex; justify-content: center; margin-top: 3rem;">
+<blockquote class="twitter-tweet">
+  <p lang="en" dir="ltr">
+    We are making some radical changes to Noice. Let us know what you think!
+    <a href="https://t.co/tx8zbT4cr4">https://t.co/tx8zbT4cr4</a>
+  </p>
+  &mdash; Noice (@trynoice)
+  <a href="https://twitter.com/trynoice/status/1440772734187819010?ref_src=twsrc%5Etfw">September 22, 2021</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+</div>
 ---
 
 #### Footnotes
