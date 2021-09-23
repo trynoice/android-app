@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.3.3](https://github.com/ashutoshgngwr/noice/releases/tag/1.3.3)
+
+**Thursday, 23 September 2021**
+
+- Prevent v2 announcement from showing up more than once
+- Update translations ([#808](https://github.com/ashutoshgngwr/noice/issues/808))
+
 ## [v1.3.2](https://github.com/ashutoshgngwr/noice/releases/tag/1.3.2)
 
 **Tuesday, 21 September 2021**
