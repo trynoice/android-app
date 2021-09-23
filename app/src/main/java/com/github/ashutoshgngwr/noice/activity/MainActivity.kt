@@ -87,6 +87,9 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
       title(R.string.v2_announcement_title)
       message(R.string.v2_announcement_message)
       positiveButton(R.string.okay)
+      onDismiss {
+        prefs.edit { putBoolean(PREF_HAS_SEEN_V2_ANNOUNCEMENT, true) }
+      }
     }
   }
 
