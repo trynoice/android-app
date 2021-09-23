@@ -43,12 +43,22 @@ adb logcat -c # truncate old logs
 adb logcat -v raw -v color -s "TestRunner:*" > "$TEST_RUNNER_ERROR_LOGS" &
 LOGCAT_PID=$!
 
-echo "starting $GRADLE_TASK gradle task..."
-./gradlew "$GRADLE_TASK" --no-daemon --stacktrace
-GRADLE_EXITCODE=$?
+function cleanup() {
+  echo "stop collecting test runner logs..."
+  kill "$LOGCAT_PID"
 
-echo "stop collecting test runner logs..."
-kill "$LOGCAT_PID"
+  echo "removing test runner log file..."
+  rm -f "$TEST_RUNNER_ERROR_LOGS"
+
+  echo "stopping gradle daemon..."
+  ./gradlew --stop
+}
+
+trap "cleanup" EXIT
+
+echo "starting $GRADLE_TASK gradle task..."
+./gradlew "$GRADLE_TASK" --stacktrace
+GRADLE_EXITCODE=$?
 
 if [ $GRADLE_EXITCODE -ne 0 ];  then
   echo ""
