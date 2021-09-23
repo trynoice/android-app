@@ -1,0 +1,7 @@
+- Neleisti, kad v2 pranešimas būtų rodomas daugiau nei vieną kartą
+- Atnaujinti vertimai
+
+Artimiausiuose leidimuose atliksime keletą radikalių Noice pakeitimų. Visą pranešimą skaitykite adresu https://ashutoshgngwr.github.io/noice/news/v2-announcement.
+
+Nuolat dirbame, kad Noice taptų geresnė. Įjunkite atnaujinimus, kad nieko nepraleistumėte!
+Išsamų pakeitimų sąrašą rasite https://ashutoshgngwr.github.io/noice/CHANGELOG
