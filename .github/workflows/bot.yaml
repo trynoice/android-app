@@ -35,13 +35,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: ${{ github.ref }}
           fetch-depth: 0
       - run: ./scripts/generate-docs.sh
         env:
           CHANGELOG_PATH: docs/CHANGELOG.md
           CONTRIBUTORS_YAML_PATH: docs/_data/authors/code.yaml
+      - id: branch_info
+        run: echo "::set-output name=name::$(git branch --format='%(refname:short)' --contains $GITHUB_REF)"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.branch_info.outputs.name }}
