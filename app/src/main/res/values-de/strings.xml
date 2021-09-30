@@ -214,5 +214,5 @@
     <string name="export_presets_successful">Gespeicherte Voreinstellungen wurden erfolgreich exportiert!</string>
     <string name="sound_fade_in_duration_summary">Dauer fürs Überblenden (in Sekunden)</string>
     <string name="sound_fade_in_duration">Fade-In-Dauer des Geräuschs</string>
-    <string name="created_by">test</string>
+    <string name="created_by"></string>
 </resources>
