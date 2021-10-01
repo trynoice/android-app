@@ -1376,10 +1376,10 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/chromecast-caf-receiver@^6.0.5":
-  version "6.0.5"
-  resolved "https://registry.yarnpkg.com/@types/chromecast-caf-receiver/-/chromecast-caf-receiver-6.0.5.tgz#cf7071b2b4b12bda531d31532d134daaf2f4a333"
-  integrity sha512-VO0qGrFuYTNYQfUr29bL3mqvZVr3neBkDXKn61ZhLUpxB9KzT3Mmup9DM6ERw7veZoFEJ1eSgZZoClyG3IgmQA==
+"@types/chromecast-caf-receiver@^6.0.6":
+  version "6.0.6"
+  resolved "https://registry.yarnpkg.com/@types/chromecast-caf-receiver/-/chromecast-caf-receiver-6.0.6.tgz#c279c85303ee71aec097f3179db36014f58bd7fe"
+  integrity sha512-bMtb9SUlgRY5qdgGZXzVAA6sNCQgwxNolTLvebzbQk+UzMhcL/BHC/b6tKSXWe9vuH6p7lJ1V+A/JBiNv+HWiw==
 
 "@types/color-name@^1.1.1":
   version "1.1.1"
