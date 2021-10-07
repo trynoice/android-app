@@ -186,7 +186,7 @@
     <string name="failed_to_write_file">No se pudo escribir en el archivo seleccionado!</string>
     <string name="failed_to_read_file">No se pudo leer el archivo seleccionado!</string>
     <string name="failed_to_purchase">No se ha podido iniciar el flujo de pagos. Vuelve a intentarlo más tarde!</string>
-    <string name="failed_to_load_inapp_purchases">No se han podido cargar los detalles de la compra en la aplicación. Vuelve a intentarlo más tarde!</string>
+    <string name="failed_to_load_inapp_purchases">¡No se han podido cargar los detalles de la compra en la aplicación. Vuelve a intentarlo más tarde!</string>
     <string name="should_share_usage_data_summary">Compartir automáticamente los datos de uso con los desarrolladores</string>
     <string name="should_share_usage_data">Compartir datos de uso</string>
     <string name="others">Otros</string>
@@ -194,4 +194,10 @@
     <string name="decline">Descartar</string>
     <string name="created_by">Creado por</string>
     <string name="payment_pending">Te notificaremos en cuanto terminemos de procesar tu pago.</string>
+    <string name="should_display_sound_icons">Mostrar iconos de sonido</string>
+    <string name="export_presets_successful">¡Preajustes exportados con éxito al archivo!</string>
+    <string name="import_presets_successful">¡Preajustes importados con éxito del archivo!</string>
+    <string name="share_usage_data_consent_message">Recopilamos datos de uso de la aplicación para mejorar la experiencia del usuario. También recopilamos datos de comportamiento de la aplicación para analizar y diagnosticar errores encontrados durante el uso de la aplicación. Lea nuestra [Política de privacidad] (https://ashutoshgnggwr.github.io/noice/privacy-policy) para obtener más información.
+\n
+\n Puede configurar el intercambio automático de datos en cualquier momento dentro de la aplicación yendo a \"**Configuración** &gt; **Compartir el uso y los datos de comportamiento**\".</string>
 </resources>
