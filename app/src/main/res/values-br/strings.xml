@@ -2,4 +2,15 @@
 <resources>
     <string name="library">Levraoueg</string>
     <string name="app_theme">temoù</string>
+    <string name="about">Diwar-benn</string>
+    <string name="help">Skoazell</string>
+    <string name="light">Gouloù</string>
+    <string name="mood">Imor</string>
+    <string name="random_preset">Dargouezhek Reoliñ</string>
+    <string name="relax">Distenn</string>
+    <string name="cancel">Nullañ</string>
+    <string name="name">Anvioù</string>
+    <string name="pause">Ehanañ</string>
+    <string name="dense">Doues</string>
+    <string name="intensity">Kreñvded</string>
 </resources>
