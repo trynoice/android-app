@@ -189,4 +189,14 @@
     <string name="enable_media_buttons">Bật nút phương tiện</string>
     <string name="import_presets_successful">Nhập các thiết lập trước từ tệp thành công!</string>
     <string name="export_presets_successful">Xuất các thiết lập trước ra tệp thành công!</string>
+    <string name="app_copyright">2019–21 Tác giả Noice</string>
+    <string name="plus1m">1p</string>
+    <string name="plus5m">5p</string>
+    <string name="plus30m">30p</string>
+    <string name="plus1h">1g</string>
+    <string name="plus4h">4h</string>
+    <string name="plus8h">8g</string>
+    <string name="others_key">khác</string>
+    <string name="v2_announcement_title">Thông báo v2</string>
+    <string name="v2_announcement_message">Chúng tôi đang thực hiện một số thay đổi căn bản đối với Noice. Vui lòng đọc thêm về chúng [here] (https://ashutoshgngwr.github.io/noice/news/v2-announcement?ref=Android+App)!</string>
 </resources>
