@@ -148,4 +148,17 @@
     <string name="behavior">行为</string>
     <string name="settings">设置</string>
     <string name="app_shortcut_creation_failed">未能将预设添加到应用程序的快捷方式中!</string>
+    <string name="appearance">界面</string>
+    <string name="skip_to_prev">上一个预设</string>
+    <string name="skip_to_next">下一个预设</string>
+    <string name="unsaved_preset">未保存的预设</string>
+    <string name="ignore_audio_focus_changes_summary_off">当其他应用播放音频时暂停</string>
+    <string name="share">分享</string>
+    <string name="export_presets">导出到文件</string>
+    <string name="import_presets">从文件中导入</string>
+    <string name="should_display_sound_icons">显示声音图标</string>
+    <string name="sound_fade_in_duration">声音淡入持续时间</string>
+    <string name="pinned_shortcut_creation_failed">未能将快捷方式添加到主屏幕！</string>
+    <string name="pinned_shortcut_created">快捷方式已添加到主屏幕！</string>
+    <string name="ignore_audio_focus_changes_summary_on">当其他应用程序播放音频时，不做任何反应</string>
 </resources>
