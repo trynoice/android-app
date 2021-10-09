@@ -1,6 +1,6 @@
-Monille ihmisille pieni taustamelu auttaa rauhoittumaan ja keskittymään. Joissakin tapauksissa se myös lisää tuottavuutta. Taustamelu voi myös auttaa minimoimaan stressin vaikutuksia.
+Monia ihmisiä pieni taustamelu auttaa rauhoittumaan ja keskittymään. Taustamelu voi auttaa minimoimaan stressin vaikutuksia. Joissakin tapauksissa se myös lisää tuottavuutta. Se auttaa ihmisiä myös peittämään tinnitusta.
 
-Noice on sovellus, jonka avulla voit luoda räätälöidyn tunnelman käyttämällä ympäristön äänilähteistä otettuja pätkiä. Voit luoda täydellisen ääniympäristön yhdistelemällä erilaisia ääniä, jotka hukuttavat häiriötekijät, jotta voit keskittyä työhösi, tai luoda seesteisen, rauhallisen ympäristön, joka auttaa sinua nukahtamaan.
+Noice on sovellus, jonka avulla voit luoda räätälöidyn tunnelman käyttämällä ympäristön äänilähteistä otettuja pätkiä. Voit luoda täydellisen ääniympäristön yhdistelemällä erilaisia ääniä, jotka hukuttavat häiriötekijät, jotta voit keskittyä työhösi, tai luoda seesteisen, rauhallisen ympäristön, joka auttaa sinua rentoutumaan.
 
 <b>Ominaisuudet</b>
 - 35 äänitettyä ääntä
