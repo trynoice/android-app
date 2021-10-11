@@ -1,24 +1,35 @@
-Para mucha gente, un poco de ruido de fondo es útil para calmarse y concentrarse. En algunos casos, también es un impulso a la productividad. El ruido de fondo (ambiente) también puede ayudar a minimizar los efectos del estrés.
+Para muchas personas, un poco de ruido de fondo es útil para calmarse y concentrarse. El ruido de fondo puede ayudar a minimizar los efectos del estrés. En algunos casos, también es un impulso a la productividad. También ayuda a las personas a producir sus acúfenos.
 
-Noice es una aplicación que permite crear un ambiente personalizado utilizando clips de fuentes de sondio ambiental. Crea tu entorno perfecto combinando diferentes sonidos para ahogar las distracciones y así poder concentrarte en tu trabajo, o generar entornos serenos y tranquilos que te animen a quedarte dormido.
+Noice es una aplicación que te permite crear un ambiente personalizado usando clips de fuentes de ruido ambiental. Cree su entorno perfecto combinando diferentes sonidos para ahogar las distracciones y así que pueda concentrarse en su trabajo o generar entornos pacíficos para la relajación.
 
 <b>Características</b>
 - 35 sonidos registrados
-- Google Cast (Chromecast) activado [solo en Play Store]
+- Google Cast (Chromecast) habilitado (solo en Play Store)
+- Temporizador de sueño automático
+- Reloj Despertador
+- Generar mezclas aleatorias
 - Hacer una mezcla personalizada
-- Temporizador de despertador
 - Guarda tus mezclas favoritas
-- Temporizador automático para dormir
 - Toca junto con otros reproductores de música
 - Control de volumen individual para cada fuente de sonido
 - Reproducción sin conexión
 - Soporte para tema blanco u oscuro
 
-<b>Biblioteca de sonidos</b>
-- Bosques (pájaros, hoguera, noche, viento, palmeras, etc.)
+<b>Biblioteca de sonido</b>
+- Vida (pájaros, grillos, lobo, latido del corazón humano, etc.)
+- Forestal (hoguera, noche, viento, palmeras, etc.)
 - Fenómenos naturales(lluvia, truenos)
-- Teletransportación (cafetería, oficina, tren en movimiento, en vuelo, en el mar, en la orilla del río, etc.)
-- Ruido en crudo (blanco, rosa, marrón)
+- Tele-transportación (cafetería, biblioteca, oficina, playa, ribera, etc.)
+- Vehicular (tren en movimiento, en vuelo, barco crujiente, coche eléctrico, etc.)
+- Ruido crudo (blanco, rosa, marrón)
+
+<b>Permisos</b>
+- <b>Evitar que el dispositivo duerma</b>: para mantener la CPU del dispositivo despierta durante la reproducción
+- <b>Ejecutar el servicio en primer plano</b>: para ejecutar el proceso del reproductor (diferente de la interfaz de usuario)
+- <b>Ejecutar en el inicio</b>: para asegurarse de que los temporizadores de activación persisten a través de reinicios
+- <b>Acceso completo a la red</b>: para habilitar Chromecast y contribuciones financieras
+- <b>Ver conexiones de red</b>: añadido por una dependencia, actualmente no está en uso
+- <b>Servicio de facturación de Google Play</b>: para permitir contribuciones financieras para apoyar el desarrollo
 
 Noice es un software libre y de código abierto.
 https://github.com/ashutoshgngwr/noice
