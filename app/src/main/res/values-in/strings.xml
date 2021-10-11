@@ -99,7 +99,7 @@
     <string name="appintro__getting_started_desc_0">Geser ke kiri untuk mengenal semua fitur!</string>
     <string name="appintro__getting_started_desc_1">Mari kita mulai!</string>
     <string name="appintro__getting_started_title">Selamat Datang</string>
-    <string name="appintro__presets_desc">Setelah memainkan beberapa suara, Anda dapat menggunakan tombol di sudut ujung bawah untuk menyimpan campuran Anda. Untuk menggunakan kembali campuran yang disimpan, Anda dapat mengunjungi daftar prasetel dari menu aplikasi.</string>
+    <string name="appintro__presets_desc">Setelah memainkan beberapa suara, Anda dapat menggunakan tombol simpan di sudut ujung bawah untuk menyimpan campuran Anda. Untuk menggunakan kembali campuran yang disimpan, buka daftar preset dari bilah bawah.</string>
     <string name="appintro__presets_title">Simpan campuran favorit Anda</string>
     <string name="appintro__library_desc">
     Gunakan penggeser volume untuk menyesuaikan volume suara. Pada setiap pengulangan suara non-looping, terjadi penundaan
@@ -118,10 +118,7 @@
     - membuat sampel suara yang lebih baik \n
     - membeli kopi \n
  </string>
-    <string name="support_development__donate_google_play_description">
-    Pembayaran Anda akan ditangani dengan aman oleh Google Play. Jumlah tersebut akan dikonversi ke
-    mata uang lokal Anda. Bergantung pada lokasi Anda, pajak tambahan mungkin ditambahkan ke jumlah akhir.
- </string>
+    <string name="support_development__donate_google_play_description">Pembayaran Anda akan ditangani dengan aman oleh Google Play. Tergantung pada lokasi Anda, pajak tambahan _mungkin_ ditambahkan ke jumlah akhir.</string>
     <string name="support_development__donate_thank_you">Terima kasih!</string>
     <string name="support_development__donate_thank_you_description">Kami berterima kasih dengan sepenuh hati atas kemurahhatian Anda untuk berkontribusi dalam proyek Noice.</string>
     <string name="support_development__share">Bagikan dengan teman</string>
@@ -135,7 +132,7 @@
     - Untuk memungkinkan pembaruan di masa mendatang \n
     - Untuk membuat Noice bebas iklan selamanya \n
  </string>
-    <string name="cast_media">Transmisikan media ke perangkat lain</string>
+    <string name="cast_media">Hubungkan ke Chromecast</string>
     <string name="in_app_feedback__description">
     Kami ingin sekali mendengar dari Anda tentang aplikasi ini. Mohon luangkan waktu sejenak untuk mengunjungi repositori GitHub kami.
     Jika Anda tidak menyukai aplikasinya, pertimbangkan untuk membuka masalah yang menjelaskan kekhawatiran Anda.
@@ -158,7 +155,7 @@
     <string name="intensity_any">Apapun</string>
     <string name="submit_feedback">Masukan Feedback</string>
     <string name="wake_up_timer_cancelled">Timer Wake-up terbatalkan!</string>
-    <string name="presets_as_home_screen_summary">\"Tunjukan Preset\" yang tersimpan pada permulaan aplikasi</string>
+    <string name="presets_as_home_screen_summary">Tampilkan \"preset\" pada startup aplikasi (memerlukan restart aplikasi)</string>
     <string name="intensity">Intensitas</string>
     <plurals name="time_minutes">
         <item quantity="other">%1$d menit</item>
@@ -197,7 +194,7 @@
     <string name="app_shortcut_created">Preset telah ditambahkan ke pintasan aplikasi!</string>
     <string name="app_shortcut_removed">Preset telah dihapus dari pintasan aplikasi!</string>
     <string name="dense">Padat</string>
-    <string name="presets_as_home_screen">Preset tersimpan sebagai layar beranda</string>
+    <string name="presets_as_home_screen">\"Preset\" sebagai layar beranda</string>
     <string name="app_authors">Lihat daftar Penulis Noice</string>
     <string name="should_display_sound_icons">Tunjukkan ikon suara</string>
     <string name="should_share_usage_data_summary">Secara otomatis berbagi data penggunaan dan perilaku dengan pengembang</string>
@@ -208,4 +205,15 @@
     <string name="share_usage_data_consent_title">Preferensi Berbagi Data</string>
     <string name="sound_fade_in_duration_summary">Durasi kelirihan bunyi (dalam detik)</string>
     <string name="sound_fade_in_duration">Durasi kelirihan bunyi</string>
+    <string name="enable_media_buttons">Aktifkan tombol media</string>
+    <string name="failed_to_purchase">Gagal memulai alur pembayaran. Silakan coba lagi nanti!</string>
+    <string name="payment_pending">Kami akan memberi tahu Anda segera setelah kami selesai memproses pembayaran Anda.</string>
+    <string name="export_presets_successful">Berhasil mengekspor preset ke file!</string>
+    <string name="import_presets_successful">Berhasil mengimpor preset dari file!</string>
+    <string name="share_usage_data_consent_message">Kami mengumpulkan data penggunaan aplikasi untuk meningkatkan pengalaman pengguna. Kami juga mengumpulkan data perilaku aplikasi untuk menganalisis dan mendiagnosis kesalahan yang ditemukan selama penggunaan aplikasi. Baca [kebijakan privasi](https://ashutoshgngwr.github.io/noice/privacy-policy) kami untuk informasi lebih lanjut.
+\n
+\n Anda dapat mengonfigurasi berbagi data otomatis kapan saja di dalam aplikasi dengan membuka \"**Setelan** &gt; **Berbagi data penggunaan dan perilaku**\".</string>
+    <string name="failed_to_load_inapp_purchases">Gagal memuat detail pembelian dalam aplikasi. Silakan coba lagi nanti!</string>
+    <string name="created_by">Dibuat oleh</string>
+    <string name="enable_media_buttons_summary">Gunakan tombol media perangkat keras untuk mengontrol pemutaran</string>
 </resources>
