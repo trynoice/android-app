@@ -154,6 +154,12 @@ dependencies {
   androidTestImplementation "junit:junit:$junitVersion"
 
   androidTestFullImplementation 'tools.fastlane:screengrab:2.1.0'
+  // Constraint can be removed once https://github.com/fastlane/fastlane/issues/19480 is resolved
+  constraints {
+    implementation('com.jraska:falcon:2.2.0') {
+      because 'Versions before 2.2.0 are only available on the now deprecated jcenter repository'
+    }
+  }
 
   debugImplementation "androidx.fragment:fragment-testing:$fragmentVersion"
 }
