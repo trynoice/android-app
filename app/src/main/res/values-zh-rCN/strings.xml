@@ -161,4 +161,5 @@
     <string name="pinned_shortcut_creation_failed">未能将快捷方式添加到主屏幕！</string>
     <string name="pinned_shortcut_created">快捷方式已添加到主屏幕！</string>
     <string name="ignore_audio_focus_changes_summary_on">当其他应用程序播放音频时，不做任何反应</string>
+    <string name="enable_media_buttons_summary">使用硬件媒体按钮控制播放</string>
 </resources>
