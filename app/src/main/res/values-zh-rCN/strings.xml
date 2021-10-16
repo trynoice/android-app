@@ -148,7 +148,7 @@
     <string name="behavior">行为</string>
     <string name="settings">设置</string>
     <string name="app_shortcut_creation_failed">未能将预设添加到应用程序的快捷方式中!</string>
-    <string name="appearance">界面</string>
+    <string name="appearance">外观</string>
     <string name="skip_to_prev">上一个预设</string>
     <string name="skip_to_next">下一个预设</string>
     <string name="unsaved_preset">未保存的预设</string>
