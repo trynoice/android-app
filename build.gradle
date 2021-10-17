@@ -17,7 +17,7 @@ buildscript {
 allprojects {
   repositories {
     google()
-    jcenter() // TODO: replace it with maven central by the end of the year 2021.
+    mavenCentral()
     maven { url "https://jitpack.io" }
   }
 }

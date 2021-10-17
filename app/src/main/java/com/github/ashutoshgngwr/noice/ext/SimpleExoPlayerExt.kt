@@ -75,6 +75,6 @@ fun SimpleExoPlayer.setAudioAttributesCompat(compatAttrs: AudioAttributesCompat)
     .build()
 
   if (attrs != audioAttributes) {
-    audioAttributes = attrs
+    setAudioAttributes(attrs, false)
   }
 }

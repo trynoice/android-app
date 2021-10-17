@@ -40,7 +40,7 @@
       android:layout_width="match_parent"
       android:layout_height="8dp" />
 
-    <com.hopenlib.flextools.FlexRadioGroup
+    <io.github.mrherintsoahasina.flextools.FlexRadioGroup
       android:id="@+id/preset_type"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
         android:layout_marginHorizontal="16dp"
         android:text="@string/relax" />
 
-    </com.hopenlib.flextools.FlexRadioGroup>
+    </io.github.mrherintsoahasina.flextools.FlexRadioGroup>
 
     <Space
       android:layout_width="match_parent"
@@ -86,7 +86,7 @@
       android:layout_width="match_parent"
       android:layout_height="8dp" />
 
-    <com.hopenlib.flextools.FlexRadioGroup
+    <io.github.mrherintsoahasina.flextools.FlexRadioGroup
       android:id="@+id/preset_intensity"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
         android:layout_marginHorizontal="16dp"
         android:text="@string/dense" />
 
-    </com.hopenlib.flextools.FlexRadioGroup>
+    </io.github.mrherintsoahasina.flextools.FlexRadioGroup>
 
     <Space
       android:layout_width="match_parent"
