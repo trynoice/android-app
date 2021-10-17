@@ -129,7 +129,7 @@ dependencies {
   fullImplementation 'com.google.android.gms:play-services-base:17.6.0'
   fullImplementation 'com.google.android.gms:play-services-cast-framework:20.0.0'
   fullImplementation 'com.google.android.play:core:1.10.1'
-  fullImplementation platform('com.google.firebase:firebase-bom:28.4.0')
+  fullImplementation platform('com.google.firebase:firebase-bom:28.4.2')
   fullImplementation 'com.google.firebase:firebase-analytics-ktx'
   fullImplementation 'com.google.firebase:firebase-crashlytics-ktx'
   fullImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
