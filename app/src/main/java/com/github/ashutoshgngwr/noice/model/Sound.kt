@@ -64,6 +64,12 @@ class Sound private constructor(
         displayGroupResID = R.string.sound_group__raw_noise,
         iconID = R.drawable.ic_sound_brownian_noise,
       ),
+      "brown_plus_pink_waves" to Sound(
+        src = arrayOf("brown_plus_pink_waves.mp3"),
+        titleResID = R.string.brown_plus_pink_waves,
+        displayGroupResID = R.string.sound_group__raw_noise,
+        iconID = R.drawable.ic_sound_seaside,
+      ),
       "coffee_shop" to Sound(
         src = arrayOf("coffee_shop_0.mp3", "coffee_shop_1.mp3"),
         titleResID = R.string.coffee_shop,
