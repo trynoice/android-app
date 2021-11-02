@@ -162,4 +162,7 @@
     <string name="pinned_shortcut_created">快捷方式已添加到主屏幕！</string>
     <string name="ignore_audio_focus_changes_summary_on">当其他应用程序播放音频时，不做任何反应</string>
     <string name="enable_media_buttons_summary">使用硬件媒体按钮控制播放</string>
+    <string name="presets_as_home_screen">“预设”作为主屏幕</string>
+    <string name="sound_fade_in_duration_summary">淡入声音的持续时间（以秒为单位）</string>
+    <string name="ignore_audio_focus_changes">忽略音频焦点变化</string>
 </resources>
