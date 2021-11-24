@@ -131,7 +131,7 @@
     - Сделать возможными последующие обновления\n
     - Оставить Noice свободным от рекламы навсегда\n
   </string>
-    <string name="cast_media">Транслировать медиа на другое устройство</string>
+    <string name="cast_media">Подключиться к Chromecast</string>
     <string name="in_app_feedback__description">Нам было бы приятно узнать что Вы думаете о приложении. Выделите, пожалуйста, минутку и посетите наш GitHub репозиторий. Если приложение вам не понравилось, откройте пожалуйста issue с объяснением. В другом случае, поставьте, пожалуйста, звездочку приложению чтобы показать любовь и поддержку.</string>
     <string name="in_app_feedback__title">Отправить отзыв</string>
     <string name="later">Позже</string>
@@ -145,7 +145,7 @@
     <string name="dense">Плотный</string>
     <string name="mood_any">Любой</string>
     <string name="intensity_any">Любой</string>
-    <string name="presets_as_home_screen_summary">Показывать «сохраненные пресеты» при запуске приложения (требуется перезапуск приложения)</string>
+    <string name="presets_as_home_screen_summary">Показывать \"сохраненные пресеты\" при запуске приложения (требуется перезапуск приложения)</string>
     <string name="preset_does_not_exist">Пресета не существует. Возможно, он был удален!</string>
     <string name="relax">Расслабиться</string>
     <string name="random_preset">Случайный пресет</string>
@@ -190,7 +190,7 @@
     <string name="pinned_shortcut_creation_failed">Не удалось добавить ярлык на главный экран!</string>
     <string name="appearance">Внешний вид</string>
     <string name="behavior">Поведение</string>
-    <string name="presets_as_home_screen">Сохраненные предустановки на главном экране</string>
+    <string name="presets_as_home_screen">\"Пресеты\" на главном экране</string>
     <string name="settings">Настройки</string>
     <string name="app_shortcut_creation_failed">Не удалось добавить предустановку в ярлыки приложений!</string>
     <string name="app_shortcut_created">Предустановка была добавлена в ярлыки приложений!</string>
