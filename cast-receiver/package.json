@@ -22,7 +22,7 @@
     "@tsconfig/recommended": "^1.0.1",
     "@types/chromecast-caf-receiver": "^6.0.5",
     "@types/howler": "^2.2.3",
-    "@types/jest": "^27.0.1",
+    "@types/jest": "^27.0.3",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
     "babel-jest": "^27.1.0",
