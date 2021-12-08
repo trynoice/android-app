@@ -4,7 +4,7 @@
     <string name="app_theme">Tema</string>
     <string name="library">Libreria</string>
     <string name="report_issue">Segnala i problemi</string>
-    <string name="presets">Preimpostazioni salvate</string>
+    <string name="presets">Preimpostazioni</string>
     <string name="sleep_timer">Timer di spegnimento </string>
     <string name="cancel">Annulla</string>
     <string name="dismiss">Annulla</string>
@@ -99,7 +99,7 @@
     <string name="relax">Lenitivo</string>
     <string name="wake_up_timer">Timer risveglio</string>
     <string name="sleep_timer_description">Noice si riavvierà allo scadere del tempo. Usa i pulsanti sotto per aggiungere del tempo e avviare il timer.</string>
-    <string name="presets_as_home_screen_summary">Mostra \"preset salvati\" all\'avvio dell\'app (necessita il riavvio dell\'app)</string>
+    <string name="presets_as_home_screen_summary">Mostra «preimpostazioni» all\'avvio dell\'app (necessita il riavvio dell\'app)</string>
     <string name="pinned_shortcuts_not_supported">Il tuo launcher predefinito non supporta l\'aggiunta di scorciatoie.</string>
     <string name="wake_up_timer_description">Noice eseguirà il preset selezionato allo scadere del tempo. Usa i pulsanti sotto per selezionare un preset e impostare il tempo desiderato per il timer di risveglio.</string>
     <string name="wake_up_timer_cancelled">Timer di risveglio annullato!</string>
@@ -114,7 +114,7 @@
     <string name="appintro__library_title">Crea i tuoi ambienti perfetti</string>
     <string name="appintro__library_desc">Usa il potenziometro del volume per adeguare il volume dei suoni. Ad ogni ripetizioni di suoni non in loop, verrà casualmente selezionato un tempo di ritardo nel range impostato dal potenziometro del tempo.</string>
     <string name="appintro__presets_title">Salva i tuoi missaggi preferiti</string>
-    <string name="appintro__presets_desc">Dopo aver riprodotto alcuni suoni, puoi usare il pulsante nell\'angolo in basso per salvare il tuo missaggio. Per riutilizzare un missaggio salvato, puoi consultare la lista dei preset dal menu dell\'app.</string>
+    <string name="appintro__presets_desc">Dopo aver riprodotto alcuni suoni, puoi usare il pulsante nell\'angolo in basso per salvare il tuo missaggio. Per riutilizzare un missaggio salvato, puoi consultare la lista delle preimpostazioni dal menù dell\'app.</string>
     <string name="appintro__getting_started_desc_0">Scorri a sinistra per conoscere tutte le funzionalità!</string>
     <string name="appintro__chromecast_title">Abilitato a Chromecast</string>
     <string name="appintro__chromecast_desc">Usa Noice per trasmettere l\'atmosfera ad altri dispositivi abilitati a Chromecast, come altoparlanti, TV, ecc.</string>
@@ -124,7 +124,7 @@
     <string name="support_development__why">Perché dovresti aiutarci\?</string>
     <string name="support_development__share_description">Condividere Noice con i tuoi amici è come regalare denaro. Con un più alto numero di downloads, potremo ricevere feedback più variegato, e ciò ci aiuterà a fare di Noice un software migliore.</string>
     <string name="support_development__donate_thank_you_description">Ti ringraziamo con tutto il cuore per il tuo contributo generoso al progetto Noice.</string>
-    <string name="support_development__donate_google_play_description">Il tuo pagamento sarà gestito con sicurezza da Google Play. L\'ammontare sarà convertito nella tua valuta. A seconda della tua ubicazione, potrebbero essere aggiunte tasse all\'ammontare finale.</string>
+    <string name="support_development__donate_google_play_description">Il tuo pagamento sarà gestito in modo sicuro da Google Play. A seconda della tua località, possono essere aggiunte tasse supplementari all\'importo finale.</string>
     <string name="focus">Messa a fuoco</string>
     <string name="never">Mai</string>
     <string name="later">Più tardi</string>
@@ -150,7 +150,7 @@
     <string name="pinned_shortcut_creation_failed">Impossibile aggiungere la scorciatoia alla schermata iniziale!</string>
     <string name="appearance">Aspetto</string>
     <string name="behavior">Comportamento</string>
-    <string name="presets_as_home_screen">«Preimpostazioni salvate» come schermata iniziale</string>
+    <string name="presets_as_home_screen">«Preimpostazioni» come schermata iniziale</string>
     <string name="settings">Impostazioni</string>
     <string name="app_shortcut_created">La preimpostazione è stata aggiunta alle scorciatoie delle app!</string>
     <string name="app_shortcut_removed">La preimpostazione è stata rimossa dalle scorciatoie delle app!</string>
@@ -185,4 +185,10 @@
 \n Puoi configurare la condivisione automatica dei dati in qualsiasi momento all\'interno dell\'app andando su «**Impostazioni** &gt; **Condividi dati di utilizzo e comportamento**».</string>
     <string name="share_usage_data_consent_title">Preferenze di condivisione dei dati</string>
     <string name="should_display_sound_icons">Visualizza le icone di suono</string>
+    <string name="enable_media_buttons">Abilita i pulsanti dei media</string>
+    <string name="enable_media_buttons_summary">Usa i pulsanti multimediali hardware per controllare la riproduzione</string>
+    <string name="sound_fade_in_duration">Durata della dissolvenza del suono</string>
+    <string name="export_presets_successful">Preimpostazioni esportate con successo nel file!</string>
+    <string name="import_presets_successful">Preimpostazioni importate con successo dal file!</string>
+    <string name="sound_fade_in_duration_summary">Durata del tempo per i suoni in dissolvenza (in secondi)</string>
 </resources>
