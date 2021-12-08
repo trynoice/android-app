@@ -4,8 +4,8 @@
     <string name="app_theme">Thème</string>
     <string name="help">Aide</string>
     <string name="library">Bibliothèque</string>
-    <string name="report_issue">Signaler des problèmes</string>
-    <string name="presets">Réglages sauvegardés</string>
+    <string name="report_issue">Signaler un problème</string>
+    <string name="presets">Préréglages sauvegardés</string>
     <string name="sleep_timer">Minuterie</string>
     <string name="support_development">Soutenir le développement</string>
     <string name="wake_up_timer">Réveil</string>
@@ -20,7 +20,7 @@
     <string name="save_preset">Sauvegarder le réglage</string>
     <string name="play">Lecture</string>
     <string name="play_pause">Lecture ou pause</string>
-    <string name="repeat_time_period">Fréquence</string>
+    <string name="repeat_time_period">Fréquence de répétition</string>
     <string name="stop">Arrêter</string>
     <string name="volume">Volume</string>
     <string name="sound_group__life">Vie</string>
@@ -83,7 +83,7 @@
   </string>
     <string name="schedule">Planifier</string>
     <string name="select_preset">Sélectionner le réglage</string>
-    <string name="wake_up_timer_description">Noice peut démarrer un réglage au moment du réveil. Utilisez les boutons ci-dessous pour sélectionner un réglage et l\'heure voulue pour activer le réveil.</string>
+    <string name="wake_up_timer_description">Noice peut démarrer un préréglage au moment du réveil. Utilisez les boutons ci-dessous pour sélectionner un préréglage et l\'heure voulue de réveil.</string>
     <string name="app_theme_light">Clair</string>
     <string name="app_theme_dark">Sombre</string>
     <string name="app_theme_system_default">Système</string>
@@ -99,10 +99,7 @@
     <string name="appintro__presets_title">Sauvegardez vos mix préférés</string>
     <string name="appintro__library_desc">Utilisez les boutons de volume pour régler le volume des sons. À chaque répétition d\'un son sans-boucle, un délai aléatoire sera généré dans la plage établie par le curseur de temps.</string>
     <string name="appintro__library_title">Créez votre environnement idéal</string>
-    <string name="appintro__timer_desc">
-    Une ambiance légère peut vous aider à vous endormir plus facilement. Utilisez la minuterie pour laisser Noice
-    s\'eteindre tout seul. De la même manière, pour se réveiller au calme, utilisez le réveil pour régler l\'alarme.
-  </string>
+    <string name="appintro__timer_desc">Une ambiance légère peut vous aider à vous endormir plus facilement. Utilisez la minuterie pour laisser Noice s\'éteindre tout seul. De la même manière, pour se réveiller au calme, utilisez le réveil pour régler l\'alarme.</string>
     <string name="appintro__timer_title">Des difficultés à s\'endormir ou à se réveiller ?</string>
     <string name="support_development__donate">Donner</string>
     <string name="support_development__donate_description">
@@ -130,19 +127,19 @@
     <string name="cast_media">Se connecter à Chromecast</string>
     <string name="notification_channel_default__description">Contrôles de lecture</string>
     <string name="notification_channel_default__name">Lecture audio</string>
-    <string name="preset_does_not_exist">Cette préconfiguration n\'existe pas. Peut-être a-t-elle été effacée !</string>
+    <string name="preset_does_not_exist">Ce préréglage n\'existe pas. Il a peut-être été effacé !</string>
     <string name="add_to_home_screen">Ajouter à l\'écran d\'accueil</string>
     <string name="relax">Apaisant</string>
-    <string name="random_preset">Préconfiguration aléatoire</string>
+    <string name="random_preset">Préréglage aléatoire</string>
     <string name="okay">D\'accord</string>
     <string name="mood">Ambiance</string>
     <string name="light">Clair</string>
     <string name="intensity">Intensité</string>
-    <string name="dense">Intense</string>
+    <string name="dense">Dense</string>
     <string name="submit_feedback">Soumettre une évaluation</string>
     <string name="in_app_feedback__description">Nous aimerions connaître votre avis sur l\'application. Nous vous prions de consulter notre GitHub. Si vous n\'aimez pas l\'application, nous vous prions d\'ouvrir un billet « issue » afin de nous expliquer vos critiques. Autrement, nous vous prions de noter le projet pour nous montrer votre reconnaissance.</string>
     <string name="wake_up_timer_cancelled">Minuterie du réveil annulée !</string>
-    <string name="presets_as_home_screen_summary">Afficher les « préréglages enregistrés » au démarrage de l\'application (nécessite un redémarrage de l\'application)</string>
+    <string name="presets_as_home_screen_summary">Afficher « Préréglages enregistrés » au démarrage de l\'application (nécessite un redémarrage de l\'application)</string>
     <string name="pinned_shortcuts_not_supported">Votre lanceur par défaut ne supporte pas l\'ajout de raccourcis.</string>
     <string name="never">Jamais</string>
     <string name="later">Plus tard</string>
