@@ -158,7 +158,7 @@
     <string name="support_development__share_description">Noice delen met vrienden is vergelijkbaar met geld doneren. Met hogere downloads kunnen we feedback ontvangen vanuit een aantal verschillende perspectieven die ons zullen helpen om Noice beter dan ooit te maken.</string>
     <string name="support_development__donate_thank_you_description">Wij danken u van harte voor uw genereuze bijdrage aan het Noice-project.</string>
     <string name="support_development__donate_thank_you">Dank u!</string>
-    <string name="support_development__donate_google_play_description">Uw betaling wordt veilig afgehandeld door Google Play. Het bedrag wordt omgerekend naar uw lokale valuta. Afhankelijk van uw locatie kunnen er extra belastingen worden toegevoegd aan het uiteindelijke bedrag.</string>
+    <string name="support_development__donate_google_play_description">Uw betaling wordt veilig afgehandeld door Google Play. Afhankelijk van uw locatie kunnen er extra belastingen worden toegevoegd aan het uiteindelijke bedrag.</string>
     <string name="all_app_shortcuts_removed">Alle snelkoppelingen zijn verwijderd!</string>
     <string name="remove_all_app_shortcuts">Verwijder alle snelkoppelingen</string>
     <string name="import_presets">Importeer een bestand</string>
