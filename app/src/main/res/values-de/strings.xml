@@ -5,7 +5,7 @@
     <string name="help">Hilfe</string>
     <string name="library">Sammlung</string>
     <string name="report_issue">Fehler melden</string>
-    <string name="presets">Gespeicherte Voreinstellungen</string>
+    <string name="presets">Voreinstellungen</string>
     <string name="sleep_timer">Einschlaftimer</string>
     <string name="support_development">Unterstütze die Entwicklung</string>
     <string name="wake_up_timer">Aufwach-Timer</string>
@@ -90,7 +90,7 @@
   </string>
     <string name="rename">Umbenennen</string>
     <string name="pinned_shortcuts_not_supported">Ihr Standard-Launcher unterstützt das Hinzufügen von Verknüpfungen nicht.</string>
-    <string name="presets_as_home_screen_summary">„Gespeicherte Voreinstellungen“ beim Start der Anwendung anzeigen (erfordert einen Neustart)</string>
+    <string name="presets_as_home_screen_summary">„Voreinstellungen“ beim Start der Anwendung anzeigen (erfordert einen Neustart)</string>
     <string name="auto_sleep_schedule_cancelled">Automatischer Schlaftimer abgebrochen!</string>
     <string name="reset">Zurücksetzen</string>
     <string name="sleep_timer_description">Noice schaltet sich automatisch nach Ablauf des Timers aus. Nutze die Knöpfe weiter unten, um dem Timer Zeit hinzuzufügen oder abzuziehen.</string>
@@ -174,7 +174,7 @@
     <string name="pinned_shortcut_creation_failed">Fehler beim Hinzufügen der Verknüpfung zum Startbildschirm!</string>
     <string name="appearance">Aussehen</string>
     <string name="behavior">Verhalten</string>
-    <string name="presets_as_home_screen">„Gespeicherte Voreinstellungen“ als Startbildschirm</string>
+    <string name="presets_as_home_screen">„Voreinstellungen“ als Startbildschirm</string>
     <string name="settings">Einstellungen</string>
     <string name="app_shortcut_created">Voreinstellung wurde zu den Anwendungsverknüpfungen hinzugefügt!</string>
     <string name="app_shortcut_removed">Die Voreinstellung wurde aus den Anwendungsverknüpfungen entfernt!</string>
@@ -198,7 +198,7 @@
     <string name="should_display_sound_icons">Tonsymbole anzeigen</string>
     <string name="decline">Ablehnen</string>
     <string name="accept">Akzeptieren</string>
-    <string name="enable_media_buttons_summary">Physische Knöpfe zum Überspringen gespeicherter Voreinstellungen beim Spielen gespeicherter Voreinstellungen verwenden</string>
+    <string name="enable_media_buttons_summary">Hardware-Medientasten zur Wiedergabesteuerung verwenden</string>
     <string name="enable_media_buttons">Medienknöpfe aktivieren</string>
     <string name="payment_pending">Wir benachrichtigen Dich, sobald wir deine Zahlung verarbeitet haben.</string>
     <string name="failed_to_purchase">Der Zahlungsfluss konnte nicht gestartet werden. Bitte versuche es später noch einmal!</string>

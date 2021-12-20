@@ -5,7 +5,7 @@
     <string name="help">Aide</string>
     <string name="library">Bibliothèque</string>
     <string name="report_issue">Signaler un problème</string>
-    <string name="presets">Préréglages sauvegardés</string>
+    <string name="presets">Préréglages</string>
     <string name="sleep_timer">Minuterie</string>
     <string name="support_development">Soutenir le développement</string>
     <string name="wake_up_timer">Réveil</string>
@@ -75,7 +75,7 @@
     Puis cliquez sur le bouton Sauvegarder qui apparait en bas à droite.
   </string>
     <string name="rename">Renommer</string>
-    <string name="auto_sleep_schedule_cancelled">Minuterie annulée !</string>
+    <string name="auto_sleep_schedule_cancelled">Minuterie annulée !</string>
     <string name="reset">Réinitialiser</string>
     <string name="sleep_timer_description">
     Noice s\'éteindra tout seul à la fin de la minuterie. Utilisez les boutons ci-dessous pour ajouter du temps et démarrer
@@ -139,7 +139,7 @@
     <string name="submit_feedback">Soumettre une évaluation</string>
     <string name="in_app_feedback__description">Nous aimerions connaître votre avis sur l\'application. Nous vous prions de consulter notre GitHub. Si vous n\'aimez pas l\'application, nous vous prions d\'ouvrir un billet « issue » afin de nous expliquer vos critiques. Autrement, nous vous prions de noter le projet pour nous montrer votre reconnaissance.</string>
     <string name="wake_up_timer_cancelled">Minuterie du réveil annulée !</string>
-    <string name="presets_as_home_screen_summary">Afficher « Préréglages enregistrés » au démarrage de l\'application (nécessite un redémarrage de l\'application)</string>
+    <string name="presets_as_home_screen_summary">Afficher « Préréglages » au démarrage de l\'application (nécessite un redémarrage de l\'application)</string>
     <string name="pinned_shortcuts_not_supported">Votre lanceur par défaut ne supporte pas l\'ajout de raccourcis.</string>
     <string name="never">Jamais</string>
     <string name="later">Plus tard</string>
@@ -167,7 +167,7 @@
     <string name="pinned_shortcut_creation_failed">Échec de l\'ajout du raccourci à l\'écran d\'accueil !</string>
     <string name="appearance">Apparence</string>
     <string name="behavior">Comportement</string>
-    <string name="presets_as_home_screen">« Préréglages enregistrés » comme écran d\'accueil</string>
+    <string name="presets_as_home_screen">« Préréglages » comme écran d\'accueil</string>
     <string name="settings">Paramètres</string>
     <string name="app_shortcut_created">Le préréglage a été ajouté aux raccourcis de l\'application !</string>
     <string name="ignore_audio_focus_changes_summary_on">Ne pas réagir lorsque d\'autres applications jouent de l\'audio</string>
@@ -204,7 +204,7 @@
     <string name="sound_fade_in_duration">Durée du fondu sonore</string>
     <string name="created_by">Créé par</string>
     <string name="import_presets_successful">Préréglages importés avec succès depuis le fichier !</string>
-    <string name="export_presets_successful">Préréglages exportés avec succès vers le fichier !</string>
+    <string name="export_presets_successful">Préréglages exportés avec succès vers le fichier !</string>
     <string name="enable_media_buttons_summary">Utiliser les boutons multimédias physiques pour contrôler la lecture</string>
     <string name="enable_media_buttons">Activer les boutons multimédias</string>
 </resources>
