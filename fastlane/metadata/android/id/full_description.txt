@@ -1,34 +1,34 @@
-Bagi banyak orang, sedikit derau latar akan membantu menenangkan dan fokus. Dalam beberapa kasus, derau juga merupakan pendorong produktivitas. Derau latar belakang (ambience) juga dapat membantu meminimalkan efek stres.
+Bagi banyak orang, sedikit kebisingan latar belakang berguna untuk menenangkan diri dan fokus. Kebisingan latar belakang dapat membantu meminimalkan efek stres. Dalam beberapa kasus, ini juga meningkatkan produktivitas. Ini juga membantu orang dalam menutupi tinnitus mereka.
 
-Noice adalah aplikasi yang memungkinkan Anda membuat suasana yang disesuaikan menggunakan klip dari sumber derau lingkungan. Ciptakan lingkungan Anda yang sempurna dengan menggabungkan berbagai suara untuk meredam gangguan sehingga Anda dapat fokus pada pekerjaan Anda, atau menghasilkan lingkungan yang tenang dan damai yang mendorong Anda untuk tertidur.
+Noice adalah aplikasi yang memungkinkan Anda membuat suasana yang disesuaikan menggunakan klip dari sumber kebisingan lingkungan. Ciptakan lingkungan yang sempurna dengan menggabungkan suara yang berbeda untuk menghilangkan gangguan sehingga Anda dapat fokus pada pekerjaan Anda atau menghasilkan lingkungan yang damai untuk relaksasi.
 
-<b>Fitur</b>
-- 35 suara yang direkam
-- Google Cast (Chromecast) diaktifkan [Play Store rilis saja]
-- Pengatur waktu tidur otomatis
-- Pengatur waktu bangun (Jam Alarm)
-- Buat campuran yang disesuaikan
-- Simpan campuran favorit Anda
-- Mainkan bersama pemutar musik lainnya
-- Kontrol volume khusus untuk setiap sumber derau
-- Pemutaran offline
-- Varian tema aplikasi terang dan gelap
+<b>Fitur</b> 
+- 35 suara yang direkam 
+- Google Cast (Chromecast) diaktifkan (hanya di Play Store) 
+- Pengatur waktu tidur otomatis 
+- Jam Alarm 
+- Hasilkan campuran acak 
+- Buat campuran yang disesuaikan 
+- Simpan campuran favorit Anda 
+- Mainkan bersama pemutar musik lainnya 
+- Kontrol volume individu untuk setiap sumber kebisingan 
+- Pemutaran offline 
+- Varian tema aplikasi terang dan gelap 
 
-<b>Perpustakaan derau</b>
-- Kehidupan (burung, jangkrik, serigala, detak jantung manusia, dll.)
-- Pengaturan hutan (api unggun, malam, angin, pohon palem, dll.)
-- Musim hujan (hujan, gemuruh)
-- Teleportasi (kedai kopi, perpustakaan, kantor, tepi laut, tepi sungai, dll.)
-- Kendaraan (kereta yang bergerak, dalam penerbangan, kapal yang berderit, mobil listrik, dll.)
-- Raw noise (white, pink, brownian)
+<b>Perpustakaan Noice</b> 
+- Set kehidupan (burung, jangkrik, serigala, detak jantung manusia, dll.) 
+- Set hutan (api unggun, malam, angin, pohon palem, dll.) 
+- Set monsun (hujan, guntur) 
+- Set Teleportasi (kedai kopi, perpustakaan, kantor, tepi laut, tepi sungai, dll.) 
+- Set kendaraan (kereta bergerak, dalam penerbangan, kapal berderit, mobil listrik, dll.) 
+- Mentahan noice (putih, merah muda, kecoklatan) 
 
-<b>Perizinan</b>
--<b>mencegah perangkat tidur</b>: untuk menjaga CPU perangkat tetap aktif selama pemutaran
--<b>menjalankan layanan latar depan</b>: untuk menjalankan proses pemutar (berbeda dari UI)
--<b>dijalankan saat memulai</b>: untuk memastikan bahwa pengatur waktu bangun tetap ada selama proses boot ulang
--<b>akses jaringan penuh</b>: untuk mengaktifkan Chromecast dan kontribusi keuangan
--<b>lihat koneksi jaringan</b>: ditambahkan oleh ketergantungan, saat ini tidak digunakan
--<b>Layanan penagihan Google Play</b>: untuk mengaktifkan kontribusi keuangan untuk mendukung pengembangan
+<b>Izin</b> 
+- <b>mencegah perangkat dari tidur</b>: untuk menjaga CPU perangkat tetap terjaga selama pemutaran 
+- <b>jalankan layanan latar depan</b>: untuk menjalankan proses pemutar (berbeda dari UI) 
+- <b>jalankan saat startup</b>: untuk memastikan timer bangun tetap ada selama reboot 
+- <b>akses jaringan penuh</b>: untuk mengaktifkan Chromecast dan kontribusi keuangan 
+- <b>melihat koneksi jaringan</b>: ditambahkan oleh ketergantungan, saat ini tidak digunakan 
+- <b>Layanan penagihan Google Play</b>: untuk mengaktifkan kontribusi keuangan guna mendukung pengembangan 
 
-Noice adalah perangkat lunak gratis dan sumber terbuka.
-https://github.com/ashutoshgngwr/noice
+Noice adalah perangkat lunak sumber terbuka dan gratis. https://github.com/ashutoshgngwr/noice
