@@ -91,7 +91,7 @@ dependencies {
   def junitVersion = '4.13.2'
   def mockkVersion = '1.12.0'
   def espressoVersion = '3.3.0'
-  def coroutinesVersion = '1.5.2'
+  def coroutinesVersion = '1.6.0'
 
   // TODO: move this to stable release. The latest stable release (2.3.5) causes a crash with error
   //  `java.lang.RuntimeException: Unknown animation name: x`
@@ -126,7 +126,7 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
   fullImplementation 'com.android.billingclient:billing-ktx:4.0.0'
-  fullImplementation 'com.google.android.gms:play-services-base:17.6.0'
+  fullImplementation 'com.google.android.gms:play-services-base:18.0.1'
   fullImplementation 'com.google.android.gms:play-services-cast-framework:20.0.0'
   fullImplementation 'com.google.android.play:core:1.10.1'
   fullImplementation platform('com.google.firebase:firebase-bom:29.0.3')
