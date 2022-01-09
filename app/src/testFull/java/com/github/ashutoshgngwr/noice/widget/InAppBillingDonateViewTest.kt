@@ -12,8 +12,8 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.test.TestCoroutineScope
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.createTestCoroutineScope
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -36,12 +36,12 @@ class InAppBillingDonateViewTest {
     activity = Robolectric.buildActivity(Activity::class.java).create().get()
     NoiceApplication.of(activity).billingProvider = mockBillingProvider
 
-    testScope = TestCoroutineScope()
+    testScope = createTestCoroutineScope()
     view = InAppBillingDonateView(activity, testScope)
   }
 
   @Test
-  fun testQueryDetailsFailed() = runBlockingTest {
+  fun testQueryDetailsFailed() = runTest {
     coEvery {
       mockBillingProvider.queryDetails(any(), any())
     } throws BillingProvider.QueryDetailsException("test-error")
@@ -55,7 +55,7 @@ class InAppBillingDonateViewTest {
   }
 
   @Test
-  fun testOnInAppItemClick() = runBlockingTest {
+  fun testOnInAppItemClick() = runTest {
     val skuDetailsList = listOf<BillingProvider.SkuDetails>(
       mockk(relaxed = true) { every { price } returns "price-1" },
       mockk(relaxed = true) { every { price } returns "price-2" }

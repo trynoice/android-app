@@ -18,7 +18,7 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.verify
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -93,7 +93,7 @@ class RealBillingProviderTest {
   }
 
   @Test
-  fun testReconcilePurchases() = runBlockingTest {
+  fun testReconcilePurchases() = runTest {
     val pendingSkuList = arrayListOf("test-sku-1", "test-sku-2")
     val mockInAppPurchase1 = mockk<Purchase>(relaxed = true) {
       every { orderId } returns "test-order-id-1"
