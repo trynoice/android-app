@@ -1,0 +1,35 @@
+plugins {
+  id 'com.android.library'
+  id 'kotlin-android'
+}
+
+android {
+  compileSdkVersion config.compileSdkVersion
+
+  defaultConfig {
+    minSdkVersion config.minSdkVersion
+    targetSdkVersion config.compileSdkVersion
+    consumerProguardFiles 'retrofit2.pro', 'gson.pro'
+  }
+
+  compileOptions {
+    sourceCompatibility = config.javaCompatibility
+    targetCompatibility = config.javaCompatibility
+  }
+
+  kotlinOptions {
+    useIR = true
+    jvmTarget = config.kotlinJvmTarget
+  }
+}
+
+dependencies {
+  def retrofitVersion = '2.9.0'
+
+  api "com.squareup.retrofit2:retrofit:$retrofitVersion"
+
+  implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$deps.kotlinVersion"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$deps.coroutinesVersion"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$deps.coroutinesVersion"
+}

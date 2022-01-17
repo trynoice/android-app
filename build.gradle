@@ -1,5 +1,20 @@
 buildscript {
-  ext.kotlin_version = '1.6.10'
+  // project-wide constants for sharing configuration and dependency versions across modules.
+  ext {
+    config = [
+      minSdkVersion    : 21,
+      compileSdkVersion: 30,
+      javaCompatibility: JavaVersion.VERSION_1_8,
+      kotlinVersion    : '1.6.10',
+      kotlinJvmTarget  : '1.8',
+    ]
+
+    deps = [
+      coroutinesVersion: '1.6.0',
+      kotlinVersion: config.kotlinVersion
+    ]
+  }
+
   repositories {
     google()
     mavenCentral()
@@ -7,7 +22,7 @@ buildscript {
 
   dependencies {
     classpath 'com.android.tools.build:gradle:4.2.2'
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$config.kotlinVersion"
 
     classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1' // sed:free-build:remove
     classpath 'com.google.gms:google-services:4.3.10' // sed:free-build:remove

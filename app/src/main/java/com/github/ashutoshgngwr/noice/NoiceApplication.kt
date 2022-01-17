@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice
 
 import android.content.Context
+import android.util.Log
 import androidx.annotation.CallSuper
 import androidx.annotation.VisibleForTesting
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
@@ -16,6 +17,10 @@ import com.github.ashutoshgngwr.noice.provider.GitHubReviewFlowProvider
 import com.github.ashutoshgngwr.noice.provider.OpenCollectiveDonateViewProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import com.trynoice.api.client.NoiceApiClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 open class NoiceApplication : android.app.Application() {
 
@@ -59,6 +64,11 @@ open class NoiceApplication : android.app.Application() {
         analyticsProvider.setCollectionEnabled(it)
         crashlyticsProvider.setCollectionEnabled(it)
       }
+
+    GlobalScope.launch(Dispatchers.IO) {
+      Log.e(this::class.simpleName, "requesting available plan details")
+      Log.e(this::class.simpleName, NoiceApiClient.subscriptions().getPlans().body().toString())
+    }
   }
 
   /**
