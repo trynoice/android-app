@@ -10,8 +10,8 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="testFdroidDebugUnitTest" />
-          <option value="testPlaystoreDebugUnitTest" />
+          <option value="testFreeDebugUnitTest" />
+          <option value="testFullDebugUnitTest" />
         </list>
       </option>
       <option name="vmOptions" value="" />
