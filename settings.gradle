@@ -1,4 +1,4 @@
-rootProject.name = 'noice'
+rootProject.name = 'noice-android'
 
 include ':app'
 include ':api-client'
