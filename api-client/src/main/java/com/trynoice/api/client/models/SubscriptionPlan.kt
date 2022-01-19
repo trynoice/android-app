@@ -3,7 +3,8 @@ package com.trynoice.api.client.models
 import com.google.gson.annotations.Expose
 
 /**
- * Plan associated with this subscription purchases.
+ * Represents a subscription plan that users can subscribe. All subscription purchases are linked to
+ * a subscription plan.
  *
  * @param billingPeriodMonths number of months included in a single billing period, e.g. 1 or 3
  * @param id id of the subscription plan

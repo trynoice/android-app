@@ -11,7 +11,8 @@ buildscript {
 
     deps = [
       coroutinesVersion: '1.6.0',
-      kotlinVersion: config.kotlinVersion
+      kotlinVersion    : config.kotlinVersion,
+      lifecycleVersion : '2.3.1',
     ]
   }
 
