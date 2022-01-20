@@ -17,7 +17,7 @@
     <string name="appintro__library_title">完璧なサラウンドを作成</string>
     <string name="appintro__library_desc">音量スライダーを利用して音の大きさを調節できます。ループしない音の繰り返しごとに、タイムスライダーで設定した範囲からランダムに遅延時間が選択されます。</string>
     <string name="appintro__presets_title">あなたのお気に入りのミックスを保存</string>
-    <string name="appintro__presets_desc">いくつかの音を再生した後、下端にあるボタンを使ってミックスを保存することができます。保存したミックスを再生するには、メニューからプリセットリストに移動します。</string>
+    <string name="appintro__presets_desc">いくつかの音を再生した後、下端にあるボタンを使ってミックスを保存することができます。保存したプリセットを再生するには、メニューからプリセットリストに移動します。</string>
     <string name="appintro__getting_started_title">ようこそ</string>
     <string name="appintro__getting_started_desc_1">さあ、はじめよう!</string>
     <string name="appintro__getting_started_desc_0">左へスワイプすることで全機能を確認することができます!</string>
@@ -42,7 +42,7 @@
     <string name="sleep_timer_description">Noiceはタイマー終了時にアプリ自体をシャットダウンします。下のボタンで時間を追加してタイマーを開始できます。</string>
     <string name="reset">リセット</string>
     <string name="auto_sleep_schedule_cancelled">自動スリープタイマーがキャンセルされました!</string>
-    <string name="presets_as_home_screen_summary">アプリ起動時に保存されたプリセットを表示する</string>
+    <string name="presets_as_home_screen_summary">アプリ起動時に保存されたプリセットを表示する (アプリの再起動が必要です)</string>
     <string name="pinned_shortcuts_not_supported">あなたが利用しているデフォルトのランチャーは、ショートカットの追加をサポートしていません。</string>
     <string name="rename">名前を変更</string>
     <string name="preset_info__description">プリセットが作成されていません。プレイリストを作成するには,ライブラリに移動してサウンドを再生します。その後、画面の下隅に表示される保存ボタンをクリックします。</string>
@@ -124,7 +124,7 @@
     <string name="wake_up_timer">起床タイマー</string>
     <string name="support_development">開発を支援する</string>
     <string name="sleep_timer">スリープタイマー</string>
-    <string name="presets">保存したプリセット</string>
+    <string name="presets">プリセット</string>
     <string name="report_issue">問題を報告</string>
     <string name="library">ライブラリ</string>
     <string name="help">ヘルプ</string>
@@ -161,7 +161,7 @@
     <string name="all_app_shortcuts_removed">すべてのアプリショートカットが削除されました!</string>
     <string name="remove_all_app_shortcuts_confirmation">アプリのショートカットメニューからプリセットのショートカットがすべて削除されます。続行しますか\?</string>
     <string name="remove_all_app_shortcuts">すべてのアプリショートカットを削除</string>
-    <string name="import_presets_summary">保存したプリセットを外部ファイルから読み込む場合、既存のプリセットは上書きされます。</string>
+    <string name="import_presets_summary">保存したプリセットを外部ファイルから読み込む場合、既存のプリセットは上書きされます</string>
     <string name="import_presets">ファイルからインポート</string>
     <string name="export_presets_summary">保存したプリセットの現在の状態を外部ファイルにエクスポート</string>
     <string name="export_presets">ファイルにエクスポート</string>
@@ -182,4 +182,11 @@
     <string name="app_shortcut_removed">アプリショートカットからプリセットが削除されました!</string>
     <string name="remove_from_app_shortcuts">アプリショートカットから削除</string>
     <string name="add_to_app_shortcuts">アプリショートカットに追加</string>
+    <string name="created_by">作成者</string>
+    <string name="enable_media_buttons_summary">ハードウェアのメデイアボタンを利用して再生コントロールを行います</string>
+    <string name="sound_fade_in_duration">音声のフェードイン時間</string>
+    <string name="sound_fade_in_duration_summary">音声フェードインの時間 (秒)</string>
+    <string name="import_presets_successful">ファイルからプリセットをインポートしました!</string>
+    <string name="export_presets_successful">プリセットがファイルに保存されました!</string>
+    <string name="enable_media_buttons">メデイアボタンを有効化</string>
 </resources>
