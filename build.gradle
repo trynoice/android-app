@@ -10,9 +10,13 @@ buildscript {
     ]
 
     deps = [
-      coroutinesVersion: '1.6.0',
-      kotlinVersion    : config.kotlinVersion,
-      lifecycleVersion : '2.3.1',
+      coroutinesVersion : '1.6.0',
+      kotlinVersion     : config.kotlinVersion,
+      lifecycleVersion  : '2.3.1',
+
+      junitVersion      : '4.13.2',
+      robolectricVersion: '4.5.1',
+      testCoreVersion   : '1.3.0',
     ]
   }
 

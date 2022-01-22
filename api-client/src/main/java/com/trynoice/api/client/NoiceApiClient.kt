@@ -33,7 +33,10 @@ private val LOG_TAG = NoiceApiClient::class.simpleName
  * A thin wrapper around Retrofit to bundle together the networked API calls while transparently
  * managing authentication credentials.
  */
-class NoiceApiClient(context: Context) {
+class NoiceApiClient(
+  context: Context,
+  baseUrl: String = "https://api.trynoice.com",
+) {
 
   private val signInStateListeners = synchronizedSet(mutableSetOf<SignInStateListener>())
   private val credentialRepository = AuthCredentialRepository(context)
@@ -50,7 +53,7 @@ class NoiceApiClient(context: Context) {
   private val retrofit: Retrofit by lazy {
     Retrofit.Builder()
       .client(okhttpClient)
-      .baseUrl("https://api.trynoice.com")
+      .baseUrl(baseUrl)
       .addConverterFactory(
         GsonConverterFactory.create(
           GsonBuilder()
