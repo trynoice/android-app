@@ -101,6 +101,7 @@ dependencies {
   implementation 'androidx.core:core-ktx:1.6.0'
   implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
   implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
+  implementation "androidx.lifecycle:lifecycle-common-java8:$deps.lifecycleVersion"
   implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$deps.lifecycleVersion"
   implementation 'androidx.media:media:1.4.1'
   implementation 'androidx.mediarouter:mediarouter:1.2.5'

@@ -13,7 +13,6 @@ import androidx.annotation.IdRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -25,6 +24,7 @@ import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.HomeFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchInCustomTab
+import com.github.ashutoshgngwr.noice.ext.registerOnDestinationChangedListener
 import com.github.ashutoshgngwr.noice.navigation.Navigable
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
@@ -41,10 +41,6 @@ class HomeFragment : Fragment(), Navigable {
   private lateinit var app: NoiceApplication
 
   private var playerManagerState = PlaybackStateCompat.STATE_STOPPED
-
-  private val childNavDestChangeListener = { _: NavController, _: NavDestination, _: Bundle? ->
-    activity?.invalidateOptionsMenu() ?: Unit
-  }
 
   // Do not refresh user preference when reconstructing this fragment from a previously saved state.
   // For whatever reasons, it makes the bottom navigation view go out of sync.
@@ -85,12 +81,9 @@ class HomeFragment : Fragment(), Navigable {
     }
 
     binding.bottomNav.setupWithNavController(childNavController)
-    childNavController.addOnDestinationChangedListener(childNavDestChangeListener)
-  }
-
-  override fun onDestroyView() {
-    childNavController.removeOnDestinationChangedListener(childNavDestChangeListener)
-    super.onDestroyView()
+    childNavController.registerOnDestinationChangedListener(viewLifecycleOwner) { _, _, _ ->
+      activity?.invalidateOptionsMenu()
+    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -144,7 +137,7 @@ class HomeFragment : Fragment(), Navigable {
       return true
     }
 
-    when (item.itemId) {
+    return when (item.itemId) {
       R.id.report_issue -> {
         var url = getString(R.string.app_issues_github_url)
         if (!BuildConfig.IS_FREE_BUILD) {
@@ -153,17 +146,17 @@ class HomeFragment : Fragment(), Navigable {
 
         Uri.parse(url).launchInCustomTab(requireContext())
         app.analyticsProvider.logEvent("issue_tracker_open", bundleOf())
+        true
       }
 
       R.id.submit_feedback -> {
         Uri.parse(getString(R.string.feedback_form_url)).launchInCustomTab(requireContext())
         app.analyticsProvider.logEvent("feedback_form_open", bundleOf())
+        true
       }
 
-      else -> return super.onOptionsItemSelected(item)
+      else -> super.onOptionsItemSelected(item)
     }
-
-    return true
   }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)

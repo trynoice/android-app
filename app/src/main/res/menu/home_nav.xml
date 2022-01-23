@@ -16,4 +16,9 @@
     android:icon="@drawable/ic_action_wake_up_timer"
     android:title="@string/wake_up_timer" />
 
+  <item
+    android:id="@+id/account"
+    android:icon="@drawable/ic_action_account"
+    android:title="@string/account" />
+
 </menu>

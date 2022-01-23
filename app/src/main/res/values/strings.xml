@@ -227,4 +227,5 @@
     <string name="created_by">Created by</string>
     <string name="enable_media_buttons">Enable media buttons</string>
     <string name="enable_media_buttons_summary">Use hardware media buttons to control playback</string>
+    <string name="account">Account</string>
 </resources>
