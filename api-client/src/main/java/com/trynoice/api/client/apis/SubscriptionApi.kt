@@ -1,10 +1,8 @@
 package com.trynoice.api.client.apis
 
 import com.trynoice.api.client.models.SubscriptionPlan
-import retrofit2.HttpException
 import retrofit2.http.GET
 import retrofit2.http.Query
-import java.io.IOException
 
 /**
  * APIs related to subscription management.
@@ -27,8 +25,9 @@ interface SubscriptionApi {
    *
    * @param provider filter listed plans by the given provider. (optional)
    * @return [kotlin.collections.List<SubscriptionPlan>]
+   * @throws retrofit2.HttpException on API error
+   * @throws java.io.IOException on network error
    */
-  @Throws(IOException::class, HttpException::class)
   @GET("/v1/subscriptions/plans")
   suspend fun getPlans(@Query("provider") provider: String? = null): List<SubscriptionPlan>
 }

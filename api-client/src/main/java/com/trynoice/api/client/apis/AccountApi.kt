@@ -4,11 +4,10 @@ import com.trynoice.api.client.auth.annotations.NeedsAccessToken
 import com.trynoice.api.client.models.Profile
 import com.trynoice.api.client.models.SignInParams
 import com.trynoice.api.client.models.SignUpParams
-import retrofit2.HttpException
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
-import java.io.IOException
 
 /**
  * APIs related to account and user management.
@@ -29,10 +28,12 @@ interface AccountApi {
    * - 400: request is not valid
    * - 429: the account is temporarily blocked from attempting sign-up
    * - 500: internal server error
+   *
+   * @throws retrofit2.HttpException on API error
+   * @throws java.io.IOException on network error
    */
-  @Throws(IOException::class, HttpException::class)
   @POST("/v1/accounts/signUp")
-  suspend fun signUp(@Body signUpParams: SignUpParams)
+  suspend fun signUp(@Body signUpParams: SignUpParams): Response<Unit>
 
   /**
    * Sends the sign-in link the provided email.
@@ -46,10 +47,12 @@ interface AccountApi {
    * - 400: request is not valid
    * - 429: the account is temporarily blocked from attempting sign-in
    * - 500: internal server error
+   *
+   * @throws retrofit2.HttpException on API error
+   * @throws java.io.IOException on network error
    */
-  @Throws(IOException::class, HttpException::class)
   @POST("/v1/accounts/signIn")
-  suspend fun signIn(@Body signInParams: SignInParams)
+  suspend fun signIn(@Body signInParams: SignInParams): Response<Unit>
 
   /**
    * Get profile of the auth user
@@ -61,8 +64,9 @@ interface AccountApi {
    *  - 500: internal server error
    *
    * @return the [Profile] of the authenticated user.
+   * @throws retrofit2.HttpException on API error
+   * @throws java.io.IOException on network error
    */
-  @Throws(IOException::class, HttpException::class)
   @NeedsAccessToken
   @GET("v1/accounts/profile")
   suspend fun getProfile(): Profile
