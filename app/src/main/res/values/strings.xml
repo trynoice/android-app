@@ -228,4 +228,12 @@
     <string name="enable_media_buttons">Enable media buttons</string>
     <string name="enable_media_buttons_summary">Use hardware media buttons to control playback</string>
     <string name="account">Account</string>
+    <string name="app">App</string>
+    <string name="support">Support</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="subscription_plans">Subscription plans</string>
+    <string name="sign_out">Sign out</string>
+    <string name="update_details">Update details</string>
+    <string name="delete_account">Delete account</string>
 </resources>

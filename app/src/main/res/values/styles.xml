@@ -152,4 +152,25 @@
     <item name="drawableStartCompat">@drawable/ic_error_24dp</item>
     <item name="drawableTint">@color/error</item>
   </style>
+
+  <style name="Widget.App.Account.Category.Header" parent="Widget.MaterialComponents.TextView">
+    <item name="android:paddingBottom">8dp</item>
+    <item name="android:paddingEnd">16dp</item>
+    <item name="android:paddingStart">16dp</item>
+    <item name="android:paddingTop">24dp</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:textAppearance">?attr/textAppearanceBody2</item>
+    <item name="android:textColor">?android:attr/textColorSecondary</item>
+  </style>
+
+  <style name="Widget.App.Account.Category.Item" parent="Widget.MaterialComponents.TextView">
+    <item name="android:background">?attr/selectableItemBackground</item>
+    <item name="android:clickable">true</item>
+    <item name="android:drawablePadding">16dp</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:padding">16dp</item>
+    <item name="android:textAppearance">?attr/textAppearanceBody1</item>
+    <item name="drawableEndCompat">@drawable/ic_baseline_navigate_next_24</item>
+  </style>
+
 </resources>

@@ -1,12 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
-  <TextView
+  <data>
+
+    <import type="android.view.View" />
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.AccountViewModel" />
+
+  </data>
+
+  <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Account" />
+    android:layout_height="match_parent">
 
-</LinearLayout>
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:visibility="@{viewModel.isUserSignedIn ? View.VISIBLE : View.GONE}"
+        tools:text="Jane Doe" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:visibility="@{viewModel.isUserSignedIn ? View.VISIBLE : View.GONE}"
+        tools:text="jane.doe@emailservice.org" />
+
+
+      <TextView
+        style="@style/Widget.App.Account.Category.Header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/account" />
+
+      <TextView
+        style="@style/Widget.App.Account.Category.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up"
+        android:visibility="@{viewModel.isUserSignedIn ? View.GONE : View.VISIBLE}"
+        app:drawableStartCompat="@drawable/ic_baseline_person_add_alt_1_32" />
+
+      <TextView
+        style="@style/Widget.App.Account.Category.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in"
+        android:visibility="@{viewModel.isUserSignedIn ? View.GONE : View.VISIBLE}"
+        app:drawableStartCompat="@drawable/ic_baseline_login_32" />
+
+      <TextView
+        style="@style/Widget.App.Account.Category.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/subscription_plans"
+        android:visibility="@{viewModel.isUserSignedIn ? View.GONE : View.VISIBLE}"
+        app:drawableStartCompat="@drawable/ic_baseline_attach_money_32" />
+
+      <TextView
+        style="@style/Widget.App.Account.Category.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/update_details"
+        android:visibility="@{viewModel.isUserSignedIn ? View.VISIBLE : View.GONE}"
+        app:drawableStartCompat="@drawable/ic_baseline_manage_accounts_32" />
+
+      <TextView
+        style="@style/Widget.App.Account.Category.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_out"
+        android:visibility="@{viewModel.isUserSignedIn ? View.VISIBLE : View.GONE}"
+        app:drawableStartCompat="@drawable/ic_baseline_logout_32" />
+
+      <TextView
+        style="@style/Widget.App.Account.Category.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_account"
+        android:visibility="@{viewModel.isUserSignedIn ? View.VISIBLE : View.GONE}"
+        app:drawableStartCompat="@drawable/ic_baseline_no_accounts_32" />
+
+
+      <TextView
+        style="@style/Widget.App.Account.Category.Header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app" />
+
+      <TextView
+        style="@style/Widget.App.Account.Category.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings"
+        app:drawableStartCompat="@drawable/ic_baseline_settings_32" />
+
+      <TextView
+        style="@style/Widget.App.Account.Category.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/support_development"
+        app:drawableStartCompat="@drawable/ic_baseline_support_32" />
+
+      <TextView
+        style="@style/Widget.App.Account.Category.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/about"
+        app:drawableStartCompat="@drawable/ic_baseline_info_32" />
+
+
+      <TextView
+        style="@style/Widget.App.Account.Category.Header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/support" />
+
+      <TextView
+        style="@style/Widget.App.Account.Category.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/help"
+        app:drawableStartCompat="@drawable/ic_baseline_help_32" />
+
+      <TextView
+        style="@style/Widget.App.Account.Category.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/report_issue"
+        app:drawableStartCompat="@drawable/ic_baseline_bug_report_32" />
+
+      <TextView
+        style="@style/Widget.App.Account.Category.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/submit_feedback"
+        app:drawableStartCompat="@drawable/ic_baseline_feedback_32" />
+
+    </LinearLayout>
+
+  </ScrollView>
+
+</layout>
