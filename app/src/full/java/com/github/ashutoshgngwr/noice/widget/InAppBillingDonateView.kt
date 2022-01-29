@@ -10,19 +10,21 @@ import android.view.LayoutInflater
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.isVisible
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.DonateViewBinding
 import com.github.ashutoshgngwr.noice.provider.BillingProvider
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class InAppBillingDonateView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
@@ -31,9 +33,10 @@ class InAppBillingDonateView @JvmOverloads constructor(
 
   private lateinit var defaultScope: CoroutineScope
 
-  private val billingProvider = NoiceApplication.of(context).billingProvider
-  private val binding: DonateViewBinding =
-    DonateViewBinding.inflate(LayoutInflater.from(context), this)
+  @set:Inject
+  internal lateinit var billingProvider: BillingProvider
+
+  private val binding = DonateViewBinding.inflate(LayoutInflater.from(context), this)
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal constructor(context: Context, defaultScope: CoroutineScope) : this(context) {

@@ -11,11 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.github.appintro.AppIntro
 import com.github.appintro.AppIntroPageTransformerType
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.fragment.AppIntroFragment
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AppIntroActivity : AppIntro() {
 
   companion object {
@@ -34,7 +36,8 @@ class AppIntroActivity : AppIntro() {
     }
   }
 
-  private lateinit var analyticsProvider: AnalyticsProvider
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -110,7 +113,6 @@ class AppIntroActivity : AppIntro() {
       )
     )
 
-    analyticsProvider = NoiceApplication.of(this).analyticsProvider
     analyticsProvider.setCurrentScreen("app_intro", AppIntroActivity::class)
   }
 

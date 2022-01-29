@@ -13,14 +13,19 @@ import androidx.core.os.HandlerCompat
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.strategy.LocalPlaybackStrategyFactory
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
-import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import com.google.gson.Gson
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 import java.util.concurrent.TimeUnit
 
 typealias PlaybackUpdateListener = (state: Int, players: Map<String, Player>) -> Unit
@@ -50,12 +55,14 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
   private lateinit var audioAttributes: AudioAttributesCompat
   private lateinit var audioFocusRequest: AudioFocusRequestCompat
   private lateinit var playbackStrategyFactory: PlaybackStrategyFactory
+  private lateinit var analyticsProvider: AnalyticsProvider
+  private lateinit var castApiProvider: CastApiProvider
 
+  private val gson: Gson
+  private val presetRepository: PresetRepository
+  private val settingsRepository: SettingsRepository
   private val players = HashMap<String, Player>(Sound.LIBRARY.size)
   private val handler = Handler(Looper.getMainLooper())
-  private val presetRepository = PresetRepository.newInstance(context)
-  private val settingsRepository = SettingsRepository.newInstance(context)
-  private val analyticsProvider = NoiceApplication.of(context).analyticsProvider
   private val audioManager = requireNotNull(context.getSystemService<AudioManager>())
 
   private val playbackStateBuilder = PlaybackStateCompat.Builder()
@@ -67,13 +74,12 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
         or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
     )
 
-  private val castAPIProvider = NoiceApplication.of(context).castAPIProvider
-  private val castSessionListener = object : CastAPIProvider.SessionListener {
+  private val castSessionListener = object : CastApiProvider.SessionListener {
     override fun onSessionBegin() {
       Log.d(TAG, "onSessionBegin(): switching playback to CastPlaybackStrategy")
-      playbackStrategyFactory = castAPIProvider.getPlaybackStrategyFactory(context)
+      playbackStrategyFactory = castApiProvider.getPlaybackStrategyFactory(context)
       players.values.forEach { it.updatePlaybackStrategy(playbackStrategyFactory) }
-      mediaSession.setPlaybackToRemote(castAPIProvider.getVolumeProvider())
+      mediaSession.setPlaybackToRemote(castApiProvider.getVolumeProvider())
       analyticsProvider.logCastSessionStartEvent()
     }
 
@@ -94,7 +100,18 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
   }
 
   init {
-    castAPIProvider.registerSessionListener(castSessionListener)
+    val entrypoint = EntryPointAccessors.fromApplication(
+      context.applicationContext,
+      PlayerManagerEntrypoint::class.java
+    )
+
+    gson = entrypoint.gson()
+    presetRepository = entrypoint.presetRepository()
+    settingsRepository = entrypoint.settingsRepository()
+    analyticsProvider = entrypoint.analyticsProvider()
+    castApiProvider = entrypoint.castApiProvider()
+
+    castApiProvider.registerSessionListener(castSessionListener)
     setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
     mediaSession.setCallback(object : MediaSessionCompat.Callback() {
       override fun onPlay() {
@@ -376,7 +393,7 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
    */
   fun cleanup() {
     stop()
-    castAPIProvider.unregisterSessionListener(castSessionListener)
+    castApiProvider.unregisterSessionListener(castSessionListener)
   }
 
   /**
@@ -396,7 +413,7 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
   }
 
   fun playPreset(uri: Uri) {
-    playPreset(Preset.from(uri))
+    playPreset(Preset.from(uri, gson))
   }
 
   /**
@@ -476,5 +493,15 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
 
   fun playerCount(): Int {
     return players.size
+  }
+
+  @EntryPoint
+  @InstallIn(SingletonComponent::class)
+  interface PlayerManagerEntrypoint {
+    fun presetRepository(): PresetRepository
+    fun settingsRepository(): SettingsRepository
+    fun analyticsProvider(): AnalyticsProvider
+    fun castApiProvider(): CastApiProvider
+    fun gson(): Gson
   }
 }

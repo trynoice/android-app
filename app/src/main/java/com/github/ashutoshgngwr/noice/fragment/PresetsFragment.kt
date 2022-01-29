@@ -18,7 +18,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.MediaPlayerService
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
@@ -27,37 +26,52 @@ import com.github.ashutoshgngwr.noice.databinding.PresetsListItemBinding
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class PresetsFragment : Fragment() {
 
-  private lateinit var binding: PresetsFragmentBinding
-  private lateinit var presetRepository: PresetRepository
-  private lateinit var analyticsProvider: AnalyticsProvider
-
-  private var adapter: PresetListAdapter? = null
   private var activePresetPos = -1
   private var dataSet = mutableListOf<Preset>()
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View {
+  private lateinit var binding: PresetsFragmentBinding
+
+  @set:Inject
+  internal lateinit var presetRepository: PresetRepository
+
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
+
+  @set:Inject
+  internal lateinit var reviewFlowProvider: ReviewFlowProvider
+
+  @set:Inject
+  internal lateinit var wakeUpTimerManager: WakeUpTimerManager
+
+  @set:Inject
+  internal lateinit var playbackController: PlaybackController
+
+  @set:Inject
+  internal lateinit var gson: Gson
+
+  private val adapter by lazy { PresetListAdapter(requireContext()) }
+
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = PresetsFragmentBinding.inflate(inflater, container, false)
     return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    presetRepository = PresetRepository.newInstance(requireContext())
-    analyticsProvider = NoiceApplication.of(requireContext()).analyticsProvider
     dataSet = presetRepository.list().toMutableList()
-    adapter = PresetListAdapter(requireContext())
     binding.list.also {
       it.adapter = adapter
       it.setHasFixedSize(true)
@@ -80,12 +94,12 @@ class PresetsFragment : Fragment() {
   fun onPlayerManagerUpdate(event: MediaPlayerService.PlaybackUpdateEvent) {
     val oldPresetPos = activePresetPos
     activePresetPos = Preset.from("", event.players.values).let { dataSet.indexOf(it) }
-    adapter?.notifyItemChanged(oldPresetPos)
-    adapter?.notifyItemChanged(activePresetPos)
+    adapter.notifyItemChanged(oldPresetPos)
+    adapter.notifyItemChanged(activePresetPos)
   }
 
   private fun updateEmptyListIndicatorVisibility() {
-    if (adapter?.itemCount ?: 0 > 0) {
+    if (adapter.itemCount > 0) {
       binding.emptyListHint.visibility = View.GONE
     } else {
       binding.emptyListHint.visibility = View.VISIBLE
@@ -113,14 +127,12 @@ class PresetsFragment : Fragment() {
   inner class ViewHolder(val binding: PresetsListItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    private val reviewFlowProvider = NoiceApplication.of(requireContext()).reviewFlowProvider
-
     init {
       binding.playButton.setOnClickListener {
         if (bindingAdapterPosition != activePresetPos) {
-          PlaybackController.playPreset(requireContext(), dataSet[bindingAdapterPosition].id)
+          playbackController.playPreset(dataSet[bindingAdapterPosition].id)
         } else {
-          PlaybackController.stop(requireContext())
+          playbackController.stop()
         }
       }
 
@@ -152,7 +164,7 @@ class PresetsFragment : Fragment() {
     }
 
     private fun showShareIntentSender() {
-      val uri = dataSet[bindingAdapterPosition].toUri().toString()
+      val uri = dataSet[bindingAdapterPosition].toUri(gson).toString()
       ShareCompat.IntentBuilder(requireActivity())
         .setType("text/plain")
         .setChooserTitle(R.string.share)
@@ -252,8 +264,8 @@ class PresetsFragment : Fragment() {
           val name = getInputText()
           dataSet[bindingAdapterPosition].name = name
           presetRepository.update(dataSet[bindingAdapterPosition])
-          adapter?.notifyItemChanged(bindingAdapterPosition)
-          PlaybackController.requestUpdateEvent(requireContext())
+          adapter.notifyItemChanged(bindingAdapterPosition)
+          playbackController.requestUpdateEvent()
 
           // maybe show in-app review dialog to the user
           reviewFlowProvider.maybeAskForReview(requireActivity())
@@ -276,7 +288,7 @@ class PresetsFragment : Fragment() {
           presetRepository.delete(preset.id)
           // then stop playback if recently deleted preset was playing
           if (bindingAdapterPosition == activePresetPos) {
-            PlaybackController.stop(requireContext())
+            playbackController.stop()
           }
 
           if (bindingAdapterPosition < activePresetPos) {
@@ -285,7 +297,7 @@ class PresetsFragment : Fragment() {
 
           cancelWakeUpTimerIfScheduled(preset.id)
           ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
-          adapter?.notifyItemRemoved(bindingAdapterPosition)
+          adapter.notifyItemRemoved(bindingAdapterPosition)
           updateEmptyListIndicatorVisibility()
           showSnackBar(R.string.preset_deleted)
 
@@ -302,10 +314,8 @@ class PresetsFragment : Fragment() {
      * cancels the wake-up timer if it was scheduled with the given [Preset.id].
      */
     private fun cancelWakeUpTimerIfScheduled(@Suppress("SameParameterValue") id: String) {
-      WakeUpTimerManager.get(requireContext())?.also {
-        if (id == it.presetID) {
-          WakeUpTimerManager.cancel(requireContext())
-        }
+      if (id == wakeUpTimerManager.get()?.presetID) {
+        wakeUpTimerManager.cancel()
       }
     }
 

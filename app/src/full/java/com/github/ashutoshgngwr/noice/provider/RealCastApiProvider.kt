@@ -23,12 +23,12 @@ import com.google.android.gms.cast.framework.media.CastMediaOptions
 import kotlin.math.round
 
 /**
- * [RealCastAPIProvider] wraps all the Google Cast API functionality used by the application
+ * [RealCastApiProvider] wraps all the Google Cast API functionality used by the application
  * for the full build variant.
  */
-class RealCastAPIProvider(context: Context) : CastAPIProvider {
+class RealCastApiProvider(context: Context) : CastApiProvider {
 
-  private val sessionListeners = mutableSetOf<CastAPIProvider.SessionListener>()
+  private val sessionListeners = mutableSetOf<CastApiProvider.SessionListener>()
 
   private val castContext = CastContext.getSharedInstance(context)
   private val castSessionManagerListener = object : SessionManagerListener<CastSession> {
@@ -81,8 +81,8 @@ class RealCastAPIProvider(context: Context) : CastAPIProvider {
   override fun getVolumeProvider(): VolumeProviderCompat =
     CastVolumeProvider(requireNotNull(castContext.sessionManager.currentCastSession))
 
-  override fun registerSessionListener(listener: CastAPIProvider.SessionListener) {
-    // add `castSessionManagerListener` only when the first `CastAPIProvider.SessionListener` is
+  override fun registerSessionListener(listener: CastApiProvider.SessionListener) {
+    // add `castSessionManagerListener` only when the first `CastApiProvider.SessionListener` is
     // registered.
     if (sessionListeners.isEmpty()) {
       castContext.sessionManager.addSessionManagerListener(
@@ -94,10 +94,10 @@ class RealCastAPIProvider(context: Context) : CastAPIProvider {
     sessionListeners.add(listener)
   }
 
-  override fun unregisterSessionListener(listener: CastAPIProvider.SessionListener) {
+  override fun unregisterSessionListener(listener: CastApiProvider.SessionListener) {
     sessionListeners.remove(listener)
 
-    // remove `castSessionManagerListener` when the last `CastAPIProvider.SessionListener` is
+    // remove `castSessionManagerListener` when the last `CastApiProvider.SessionListener` is
     // unregistered.
     if (sessionListeners.isEmpty()) {
       castContext.sessionManager.removeSessionManagerListener(

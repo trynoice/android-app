@@ -2,7 +2,7 @@ package com.github.ashutoshgngwr.noice.model
 
 import android.net.Uri
 import com.github.ashutoshgngwr.noice.playback.Player
-import com.google.gson.GsonBuilder
+import com.google.gson.Gson
 import com.google.gson.annotations.Expose
 import java.util.*
 
@@ -10,7 +10,7 @@ import java.util.*
  * [Preset] represents a snapshot of Player Manager at any given time. It holds states of various
  * players and is used for serializing the state to JSON and persisting it on disk.
  */
-class Preset(
+data class Preset(
   @Expose val id: String,
   @Expose var name: String,
   @Expose val playerStates: Array<PlayerState>
@@ -39,16 +39,12 @@ class Preset(
     /**
      * Decodes a preset from an [Uri] encoded using [toUri].
      */
-    fun from(uri: Uri): Preset {
+    fun from(uri: Uri, gson: Gson): Preset {
       val name = uri.getQueryParameter(URI_NAME_PARAM) ?: ""
       val playerStatesJSON = uri.getQueryParameter(URI_PLAYER_STATES_PARAM)
         ?: throw IllegalArgumentException("'playerStates' query parameter is missing from the URI.")
 
-      val playerStates = GsonBuilder()
-        .excludeFieldsWithoutExposeAnnotation()
-        .create()
-        .fromJson(playerStatesJSON, Array<PlayerState>::class.java)
-
+      val playerStates = gson.fromJson(playerStatesJSON, Array<PlayerState>::class.java)
       return Preset(UUID.randomUUID().toString(), name, playerStates)
     }
   }
@@ -81,8 +77,7 @@ class Preset(
   /**
    * Encodes the preset to an [Uri] with [name] and [playerStates] as query its parameters.
    */
-  fun toUri(): Uri {
-    val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+  fun toUri(gson: Gson): Uri {
     return Uri.Builder()
       .scheme(URI_SCHEME)
       .authority(URI_AUTHORITY)

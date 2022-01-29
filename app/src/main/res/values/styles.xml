@@ -149,7 +149,7 @@
     <item name="android:gravity">center_vertical</item>
     <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body2</item>
     <item name="android:textColor">@color/error</item>
-    <item name="drawableStartCompat">@drawable/ic_error_24dp</item>
+    <item name="drawableStartCompat">@drawable/ic_baseline_error_24</item>
     <item name="drawableTint">@color/error</item>
   </style>
 

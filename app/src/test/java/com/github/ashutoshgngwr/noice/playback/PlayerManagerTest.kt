@@ -12,7 +12,7 @@ import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
-import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
+import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.shadow.ShadowMediaSession
 import com.github.ashutoshgngwr.noice.shadow.ShadowMediaSessionCompat
@@ -42,7 +42,7 @@ import org.robolectric.shadows.ShadowLooper
 @Config(shadows = [ShadowMediaSession::class, ShadowMediaSessionCompat::class])
 class PlayerManagerTest {
 
-  private lateinit var mockCastAPIProvider: CastAPIProvider
+  private lateinit var mockCastApiProvider: CastApiProvider
   private lateinit var players: HashMap<String, Player>
   private lateinit var settingsRepository: SettingsRepository
 
@@ -51,9 +51,9 @@ class PlayerManagerTest {
 
   @Before
   fun setup() {
-    mockCastAPIProvider = mockk(relaxed = true)
+    mockCastApiProvider = mockk(relaxed = true)
     ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .castAPIProvider = mockCastAPIProvider
+      .castApiProvider = mockCastApiProvider
 
     // always have a fake player in manager's state
     players = hashMapOf("test" to mockk(relaxed = true) {
@@ -255,21 +255,21 @@ class PlayerManagerTest {
     assertEquals(0, players.size)
     verify(exactly = 1) {
       // should clear session callbacks
-      mockCastAPIProvider.unregisterSessionListener(any())
+      mockCastApiProvider.unregisterSessionListener(any())
     }
   }
 
   @Test
   fun testUpdatePlaybackStrategies() {
-    val listenerSlot = slot<CastAPIProvider.SessionListener>()
+    val listenerSlot = slot<CastApiProvider.SessionListener>()
     verify(exactly = 1) {
-      mockCastAPIProvider.registerSessionListener(capture(listenerSlot))
+      mockCastApiProvider.registerSessionListener(capture(listenerSlot))
     }
 
     val mockPlaybackStrategy = mockk<PlaybackStrategyFactory>(relaxed = true)
     val spyVolumeProvider = spyk<VolumeProviderCompat>()
-    every { mockCastAPIProvider.getPlaybackStrategyFactory(any()) } returns mockPlaybackStrategy
-    every { mockCastAPIProvider.getVolumeProvider() } returns spyVolumeProvider
+    every { mockCastApiProvider.getPlaybackStrategyFactory(any()) } returns mockPlaybackStrategy
+    every { mockCastApiProvider.getVolumeProvider() } returns spyVolumeProvider
     listenerSlot.captured.onSessionBegin() // invoke the session begin callback
     verify(exactly = 1) { players.getValue("test").updatePlaybackStrategy(mockPlaybackStrategy) }
     assertEquals(spyVolumeProvider, ShadowMediaSessionCompat.currentVolumeProvider)

@@ -20,40 +20,52 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.MediaPlayerService
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.HomeFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchInCustomTab
 import com.github.ashutoshgngwr.noice.ext.registerOnDestinationChangedListener
 import com.github.ashutoshgngwr.noice.navigation.Navigable
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(), Navigable {
 
   private lateinit var binding: HomeFragmentBinding
   private lateinit var navController: NavController
   private lateinit var childNavController: NavController
-  private lateinit var app: NoiceApplication
 
   private var playerManagerState = PlaybackStateCompat.STATE_STOPPED
+
+  @set:Inject
+  internal lateinit var settingsRepository: SettingsRepository
+
+  @set:Inject
+  internal lateinit var castApiProvider: CastApiProvider
+
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
+
+  @set:Inject
+  internal lateinit var playbackController: PlaybackController
 
   // Do not refresh user preference when reconstructing this fragment from a previously saved state.
   // For whatever reasons, it makes the bottom navigation view go out of sync.
   private val shouldDisplayPresetsAsHomeScreen by lazy {
-    SettingsRepository.newInstance(requireContext())
-      .shouldDisplayPresetsAsHomeScreen()
+    settingsRepository.shouldDisplayPresetsAsHomeScreen()
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setHasOptionsMenu(true)
-
-    app = NoiceApplication.of(requireContext())
     EventBus.getDefault().register(this)
   }
 
@@ -87,7 +99,7 @@ class HomeFragment : Fragment(), Navigable {
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    app.castAPIProvider.addMenuItem(requireContext(), menu, R.string.cast_media)
+    castApiProvider.addMenuItem(requireContext(), menu, R.string.cast_media)
     val displayPlaybackControls = childNavController.currentDestination?.id != R.id.wake_up_timer
     if (displayPlaybackControls && PlaybackStateCompat.STATE_STOPPED != playerManagerState) {
       addPlaybackToggleMenuItem(menu)
@@ -104,8 +116,8 @@ class HomeFragment : Fragment(), Navigable {
         setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
         setIcon(R.drawable.ic_pause_24dp)
         setOnMenuItemClickListener {
-          PlaybackController.pause(requireContext())
-          app.analyticsProvider.logEvent("playback_toggle_click", bundleOf())
+          playbackController.pause()
+          analyticsProvider.logEvent("playback_toggle_click", bundleOf())
           true
         }
       }
@@ -114,8 +126,8 @@ class HomeFragment : Fragment(), Navigable {
         setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
         setIcon(R.drawable.ic_play_arrow_24dp)
         setOnMenuItemClickListener {
-          PlaybackController.resume(requireContext())
-          app.analyticsProvider.logEvent("playback_toggle_click", bundleOf())
+          playbackController.resume()
+          analyticsProvider.logEvent("playback_toggle_click", bundleOf())
           true
         }
       }
@@ -145,13 +157,13 @@ class HomeFragment : Fragment(), Navigable {
         }
 
         Uri.parse(url).launchInCustomTab(requireContext())
-        app.analyticsProvider.logEvent("issue_tracker_open", bundleOf())
+        analyticsProvider.logEvent("issue_tracker_open", bundleOf())
         true
       }
 
       R.id.submit_feedback -> {
         Uri.parse(getString(R.string.feedback_form_url)).launchInCustomTab(requireContext())
-        app.analyticsProvider.logEvent("feedback_form_open", bundleOf())
+        analyticsProvider.logEvent("feedback_form_open", bundleOf())
         true
       }
 

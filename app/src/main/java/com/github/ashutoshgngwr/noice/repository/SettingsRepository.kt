@@ -5,23 +5,24 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
 /**
  * [SettingsRepository] implements the data access layer for storing various user preferences.
  */
-class SettingsRepository private constructor(private val context: Context) {
+class SettingsRepository @Inject constructor(
+  @ApplicationContext private val context: Context,
+  private val crashlyticsProvider: CrashlyticsProvider,
+  private val analyticsProvider: AnalyticsProvider,
+) {
 
   companion object {
-    const val APP_THEME_LIGHT = 0
-    const val APP_THEME_DARK = 1
-    const val APP_THEME_SYSTEM_DEFAULT = 2
-
-    /**
-     * Creates a new instance of [SettingsRepository]. It is needed because mockk in unable to mock
-     * constructors on Android instrumented tests and there's no cleaner way to inject mocks in
-     * Android components than mocking companion object methods.
-     */
-    fun newInstance(context: Context) = SettingsRepository(context)
+    internal const val APP_THEME_LIGHT = 0
+    internal const val APP_THEME_DARK = 1
+    internal const val APP_THEME_SYSTEM_DEFAULT = 2
   }
 
   private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -89,17 +90,11 @@ class SettingsRepository private constructor(private val context: Context) {
   }
 
   /**
-   * Returns the value of switch preference with key [R.string.should_share_usage_data_key].
-   */
-  fun shouldShareUsageData(): Boolean {
-    return prefs.getBoolean(context.getString(R.string.should_share_usage_data_key), false)
-  }
-
-  /**
    * Sets the value of switch preference with key [R.string.should_share_usage_data_key].
    */
   fun setShouldShareUsageData(enabled: Boolean) {
-    prefs.edit { putBoolean(context.getString(R.string.should_share_usage_data_key), enabled) }
+    crashlyticsProvider.setCollectionEnabled(enabled)
+    analyticsProvider.setCollectionEnabled(enabled)
   }
 
   /**

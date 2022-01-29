@@ -106,7 +106,7 @@ class GenerateScreenshots {
   @Test
   fun library() {
     // add a fake Cast button since we can't make the real one appear on an emulator.
-    ApplicationProvider.getApplicationContext<NoiceApplication>().castAPIProvider =
+    ApplicationProvider.getApplicationContext<NoiceApplication>().castApiProvider =
       mockk(relaxed = true) {
         every { addMenuItem(any(), any(), any()) } answers {
           secondArg<Menu>().add("fake-cast-button").apply {

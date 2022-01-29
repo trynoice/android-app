@@ -47,11 +47,7 @@ class DialogFragment : BottomSheetDialogFragment() {
 
   private val viewModel: ViewModel by viewModels()
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     baseBinding = DialogFragmentBaseBinding.inflate(inflater, container, false)
     return baseBinding.root
   }
@@ -65,6 +61,9 @@ class DialogFragment : BottomSheetDialogFragment() {
     super.onDismiss(dialog)
   }
 
+  /**
+   * Always called when the dialog is closed.
+   */
   fun onDismiss(listener: () -> Unit) {
     onDismissListener = listener
   }

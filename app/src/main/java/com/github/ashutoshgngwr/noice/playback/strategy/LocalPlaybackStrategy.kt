@@ -20,7 +20,8 @@ import com.google.android.exoplayer2.util.Util
 class LocalPlaybackStrategy(
   context: Context,
   audioAttributes: AudioAttributesCompat,
-  sound: Sound
+  sound: Sound,
+  private val settingsRepository: SettingsRepository,
 ) : PlaybackStrategy {
 
   companion object {
@@ -29,7 +30,6 @@ class LocalPlaybackStrategy(
   }
 
   private val players = sound.src.map { initPlayer(context, it, sound.isLooping) }
-  private val settingsRepository = SettingsRepository.newInstance(context)
   private var volume: Float = 0f
 
   init {

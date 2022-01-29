@@ -1,17 +1,20 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.github.ashutoshgngwr.noice.NoiceApplication
+import androidx.lifecycle.ViewModel
 import com.github.ashutoshgngwr.noice.databinding.AccountFragmentBinding
+import com.trynoice.api.client.NoiceApiClient
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AccountFragment : Fragment() {
 
   private lateinit var binding: AccountFragmentBinding
@@ -28,19 +31,18 @@ class AccountFragment : Fragment() {
   }
 }
 
-class AccountViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class AccountViewModel @Inject constructor(private val apiClient: NoiceApiClient) : ViewModel() {
 
-  private val app: NoiceApplication = getApplication()
-
-  val isUserSignedIn = MutableLiveData(app.apiClient.isSignedIn())
+  val isUserSignedIn = MutableLiveData(apiClient.isSignedIn())
   val isLoadingProfile = MutableLiveData(false)
 
   init {
-    app.apiClient.addSignInStateListener(isUserSignedIn::postValue)
+    apiClient.addSignInStateListener(isUserSignedIn::postValue)
   }
 
   override fun onCleared() {
-    app.apiClient.removeSignInStateListener(isUserSignedIn::postValue)
+    apiClient.removeSignInStateListener(isUserSignedIn::postValue)
   }
 
   fun loadUserProfile() {

@@ -4,6 +4,7 @@ buildscript {
     config = [
       minSdkVersion    : 21,
       compileSdkVersion: 30,
+      hiltVersion      : '2.38.1',
       javaCompatibility: JavaVersion.VERSION_1_8,
       kotlinVersion    : '1.6.10',
       kotlinJvmTarget  : '1.8',
@@ -11,6 +12,7 @@ buildscript {
 
     deps = [
       coroutinesVersion : '1.6.0',
+      hiltVersion       : config.hiltVersion,
       kotlinVersion     : config.kotlinVersion,
       lifecycleVersion  : '2.3.1',
 
@@ -27,6 +29,7 @@ buildscript {
 
   dependencies {
     classpath 'com.android.tools.build:gradle:4.2.2'
+    classpath "com.google.dagger:hilt-android-gradle-plugin:$config.hiltVersion"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$config.kotlinVersion"
 
     classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1' // sed:free-build:remove

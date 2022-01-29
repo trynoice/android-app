@@ -19,42 +19,37 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.MediaPlayerService
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.databinding.AlarmRingerActivityBinding
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.strategy.LocalPlaybackStrategy
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.ncorti.slidetoact.SlideToActView
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteListener {
 
-  companion object {
-    @VisibleForTesting
-    internal const val EXTRA_PRESET_ID = "preset_id"
+  private var ringerStartTime: Long = 0L
+  private lateinit var binding: AlarmRingerActivityBinding
 
-    private const val RC_ALARM = 0x39
-    private val LOG_TAG = AlarmRingerActivity::class.simpleName
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
 
-    fun getPendingIntent(context: Context, presetID: String?): PendingIntent {
-      var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE
-      }
+  @set:Inject
+  internal lateinit var playbackController: PlaybackController
 
-      return Intent(context, AlarmRingerActivity::class.java)
-        .putExtra(EXTRA_PRESET_ID, presetID)
-        .let { PendingIntent.getActivity(context, RC_ALARM, it, piFlags) }
-    }
+  private val settingsRepository by lazy {
+    EntryPointAccessors.fromApplication(application, AlarmRingerActivityEntryPoint::class.java)
+      .settingsRepository()
   }
 
-  private lateinit var binding: AlarmRingerActivityBinding
-  private lateinit var settingsRepository: SettingsRepository
-  private lateinit var analyticsProvider: AnalyticsProvider
-  private var ringerStartTime: Long = 0L
-
   override fun onCreate(savedInstanceState: Bundle?) {
-    settingsRepository = SettingsRepository.newInstance(this)
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
     super.onCreate(savedInstanceState)
 
@@ -63,8 +58,6 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     binding.dismissSlider.onSlideCompleteListener = this
     setContentView(binding.root)
     showWhenLocked()
-
-    analyticsProvider = NoiceApplication.of(this).analyticsProvider
     ringerStartTime = System.currentTimeMillis()
   }
 
@@ -96,8 +89,8 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     ContextCompat.startForegroundService(this, Intent(this, MediaPlayerService::class.java))
 
     Log.d(LOG_TAG, "onResume(): starting preset")
-    PlaybackController.setAudioUsage(this, AudioAttributesCompat.USAGE_ALARM)
-    PlaybackController.playPreset(this, presetID)
+    playbackController.setAudioUsage(AudioAttributesCompat.USAGE_ALARM)
+    playbackController.playPreset(presetID)
   }
 
   override fun onStop() {
@@ -107,11 +100,11 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     }
 
     Log.d(LOG_TAG, "onStop(): pausing playback")
-    PlaybackController.pause(this)
+    playbackController.pause()
 
     // TODO: find a better solution to wait for pause transition to finish before switching streams.
     Handler(mainLooper).postDelayed({
-      PlaybackController.setAudioUsage(this, AudioAttributesCompat.USAGE_MEDIA)
+      playbackController.setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
     }, LocalPlaybackStrategy.DEFAULT_FADE_DURATION)
 
     val duration = System.currentTimeMillis() - ringerStartTime
@@ -148,6 +141,31 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
         WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
           WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
       )
+    }
+  }
+
+  @EntryPoint
+  @InstallIn(SingletonComponent::class)
+  interface AlarmRingerActivityEntryPoint {
+    fun settingsRepository(): SettingsRepository
+  }
+
+  companion object {
+    @VisibleForTesting
+    internal const val EXTRA_PRESET_ID = "preset_id"
+
+    private const val RC_ALARM = 0x39
+    private val LOG_TAG = AlarmRingerActivity::class.simpleName
+
+    fun getPendingIntent(context: Context, presetID: String?): PendingIntent {
+      var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE
+      }
+
+      return Intent(context, AlarmRingerActivity::class.java)
+        .putExtra(EXTRA_PRESET_ID, presetID)
+        .let { PendingIntent.getActivity(context, RC_ALARM, it, piFlags) }
     }
   }
 }

@@ -9,19 +9,21 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.BuildConfig
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.ext.launchInCustomTab
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import dagger.hilt.android.AndroidEntryPoint
 import mehdi.sakout.aboutpage.AboutPage
 import mehdi.sakout.aboutpage.Element
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AboutFragment : Fragment() {
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
+
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     return AboutPage(context).run {
       setImage(R.drawable.app_banner)
       setDescription(getString(R.string.app_description))
@@ -49,7 +51,7 @@ class AboutFragment : Fragment() {
         )
       )
 
-      if (NoiceApplication.of(requireContext()).isGoogleMobileServicesAvailable()) {
+      if (!BuildConfig.IS_FREE_BUILD) {
         addItem(
           buildElement(
             R.drawable.about_icon_google_play,
@@ -98,9 +100,7 @@ class AboutFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    NoiceApplication.of(requireContext())
-      .analyticsProvider
-      .setCurrentScreen("about", AboutFragment::class)
+    analyticsProvider.setCurrentScreen("about", AboutFragment::class)
   }
 
   private fun buildElement(
