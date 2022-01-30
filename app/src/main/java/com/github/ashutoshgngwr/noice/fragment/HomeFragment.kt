@@ -46,6 +46,9 @@ class HomeFragment : Fragment(), Navigable {
   private var playerManagerState = PlaybackStateCompat.STATE_STOPPED
 
   @set:Inject
+  internal lateinit var eventBus: EventBus
+
+  @set:Inject
   internal lateinit var settingsRepository: SettingsRepository
 
   @set:Inject
@@ -66,11 +69,11 @@ class HomeFragment : Fragment(), Navigable {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setHasOptionsMenu(true)
-    EventBus.getDefault().register(this)
+    eventBus.register(this)
   }
 
   override fun onDestroy() {
-    EventBus.getDefault().unregister(this)
+    eventBus.unregister(this)
     super.onDestroy()
   }
 

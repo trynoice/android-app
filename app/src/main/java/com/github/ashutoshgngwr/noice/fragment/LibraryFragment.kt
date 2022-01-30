@@ -42,6 +42,9 @@ class LibraryFragment : Fragment() {
   private var players = emptyMap<String, Player>()
 
   @set:Inject
+  internal lateinit var eventBus: EventBus
+
+  @set:Inject
   internal lateinit var presetRepository: PresetRepository
 
   @set:Inject
@@ -56,9 +59,7 @@ class LibraryFragment : Fragment() {
   @set:Inject
   internal lateinit var playbackController: PlaybackController
 
-  private val eventBus = EventBus.getDefault()
   private val adapter by lazy { SoundListAdapter(requireContext()) }
-
   private val dataSet by lazy {
     arrayListOf<SoundListItem>().also { list ->
       var lastDisplayGroupResID = -1

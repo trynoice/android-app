@@ -53,6 +53,9 @@ class MediaPlayerService : Service() {
   private lateinit var playerManager: PlayerManager
 
   @set:Inject
+  internal lateinit var eventBus: EventBus
+
+  @set:Inject
   internal lateinit var playbackController: PlaybackController
 
   @set:Inject
@@ -104,8 +107,7 @@ class MediaPlayerService : Service() {
   }
 
   private fun onPlaybackUpdate(state: Int, players: Map<String, Player>) {
-    EventBus.getDefault().postSticky(PlaybackUpdateEvent(state, players))
-
+    eventBus.postSticky(PlaybackUpdateEvent(state, players))
     val currentPreset = getCurrentPreset(players.values)
     val title = currentPreset?.name ?: getString(R.string.unsaved_preset)
     mediaSession.setMetadata(

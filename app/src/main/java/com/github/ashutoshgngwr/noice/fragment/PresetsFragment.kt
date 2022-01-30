@@ -46,6 +46,9 @@ class PresetsFragment : Fragment() {
   private lateinit var binding: PresetsFragmentBinding
 
   @set:Inject
+  internal lateinit var eventBus: EventBus
+
+  @set:Inject
   internal lateinit var presetRepository: PresetRepository
 
   @set:Inject
@@ -78,7 +81,7 @@ class PresetsFragment : Fragment() {
       it.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
     }
 
-    EventBus.getDefault().register(this)
+    eventBus.register(this)
     updateEmptyListIndicatorVisibility()
 
     val params = bundleOf("items_count" to dataSet.size)
@@ -86,7 +89,7 @@ class PresetsFragment : Fragment() {
   }
 
   override fun onDestroyView() {
-    EventBus.getDefault().unregister(this)
+    eventBus.unregister(this)
     super.onDestroyView()
   }
 
