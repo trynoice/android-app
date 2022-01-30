@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.google.gson.GsonBuilder
+import com.google.gson.Gson
 import com.trynoice.api.client.apis.AccountApi
 import com.trynoice.api.client.apis.InternalAccountApi
 import com.trynoice.api.client.apis.SubscriptionApi
@@ -35,6 +35,7 @@ private val LOG_TAG = NoiceApiClient::class.simpleName
  */
 class NoiceApiClient(
   context: Context,
+  gson: Gson,
   baseUrl: String = "https://api.trynoice.com",
 ) {
 
@@ -55,11 +56,7 @@ class NoiceApiClient(
       .client(okhttpClient)
       .baseUrl(baseUrl)
       .addConverterFactory(
-        GsonConverterFactory.create(
-          GsonBuilder()
-            .excludeFieldsWithoutExposeAnnotation()
-            .create()
-        )
+        GsonConverterFactory.create(gson)
       )
       .build()
   }

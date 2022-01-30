@@ -36,7 +36,7 @@ class NoiceApiClientTest {
 
     val context = ApplicationProvider.getApplicationContext<Context>()
     credentialRepository = AuthCredentialRepository(context)
-    apiClient = NoiceApiClient(context, mockServer.url("").toString())
+    apiClient = NoiceApiClient(context, gson, mockServer.url("").toString())
   }
 
   @After

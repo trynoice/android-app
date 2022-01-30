@@ -29,6 +29,8 @@ class NoiceApplication : Application() {
   object ApiModule {
     @Provides
     @Singleton
-    fun client(@ApplicationContext context: Context): NoiceApiClient = NoiceApiClient(context)
+    fun client(@ApplicationContext context: Context, gson: Gson): NoiceApiClient {
+      return NoiceApiClient(context, gson)
+    }
   }
 }
