@@ -27,6 +27,7 @@ class PlaybackController @Inject constructor(
 ) {
 
   private val handler = Handler(Looper.getMainLooper())
+  private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
   fun handleServiceIntent(playerManager: PlayerManager, intent: Intent) {
     when (intent.action) {
@@ -208,8 +209,7 @@ class PlaybackController @Inject constructor(
    */
   fun scheduleAutoStop(afterDurationMillis: Long) {
     val atUptimeMillis = SystemClock.uptimeMillis() + afterDurationMillis
-    PreferenceManager.getDefaultSharedPreferences(context)
-      .edit(commit = true) { putLong(PREF_LAST_SCHEDULED_STOP_TIME, atUptimeMillis) }
+    prefs.edit(commit = true) { putLong(PREF_LAST_SCHEDULED_STOP_TIME, atUptimeMillis) }
 
     context.startService(
       Intent(context, MediaPlayerService::class.java)
@@ -222,9 +222,7 @@ class PlaybackController @Inject constructor(
    * Returns the uptime millis for the last stop playback schedule.
    */
   fun getScheduledAutoStopRemainingDurationMillis(): Long {
-    val atUptimeMillis = PreferenceManager.getDefaultSharedPreferences(context)
-      .getLong(PREF_LAST_SCHEDULED_STOP_TIME, 0)
-
+    val atUptimeMillis = prefs.getLong(PREF_LAST_SCHEDULED_STOP_TIME, 0)
     return max(atUptimeMillis - SystemClock.uptimeMillis(), 0)
   }
 

@@ -95,7 +95,7 @@ dependencies {
   def espressoVersion = '3.3.0'
   def mockkVersion = '1.12.2'
 
-  kapt "com.google.dagger:hilt-compiler:$config.hiltVersion"
+  kapt "com.google.dagger:hilt-compiler:$deps.hiltVersion"
 
   implementation 'androidx.activity:activity-ktx:1.3.1'
   implementation 'androidx.appcompat:appcompat:1.3.1'
@@ -119,7 +119,7 @@ dependencies {
   implementation 'com.google.android.flexbox:flexbox:3.0.0'
   implementation 'com.google.android.material:material:1.4.0'
   implementation 'com.google.code.gson:gson:2.8.9'
-  implementation "com.google.dagger:hilt-android:$config.hiltVersion"
+  implementation "com.google.dagger:hilt-android:$deps.hiltVersion"
   implementation 'com.ncorti:slidetoact:0.9.0'
   implementation 'io.github.medyo:android-about-page:2.0.0'
   implementation 'io.github.mrherintsoahasina:flextools:1.0.3'
@@ -139,7 +139,10 @@ dependencies {
   fullImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$deps.coroutinesVersion"
 
 
+  kaptTest "com.google.dagger:hilt-android-compiler:$deps.hiltVersion"
+
   testImplementation "androidx.test:core:$deps.testCoreVersion"
+  testImplementation "com.google.dagger:hilt-android-testing:$deps.hiltVersion"
   testImplementation "io.mockk:mockk:$mockkVersion"
   testImplementation "junit:junit:$deps.junitVersion"
   testImplementation "org.robolectric:robolectric:$deps.robolectricVersion"

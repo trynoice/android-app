@@ -2,9 +2,7 @@ package com.github.ashutoshgngwr.noice
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.view.Menu
-import android.view.MenuItem
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +24,6 @@ import com.github.ashutoshgngwr.noice.activity.AppIntroActivity
 import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.fragment.PresetsFragment
 import com.github.ashutoshgngwr.noice.playback.Player
-import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.Matchers.allOf
 import org.junit.After

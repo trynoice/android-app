@@ -2,16 +2,17 @@ package com.github.ashutoshgngwr.noice
 
 import android.app.AlarmManager
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import io.mockk.verify
@@ -20,33 +21,40 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowAlarmManager
+import javax.inject.Inject
 
+@HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
 class WakeUpTimerManagerTest {
 
+  @get:Rule
+  val hiltRule = HiltAndroidRule(this)
+
   private lateinit var mockPrefs: SharedPreferences
-  private lateinit var mockPresetRepository: PresetRepository
   private lateinit var shadowAlarmManager: ShadowAlarmManager
+  private lateinit var mockPresetRepository: PresetRepository
+  private lateinit var wakeUpTimerManager: WakeUpTimerManager
+
+  @set:Inject
+  internal lateinit var gson: Gson
 
   @Before
   fun setup() {
+    hiltRule.inject()
     mockkStatic(PreferenceManager::class)
     mockPrefs = mockk(relaxed = true)
     every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
 
-    mockkObject(PresetRepository.Companion)
     mockPresetRepository = mockk(relaxed = true)
-    every { PresetRepository.newInstance(any()) } returns mockPresetRepository
-
-    shadowAlarmManager = shadowOf(
-      ApplicationProvider.getApplicationContext<Context>()
-        .getSystemService(AlarmManager::class.java)
-    )
+    val context = ApplicationProvider.getApplicationContext<Context>()
+    shadowAlarmManager = shadowOf(context.getSystemService(AlarmManager::class.java))
+    wakeUpTimerManager = WakeUpTimerManager(context, mockPresetRepository, gson)
   }
 
   @After
@@ -71,7 +79,7 @@ class WakeUpTimerManagerTest {
     every { mockPrefs.edit() } returns mockPrefsEditor
     every { mockPresetRepository.get(expectedPresetID) } returns mockk()
 
-    WakeUpTimerManager.set(ApplicationProvider.getApplicationContext(), expectedTimer)
+    wakeUpTimerManager.set(expectedTimer)
 
     verifyOrder {
       mockPrefs.edit()
@@ -92,7 +100,7 @@ class WakeUpTimerManagerTest {
     }
 
     every { mockPrefs.edit() } returns mockPrefsEditor
-    WakeUpTimerManager.cancel(ApplicationProvider.getApplicationContext())
+    wakeUpTimerManager.cancel()
 
     verifyOrder {
       mockPrefs.edit()
@@ -107,19 +115,19 @@ class WakeUpTimerManagerTest {
   fun testGet() {
     // when timer is not scheduled
     every { mockPrefs.getString(WakeUpTimerManager.PREF_WAKE_UP_TIMER, any()) } returns null
-    assertNull(WakeUpTimerManager.get(ApplicationProvider.getApplicationContext()))
+    assertNull(wakeUpTimerManager.get())
 
     every {
       mockPrefs.getString(WakeUpTimerManager.PREF_WAKE_UP_TIMER, any())
     } returns """{"presetID": "test", "atMillis": 1, "mediaVolume": 10}"""
 
-    val timer = WakeUpTimerManager.get(ApplicationProvider.getApplicationContext())
+    val timer = wakeUpTimerManager.get()
     assertEquals(1L, timer?.atMillis)
     assertEquals("test", timer?.presetID)
   }
 
   @Test
-  fun testBootReceiver_whenTimerIsPreScheduled() {
+  fun rescheduleExistingTimer_whenTimerIsPreScheduled() {
     val expectedTime = System.currentTimeMillis() + 1000L
     every {
       mockPrefs.getString(WakeUpTimerManager.PREF_WAKE_UP_TIMER, any())
@@ -127,18 +135,14 @@ class WakeUpTimerManagerTest {
 
     every { mockPresetRepository.get("test") } returns mockk()
 
-    WakeUpTimerManager.BootReceiver()
-      .onReceive(ApplicationProvider.getApplicationContext(), Intent(Intent.ACTION_BOOT_COMPLETED))
-
+    wakeUpTimerManager.rescheduleExistingTimer()
     assertEquals(expectedTime, shadowAlarmManager.nextScheduledAlarm.triggerAtTime)
   }
 
   @Test
-  fun testBootReceiver_whenTimeIsNotPreScheduled() {
+  fun rescheduleExistingTimer_whenTimeIsNotPreScheduled() {
     every { mockPrefs.getString(WakeUpTimerManager.PREF_WAKE_UP_TIMER, any()) } returns null
-    WakeUpTimerManager.BootReceiver()
-      .onReceive(ApplicationProvider.getApplicationContext(), Intent(Intent.ACTION_BOOT_COMPLETED))
-
+    wakeUpTimerManager.rescheduleExistingTimer()
     assertNull(shadowAlarmManager.nextScheduledAlarm)
   }
 
@@ -150,7 +154,7 @@ class WakeUpTimerManagerTest {
     }
 
     every { mockPrefs.edit() } returns mockPrefsEditor
-    WakeUpTimerManager.saveLastUsedPresetID(ApplicationProvider.getApplicationContext(), presetID)
+    wakeUpTimerManager.saveLastUsedPresetID(presetID)
     verify(exactly = 1) {
       mockPrefs.edit()
       mockPrefsEditor.putString(WakeUpTimerManager.PREF_LAST_USED_PRESET_ID, presetID)
@@ -160,10 +164,9 @@ class WakeUpTimerManagerTest {
 
   @Test
   fun testGetLastUsedPresetID() {
-    val context = ApplicationProvider.getApplicationContext<Context>()
     every { mockPrefs.getString(WakeUpTimerManager.PREF_LAST_USED_PRESET_ID, any()) } returns null
     every { mockPresetRepository.get(null) } returns null
-    assertNull(WakeUpTimerManager.getLastUsedPresetID(context))
+    assertNull(wakeUpTimerManager.getLastUsedPresetID())
 
     val presetID = "test-preset-id"
     every {
@@ -172,13 +175,13 @@ class WakeUpTimerManagerTest {
 
     // preset doesn't exist
     every { mockPresetRepository.get(presetID) } returns null
-    assertNull(WakeUpTimerManager.getLastUsedPresetID(context))
+    assertNull(wakeUpTimerManager.getLastUsedPresetID())
 
     // preset doesn't exist
     every { mockPresetRepository.get(presetID) } returns mockk {
       every { id } returns presetID
     }
 
-    assertEquals(presetID, WakeUpTimerManager.getLastUsedPresetID(context))
+    assertEquals(presetID, wakeUpTimerManager.getLastUsedPresetID())
   }
 }

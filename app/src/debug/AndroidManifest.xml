@@ -26,6 +26,10 @@
 
   <!-- /screengrab-permissions -->
 
-  <application tools:ignore="AllowBackup" />
+  <application>
+
+    <activity android:name="com.github.ashutoshgngwr.noice.HiltTestActivity" />
+
+  </application>
 
 </manifest>

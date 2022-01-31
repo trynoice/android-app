@@ -25,7 +25,6 @@ import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
-import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
@@ -50,13 +49,6 @@ class LibraryFragmentTest {
 
   @Before
   fun setup() {
-    mockkStatic(EventBus::class)
-    mockkObject(
-      PlaybackController,
-      PresetRepository.Companion,
-      SettingsRepository.Companion
-    )
-
     mockReviewFlowProvider = mockk(relaxed = true)
     ApplicationProvider.getApplicationContext<NoiceApplication>()
       .reviewFlowProvider = mockReviewFlowProvider

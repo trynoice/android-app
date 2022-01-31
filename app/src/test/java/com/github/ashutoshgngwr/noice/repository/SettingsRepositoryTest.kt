@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.InjectionLookupType
@@ -23,6 +25,8 @@ class SettingsRepositoryTest {
   private lateinit var prefs: SharedPreferences
   private lateinit var prefsEditor: SharedPreferences.Editor
   private lateinit var context: Context
+  private lateinit var mockCrashlyticsProvider: CrashlyticsProvider
+  private lateinit var mockAnalyticsProvider: AnalyticsProvider
 
   @OverrideMockKs(InjectionLookupType.BY_NAME)
   private lateinit var settingsRepository: SettingsRepository
@@ -35,7 +39,9 @@ class SettingsRepositoryTest {
     }
 
     context = ApplicationProvider.getApplicationContext()
-    settingsRepository = SettingsRepository.newInstance(context)
+    mockCrashlyticsProvider = mockk(relaxed = true)
+    mockAnalyticsProvider = mockk(relaxed = true)
+    settingsRepository = SettingsRepository(context, mockCrashlyticsProvider, mockAnalyticsProvider)
     MockKAnnotations.init(this)
   }
 
@@ -142,27 +148,13 @@ class SettingsRepositoryTest {
   }
 
   @Test
-  fun testShouldShareUsageData() {
-    val inputs = arrayOf(true, false)
-    for (input in inputs) {
-      every {
-        prefs.getBoolean(context.getString(R.string.should_share_usage_data_key), any())
-      } returns input
-
-      assertEquals(input, settingsRepository.shouldShareUsageData())
-    }
-  }
-
-  @Test
   fun testSetShouldShareUsageData() {
     val inputs = arrayOf(true, false)
-    every { prefsEditor.putBoolean(any(), any()) } returns prefsEditor
-    every { prefsEditor.apply() } returns Unit
-
     for (input in inputs) {
       settingsRepository.setShouldShareUsageData(input)
       verify(exactly = 1) {
-        prefsEditor.putBoolean(context.getString(R.string.should_share_usage_data_key), input)
+        mockCrashlyticsProvider.setCollectionEnabled(input)
+        mockAnalyticsProvider.setCollectionEnabled(input)
       }
     }
   }

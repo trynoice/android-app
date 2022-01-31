@@ -31,7 +31,7 @@ import javax.inject.Singleton
  */
 @Module
 @InstallIn(SingletonComponent::class)
-object FullModule {
+object ProviderModule {
 
   private fun isGoogleMobileServiceAvailable(context: Context): Boolean {
     return GoogleApiAvailability.getInstance()

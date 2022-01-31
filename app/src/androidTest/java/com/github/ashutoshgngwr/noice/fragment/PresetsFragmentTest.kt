@@ -56,11 +56,7 @@ class PresetsFragmentTest {
   @Before
   fun setup() {
     mockkStatic(ShortcutManagerCompat::class)
-    mockkObject(
-      Preset.Companion,
-      PlaybackController,
-      PresetRepository.Companion
-    )
+    mockkObject(Preset.Companion)
 
     mockReviewFlowProvider = mockk(relaxed = true)
     ApplicationProvider.getApplicationContext<NoiceApplication>()

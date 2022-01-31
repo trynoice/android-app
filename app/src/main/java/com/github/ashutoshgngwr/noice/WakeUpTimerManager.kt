@@ -101,6 +101,16 @@ class WakeUpTimerManager @Inject constructor(
   }
 
   /**
+   * reschedules existing timer when invoked, e.g. on device reboot.
+   */
+  fun rescheduleExistingTimer() {
+    val timer = get() ?: return
+    if (timer.atMillis > System.currentTimeMillis()) {
+      set(timer)
+    }
+  }
+
+  /**
    * [Timer] declares fields necessary to schedule a Wake-up timer.
    */
   data class Timer(@Expose var presetID: String, @Expose var atMillis: Long)
@@ -119,10 +129,7 @@ class WakeUpTimerManager @Inject constructor(
         return
       }
 
-      val timer = wakeUpTimerManager.get() ?: return
-      if (timer.atMillis > System.currentTimeMillis()) {
-        wakeUpTimerManager.set(timer)
-      }
+      wakeUpTimerManager.rescheduleExistingTimer()
     }
   }
 

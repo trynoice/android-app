@@ -22,7 +22,6 @@ import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
@@ -42,8 +41,6 @@ class WakeUpTimerFragmentTest {
 
   @Before
   fun setup() {
-    mockkObject(PresetRepository.Companion, WakeUpTimerManager)
-
     mockReviewFlowProvider = mockk(relaxed = true)
     ApplicationProvider.getApplicationContext<NoiceApplication>()
       .reviewFlowProvider = mockReviewFlowProvider

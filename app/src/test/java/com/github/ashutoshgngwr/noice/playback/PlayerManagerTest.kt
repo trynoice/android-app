@@ -8,7 +8,6 @@ import androidx.media.AudioAttributesCompat
 import androidx.media.AudioManagerCompat
 import androidx.media.VolumeProviderCompat
 import androidx.test.core.app.ApplicationProvider
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
@@ -16,6 +15,8 @@ import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.shadow.ShadowMediaSession
 import com.github.ashutoshgngwr.noice.shadow.ShadowMediaSessionCompat
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.MockKAnnotations
 import io.mockk.called
 import io.mockk.clearMocks
@@ -32,28 +33,34 @@ import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLooper
+import javax.inject.Inject
 
+@HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowMediaSession::class, ShadowMediaSessionCompat::class])
 class PlayerManagerTest {
 
-  private lateinit var mockCastApiProvider: CastApiProvider
+  @get:Rule
+  val hiltRule = HiltAndroidRule(this)
+
   private lateinit var players: HashMap<String, Player>
   private lateinit var settingsRepository: SettingsRepository
+
+  @set:Inject
+  internal lateinit var mockCastApiProvider: CastApiProvider
 
   @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
   private lateinit var playerManager: PlayerManager
 
   @Before
   fun setup() {
-    mockCastApiProvider = mockk(relaxed = true)
-    ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .castApiProvider = mockCastApiProvider
+    hiltRule.inject()
 
     // always have a fake player in manager's state
     players = hashMapOf("test" to mockk(relaxed = true) {

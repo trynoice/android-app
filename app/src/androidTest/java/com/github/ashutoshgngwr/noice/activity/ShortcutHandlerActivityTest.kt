@@ -15,7 +15,6 @@ import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.unmockkAll
 import io.mockk.verify
 import org.hamcrest.Matchers.allOf
@@ -33,7 +32,6 @@ class ShortcutHandlerActivityTest {
 
   @Test
   fun testOnCreate() {
-    mockkObject(PresetRepository.Companion, PlaybackController)
     every { PlaybackController.playPreset(any(), any()) } returns Unit
 
     val mockRepo = mockk<PresetRepository>()
