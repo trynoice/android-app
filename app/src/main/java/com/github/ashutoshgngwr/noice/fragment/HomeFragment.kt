@@ -13,7 +13,6 @@ import androidx.annotation.IdRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -86,15 +85,13 @@ class HomeFragment : Fragment(), Navigable {
     navController = view.findNavController()
     val navHostFragment = requireNotNull(binding.navHostFragment.getFragment<NavHostFragment>())
     childNavController = navHostFragment.navController
+    val childGraph = childNavController.navInflater.inflate(R.navigation.home)
 
-    if (shouldDisplayPresetsAsHomeScreen) {
-      childNavController.navigate(
-        R.id.presets, null, NavOptions.Builder()
-          .setPopUpTo(R.id.library, true)
-          .build()
-      )
+    if (settingsRepository.shouldDisplayPresetsAsHomeScreen()) {
+      childGraph.setStartDestination(R.id.presets)
     }
 
+    childNavController.graph = childGraph
     binding.bottomNav.setupWithNavController(childNavController)
     childNavController.registerOnDestinationChangedListener(viewLifecycleOwner) { _, _, _ ->
       activity?.invalidateOptionsMenu()
