@@ -9,6 +9,7 @@ import com.github.ashutoshgngwr.noice.playback.PlayerManager
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.invoke
@@ -29,9 +30,9 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.android.controller.ServiceController
 import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowPowerManager
-import javax.inject.Inject
 
 @HiltAndroidTest
+@UninstallModules(NoiceApplication.EventBusModule::class)
 @RunWith(RobolectricTestRunner::class)
 class MediaPlayerServiceTest {
 
@@ -41,7 +42,7 @@ class MediaPlayerServiceTest {
   @get:Rule
   var hiltRule = HiltAndroidRule(this)
 
-  @set:Inject
+  @BindValue
   internal lateinit var mockEventBus: EventBus
 
   @BindValue
@@ -49,10 +50,10 @@ class MediaPlayerServiceTest {
 
   @Before
   fun setup() {
+    mockEventBus = mockk(relaxed = true)
     mockPlaybackController = mockk(relaxed = true)
     mockServiceIntent = mockk(relaxed = true)
     serviceController = Robolectric.buildService(MediaPlayerService::class.java, mockServiceIntent)
-    hiltRule.inject()
   }
 
   @After

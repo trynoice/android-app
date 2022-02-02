@@ -2,7 +2,6 @@ package com.github.ashutoshgngwr.noice.model
 
 import android.net.Uri
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every

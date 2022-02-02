@@ -13,36 +13,45 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.hamcrest.Matchers.allOf
-import org.junit.After
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 class ShortcutHandlerActivityTest {
 
-  @After
-  fun teardown() {
-    unmockkAll()
+  @get:Rule
+  val hiltRule = HiltAndroidRule(this)
+
+  @BindValue
+  internal lateinit var mockPlaybackController: PlaybackController
+
+  @BindValue
+  internal lateinit var mockPresetRepository: PresetRepository
+
+  @Before
+  fun setup() {
+    mockPlaybackController = mockk(relaxed = true)
+    mockPresetRepository = mockk(relaxed = true)
   }
 
   @Test
   fun testOnCreate() {
-    every { PlaybackController.playPreset(any(), any()) } returns Unit
-
-    val mockRepo = mockk<PresetRepository>()
-    every { PresetRepository.newInstance(any()) } returns mockRepo
-
     val presetIDExpectations = arrayOf("invalid-id", "valid-id")
     val presetFindByIdReturns = arrayOf(null, mockk<Preset>(relaxed = true))
     val playPresetCallCount = arrayOf(0, 1)
 
     for (i in presetIDExpectations.indices) {
-      every { mockRepo.get(presetIDExpectations[i]) } returns presetFindByIdReturns[i]
+      every { mockPresetRepository.get(presetIDExpectations[i]) } returns presetFindByIdReturns[i]
       Intents.init()
       Intents.intending(hasComponent(MainActivity::class.qualifiedName))
         .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, Intent()))
@@ -62,7 +71,7 @@ class ShortcutHandlerActivityTest {
         )
 
         verify(exactly = playPresetCallCount[i], timeout = 5000L) {
-          PlaybackController.playPreset(any(), presetIDExpectations[i])
+          mockPlaybackController.playPreset(presetIDExpectations[i])
         }
       } finally {
         Intents.release()

@@ -1,11 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.icu.util.Calendar
-import androidx.core.content.edit
-import androidx.fragment.app.testing.FragmentScenario
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.preference.PreferenceManager
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
@@ -13,54 +8,63 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.PickerActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.ashutoshgngwr.noice.NoiceApplication
+import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
+import com.github.ashutoshgngwr.noice.HiltFragmentScenario
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.ReviewFlowProviderModule
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.hamcrest.Matchers.not
-import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@HiltAndroidTest
+@UninstallModules(ReviewFlowProviderModule::class)
 @RunWith(AndroidJUnit4::class)
 class WakeUpTimerFragmentTest {
 
-  private lateinit var mockPresetRepository: PresetRepository
-  private lateinit var mockReviewFlowProvider: ReviewFlowProvider
-  private lateinit var fragmentScenario: FragmentScenario<WakeUpTimerFragment>
+  @get:Rule
+  val hiltRule = HiltAndroidRule(this)
+
+  private lateinit var fragmentScenario: HiltFragmentScenario<WakeUpTimerFragment>
+
+  @BindValue
+  internal lateinit var mockPresetRepository: PresetRepository
+
+  @BindValue
+  internal lateinit var mockWakeUpTimerManager: WakeUpTimerManager
+
+  @BindValue
+  internal lateinit var mockReviewFlowProvider: ReviewFlowProvider
 
   @Before
   fun setup() {
-    mockReviewFlowProvider = mockk(relaxed = true)
-    ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .reviewFlowProvider = mockReviewFlowProvider
-
     mockPresetRepository = mockk {
       every { get(null) } returns null
       every { list() } returns emptyArray()
     }
 
-    every { PresetRepository.newInstance(any()) } returns mockPresetRepository
-    every { WakeUpTimerManager.set(any(), any()) } returns Unit
-    fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
-  }
-
-  @After
-  fun teardown() {
-    unmockkAll()
-    with(PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())) {
-      edit { clear() }
+    mockWakeUpTimerManager = mockk(relaxed = true) {
+      every { get() } returns null
+      every { getLastUsedPresetID() } returns null
     }
+
+    mockReviewFlowProvider = mockk(relaxed = true)
+    fragmentScenario = launchFragmentInHiltContainer()
   }
 
   @Test
@@ -84,7 +88,7 @@ class WakeUpTimerFragmentTest {
       every { name } returns expectedPresetName
     }
 
-    every { WakeUpTimerManager.get(any()) } returns mockk {
+    every { mockWakeUpTimerManager.get() } returns mockk {
       every { presetID } returns expectedPresetID
       every { atMillis } returns System.currentTimeMillis() + 10000L
     }
@@ -106,7 +110,7 @@ class WakeUpTimerFragmentTest {
   @Test
   fun testInitialLayout_whenTimerIsPreScheduled_andPresetIsDeletedFromStorage() {
     every { mockPresetRepository.get("test") } returns null
-    every { WakeUpTimerManager.get(any()) } returns mockk {
+    every { mockWakeUpTimerManager.get() } returns mockk {
       every { presetID } returns "test"
       every { atMillis } returns System.currentTimeMillis() + 10000L
     }
@@ -150,7 +154,6 @@ class WakeUpTimerFragmentTest {
       }
     )
 
-
     onView(withId(R.id.select_preset_button))
       .perform(click())
 
@@ -164,7 +167,7 @@ class WakeUpTimerFragmentTest {
     onView(withId(R.id.select_preset_button))
       .check(matches(withText("test-1")))
 
-    verify(exactly = 0) { WakeUpTimerManager.set(any(), any()) }
+    verify(exactly = 0) { mockWakeUpTimerManager.set(any()) }
 
     onView(withId(R.id.time_picker))
       .perform(PickerActions.setTime(1, 2))
@@ -178,11 +181,11 @@ class WakeUpTimerFragmentTest {
 
     try {
       verify(exactly = 1) {
-        WakeUpTimerManager.set(any(), capture(timerSlot))
+        mockWakeUpTimerManager.set(capture(timerSlot))
         mockReviewFlowProvider.maybeAskForReview(any())
       }
     } finally {
-      clearMocks(WakeUpTimerManager, mockReviewFlowProvider)
+      clearMocks(mockWakeUpTimerManager, mockReviewFlowProvider)
     }
 
     calendar.timeInMillis = timerSlot.captured.atMillis
@@ -201,18 +204,19 @@ class WakeUpTimerFragmentTest {
       every { name } returns "test-name"
     }
 
-    every { WakeUpTimerManager.get(any()) } returns mockk {
+    every { mockWakeUpTimerManager.get() } returns mockk {
       every { presetID } returns "test-id"
       every { atMillis } returns System.currentTimeMillis() + 10000L
     }
 
     fragmentScenario.recreate()
-    clearMocks(WakeUpTimerManager)
+    clearMocks(mockWakeUpTimerManager)
+    every { mockWakeUpTimerManager.getLastUsedPresetID() } returns null // mock cleared state post the button click.
     onView(withId(R.id.reset_time_button))
       .check(matches(isEnabled()))
       .perform(scrollTo(), click())
 
-    verify(exactly = 1) { WakeUpTimerManager.cancel(any()) }
+    verify(exactly = 1) { mockWakeUpTimerManager.cancel() }
   }
 
   @Test
@@ -235,7 +239,7 @@ class WakeUpTimerFragmentTest {
       }
     )
 
-    every { WakeUpTimerManager.getLastUsedPresetID(any()) } returns savedPresetID
+    every { mockWakeUpTimerManager.getLastUsedPresetID() } returns savedPresetID
     every { mockPresetRepository.get(savedPresetID) } returns savedPreset
 
     fragmentScenario.recreate()

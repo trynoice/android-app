@@ -6,9 +6,6 @@ import android.support.v4.media.session.PlaybackStateCompat
 import android.widget.Button
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
-import androidx.fragment.app.testing.FragmentScenario
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
@@ -22,14 +19,20 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
-import com.github.ashutoshgngwr.noice.NoiceApplication
+import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
+import com.github.ashutoshgngwr.noice.HiltFragmentScenario
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.ReviewFlowProviderModule
 import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import io.mockk.clearStaticMockk
 import io.mockk.every
 import io.mockk.mockk
@@ -42,25 +45,34 @@ import org.hamcrest.Matchers.*
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@HiltAndroidTest
+@UninstallModules(ReviewFlowProviderModule::class)
 @RunWith(AndroidJUnit4::class)
 class PresetsFragmentTest {
 
-  private lateinit var fragmentScenario: FragmentScenario<PresetsFragment>
+  @get:Rule
+  val hiltRule = HiltAndroidRule(this)
+
+  private lateinit var fragmentScenario: HiltFragmentScenario<PresetsFragment>
   private lateinit var mockPreset: Preset
-  private lateinit var mockPresetRepository: PresetRepository
-  private lateinit var mockReviewFlowProvider: ReviewFlowProvider
+
+  @BindValue
+  internal lateinit var mockPresetRepository: PresetRepository
+
+  @BindValue
+  internal lateinit var mockPlaybackController: PlaybackController
+
+  @BindValue
+  internal lateinit var mockReviewFlowProvider: ReviewFlowProvider
 
   @Before
   fun setup() {
     mockkStatic(ShortcutManagerCompat::class)
     mockkObject(Preset.Companion)
-
-    mockReviewFlowProvider = mockk(relaxed = true)
-    ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .reviewFlowProvider = mockReviewFlowProvider
 
     mockPreset = mockk(relaxed = true) {
       every { id } returns "test-id"
@@ -77,8 +89,9 @@ class PresetsFragmentTest {
       })
     }
 
-    every { PresetRepository.newInstance(any()) } returns mockPresetRepository
-    fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
+    mockPlaybackController = mockk(relaxed = true)
+    mockReviewFlowProvider = mockk(relaxed = true)
+    fragmentScenario = launchFragmentInHiltContainer()
   }
 
   @After
@@ -99,23 +112,20 @@ class PresetsFragmentTest {
 
   @Test
   fun testRecyclerViewItem_playButton() {
-    // stub the original method. Without stubbing, mockk will also run the real implementation.
-    every { PlaybackController.playPreset(any(), any()) } returns Unit
-
     onView(withId(R.id.list)).perform(
       RecyclerViewActions.actionOnItem<PresetsFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickInItem(R.id.play_button)
+        EspressoX.clickOn(R.id.play_button)
       )
     )
 
-    verify(exactly = 1) { PlaybackController.playPreset(any(), "test-id") }
+    verify(exactly = 1) { mockPlaybackController.playPreset("test-id") }
   }
 
   @Test
   fun testRecyclerViewItem_stopButton() {
     // ensure that PresetsFragment assumes it is playing a preset
-    every { Preset.from(any(), any()) } returns mockPreset
+    every { Preset.from(any<String>(), any()) } returns mockPreset
     fragmentScenario.onFragment {
       it.onPlayerManagerUpdate(mockk(relaxed = true) {
         every { state } returns PlaybackStateCompat.STATE_PLAYING
@@ -125,23 +135,23 @@ class PresetsFragmentTest {
     onView(withId(R.id.list)).perform(
       RecyclerViewActions.actionOnItem<PresetsFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickInItem(R.id.play_button)
+        EspressoX.clickOn(R.id.play_button)
       )
     )
 
-    verify(exactly = 1) { PlaybackController.stop(any()) }
+    verify(exactly = 1) { mockPlaybackController.stop() }
   }
 
   @Test
   fun testRecyclerViewItem_shareOption() {
     val presetUri = "test-preset-uri"
-    every { mockPreset.toUri() } returns Uri.parse(presetUri)
+    every { mockPreset.toUri(any()) } returns Uri.parse(presetUri)
 
     // open context menu
     onView(withId(R.id.list)).perform(
       RecyclerViewActions.actionOnItem<PresetsFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickInItem(R.id.menu_button)
+        EspressoX.clickOn(R.id.menu_button)
       )
     )
 
@@ -169,7 +179,7 @@ class PresetsFragmentTest {
     onView(withId(R.id.list)).perform(
       RecyclerViewActions.actionOnItem<PresetsFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickInItem(R.id.menu_button)
+        EspressoX.clickOn(R.id.menu_button)
       )
     )
 
@@ -188,7 +198,7 @@ class PresetsFragmentTest {
   @Test
   fun testRecyclerViewItem_deleteOption_onPresetPlaying() {
     // ensure that PresetsFragment assumes it is playing a preset
-    every { Preset.from(any(), any()) } returns mockPreset
+    every { Preset.from(any<String>(), any()) } returns mockPreset
     every { mockPresetRepository.delete(any()) } returns true
 
     fragmentScenario.onFragment {
@@ -201,7 +211,7 @@ class PresetsFragmentTest {
     onView(withId(R.id.list)).perform(
       RecyclerViewActions.actionOnItem<PresetsFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickInItem(R.id.menu_button)
+        EspressoX.clickOn(R.id.menu_button)
       )
     )
 
@@ -210,7 +220,7 @@ class PresetsFragmentTest {
       .perform(click()) // click delete button in confirmation dialog
 
     // should publish a stop playback event if preset was playing
-    verify(exactly = 1) { PlaybackController.stop(any()) }
+    verify(exactly = 1) { mockPlaybackController.stop() }
   }
 
   @Test
@@ -221,7 +231,7 @@ class PresetsFragmentTest {
     onView(withId(R.id.list)).perform(
       RecyclerViewActions.actionOnItem<PresetsFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickInItem(R.id.menu_button)
+        EspressoX.clickOn(R.id.menu_button)
       )
     )
 
@@ -267,7 +277,7 @@ class PresetsFragmentTest {
       onView(withId(R.id.list)).perform(
         RecyclerViewActions.actionOnItem<PresetsFragment.ViewHolder>(
           hasDescendant(allOf(withId(R.id.title), withText("test"))),
-          EspressoX.clickInItem(R.id.menu_button)
+          EspressoX.clickOn(R.id.menu_button)
         )
       )
 
@@ -314,7 +324,7 @@ class PresetsFragmentTest {
     onView(withId(R.id.list)).perform(
       RecyclerViewActions.actionOnItem<PresetsFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickInItem(R.id.menu_button)
+        EspressoX.clickOn(R.id.menu_button)
       )
     )
 
@@ -341,7 +351,7 @@ class PresetsFragmentTest {
     onView(withId(R.id.list)).perform(
       RecyclerViewActions.actionOnItem<PresetsFragment.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText("test"))),
-        EspressoX.clickInItem(R.id.menu_button)
+        EspressoX.clickOn(R.id.menu_button)
       )
     )
 

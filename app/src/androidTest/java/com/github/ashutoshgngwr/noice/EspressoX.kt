@@ -1,9 +1,16 @@
 package com.github.ashutoshgngwr.noice
 
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
+import androidx.annotation.StyleRes
+import androidx.fragment.app.Fragment
+import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
@@ -29,10 +36,10 @@ import org.hamcrest.TypeSafeMatcher
 object EspressoX {
 
   /**
-   * [clickInItem] performs a click action on item with the given [viewId] inside currently
-   * matched view.
+   * [clickOn] performs a click action on item with the given [viewId] inside currently matched
+   * view.
    */
-  fun clickInItem(@IdRes viewId: Int): ViewAction {
+  fun clickOn(@IdRes viewId: Int): ViewAction {
     return object : ViewAction {
       override fun getDescription() = "Click on view with specified id"
       override fun getConstraints() = hasDescendant(withId(viewId))
@@ -148,5 +155,70 @@ object EspressoX {
    */
   fun onViewInDialog(vararg matchers: Matcher<View>): ViewInteraction {
     return onView(allOf(*matchers)).inRoot(isDialog())
+  }
+
+  /**
+   * https://github.com/android/architecture-samples/blob/2291fc6d2e17a37be584a89b80ee73c207c804c3/app/src/androidTest/java/com/example/android/architecture/blueprints/todoapp/HiltExt.kt#L28-L65
+   */
+  inline fun <reified F : Fragment> launchFragmentInHiltContainer(
+    fragmentArgs: Bundle? = null,
+    @StyleRes themeResId: Int = R.style.Theme_App,
+  ): HiltFragmentScenario<F> {
+    val context = ApplicationProvider.getApplicationContext<Context>()
+    val intent = Intent.makeMainActivity(ComponentName(context, HiltTestActivity::class.java))
+      .putExtra(
+        "androidx.fragment.app.testing.FragmentScenario.EmptyFragmentActivity.THEME_EXTRAS_BUNDLE_KEY",
+        themeResId
+      )
+
+    lateinit var fragment: F
+    val activityScenario = ActivityScenario.launch<HiltTestActivity>(intent)
+      .onActivity { activity ->
+        fragment = activity.supportFragmentManager
+          .fragmentFactory
+          .instantiate(requireNotNull(F::class.java.classLoader), F::class.java.name) as F
+
+        fragment.arguments = fragmentArgs
+        activity.supportFragmentManager
+          .beginTransaction()
+          .add(android.R.id.content, fragment, F::class.java.simpleName)
+          .commitNow()
+      }
+
+    return HiltFragmentScenario(activityScenario, fragment)
+  }
+}
+
+/**
+ * Mimics the `FragmentScenario` class from `fragment-testing` lib, but uses [HiltTestActivity]
+ * under the hood.
+ */
+class HiltFragmentScenario<F : Fragment>(
+  private val activityScenario: ActivityScenario<HiltTestActivity>,
+  private val fragment: F,
+) {
+
+  fun onFragment(action: (F) -> Unit): HiltFragmentScenario<F> {
+    activityScenario.onActivity { action.invoke(fragment) }
+    return this
+  }
+
+  fun recreate(): HiltFragmentScenario<F> {
+    activityScenario.recreate()
+    return this
+  }
+
+  inline fun <T : Any> withFragment(crossinline block: F.() -> T): T {
+    lateinit var value: T
+    var err: Throwable? = null
+    onFragment { fragment ->
+      try {
+        value = block(fragment)
+      } catch (t: Throwable) {
+        err = t
+      }
+    }
+    err?.let { throw it }
+    return value
   }
 }

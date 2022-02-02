@@ -4,11 +4,14 @@ import android.app.Activity
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.children
+import com.github.ashutoshgngwr.noice.BillingProviderModule
 import com.github.ashutoshgngwr.noice.HiltTestActivity
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.provider.BillingProvider
+import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -23,9 +26,9 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLooper
-import javax.inject.Inject
 
 @HiltAndroidTest
+@UninstallModules(BillingProviderModule::class)
 @RunWith(RobolectricTestRunner::class)
 class InAppBillingDonateViewTest {
 
@@ -35,14 +38,14 @@ class InAppBillingDonateViewTest {
   private lateinit var activity: Activity
   private lateinit var view: InAppBillingDonateView
 
-  @set:Inject
+  @BindValue
   internal lateinit var mockBillingProvider: BillingProvider
 
   @Before
   fun setup() {
+    mockBillingProvider = mockk(relaxed = true)
     activity = Robolectric.buildActivity(HiltTestActivity::class.java).create().get()
     view = InAppBillingDonateView(activity, TestCoroutineScope())
-    hiltRule.inject()
   }
 
   @Test

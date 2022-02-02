@@ -26,18 +26,17 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-/**
- * Hilt [Module] to provide dependencies for full build variant.
- */
+
+// Hilt modules to create providers for the full build variant.
+
+private fun isGoogleMobileServiceAvailable(context: Context): Boolean {
+  return GoogleApiAvailability.getInstance()
+    .isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS
+}
+
 @Module
 @InstallIn(SingletonComponent::class)
-object ProviderModule {
-
-  private fun isGoogleMobileServiceAvailable(context: Context): Boolean {
-    return GoogleApiAvailability.getInstance()
-      .isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS
-  }
-
+object CastApiProviderModule {
   @Provides
   @Singleton
   fun castApiProvider(@ApplicationContext context: Context): CastApiProvider {
@@ -47,7 +46,11 @@ object ProviderModule {
 
     return DummyCastApiProvider
   }
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+object ReviewFlowProviderModule {
   @Provides
   @Singleton
   fun reviewFlowProvider(@ApplicationContext context: Context): ReviewFlowProvider {
@@ -57,15 +60,27 @@ object ProviderModule {
 
     return GitHubReviewFlowProvider
   }
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+object CrashlyticsProviderModule {
   @Provides
   @Singleton
   fun crashlyticsProvider(): CrashlyticsProvider = RealCrashlyticsProvider
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+object AnalyticsProviderModule {
   @Provides
   @Singleton
   fun analyticsProvider(): AnalyticsProvider = RealAnalyticsProvider
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+object BillingProviderModule {
   @Provides
   @Singleton
   fun billingProvider(@ApplicationContext context: Context): BillingProvider {
@@ -75,7 +90,11 @@ object ProviderModule {
 
     return DummyBillingProvider
   }
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+object DonateViewProviderModule {
   @Provides
   @Singleton
   fun donateViewProvider(@ApplicationContext context: Context): DonateViewProvider {

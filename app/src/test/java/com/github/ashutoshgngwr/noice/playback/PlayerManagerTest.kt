@@ -8,6 +8,7 @@ import androidx.media.AudioAttributesCompat
 import androidx.media.AudioManagerCompat
 import androidx.media.VolumeProviderCompat
 import androidx.test.core.app.ApplicationProvider
+import com.github.ashutoshgngwr.noice.CastApiProviderModule
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
@@ -15,8 +16,10 @@ import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.shadow.ShadowMediaSession
 import com.github.ashutoshgngwr.noice.shadow.ShadowMediaSessionCompat
+import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import io.mockk.MockKAnnotations
 import io.mockk.called
 import io.mockk.clearMocks
@@ -39,9 +42,9 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLooper
-import javax.inject.Inject
 
 @HiltAndroidTest
+@UninstallModules(CastApiProviderModule::class)
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowMediaSession::class, ShadowMediaSessionCompat::class])
 class PlayerManagerTest {
@@ -52,7 +55,7 @@ class PlayerManagerTest {
   private lateinit var players: HashMap<String, Player>
   private lateinit var settingsRepository: SettingsRepository
 
-  @set:Inject
+  @BindValue
   internal lateinit var mockCastApiProvider: CastApiProvider
 
   @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
@@ -60,15 +63,13 @@ class PlayerManagerTest {
 
   @Before
   fun setup() {
-    hiltRule.inject()
-
     // always have a fake player in manager's state
     players = hashMapOf("test" to mockk(relaxed = true) {
       every { soundKey } returns "test"
     })
 
     settingsRepository = mockk(relaxed = true)
-
+    mockCastApiProvider = mockk(relaxed = true)
     val context = ApplicationProvider.getApplicationContext<Context>()
     playerManager = PlayerManager(context, MediaSessionCompat(context, "test"))
     MockKAnnotations.init(this)

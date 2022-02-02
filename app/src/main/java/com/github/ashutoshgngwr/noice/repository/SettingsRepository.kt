@@ -9,10 +9,12 @@ import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * [SettingsRepository] implements the data access layer for storing various user preferences.
  */
+@Singleton
 class SettingsRepository @Inject constructor(
   @ApplicationContext private val context: Context,
   private val crashlyticsProvider: CrashlyticsProvider,

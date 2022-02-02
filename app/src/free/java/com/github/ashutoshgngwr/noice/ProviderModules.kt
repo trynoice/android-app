@@ -18,33 +18,52 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-/**
- * Hilt [Module] to provide dependencies for free build variant.
- */
+
+// Hilt modules to create providers for the free build variant.
+
 @Module
 @InstallIn(SingletonComponent::class)
-object ProviderModule {
-
+object CastApiProviderModule {
   @Provides
   @Singleton
   fun castApiProvider(): CastApiProvider = DummyCastApiProvider
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+object ReviewFlowProviderModule {
   @Provides
   @Singleton
   fun reviewFlowProvider(): ReviewFlowProvider = GitHubReviewFlowProvider
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+object CrashlyticsProviderModule {
   @Provides
   @Singleton
   fun crashlyticsProvider(): CrashlyticsProvider = DummyCrashlyticsProvider
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+object AnalyticsProviderModule {
   @Provides
   @Singleton
   fun analyticsProvider(): AnalyticsProvider = DummyAnalyticsProvider
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+object BillingProviderModule {
   @Provides
   @Singleton
   fun billingProvider(): BillingProvider = DummyBillingProvider
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+object DonateViewProviderModule {
   @Provides
   @Singleton
   fun donateViewProvider(): DonateViewProvider = OpenCollectiveDonateViewProvider

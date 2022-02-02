@@ -1,39 +1,36 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.ashutoshgngwr.noice.NoiceApplication
+import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
-import io.mockk.every
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.mockk
-import io.mockk.mockkObject
-import io.mockk.unmockkAll
 import io.mockk.verify
-import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 class RandomPresetFragmentTest {
 
+  @get:Rule
+  val hiltRule = HiltAndroidRule(this)
+
+  @BindValue
+  internal lateinit var mockPlaybackController: PlaybackController
+
   @Before
   fun setup() {
-    mockkObject(PlaybackController)
-    every { PlaybackController.playRandomPreset(any(), any(), any()) } returns Unit
-    ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .reviewFlowProvider = mockk(relaxed = true)
-  }
-
-  @After
-  fun teardown() {
-    unmockkAll()
+    mockPlaybackController = mockk(relaxed = true)
   }
 
   @Test
@@ -50,7 +47,7 @@ class RandomPresetFragmentTest {
       R.id.preset_type__relax to Sound.Tag.RELAX
     )
 
-    launchFragmentInContainer<RandomPresetFragment>(null, R.style.Theme_App)
+    launchFragmentInHiltContainer<RandomPresetFragment>(null, R.style.Theme_App)
 
     val intensityID = intensities.keys.random()
     val typeID = types.keys.random()
@@ -62,8 +59,8 @@ class RandomPresetFragmentTest {
       .perform(ViewActions.click())
 
     verify(exactly = 1) {
-      PlaybackController.playRandomPreset(
-        any(), types[typeID],
+      mockPlaybackController.playRandomPreset(
+        types[typeID],
         intensities[intensityID] ?: IntRange.EMPTY
       )
     }

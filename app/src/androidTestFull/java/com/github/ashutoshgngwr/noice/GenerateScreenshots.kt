@@ -2,10 +2,13 @@ package com.github.ashutoshgngwr.noice
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.view.Menu
+import android.view.MenuItem
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
@@ -17,18 +20,25 @@ import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.github.ashutoshgngwr.noice.EspressoX.onViewInDialog
 import com.github.ashutoshgngwr.noice.activity.AppIntroActivity
 import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.fragment.PresetsFragment
 import com.github.ashutoshgngwr.noice.playback.Player
+import com.github.ashutoshgngwr.noice.provider.CastApiProvider
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
+import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.AfterClass
 import org.junit.Assume.assumeNotNull
+import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.ClassRule
 import org.junit.Rule
@@ -39,7 +49,10 @@ import org.junit.runners.model.Statement
 import tools.fastlane.screengrab.Screengrab
 import tools.fastlane.screengrab.cleanstatusbar.CleanStatusBar
 import tools.fastlane.screengrab.locale.LocaleTestRule
+import javax.inject.Inject
 
+@HiltAndroidTest
+@UninstallModules(CastApiProviderModule::class)
 @RunWith(AndroidJUnit4::class)
 class GenerateScreenshots {
 
@@ -76,12 +89,10 @@ class GenerateScreenshots {
     }
   }
 
-  @JvmField
-  @Rule
-  var activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
+  @get:Rule
+  val hiltRule = HiltAndroidRule(this)
 
-  @Rule
-  @JvmField
+  @get:Rule
   val screenshotRule = TestRule { base, _ ->
     object : Statement() {
       override fun evaluate() {
@@ -93,9 +104,24 @@ class GenerateScreenshots {
     }
   }
 
+  private lateinit var activityScenario: ActivityScenario<MainActivity>
+
+  @BindValue
+  internal lateinit var mockCastApiProvider: CastApiProvider
+
+  @set:Inject
+  internal lateinit var wakeUpTimerManager: WakeUpTimerManager
+
+  @Before
+  fun before() {
+    hiltRule.inject()
+    mockCastApiProvider = mockk(relaxed = true)
+    activityScenario = ActivityScenario.launch(MainActivity::class.java)
+  }
+
   @After
   fun after() {
-    activityScenarioRule.scenario.onActivity {
+    activityScenario.onActivity {
       it.stopService(Intent(it, MediaPlayerService::class.java))
     }
   }
@@ -103,21 +129,18 @@ class GenerateScreenshots {
   @Test
   fun library() {
     // add a fake Cast button since we can't make the real one appear on an emulator.
-    ApplicationProvider.getApplicationContext<NoiceApplication>().castApiProvider =
-      mockk(relaxed = true) {
-        every { addMenuItem(any(), any(), any()) } answers {
-          secondArg<Menu>().add("fake-cast-button").apply {
-            setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS)
-            setIcon(R.drawable.cast_ic_notification_small_icon)
-            iconTintList = ColorStateList.valueOf(
-              ApplicationProvider.getApplicationContext<Context>()
-                .getColor(R.color.action_menu_item)
-            )
-          }
-        }
+    every { mockCastApiProvider.addMenuItem(any(), any(), any()) } answers {
+      secondArg<Menu>().add("fake-cast-button").apply {
+        setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        setIcon(R.drawable.cast_ic_notification_small_icon)
+        iconTintList = ColorStateList.valueOf(
+          ApplicationProvider.getApplicationContext<Context>()
+            .getColor(R.color.action_menu_item)
+        )
       }
+    }
 
-    activityScenarioRule.scenario.recreate()
+    activityScenario.recreate()
     onView(withId(R.id.sound_list)).perform(
       actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.light_rain))),
@@ -128,14 +151,14 @@ class GenerateScreenshots {
     onView(withId(R.id.sound_list)).perform(
       actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.light_rain))),
-        EspressoX.clickInItem(R.id.volume_button)
+        EspressoX.clickOn(R.id.volume_button)
       )
     )
 
-    onView(withId(R.id.volume_slider))
+    onViewInDialog(withId(R.id.volume_slider))
       .perform(EspressoX.slide(Player.MAX_VOLUME.toFloat() - Player.DEFAULT_VOLUME))
 
-    onView(withId(R.id.positive))
+    onViewInDialog(withId(R.id.positive))
       .perform(click())
 
     onView(withId(R.id.sound_list)).perform(
@@ -150,27 +173,27 @@ class GenerateScreenshots {
     onView(withId(R.id.sound_list)).perform(
       actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.distant_thunder))),
-        EspressoX.clickInItem(R.id.volume_button)
+        EspressoX.clickOn(R.id.volume_button)
       )
     )
 
-    onView(withId(R.id.volume_slider))
+    onViewInDialog(withId(R.id.volume_slider))
       .perform(EspressoX.slide(Player.MAX_VOLUME.toFloat()))
 
-    onView(withId(R.id.positive))
+    onViewInDialog(withId(R.id.positive))
       .perform(click())
 
     onView(withId(R.id.sound_list)).perform(
       actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.distant_thunder))),
-        EspressoX.clickInItem(R.id.time_period_button)
+        EspressoX.clickOn(R.id.time_period_button)
       )
     )
 
-    onView(withId(R.id.time_period_slider))
+    onViewInDialog(withId(R.id.time_period_slider))
       .perform(EspressoX.slide(Player.MAX_TIME_PERIOD.toFloat() - 300))
 
-    onView(withId(R.id.positive))
+    onViewInDialog(withId(R.id.positive))
       .perform(click())
 
     Thread.sleep(SLEEP_PERIOD_BEFORE_SCREENGRAB)
@@ -183,7 +206,7 @@ class GenerateScreenshots {
     onView(withId(R.id.list))
       .perform(
         actionOnItemAtPosition<PresetsFragment.ViewHolder>(
-          1, EspressoX.clickInItem(R.id.play_button)
+          1, EspressoX.clickOn(R.id.play_button)
         )
       )
 
@@ -193,8 +216,8 @@ class GenerateScreenshots {
 
   @Test
   fun wakeUpTimer() {
-    // cancel any previous alarms
-    WakeUpTimerManager.cancel(ApplicationProvider.getApplicationContext())
+    // cancel any previous alarm
+    wakeUpTimerManager.cancel()
 
     onView(withId(R.id.wake_up_timer)).perform(click())
 

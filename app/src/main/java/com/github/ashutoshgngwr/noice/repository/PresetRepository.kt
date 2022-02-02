@@ -20,6 +20,7 @@ import java.io.OutputStream
 import java.io.OutputStreamWriter
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.math.round
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -29,6 +30,7 @@ import kotlin.random.nextInt
  * [PresetRepository] implements the data access layer for [Preset]. It stores all its data in a
  * shared preference with [PREFERENCE_KEY].
  */
+@Singleton
 class PresetRepository @Inject constructor(
   @ApplicationContext context: Context,
   private val gson: Gson,

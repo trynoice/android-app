@@ -21,7 +21,7 @@ android {
     targetSdkVersion config.compileSdkVersion
     versionCode 52
     versionName '1.3.3'
-    testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    testInstrumentationRunner 'com.github.ashutoshgngwr.noice.InstrumentedTestRunner'
     proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
   }
 
@@ -150,6 +150,9 @@ dependencies {
 
   testFullImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$deps.coroutinesVersion"
 
+
+  kaptAndroidTest "com.google.dagger:hilt-android-compiler:$deps.hiltVersion"
+
   androidTestImplementation "androidx.test:core:$deps.testCoreVersion"
   androidTestImplementation "androidx.test:rules:1.4.0"
   androidTestImplementation "androidx.test:runner:1.4.0"
@@ -157,10 +160,9 @@ dependencies {
   androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
   androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
   androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+  androidTestImplementation "com.google.dagger:hilt-android-testing:$deps.hiltVersion"
   androidTestImplementation "io.mockk:mockk-android:$mockkVersion"
   androidTestImplementation "junit:junit:$deps.junitVersion"
 
   androidTestFullImplementation 'tools.fastlane:screengrab:2.1.1'
-
-  debugImplementation "androidx.fragment:fragment-testing:$fragmentVersion"
 }

@@ -4,8 +4,6 @@ import android.content.Context
 import android.net.Uri
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.pm.ShortcutManagerCompat
-import androidx.fragment.app.testing.FragmentScenario
-import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -14,34 +12,48 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
+import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
+import com.github.ashutoshgngwr.noice.HiltFragmentScenario
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
+import javax.inject.Inject
 
+@HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 class SettingsFragmentTest {
 
-  private lateinit var mockPresetRepository: PresetRepository
-  private lateinit var fragmentScenario: FragmentScenario<SettingsFragment>
+  @get:Rule
+  val hiltRule = HiltAndroidRule(this)
+
+  private lateinit var fragmentScenario: HiltFragmentScenario<SettingsFragment>
+
+  @BindValue
+  internal lateinit var mockPresetRepository: PresetRepository
+
+  @set:Inject
+  internal lateinit var settingsRepository: SettingsRepository
 
   @Before
   fun setup() {
+    hiltRule.inject()
     mockPresetRepository = mockk()
-    mockkObject(PresetRepository)
-    every { PresetRepository.newInstance(any()) } returns mockPresetRepository
-    fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
+    fragmentScenario = launchFragmentInHiltContainer()
   }
 
   @Test
@@ -120,8 +132,6 @@ class SettingsFragmentTest {
 
     val context = ApplicationProvider.getApplicationContext<Context>()
     val themes = context.resources.getStringArray(R.array.app_themes)
-    val repo = SettingsRepository.newInstance(context)
-
     for (i in themes.indices) {
       onView(withId(androidx.preference.R.id.recycler_view))
         .perform(
@@ -137,7 +147,7 @@ class SettingsFragmentTest {
       // wait for activity to be recreated.
       onView(withText(R.string.app_theme)).check(matches(isDisplayed()))
       onView(withText(prefSummary[i])).check(matches(isDisplayed()))
-      assertEquals(nightModes[i], repo.getAppThemeAsNightMode())
+      assertEquals(nightModes[i], settingsRepository.getAppThemeAsNightMode())
     }
   }
 }
