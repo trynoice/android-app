@@ -1,16 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="library">Levraoueg</string>
-    <string name="app_theme">temoù</string>
+    <string name="app_theme">Temoù</string>
     <string name="about">Diwar-benn</string>
     <string name="help">Skoazell</string>
-    <string name="light">Gouloù</string>
+    <string name="light">Sklaer</string>
     <string name="mood">Imor</string>
-    <string name="random_preset">Dargouezhek Reoliñ</string>
+    <string name="random_preset">Kefluniadur dargouezhek</string>
     <string name="relax">Distenn</string>
     <string name="cancel">Nullañ</string>
-    <string name="name">Anvioù</string>
+    <string name="name">Anv</string>
     <string name="pause">Ehanañ</string>
     <string name="dense">Doues</string>
     <string name="intensity">Kreñvded</string>
+    <string name="report_issue">Danevelliñ kudennoù</string>
+    <string name="presets">Pre-keflunadurioù</string>
+    <string name="sleep_timer">Munuter Kousk</string>
+    <string name="preset_saved">Kefluniad enrollet !</string>
+    <string name="okay">A-du</string>
+    <string name="save">Enrollañ</string>
+    <string name="birds">Laboused</string>
+    <string name="brownian_noise">Trouz gell</string>
+    <string name="crickets">Krank-radennoù</string>
+    <string name="distant_thunder">Kurun a-bell</string>
+    <string name="others">All</string>
+    <string name="decline">Diskar</string>
+    <string name="accept">Degemer</string>
+    <string name="appearance">Neuz</string>
+    <string name="created_by">Krouet gant</string>
+    <string name="preset_already_exists">Bezet dija ur c\'hefluniad gant ar memes anv !</string>
+    <string name="sound_group__wind">Avel</string>
+    <string name="bonfire">Tan</string>
+    <string name="delete">Dilemel</string>
+    <string name="preset_name_cannot_be_empty">Ne c\'hell ket anv ar c\'hefluniad bezañ goullo !</string>
+    <string name="night">Noz</string>
+    <string name="appintro__getting_started_title">Donemat</string>
+    <string name="electric_car">Kar tredan</string>
+    <string name="sound_group__water">Dour</string>
+    <string name="save_preset">Enrollañ ar c\'hefluniad</string>
+    <string name="stop">Paouez</string>
 </resources>
