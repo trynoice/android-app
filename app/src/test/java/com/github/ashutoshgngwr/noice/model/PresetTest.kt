@@ -6,8 +6,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -92,10 +91,11 @@ PresetTest {
     )
 
     val preset = Preset.from(Uri.parse(presetUri), gson)
-    assertEquals("test", preset.name)
-    assertEquals(expectedOutput.size, preset.playerStates.size)
+    assertNotNull(preset)
+    assertEquals("test", preset?.name)
+    assertEquals(expectedOutput.size, preset?.playerStates?.size)
     for (i in expectedOutput.indices) {
-      assertEquals(expectedOutput[i], preset.playerStates[i])
+      assertEquals(expectedOutput[i], preset?.playerStates?.get(i))
     }
   }
 

@@ -39,11 +39,9 @@ data class Preset(
     /**
      * Decodes a preset from an [Uri] encoded using [toUri].
      */
-    fun from(uri: Uri, gson: Gson): Preset {
+    fun from(uri: Uri, gson: Gson): Preset? {
       val name = uri.getQueryParameter(URI_NAME_PARAM) ?: ""
-      val playerStatesJSON = uri.getQueryParameter(URI_PLAYER_STATES_PARAM)
-        ?: throw IllegalArgumentException("'playerStates' query parameter is missing from the URI.")
-
+      val playerStatesJSON = uri.getQueryParameter(URI_PLAYER_STATES_PARAM) ?: return null
       val playerStates = gson.fromJson(playerStatesJSON, Array<PlayerState>::class.java)
       return Preset(UUID.randomUUID().toString(), name, playerStates)
     }

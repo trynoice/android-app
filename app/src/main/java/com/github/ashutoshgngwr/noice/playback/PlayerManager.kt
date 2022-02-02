@@ -413,7 +413,7 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
   }
 
   fun playPreset(uri: Uri) {
-    playPreset(Preset.from(uri, gson))
+    playPreset(Preset.from(uri, gson) ?: return)
   }
 
   /**
