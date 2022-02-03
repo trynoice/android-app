@@ -236,4 +236,6 @@
     <string name="sign_out">Sign out</string>
     <string name="update_details">Update details</string>
     <string name="delete_account">Delete account</string>
+    <string name="network_error">Failed to connect to the Internet!</string>
+    <string name="unknown_error">An unknown error occurred. Please try again later!</string>
 </resources>

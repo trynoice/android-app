@@ -6,6 +6,7 @@
   <data>
 
     <import type="android.view.View" />
+    <import type="com.github.ashutoshgngwr.noice.model.Resource.Status" />
 
     <variable
       name="viewModel"
@@ -22,27 +23,52 @@
       android:layout_height="wrap_content"
       android:orientation="vertical">
 
-      <TextView
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:gravity="center"
-        android:paddingHorizontal="16dp"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        android:visibility="@{viewModel.isUserSignedIn ? View.VISIBLE : View.GONE}"
-        tools:text="Jane Doe" />
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="24dp"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        android:visibility="@{viewModel.isSignedIn ? View.VISIBLE : View.GONE}">
 
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="32dp"
-        android:gravity="center"
-        android:paddingHorizontal="16dp"
-        android:textAppearance="?attr/textAppearanceCaption"
-        android:visibility="@{viewModel.isUserSignedIn ? View.VISIBLE : View.GONE}"
-        tools:text="jane.doe@emailservice.org" />
+        <ProgressBar
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:visibility="@{viewModel.profile.status == Status.LOADING ? View.VISIBLE : View.GONE}"
+          tools:visibility="gone" />
 
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:paddingHorizontal="16dp"
+          android:text='@{viewModel.profile.data.email ?? ""}'
+          android:textAppearance="?attr/textAppearanceHeadline6"
+          android:visibility="@{viewModel.profile.status == Status.SUCCESS ? View.VISIBLE : View.GONE}"
+          tools:text="Jane Doe" />
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:gravity="center"
+          android:paddingHorizontal="16dp"
+          android:text='@{viewModel.profile.data.email ?? ""}'
+          android:textAppearance="?attr/textAppearanceCaption"
+          android:visibility="@{viewModel.profile.status == Status.SUCCESS ? View.VISIBLE : View.GONE}"
+          tools:text="jane.doe@emailservice.org" />
+
+        <TextView
+          style="@style/Widget.App.TextView.Error"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text='@{viewModel.getProfileErrorStringRes() ?? ""}'
+          android:visibility="@{viewModel.profile.status == Status.ERROR ? View.VISIBLE : View.GONE}"
+          tools:text="@string/network_error"
+          tools:visibility="gone" />
+
+      </LinearLayout>
 
       <TextView
         style="@style/Widget.App.Account.Category.Header"
@@ -51,51 +77,63 @@
         android:text="@string/account" />
 
       <TextView
+        android:id="@+id/sign_up"
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/sign_up"
-        android:visibility="@{viewModel.isUserSignedIn ? View.GONE : View.VISIBLE}"
+        android:visibility="@{viewModel.isSignedIn ? View.GONE : View.VISIBLE}"
         app:drawableStartCompat="@drawable/ic_baseline_person_add_alt_1_32" />
 
       <TextView
+        android:id="@+id/sign_in"
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/sign_in"
-        android:visibility="@{viewModel.isUserSignedIn ? View.GONE : View.VISIBLE}"
+        android:visibility="@{viewModel.isSignedIn ? View.GONE : View.VISIBLE}"
         app:drawableStartCompat="@drawable/ic_baseline_login_32" />
 
       <TextView
+        android:id="@+id/go_premium"
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/subscription_plans"
-        android:visibility="@{viewModel.isUserSignedIn ? View.GONE : View.VISIBLE}"
+        android:visibility="@{viewModel.isSignedIn ? View.GONE : View.VISIBLE}"
         app:drawableStartCompat="@drawable/ic_baseline_attach_money_32" />
 
       <TextView
+        android:id="@+id/manage_account"
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/update_details"
-        android:visibility="@{viewModel.isUserSignedIn ? View.VISIBLE : View.GONE}"
+        android:visibility="@{viewModel.isSignedIn ? View.VISIBLE : View.GONE}"
         app:drawableStartCompat="@drawable/ic_baseline_manage_accounts_32" />
 
       <TextView
+        android:id="@+id/sign_out"
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/sign_out"
-        android:visibility="@{viewModel.isUserSignedIn ? View.VISIBLE : View.GONE}"
+        android:visibility="@{viewModel.isSignedIn ? View.VISIBLE : View.GONE}"
         app:drawableStartCompat="@drawable/ic_baseline_logout_32" />
 
       <TextView
+        android:id="@+id/delete_account"
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/delete_account"
-        android:visibility="@{viewModel.isUserSignedIn ? View.VISIBLE : View.GONE}"
+        android:visibility="@{viewModel.isSignedIn ? View.VISIBLE : View.GONE}"
         app:drawableStartCompat="@drawable/ic_baseline_no_accounts_32" />
 
 
@@ -106,23 +144,29 @@
         android:text="@string/app" />
 
       <TextView
+        android:id="@+id/settings"
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/settings"
         app:drawableStartCompat="@drawable/ic_baseline_settings_32" />
 
       <TextView
+        android:id="@+id/support_development"
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/support_development"
         app:drawableStartCompat="@drawable/ic_baseline_support_32" />
 
       <TextView
+        android:id="@+id/about"
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/about"
         app:drawableStartCompat="@drawable/ic_baseline_info_32" />
 
@@ -134,23 +178,29 @@
         android:text="@string/support" />
 
       <TextView
+        android:id="@+id/help"
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/help"
         app:drawableStartCompat="@drawable/ic_baseline_help_32" />
 
       <TextView
+        android:id="@+id/report_issues"
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/report_issue"
         app:drawableStartCompat="@drawable/ic_baseline_bug_report_32" />
 
       <TextView
+        android:id="@+id/submit_feedback"
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/submit_feedback"
         app:drawableStartCompat="@drawable/ic_baseline_feedback_32" />
 

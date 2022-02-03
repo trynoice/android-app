@@ -17,6 +17,12 @@
     tools:layout="@layout/presets_fragment" />
 
   <fragment
+    android:id="@+id/sleep_timer"
+    android:name="com.github.ashutoshgngwr.noice.fragment.SleepTimerFragment"
+    android:label="@string/sleep_timer"
+    tools:layout="@layout/sleep_timer_fragment" />
+
+  <fragment
     android:id="@+id/wake_up_timer"
     android:name="com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment"
     android:label="@string/wake_up_timer"

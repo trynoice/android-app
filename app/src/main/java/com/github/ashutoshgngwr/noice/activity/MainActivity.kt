@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
     binding = MainActivityBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    val navHostFragment = requireNotNull(binding.navHostFragment.getFragment<NavHostFragment>())
+    val navHostFragment = requireNotNull(binding.mainNavHostFragment.getFragment<NavHostFragment>())
     navController = navHostFragment.navController
     setupActionBarWithNavController(navController, AppBarConfiguration(navController.graph))
     AppIntroActivity.maybeStart(this)
@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
     hasNewIntent = false
     if (intent.hasExtra(EXTRA_NAV_DESTINATION)) {
       val destID = intent.getIntExtra(EXTRA_NAV_DESTINATION, 0)
-      if (!Navigable.navigate(binding.navHostFragment.getFragment(), destID)) {
+      if (!Navigable.navigate(binding.mainNavHostFragment.getFragment(), destID)) {
         navController.navigate(destID)
       }
     } else if (Intent.ACTION_APPLICATION_PREFERENCES == intent.action) {
@@ -157,8 +157,9 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
   }
 
   override fun onPending(skus: List<String>) {
-    Snackbar.make(binding.navHostFragment, R.string.payment_pending, Snackbar.LENGTH_LONG).show()
     analyticsProvider.logEvent("purchase_pending", bundleOf())
+    Snackbar.make(binding.mainNavHostFragment, R.string.payment_pending, Snackbar.LENGTH_LONG)
+      .show()
   }
 
   override fun onComplete(skus: List<String>, orderId: String) {

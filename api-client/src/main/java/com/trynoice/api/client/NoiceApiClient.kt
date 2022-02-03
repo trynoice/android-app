@@ -2,8 +2,6 @@ package com.trynoice.api.client
 
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import com.google.gson.Gson
 import com.trynoice.api.client.apis.AccountApi
 import com.trynoice.api.client.apis.InternalAccountApi
@@ -12,9 +10,8 @@ import com.trynoice.api.client.auth.AccessTokenInjector
 import com.trynoice.api.client.auth.AuthCredentialRepository
 import com.trynoice.api.client.auth.RefreshTokenInjector
 import com.trynoice.api.client.models.AuthCredentials
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -25,7 +22,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import java.io.IOException
-import java.util.Collections.synchronizedSet
 
 private val LOG_TAG = NoiceApiClient::class.simpleName
 
@@ -39,8 +35,8 @@ class NoiceApiClient(
   baseUrl: String = "https://api.trynoice.com",
 ) {
 
-  private val signInStateListeners = synchronizedSet(mutableSetOf<SignInStateListener>())
   private val credentialRepository = AuthCredentialRepository(context)
+  private val signedInState = MutableStateFlow(credentialRepository.getRefreshToken() != null)
   private val refreshCredentialsMutex = Mutex()
 
   private val okhttpClient = OkHttpClient.Builder()
@@ -76,51 +72,18 @@ class NoiceApiClient(
   fun subscriptions() = subscriptionApi
 
   /**
-   * Adds a new listener to listen for sign-in state changes. The listeners are always invoked on
-   * application's main thread.
-   */
-  fun addSignInStateListener(listener: SignInStateListener) {
-    signInStateListeners.add(listener)
-  }
-
-  /**
-   * Removes a registered listener. Does a no-op if the listener wasn't registered.
-   */
-  fun removeSignInStateListener(listener: SignInStateListener) {
-    signInStateListeners.remove(listener)
-  }
-
-  /**
-   * Registers a new listener that is automatically added and removed based on the lifecycle of its
-   * [owner].
-   */
-  fun registerSignInStateListener(owner: LifecycleOwner, listener: SignInStateListener) {
-    owner.lifecycle.addObserver(object : DefaultLifecycleObserver {
-      override fun onCreate(owner: LifecycleOwner) {
-        addSignInStateListener(listener)
-      }
-
-      override fun onDestroy(owner: LifecycleOwner) {
-        removeSignInStateListener(listener)
-        owner.lifecycle.removeObserver(this)
-      }
-    })
-  }
-
-  /**
    * Adds the sign-in token to the credential store and then attempts to issue new credentials using
    * it.
    */
   suspend fun signInWithToken(signInToken: String) {
     credentialRepository.setCredentials(AuthCredentials(signInToken, ""))
     refreshCredentials()
-    notifySignInStateListeners()
+    signedInState.emit(credentialRepository.getRefreshToken() != null)
   }
 
-  /**
-   * Weak check to know if the API client has a (valid or invalid) refresh token.
-   */
-  fun isSignedIn() = credentialRepository.getRefreshToken() != null
+  fun isSignedIn(): Boolean = signedInState.value
+
+  fun getSignedInState(): Flow<Boolean> = signedInState
 
   /**
    * Signs out the currently logged in user.
@@ -137,7 +100,7 @@ class NoiceApiClient(
       }
 
     credentialRepository.clearCredentials()
-    notifySignInStateListeners()
+    signedInState.emit(false)
   }
 
   private suspend fun refreshCredentials() {
@@ -153,31 +116,11 @@ class NoiceApiClient(
         .onFailure {
           if (it is HttpException && it.code() == 401) {
             credentialRepository.clearCredentials()
-            notifySignInStateListeners()
+            signedInState.emit(false)
           } else {
             Log.w(LOG_TAG, "refresh credential request failed", it)
           }
         }
     }
-  }
-
-  private suspend fun notifySignInStateListeners() = coroutineScope {
-    val isSignedIn = credentialRepository.getRefreshToken() != null
-    signInStateListeners.forEach {
-      launch(Dispatchers.Main) { it.onSignInStateChanged(isSignedIn) }
-    }
-  }
-
-  /**
-   * Listener to listen for sign-in state changes.
-   */
-  fun interface SignInStateListener {
-
-    /**
-     * Invoked when the sign-in state has changed.
-     *
-     * @param isSignedIn indicates whether the user is currently signed-in or not.
-     */
-    fun onSignInStateChanged(isSignedIn: Boolean)
   }
 }

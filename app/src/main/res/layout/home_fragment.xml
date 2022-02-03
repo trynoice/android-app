@@ -6,7 +6,7 @@
   android:orientation="vertical">
 
   <androidx.fragment.app.FragmentContainerView
-    android:id="@+id/nav_host_fragment"
+    android:id="@+id/home_nav_host_fragment"
     android:name="androidx.navigation.fragment.NavHostFragment"
     android:layout_width="match_parent"
     android:layout_height="0dp"

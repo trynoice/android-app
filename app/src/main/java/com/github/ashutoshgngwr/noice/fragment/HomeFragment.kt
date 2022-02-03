@@ -1,6 +1,5 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
@@ -17,11 +16,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
-import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.HomeFragmentBinding
-import com.github.ashutoshgngwr.noice.ext.launchInCustomTab
 import com.github.ashutoshgngwr.noice.ext.registerOnDestinationChangedListener
 import com.github.ashutoshgngwr.noice.navigation.Navigable
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
@@ -59,12 +56,6 @@ class HomeFragment : Fragment(), Navigable {
   @set:Inject
   internal lateinit var playbackController: PlaybackController
 
-  // Do not refresh user preference when reconstructing this fragment from a previously saved state.
-  // For whatever reasons, it makes the bottom navigation view go out of sync.
-  private val shouldDisplayPresetsAsHomeScreen by lazy {
-    settingsRepository.shouldDisplayPresetsAsHomeScreen()
-  }
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setHasOptionsMenu(true)
@@ -83,7 +74,7 @@ class HomeFragment : Fragment(), Navigable {
 
   override fun onViewCreated(view: View, state: Bundle?) {
     navController = view.findNavController()
-    val navHostFragment = requireNotNull(binding.navHostFragment.getFragment<NavHostFragment>())
+    val navHostFragment = requireNotNull(binding.homeNavHostFragment.getFragment<NavHostFragment>())
     childNavController = navHostFragment.navController
     val childGraph = childNavController.navInflater.inflate(R.navigation.home)
 
@@ -101,12 +92,12 @@ class HomeFragment : Fragment(), Navigable {
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     castApiProvider.addMenuItem(requireContext(), menu, R.string.cast_media)
     val displayPlaybackControls = childNavController.currentDestination?.id != R.id.wake_up_timer
-    if (displayPlaybackControls && PlaybackStateCompat.STATE_STOPPED != playerManagerState) {
+      && PlaybackStateCompat.STATE_STOPPED != playerManagerState
+
+    if (displayPlaybackControls) {
       addPlaybackToggleMenuItem(menu)
     }
 
-    inflater.inflate(R.menu.home_menu, menu)
-    menu.findItem(R.id.sleep_timer)?.isVisible = displayPlaybackControls
     super.onCreateOptionsMenu(menu, inflater)
   }
 
@@ -138,37 +129,6 @@ class HomeFragment : Fragment(), Navigable {
     return binding.bottomNav.menu.findItem(destID)?.let {
       NavigationUI.onNavDestinationSelected(it, childNavController)
     } ?: false
-  }
-
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    if (NavigationUI.onNavDestinationSelected(item, childNavController)) {
-      return true
-    }
-
-    if (NavigationUI.onNavDestinationSelected(item, navController)) {
-      return true
-    }
-
-    return when (item.itemId) {
-      R.id.report_issue -> {
-        var url = getString(R.string.app_issues_github_url)
-        if (!BuildConfig.IS_FREE_BUILD) {
-          url = getString(R.string.app_issues_form_url)
-        }
-
-        Uri.parse(url).launchInCustomTab(requireContext())
-        analyticsProvider.logEvent("issue_tracker_open", bundleOf())
-        true
-      }
-
-      R.id.submit_feedback -> {
-        Uri.parse(getString(R.string.feedback_form_url)).launchInCustomTab(requireContext())
-        analyticsProvider.logEvent("feedback_form_open", bundleOf())
-        true
-      }
-
-      else -> super.onOptionsItemSelected(item)
-    }
   }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)

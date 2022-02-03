@@ -12,6 +12,11 @@
     android:title="@string/presets" />
 
   <item
+    android:id="@+id/sleep_timer"
+    android:icon="@drawable/ic_timer_24dp"
+    android:title="@string/sleep_timer" />
+
+  <item
     android:id="@+id/wake_up_timer"
     android:icon="@drawable/ic_action_wake_up_timer"
     android:title="@string/wake_up_timer" />

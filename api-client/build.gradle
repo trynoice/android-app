@@ -36,8 +36,6 @@ dependencies {
 
   api "com.squareup.retrofit2:retrofit:$retrofitVersion"
 
-  implementation "androidx.lifecycle:lifecycle-runtime-ktx:$deps.lifecycleVersion"
-  implementation "androidx.lifecycle:lifecycle-common-java8:$deps.lifecycleVersion"
   implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
   implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
   implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
