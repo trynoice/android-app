@@ -2,13 +2,79 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/main"
   app:startDestination="@id/home">
 
   <fragment
     android:id="@+id/home"
     android:name="com.github.ashutoshgngwr.noice.fragment.HomeFragment"
     android:label="@string/app_name"
-    tools:layout="@layout/home_fragment" />
+    tools:layout="@layout/home_fragment">
+
+    <action
+      android:id="@+id/sign_in_form"
+      app:destination="@id/sign_in_sign_up_form">
+
+      <argument
+        android:name="isReturningUser"
+        android:defaultValue="true" />
+
+    </action>
+
+    <action
+      android:id="@+id/sign_up_form"
+      app:destination="@id/sign_in_sign_up_form">
+
+      <argument
+        android:name="isReturningUser"
+        android:defaultValue="false" />
+
+    </action>
+
+  </fragment>
+
+  <fragment
+    android:id="@+id/sign_in_sign_up_form"
+    android:name="com.github.ashutoshgngwr.noice.fragment.SignInFormFragment"
+    android:label="@string/sign_in"
+    tools:layout="@layout/sign_in_form_fragment">
+
+    <argument
+      android:name="isReturningUser"
+      android:defaultValue="false"
+      app:argType="boolean"
+      app:nullable="false" />
+
+    <action
+      android:id="@id/sign_in_result"
+      app:destination="@id/sign_in_result" />
+
+  </fragment>
+
+  <fragment
+    android:id="@+id/sign_in_result"
+    android:name="com.github.ashutoshgngwr.noice.fragment.SignInResultFragment"
+    android:label="@string/sign_in"
+    tools:layout="@layout/sign_in_result_fragment">
+
+    <argument
+      android:name="isReturningUser"
+      android:defaultValue="false"
+      app:argType="boolean"
+      app:nullable="false" />
+
+    <argument
+      android:name="name"
+      android:defaultValue="null"
+      app:argType="string"
+      app:nullable="true" />
+
+    <argument
+      android:name="email"
+      app:argType="string"
+      app:nullable="false" />
+
+  </fragment>
 
   <fragment
     android:id="@+id/settings"

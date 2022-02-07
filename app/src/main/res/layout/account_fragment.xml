@@ -6,7 +6,6 @@
   <data>
 
     <import type="android.view.View" />
-    <import type="com.github.ashutoshgngwr.noice.model.Resource.Status" />
 
     <variable
       name="viewModel"
@@ -27,44 +26,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="24dp"
+        android:layout_marginVertical="32dp"
         android:animateLayoutChanges="true"
+        android:gravity="center"
         android:orientation="vertical"
         android:visibility="@{viewModel.isSignedIn ? View.VISIBLE : View.GONE}">
 
-        <ProgressBar
-          android:layout_width="match_parent"
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+          style="@style/Widget.MaterialComponents.CircularProgressIndicator.Small"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:visibility="@{viewModel.profile.status == Status.LOADING ? View.VISIBLE : View.GONE}"
+          android:visibility="@{viewModel.isLoadingProfile ? View.VISIBLE : View.GONE}"
           tools:visibility="gone" />
 
         <TextView
-          android:layout_width="match_parent"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:gravity="center"
           android:paddingHorizontal="16dp"
-          android:text='@{viewModel.profile.data.email ?? ""}'
+          android:text="@{viewModel.profile.email ?? ``}"
           android:textAppearance="?attr/textAppearanceHeadline6"
-          android:visibility="@{viewModel.profile.status == Status.SUCCESS ? View.VISIBLE : View.GONE}"
+          android:visibility="@{viewModel.profile != null ? View.VISIBLE : View.GONE}"
           tools:text="Jane Doe" />
 
         <TextView
-          android:layout_width="match_parent"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"
-          android:gravity="center"
           android:paddingHorizontal="16dp"
-          android:text='@{viewModel.profile.data.email ?? ""}'
+          android:text="@{viewModel.profile.email ?? ``}"
           android:textAppearance="?attr/textAppearanceCaption"
-          android:visibility="@{viewModel.profile.status == Status.SUCCESS ? View.VISIBLE : View.GONE}"
+          android:visibility="@{viewModel.profile != null ? View.VISIBLE : View.GONE}"
           tools:text="jane.doe@emailservice.org" />
 
         <TextView
           style="@style/Widget.App.TextView.Error"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text='@{viewModel.getProfileErrorStringRes() ?? ""}'
-          android:visibility="@{viewModel.profile.status == Status.ERROR ? View.VISIBLE : View.GONE}"
+          android:text="@{viewModel.profileLoadErrorStringRes}"
+          android:visibility="@{viewModel.profileLoadError != null ? View.VISIBLE : View.GONE}"
           tools:text="@string/network_error"
           tools:visibility="gone" />
 
@@ -77,7 +76,7 @@
         android:text="@string/account" />
 
       <TextView
-        android:id="@+id/sign_up"
+        android:id="@+id/sign_up_form"
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -87,7 +86,7 @@
         app:drawableStartCompat="@drawable/ic_baseline_person_add_alt_1_32" />
 
       <TextView
-        android:id="@+id/sign_in"
+        android:id="@+id/sign_in_form"
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

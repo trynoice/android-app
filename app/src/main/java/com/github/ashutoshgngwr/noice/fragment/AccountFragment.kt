@@ -5,21 +5,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.AccountFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchInCustomTab
-import com.github.ashutoshgngwr.noice.model.Resource
+import com.github.ashutoshgngwr.noice.model.NetworkError
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
+import com.trynoice.api.client.models.Profile
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -39,6 +44,7 @@ class AccountFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
+    viewModel.loadProfile()
     viewModel.onItemClickListener = View.OnClickListener { item ->
       when (item.id) {
         R.id.report_issues -> {
@@ -70,16 +76,38 @@ class AccountViewModel @Inject constructor(
   private val accountRepository: AccountRepository,
 ) : ViewModel() {
 
-  val isSignedIn = accountRepository.isSignedIn()
-  val profile = accountRepository.getProfile()
   var onItemClickListener = View.OnClickListener { }
+  val isSignedIn = accountRepository.isSignedIn()
+  val isLoadingProfile = MutableLiveData(false)
+  val profile = MutableLiveData<Profile>()
+  val profileLoadError = MutableLiveData<Throwable?>()
+  val profileLoadErrorStringRes = MediatorLiveData<Int?>().also {
+    it.addSource(profileLoadError) { e ->
+      it.postValue(
+        when (e) {
+          null -> null
+          is NetworkError -> R.string.network_error
+          else -> R.string.unknown_error
+        }
+      )
+    }
+  }
 
-  @StringRes
-  fun getProfileErrorStringRes(): Int? {
-    return when (profile.value?.error) {
-      is Resource.NetworkError -> R.string.network_error
-      is Resource.UnknownError -> R.string.unknown_error
-      else -> null
+  internal fun loadProfile() {
+    if (isLoadingProfile.value == true || profile.value != null) {
+      return
+    }
+
+    profileLoadError.postValue(null)
+    isLoadingProfile.postValue(true)
+    viewModelScope.launch(Dispatchers.IO) {
+      try {
+        profile.postValue(accountRepository.getProfile())
+      } catch (e: Throwable) {
+        profileLoadError.postValue(e)
+      } finally {
+        isLoadingProfile.postValue(false)
+      }
     }
   }
 }

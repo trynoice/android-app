@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="android.view.View" />
+
+    <import type="com.airbnb.lottie.LottieDrawable" />
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.SignInResultViewModel" />
+
+  </data>
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:animateLayoutChanges="true"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:paddingHorizontal="16dp"
+      android:paddingVertical="48dp">
+
+      <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="192dp"
+        android:visibility="@{viewModel.signInError == null ? View.VISIBLE : View.GONE}"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/lottie_email_sent"
+        app:lottie_speed="1.5"
+        app:maxFrame="@{viewModel.isSigningIn ? 75 : Integer.MAX_VALUE}"
+        app:repeatCount="@{viewModel.isSigningIn ? LottieDrawable.INFINITE : 0}" />
+
+      <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="192dp"
+        android:visibility="@{viewModel.signInError != null ? View.VISIBLE : View.GONE}"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/lottie_error"
+        app:lottie_speed="1.5"
+        tools:visibility="gone" />
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/sign_in_email_sent"
+        android:textAppearance="?textAppearanceBody1"
+        android:visibility="@{viewModel.isSignInComplete ? View.VISIBLE : View.GONE}" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@{@string/account_locked_error(@plurals/time_minutes(viewModel.accountLockTimeoutMinutes, viewModel.accountLockTimeoutMinutes))}"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:visibility="@{viewModel.isAccountLocked ? View.VISIBLE : View.GONE}"
+        app:drawableStartCompat="@null"
+        tools:visibility="gone" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@{viewModel.signInErrorStrRes}"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:visibility="@{viewModel.signInErrorStrRes != null ? View.VISIBLE : View.GONE}"
+        app:drawableStartCompat="@null"
+        tools:visibility="gone" />
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+
+      <Button
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
+        android:onClick="@{() -> viewModel.signIn()}"
+        android:paddingHorizontal="32dp"
+        android:text="@string/try_again"
+        android:visibility="@{viewModel.signInError != null ? View.VISIBLE : View.GONE}"
+        tools:visibility="gone" />
+
+      <Button
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> viewModel.onOpenMailboxClicked.invoke()}"
+        android:paddingHorizontal="32dp"
+        android:text="@string/open_mailbox"
+        android:visibility="@{viewModel.isSignInComplete ? View.VISIBLE : View.GONE}" />
+
+    </LinearLayout>
+
+  </ScrollView>
+
+</layout>
