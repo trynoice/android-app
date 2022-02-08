@@ -93,8 +93,8 @@ class SignInResultViewModel @Inject constructor(
     }
   }
 
+  val email: String
   private val isReturningUser: Boolean
-  private val email: String
   private val name: String?
 
   init {
