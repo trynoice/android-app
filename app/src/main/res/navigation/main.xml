@@ -31,6 +31,22 @@
 
     </action>
 
+    <action
+      android:id="@id/settings"
+      app:destination="@id/settings" />
+
+    <action
+      android:id="@id/about"
+      app:destination="@id/about" />
+
+    <action
+      android:id="@id/support_development"
+      app:destination="@id/support_development" />
+
+    <action
+      android:id="@id/help"
+      app:destination="@id/help" />
+
   </fragment>
 
   <fragment

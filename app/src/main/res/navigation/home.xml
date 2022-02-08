@@ -8,7 +8,13 @@
     android:id="@+id/library"
     android:name="com.github.ashutoshgngwr.noice.fragment.LibraryFragment"
     android:label="@string/library"
-    tools:layout="@layout/library_fragment" />
+    tools:layout="@layout/library_fragment">
+
+    <action
+      android:id="@id/random_preset"
+      app:destination="@id/random_preset" />
+
+  </fragment>
 
   <fragment
     android:id="@+id/presets"
