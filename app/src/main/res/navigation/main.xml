@@ -26,6 +26,11 @@
       app:destination="@id/sign_in_sign_up_form">
 
       <argument
+        android:name="title"
+        android:defaultValue="@string/sign_up"
+        app:argType="reference" />
+
+      <argument
         android:name="isReturningUser"
         android:defaultValue="false" />
 
@@ -54,6 +59,12 @@
     android:name="com.github.ashutoshgngwr.noice.fragment.SignInFormFragment"
     android:label="@string/sign_in"
     tools:layout="@layout/sign_in_form_fragment">
+
+    <argument
+      android:name="title"
+      android:defaultValue="@string/sign_in"
+      app:argType="reference"
+      app:nullable="false" />
 
     <argument
       android:name="isReturningUser"
