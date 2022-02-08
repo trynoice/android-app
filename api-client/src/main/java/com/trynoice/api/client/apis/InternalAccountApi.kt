@@ -15,14 +15,14 @@ internal interface InternalAccountApi {
    * the refresh token is invalid, expired or re-used, it returns `HTTP 401`.
    *
    * Responses:
-   *  - 200: fresh credentials (refresh and access tokens)
-   *  - 400: request is not valid
-   *  - 401: refresh token is invalid, expired or re-used
-   *  - 500: internal server error
+   *  - 200: fresh credentials (refresh and access tokens).
+   *  - 400: request is not valid.
+   *  - 401: refresh token is invalid, expired or re-used.
+   *  - 500: internal server error.
    *
    * @return fresh [AuthCredentials] on successful request.
-   * @throws retrofit2.HttpException on API error
-   * @throws java.io.IOException on network error
+   * @throws retrofit2.HttpException on API error.
+   * @throws java.io.IOException on network error.
    */
   @NeedsRefreshToken
   @GET("/v1/accounts/credentials")
@@ -33,13 +33,13 @@ internal interface InternalAccountApi {
    * HTTP 401.
    *
    * Responses:
-   *  - 200: OK
-   *  - 400: request is not valid
-   *  - 401: refresh token is invalid, expired or re-used
-   *  - 500: internal server error
+   *  - 200: OK.
+   *  - 400: request is not valid.
+   *  - 401: refresh token is invalid, expired or re-used.
+   *  - 500: internal server error.
    *
-   * @throws retrofit2.HttpException on API error
-   * @throws java.io.IOException on network error
+   * @throws retrofit2.HttpException on API error.
+   * @throws java.io.IOException on network error.
    */
   @NeedsRefreshToken
   @GET("/v1/accounts/signOut")

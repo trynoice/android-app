@@ -18,15 +18,15 @@ interface SubscriptionApi {
    * - `stripe`: the response contains all available plans supported by Stripe.
    *
    * Responses:
-   *  - 200: a list of available subscription plans
-   *  - 400: request is not valid
-   *  - 422: the requested provider is not supported
-   *  - 500: internal server error
+   *  - 200: a list of available subscription plans.
+   *  - 400: request is not valid.
+   *  - 422: the requested provider is not supported.
+   *  - 500: internal server error.
    *
    * @param provider filter listed plans by the given provider. (optional)
-   * @return [kotlin.collections.List<SubscriptionPlan>]
-   * @throws retrofit2.HttpException on API error
-   * @throws java.io.IOException on network error
+   * @return [List]<[SubscriptionPlan]>
+   * @throws retrofit2.HttpException on API error.
+   * @throws java.io.IOException on network error.
    */
   @GET("/v1/subscriptions/plans")
   suspend fun getPlans(@Query("provider") provider: String? = null): List<SubscriptionPlan>

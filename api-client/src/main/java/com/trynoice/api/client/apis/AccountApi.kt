@@ -24,12 +24,11 @@ interface AccountApi {
    * elapsed.
    *
    * Responses:
-   * - 201: sign-in link sent to the provided email
-   * - 400: request is not valid
-   * - 429: the account is temporarily blocked from attempting sign-up
-   * - 500: internal server error
+   * - 201: sign-in link sent to the provided email.
+   * - 400: request is not valid.
+   * - 429: the account is temporarily blocked from attempting sign-up. Refer `Retry-After` header.
+   * - 500: internal server error.
    *
-   * @throws retrofit2.HttpException on API error
    * @throws java.io.IOException on network error
    */
   @POST("/v1/accounts/signUp")
@@ -43,29 +42,28 @@ interface AccountApi {
    * elapsed.
    *
    * Responses:
-   * - 201: sent sign-in link to the given email if such an account exists
-   * - 400: request is not valid
-   * - 429: the account is temporarily blocked from attempting sign-in
-   * - 500: internal server error
+   * - 201: sent sign-in link to the given email if such an account exists.
+   * - 400: request is not valid.
+   * - 429: the account is temporarily blocked from attempting sign-in. Refer `Retry-After` header.
+   * - 500: internal server error.
    *
-   * @throws retrofit2.HttpException on API error
-   * @throws java.io.IOException on network error
+   * @throws java.io.IOException on network error.
    */
   @POST("/v1/accounts/signIn")
   suspend fun signIn(@Body signInParams: SignInParams): Response<Unit>
 
   /**
-   * Get profile of the auth user
+   * Get profile of the auth user.
    *
    * Responses:
    *  - 200: profile of the authenticated user.
-   *  - 400: failed to read request
-   *  - 401: access token is invalid
-   *  - 500: internal server error
+   *  - 400: failed to read request.
+   *  - 401: access token is invalid.
+   *  - 500: internal server error.
    *
    * @return the [Profile] of the authenticated user.
-   * @throws retrofit2.HttpException on API error
-   * @throws java.io.IOException on network error
+   * @throws retrofit2.HttpException on API error.
+   * @throws java.io.IOException on network error.
    */
   @NeedsAccessToken
   @GET("v1/accounts/profile")
