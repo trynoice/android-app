@@ -7,11 +7,13 @@ import com.google.gson.GsonBuilder
 import com.trynoice.api.client.auth.AuthCredentialRepository
 import com.trynoice.api.client.models.AuthCredentials
 import com.trynoice.api.client.models.Profile
+import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.test.runTest
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -58,7 +60,7 @@ class NoiceApiClientTest {
     runCatching { mockServer.takeRequest() }
       .onSuccess { assertEquals(testSignInToken, it.getHeader("X-Refresh-Token")) }
 
-    assertEquals(true, apiClient.getSignedInState().value)
+    assertEquals(true, apiClient.getSignedInState().lastOrNull())
     assertEquals(testCredentials.refreshToken, credentialRepository.getRefreshToken())
     assertEquals(testCredentials.accessToken, credentialRepository.getAccessToken())
   }
@@ -137,7 +139,7 @@ class NoiceApiClientTest {
         assertEquals(testCredentials.refreshToken, it.getHeader("X-Refresh-Token"))
       }
 
-    assertEquals(false, apiClient.getSignedInState().value)
+    assertEquals(false, apiClient.getSignedInState().lastOrNull())
     assertNull(credentialRepository.getRefreshToken())
     assertNull(credentialRepository.getAccessToken())
   }
