@@ -19,7 +19,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.HomeFragmentBinding
-import com.github.ashutoshgngwr.noice.ext.registerOnDestinationChangedListener
 import com.github.ashutoshgngwr.noice.navigation.Navigable
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
@@ -84,9 +83,6 @@ class HomeFragment : Fragment(), Navigable {
 
     childNavController.graph = childGraph
     binding.bottomNav.setupWithNavController(childNavController)
-    childNavController.registerOnDestinationChangedListener(viewLifecycleOwner) { _, _, _ ->
-      activity?.invalidateOptionsMenu()
-    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
