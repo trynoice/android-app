@@ -13,13 +13,7 @@
 
     <action
       android:id="@+id/sign_in_form"
-      app:destination="@id/sign_in_sign_up_form">
-
-      <argument
-        android:name="isReturningUser"
-        android:defaultValue="true" />
-
-    </action>
+      app:destination="@id/sign_in_sign_up_form" />
 
     <action
       android:id="@+id/sign_up_form"
@@ -68,7 +62,7 @@
 
     <argument
       android:name="isReturningUser"
-      android:defaultValue="false"
+      android:defaultValue="true"
       app:argType="boolean"
       app:nullable="false" />
 
