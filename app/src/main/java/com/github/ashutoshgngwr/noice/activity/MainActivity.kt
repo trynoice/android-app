@@ -116,8 +116,9 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
   override fun onNewIntent(intent: Intent) {
     super.onNewIntent(intent)
     setIntent(intent)
-    navController.handleDeepLink(intent)
-    hasNewIntent = true
+    if (!navController.handleDeepLink(intent)) {
+      hasNewIntent = true
+    }
   }
 
   override fun onResume() {

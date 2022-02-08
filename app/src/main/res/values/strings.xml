@@ -250,4 +250,8 @@
     <string name="try_again">Try again</string>
     <string name="open_mailbox">Open Mailbox</string>
     <string name="mailbox_app_not_found">Uh-oh! We couldn\'t find a mailbox app on your device!</string>
+    <string name="signing_in">Signing in</string>
+    <string name="sign_in_token_error">The sign-in link appears to be invalid. It may have expired. Please try again!</string>
+    <string name="sign_in_sucessful">Successfully signed in!</string>
+    <string name="cont">Continue</string>
 </resources>

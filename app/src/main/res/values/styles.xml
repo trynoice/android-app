@@ -24,6 +24,23 @@
     <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
   </style>
 
+  <style name="Theme.App.Translucent">
+    <item name="android:backgroundDimEnabled">false</item>
+    <item name="android:navigationBarColor">@android:color/transparent</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+  </style>
+
+  <style name="Theme.App.SignInLinkHandler" parent="Theme.App.Translucent">
+    <item name="android:backgroundDimEnabled">true</item>
+    <item name="android:navigationBarColor">@color/status_bar</item>
+    <item name="bottomSheetStyle">@style/Widget.App.BottomSheet.Modal</item>
+  </style>
+
   <style name="ThemeOverlay.App.ActionBar" parent="ThemeOverlay.MaterialComponents.ActionBar">
     <item name="colorPrimary">@color/action_bar</item>
     <item name="colorControlNormal">@color/action_menu_item</item>
@@ -66,10 +83,10 @@
   </style>
 
   <style name="Widget.App.BottomSheet.Modal" parent="Widget.Design.BottomSheet.Modal">
-    <item name="shapeAppearance">@style/ShapeAppearance.App.BottomSheetDialog</item>
+    <item name="shapeAppearance">@style/ShapeAppearance.App.BottomSheet.Modal</item>
   </style>
 
-  <style name="ShapeAppearance.App.BottomSheetDialog" parent="">
+  <style name="ShapeAppearance.App.BottomSheet.Modal" parent="">
     <item name="cornerFamily">rounded</item>
     <item name="cornerSizeTopRight">8dp</item>
     <item name="cornerSizeTopLeft">8dp</item>

@@ -6,3 +6,5 @@ object NetworkError : Throwable()
 object NotSignedInError : Throwable()
 
 class AccountTemporarilyLockedError(val timeoutSeconds: Int) : Throwable()
+
+object SignInWithTokenError : Throwable()

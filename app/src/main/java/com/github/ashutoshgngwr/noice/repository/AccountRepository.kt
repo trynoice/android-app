@@ -60,6 +60,13 @@ class AccountRepository @Inject constructor(private val apiClient: NoiceApiClien
     throw HttpException(response)
   }
 
+  suspend fun signInWithToken(token: String) {
+    apiClient.signInWithToken(token)
+    if (!apiClient.isSignedIn()) {
+      throw NotSignedInError
+    }
+  }
+
   companion object {
     private val LOG_TAG = AccountRepository::class.simpleName
   }

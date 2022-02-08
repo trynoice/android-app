@@ -1,7 +1,6 @@
 package com.trynoice.api.client
 
 import android.content.Context
-import android.util.Log
 import com.google.gson.Gson
 import com.trynoice.api.client.apis.AccountApi
 import com.trynoice.api.client.apis.InternalAccountApi
@@ -23,7 +22,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import java.io.IOException
 
-private val LOG_TAG = NoiceApiClient::class.simpleName
 
 /**
  * A thin wrapper around Retrofit to bundle together the networked API calls while transparently
@@ -118,7 +116,7 @@ class NoiceApiClient(
             credentialRepository.clearCredentials()
             signedInState.emit(false)
           } else {
-            Log.w(LOG_TAG, "refresh credential request failed", it)
+            throw it
           }
         }
     }

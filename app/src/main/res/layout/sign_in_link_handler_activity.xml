@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="android.view.View" />
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.activity.SignInLinkHandlerViewModel" />
+
+  </data>
+
+  <androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:id="@+id/bottom_sheet"
+      style="?attr/bottomSheetStyle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/background_dark"
+      android:orientation="vertical"
+      android:padding="24dp"
+      app:behavior_hideable="false"
+      app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="@{viewModel.isSigningIn ? View.VISIBLE : View.GONE}"
+        tools:visibility="gone">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+          style="@style/Widget.MaterialComponents.CircularProgressIndicator.Small"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:indeterminate="true"
+          android:visibility="@{viewModel.isSigningIn ? View.VISIBLE : View.GONE}" />
+
+        <Space
+          android:layout_width="16dp"
+          android:layout_height="wrap_content" />
+
+        <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="@string/signing_in"
+          android:textAppearance="?attr/textAppearanceBody1" />
+
+      </LinearLayout>
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:drawablePadding="16dp"
+        android:gravity="center_vertical"
+        android:text="@string/sign_in_sucessful"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:visibility="@{viewModel.isSignInComplete ? View.VISIBLE : View.GONE}"
+        app:drawableStartCompat="@drawable/ic_baseline_check_circle_36"
+        app:drawableTint="?attr/colorAccent" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:drawablePadding="16dp"
+        android:gravity="center_vertical"
+        android:text="@{viewModel.signInErrorStringRes}"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:visibility="@{viewModel.signInError != null  ? View.VISIBLE : View.GONE}"
+        app:drawableStartCompat="@drawable/ic_baseline_error_36"
+        app:drawableTint="@color/red"
+        tools:visibility="gone" />
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|end"
+        android:orientation="horizontal">
+
+        <Button
+          style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:onClick="@{() -> viewModel.onSuccessButtonClick.invoke()}"
+          android:text="@string/cont"
+          android:visibility="@{viewModel.isSignInComplete ? View.VISIBLE : View.GONE}" />
+
+        <Button
+          style="@style/Widget.MaterialComponents.Button.TextButton"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:onClick="@{() -> viewModel.onFailureButtonClick.invoke()}"
+          android:text="@string/dismiss"
+          android:visibility="@{viewModel.signInError != null ? View.VISIBLE : View.GONE}"
+          tools:visibility="gone" />
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+  </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>
