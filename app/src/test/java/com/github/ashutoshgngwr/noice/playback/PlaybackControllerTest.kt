@@ -33,11 +33,20 @@ import kotlin.random.Random
 @RunWith(RobolectricTestRunner::class)
 class PlaybackControllerTest {
 
+  private lateinit var mockContext: Context
+  private lateinit var mockPrefs: SharedPreferences
   private lateinit var mockPlayerManager: PlayerManager
+  private lateinit var playbackController: PlaybackController
 
   @Before
   fun setup() {
+    mockContext = mockk(relaxed = true)
+    mockPrefs = mockk(relaxed = true)
     mockPlayerManager = mockk(relaxed = true)
+    mockkStatic(PreferenceManager::class)
+    every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
+
+    playbackController = PlaybackController(mockContext, mockk(relaxed = true))
   }
 
   @After
@@ -110,10 +119,9 @@ class PlaybackControllerTest {
 
   @Test
   fun testHandleServiceIntent_withResumePlaybackAction() {
-    PlaybackController.handleServiceIntent(
-      ApplicationProvider.getApplicationContext(),
+    playbackController.handleServiceIntent(
       mockPlayerManager,
-      Intent(PlaybackController.ACTION_RESUME_PLAYBACK),
+      Intent(PlaybackController.ACTION_RESUME_PLAYBACK)
     )
 
     verify(exactly = 1) { mockPlayerManager.resume() }
@@ -121,8 +129,7 @@ class PlaybackControllerTest {
 
   @Test
   fun testHandleServiceIntent_withPausePlaybackAction() {
-    PlaybackController.handleServiceIntent(
-      ApplicationProvider.getApplicationContext(),
+    playbackController.handleServiceIntent(
       mockPlayerManager,
       Intent(PlaybackController.ACTION_PAUSE_PLAYBACK),
     )
@@ -132,8 +139,7 @@ class PlaybackControllerTest {
 
   @Test
   fun testHandleServiceIntent_withStopPlaybackAction() {
-    PlaybackController.handleServiceIntent(
-      ApplicationProvider.getApplicationContext(),
+    playbackController.handleServiceIntent(
       mockPlayerManager,
       Intent(PlaybackController.ACTION_STOP_PLAYBACK),
     )
@@ -145,16 +151,14 @@ class PlaybackControllerTest {
   fun testHandleServiceIntent_withPlayPresetAction() {
     val presetID = "test-id"
 
-    PlaybackController.handleServiceIntent(
-      ApplicationProvider.getApplicationContext(),
+    playbackController.handleServiceIntent(
       mockPlayerManager,
       Intent(PlaybackController.ACTION_PLAY_PRESET)
         .putExtra(PlaybackController.EXTRA_PRESET_ID, presetID),
     )
 
     val uri = Uri.parse("test")
-    PlaybackController.handleServiceIntent(
-      ApplicationProvider.getApplicationContext(),
+    playbackController.handleServiceIntent(
       mockPlayerManager,
       Intent(PlaybackController.ACTION_PLAY_PRESET)
         .setData(uri),
@@ -171,8 +175,7 @@ class PlaybackControllerTest {
     val tag = mockk<Sound.Tag>(relaxed = true)
     val minSounds = Random.nextInt()
     val maxSounds = Random.nextInt(minSounds, minSounds + 10)
-    PlaybackController.handleServiceIntent(
-      ApplicationProvider.getApplicationContext(),
+    playbackController.handleServiceIntent(
       mockPlayerManager,
       Intent(PlaybackController.ACTION_PLAY_RANDOM_PRESET)
         .putExtra(PlaybackController.EXTRA_FILTER_SOUNDS_BY_TAG, tag)
@@ -186,8 +189,7 @@ class PlaybackControllerTest {
   @Test
   fun testHandleServiceIntent_withPlaySoundAction() {
     val soundKey = "test-sound-key"
-    PlaybackController.handleServiceIntent(
-      ApplicationProvider.getApplicationContext(),
+    playbackController.handleServiceIntent(
       mockPlayerManager,
       Intent(PlaybackController.ACTION_PLAY_SOUND)
         .putExtra(PlaybackController.EXTRA_SOUND_KEY, soundKey),
@@ -199,8 +201,7 @@ class PlaybackControllerTest {
   @Test
   fun testHandleServiceIntent_withStopSoundAction() {
     val soundKey = "test-sound-key"
-    PlaybackController.handleServiceIntent(
-      ApplicationProvider.getApplicationContext(),
+    playbackController.handleServiceIntent(
       mockPlayerManager,
       Intent(PlaybackController.ACTION_STOP_SOUND)
         .putExtra(PlaybackController.EXTRA_SOUND_KEY, soundKey),
@@ -211,8 +212,7 @@ class PlaybackControllerTest {
 
   @Test
   fun testHandleServiceIntent_withScheduleStopPlaybackAction_onSchedule() {
-    PlaybackController.handleServiceIntent(
-      ApplicationProvider.getApplicationContext(),
+    playbackController.handleServiceIntent(
       mockPlayerManager,
       Intent(PlaybackController.ACTION_SCHEDULE_STOP_PLAYBACK)
         .putExtra(PlaybackController.EXTRA_AT_UPTIME_MILLIS, SystemClock.uptimeMillis() + 100),
@@ -225,15 +225,13 @@ class PlaybackControllerTest {
 
   @Test
   fun testHandleServiceIntent_withScheduleStopPlaybackAction_onCancel() {
-    PlaybackController.handleServiceIntent(
-      ApplicationProvider.getApplicationContext(),
+    playbackController.handleServiceIntent(
       mockPlayerManager,
       Intent(PlaybackController.ACTION_SCHEDULE_STOP_PLAYBACK)
         .putExtra(PlaybackController.EXTRA_AT_UPTIME_MILLIS, SystemClock.uptimeMillis() + 1000),
     )
 
-    PlaybackController.handleServiceIntent(
-      ApplicationProvider.getApplicationContext(),
+    playbackController.handleServiceIntent(
       mockPlayerManager,
       Intent(PlaybackController.ACTION_SCHEDULE_STOP_PLAYBACK)
         .putExtra(PlaybackController.EXTRA_AT_UPTIME_MILLIS, SystemClock.uptimeMillis() - 1000),
@@ -246,8 +244,7 @@ class PlaybackControllerTest {
   @Test
   fun testHandleServiceIntent_withSkipPresetAction() {
     for (input in arrayOf(PlayerManager.SKIP_DIRECTION_PREV, PlayerManager.SKIP_DIRECTION_NEXT)) {
-      PlaybackController.handleServiceIntent(
-        ApplicationProvider.getApplicationContext(),
+      playbackController.handleServiceIntent(
         mockPlayerManager,
         Intent(PlaybackController.ACTION_SKIP_PRESET)
           .putExtra(PlaybackController.EXTRA_SKIP_DIRECTION, input),
@@ -259,8 +256,7 @@ class PlaybackControllerTest {
   }
 
   fun testHandleServiceIntent_withRequestUpdateEventAction() {
-    PlaybackController.handleServiceIntent(
-      ApplicationProvider.getApplicationContext(),
+    playbackController.handleServiceIntent(
       mockPlayerManager,
       Intent(PlaybackController.ACTION_REQUEST_UPDATE_EVENT),
     )
@@ -270,8 +266,7 @@ class PlaybackControllerTest {
 
   fun testHandleServiceIntent_withSetAudioUsageAction() {
     val audioUsage = AudioAttributesCompat.USAGE_ALARM
-    PlaybackController.handleServiceIntent(
-      ApplicationProvider.getApplicationContext(),
+    playbackController.handleServiceIntent(
       mockPlayerManager,
       Intent(PlaybackController.ACTION_SET_AUDIO_USAGE)
         .putExtra(PlaybackController.EXTRA_AUDIO_USAGE, audioUsage),
@@ -282,20 +277,14 @@ class PlaybackControllerTest {
 
   @Test
   fun testHandleServiceIntent_withoutAction() {
-    PlaybackController.handleServiceIntent(
-      ApplicationProvider.getApplicationContext(),
-      mockPlayerManager,
-      Intent(),
-    )
-
+    playbackController.handleServiceIntent(mockPlayerManager, Intent())
     verify { mockPlayerManager wasNot called }
   }
 
   @Test
   fun testPlaySound() {
-    val mockContext = mockk<Context>(relaxed = true)
     val soundKey = "test-sound-key"
-    PlaybackController.play(mockContext, soundKey)
+    playbackController.play(soundKey)
     verify(exactly = 1) {
       mockContext.startService(
         withArg {
@@ -309,9 +298,8 @@ class PlaybackControllerTest {
 
   @Test
   fun testStopSound() {
-    val mockContext = mockk<Context>(relaxed = true)
     val soundKey = "test-sound-key"
-    PlaybackController.stop(mockContext, soundKey)
+    playbackController.stop(soundKey)
     verify(exactly = 1) {
       mockContext.startService(
         withArg {
@@ -325,8 +313,7 @@ class PlaybackControllerTest {
 
   @Test
   fun testResumePlayback() {
-    val mockContext = mockk<Context>(relaxed = true)
-    PlaybackController.resume(mockContext)
+    playbackController.resume()
     verify(exactly = 1) {
       mockContext.startService(
         withArg {
@@ -339,8 +326,7 @@ class PlaybackControllerTest {
 
   @Test
   fun testPausePlayback() {
-    val mockContext = mockk<Context>(relaxed = true)
-    PlaybackController.pause(mockContext)
+    playbackController.pause()
     verify(exactly = 1) {
       mockContext.startService(
         withArg {
@@ -353,8 +339,7 @@ class PlaybackControllerTest {
 
   @Test
   fun testStopPlayback() {
-    val mockContext = mockk<Context>(relaxed = true)
-    PlaybackController.stop(mockContext)
+    playbackController.stop()
     verify(exactly = 1) {
       mockContext.startService(
         withArg {
@@ -367,8 +352,7 @@ class PlaybackControllerTest {
 
   @Test
   fun testPlayPreset() {
-    val mockContext = mockk<Context>(relaxed = true)
-    PlaybackController.playPreset(mockContext, "test")
+    playbackController.playPreset("test")
     verify(exactly = 1) {
       mockContext.startService(
         withArg {
@@ -382,9 +366,8 @@ class PlaybackControllerTest {
 
   @Test
   fun testPlayPresetFromUri() {
-    val mockContext = mockk<Context>(relaxed = true)
     val uri = Uri.parse("test")
-    PlaybackController.playPresetFromUri(mockContext, uri)
+    playbackController.playPresetFromUri(uri)
     verify(exactly = 1) {
       mockContext.startService(
         withArg {
@@ -398,11 +381,10 @@ class PlaybackControllerTest {
 
   @Test
   fun testPlayRandomPreset() {
-    val mockContext = mockk<Context>(relaxed = true)
     val tag = mockk<Sound.Tag>(relaxed = true)
     val intensity = 1 until 10
 
-    PlaybackController.playRandomPreset(mockContext, tag, intensity)
+    playbackController.playRandomPreset(tag, intensity)
     verify(exactly = 1) {
       mockContext.startService(
         withArg {
@@ -429,20 +411,16 @@ class PlaybackControllerTest {
 
   @Test
   fun testScheduleAutoStop() {
-    mockkStatic(PreferenceManager::class)
     val mockPrefsEditor = mockk<SharedPreferences.Editor> {
       every { putLong(any(), any()) } returns this
       every { commit() } returns true
     }
 
-    every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockk {
-      every { edit() } returns mockPrefsEditor
-    }
+    every { mockPrefs.edit() } returns mockPrefsEditor
 
-    val mockContext = mockk<Context>(relaxed = true)
     val duration = TimeUnit.SECONDS.toMillis(1)
     val before = SystemClock.uptimeMillis() + duration
-    PlaybackController.scheduleAutoStop(mockContext, duration)
+    playbackController.scheduleAutoStop(duration)
     val after = SystemClock.uptimeMillis() + duration
     verify(exactly = 1) {
       mockPrefsEditor.putLong(PlaybackController.PREF_LAST_SCHEDULED_STOP_TIME, withArg {
@@ -461,8 +439,7 @@ class PlaybackControllerTest {
 
   @Test
   fun testClearScheduledAutoStop() {
-    val mockContext = mockk<Context>(relaxed = true)
-    PlaybackController.clearScheduledAutoStop(mockContext)
+    playbackController.clearScheduledAutoStop()
     verify(exactly = 1) {
       mockContext.startService(
         withArg {
@@ -478,35 +455,30 @@ class PlaybackControllerTest {
 
   @Test
   fun testGetScheduledAutoStopRemainingDurationMillis() {
-    mockkStatic(PreferenceManager::class)
-    every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockk {
-      every {
-        getLong(PlaybackController.PREF_LAST_SCHEDULED_STOP_TIME, any())
-      } returns SystemClock.uptimeMillis() + 1000L
-    }
+    every {
+      mockPrefs.getLong(PlaybackController.PREF_LAST_SCHEDULED_STOP_TIME, any())
+    } returns SystemClock.uptimeMillis() + 1000L
 
-    val r = PlaybackController.getScheduledAutoStopRemainingDurationMillis(mockk(relaxed = true))
+    val r = playbackController.getScheduledAutoStopRemainingDurationMillis()
     assertTrue(r in 900..1000)
   }
 
   @Test
   fun testClearAutoStopCallback() {
-    PlaybackController.handleServiceIntent(
-      mockk(),
+    playbackController.handleServiceIntent(
       mockPlayerManager,
       Intent(PlaybackController.ACTION_SCHEDULE_STOP_PLAYBACK)
         .putExtra(PlaybackController.EXTRA_AT_UPTIME_MILLIS, SystemClock.uptimeMillis() + 1000),
     )
 
-    PlaybackController.clearAutoStopCallback()
+    playbackController.clearAutoStopCallback()
     ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     verify { mockPlayerManager wasNot called }
   }
 
   @Test
   fun testRequestUpdateEvent() {
-    val mockContext = mockk<Context>(relaxed = true)
-    PlaybackController.requestUpdateEvent(mockContext)
+    playbackController.requestUpdateEvent()
     verify(exactly = 1) {
       mockContext.startService(
         withArg {
@@ -519,9 +491,8 @@ class PlaybackControllerTest {
 
   @Test
   fun testSetAudioUsage() {
-    val mockContext = mockk<Context>(relaxed = true)
     val audioUsage = AudioAttributesCompat.USAGE_ALARM
-    PlaybackController.setAudioUsage(mockContext, audioUsage)
+    playbackController.setAudioUsage(audioUsage)
     verify(exactly = 1) {
       mockContext.startService(
         withArg {

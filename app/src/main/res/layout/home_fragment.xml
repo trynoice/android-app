@@ -6,13 +6,12 @@
   android:orientation="vertical">
 
   <androidx.fragment.app.FragmentContainerView
-    android:id="@+id/nav_host_fragment"
+    android:id="@+id/home_nav_host_fragment"
     android:name="androidx.navigation.fragment.NavHostFragment"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1"
-    app:defaultNavHost="true"
-    app:navGraph="@navigation/home" />
+    app:defaultNavHost="true" />
 
   <com.google.android.material.bottomnavigation.BottomNavigationView
     android:id="@+id/bottom_nav"

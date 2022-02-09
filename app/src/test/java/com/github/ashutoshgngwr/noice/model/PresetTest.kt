@@ -1,17 +1,35 @@
 package com.github.ashutoshgngwr.noice.model
 
 import android.net.Uri
+import com.google.gson.Gson
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
+import org.junit.Assert.*
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.skyscreamer.jsonassert.JSONAssert
+import javax.inject.Inject
 
+@HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
-class PresetTest {
+class
+PresetTest {
+
+  @get:Rule
+  val hiltRule = HiltAndroidRule(this)
+
+  @set:Inject
+  internal lateinit var gson: Gson
+
+  @Before
+  fun setup() {
+    hiltRule.inject()
+  }
 
   @Test
   fun testEquality() {
@@ -72,11 +90,12 @@ class PresetTest {
       Preset.PlayerState("test-2", 4, 300)
     )
 
-    val preset = Preset.from(Uri.parse(presetUri))
-    assertEquals("test", preset.name)
-    assertEquals(expectedOutput.size, preset.playerStates.size)
+    val preset = Preset.from(Uri.parse(presetUri), gson)
+    assertNotNull(preset)
+    assertEquals("test", preset?.name)
+    assertEquals(expectedOutput.size, preset?.playerStates?.size)
     for (i in expectedOutput.indices) {
-      assertEquals(expectedOutput[i], preset.playerStates[i])
+      assertEquals(expectedOutput[i], preset?.playerStates?.get(i))
     }
   }
 
@@ -90,7 +109,7 @@ class PresetTest {
       }
     ))
 
-    val uri = preset.toUri()
+    val uri = preset.toUri(gson)
     assertEquals(preset.name, uri.getQueryParameter(Preset.URI_NAME_PARAM))
 
     val playerStatesJSON = """[{

@@ -8,9 +8,10 @@ import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.repository.PresetRepository.Companion.PREFERENCE_KEY
-import com.google.gson.GsonBuilder
+import com.google.gson.Gson
 import com.google.gson.JsonIOException
 import com.google.gson.JsonSyntaxException
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.InputStream
@@ -18,6 +19,8 @@ import java.io.InputStreamReader
 import java.io.OutputStream
 import java.io.OutputStreamWriter
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.math.round
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -27,7 +30,11 @@ import kotlin.random.nextInt
  * [PresetRepository] implements the data access layer for [Preset]. It stores all its data in a
  * shared preference with [PREFERENCE_KEY].
  */
-class PresetRepository private constructor(context: Context) {
+@Singleton
+class PresetRepository @Inject constructor(
+  @ApplicationContext context: Context,
+  private val gson: Gson,
+) {
 
   companion object {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -133,17 +140,9 @@ class PresetRepository private constructor(context: Context) {
         }
       ]
     }]"""
-
-    /**
-     * Creates a new instance of [PresetRepository]. Needed because mockk is unable to mock
-     * constructors on Android instrumented test and there's no cleaner way to inject mocks in
-     * Android components than mocking companion object methods.
-     */
-    fun newInstance(context: Context) = PresetRepository(context)
   }
 
   private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-  private val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
 
   init {
     migrate()

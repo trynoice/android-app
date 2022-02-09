@@ -2,9 +2,6 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.testing.FragmentScenario
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.fragment.app.testing.withFragment
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
@@ -13,24 +10,33 @@ import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
+import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
+import com.github.ashutoshgngwr.noice.HiltFragmentScenario
 import com.github.ashutoshgngwr.noice.R
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.random.Random
 
+@HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 class DialogFragmentTest {
 
-  private lateinit var emptyFragmentScenario: FragmentScenario<Fragment>
+  @get:Rule
+  val hiltRule = HiltAndroidRule(this)
+
+  private lateinit var emptyFragmentScenario: HiltFragmentScenario<Fragment>
 
   @Before
   fun setup() {
-    emptyFragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
+    emptyFragmentScenario = launchFragmentInHiltContainer()
   }
 
   @Test

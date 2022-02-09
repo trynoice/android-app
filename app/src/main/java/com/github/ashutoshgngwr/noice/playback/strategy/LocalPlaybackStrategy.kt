@@ -20,16 +20,16 @@ import com.google.android.exoplayer2.util.Util
 class LocalPlaybackStrategy(
   context: Context,
   audioAttributes: AudioAttributesCompat,
-  sound: Sound
+  sound: Sound,
+  private val settingsRepository: SettingsRepository,
 ) : PlaybackStrategy {
 
   companion object {
-    // a smaller default used when changing volume of an active player.
+    // a smaller default used when changing volume of, pausing, or stopping an active player.
     internal const val DEFAULT_FADE_DURATION = 1000L
   }
 
   private val players = sound.src.map { initPlayer(context, it, sound.isLooping) }
-  private val settingsRepository = SettingsRepository.newInstance(context)
   private var volume: Float = 0f
 
   init {

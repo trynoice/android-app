@@ -2,18 +2,19 @@ package com.github.ashutoshgngwr.noice
 
 import android.content.Intent
 import android.support.v4.media.session.PlaybackStateCompat
-import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.PlaybackUpdateListener
 import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.playback.PlayerManager
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.invoke
 import io.mockk.mockk
 import io.mockk.mockkConstructor
-import io.mockk.mockkObject
-import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
@@ -21,6 +22,7 @@ import org.greenrobot.eventbus.EventBus
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -29,23 +31,27 @@ import org.robolectric.android.controller.ServiceController
 import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowPowerManager
 
+@HiltAndroidTest
+@UninstallModules(NoiceApplication.EventBusModule::class)
 @RunWith(RobolectricTestRunner::class)
 class MediaPlayerServiceTest {
 
   private lateinit var serviceController: ServiceController<MediaPlayerService>
-  private lateinit var mockEventBus: EventBus
   private lateinit var mockServiceIntent: Intent
+
+  @get:Rule
+  var hiltRule = HiltAndroidRule(this)
+
+  @BindValue
+  internal lateinit var mockEventBus: EventBus
+
+  @BindValue
+  internal lateinit var mockPlaybackController: PlaybackController
 
   @Before
   fun setup() {
-    // mock so that service is created (onCreate calls CastAPIProvider constructor via PlayerManager).
-    ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .castAPIProvider = mockk(relaxed = true)
-
-    mockkStatic(EventBus::class)
     mockEventBus = mockk(relaxed = true)
-    every { EventBus.getDefault() } returns mockEventBus
-
+    mockPlaybackController = mockk(relaxed = true)
     mockServiceIntent = mockk(relaxed = true)
     serviceController = Robolectric.buildService(MediaPlayerService::class.java, mockServiceIntent)
   }
@@ -93,19 +99,17 @@ class MediaPlayerServiceTest {
 
   @Test
   fun testWakeLock_onServiceDestroy() {
-    mockkObject(PlaybackController)
     serviceController.create().destroy()
     ShadowLooper.idleMainLooper()
     assertFalse(ShadowPowerManager.getLatestWakeLock().isHeld)
-    verify(exactly = 1) { PlaybackController.clearAutoStopCallback() }
+    verify(exactly = 1) { mockPlaybackController.clearAutoStopCallback() }
   }
 
   @Test
   fun testOnStartCommand() {
-    mockkObject(PlaybackController)
     serviceController.create().startCommand(0, 0)
     verify(exactly = 1) {
-      PlaybackController.handleServiceIntent(any(), any(), mockServiceIntent)
+      mockPlaybackController.handleServiceIntent(any(), mockServiceIntent)
     }
   }
 }

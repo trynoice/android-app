@@ -1,10 +1,6 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <application
-    android:name="com.github.ashutoshgngwr.noice.FullNoiceApplication"
-    tools:ignore="AllowBackup"
-    tools:replace="name">
+  <application>
 
     <meta-data
       android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"

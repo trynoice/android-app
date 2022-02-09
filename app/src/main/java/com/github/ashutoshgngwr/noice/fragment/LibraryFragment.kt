@@ -15,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.MediaPlayerService
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.LibraryFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundGroupListItemBinding
@@ -25,25 +24,42 @@ import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LibraryFragment : Fragment() {
 
   private lateinit var binding: LibraryFragmentBinding
-  private lateinit var presetRepository: PresetRepository
-  private lateinit var settingsRepository: SettingsRepository
-  private lateinit var analyticsProvider: AnalyticsProvider
 
-  private var adapter: SoundListAdapter? = null
   private var players = emptyMap<String, Player>()
 
-  private val eventBus = EventBus.getDefault()
+  @set:Inject
+  internal lateinit var eventBus: EventBus
 
+  @set:Inject
+  internal lateinit var presetRepository: PresetRepository
+
+  @set:Inject
+  internal lateinit var settingsRepository: SettingsRepository
+
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
+
+  @set:Inject
+  internal lateinit var reviewFlowProvider: ReviewFlowProvider
+
+  @set:Inject
+  internal lateinit var playbackController: PlaybackController
+
+  private val adapter by lazy { SoundListAdapter(requireContext()) }
   private val dataSet by lazy {
     arrayListOf<SoundListItem>().also { list ->
       var lastDisplayGroupResID = -1
@@ -73,7 +89,7 @@ class LibraryFragment : Fragment() {
     val showSavePresetFAB = !presetRepository.list().contains(Preset.from("", players.values))
 
     view?.post {
-      adapter?.notifyDataSetChanged()
+      adapter.notifyDataSetChanged()
       if (showSavePresetFAB && event.state == PlaybackStateCompat.STATE_PLAYING) {
         binding.savePresetButton.show()
       } else {
@@ -82,20 +98,12 @@ class LibraryFragment : Fragment() {
     }
   }
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = LibraryFragmentBinding.inflate(inflater, container, false)
     return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    presetRepository = PresetRepository.newInstance(requireContext())
-    settingsRepository = SettingsRepository.newInstance(requireContext())
-    analyticsProvider = NoiceApplication.of(requireContext()).analyticsProvider
-    adapter = SoundListAdapter(requireContext())
     binding.soundList.also {
       it.adapter = adapter
       it.setHasFixedSize(true)
@@ -136,16 +144,14 @@ class LibraryFragment : Fragment() {
           presetRepository.create(preset)
           binding.savePresetButton.hide()
           showPresetSavedMessage()
-          PlaybackController.requestUpdateEvent(requireContext())
+          playbackController.requestUpdateEvent()
 
           params.putBoolean("success", true)
           analyticsProvider.logEvent("preset_name", bundleOf("item_length" to name.length))
           val soundCount = preset.playerStates.size
           analyticsProvider.logEvent("preset_sounds", bundleOf("items_count" to soundCount))
           // maybe show in-app review dialog to the user
-          NoiceApplication.of(requireContext())
-            .reviewFlowProvider
-            .maybeAskForReview(requireActivity())
+          reviewFlowProvider.maybeAskForReview(requireActivity())
         }
 
         onDismiss { analyticsProvider.logEvent("preset_create", params) }
@@ -260,9 +266,9 @@ class LibraryFragment : Fragment() {
       binding.root.setOnClickListener {
         dataSet.getOrNull(bindingAdapterPosition)?.also {
           if (players.containsKey(it.data)) {
-            PlaybackController.stop(requireContext(), it.data)
+            playbackController.stop(it.data)
           } else {
-            PlaybackController.play(requireContext(), it.data)
+            playbackController.play(it.data)
           }
         }
       }
@@ -300,7 +306,7 @@ class LibraryFragment : Fragment() {
         }
 
         positiveButton(R.string.okay)
-        onDismiss { PlaybackController.requestUpdateEvent(requireContext()) }
+        onDismiss { playbackController.requestUpdateEvent() }
       }
 
       analyticsProvider.logEvent("sound_controls_open", bundleOf("sound_key" to listItem.data))
