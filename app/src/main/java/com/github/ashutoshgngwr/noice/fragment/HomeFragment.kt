@@ -12,7 +12,7 @@ import androidx.annotation.IdRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
@@ -35,10 +35,17 @@ import javax.inject.Inject
 class HomeFragment : Fragment(), Navigable {
 
   private lateinit var binding: HomeFragmentBinding
-  private lateinit var navController: NavController
-  private lateinit var childNavController: NavController
-
   private var playerManagerState = PlaybackStateCompat.STATE_STOPPED
+
+  private val homeNavController: NavController by lazy {
+    val navHostFragment = binding.homeNavHostFragment.getFragment<NavHostFragment>()
+    requireNotNull(navHostFragment) { "failed to get the home NavHostFragment from the view tree" }
+    navHostFragment.navController
+  }
+
+  private val homeNavGraph: NavGraph by lazy {
+    homeNavController.navInflater.inflate(R.navigation.home)
+  }
 
   @set:Inject
   internal lateinit var eventBus: EventBus
@@ -72,22 +79,17 @@ class HomeFragment : Fragment(), Navigable {
   }
 
   override fun onViewCreated(view: View, state: Bundle?) {
-    navController = view.findNavController()
-    val navHostFragment = requireNotNull(binding.homeNavHostFragment.getFragment<NavHostFragment>())
-    childNavController = navHostFragment.navController
-    val childGraph = childNavController.navInflater.inflate(R.navigation.home)
-
     if (settingsRepository.shouldDisplayPresetsAsHomeScreen()) {
-      childGraph.setStartDestination(R.id.presets)
+      homeNavGraph.setStartDestination(R.id.presets)
     }
 
-    childNavController.graph = childGraph
-    binding.bottomNav.setupWithNavController(childNavController)
+    homeNavController.graph = homeNavGraph
+    binding.bottomNav.setupWithNavController(homeNavController)
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     castApiProvider.addMenuItem(requireContext(), menu, R.string.cast_media)
-    val displayPlaybackControls = childNavController.currentDestination?.id != R.id.wake_up_timer
+    val displayPlaybackControls = homeNavController.currentDestination?.id != R.id.wake_up_timer
       && PlaybackStateCompat.STATE_STOPPED != playerManagerState
 
     if (displayPlaybackControls) {
@@ -123,7 +125,7 @@ class HomeFragment : Fragment(), Navigable {
 
   override fun onNavDestinationSelected(@IdRes destID: Int): Boolean {
     return binding.bottomNav.menu.findItem(destID)?.let {
-      NavigationUI.onNavDestinationSelected(it, childNavController)
+      NavigationUI.onNavDestinationSelected(it, homeNavController)
     } ?: false
   }
 
