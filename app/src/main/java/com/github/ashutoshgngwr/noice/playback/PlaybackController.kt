@@ -20,6 +20,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.max
 
+/**
+ * Provides the playback controls the [PlayerManager] to the entire application.
+ */
 @Singleton
 class PlaybackController @Inject constructor(
   @ApplicationContext private val context: Context,
@@ -29,6 +32,10 @@ class PlaybackController @Inject constructor(
   private val handler = Handler(Looper.getMainLooper())
   private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
+  /**
+   * Handles [MediaPlayerService.onStartCommand] intents and translates them to relevant
+   * [PlayerManager] commands.
+   */
   fun handleServiceIntent(playerManager: PlayerManager, intent: Intent) {
     when (intent.action) {
       ACTION_RESUME_PLAYBACK -> {
@@ -226,10 +233,17 @@ class PlaybackController @Inject constructor(
     return max(atUptimeMillis - SystemClock.uptimeMillis(), 0)
   }
 
+  /**
+   * Remove sleep timer callbacks (if any).
+   */
   fun clearAutoStopCallback() {
     handler.removeCallbacksAndMessages(AUTO_STOP_CALLBACK_TOKEN)
   }
 
+  /**
+   * When invoked, tells the [MediaPlayerService] to issue a
+   * [MediaPlayerService.PlaybackUpdateEvent] through the event bus.
+   */
   fun requestUpdateEvent() {
     context.startService(
       Intent(context, MediaPlayerService::class.java)
@@ -237,6 +251,9 @@ class PlaybackController @Inject constructor(
     )
   }
 
+  /**
+   * Sets the audio stream that [PlayerManager] uses for playback.
+   */
   fun setAudioUsage(@AudioAttributesCompat.AttributeUsage usage: Int) {
     context.startService(
       Intent(context, MediaPlayerService::class.java)
@@ -278,18 +295,31 @@ class PlaybackController @Inject constructor(
     private const val RC_STOP = 0x3E
     private const val RC_RANDOM_PRESET = 0x3F
 
+    /**
+     * @return [PendingIntent] that issues resume command to the [MediaPlayerService].
+     */
     fun buildResumeActionPendingIntent(context: Context): PendingIntent {
       return buildSimpleActionPendingIntent(context, ACTION_RESUME_PLAYBACK, RC_RESUME)
     }
 
+    /**
+     * @return [PendingIntent] that issues pause command to the [MediaPlayerService].
+     */
     fun buildPauseActionPendingIntent(context: Context): PendingIntent {
       return buildSimpleActionPendingIntent(context, ACTION_PAUSE_PLAYBACK, RC_PAUSE)
     }
 
+    /**
+     * @return [PendingIntent] that issues stop command to the [MediaPlayerService].
+     */
     fun buildStopActionPendingIntent(context: Context): PendingIntent {
       return buildSimpleActionPendingIntent(context, ACTION_STOP_PLAYBACK, RC_STOP)
     }
 
+    /**
+     * @return [PendingIntent] that issues a command to the [MediaPlayerService] to play a random
+     * preset.
+     */
     fun buildRandomPresetActionPendingIntent(context: Context): PendingIntent {
       return buildSimpleActionPendingIntent(context, ACTION_PLAY_RANDOM_PRESET, RC_RANDOM_PRESET)
     }
@@ -305,10 +335,18 @@ class PlaybackController @Inject constructor(
       return buildPendingIntent(context, intent, requestCode)
     }
 
+    /**
+     * @return [PendingIntent] that issues a command to the [MediaPlayerService] to play the
+     * previous preset.
+     */
     fun buildSkipPrevActionPendingIntent(context: Context): PendingIntent {
       return buildSkipActionPendingIntent(context, PlayerManager.SKIP_DIRECTION_PREV, RC_SKIP_PREV)
     }
 
+    /**
+     * @return [PendingIntent] that issues a command to the [MediaPlayerService] to play the next
+     * preset.
+     */
     fun buildSkipNextActionPendingIntent(context: Context): PendingIntent {
       return buildSkipActionPendingIntent(context, PlayerManager.SKIP_DIRECTION_NEXT, RC_SKIP_NEXT)
     }

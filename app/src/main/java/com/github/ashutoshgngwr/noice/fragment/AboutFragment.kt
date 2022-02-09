@@ -94,7 +94,7 @@ class AboutFragment : Fragment() {
       )
 
       addGroup(getString(R.string.created_by))
-      addTwitter(creatorTwitter, creatorTwitter)
+      addTwitter(creatorTwitter, creatorName)
       create()
     }
   }
@@ -119,5 +119,6 @@ class AboutFragment : Fragment() {
 
   companion object {
     private const val creatorTwitter = "ashutoshgngwr"
+    private const val creatorName = "Ashutosh Gangwar"
   }
 }

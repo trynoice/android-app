@@ -24,7 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.roundToInt
+import kotlin.math.ceil
 
 @AndroidEntryPoint
 class SignInResultFragment : Fragment() {
@@ -88,7 +88,7 @@ class SignInResultViewModel @Inject constructor(
     it.value = 0 // data binding causes NPE without it.
     it.addSource(signInError) { e ->
       if (e is AccountTemporarilyLockedError) {
-        it.postValue((e.timeoutSeconds / 60.0).roundToInt())
+        it.postValue(ceil(e.timeoutSeconds / 60.0).toInt())
       }
     }
   }

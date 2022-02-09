@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.ListView
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.TextViewCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentManager
@@ -71,7 +72,7 @@ class DialogFragment : BottomSheetDialogFragment() {
   /**
    * Adds given [View] to the [R.id.content] layout in the dialog
    */
-  private fun addContentView(view: View) {
+  private fun addView(view: View) {
     baseBinding.content.addView(view)
   }
 
@@ -144,7 +145,7 @@ class DialogFragment : BottomSheetDialogFragment() {
    * in the dialog.
    */
   fun message(@StringRes resId: Int, vararg formatArgs: Any) {
-    addContentView(
+    addView(
       MarkdownTextView(requireContext()).apply {
         val textAppearance = android.R.attr.textAppearance.resolveAttributeValue()
         TextViewCompat.setTextAppearance(this, textAppearance)
@@ -172,7 +173,7 @@ class DialogFragment : BottomSheetDialogFragment() {
   ) {
     textInputBinding =
       DialogFragmentTextInputBinding.inflate(layoutInflater, baseBinding.content, false)
-    addContentView(textInputBinding.root)
+    addView(textInputBinding.root)
 
     baseBinding.positive.isEnabled = false
     textInputBinding.textInputLayout.hint = getString(hintRes)
@@ -217,7 +218,7 @@ class DialogFragment : BottomSheetDialogFragment() {
     onItemSelected: (Int) -> Unit = { }
   ) {
     require(currentChoice >= -1 && currentChoice < items.size)
-    addContentView(
+    addView(
       ListView(requireContext()).apply {
         id = android.R.id.list
         dividerHeight = 0
@@ -240,8 +241,11 @@ class DialogFragment : BottomSheetDialogFragment() {
     )
   }
 
+  /**
+   * Adds a [Slider] to the dialog with given parameters.
+   */
   fun slider(
-    @IdRes viewID: Int = 0,
+    @IdRes viewID: Int = ResourcesCompat.ID_NULL,
     step: Float = 1.0f,
     from: Float = 0.0f,
     to: Float = -1.0f,
@@ -262,7 +266,7 @@ class DialogFragment : BottomSheetDialogFragment() {
         }
       }
 
-      addContentView(this)
+      addView(this)
     }
   }
 

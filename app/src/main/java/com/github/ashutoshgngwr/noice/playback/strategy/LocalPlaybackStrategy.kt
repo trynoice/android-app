@@ -25,7 +25,7 @@ class LocalPlaybackStrategy(
 ) : PlaybackStrategy {
 
   companion object {
-    // a smaller default used when changing volume of an active player.
+    // a smaller default used when changing volume of, pausing, or stopping an active player.
     internal const val DEFAULT_FADE_DURATION = 1000L
   }
 

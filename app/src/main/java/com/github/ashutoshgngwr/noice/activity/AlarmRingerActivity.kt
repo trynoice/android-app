@@ -157,6 +157,9 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     private const val RC_ALARM = 0x39
     private val LOG_TAG = AlarmRingerActivity::class.simpleName
 
+    /**
+     * Returns a [PendingIntent] that starts the [AlarmRingerActivity] with the given [presetID].
+     */
     fun getPendingIntent(context: Context, presetID: String?): PendingIntent {
       var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

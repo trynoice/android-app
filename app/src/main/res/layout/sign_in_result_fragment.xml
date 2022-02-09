@@ -69,7 +69,6 @@
         android:text="@{@string/account_locked_error(@plurals/time_minutes(viewModel.accountLockTimeoutMinutes, viewModel.accountLockTimeoutMinutes))}"
         android:textAppearance="?attr/textAppearanceBody1"
         android:visibility="@{viewModel.isAccountLocked ? View.VISIBLE : View.GONE}"
-        app:drawableStartCompat="@null"
         tools:visibility="gone" />
 
       <TextView
@@ -79,7 +78,6 @@
         android:text="@{viewModel.signInErrorStrRes}"
         android:textAppearance="?attr/textAppearanceBody1"
         android:visibility="@{viewModel.signInErrorStrRes != null ? View.VISIBLE : View.GONE}"
-        app:drawableStartCompat="@null"
         tools:visibility="gone" />
 
       <Space

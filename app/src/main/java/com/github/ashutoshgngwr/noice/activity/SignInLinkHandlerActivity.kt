@@ -81,6 +81,7 @@ class SignInLinkHandlerViewModel @Inject constructor(
       return
     }
 
+    signInError.postValue(null)
     isSigningIn.postValue(true)
     viewModelScope.launch(Dispatchers.IO) {
       try {

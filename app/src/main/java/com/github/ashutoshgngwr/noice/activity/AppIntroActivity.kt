@@ -22,7 +22,7 @@ class AppIntroActivity : AppIntro() {
 
   companion object {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val PREF_HAS_USER_SEEN_APP_INTRO = "has_user_seen_app_intro"
+    internal const val PREF_HAS_USER_SEEN_APP_INTRO = "has_user_seen_app_intro"
 
     /**
      * [maybeStart] displays the [AppIntroActivity] if user hasn't seen it before.

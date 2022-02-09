@@ -176,6 +176,9 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
     }
   }
 
+  /**
+   * Sets the system audio stream used for playback.
+   */
   internal fun setAudioUsage(@AudioAttributesCompat.AttributeUsage usage: Int) {
     if (this::audioAttributes.isInitialized && usage == audioAttributes.usage) {
       return
@@ -404,14 +407,24 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
     playbackUpdateListener = listener
   }
 
+  /**
+   * Generates a random preset using the given parameters and plays it.
+   */
   fun playRandomPreset(tag: Sound.Tag? = null, intensity: IntRange = 2 until 6) {
     playPreset(presetRepository.random(tag, intensity))
   }
 
+  /**
+   * Plays the preset with given id. Fails silently if the preset with the given id doesn't exist.
+   */
   fun playPreset(presetID: String) {
     presetRepository.get(presetID)?.also { playPreset(it) }
   }
 
+  /**
+   * Decodes the URI and plays the preset encoded in its query parameters. Fails silently if the
+   * given URI doesn't contain a valid preset.
+   */
   fun playPreset(uri: Uri) {
     playPreset(Preset.from(uri, gson) ?: return)
   }
@@ -448,6 +461,9 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
     resume()
   }
 
+  /**
+   * Signals to the [PlayerManager] that its client is requesting an update event.
+   */
   fun callPlaybackUpdateListener() {
     playbackUpdateListener?.invoke(state, players)
   }
@@ -467,6 +483,11 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
     }
   }
 
+  /**
+   * Skips the currently playing preset in the given [skipDirection].
+   *
+   * @param skipDirection must be one of [SKIP_DIRECTION_PREV] or [SKIP_DIRECTION_NEXT].
+   */
   fun skipPreset(skipDirection: Int) {
     if (skipDirection != SKIP_DIRECTION_PREV && skipDirection != SKIP_DIRECTION_NEXT) {
       throw IllegalArgumentException(
@@ -491,6 +512,10 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
     playPreset(presets[nextPresetIndex])
   }
 
+  /**
+   * Returns the number of players in the [PlayerManager]'s state (playing or paused, but excluding
+   * stopped players).
+   */
   fun playerCount(): Int {
     return players.size
   }

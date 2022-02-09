@@ -108,6 +108,9 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
     }
   }
 
+  /**
+   * Sets the provided [AudioAttributesCompat] to the underlying [PlaybackStrategy].
+   */
   internal fun setAudioAttributes(attrs: AudioAttributesCompat) {
     playbackStrategy.setAudioAttributes(attrs)
   }

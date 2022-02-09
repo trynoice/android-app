@@ -12,6 +12,9 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.github.ashutoshgngwr.noice.R
 
+/**
+ * Manages a media-styled foreground notification displayed by the media player service.
+ */
 object PlayerNotificationManager {
 
   private const val NOTIFICATION_CHANNEL_ID = "com.github.ashutoshgngwr.noice.default"
