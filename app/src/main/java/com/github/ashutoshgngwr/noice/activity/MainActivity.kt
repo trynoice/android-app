@@ -16,7 +16,6 @@ import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
-import com.github.ashutoshgngwr.noice.navigation.Navigable
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.BillingProvider
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
      * [EXTRA_NAV_DESTINATION] declares the key for intent extra value passed to [MainActivity] for
      * setting the current destination on the [NavController]. The value for this extra should be an
      * id resource representing the action/destination id present in the [main][R.navigation.main]
-     * or [home][R.navigation.home] navigation graphs.
+     * navigation graph.
      */
     internal const val EXTRA_NAV_DESTINATION = "nav_destination"
 
@@ -132,10 +131,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
 
     hasNewIntent = false
     if (intent.hasExtra(EXTRA_NAV_DESTINATION)) {
-      val destID = intent.getIntExtra(EXTRA_NAV_DESTINATION, 0)
-      if (!Navigable.navigate(binding.mainNavHostFragment.getFragment(), destID)) {
-        navController.navigate(destID)
-      }
+      navController.navigate(intent.getIntExtra(EXTRA_NAV_DESTINATION, 0))
     } else if (Intent.ACTION_APPLICATION_PREFERENCES == intent.action) {
       navController.navigate(R.id.settings)
     }

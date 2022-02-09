@@ -8,18 +8,17 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.IdRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.HomeFragmentBinding
-import com.github.ashutoshgngwr.noice.navigation.Navigable
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.CastApiProvider
@@ -32,11 +31,12 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), Navigable {
+class HomeFragment : Fragment() {
 
   private lateinit var binding: HomeFragmentBinding
   private var playerManagerState = PlaybackStateCompat.STATE_STOPPED
 
+  private val navArgs: HomeFragmentArgs by navArgs()
   private val homeNavController: NavController by lazy {
     val navHostFragment = binding.homeNavHostFragment.getFragment<NavHostFragment>()
     requireNotNull(navHostFragment) { "failed to get the home NavHostFragment from the view tree" }
@@ -85,6 +85,9 @@ class HomeFragment : Fragment(), Navigable {
 
     homeNavController.graph = homeNavGraph
     binding.bottomNav.setupWithNavController(homeNavController)
+    binding.bottomNav.menu.findItem(navArgs.navDestination)?.let {
+      NavigationUI.onNavDestinationSelected(it, homeNavController)
+    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -121,12 +124,6 @@ class HomeFragment : Fragment(), Navigable {
         }
       }
     }
-  }
-
-  override fun onNavDestinationSelected(@IdRes destID: Int): Boolean {
-    return binding.bottomNav.menu.findItem(destID)?.let {
-      NavigationUI.onNavDestinationSelected(it, homeNavController)
-    } ?: false
   }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
