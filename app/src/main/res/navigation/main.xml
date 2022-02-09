@@ -11,6 +11,12 @@
     android:label="@string/app_name"
     tools:layout="@layout/home_fragment">
 
+    <argument
+      android:name="navDestination"
+      android:defaultValue="0"
+      app:argType="reference"
+      app:nullable="false" />
+
     <action
       android:id="@+id/sign_in_form"
       app:destination="@id/sign_in_sign_up_form" />
@@ -119,5 +125,25 @@
     android:name="com.github.ashutoshgngwr.noice.activity.AppIntroActivity"
     android:label="@string/help"
     tools:layout="@layout/appintro_intro_layout" />
+
+  <action
+    android:id="@+id/home_presets"
+    app:destination="@id/home">
+
+    <argument
+      android:name="navDestination"
+      android:defaultValue="@id/presets" />
+
+  </action>
+
+  <action
+    android:id="@+id/home_wake_up_timer"
+    app:destination="@id/home">
+
+    <argument
+      android:name="navDestination"
+      android:defaultValue="@id/wake_up_timer" />
+
+  </action>
 
 </navigation>
