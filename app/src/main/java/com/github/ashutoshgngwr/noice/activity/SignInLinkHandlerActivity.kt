@@ -45,7 +45,7 @@ class SignInLinkHandlerActivity : AppCompatActivity() {
       startActivity(
         Intent(this, MainActivity::class.java)
           .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-          .putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.home)
+          .putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.home_account)
       )
     }
 

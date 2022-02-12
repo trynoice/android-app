@@ -146,4 +146,14 @@
 
   </action>
 
+  <action
+    android:id="@+id/home_account"
+    app:destination="@id/home">
+
+    <argument
+      android:name="navDestination"
+      android:defaultValue="@id/account" />
+
+  </action>
+
 </navigation>
