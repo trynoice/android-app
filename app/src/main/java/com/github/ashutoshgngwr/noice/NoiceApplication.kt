@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice
 
 import android.app.Application
 import android.content.Context
+import android.os.Build
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.trynoice.api.client.NoiceApiClient
@@ -39,7 +40,12 @@ class NoiceApplication : Application() {
     @Provides
     @Singleton
     fun client(@ApplicationContext context: Context, gson: Gson): NoiceApiClient {
-      return NoiceApiClient(context, gson)
+      return NoiceApiClient(
+        context = context,
+        gson = gson,
+        userAgent = "${context.getString(R.string.app_name)}/${BuildConfig.VERSION_NAME} " +
+          "(Android ${Build.VERSION.RELEASE}; ${Build.MANUFACTURER} ${Build.MODEL})",
+      )
     }
   }
 }

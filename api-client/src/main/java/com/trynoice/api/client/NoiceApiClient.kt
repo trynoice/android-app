@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.HttpException
@@ -31,6 +32,7 @@ class NoiceApiClient(
   context: Context,
   gson: Gson,
   baseUrl: String = "https://api.trynoice.com",
+  userAgent: String = "noice-api-client"
 ) {
 
   private val credentialRepository = AuthCredentialRepository(context)
@@ -43,6 +45,14 @@ class NoiceApiClient(
     }))
     .addInterceptor(RefreshTokenInjector(credentialRepository))
     .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC })
+    .addInterceptor { chain ->
+      chain.proceed(
+        chain.request()
+          .newBuilder()
+          .addHeader("User-Agent", "$userAgent OkHttp/${OkHttp.VERSION}")
+          .build()
+      )
+    }
     .build()
 
   private val retrofit: Retrofit by lazy {
