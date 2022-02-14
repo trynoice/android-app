@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.databinding.WakeUpTimerFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.showSnackbar
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -96,7 +96,7 @@ class WakeUpTimerFragment : Fragment() {
   private fun onResetTimeClicked() {
     resetControls()
     notifyUpdate()
-    Snackbar.make(requireView(), R.string.wake_up_timer_cancelled, Snackbar.LENGTH_LONG).show()
+    showSnackbar(R.string.wake_up_timer_cancelled)
     analyticsProvider.logEvent("wake_up_timer_cancel", bundleOf())
   }
 
@@ -213,11 +213,7 @@ class WakeUpTimerFragment : Fragment() {
     val diffHours = TimeUnit.MILLISECONDS.toHours(differenceMillis).toInt()
     val diffMinutes = TimeUnit.MILLISECONDS.toMinutes(differenceMillis).toInt() % 60
 
-    Snackbar.make(
-      requireView(),
-      getRelativeDurationString(diffHours, diffMinutes),
-      Snackbar.LENGTH_LONG
-    ).show()
+    showSnackbar(getRelativeDurationString(diffHours, diffMinutes))
   }
 
   private val matchSpacesRegex = """\s+""".toRegex()

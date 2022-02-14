@@ -19,6 +19,7 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.LibraryFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundGroupListItemBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundListItemBinding
+import com.github.ashutoshgngwr.noice.ext.showSnackbar
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
@@ -27,7 +28,6 @@ import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -143,7 +143,7 @@ class LibraryFragment : Fragment() {
           val preset = Preset.from(name, players.values)
           presetRepository.create(preset)
           binding.savePresetButton.hide()
-          showPresetSavedMessage()
+          showSnackbar(R.string.preset_saved)
           playbackController.requestUpdateEvent()
 
           params.putBoolean("success", true)
@@ -165,10 +165,6 @@ class LibraryFragment : Fragment() {
   override fun onDestroyView() {
     eventBus.unregister(this)
     super.onDestroyView()
-  }
-
-  private fun showPresetSavedMessage() {
-    Snackbar.make(requireView(), R.string.preset_saved, Snackbar.LENGTH_LONG).show()
   }
 
   private class SoundListItem(@LayoutRes val layoutID: Int, val data: String)

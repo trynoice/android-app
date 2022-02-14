@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.StringRes
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ShareCompat
 import androidx.core.content.pm.ShortcutInfoCompat
@@ -23,12 +22,12 @@ import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.databinding.PresetsFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.PresetsListItemBinding
+import com.github.ashutoshgngwr.noice.ext.showSnackbar
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
-import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
@@ -179,16 +178,16 @@ class PresetsFragment : Fragment() {
 
     private fun createPinnedShortcut() {
       if (!ShortcutManagerCompat.isRequestPinShortcutSupported(requireContext())) {
-        showSnackBar(R.string.pinned_shortcuts_not_supported)
+        showSnackbar(R.string.pinned_shortcuts_not_supported)
         return
       }
 
       val info = buildShortcutInfo(UUID.randomUUID().toString(), "pinned")
       val result = ShortcutManagerCompat.requestPinShortcut(requireContext(), info, null)
       if (!result) {
-        showSnackBar(R.string.pinned_shortcut_creation_failed)
+        showSnackbar(R.string.pinned_shortcut_creation_failed)
       } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-        showSnackBar(R.string.pinned_shortcut_created)
+        showSnackbar(R.string.pinned_shortcut_created)
       }
 
       val params = bundleOf("success" to result, "shortcut_type" to "pinned")
@@ -202,9 +201,9 @@ class PresetsFragment : Fragment() {
 
       val result = ShortcutManagerCompat.addDynamicShortcuts(requireContext(), list)
       if (result) {
-        showSnackBar(R.string.app_shortcut_created)
+        showSnackbar(R.string.app_shortcut_created)
       } else {
-        showSnackBar(R.string.app_shortcut_creation_failed)
+        showSnackbar(R.string.app_shortcut_creation_failed)
       }
 
       val params = bundleOf("success" to result, "shortcut_type" to "app")
@@ -214,7 +213,7 @@ class PresetsFragment : Fragment() {
     private fun removeAppShortcut() {
       val presetID = dataSet[bindingAdapterPosition].id
       ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(presetID))
-      showSnackBar(R.string.app_shortcut_removed)
+      showSnackbar(R.string.app_shortcut_removed)
       analyticsProvider.logEvent("preset_shortcut_remove", bundleOf("shortcut_type" to "app"))
     }
 
@@ -302,7 +301,7 @@ class PresetsFragment : Fragment() {
           ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
           adapter.notifyItemRemoved(bindingAdapterPosition)
           updateEmptyListIndicatorVisibility()
-          showSnackBar(R.string.preset_deleted)
+          showSnackbar(R.string.preset_deleted)
 
           params.putBoolean("success", true)
           // maybe show in-app review dialog to the user
@@ -320,10 +319,6 @@ class PresetsFragment : Fragment() {
       if (id == wakeUpTimerManager.get()?.presetID) {
         wakeUpTimerManager.cancel()
       }
-    }
-
-    private fun showSnackBar(@StringRes message: Int) {
-      Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).show()
     }
   }
 }

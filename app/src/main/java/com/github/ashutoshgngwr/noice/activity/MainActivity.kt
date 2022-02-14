@@ -156,6 +156,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
   override fun onPending(skus: List<String>) {
     analyticsProvider.logEvent("purchase_pending", bundleOf())
     Snackbar.make(binding.mainNavHostFragment, R.string.payment_pending, Snackbar.LENGTH_LONG)
+      .setAnchorView(findViewById(R.id.bottom_nav))
       .show()
   }
 

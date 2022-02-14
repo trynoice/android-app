@@ -18,6 +18,7 @@ import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.AccountFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchInCustomTab
+import com.github.ashutoshgngwr.noice.ext.showSnackbar
 import com.github.ashutoshgngwr.noice.model.NetworkError
 import com.github.ashutoshgngwr.noice.model.NotSignedInError
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
@@ -73,10 +74,8 @@ class AccountFragment : Fragment() {
 
     viewModel.profileLoadErrorStringRes.observe(viewLifecycleOwner) { errRes ->
       if (errRes != null && errRes != ResourcesCompat.ID_NULL) {
-        Snackbar.make(binding.root, errRes, Snackbar.LENGTH_LONG)
-          .setAnchorView(R.id.bottom_nav)
+        showSnackbar(errRes, Snackbar.LENGTH_LONG)
           .setAction(R.string.retry) { viewModel.loadProfile(force = true) }
-          .show()
       }
     }
 
