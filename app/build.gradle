@@ -121,6 +121,8 @@ dependencies {
   implementation 'com.google.code.gson:gson:2.8.9'
   implementation "com.google.dagger:hilt-android:$deps.hiltVersion"
   implementation 'com.ncorti:slidetoact:0.9.0'
+  // TODO: move to stable https://github.com/elye/loaderviewlibrary/issues/33
+  implementation 'com.github.ashutoshgngwr:loaderviewlibrary:921818c849'
   implementation 'io.github.medyo:android-about-page:2.0.0'
   implementation 'io.github.mrherintsoahasina:flextools:1.0.3'
   implementation 'io.noties.markwon:core:4.6.2'

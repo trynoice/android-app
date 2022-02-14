@@ -20,7 +20,6 @@
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:animateLayoutChanges="true"
       android:orientation="vertical">
 
       <LinearLayout
@@ -28,45 +27,28 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="32dp"
-        android:animateLayoutChanges="true"
-        android:gravity="center"
         android:orientation="vertical"
         android:visibility="@{viewModel.isSignedIn ? View.VISIBLE : View.GONE}">
 
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-          style="@style/Widget.MaterialComponents.CircularProgressIndicator.Small"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:indeterminate="true"
-          android:visibility="@{viewModel.isLoadingProfile ? View.VISIBLE : View.GONE}"
-          tools:visibility="gone" />
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="@{viewModel.profile.name ?? ``}"
-          android:textAppearance="?attr/textAppearanceHeadline5"
-          android:visibility="@{viewModel.profile != null ? View.VISIBLE : View.GONE}"
-          tools:text="Jane Doe" />
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="8dp"
-          android:text="@{viewModel.profile.email ?? ``}"
-          android:textAppearance="?attr/textAppearanceCaption"
-          android:textSize="16sp"
-          android:visibility="@{viewModel.profile != null ? View.VISIBLE : View.GONE}"
-          tools:text="jane.doe@emailservice.org" />
-
-        <TextView
-          style="@style/Widget.App.TextView.Error"
+        <com.elyeproj.loaderviewlibrary.LoaderTextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="@{viewModel.profileLoadErrorStringRes}"
-          android:visibility="@{viewModel.profileLoadError != null ? View.VISIBLE : View.GONE}"
-          tools:text="@string/network_error"
-          tools:visibility="gone" />
+          android:gravity="center"
+          android:textAppearance="?attr/textAppearanceHeadline5"
+          android:text="@{viewModel.profile.name}"
+          app:width_weight="0.65"
+          tools:text="Jane Doe" />
+
+        <com.elyeproj.loaderviewlibrary.LoaderTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:gravity="center"
+          android:textAppearance="?attr/textAppearanceCaption"
+          android:textSize="16sp"
+          android:text="@{viewModel.profile.email}"
+          app:width_weight="0.75"
+          tools:text="jane.doe@emailservice.org" />
 
       </LinearLayout>
 

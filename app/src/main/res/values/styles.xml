@@ -22,6 +22,10 @@
     <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
     <item name="aboutStyle">@style/Widget.App.AboutPage</item>
     <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+
+    <!-- default style shimmering loader text and image views -->
+    <item name="custom_color">@color/loading_background</item>
+    <item name="corners">8</item>
   </style>
 
   <style name="Theme.App.Translucent">
