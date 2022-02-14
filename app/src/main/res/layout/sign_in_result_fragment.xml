@@ -91,7 +91,7 @@
         android:backgroundTint="@color/red"
         android:onClick="@{() -> viewModel.signIn()}"
         android:paddingHorizontal="32dp"
-        android:text="@string/try_again"
+        android:text="@string/retry"
         android:visibility="@{viewModel.signInError != null ? View.VISIBLE : View.GONE}"
         tools:visibility="gone" />
 
