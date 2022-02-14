@@ -1,10 +1,9 @@
 package com.github.ashutoshgngwr.noice.provider
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.ext.launchInCustomTab
+import com.github.ashutoshgngwr.noice.ext.startCustomTab
 
 /**
  * [DonateViewProvider] provides an interface to add different variants of donate buttons in support
@@ -25,10 +24,7 @@ object OpenCollectiveDonateViewProvider : DonateViewProvider {
       .inflate(R.layout.open_collective_donate_button, parent, false)
       .apply {
         parent.addView(this)
-        setOnClickListener {
-          val url = it.context.getString(R.string.open_collective_url)
-          Uri.parse(url).launchInCustomTab(it.context)
-        }
+        setOnClickListener { it.context.startCustomTab(R.string.open_collective_url) }
       }
   }
 }

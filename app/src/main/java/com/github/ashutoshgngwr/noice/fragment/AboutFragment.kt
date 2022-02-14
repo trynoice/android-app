@@ -1,6 +1,5 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.ext.launchInCustomTab
+import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import dagger.hilt.android.AndroidEntryPoint
 import mehdi.sakout.aboutpage.AboutPage
@@ -114,7 +113,7 @@ class AboutFragment : Fragment() {
   private fun buildElement(@DrawableRes iconId: Int, title: String, url: String): Element {
     return Element(title, iconId)
       .setAutoApplyIconTint(true)
-      .setOnClickListener { Uri.parse(url).launchInCustomTab(requireContext()) }
+      .setOnClickListener { it.context.startCustomTab(url) }
   }
 
   companion object {

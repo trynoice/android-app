@@ -1,6 +1,5 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +16,8 @@ import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.AccountFragmentBinding
-import com.github.ashutoshgngwr.noice.ext.launchInCustomTab
 import com.github.ashutoshgngwr.noice.ext.showSnackbar
+import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.model.NetworkError
 import com.github.ashutoshgngwr.noice.model.NotSignedInError
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
@@ -51,17 +50,18 @@ class AccountFragment : Fragment() {
     viewModel.onItemClickListener = View.OnClickListener { item ->
       when (item.id) {
         R.id.report_issues -> {
-          var url = getString(R.string.app_issues_github_url)
-          if (!BuildConfig.IS_FREE_BUILD) {
-            url = getString(R.string.app_issues_form_url)
+          val url = if (BuildConfig.IS_FREE_BUILD) {
+            R.string.app_issues_github_url
+          } else {
+            R.string.app_issues_form_url
           }
 
-          Uri.parse(url).launchInCustomTab(requireContext())
+          item.context.startCustomTab(url)
           analyticsProvider.logEvent("issue_tracker_open", bundleOf())
         }
 
         R.id.submit_feedback -> {
-          Uri.parse(getString(R.string.feedback_form_url)).launchInCustomTab(requireContext())
+          item.context.startCustomTab(R.string.feedback_form_url)
           analyticsProvider.logEvent("feedback_form_open", bundleOf())
         }
 
