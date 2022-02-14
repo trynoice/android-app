@@ -15,10 +15,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignInResultFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.showSnackbar
 import com.github.ashutoshgngwr.noice.model.AccountTemporarilyLockedError
 import com.github.ashutoshgngwr.noice.model.NetworkError
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -52,7 +52,7 @@ class SignInResultFragment : Fragment() {
           .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
       )
     } catch (e: ActivityNotFoundException) {
-      Snackbar.make(requireView(), R.string.mailbox_app_not_found, Snackbar.LENGTH_LONG).show()
+      showSnackbar(R.string.mailbox_app_not_found)
     }
   }
 }
