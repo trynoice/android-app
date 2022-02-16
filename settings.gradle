@@ -1,3 +1,30 @@
+pluginManagement {
+  repositories {
+    gradlePluginPortal()
+    google()
+    mavenCentral()
+  }
+
+  resolutionStrategy {
+    eachPlugin {
+      // TODO: remove the following when the appropriate hilt gradle plugin is available in one of
+      //  the plugins repository.
+      if (requested.id.id == 'dagger.hilt.android.plugin') {
+        useModule("com.google.dagger:hilt-android-gradle-plugin:${requested.version}")
+      }
+    }
+  }
+}
+
+dependencyResolutionManagement {
+  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+  repositories {
+    google()
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+  }
+}
+
 rootProject.name = 'noice-android'
 
 include ':app'

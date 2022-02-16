@@ -3,7 +3,7 @@
 apply plugin: 'jacoco'
 
 jacoco {
-  // https://bintray.com/bintray/jcenter/org.jacoco:org.jacoco.core
+  // https://search.maven.org/artifact/org.jacoco/jacoco-maven-plugin
   toolVersion = '0.8.7'
 }
 
@@ -45,9 +45,9 @@ project.afterEvaluate {
       classDirectories.setFrom(classFiles)
 
       reports {
-        xml.enabled = true
+        xml.required = true
         xml.destination file("${project.buildDir}/reports/jacoco/${taskName}/report.xml")
-        html.enabled = true
+        html.required = true
       }
     }
   }

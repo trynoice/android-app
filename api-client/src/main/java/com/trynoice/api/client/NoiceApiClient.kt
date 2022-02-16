@@ -9,8 +9,8 @@ import com.trynoice.api.client.auth.AccessTokenInjector
 import com.trynoice.api.client.auth.AuthCredentialRepository
 import com.trynoice.api.client.auth.RefreshTokenInjector
 import com.trynoice.api.client.models.AuthCredentials
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -91,7 +91,7 @@ class NoiceApiClient(
 
   fun isSignedIn(): Boolean = signedInState.value
 
-  fun getSignedInState(): Flow<Boolean> = signedInState
+  fun getSignedInState(): StateFlow<Boolean> = signedInState
 
   /**
    * Signs out the currently logged in user.

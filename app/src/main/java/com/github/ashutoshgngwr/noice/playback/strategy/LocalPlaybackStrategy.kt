@@ -1,17 +1,14 @@
 package com.github.ashutoshgngwr.noice.playback.strategy
 
 import android.content.Context
-import android.net.Uri
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.ext.fade
 import com.github.ashutoshgngwr.noice.ext.setAudioAttributesCompat
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.google.android.exoplayer2.util.Util
 
 /**
  * [LocalPlaybackStrategy] implements [PlaybackStrategy] which plays the media locally
@@ -46,12 +43,8 @@ class LocalPlaybackStrategy(
           ExoPlayer.REPEAT_MODE_OFF
         }
 
-        prepare(
-          Util.getUserAgent(context, context.packageName).let { userAgent ->
-            ProgressiveMediaSource.Factory(DefaultDataSourceFactory(context, userAgent))
-              .createMediaSource(Uri.parse("asset:///$src"))
-          }
-        )
+        setMediaItem(MediaItem.fromUri("asset:///$src"))
+        prepare()
       }
   }
 

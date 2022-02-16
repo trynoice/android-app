@@ -77,7 +77,7 @@ class HomeFragmentTest {
     onView(withId(R.id.bottom_nav))
       .check(matches(EspressoX.withBottomNavSelectedItem(R.id.library)))
 
-    withChildNavController {
+    withHomeNavController {
       assertEquals(R.id.library, it.currentDestination?.id)
     }
 
@@ -86,7 +86,7 @@ class HomeFragmentTest {
     onView(withId(R.id.bottom_nav))
       .check(matches(EspressoX.withBottomNavSelectedItem(R.id.presets)))
 
-    withChildNavController {
+    withHomeNavController {
       assertEquals(R.id.presets, it.currentDestination?.id)
     }
   }
@@ -150,15 +150,15 @@ class HomeFragmentTest {
 
   private inline fun onHomeFragment(crossinline block: (HomeFragment) -> Unit) {
     activityScenario.onActivity {
-      val parent = it.supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as Fragment
+      val parent = it.supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as Fragment
       val home = parent.childFragmentManager.fragments.first() as HomeFragment
       block.invoke(home)
     }
   }
 
-  private inline fun withChildNavController(crossinline block: (NavController) -> Unit) {
+  private inline fun withHomeNavController(crossinline block: (NavController) -> Unit) {
     onHomeFragment {
-      val f = it.childFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+      val f = it.childFragmentManager.findFragmentById(R.id.home_nav_host_fragment) as NavHostFragment
       block.invoke(f.navController)
     }
   }

@@ -9,9 +9,10 @@ import androidx.media.VolumeProviderCompat
 import org.robolectric.annotation.Implementation
 import org.robolectric.annotation.Implements
 import org.robolectric.annotation.RealObject
-import org.robolectric.shadow.api.Shadow.directlyOn
 import org.robolectric.shadow.api.Shadow.invokeConstructor
 import org.robolectric.util.ReflectionHelpers.ClassParameter
+import org.robolectric.util.reflector.ForType
+import org.robolectric.util.reflector.Reflector.reflector
 
 /**
  * Shadow implementation for [MediaSessionCompat].
@@ -45,15 +46,21 @@ class ShadowMediaSessionCompat {
 
   @Implementation
   fun setPlaybackState(state: PlaybackStateCompat) {
-    directlyOn(realMediaSessionCompat, MediaSessionCompat::class.java).setPlaybackState(state)
     currentPlaybackState = state
+    reflector(MediaSessionCompatReflector::class.java, realMediaSessionCompat)
+      .setPlaybackState(state)
   }
 
   @Implementation
   fun setPlaybackToRemote(volumeProvider: VolumeProviderCompat) {
-    directlyOn(realMediaSessionCompat, MediaSessionCompat::class.java)
-      .setPlaybackToRemote(volumeProvider)
-
     currentVolumeProvider = volumeProvider
+    reflector(MediaSessionCompatReflector::class.java, realMediaSessionCompat)
+      .setPlaybackToRemote(volumeProvider)
+  }
+
+  @ForType(value = MediaSessionCompat::class, direct = true)
+  private interface MediaSessionCompatReflector {
+    fun setPlaybackState(state: PlaybackStateCompat)
+    fun setPlaybackToRemote(volumeProvider: VolumeProviderCompat)
   }
 }

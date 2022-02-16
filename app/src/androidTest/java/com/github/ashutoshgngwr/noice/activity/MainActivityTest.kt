@@ -89,7 +89,7 @@ class MainActivityTest {
       }
 
     activityScenario.onActivity {
-      val navController = it.findNavController(R.id.nav_host_fragment)
+      val navController = it.findNavController(R.id.main_nav_host_fragment)
       assertEquals(R.id.about, navController.currentDestination?.id)
     }
   }
