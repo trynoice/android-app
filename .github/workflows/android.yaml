@@ -49,7 +49,7 @@ jobs:
         with:
           distribution: adopt
           java-version: ${{ env.JAVA_VERSION }}
-      - run: ./gradlew testCoverage --no-daemon --stacktrace
+      - run: ./gradlew :app:testDebugCoverage --no-daemon --stacktrace
       - uses: codecov/codecov-action@v1
         with:
           flags: android
@@ -63,10 +63,10 @@ jobs:
         include:
           - android: 28
             target: default
-            gradleTask: createFreeDebugCoverageReport
+            gradleTask: :app:createFreeDebugCoverageReport
           - android: 28
             target: google_apis
-            gradleTask: createFullDebugCoverageReport
+            gradleTask: :app:createFullDebugCoverageReport
       fail-fast: false
     steps:
       - uses: actions/checkout@v2

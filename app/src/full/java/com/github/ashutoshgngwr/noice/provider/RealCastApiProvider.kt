@@ -135,7 +135,7 @@ class CastOptionsProvider : OptionsProvider {
     }
   }
 
-  override fun getAdditionalSessionProviders(context: Context?): List<SessionProvider>? = null
+  override fun getAdditionalSessionProviders(context: Context): MutableList<SessionProvider>? = null
 }
 
 /**

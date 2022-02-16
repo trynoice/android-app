@@ -1,7 +1,7 @@
 plugins {
   id 'com.android.application'
-  id 'kotlin-android'
-  id 'kotlin-kapt'
+  id 'org.jetbrains.kotlin.android'
+  id 'org.jetbrains.kotlin.kapt'
 
   id 'androidx.navigation.safeargs.kotlin'
   id 'dagger.hilt.android.plugin'
@@ -9,18 +9,18 @@ plugins {
   id 'com.google.gms.google-services' // sed:free-build:remove
   id 'com.google.firebase.crashlytics' // sed:free-build:remove
 
-  id 'com.adarshr.test-logger' version '3.0.0'
+  id 'com.adarshr.test-logger'
 }
 
 apply from: 'jacoco.gradle'
 
 android {
-  compileSdkVersion config.compileSdkVersion
+  compileSdk config.compileSdkVersion
 
   defaultConfig {
     applicationId 'com.github.ashutoshgngwr.noice'
-    minSdkVersion config.minSdkVersion
-    targetSdkVersion config.compileSdkVersion
+    minSdk config.minSdkVersion
+    targetSdk config.compileSdkVersion
     versionCode 52
     versionName '1.3.3'
     testInstrumentationRunner 'com.github.ashutoshgngwr.noice.InstrumentedTestRunner'
@@ -88,37 +88,37 @@ android {
 }
 
 dependencies {
-  def fragmentVersion = '1.3.6'
+  def fragmentVersion = '1.4.1'
 
-  def espressoVersion = '3.3.0'
+  def espressoVersion = '3.4.0'
   def mockkVersion = '1.12.2'
 
   kapt "com.google.dagger:hilt-compiler:$deps.hiltVersion"
 
-  implementation 'androidx.activity:activity-ktx:1.3.1'
-  implementation 'androidx.appcompat:appcompat:1.3.1'
-  implementation 'androidx.browser:browser:1.3.0'
+  implementation 'androidx.activity:activity-ktx:1.4.0'
+  implementation 'androidx.appcompat:appcompat:1.4.1'
+  implementation 'androidx.browser:browser:1.4.0'
   implementation 'androidx.cardview:cardview:1.0.0'
-  implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
-  implementation 'androidx.core:core-ktx:1.6.0'
+  implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+  implementation 'androidx.core:core-ktx:1.7.0'
   implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
   implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
   implementation "androidx.lifecycle:lifecycle-common-java8:$deps.lifecycleVersion"
   implementation "androidx.lifecycle:lifecycle-livedata-ktx:$deps.lifecycleVersion"
   implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$deps.lifecycleVersion"
-  implementation 'androidx.media:media:1.4.1'
-  implementation 'androidx.mediarouter:mediarouter:1.2.5'
+  implementation 'androidx.media:media:1.5.0'
+  implementation 'androidx.mediarouter:mediarouter:1.2.6'
   implementation "androidx.navigation:navigation-fragment-ktx:$deps.navVersion"
   implementation "androidx.navigation:navigation-ui-ktx:$deps.navVersion"
-  implementation 'androidx.preference:preference-ktx:1.1.1'
+  implementation 'androidx.preference:preference-ktx:1.2.0'
   implementation 'androidx.recyclerview:recyclerview:1.2.1'
   implementation 'commons-validator:commons-validator:1.7'
   implementation 'com.airbnb.android:lottie:4.2.2'
-  implementation 'com.github.AppIntro:AppIntro:6.1.0'
-  implementation 'com.google.android.exoplayer:exoplayer-core:2.13.3'
+  implementation 'com.github.AppIntro:AppIntro:6.2.0'
+  implementation 'com.google.android.exoplayer:exoplayer-core:2.16.1'
   implementation 'com.google.android.flexbox:flexbox:3.0.0'
-  implementation 'com.google.android.material:material:1.4.0'
-  implementation 'com.google.code.gson:gson:2.8.9'
+  implementation 'com.google.android.material:material:1.5.0'
+  implementation 'com.google.code.gson:gson:2.9.0'
   implementation "com.google.dagger:hilt-android:$deps.hiltVersion"
   implementation 'com.ncorti:slidetoact:0.9.0'
   // TODO: move to stable https://github.com/elye/loaderviewlibrary/issues/33
@@ -127,15 +127,14 @@ dependencies {
   implementation 'io.github.mrherintsoahasina:flextools:1.0.3'
   implementation 'io.noties.markwon:core:4.6.2'
   implementation 'org.greenrobot:eventbus:3.3.1'
-  implementation "org.jetbrains.kotlin:kotlin-stdlib:$deps.kotlinVersion"
 
   implementation project(":api-client")
 
   fullImplementation 'com.android.billingclient:billing-ktx:4.0.0'
   fullImplementation 'com.google.android.gms:play-services-base:18.0.1'
-  fullImplementation 'com.google.android.gms:play-services-cast-framework:20.0.0'
+  fullImplementation 'com.google.android.gms:play-services-cast-framework:21.0.1'
   fullImplementation 'com.google.android.play:core:1.10.3'
-  fullImplementation platform('com.google.firebase:firebase-bom:29.0.3')
+  fullImplementation platform('com.google.firebase:firebase-bom:29.1.0')
   fullImplementation 'com.google.firebase:firebase-analytics-ktx'
   fullImplementation 'com.google.firebase:firebase-crashlytics-ktx'
   fullImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$deps.coroutinesVersion"
