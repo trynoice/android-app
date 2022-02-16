@@ -1,9 +1,8 @@
 package com.github.ashutoshgngwr.noice.widget
 
 import android.content.Context
-import android.net.Uri
 import android.util.AttributeSet
-import com.github.ashutoshgngwr.noice.ext.launchInCustomTab
+import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.google.android.material.textview.MaterialTextView
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
@@ -19,7 +18,7 @@ class MarkdownTextView @JvmOverloads constructor(
     .usePlugin(
       object : AbstractMarkwonPlugin() {
         override fun configureConfiguration(builder: MarkwonConfiguration.Builder) {
-          builder.linkResolver { _, link -> Uri.parse(link).launchInCustomTab(context) }
+          builder.linkResolver { _, link -> context.startCustomTab(link) }
         }
       }
     )

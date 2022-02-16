@@ -1,6 +1,10 @@
 plugins {
   id 'com.android.application'
   id 'kotlin-android'
+  id 'kotlin-kapt'
+
+  id 'androidx.navigation.safeargs.kotlin'
+  id 'dagger.hilt.android.plugin'
 
   id 'com.google.gms.google-services' // sed:free-build:remove
   id 'com.google.firebase.crashlytics' // sed:free-build:remove
@@ -11,15 +15,16 @@ plugins {
 apply from: 'jacoco.gradle'
 
 android {
-  compileSdkVersion 31
+  compileSdkVersion config.compileSdkVersion
 
   defaultConfig {
     applicationId 'com.github.ashutoshgngwr.noice'
-    minSdkVersion 21
-    targetSdkVersion 31
+    minSdkVersion config.minSdkVersion
+    targetSdkVersion config.compileSdkVersion
     versionCode 52
     versionName '1.3.3'
-    testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    testInstrumentationRunner 'com.github.ashutoshgngwr.noice.InstrumentedTestRunner'
+    proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
   }
 
   signingConfigs {
@@ -33,18 +38,17 @@ android {
 
   buildFeatures {
     viewBinding true
+    dataBinding true
   }
 
   buildTypes {
     debug {
-      applicationIdSuffix '.debug'
       testCoverageEnabled true
     }
 
     release {
       shrinkResources true
       minifyEnabled true
-      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
       signingConfig = signingConfigs.release // sed:free-build:remove
     }
   }
@@ -63,13 +67,13 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = config.javaCompatibility
+    targetCompatibility = config.javaCompatibility
   }
 
   kotlinOptions {
     useIR = true
-    jvmTarget = 11
+    jvmTarget = config.kotlinJvmTarget
     freeCompilerArgs += ["-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
   }
 
@@ -77,26 +81,19 @@ android {
     unitTests {
       includeAndroidResources = true
       all {
-        testlogger {
-          theme 'mocha'
-        }
+        testlogger.theme 'mocha'
       }
     }
   }
 }
 
 dependencies {
-  def fragmentVersion = '1.4.0'
-  def testCoreVersion = '1.3.0'
-  def junitVersion = '4.13.2'
-  def mockkVersion = '1.12.2'
-  def espressoVersion = '3.3.0'
-  def coroutinesVersion = '1.6.0'
+  def fragmentVersion = '1.3.6'
 
-  // TODO: move this to stable release. The latest stable release (2.3.5) causes a crash with error
-  //  `java.lang.RuntimeException: Unknown animation name: x`
-  //  Although, the crash only occurs on the Play Store variant..?
-  def navVersion = '2.4.0-alpha06'
+  def espressoVersion = '3.3.0'
+  def mockkVersion = '1.12.2'
+
+  kapt "com.google.dagger:hilt-compiler:$deps.hiltVersion"
 
   implementation 'androidx.activity:activity-ktx:1.3.1'
   implementation 'androidx.appcompat:appcompat:1.3.1'
@@ -106,54 +103,68 @@ dependencies {
   implementation 'androidx.core:core-ktx:1.6.0'
   implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
   implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
-  implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+  implementation "androidx.lifecycle:lifecycle-common-java8:$deps.lifecycleVersion"
+  implementation "androidx.lifecycle:lifecycle-livedata-ktx:$deps.lifecycleVersion"
+  implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$deps.lifecycleVersion"
   implementation 'androidx.media:media:1.4.1'
   implementation 'androidx.mediarouter:mediarouter:1.2.5'
-  implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
-  implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+  implementation "androidx.navigation:navigation-fragment-ktx:$deps.navVersion"
+  implementation "androidx.navigation:navigation-ui-ktx:$deps.navVersion"
   implementation 'androidx.preference:preference-ktx:1.1.1'
   implementation 'androidx.recyclerview:recyclerview:1.2.1'
+  implementation 'commons-validator:commons-validator:1.7'
+  implementation 'com.airbnb.android:lottie:4.2.2'
   implementation 'com.github.AppIntro:AppIntro:6.1.0'
-  implementation 'io.github.medyo:android-about-page:2.0.0'
   implementation 'com.google.android.exoplayer:exoplayer-core:2.13.3'
   implementation 'com.google.android.flexbox:flexbox:3.0.0'
   implementation 'com.google.android.material:material:1.4.0'
   implementation 'com.google.code.gson:gson:2.8.9'
-  implementation 'io.github.mrherintsoahasina:flextools:1.0.3'
+  implementation "com.google.dagger:hilt-android:$deps.hiltVersion"
   implementation 'com.ncorti:slidetoact:0.9.0'
+  // TODO: move to stable https://github.com/elye/loaderviewlibrary/issues/33
+  implementation 'com.github.ashutoshgngwr:loaderviewlibrary:921818c849'
+  implementation 'io.github.medyo:android-about-page:2.0.0'
+  implementation 'io.github.mrherintsoahasina:flextools:1.0.3'
   implementation 'io.noties.markwon:core:4.6.2'
   implementation 'org.greenrobot:eventbus:3.3.1'
-  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$deps.kotlinVersion"
+
+  implementation project(":api-client")
 
   fullImplementation 'com.android.billingclient:billing-ktx:4.0.0'
   fullImplementation 'com.google.android.gms:play-services-base:18.0.1'
   fullImplementation 'com.google.android.gms:play-services-cast-framework:20.0.0'
-  fullImplementation 'com.google.android.play:core:1.10.1'
+  fullImplementation 'com.google.android.play:core:1.10.3'
   fullImplementation platform('com.google.firebase:firebase-bom:29.0.3')
   fullImplementation 'com.google.firebase:firebase-analytics-ktx'
   fullImplementation 'com.google.firebase:firebase-crashlytics-ktx'
-  fullImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+  fullImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$deps.coroutinesVersion"
 
 
-  testImplementation "androidx.test:core:$testCoreVersion"
+  kaptTest "com.google.dagger:hilt-android-compiler:$deps.hiltVersion"
+
+  testImplementation "androidx.test:core:$deps.testCoreVersion"
+  testImplementation "com.google.dagger:hilt-android-testing:$deps.hiltVersion"
   testImplementation "io.mockk:mockk:$mockkVersion"
-  testImplementation "junit:junit:$junitVersion"
-  testImplementation 'org.robolectric:robolectric:4.7.3'
+  testImplementation "junit:junit:$deps.junitVersion"
+  testImplementation "org.robolectric:robolectric:$deps.robolectricVersion"
   testImplementation 'org.skyscreamer:jsonassert:1.5.0'
 
-  testFullImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
+  testFullImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$deps.coroutinesVersion"
 
-  androidTestImplementation "androidx.test:core:$testCoreVersion"
+
+  kaptAndroidTest "com.google.dagger:hilt-android-compiler:$deps.hiltVersion"
+
+  androidTestImplementation "androidx.test:core:$deps.testCoreVersion"
   androidTestImplementation "androidx.test:rules:1.4.0"
   androidTestImplementation "androidx.test:runner:1.4.0"
   androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
   androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
   androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
   androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+  androidTestImplementation "com.google.dagger:hilt-android-testing:$deps.hiltVersion"
   androidTestImplementation "io.mockk:mockk-android:$mockkVersion"
-  androidTestImplementation "junit:junit:$junitVersion"
+  androidTestImplementation "junit:junit:$deps.junitVersion"
 
   androidTestFullImplementation 'tools.fastlane:screengrab:2.1.1'
-
-  debugImplementation "androidx.fragment:fragment-testing:$fragmentVersion"
 }

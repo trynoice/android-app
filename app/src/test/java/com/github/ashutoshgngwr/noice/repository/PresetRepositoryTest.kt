@@ -5,6 +5,9 @@ import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.Player
+import com.google.gson.Gson
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.InjectionLookupType
@@ -17,6 +20,7 @@ import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -24,19 +28,28 @@ import org.skyscreamer.jsonassert.JSONAssert
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.util.*
+import javax.inject.Inject
 import kotlin.math.roundToInt
 
+@HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
 class PresetRepositoryTest {
 
+  @get:Rule
+  val hiltRule = HiltAndroidRule(this)
+
   private lateinit var prefs: SharedPreferences
   private lateinit var prefsEditor: SharedPreferences.Editor
+
+  @set:Inject
+  internal lateinit var gson: Gson
 
   @OverrideMockKs(InjectionLookupType.BY_NAME)
   private lateinit var repository: PresetRepository
 
   @Before
   fun setup() {
+    hiltRule.inject()
     prefsEditor = mockk {
       every { putString(PresetRepository.PREFERENCE_KEY, any()) } returns this
       every { commit() } returns true
@@ -46,7 +59,7 @@ class PresetRepositoryTest {
       every { edit() } returns prefsEditor
     }
 
-    repository = PresetRepository.newInstance(ApplicationProvider.getApplicationContext())
+    repository = PresetRepository(ApplicationProvider.getApplicationContext(), gson)
     MockKAnnotations.init(this)
   }
 

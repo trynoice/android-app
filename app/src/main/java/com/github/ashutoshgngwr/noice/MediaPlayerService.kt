@@ -24,9 +24,12 @@ import com.github.ashutoshgngwr.noice.playback.PlayerManager
 import com.github.ashutoshgngwr.noice.playback.PlayerNotificationManager
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MediaPlayerService : Service() {
   /**
    * [MediaPlayerService] publishes [PlaybackUpdateEvent] whenever there's an update to
@@ -48,8 +51,18 @@ class MediaPlayerService : Service() {
   private lateinit var wakeLock: PowerManager.WakeLock
   private lateinit var mediaSession: MediaSessionCompat
   private lateinit var playerManager: PlayerManager
-  private lateinit var presetRepository: PresetRepository
-  private lateinit var settingsRepository: SettingsRepository
+
+  @set:Inject
+  internal lateinit var eventBus: EventBus
+
+  @set:Inject
+  internal lateinit var playbackController: PlaybackController
+
+  @set:Inject
+  internal lateinit var presetRepository: PresetRepository
+
+  @set:Inject
+  internal lateinit var settingsRepository: SettingsRepository
 
   private val becomingNoisyReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -89,16 +102,12 @@ class MediaPlayerService : Service() {
 
     playerManager = PlayerManager(this, mediaSession)
     playerManager.setPlaybackUpdateListener(this::onPlaybackUpdate)
-
-    presetRepository = PresetRepository.newInstance(this)
-    settingsRepository = SettingsRepository.newInstance(this)
     PlayerNotificationManager.createChannel(this)
     registerReceiver(becomingNoisyReceiver, IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY))
   }
 
   private fun onPlaybackUpdate(state: Int, players: Map<String, Player>) {
-    EventBus.getDefault().postSticky(PlaybackUpdateEvent(state, players))
-
+    eventBus.postSticky(PlaybackUpdateEvent(state, players))
     val currentPreset = getCurrentPreset(players.values)
     val title = currentPreset?.name ?: getString(R.string.unsaved_preset)
     mediaSession.setMetadata(
@@ -133,7 +142,7 @@ class MediaPlayerService : Service() {
   }
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-    intent?.also { PlaybackController.handleServiceIntent(this, playerManager, it) }
+    intent?.also { playbackController.handleServiceIntent(playerManager, it) }
     return START_STICKY
   }
 
@@ -141,7 +150,7 @@ class MediaPlayerService : Service() {
     unregisterReceiver(becomingNoisyReceiver)
     playerManager.cleanup()
     mediaSession.release()
-    PlaybackController.clearAutoStopCallback()
+    playbackController.clearAutoStopCallback()
     wakeLock.release()
     super.onDestroy()
   }

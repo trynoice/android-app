@@ -20,17 +20,18 @@ android {
 
 project.afterEvaluate {
 
-  android.applicationVariants.all { variant ->
-    def taskName = "test${variant.name.capitalize()}Coverage"
-    def testTask = "test${variant.name.capitalize()}UnitTest"
+  android.productFlavors.all { flavor ->
+    def variant = "${flavor.name}Debug"
+    def taskName = "test${variant.capitalize()}Coverage"
+    def testTask = "test${variant.capitalize()}UnitTest"
     tasks.create(name: "${taskName}", type: JacocoReport, dependsOn: "${testTask}") {
       group = 'Reporting'
-      description = "Generate Jacoco coverage reports for the ${variant.name} build variant."
+      description = "Generate Jacoco coverage reports for the ${flavor.name} debug build variant."
 
-      def sourceDirs = ['src/main/java'] + android.sourceSets[variant.name].java.srcDirs
+      def sourceDirs = ['src/main/java'] + android.sourceSets[variant].java.srcDirs
       def execDataFile = "${project.buildDir}/jacoco/${testTask}.exec"
       def classFiles = fileTree(
-        dir: "${project.buildDir}/tmp/kotlin-classes/${variant.name}",
+        dir: "${project.buildDir}/tmp/kotlin-classes/${variant}",
         excludes: ['**/R.class',
                    '**/R$*.class',
                    '**/*$ViewInjector*.*',
@@ -51,12 +52,12 @@ project.afterEvaluate {
     }
   }
 
-  tasks.create(name: 'testCoverage', type: JacocoReport) {
+  tasks.create(name: 'testDebugCoverage', type: JacocoReport) {
     group = 'Reporting'
-    description = 'Generate Jacoco coverage reports for the all build variants.'
+    description = 'Generate Jacoco coverage reports for the all debug build variants.'
 
-    android.applicationVariants.all { variant ->
-      dependsOn "test${variant.name.capitalize()}Coverage"
+    android.productFlavors.all { flavor ->
+      dependsOn "test${flavor.name.capitalize()}DebugCoverage"
     }
   }
 }

@@ -19,13 +19,11 @@
 
   <TextView
     android:id="@+id/error"
+    style="@style/Widget.App.TextView.Error"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:drawablePadding="10dp"
-    android:textColor="@color/error"
-    app:drawableStartCompat="@drawable/ic_error_24dp"
-    app:drawableTint="@color/error" />
+    android:text="@string/failed_to_load_inapp_purchases" />
 
   <com.google.android.flexbox.FlexboxLayout
     android:id="@+id/button_container"

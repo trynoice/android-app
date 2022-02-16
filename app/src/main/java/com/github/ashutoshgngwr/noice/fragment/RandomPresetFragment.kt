@@ -5,13 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetFragmentBinding
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class RandomPresetFragment : BottomSheetDialogFragment() {
 
   companion object {
@@ -27,10 +31,16 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
 
   private lateinit var binding: RandomPresetFragmentBinding
 
-  override fun onCreateView(
-    inflater: LayoutInflater, container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View {
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
+
+  @set:Inject
+  internal lateinit var reviewFlowProvider: ReviewFlowProvider
+
+  @set:Inject
+  internal lateinit var playbackController: PlaybackController
+
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = RandomPresetFragmentBinding.inflate(inflater, container, false)
     return binding.root
   }
@@ -54,21 +64,17 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
         else -> RANGE_INTENSITY_ANY
       }
 
-      PlaybackController.playRandomPreset(requireContext(), tag, intensity)
+      playbackController.playRandomPreset(tag, intensity)
       dismiss()
 
       // maybe show in-app review dialog to the user
-      NoiceApplication.of(requireContext())
-        .reviewFlowProvider
-        .maybeAskForReview(requireActivity())
+      reviewFlowProvider.maybeAskForReview(requireActivity())
     }
 
     binding.cancelButton.setOnClickListener {
       dismiss()
     }
 
-    NoiceApplication.of(requireContext())
-      .analyticsProvider
-      .setCurrentScreen("random_preset", RandomPresetFragment::class)
+    analyticsProvider.setCurrentScreen("random_preset", RandomPresetFragment::class)
   }
 }

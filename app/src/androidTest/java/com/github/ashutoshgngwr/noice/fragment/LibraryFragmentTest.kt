@@ -1,10 +1,7 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.support.v4.media.session.PlaybackStateCompat
-import androidx.fragment.app.testing.FragmentScenario
-import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.recyclerview.widget.RecyclerView
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
@@ -13,19 +10,25 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
+import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
+import com.github.ashutoshgngwr.noice.HiltFragmentScenario
 import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.ReviewFlowProviderModule
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
-import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
@@ -35,41 +38,44 @@ import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.random.Random
 
+@HiltAndroidTest
+@UninstallModules(NoiceApplication.EventBusModule::class, ReviewFlowProviderModule::class)
 @RunWith(AndroidJUnit4::class)
 class LibraryFragmentTest {
 
-  private lateinit var mockEventBus: EventBus
-  private lateinit var mockPresetRepository: PresetRepository
-  private lateinit var mockSettingsRepository: SettingsRepository
-  private lateinit var mockReviewFlowProvider: ReviewFlowProvider
-  private lateinit var fragmentScenario: FragmentScenario<LibraryFragment>
+  @get:Rule
+  val hiltRule = HiltAndroidRule(this)
+
+  private lateinit var fragmentScenario: HiltFragmentScenario<LibraryFragment>
+
+  @BindValue
+  internal lateinit var mockPresetRepository: PresetRepository
+
+  @BindValue
+  internal lateinit var mockSettingsRepository: SettingsRepository
+
+  @BindValue
+  internal lateinit var mockPlaybackController: PlaybackController
+
+  @BindValue
+  internal lateinit var mockReviewFlowProvider: ReviewFlowProvider
+
+  @BindValue
+  internal lateinit var mockEventBus: EventBus
 
   @Before
   fun setup() {
-    mockkStatic(EventBus::class)
-    mockkObject(
-      PlaybackController,
-      PresetRepository.Companion,
-      SettingsRepository.Companion
-    )
-
-    mockReviewFlowProvider = mockk(relaxed = true)
-    ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .reviewFlowProvider = mockReviewFlowProvider
-
-    mockEventBus = mockk(relaxed = true)
     mockPresetRepository = mockk(relaxed = true)
     mockSettingsRepository = mockk(relaxed = true)
-
-    every { EventBus.getDefault() } returns mockEventBus
-    every { PresetRepository.newInstance(any()) } returns mockPresetRepository
-    every { SettingsRepository.newInstance(any()) } returns mockSettingsRepository
-
-    fragmentScenario = launchFragmentInContainer(null, R.style.Theme_App)
+    mockPlaybackController = mockk(relaxed = true)
+    mockReviewFlowProvider = mockk(relaxed = true)
+    mockEventBus = mockk(relaxed = true)
+    fragmentScenario = launchFragmentInHiltContainer()
   }
 
   @After
@@ -79,9 +85,6 @@ class LibraryFragmentTest {
 
   @Test
   fun testRecyclerViewItem_playButton() {
-    // stub the real implementation
-    every { PlaybackController.play(any(), any()) } returns Unit
-
     onView(withId(R.id.sound_list)).perform(
       RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
@@ -89,12 +92,11 @@ class LibraryFragmentTest {
       )
     )
 
-    verify(exactly = 1) { PlaybackController.play(any(), "birds") }
+    verify(exactly = 1) { mockPlaybackController.play("birds") }
   }
 
   @Test
   fun testRecyclerViewItem_stopButton() {
-    every { PlaybackController.stop(any(), any()) } returns Unit
     val mockUpdateEvent = mockk<MediaPlayerService.PlaybackUpdateEvent>(relaxed = true) {
       every { players } returns hashMapOf("birds" to mockk(relaxed = true))
     }
@@ -112,7 +114,7 @@ class LibraryFragmentTest {
       )
     )
 
-    verify(exactly = 1) { PlaybackController.stop(any(), "birds") }
+    verify(exactly = 1) { mockPlaybackController.stop("birds") }
   }
 
   @Test
@@ -135,7 +137,7 @@ class LibraryFragmentTest {
       onView(withId(R.id.sound_list)).perform(
         RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
           hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-          EspressoX.clickInItem(R.id.volume_button)
+          EspressoX.clickOn(R.id.volume_button)
         )
       )
 
@@ -178,7 +180,7 @@ class LibraryFragmentTest {
           ),
           RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
             hasDescendant(allOf(withId(R.id.title), withText(R.string.rolling_thunder))),
-            EspressoX.clickInItem(R.id.time_period_button)
+            EspressoX.clickOn(R.id.time_period_button)
           )
         )
 
@@ -260,7 +262,7 @@ class LibraryFragmentTest {
     onView(withId(R.id.sound_list)).perform(
       RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        EspressoX.clickInItem(R.id.volume_button)
+        EspressoX.clickOn(R.id.volume_button)
       )
     )
 

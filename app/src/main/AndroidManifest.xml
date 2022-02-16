@@ -77,12 +77,35 @@
     <activity
       android:name=".activity.ShortcutHandlerActivity"
       android:excludeFromRecents="true"
-      android:exported="true" />
+      android:exported="true"
+      android:theme="@style/Theme.App.Translucent" />
 
     <activity
       android:name=".activity.AlarmRingerActivity"
       android:excludeFromRecents="true"
       android:launchMode="singleInstance" />
+
+    <activity
+      android:name=".activity.SignInLinkHandlerActivity"
+      android:excludeFromRecents="true"
+      android:exported="true"
+      android:theme="@style/Theme.App.SignInLinkHandler">
+
+      <intent-filter>
+
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+          android:host="trynoice.com"
+          android:pathPrefix="/sign-in"
+          android:scheme="https" />
+
+      </intent-filter>
+
+    </activity>
 
     <service android:name=".MediaPlayerService" />
 

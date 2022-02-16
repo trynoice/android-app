@@ -31,7 +31,13 @@ class LocalPlaybackStrategyTest {
     val context: Context = ApplicationProvider.getApplicationContext()
     mockPlayer = mockk(relaxed = true)
     players = listOf(mockPlayer)
-    playbackStrategy = LocalPlaybackStrategy(context, mockk(relaxed = true), mockk(relaxed = true))
+    playbackStrategy = LocalPlaybackStrategy(
+      context,
+      mockk(relaxed = true),
+      mockk(relaxed = true),
+      mockk(relaxed = true),
+    )
+
     MockKAnnotations.init(this)
   }
 

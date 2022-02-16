@@ -7,22 +7,24 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.LinearLayoutCompat
-import com.github.ashutoshgngwr.noice.NoiceApplication
+import androidx.core.view.isVisible
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.DonateViewBinding
 import com.github.ashutoshgngwr.noice.provider.BillingProvider
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class InAppBillingDonateView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
@@ -31,9 +33,10 @@ class InAppBillingDonateView @JvmOverloads constructor(
 
   private lateinit var defaultScope: CoroutineScope
 
-  private val billingProvider = NoiceApplication.of(context).billingProvider
-  private val binding: DonateViewBinding =
-    DonateViewBinding.inflate(LayoutInflater.from(context), this)
+  @set:Inject
+  internal lateinit var billingProvider: BillingProvider
+
+  private val binding = DonateViewBinding.inflate(LayoutInflater.from(context), this)
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal constructor(context: Context, defaultScope: CoroutineScope) : this(context) {
@@ -47,9 +50,9 @@ class InAppBillingDonateView @JvmOverloads constructor(
 
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
-    binding.progressCircle.visibility = View.VISIBLE
-    binding.error.visibility = View.GONE
-    binding.buttonContainer.visibility = View.GONE
+    binding.progressCircle.isVisible = true
+    binding.error.isVisible = false
+    binding.buttonContainer.isVisible = false
 
     defaultScope = CoroutineScope(Job() + CoroutineName("DonateViewScope"))
     defaultScope.launch(Dispatchers.IO) { loadSkuDetails() }
@@ -70,14 +73,18 @@ class InAppBillingDonateView @JvmOverloads constructor(
       }
     } catch (e: BillingProvider.QueryDetailsException) {
       Log.w(this::class.simpleName, "failed to load sku details", e)
-      defaultScope.launch(Dispatchers.Main) { setQueryDetailsFailedError() }
+      defaultScope.launch(Dispatchers.Main) {
+        binding.progressCircle.isVisible = false
+        binding.buttonContainer.isVisible = false
+        binding.error.isVisible = true
+      }
     }
   }
 
   private fun setDetails(detailsList: List<BillingProvider.SkuDetails>) {
-    binding.progressCircle.visibility = View.GONE
-    binding.error.visibility = View.GONE
-    binding.buttonContainer.visibility = View.VISIBLE
+    binding.progressCircle.isVisible = false
+    binding.error.isVisible = false
+    binding.buttonContainer.isVisible = true
     binding.buttonContainer.removeAllViews()
 
     detailsList.forEach { details ->
@@ -90,13 +97,6 @@ class InAppBillingDonateView @JvmOverloads constructor(
       }
       binding.buttonContainer.addView(b)
     }
-  }
-
-  private fun setQueryDetailsFailedError() {
-    binding.progressCircle.visibility = View.GONE
-    binding.buttonContainer.visibility = View.GONE
-    binding.error.visibility = View.VISIBLE
-    binding.error.setText(R.string.failed_to_load_inapp_purchases)
   }
 
   // https://android.googlesource.com/platform/frameworks/support/+/refs/heads/marshmallow-release/v7/mediarouter/src/android/support/v7/app/MediaRouteButton.java#262

@@ -4,40 +4,48 @@ import android.app.Activity
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.children
-import com.github.ashutoshgngwr.noice.NoiceApplication
+import com.github.ashutoshgngwr.noice.BillingProviderModule
+import com.github.ashutoshgngwr.noice.HiltTestActivity
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.provider.BillingProvider
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.test.createTestCoroutineScope
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLooper
 
+@HiltAndroidTest
+@UninstallModules(BillingProviderModule::class)
 @RunWith(RobolectricTestRunner::class)
 class InAppBillingDonateViewTest {
 
-  private lateinit var mockBillingProvider: BillingProvider
+  @get:Rule
+  val hiltRule = HiltAndroidRule(this)
+
   private lateinit var activity: Activity
   private lateinit var view: InAppBillingDonateView
-  private lateinit var testScope: CoroutineScope
+
+  @BindValue
+  internal lateinit var mockBillingProvider: BillingProvider
 
   @Before
   fun setup() {
     mockBillingProvider = mockk(relaxed = true)
-    activity = Robolectric.buildActivity(Activity::class.java).create().get()
-    NoiceApplication.of(activity).billingProvider = mockBillingProvider
-
-    testScope = createTestCoroutineScope()
-    view = InAppBillingDonateView(activity, testScope)
+    activity = Robolectric.buildActivity(HiltTestActivity::class.java).create().get()
+    view = InAppBillingDonateView(activity, TestScope())
   }
 
   @Test

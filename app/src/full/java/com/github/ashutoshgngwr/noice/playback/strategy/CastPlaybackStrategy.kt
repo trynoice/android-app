@@ -1,11 +1,10 @@
 package com.github.ashutoshgngwr.noice.playback.strategy
 
-import android.content.Context
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.gms.cast.framework.CastSession
-import com.google.gson.GsonBuilder
+import com.google.gson.Gson
 import com.google.gson.annotations.Expose
 
 /**
@@ -13,10 +12,11 @@ import com.google.gson.annotations.Expose
  * to the cast receiver application.
  */
 class CastPlaybackStrategy(
-  context: Context,
   private val session: CastSession,
   private val namespace: String,
-  private val sound: Sound
+  private val sound: Sound,
+  private val gson: Gson,
+  private val settingsRepository: SettingsRepository,
 ) : PlaybackStrategy {
 
   companion object {
@@ -37,9 +37,6 @@ class CastPlaybackStrategy(
 
   var volume: Float = 0.0f
     private set
-
-  private val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
-  private val settingsRepository = SettingsRepository.newInstance(context)
 
   init {
     notifyChanges(ACTION_CREATE)
