@@ -131,6 +131,7 @@ class AccountViewModel @Inject constructor(
         .catch { e -> profileLoadError.emit(e) }
         .collect { p -> profile.emit(p) }
 
+      isLoadingProfile = false
     }
   }
 }
