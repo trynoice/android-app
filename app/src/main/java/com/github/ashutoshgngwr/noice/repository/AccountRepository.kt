@@ -1,8 +1,6 @@
 package com.github.ashutoshgngwr.noice.repository
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
 import com.github.ashutoshgngwr.noice.model.AccountTemporarilyLockedError
 import com.github.ashutoshgngwr.noice.model.NetworkError
 import com.github.ashutoshgngwr.noice.model.NotSignedInError
@@ -10,6 +8,9 @@ import com.trynoice.api.client.NoiceApiClient
 import com.trynoice.api.client.models.Profile
 import com.trynoice.api.client.models.SignInParams
 import com.trynoice.api.client.models.SignUpParams
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
@@ -23,9 +24,9 @@ import javax.inject.Singleton
 class AccountRepository @Inject constructor(private val apiClient: NoiceApiClient) {
 
   /**
-   * @return a [LiveData] that notifies changes to the current signed-in state of the api client.
+   * @return a [StateFlow] that notifies changes to the current signed-in state of the api client.
    */
-  fun isSignedIn(): LiveData<Boolean> = apiClient.getSignedInState().asLiveData()
+  fun isSignedIn(): StateFlow<Boolean> = apiClient.getSignedInState()
 
   /**
    * @return the [Profile] of the user.
@@ -33,18 +34,22 @@ class AccountRepository @Inject constructor(private val apiClient: NoiceApiClien
    * @throws NetworkError on network errors.
    * @throws Throwable on unknown errors.
    */
-  suspend fun getProfile(): Profile {
+  fun getProfile(): Flow<Profile> = flow {
     if (!apiClient.isSignedIn()) {
       throw NotSignedInError
     }
 
     try {
-      return apiClient.accounts().getProfile()
+      emit(apiClient.accounts().getProfile())
     } catch (e: IOException) {
       Log.i(LOG_TAG, "network error when loading profile", e)
       throw NetworkError
     } catch (e: Throwable) {
       Log.i(LOG_TAG, "unknown error when loading profile", e)
+      if (e is HttpException && e.code() == 401) {
+        throw NotSignedInError
+      }
+
       throw e
     }
   }
