@@ -8,6 +8,7 @@ import com.trynoice.api.client.NoiceApiClient
 import com.trynoice.api.client.models.Profile
 import com.trynoice.api.client.models.SignInParams
 import com.trynoice.api.client.models.SignUpParams
+import io.github.ashutoshgngwr.may.May
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
@@ -21,7 +22,10 @@ import javax.inject.Singleton
  * Implements a data access layer for fetching and manipulating user account related data.
  */
 @Singleton
-class AccountRepository @Inject constructor(private val apiClient: NoiceApiClient) {
+class AccountRepository @Inject constructor(
+  private val apiClient: NoiceApiClient,
+  private val cacheStore: May,
+) {
 
   /**
    * @return a [StateFlow] that notifies changes to the current signed-in state of the api client.
@@ -39,14 +43,18 @@ class AccountRepository @Inject constructor(private val apiClient: NoiceApiClien
       throw NotSignedInError
     }
 
+    // immediately emit cached profile if exists, and then refresh it from the network.
+    cacheStore.getAs<Profile>(PROFILE_CACHE_KEY)?.also { emit(it) }
     try {
-      emit(apiClient.accounts().getProfile())
+      val profile = apiClient.accounts().getProfile()
+      cacheStore.put(PROFILE_CACHE_KEY, profile)
+      emit(profile)
     } catch (e: IOException) {
       Log.i(LOG_TAG, "network error when loading profile", e)
       throw NetworkError
-    } catch (e: Throwable) {
-      Log.i(LOG_TAG, "unknown error when loading profile", e)
-      if (e is HttpException && e.code() == 401) {
+    } catch (e: HttpException) {
+      Log.i(LOG_TAG, "api error when loading profile", e)
+      if (e.code() == 401) {
         throw NotSignedInError
       }
 
@@ -69,8 +77,8 @@ class AccountRepository @Inject constructor(private val apiClient: NoiceApiClien
     } catch (e: IOException) {
       Log.i(LOG_TAG, "network error when loading profile", e)
       throw NetworkError
-    } catch (e: Throwable) {
-      Log.i(LOG_TAG, "unknown error when loading profile", e)
+    } catch (e: HttpException) {
+      Log.i(LOG_TAG, "api error when loading profile", e)
       throw e
     }
 
@@ -92,8 +100,8 @@ class AccountRepository @Inject constructor(private val apiClient: NoiceApiClien
     } catch (e: IOException) {
       Log.i(LOG_TAG, "network error when loading profile", e)
       throw NetworkError
-    } catch (e: Throwable) {
-      Log.i(LOG_TAG, "unknown error when loading profile", e)
+    } catch (e: HttpException) {
+      Log.i(LOG_TAG, "api error when loading profile", e)
       throw e
     }
 
@@ -126,8 +134,8 @@ class AccountRepository @Inject constructor(private val apiClient: NoiceApiClien
     } catch (e: IOException) {
       Log.i(LOG_TAG, "network error when loading profile", e)
       throw NetworkError
-    } catch (e: Throwable) {
-      Log.i(LOG_TAG, "unknown error when loading profile", e)
+    } catch (e: HttpException) {
+      Log.i(LOG_TAG, "api error when loading profile", e)
       throw e
     }
 
@@ -138,5 +146,7 @@ class AccountRepository @Inject constructor(private val apiClient: NoiceApiClien
 
   companion object {
     private val LOG_TAG = AccountRepository::class.simpleName
+
+    private const val PROFILE_CACHE_KEY = "account/profile"
   }
 }
