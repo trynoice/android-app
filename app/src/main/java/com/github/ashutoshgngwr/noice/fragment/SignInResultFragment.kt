@@ -92,7 +92,7 @@ class SignInResultViewModel @Inject constructor(
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
 
   val email: String
-  private val isReturningUser: Boolean
+  val isReturningUser: Boolean
   private val name: String?
 
   init {

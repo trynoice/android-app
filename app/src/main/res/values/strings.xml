@@ -246,7 +246,9 @@
     <string name="invalid_name">Name is not valid!</string>
     <string name="invalid_email">Email is not valid!</string>
     <string name="account_locked_error">Your email is temporarily locked from making sign-in attempts. Please try again after %1$s!</string>
-    <string name="sign_in_email_sent">We\'ve sent a sign-in link to \"%1$s\". Please open the link using Noice to complete sign-in.</string>
+    <string name="sign_up_email_sent">We\'ve emailed you a sign-in link at \"%1$s\".</string>
+    <string name="sign_in_email_sent">We\'ve emailed you a sign-in link at \"%1$s\" if this address belongs to a registered account.</string>
+    <string name="sign_in_link_tip">Please open the received link using Noice to complete the sign-in process.</string>
     <string name="retry">Retry</string>
     <string name="open_mailbox">Open Mailbox</string>
     <string name="mailbox_app_not_found">Uh-oh! We couldn\'t find a mailbox app on your device!</string>
