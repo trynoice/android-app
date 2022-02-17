@@ -6,8 +6,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 
 /**
- * Prevents NPEs when trying to set string resource IDs using a LiveData whose value may be `null`
- * at some point.
+ * Prevents NPEs when trying to set string resource IDs using a LiveData/StateFlow whose value may
+ * be `null` at some point.
  */
 @BindingAdapter("android:text")
 fun TextView.setText(@StringRes resId: Int?) {

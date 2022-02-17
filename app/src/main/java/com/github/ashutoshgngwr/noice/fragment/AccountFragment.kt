@@ -8,9 +8,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.BuildConfig
@@ -27,6 +26,15 @@ import com.trynoice.api.client.models.Profile
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -72,11 +80,14 @@ class AccountFragment : Fragment() {
       }
     }
 
-    viewModel.profileLoadErrorStringRes.observe(viewLifecycleOwner) { errRes ->
-      if (errRes != null && errRes != ResourcesCompat.ID_NULL) {
-        showSnackbar(errRes, Snackbar.LENGTH_LONG)
-          .setAction(R.string.retry) { viewModel.loadProfile(force = true) }
-      }
+    lifecycleScope.launch {
+      viewModel.profileLoadErrorStringRes
+        .filterNotNull()
+        .filter { errRes -> errRes != ResourcesCompat.ID_NULL }
+        .collect { errRes ->
+          showSnackbar(errRes, Snackbar.LENGTH_LONG)
+            .setAction(R.string.retry) { viewModel.loadProfile(force = true) }
+        }
     }
 
     viewModel.loadProfile()
@@ -90,39 +101,36 @@ class AccountViewModel @Inject constructor(
 
   @Volatile
   private var isLoadingProfile = false
-  private val profileLoadError = MutableLiveData<Throwable?>()
 
   var onItemClickListener = View.OnClickListener { }
   val isSignedIn = accountRepository.isSignedIn()
-  val profile = MutableLiveData<Profile>()
-  val profileLoadErrorStringRes = MediatorLiveData<Int?>().also {
-    it.addSource(profileLoadError) { e ->
-      it.postValue(
-        when (e) {
-          null -> null
-          is NotSignedInError -> null
-          is NetworkError -> R.string.network_error
-          else -> R.string.unknown_error
-        }
-      )
-    }
-  }
+
+  val profile = MutableStateFlow<Profile?>(null)
+  private val profileLoadError = MutableStateFlow<Throwable?>(null)
+  val profileLoadErrorStringRes: StateFlow<Int?> = profileLoadError.transform { error ->
+    emit(
+      when (error) {
+        null -> null
+        is NotSignedInError -> null
+        is NetworkError -> R.string.network_error
+        else -> R.string.unknown_error
+      }
+    )
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   internal fun loadProfile(force: Boolean = false) {
     if (!force && (isLoadingProfile || profile.value != null)) {
       return
     }
 
-    profileLoadError.postValue(null)
     isLoadingProfile = true
-    viewModelScope.launch(Dispatchers.IO) {
-      try {
-        profile.postValue(accountRepository.getProfile())
-      } catch (e: Throwable) {
-        profileLoadError.postValue(e)
-      } finally {
-        isLoadingProfile = false
-      }
+    viewModelScope.launch {
+      profileLoadError.emit(null)
+      accountRepository.getProfile()
+        .flowOn(Dispatchers.IO)
+        .catch { e -> profileLoadError.emit(e) }
+        .collect { p -> profile.emit(p) }
+
     }
   }
 }

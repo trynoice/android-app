@@ -8,15 +8,17 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignInFormFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import org.apache.commons.validator.routines.EmailValidator
 import javax.inject.Inject
 
@@ -56,10 +58,10 @@ class SignInFormFragment : Fragment() {
 class SignInFormViewModel @Inject constructor(savedStateHandle: SavedStateHandle) : ViewModel() {
 
   val isReturningUser: Boolean
-  val name = MutableLiveData("")
-  val isNameValid = MutableLiveData(true)
-  val email = MutableLiveData("")
-  val isEmailValid = MutableLiveData(true)
+  val name = MutableStateFlow("")
+  val isNameValid = MutableStateFlow(true)
+  val email = MutableStateFlow("")
+  val isEmailValid = MutableStateFlow(true)
   var onSignFormSubmitted: (SignInResultFragmentArgs) -> Unit = {}
 
   init {
@@ -70,21 +72,21 @@ class SignInFormViewModel @Inject constructor(savedStateHandle: SavedStateHandle
   fun validateName(): Boolean {
     // maxLength: 64
     // minLength: 1
-    val text = name.value ?: ""
-    val isValid = text.isNotBlank() && text.length <= 64
-    isNameValid.postValue(isValid)
+    val v = name.value
+    val isValid = v.isNotBlank() && v.length <= 64
+    viewModelScope.launch { isNameValid.emit(isValid) }
     return isValid
   }
 
   fun validateEmail(): Boolean {
     // maxLength: 64
     // minLength: 3
-    val text = email.value ?: ""
-    val isValid = text.isNotBlank()
-      && text.length <= 64
-      && EmailValidator.getInstance(false, false).isValid(text)
+    val v = email.value
+    val isValid = v.isNotBlank()
+      && v.length <= 64
+      && EmailValidator.getInstance(false, false).isValid(v)
 
-    isEmailValid.postValue(isValid)
+    viewModelScope.launch { isEmailValid.emit(isValid) }
     return isValid
   }
 

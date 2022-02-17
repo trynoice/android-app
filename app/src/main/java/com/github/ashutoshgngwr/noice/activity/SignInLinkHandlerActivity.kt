@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
@@ -16,6 +14,11 @@ import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -60,37 +63,36 @@ class SignInLinkHandlerViewModel @Inject constructor(
 
   var onSuccessButtonClick: () -> Unit = {}
   var onFailureButtonClick: () -> Unit = {}
-  val isSigningIn = MutableLiveData(false)
-  val isSignInComplete = MutableLiveData(false)
-  val signInError = MutableLiveData<Throwable?>()
-  val signInErrorStringRes = MediatorLiveData<Int?>().also {
-    it.addSource(signInError) { e ->
-      it.postValue(
-        when (e) {
-          null -> null
-          is NotSignedInError -> R.string.sign_in_token_error
-          is NetworkError -> R.string.network_error
-          else -> R.string.unknown_error
-        }
-      )
-    }
-  }
+  val isSigningIn = MutableStateFlow(false)
+  val isSignInComplete = MutableStateFlow(false)
+  val signInError = MutableStateFlow<Throwable?>(null)
+  val signInErrorStringRes: StateFlow<Int?> = signInError.transform { error ->
+    emit(
+      when (error) {
+        null -> null
+        is NotSignedInError -> R.string.sign_in_token_error
+        is NetworkError -> R.string.network_error
+        else -> R.string.unknown_error
+      }
+    )
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   internal fun signInWithToken(token: String) {
-    if (isSigningIn.value == true || isSignInComplete.value == true) {
+    if (isSigningIn.value || isSignInComplete.value) {
       return
     }
 
-    signInError.postValue(null)
-    isSigningIn.postValue(true)
     viewModelScope.launch(Dispatchers.IO) {
+      signInError.emit(null)
+      isSigningIn.emit(true)
+
       try {
         accountRepository.signInWithToken(token)
-        isSignInComplete.postValue(true)
+        isSignInComplete.emit(true)
       } catch (e: Throwable) {
-        signInError.postValue(e)
+        signInError.emit(e)
       } finally {
-        isSigningIn.postValue(false)
+        isSigningIn.emit(false)
       }
     }
   }
