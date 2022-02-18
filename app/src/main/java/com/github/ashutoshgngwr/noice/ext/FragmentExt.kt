@@ -23,7 +23,10 @@ fun Fragment.showSnackbar(
   msg: String,
   @BaseTransientBottomBar.Duration length: Int = Snackbar.LENGTH_LONG,
 ): Snackbar {
-  return Snackbar.make(requireView(), msg, length).apply {
+  // pass Snackbar a view that is likely to be available even if current fragment is currently being
+  // destroyed. This happens frequently in case of bottom sheet dialog fragments.
+  val view = activity?.findViewById(R.id.main_nav_host_fragment) ?: requireView()
+  return Snackbar.make(view, msg, length).apply {
     anchorView = activity?.findViewById(R.id.bottom_nav)
     show()
   }
