@@ -15,7 +15,7 @@ import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.AccountFragmentBinding
-import com.github.ashutoshgngwr.noice.ext.showSnackbar
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.model.NetworkError
 import com.github.ashutoshgngwr.noice.model.NotSignedInError
@@ -85,7 +85,7 @@ class AccountFragment : Fragment() {
         .filterNotNull()
         .filter { errRes -> errRes != ResourcesCompat.ID_NULL }
         .collect { errRes ->
-          showSnackbar(errRes, Snackbar.LENGTH_LONG)
+          showErrorSnackbar(errRes)
             .setAction(R.string.retry) { viewModel.loadProfile(force = true) }
         }
     }

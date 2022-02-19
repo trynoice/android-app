@@ -19,7 +19,7 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.LibraryFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundGroupListItemBinding
 import com.github.ashutoshgngwr.noice.databinding.SoundListItemBinding
-import com.github.ashutoshgngwr.noice.ext.showSnackbar
+import com.github.ashutoshgngwr.noice.ext.showSuccessSnackbar
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
@@ -143,7 +143,7 @@ class LibraryFragment : Fragment() {
           val preset = Preset.from(name, players.values)
           presetRepository.create(preset)
           binding.savePresetButton.hide()
-          showSnackbar(R.string.preset_saved)
+          showSuccessSnackbar(R.string.preset_saved)
           playbackController.requestUpdateEvent()
 
           params.putBoolean("success", true)

@@ -14,7 +14,8 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.ext.showSnackbar
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
+import com.github.ashutoshgngwr.noice.ext.showSuccessSnackbar
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
@@ -78,7 +79,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         negativeButton(R.string.cancel)
         positiveButton(R.string.okay) {
           ShortcutManagerCompat.removeAllDynamicShortcuts(requireContext())
-          showSnackbar(R.string.all_app_shortcuts_removed)
+          showSuccessSnackbar(R.string.all_app_shortcuts_removed)
           analyticsProvider.logEvent("preset_shortcut_remove_all", bundleOf())
         }
       }
@@ -139,7 +140,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
       }
 
       success = true
-      showSnackbar(R.string.export_presets_successful)
+      showSuccessSnackbar(R.string.export_presets_successful)
     } catch (e: Throwable) {
       Log.w(TAG, "failed to export saved presets", e)
       crashlyticsProvider.log("failed to export saved presets")
@@ -147,7 +148,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
       when (e) {
         is FileNotFoundException,
         is IOException,
-        is JsonIOException -> showSnackbar(R.string.failed_to_write_file)
+        is JsonIOException -> showErrorSnackbar(R.string.failed_to_write_file)
         else -> throw e
       }
     } finally {
@@ -168,19 +169,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
       }
 
       success = true
-      showSnackbar(R.string.import_presets_successful)
+      showSuccessSnackbar(R.string.import_presets_successful)
     } catch (e: Throwable) {
       Log.w(TAG, "failed to import saved presets", e)
       when (e) {
         is FileNotFoundException,
         is IOException,
         is JsonIOException -> {
-          showSnackbar(R.string.failed_to_read_file)
+          showErrorSnackbar(R.string.failed_to_read_file)
           crashlyticsProvider.log("failed to import saved presets")
           crashlyticsProvider.recordException(e)
         }
         is JsonSyntaxException,
-        is IllegalArgumentException -> showSnackbar(R.string.invalid_import_file_format)
+        is IllegalArgumentException -> showErrorSnackbar(R.string.invalid_import_file_format)
         else -> {
           crashlyticsProvider.log("failed to import saved presets")
           crashlyticsProvider.recordException(e)

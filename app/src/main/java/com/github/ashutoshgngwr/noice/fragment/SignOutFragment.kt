@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignOutFragmentBinding
-import com.github.ashutoshgngwr.noice.ext.showSnackbar
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.model.NetworkError
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -52,7 +52,7 @@ class SignOutFragment : BottomSheetDialogFragment() {
       viewModel.signOutErrorStrRes
         .filterNotNull()
         .filterNot { strRes -> strRes == ResourcesCompat.ID_NULL }
-        .collect { strRes -> showSnackbar(strRes) }
+        .collect { strRes -> showErrorSnackbar(strRes) }
     }
   }
 }
