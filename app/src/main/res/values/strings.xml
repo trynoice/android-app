@@ -261,4 +261,6 @@
     <string name="delete_account_confirmation">On deleting your account, you will immediately lose access to your profile. If you have an ongoing subscription, it will be cancelled. Please note that it may take us a while to completely erase your data from our servers.</string>
     <string name="i_understand">I understand.</string>
     <string name="deleting_account">Deleting account</string>
+    <string name="duplicate_email_error">The updated email is already in use by another account.</string>
+    <string name="profile_update_success">Your profile was updated successfully.</string>
 </resources>

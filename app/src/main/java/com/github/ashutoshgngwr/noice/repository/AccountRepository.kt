@@ -2,12 +2,14 @@ package com.github.ashutoshgngwr.noice.repository
 
 import android.util.Log
 import com.github.ashutoshgngwr.noice.model.AccountTemporarilyLockedError
+import com.github.ashutoshgngwr.noice.model.DuplicateEmailError
 import com.github.ashutoshgngwr.noice.model.NetworkError
 import com.github.ashutoshgngwr.noice.model.NotSignedInError
 import com.trynoice.api.client.NoiceApiClient
 import com.trynoice.api.client.models.Profile
 import com.trynoice.api.client.models.SignInParams
 import com.trynoice.api.client.models.SignUpParams
+import com.trynoice.api.client.models.UpdateProfileParams
 import io.github.ashutoshgngwr.may.May
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -63,6 +65,32 @@ class AccountRepository @Inject constructor(
   }
 
   /**
+   * Updates the profile fields of an authenticated user.
+   *
+   * @param email must be valid email
+   * @param name must be valid name
+   * @throws DuplicateEmailError if updated email is already linked to another account.
+   * @throws NetworkError on network errors.
+   * @throws HttpException on api errors.
+   */
+  suspend fun updateProfile(email: String, name: String) {
+    try {
+      val response = apiClient.accounts().updateProfile(UpdateProfileParams(email, name))
+      when {
+        response.isSuccessful -> return
+        response.code() == 409 -> throw DuplicateEmailError
+        else -> {
+          val e = HttpException(response)
+          Log.i(LOG_TAG, "updateProfile: api error", e)
+          throw e
+        }
+      }
+    } catch (e: IOException) {
+      Log.i(LOG_TAG, "updateProfile: network error", e)
+    }
+  }
+
+  /**
    * Attempts to send the sign-link to the given [email] address.
    *
    * @throws AccountTemporarilyLockedError if the account is temporarily locked from making sign-in
@@ -71,9 +99,9 @@ class AccountRepository @Inject constructor(
    * @throws HttpException on api errors.
    */
   suspend fun signIn(email: String) {
-    val response: Response<Unit>
     try {
-      response = apiClient.accounts().signIn(SignInParams(email))
+      val response = apiClient.accounts().signIn(SignInParams(email))
+      handleSignInResponse(response)
     } catch (e: IOException) {
       Log.i(LOG_TAG, "signIn: network error", e)
       throw NetworkError
@@ -81,8 +109,6 @@ class AccountRepository @Inject constructor(
       Log.i(LOG_TAG, "signIn: api error", e)
       throw e
     }
-
-    handleSignInResponse(response)
   }
 
   /**
@@ -94,9 +120,9 @@ class AccountRepository @Inject constructor(
    * @throws HttpException on api errors.
    */
   suspend fun signUp(email: String, name: String) {
-    val response: Response<Unit>
     try {
-      response = apiClient.accounts().signUp(SignUpParams(email, name))
+      val response = apiClient.accounts().signUp(SignUpParams(email, name))
+      handleSignInResponse(response)
     } catch (e: IOException) {
       Log.i(LOG_TAG, "signUp: network error", e)
       throw NetworkError
@@ -104,8 +130,6 @@ class AccountRepository @Inject constructor(
       Log.i(LOG_TAG, "signUp: api error", e)
       throw e
     }
-
-    handleSignInResponse(response)
   }
 
   private fun handleSignInResponse(response: Response<Unit>) {

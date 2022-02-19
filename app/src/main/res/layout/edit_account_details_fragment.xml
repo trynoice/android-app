@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="android.view.View" />
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.EditAccountDetailsViewModel" />
+
+  </data>
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:paddingHorizontal="16dp"
+      android:paddingVertical="24dp">
+
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="name"
+        android:enabled="@{viewModel.isEditingEnabled}"
+        android:hint="@string/name"
+        app:error="@{viewModel.isNameValid ? null : @string/invalid_name}"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:inputType="textCapWords"
+          android:text="@={viewModel.name}" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="8dp" />
+
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="emailAddress"
+        android:enabled="@{viewModel.isEditingEnabled}"
+        android:hint="@string/email"
+        app:error="@{viewModel.isEmailValid ? null : @string/invalid_email}"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:inputType="textWebEmailAddress"
+          android:text="@={viewModel.email}" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+      <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+          style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:onClick="@{() -> viewModel.save()}"
+          android:text="@string/save"
+          android:visibility="@{!viewModel.isLoading ? View.VISIBLE : View.GONE}" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+          style="@style/Widget.MaterialComponents.CircularProgressIndicator.Small"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:indeterminate="true"
+          android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+          tools:visibility="gone" />
+
+      </FrameLayout>
+
+    </LinearLayout>
+
+  </ScrollView>
+
+</layout>

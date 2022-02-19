@@ -4,10 +4,12 @@ import com.trynoice.api.client.auth.annotations.NeedsAccessToken
 import com.trynoice.api.client.models.Profile
 import com.trynoice.api.client.models.SignInParams
 import com.trynoice.api.client.models.SignUpParams
+import com.trynoice.api.client.models.UpdateProfileParams
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 
@@ -70,6 +72,23 @@ interface AccountApi {
   @NeedsAccessToken
   @GET("/v1/accounts/profile")
   suspend fun getProfile(): Profile
+
+  /**
+   * Updates the profile fields of the authenticated user. It accepts partial updates, i.e., all
+   * `null` fields in the request body are ignored.
+   *
+   * Responses
+   *  - 204: profile update successfully
+   *  - 400: request is not valid
+   *  - 401: access token is invalid
+   *  - 409: updated email belongs to another existing account
+   *  - 500: internal server error
+   *
+   * @throws java.io.IOException on network error.
+   */
+  @NeedsAccessToken
+  @PATCH("/v1/accounts/profile")
+  suspend fun updateProfile(@Body updateProfileParams: UpdateProfileParams): Response<Unit>
 
   /**
    * Deletes the account of an authenticated user. If the account with the given [accountId] does

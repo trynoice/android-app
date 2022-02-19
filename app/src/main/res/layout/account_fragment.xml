@@ -34,8 +34,8 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:gravity="center"
-          android:textAppearance="?attr/textAppearanceHeadline5"
           android:text="@{viewModel.profile.name}"
+          android:textAppearance="?attr/textAppearanceHeadline5"
           app:width_weight="0.65"
           tools:text="Jane Doe" />
 
@@ -44,9 +44,9 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"
           android:gravity="center"
+          android:text="@{viewModel.profile.email}"
           android:textAppearance="?attr/textAppearanceCaption"
           android:textSize="16sp"
-          android:text="@{viewModel.profile.email}"
           app:width_weight="0.75"
           tools:text="jane.doe@emailservice.org" />
 
@@ -89,7 +89,7 @@
         app:drawableStartCompat="@drawable/ic_baseline_attach_money_32" />
 
       <TextView
-        android:id="@+id/manage_account"
+        android:id="@+id/update_account_details"
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

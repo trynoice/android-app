@@ -45,6 +45,10 @@
       app:destination="@id/delete_account" />
 
     <action
+      android:id="@id/update_account_details"
+      app:destination="@id/update_account_details" />
+
+    <action
       android:id="@id/settings"
       app:destination="@id/settings" />
 
@@ -122,6 +126,12 @@
     android:name="com.github.ashutoshgngwr.noice.fragment.DeleteAccountFragment"
     android:label="@string/delete_account"
     tools:layout="@layout/delete_account_fragment" />
+
+  <fragment
+    android:id="@+id/update_account_details"
+    android:name="com.github.ashutoshgngwr.noice.fragment.EditAccountDetailsFragment"
+    android:label="@string/update_details"
+    tools:layout="@layout/edit_account_details_fragment" />
 
   <fragment
     android:id="@+id/settings"
