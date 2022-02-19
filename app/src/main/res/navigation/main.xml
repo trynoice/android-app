@@ -41,6 +41,10 @@
       app:destination="@id/sign_out" />
 
     <action
+      android:id="@id/delete_account"
+      app:destination="@id/delete_account" />
+
+    <action
       android:id="@id/settings"
       app:destination="@id/settings" />
 
@@ -112,6 +116,12 @@
     android:name="com.github.ashutoshgngwr.noice.fragment.SignOutFragment"
     android:label="@string/sign_out"
     tools:layout="@layout/sign_out_fragment" />
+
+  <dialog
+    android:id="@+id/delete_account"
+    android:name="com.github.ashutoshgngwr.noice.fragment.DeleteAccountFragment"
+    android:label="@string/delete_account"
+    tools:layout="@layout/delete_account_fragment" />
 
   <fragment
     android:id="@+id/settings"

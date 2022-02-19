@@ -36,7 +36,7 @@ class AccountRepository @Inject constructor(
    * @return the [Profile] of the user.
    * @throws NotSignedInError if the client isn't signed-in.
    * @throws NetworkError on network errors.
-   * @throws Throwable on unknown errors.
+   * @throws HttpException on api errors.
    */
   fun getProfile(): Flow<Profile> = flow {
     if (!apiClient.isSignedIn()) {
@@ -68,7 +68,7 @@ class AccountRepository @Inject constructor(
    * @throws AccountTemporarilyLockedError if the account is temporarily locked from making sign-in
    * attempts.
    * @throws NetworkError on network errors.
-   * @throws Throwable on unknown errors.
+   * @throws HttpException on api errors.
    */
   suspend fun signIn(email: String) {
     val response: Response<Unit>
@@ -91,7 +91,7 @@ class AccountRepository @Inject constructor(
    * @throws AccountTemporarilyLockedError if the account is temporarily locked from making sign-in
    * attempts.
    * @throws NetworkError on network errors.
-   * @throws Throwable on unknown errors.
+   * @throws HttpException on api errors.
    */
   suspend fun signUp(email: String, name: String) {
     val response: Response<Unit>
@@ -126,7 +126,7 @@ class AccountRepository @Inject constructor(
    *
    * @throws NotSignedInError if the [token] is refused by the api.
    * @throws NetworkError on network errors.
-   * @throws Throwable on unknown errors.
+   * @throws HttpException on api errors.
    */
   suspend fun signInWithToken(token: String) {
     try {
@@ -144,6 +144,12 @@ class AccountRepository @Inject constructor(
     }
   }
 
+  /**
+   * Signs out the currently authenticated user from the [NoiceApiClient].
+   *
+   * @throws NetworkError on network errors.
+   * @throws HttpException on api errors.
+   */
   suspend fun signOut() {
     try {
       apiClient.signOut()
@@ -154,6 +160,26 @@ class AccountRepository @Inject constructor(
     } catch (e: HttpException) {
       Log.i(LOG_TAG, "signOut: api error", e)
       throw e
+    }
+  }
+
+  /**
+   * Deletes the account of currently authenticated user.
+   *
+   * @throws NetworkError on network errors.
+   * @throws HttpException on api errors.
+   */
+  suspend fun deleteAccount(accountId: Long) {
+    try {
+      val response = apiClient.accounts().delete(accountId)
+      if (!response.isSuccessful) {
+        val error = HttpException(response)
+        Log.i(LOG_TAG, "deleteAccount: api error", error)
+        throw error
+      }
+    } catch (e: IOException) {
+      Log.i(LOG_TAG, "deleteAccount: network error", e)
+      throw NetworkError
     }
   }
 

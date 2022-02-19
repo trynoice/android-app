@@ -194,4 +194,8 @@
     <item name="drawableEndCompat">@drawable/ic_baseline_navigate_next_24</item>
   </style>
 
+  <style name="ThemeOverlay.App.Button.DestructiveAction" parent="">
+    <item name="colorPrimary">@color/error</item>
+  </style>
+
 </resources>

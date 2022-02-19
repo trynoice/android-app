@@ -6,8 +6,10 @@ import com.trynoice.api.client.models.SignInParams
 import com.trynoice.api.client.models.SignUpParams
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 /**
  * APIs related to account and user management.
@@ -66,6 +68,22 @@ interface AccountApi {
    * @throws java.io.IOException on network error.
    */
   @NeedsAccessToken
-  @GET("v1/accounts/profile")
+  @GET("/v1/accounts/profile")
   suspend fun getProfile(): Profile
+
+  /**
+   * Deletes the account of an authenticated user. If the account with the given [accountId] does
+   * not belong to the authenticated user, it returns `HTTP 400`.
+   *
+   * Responses:
+   *  - 204: account deleted successfully.
+   *  - 400: request is not valid.
+   *  - 401: access token is invalid.
+   *  - 500: internal server error.
+   *
+   * @throws java.io.IOException on network error.
+   */
+  @NeedsAccessToken
+  @DELETE("/v1/accounts/{id}")
+  suspend fun delete(@Path("id") accountId: Long): Response<Unit>
 }
