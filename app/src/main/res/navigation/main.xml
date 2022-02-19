@@ -37,6 +37,10 @@
     </action>
 
     <action
+      android:id="@id/sign_out"
+      app:destination="@id/sign_out" />
+
+    <action
       android:id="@id/settings"
       app:destination="@id/settings" />
 
@@ -102,6 +106,12 @@
       app:nullable="false" />
 
   </fragment>
+
+  <dialog
+    android:id="@+id/sign_out"
+    android:name="com.github.ashutoshgngwr.noice.fragment.SignOutFragment"
+    android:label="@string/sign_out"
+    tools:layout="@layout/sign_out_fragment" />
 
   <fragment
     android:id="@+id/settings"

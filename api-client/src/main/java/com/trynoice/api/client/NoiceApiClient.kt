@@ -21,7 +21,6 @@ import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
-import java.io.IOException
 
 
 /**
@@ -95,15 +94,18 @@ class NoiceApiClient(
 
   /**
    * Signs out the currently logged in user.
+   *
+   * @throws retrofit2.HttpException on API error.
+   * @throws java.io.IOException on network error.
    */
-  @Throws(IOException::class, HttpException::class)
   suspend fun signOut() {
     credentialRepository.getRefreshToken() ?: return
     runCatching { internalAccountApi.signOut() }
-      .onFailure {
+      .onFailure { throw it }
+      .onSuccess { response ->
         // HTTP 401 = invalid or expired refresh token, thus a valid result.
-        if (it !is HttpException || it.code() != 401) {
-          throw it
+        if (!response.isSuccessful && response.code() != 401) {
+          throw HttpException(response)
         }
       }
 

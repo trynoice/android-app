@@ -256,4 +256,6 @@
     <string name="sign_in_token_error">The sign-in link appears to be invalid. It may have expired. Please try again!</string>
     <string name="sign_in_sucessful">Successfully signed in!</string>
     <string name="cont">Continue</string>
+    <string name="sign_out_confirmation">Confirm signing out?</string>
+    <string name="signing_out">Signing out</string>
 </resources>

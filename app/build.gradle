@@ -122,7 +122,7 @@ dependencies {
   implementation 'com.ncorti:slidetoact:0.9.0'
   // TODO: move to stable https://github.com/elye/loaderviewlibrary/issues/33
   implementation 'com.github.ashutoshgngwr:loaderviewlibrary:921818c849'
-  implementation 'io.github.ashutoshgngwr:may:0.1.1'
+  implementation 'io.github.ashutoshgngwr:may:0.2.1'
   implementation 'io.github.medyo:android-about-page:2.0.0'
   implementation 'io.github.mrherintsoahasina:flextools:1.0.3'
   implementation 'io.noties.markwon:core:4.6.2'

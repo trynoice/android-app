@@ -50,10 +50,10 @@ class AccountRepository @Inject constructor(
       cacheStore.put(PROFILE_CACHE_KEY, profile)
       emit(profile)
     } catch (e: IOException) {
-      Log.i(LOG_TAG, "network error when loading profile", e)
+      Log.i(LOG_TAG, "getProfile: network error", e)
       throw NetworkError
     } catch (e: HttpException) {
-      Log.i(LOG_TAG, "api error when loading profile", e)
+      Log.i(LOG_TAG, "getProfile: api error", e)
       if (e.code() == 401) {
         throw NotSignedInError
       }
@@ -75,10 +75,10 @@ class AccountRepository @Inject constructor(
     try {
       response = apiClient.accounts().signIn(SignInParams(email))
     } catch (e: IOException) {
-      Log.i(LOG_TAG, "network error when loading profile", e)
+      Log.i(LOG_TAG, "signIn: network error", e)
       throw NetworkError
     } catch (e: HttpException) {
-      Log.i(LOG_TAG, "api error when loading profile", e)
+      Log.i(LOG_TAG, "signIn: api error", e)
       throw e
     }
 
@@ -98,10 +98,10 @@ class AccountRepository @Inject constructor(
     try {
       response = apiClient.accounts().signUp(SignUpParams(email, name))
     } catch (e: IOException) {
-      Log.i(LOG_TAG, "network error when loading profile", e)
+      Log.i(LOG_TAG, "signUp: network error", e)
       throw NetworkError
     } catch (e: HttpException) {
-      Log.i(LOG_TAG, "api error when loading profile", e)
+      Log.i(LOG_TAG, "signUp: api error", e)
       throw e
     }
 
@@ -132,10 +132,10 @@ class AccountRepository @Inject constructor(
     try {
       apiClient.signInWithToken(token)
     } catch (e: IOException) {
-      Log.i(LOG_TAG, "network error when loading profile", e)
+      Log.i(LOG_TAG, "signInWithToken: network error", e)
       throw NetworkError
     } catch (e: HttpException) {
-      Log.i(LOG_TAG, "api error when loading profile", e)
+      Log.i(LOG_TAG, "signInWithToken: api error", e)
       throw e
     }
 
@@ -144,9 +144,21 @@ class AccountRepository @Inject constructor(
     }
   }
 
-  companion object {
-    private val LOG_TAG = AccountRepository::class.simpleName
+  suspend fun signOut() {
+    try {
+      apiClient.signOut()
+      cacheStore.removeAll()
+    } catch (e: IOException) {
+      Log.i(LOG_TAG, "signOut: network error", e)
+      throw NetworkError
+    } catch (e: HttpException) {
+      Log.i(LOG_TAG, "signOut: api error", e)
+      throw e
+    }
+  }
 
+  companion object {
+    private const val LOG_TAG = "AccountRepository"
     private const val PROFILE_CACHE_KEY = "account/profile"
   }
 }

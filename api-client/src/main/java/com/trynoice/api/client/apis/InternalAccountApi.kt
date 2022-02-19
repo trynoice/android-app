@@ -1,7 +1,9 @@
 package com.trynoice.api.client.apis
 
+import com.trynoice.api.client.auth.annotations.NeedsAccessToken
 import com.trynoice.api.client.auth.annotations.NeedsRefreshToken
 import com.trynoice.api.client.models.AuthCredentials
+import retrofit2.Response
 import retrofit2.http.GET
 
 /**
@@ -33,15 +35,15 @@ internal interface InternalAccountApi {
    * HTTP 401.
    *
    * Responses:
-   *  - 200: OK.
+   *  - 204: OK.
    *  - 400: request is not valid.
    *  - 401: refresh token is invalid, expired or re-used.
    *  - 500: internal server error.
    *
-   * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
   @NeedsRefreshToken
+  @NeedsAccessToken
   @GET("/v1/accounts/signOut")
-  suspend fun signOut()
+  suspend fun signOut(): Response<Unit>
 }

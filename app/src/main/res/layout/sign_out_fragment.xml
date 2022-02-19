@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="android.view.View" />
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.SignOutViewModel" />
+
+  </data>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:theme="@style/Theme.App.BottomSheetDialog">
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/sign_out_confirmation"
+      android:textAppearance="?android:attr/textAppearance"
+      android:visibility="@{!viewModel.isSigningOut ? View.VISIBLE : View.GONE}" />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:visibility="@{viewModel.isSigningOut ? View.VISIBLE : View.GONE}"
+      tools:visibility="gone">
+
+      <com.google.android.material.progressindicator.CircularProgressIndicator
+        style="@style/Widget.MaterialComponents.CircularProgressIndicator.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true" />
+
+      <Space
+        android:layout_width="16dp"
+        android:layout_height="wrap_content" />
+
+      <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/signing_out"
+        android:textAppearance="?android:attr/textAppearance" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:gravity="center_vertical|end"
+      android:orientation="horizontal"
+      android:visibility="@{!viewModel.isSigningOut ? View.VISIBLE : View.GONE}">
+
+      <Button
+        style="?attr/buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> viewModel.cancel()}"
+        android:text="@string/cancel" />
+
+      <Space
+        android:layout_width="16dp"
+        android:layout_height="wrap_content" />
+
+      <Button
+        style="?attr/buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> viewModel.signOut()}"
+        android:text="@string/cont" />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</layout>
