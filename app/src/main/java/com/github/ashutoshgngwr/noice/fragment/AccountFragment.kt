@@ -28,10 +28,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -83,10 +81,7 @@ class AccountFragment : Fragment() {
       viewModel.profileLoadErrorStringRes
         .filterNotNull()
         .filter { errRes -> errRes != ResourcesCompat.ID_NULL }
-        .collect { errRes ->
-          showErrorSnackbar(errRes)
-            .setAction(R.string.retry) { viewModel.loadProfile(force = true) }
-        }
+        .collect { errRes -> showErrorSnackbar(errRes) }
     }
 
     viewModel.loadProfile()
@@ -117,20 +112,21 @@ class AccountViewModel @Inject constructor(
     )
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-  internal fun loadProfile(force: Boolean = false) {
-    if (!force && (isLoadingProfile || profile.value != null)) {
+  internal fun loadProfile() {
+    if (isLoadingProfile) {
       return
     }
 
     isLoadingProfile = true
-    viewModelScope.launch {
+    viewModelScope.launch(Dispatchers.IO) {
       profileLoadError.emit(null)
-      accountRepository.getProfile()
-        .flowOn(Dispatchers.IO)
-        .catch { e -> profileLoadError.emit(e) }
-        .collect { p -> profile.emit(p) }
-
-      isLoadingProfile = false
+      try {
+        accountRepository.getProfile().collect(profile::emit)
+      } catch (e: Throwable) {
+        profileLoadError.emit(e)
+      } finally {
+        isLoadingProfile = false
+      }
     }
   }
 }
