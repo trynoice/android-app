@@ -20,6 +20,7 @@ import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.model.NetworkError
 import com.github.ashutoshgngwr.noice.model.NotSignedInError
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.trynoice.api.client.models.Profile
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,10 +29,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -43,6 +46,9 @@ class AccountFragment : Fragment() {
 
   private lateinit var binding: AccountFragmentBinding
   private val viewModel: AccountViewModel by viewModels()
+  private val mainNavController by lazy {
+    Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
+  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = AccountFragmentBinding.inflate(inflater, container, false)
@@ -70,63 +76,57 @@ class AccountFragment : Fragment() {
           analyticsProvider.logEvent("feedback_form_open", bundleOf())
         }
 
-        else -> {
-          Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
-            .navigate(item.id)
-        }
+        else -> mainNavController.navigate(item.id)
       }
     }
 
     lifecycleScope.launch {
-      viewModel.profileLoadErrorStringRes
+      viewModel.errorStrRes
         .filterNotNull()
         .filter { errRes -> errRes != ResourcesCompat.ID_NULL }
         .collect { errRes -> showErrorSnackbar(errRes) }
     }
-
-    viewModel.loadProfile()
   }
 }
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
   private val accountRepository: AccountRepository,
+  networkInfoProvider: NetworkInfoProvider,
 ) : ViewModel() {
 
-  @Volatile
-  private var isLoadingProfile = false
-
-  var onItemClickListener = View.OnClickListener { }
+  var onItemClickListener = View.OnClickListener {}
   val isSignedIn = accountRepository.isSignedIn()
-
   val profile = MutableStateFlow<Profile?>(null)
-  private val profileLoadError = MutableStateFlow<Throwable?>(null)
-  val profileLoadErrorStringRes: StateFlow<Int?> = profileLoadError.transform { error ->
-    emit(
-      when (error) {
-        null -> null
-        is NotSignedInError -> null
-        is NetworkError -> R.string.network_error
-        else -> R.string.unknown_error
-      }
-    )
+
+  private val error = MutableStateFlow<Throwable?>(null)
+  val errorStrRes: StateFlow<Int?> = combine(profile, error) { data, err ->
+    when {
+      // ignore errors when cached profile is present and network is offline.
+      data != null && networkInfoProvider.offlineState.value -> null
+      err == null -> null
+      err is NotSignedInError -> null
+      err is NetworkError -> R.string.network_error
+      else -> R.string.unknown_error
+    }
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-  internal fun loadProfile() {
-    if (isLoadingProfile) {
-      return
-    }
-
-    isLoadingProfile = true
-    viewModelScope.launch(Dispatchers.IO) {
-      profileLoadError.emit(null)
-      try {
-        accountRepository.getProfile().collect(profile::emit)
-      } catch (e: Throwable) {
-        profileLoadError.emit(e)
-      } finally {
-        isLoadingProfile = false
+  init {
+    viewModelScope.launch {
+      loadProfile()
+      networkInfoProvider.offlineState.collect { isOffline ->
+        // automatically reload profile when network comes back online.
+        if (!isOffline) {
+          loadProfile()
+        }
       }
     }
+  }
+
+  private suspend fun loadProfile() {
+    accountRepository.getProfile()
+      .flowOn(Dispatchers.IO)
+      .catch { error.emit(it) }
+      .collect(profile)
   }
 }

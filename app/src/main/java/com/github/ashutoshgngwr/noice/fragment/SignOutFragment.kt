@@ -76,10 +76,6 @@ class SignOutViewModel @Inject constructor(
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   fun signOut() {
-    if (isSigningOut.value) {
-      return
-    }
-
     viewModelScope.launch(Dispatchers.IO) {
       isSigningOut.emit(true)
       try {
