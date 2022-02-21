@@ -2,11 +2,16 @@ package com.github.ashutoshgngwr.noice.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
+import androidx.core.os.postDelayed
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -19,6 +24,7 @@ import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.BillingProvider
+import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.snackbar.Snackbar
@@ -27,6 +33,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -60,10 +67,14 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
   @set:Inject
   internal lateinit var playbackController: PlaybackController
 
+  @set:Inject
+  internal lateinit var networkInfoProvider: NetworkInfoProvider
+
   /**
    * indicates whether the activity was delivered a new intent since it was last resumed.
    */
   private var hasNewIntent = false
+  private val handler = Handler(Looper.getMainLooper())
   private val settingsRepository by lazy {
     EntryPointAccessors.fromApplication(application, MainActivityEntryPoint::class.java)
       .settingsRepository()
@@ -87,6 +98,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
     billingProvider.init(this, this)
     analyticsProvider.logEvent("ui_open", bundleOf("theme" to settingsRepository.getAppTheme()))
     hasNewIntent = true
+    initOfflineIndicator()
   }
 
   private fun maybeShowDataCollectionConsent() {
@@ -99,16 +111,41 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
       isCancelable = false
       title(R.string.share_usage_data_consent_title)
       message(R.string.share_usage_data_consent_message)
+      positiveButton(R.string.accept) { settingsRepository.setShouldShareUsageData(true) }
+      negativeButton(R.string.decline) { settingsRepository.setShouldShareUsageData(false) }
+      onDismiss { prefs.edit { putBoolean(PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true) } }
+    }
+  }
 
-      positiveButton(R.string.accept) {
-        settingsRepository.setShouldShareUsageData(true)
-        prefs.edit { putBoolean(PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true) }
+  private fun initOfflineIndicator() {
+    lifecycleScope.launch {
+      networkInfoProvider.offlineState.collect {
+        if (it) {
+          showOfflineIndicator()
+        } else {
+          hideOfflineIndicator()
+        }
       }
+    }
+  }
 
-      negativeButton(R.string.decline) {
-        settingsRepository.setShouldShareUsageData(false)
-        prefs.edit { putBoolean(PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true) }
-      }
+  private fun showOfflineIndicator() {
+    handler.removeCallbacksAndMessages(binding.networkIndicator)
+    binding.networkIndicator.apply {
+      setBackgroundResource(R.color.error)
+      setText(R.string.offline)
+      isVisible = true
+    }
+  }
+
+  private fun hideOfflineIndicator() {
+    binding.networkIndicator.apply {
+      setBackgroundResource(R.color.accent)
+      setText(R.string.back_online)
+    }
+
+    handler.postDelayed(2500, binding.networkIndicator) {
+      binding.networkIndicator.isVisible = false
     }
   }
 
