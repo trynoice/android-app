@@ -78,10 +78,6 @@ class DeleteAccountViewModel @Inject constructor(
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   fun deleteAccount() {
-    if (isDeletingAccount.value) {
-      return
-    }
-
     viewModelScope.launch(Dispatchers.IO) {
       isDeletingAccount.emit(true)
       try {
