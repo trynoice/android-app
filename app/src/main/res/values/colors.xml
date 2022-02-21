@@ -7,7 +7,6 @@
   <color name="action_bar">@color/white_1</color>
   <color name="background">@color/white_0</color>
   <color name="background_dark">@color/white_1</color>
-  <color name="action_menu_item">@color/woodsmoke</color>
   <color name="sound_icon">@color/shark_0</color>
   <color name="error">@color/red</color>
   <color name="loading_background">@color/white_2</color>

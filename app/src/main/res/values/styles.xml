@@ -47,7 +47,7 @@
 
   <style name="ThemeOverlay.App.ActionBar" parent="ThemeOverlay.MaterialComponents.ActionBar">
     <item name="colorPrimary">@color/action_bar</item>
-    <item name="colorControlNormal">@color/action_menu_item</item>
+    <item name="colorOnPrimary">?attr/colorOnSurface</item>
   </style>
 
   <style name="Widget.App.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
