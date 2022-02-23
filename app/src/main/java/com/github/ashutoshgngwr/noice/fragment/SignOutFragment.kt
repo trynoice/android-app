@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
@@ -21,7 +20,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
@@ -51,7 +49,6 @@ class SignOutFragment : BottomSheetDialogFragment() {
     lifecycleScope.launch {
       viewModel.signOutErrorStrRes
         .filterNotNull()
-        .filterNot { strRes -> strRes == ResourcesCompat.ID_NULL }
         .collect { strRes -> showErrorSnackbar(strRes) }
     }
   }

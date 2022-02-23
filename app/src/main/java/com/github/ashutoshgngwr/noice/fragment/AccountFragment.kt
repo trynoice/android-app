@@ -1,11 +1,9 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,6 +18,7 @@ import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.model.NetworkError
 import com.github.ashutoshgngwr.noice.model.NotSignedInError
+import com.github.ashutoshgngwr.noice.model.Resource
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
@@ -30,14 +29,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -84,9 +79,8 @@ class AccountFragment : Fragment() {
     }
 
     lifecycleScope.launch {
-      viewModel.apiErrorStrRes
+      viewModel.loadErrorStrRes
         .filterNotNull()
-        .filter { errRes -> errRes != ResourcesCompat.ID_NULL }
         .collect { errRes -> showErrorSnackbar(errRes) }
     }
 
@@ -102,38 +96,32 @@ class AccountViewModel @Inject constructor(
 
   var onItemClickListener = View.OnClickListener {}
   val isSignedIn = accountRepository.isSignedIn()
-  val profile = MutableStateFlow<Profile?>(null)
+  private val profileResource = MutableStateFlow<Resource<Profile>>(Resource.Loading())
 
-  private val apiError = MutableStateFlow<Throwable?>(null)
-  val apiErrorStrRes: StateFlow<Int?> = combine(profile, apiError) { data, err ->
-    when {
-      // ignore errors when cached profile is present and network is offline.
-      data != null && networkInfoProvider.isOffline.value -> null
-      err == null -> null
-      err is NotSignedInError -> null
-      err is NetworkError -> R.string.network_error
-      else -> R.string.unknown_error
-    }
+  val profile = profileResource.transform { resource ->
+    resource.data?.also { emit(it) }
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+  internal val loadErrorStrRes: StateFlow<Int?> = profileResource.transform { resource ->
+    emit(
+      when {
+        // ignore errors when cached profile is present and network is offline.
+        resource.data != null && networkInfoProvider.isOffline.value -> null
+        resource.error == null -> null
+        resource.error is NotSignedInError -> null
+        resource.error is NetworkError -> R.string.network_error
+        else -> R.string.unknown_error
+      }
+    )
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   internal fun loadProfile() {
     viewModelScope.launch {
-      Log.d(LOG_TAG, "loadProfile: coroutine start")
-      apiError.emit(null) // reset error
-      networkInfoProvider.isOnline.collect { isOnline ->
-        Log.d(LOG_TAG, "loadProfile: loading profile, isNetworkOnline=$isOnline")
+      networkInfoProvider.isOnline.collect {
         accountRepository.getProfile()
           .flowOn(Dispatchers.IO)
-          .onEach { p -> profile.emit(p) }
-          .catch { e -> apiError.emit(e) }
-          .collect()
+          .collect(profileResource)
       }
-
-      Log.d(LOG_TAG, "loadProfile: coroutine end")
     }
-  }
-
-  companion object {
-    private const val LOG_TAG = "AccountViewModel"
   }
 }

@@ -1,11 +1,9 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -17,19 +15,21 @@ import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackbar
 import com.github.ashutoshgngwr.noice.model.DuplicateEmailError
 import com.github.ashutoshgngwr.noice.model.NetworkError
+import com.github.ashutoshgngwr.noice.model.Resource
 import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
+import com.trynoice.api.client.models.Profile
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.filterNot
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -51,11 +51,10 @@ class EditAccountDetailsFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    viewModel.onProfileUpdated = { showSuccessSnackbar(R.string.profile_update_success) }
+    viewModel.onUpdateSuccess = { showSuccessSnackbar(R.string.profile_update_success) }
     lifecycleScope.launch {
       viewModel.apiErrorStrRes
         .filterNotNull()
-        .filterNot { strRes -> strRes == ResourcesCompat.ID_NULL }
         .collect { strRes -> showErrorSnackbar(strRes) }
     }
   }
@@ -67,10 +66,21 @@ class EditAccountDetailsViewModel @Inject constructor(
   private val networkInfoProvider: NetworkInfoProvider,
 ) : ViewModel() {
 
-  var onProfileUpdated: () -> Unit = {}
-  val isLoading = MutableStateFlow(false)
+  var onUpdateSuccess: () -> Unit = {}
   val name = MutableStateFlow("")
   val email = MutableStateFlow("")
+
+  private val profileResource = MutableStateFlow<Resource<Profile>>(Resource.Loading())
+  private val isUpdating = MutableStateFlow(false)
+  private val updateError = MutableStateFlow<Throwable?>(null)
+
+  private val loadError: StateFlow<Throwable?> = profileResource.transform { resource ->
+    emit(resource.error)
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+  val isLoading: StateFlow<Boolean> = combine(profileResource, isUpdating) { resource, isUpdating ->
+    resource is Resource.Loading || isUpdating
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
   val isNameValid: StateFlow<Boolean> = name.transform { name ->
     emit(name.isNotBlank() && name.length <= 64)
@@ -84,8 +94,7 @@ class EditAccountDetailsViewModel @Inject constructor(
     )
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
-  private val apiError = MutableStateFlow<Throwable?>(null)
-  internal val apiErrorStrRes: StateFlow<Int?> = apiError.transform { e ->
+  internal val apiErrorStrRes: StateFlow<Int?> = merge(loadError, updateError).transform { e ->
     emit(
       when (e) {
         null -> null
@@ -97,27 +106,18 @@ class EditAccountDetailsViewModel @Inject constructor(
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   init {
-    loadProfile()
-  }
-
-  private fun loadProfile() {
     viewModelScope.launch {
-      Log.d(LOG_TAG, "loadProfile: coroutine start")
-      isLoading.emit(true)
-      networkInfoProvider.isOnline.collect { isOnline ->
-        Log.d(LOG_TAG, "loadProfile: loading profile, isNetworkOnline=$isOnline")
+      networkInfoProvider.isOnline.collect {
         accountRepository.getProfile()
           .flowOn(Dispatchers.IO)
-          .catch { e -> apiError.emit(e) }
-          .lastOrNull()
-          ?.also { profile ->
-            name.emit(profile.name)
-            email.emit(profile.email)
+          .onEach { resource ->
+            if (resource.data != null) {
+              name.emit(resource.data.name)
+              email.emit(resource.data.email)
+            }
           }
+          .collect(profileResource)
       }
-
-      isLoading.emit(false)
-      Log.d(LOG_TAG, "loadProfile: coroutine end")
     }
   }
 
@@ -127,20 +127,16 @@ class EditAccountDetailsViewModel @Inject constructor(
     }
 
     viewModelScope.launch(Dispatchers.IO) {
-      apiError.emit(null)
-      isLoading.emit(true)
+      updateError.emit(null)
+      isUpdating.emit(true)
       try {
         accountRepository.updateProfile(email.value, name.value)
-        withContext(Dispatchers.Main) { onProfileUpdated.invoke() }
+        withContext(Dispatchers.Main) { onUpdateSuccess.invoke() }
       } catch (e: Throwable) {
-        apiError.emit(e)
+        updateError.emit(e)
       } finally {
-        isLoading.emit(false)
+        isUpdating.emit(false)
       }
     }
-  }
-
-  companion object {
-    private const val LOG_TAG = "EditAccountViewModel"
   }
 }

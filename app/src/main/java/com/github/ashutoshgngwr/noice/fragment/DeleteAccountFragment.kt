@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
@@ -21,7 +20,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
@@ -52,7 +50,6 @@ class DeleteAccountFragment : BottomSheetDialogFragment() {
     lifecycleScope.launch {
       viewModel.deleteAccountErrorStrRes
         .filterNotNull()
-        .filterNot { strRes -> strRes == ResourcesCompat.ID_NULL }
         .collect { strRes -> showErrorSnackbar(strRes) }
     }
   }
@@ -82,7 +79,11 @@ class DeleteAccountViewModel @Inject constructor(
       isDeletingAccount.emit(true)
       try {
         // TODO: cancel subscription before deleting the account.
-        val profile = accountRepository.getProfile().first()
+        val profile = accountRepository.getProfile()
+          .transform { emit(it.data) }
+          .filterNotNull()
+          .first()
+
         accountRepository.deleteAccount(profile.accountId)
         accountRepository.signOut() // call signOut to clear api client's state.
       } catch (e: Throwable) {

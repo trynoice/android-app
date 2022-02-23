@@ -5,6 +5,7 @@ import com.github.ashutoshgngwr.noice.model.AccountTemporarilyLockedError
 import com.github.ashutoshgngwr.noice.model.DuplicateEmailError
 import com.github.ashutoshgngwr.noice.model.NetworkError
 import com.github.ashutoshgngwr.noice.model.NotSignedInError
+import com.github.ashutoshgngwr.noice.model.Resource
 import com.trynoice.api.client.NoiceApiClient
 import com.trynoice.api.client.models.Profile
 import com.trynoice.api.client.models.SignInParams
@@ -13,7 +14,6 @@ import com.trynoice.api.client.models.UpdateProfileParams
 import io.github.ashutoshgngwr.may.May
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
@@ -40,29 +40,19 @@ class AccountRepository @Inject constructor(
    * @throws NetworkError on network errors.
    * @throws HttpException on api errors.
    */
-  fun getProfile(): Flow<Profile> = flow {
-    if (!apiClient.isSignedIn()) {
-      throw NotSignedInError
-    }
-
-    // immediately emit cached profile if exists, and then refresh it from the network.
-    cacheStore.getAs<Profile>(PROFILE_CACHE_KEY)?.also { emit(it) }
-    try {
-      val profile = apiClient.accounts().getProfile()
-      cacheStore.put(PROFILE_CACHE_KEY, profile)
-      emit(profile)
-    } catch (e: IOException) {
-      Log.i(LOG_TAG, "getProfile: network error", e)
-      throw NetworkError
-    } catch (e: HttpException) {
-      Log.i(LOG_TAG, "getProfile: api error", e)
-      if (e.code() == 401) {
-        throw NotSignedInError
+  fun getProfile(): Flow<Resource<Profile>> = fetchNetworkBoundResource(
+    loadFromCache = { cacheStore.getAs(PROFILE_CACHE_KEY) },
+    loadFromNetwork = { apiClient.accounts().getProfile() },
+    cacheNetworkResult = { p -> cacheStore.put(PROFILE_CACHE_KEY, p) },
+    loadFromNetworkErrorTransform = { e ->
+      Log.d(LOG_TAG, "getProfile:", e)
+      when {
+        e is HttpException && e.code() == 401 -> NotSignedInError
+        e is IOException -> NetworkError
+        else -> e
       }
-
-      throw e
-    }
-  }
+    },
+  )
 
   /**
    * Updates the profile fields of an authenticated user.
@@ -87,6 +77,7 @@ class AccountRepository @Inject constructor(
       }
     } catch (e: IOException) {
       Log.i(LOG_TAG, "updateProfile: network error", e)
+      throw NetworkError
     }
   }
 
