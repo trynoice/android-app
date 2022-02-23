@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
 
   private fun initOfflineIndicator() {
     lifecycleScope.launch {
-      networkInfoProvider.offlineState.collect {
+      networkInfoProvider.isOffline.collect {
         if (it) {
           showOfflineIndicator()
         } else {

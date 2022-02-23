@@ -70,6 +70,8 @@ fun Fragment.showSnackbar(
   val treeNode = activity?.findViewById(R.id.main_nav_host_fragment) ?: requireView()
   return Snackbar.make(treeNode, msg, length).apply {
     anchorView = activity?.findViewById(R.id.bottom_nav)
+    anchorView = anchorView ?: activity?.findViewById(R.id.network_indicator)
+
     this.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.also { tv ->
       tv.gravity = Gravity.CENTER_VERTICAL or Gravity.START
       tv.compoundDrawablePadding = context.resources
