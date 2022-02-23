@@ -92,7 +92,9 @@ class SettingsRepository @Inject constructor(
   }
 
   /**
-   * Sets the value of switch preference with key [R.string.should_share_usage_data_key].
+   * Enables/disables the data collection preferences on the [AnalyticsProvider] and the
+   * [CrashlyticsProvider]. Both providers persist these settings across app sessions, so there's no
+   * need to handle their persistence.
    */
   fun setShouldShareUsageData(enabled: Boolean) {
     crashlyticsProvider.setCollectionEnabled(enabled)

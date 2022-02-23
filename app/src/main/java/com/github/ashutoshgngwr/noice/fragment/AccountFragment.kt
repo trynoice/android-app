@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,10 +31,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -81,29 +84,31 @@ class AccountFragment : Fragment() {
     }
 
     lifecycleScope.launch {
-      viewModel.errorStrRes
+      viewModel.apiErrorStrRes
         .filterNotNull()
         .filter { errRes -> errRes != ResourcesCompat.ID_NULL }
         .collect { errRes -> showErrorSnackbar(errRes) }
     }
+
+    viewModel.loadProfile()
   }
 }
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
   private val accountRepository: AccountRepository,
-  networkInfoProvider: NetworkInfoProvider,
+  private val networkInfoProvider: NetworkInfoProvider,
 ) : ViewModel() {
 
   var onItemClickListener = View.OnClickListener {}
   val isSignedIn = accountRepository.isSignedIn()
   val profile = MutableStateFlow<Profile?>(null)
 
-  private val error = MutableStateFlow<Throwable?>(null)
-  val errorStrRes: StateFlow<Int?> = combine(profile, error) { data, err ->
+  private val apiError = MutableStateFlow<Throwable?>(null)
+  val apiErrorStrRes: StateFlow<Int?> = combine(profile, apiError) { data, err ->
     when {
       // ignore errors when cached profile is present and network is offline.
-      data != null && networkInfoProvider.offlineState.value -> null
+      data != null && networkInfoProvider.isOffline.value -> null
       err == null -> null
       err is NotSignedInError -> null
       err is NetworkError -> R.string.network_error
@@ -111,22 +116,24 @@ class AccountViewModel @Inject constructor(
     }
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-  init {
+  internal fun loadProfile() {
     viewModelScope.launch {
-      loadProfile()
-      networkInfoProvider.offlineState.collect { isOffline ->
-        // automatically reload profile when network comes back online.
-        if (!isOffline) {
-          loadProfile()
-        }
+      Log.d(LOG_TAG, "loadProfile: coroutine start")
+      apiError.emit(null) // reset error
+      networkInfoProvider.isOnline.collect { isOnline ->
+        Log.d(LOG_TAG, "loadProfile: loading profile, isNetworkOnline=$isOnline")
+        accountRepository.getProfile()
+          .flowOn(Dispatchers.IO)
+          .onEach { p -> profile.emit(p) }
+          .catch { e -> apiError.emit(e) }
+          .collect()
       }
+
+      Log.d(LOG_TAG, "loadProfile: coroutine end")
     }
   }
 
-  private suspend fun loadProfile() {
-    accountRepository.getProfile()
-      .flowOn(Dispatchers.IO)
-      .catch { error.emit(it) }
-      .collect(profile)
+  companion object {
+    private const val LOG_TAG = "AccountViewModel"
   }
 }

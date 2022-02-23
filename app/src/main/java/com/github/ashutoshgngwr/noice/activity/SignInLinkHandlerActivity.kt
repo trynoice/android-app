@@ -64,7 +64,6 @@ class SignInLinkHandlerViewModel @Inject constructor(
   var onSuccessButtonClick: () -> Unit = {}
   var onFailureButtonClick: () -> Unit = {}
   val isSigningIn = MutableStateFlow(false)
-  val isSignInComplete = MutableStateFlow(false)
   val signInError = MutableStateFlow<Throwable?>(null)
   val signInErrorStringRes: StateFlow<Int?> = signInError.transform { error ->
     emit(
@@ -78,7 +77,7 @@ class SignInLinkHandlerViewModel @Inject constructor(
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   internal fun signInWithToken(token: String) {
-    if (isSigningIn.value || isSignInComplete.value) {
+    if (isSigningIn.value) {
       return
     }
 
@@ -88,7 +87,6 @@ class SignInLinkHandlerViewModel @Inject constructor(
 
       try {
         accountRepository.signInWithToken(token)
-        isSignInComplete.emit(true)
       } catch (e: Throwable) {
         signInError.emit(e)
       } finally {
