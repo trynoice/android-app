@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="android.view.View" />
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.ViewSubscriptionPlansViewModel" />
+
+  </data>
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="16dp">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/benefits"
+        android:textAppearance="?attr/textAppearanceHeadline5" />
+
+      <Space
+        android:layout_width="wrap_content"
+        android:layout_height="24dp" />
+
+      <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+          style="@style/TextAppearance.App.SubscriptionBenefit"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/benefit_0"
+          app:drawableStartCompat="@drawable/ic_baseline_forest_24" />
+
+        <Space
+          android:layout_width="wrap_content"
+          android:layout_height="8dp" />
+
+        <TextView
+          style="@style/TextAppearance.App.SubscriptionBenefit"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:drawablePadding="16dp"
+          android:text="@string/benefit_1"
+          android:textAppearance="?attr/textAppearanceBody1"
+          app:drawableStartCompat="@drawable/ic_baseline_high_quality_24" />
+
+        <Space
+          android:layout_width="wrap_content"
+          android:layout_height="8dp" />
+
+        <TextView
+          style="@style/TextAppearance.App.SubscriptionBenefit"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:drawablePadding="16dp"
+          android:text="@string/benefit_2"
+          android:textAppearance="?attr/textAppearanceBody1"
+          app:drawableStartCompat="@drawable/ic_baseline_download_for_offline_24" />
+
+      </LinearLayout>
+
+      <Space
+        android:layout_width="wrap_content"
+        android:layout_height="32dp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/select_a_plan"
+        android:textAppearance="?attr/textAppearanceHeadline5" />
+
+      <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginVertical="16dp"
+        android:layout_weight="1">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:indeterminate="true"
+          android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+          tools:visibility="gone" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:animateLayoutChanges="true"
+          android:orientation="vertical"
+          android:visibility="@{!viewModel.plans.isEmpty() ? View.VISIBLE : View.GONE}"
+          app:subscriptionPlans="@{viewModel.plans}" />
+
+      </FrameLayout>
+
+    </LinearLayout>
+
+  </ScrollView>
+
+</layout>

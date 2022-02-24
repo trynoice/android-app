@@ -79,12 +79,12 @@
         app:drawableStartCompat="@drawable/ic_baseline_login_32" />
 
       <TextView
-        android:id="@+id/go_premium"
+        android:id="@+id/view_subscription_plans"
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{viewModel.onItemClickListener}"
-        android:text="@string/subscription_plans"
+        android:text="@string/view_subscription_plans"
         android:visibility="@{viewModel.isSignedIn ? View.GONE : View.VISIBLE}"
         app:drawableStartCompat="@drawable/ic_baseline_attach_money_32" />
 

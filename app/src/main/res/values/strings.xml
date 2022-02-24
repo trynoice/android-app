@@ -232,7 +232,7 @@
     <string name="support">Support</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
-    <string name="subscription_plans">Subscription plans</string>
+    <string name="view_subscription_plans">View plans</string>
     <string name="sign_out">Sign out</string>
     <string name="update_details">Update details</string>
     <string name="delete_account">Delete account</string>
@@ -265,4 +265,24 @@
     <string name="account_details_update_success">Your account details were updated successfully.</string>
     <string name="offline">You\'re offline</string>
     <string name="back_online">Back online</string>
+    <string name="premium">Premium</string>
+    <string name="monthly">Monthly</string>
+    <string name="quarterly">Quarterly</string>
+    <string name="bi_yearly">Bi-yearly</string>
+    <string name="yearly">Yearly</string>
+    <plurals name="n_months">
+        <item quantity="one">%1$d month</item>
+        <item quantity="other">%1$d months</item>
+    </plurals>
+    <plurals name="trial_period">
+        <item quantity="one">First day free</item>
+        <item quantity="other">First %1$d days free</item>
+    </plurals>
+    <string name="total_price">%1$s total</string>
+    <string name="monthly_price">%1$s per month</string>
+    <string name="benefits">Benefits</string>
+    <string name="benefit_0">Natural variations in sounds</string>
+    <string name="benefit_1">High-quality audio streaming</string>
+    <string name="benefit_2">Offline playback</string>
+    <string name="select_a_plan">Select a plan</string>
 </resources>
