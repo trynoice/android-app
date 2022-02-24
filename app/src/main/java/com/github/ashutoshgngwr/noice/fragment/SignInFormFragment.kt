@@ -1,6 +1,5 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,22 +28,24 @@ class SignInFormFragment : Fragment() {
   private val viewModel: SignInFormViewModel by viewModels()
   private val navArgs: SignInFormFragmentArgs by navArgs()
 
-  override fun onAttach(context: Context) {
-    super.onAttach(context)
-
-    // workaround until the upstream issue resolved!
-    // https://issuetracker.google.com/issues/167959935
-    (activity as? AppCompatActivity)
-      ?.supportActionBar
-      ?.setTitle(navArgs.title)
-  }
-
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = SignInFormFragmentBinding.inflate(inflater, container, false)
     return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    // TODO: workaround until the upstream issue resolved!
+    //  https://issuetracker.google.com/issues/167959935
+    (activity as? AppCompatActivity)
+      ?.supportActionBar
+      ?.setTitle(
+        if (navArgs.isReturningUser) {
+          R.string.sign_in
+        } else {
+          R.string.sign_up
+        }
+      )
+
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
     viewModel.onSignFormSubmitted = { args ->

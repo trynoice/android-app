@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.navArgs
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignInResultFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
@@ -36,6 +38,7 @@ class SignInResultFragment : Fragment() {
 
   private lateinit var binding: SignInResultFragmentBinding
   private val viewModel: SignInResultViewModel by viewModels()
+  private val navArgs: SignInResultFragmentArgs by navArgs()
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = SignInResultFragmentBinding.inflate(inflater, container, false)
@@ -43,6 +46,18 @@ class SignInResultFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    // TODO: workaround until the upstream issue resolved!
+    //  https://issuetracker.google.com/issues/167959935
+    (activity as? AppCompatActivity)
+      ?.supportActionBar
+      ?.setTitle(
+        if (navArgs.isReturningUser) {
+          R.string.sign_in
+        } else {
+          R.string.sign_up
+        }
+      )
+
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
     viewModel.onOpenMailboxClicked = this::openMailbox
