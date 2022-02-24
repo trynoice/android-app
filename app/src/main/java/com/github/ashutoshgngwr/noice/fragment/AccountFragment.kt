@@ -116,6 +116,10 @@ class AccountViewModel @Inject constructor(
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   internal fun loadProfile() {
+    if (!isSignedIn.value) {
+      return
+    }
+
     viewModelScope.launch {
       networkInfoProvider.isOnline.collect {
         accountRepository.getProfile()

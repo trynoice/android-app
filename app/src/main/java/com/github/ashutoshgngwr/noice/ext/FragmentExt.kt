@@ -1,11 +1,13 @@
 package com.github.ashutoshgngwr.noice.ext
 
 import android.view.Gravity
+import android.view.View
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.R
@@ -14,7 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 
 /**
  * Shows the [Snackbar] with [R.drawable.ic_baseline_check_circle_24] icon and [R.color.accent]
- * iconTint, anchored to [R.id.bottom_nav] (if present) and returns it.
+ * iconTint, anchored to [R.id.network_indicator] or [R.id.bottom_nav] (if present) and returns it.
  */
 fun Fragment.showSuccessSnackbar(
   @StringRes msgRes: Int,
@@ -25,7 +27,7 @@ fun Fragment.showSuccessSnackbar(
 
 /**
  * Shows the [Snackbar] with [R.drawable.ic_baseline_error_24] icon and [R.color.error] iconTint,
- * anchored to [R.id.bottom_nav] (if present) and returns it.
+ * anchored to [R.id.network_indicator] or [R.id.bottom_nav] (if present) and returns it.
  */
 fun Fragment.showErrorSnackbar(
   @StringRes msgRes: Int,
@@ -35,7 +37,8 @@ fun Fragment.showErrorSnackbar(
 }
 
 /**
- * Shows a [Snackbar] anchored to [R.id.bottom_nav] (if present) and returns it.
+ * Shows a [Snackbar] anchored to [R.id.network_indicator] or [R.id.bottom_nav] (if present) and
+ * returns it.
  *
  * @param msgRes id of the string to show on [Snackbar].
  * @param icon icon to display at the start of text.
@@ -52,7 +55,8 @@ fun Fragment.showSnackbar(
 }
 
 /**
- * Shows a [Snackbar] anchored to [R.id.bottom_nav] (if present) and returns it.
+ * Shows a [Snackbar] anchored to [R.id.network_indicator] or [R.id.bottom_nav] (if present) and
+ * returns it.
  *
  * @param msg text to show on [Snackbar].
  * @param icon icon to display at the start of text.
@@ -68,9 +72,12 @@ fun Fragment.showSnackbar(
   // pass Snackbar a view that is likely to be available even if current fragment is currently being
   // destroyed. This happens frequently in case of bottom sheet dialog fragments.
   val treeNode = activity?.findViewById(R.id.main_nav_host_fragment) ?: requireView()
+  val networkIndicator = activity?.findViewById<View>(R.id.network_indicator)
   return Snackbar.make(treeNode, msg, length).apply {
     anchorView = activity?.findViewById(R.id.bottom_nav)
-    anchorView = anchorView ?: activity?.findViewById(R.id.network_indicator)
+    if (networkIndicator?.isVisible == true && anchorView == null) {
+      anchorView = networkIndicator
+    }
 
     this.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.also { tv ->
       tv.gravity = Gravity.CENTER_VERTICAL or Gravity.START

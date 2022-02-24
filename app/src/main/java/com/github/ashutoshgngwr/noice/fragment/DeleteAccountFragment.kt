@@ -12,8 +12,10 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.DeleteAccountFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.model.NetworkError
+import com.github.ashutoshgngwr.noice.model.Resource
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.trynoice.api.client.models.Profile
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,11 +23,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -48,7 +50,7 @@ class DeleteAccountFragment : BottomSheetDialogFragment() {
     }
 
     lifecycleScope.launch {
-      viewModel.deleteAccountErrorStrRes
+      viewModel.apiErrorStrRes
         .filterNotNull()
         .collect { strRes -> showErrorSnackbar(strRes) }
     }
@@ -62,36 +64,47 @@ class DeleteAccountViewModel @Inject constructor(
 
   var onDeleteFlowComplete: () -> Unit = {}
   val hasConfirmed = MutableStateFlow(false)
-  val isDeletingAccount = MutableStateFlow(false)
-  private val deleteAccountError = MutableStateFlow<Throwable?>(null)
-  internal val deleteAccountErrorStrRes: StateFlow<Int?> = deleteAccountError.transform { error ->
-    emit(
-      when (error) {
-        null -> null
-        is NetworkError -> R.string.network_error
-        else -> R.string.unknown_error
-      }
-    )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-  fun deleteAccount() {
-    viewModelScope.launch(Dispatchers.IO) {
-      isDeletingAccount.emit(true)
-      try {
-        // TODO: cancel subscription before deleting the account.
-        val profile = accountRepository.getProfile()
-          .transform { emit(it.data) }
-          .filterNotNull()
-          .first()
+  private val profileResource = MutableStateFlow<Resource<Profile>?>(null)
+  private val deleteResource = MutableStateFlow<Resource<Unit>?>(null)
+  private val signOutResource = MutableStateFlow<Resource<Unit>?>(null)
 
-        accountRepository.deleteAccount(profile.accountId)
-        accountRepository.signOut() // call signOut to clear api client's state.
-      } catch (e: Throwable) {
-        deleteAccountError.emit(e)
-      } finally {
-        withContext(Dispatchers.Main) { onDeleteFlowComplete.invoke() }
-      }
+  val isDeletingAccount: StateFlow<Boolean> =
+    merge(profileResource, deleteResource, signOutResource).transform { r ->
+      emit(r !is Resource.Failure) // only failure is a terminal state until the final operation.
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+  internal val apiErrorStrRes: StateFlow<Int?> =
+    merge(profileResource, deleteResource, signOutResource).transform { r ->
+      emit(
+        when (r?.error) {
+          null -> null
+          is NetworkError -> R.string.network_error
+          else -> R.string.unknown_error
+        }
+      )
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+  fun deleteAccount() = viewModelScope.launch {
+    // TODO: cancel subscription before deleting the account.
+    accountRepository.getProfile()
+      .flowOn(Dispatchers.IO)
+      .collect(profileResource)
+
+    val accountId = profileResource.value?.data?.accountId
+    if (apiErrorStrRes.value == null && accountId != null) {
+      accountRepository.deleteAccount(accountId)
+        .flowOn(Dispatchers.IO)
+        .collect(deleteResource)
     }
+
+    if (apiErrorStrRes.value == null) {
+      accountRepository.signOut() // call signOut to clear api client's state.
+        .flowOn(Dispatchers.IO)
+        .collect(signOutResource)
+    }
+
+    onDeleteFlowComplete.invoke()
   }
 
   fun cancel() {

@@ -10,6 +10,7 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignInLinkHandlerActivityBinding
 import com.github.ashutoshgngwr.noice.model.NetworkError
 import com.github.ashutoshgngwr.noice.model.NotSignedInError
+import com.github.ashutoshgngwr.noice.model.Resource
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -42,8 +44,8 @@ class SignInLinkHandlerActivity : AppCompatActivity() {
     binding.viewModel = viewModel
     setContentView(binding.root)
 
-    viewModel.onFailureButtonClick = { finish() }
-    viewModel.onSuccessButtonClick = {
+    viewModel.onDismissClicked = { finish() }
+    viewModel.onContinueClicked = {
       finish()
       startActivity(
         Intent(this, MainActivity::class.java)
@@ -61,13 +63,18 @@ class SignInLinkHandlerViewModel @Inject constructor(
   private val accountRepository: AccountRepository,
 ) : ViewModel() {
 
-  var onSuccessButtonClick: () -> Unit = {}
-  var onFailureButtonClick: () -> Unit = {}
-  val isSigningIn = MutableStateFlow(false)
-  val signInError = MutableStateFlow<Throwable?>(null)
-  val signInErrorStringRes: StateFlow<Int?> = signInError.transform { error ->
+  var onContinueClicked: () -> Unit = {}
+  var onDismissClicked: () -> Unit = {}
+
+  private val signInResource = MutableStateFlow<Resource<Unit>>(Resource.Loading())
+
+  val isSigningIn = signInResource.transform { r ->
+    emit(r is Resource.Loading)
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+  val signInErrorStrRes: StateFlow<Int?> = signInResource.transform { r ->
     emit(
-      when (error) {
+      when (r.error) {
         null -> null
         is NotSignedInError -> R.string.sign_in_token_error
         is NetworkError -> R.string.network_error
@@ -81,17 +88,10 @@ class SignInLinkHandlerViewModel @Inject constructor(
       return
     }
 
-    viewModelScope.launch(Dispatchers.IO) {
-      signInError.emit(null)
-      isSigningIn.emit(true)
-
-      try {
-        accountRepository.signInWithToken(token)
-      } catch (e: Throwable) {
-        signInError.emit(e)
-      } finally {
-        isSigningIn.emit(false)
-      }
+    viewModelScope.launch {
+      accountRepository.signInWithToken(token)
+        .flowOn(Dispatchers.IO)
+        .collect(signInResource)
     }
   }
 }

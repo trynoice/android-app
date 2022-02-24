@@ -10,17 +10,17 @@ import kotlinx.coroutines.flow.flow
  * @param loadFromCache an optional function to load [Data] from the cache.
  * @param loadFromNetwork a function to load the [Data] from network.
  * @param cacheNetworkResult an optional function to persist [Data] from network to the local cache.
- * @param loadFromNetworkErrorTransform an optional transform that is applied to a [Throwable]
- * thrown by [loadFromNetwork].
+ * @param loadFromNetworkErrorTransform an optional transform applied to a [Throwable] thrown by
+ * [loadFromNetwork] before emitting it with [Resource.Failure].
  * @return a [Flow]<[Resource]> that emits [Resource.Loading] state with an optional cached value if
  * found. Later, it emits [Resource.Success] or [Resource.Failure] based on the result of
  * [loadFromNetwork]. [Resource.Failure] may contain cached data if it was found.
  */
-inline fun <Data : Any> fetchNetworkBoundResource(
-  crossinline loadFromCache: suspend () -> Data? = { null },
-  crossinline loadFromNetwork: suspend () -> Data,
-  crossinline cacheNetworkResult: suspend (Data) -> Unit = { },
-  crossinline loadFromNetworkErrorTransform: (Throwable) -> Throwable = { it },
+fun <Data : Any> fetchNetworkBoundResource(
+  loadFromCache: suspend () -> Data? = { null },
+  loadFromNetwork: suspend () -> Data,
+  cacheNetworkResult: suspend (Data) -> Unit = { },
+  loadFromNetworkErrorTransform: (Throwable) -> Throwable = { it },
 ): Flow<Resource<Data>> = flow {
   emit(Resource.Loading())
 
