@@ -13,11 +13,11 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.EditAccountDetailsFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackbar
-import com.github.ashutoshgngwr.noice.model.DuplicateEmailError
-import com.github.ashutoshgngwr.noice.model.NetworkError
-import com.github.ashutoshgngwr.noice.model.Resource
 import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
+import com.github.ashutoshgngwr.noice.repository.Resource
+import com.github.ashutoshgngwr.noice.repository.errors.DuplicateEmailError
+import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.trynoice.api.client.models.Profile
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel

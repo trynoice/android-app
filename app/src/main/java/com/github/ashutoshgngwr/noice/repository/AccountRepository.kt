@@ -1,11 +1,10 @@
 package com.github.ashutoshgngwr.noice.repository
 
 import android.util.Log
-import com.github.ashutoshgngwr.noice.model.AccountTemporarilyLockedError
-import com.github.ashutoshgngwr.noice.model.DuplicateEmailError
-import com.github.ashutoshgngwr.noice.model.NetworkError
-import com.github.ashutoshgngwr.noice.model.NotSignedInError
-import com.github.ashutoshgngwr.noice.model.Resource
+import com.github.ashutoshgngwr.noice.repository.errors.AccountTemporarilyLockedError
+import com.github.ashutoshgngwr.noice.repository.errors.DuplicateEmailError
+import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
+import com.github.ashutoshgngwr.noice.repository.errors.NotSignedInError
 import com.trynoice.api.client.NoiceApiClient
 import com.trynoice.api.client.models.Profile
 import com.trynoice.api.client.models.SignInParams

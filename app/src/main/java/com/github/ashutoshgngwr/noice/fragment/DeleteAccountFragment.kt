@@ -11,9 +11,9 @@ import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.DeleteAccountFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
-import com.github.ashutoshgngwr.noice.model.NetworkError
-import com.github.ashutoshgngwr.noice.model.Resource
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
+import com.github.ashutoshgngwr.noice.repository.Resource
+import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.trynoice.api.client.models.Profile
 import dagger.hilt.android.AndroidEntryPoint

@@ -8,10 +8,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignInLinkHandlerActivityBinding
-import com.github.ashutoshgngwr.noice.model.NetworkError
-import com.github.ashutoshgngwr.noice.model.NotSignedInError
-import com.github.ashutoshgngwr.noice.model.Resource
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
+import com.github.ashutoshgngwr.noice.repository.Resource
+import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
+import com.github.ashutoshgngwr.noice.repository.errors.NotSignedInError
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -68,7 +68,7 @@ class SignInLinkHandlerViewModel @Inject constructor(
 
   private val signInResource = MutableStateFlow<Resource<Unit>>(Resource.Loading())
 
-  val isSigningIn = signInResource.transform { r ->
+  val isSigningIn: StateFlow<Boolean> = signInResource.transform { r ->
     emit(r is Resource.Loading)
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
