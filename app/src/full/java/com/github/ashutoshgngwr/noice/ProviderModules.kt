@@ -9,6 +9,7 @@ import com.github.ashutoshgngwr.noice.provider.DonateViewProvider
 import com.github.ashutoshgngwr.noice.provider.DummyBillingProvider
 import com.github.ashutoshgngwr.noice.provider.DummyCastApiProvider
 import com.github.ashutoshgngwr.noice.provider.GitHubReviewFlowProvider
+import com.github.ashutoshgngwr.noice.provider.GooglePlaySubscriptionProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingDonateViewProvider
 import com.github.ashutoshgngwr.noice.provider.OpenCollectiveDonateViewProvider
 import com.github.ashutoshgngwr.noice.provider.PlaystoreReviewFlowProvider
@@ -17,8 +18,11 @@ import com.github.ashutoshgngwr.noice.provider.RealBillingProvider
 import com.github.ashutoshgngwr.noice.provider.RealCastApiProvider
 import com.github.ashutoshgngwr.noice.provider.RealCrashlyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
+import com.github.ashutoshgngwr.noice.provider.StripeSubscriptionProvider
+import com.github.ashutoshgngwr.noice.provider.SubscriptionProvider
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
+import com.trynoice.api.client.NoiceApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -103,5 +107,22 @@ object DonateViewProviderModule {
     }
 
     return OpenCollectiveDonateViewProvider
+  }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object SubscriptionProviderModule {
+  @Provides
+  @Singleton
+  fun subscriptionProvider(
+    @ApplicationContext context: Context,
+    apiClient: NoiceApiClient,
+  ): SubscriptionProvider {
+    if (isGoogleMobileServiceAvailable(context)) {
+      return GooglePlaySubscriptionProvider(apiClient)
+    }
+
+    return StripeSubscriptionProvider(apiClient)
   }
 }

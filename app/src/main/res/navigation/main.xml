@@ -44,6 +44,10 @@
       app:destination="@id/update_account_details" />
 
     <action
+      android:id="@id/view_subscription_plans"
+      app:destination="@id/view_subscription_plans" />
+
+    <action
       android:id="@id/settings"
       app:destination="@id/settings" />
 
@@ -121,6 +125,12 @@
     android:name="com.github.ashutoshgngwr.noice.fragment.EditAccountDetailsFragment"
     android:label="@string/update_details"
     tools:layout="@layout/edit_account_details_fragment" />
+
+  <fragment
+    android:id="@+id/view_subscription_plans"
+    android:name="com.github.ashutoshgngwr.noice.fragment.ViewSubscriptionPlansFragment"
+    android:label="@string/premium"
+    tools:layout="@layout/view_subscription_plans_fragment" />
 
   <fragment
     android:id="@+id/settings"

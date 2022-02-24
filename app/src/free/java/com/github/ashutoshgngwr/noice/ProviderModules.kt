@@ -12,6 +12,9 @@ import com.github.ashutoshgngwr.noice.provider.DummyCrashlyticsProvider
 import com.github.ashutoshgngwr.noice.provider.GitHubReviewFlowProvider
 import com.github.ashutoshgngwr.noice.provider.OpenCollectiveDonateViewProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
+import com.github.ashutoshgngwr.noice.provider.StripeSubscriptionProvider
+import com.github.ashutoshgngwr.noice.provider.SubscriptionProvider
+import com.trynoice.api.client.NoiceApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -67,4 +70,14 @@ object DonateViewProviderModule {
   @Provides
   @Singleton
   fun donateViewProvider(): DonateViewProvider = OpenCollectiveDonateViewProvider
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object SubscriptionProviderModule {
+  @Provides
+  @Singleton
+  fun subscriptionProvider(apiClient: NoiceApiClient): SubscriptionProvider {
+    return StripeSubscriptionProvider(apiClient)
+  }
 }

@@ -99,6 +99,8 @@ class AccountRepository @Inject constructor(
    * - [HttpException] on api errors.
    *
    * @param email email that the account is registered with.
+   * @see fetchNetworkBoundResource
+   * @see Resource
    */
   fun signIn(email: String): Flow<Resource<Unit>> = fetchNetworkBoundResource(
     loadFromNetwork = {
@@ -125,6 +127,8 @@ class AccountRepository @Inject constructor(
    *
    * @param email address for the new account.
    * @param name name of the user for the new account.
+   * @see fetchNetworkBoundResource
+   * @see Resource
    */
   fun signUp(email: String, name: String): Flow<Resource<Unit>> = fetchNetworkBoundResource(
     loadFromNetwork = {
@@ -162,6 +166,8 @@ class AccountRepository @Inject constructor(
    * - [HttpException] on api errors.
    *
    * @param token token obtained from a sign-in link.
+   * @see fetchNetworkBoundResource
+   * @see Resource
    */
   fun signInWithToken(token: String): Flow<Resource<Unit>> = fetchNetworkBoundResource(
     loadFromNetwork = {
@@ -171,7 +177,7 @@ class AccountRepository @Inject constructor(
       }
     },
     loadFromNetworkErrorTransform = { e ->
-      Log.d(LOG_TAG, "signInWithToken:", e)
+      Log.i(LOG_TAG, "signInWithToken:", e)
       when (e) {
         is IOException -> NetworkError
         else -> e
@@ -185,6 +191,9 @@ class AccountRepository @Inject constructor(
    * On failures, the returned [Flow] emits [Resource.Failure] with:
    * - [NetworkError] on network errors.
    * - [HttpException] on api errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
    */
   fun signOut(): Flow<Resource<Unit>> = fetchNetworkBoundResource(
     loadFromNetwork = {
@@ -192,7 +201,7 @@ class AccountRepository @Inject constructor(
       cacheStore.removeAll()
     },
     loadFromNetworkErrorTransform = { e ->
-      Log.d(LOG_TAG, "signOut:", e)
+      Log.i(LOG_TAG, "signOut:", e)
       when (e) {
         is IOException -> NetworkError
         else -> e
@@ -206,6 +215,9 @@ class AccountRepository @Inject constructor(
    * On failures, the returned [Flow] emits [Resource.Failure] with:
    * - [NetworkError] on network errors.
    * - [HttpException] on api errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
    */
   fun deleteAccount(accountId: Long): Flow<Resource<Unit>> = fetchNetworkBoundResource(
     loadFromNetwork = {

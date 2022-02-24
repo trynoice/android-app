@@ -24,7 +24,7 @@
     <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
 
     <!-- default style shimmering loader text and image views -->
-    <item name="custom_color">@color/loading_background</item>
+    <item name="custom_color">@color/background_darker</item>
     <item name="corners">8</item>
   </style>
 
@@ -196,6 +196,21 @@
 
   <style name="ThemeOverlay.App.Button.DestructiveAction" parent="">
     <item name="colorPrimary">@color/error</item>
+  </style>
+
+  <style name="TextAppearance.App.SubscriptionBenefit" parent="Widget.MaterialComponents.TextView">
+    <item name="android:drawablePadding">16dp</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:textAppearance">?attr/textAppearanceBody1</item>
+    <item name="drawableTint">@color/accent</item>
+  </style>
+
+  <style name="TextAppearance.App.SubscriptionPlanItem.Large" parent="TextAppearance.MaterialComponents.Headline6">
+    <item name="android:textSize">18sp</item>
+  </style>
+
+  <style name="TextAppearance.App.SubscriptionPlanItem.Small" parent="TextAppearance.MaterialComponents.Caption">
+    <item name="android:textSize">14sp</item>
   </style>
 
 </resources>
