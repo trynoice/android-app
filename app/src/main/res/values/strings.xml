@@ -262,7 +262,7 @@
     <string name="i_understand">I understand.</string>
     <string name="deleting_account">Deleting account</string>
     <string name="duplicate_email_error">The updated email is already in use by another account.</string>
-    <string name="profile_update_success">Your profile was updated successfully.</string>
-    <string name="offline">Offline</string>
+    <string name="account_details_update_success">Your account details were updated successfully.</string>
+    <string name="offline">You\'re offline</string>
     <string name="back_online">Back online</string>
 </resources>

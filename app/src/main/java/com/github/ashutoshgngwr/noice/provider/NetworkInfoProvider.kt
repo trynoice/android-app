@@ -16,8 +16,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Monitors device's internet connectivity and provides its live events as a
- * [StateFlow][offlineState] to the entire application.
+ * Monitors device's internet connectivity and provides its live events as a [StateFlow][isOffline]
+ * to the entire application.
  */
 @Singleton
 class NetworkInfoProvider @Inject constructor(

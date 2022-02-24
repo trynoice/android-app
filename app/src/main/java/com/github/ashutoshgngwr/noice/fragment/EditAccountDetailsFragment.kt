@@ -49,7 +49,7 @@ class EditAccountDetailsFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    viewModel.onUpdateSuccess = { showSuccessSnackbar(R.string.profile_update_success) }
+    viewModel.onUpdateSuccess = { showSuccessSnackbar(R.string.account_details_update_success) }
     lifecycleScope.launch {
       viewModel.errorStrRes
         .filterNotNull()
