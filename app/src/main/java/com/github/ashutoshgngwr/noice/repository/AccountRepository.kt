@@ -35,17 +35,22 @@ class AccountRepository @Inject constructor(
   fun isSignedIn(): StateFlow<Boolean> = apiClient.getSignedInState()
 
   /**
-   * @return the [Profile] of the user.
-   * @throws NotSignedInError if the client isn't signed-in.
-   * @throws NetworkError on network errors.
-   * @throws HttpException on api errors.
+   * Returns a [Flow] that emits the profile [Resource] of the authenticated user.
+   *
+   * On failures, the flow emits [Resource.Failure] with:
+   * - [NotSignedInError] if the user is not signed-in.
+   * - [NetworkError] on network errors.
+   * - [HttpException] on api errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
    */
   fun getProfile(): Flow<Resource<Profile>> = fetchNetworkBoundResource(
     loadFromCache = { cacheStore.getAs(PROFILE_CACHE_KEY) },
     loadFromNetwork = { apiClient.accounts().getProfile() },
     cacheNetworkResult = { p -> cacheStore.put(PROFILE_CACHE_KEY, p) },
     loadFromNetworkErrorTransform = { e ->
-      Log.d(LOG_TAG, "getProfile:", e)
+      Log.i(LOG_TAG, "getProfile:", e)
       when {
         e is HttpException && e.code() == 401 -> NotSignedInError
         e is IOException -> NetworkError
@@ -57,71 +62,84 @@ class AccountRepository @Inject constructor(
   /**
    * Updates the profile fields of an authenticated user.
    *
+   * On failures, the returned [Flow] emits [Resource.Failure] with:
+   * - [DuplicateEmailError] if updated email is already linked to another account.
+   * - [NetworkError] on network errors.
+   * - [HttpException] on api errors.
+   *
    * @param email must be valid email
    * @param name must be valid name
-   * @throws DuplicateEmailError if updated email is already linked to another account.
-   * @throws NetworkError on network errors.
-   * @throws HttpException on api errors.
+   * @see fetchNetworkBoundResource
+   * @see Resource
    */
-  suspend fun updateProfile(email: String, name: String) {
-    try {
-      val response = apiClient.accounts().updateProfile(UpdateProfileParams(email, name))
-      when {
-        response.isSuccessful -> return
-        response.code() == 409 -> throw DuplicateEmailError
-        else -> {
-          val e = HttpException(response)
-          Log.i(LOG_TAG, "updateProfile: api error", e)
-          throw e
+  fun updateProfile(email: String, name: String): Flow<Resource<Unit>> =
+    fetchNetworkBoundResource(
+      loadFromNetwork = {
+        val response = apiClient.accounts().updateProfile(UpdateProfileParams(email, name))
+        if (!response.isSuccessful) {
+          throw HttpException(response)
         }
-      }
-    } catch (e: IOException) {
-      Log.i(LOG_TAG, "updateProfile: network error", e)
-      throw NetworkError
-    }
-  }
+      },
+      loadFromNetworkErrorTransform = { e ->
+        Log.i(LOG_TAG, "updateProfile:", e)
+        when {
+          e is HttpException && e.code() == 409 -> DuplicateEmailError
+          e is IOException -> NetworkError
+          else -> e
+        }
+      },
+    )
 
   /**
    * Attempts to send the sign-link to the given [email] address.
    *
-   * @throws AccountTemporarilyLockedError if the account is temporarily locked from making sign-in
-   * attempts.
-   * @throws NetworkError on network errors.
-   * @throws HttpException on api errors.
+   * On failures, the returned [Flow] emits [Resource.Failure] with:
+   * - [AccountTemporarilyLockedError] if the account is temporarily locked from making sign-in
+   *   attempts.
+   * - [NetworkError] on network errors.
+   * - [HttpException] on api errors.
+   *
+   * @param email email that the account is registered with.
    */
-  suspend fun signIn(email: String) {
-    try {
+  fun signIn(email: String): Flow<Resource<Unit>> = fetchNetworkBoundResource(
+    loadFromNetwork = {
       val response = apiClient.accounts().signIn(SignInParams(email))
       handleSignInResponse(response)
-    } catch (e: IOException) {
-      Log.i(LOG_TAG, "signIn: network error", e)
-      throw NetworkError
-    } catch (e: HttpException) {
-      Log.i(LOG_TAG, "signIn: api error", e)
-      throw e
-    }
-  }
+    },
+    loadFromNetworkErrorTransform = { e ->
+      Log.i(LOG_TAG, "signIn:", e)
+      when (e) {
+        is IOException -> NetworkError
+        else -> e
+      }
+    },
+  )
 
   /**
    * Attempts to create a new account with given [email] and [name] and send a sign-in link to it.
    *
-   * @throws AccountTemporarilyLockedError if the account is temporarily locked from making sign-in
-   * attempts.
-   * @throws NetworkError on network errors.
-   * @throws HttpException on api errors.
+   * On failures, the returned [Flow] emits [Resource.Failure] with:
+   * - [AccountTemporarilyLockedError] if the account is temporarily locked from making sign-in
+   *   attempts.
+   * - [NetworkError] on network errors.
+   * - [HttpException] on api errors.
+   *
+   * @param email address for the new account.
+   * @param name name of the user for the new account.
    */
-  suspend fun signUp(email: String, name: String) {
-    try {
+  fun signUp(email: String, name: String): Flow<Resource<Unit>> = fetchNetworkBoundResource(
+    loadFromNetwork = {
       val response = apiClient.accounts().signUp(SignUpParams(email, name))
       handleSignInResponse(response)
-    } catch (e: IOException) {
-      Log.i(LOG_TAG, "signUp: network error", e)
-      throw NetworkError
-    } catch (e: HttpException) {
-      Log.i(LOG_TAG, "signUp: api error", e)
-      throw e
-    }
-  }
+    },
+    loadFromNetworkErrorTransform = { e ->
+      Log.i(LOG_TAG, "signUp:", e)
+      when (e) {
+        is IOException -> NetworkError
+        else -> e
+      }
+    },
+  )
 
   private fun handleSignInResponse(response: Response<Unit>) {
     if (response.isSuccessful) {
@@ -139,64 +157,71 @@ class AccountRepository @Inject constructor(
   /**
    * Uses the given sign-in [token] to sign-in the api client.
    *
-   * @throws NotSignedInError if the [token] is refused by the api.
-   * @throws NetworkError on network errors.
-   * @throws HttpException on api errors.
+   * On failures, the returned [Flow] emits [Resource.Failure] with:
+   * - [NotSignedInError] if the [token] is refused by the api.
+   * - [NetworkError] on network errors.
+   * - [HttpException] on api errors.
+   *
+   * @param token token obtained from a sign-in link.
    */
-  suspend fun signInWithToken(token: String) {
-    try {
+  fun signInWithToken(token: String): Flow<Resource<Unit>> = fetchNetworkBoundResource(
+    loadFromNetwork = {
       apiClient.signInWithToken(token)
-    } catch (e: IOException) {
-      Log.i(LOG_TAG, "signInWithToken: network error", e)
-      throw NetworkError
-    } catch (e: HttpException) {
-      Log.i(LOG_TAG, "signInWithToken: api error", e)
-      throw e
-    }
-
-    if (!apiClient.isSignedIn()) {
-      throw NotSignedInError
-    }
-  }
+      if (!apiClient.isSignedIn()) {
+        throw NotSignedInError
+      }
+    },
+    loadFromNetworkErrorTransform = { e ->
+      Log.d(LOG_TAG, "signInWithToken:", e)
+      when (e) {
+        is IOException -> NetworkError
+        else -> e
+      }
+    },
+  )
 
   /**
    * Signs out the currently authenticated user from the [NoiceApiClient].
    *
-   * @throws NetworkError on network errors.
-   * @throws HttpException on api errors.
+   * On failures, the returned [Flow] emits [Resource.Failure] with:
+   * - [NetworkError] on network errors.
+   * - [HttpException] on api errors.
    */
-  suspend fun signOut() {
-    try {
+  fun signOut(): Flow<Resource<Unit>> = fetchNetworkBoundResource(
+    loadFromNetwork = {
       apiClient.signOut()
       cacheStore.removeAll()
-    } catch (e: IOException) {
-      Log.i(LOG_TAG, "signOut: network error", e)
-      throw NetworkError
-    } catch (e: HttpException) {
-      Log.i(LOG_TAG, "signOut: api error", e)
-      throw e
-    }
-  }
+    },
+    loadFromNetworkErrorTransform = { e ->
+      Log.d(LOG_TAG, "signOut:", e)
+      when (e) {
+        is IOException -> NetworkError
+        else -> e
+      }
+    },
+  )
 
   /**
    * Deletes the account of currently authenticated user.
    *
-   * @throws NetworkError on network errors.
-   * @throws HttpException on api errors.
+   * On failures, the returned [Flow] emits [Resource.Failure] with:
+   * - [NetworkError] on network errors.
+   * - [HttpException] on api errors.
    */
-  suspend fun deleteAccount(accountId: Long) {
-    try {
+  fun deleteAccount(accountId: Long): Flow<Resource<Unit>> = fetchNetworkBoundResource(
+    loadFromNetwork = {
       val response = apiClient.accounts().delete(accountId)
       if (!response.isSuccessful) {
-        val error = HttpException(response)
-        Log.i(LOG_TAG, "deleteAccount: api error", error)
-        throw error
+        throw HttpException(response)
       }
-    } catch (e: IOException) {
-      Log.i(LOG_TAG, "deleteAccount: network error", e)
-      throw NetworkError
-    }
-  }
+    },
+    loadFromNetworkErrorTransform = { e ->
+      when (e) {
+        is IOException -> NetworkError
+        else -> e
+      }
+    },
+  )
 
   companion object {
     private const val LOG_TAG = "AccountRepository"

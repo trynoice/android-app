@@ -16,6 +16,7 @@ import com.github.ashutoshgngwr.noice.databinding.SignInResultFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.model.AccountTemporarilyLockedError
 import com.github.ashutoshgngwr.noice.model.NetworkError
+import com.github.ashutoshgngwr.noice.model.Resource
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -67,12 +69,32 @@ class SignInResultViewModel @Inject constructor(
 ) : ViewModel() {
 
   var onOpenMailboxClicked: () -> Unit = {}
-  val isSigningIn = MutableStateFlow(false)
-  val isSignInComplete = MutableStateFlow(false)
-  val signInError = MutableStateFlow<Throwable?>(null)
+  val isReturningUser: Boolean
+  val email: String
+  private val name: String?
+  private val signInResource = MutableStateFlow<Resource<Unit>>(Resource.Loading())
+
+  val isSigningIn: StateFlow<Boolean> = signInResource.transform { r ->
+    emit(r is Resource.Loading)
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+  val isSignInSuccess: StateFlow<Boolean> = signInResource.transform { r ->
+    emit(r is Resource.Success)
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+  val signInError: StateFlow<Throwable?> = signInResource.transform { r ->
+    emit(r.error)
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
   val isAccountLocked: StateFlow<Boolean> = signInError.transform { e ->
     emit(e is AccountTemporarilyLockedError)
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+  val accountLockTimeoutMinutes: StateFlow<Int> = signInError.transform { e ->
+    if (e is AccountTemporarilyLockedError) {
+      emit(ceil(e.timeoutSeconds / 60.0).toInt())
+    }
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
 
   val signInErrorStrRes: StateFlow<Int?> = signInError.transform { e ->
     emit(
@@ -84,16 +106,6 @@ class SignInResultViewModel @Inject constructor(
       }
     )
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-  val accountLockTimeoutMinutes: StateFlow<Int> = signInError.transform { e ->
-    if (e is AccountTemporarilyLockedError) {
-      emit(ceil(e.timeoutSeconds / 60.0).toInt())
-    }
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
-
-  val email: String
-  val isReturningUser: Boolean
-  private val name: String?
 
   init {
     val navArgs = SignInResultFragmentArgs.fromSavedStateHandle(savedStateHandle)
@@ -107,27 +119,18 @@ class SignInResultViewModel @Inject constructor(
   }
 
   fun signIn() {
-    if (isSignInComplete.value || isSigningIn.value) {
+    if (isSignInSuccess.value || isSigningIn.value) {
       return
     }
 
-    viewModelScope.launch(Dispatchers.IO) {
-      signInError.emit(null)
-      isSigningIn.emit(true)
-
-      try {
-        if (isReturningUser) {
-          accountRepository.signIn(email)
-        } else {
-          accountRepository.signUp(email, requireNotNull(name))
-        }
-
-        isSignInComplete.emit(true)
-      } catch (e: Throwable) {
-        signInError.emit(e)
-      } finally {
-        isSigningIn.emit(false)
+    viewModelScope.launch {
+      val flow = if (isReturningUser) {
+        accountRepository.signIn(email)
+      } else {
+        accountRepository.signUp(email, requireNotNull(name))
       }
+
+      flow.flowOn(Dispatchers.IO).collect(signInResource)
     }
   }
 }

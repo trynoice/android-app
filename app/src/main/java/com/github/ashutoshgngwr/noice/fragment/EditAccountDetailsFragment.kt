@@ -25,7 +25,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.merge
@@ -33,7 +32,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.apache.commons.validator.routines.EmailValidator
 import javax.inject.Inject
 
@@ -53,7 +51,7 @@ class EditAccountDetailsFragment : Fragment() {
     binding.viewModel = viewModel
     viewModel.onUpdateSuccess = { showSuccessSnackbar(R.string.profile_update_success) }
     lifecycleScope.launch {
-      viewModel.apiErrorStrRes
+      viewModel.errorStrRes
         .filterNotNull()
         .collect { strRes -> showErrorSnackbar(strRes) }
     }
@@ -70,17 +68,8 @@ class EditAccountDetailsViewModel @Inject constructor(
   val name = MutableStateFlow("")
   val email = MutableStateFlow("")
 
-  private val profileResource = MutableStateFlow<Resource<Profile>>(Resource.Loading())
-  private val isUpdating = MutableStateFlow(false)
-  private val updateError = MutableStateFlow<Throwable?>(null)
-
-  private val loadError: StateFlow<Throwable?> = profileResource.transform { resource ->
-    emit(resource.error)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-  val isLoading: StateFlow<Boolean> = combine(profileResource, isUpdating) { resource, isUpdating ->
-    resource is Resource.Loading || isUpdating
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  private val loadResource = MutableStateFlow<Resource<Profile>>(Resource.Loading())
+  private val updateResource = MutableStateFlow<Resource<Unit>?>(null)
 
   val isNameValid: StateFlow<Boolean> = name.transform { name ->
     emit(name.isNotBlank() && name.length <= 64)
@@ -94,9 +83,13 @@ class EditAccountDetailsViewModel @Inject constructor(
     )
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
-  internal val apiErrorStrRes: StateFlow<Int?> = merge(loadError, updateError).transform { e ->
+  val isLoading: StateFlow<Boolean> = merge(loadResource, updateResource.filterNotNull())
+    .transform { emit(it is Resource.Loading) }
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+  internal val errorStrRes: StateFlow<Int?> = merge(loadResource, updateResource).transform { r ->
     emit(
-      when (e) {
+      when (r?.error) {
         null -> null
         is DuplicateEmailError -> R.string.duplicate_email_error
         is NetworkError -> R.string.network_error
@@ -116,7 +109,7 @@ class EditAccountDetailsViewModel @Inject constructor(
               email.emit(resource.data.email)
             }
           }
-          .collect(profileResource)
+          .collect(loadResource)
       }
     }
   }
@@ -126,17 +119,16 @@ class EditAccountDetailsViewModel @Inject constructor(
       return
     }
 
-    viewModelScope.launch(Dispatchers.IO) {
-      updateError.emit(null)
-      isUpdating.emit(true)
-      try {
-        accountRepository.updateProfile(email.value, name.value)
-        withContext(Dispatchers.Main) { onUpdateSuccess.invoke() }
-      } catch (e: Throwable) {
-        updateError.emit(e)
-      } finally {
-        isUpdating.emit(false)
-      }
+    viewModelScope.launch {
+      accountRepository
+        .updateProfile(email.value, name.value)
+        .flowOn(Dispatchers.IO)
+        .onEach { resource ->
+          if (resource is Resource.Success) {
+            onUpdateSuccess.invoke()
+          }
+        }
+        .collect(updateResource)
     }
   }
 }

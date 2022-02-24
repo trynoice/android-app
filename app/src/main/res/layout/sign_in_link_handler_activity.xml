@@ -67,7 +67,7 @@
           android:gravity="center_vertical"
           android:text="@string/sign_in_sucessful"
           android:textAppearance="?attr/textAppearanceBody1"
-          android:visibility="@{viewModel.signInError == null ? View.VISIBLE : View.GONE}"
+          android:visibility="@{viewModel.signInErrorStrRes == null ? View.VISIBLE : View.GONE}"
           app:drawableStartCompat="@drawable/ic_baseline_check_circle_36"
           app:drawableTint="?attr/colorAccent" />
 
@@ -76,9 +76,9 @@
           android:layout_height="wrap_content"
           android:drawablePadding="16dp"
           android:gravity="center_vertical"
-          android:text="@{viewModel.signInErrorStringRes}"
+          android:text="@{viewModel.signInErrorStrRes}"
           android:textAppearance="?attr/textAppearanceBody1"
-          android:visibility="@{viewModel.signInError != null  ? View.VISIBLE : View.GONE}"
+          android:visibility="@{viewModel.signInErrorStrRes != null  ? View.VISIBLE : View.GONE}"
           app:drawableStartCompat="@drawable/ic_baseline_error_36"
           app:drawableTint="@color/red"
           tools:visibility="gone" />
@@ -94,18 +94,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:onClick="@{() -> viewModel.onSuccessButtonClick.invoke()}"
+            android:onClick="@{() -> viewModel.onContinueClicked.invoke()}"
             android:text="@string/cont"
-            android:visibility="@{viewModel.signInError == null ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{viewModel.signInErrorStrRes == null ? View.VISIBLE : View.GONE}" />
 
           <Button
             style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:onClick="@{() -> viewModel.onFailureButtonClick.invoke()}"
+            android:onClick="@{() -> viewModel.onDismissClicked.invoke()}"
             android:text="@string/dismiss"
-            android:visibility="@{viewModel.signInError != null ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.signInErrorStrRes != null ? View.VISIBLE : View.GONE}"
             tools:visibility="gone" />
 
         </LinearLayout>

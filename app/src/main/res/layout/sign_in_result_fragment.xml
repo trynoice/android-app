@@ -59,7 +59,7 @@
         android:gravity="center"
         android:text="@{viewModel.isReturningUser ? @string/sign_in_email_sent(viewModel.email) : @string/sign_up_email_sent(viewModel.email)}"
         android:textAppearance="?attr/textAppearanceBody1"
-        android:visibility="@{viewModel.isSignInComplete ? View.VISIBLE : View.GONE}"
+        android:visibility="@{viewModel.isSignInSuccess ? View.VISIBLE : View.GONE}"
         tools:text="@string/sign_up_email_sent" />
 
       <TextView
@@ -69,7 +69,7 @@
         android:gravity="center"
         android:text="@string/sign_in_link_tip"
         android:textAppearance="?attr/textAppearanceBody1"
-        android:visibility="@{viewModel.isSignInComplete ? View.VISIBLE : View.GONE}" />
+        android:visibility="@{viewModel.isSignInSuccess ? View.VISIBLE : View.GONE}" />
 
       <TextView
         android:layout_width="match_parent"
@@ -111,7 +111,7 @@
         android:onClick="@{() -> viewModel.onOpenMailboxClicked.invoke()}"
         android:paddingHorizontal="32dp"
         android:text="@string/open_mailbox"
-        android:visibility="@{viewModel.isSignInComplete ? View.VISIBLE : View.GONE}" />
+        android:visibility="@{viewModel.isSignInSuccess ? View.VISIBLE : View.GONE}" />
 
     </LinearLayout>
 

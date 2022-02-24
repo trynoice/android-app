@@ -12,6 +12,7 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignOutFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.model.NetworkError
+import com.github.ashutoshgngwr.noice.model.Resource
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,10 +22,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -41,7 +43,7 @@ class SignOutFragment : BottomSheetDialogFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    viewModel.onSignOutFlowComplete = this::dismiss
+    viewModel.onFlowComplete = this::dismiss
     lifecycleScope.launch {
       viewModel.isSigningOut.collect { isSigningOut -> isCancelable = !isSigningOut }
     }
@@ -59,12 +61,16 @@ class SignOutViewModel @Inject constructor(
   private val accountRepository: AccountRepository
 ) : ViewModel() {
 
-  var onSignOutFlowComplete: () -> Unit = {}
-  val isSigningOut = MutableStateFlow(false)
-  private val signOutError = MutableStateFlow<Throwable?>(null)
-  internal val signOutErrorStrRes: StateFlow<Int?> = signOutError.transform { error ->
+  var onFlowComplete: () -> Unit = {}
+  private val signOutResource = MutableStateFlow<Resource<Unit>?>(null)
+
+  val isSigningOut: StateFlow<Boolean> = signOutResource.transform { r ->
+    emit(r is Resource.Loading)
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+  val signOutErrorStrRes: StateFlow<Int?> = signOutResource.transform { r ->
     emit(
-      when (error) {
+      when (r?.error) {
         null -> null
         is NetworkError -> R.string.network_error
         else -> R.string.unknown_error
@@ -72,20 +78,14 @@ class SignOutViewModel @Inject constructor(
     )
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-  fun signOut() {
-    viewModelScope.launch(Dispatchers.IO) {
-      isSigningOut.emit(true)
-      try {
-        accountRepository.signOut()
-      } catch (e: Throwable) {
-        signOutError.emit(e)
-      } finally {
-        withContext(Dispatchers.Main) { onSignOutFlowComplete.invoke() }
-      }
-    }
+  fun signOut() = viewModelScope.launch {
+    accountRepository.signOut()
+      .flowOn(Dispatchers.IO)
+      .onCompletion { onFlowComplete.invoke() }
+      .collect(signOutResource)
   }
 
   fun cancel() {
-    onSignOutFlowComplete.invoke()
+    onFlowComplete.invoke()
   }
 }
