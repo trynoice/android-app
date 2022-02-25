@@ -4,4 +4,17 @@
     <string name="help">সহায়তা</string>
     <string name="app_theme">থিম</string>
     <string name="about">সম্পর্কে</string>
+    <string name="name">নাম</string>
+    <string name="sound_group__life">জীবন</string>
+    <string name="submit_feedback">প্রতিক্রিয়া জমা দিন</string>
+    <string name="intensity">তীব্রতা</string>
+    <string name="report_issue">সমস্যা বিবরণ করুন</string>
+    <string name="focus">মনোনিবেিশত</string>
+    <string name="sleep_timer">ঘুমের সময় নির্ণায়ক</string>
+    <string name="wake_up_timer">ঘুম ভাঙ্গার সময় নির্ণায়ক</string>
+    <string name="dense">নিবিড়</string>
+    <string name="support_development">উন্নয়নকে সমর্থন করুন</string>
+    <string name="mood_any">যেকোনো</string>
+    <string name="intensity_any">যেকোনো</string>
+    <string name="presets">পূর্বনির্ধারিত</string>
 </resources>
