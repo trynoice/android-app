@@ -10,7 +10,8 @@ import com.google.gson.annotations.Expose
  * @param id id of the subscription plan
  * @param googlePlaySubscriptionId Google Play assigned id of the subscription plan
  * @param priceInIndianPaise price of the plan in Indian Paise (INR * 100)
- * @param provider provider of the subscription plan, e.g. google_play or stripe
+ * @param provider the provider of the subscription plan. It must be one of
+ * [SubscriptionPlan.PROVIDER_GOOGLE_PLAY] or [SubscriptionPlan.PROVIDER_STRIPE].
  * @param trialPeriodDays number of days included as the trial period with the plan
  */
 data class SubscriptionPlan(
@@ -32,4 +33,10 @@ data class SubscriptionPlan(
 
   @Expose
   val trialPeriodDays: Int,
-)
+) {
+
+  companion object {
+    const val PROVIDER_GOOGLE_PLAY = "google_play"
+    const val PROVIDER_STRIPE = "stripe"
+  }
+}
