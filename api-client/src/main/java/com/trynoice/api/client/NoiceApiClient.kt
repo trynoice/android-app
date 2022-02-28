@@ -59,7 +59,11 @@ class NoiceApiClient(
       .client(okhttpClient)
       .baseUrl(baseUrl)
       .addConverterFactory(
-        GsonConverterFactory.create(gson)
+        GsonConverterFactory.create(
+          gson.newBuilder()
+            .excludeFieldsWithoutExposeAnnotation()
+            .create()
+        )
       )
       .build()
   }
