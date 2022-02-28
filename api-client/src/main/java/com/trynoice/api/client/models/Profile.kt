@@ -1,6 +1,7 @@
 package com.trynoice.api.client.models
 
 import com.google.gson.annotations.Expose
+import java.io.Serializable
 
 /**
  * Profile data of an authenticated user returned by
@@ -20,4 +21,4 @@ data class Profile(
 
   @Expose
   val name: String
-)
+) : Serializable

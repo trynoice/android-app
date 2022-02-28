@@ -1,6 +1,7 @@
 package com.trynoice.api.client.models
 
 import com.google.gson.annotations.Expose
+import java.io.Serializable
 
 /**
  * Request parameters accepted by the
@@ -20,4 +21,4 @@ data class SubscriptionFlowParams(
 
   @Expose
   val successUrl: String? = null
-)
+) : Serializable

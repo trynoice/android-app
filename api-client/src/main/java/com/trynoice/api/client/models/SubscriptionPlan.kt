@@ -1,6 +1,7 @@
 package com.trynoice.api.client.models
 
 import com.google.gson.annotations.Expose
+import java.io.Serializable
 
 /**
  * Represents a subscription plan that users can subscribe. All subscription purchases are linked to
@@ -33,7 +34,7 @@ data class SubscriptionPlan(
 
   @Expose
   val trialPeriodDays: Int,
-) {
+) : Serializable {
 
   companion object {
     const val PROVIDER_GOOGLE_PLAY = "google_play"

@@ -1,6 +1,7 @@
 package com.trynoice.api.client.models
 
 import com.google.gson.annotations.Expose
+import java.io.Serializable
 
 /**
  * Response returned by account issue credentials operation.
@@ -15,4 +16,4 @@ internal data class AuthCredentials(
 
   @Expose
   val accessToken: String,
-)
+) : Serializable

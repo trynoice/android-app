@@ -1,6 +1,7 @@
 package com.trynoice.api.client.models
 
 import com.google.gson.annotations.Expose
+import java.io.Serializable
 
 /**
  * Result returned by the [create subscription][com.trynoice.api.client.apis.SubscriptionApi.create]
@@ -17,4 +18,4 @@ data class SubscriptionFlowResult(
 
   @Expose
   val stripeCheckoutSessionUrl: String? = null
-)
+) : Serializable
