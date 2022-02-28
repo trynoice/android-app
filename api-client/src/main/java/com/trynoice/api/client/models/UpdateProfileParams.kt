@@ -1,6 +1,7 @@
 package com.trynoice.api.client.models
 
 import com.google.gson.annotations.Expose
+import java.io.Serializable
 
 /**
  * Request parameters accepted by [update
@@ -16,4 +17,4 @@ data class UpdateProfileParams(
 
   @Expose
   val name: String?,
-)
+) : Serializable
