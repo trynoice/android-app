@@ -89,7 +89,6 @@
     <string name="appintro__getting_started_desc_1">讓我們開始吧！</string>
     <string name="appintro__getting_started_title">歡迎</string>
     <string name="appintro__timer_title">入睡、醒來有障礙？</string>
-    <string name="support_development__why">你應該支持的理由？</string>
     <string name="later">晚點吧</string>
     <string name="never">不了</string>
     <string name="notification_channel_default__name">媒體播放</string>
@@ -117,7 +116,6 @@
     <string name="appintro__presets_title">儲存你最愛的混音</string>
     <string name="appintro__library_title">創造完美的環境</string>
     <string name="support_development__donate">捐助</string>
-    <string name="support_development__donate_thank_you">感謝你！</string>
     <string name="support_development__share">和朋友分享</string>
     <string name="in_app_feedback__title">提交回饋</string>
     <string name="notification_channel_default__description">媒體播放控制</string>

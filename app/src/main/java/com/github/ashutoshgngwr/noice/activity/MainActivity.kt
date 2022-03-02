@@ -21,9 +21,10 @@ import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
+import com.github.ashutoshgngwr.noice.fragment.DonationPurchasedCallbackFragmentArgs
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.BillingProvider
+import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
@@ -37,7 +38,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
+class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener {
 
   companion object {
     /**
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
   internal lateinit var reviewFlowProvider: ReviewFlowProvider
 
   @set:Inject
-  internal lateinit var billingProvider: BillingProvider
+  internal lateinit var billingProvider: InAppBillingProvider
 
   @set:Inject
   internal lateinit var analyticsProvider: AnalyticsProvider
@@ -95,7 +96,6 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
     }
 
     reviewFlowProvider.init(this)
-    billingProvider.init(this, this)
     analyticsProvider.logEvent("ui_open", bundleOf("theme" to settingsRepository.getAppTheme()))
     hasNewIntent = true
     initOfflineIndicator()
@@ -159,6 +159,7 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
 
   override fun onResume() {
     super.onResume()
+    billingProvider.setPurchaseListener(this)
 
     // handle the new intent here since onResume() is guaranteed to be called after onNewIntent().
     // https://developer.android.com/reference/android/app/Activity#onNewIntent(android.content.Intent)
@@ -181,30 +182,28 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
     }
   }
 
-  override fun onDestroy() {
-    billingProvider.close()
-    super.onDestroy()
+  override fun onPause() {
+    billingProvider.setPurchaseListener(null)
+    super.onPause()
   }
 
   override fun onSupportNavigateUp(): Boolean {
     return navController.navigateUp() || super.onSupportNavigateUp()
   }
 
-  override fun onPending(skus: List<String>) {
+  override fun onPending(purchase: InAppBillingProvider.Purchase) {
     analyticsProvider.logEvent("purchase_pending", bundleOf())
     Snackbar.make(binding.mainNavHostFragment, R.string.payment_pending, Snackbar.LENGTH_LONG)
       .setAnchorView(findViewById(R.id.bottom_nav))
       .show()
   }
 
-  override fun onComplete(skus: List<String>, orderId: String) {
+  override fun onComplete(purchase: InAppBillingProvider.Purchase) {
     analyticsProvider.logEvent("purchase_complete", bundleOf())
-    billingProvider.consumePurchase(orderId)
-    DialogFragment.show(supportFragmentManager) {
-      title(R.string.support_development__donate_thank_you)
-      message(R.string.support_development__donate_thank_you_description)
-      positiveButton(R.string.okay)
-    }
+    navController.navigate(
+      R.id.donation_purchased_callback,
+      DonationPurchasedCallbackFragmentArgs(purchase).toBundle()
+    )
   }
 
   @EntryPoint

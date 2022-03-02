@@ -110,14 +110,7 @@
   </string>
     <string name="appintro__timer_title">Сложно засыпать или просыпаться?</string>
     <string name="support_development__donate">Пожертвовать</string>
-    <string name="support_development__donate_description">
-    Пожертвования помогут нам в\n
-    - инвестировании в новые функции\n
-    - добавлении лучших звуков\n
-    - покупке кофе\n
-  </string>
     <string name="support_development__donate_google_play_description">Ваш платеж будет безопасно проведен через Google Play. Дополнительные налоги _могут_ быть добавлены к сумме в зависимости от вашей локации.</string>
-    <string name="support_development__donate_thank_you">Спасибо!</string>
     <string name="support_development__donate_thank_you_description">
     Мы от всего сердца благодарим Вас за вашу щедрую помощь для проекта Noice.
   </string>
@@ -125,11 +118,6 @@
     <string name="support_development__share_description">
     Поделиться Noice с друзьями похоже на пожертвование денег. С большим числом загрузок мы сможем
     получать обратную связь с разными взглядами, что поможет нам сделать Noice еще лучше.
-  </string>
-    <string name="support_development__why">Почему Вам следует поддержать?</string>
-    <string name="support_development__why_description">
-    - Сделать возможными последующие обновления\n
-    - Оставить Noice свободным от рекламы навсегда\n
   </string>
     <string name="cast_media">Подключиться к Chromecast</string>
     <string name="in_app_feedback__description">Нам было бы приятно узнать что Вы думаете о приложении. Выделите, пожалуйста, минутку и посетите наш GitHub репозиторий. Если приложение вам не понравилось, откройте пожалуйста issue с объяснением. В другом случае, поставьте, пожалуйста, звездочку приложению чтобы показать любовь и поддержку.</string>

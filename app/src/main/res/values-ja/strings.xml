@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="support_development__why">なぜサポートを頂きたいのか\?</string>
     <string name="support_development__share_description">友達とNoiceを共有することは、お金を寄付することに似ています。ダウンロード数が増えれば、様々な視点からのご意見を受けられ、Noiceをより良いものにできるでしょう。</string>
     <string name="support_development__share">友達に共有</string>
     <string name="support_development__donate_thank_you_description">Noiceプロジェクトに多大なご協力をいただき、心より感謝申し上げます。</string>
-    <string name="support_development__donate_thank_you">ありがとうございます!</string>
     <string name="support_development__donate_google_play_description">あなたの購入はGoogle Playを介して安全に処理されます。地域によっては、_もしかすると_最終的に追加の税金が付加されるかもしれません。</string>
-    <string name="support_development__donate_description">寄付することで以下のような形で開発者を手助けすることができます
-\n- 新機能の開発
-\n- より高品質なサウンドサンプルの採用
-\n- コーヒーの購入
-\n</string>
     <string name="support_development__donate">寄付</string>
     <string name="appintro__timer_title">眠りにつきにくかったり、起床しにくかったりしませんか\?</string>
     <string name="appintro__timer_desc">少しの環境音で、眠りにつきやすくなります。スリープタイマーを使うことで、Noiceを自動的にシャットダウンできます。同様に、穏やかな環境で目を覚ましたいときには、起床タイマーを使ってアラームをセットできます。</string>
@@ -138,9 +131,6 @@
     <string name="in_app_feedback__title">レビューを投稿</string>
     <string name="in_app_feedback__description">アプリについてのご意見をお待ちしています。私たちのGitHubリポジトリをご覧ください。アプリが気に入らなかった場合、気になる点を説明するためにissueの作成をご検討ください。そうでなければ、あなたの愛とサポートを示すためにぜひプロジェクトにスターを付けてください。</string>
     <string name="cast_media">Chromecastに接続</string>
-    <string name="support_development__why_description">- 将来のアップデートを継続するため
-\n- Noiceを永遠に広告無しのアプリとして継続するため
-\n</string>
     <string name="presets_as_home_screen">プリセットをホーム画面として保存</string>
     <string name="payment_pending">お支払いの処理が完了したら、すぐにお知らせします。</string>
     <string name="failed_to_purchase">支払フローを開始できませんでした。後でもう一度お試しください!</string>

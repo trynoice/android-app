@@ -10,20 +10,10 @@
     <string name="about">Tietoja</string>
     <string name="wake_up_timer">Herätysajastin</string>
     <string name="presets">Esiasetukset</string>
-    <string name="support_development__why_description">- Jotta tulevat päivitykset olisivat mahdollisia
-\n - Pitääksemme Noicen mainosvapaana ikuisesti
-\n</string>
-    <string name="support_development__why">Miksi kannattaa tukea\?</string>
     <string name="support_development__share_description">Noicen jakaminen ystäviesi kanssa on verrattavissa rahan lahjoittamiseen. Kun latauksia on enemmän, voimme saada palautetta useista eri näkökulmista, mikä auttaa meitä tekemään Noicesta entistäkin paremman.</string>
     <string name="support_development__share">Jaa ystäviesi kanssa</string>
     <string name="support_development__donate_thank_you_description">Kiitämme vilpittömästi anteliaasta lahjoituksestasi Noice-hankkeelle.</string>
-    <string name="support_development__donate_thank_you">Kiitos!</string>
     <string name="support_development__donate_google_play_description">Google Play käsittelee maksun turvallisesti. Sijainnistasi riippuen lopulliseen summaan voidaan _mahdollisesti_ lisätä ylimääräisiä veroja.</string>
-    <string name="support_development__donate_description">Lahjoitukset auttavat meitä
-\n - uusien ominaisuuksien kehittämisessä
-\n - parempien ääninäytteiden keräämisessä
-\n - kahvin ostamisessa
-\n</string>
     <string name="support_development__donate">Lahjoita</string>
     <string name="appintro__timer_title">Vaikeuksia nukahtamisessa tai heräämisessä\?</string>
     <string name="appintro__timer_desc">Pieni tunnelma-ääni voi auttaa sinua nukahtamaan vaivattomasti. Käytä uniajastinta antaaksesi Noicen sammuttaa itsensä. Vastaavasti, jos haluat herätä rauhalliseen tunnelmaan, käytä herätysajastinta hälytyksen asettamiseen.</string>

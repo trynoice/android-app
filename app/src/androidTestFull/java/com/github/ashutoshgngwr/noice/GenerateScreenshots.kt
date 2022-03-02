@@ -133,10 +133,6 @@ class GenerateScreenshots {
       secondArg<Menu>().add("fake-cast-button").apply {
         setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS)
         setIcon(R.drawable.cast_ic_notification_small_icon)
-        iconTintList = ColorStateList.valueOf(
-          ApplicationProvider.getApplicationContext<Context>()
-            .getColor(R.color.action_menu_item)
-        )
       }
     }
 

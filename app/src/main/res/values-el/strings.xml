@@ -114,20 +114,10 @@
     <string name="help">Βοήθεια</string>
     <string name="app_theme">Θέμα</string>
     <string name="about">Περί</string>
-    <string name="support_development__why_description">- Για να μπορούμε να αναβαθμίζουμε την εφαρμογή
-\n- Για να διατηρήσουμε την εφαρμογή χωρίς διαφημίσεις
-\n</string>
-    <string name="support_development__why">Γιατί χρειαζόμαστε την υποστήριξη σας;</string>
     <string name="support_development__share_description">Η κοινοποίηση της εφαρμογής σε φίλους είναι αντίστοιχη με τη δωρεά χρημάτων. Με περισσότερες λήψεις, μπορούμε να λάβουμε περισσότερα σχόλια, το οποίο μας βοηθάει να κάνουμε την εφαρμογή καλύτερη.</string>
     <string name="support_development__share">Κοινοποίηση σε φίλους</string>
     <string name="support_development__donate_thank_you_description">Σας ευχαριστούμε εγκάρδια για τη γενναιόδωρη συνεισφορά σας στο Noice.</string>
-    <string name="support_development__donate_thank_you">Ευχαριστούμε!</string>
     <string name="support_development__donate_google_play_description">Η πληρωμή σας γίνεται με ασφάλεια από το Google Play. Ανάλογα την περιοχή σας, μπορεί να προστεθούν επιπλέον φόροι στο ποσό.</string>
-    <string name="support_development__donate_description">Οι δωρεές μας βοηθούν να
-\n- επενδύσουμε σε νέα χαρακτηριστικά
-\n- προμηθευτούμε νέους ήχους
-\n- αγοράσουμε κανά καφέ
-\n</string>
     <string name="support_development__donate">Δωρεά</string>
     <string name="appintro__timer_title">Δυσκολεύεστε να κοιμηθείτε ή να ξυπνήσετε;</string>
     <string name="appintro__timer_desc">Ένα ήρεμο περιβάλλον σας βοηθάει να κοιμηθείτε εύκολα. Χρησιμοποιήστε το χρονοδιακόπτη ύπνου για να αυτοτερματιστεί η εφαρμογή. Αντίστοιχα, για να ξυπνήσετε σε ένα ήρεμο περιβάλλον, χρησιμοποιήστε το χρονοδιακόπτη έγερσης για να ορίσετε το ξυπνητήρι.</string>

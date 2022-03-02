@@ -141,14 +141,8 @@
   </string>
     <string name="appintro__timer_title">Trouble falling asleep or waking up?</string>
     <string name="support_development__donate">Donate</string>
-    <string name="support_development__donate_description">
-    Donations will help us in\n
-    - investing in new features\n
-    - curating better sound samples\n
-    - buying coffee\n
-  </string>
+    <string name="support_development__donate_description">If you have not purchased the premium subscription of Noice, you can help us through a one-time payment. It will help us sustain the development of the free features in Noice and keep them ad-free forever.</string>
     <string name="support_development__donate_google_play_description">Your payment will be securely handled by Google Play. Depending on your location, additional taxes _may be_ added to the final amount.</string>
-    <string name="support_development__donate_thank_you">Thank you!</string>
     <string name="support_development__donate_thank_you_description">
     We wholeheartedly thank you for your generous contribution to the Noice project.
   </string>
@@ -157,11 +151,6 @@
     Sharing Noice with friends is similar to donating money. With higher downloads, we will be able
     to receive feedback from a number of different perspectives which will help us in making Noice
     better than ever.
-  </string>
-    <string name="support_development__why">Why should you support?</string>
-    <string name="support_development__why_description">
-    - To make future updates possible\n
-    - To keep Noice ad-free forever\n
   </string>
     <string name="cast_media">Connect to Chromecast</string>
     <string name="in_app_feedback__description">
@@ -285,4 +274,6 @@
     <string name="benefit_1">High-quality audio streaming</string>
     <string name="benefit_2">Offline playback</string>
     <string name="select_a_plan">Select a plan</string>
+    <string name="processing_payment">Processing payment</string>
+    <string name="payment_processing_error">We were unable to process your payment. The amount should be automatically refunded if deducted. If you do not get your refund within a week, please notify us.</string>
 </resources>
