@@ -110,14 +110,7 @@
   </string>
     <string name="appintro__timer_title">सोते हुए या जागने में परेशानी?</string>
     <string name="support_development__donate">दान करें</string>
-    <string name="support_development__donate_description">
-       दान निम्नलिखित में हमारी सहायता करेगा\n
-    - नई सुविधाओं में निवेश\n
-    - बेहतर ध्वनि नमूनों पर अंकुश लगाना\n
-    - कॉफी खरीदना\n
-  </string>
     <string name="support_development__donate_google_play_description">आपका भुगतान गूगल प्ले द्वारा सुरक्षित रूप से नियंत्रित किया जाएगा। आपके स्थान के आधार पर, अतिरिक्त करों को अंतिम राशि में जोड़ा जा सकता है।</string>
-    <string name="support_development__donate_thank_you">धन्यवाद!</string>
     <string name="support_development__donate_thank_you_description">
        हम इस परियोजना में आपके उदार योगदान के लिए तहे दिल से शुक्रिया अदा करते हैं।
   </string>
@@ -125,11 +118,6 @@
     <string name="support_development__share_description">
        दोस्तों के साथ ऐप साझा करना पैसे दान करने के समान है। उच्च डाउनलोड के साथ, हम कई अलग-अलग दृष्टिकोणों से प्रतिक्रिया प्राप्त करने
        में सक्षम होंगे जो हमें ऐप को पहले से बेहतर बनाने में मदद करेगा।
-  </string>
-    <string name="support_development__why">आपको क्यों समर्थन करना चाहिए?</string>
-    <string name="support_development__why_description">
-    - भविष्य के अपडेट को संभव बनाने के लिए\n
-    - Noice को हमेशा विज्ञापन मुक्त रखने के लिए\n
   </string>
     <string name="cast_media">क्रोमकास्ट से कनेक्ट करें</string>
     <string name="notification_channel_default__description">मीडिया प्लेबैक नियंत्रण</string>

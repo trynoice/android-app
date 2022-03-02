@@ -139,14 +139,7 @@
   </string>
     <string name="appintro__timer_title">Máte problémy s usínáním či se v noci budíte?</string>
     <string name="support_development__donate">Podpořit</string>
-    <string name="support_development__donate_description">
-    Vaše dary nám pomohou\n
-    - investovat čas a peníze do vývoje nových funkcí\n
-    - zakoupení lepších nahrávek zvuků\n
-    - koupit si kafe\n
-  </string>
     <string name="support_development__donate_google_play_description">Vaše platba bude bezpečně zaštítěna službou Google Play. V závisloti na vaší poloze vám __možná__ bude přiúčtována daň z koupě, dle vašich lokálních zákonů.</string>
-    <string name="support_development__donate_thank_you">Děkujeme!</string>
     <string name="support_development__donate_thank_you_description">
     Zcela upřímně vám moc srdečně děkujeme za vaši finanční podporu projektu Noice.
   </string>
@@ -155,11 +148,6 @@
     Sdílením informace o existenci Noice s vašimi přáteli je podobné jako přímé darování peněz. Čím
     vyšší počet stažení, tím silnější zpětnou vazbu dostaneme z různých perspektiv, což nám pomůže
     ke zlepšení kvality celé aplikace.
-  </string>
-    <string name="support_development__why">Proč nás podpořit?</string>
-    <string name="support_development__why_description">
-    - Pro podporu dalšího vývoje\n
-    - Pro udržení Noice nadále bez reklam\n
   </string>
     <string name="cast_media">Propojit s Chromecast</string>
     <string name="in_app_feedback__description">

@@ -5,4 +5,5 @@
   android:layout_gravity="center_horizontal"
   android:background="?attr/selectableItemBackground"
   android:contentDescription="@string/support_development__donate"
+  android:paddingVertical="8dp"
   android:src="@drawable/ic_donate_opencollective" />

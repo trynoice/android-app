@@ -78,11 +78,6 @@
     <string name="submit_feedback">Geef feedback</string>
     <string name="support_development">Ondersteun de ontwikkeling</string>
     <string name="help">Hulp</string>
-    <string name="support_development__donate_description">Donaties zullen ons helpen met
-\n- het investeren in nieuwe mogelijkheden
-\n- het samenstellen van betere geluiden
-\n- koffie kopen
-\n</string>
     <string name="appintro__timer_title">Moeite met in slaap vallen of wakker worden\?</string>
     <string name="appintro__timer_desc">Een beetje sfeer kan u helpen om moeiteloos in slaap te vallen. Gebruik de slaaptimer om Noice zichzelf uit te laten schakelen. Gebruik de wekker om het alarm in te stellen om wakker te worden in een rustige omgeving.</string>
     <string name="appintro__library_title">Creëer uw perfecte omgeving</string>
@@ -151,13 +146,8 @@
     <string name="in_app_feedback__title">Plaats een recensie</string>
     <string name="in_app_feedback__description">We horen graag van je over de app. Neem even de tijd om onze GitHub-repository te bezoeken. Als je de app niet leuk vond, overweeg dan om een probleem in te dienen waarin je zorgen uitlegt. Ook kunt u het project een ster geven om liefde en steun te tonen.</string>
     <string name="cast_media">Verbinding met Chromecast</string>
-    <string name="support_development__why_description">- Om toekomstige updates mogelijk te maken
-\n- Om Noice voor altijd reclamevrij te houden
-\n</string>
-    <string name="support_development__why">Waarom zou je steunen\?</string>
     <string name="support_development__share_description">Noice delen met vrienden is vergelijkbaar met geld doneren. Met hogere downloads kunnen we feedback ontvangen vanuit een aantal verschillende perspectieven die ons zullen helpen om Noice beter dan ooit te maken.</string>
     <string name="support_development__donate_thank_you_description">Wij danken u van harte voor uw genereuze bijdrage aan het Noice-project.</string>
-    <string name="support_development__donate_thank_you">Dank u!</string>
     <string name="support_development__donate_google_play_description">Uw betaling wordt veilig afgehandeld door Google Play. Afhankelijk van uw locatie kunnen er extra belastingen worden toegevoegd aan het uiteindelijke bedrag.</string>
     <string name="all_app_shortcuts_removed">Alle snelkoppelingen zijn verwijderd!</string>
     <string name="remove_all_app_shortcuts">Verwijder alle snelkoppelingen</string>

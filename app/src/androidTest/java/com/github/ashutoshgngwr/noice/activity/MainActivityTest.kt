@@ -13,19 +13,20 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.ashutoshgngwr.noice.BillingProviderModule
 import com.github.ashutoshgngwr.noice.BuildConfig
-import com.github.ashutoshgngwr.noice.EspressoX
+import com.github.ashutoshgngwr.noice.InAppBillingProviderModule
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
-import com.github.ashutoshgngwr.noice.provider.BillingProvider
+import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -40,7 +41,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @HiltAndroidTest
-@UninstallModules(BillingProviderModule::class)
+@UninstallModules(InAppBillingProviderModule::class)
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
 
@@ -56,7 +57,7 @@ class MainActivityTest {
   internal lateinit var mockPlaybackController: PlaybackController
 
   @BindValue
-  internal lateinit var mockBillingProvider: BillingProvider
+  internal lateinit var mockBillingProvider: InAppBillingProvider
 
   @Before
   fun setup() {
@@ -154,23 +155,22 @@ class MainActivityTest {
       return
     }
 
-    val slot = slot<BillingProvider.PurchaseListener>()
-    verify { mockBillingProvider.init(any(), capture(slot)) }
+    val slot = slot<InAppBillingProvider.PurchaseListener>()
+    verify { mockBillingProvider.setPurchaseListener(capture(slot)) }
     assertTrue(slot.isCaptured)
 
     activityScenario.onActivity {
-      slot.captured.onPending(listOf("test-sku"))
+      slot.captured.onPending(mockk())
     }
 
     onView(withText(R.string.payment_pending))
       .check(matches(isDisplayed()))
 
-    val testOrderID = "test-order-id"
+    val purchase = mockk<InAppBillingProvider.Purchase>(relaxed = true)
     activityScenario.onActivity {
-      slot.captured.onComplete(listOf(), testOrderID)
+      slot.captured.onComplete(purchase)
     }
 
-    EspressoX.onViewInDialog(withId(R.id.positive)).perform(click()) // close the dialog
-    verify { mockBillingProvider.consumePurchase(testOrderID) }
+    coVerify(exactly = 1, timeout = 15000) { mockBillingProvider.consumePurchase(purchase) }
   }
 }

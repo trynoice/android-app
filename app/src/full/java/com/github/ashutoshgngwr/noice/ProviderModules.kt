@@ -2,21 +2,21 @@ package com.github.ashutoshgngwr.noice
 
 import android.content.Context
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.BillingProvider
 import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
-import com.github.ashutoshgngwr.noice.provider.DonateViewProvider
-import com.github.ashutoshgngwr.noice.provider.DummyBillingProvider
+import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
 import com.github.ashutoshgngwr.noice.provider.DummyCastApiProvider
+import com.github.ashutoshgngwr.noice.provider.DummyInAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.GitHubReviewFlowProvider
 import com.github.ashutoshgngwr.noice.provider.GooglePlaySubscriptionProvider
-import com.github.ashutoshgngwr.noice.provider.InAppBillingDonateViewProvider
-import com.github.ashutoshgngwr.noice.provider.OpenCollectiveDonateViewProvider
+import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
+import com.github.ashutoshgngwr.noice.provider.InAppDonationFragmentProvider
+import com.github.ashutoshgngwr.noice.provider.OpenCollectiveDonationFragmentProvider
 import com.github.ashutoshgngwr.noice.provider.PlaystoreReviewFlowProvider
 import com.github.ashutoshgngwr.noice.provider.RealAnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.RealBillingProvider
 import com.github.ashutoshgngwr.noice.provider.RealCastApiProvider
 import com.github.ashutoshgngwr.noice.provider.RealCrashlyticsProvider
+import com.github.ashutoshgngwr.noice.provider.RealInAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.provider.StripeSubscriptionProvider
 import com.github.ashutoshgngwr.noice.provider.SubscriptionProvider
@@ -28,6 +28,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.MainScope
 import javax.inject.Singleton
 
 
@@ -84,29 +85,29 @@ object AnalyticsProviderModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-object BillingProviderModule {
+object InAppBillingProviderModule {
   @Provides
   @Singleton
-  fun billingProvider(@ApplicationContext context: Context): BillingProvider {
+  fun inAppBillingProvider(@ApplicationContext context: Context): InAppBillingProvider {
     if (isGoogleMobileServiceAvailable(context)) {
-      return RealBillingProvider
+      return RealInAppBillingProvider(context, MainScope())
     }
 
-    return DummyBillingProvider
+    return DummyInAppBillingProvider
   }
 }
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DonateViewProviderModule {
+object DonationFragmentProviderModule {
   @Provides
   @Singleton
-  fun donateViewProvider(@ApplicationContext context: Context): DonateViewProvider {
+  fun donationFragmentProvider(@ApplicationContext context: Context): DonationFragmentProvider {
     if (isGoogleMobileServiceAvailable(context)) {
-      return InAppBillingDonateViewProvider
+      return InAppDonationFragmentProvider
     }
 
-    return OpenCollectiveDonateViewProvider
+    return OpenCollectiveDonationFragmentProvider
   }
 }
 

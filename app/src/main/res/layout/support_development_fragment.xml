@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="match_parent"
+  android:fillViewport="true">
 
   <LinearLayout
     android:layout_width="match_parent"
@@ -12,7 +14,8 @@
     <androidx.cardview.widget.CardView
       style="?attr/materialCardViewStyle"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      android:layout_height="wrap_content"
+      app:contentPadding="16dp">
 
       <LinearLayout
         android:layout_width="match_parent"
@@ -22,18 +25,29 @@
         <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="5dp"
-          android:text="@string/support_development__why"
+          android:text="@string/support_development__donate"
           android:textAppearance="?attr/textAppearanceHeadline6"
           android:textColor="?attr/colorAccent" />
 
-        <com.github.ashutoshgngwr.noice.widget.MarkdownTextView
+        <Space
+          android:layout_width="wrap_content"
+          android:layout_height="16dp" />
+
+        <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="5dp"
           android:lineSpacingMultiplier="1.25"
-          android:text="@string/support_development__why_description"
+          android:text="@string/support_development__donate_description"
           android:textAppearance="?attr/textAppearanceBody1" />
+
+        <Space
+          android:layout_width="wrap_content"
+          android:layout_height="16dp" />
+
+        <androidx.fragment.app.FragmentContainerView
+          android:id="@+id/donate_view_container"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
 
       </LinearLayout>
 
@@ -42,7 +56,8 @@
     <androidx.cardview.widget.CardView
       style="?attr/materialCardViewStyle"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      android:layout_height="wrap_content"
+      app:contentPadding="16dp">
 
       <LinearLayout
         android:layout_width="match_parent"
@@ -52,18 +67,24 @@
         <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="5dp"
           android:text="@string/support_development__share"
           android:textAppearance="?attr/textAppearanceHeadline6"
           android:textColor="?attr/colorAccent" />
 
-        <com.github.ashutoshgngwr.noice.widget.MarkdownTextView
+        <Space
+          android:layout_width="wrap_content"
+          android:layout_height="16dp" />
+
+        <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="5dp"
           android:lineSpacingMultiplier="1.25"
           android:text="@string/support_development__share_description"
           android:textAppearance="?attr/textAppearanceBody1" />
+
+        <Space
+          android:layout_width="wrap_content"
+          android:layout_height="16dp" />
 
         <Button
           android:id="@+id/share_button"
@@ -71,45 +92,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="end"
-          android:layout_margin="5dp"
           android:text="@string/support_development__share" />
-
-      </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-      style="?attr/materialCardViewStyle"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="5dp"
-          android:text="@string/support_development__donate"
-          android:textAppearance="?attr/textAppearanceHeadline6"
-          android:textColor="?attr/colorAccent" />
-
-        <com.github.ashutoshgngwr.noice.widget.MarkdownTextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="5dp"
-          android:lineSpacingMultiplier="1.25"
-          android:text="@string/support_development__donate_description"
-          android:textAppearance="?attr/textAppearanceBody1" />
-
-        <FrameLayout
-          android:id="@+id/donate_view_container"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginHorizontal="5dp"
-          android:layout_marginVertical="16dp" />
 
       </LinearLayout>
 

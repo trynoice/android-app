@@ -35,20 +35,10 @@
     <string name="in_app_feedback__title">Gửi đi một bài đánh giá</string>
     <string name="in_app_feedback__description">Chúng tôi rất muốn nghe phản hồi của bạn về ứng dụng này. Hãy vui lòng dành ra một lúc để đi đến kho GitHub của chúng tôi. Nếu bạn đã không thích ứng dụng này, hãy vui lòng mở một vấn đề giải thích sự lo ngại của bạn. Nếu không, hãy vui lòng gắn sao cho dự án để bày tỏ sự yêu thích và sự hỗ trợ.</string>
     <string name="cast_media">Kết nối đến Chromecast</string>
-    <string name="support_development__why_description">- Giúp chúng tôi làm tiếp các bản cập nhật trong tương lai
-\n- Giữ cho Noice tránh xa các quảng cáo
-\n</string>
-    <string name="support_development__why">Tại sao bạn nên hỗ trợ\?</string>
     <string name="support_development__share_description">Việc chia sẻ Noice với các bạn cũng tương tự như quyên góp tiền. Với lượt tải xuống cao hơn, chúng tôi sẽ có thể nhận phản hồi từ một số lượng những cách nhìn khác nhau, phản hồi đó sẽ giúp chúng tôi trong việc làm cho Noice tốt hơn bao giờ hết.</string>
     <string name="support_development__share">Chia sẻ với các bạn</string>
     <string name="support_development__donate_thank_you_description">Chúng tôi thật lòng cảm ơn bạn vì sự quyên góp hào phóng của bạn cho dự án Noice.</string>
-    <string name="support_development__donate_thank_you">Cảm ơn bạn!</string>
     <string name="support_development__donate_google_play_description">Thanh toán của bạn sẽ được Google Play xử lý một cách bảo mật. Tuỳ vào vị trí của bạn, các thuế bổ sung _có thể_ được thêm vào khoản cuối cùng.</string>
-    <string name="support_development__donate_description">Các sự quyên góp sẽ giúp chúng tôi trong việc
-\n- đầu tư vào các tính năng mới
-\n- chọn các mẫu âm thanh tốt hơn
-\n- mua cà phê
-\n</string>
     <string name="support_development__donate">Quyên góp</string>
     <string name="appintro__timer_title">Gặp khó khăn khi ngủ hoặc thức dậy\?</string>
     <string name="appintro__timer_desc">Sự tĩnh lặng có thể giúp bạn đi vào giấc ngủ dễ dàng hơn. Dùng tính năng hẹn giờ ngủ để Noice tự động tắt. Bạn cũng có thể dùng tính năng hẹn giờ thức dậy để đặt báo thức.</string>
