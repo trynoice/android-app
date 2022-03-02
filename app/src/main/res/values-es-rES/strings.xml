@@ -102,23 +102,12 @@
   </string>
     <string name="appintro__timer_title">¿Problemas para conciliar el sueño o para despertar?</string>
     <string name="support_development__donate">Donar</string>
-    <string name="support_development__donate_description">
-    Las donaciones nos ayudarán a\n
-    - invertir en nuevas funciones\n
-    - curar mejores muestras de sonido\n
-    - comprar café\n
-  </string>
     <string name="support_development__donate_google_play_description">Su pago será manejado de forma segura por Google Play. Dependiendo de su ubicación, se pueden agregar impuestos adicionales al monto final.</string>
-    <string name="support_development__donate_thank_you">Gracias!</string>
     <string name="support_development__donate_thank_you_description">
     Le agradecemos de todo corazón su generosa contribución al proyecto Noise.
   </string>
     <string name="support_development__share">Compartir con amigos</string>
     <string name="support_development__share_description">Comparte Noice con amigos es una alternativa a las donaciones. Cuantas mas descargas, podremos recibir comentarios desde diferentes perspectivas que nos ayudará a hacer de Noice mejor que nunca.</string>
-    <string name="support_development__why">¿Por qué debería apoyar\?</string>
-    <string name="support_development__why_description">- Para garantizar futuras actualizaciones
-\n- Para mantener Noice libre de anuncios siempre
-\n</string>
     <string name="cast_media">Conectar a Chromecast</string>
     <string name="notification_channel_default__description">Controles de reproducción de medios</string>
     <string name="notification_channel_default__name">Reproducción de medios</string>

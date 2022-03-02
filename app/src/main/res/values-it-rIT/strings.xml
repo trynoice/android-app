@@ -67,7 +67,6 @@
     <string name="preset_already_exists">Un preimpostato con questo nome esiste già!</string>
     <string name="random_preset">Preset casuale</string>
     <string name="support_development__share">Condividi</string>
-    <string name="support_development__donate_thank_you">Grazie!</string>
     <string name="support_development__donate">Dona</string>
     <string name="appintro__getting_started_title">Benvenuto</string>
     <string name="appintro__getting_started_desc_1">Iniziamo!</string>
@@ -104,11 +103,6 @@
     <string name="wake_up_timer_description">Noice eseguirà il preset selezionato allo scadere del tempo. Usa i pulsanti sotto per selezionare un preset e impostare il tempo desiderato per il timer di risveglio.</string>
     <string name="wake_up_timer_cancelled">Timer di risveglio annullato!</string>
     <string name="schedule">Programma</string>
-    <string name="support_development__donate_description">Le donazioni ci aiutano a
-\n- investire in nuove funzionalità
-\n- preparare migliori campionamenti
-\n- comprare il caffè
-\n</string>
     <string name="appintro__timer_title">Hai problemi a coricarti o a risvegliarti\?</string>
     <string name="appintro__timer_desc">Un po\' di atmosfera può aiutarti ad addormentarti senza fatica. Usa il timer di spegnimento per permettere a Noice di spegnersi automaticamente. Allo stesso modo, per risvegliarti in un ambiente tranquillo, puoi usare il timer di risveglio per impostare la sveglia.</string>
     <string name="appintro__library_title">Crea i tuoi ambienti perfetti</string>
@@ -118,10 +112,6 @@
     <string name="appintro__getting_started_desc_0">Scorri a sinistra per conoscere tutte le funzionalità!</string>
     <string name="appintro__chromecast_title">Abilitato a Chromecast</string>
     <string name="appintro__chromecast_desc">Usa Noice per trasmettere l\'atmosfera ad altri dispositivi abilitati a Chromecast, come altoparlanti, TV, ecc.</string>
-    <string name="support_development__why_description">- Per rendere possibili aggiornamenti futuri
-\n- Per mantenere Noice privo di pubblicità
-\n</string>
-    <string name="support_development__why">Perché dovresti aiutarci\?</string>
     <string name="support_development__share_description">Condividere Noice con i tuoi amici è come regalare denaro. Con un più alto numero di downloads, potremo ricevere feedback più variegato, e ciò ci aiuterà a fare di Noice un software migliore.</string>
     <string name="support_development__donate_thank_you_description">Ti ringraziamo con tutto il cuore per il tuo contributo generoso al progetto Noice.</string>
     <string name="support_development__donate_google_play_description">Il tuo pagamento sarà gestito in modo sicuro da Google Play. A seconda della tua località, possono essere aggiunte tasse supplementari all\'importo finale.</string>

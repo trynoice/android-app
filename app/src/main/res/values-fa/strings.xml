@@ -16,20 +16,10 @@
     <string name="in_app_feedback__title">یک نظر ارائه دهید</string>
     <string name="in_app_feedback__description">ما عاشق آنیم که از شما درباره‌ی برنامه بشنویم. لطفاً برای بازدید از مخزن GitHub ما لحظه‌ای صرف کنید. اگر برنامه را دوست نداشتید، لطفاً اقدام به باز کردن یک issue و توضیح موارد موردنظر خود کنید. در غیر این صورت، لطفاً به پروژه ستاره دهید تا عشق و حمایت را نشان دهید.</string>
     <string name="cast_media">اتصال به Chromecast</string>
-    <string name="support_development__why_description">- برای اینکه به‌روزرسانی‌های آینده را ممکن کنید
-\n - برای اینکه Noice را برای همیشه عاری از تبلیغ نگه داریم
-\n</string>
-    <string name="support_development__why">چرا خوب است که حمایت کنید؟</string>
     <string name="support_development__share_description">اشتراک‌گذاری Noice با دوستان مانند هدیه دادن پول است. با دانلودهای بیشتر، ما قادر به دریافت بازخورد از تعدادی از دیدگاه‌های مختلف خواهیم بود که به ما کمک خواهد کرد که Noice را از همیشه بهتر کنیم.</string>
     <string name="support_development__share">اشتراک‌گذاری با دوستان</string>
     <string name="support_development__donate_thank_you_description">بخاطر کمک سخاوتمندانه‌تان به پروزه‌ی Noice از صمیم قلب از شما متشکریم.</string>
-    <string name="support_development__donate_thank_you">متشکریم!</string>
     <string name="support_development__donate_google_play_description">پرداخت شما بطور امن توسط Google Play ترتیب داده می‌شود. بسته به موقعیت شما، مالیات افزون بر آن _ممکن است_ به مبلغ نهایی اضافه شود.</string>
-    <string name="support_development__donate_description">هدایا به ما کمک می‌کنند در
-\n - سرمایه‌گذاری در ویژگی‌های تازه
-\n - گردآوری نمونه‌های بهتر صدا
-\n - خریدن قهوه
-\n</string>
     <string name="support_development__donate">هدیه دهید</string>
     <string name="appintro__timer_title">برای به خواب رفتن یا بیدار شدن مشکل دارید؟</string>
     <string name="appintro__timer_desc">کمی صدای محیطی می‌تواند به شما کمک کند که بدون زحمت به خواب بروید. از زمان‌سنج خواب استفاده کنید تا به Noice اجازه دهید که خودش را خاموش کند. به همین صورت، برای بیدار شدن به یک محیط آرام، از زمان‌سنج بیداری برای تنظیم هشدار استفاده کنید.</string>

@@ -112,25 +112,13 @@
  </string>
     <string name="appintro__timer_title">Kesulitan tidur atau bangun?</string>
     <string name="support_development__donate">Donasi</string>
-    <string name="support_development__donate_description">
-    Donasi akan membantu kami dalam \n
-    - berinvestasi dalam fitur baru \n
-    - membuat sampel suara yang lebih baik \n
-    - membeli kopi \n
- </string>
     <string name="support_development__donate_google_play_description">Pembayaran Anda akan ditangani dengan aman oleh Google Play. Tergantung pada lokasi Anda, pajak tambahan _mungkin_ ditambahkan ke jumlah akhir.</string>
-    <string name="support_development__donate_thank_you">Terima kasih!</string>
     <string name="support_development__donate_thank_you_description">Kami berterima kasih dengan sepenuh hati atas kemurahhatian Anda untuk berkontribusi dalam proyek Noice.</string>
     <string name="support_development__share">Bagikan dengan teman</string>
     <string name="support_development__share_description">
     Berbagi Noice dengan teman sama dengan mendonasikan uang. Dengan unduhan yang lebih tinggi, kami
     akan dapat menerima umpan balik dari sejumlah berbagai perspektif yang akan membantu kami
     membuat Noice lebih baik dari sebelumnya.
- </string>
-    <string name="support_development__why">Mengapa Anda harus mendukung?</string>
-    <string name="support_development__why_description">
-    - Untuk memungkinkan pembaruan di masa mendatang \n
-    - Untuk membuat Noice bebas iklan selamanya \n
  </string>
     <string name="cast_media">Hubungkan ke Chromecast</string>
     <string name="in_app_feedback__description">

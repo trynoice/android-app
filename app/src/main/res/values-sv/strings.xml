@@ -96,20 +96,10 @@
     <string name="later">Senare</string>
     <string name="in_app_feedback__title">Skicka in en recension</string>
     <string name="in_app_feedback__description">Vi skulle gärna vilja att du hörde av dig om appen. Vänligen ta en stund för att besöka vårat GitHub-filförråd. Om du inte tycker om appen, vänligen överväg att öppna en rapport som förklarar dina bekymmer. Vänligen ge projektet en stjärna annars för att visa kärlek och stöttning.</string>
-    <string name="support_development__why_description">- För att göra framtida uppdateringar möjliga
-\n- För att hålla Noice fritt från annonser för alltid
-\n</string>
-    <string name="support_development__why">Varför borde du stötta\?</string>
     <string name="support_development__share_description">Att dela Noice med vänner är liknande som att donera pengar. Med större nerladdningar så kommer vi att ha möjlighet att ta emot feedback från ett antal olika perspektiv vilket kan hjälpa oss att göra Noice bättre än tidigare.</string>
     <string name="support_development__share">Dela med vänner</string>
     <string name="support_development__donate_thank_you_description">Vi tackar dig så hjärtligt för ditt generösa bidrag till Noice-projektet.</string>
-    <string name="support_development__donate_thank_you">Tack!</string>
     <string name="support_development__donate_google_play_description">Din betalning kommer att hanteras av Google Play. Summan kommer att konverteras till din lokala valuta. Beroende på din plats så kan ytterligare skatt läggas till i slutsumman.</string>
-    <string name="support_development__donate_description">Donationer kommer att hjälpa oss att
-\n- investera i nya funktioner
-\n- organisera bättre ljudprover
-\n- köpa kaffe
-\n</string>
     <string name="support_development__donate">Donera</string>
     <string name="appintro__timer_title">Har du problem med att somna eller att vakna upp\?</string>
     <string name="appintro__library_title">Skapa dina perfekta omgivningar</string>

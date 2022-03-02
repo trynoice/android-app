@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="android.view.View" />
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.DonationPurchaseCallbackViewModel" />
+
+  </data>
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+      tools:visibility="gone">
+
+      <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true" />
+
+      <Space
+        android:layout_width="16dp"
+        android:layout_height="wrap_content" />
+
+      <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/processing_payment"
+        android:textAppearance="?attr/textAppearanceBody1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:visibility="@{!viewModel.isLoading ? View.VISIBLE : View.GONE}">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="16dp"
+        android:text="@string/support_development__donate_thank_you_description"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:visibility="@{viewModel.error == null ? View.VISIBLE : View.GONE}"
+        app:drawableStartCompat="@drawable/ic_baseline_check_circle_36"
+        app:drawableTint="?attr/colorAccent"
+        tools:visibility="gone" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="16dp"
+        android:gravity="center_vertical"
+        android:text="@string/payment_processing_error"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:visibility="@{viewModel.error != null ? View.VISIBLE : View.GONE}"
+        app:drawableStartCompat="@drawable/ic_baseline_error_36"
+        app:drawableTint="@color/red"
+        tools:visibility="visible" />
+
+      <Space
+        android:layout_width="wrap_content"
+        android:layout_height="16dp" />
+
+      <Button
+        style="?attr/buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:onClick="@{() -> viewModel.onDismissClicked.invoke()}"
+        android:text="@string/okay" />
+
+    </LinearLayout>
+
+  </FrameLayout>
+
+</layout>

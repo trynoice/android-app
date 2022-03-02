@@ -69,20 +69,10 @@
     <string name="in_app_feedback__title">Pateikti atsiliepimą</string>
     <string name="in_app_feedback__description">Norėtume iš jūsų išgirsti apie programėlę. Skirkite akimirką ir apsilankykite mūsų GitHub repozitorijoje. Jei programėlė jums nepatiko, apsvarstykite galimybę atidaryti problemą, kurioje paaiškintumėte savo problemas. Priešingu atveju, prašome suteikti projektui žvaigždutę, kad parodytumėte meilę ir palaikymą.</string>
     <string name="cast_media">Prisijungti prie Chromecast</string>
-    <string name="support_development__why_description">- Kad ateityje būtų galima atlikti atnaujinimus
-\n - Kad Noice visada būtų be reklamų
-\n</string>
-    <string name="support_development__why">Kodėl turėtumėte paremti\?</string>
     <string name="support_development__share_description">Noice bendrinimas su draugais yra panašus į pinigų aukojimą. Su daugiau atsisiuntimų, galėsime gauti atsiliepimų iš įvairių perspektyvų, kurios padės mums padaryti Noice geresnį nei bet kada anksčiau.</string>
     <string name="support_development__share">Bendrinkite su draugais</string>
     <string name="support_development__donate_thank_you_description">Nuoširdžiai dėkojame už dosnų indėlį į projektą Noice.</string>
-    <string name="support_development__donate_thank_you">Ačiū!</string>
     <string name="support_development__donate_google_play_description">Jūsų mokėjimą saugiai atliks Google Play. Priklausomai nuo jūsų gyvenamosios vietos, prie galutinės sumos gali būti pridedami papildomi mokesčiai.</string>
-    <string name="support_development__donate_description">Aukos padės mums
-\n - investuoti į naujas funkcijas
-\n - kuruoti geresnius garsus
-\n - pirkti kavą.
-\n</string>
     <string name="support_development__donate">Paaukoti</string>
     <string name="appintro__timer_title">Sunkiai užmiegate arba pabundate\?</string>
     <string name="appintro__timer_desc">Šiek tiek atmosferos gali padėti užmigti be vargo. Naudokite miego laikmatį, kad Noice išsijungtų. Panašiai, norėdami pabusti ramioje aplinkoje, naudokite pabudimo laikmatį, kad nustatytumėte žadintuvą.</string>

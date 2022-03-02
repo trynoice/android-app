@@ -71,14 +71,7 @@
     <string name="app_theme_system_default">Domyślny systemowy</string>
     <string name="app_description">Zrelaksuj się i zwiększ wydajność pracy przy minimalnym szumie w tle.</string>
     <string name="support_development__donate">Przekaż darowiznę</string>
-    <string name="support_development__donate_description">
-    Darowizny pomogą nam w\n
-    - inwestowaniu nowych funkcji\n
-    - doborze lepszych sampli\n
-    - zakupie kawy\n
-  </string>
     <string name="support_development__donate_google_play_description">Twoja płatność będzie bezpiecznie obsługiwana przez Google Play. W zależności od lokalizacji, do ostatecznej kwoty _mogą_ zostać naliczone dodatkowe opłaty.</string>
-    <string name="support_development__donate_thank_you">Dziękujemy!</string>
     <string name="support_development__donate_thank_you_description">
     Z całego serca dziękujemy Ci za Twój hojny wkład w projekt Noice.
   </string>
@@ -87,11 +80,6 @@
     Dzielenie się tą aplikacją z przyjaciółmi jest podobne do przekazywania pieniędzy. Z większą
     liczbą pobrań, będziemy mogli uzyskać informacje zwrotne z wielu różnych perspektyw, które
     pomogą nam w uczynieniu Noice lepszym niż kiedykolwiek wcześniej.
-  </string>
-    <string name="support_development__why">Dlaczego powinieneś(-aś) wesprzeć?</string>
-    <string name="support_development__why_description">
-    - Aby umożliwić przyszłe aktualizacje\n
-    - Aby Noice pozostał wolny od reklam na zawsze\n
   </string>
     <string name="cast_media">Połącz z Chromecast</string>
     <string name="notification_channel_default__description">Elementy sterujące odtwarzaniem multimediów</string>

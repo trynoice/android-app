@@ -6,7 +6,6 @@
     <string name="settings">إعدادات</string>
     <string name="later">لاحقًا</string>
     <string name="support_development__share">مشاركة مع الأصدقاء</string>
-    <string name="support_development__donate_thank_you">شكرًا لك!</string>
     <string name="support_development__donate">دعم</string>
     <string name="appintro__getting_started_title">مرحبًا</string>
     <string name="appintro__getting_started_desc_1">هيّا لنبدأ!</string>
@@ -150,18 +149,9 @@
     <string name="in_app_feedback__title">إرسال مراجعة</string>
     <string name="in_app_feedback__description">نود أن نسمع منك عن التطبيق. يرجى قضاء بعض الوقت لزيارة مستودع GitHub الخاص بنا. إذا لم يعجبك التطبيق ، فيرجى التفكير في فتح مشكلة تشرح مخاوفك. بخلاف ذلك ، يرجى تمييز المشروع بنجمة لإظهار الحب والدعم.</string>
     <string name="cast_media">اتصل بجهاز Chromecast</string>
-    <string name="support_development__why_description">- لجعل التحديثات المستقبلية ممكنة
-\n - لإبقاء Noice خاليا من الإعلانات إلى الأبد
-\n</string>
-    <string name="support_development__why">لماذا يجب أن تدعمنا؟</string>
     <string name="support_development__share_description">مشاركة Noice مع الأصدقاء التبرع بالمال. و بالتنزيلات عالية ، سنتمكن من تلقي التعليقات من عدد من وجهات النظر المختلفة والتي ستساعدنا في جعل Noice أفضل من أي وقت مضى.</string>
     <string name="support_development__donate_thank_you_description">نشكرك من صميم القلب على مساهمتك السخية في مشروع Noice.</string>
     <string name="support_development__donate_google_play_description">سيتم التعامل مع دفعتك بأمان بواسطة Google Play. اعتمادًا على موقعك ، يمكن إضافة ضرائب إضافية إلى المبلغ النهائي.</string>
-    <string name="support_development__donate_description">سوف تساعدنا التبرعات في
-\n - الاستثمار في ميزات جديدة
-\n - تنسيق عينات صوت أفضل
-\n - شراء القهوة
-\n</string>
     <string name="appintro__timer_title">صعوبة في النوم أو الاستيقاظ؟</string>
     <string name="appintro__timer_desc">يمكن أن يساعدك على النوم و بمجهود قليل من الأجواء على النوم . استخدم مؤقت النوم للسماح لتطبيق Noice بإغلاق نفسه. وبالمثل ، للاستيقاظ في بيئة هادئة ، استخدم مؤقت الاستيقاظ لضبط المنبه.</string>
     <string name="appintro__library_title">اصنع محيطك المثالي</string>

@@ -168,20 +168,10 @@
     <string name="in_app_feedback__title">Enviar uma avaliação</string>
     <string name="in_app_feedback__description">Adoraríamos saber a sua opinião sobre a aplicação. Reserve um momento para visitar o nosso repositório no GitHub. Se não gostou da aplicação, considere reportar um problema explicando as suas razões. Também pode avaliar o projeto com estrelas para mostrar amor e apoio.</string>
     <string name="cast_media">Conectar ao Chromecast</string>
-    <string name="support_development__why_description">- Para possibilitar futuras atualizações
-\n - Para manter o Noice livre de anúncios para sempre
-\n</string>
-    <string name="support_development__why">Porque deve apoiar-nos\?</string>
     <string name="support_development__share_description">Partilhar o Noice com amigos é semelhante a fazer um donativo monetário. Com mais descarregamentos da aplicação, seremos capazes de receber comentários e opiniões de uma série de pontos de vista diferentes que nos ajudarão a tornar o Noice melhor do que nunca.</string>
     <string name="support_development__share">Partilhar com os amigos</string>
     <string name="support_development__donate_thank_you_description">Agradecemos-lhe muito sinceramente a sua generosa contribuição para o projeto Noice.</string>
-    <string name="support_development__donate_thank_you">Obrigado!</string>
     <string name="support_development__donate_google_play_description">O seu pagamento será tratado com segurança pelo Google Play. Dependendo da sua localização, _poderão_ ser aplicados impostos adicionais ao valor final.</string>
-    <string name="support_development__donate_description">Os donativos ajudam-nos a
-\n - investir em novos recursos
-\n - obter melhores amostras de som
-\n - comprar café
-\n</string>
     <string name="support_development__donate">Fazer um donativo</string>
     <string name="appintro__timer_title">Com problemas em adormecer ou acordar\?</string>
     <string name="appintro__timer_desc">Um pouco de ambiente pode ajudá-lo a adormecer. Utilize a suspensão programada para que o Noice se desligue. Da mesma forma, para acordar com um ambiente calmo, utilize o despertador para configurar o alarme para acordar.</string>

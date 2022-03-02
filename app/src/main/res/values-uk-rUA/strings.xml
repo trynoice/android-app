@@ -97,20 +97,10 @@
     <string name="appintro__timer_desc">Маленька атмосфера може допомогти вам заснути без зусиль. Скористайтеся таймером сну, щоб дозволити Noice вимкнутися та таймер пробудження, щоб встановити будильник і прокинутись у спокійному оточенні.</string>
     <string name="appintro__timer_title">Важко заснути або прокинутись?</string>
     <string name="support_development__donate">Допомогти</string>
-    <string name="support_development__donate_description">Внески допоможуть нам
-\n - інвестувати у нові функції
-\n - додавати кращі звукові зразки
-\n - купувати каву
-\n</string>
     <string name="support_development__donate_google_play_description">Ваш платіж буде безпечно оброблено через Google Play. Додаткові податки _можуть_ бути додані до кінцевої суми в залежності від вашого місця перебування.</string>
-    <string name="support_development__donate_thank_you">Дякуємо!</string>
     <string name="support_development__donate_thank_you_description">Ми сердешно вдячні за ваш щедрий внесок до проєкту Noice.</string>
     <string name="support_development__share">Поділитися з друзями</string>
     <string name="support_development__share_description">Поділитися Noice з друзями схоже з грошовими внесками. З більшою кількістю завантажень ми зможемо отримувати зворотний зв\'язок з різними точками зору що допоможе нам вдосконалити Noice.</string>
-    <string name="support_development__why">Чому вам варто підтримати\?</string>
-    <string name="support_development__why_description">- Щоб зробити можливими майбутні оновлення
-\n- Щоб залишити Noice вільним від реклами назавжди
-\n</string>
     <string name="cast_media">Під\'єднатись до Chromecast</string>
     <string name="in_app_feedback__description">
     Ми хотіли б почути що Ви думаєте про додаток. Відвідайте, будь ласка, наш GitHub репозиторій.

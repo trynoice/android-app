@@ -126,24 +126,12 @@
   </string>
     <string name="appintro__timer_title">Schwierigkeiten einzuschlafen oder aufzuwachen?</string>
     <string name="support_development__donate">Spenden</string>
-    <string name="support_development__donate_description">
-    Spenden helfen uns dabei\n
-    - in neue Funktionen zu investieren\n
-    - bessere Audiosamples zu kuratieren\n
-    - Kaffee zu kaufen\n
-  </string>
     <string name="support_development__donate_google_play_description">Deine Spende wird sicher über Google Play abgewickelt. Je nach Land _können_ weitere Steuern zum Endbetrag hinzukommen.</string>
-    <string name="support_development__donate_thank_you">Vielen Dank!</string>
     <string name="support_development__donate_thank_you_description">
     Wir danken dir von ganzem Herzen für deine großzügige Spende an das Noice-Projekt.
   </string>
     <string name="support_development__share">Mit Freunden teilen</string>
     <string name="support_development__share_description">Noice mit Freunden zu teilen ist fast genau so wichtig wie Geld zu spenden. Mit mehr Downloads können wir Feedback aus vielen unterschiedlichen Perspektiven erhalten, welches uns dabei hilft Noice noch besser zu machen.</string>
-    <string name="support_development__why">Warum solltest du unterstützen?</string>
-    <string name="support_development__why_description">
-    - Um zukünftige Updates zu ermöglichen\n
-    - Um Noice für immer werbefrei zu halten\n
-  </string>
     <string name="cast_media">Mit Chromecast verbinden</string>
     <string name="in_app_feedback__description">
     Wir würden uns freuen von Ihnen über die App zu hören. Bitte nehmen Sie sich einen Moment um das Github Repositorie zu besuchen.

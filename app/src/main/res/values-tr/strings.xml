@@ -126,14 +126,7 @@
   </string>
     <string name="appintro__timer_title">Uyku sorunlarınız mı var?</string>
     <string name="support_development__donate">Bağışta bulunun</string>
-    <string name="support_development__donate_description">
-    Bağışlarınız bize şunları sağlar\n
-    - yeni özellikler için yatırım\n
-    - daha iyi ve kaliteli sesler\n
-    - kahve almak\n
-  </string>
     <string name="support_development__donate_google_play_description">Ödemeniz Google Play ile güvenli bir şekilde gerçekleşecektir. Konumunuza bağlı olarak son tutara _belki_ vergi eklenebilir.</string>
-    <string name="support_development__donate_thank_you">Teşekkür ederiz!</string>
     <string name="support_development__donate_thank_you_description">
     Noice projesine olan cömertçe katkınızdan dolayı tüm içtenliğimizle teşekkür ederiz.
   </string>
@@ -142,11 +135,6 @@
     Noice\'i arkadaşlarınızla paylaşmanız para bağışlamanız kadar faydalıdır.
     Daha fazla indirme, Noice\'i daha iyi bir seviyeye doğru geliştirmekte
     yardımcı olacak çeşitli geri dönüşler elde etmemizi sağlayabilir.
-  </string>
-    <string name="support_development__why">Neden desteklemelisiniz?</string>
-    <string name="support_development__why_description">
-    - Gelecek güncellemeleri mümkün kılmak için\n
-    - Noice\'in reklamsız kalmasını sağlamak için\n
   </string>
     <string name="cast_media">Chromecast\'e bağlan</string>
     <string name="in_app_feedback__description">
