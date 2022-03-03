@@ -10,8 +10,10 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
+import io.mockk.MockKAnnotations
 import io.mockk.clearMocks
 import io.mockk.every
+import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.invoke
 import io.mockk.mockk
 import io.mockk.mockkConstructor
@@ -36,11 +38,8 @@ import org.robolectric.shadows.ShadowPowerManager
 @RunWith(RobolectricTestRunner::class)
 class MediaPlayerServiceTest {
 
-  private lateinit var serviceController: ServiceController<MediaPlayerService>
-  private lateinit var mockServiceIntent: Intent
-
   @get:Rule
-  var hiltRule = HiltAndroidRule(this)
+  val hiltRule = HiltAndroidRule(this)
 
   @BindValue
   internal lateinit var mockEventBus: EventBus
@@ -48,12 +47,26 @@ class MediaPlayerServiceTest {
   @BindValue
   internal lateinit var mockPlaybackController: PlaybackController
 
+  private lateinit var serviceController: ServiceController<MediaPlayerService>
+  private lateinit var mockServiceIntent: Intent
+
+  /**
+   * For whatever reasons, Hilt never injects `BindValue` fields to the service. I couldn't find
+   * anything else on the subject, and wasn't able to reproduce it in a minimal set-up, so here's a
+   * workaround. The same applies to [com.github.ashutoshgngwr.noice.playback.PlayerManagerTest].
+   */
+  @OverrideMockKs
+  private lateinit var service: MediaPlayerService
+
   @Before
   fun setup() {
     mockEventBus = mockk(relaxed = true)
     mockPlaybackController = mockk(relaxed = true)
     mockServiceIntent = mockk(relaxed = true)
+
     serviceController = Robolectric.buildService(MediaPlayerService::class.java, mockServiceIntent)
+    service = serviceController.get()
+    MockKAnnotations.init(this)
   }
 
   @After

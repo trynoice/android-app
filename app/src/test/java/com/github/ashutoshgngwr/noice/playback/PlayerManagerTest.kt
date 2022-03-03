@@ -25,7 +25,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.called
 import io.mockk.clearMocks
 import io.mockk.every
-import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -58,7 +57,7 @@ class PlayerManagerTest {
   @BindValue
   internal lateinit var mockCastApiProvider: CastApiProvider
 
-  @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
+  @OverrideMockKs
   private lateinit var playerManager: PlayerManager
 
   @Before
