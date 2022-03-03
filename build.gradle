@@ -5,7 +5,7 @@ plugins {
   id 'org.jetbrains.kotlin.kapt' version "${kotlinVersion}" apply false
 
   id 'androidx.navigation.safeargs.kotlin' version "${navVersion}" apply false
-  id 'dagger.hilt.android.plugin' version "${hiltVersion}" apply false
+  id 'com.google.dagger.hilt.android' version "${hiltVersion}" apply false
 
   id 'com.google.gms.google-services' version '4.3.10' apply false // sed:free-build:remove
   id 'com.google.firebase.crashlytics' version '2.8.1' apply false // sed:free-build:remove
