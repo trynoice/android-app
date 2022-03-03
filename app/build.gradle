@@ -4,7 +4,7 @@ plugins {
   id 'org.jetbrains.kotlin.kapt'
 
   id 'androidx.navigation.safeargs.kotlin'
-  id 'dagger.hilt.android.plugin'
+  id 'com.google.dagger.hilt.android'
 
   id 'com.google.gms.google-services' // sed:free-build:remove
   id 'com.google.firebase.crashlytics' // sed:free-build:remove
