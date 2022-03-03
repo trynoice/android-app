@@ -168,14 +168,18 @@ class RealInAppBillingProvider(
     try {
       processPurchases(
         queryPurchases(InAppBillingProvider.SkuType.INAPP)
-          + queryPurchases(InAppBillingProvider.SkuType.SUBS)
+          + queryPurchases(InAppBillingProvider.SkuType.SUBS),
+        true
       )
     } catch (e: InAppBillingProviderException) {
       Log.e(LOG_TAG, "refreshPurchases: failed query purchases", e)
     }
   }
 
-  private fun processPurchases(purchases: List<Purchase>) = synchronized(prefs) {
+  private fun processPurchases(
+    purchases: List<Purchase>,
+    removeAbsenteeItemsFromInternalState: Boolean = false,
+  ) = synchronized(prefs) {
     val pending = prefs.getMutableStringSet(PREF_PENDING_PURCHASES)
     val completed = prefs.getMutableStringSet(PREF_COMPLETED_PURCHASES)
 
@@ -204,9 +208,14 @@ class RealInAppBillingProvider(
 
     // remove absentee purchase tokens from our internal state to keep its size in check.
     val activePurchaseTokens = purchases.map { it.purchaseToken }.toSet()
+    if (removeAbsenteeItemsFromInternalState) {
+      pending.removeAll { !activePurchaseTokens.contains(it) }
+      completed.removeAll { !activePurchaseTokens.contains(it) }
+    }
+
     prefs.edit(commit = true) {
-      putStringSet(PREF_PENDING_PURCHASES, pending.intersect(activePurchaseTokens))
-      putStringSet(PREF_COMPLETED_PURCHASES, completed.intersect(activePurchaseTokens))
+      putStringSet(PREF_PENDING_PURCHASES, pending)
+      putStringSet(PREF_COMPLETED_PURCHASES, completed)
     }
   }
 
