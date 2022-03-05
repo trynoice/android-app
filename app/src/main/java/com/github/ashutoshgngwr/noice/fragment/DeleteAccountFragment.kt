@@ -71,7 +71,7 @@ class DeleteAccountViewModel @Inject constructor(
 
   val isDeletingAccount: StateFlow<Boolean> =
     merge(profileResource, deleteResource, signOutResource).transform { r ->
-      emit(r !is Resource.Failure) // only failure is a terminal state until the final operation.
+      emit(r != null && r !is Resource.Failure) // only failure is a terminal state until the final operation.
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
   internal val apiErrorStrRes: StateFlow<Int?> =

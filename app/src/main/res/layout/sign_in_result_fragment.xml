@@ -32,7 +32,7 @@
       <com.airbnb.lottie.LottieAnimationView
         android:layout_width="match_parent"
         android:layout_height="192dp"
-        android:visibility="@{viewModel.signInError == null ? View.VISIBLE : View.GONE}"
+        app:isVisible="@{viewModel.signInError == null}"
         app:lottie_autoPlay="true"
         app:lottie_rawRes="@raw/lottie_email_sent"
         app:lottie_speed="1.5"
@@ -42,7 +42,7 @@
       <com.airbnb.lottie.LottieAnimationView
         android:layout_width="match_parent"
         android:layout_height="192dp"
-        android:visibility="@{viewModel.signInError != null ? View.VISIBLE : View.GONE}"
+        app:isVisible="@{viewModel.signInError != null}"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
         app:lottie_rawRes="@raw/lottie_error"
@@ -59,7 +59,7 @@
         android:gravity="center"
         android:text="@{viewModel.isReturningUser ? @string/sign_in_email_sent(viewModel.email) : @string/sign_up_email_sent(viewModel.email)}"
         android:textAppearance="?attr/textAppearanceBody1"
-        android:visibility="@{viewModel.isSignInSuccess ? View.VISIBLE : View.GONE}"
+        app:isVisible="@{viewModel.isSignInSuccess}"
         tools:text="@string/sign_up_email_sent" />
 
       <TextView
@@ -69,7 +69,7 @@
         android:gravity="center"
         android:text="@string/sign_in_link_tip"
         android:textAppearance="?attr/textAppearanceBody1"
-        android:visibility="@{viewModel.isSignInSuccess ? View.VISIBLE : View.GONE}" />
+        app:isVisible="@{viewModel.isSignInSuccess}" />
 
       <TextView
         android:layout_width="match_parent"
@@ -77,7 +77,7 @@
         android:gravity="center"
         android:text="@{@string/account_locked_error(@plurals/time_minutes(viewModel.accountLockTimeoutMinutes, viewModel.accountLockTimeoutMinutes))}"
         android:textAppearance="?attr/textAppearanceBody1"
-        android:visibility="@{viewModel.isAccountLocked ? View.VISIBLE : View.GONE}"
+        app:isVisible="@{viewModel.isAccountLocked}"
         tools:visibility="gone" />
 
       <TextView
@@ -86,7 +86,7 @@
         android:gravity="center"
         android:text="@{viewModel.signInErrorStrRes}"
         android:textAppearance="?attr/textAppearanceBody1"
-        android:visibility="@{viewModel.signInErrorStrRes != null ? View.VISIBLE : View.GONE}"
+        app:isVisible="@{viewModel.signInErrorStrRes != null}"
         tools:visibility="gone" />
 
       <Space
@@ -101,7 +101,7 @@
         android:onClick="@{() -> viewModel.signIn()}"
         android:paddingHorizontal="32dp"
         android:text="@string/retry"
-        android:visibility="@{viewModel.signInError != null ? View.VISIBLE : View.GONE}"
+        app:isVisible="@{viewModel.signInError != null}"
         tools:visibility="gone" />
 
       <Button
@@ -111,7 +111,7 @@
         android:onClick="@{() -> viewModel.onOpenMailboxClicked.invoke()}"
         android:paddingHorizontal="32dp"
         android:text="@string/open_mailbox"
-        android:visibility="@{viewModel.isSignInSuccess ? View.VISIBLE : View.GONE}" />
+        app:isVisible="@{viewModel.isSignInSuccess}" />
 
     </LinearLayout>
 
