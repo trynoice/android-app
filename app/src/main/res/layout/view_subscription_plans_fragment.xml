@@ -96,7 +96,7 @@
           android:layout_height="wrap_content"
           android:layout_gravity="center"
           android:indeterminate="true"
-          android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+          app:isVisible="@{viewModel.isLoading}"
           tools:visibility="gone" />
 
         <LinearLayout
@@ -104,7 +104,7 @@
           android:layout_height="wrap_content"
           android:animateLayoutChanges="true"
           android:orientation="vertical"
-          android:visibility="@{!viewModel.plans.isEmpty() ? View.VISIBLE : View.GONE}"
+          app:isVisible="@{!viewModel.plans.isEmpty()}"
           app:subscriptionPlans="@{viewModel.plans}" />
 
       </FrameLayout>

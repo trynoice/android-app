@@ -57,7 +57,7 @@
         android:layout_marginVertical="8dp"
         android:autofillHints="name"
         android:hint="@string/name"
-        android:visibility="@{viewModel.isReturningUser ? View.GONE : View.VISIBLE}"
+        app:isVisible="@{!viewModel.isReturningUser}"
         app:error="@{viewModel.isNameValid ? null : @string/invalid_name}"
         app:errorEnabled="true">
 

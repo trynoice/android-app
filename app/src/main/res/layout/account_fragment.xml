@@ -28,7 +28,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="32dp"
         android:orientation="vertical"
-        android:visibility="@{viewModel.isSignedIn ? View.VISIBLE : View.GONE}">
+        app:isVisible="@{viewModel.isSignedIn}">
 
         <com.elyeproj.loaderviewlibrary.LoaderTextView
           android:layout_width="match_parent"
@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/sign_up"
-        android:visibility="@{viewModel.isSignedIn ? View.GONE : View.VISIBLE}"
+        app:isVisible="@{!viewModel.isSignedIn}"
         app:drawableStartCompat="@drawable/ic_baseline_person_add_alt_1_32" />
 
       <TextView
@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/sign_in"
-        android:visibility="@{viewModel.isSignedIn ? View.GONE : View.VISIBLE}"
+        app:isVisible="@{!viewModel.isSignedIn}"
         app:drawableStartCompat="@drawable/ic_baseline_login_32" />
 
       <TextView
@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/view_subscription_plans"
-        android:visibility="@{viewModel.isSignedIn ? View.GONE : View.VISIBLE}"
+        app:isVisible="@{!viewModel.isSignedIn}"
         app:drawableStartCompat="@drawable/ic_baseline_attach_money_32" />
 
       <TextView
@@ -95,8 +95,8 @@
         android:layout_height="wrap_content"
         android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/update_details"
-        android:visibility="@{viewModel.isSignedIn ? View.VISIBLE : View.GONE}"
-        app:drawableStartCompat="@drawable/ic_baseline_manage_accounts_32" />
+        app:drawableStartCompat="@drawable/ic_baseline_manage_accounts_32"
+        app:isVisible="@{viewModel.isSignedIn}" />
 
       <TextView
         android:id="@+id/sign_out"
@@ -105,8 +105,8 @@
         android:layout_height="wrap_content"
         android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/sign_out"
-        android:visibility="@{viewModel.isSignedIn ? View.VISIBLE : View.GONE}"
-        app:drawableStartCompat="@drawable/ic_baseline_logout_32" />
+        app:drawableStartCompat="@drawable/ic_baseline_logout_32"
+        app:isVisible="@{viewModel.isSignedIn}" />
 
       <TextView
         android:id="@+id/delete_account"
@@ -115,8 +115,8 @@
         android:layout_height="wrap_content"
         android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/delete_account"
-        android:visibility="@{viewModel.isSignedIn ? View.VISIBLE : View.GONE}"
-        app:drawableStartCompat="@drawable/ic_baseline_no_accounts_32" />
+        app:drawableStartCompat="@drawable/ic_baseline_no_accounts_32"
+        app:isVisible="@{viewModel.isSignedIn}" />
 
 
       <TextView
