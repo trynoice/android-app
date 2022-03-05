@@ -25,14 +25,14 @@
       android:layout_gravity="center"
       android:layout_margin="10dp"
       android:indeterminate="true"
-      android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+      app:isVisible="@{viewModel.isLoading}"
       tools:visibility="gone" />
 
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      android:visibility="@{!viewModel.isLoading ? View.VISIBLE : View.GONE}">
+      app:isVisible="@{!viewModel.isLoading}">
 
       <TextView
         style="@style/Widget.App.TextView.Error"
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/failed_to_load_inapp_purchases"
-        android:visibility="@{viewModel.error != null ? View.VISIBLE : View.GONE}"
+        app:isVisible="@{viewModel.error != null}"
         tools:visibility="gone" />
 
       <com.github.ashutoshgngwr.noice.widget.MarkdownTextView
@@ -50,18 +50,18 @@
         android:lineSpacingMultiplier="1.25"
         android:text="@string/support_development__donate_google_play_description"
         android:textAppearance="?attr/textAppearanceBody1"
-        android:visibility="@{viewModel.error == null ? View.VISIBLE : View.GONE}" />
+        app:isVisible="@{viewModel.error == null}" />
 
       <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/button_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="16dp"
-        android:visibility="@{viewModel.error == null ? View.VISIBLE : View.GONE}"
         app:alignContent="stretch"
         app:alignItems="stretch"
         app:donationSkuDetailsList="@{viewModel.skuDetails}"
         app:flexWrap="wrap"
+        app:isVisible="@{viewModel.error == null}"
         app:justifyContent="space_evenly"
         app:onClickSkuDetails="@{viewModel.skuDetailsClickListener}" />
 

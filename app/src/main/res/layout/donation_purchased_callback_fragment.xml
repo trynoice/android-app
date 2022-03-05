@@ -23,7 +23,7 @@
       android:layout_height="wrap_content"
       android:gravity="center_vertical"
       android:orientation="horizontal"
-      android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+      app:isVisible="@{viewModel.isLoading}"
       tools:visibility="gone">
 
       <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -48,7 +48,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      android:visibility="@{!viewModel.isLoading ? View.VISIBLE : View.GONE}">
+      app:isVisible="@{!viewModel.isLoading}">
 
       <TextView
         android:layout_width="match_parent"
@@ -56,9 +56,9 @@
         android:drawablePadding="16dp"
         android:text="@string/support_development__donate_thank_you_description"
         android:textAppearance="?attr/textAppearanceBody1"
-        android:visibility="@{viewModel.error == null ? View.VISIBLE : View.GONE}"
         app:drawableStartCompat="@drawable/ic_baseline_check_circle_36"
         app:drawableTint="?attr/colorAccent"
+        app:isVisible="@{viewModel.error == null}"
         tools:visibility="gone" />
 
       <TextView
@@ -68,9 +68,9 @@
         android:gravity="center_vertical"
         android:text="@string/payment_processing_error"
         android:textAppearance="?attr/textAppearanceBody1"
-        android:visibility="@{viewModel.error != null ? View.VISIBLE : View.GONE}"
         app:drawableStartCompat="@drawable/ic_baseline_error_36"
         app:drawableTint="@color/red"
+        app:isVisible="@{viewModel.error != null}"
         tools:visibility="visible" />
 
       <Space

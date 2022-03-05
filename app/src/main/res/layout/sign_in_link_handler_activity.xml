@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="@{viewModel.isSigningIn ? View.VISIBLE : View.GONE}"
+        app:isVisible="@{viewModel.isSigningIn}"
         tools:visibility="gone">
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -58,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="@{!viewModel.isSigningIn ? View.VISIBLE : View.GONE}">
+        app:isVisible="@{!viewModel.isSigningIn}">
 
         <TextView
           android:layout_width="match_parent"
@@ -67,9 +67,9 @@
           android:gravity="center_vertical"
           android:text="@string/sign_in_sucessful"
           android:textAppearance="?attr/textAppearanceBody1"
-          android:visibility="@{viewModel.signInErrorStrRes == null ? View.VISIBLE : View.GONE}"
           app:drawableStartCompat="@drawable/ic_baseline_check_circle_36"
-          app:drawableTint="?attr/colorAccent" />
+          app:drawableTint="?attr/colorAccent"
+          app:isVisible="@{viewModel.signInErrorStrRes == null}" />
 
         <TextView
           android:layout_width="match_parent"
@@ -78,9 +78,9 @@
           android:gravity="center_vertical"
           android:text="@{viewModel.signInErrorStrRes}"
           android:textAppearance="?attr/textAppearanceBody1"
-          android:visibility="@{viewModel.signInErrorStrRes != null  ? View.VISIBLE : View.GONE}"
           app:drawableStartCompat="@drawable/ic_baseline_error_36"
           app:drawableTint="@color/red"
+          app:isVisible="@{viewModel.signInErrorStrRes != null}"
           tools:visibility="gone" />
 
         <LinearLayout
@@ -96,7 +96,7 @@
             android:layout_marginTop="8dp"
             android:onClick="@{() -> viewModel.onContinueClicked.invoke()}"
             android:text="@string/cont"
-            android:visibility="@{viewModel.signInErrorStrRes == null ? View.VISIBLE : View.GONE}" />
+            app:isVisible="@{viewModel.signInErrorStrRes == null}" />
 
           <Button
             style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
@@ -105,7 +105,7 @@
             android:layout_marginTop="8dp"
             android:onClick="@{() -> viewModel.onDismissClicked.invoke()}"
             android:text="@string/dismiss"
-            android:visibility="@{viewModel.signInErrorStrRes != null ? View.VISIBLE : View.GONE}"
+            app:isVisible="@{viewModel.signInErrorStrRes != null}"
             tools:visibility="gone" />
 
         </LinearLayout>
