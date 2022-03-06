@@ -276,4 +276,13 @@
     <string name="select_a_plan">Select a plan</string>
     <string name="processing_payment">Processing payment</string>
     <string name="payment_processing_error">We were unable to process your payment. The amount should be automatically refunded if deducted. If you do not get your refund within a week, please notify us.</string>
+    <string name="plans">Plans</string>
+    <string name="get_premium">Get premium</string>
+    <string name="sign_in_to_continue">Please sign-in or sign-up to continue.</string>
+    <string name="initialising_subscription">Initialising subscription</string>
+    <string name="user_already_subscribed">You are already subscribed.</string>
+    <string name="confirming_payment">Confirming payment</string>
+    <string name="subscription_payment_confirmation_failed">Uh-oh! We had some trouble while waiting for the payment confirmation. It may be due to a network error or a delay from the payment provider. We\'ll activate your subscription as soon as we hear from the provider. Please check your subscription status after some time.</string>
+    <string name="subscription_payment_complete">Thank you for subscribing to Noice Premium. Your subscription is now active.</string>
+    <string name="subscription_payment_cancelled">The subscription payment was cancelled!</string>
 </resources>

@@ -65,8 +65,8 @@
         android:layout_height="wrap_content"
         android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/sign_up"
-        app:isVisible="@{!viewModel.isSignedIn}"
-        app:drawableStartCompat="@drawable/ic_baseline_person_add_alt_1_32" />
+        app:drawableStartCompat="@drawable/ic_baseline_person_add_alt_1_32"
+        app:isVisible="@{!viewModel.isSignedIn}" />
 
       <TextView
         android:id="@+id/sign_in_form"
@@ -75,8 +75,8 @@
         android:layout_height="wrap_content"
         android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/sign_in"
-        app:isVisible="@{!viewModel.isSignedIn}"
-        app:drawableStartCompat="@drawable/ic_baseline_login_32" />
+        app:drawableStartCompat="@drawable/ic_baseline_login_32"
+        app:isVisible="@{!viewModel.isSignedIn}" />
 
       <TextView
         android:id="@+id/view_subscription_plans"
@@ -85,8 +85,18 @@
         android:layout_height="wrap_content"
         android:onClick="@{viewModel.onItemClickListener}"
         android:text="@string/view_subscription_plans"
-        app:isVisible="@{!viewModel.isSignedIn}"
-        app:drawableStartCompat="@drawable/ic_baseline_attach_money_32" />
+        app:drawableStartCompat="@drawable/ic_baseline_attach_money_32"
+        app:isVisible="@{!viewModel.isSignedIn}" />
+
+      <TextView
+        android:id="@+id/get_premium"
+        style="@style/Widget.App.Account.Category.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{viewModel.onItemClickListener}"
+        android:text="@string/get_premium"
+        app:drawableStartCompat="@drawable/ic_baseline_shopping_cart_32"
+        app:isVisible="@{viewModel.isSignedIn}" />
 
       <TextView
         android:id="@+id/update_account_details"

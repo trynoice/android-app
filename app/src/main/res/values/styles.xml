@@ -165,15 +165,6 @@
     <item name="fontFamily">sans-serif-medium</item>
   </style>
 
-  <style name="Widget.App.TextView.Error" parent="Widget.MaterialComponents.TextView">
-    <item name="android:drawablePadding">10dp</item>
-    <item name="android:gravity">center_vertical</item>
-    <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body2</item>
-    <item name="android:textColor">@color/error</item>
-    <item name="drawableStartCompat">@drawable/ic_baseline_error_24</item>
-    <item name="drawableTint">@color/error</item>
-  </style>
-
   <style name="Widget.App.Account.Category.Header" parent="Widget.MaterialComponents.TextView">
     <item name="android:paddingBottom">8dp</item>
     <item name="android:paddingEnd">16dp</item>
@@ -211,6 +202,23 @@
 
   <style name="TextAppearance.App.SubscriptionPlanItem.Small" parent="TextAppearance.MaterialComponents.Caption">
     <item name="android:textSize">14sp</item>
+  </style>
+
+  <style name="Widget.App.TextView.Message" parent="Widget.MaterialComponents.TextView">
+    <item name="android:drawablePadding">16dp</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:lineSpacingMultiplier">1.25</item>
+    <item name="android:textAppearance">?attr/textAppearanceBody1</item>
+  </style>
+
+  <style name="Widget.App.TextView.Message.Success">
+    <item name="drawableStartCompat">@drawable/ic_baseline_check_circle_36</item>
+    <item name="drawableTint">?attr/colorAccent</item>
+  </style>
+
+  <style name="Widget.App.TextView.Message.Error">
+    <item name="drawableStartCompat">@drawable/ic_baseline_error_36</item>
+    <item name="drawableTint">@color/error</item>
   </style>
 
 </resources>

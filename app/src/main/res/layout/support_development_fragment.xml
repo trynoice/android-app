@@ -34,11 +34,10 @@
           android:layout_height="16dp" />
 
         <TextView
+          style="@style/Widget.App.TextView.Message"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:lineSpacingMultiplier="1.25"
-          android:text="@string/support_development__donate_description"
-          android:textAppearance="?attr/textAppearanceBody1" />
+          android:text="@string/support_development__donate_description" />
 
         <Space
           android:layout_width="wrap_content"
@@ -76,11 +75,10 @@
           android:layout_height="16dp" />
 
         <TextView
+          style="@style/Widget.App.TextView.Message"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:lineSpacingMultiplier="1.25"
-          android:text="@string/support_development__share_description"
-          android:textAppearance="?attr/textAppearanceBody1" />
+          android:text="@string/support_development__share_description" />
 
         <Space
           android:layout_width="wrap_content"
