@@ -85,31 +85,10 @@
 
     </LinearLayout>
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center_vertical"
-      android:orientation="horizontal"
-      app:isVisible="@{viewModel.isDeletingAccount}">
-
-      <com.google.android.material.progressindicator.CircularProgressIndicator
-        style="@style/Widget.MaterialComponents.CircularProgressIndicator.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true" />
-
-      <Space
-        android:layout_width="16dp"
-        android:layout_height="wrap_content" />
-
-      <TextView
-        style="@style/Widget.App.TextView.Message"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/deleting_account" />
-
-    </LinearLayout>
+    <include
+      layout="@layout/simple_progress_layout"
+      app:isVisible="@{viewModel.isDeletingAccount}"
+      app:message="@{@string/deleting_account}" />
 
   </FrameLayout>
 
