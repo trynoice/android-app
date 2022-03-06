@@ -18,6 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -68,7 +69,7 @@ class SignOutViewModel @Inject constructor(
     emit(r is Resource.Loading)
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
-  val signOutErrorStrRes: StateFlow<Int?> = signOutResource.transform { r ->
+  val signOutErrorStrRes: Flow<Int?> = signOutResource.transform { r ->
     emit(
       when (r?.error) {
         null -> null
@@ -76,7 +77,7 @@ class SignOutViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }
 
   fun signOut() = viewModelScope.launch {
     accountRepository.signOut()

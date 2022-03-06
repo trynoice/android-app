@@ -22,13 +22,11 @@ import com.trynoice.api.client.models.SubscriptionPlan
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -65,7 +63,7 @@ class LaunchSubscriptionFlowViewModel @Inject constructor(
 
   internal var onLaunchCompleted: () -> Unit = {}
   private val launchResource = MutableStateFlow<Resource<Unit>?>(null)
-  internal val launchErrorStrRes: StateFlow<Int?> = launchResource.transform { r ->
+  internal val launchErrorStrRes: Flow<Int?> = launchResource.transform { r ->
     emit(
       when (r?.error) {
         null -> null
@@ -74,7 +72,7 @@ class LaunchSubscriptionFlowViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }
 
   internal fun launchBillingFlow(activity: Activity, plan: SubscriptionPlan) {
     if (launchResource.value != null) {
