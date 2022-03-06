@@ -35,21 +35,21 @@
       app:isVisible="@{!viewModel.isLoading}">
 
       <TextView
-        style="@style/Widget.App.TextView.Error"
+        style="@style/Widget.App.TextView.Message.Error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginVertical="8dp"
         android:text="@string/failed_to_load_inapp_purchases"
+        android:textColor="@color/error"
         app:isVisible="@{viewModel.error != null}"
         tools:visibility="gone" />
 
       <com.github.ashutoshgngwr.noice.widget.MarkdownTextView
+        style="@style/Widget.App.TextView.Message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
-        android:lineSpacingMultiplier="1.25"
         android:text="@string/support_development__donate_google_play_description"
-        android:textAppearance="?attr/textAppearanceBody1"
         app:isVisible="@{viewModel.error == null}" />
 
       <com.google.android.flexbox.FlexboxLayout

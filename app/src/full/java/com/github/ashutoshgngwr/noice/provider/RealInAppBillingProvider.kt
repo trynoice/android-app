@@ -129,12 +129,16 @@ class RealInAppBillingProvider(
     } ?: throw InAppBillingProviderException("sku details list is null")
   }
 
-  override fun purchase(activity: Activity, sku: InAppBillingProvider.SkuDetails) {
-    val params = BillingFlowParams.newBuilder()
+  override fun purchase(
+    activity: Activity,
+    sku: InAppBillingProvider.SkuDetails,
+    obfuscatedAccountId: String?,
+  ) {
+    val paramsBuilder = BillingFlowParams.newBuilder()
       .setSkuDetails(SkuDetails(sku.originalJSON))
-      .build()
 
-    val result = client.launchBillingFlow(activity, params)
+    obfuscatedAccountId?.let { paramsBuilder.setObfuscatedAccountId(it) }
+    val result = client.launchBillingFlow(activity, paramsBuilder.build())
     if (result.responseCode != BillingClient.BillingResponseCode.OK) {
       throw inAppBillingProviderException(result)
     }
@@ -263,7 +267,7 @@ class RealInAppBillingProvider(
       skus = purchase.skus,
       purchaseToken = purchase.purchaseToken,
       purchaseState = purchase.purchaseState,
-      obfuscatedProfileId = purchase.accountIdentifiers?.obfuscatedProfileId,
+      obfuscatedAccountId = purchase.accountIdentifiers?.obfuscatedAccountId,
       originalJSON = purchase.originalJson,
       signature = purchase.signature,
     )

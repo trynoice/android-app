@@ -13,6 +13,13 @@ interface DonationFragmentProvider {
    * Returns a new instance of a donation fragment.
    */
   fun get(): Fragment
+
+  companion object {
+    val IN_APP_DONATION_SKUS = listOf(
+      "donate_usd1", "donate_usd2", "donate_usd5",
+      "donate_usd10", "donate_usd15", "donate_usd25",
+    )
+  }
 }
 
 object OpenCollectiveDonationFragmentProvider : DonationFragmentProvider {

@@ -119,9 +119,10 @@ object SubscriptionProviderModule {
   fun subscriptionProvider(
     @ApplicationContext context: Context,
     apiClient: NoiceApiClient,
+    billingProvider: InAppBillingProvider,
   ): SubscriptionProvider {
     if (isGoogleMobileServiceAvailable(context)) {
-      return GooglePlaySubscriptionProvider(apiClient)
+      return GooglePlaySubscriptionProvider(apiClient, billingProvider)
     }
 
     return StripeSubscriptionProvider(apiClient)
