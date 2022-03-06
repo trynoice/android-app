@@ -13,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.InAppDonationFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
+import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProviderException
 import com.google.android.material.button.MaterialButton
@@ -89,10 +90,7 @@ class InAppDonationViewModel @Inject constructor(
       try {
         val details = billingProvider.queryDetails(
           InAppBillingProvider.SkuType.INAPP,
-          listOf(
-            "donate_usd1", "donate_usd2", "donate_usd5",
-            "donate_usd10", "donate_usd15", "donate_usd25",
-          )
+          DonationFragmentProvider.IN_APP_DONATION_SKUS,
         )
 
         skuDetails.emit(details)

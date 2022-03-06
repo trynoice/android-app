@@ -5,17 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.forEach
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPlanItemBinding
 import com.github.ashutoshgngwr.noice.databinding.ViewSubscriptionPlansFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
+import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
@@ -40,6 +44,9 @@ class ViewSubscriptionPlansFragment : Fragment() {
 
   private lateinit var binding: ViewSubscriptionPlansFragmentBinding
   private val viewModel: ViewSubscriptionPlansViewModel by viewModels()
+  private val mainNavController: NavController by lazy {
+    Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
+  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = ViewSubscriptionPlansFragmentBinding.inflate(inflater, container, false)
@@ -49,6 +56,13 @@ class ViewSubscriptionPlansFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
+    viewModel.onSignInClicked = { mainNavController.navigate(R.id.sign_in_form) }
+    viewModel.onSignUpClicked = { mainNavController.navigate(R.id.sign_up_form) }
+    viewModel.onPlanSelectedListener = OnPlanSelectedListener { plan ->
+      val args = LaunchSubscriptionFlowFragmentArgs(plan)
+      mainNavController.navigate(R.id.launch_subscription_flow, args.toBundle())
+    }
+
     lifecycleScope.launch {
       viewModel.apiErrorStrRes
         .filterNotNull()
@@ -62,14 +76,27 @@ private val INR_FORMATTER = NumberFormat.getCurrencyInstance().apply {
   minimumFractionDigits = 0
 }
 
-@BindingAdapter("subscriptionPlans")
-fun setSubscriptionPlans(container: ViewGroup, plans: List<SubscriptionPlan>) {
+@BindingAdapter("subscriptionPlans", "canClickItems", "onPlanSelected")
+fun setSubscriptionPlans(
+  container: ViewGroup,
+  plans: List<SubscriptionPlan>,
+  canClickItems: Boolean,
+  onPlanSelectedListener: OnPlanSelectedListener,
+) {
+  if (plans == container.tag) {
+    container.forEach { it.isClickable = canClickItems }
+    return
+  }
+
+  container.tag = plans
   container.removeAllViews()
   val inflater = LayoutInflater.from(container.context)
-  plans.forEach {
+  plans.forEach { plan ->
     val binding = SubscriptionPlanItemBinding.inflate(inflater, container, true)
-    binding.plan = it
-    binding.formatIndianPaise = { p -> INR_FORMATTER.format(p / 100.0) }
+    binding.formatIndianPaise = { INR_FORMATTER.format(it / 100.0) }
+    binding.plan = plan
+    binding.root.isClickable = canClickItems
+    binding.root.setOnClickListener { onPlanSelectedListener.onPlanSelected(plan) }
   }
 }
 
@@ -87,9 +114,15 @@ fun setBillingPeriodMonths(tv: TextView, months: Int) {
 
 @HiltViewModel
 class ViewSubscriptionPlansViewModel @Inject constructor(
+  accountRepository: AccountRepository,
   subscriptionRepository: SubscriptionRepository,
   networkInfoProvider: NetworkInfoProvider,
 ) : ViewModel() {
+
+  var onSignInClicked: () -> Unit = {}
+  var onSignUpClicked: () -> Unit = {}
+  var onPlanSelectedListener = OnPlanSelectedListener {}
+  val isSignedIn = accountRepository.isSignedIn()
 
   private val plansResource = MutableStateFlow<Resource<List<SubscriptionPlan>>>(Resource.Loading())
 
@@ -121,4 +154,8 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
       }
     }
   }
+}
+
+fun interface OnPlanSelectedListener {
+  fun onPlanSelected(plan: SubscriptionPlan)
 }

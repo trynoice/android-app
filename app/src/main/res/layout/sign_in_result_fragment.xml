@@ -54,38 +54,38 @@
         android:layout_height="24dp" />
 
       <TextView
+        style="@style/Widget.App.TextView.Message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@{viewModel.isReturningUser ? @string/sign_in_email_sent(viewModel.email) : @string/sign_up_email_sent(viewModel.email)}"
-        android:textAppearance="?attr/textAppearanceBody1"
         app:isVisible="@{viewModel.isSignInSuccess}"
         tools:text="@string/sign_up_email_sent" />
 
       <TextView
+        style="@style/Widget.App.TextView.Message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/sign_in_link_tip"
-        android:textAppearance="?attr/textAppearanceBody1"
         app:isVisible="@{viewModel.isSignInSuccess}" />
 
       <TextView
+        style="@style/Widget.App.TextView.Message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@{@string/account_locked_error(@plurals/time_minutes(viewModel.accountLockTimeoutMinutes, viewModel.accountLockTimeoutMinutes))}"
-        android:textAppearance="?attr/textAppearanceBody1"
         app:isVisible="@{viewModel.isAccountLocked}"
         tools:visibility="gone" />
 
       <TextView
+        style="@style/Widget.App.TextView.Message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@{viewModel.signInErrorStrRes}"
-        android:textAppearance="?attr/textAppearanceBody1"
         app:isVisible="@{viewModel.signInErrorStrRes != null}"
         tools:visibility="gone" />
 

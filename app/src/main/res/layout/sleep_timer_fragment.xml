@@ -19,12 +19,12 @@
       android:gravity="center" />
 
     <TextView
+      style="@style/Widget.App.TextView.Message"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_margin="20dp"
       android:gravity="center"
-      android:text="@string/sleep_timer_description"
-      android:textAppearance="?attr/textAppearanceBody1" />
+      android:text="@string/sleep_timer_description" />
 
     <com.github.ashutoshgngwr.noice.widget.DurationPicker
       android:id="@+id/duration_picker"

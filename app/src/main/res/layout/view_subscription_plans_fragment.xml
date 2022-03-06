@@ -82,8 +82,9 @@
       <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/select_a_plan"
-        android:textAppearance="?attr/textAppearanceHeadline5" />
+        android:text="@{viewModel.isSignedIn ? @string/select_a_plan : @string/plans}"
+        android:textAppearance="?attr/textAppearanceHeadline5"
+        tools:text="@string/select_a_plan" />
 
       <FrameLayout
         android:layout_width="match_parent"
@@ -104,10 +105,62 @@
           android:layout_height="wrap_content"
           android:animateLayoutChanges="true"
           android:orientation="vertical"
+          app:canClickItems="@{viewModel.isSignedIn}"
           app:isVisible="@{!viewModel.plans.isEmpty()}"
+          app:onPlanSelected="@{viewModel.onPlanSelectedListener}"
           app:subscriptionPlans="@{viewModel.plans}" />
 
       </FrameLayout>
+
+      <Space
+        android:layout_width="wrap_content"
+        android:layout_height="24dp" />
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:isVisible="@{!viewModel.isSignedIn}"
+        tools:visibility="gone">
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/sign_in_to_continue"
+          android:textAppearance="?attr/textAppearanceBody1" />
+
+        <Space
+          android:layout_width="wrap_content"
+          android:layout_height="16dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+          <Button
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="@{() -> viewModel.onSignUpClicked.invoke()}"
+            android:text="@string/sign_up" />
+
+          <Space
+            android:layout_width="16dp"
+            android:layout_height="wrap_content" />
+
+          <Button
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="@{() -> viewModel.onSignInClicked.invoke()}"
+            android:text="@string/sign_in" />
+
+        </LinearLayout>
+
+      </LinearLayout>
 
     </LinearLayout>
 

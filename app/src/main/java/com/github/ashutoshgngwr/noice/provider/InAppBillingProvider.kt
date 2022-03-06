@@ -29,7 +29,7 @@ interface InAppBillingProvider {
    *
    * @throws InAppBillingProviderException on failing to launch the billing flow.
    */
-  fun purchase(activity: Activity, sku: SkuDetails)
+  fun purchase(activity: Activity, sku: SkuDetails, obfuscatedAccountId: String? = null)
 
   /**
    * Acknowledges a given purchase.
@@ -85,7 +85,7 @@ interface InAppBillingProvider {
     val skus: List<String>,
     val purchaseToken: String,
     val purchaseState: Int,
-    val obfuscatedProfileId: String?,
+    val obfuscatedAccountId: String?,
     val originalJSON: String,
     val signature: String,
   ) : Serializable
@@ -106,7 +106,12 @@ object DummyInAppBillingProvider : InAppBillingProvider {
     skus: List<String>
   ): List<InAppBillingProvider.SkuDetails> = emptyList()
 
-  override fun purchase(activity: Activity, sku: InAppBillingProvider.SkuDetails) = Unit
+  override fun purchase(
+    activity: Activity,
+    sku: InAppBillingProvider.SkuDetails,
+    obfuscatedAccountId: String?,
+  ) = Unit
+
   override suspend fun acknowledgePurchase(purchase: InAppBillingProvider.Purchase) = Unit
   override suspend fun consumePurchase(purchase: InAppBillingProvider.Purchase) = Unit
 }

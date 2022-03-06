@@ -22,8 +22,11 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.fragment.DonationPurchasedCallbackFragmentArgs
+import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
+import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragmentArgs
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
@@ -174,11 +177,21 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
       navController.navigate(R.id.settings)
     }
 
-    if (Intent.ACTION_VIEW == intent.action &&
-      (intent.dataString?.startsWith("https://ashutoshgngwr.github.io/noice/preset") == true ||
-        intent.dataString?.startsWith("noice://preset") == true)
-    ) {
-      intent.data?.also { playbackController.playPresetFromUri(it) }
+    val uri = intent.data
+    if (Intent.ACTION_VIEW == intent.action && uri != null) {
+      val data = intent.dataString ?: ""
+      when {
+        data.startsWith("https://ashutoshgngwr.github.io/noice/preset") || data.startsWith("noice://preset") -> {
+          playbackController.playPresetFromUri(uri)
+        }
+
+        data.startsWith(SubscriptionBillingCallbackFragment.STRIPE_CALLBACK_URL) -> {
+          navController.navigate(
+            R.id.subscription_billing_callback,
+            SubscriptionBillingCallbackFragment.args(uri),
+          )
+        }
+      }
     }
   }
 
@@ -200,10 +213,20 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   override fun onComplete(purchase: InAppBillingProvider.Purchase) {
     analyticsProvider.logEvent("purchase_complete", bundleOf())
-    navController.navigate(
-      R.id.donation_purchased_callback,
-      DonationPurchasedCallbackFragmentArgs(purchase).toBundle()
-    )
+    if (DonationFragmentProvider.IN_APP_DONATION_SKUS.containsAll(purchase.skus)) {
+      navController.navigate(
+        R.id.donation_purchased_callback,
+        DonationPurchasedCallbackFragmentArgs(purchase).toBundle()
+      )
+    } else if (purchase.obfuscatedAccountId != null) {
+      navController.navigate(
+        R.id.subscription_billing_callback,
+        SubscriptionBillingCallbackFragmentArgs(
+          SubscriptionBillingCallbackFragment.ACTION_SUCCESS,
+          purchase.obfuscatedAccountId.toLong()
+        ).toBundle(),
+      )
+    }
   }
 
   @EntryPoint

@@ -48,6 +48,10 @@
       app:destination="@id/view_subscription_plans" />
 
     <action
+      android:id="@+id/get_premium"
+      app:destination="@id/view_subscription_plans" />
+
+    <action
       android:id="@id/settings"
       app:destination="@id/settings" />
 
@@ -130,7 +134,57 @@
     android:id="@+id/view_subscription_plans"
     android:name="com.github.ashutoshgngwr.noice.fragment.ViewSubscriptionPlansFragment"
     android:label="@string/premium"
-    tools:layout="@layout/view_subscription_plans_fragment" />
+    tools:layout="@layout/view_subscription_plans_fragment">
+
+    <action
+      android:id="@+id/sign_in_form"
+      app:destination="@id/sign_in_sign_up_form" />
+
+    <action
+      android:id="@+id/sign_up_form"
+      app:destination="@id/sign_in_sign_up_form">
+
+      <argument
+        android:name="isReturningUser"
+        android:defaultValue="false" />
+
+    </action>
+
+    <action
+      android:id="@id/launch_subscription_flow"
+      app:destination="@id/launch_subscription_flow" />
+
+  </fragment>
+
+  <dialog
+    android:id="@+id/launch_subscription_flow"
+    android:name="com.github.ashutoshgngwr.noice.fragment.LaunchSubscriptionFlowFragment"
+    android:label="@string/initialising_subscription"
+    tools:layout="@layout/launch_subscription_flow_fragment">
+
+    <argument
+      android:name="plan"
+      app:argType="com.trynoice.api.client.models.SubscriptionPlan"
+      app:nullable="false" />
+
+  </dialog>
+
+  <dialog
+    android:id="@+id/subscription_billing_callback"
+    android:name="com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment"
+    android:label="@string/confirming_payment"
+    tools:layout="@layout/subscription_billing_callback_fragment">
+
+    <argument
+      android:name="action"
+      app:argType="string"
+      app:nullable="false" />
+
+    <argument
+      android:name="subscriptionId"
+      app:argType="long" />
+
+  </dialog>
 
   <fragment
     android:id="@+id/settings"

@@ -17,12 +17,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <FrameLayout
       style="?attr/bottomSheetStyle"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@color/background_dark"
-      android:orientation="vertical"
       android:padding="24dp"
       app:behavior_hideable="false"
       app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -46,11 +45,11 @@
           android:layout_height="wrap_content" />
 
         <TextView
+          style="@style/Widget.App.TextView.Message"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
-          android:text="@string/signing_in"
-          android:textAppearance="?attr/textAppearanceBody1" />
+          android:text="@string/signing_in" />
 
       </LinearLayout>
 
@@ -61,25 +60,17 @@
         app:isVisible="@{!viewModel.isSigningIn}">
 
         <TextView
+          style="@style/Widget.App.TextView.Message.Success"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:drawablePadding="16dp"
-          android:gravity="center_vertical"
           android:text="@string/sign_in_sucessful"
-          android:textAppearance="?attr/textAppearanceBody1"
-          app:drawableStartCompat="@drawable/ic_baseline_check_circle_36"
-          app:drawableTint="?attr/colorAccent"
           app:isVisible="@{viewModel.signInErrorStrRes == null}" />
 
         <TextView
+          style="@style/Widget.App.TextView.Message.Error"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:drawablePadding="16dp"
-          android:gravity="center_vertical"
           android:text="@{viewModel.signInErrorStrRes}"
-          android:textAppearance="?attr/textAppearanceBody1"
-          app:drawableStartCompat="@drawable/ic_baseline_error_36"
-          app:drawableTint="@color/red"
           app:isVisible="@{viewModel.signInErrorStrRes != null}"
           tools:visibility="gone" />
 
@@ -112,7 +103,7 @@
 
       </LinearLayout>
 
-    </LinearLayout>
+    </FrameLayout>
 
   </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
