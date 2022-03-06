@@ -22,7 +22,6 @@
     app:isVisible="@{isVisible ?? true}">
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
-      style="@style/Widget.MaterialComponents.CircularProgressIndicator.Small"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:indeterminate="true" />
