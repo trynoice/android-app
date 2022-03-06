@@ -1,25 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:gravity="center_vertical"
-  android:orientation="horizontal"
-  android:padding="24dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <com.google.android.material.progressindicator.CircularProgressIndicator
-    android:layout_width="wrap_content"
+  <FrameLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:indeterminate="true" />
+    android:padding="24dp">
 
-  <Space
-    android:layout_width="16dp"
-    android:layout_height="wrap_content" />
+    <include
+      layout="@layout/simple_progress_layout"
+      app:message="@{@string/initialising_subscription}" />
 
-  <TextView
-    style="@style/Widget.App.TextView.Message"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:text="@string/initialising_subscription" />
+  </FrameLayout>
 
-</LinearLayout>
+</layout>
