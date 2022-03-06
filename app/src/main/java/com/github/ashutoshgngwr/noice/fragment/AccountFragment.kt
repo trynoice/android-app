@@ -26,9 +26,9 @@ import com.trynoice.api.client.models.Profile
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
@@ -102,7 +102,7 @@ class AccountViewModel @Inject constructor(
     resource.data?.also { emit(it) }
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-  internal val loadErrorStrRes: StateFlow<Int?> = profileResource.transform { resource ->
+  internal val loadErrorStrRes: Flow<Int?> = profileResource.transform { resource ->
     emit(
       when {
         // ignore errors when cached profile is present and network is offline.
@@ -113,7 +113,7 @@ class AccountViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }
 
   internal fun loadProfile() {
     if (!isSignedIn.value) {

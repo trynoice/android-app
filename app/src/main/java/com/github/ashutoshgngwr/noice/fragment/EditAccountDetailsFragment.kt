@@ -22,6 +22,7 @@ import com.trynoice.api.client.models.Profile
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -87,7 +88,7 @@ class EditAccountDetailsViewModel @Inject constructor(
     .transform { emit(it is Resource.Loading) }
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
-  internal val errorStrRes: StateFlow<Int?> = merge(loadResource, updateResource).transform { r ->
+  internal val errorStrRes: Flow<Int?> = merge(loadResource, updateResource).transform { r ->
     emit(
       when (r?.error) {
         null -> null
@@ -96,7 +97,7 @@ class EditAccountDetailsViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }
 
   init {
     viewModelScope.launch {

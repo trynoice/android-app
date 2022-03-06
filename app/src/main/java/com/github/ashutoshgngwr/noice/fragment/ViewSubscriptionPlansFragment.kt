@@ -27,6 +27,7 @@ import com.trynoice.api.client.models.SubscriptionPlan
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -134,7 +135,7 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
     emit(r.data ?: emptyList())
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
-  internal val apiErrorStrRes: StateFlow<Int?> = plansResource.transform { r ->
+  internal val apiErrorStrRes: Flow<Int?> = plansResource.transform { r ->
     emit(
       when {
         r.data != null && networkInfoProvider.isOffline.value -> null
@@ -143,7 +144,7 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }
 
   init {
     viewModelScope.launch {
