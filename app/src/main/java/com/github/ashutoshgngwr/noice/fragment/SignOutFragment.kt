@@ -45,11 +45,11 @@ class SignOutFragment : BottomSheetDialogFragment() {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
     viewModel.onFlowComplete = this::dismiss
-    lifecycleScope.launch {
+    viewLifecycleOwner.lifecycleScope.launch {
       viewModel.isSigningOut.collect { isSigningOut -> isCancelable = !isSigningOut }
     }
 
-    lifecycleScope.launch {
+    viewLifecycleOwner.lifecycleScope.launch {
       viewModel.signOutErrorStrRes
         .filterNotNull()
         .collect { strRes -> showErrorSnackbar(strRes) }

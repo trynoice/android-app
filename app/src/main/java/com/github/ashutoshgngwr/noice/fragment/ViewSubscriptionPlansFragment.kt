@@ -64,7 +64,7 @@ class ViewSubscriptionPlansFragment : Fragment() {
       mainNavController.navigate(R.id.launch_subscription_flow, args.toBundle())
     }
 
-    lifecycleScope.launch {
+    viewLifecycleOwner.lifecycleScope.launch {
       viewModel.apiErrorStrRes
         .filterNotNull()
         .collect { strRes -> showErrorSnackbar(strRes) }
