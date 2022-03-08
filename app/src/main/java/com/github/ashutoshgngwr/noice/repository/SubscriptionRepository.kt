@@ -97,12 +97,63 @@ class SubscriptionRepository @Inject constructor(
         e is IOException -> NetworkError
         else -> e
       }
-    }
+    },
   )
+
+  /**
+   * Returns a [Flow] that emits the requested subscription page as a [Resource].
+   *
+   * On failures, the flow emits [Resource.Failure] with:
+   * - [SubscriptionNotFoundError] when page with given index doesn't exist.
+   * - [NetworkError] on network errors.
+   * - [HttpException] on api errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
+   */
+  fun list(page: Int = 0): Flow<Resource<List<Subscription>>> = fetchNetworkBoundResource(
+    loadFromCache = { cacheStore.getAs("${SUBSCRIPTION_PAGE_PREFIX}/$page") },
+    loadFromNetwork = { subscriptionProvider.listSubscription(false, page) },
+    cacheNetworkResult = { cacheStore.put("${SUBSCRIPTION_PAGE_PREFIX}/$page", it) },
+    loadFromNetworkErrorTransform = { e ->
+      Log.i(LOG_TAG, "list:", e)
+      when {
+        e is HttpException && e.code() == 404 -> SubscriptionNotFoundError
+        e is IOException -> NetworkError
+        else -> e
+      }
+    },
+  )
+
+  /**
+   * Returns whether the given [subscription] is manageable through an external portal, e.g. Stripe
+   * customer portal.
+   *
+   * @see launchManagementFlow
+   */
+  fun canLaunchManagementFlow(subscription: Subscription): Boolean {
+    return subscriptionProvider.canLaunchManagementFlow(subscription)
+  }
+
+  /**
+   * Launches an intent to open the external portal for managing the subscription.
+   */
+  fun launchManagementFlow(activity: Activity, subscription: Subscription) {
+    subscriptionProvider.launchManagementFlow(activity, subscription)
+  }
+
+  /**
+   * Returns whether the given [subscription] can be upgraded via an internal flow, e.g. Google Play
+   * In-App billing flow.
+   */
+  fun canLaunchUpgradeFlow(subscription: Subscription): Boolean {
+    return subscriptionProvider.canLaunchUpgradeFlow(subscription)
+  }
 
   companion object {
     private const val LOG_TAG = "SubscriptionRepository"
-    private const val SUBSCRIPTION_KEY_PREFIX = "subscription/"
+    private const val SUBSCRIPTION_KEY_PREFIX = "subscription"
     private const val PLANS_CACHE_KEY = "${SUBSCRIPTION_KEY_PREFIX}/plans"
+    private const val SUBSCRIPTION_PAGE_PREFIX = "${SUBSCRIPTION_KEY_PREFIX}/page"
   }
 }

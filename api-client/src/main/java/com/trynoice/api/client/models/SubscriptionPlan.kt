@@ -2,6 +2,8 @@ package com.trynoice.api.client.models
 
 import com.google.gson.annotations.Expose
 import java.io.Serializable
+import java.text.NumberFormat
+import java.util.*
 
 /**
  * Represents a subscription plan that users can subscribe. All subscription purchases are linked to
@@ -36,7 +38,22 @@ data class SubscriptionPlan(
   val trialPeriodDays: Int,
 ) : Serializable {
 
+  /**
+   * A formatted string representing total price of this plan.
+   */
+  val totalPrice get(): String = INR_FORMATTER.format(priceInIndianPaise / 100)
+
+  /**
+   * A formatted string representing monthly price of this plan.
+   */
+  val monthlyPrice get(): String = INR_FORMATTER.format(priceInIndianPaise / (billingPeriodMonths * 100))
+
   companion object {
+    private val INR_FORMATTER = NumberFormat.getCurrencyInstance().apply {
+      currency = Currency.getInstance("INR")
+      minimumFractionDigits = 0
+    }
+
     const val PROVIDER_GOOGLE_PLAY = "google_play"
     const val PROVIDER_STRIPE = "stripe"
   }

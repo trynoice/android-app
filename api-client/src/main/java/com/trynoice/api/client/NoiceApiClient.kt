@@ -63,7 +63,7 @@ class NoiceApiClient(
         GsonConverterFactory.create(
           gson.newBuilder()
             .excludeFieldsWithoutExposeAnnotation()
-            .registerTypeAdapter(Date::class.java, EpochSecondsToDateDeserializer())
+            .registerTypeAdapter(Date::class.java, EpochMillisToDateDeserializer())
             .create()
         )
       )

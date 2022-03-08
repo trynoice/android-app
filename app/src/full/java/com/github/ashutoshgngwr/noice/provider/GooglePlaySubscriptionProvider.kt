@@ -2,7 +2,6 @@ package com.github.ashutoshgngwr.noice.provider
 
 import android.app.Activity
 import com.trynoice.api.client.NoiceApiClient
-import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionFlowParams
 import com.trynoice.api.client.models.SubscriptionPlan
 
@@ -11,9 +10,9 @@ import com.trynoice.api.client.models.SubscriptionPlan
  * billing provider.
  */
 class GooglePlaySubscriptionProvider(
-  private val apiClient: NoiceApiClient,
+  apiClient: NoiceApiClient,
   private val billingProvider: InAppBillingProvider,
-) : SubscriptionProvider {
+) : SubscriptionProvider(apiClient) {
 
   override suspend fun getPlans(): List<SubscriptionPlan> {
     return apiClient.subscriptions().getPlans(SubscriptionPlan.PROVIDER_GOOGLE_PLAY)
@@ -31,9 +30,5 @@ class GooglePlaySubscriptionProvider(
     val skuDetails = billingProvider.queryDetails(InAppBillingProvider.SkuType.SUBS, listOf(sku))
     val result = apiClient.subscriptions().create(SubscriptionFlowParams(plan.id))
     billingProvider.purchase(activity, skuDetails.first(), result.subscription.id.toString())
-  }
-
-  override suspend fun getSubscription(subscriptionId: Long): Subscription {
-    return apiClient.subscriptions().get(subscriptionId)
   }
 }

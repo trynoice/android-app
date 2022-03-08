@@ -268,7 +268,7 @@
         <item quantity="other">First %1$d days free</item>
     </plurals>
     <string name="total_price">%1$s total</string>
-    <string name="monthly_price">%1$s per month</string>
+    <string name="monthly_price">%1$s/month</string>
     <string name="benefits">Benefits</string>
     <string name="benefit_0">Natural variations in sounds</string>
     <string name="benefit_1">High-quality audio streaming</string>
@@ -285,4 +285,13 @@
     <string name="subscription_payment_confirmation_failed">Uh-oh! We had some trouble while waiting for the payment confirmation. It may be due to a network error or a delay from the payment provider. We\'ll activate your subscription as soon as we hear from the provider. Please check your subscription status after some time.</string>
     <string name="subscription_payment_complete">Thank you for subscribing to Noice Premium. Your subscription is now active.</string>
     <string name="subscription_payment_cancelled">The subscription payment was cancelled!</string>
+    <string name="subscription_purchases">Subscription purchases</string>
+    <string name="renews_on">Renews on %1$s</string>
+    <string name="started_on">Started on %1$s</string>
+    <string name="ended_on">Ended on %1$s</string>
+    <string name="paid_using">Paid using %1$s</string>
+    <string name="subscription_payment_pending">A payment is pending for this purchase.</string>
+    <string name="change_plan">Change plan</string>
+    <string name="manage_subscription">Manage Subscription</string>
+    <string name="cancel_subscription">Cancel Subscription</string>
 </resources>

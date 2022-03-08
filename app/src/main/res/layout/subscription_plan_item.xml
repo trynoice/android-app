@@ -6,10 +6,6 @@
   <data>
 
     <variable
-      name="formatIndianPaise"
-      type="kotlin.jvm.functions.Function1&lt;Integer, String&gt;" />
-
-    <variable
       name="plan"
       type="com.trynoice.api.client.models.SubscriptionPlan" />
 
@@ -58,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@{@string/total_price(formatIndianPaise.invoke(plan.priceInIndianPaise))}"
+        android:text="@{@string/total_price(plan.totalPrice)}"
         android:textAppearance="@style/TextAppearance.App.SubscriptionPlanItem.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -69,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@{@string/monthly_price(formatIndianPaise.invoke(plan.priceInIndianPaise / plan.billingPeriodMonths))}"
+        android:text="@{@string/monthly_price(plan.monthlyPrice)}"
         android:textAppearance="@style/TextAppearance.App.SubscriptionPlanItem.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/total_price"
