@@ -51,7 +51,7 @@ class EditAccountDetailsFragment : Fragment() {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
     viewModel.onUpdateSuccess = { showSuccessSnackbar(R.string.account_details_update_success) }
-    lifecycleScope.launch {
+    viewLifecycleOwner.lifecycleScope.launch {
       viewModel.errorStrRes
         .filterNotNull()
         .collect { strRes -> showErrorSnackbar(strRes) }
