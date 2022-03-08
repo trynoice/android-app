@@ -44,7 +44,7 @@ class SubscriptionBillingCallbackFragment : BottomSheetDialogFragment() {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
     viewModel.onDismissClicked = this::dismiss
-    lifecycleScope.launch {
+    viewLifecycleOwner.lifecycleScope.launch {
       viewModel.isLoading.collect { isCancelable = it }
     }
   }

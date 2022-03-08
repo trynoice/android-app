@@ -78,7 +78,7 @@ class AccountFragment : Fragment() {
       }
     }
 
-    lifecycleScope.launch {
+    viewLifecycleOwner.lifecycleScope.launch {
       viewModel.loadErrorStrRes
         .filterNotNull()
         .collect { errRes -> showErrorSnackbar(errRes) }

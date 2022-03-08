@@ -48,7 +48,7 @@ class LaunchSubscriptionFlowFragment : BottomSheetDialogFragment() {
     viewModel.onLaunchCompleted = this::dismiss
     viewModel.launchBillingFlow(requireActivity(), args.plan)
 
-    lifecycleScope.launch {
+    viewLifecycleOwner.lifecycleScope.launch {
       viewModel.launchErrorStrRes
         .filterNotNull()
         .collect { strRes -> showErrorSnackbar(strRes) }

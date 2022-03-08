@@ -45,11 +45,11 @@ class DeleteAccountFragment : BottomSheetDialogFragment() {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
     viewModel.onDeleteFlowComplete = this::dismiss
-    lifecycleScope.launch {
+    viewLifecycleOwner.lifecycleScope.launch {
       viewModel.isDeletingAccount.collect { isDeletingAccount -> isCancelable = !isDeletingAccount }
     }
 
-    lifecycleScope.launch {
+    viewLifecycleOwner.lifecycleScope.launch {
       viewModel.apiErrorStrRes
         .filterNotNull()
         .collect { strRes -> showErrorSnackbar(strRes) }
