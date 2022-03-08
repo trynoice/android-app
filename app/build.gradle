@@ -109,6 +109,7 @@ dependencies {
   implementation 'androidx.mediarouter:mediarouter:1.2.6'
   implementation "androidx.navigation:navigation-fragment-ktx:$deps.navVersion"
   implementation "androidx.navigation:navigation-ui-ktx:$deps.navVersion"
+  implementation 'androidx.paging:paging-runtime-ktx:3.1.0'
   implementation 'androidx.preference:preference-ktx:1.2.0'
   implementation 'androidx.recyclerview:recyclerview:1.2.1'
   implementation 'commons-validator:commons-validator:1.7'

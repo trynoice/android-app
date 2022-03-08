@@ -37,4 +37,6 @@
   <string name="open_collective_url">https://opencollective.com/noice</string>
   <string name="play_store_url">https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice</string>
   <string name="fdroid_url">https://f-droid.org/app/com.github.ashutoshgngwr.noice</string>
+  <string name="google_play">Google Play</string>
+  <string name="stripe">Stripe</string>
 </resources>
