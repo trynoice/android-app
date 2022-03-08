@@ -7,11 +7,12 @@ import java.lang.reflect.Type
 import java.util.*
 
 /**
- * A [JsonDeserializer] implementation that deserializes epoch seconds ([Long]) to [java.util.Date].
+ * A [JsonDeserializer] implementation that deserializes epoch milliseconds ([Long]) to
+ * [java.util.Date].
  */
-class EpochSecondsToDateDeserializer : JsonDeserializer<Date> {
+class EpochMillisToDateDeserializer : JsonDeserializer<Date> {
 
   override fun deserialize(e: JsonElement?, t: Type?, ctx: JsonDeserializationContext?): Date? {
-    return e?.asLong?.let { Date(it * 1000L) }
+    return e?.asLong?.let { Date(it) }
   }
 }

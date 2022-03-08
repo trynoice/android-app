@@ -10,14 +10,13 @@ import java.util.*
  *
  * @param id id of the subscription purchase.
  * @param plan subscription plan for this purchase.
- * @param status the current status of the subscription. it must be one of
- * [Subscription.STATUS_INACTIVE], [Subscription.STATUS_PENDING] or [Subscription.STATUS_ACTIVE].
- * @param endedAt subscription end timestamp (ISO-8601 format) if the subscription has ended
- * (status = ended)
- * @param startedAt subscription start timestamp (ISO-8601 format) if the subscription is active
- * (status != inactive)
+ * @param isActive whether this subscription purchase is currently active.
+ * @param isPaymentPending whether a payment for this subscription purchase is currently pending.
+ * @param startedAt epoch millis when the subscription started.
+ * @param endedAt epoch millis when the subscription has ended.
+ * @param renewsAt epoch millis when the next billing cycle starts, if the subscription is active.
  * @param stripeCustomerPortalUrl Stripe customer portal URL to manage subscriptions (only present
- * if provider = stripe and status != inactive)
+ * if subscription is active and the plan provider is Stripe).
  */
 data class Subscription(
 
@@ -28,33 +27,20 @@ data class Subscription(
   val plan: SubscriptionPlan,
 
   @Expose
-  val status: String,
+  val isActive: Boolean,
 
   @Expose
-  val endedAt: Date? = null,
+  val isPaymentPending: Boolean,
 
   @Expose
   val startedAt: Date? = null,
 
   @Expose
+  val endedAt: Date? = null,
+
+  @Expose
+  val renewsAt: Date? = null,
+
+  @Expose
   val stripeCustomerPortalUrl: String? = null
-) : Serializable {
-
-  companion object {
-    /**
-     * The subscription is currently inactive. It may be due to a pending payment after the
-     * subscription flow was started. Otherwise, it indicates the subscription has expired.
-     */
-    const val STATUS_INACTIVE = "inactive"
-
-    /**
-     * The payment for the subscription is pending, but the user has access to its entitlements.
-     */
-    const val STATUS_PENDING = "pending"
-
-    /**
-     * The subscription is currently active, and the user have access to all its entitlements.
-     */
-    const val STATUS_ACTIVE = "active"
-  }
-}
+) : Serializable

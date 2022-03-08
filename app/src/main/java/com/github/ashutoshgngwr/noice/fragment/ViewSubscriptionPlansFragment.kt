@@ -36,8 +36,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
-import java.text.NumberFormat
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -72,11 +70,6 @@ class ViewSubscriptionPlansFragment : Fragment() {
   }
 }
 
-private val INR_FORMATTER = NumberFormat.getCurrencyInstance().apply {
-  currency = Currency.getInstance("INR")
-  minimumFractionDigits = 0
-}
-
 @BindingAdapter("subscriptionPlans", "canClickItems", "onPlanSelected")
 fun setSubscriptionPlans(
   container: ViewGroup,
@@ -94,7 +87,6 @@ fun setSubscriptionPlans(
   val inflater = LayoutInflater.from(container.context)
   plans.forEach { plan ->
     val binding = SubscriptionPlanItemBinding.inflate(inflater, container, true)
-    binding.formatIndianPaise = { INR_FORMATTER.format(it / 100.0) }
     binding.plan = plan
     binding.root.isClickable = canClickItems
     binding.root.setOnClickListener { onPlanSelectedListener.onPlanSelected(plan) }
