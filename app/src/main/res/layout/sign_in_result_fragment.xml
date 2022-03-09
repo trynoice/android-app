@@ -5,8 +5,6 @@
 
   <data>
 
-    <import type="android.view.View" />
-
     <import type="com.airbnb.lottie.LottieDrawable" />
 
     <variable
