@@ -12,11 +12,14 @@ import java.util.*
  * @param plan subscription plan for this purchase.
  * @param isActive whether this subscription purchase is currently active.
  * @param isPaymentPending whether a payment for this subscription purchase is currently pending.
+ * @param isAutoRenewing whether the subscription will renew at the end of this billing cycle. if
+ * `false`, it implies that the subscription will end at the end of current billing cycle
  * @param startedAt epoch millis when the subscription started.
  * @param endedAt epoch millis when the subscription has ended.
- * @param renewsAt epoch millis when the next billing cycle starts, if the subscription is active.
- * @param stripeCustomerPortalUrl Stripe customer portal URL to manage subscriptions (only present
- * if subscription is active and the plan provider is Stripe).
+ * @param renewsAt epoch millis when the current billing cycle ends and the next one starts. always
+ * present unless the subscription is inactive.
+ * @param stripeCustomerPortalUrl Stripe customer portal URL to manage subscriptions. only present
+ * when the subscription is active and provided by Stripe.
  */
 data class Subscription(
 
@@ -31,6 +34,9 @@ data class Subscription(
 
   @Expose
   val isPaymentPending: Boolean,
+
+  @Expose
+  val isAutoRenewing: Boolean,
 
   @Expose
   val startedAt: Date? = null,

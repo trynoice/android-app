@@ -1,6 +1,5 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.app.Activity
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.LayoutInflater
@@ -8,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.paging.Pager
@@ -43,10 +45,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SubscriptionPurchaseListFragment : Fragment() {
+class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickListener {
 
   private lateinit var binding: SubscriptionPurchaseListFragmentBinding
   private val viewModel: SubscriptionPurchaseListViewModel by viewModels()
+  private val mainNavController: NavController by lazy {
+    Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
+  }
 
   @set:Inject
   internal lateinit var subscriptionRepository: SubscriptionRepository
@@ -57,12 +62,7 @@ class SubscriptionPurchaseListFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    val adapter = SubscriptionPurchaseListAdapter(
-      layoutInflater,
-      subscriptionRepository,
-      this::requireActivity
-    )
-
+    val adapter = SubscriptionPurchaseListAdapter(layoutInflater, subscriptionRepository, this)
     val headerAdapter = SubscriptionPurchaseListLoadStateAdapter(layoutInflater, adapter::retry)
     val footerAdapter = SubscriptionPurchaseListLoadStateAdapter(layoutInflater, adapter::retry)
     binding.root.adapter = ConcatAdapter(headerAdapter, adapter, footerAdapter)
@@ -74,23 +74,43 @@ class SubscriptionPurchaseListFragment : Fragment() {
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.purchasesPager.collectLatest(adapter::submitData)
     }
+
+    setFragmentResultListener(CancelSubscriptionFragment.RESULT_KEY) { _, bundle ->
+      if (!bundle.getBoolean(CancelSubscriptionFragment.EXTRA_WAS_ABORTED, true)) {
+        adapter.refresh()
+      }
+    }
+  }
+
+  override fun onClickManage(subscription: Subscription) {
+    subscriptionRepository.launchManagementFlow(requireActivity(), subscription)
+  }
+
+  override fun onClickUpgrade(subscription: Subscription) {
+    TODO("Not yet implemented")
+  }
+
+  override fun onClickCancel(subscription: Subscription) {
+    val args = CancelSubscriptionFragmentArgs(subscription).toBundle()
+    mainNavController.navigate(R.id.cancel_subscription, args)
   }
 }
 
 @HiltViewModel
 class SubscriptionPurchaseListViewModel @Inject constructor(
-  subscriptionPurchasePagingDataSource: SubscriptionPurchasePagingDataSource,
+  subscriptionRepository: SubscriptionRepository,
+  networkInfoProvider: NetworkInfoProvider,
 ) : ViewModel() {
 
   internal val purchasesPager = Pager(PagingConfig(pageSize = 20)) {
-    subscriptionPurchasePagingDataSource
+    SubscriptionPurchasePagingDataSource(subscriptionRepository, networkInfoProvider)
   }.flow.cachedIn(viewModelScope)
 }
 
 class SubscriptionPurchaseListAdapter(
   private val layoutInflater: LayoutInflater,
   private val subscriptionRepository: SubscriptionRepository,
-  private val activityProvider: () -> Activity,
+  private val actionClickListener: SubscriptionActionClickListener,
 ) : PagingDataAdapter<Subscription, SubscriptionPurchaseViewHolder>(SubscriptionComparator) {
 
   override fun onBindViewHolder(holder: SubscriptionPurchaseViewHolder, position: Int) {
@@ -99,14 +119,14 @@ class SubscriptionPurchaseListAdapter(
 
   override fun onCreateViewHolder(parent: ViewGroup, type: Int): SubscriptionPurchaseViewHolder {
     val binding = SubscriptionPurchaseItemBinding.inflate(layoutInflater, parent, false)
-    return SubscriptionPurchaseViewHolder(binding, subscriptionRepository, activityProvider)
+    return SubscriptionPurchaseViewHolder(binding, subscriptionRepository, actionClickListener)
   }
 }
 
 class SubscriptionPurchaseViewHolder(
   private val binding: SubscriptionPurchaseItemBinding,
   private val subscriptionRepository: SubscriptionRepository,
-  private val activityProvider: () -> Activity,
+  private val actionClickListener: SubscriptionActionClickListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
   fun bind(s: Subscription?) {
@@ -134,15 +154,27 @@ class SubscriptionPurchaseViewHolder(
       )
     }
 
-    binding.endedOn.isVisible = s.endedAt != null
-    binding.endedOn.text = s.endedAt?.let {
-      resources.getString(
-        R.string.ended_on,
-        DateUtils.formatDateTime(context, it.time, DATE_FMT_FLAGS)
-      )
+    when {
+      !s.isAutoRenewing && s.renewsAt != null -> {
+        binding.endedOn.isVisible = true
+        binding.endedOn.text = resources.getString(
+          R.string.ends_on,
+          s.renewsAt?.let { DateUtils.formatDateTime(context, it.time, DATE_FMT_FLAGS) }
+        )
+      }
+
+      s.endedAt != null -> {
+        binding.endedOn.isVisible = true
+        binding.endedOn.text = resources.getString(
+          R.string.ended_on,
+          s.endedAt?.let { DateUtils.formatDateTime(context, it.time, DATE_FMT_FLAGS) }
+        )
+      }
+
+      else -> binding.endedOn.isVisible = false
     }
 
-    binding.renewsOn.isVisible = s.renewsAt != null
+    binding.renewsOn.isVisible = s.isAutoRenewing && s.renewsAt != null
     binding.renewsOn.text = s.renewsAt?.let {
       resources.getString(
         R.string.renews_on,
@@ -164,13 +196,11 @@ class SubscriptionPurchaseViewHolder(
     binding.actionButtonContainer.isVisible = s.isActive
     if (s.isActive) {
       binding.manage.isVisible = subscriptionRepository.canLaunchManagementFlow(s)
-      binding.manage.setOnClickListener {
-        subscriptionRepository.launchManagementFlow(activityProvider.invoke(), s)
-      }
-
+      binding.manage.setOnClickListener { actionClickListener.onClickManage(s) }
       binding.changePlan.isVisible = subscriptionRepository.canLaunchUpgradeFlow(s)
-      binding.changePlan.setOnClickListener { TODO() }
-      binding.cancel.setOnClickListener { TODO() }
+      binding.changePlan.setOnClickListener { actionClickListener.onClickUpgrade(s) }
+      binding.cancel.isVisible = s.isAutoRenewing
+      binding.cancel.setOnClickListener { actionClickListener.onClickCancel(s) }
     }
   }
 
@@ -190,7 +220,7 @@ object SubscriptionComparator : DiffUtil.ItemCallback<Subscription>() {
   }
 }
 
-class SubscriptionPurchasePagingDataSource @Inject constructor(
+class SubscriptionPurchasePagingDataSource(
   private val subscriptionRepository: SubscriptionRepository,
   private val networkInfoProvider: NetworkInfoProvider,
 ) : PagingSource<Int, Subscription>() {
@@ -263,4 +293,10 @@ class SubscriptionPurchaseLoadingViewHolder(
       )
     }
   }
+}
+
+interface SubscriptionActionClickListener {
+  fun onClickManage(subscription: Subscription)
+  fun onClickUpgrade(subscription: Subscription)
+  fun onClickCancel(subscription: Subscription)
 }

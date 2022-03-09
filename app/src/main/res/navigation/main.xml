@@ -194,7 +194,25 @@
     android:id="@+id/subscription_purchase_list"
     android:name="com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment"
     android:label="@string/subscription_purchases"
-    tools:layout="@layout/subscription_purchase_list_fragment" />
+    tools:layout="@layout/subscription_purchase_list_fragment">
+
+    <action
+      android:id="@+id/cancel_subscription"
+      app:destination="@id/cancel_subscription" />
+
+  </fragment>
+
+  <dialog
+    android:id="@+id/cancel_subscription"
+    android:name="com.github.ashutoshgngwr.noice.fragment.CancelSubscriptionFragment"
+    android:label="@string/cancel_subscription"
+    tools:layout="@layout/cancel_subscription_fragment">
+
+    <argument
+      android:name="subscription"
+      app:argType="com.trynoice.api.client.models.Subscription" />
+
+  </dialog>
 
   <fragment
     android:id="@+id/settings"
