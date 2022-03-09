@@ -10,6 +10,7 @@ import com.trynoice.api.client.models.SubscriptionFlowParams
 import com.trynoice.api.client.models.SubscriptionPlan
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 
 /**
  * An abstraction layer to allow application to select from Stripe and Google Play subscription
@@ -60,6 +61,21 @@ abstract class SubscriptionProvider(protected val apiClient: NoiceApiClient) {
    */
   suspend fun listSubscription(onlyActive: Boolean, page: Int = 0): List<Subscription> {
     return apiClient.subscriptions().list(onlyActive, page, STRIPE_RETURN_URL)
+  }
+
+  /**
+   * Cancels a subscription with the given [subscriptionId].
+   *
+   * @throws retrofit2.HttpException on API error.
+   * @throws java.io.IOException on network error.
+   *
+   * @see com.trynoice.api.client.apis.SubscriptionApi.cancel
+   */
+  suspend fun cancelSubscription(subscriptionId: Long) {
+    val response = apiClient.subscriptions().cancel(subscriptionId)
+    if (!response.isSuccessful) {
+      throw HttpException(response)
+    }
   }
 
   /**

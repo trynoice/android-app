@@ -126,6 +126,29 @@ class SubscriptionRepository @Inject constructor(
   )
 
   /**
+   * Returns a [Flow] that emits the current state of subscription cancel operation as a [Resource].
+   *
+   * On failures, the flow emits [Resource.Failure] with:
+   * - [SubscriptionNotFoundError] when the subscription isn't owned by the auth user or is inactive.
+   * - [NetworkError] on network errors.
+   * - [HttpException] on api errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
+   */
+  fun cancel(subscription: Subscription): Flow<Resource<Unit>> = fetchNetworkBoundResource(
+    loadFromNetwork = { subscriptionProvider.cancelSubscription(subscription.id) },
+    loadFromNetworkErrorTransform = { e ->
+      Log.i(LOG_TAG, "cancel:", e)
+      when {
+        e is HttpException && e.code() == 404 -> SubscriptionNotFoundError
+        e is IOException -> NetworkError
+        else -> e
+      }
+    },
+  )
+
+  /**
    * Returns whether the given [subscription] is manageable through an external portal, e.g. Stripe
    * customer portal.
    *
