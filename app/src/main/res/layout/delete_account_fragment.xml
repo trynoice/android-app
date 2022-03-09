@@ -5,8 +5,6 @@
 
   <data>
 
-    <import type="android.view.View" />
-
     <variable
       name="viewModel"
       type="com.github.ashutoshgngwr.noice.fragment.DeleteAccountViewModel" />
