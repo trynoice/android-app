@@ -128,8 +128,9 @@ interface SubscriptionApi {
   ): Subscription
 
   /**
-   * Cancels the given subscription if it is currently ongoing (active). Returns `HTTP 404` if an
-   * auth user doesn't have an active subscription.
+   * Cancels the given subscription by requesting its cancellation from its provider. All providers
+   * are configured to cancel subscriptions at the end of their current billing cycles. Returns
+   * `HTTP 404` if an auth user doesn't have an active subscription.
    *
    * Responses:
    *  - 204: subscription cancelled.

@@ -287,6 +287,7 @@
     <string name="subscription_payment_cancelled">The subscription payment was cancelled!</string>
     <string name="subscription_purchases">Subscription purchases</string>
     <string name="renews_on">Renews on %1$s</string>
+    <string name="ends_on">Ends on %1$s</string>
     <string name="started_on">Started on %1$s</string>
     <string name="ended_on">Ended on %1$s</string>
     <string name="paid_using">Paid using %1$s</string>
@@ -294,4 +295,6 @@
     <string name="change_plan">Change plan</string>
     <string name="manage_subscription">Manage Subscription</string>
     <string name="cancel_subscription">Cancel Subscription</string>
+    <string name="cancel_subscription_confirmation">Are you sure you want to cancel your subscription to Noice Premium? Your subscription will automatically terminate at the end of the current billing cycle. Your current billing cycle ends on %1$s.</string>
+    <string name="cancelling_subscription">Cancelling subscription</string>
 </resources>
