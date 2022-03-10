@@ -297,4 +297,5 @@
     <string name="cancel_subscription">Cancel Subscription</string>
     <string name="cancel_subscription_confirmation">Are you sure you want to cancel your subscription to Noice Premium? Your subscription will automatically terminate at the end of the current billing cycle. Your current billing cycle ends on %1$s.</string>
     <string name="cancelling_subscription">Cancelling subscription</string>
+    <string name="no_subscription_purchases_found">We don\'t think that you have tried Noice Premium yet. Your previous subscriptions will appear here once you have used Noice Premium at least once.</string>
 </resources>
