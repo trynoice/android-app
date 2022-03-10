@@ -10,6 +10,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionBillingCallbackFragmentBinding
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundError
@@ -34,6 +37,9 @@ class SubscriptionBillingCallbackFragment : BottomSheetDialogFragment() {
 
   private lateinit var binding: SubscriptionBillingCallbackFragmentBinding
   private val viewModel: SubscriptionBillingCallbackViewModel by viewModels()
+  private val mainNavController: NavController by lazy {
+    Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
+  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = SubscriptionBillingCallbackFragmentBinding.inflate(inflater, container, false)
@@ -43,7 +49,11 @@ class SubscriptionBillingCallbackFragment : BottomSheetDialogFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    viewModel.onDismissClicked = this::dismiss
+    viewModel.onDismissClicked = {
+      dismiss()
+      mainNavController.navigate(R.id.subscription_purchase_list)
+    }
+
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.isLoading.collect { isCancelable = it }
     }
