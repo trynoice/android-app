@@ -22,6 +22,8 @@ abstract class SubscriptionProvider(protected val apiClient: NoiceApiClient) {
    * @return a list of subscription plans offered by the given [SubscriptionProvider].
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
+   *
+   * @see com.trynoice.api.client.apis.SubscriptionApi.getPlans
    */
   abstract suspend fun getPlans(): List<SubscriptionPlan>
 
@@ -35,6 +37,8 @@ abstract class SubscriptionProvider(protected val apiClient: NoiceApiClient) {
    * @throws java.io.IOException on network error.
    * @throws InAppBillingProviderException on in-app billing errors when using google play
    * subscription provider implementation.
+   *
+   * @see com.trynoice.api.client.apis.SubscriptionApi.create
    */
   abstract suspend fun launchBillingFlow(activity: Activity, plan: SubscriptionPlan)
 
@@ -45,6 +49,8 @@ abstract class SubscriptionProvider(protected val apiClient: NoiceApiClient) {
    * @return the request [Subscription] entity.
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
+   *
+   * @see com.trynoice.api.client.apis.SubscriptionApi.get
    */
   suspend fun getSubscription(subscriptionId: Long): Subscription {
     return apiClient.subscriptions().get(subscriptionId, STRIPE_RETURN_URL)
@@ -58,6 +64,8 @@ abstract class SubscriptionProvider(protected val apiClient: NoiceApiClient) {
    * @return a page of [Subscription] entities.
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
+   *
+   * @see com.trynoice.api.client.apis.SubscriptionApi.list
    */
   suspend fun listSubscription(onlyActive: Boolean, page: Int = 0): List<Subscription> {
     return apiClient.subscriptions().list(onlyActive, page, STRIPE_RETURN_URL)
