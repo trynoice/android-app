@@ -20,6 +20,7 @@ import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
+import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.repository.errors.NotSignedInError
 import com.trynoice.api.client.models.Profile
@@ -84,7 +85,7 @@ class AccountFragment : Fragment() {
         .collect { errRes -> showErrorSnackbar(errRes) }
     }
 
-    viewModel.loadProfile()
+    viewModel.loadData()
   }
 }
 
@@ -92,10 +93,13 @@ class AccountFragment : Fragment() {
 class AccountViewModel @Inject constructor(
   private val accountRepository: AccountRepository,
   private val networkInfoProvider: NetworkInfoProvider,
+  private val subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
   var onItemClickListener = View.OnClickListener {}
   val isSignedIn = accountRepository.isSignedIn()
+  val isSubscribed = MutableStateFlow(true)
+
   private val profileResource = MutableStateFlow<Resource<Profile>>(Resource.Loading())
 
   val profile = profileResource.transform { resource ->
@@ -115,7 +119,7 @@ class AccountViewModel @Inject constructor(
     )
   }
 
-  internal fun loadProfile() {
+  internal fun loadData() {
     if (!isSignedIn.value) {
       return
     }
@@ -125,6 +129,12 @@ class AccountViewModel @Inject constructor(
         accountRepository.getProfile()
           .flowOn(Dispatchers.IO)
           .collect(profileResource)
+
+        // ignore errors here.
+        subscriptionRepository.isSubscribed()
+          .flowOn(Dispatchers.IO)
+          .transform { r -> r.data?.let { emit(it) } }
+          .collect(isSubscribed)
       }
     }
   }

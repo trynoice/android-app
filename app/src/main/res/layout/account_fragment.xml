@@ -56,86 +56,97 @@
         android:layout_height="wrap_content"
         android:text="@string/account" />
 
-      <TextView
-        android:id="@+id/sign_up_form"
-        style="@style/Widget.App.Account.Category.Item"
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{viewModel.onItemClickListener}"
-        android:text="@string/sign_up"
-        app:drawableStartCompat="@drawable/ic_baseline_person_add_alt_1_32"
-        app:isVisible="@{!viewModel.isSignedIn}" />
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        app:isVisible="@{!viewModel.isSignedIn}">
 
-      <TextView
-        android:id="@+id/sign_in_form"
-        style="@style/Widget.App.Account.Category.Item"
+        <TextView
+          android:id="@+id/sign_up_form"
+          style="@style/Widget.App.Account.Category.Item"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{viewModel.onItemClickListener}"
+          android:text="@string/sign_up"
+          app:drawableStartCompat="@drawable/ic_baseline_person_add_alt_1_32" />
+
+        <TextView
+          android:id="@+id/sign_in_form"
+          style="@style/Widget.App.Account.Category.Item"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{viewModel.onItemClickListener}"
+          android:text="@string/sign_in"
+          app:drawableStartCompat="@drawable/ic_baseline_login_32" />
+
+        <TextView
+          android:id="@+id/view_subscription_plans"
+          style="@style/Widget.App.Account.Category.Item"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{viewModel.onItemClickListener}"
+          android:text="@string/view_subscription_plans"
+          app:drawableStartCompat="@drawable/ic_baseline_attach_money_32" />
+
+      </LinearLayout>
+
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{viewModel.onItemClickListener}"
-        android:text="@string/sign_in"
-        app:drawableStartCompat="@drawable/ic_baseline_login_32"
-        app:isVisible="@{!viewModel.isSignedIn}" />
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        app:isVisible="@{viewModel.isSignedIn}">
 
-      <TextView
-        android:id="@+id/view_subscription_plans"
-        style="@style/Widget.App.Account.Category.Item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{viewModel.onItemClickListener}"
-        android:text="@string/view_subscription_plans"
-        app:drawableStartCompat="@drawable/ic_baseline_attach_money_32"
-        app:isVisible="@{!viewModel.isSignedIn}" />
+        <TextView
+          android:id="@+id/get_premium"
+          style="@style/Widget.App.Account.Category.Item"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{viewModel.onItemClickListener}"
+          android:text="@string/get_premium"
+          android:visibility="gone"
+          app:drawableStartCompat="@drawable/ic_baseline_shopping_cart_32"
+          app:isVisible="@{!viewModel.isSubscribed}" />
 
-      <TextView
-        android:id="@+id/get_premium"
-        style="@style/Widget.App.Account.Category.Item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{viewModel.onItemClickListener}"
-        android:text="@string/get_premium"
-        app:drawableStartCompat="@drawable/ic_baseline_shopping_cart_32"
-        app:isVisible="@{viewModel.isSignedIn}" />
+        <TextView
+          android:id="@+id/subscription_purchase_list"
+          style="@style/Widget.App.Account.Category.Item"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{viewModel.onItemClickListener}"
+          android:text="@string/subscription_purchases"
+          app:drawableStartCompat="@drawable/ic_baseline_attach_money_32" />
 
-      <TextView
-        android:id="@+id/subscription_purchase_list"
-        style="@style/Widget.App.Account.Category.Item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{viewModel.onItemClickListener}"
-        android:text="@string/subscription_purchases"
-        app:drawableStartCompat="@drawable/ic_baseline_attach_money_32"
-        app:isVisible="@{viewModel.isSignedIn}" />
+        <TextView
+          android:id="@+id/update_account_details"
+          style="@style/Widget.App.Account.Category.Item"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{viewModel.onItemClickListener}"
+          android:text="@string/update_details"
+          app:drawableStartCompat="@drawable/ic_baseline_manage_accounts_32" />
 
-      <TextView
-        android:id="@+id/update_account_details"
-        style="@style/Widget.App.Account.Category.Item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{viewModel.onItemClickListener}"
-        android:text="@string/update_details"
-        app:drawableStartCompat="@drawable/ic_baseline_manage_accounts_32"
-        app:isVisible="@{viewModel.isSignedIn}" />
+        <TextView
+          android:id="@+id/sign_out"
+          style="@style/Widget.App.Account.Category.Item"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{viewModel.onItemClickListener}"
+          android:text="@string/sign_out"
+          app:drawableStartCompat="@drawable/ic_baseline_logout_32" />
 
-      <TextView
-        android:id="@+id/sign_out"
-        style="@style/Widget.App.Account.Category.Item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{viewModel.onItemClickListener}"
-        android:text="@string/sign_out"
-        app:drawableStartCompat="@drawable/ic_baseline_logout_32"
-        app:isVisible="@{viewModel.isSignedIn}" />
+        <TextView
+          android:id="@+id/delete_account"
+          style="@style/Widget.App.Account.Category.Item"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{viewModel.onItemClickListener}"
+          android:text="@string/delete_account"
+          app:drawableStartCompat="@drawable/ic_baseline_no_accounts_32" />
 
-      <TextView
-        android:id="@+id/delete_account"
-        style="@style/Widget.App.Account.Category.Item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{viewModel.onItemClickListener}"
-        android:text="@string/delete_account"
-        app:drawableStartCompat="@drawable/ic_baseline_no_accounts_32"
-        app:isVisible="@{viewModel.isSignedIn}" />
-
+      </LinearLayout>
 
       <TextView
         style="@style/Widget.App.Account.Category.Header"

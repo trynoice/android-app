@@ -173,10 +173,35 @@ class SubscriptionRepository @Inject constructor(
     return subscriptionProvider.canLaunchUpgradeFlow(subscription)
   }
 
+  /**
+   * Returns a flow that emits whether the authenticated user owns an active subscription as a
+   * [Resource].
+   *
+   * On failures, the flow emits [Resource.Failure] with:
+   * - [NetworkError] on network errors.
+   * - [HttpException] on api errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
+   */
+  fun isSubscribed(): Flow<Resource<Boolean>> = fetchNetworkBoundResource(
+    loadFromCache = { cacheStore.getAs(IS_SUBSCRIBED_KEY) },
+    loadFromNetwork = { subscriptionProvider.listSubscription(true).isNotEmpty() },
+    cacheNetworkResult = { cacheStore.put(IS_SUBSCRIBED_KEY, it) },
+    loadFromNetworkErrorTransform = { e ->
+      Log.i(LOG_TAG, "isSubscribed:", e)
+      when (e) {
+        is IOException -> NetworkError
+        else -> e
+      }
+    },
+  )
+
   companion object {
     private const val LOG_TAG = "SubscriptionRepository"
     private const val SUBSCRIPTION_KEY_PREFIX = "subscription"
     private const val PLANS_CACHE_KEY = "${SUBSCRIPTION_KEY_PREFIX}/plans"
     private const val SUBSCRIPTION_PAGE_PREFIX = "${SUBSCRIPTION_KEY_PREFIX}/page"
+    private const val IS_SUBSCRIBED_KEY = "${SUBSCRIPTION_KEY_PREFIX}/is_subscribed"
   }
 }
