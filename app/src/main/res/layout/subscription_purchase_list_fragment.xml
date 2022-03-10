@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="@color/background_dark"
-  android:clipToPadding="false"
-  android:paddingVertical="8dp"
-  app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+  android:layout_height="match_parent">
+
+  <LinearLayout
+    android:id="@+id/empty_list_indicator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+      style="@style/Widget.App.TextView.Message"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:text="@string/no_subscription_purchases_found" />
+
+    <Space
+      android:layout_width="wrap_content"
+      android:layout_height="24dp" />
+
+    <Button
+      android:id="@+id/view_subscription_plans"
+      style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/view_subscription_plans" />
+
+  </LinearLayout>
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingVertical="8dp"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+</FrameLayout>

@@ -65,10 +65,21 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
     val adapter = SubscriptionPurchaseListAdapter(layoutInflater, subscriptionRepository, this)
     val headerAdapter = SubscriptionPurchaseListLoadStateAdapter(layoutInflater, adapter::retry)
     val footerAdapter = SubscriptionPurchaseListLoadStateAdapter(layoutInflater, adapter::retry)
-    binding.root.adapter = ConcatAdapter(headerAdapter, adapter, footerAdapter)
+    binding.list.adapter = ConcatAdapter(headerAdapter, adapter, footerAdapter)
     adapter.addLoadStateListener { loadStates ->
       headerAdapter.loadState = loadStates.refresh
       footerAdapter.loadState = loadStates.append
+
+      val isListEmpty = loadStates.source.refresh is LoadState.NotLoading
+        && loadStates.append.endOfPaginationReached
+        && adapter.itemCount < 1
+
+      binding.list.isVisible = !isListEmpty
+      binding.emptyListIndicator.isVisible = isListEmpty
+    }
+
+    binding.viewSubscriptionPlans.setOnClickListener {
+      mainNavController.navigate(R.id.view_subscription_plans)
     }
 
     viewLifecycleOwner.lifecycleScope.launch {

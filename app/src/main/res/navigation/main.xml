@@ -197,6 +197,10 @@
     tools:layout="@layout/subscription_purchase_list_fragment">
 
     <action
+      android:id="@+id/view_subscription_plans"
+      app:destination="@id/view_subscription_plans" />
+
+    <action
       android:id="@+id/cancel_subscription"
       app:destination="@id/cancel_subscription" />
 
