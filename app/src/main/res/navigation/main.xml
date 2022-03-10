@@ -188,6 +188,11 @@
       android:name="subscriptionId"
       app:argType="long" />
 
+    <action
+      android:id="@+id/subscription_purchase_list"
+      app:destination="@id/subscription_purchase_list"
+      app:popUpTo="@id/home" />
+
   </dialog>
 
   <fragment
