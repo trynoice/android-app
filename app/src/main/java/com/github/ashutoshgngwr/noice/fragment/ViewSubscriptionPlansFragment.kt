@@ -77,19 +77,21 @@ fun setSubscriptionPlans(
   canClickItems: Boolean,
   onPlanSelectedListener: OnPlanSelectedListener,
 ) {
-  if (plans == container.tag) {
-    container.forEach { it.isClickable = canClickItems }
-    return
+  if (plans != container.tag) {
+    container.tag = plans
+    container.removeAllViews()
+    val inflater = LayoutInflater.from(container.context)
+    plans.forEach { plan ->
+      val binding = SubscriptionPlanItemBinding.inflate(inflater, container, true)
+      binding.plan = plan
+      binding.root.setOnClickListener { onPlanSelectedListener.onPlanSelected(plan) }
+    }
   }
 
-  container.tag = plans
-  container.removeAllViews()
-  val inflater = LayoutInflater.from(container.context)
-  plans.forEach { plan ->
-    val binding = SubscriptionPlanItemBinding.inflate(inflater, container, true)
-    binding.plan = plan
-    binding.root.isClickable = canClickItems
-    binding.root.setOnClickListener { onPlanSelectedListener.onPlanSelected(plan) }
+  // setOnClickListener sets isClickable = true internally, and therefore, isClickable should be
+  // called after it.
+  container.forEach { view ->
+    view.isClickable = canClickItems
   }
 }
 
