@@ -33,6 +33,8 @@ import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundError
+import com.github.ashutoshgngwr.noice.repository.isManageable
+import com.github.ashutoshgngwr.noice.repository.isUpgradeable
 import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionPlan
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,7 +64,7 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    val adapter = SubscriptionPurchaseListAdapter(layoutInflater, subscriptionRepository, this)
+    val adapter = SubscriptionPurchaseListAdapter(layoutInflater, this)
     val headerAdapter = SubscriptionPurchaseListLoadStateAdapter(layoutInflater, adapter::retry)
     val footerAdapter = SubscriptionPurchaseListLoadStateAdapter(layoutInflater, adapter::retry)
     binding.list.adapter = ConcatAdapter(headerAdapter, adapter, footerAdapter)
@@ -120,7 +122,6 @@ class SubscriptionPurchaseListViewModel @Inject constructor(
 
 class SubscriptionPurchaseListAdapter(
   private val layoutInflater: LayoutInflater,
-  private val subscriptionRepository: SubscriptionRepository,
   private val actionClickListener: SubscriptionActionClickListener,
 ) : PagingDataAdapter<Subscription, SubscriptionPurchaseViewHolder>(SubscriptionComparator) {
 
@@ -130,13 +131,12 @@ class SubscriptionPurchaseListAdapter(
 
   override fun onCreateViewHolder(parent: ViewGroup, type: Int): SubscriptionPurchaseViewHolder {
     val binding = SubscriptionPurchaseItemBinding.inflate(layoutInflater, parent, false)
-    return SubscriptionPurchaseViewHolder(binding, subscriptionRepository, actionClickListener)
+    return SubscriptionPurchaseViewHolder(binding, actionClickListener)
   }
 }
 
 class SubscriptionPurchaseViewHolder(
   private val binding: SubscriptionPurchaseItemBinding,
-  private val subscriptionRepository: SubscriptionRepository,
   private val actionClickListener: SubscriptionActionClickListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -206,9 +206,9 @@ class SubscriptionPurchaseViewHolder(
     binding.paymentPending.isVisible = s.isPaymentPending
     binding.actionButtonContainer.isVisible = s.isActive
     if (s.isActive) {
-      binding.manage.isVisible = subscriptionRepository.canLaunchManagementFlow(s)
+      binding.manage.isVisible = s.isManageable()
       binding.manage.setOnClickListener { actionClickListener.onClickManage(s) }
-      binding.changePlan.isVisible = subscriptionRepository.canLaunchUpgradeFlow(s)
+      binding.changePlan.isVisible = s.isUpgradeable()
       binding.changePlan.setOnClickListener { actionClickListener.onClickUpgrade(s) }
       binding.cancel.isVisible = s.isAutoRenewing
       binding.cancel.setOnClickListener { actionClickListener.onClickCancel(s) }

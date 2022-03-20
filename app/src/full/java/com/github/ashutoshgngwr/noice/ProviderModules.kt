@@ -8,7 +8,7 @@ import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
 import com.github.ashutoshgngwr.noice.provider.DummyCastApiProvider
 import com.github.ashutoshgngwr.noice.provider.DummyInAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.GitHubReviewFlowProvider
-import com.github.ashutoshgngwr.noice.provider.GooglePlaySubscriptionProvider
+import com.github.ashutoshgngwr.noice.provider.GooglePlaySubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.InAppDonationFragmentProvider
 import com.github.ashutoshgngwr.noice.provider.OpenCollectiveDonationFragmentProvider
@@ -18,8 +18,8 @@ import com.github.ashutoshgngwr.noice.provider.RealCastApiProvider
 import com.github.ashutoshgngwr.noice.provider.RealCrashlyticsProvider
 import com.github.ashutoshgngwr.noice.provider.RealInAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
-import com.github.ashutoshgngwr.noice.provider.StripeSubscriptionProvider
-import com.github.ashutoshgngwr.noice.provider.SubscriptionProvider
+import com.github.ashutoshgngwr.noice.provider.StripeSubscriptionBillingProvider
+import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.trynoice.api.client.NoiceApiClient
@@ -113,18 +113,18 @@ object DonationFragmentProviderModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-object SubscriptionProviderModule {
+object SubscriptionBillingProviderModule {
   @Provides
   @Singleton
-  fun subscriptionProvider(
+  fun subscriptionBillingProvider(
     @ApplicationContext context: Context,
     apiClient: NoiceApiClient,
     billingProvider: InAppBillingProvider,
-  ): SubscriptionProvider {
+  ): SubscriptionBillingProvider {
     if (isGoogleMobileServiceAvailable(context)) {
-      return GooglePlaySubscriptionProvider(apiClient, billingProvider)
+      return GooglePlaySubscriptionBillingProvider(apiClient, billingProvider)
     }
 
-    return StripeSubscriptionProvider(apiClient)
+    return StripeSubscriptionBillingProvider(apiClient)
   }
 }
