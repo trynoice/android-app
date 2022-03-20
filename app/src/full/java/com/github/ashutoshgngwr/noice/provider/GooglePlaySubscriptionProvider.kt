@@ -6,13 +6,13 @@ import com.trynoice.api.client.models.SubscriptionFlowParams
 import com.trynoice.api.client.models.SubscriptionPlan
 
 /**
- * [SubscriptionProvider] implementation that provides subscriptions using Google Play as the
+ * [SubscriptionBillingProvider] implementation that provides subscriptions using Google Play as the
  * billing provider.
  */
-class GooglePlaySubscriptionProvider(
-  apiClient: NoiceApiClient,
+class GooglePlaySubscriptionBillingProvider(
+  private val apiClient: NoiceApiClient,
   private val billingProvider: InAppBillingProvider,
-) : SubscriptionProvider(apiClient) {
+) : SubscriptionBillingProvider {
 
   override suspend fun getPlans(): List<SubscriptionPlan> {
     return apiClient.subscriptions().getPlans(SubscriptionPlan.PROVIDER_GOOGLE_PLAY)
