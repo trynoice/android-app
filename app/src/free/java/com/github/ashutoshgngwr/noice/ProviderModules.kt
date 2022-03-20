@@ -12,8 +12,8 @@ import com.github.ashutoshgngwr.noice.provider.GitHubReviewFlowProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.OpenCollectiveDonationFragmentProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
-import com.github.ashutoshgngwr.noice.provider.StripeSubscriptionProvider
-import com.github.ashutoshgngwr.noice.provider.SubscriptionProvider
+import com.github.ashutoshgngwr.noice.provider.StripeSubscriptionBillingProvider
+import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
 import com.trynoice.api.client.NoiceApiClient
 import dagger.Module
 import dagger.Provides
@@ -74,10 +74,10 @@ object DonationFragmentProviderModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-object SubscriptionProviderModule {
+object SubscriptionBillingProviderModule {
   @Provides
   @Singleton
-  fun subscriptionProvider(apiClient: NoiceApiClient): SubscriptionProvider {
-    return StripeSubscriptionProvider(apiClient)
+  fun subscriptionProvider(apiClient: NoiceApiClient): SubscriptionBillingProvider {
+    return StripeSubscriptionBillingProvider(apiClient)
   }
 }
