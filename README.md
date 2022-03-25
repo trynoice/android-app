@@ -1,4 +1,9 @@
-# ![Feature graphic](fastlane/metadata/android/en-US/images/featureGraphic.png)
+<p align="center">
+  <a href="https://trynoice.com">
+    <img alt="Gatsby" src="graphics/icon-round.png" width="92" />
+  </a>
+</p>
+<h1 align="center">Noice for Android</h1>
 
 [![Latest release](https://img.shields.io/github/tag-date/ashutoshgngwr/noice.svg?color=orange&label=release)](https://GitHub.com/ashutoshgngwr/noice/tags/)
 [![GitHub license](https://img.shields.io/github/license/ashutoshgngwr/noice.svg)](https://github.com/ashutoshgngwr/noice/blob/master/LICENSE)
@@ -27,14 +32,11 @@ Noice is an app that allows you to create your own set of background sounds by m
 
 ## Documentation
 
-1. [All notable changes](https://ashutoshgngwr.github.io/noice/CHANGELOG) to the
-   project over time
-2. The [list of
-   contributors](https://ashutoshgngwr.github.io/noice/contributors)
-3. [How can you contribute?](https://ashutoshgngwr.github.io/noice/contributing)
-4. [Code of Conduct](https://ashutoshgngwr.github.io/noice/code-of-conduct)
-5. [Privacy Policy](https://ashutoshgngwr.github.io/noice/privacy-policy) for
-   application users
+1. [All notable changes](https://trynoice.com/changelog) to the project over
+   time
+2. [How can you contribute?](CONTRIBUTING.md)
+3. [Code of Conduct](CODE_OF_CONDUCT.md)
+4. [Privacy Policy](https://trynoice.com/privacy-policy) for application users
 
 ## License
 

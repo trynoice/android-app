@@ -1,7 +1,7 @@
 # Contributing <!-- omit in toc -->
 
-We welcome contributions of all kinds and sizes. This includes everything from simple
-bug reports to large features.
+We welcome contributions of all kinds and sizes. This includes everything from
+simple bug reports to large features.
 
 ## Table of Contents <!-- omit in toc -->
 
@@ -25,15 +25,15 @@ bug reports to large features.
 - We love GitHub issues!
 - For small feature requests, an issue first proposing it for discussion or demo
   implementation in a PR suffice
-- For big feature requests, please open an issue to avoid wasting time on a feature
-  that might need reworking
+- For big feature requests, please open an issue to avoid wasting time on a
+  feature that might need reworking
 - Small pull requests for things like typos, bug fixes, etc are always welcome
 
 ## Getting started
 
 1. Ensure that you have the latest Android SDK tools installed on your machine
-1. Fork the repository to create a copy in your GitHub account. The forked repository
-   should be accessible at `https://github.com/<your-username>/noice`
+1. Fork the repository to create a copy in your GitHub account. The forked
+   repository should be accessible at `https://github.com/<your-username>/noice`
 1. Clone the forked repository to your machine
 1. Open the existing project using Android Studio or any editor of your choice
 
@@ -45,7 +45,7 @@ Weblate](https://hosted.weblate.org/engage/noice/) to contribute translations.
 ### Stats
 
 <p align="center">
-  <img alt="Cast receiver app architecture" src="https://hosted.weblate.org/widgets/noice/-/horizontal-auto.svg" /><br>
+  <img alt="translation stats" src="https://hosted.weblate.org/widgets/noice/-/horizontal-auto.svg" />
 </p>
 
 ## Adding sounds
@@ -123,7 +123,7 @@ A `PlayerManager` controls multiple `Player` instances and can have at most one
 `Player` instance for each sound present in the library.
 
 <p align="center">
-  <img align="center" alt="Android app architecture" src="assets/android-app-architecture.svg" /><br>
+  <img align="center" alt="Android app architecture" src="graphics/android-app-architecture.svg" /><br>
 </p>
 
 #### Cast Receiver
@@ -153,7 +153,7 @@ the keys present in `src` array.
 ```
 
 <p align="center">
-  <img alt="Cast receiver app architecture" src="assets/cast-receiver-architecture.svg" /><br>
+  <img alt="Cast receiver app architecture" src="graphics/cast-receiver-architecture.svg" /><br>
 </p>
 
 ### Best Practices
