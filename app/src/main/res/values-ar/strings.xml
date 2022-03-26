@@ -45,7 +45,7 @@
     <string name="wake_up_timer">مؤقّت الاستيقاظ</string>
     <string name="sleep_timer">مؤقّت النوم</string>
     <string name="about">حول</string>
-    <string name="random_preset_description">ستحتوي الإعدادات المسبقة العشوائية على أصوات تتوافق مع الحالة المزاجية المختارة. علاوة على ذلك ، ستحاول الإعدادات المسبقة الكثيفة تشغيل المزيد من الأصوات في وقت واحد.</string>
+    <string name="random_preset_description">ستحتوي الإعدادات المسبقة العشوائية على أصوات تتوافق مع الحالة المزاجية المختارة. علاوة على ذلك، ستحاول الإعدادات المسبقة الكثيفة تشغيل المزيد من الأصوات في وقت واحد.</string>
     <string name="focus">ركز</string>
     <string name="intensity_any">الكل</string>
     <string name="mood_any">الكل</string>
@@ -86,7 +86,7 @@
     <string name="crickets">صراصير الليل</string>
     <string name="creaking_ship">صرير السفينة</string>
     <string name="brownian_noise">الضوضاء الرمادية</string>
-    <string name="bonfire">الشعله</string>
+    <string name="bonfire">الشعلة</string>
     <string name="airplane_seatbelt_beeps">أصوات حزام مقعد الطائرة</string>
     <string name="airplane_inflight">طائرة أثناء الطيران</string>
     <string name="sound_group__vehicles">مركبات</string>
@@ -99,7 +99,7 @@
     <string name="save_preset">حفظ الإعداد المسبق</string>
     <string name="preset_saved">تم حفظ الإعداد المسبق!</string>
     <string name="preset_name_cannot_be_empty">لا يمكن أن يكون اسم الإعداد المسبق فارغًا!</string>
-    <string name="preset_already_exists">الإعداد المسبق بالاسم المحدد موجود بالفعل!</string>
+    <string name="preset_already_exists">الإعداد المسبق بالاسم المحدد موجود آصلًا!</string>
     <string name="dismiss">تجاهل</string>
     <string name="relax">استرخاء</string>
     <string name="random_preset">إعداد مسبق عشوائي</string>
@@ -171,7 +171,7 @@
     <string name="appintro__getting_started_desc_0">اسحب لليسار للتعرف على جميع الميزات!</string>
     <string name="appintro__chromecast_title">تم تمكين Chromecast</string>
     <string name="appintro__chromecast_desc">استخدم Noice لإرسال أجواءه إلى الأجهزة الأخرى التي تدعم Chromecast مثل مكبرات الصوت وأجهزة التلفزيون وما إلى ذلك.</string>
-    <string name="app_description">استرخ وعزز الإنتاجية مع الحد الأدنى من الضوضاء في الخلفية.</string>
+    <string name="app_description">استرخ وعزز الإنتاجية مع ضوضاء مهدئة طبيعية.</string>
     <string name="app_theme_system_default">الإعدادات الإفتراضية</string>
     <string name="wake_up_timer_description">سيبدأ Noice في الإعداد المسبق المحدد عندما ينتهي المؤقت. استخدم الأزرار أدناه لتحديد إعداد مسبق وضبط الوقت المطلوب لبدء مؤقت الاستيقاظ.</string>
     <string name="wake_up_timer_schedule_set">سوف ينطلق المنبه في %1$s %2$s %3$s</string>
