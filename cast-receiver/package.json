@@ -33,7 +33,7 @@
     "parcel-bundler": "^1.12.5",
     "parcel-plugin-svg-sprite": "^1.4.1",
     "prettier": "^2.5.1",
-    "sass": "^1.47.0",
+    "sass": "^1.49.11",
     "typescript": "^4.5.4"
   },
   "dependencies": {
