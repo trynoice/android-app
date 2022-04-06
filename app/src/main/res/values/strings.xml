@@ -117,7 +117,7 @@
     <string name="app_theme_light">Light</string>
     <string name="app_theme_dark">Dark</string>
     <string name="app_theme_system_default">System default</string>
-    <string name="app_description">Relax and boost productivity with natural calming noise.</string>
+    <string name="app_description">Relax and improve focus with natural calming noise.</string>
     <string name="appintro__chromecast_desc">
     Use Noice to cast its ambience to other Chromecast enabled devices such as speakers, TVs, etc.
   </string>
