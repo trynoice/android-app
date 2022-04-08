@@ -40,10 +40,11 @@ internal interface InternalAccountApi {
    *  - 401: refresh token is invalid, expired or re-used.
    *  - 500: internal server error.
    *
+   * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
   @NeedsRefreshToken
   @NeedsAccessToken
   @GET("/v1/accounts/signOut")
-  suspend fun signOut(): Response<Unit>
+  suspend fun signOut()
 }

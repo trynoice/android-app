@@ -40,11 +40,26 @@ class NoiceApiClient(
   private val refreshCredentialsMutex = Mutex()
 
   private val okhttpClient = OkHttpClient.Builder()
+    .addNetworkInterceptor { chain ->
+      // Intercept 'HTTP 204 - No Content' responses and rewrite them as HTTP 200 to avoid:
+      // `kotlin.KotlinNullPointerException: Response from <method> was null but response body type
+      // was declared as non-null.`
+      // See: https://github.com/square/retrofit/issues/2867
+      val response = chain.proceed(chain.request())
+      if (response.code == 204) {
+        HttpLoggingInterceptor.Logger.DEFAULT.log("rewriting HTTP 204 response as HTTP 200")
+        response.newBuilder().code(200).build()
+      } else {
+        response
+      }
+    }
+    .addNetworkInterceptor(HttpLoggingInterceptor().apply {
+      level = HttpLoggingInterceptor.Level.BASIC
+    })
     .addInterceptor(AccessTokenInjector(credentialRepository, credentialRefresher = {
       runBlocking { refreshCredentials() }
     }))
     .addInterceptor(RefreshTokenInjector(credentialRepository))
-    .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC })
     .addInterceptor { chain ->
       chain.proceed(
         chain.request()
@@ -106,14 +121,14 @@ class NoiceApiClient(
    */
   suspend fun signOut() {
     credentialRepository.getRefreshToken() ?: return
-    runCatching { internalAccountApi.signOut() }
-      .onFailure { throw it }
-      .onSuccess { response ->
-        // HTTP 401 = invalid or expired refresh token, thus a valid result.
-        if (!response.isSuccessful && response.code() != 401) {
-          throw HttpException(response)
-        }
+    try {
+      internalAccountApi.signOut()
+    } catch (e: HttpException) {
+      // HTTP 401 = invalid or expired refresh token, thus a valid result.
+      if (e.code() != 401) {
+        throw e
       }
+    }
 
     credentialRepository.clearCredentials()
     signedInState.emit(false)

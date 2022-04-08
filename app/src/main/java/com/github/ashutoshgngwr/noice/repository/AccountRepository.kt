@@ -73,12 +73,7 @@ class AccountRepository @Inject constructor(
    */
   fun updateProfile(email: String, name: String): Flow<Resource<Unit>> =
     fetchNetworkBoundResource(
-      loadFromNetwork = {
-        val response = apiClient.accounts().updateProfile(UpdateProfileParams(email, name))
-        if (!response.isSuccessful) {
-          throw HttpException(response)
-        }
-      },
+      loadFromNetwork = { apiClient.accounts().updateProfile(UpdateProfileParams(email, name)) },
       loadFromNetworkErrorTransform = { e ->
         Log.i(LOG_TAG, "updateProfile:", e)
         when {
@@ -220,12 +215,7 @@ class AccountRepository @Inject constructor(
    * @see Resource
    */
   fun deleteAccount(accountId: Long): Flow<Resource<Unit>> = fetchNetworkBoundResource(
-    loadFromNetwork = {
-      val response = apiClient.accounts().delete(accountId)
-      if (!response.isSuccessful) {
-        throw HttpException(response)
-      }
-    },
+    loadFromNetwork = { apiClient.accounts().delete(accountId) },
     loadFromNetworkErrorTransform = { e ->
       when (e) {
         is IOException -> NetworkError

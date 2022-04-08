@@ -84,11 +84,12 @@ interface AccountApi {
    *  - 409: updated email belongs to another existing account
    *  - 500: internal server error
    *
+   * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
   @NeedsAccessToken
   @PATCH("/v1/accounts/profile")
-  suspend fun updateProfile(@Body updateProfileParams: UpdateProfileParams): Response<Unit>
+  suspend fun updateProfile(@Body updateProfileParams: UpdateProfileParams)
 
   /**
    * Deletes the account of an authenticated user. If the account with the given [accountId] does
@@ -100,9 +101,10 @@ interface AccountApi {
    *  - 401: access token is invalid.
    *  - 500: internal server error.
    *
+   * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
   @NeedsAccessToken
   @DELETE("/v1/accounts/{id}")
-  suspend fun delete(@Path("id") accountId: Long): Response<Unit>
+  suspend fun delete(@Path("id") accountId: Long)
 }
