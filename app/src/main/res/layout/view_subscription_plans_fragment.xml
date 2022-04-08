@@ -103,6 +103,7 @@
           android:layout_height="wrap_content"
           android:animateLayoutChanges="true"
           android:orientation="vertical"
+          app:activePlan="@{viewModel.activePlan}"
           app:canClickItems="@{viewModel.isSignedIn}"
           app:isVisible="@{!viewModel.plans.isEmpty()}"
           app:onPlanSelected="@{viewModel.onPlanSelectedListener}"

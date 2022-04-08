@@ -140,6 +140,12 @@
     android:label="@string/premium"
     tools:layout="@layout/view_subscription_plans_fragment">
 
+    <argument
+      android:name="activeSubscription"
+      android:defaultValue="@null"
+      app:argType="com.trynoice.api.client.models.Subscription"
+      app:nullable="true" />
+
     <action
       android:id="@+id/sign_in_form"
       app:destination="@id/sign_in_sign_up_form" />
@@ -170,6 +176,12 @@
       android:name="plan"
       app:argType="com.trynoice.api.client.models.SubscriptionPlan"
       app:nullable="false" />
+
+    <argument
+      android:name="activeSubscription"
+      android:defaultValue="@null"
+      app:argType="com.trynoice.api.client.models.Subscription"
+      app:nullable="true" />
 
   </dialog>
 

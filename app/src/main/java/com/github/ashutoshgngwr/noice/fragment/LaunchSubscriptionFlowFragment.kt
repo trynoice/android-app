@@ -18,6 +18,7 @@ import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.AlreadySubscribedError
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionPlan
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,7 +47,7 @@ class LaunchSubscriptionFlowFragment : BottomSheetDialogFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     isCancelable = false
     viewModel.onLaunchCompleted = this::dismiss
-    viewModel.launchBillingFlow(requireActivity(), args.plan)
+    viewModel.launchBillingFlow(requireActivity(), args.plan, args.activeSubscription)
 
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.launchErrorStrRes
@@ -74,14 +75,18 @@ class LaunchSubscriptionFlowViewModel @Inject constructor(
     )
   }
 
-  internal fun launchBillingFlow(activity: Activity, plan: SubscriptionPlan) {
+  internal fun launchBillingFlow(
+    activity: Activity,
+    plan: SubscriptionPlan,
+    activeSubscription: Subscription?,
+  ) {
     if (launchResource.value != null) {
       return
     }
 
     launchResource.value = Resource.Loading()
     viewModelScope.launch {
-      subscriptionRepository.launchBillingFlow(activity, plan)
+      subscriptionRepository.launchBillingFlow(activity, plan, activeSubscription)
         .flowOn(Dispatchers.IO)
         .onCompletion { onLaunchCompleted.invoke() }
         .collect(launchResource)

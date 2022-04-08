@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.core.net.toUri
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
 import com.trynoice.api.client.NoiceApiClient
+import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionFlowParams
 import com.trynoice.api.client.models.SubscriptionPlan
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +39,11 @@ interface SubscriptionBillingProvider {
    *
    * @see com.trynoice.api.client.apis.SubscriptionApi.create
    */
-  suspend fun launchBillingFlow(activity: Activity, plan: SubscriptionPlan)
+  suspend fun launchBillingFlow(
+    activity: Activity,
+    plan: SubscriptionPlan,
+    activeSubscription: Subscription?,
+  )
 }
 
 /**
@@ -53,9 +58,17 @@ class StripeSubscriptionBillingProvider(
     return apiClient.subscriptions().getPlans(SubscriptionPlan.PROVIDER_STRIPE)
   }
 
-  override suspend fun launchBillingFlow(activity: Activity, plan: SubscriptionPlan) {
+  override suspend fun launchBillingFlow(
+    activity: Activity,
+    plan: SubscriptionPlan,
+    activeSubscription: Subscription?,
+  ) {
     require(plan.provider == SubscriptionPlan.PROVIDER_STRIPE) {
       "stripe provider launched subscription flow for non-stripe plan"
+    }
+
+    require(activeSubscription == null) {
+      "stripe provider doesn't support upgrading subscription plans"
     }
 
     val result = apiClient.subscriptions().create(

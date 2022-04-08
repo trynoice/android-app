@@ -132,10 +132,20 @@ class RealInAppBillingProvider(
   override fun purchase(
     activity: Activity,
     sku: InAppBillingProvider.SkuDetails,
+    oldPurchaseToken: String?,
     obfuscatedAccountId: String?,
   ) {
     val paramsBuilder = BillingFlowParams.newBuilder()
       .setSkuDetails(SkuDetails(sku.originalJSON))
+
+    oldPurchaseToken?.let {
+      paramsBuilder.setSubscriptionUpdateParams(
+        BillingFlowParams.SubscriptionUpdateParams.newBuilder()
+          .setOldSkuPurchaseToken(it)
+          .setReplaceSkusProrationMode(BillingFlowParams.ProrationMode.IMMEDIATE_WITH_TIME_PRORATION)
+          .build()
+      )
+    }
 
     obfuscatedAccountId?.let { paramsBuilder.setObfuscatedAccountId(it) }
     val result = client.launchBillingFlow(activity, paramsBuilder.build())
