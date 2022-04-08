@@ -19,7 +19,7 @@ interface InAppBillingProvider {
   /**
    * Query details of the given [skus].
    *
-   * @return List of [InAppBillingProvider.SkuDetails] for provided [skus].
+   * @return List of [SkuDetails] for provided [skus].
    * @throws InAppBillingProviderException when the query fails.
    */
   suspend fun queryDetails(type: SkuType, skus: List<String>): List<SkuDetails>
@@ -27,9 +27,18 @@ interface InAppBillingProvider {
   /**
    * Starts purchase flow for the given [sku].
    *
+   * @param activity current activity context to launch the billing flow.
+   * @param sku [SkuDetails] of the in-app product or subscription to purchase.
+   * @param oldPurchaseToken purchase token of the active subscription to launch an upgrade flow.
+   * @param obfuscatedAccountId an identifier to identify purchase on the server-side.
    * @throws InAppBillingProviderException on failing to launch the billing flow.
    */
-  fun purchase(activity: Activity, sku: SkuDetails, obfuscatedAccountId: String? = null)
+  fun purchase(
+    activity: Activity,
+    sku: SkuDetails,
+    oldPurchaseToken: String? = null,
+    obfuscatedAccountId: String? = null,
+  )
 
   /**
    * Acknowledges a given purchase.
@@ -109,6 +118,7 @@ object DummyInAppBillingProvider : InAppBillingProvider {
   override fun purchase(
     activity: Activity,
     sku: InAppBillingProvider.SkuDetails,
+    oldPurchaseToken: String?,
     obfuscatedAccountId: String?,
   ) = Unit
 

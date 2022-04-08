@@ -219,11 +219,12 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
         DonationPurchasedCallbackFragmentArgs(purchase).toBundle()
       )
     } else if (purchase.obfuscatedAccountId != null) {
+      // TODO: how to distinguish between subscription upgrade purchases and new subscription purchases?
       navController.navigate(
         R.id.subscription_billing_callback,
         SubscriptionBillingCallbackFragmentArgs(
           SubscriptionBillingCallbackFragment.ACTION_SUCCESS,
-          purchase.obfuscatedAccountId.toLong()
+          purchase.obfuscatedAccountId.toLong(),
         ).toBundle(),
       )
     }

@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.provider
 
 import android.app.Activity
 import com.trynoice.api.client.NoiceApiClient
+import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionFlowParams
 import com.trynoice.api.client.models.SubscriptionPlan
 
@@ -18,7 +19,11 @@ class GooglePlaySubscriptionBillingProvider(
     return apiClient.subscriptions().getPlans(SubscriptionPlan.PROVIDER_GOOGLE_PLAY)
   }
 
-  override suspend fun launchBillingFlow(activity: Activity, plan: SubscriptionPlan) {
+  override suspend fun launchBillingFlow(
+    activity: Activity,
+    plan: SubscriptionPlan,
+    activeSubscription: Subscription?,
+  ) {
     require(plan.provider == SubscriptionPlan.PROVIDER_GOOGLE_PLAY) {
       "google play provider launched billing flow for non-google-play subscription plan"
     }
@@ -27,8 +32,21 @@ class GooglePlaySubscriptionBillingProvider(
       "subscription plan has null google play subscription id"
     }
 
+    val activePurchaseToken = activeSubscription?.googlePlayPurchaseToken
+    val subscription: Subscription = if (activePurchaseToken == null) {
+      apiClient.subscriptions()
+        .create(SubscriptionFlowParams(plan.id))
+        .subscription
+    } else {
+      activeSubscription
+    }
+
     val skuDetails = billingProvider.queryDetails(InAppBillingProvider.SkuType.SUBS, listOf(sku))
-    val result = apiClient.subscriptions().create(SubscriptionFlowParams(plan.id))
-    billingProvider.purchase(activity, skuDetails.first(), result.subscription.id.toString())
+    billingProvider.purchase(
+      activity,
+      skuDetails.first(),
+      oldPurchaseToken = activePurchaseToken,
+      obfuscatedAccountId = subscription.id.toString(),
+    )
   }
 }

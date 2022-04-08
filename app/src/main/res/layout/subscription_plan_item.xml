@@ -24,8 +24,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginHorizontal="28dp"
-      android:layout_marginVertical="20dp">
+      android:layout_marginHorizontal="32dp"
+      android:layout_marginVertical="24dp">
 
       <TextView
         android:id="@+id/billing_period"

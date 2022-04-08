@@ -67,8 +67,11 @@ class SubscriptionRepository @Inject constructor(
   fun launchBillingFlow(
     activity: Activity,
     plan: SubscriptionPlan,
+    activeSubscription: Subscription?,
   ): Flow<Resource<Unit>> = fetchNetworkBoundResource(
-    loadFromNetwork = { subscriptionBillingProvider.launchBillingFlow(activity, plan) },
+    loadFromNetwork = {
+      subscriptionBillingProvider.launchBillingFlow(activity, plan, activeSubscription)
+    },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "launchSubscriptionFlow:", e)
       when {
