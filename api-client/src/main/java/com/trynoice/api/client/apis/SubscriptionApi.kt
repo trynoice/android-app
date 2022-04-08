@@ -140,9 +140,10 @@ interface SubscriptionApi {
    *  - 500: internal server error.
    *
    * @param subscriptionId id of the subscription to cancel.
+   * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
   @NeedsAccessToken
   @DELETE("/v1/subscriptions/{subscriptionId}")
-  suspend fun cancel(@Path("subscriptionId") subscriptionId: Long): Response<Unit>
+  suspend fun cancel(@Path("subscriptionId") subscriptionId: Long)
 }
