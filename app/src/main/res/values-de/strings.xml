@@ -105,7 +105,7 @@
     <string name="app_theme_light">Hell</string>
     <string name="app_theme_dark">Dunkel</string>
     <string name="app_theme_system_default">Systemstandard</string>
-    <string name="app_description">Entspannen Sie sich und steigern Sie Ihre Produktivität mit natürlichen, beruhigenden Geräuschen.</string>
+    <string name="app_description">Entspannen Sie sich und verbessern Sie Ihre Konzentration mit natürlichen beruhigenden Geräuschen.</string>
     <string name="appintro__chromecast_desc">
     Benutze Noice um die Stimmung zu anderen Chromecast aktivierten Geräten wie Lautsprechern, TVs, etc zu übertragen.
   </string>
