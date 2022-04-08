@@ -20,6 +20,8 @@ import java.util.*
  * present unless the subscription is inactive.
  * @param stripeCustomerPortalUrl Stripe customer portal URL to manage subscriptions. only present
  * when the subscription is active and provided by Stripe.
+ * @param googlePlayPurchaseToken Google Play purchase token corresponding to this subscription
+ * purchase. only present when the subscription is active and provided by Google Play.
  */
 data class Subscription(
 
@@ -48,5 +50,8 @@ data class Subscription(
   val renewsAt: Date? = null,
 
   @Expose
-  val stripeCustomerPortalUrl: String? = null
+  val stripeCustomerPortalUrl: String? = null,
+
+  @Expose
+  val googlePlayPurchaseToken: String? = null,
 ) : Serializable

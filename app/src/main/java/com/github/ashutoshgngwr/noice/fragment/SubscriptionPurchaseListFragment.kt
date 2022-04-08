@@ -100,7 +100,8 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
   }
 
   override fun onClickUpgrade(subscription: Subscription) {
-    TODO("Not yet implemented")
+    val args = ViewSubscriptionPlansFragmentArgs(subscription).toBundle()
+    mainNavController.navigate(R.id.view_subscription_plans, args)
   }
 
   override fun onClickCancel(subscription: Subscription) {
