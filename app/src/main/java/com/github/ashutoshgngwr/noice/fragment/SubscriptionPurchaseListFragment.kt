@@ -1,12 +1,10 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -31,11 +29,11 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseItemBinding
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseListFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseLoadingItemBinding
+import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
 import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
-import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundError
 import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionPlan
 import dagger.hilt.android.AndroidEntryPoint
@@ -100,10 +98,7 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
   }
 
   override fun onClickManage(subscription: Subscription) {
-    activity?.startActivity(
-      Intent(Intent.ACTION_VIEW)
-        .setData(subscription.stripeCustomerPortalUrl?.toUri())
-    )
+    subscription.stripeCustomerPortalUrl?.also { activity?.startCustomTab(it) }
   }
 
   override fun onClickUpgrade(subscription: Subscription) {
@@ -114,6 +109,10 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
   override fun onClickCancel(subscription: Subscription) {
     val args = CancelSubscriptionFragmentArgs(subscription).toBundle()
     mainNavController.navigate(R.id.cancel_subscription, args)
+  }
+
+  companion object {
+    internal val URI = "noice://subscriptions/purchases"
   }
 }
 
@@ -259,19 +258,21 @@ class SubscriptionPurchasePagingDataSource(
       .flowOn(Dispatchers.IO)
       .last()
 
-    if (resource.error is SubscriptionNotFoundError) { // no more results.
-      return LoadResult.Page(emptyList(), prevKey = null, nextKey = null)
+    val nextPage = if (resource.data?.isNotEmpty() == true) {
+      page + 1
+    } else {
+      null
     }
 
     if (resource.data != null && networkInfoProvider.isOffline.value) { // offline mode
-      return LoadResult.Page(resource.data, prevKey = null, nextKey = page + 1)
+      return LoadResult.Page(resource.data, prevKey = null, nextKey = nextPage)
     }
 
     if (resource.error != null || resource.data == null) {
       return LoadResult.Error(resource.error ?: throw NullPointerException("resource data is null"))
     }
 
-    return LoadResult.Page(resource.data, prevKey = null, nextKey = page + 1)
+    return LoadResult.Page(resource.data, prevKey = null, nextKey = nextPage)
   }
 }
 

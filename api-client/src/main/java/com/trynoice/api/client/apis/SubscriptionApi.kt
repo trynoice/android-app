@@ -52,7 +52,7 @@ interface SubscriptionApi {
    *
    * Since clients may desire to use created subscription's id in `successUrl` and `cancelUrl`
    * callbacks, the server makes it available through `{subscriptionId}` template string in their
-   * values, e.g. `https://api.test/success?id={subscriptionId}`. The server will replace the
+   * values, e.g. `https://api.test/success?id=%7BsubscriptionId%7D`. The server will replace the
    * template with the created subscription's id before creating a Stripe checkout session, i.e. it
    * will transform the previous url to `https://api.test/success?id=1`, assuming the created
    * subscription's id is `1`.
@@ -84,13 +84,13 @@ interface SubscriptionApi {
    *  - 200: a page of subscription purchases.
    *  - 400: request is not valid.
    *  - 401: access token is invalid.
-   *  - 404: the requested page number is higher than available.
    *  - 500: internal server error.
    *
    * @param onlyActive return only the active subscription (single instance).
-   * @param stripeReturnUrl redirect URL for exiting Stripe customer portal.
-   * @param page 0-indexed page number. Causes `HTTP 404` on exceeding the available limit.
-   * @return a page of subscription purchases.
+   * @param stripeReturnUrl optional redirect URL for exiting Stripe customer portal.
+   * @param page 0-indexed page number.
+   * @return a list of subscription purchases; empty list if the page number is higher than
+   * available data.
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
@@ -99,7 +99,7 @@ interface SubscriptionApi {
   suspend fun list(
     @Query("onlyActive") onlyActive: Boolean = false,
     @Query("page") page: Int = 0,
-    @Query("stripeReturnUrl") stripeReturnUrl: String? = null
+    @Query("stripeReturnUrl") stripeReturnUrl: String? = null,
   ): List<Subscription>
 
   /**
@@ -114,7 +114,7 @@ interface SubscriptionApi {
    *  - 500: internal server error.
    *
    * @param subscriptionId id of the subscription entity.
-   * @param stripeReturnUrl optional redirect URL for exiting Stripe customer portal. (optional)
+   * @param stripeReturnUrl optional redirect URL for exiting Stripe customer portal.
    * @return the requested [Subscription] entity.
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
@@ -123,7 +123,7 @@ interface SubscriptionApi {
   @GET("/v1/subscriptions/{subscriptionId}")
   suspend fun get(
     @Path("subscriptionId") subscriptionId: Long,
-    @Query("stripeReturnUrl") stripeReturnUrl: String? = null
+    @Query("stripeReturnUrl") stripeReturnUrl: String? = null,
   ): Subscription
 
   /**

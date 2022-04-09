@@ -1,7 +1,9 @@
 package com.github.ashutoshgngwr.noice.repository
 
 import android.app.Activity
+import android.net.Uri
 import android.util.Log
+import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
 import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.repository.errors.AlreadySubscribedError
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
@@ -93,7 +95,9 @@ class SubscriptionRepository @Inject constructor(
    */
   fun get(subscriptionId: Long): Flow<Resource<Subscription>> = fetchNetworkBoundResource(
     loadFromCache = { cacheStore.getAs("${SUBSCRIPTION_KEY_PREFIX}/${subscriptionId}") },
-    loadFromNetwork = { apiClient.subscriptions().get(subscriptionId, STRIPE_RETURN_URL) },
+    loadFromNetwork = {
+      apiClient.subscriptions().get(subscriptionId, stripeReturnUrl = STRIPE_RETURN_URL)
+    },
     cacheNetworkResult = { s -> cacheStore.put("${SUBSCRIPTION_KEY_PREFIX}/${subscriptionId}", s) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "get:", e)
@@ -118,7 +122,9 @@ class SubscriptionRepository @Inject constructor(
    */
   fun list(page: Int = 0): Flow<Resource<List<Subscription>>> = fetchNetworkBoundResource(
     loadFromCache = { cacheStore.getAs("${SUBSCRIPTION_PAGE_PREFIX}/$page") },
-    loadFromNetwork = { apiClient.subscriptions().list(false, page, STRIPE_RETURN_URL) },
+    loadFromNetwork = {
+      apiClient.subscriptions().list(false, page, stripeReturnUrl = STRIPE_RETURN_URL)
+    },
     cacheNetworkResult = { cacheStore.put("${SUBSCRIPTION_PAGE_PREFIX}/$page", it) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "list:", e)
@@ -183,6 +189,10 @@ class SubscriptionRepository @Inject constructor(
     private const val PLANS_CACHE_KEY = "${SUBSCRIPTION_KEY_PREFIX}/plans"
     private const val SUBSCRIPTION_PAGE_PREFIX = "${SUBSCRIPTION_KEY_PREFIX}/page"
     private const val IS_SUBSCRIBED_KEY = "${SUBSCRIPTION_KEY_PREFIX}/is_subscribed"
-    private const val STRIPE_RETURN_URL = "https://trynoice.com/subscriptions"
+
+    private val STRIPE_RETURN_URL = Uri.parse("https://trynoice.com/redirect")
+      .buildUpon()
+      .appendQueryParameter("uri", SubscriptionPurchaseListFragment.URI)
+      .toString()
   }
 }

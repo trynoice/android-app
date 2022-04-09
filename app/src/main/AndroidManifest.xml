@@ -67,23 +67,7 @@
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
 
-        <data
-          android:host="preset"
-          android:scheme="noice" />
-
-      </intent-filter>
-
-      <intent-filter android:autoVerify="true">
-
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="trynoice.com"
-          android:path="/subscriptions/stripe/callback"
-          android:scheme="https" />
+        <data android:scheme="noice" />
 
       </intent-filter>
 
@@ -110,7 +94,7 @@
       android:exported="true"
       android:theme="@style/Theme.App.SignInLinkHandler">
 
-      <intent-filter>
+      <intent-filter android:autoVerify="true">
 
         <action android:name="android.intent.action.VIEW" />
 
@@ -119,7 +103,7 @@
 
         <data
           android:host="trynoice.com"
-          android:pathPrefix="/sign-in"
+          android:path="/sign-in"
           android:scheme="https" />
 
       </intent-filter>
