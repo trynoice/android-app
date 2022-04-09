@@ -51,7 +51,10 @@ class SubscriptionBillingCallbackFragment : BottomSheetDialogFragment() {
     binding.viewModel = viewModel
     viewModel.onDismissClicked = {
       dismiss()
-      mainNavController.navigate(R.id.subscription_purchase_list)
+
+      if (!viewModel.wasCancelled) {
+        mainNavController.navigate(R.id.subscription_purchase_list)
+      }
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
@@ -65,16 +68,19 @@ class SubscriptionBillingCallbackFragment : BottomSheetDialogFragment() {
     internal const val ACTION_SUCCESS = "success"
     internal const val ACTION_CANCEL = "cancel"
 
-    internal const val STRIPE_CALLBACK_URL = "https://trynoice.com/subscriptions/stripe/callback"
-    internal const val STRIPE_CANCEL_CALLBACK_URL = STRIPE_CALLBACK_URL +
-      "?${ACTION_PARAM}=${ACTION_CANCEL}"
+    private val BASE_URI = "noice://subscriptions/stripe/callback"
 
-    internal const val STRIPE_SUCCESS_CALLBACK_URL = STRIPE_CALLBACK_URL +
-      "?${ACTION_PARAM}=${ACTION_SUCCESS}&${SUBSCRIPTION_ID_PARAM}={subscriptionId}"
+    internal val CANCEL_URI = "${BASE_URI}?${ACTION_PARAM}=${ACTION_CANCEL}"
+    internal val SUCCESS_URI = "${BASE_URI}?${ACTION_PARAM}=${ACTION_SUCCESS}" +
+      "&${SUBSCRIPTION_ID_PARAM}={subscriptionId}"
+
+    fun canHandleUri(uri: String): Boolean {
+      return uri.startsWith(BASE_URI)
+    }
 
     /**
-     * Builder function to build [SubscriptionBillingCallbackFragmentArgs] from a
-     * [STRIPE_CALLBACK_URL] ([STRIPE_SUCCESS_CALLBACK_URL] or [STRIPE_CANCEL_CALLBACK_URL]).
+     * Builder function to build [SubscriptionBillingCallbackFragmentArgs] from a callback uri
+     * ([SUCCESS_URI] or [CANCEL_URI]).
      */
     fun args(uri: Uri): Bundle {
       return SubscriptionBillingCallbackFragmentArgs(

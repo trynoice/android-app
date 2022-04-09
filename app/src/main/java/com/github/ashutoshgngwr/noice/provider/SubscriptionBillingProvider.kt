@@ -1,8 +1,8 @@
 package com.github.ashutoshgngwr.noice.provider
 
 import android.app.Activity
-import android.content.Intent
-import androidx.core.net.toUri
+import android.net.Uri
+import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
 import com.trynoice.api.client.NoiceApiClient
 import com.trynoice.api.client.models.Subscription
@@ -80,8 +80,8 @@ class StripeSubscriptionBillingProvider(
     val result = apiClient.subscriptions().create(
       SubscriptionFlowParams(
         planId = plan.id,
-        successUrl = SubscriptionBillingCallbackFragment.STRIPE_SUCCESS_CALLBACK_URL,
-        cancelUrl = SubscriptionBillingCallbackFragment.STRIPE_CANCEL_CALLBACK_URL,
+        successUrl = SUCCESS_REDIRECT_URL,
+        cancelUrl = CANCEL_REDIRECT_URL,
       )
     )
 
@@ -90,14 +90,23 @@ class StripeSubscriptionBillingProvider(
     }
 
     withContext(Dispatchers.Main) {
-      activity.startActivity(
-        Intent(Intent.ACTION_VIEW)
-          .setData(checkoutSessionUrl.toUri())
-      )
+      activity.startCustomTab(checkoutSessionUrl)
     }
   }
 
   override fun canUpgrade(s: Subscription): Boolean {
     return false
+  }
+
+  companion object {
+    private val SUCCESS_REDIRECT_URL = Uri.parse("https://trynoice.com/redirect")
+      .buildUpon()
+      .appendQueryParameter("uri", SubscriptionBillingCallbackFragment.SUCCESS_URI)
+      .toString()
+
+    private val CANCEL_REDIRECT_URL = Uri.parse("https://trynoice.com/redirect")
+      .buildUpon()
+      .appendQueryParameter("uri", SubscriptionBillingCallbackFragment.CANCEL_URI)
+      .toString()
   }
 }

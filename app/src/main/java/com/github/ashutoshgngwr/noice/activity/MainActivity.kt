@@ -24,6 +24,7 @@ import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.fragment.DonationPurchasedCallbackFragmentArgs
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragmentArgs
+import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
@@ -185,11 +186,15 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
           playbackController.playPresetFromUri(uri)
         }
 
-        data.startsWith(SubscriptionBillingCallbackFragment.STRIPE_CALLBACK_URL) -> {
+        SubscriptionBillingCallbackFragment.canHandleUri(data) -> {
           navController.navigate(
             R.id.subscription_billing_callback,
             SubscriptionBillingCallbackFragment.args(uri),
           )
+        }
+
+        SubscriptionPurchaseListFragment.URI == data -> {
+          navController.navigate(R.id.subscription_purchase_list)
         }
       }
     }
