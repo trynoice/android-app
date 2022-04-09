@@ -44,6 +44,12 @@ interface SubscriptionBillingProvider {
     plan: SubscriptionPlan,
     activeSubscription: Subscription?,
   )
+
+  /**
+   * Returns whether [s] can be upgraded using in-app flows offered by the current billing provider
+   * implementation.
+   */
+  fun canUpgrade(s: Subscription): Boolean
 }
 
 /**
@@ -89,5 +95,9 @@ class StripeSubscriptionBillingProvider(
           .setData(checkoutSessionUrl.toUri())
       )
     }
+  }
+
+  override fun canUpgrade(s: Subscription): Boolean {
+    return false
   }
 }

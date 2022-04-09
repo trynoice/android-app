@@ -1,10 +1,12 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -30,11 +32,10 @@ import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseItemBindin
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseListFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseLoadingItemBinding
 import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
+import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundError
-import com.github.ashutoshgngwr.noice.repository.isManageable
-import com.github.ashutoshgngwr.noice.repository.isUpgradeable
 import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionPlan
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,13 +59,16 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
   @set:Inject
   internal lateinit var subscriptionRepository: SubscriptionRepository
 
+  @set:Inject
+  internal lateinit var subscriptionBillingProvider: SubscriptionBillingProvider
+
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = SubscriptionPurchaseListFragmentBinding.inflate(inflater, container, false)
     return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    val adapter = SubscriptionPurchaseListAdapter(layoutInflater, this)
+    val adapter = SubscriptionPurchaseListAdapter(layoutInflater, this, subscriptionBillingProvider)
     val headerAdapter = SubscriptionPurchaseListLoadStateAdapter(layoutInflater, adapter::retry)
     val footerAdapter = SubscriptionPurchaseListLoadStateAdapter(layoutInflater, adapter::retry)
     binding.list.adapter = ConcatAdapter(headerAdapter, adapter, footerAdapter)
@@ -96,7 +100,10 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
   }
 
   override fun onClickManage(subscription: Subscription) {
-    subscriptionRepository.launchManagementFlow(requireActivity(), subscription)
+    activity?.startActivity(
+      Intent(Intent.ACTION_VIEW)
+        .setData(subscription.stripeCustomerPortalUrl?.toUri())
+    )
   }
 
   override fun onClickUpgrade(subscription: Subscription) {
@@ -124,6 +131,7 @@ class SubscriptionPurchaseListViewModel @Inject constructor(
 class SubscriptionPurchaseListAdapter(
   private val layoutInflater: LayoutInflater,
   private val actionClickListener: SubscriptionActionClickListener,
+  private val subscriptionBillingProvider: SubscriptionBillingProvider,
 ) : PagingDataAdapter<Subscription, SubscriptionPurchaseViewHolder>(SubscriptionComparator) {
 
   override fun onBindViewHolder(holder: SubscriptionPurchaseViewHolder, position: Int) {
@@ -132,13 +140,14 @@ class SubscriptionPurchaseListAdapter(
 
   override fun onCreateViewHolder(parent: ViewGroup, type: Int): SubscriptionPurchaseViewHolder {
     val binding = SubscriptionPurchaseItemBinding.inflate(layoutInflater, parent, false)
-    return SubscriptionPurchaseViewHolder(binding, actionClickListener)
+    return SubscriptionPurchaseViewHolder(binding, actionClickListener, subscriptionBillingProvider)
   }
 }
 
 class SubscriptionPurchaseViewHolder(
   private val binding: SubscriptionPurchaseItemBinding,
   private val actionClickListener: SubscriptionActionClickListener,
+  private val subscriptionBillingProvider: SubscriptionBillingProvider,
 ) : RecyclerView.ViewHolder(binding.root) {
 
   fun bind(s: Subscription?) {
@@ -207,9 +216,9 @@ class SubscriptionPurchaseViewHolder(
     binding.paymentPending.isVisible = s.isPaymentPending
     binding.actionButtonContainer.isVisible = s.isActive
     if (s.isActive) {
-      binding.manage.isVisible = s.isManageable()
+      binding.manage.isVisible = s.stripeCustomerPortalUrl != null
       binding.manage.setOnClickListener { actionClickListener.onClickManage(s) }
-      binding.changePlan.isVisible = s.isUpgradeable()
+      binding.changePlan.isVisible = subscriptionBillingProvider.canUpgrade(s)
       binding.changePlan.setOnClickListener { actionClickListener.onClickUpgrade(s) }
       binding.cancel.isVisible = s.isAutoRenewing
       binding.cancel.setOnClickListener { actionClickListener.onClickCancel(s) }

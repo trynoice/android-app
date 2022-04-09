@@ -5,7 +5,6 @@ import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionFlowParams
 import com.trynoice.api.client.models.SubscriptionFlowResult
 import com.trynoice.api.client.models.SubscriptionPlan
-import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
