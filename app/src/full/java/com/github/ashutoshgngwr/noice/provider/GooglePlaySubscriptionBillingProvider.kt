@@ -49,4 +49,8 @@ class GooglePlaySubscriptionBillingProvider(
       obfuscatedAccountId = subscription.id.toString(),
     )
   }
+
+  override fun canUpgrade(s: Subscription): Boolean {
+    return s.isActive && s.plan.provider == SubscriptionPlan.PROVIDER_GOOGLE_PLAY
+  }
 }

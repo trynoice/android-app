@@ -1,9 +1,7 @@
 package com.github.ashutoshgngwr.noice.repository
 
 import android.app.Activity
-import android.content.Intent
 import android.util.Log
-import androidx.core.net.toUri
 import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.repository.errors.AlreadySubscribedError
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
@@ -156,20 +154,6 @@ class SubscriptionRepository @Inject constructor(
   )
 
   /**
-   * Launches an intent to open the external portal for managing the subscription.
-   */
-  fun launchManagementFlow(activity: Activity, subscription: Subscription) {
-    if (!subscription.isManageable()) {
-      throw IllegalArgumentException("subscription is not manageable")
-    }
-
-    activity.startActivity(
-      Intent(Intent.ACTION_VIEW)
-        .setData(subscription.stripeCustomerPortalUrl?.toUri())
-    )
-  }
-
-  /**
    * Returns a flow that emits whether the authenticated user owns an active subscription as a
    * [Resource].
    *
@@ -201,24 +185,4 @@ class SubscriptionRepository @Inject constructor(
     private const val IS_SUBSCRIBED_KEY = "${SUBSCRIPTION_KEY_PREFIX}/is_subscribed"
     private const val STRIPE_RETURN_URL = "https://trynoice.com/subscriptions"
   }
-}
-
-/**
- * Returns whether this [Subscription] is manageable through an external portal, e.g. Stripe
- * customer portal.
- *
- * @see SubscriptionRepository.launchManagementFlow
- */
-fun Subscription.isManageable(): Boolean {
-  return isActive
-    && plan.provider == SubscriptionPlan.PROVIDER_STRIPE
-    && stripeCustomerPortalUrl != null
-}
-
-/**
- * Returns whether this [Subscription] can be upgraded via an internal flow, e.g. Google Play In-App
- * billing flow.
- */
-fun Subscription.isUpgradeable(): Boolean {
-  return isActive && plan.provider == SubscriptionPlan.PROVIDER_GOOGLE_PLAY
 }

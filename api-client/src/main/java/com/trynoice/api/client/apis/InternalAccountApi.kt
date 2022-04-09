@@ -3,7 +3,6 @@ package com.trynoice.api.client.apis
 import com.trynoice.api.client.auth.annotations.NeedsAccessToken
 import com.trynoice.api.client.auth.annotations.NeedsRefreshToken
 import com.trynoice.api.client.models.AuthCredentials
-import retrofit2.Response
 import retrofit2.http.GET
 
 /**
