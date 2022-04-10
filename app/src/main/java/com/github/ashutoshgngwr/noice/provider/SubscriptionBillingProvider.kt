@@ -31,6 +31,9 @@ interface SubscriptionBillingProvider {
    * entity. It then executes provider specific code to launch provider's billing flow. It returns
    * once the billing flow is successfully launched.
    *
+   * If [activeSubscription] is not `null`, it initiates a subscription upgrade flow to change the
+   * billing plan for the [activeSubscription].
+   *
    * @throws retrofit2.HttpException on API error. For details about HTTP error codes, refer
    * [create-subscription operation][com.trynoice.api.client.apis.SubscriptionApi.create].
    * @throws java.io.IOException on network error.
