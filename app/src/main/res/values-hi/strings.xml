@@ -89,7 +89,7 @@
     <string name="app_theme_light">हल्का रंग</string>
     <string name="app_theme_dark">गहरा रंग</string>
     <string name="app_theme_system_default">सिस्टम डिफ़ॉल्ट</string>
-    <string name="app_description">कम से कम पृष्ठभूमि शोर के साथ, उत्पादकता और विश्राम को बढ़ावा दे।</string>
+    <string name="app_description">पृष्ठभूमि शोर के साथ आराम और फोकस को बढ़ावा दें।</string>
     <string name="appintro__chromecast_desc">
        अन्य क्रोमकास्ट सक्षम डिवाइस जैसे स्पीकर, टीवी, आदि पर ऑडियो चलाने के लिए ऐप का उपयोग करें।
   </string>
