@@ -11,7 +11,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignInFormFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +25,6 @@ class SignInFormFragment : Fragment() {
 
   private lateinit var binding: SignInFormFragmentBinding
   private val viewModel: SignInFormViewModel by viewModels()
-  private val navArgs: SignInFormFragmentArgs by navArgs()
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = SignInFormFragmentBinding.inflate(inflater, container, false)
@@ -39,7 +37,7 @@ class SignInFormFragment : Fragment() {
     (activity as? AppCompatActivity)
       ?.supportActionBar
       ?.setTitle(
-        if (navArgs.isReturningUser) {
+        if (viewModel.isReturningUser) {
           R.string.sign_in
         } else {
           R.string.sign_up

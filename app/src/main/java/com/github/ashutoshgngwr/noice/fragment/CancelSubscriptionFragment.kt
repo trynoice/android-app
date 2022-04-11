@@ -12,7 +12,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.navArgs
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.CancelSubscriptionFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
@@ -25,6 +24,7 @@ import com.trynoice.api.client.models.Subscription
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -41,7 +41,6 @@ class CancelSubscriptionFragment : BottomSheetDialogFragment() {
 
   private lateinit var binding: CancelSubscriptionFragmentBinding
   private val viewModel: CancelSubscriptionViewModel by viewModels()
-  private val args: CancelSubscriptionFragmentArgs by navArgs()
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = CancelSubscriptionFragmentBinding.inflate(inflater, container, false)
@@ -53,7 +52,7 @@ class CancelSubscriptionFragment : BottomSheetDialogFragment() {
     binding.viewModel = viewModel
     binding.confirmationMessage.text = getString(
       R.string.cancel_subscription_confirmation,
-      args.subscription.renewsAt?.let {
+      viewModel.subscription.renewsAt?.let {
         val fmtFlags = DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME
         DateUtils.formatDateTime(requireContext(), it.time, fmtFlags)
       }
@@ -97,7 +96,7 @@ class CancelSubscriptionViewModel @Inject constructor(
     emit(r is Resource.Loading)
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
-  internal val errorStrRes: StateFlow<Int?> = cancelResource.transform { r ->
+  internal val errorStrRes: Flow<Int?> = cancelResource.transform { r ->
     emit(
       when (r?.error) {
         null -> null
@@ -106,7 +105,7 @@ class CancelSubscriptionViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }
 
   fun cancel() {
     viewModelScope.launch {
