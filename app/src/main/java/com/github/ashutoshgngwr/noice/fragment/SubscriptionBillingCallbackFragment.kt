@@ -68,10 +68,10 @@ class SubscriptionBillingCallbackFragment : BottomSheetDialogFragment() {
     internal const val ACTION_SUCCESS = "success"
     internal const val ACTION_CANCEL = "cancel"
 
-    private val BASE_URI = "noice://subscriptions/stripe/callback"
+    private const val BASE_URI = "noice://subscriptions/stripe/callback"
 
-    internal val CANCEL_URI = "${BASE_URI}?${ACTION_PARAM}=${ACTION_CANCEL}"
-    internal val SUCCESS_URI = "${BASE_URI}?${ACTION_PARAM}=${ACTION_SUCCESS}" +
+    internal const val CANCEL_URI = "${BASE_URI}?${ACTION_PARAM}=${ACTION_CANCEL}"
+    internal const val SUCCESS_URI = "${BASE_URI}?${ACTION_PARAM}=${ACTION_SUCCESS}" +
       "&${SUBSCRIPTION_ID_PARAM}={subscriptionId}"
 
     fun canHandleUri(uri: String): Boolean {

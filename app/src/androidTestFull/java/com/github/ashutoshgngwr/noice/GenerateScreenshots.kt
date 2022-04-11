@@ -1,8 +1,6 @@
 package com.github.ashutoshgngwr.noice
 
-import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.content.edit

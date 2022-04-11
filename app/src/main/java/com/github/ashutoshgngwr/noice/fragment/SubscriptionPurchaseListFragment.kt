@@ -112,7 +112,7 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
   }
 
   companion object {
-    internal val URI = "noice://subscriptions/purchases"
+    internal const val URI = "noice://subscriptions/purchases"
   }
 }
 

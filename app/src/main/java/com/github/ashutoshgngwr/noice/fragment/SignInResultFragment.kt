@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.navArgs
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignInResultFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
@@ -38,7 +37,6 @@ class SignInResultFragment : Fragment() {
 
   private lateinit var binding: SignInResultFragmentBinding
   private val viewModel: SignInResultViewModel by viewModels()
-  private val navArgs: SignInResultFragmentArgs by navArgs()
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = SignInResultFragmentBinding.inflate(inflater, container, false)
@@ -51,7 +49,7 @@ class SignInResultFragment : Fragment() {
     (activity as? AppCompatActivity)
       ?.supportActionBar
       ?.setTitle(
-        if (navArgs.isReturningUser) {
+        if (viewModel.isReturningUser) {
           R.string.sign_in
         } else {
           R.string.sign_up

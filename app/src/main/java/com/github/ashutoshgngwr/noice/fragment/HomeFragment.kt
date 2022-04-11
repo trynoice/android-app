@@ -38,9 +38,7 @@ class HomeFragment : Fragment() {
 
   private val navArgs: HomeFragmentArgs by navArgs()
   private val homeNavController: NavController by lazy {
-    val navHostFragment = binding.homeNavHostFragment.getFragment<NavHostFragment>()
-    requireNotNull(navHostFragment) { "failed to get the home NavHostFragment from the view tree" }
-    navHostFragment.navController
+    binding.homeNavHostFragment.getFragment<NavHostFragment>().navController
   }
 
   private val homeNavGraph: NavGraph by lazy {

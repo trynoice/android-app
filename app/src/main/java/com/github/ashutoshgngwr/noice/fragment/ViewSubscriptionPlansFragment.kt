@@ -15,7 +15,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPlanItemBinding
 import com.github.ashutoshgngwr.noice.databinding.ViewSubscriptionPlansFragmentBinding
@@ -26,6 +25,7 @@ import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.google.android.material.card.MaterialCardView
+import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionPlan
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,7 +46,6 @@ class ViewSubscriptionPlansFragment : Fragment() {
 
   private lateinit var binding: ViewSubscriptionPlansFragmentBinding
   private val viewModel: ViewSubscriptionPlansViewModel by viewModels()
-  private val args: ViewSubscriptionPlansFragmentArgs by navArgs()
   private val mainNavController: NavController by lazy {
     Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
   }
@@ -62,7 +61,7 @@ class ViewSubscriptionPlansFragment : Fragment() {
     viewModel.onSignInClicked = { mainNavController.navigate(R.id.sign_in_form) }
     viewModel.onSignUpClicked = { mainNavController.navigate(R.id.sign_up_form) }
     viewModel.onPlanSelectedListener = OnPlanSelectedListener { plan ->
-      val args = LaunchSubscriptionFlowFragmentArgs(plan, args.activeSubscription)
+      val args = LaunchSubscriptionFlowFragmentArgs(plan, viewModel.activeSubscription)
       mainNavController.navigate(R.id.launch_subscription_flow, args.toBundle())
     }
 
@@ -134,7 +133,7 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
   var onSignUpClicked: () -> Unit = {}
   var onPlanSelectedListener = OnPlanSelectedListener {}
   val isSignedIn = accountRepository.isSignedIn()
-  val activePlan: SubscriptionPlan?
+  val activeSubscription: Subscription?
 
   private val plansResource = MutableStateFlow<Resource<List<SubscriptionPlan>>>(Resource.Loading())
 
@@ -159,7 +158,7 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
 
   init {
     val args = ViewSubscriptionPlansFragmentArgs.fromSavedStateHandle(savedStateHandle)
-    activePlan = args.activeSubscription?.plan
+    activeSubscription = args.activeSubscription
 
     viewModelScope.launch {
       networkInfoProvider.isOnline.collect {

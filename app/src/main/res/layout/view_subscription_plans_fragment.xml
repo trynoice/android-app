@@ -39,7 +39,7 @@
         android:orientation="vertical">
 
         <TextView
-          style="@style/TextAppearance.App.SubscriptionBenefit"
+          style="@style/Widget.App.TextView.SubscriptionBenefit"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="@string/benefit_0"
@@ -50,7 +50,7 @@
           android:layout_height="8dp" />
 
         <TextView
-          style="@style/TextAppearance.App.SubscriptionBenefit"
+          style="@style/Widget.App.TextView.SubscriptionBenefit"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:drawablePadding="16dp"
@@ -63,7 +63,7 @@
           android:layout_height="8dp" />
 
         <TextView
-          style="@style/TextAppearance.App.SubscriptionBenefit"
+          style="@style/Widget.App.TextView.SubscriptionBenefit"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:drawablePadding="16dp"
@@ -103,7 +103,7 @@
           android:layout_height="wrap_content"
           android:animateLayoutChanges="true"
           android:orientation="vertical"
-          app:activePlan="@{viewModel.activePlan}"
+          app:activePlan="@{viewModel.activeSubscription.plan}"
           app:canClickItems="@{viewModel.isSignedIn}"
           app:isVisible="@{!viewModel.plans.isEmpty()}"
           app:onPlanSelected="@{viewModel.onPlanSelectedListener}"
