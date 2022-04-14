@@ -67,21 +67,22 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     val adapter = SubscriptionPurchaseListAdapter(layoutInflater, this, subscriptionBillingProvider)
-    val headerAdapter = SubscriptionPurchaseListLoadStateAdapter(layoutInflater, adapter::retry)
     val footerAdapter = SubscriptionPurchaseListLoadStateAdapter(layoutInflater, adapter::retry)
-    binding.list.adapter = ConcatAdapter(headerAdapter, adapter, footerAdapter)
+    binding.list.adapter = ConcatAdapter(adapter, footerAdapter)
     adapter.addLoadStateListener { loadStates ->
-      headerAdapter.loadState = loadStates.refresh
+      binding.swipeContainer.isRefreshing = loadStates.source.refresh is LoadState.Loading
       footerAdapter.loadState = loadStates.append
 
       val isListEmpty = loadStates.source.refresh is LoadState.NotLoading
         && loadStates.append.endOfPaginationReached
         && adapter.itemCount < 1
 
-      binding.list.isVisible = !isListEmpty
+      binding.swipeContainer.isVisible = !isListEmpty
       binding.emptyListIndicator.isVisible = isListEmpty
     }
 
+    binding.swipeContainer.setColorSchemeResources(R.color.primary)
+    binding.swipeContainer.setOnRefreshListener(adapter::refresh)
     binding.viewSubscriptionPlans.setOnClickListener {
       mainNavController.navigate(R.id.view_subscription_plans)
     }
