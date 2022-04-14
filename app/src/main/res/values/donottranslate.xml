@@ -10,6 +10,7 @@
   <string name="app_twitter_url">https://twitter.com/trynoice</string>
   <string name="app_github_url">https://github.com/ashutoshgngwr/noice</string>
   <string name="app_issues_github_url">https://github.com/ashutoshgngwr/noice/issues</string>
+  <string name="app_faqs_url">https://trynoice.com/faqs</string>
   <string name="app_issues_form_url">
     https://docs.google.com/forms/d/e/1FAIpQLSdYhyYjxhJ7IKyiqdc3AE3uINSoRWBw8ROB003gkZ47KeSjWw/viewform?usp=sf_link
   </string>

@@ -59,6 +59,7 @@ class AccountFragment : Fragment() {
     binding.viewModel = viewModel
     viewModel.onItemClickListener = View.OnClickListener { item ->
       when (item.id) {
+        R.id.faqs -> item.context.startCustomTab(R.string.app_faqs_url)
         R.id.report_issues -> {
           val url = if (BuildConfig.IS_FREE_BUILD) {
             R.string.app_issues_github_url
