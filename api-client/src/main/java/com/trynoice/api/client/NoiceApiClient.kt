@@ -3,6 +3,7 @@ package com.trynoice.api.client
 import android.content.Context
 import com.google.gson.Gson
 import com.trynoice.api.client.apis.AccountApi
+import com.trynoice.api.client.apis.CdnApi
 import com.trynoice.api.client.apis.InternalAccountApi
 import com.trynoice.api.client.apis.SubscriptionApi
 import com.trynoice.api.client.auth.AccessTokenInjector
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import okhttp3.Cache
 import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,6 +23,7 @@ import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+import java.io.File
 import java.util.*
 
 
@@ -88,6 +91,17 @@ class NoiceApiClient(
   private val accountApi: AccountApi by lazy { retrofit.create() }
   private val internalAccountApi: InternalAccountApi by lazy { retrofit.create() }
   private val subscriptionApi: SubscriptionApi by lazy { retrofit.create() }
+  private val cdnApi: CdnApi by lazy {
+    retrofit.newBuilder()
+      .client(
+        okhttpClient.newBuilder()
+          .cache(Cache(File(context.cacheDir, "cdn-cache"), 1024 * 1024 * 1024 /* 1GB */))
+          .build()
+      )
+      .baseUrl("https://cdn.trynoice.com")
+      .build()
+      .create()
+  }
 
   /**
    * Subscription management related APIs.
@@ -98,6 +112,12 @@ class NoiceApiClient(
    * Account and user management related APIs.
    */
   fun subscriptions() = subscriptionApi
+
+  /**
+   * APIs to fetch resources from the CDN. The client caches CDN responses if and as directed by the
+   * `Cache-Control` response headers.
+   */
+  fun cdn() = cdnApi
 
   /**
    * Adds the sign-in token to the credential store and then attempts to issue new credentials using
