@@ -292,6 +292,7 @@
     <string name="ended_on">Ended on %1$s</string>
     <string name="paid_using">Paid using %1$s</string>
     <string name="subscription_payment_pending">A payment is pending for this purchase.</string>
+    <string name="subscription_payment_refunded">We cancelled this purchase and initiated a refund for it.</string>
     <string name="change_plan">Change plan</string>
     <string name="manage_subscription">Manage Subscription</string>
     <string name="cancel_subscription">Cancel Subscription</string>

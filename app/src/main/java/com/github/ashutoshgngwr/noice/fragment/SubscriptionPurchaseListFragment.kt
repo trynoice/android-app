@@ -212,6 +212,7 @@ class SubscriptionPurchaseViewHolder(
       )
     )
 
+    binding.refunded.isVisible = s.isRefunded == true
     binding.paymentPending.isVisible = s.isPaymentPending
     binding.actionButtonContainer.isVisible = s.isActive
     if (s.isActive) {

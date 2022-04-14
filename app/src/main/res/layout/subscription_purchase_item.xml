@@ -7,11 +7,11 @@
   android:layout_marginHorizontal="16dp"
   android:layout_marginVertical="8dp"
   android:animateLayoutChanges="true"
-  app:strokeColor="@color/background_darker"
-  app:strokeWidth="1dp"
   app:cardCornerRadius="16dp"
   app:cardElevation="0dp"
-  app:contentPadding="24dp">
+  app:contentPadding="24dp"
+  app:strokeColor="@color/background_darker"
+  app:strokeWidth="1dp">
 
   <LinearLayout
     android:layout_width="match_parent"
@@ -102,6 +102,19 @@
       android:drawablePadding="8dp"
       android:gravity="center_vertical"
       android:text="@string/subscription_payment_pending"
+      android:textAppearance="?attr/textAppearanceBody1"
+      android:textColor="@color/error"
+      app:drawableStartCompat="@drawable/ic_baseline_pending_24"
+      app:drawableTint="@color/error" />
+
+    <TextView
+      android:id="@+id/refunded"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="2dp"
+      android:drawablePadding="8dp"
+      android:gravity="center_vertical"
+      android:text="@string/subscription_payment_refunded"
       android:textAppearance="?attr/textAppearanceBody1"
       android:textColor="@color/error"
       app:drawableStartCompat="@drawable/ic_baseline_pending_24"

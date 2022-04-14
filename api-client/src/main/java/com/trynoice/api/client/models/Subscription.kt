@@ -13,7 +13,8 @@ import java.util.*
  * @param isActive whether this subscription purchase is currently active.
  * @param isPaymentPending whether a payment for this subscription purchase is currently pending.
  * @param isAutoRenewing whether the subscription will renew at the end of this billing cycle. if
- * `false`, it implies that the subscription will end at the end of current billing cycle
+ * `false`, it implies that the subscription will end at the end of current billing cycle.
+ * @param isRefunded whether the subscription was cancelled and its amount refunded.
  * @param startedAt epoch millis when the subscription started.
  * @param endedAt epoch millis when the subscription has ended.
  * @param renewsAt epoch millis when the current billing cycle ends and the next one starts. always
@@ -39,6 +40,9 @@ data class Subscription(
 
   @Expose
   val isAutoRenewing: Boolean,
+
+  @Expose
+  val isRefunded: Boolean? = null,
 
   @Expose
   val startedAt: Date? = null,
