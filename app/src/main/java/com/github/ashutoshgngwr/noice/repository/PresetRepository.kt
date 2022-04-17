@@ -23,8 +23,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.round
 import kotlin.math.roundToInt
-import kotlin.random.Random
-import kotlin.random.nextInt
 
 /**
  * [PresetRepository] implements the data access layer for [Preset]. It stores all its data in a
@@ -187,15 +185,16 @@ class PresetRepository @Inject constructor(
    * present in the generated preset. A number is chosen randomly in this range.
    */
   fun random(tag: Sound.Tag?, intensity: IntRange): Preset {
-    val library = Sound.filterLibraryByTag(tag).shuffled()
-    val playerStates = mutableListOf<Preset.PlayerState>()
-    for (i in 0 until Random.nextInt(intensity)) {
-      val volume = 1 + Random.nextInt(0, Player.MAX_VOLUME)
-      val timePeriod = Random.nextInt(Player.MIN_TIME_PERIOD, Player.MAX_TIME_PERIOD + 1)
-      playerStates.add(Preset.PlayerState(library[i], volume, timePeriod))
-    }
+    // TODO: fix
+//    val library = Sound.filterLibraryByTag(tag).shuffled()
+//    val playerStates = mutableListOf<Preset.PlayerState>()
+//    for (i in 0 until Random.nextInt(intensity)) {
+//      val volume = 1 + Random.nextInt(0, Player.MAX_VOLUME)
+//      val timePeriod = Random.nextInt(Player.MIN_TIME_PERIOD, Player.MAX_TIME_PERIOD + 1)
+//      playerStates.add(Preset.PlayerState(library[i], volume, timePeriod))
+//    }
 
-    return Preset(UUID.randomUUID().toString(), "", playerStates.toTypedArray())
+    return Preset(UUID.randomUUID().toString(), "", emptyArray())
   }
 
   /**

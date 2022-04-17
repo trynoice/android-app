@@ -7,8 +7,6 @@ import com.google.gson.annotations.Expose
  *
  * @param segmentsBasePath The path relative to the library manifest where individual segment clips
  * are accessible at `${segmentsBasePath}/${sound.id}/${segment.name}.m3u8`.
- * @param iconsBasePath The path where icons are accessible at `${iconsBasePath}/${sound.icon}`. It
- * must be a valid path relative to the library manifest.
  * @param groups A list of groups for categorising sounds.
  * @param sounds A list of available sounds in the library.
  */
@@ -16,9 +14,6 @@ data class LibraryManifest(
 
   @Expose
   val segmentsBasePath: String,
-
-  @Expose
-  val iconsBasePath: String,
 
   @Expose
   val groups: List<SoundGroup>,
@@ -48,8 +43,7 @@ data class SoundGroup(
  * @param id A unique stable snake-cased identifier for a sound.
  * @param groupId ID of an existing [SoundGroup] to which this sound belongs.
  * @param name A user-presentable name for this sound.
- * @param icon A user-presentable icon for this sound. The path must be relative to
- * [LibraryManifest.iconsBasePath].
+ * @param icon A user-presentable SVG icon encoded as a data URI.
  * @param maxSilence The upper limit (in seconds) for the amount of silence to add in-between
  * segments for non-contiguous sounds. Clients should randomly choose the length of silence in this
  * range to add after each segment. Moreover, sounds are considered as contiguous if `maxSilence` is
@@ -75,10 +69,10 @@ data class Sound(
   val maxSilence: Int,
 
   @Expose
-  val segments: List<Segment>,
+  val segments: List<SoundSegment>,
 
   @Expose
-  val sources: List<Source>,
+  val sources: List<SoundSource>,
 )
 
 /**
@@ -90,7 +84,7 @@ data class Sound(
  * @param isFree A hint whether a segment is available to unsubscribed users. If a user attempts to
  * access resources despite this hint being `false`, the CDN server returns HTTP 403.
  */
-data class Segment(
+data class SoundSegment(
 
   @Expose
   val name: String,
@@ -107,7 +101,7 @@ data class Segment(
  * @param license A SPDX license code for the source clip.
  * @param author author of the source asset.
  */
-data class Source(
+data class SoundSource(
 
   @Expose
   val name: String,
@@ -119,14 +113,14 @@ data class Source(
   val license: String,
 
   @Expose
-  val author: SourceAuthor? = null,
+  val author: SoundSourceAuthor? = null,
 )
 
 /**
  * @param name Name of the author.
  * @param url URL of the author.
  */
-data class SourceAuthor(
+data class SoundSourceAuthor(
 
   @Expose
   val name: String,

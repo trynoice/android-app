@@ -137,7 +137,7 @@ class LibraryFragmentTest {
       onView(withId(R.id.sound_list)).perform(
         RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
           hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-          EspressoX.clickOn(R.id.volume_button)
+          EspressoX.clickOn(R.id.volume)
         )
       )
 
@@ -180,7 +180,7 @@ class LibraryFragmentTest {
           ),
           RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
             hasDescendant(allOf(withId(R.id.title), withText(R.string.rolling_thunder))),
-            EspressoX.clickOn(R.id.time_period_button)
+            EspressoX.clickOn(R.id.time_period)
           )
         )
 
@@ -262,7 +262,7 @@ class LibraryFragmentTest {
     onView(withId(R.id.sound_list)).perform(
       RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
         hasDescendant(allOf(withId(R.id.title), withText(R.string.birds))),
-        EspressoX.clickOn(R.id.volume_button)
+        EspressoX.clickOn(R.id.volume)
       )
     )
 

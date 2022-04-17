@@ -26,7 +26,9 @@ class LocalPlaybackStrategy(
     internal const val DEFAULT_FADE_DURATION = 1000L
   }
 
-  private val players = sound.src.map { initPlayer(context, it, sound.isLooping) }
+  // TODO:
+  // private val players = sound.src.map { initPlayer(context, it, sound.isLooping) }
+  private val players = emptyList<SimpleExoPlayer>()
   private var volume: Float = 0f
 
   init {

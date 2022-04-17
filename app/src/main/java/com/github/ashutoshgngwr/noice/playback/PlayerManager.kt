@@ -61,7 +61,7 @@ class PlayerManager(private val context: Context, private val mediaSession: Medi
   private val gson: Gson
   private val presetRepository: PresetRepository
   private val settingsRepository: SettingsRepository
-  private val players = HashMap<String, Player>(Sound.LIBRARY.size)
+  private val players = hashMapOf<String, Player>() // TODO
   private val handler = Handler(Looper.getMainLooper())
   private val audioManager = requireNotNull(context.getSystemService<AudioManager>())
 

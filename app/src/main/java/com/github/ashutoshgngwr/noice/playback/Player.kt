@@ -8,6 +8,7 @@ import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategy
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
+import com.trynoice.api.client.models.SoundGroup
 import kotlin.math.pow
 import kotlin.random.Random.Default.nextInt
 
@@ -32,7 +33,10 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
 
   var timePeriod = DEFAULT_TIME_PERIOD
 
-  private val sound = Sound.get(soundKey)
+  // TODO:
+  private val sound = Sound(
+    soundKey, SoundGroup("", ""), soundKey, "", 0, "", emptyList(), emptyList()
+  )
 
   private var isPlaying = false
   private var playbackStrategy = playbackStrategyFactory.newInstance(sound).also {

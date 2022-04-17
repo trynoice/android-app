@@ -145,7 +145,7 @@ class GenerateScreenshots {
     onView(withId(R.id.sound_list)).perform(
       actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.light_rain))),
-        EspressoX.clickOn(R.id.volume_button)
+        EspressoX.clickOn(R.id.volume)
       )
     )
 
@@ -167,7 +167,7 @@ class GenerateScreenshots {
     onView(withId(R.id.sound_list)).perform(
       actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.distant_thunder))),
-        EspressoX.clickOn(R.id.volume_button)
+        EspressoX.clickOn(R.id.volume)
       )
     )
 
@@ -180,7 +180,7 @@ class GenerateScreenshots {
     onView(withId(R.id.sound_list)).perform(
       actionOnItem<RecyclerView.ViewHolder>(
         ViewMatchers.hasDescendant(allOf(withId(R.id.title), withText(R.string.distant_thunder))),
-        EspressoX.clickOn(R.id.time_period_button)
+        EspressoX.clickOn(R.id.time_period)
       )
     )
 
