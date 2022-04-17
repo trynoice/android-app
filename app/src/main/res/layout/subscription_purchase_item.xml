@@ -103,7 +103,6 @@
       android:gravity="center_vertical"
       android:text="@string/subscription_payment_pending"
       android:textAppearance="?attr/textAppearanceBody1"
-      android:textColor="@color/error"
       app:drawableStartCompat="@drawable/ic_baseline_pending_24"
       app:drawableTint="@color/error" />
 
@@ -116,7 +115,6 @@
       android:gravity="center_vertical"
       android:text="@string/subscription_payment_refunded"
       android:textAppearance="?attr/textAppearanceBody1"
-      android:textColor="@color/error"
       app:drawableStartCompat="@drawable/ic_baseline_pending_24"
       app:drawableTint="@color/error" />
 

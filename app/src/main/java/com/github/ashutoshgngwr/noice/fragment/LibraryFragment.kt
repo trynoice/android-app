@@ -29,7 +29,6 @@ import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
@@ -114,7 +113,7 @@ class LibraryFragment : Fragment() {
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.errorStrRes
+      viewModel.transientErrorStrRes
         .filterNotNull()
         .collect { showErrorSnackbar(it) }
     }
@@ -180,7 +179,6 @@ class LibraryFragment : Fragment() {
 @HiltViewModel
 class LibraryViewModel @Inject constructor(
   private val soundRepository: SoundRepository,
-  private val networkInfoProvider: NetworkInfoProvider,
 ) : ViewModel() {
 
   private val soundsResource = MutableStateFlow<Resource<List<Sound>>>(Resource.Loading())
@@ -206,22 +204,28 @@ class LibraryViewModel @Inject constructor(
     emit(dataSet)
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
-  internal val errorStrRes: Flow<Int?> = soundsResource.transform { r ->
+  internal val transientErrorStrRes: Flow<Int?> = soundsResource.transform { r ->
     emit(
-      when (r.error) {
-        null -> null
-        is NetworkError -> R.string.network_error
+      when {
+        r.error == null || r.data == null -> null // show persistent error if there's no data
+        r.error is NetworkError -> R.string.network_error
         else -> R.string.unknown_error
       }
     )
   }
 
-  init {
-    viewModelScope.launch {
-      networkInfoProvider.isOnline.collect {
-        loadLibrary()
+  val persistentErrorStrRes: StateFlow<Int?> = soundsResource.transform { r ->
+    emit(
+      when {
+        r.error == null || r.data != null -> null // show transient error if data is available
+        r.error is NetworkError -> R.string.network_error
+        else -> R.string.unknown_error
       }
-    }
+    )
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+  init {
+    loadLibrary()
   }
 
   fun loadLibrary() {

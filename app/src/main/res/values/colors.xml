@@ -8,7 +8,6 @@
   <color name="background">@color/white_0</color>
   <color name="background_dark">@color/white_1</color>
   <color name="background_darker">@color/white_2</color>
-  <color name="sound_icon">@color/shark_0</color>
   <color name="error">@color/red</color>
 
   <color name="ic_launcher_background">@color/white_0</color>
