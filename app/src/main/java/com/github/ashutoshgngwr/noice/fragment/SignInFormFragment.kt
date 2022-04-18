@@ -9,14 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignInFormFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
 import org.apache.commons.validator.routines.EmailValidator
 import javax.inject.Inject
 
@@ -25,6 +23,9 @@ class SignInFormFragment : Fragment() {
 
   private lateinit var binding: SignInFormFragmentBinding
   private val viewModel: SignInFormViewModel by viewModels()
+  private val mainNavController by lazy {
+    Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
+  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = SignInFormFragmentBinding.inflate(inflater, container, false)
@@ -46,9 +47,15 @@ class SignInFormFragment : Fragment() {
 
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    viewModel.onSignFormSubmitted = { args ->
-      Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
-        .navigate(R.id.sign_in_result, args.toBundle())
+    binding.signIn.setOnClickListener {
+      mainNavController.navigate(
+        R.id.sign_in_result,
+        SignInResultFragmentArgs(
+          isReturningUser = viewModel.isReturningUser,
+          name = viewModel.name.value,
+          email = requireNotNull(viewModel.email.value),
+        ).toBundle()
+      )
     }
   }
 }
@@ -56,52 +63,27 @@ class SignInFormFragment : Fragment() {
 @HiltViewModel
 class SignInFormViewModel @Inject constructor(savedStateHandle: SavedStateHandle) : ViewModel() {
 
-  val isReturningUser: Boolean
+  val isReturningUser: Boolean = SignInFormFragmentArgs.fromSavedStateHandle(savedStateHandle)
+    .isReturningUser
+
   val name = MutableStateFlow("")
-  val isNameValid = MutableStateFlow(true)
+  val isNameValid = MutableStateFlow(isReturningUser)
   val email = MutableStateFlow("")
-  val isEmailValid = MutableStateFlow(true)
-  var onSignFormSubmitted: (SignInResultFragmentArgs) -> Unit = {}
+  val isEmailValid = MutableStateFlow(false)
 
-  init {
-    val navArgs = SignInFormFragmentArgs.fromSavedStateHandle(savedStateHandle)
-    isReturningUser = navArgs.isReturningUser
-  }
-
-  fun validateName(): Boolean {
+  fun validateName() {
     // maxLength: 64
     // minLength: 1
     val v = name.value
-    val isValid = v.isNotBlank() && v.length <= 64
-    viewModelScope.launch { isNameValid.emit(isValid) }
-    return isValid
+    isNameValid.value = isReturningUser || (v.isNotBlank() && v.length <= 64)
   }
 
-  fun validateEmail(): Boolean {
+  fun validateEmail() {
     // maxLength: 64
     // minLength: 3
     val v = email.value
-    val isValid = v.isNotBlank()
+    isEmailValid.value = v.isNotBlank()
       && v.length <= 64
       && EmailValidator.getInstance(false, false).isValid(v)
-
-    viewModelScope.launch { isEmailValid.emit(isValid) }
-    return isValid
-  }
-
-  fun signIn() {
-    val isNameValid = isReturningUser || validateName()
-    val isEmailValid = validateEmail()
-    if (!isNameValid || !isEmailValid) {
-      return
-    }
-
-    onSignFormSubmitted.invoke(
-      SignInResultFragmentArgs(
-        isReturningUser = isReturningUser,
-        name = name.value,
-        email = requireNotNull(email.value),
-      )
-    )
   }
 }

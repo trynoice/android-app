@@ -60,10 +60,10 @@
         android:orientation="horizontal">
 
         <Button
+          android:id="@+id/cancel"
           style="?attr/buttonStyle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:onClick="@{() -> viewModel.cancel()}"
           android:text="@string/cancel" />
 
         <Space
@@ -71,11 +71,11 @@
           android:layout_height="wrap_content" />
 
         <Button
+          android:id="@+id/delete"
           style="?attr/buttonStyle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:enabled="@{viewModel.hasConfirmed}"
-          android:onClick="@{() -> viewModel.deleteAccount()}"
           android:text="@string/delete"
           android:theme="@style/ThemeOverlay.App.Button.DestructiveAction" />
 

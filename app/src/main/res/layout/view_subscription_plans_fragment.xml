@@ -9,6 +9,10 @@
       name="viewModel"
       type="com.github.ashutoshgngwr.noice.fragment.ViewSubscriptionPlansViewModel" />
 
+    <variable
+      name="onPlanSelectedListener"
+      type="com.github.ashutoshgngwr.noice.fragment.OnPlanSelectedListener" />
+
   </data>
 
   <ScrollView
@@ -106,7 +110,7 @@
           app:activePlan="@{viewModel.activeSubscription.plan}"
           app:canClickItems="@{viewModel.isSignedIn}"
           app:isVisible="@{!viewModel.plans.isEmpty()}"
-          app:onPlanSelected="@{viewModel.onPlanSelectedListener}"
+          app:onPlanSelected="@{onPlanSelectedListener}"
           app:subscriptionPlans="@{viewModel.plans}" />
 
       </FrameLayout>
@@ -138,11 +142,11 @@
           android:orientation="horizontal">
 
           <Button
+            android:id="@+id/sign_up"
             style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="@{() -> viewModel.onSignUpClicked.invoke()}"
             android:text="@string/sign_up" />
 
           <Space
@@ -150,11 +154,11 @@
             android:layout_height="wrap_content" />
 
           <Button
+            android:id="@+id/sign_in"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="@{() -> viewModel.onSignInClicked.invoke()}"
             android:text="@string/sign_in" />
 
         </LinearLayout>

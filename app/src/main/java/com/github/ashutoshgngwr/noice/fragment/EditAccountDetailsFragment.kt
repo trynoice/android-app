@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.merge
@@ -50,7 +51,12 @@ class EditAccountDetailsFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    viewModel.onUpdateSuccess = { showSuccessSnackbar(R.string.account_details_update_success) }
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.updateResource
+        .filter { it is Resource.Success }
+        .collect { showSuccessSnackbar(R.string.account_details_update_success) }
+    }
+
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.errorStrRes
         .filterNotNull()
@@ -65,12 +71,11 @@ class EditAccountDetailsViewModel @Inject constructor(
   private val networkInfoProvider: NetworkInfoProvider,
 ) : ViewModel() {
 
-  var onUpdateSuccess: () -> Unit = {}
   val name = MutableStateFlow("")
   val email = MutableStateFlow("")
 
   private val loadResource = MutableStateFlow<Resource<Profile>>(Resource.Loading())
-  private val updateResource = MutableStateFlow<Resource<Unit>?>(null)
+  internal val updateResource = MutableStateFlow<Resource<Unit>?>(null)
 
   val isNameValid: StateFlow<Boolean> = name.transform { name ->
     emit(name.isNotBlank() && name.length <= 64)
@@ -124,11 +129,6 @@ class EditAccountDetailsViewModel @Inject constructor(
       accountRepository
         .updateProfile(email.value, name.value)
         .flowOn(Dispatchers.IO)
-        .onEach { resource ->
-          if (resource is Resource.Success) {
-            onUpdateSuccess.invoke()
-          }
-        }
         .collect(updateResource)
     }
   }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.databinding.DonationPurchasedCallbackFragmentBinding
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
@@ -31,10 +32,12 @@ class DonationPurchasedCallbackFragment : BottomSheetDialogFragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    isCancelable = false
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    viewModel.onDismissClicked = this::dismiss
+    binding.dismiss.setOnClickListener { dismiss() }
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.isLoading.collect { isCancelable = !it }
+    }
   }
 }
 
@@ -44,7 +47,6 @@ class DonationPurchaseCallbackViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-  var onDismissClicked: () -> Unit = {}
   val isLoading = MutableStateFlow(true)
   val error = MutableStateFlow<Throwable?>(null)
 

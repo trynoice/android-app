@@ -58,7 +58,7 @@ class SignInResultFragment : Fragment() {
 
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    viewModel.onOpenMailboxClicked = this::openMailbox
+    binding.openMailbox.setOnClickListener { openMailbox() }
     viewModel.signIn()
   }
 
@@ -81,7 +81,6 @@ class SignInResultViewModel @Inject constructor(
   private val accountRepository: AccountRepository
 ) : ViewModel() {
 
-  var onOpenMailboxClicked: () -> Unit = {}
   val isReturningUser: Boolean
   val email: String
   private val name: String?

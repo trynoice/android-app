@@ -28,9 +28,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -58,20 +58,27 @@ class CancelSubscriptionFragment : BottomSheetDialogFragment() {
       }
     )
 
-    viewModel.onCancelCompleted = { isAborted ->
-      dismiss()
-      setFragmentResult(RESULT_KEY, bundleOf(EXTRA_WAS_ABORTED to isAborted))
-    }
-
+    binding.dismiss.setOnClickListener { dismissAndSetFragmentResult(true) }
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.isCancelling.collect { isCancelable = !it }
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.cancelResource
+        .filterNot { it == null || it is Resource.Loading }
+        .collect { dismissAndSetFragmentResult(false) }
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
       viewModel.errorStrRes
         .filterNotNull()
-        .collect { strRes -> showErrorSnackbar(strRes) }
+        .collect { showErrorSnackbar(it) }
     }
+  }
+
+  private fun dismissAndSetFragmentResult(wasAborted: Boolean) {
+    dismiss()
+    setFragmentResult(RESULT_KEY, bundleOf(EXTRA_WAS_ABORTED to wasAborted))
   }
 
   companion object {
@@ -86,12 +93,12 @@ class CancelSubscriptionViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-  var onCancelCompleted: (isAborted: Boolean) -> Unit = {}
   val subscription: Subscription = CancelSubscriptionFragmentArgs
     .fromSavedStateHandle(savedStateHandle)
     .subscription
 
-  private val cancelResource = MutableStateFlow<Resource<Unit>?>(null)
+  internal val cancelResource = MutableStateFlow<Resource<Unit>?>(null)
+
   val isCancelling: StateFlow<Boolean> = cancelResource.transform { r ->
     emit(r is Resource.Loading)
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
@@ -111,12 +118,7 @@ class CancelSubscriptionViewModel @Inject constructor(
     viewModelScope.launch {
       subscriptionRepository.cancel(subscription)
         .flowOn(Dispatchers.IO)
-        .onCompletion { onCancelCompleted.invoke(false) }
         .collect(cancelResource)
     }
-  }
-
-  fun abort() {
-    onCancelCompleted.invoke(true)
   }
 }

@@ -9,6 +9,10 @@
       name="viewModel"
       type="com.github.ashutoshgngwr.noice.fragment.AccountViewModel" />
 
+    <variable
+      name="listItemClickListener"
+      type="android.view.View.OnClickListener" />
+
   </data>
 
   <ScrollView
@@ -68,7 +72,7 @@
           style="@style/Widget.App.Account.Category.Item"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:onClick="@{viewModel.onItemClickListener}"
+          android:onClick="@{listItemClickListener}"
           android:text="@string/sign_up"
           app:drawableStartCompat="@drawable/ic_baseline_person_add_alt_1_32" />
 
@@ -77,7 +81,7 @@
           style="@style/Widget.App.Account.Category.Item"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:onClick="@{viewModel.onItemClickListener}"
+          android:onClick="@{listItemClickListener}"
           android:text="@string/sign_in"
           app:drawableStartCompat="@drawable/ic_baseline_login_32" />
 
@@ -86,7 +90,7 @@
           style="@style/Widget.App.Account.Category.Item"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:onClick="@{viewModel.onItemClickListener}"
+          android:onClick="@{listItemClickListener}"
           android:text="@string/view_subscription_plans"
           app:drawableStartCompat="@drawable/ic_baseline_attach_money_32" />
 
@@ -104,7 +108,7 @@
           style="@style/Widget.App.Account.Category.Item"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:onClick="@{viewModel.onItemClickListener}"
+          android:onClick="@{listItemClickListener}"
           android:text="@string/get_premium"
           android:visibility="gone"
           app:drawableStartCompat="@drawable/ic_baseline_shopping_cart_32"
@@ -115,7 +119,7 @@
           style="@style/Widget.App.Account.Category.Item"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:onClick="@{viewModel.onItemClickListener}"
+          android:onClick="@{listItemClickListener}"
           android:text="@string/subscription_purchases"
           app:drawableStartCompat="@drawable/ic_baseline_attach_money_32" />
 
@@ -124,7 +128,7 @@
           style="@style/Widget.App.Account.Category.Item"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:onClick="@{viewModel.onItemClickListener}"
+          android:onClick="@{listItemClickListener}"
           android:text="@string/update_details"
           app:drawableStartCompat="@drawable/ic_baseline_manage_accounts_32" />
 
@@ -133,7 +137,7 @@
           style="@style/Widget.App.Account.Category.Item"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:onClick="@{viewModel.onItemClickListener}"
+          android:onClick="@{listItemClickListener}"
           android:text="@string/sign_out"
           app:drawableStartCompat="@drawable/ic_baseline_logout_32" />
 
@@ -142,7 +146,7 @@
           style="@style/Widget.App.Account.Category.Item"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:onClick="@{viewModel.onItemClickListener}"
+          android:onClick="@{listItemClickListener}"
           android:text="@string/delete_account"
           app:drawableStartCompat="@drawable/ic_baseline_no_accounts_32" />
 
@@ -159,7 +163,7 @@
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{viewModel.onItemClickListener}"
+        android:onClick="@{listItemClickListener}"
         android:text="@string/settings"
         app:drawableStartCompat="@drawable/ic_baseline_settings_32" />
 
@@ -168,7 +172,7 @@
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{viewModel.onItemClickListener}"
+        android:onClick="@{listItemClickListener}"
         android:text="@string/support_development"
         app:drawableStartCompat="@drawable/ic_baseline_support_32" />
 
@@ -177,7 +181,7 @@
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{viewModel.onItemClickListener}"
+        android:onClick="@{listItemClickListener}"
         android:text="@string/about"
         app:drawableStartCompat="@drawable/ic_baseline_info_32" />
 
@@ -193,7 +197,7 @@
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{viewModel.onItemClickListener}"
+        android:onClick="@{listItemClickListener}"
         android:text="@string/faqs"
         app:drawableStartCompat="@drawable/ic_baseline_question_answer_32" />
 
@@ -202,7 +206,7 @@
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{viewModel.onItemClickListener}"
+        android:onClick="@{listItemClickListener}"
         android:text="@string/help"
         app:drawableStartCompat="@drawable/ic_baseline_help_32" />
 
@@ -211,7 +215,7 @@
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{viewModel.onItemClickListener}"
+        android:onClick="@{listItemClickListener}"
         android:text="@string/report_issue"
         app:drawableStartCompat="@drawable/ic_baseline_bug_report_32" />
 
@@ -220,7 +224,7 @@
         style="@style/Widget.App.Account.Category.Item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{viewModel.onItemClickListener}"
+        android:onClick="@{listItemClickListener}"
         android:text="@string/submit_feedback"
         app:drawableStartCompat="@drawable/ic_baseline_feedback_32" />
 

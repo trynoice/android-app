@@ -58,20 +58,20 @@
           android:orientation="horizontal">
 
           <Button
+            android:id="@+id/continuu"
             style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:onClick="@{() -> viewModel.onContinueClicked.invoke()}"
             android:text="@string/cont"
             app:isVisible="@{viewModel.signInErrorStrRes == null}" />
 
           <Button
+            android:id="@+id/dismiss"
             style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:onClick="@{() -> viewModel.onDismissClicked.invoke()}"
             android:text="@string/dismiss"
             app:isVisible="@{viewModel.signInErrorStrRes != null}"
             tools:visibility="gone" />

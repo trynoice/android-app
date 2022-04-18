@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.merge
@@ -44,15 +45,22 @@ class DeleteAccountFragment : BottomSheetDialogFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    viewModel.onDeleteFlowComplete = this::dismiss
+    binding.cancel.setOnClickListener { dismiss() }
+    binding.delete.setOnClickListener { viewModel.deleteAccount() }
     viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.isDeletingAccount.collect { isDeletingAccount -> isCancelable = !isDeletingAccount }
+      viewModel.isDeletingAccount.collect { isCancelable = !it }
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.isFlowComplete
+        .filter { it }
+        .collect { dismiss() }
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.apiErrorStrRes
         .filterNotNull()
-        .collect { strRes -> showErrorSnackbar(strRes) }
+        .collect { showErrorSnackbar(it) }
     }
   }
 }
@@ -62,7 +70,6 @@ class DeleteAccountViewModel @Inject constructor(
   private val accountRepository: AccountRepository,
 ) : ViewModel() {
 
-  var onDeleteFlowComplete: () -> Unit = {}
   val hasConfirmed = MutableStateFlow(false)
 
   private val profileResource = MutableStateFlow<Resource<Profile>?>(null)
@@ -85,6 +92,8 @@ class DeleteAccountViewModel @Inject constructor(
       )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+  internal val isFlowComplete = MutableStateFlow(false)
+
   fun deleteAccount() = viewModelScope.launch {
     // TODO: cancel subscription before deleting the account.
     accountRepository.getProfile()
@@ -104,10 +113,6 @@ class DeleteAccountViewModel @Inject constructor(
         .collect(signOutResource)
     }
 
-    onDeleteFlowComplete.invoke()
-  }
-
-  fun cancel() {
-    onDeleteFlowComplete.invoke()
+    isFlowComplete.emit(true)
   }
 }

@@ -22,9 +22,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -44,15 +44,21 @@ class SignOutFragment : BottomSheetDialogFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    viewModel.onFlowComplete = this::dismiss
+    binding.cancel.setOnClickListener { dismiss() }
     viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.isSigningOut.collect { isSigningOut -> isCancelable = !isSigningOut }
+      viewModel.isSigningOut.collect { isCancelable = !it }
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.signOutErrorStrRes
         .filterNotNull()
-        .collect { strRes -> showErrorSnackbar(strRes) }
+        .collect { showErrorSnackbar(it) }
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.signOutResource
+        .filterNot { it == null || it is Resource.Loading }
+        .collect { dismiss() }
     }
   }
 }
@@ -62,8 +68,7 @@ class SignOutViewModel @Inject constructor(
   private val accountRepository: AccountRepository
 ) : ViewModel() {
 
-  var onFlowComplete: () -> Unit = {}
-  private val signOutResource = MutableStateFlow<Resource<Unit>?>(null)
+  internal val signOutResource = MutableStateFlow<Resource<Unit>?>(null)
 
   val isSigningOut: StateFlow<Boolean> = signOutResource.transform { r ->
     emit(r is Resource.Loading)
@@ -82,11 +87,6 @@ class SignOutViewModel @Inject constructor(
   fun signOut() = viewModelScope.launch {
     accountRepository.signOut()
       .flowOn(Dispatchers.IO)
-      .onCompletion { onFlowComplete.invoke() }
       .collect(signOutResource)
-  }
-
-  fun cancel() {
-    onFlowComplete.invoke()
   }
 }

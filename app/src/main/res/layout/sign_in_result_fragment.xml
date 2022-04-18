@@ -103,10 +103,10 @@
         tools:visibility="gone" />
 
       <Button
+        android:id="@+id/open_mailbox"
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> viewModel.onOpenMailboxClicked.invoke()}"
         android:paddingHorizontal="32dp"
         android:text="@string/open_mailbox"
         app:isVisible="@{viewModel.isSignInSuccess}" />

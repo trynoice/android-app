@@ -57,7 +57,7 @@ class AccountFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    viewModel.onItemClickListener = View.OnClickListener { item ->
+    binding.listItemClickListener = View.OnClickListener { item ->
       when (item.id) {
         R.id.faqs -> item.context.startCustomTab(R.string.app_faqs_url)
         R.id.report_issues -> {
@@ -97,7 +97,6 @@ class AccountViewModel @Inject constructor(
   private val subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
-  var onItemClickListener = View.OnClickListener {}
   val isSignedIn = accountRepository.isSignedIn()
   val isSubscribed = MutableStateFlow(true)
 

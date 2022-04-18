@@ -42,19 +42,20 @@ class SignInLinkHandlerActivity : AppCompatActivity() {
     binding = SignInLinkHandlerActivityBinding.inflate(layoutInflater)
     binding.lifecycleOwner = this
     binding.viewModel = viewModel
+    binding.dismiss.setOnClickListener { finish() }
+    binding.continuu.setOnClickListener { finishAndLaunchMainActivity() }
+
     setContentView(binding.root)
-
-    viewModel.onDismissClicked = { finish() }
-    viewModel.onContinueClicked = {
-      finish()
-      startActivity(
-        Intent(this, MainActivity::class.java)
-          .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-          .putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.home_account)
-      )
-    }
-
     viewModel.signInWithToken(signInToken)
+  }
+
+  private fun finishAndLaunchMainActivity() {
+    finish()
+    startActivity(
+      Intent(this, MainActivity::class.java)
+        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        .putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.home_account)
+    )
   }
 }
 
@@ -62,9 +63,6 @@ class SignInLinkHandlerActivity : AppCompatActivity() {
 class SignInLinkHandlerViewModel @Inject constructor(
   private val accountRepository: AccountRepository,
 ) : ViewModel() {
-
-  var onContinueClicked: () -> Unit = {}
-  var onDismissClicked: () -> Unit = {}
 
   private val signInResource = MutableStateFlow<Resource<Unit>>(Resource.Loading())
 

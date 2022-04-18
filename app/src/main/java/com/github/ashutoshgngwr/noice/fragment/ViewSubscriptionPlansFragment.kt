@@ -58,12 +58,13 @@ class ViewSubscriptionPlansFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    viewModel.onSignInClicked = { mainNavController.navigate(R.id.sign_in_form) }
-    viewModel.onSignUpClicked = { mainNavController.navigate(R.id.sign_up_form) }
-    viewModel.onPlanSelectedListener = OnPlanSelectedListener { plan ->
+    binding.onPlanSelectedListener = OnPlanSelectedListener { plan ->
       val args = LaunchSubscriptionFlowFragmentArgs(plan, viewModel.activeSubscription)
       mainNavController.navigate(R.id.launch_subscription_flow, args.toBundle())
     }
+
+    binding.signIn.setOnClickListener { mainNavController.navigate(R.id.sign_in_form) }
+    binding.signUp.setOnClickListener { mainNavController.navigate(R.id.sign_up_form) }
 
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.apiErrorStrRes
@@ -129,9 +130,6 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-  var onSignInClicked: () -> Unit = {}
-  var onSignUpClicked: () -> Unit = {}
-  var onPlanSelectedListener = OnPlanSelectedListener {}
   val isSignedIn = accountRepository.isSignedIn()
   val activeSubscription: Subscription?
 

@@ -76,10 +76,9 @@
           style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:enabled="@{viewModel.isNameValid &amp;&amp; viewModel.isEmailValid()}"
+          android:enabled="@{viewModel.isNameValid &amp;&amp; viewModel.isEmailValid}"
           android:onClick="@{() -> viewModel.save()}"
           android:text="@string/save" />
-
 
       </LinearLayout>
 

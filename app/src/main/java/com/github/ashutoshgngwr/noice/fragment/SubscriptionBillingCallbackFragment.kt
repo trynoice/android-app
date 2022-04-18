@@ -49,16 +49,15 @@ class SubscriptionBillingCallbackFragment : BottomSheetDialogFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    viewModel.onDismissClicked = {
+    binding.okay.setOnClickListener {
       dismiss()
-
       if (!viewModel.wasCancelled) {
         mainNavController.navigate(R.id.subscription_purchase_list)
       }
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.isLoading.collect { isCancelable = it }
+      viewModel.isLoading.collect { isCancelable = !it }
     }
   }
 
@@ -97,7 +96,6 @@ class SubscriptionBillingCallbackViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-  var onDismissClicked: () -> Unit = {}
   val isLoading = MutableStateFlow(true)
   val error = MutableStateFlow<Throwable?>(null)
   val wasCancelled: Boolean
