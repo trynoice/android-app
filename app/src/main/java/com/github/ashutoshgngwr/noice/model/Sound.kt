@@ -35,6 +35,9 @@ data class Sound(
   val isLooping: Boolean
     get() = maxSilence == 0
 
+  /**
+   * Whether the sound contains non-free (premium) segments.
+   */
   val hasPremiumSegments: Boolean
     get() = segments.any { !it.isFree }
 

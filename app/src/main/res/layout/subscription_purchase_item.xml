@@ -52,77 +52,65 @@
 
     <TextView
       android:id="@+id/started_on"
+      style="@style/Widget.App.TextView.Message"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginVertical="2dp"
-      android:drawablePadding="8dp"
-      android:gravity="center_vertical"
-      android:textAppearance="?attr/textAppearanceBody1"
+      android:layout_marginVertical="4dp"
       app:drawableStartCompat="@drawable/ic_baseline_access_time_24"
       tools:text="@string/started_on" />
 
     <TextView
       android:id="@+id/ended_on"
+      style="@style/Widget.App.TextView.Message"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginVertical="2dp"
-      android:drawablePadding="8dp"
-      android:gravity="center_vertical"
-      android:textAppearance="?attr/textAppearanceBody1"
+      android:layout_marginVertical="4dp"
       app:drawableStartCompat="@drawable/ic_baseline_access_time_filled_24"
       tools:text="@string/ended_on" />
 
     <TextView
       android:id="@+id/renews_on"
+      style="@style/Widget.App.TextView.Message"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginVertical="2dp"
-      android:drawablePadding="8dp"
-      android:gravity="center_vertical"
-      android:textAppearance="?attr/textAppearanceBody1"
+      android:layout_marginVertical="4dp"
       app:drawableStartCompat="@drawable/ic_baseline_payment_24"
       tools:text="@string/renews_on" />
 
     <TextView
       android:id="@+id/paid_using"
+      style="@style/Widget.App.TextView.Message"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginVertical="2dp"
-      android:drawablePadding="8dp"
-      android:gravity="center_vertical"
-      android:textAppearance="?attr/textAppearanceBody1"
+      android:layout_marginVertical="4dp"
       app:drawableStartCompat="@drawable/ic_baseline_paid_24"
       tools:text="@string/paid_using" />
 
     <TextView
       android:id="@+id/payment_pending"
+      style="@style/Widget.App.TextView.Message"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginVertical="2dp"
-      android:drawablePadding="8dp"
-      android:gravity="center_vertical"
+      android:layout_marginVertical="4dp"
       android:text="@string/subscription_payment_pending"
-      android:textAppearance="?attr/textAppearanceBody1"
       app:drawableStartCompat="@drawable/ic_baseline_pending_24"
-      app:drawableTint="@color/error" />
+      app:drawableTint="@color/primary" />
 
     <TextView
       android:id="@+id/refunded"
+      style="@style/Widget.App.TextView.Message"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginVertical="2dp"
-      android:drawablePadding="8dp"
-      android:gravity="center_vertical"
+      android:layout_marginVertical="4dp"
       android:text="@string/subscription_payment_refunded"
-      android:textAppearance="?attr/textAppearanceBody1"
       app:drawableStartCompat="@drawable/ic_baseline_pending_24"
-      app:drawableTint="@color/error" />
+      app:drawableTint="@color/primary" />
 
     <LinearLayout
       android:id="@+id/action_button_container"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
+      android:layout_marginTop="12dp"
       android:orientation="vertical">
 
       <Button
@@ -130,7 +118,7 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="2dp"
+        android:layout_marginVertical="4dp"
         android:text="@string/manage_subscription" />
 
       <Button
@@ -138,7 +126,7 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="2dp"
+        android:layout_marginVertical="4dp"
         android:text="@string/change_plan" />
 
       <Button
@@ -146,7 +134,7 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="2dp"
+        android:layout_marginVertical="4dp"
         android:text="@string/cancel_subscription"
         android:theme="@style/ThemeOverlay.App.Button.DestructiveAction" />
 
