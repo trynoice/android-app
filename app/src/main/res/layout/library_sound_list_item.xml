@@ -5,6 +5,19 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content">
 
+  <com.caverock.androidsvg.SVGImageView
+    android:id="@+id/icon"
+    android:layout_width="0dp"
+    android:layout_height="112dp"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="16dp"
+    android:scaleType="fitEnd"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@id/title"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:ignore="ContentDescription" />
+
   <TextView
     android:id="@+id/title"
     android:layout_width="match_parent"
@@ -25,7 +38,6 @@
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_margin="12dp"
-    android:elevation="10dp"
     app:alignItems="flex_start"
     app:flexDirection="row"
     app:flexWrap="wrap"
@@ -74,18 +86,5 @@
       tools:text="2m 10s" />
 
   </com.google.android.flexbox.FlexboxLayout>
-
-  <com.caverock.androidsvg.SVGImageView
-    android:id="@+id/icon"
-    android:layout_width="0dp"
-    android:layout_height="112dp"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="16dp"
-    android:scaleType="fitEnd"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@id/title"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
