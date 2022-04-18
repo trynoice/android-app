@@ -66,8 +66,9 @@ class CastPlaybackStrategy(
   override fun setAudioAttributes(attrs: AudioAttributesCompat) = Unit
 
   private fun notifyChanges(action: String?) {
-    val fadeInDuration = settingsRepository.getSoundFadeInDurationMillis()
-    val event = PlayerEvent(sound.src, sound.isLooping, volume, action, fadeInDuration)
-    session.sendMessage(namespace, gson.toJson(event))
+    // TODO:
+//    val fadeInDuration = settingsRepository.getSoundFadeInDurationMillis()
+//    val event = PlayerEvent(sound.src, sound.isLooping, volume, action, fadeInDuration)
+//    session.sendMessage(namespace, gson.toJson(event))
   }
 }

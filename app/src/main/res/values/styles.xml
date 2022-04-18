@@ -207,7 +207,7 @@
   <style name="Widget.App.TextView.Message" parent="Widget.MaterialComponents.TextView">
     <item name="android:drawablePadding">16dp</item>
     <item name="android:gravity">center_vertical</item>
-    <item name="android:lineSpacingMultiplier">1.25</item>
+    <item name="android:lineSpacingMultiplier">1.33</item>
     <item name="android:textAppearance">?attr/textAppearanceBody1</item>
   </style>
 
@@ -219,6 +219,20 @@
   <style name="Widget.App.TextView.Message.Error">
     <item name="drawableStartCompat">@drawable/ic_baseline_error_36</item>
     <item name="drawableTint">@color/error</item>
+  </style>
+
+  <style name="Widget.App.TextView.Message.Error.Centered" parent="Widget.App.TextView.Message">
+    <item name="android:gravity">center</item>
+    <item name="drawableTopCompat">@drawable/ic_baseline_error_36</item>
+    <item name="drawableTint">@color/error</item>
+  </style>
+
+  <style name="Widget.App.Button.OutlinedButton.IconOnly" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <item name="iconPadding">0dp</item>
+    <item name="android:minWidth">48dp</item>
+    <item name="android:minHeight">48dp</item>
+    <item name="android:paddingLeft">12dp</item>
+    <item name="android:paddingRight">12dp</item>
   </style>
 
 </resources>
