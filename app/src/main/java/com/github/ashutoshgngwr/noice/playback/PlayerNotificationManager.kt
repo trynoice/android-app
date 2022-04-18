@@ -64,7 +64,7 @@ object PlayerNotificationManager {
       if (!enableSkipButtons) {
         addAction(
           NotificationCompat.Action(
-            R.drawable.ic_shuffle_32dp,
+            R.drawable.ic_baseline_shuffle_32,
             context.getString(R.string.random_preset),
             PlaybackController.buildRandomPresetActionPendingIntent(context)
           )

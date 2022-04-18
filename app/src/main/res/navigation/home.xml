@@ -14,7 +14,24 @@
       android:id="@id/random_preset"
       app:destination="@id/random_preset" />
 
+    <action
+      android:id="@id/library_sound_info"
+      app:destination="@id/library_sound_info" />
+
   </fragment>
+
+  <dialog
+    android:id="@+id/library_sound_info"
+    android:name="com.github.ashutoshgngwr.noice.fragment.LibrarySoundInfoFragment"
+    android:label="@string/sound_info"
+    tools:layout="@layout/library_sound_info_fragment">
+
+    <argument
+      android:name="sound"
+      app:argType="com.github.ashutoshgngwr.noice.model.Sound"
+      app:nullable="false" />
+
+  </dialog>
 
   <fragment
     android:id="@+id/presets"

@@ -40,7 +40,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="4dp"
-      android:contentDescription="@string/about"
+      android:contentDescription="@string/sound_info"
       app:icon="@drawable/ic_outline_info_24" />
 
     <com.google.android.material.button.MaterialButton

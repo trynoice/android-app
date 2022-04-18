@@ -14,6 +14,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -79,7 +81,10 @@ class LibraryFragment : Fragment() {
   internal lateinit var playbackController: PlaybackController
 
   private val viewModel: LibraryViewModel by viewModels()
-  private val adapter by lazy { LibraryListAdapter(layoutInflater, settingsRepository) }
+  private val adapter by lazy {
+    val navController = Navigation.findNavController(requireActivity(), R.id.home_nav_host_fragment)
+    LibraryListAdapter(layoutInflater, settingsRepository, navController)
+  }
 
   @Subscribe(sticky = true, threadMode = ThreadMode.ASYNC)
   fun onPlayerManagerUpdate(event: MediaPlayerService.PlaybackUpdateEvent) {
@@ -256,9 +261,17 @@ class SoundGroupViewHolder(
 class SoundViewHolder(
   private val binding: LibrarySoundListItemBinding,
   private val settingsRepository: SettingsRepository,
+  navController: NavController,
 ) : LibraryListItemViewHolder(binding.root) {
 
   private lateinit var soundId: String
+
+  init {
+    binding.info.setOnClickListener {
+      val args = LibrarySoundInfoFragmentArgs(it.tag as Sound)
+      navController.navigate(R.id.library_sound_info, args.toBundle())
+    }
+  }
 
 //  init {
 //    binding.root.setOnClickListener {
@@ -326,6 +339,7 @@ class SoundViewHolder(
       }
     }
 
+    binding.info.tag = sound
 //    binding.play.setIconResource(
 //      if (sound.isPlaying) {
 //        R.drawable.ic_pause_24dp
@@ -348,6 +362,7 @@ class SoundViewHolder(
 class LibraryListAdapter(
   private val layoutInflater: LayoutInflater,
   private val settingsRepository: SettingsRepository,
+  private val navController: NavController,
 ) : RecyclerView.Adapter<LibraryListItemViewHolder>() {
 
   var dataSet: List<LibraryListItem> = emptyList()
@@ -366,7 +381,7 @@ class LibraryListAdapter(
 
       R.layout.library_sound_list_item -> {
         val binding = LibrarySoundListItemBinding.inflate(layoutInflater, parent, false)
-        SoundViewHolder(binding, settingsRepository)
+        SoundViewHolder(binding, settingsRepository, navController)
       }
 
       else -> throw IllegalArgumentException("unknown view type: $viewType")

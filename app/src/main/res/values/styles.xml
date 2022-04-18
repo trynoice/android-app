@@ -207,7 +207,7 @@
   <style name="Widget.App.TextView.Message" parent="Widget.MaterialComponents.TextView">
     <item name="android:drawablePadding">16dp</item>
     <item name="android:gravity">center_vertical</item>
-    <item name="android:lineSpacingMultiplier">1.25</item>
+    <item name="android:lineSpacingMultiplier">1.33</item>
     <item name="android:textAppearance">?attr/textAppearanceBody1</item>
   </style>
 

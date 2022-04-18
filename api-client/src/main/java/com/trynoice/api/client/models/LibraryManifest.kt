@@ -1,6 +1,7 @@
 package com.trynoice.api.client.models
 
 import com.google.gson.annotations.Expose
+import java.io.Serializable
 
 /**
  * An entity describing the sound library.
@@ -20,7 +21,7 @@ data class LibraryManifest(
 
   @Expose
   val sounds: List<Sound>,
-)
+) : Serializable
 
 /**
  * An entity describing a sound category.
@@ -35,7 +36,7 @@ data class SoundGroup(
 
   @Expose
   val name: String,
-)
+) : Serializable
 
 /**
  * An entity describing various attributes of a sound.
@@ -73,7 +74,7 @@ data class Sound(
 
   @Expose
   val sources: List<SoundSource>,
-)
+) : Serializable
 
 /**
  * An entity describing a segment of a [Sound].
@@ -91,7 +92,7 @@ data class SoundSegment(
 
   @Expose
   val isFree: Boolean,
-)
+) : Serializable
 
 /**
  * An entity describing an original source of a [Sound]'s asset.
@@ -114,7 +115,7 @@ data class SoundSource(
 
   @Expose
   val author: SoundSourceAuthor? = null,
-)
+) : Serializable
 
 /**
  * @param name Name of the author.
@@ -127,4 +128,4 @@ data class SoundSourceAuthor(
 
   @Expose
   val url: String,
-)
+) : Serializable
