@@ -13,9 +13,12 @@ import com.github.ashutoshgngwr.noice.databinding.DeleteAccountFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
+import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
+import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.trynoice.api.client.models.Profile
+import com.trynoice.api.client.models.Subscription
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +26,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.merge
@@ -68,37 +72,62 @@ class DeleteAccountFragment : BottomSheetDialogFragment() {
 @HiltViewModel
 class DeleteAccountViewModel @Inject constructor(
   private val accountRepository: AccountRepository,
+  private val subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
   val hasConfirmed = MutableStateFlow(false)
 
+  private val activeSubscriptionResource = MutableStateFlow<Resource<Subscription>?>(null)
+  private val cancelSubscriptionResource = MutableStateFlow<Resource<Unit>?>(null)
   private val profileResource = MutableStateFlow<Resource<Profile>?>(null)
   private val deleteResource = MutableStateFlow<Resource<Unit>?>(null)
   private val signOutResource = MutableStateFlow<Resource<Unit>?>(null)
 
-  val isDeletingAccount: StateFlow<Boolean> =
-    merge(profileResource, deleteResource, signOutResource).transform { r ->
-      emit(r != null && r !is Resource.Failure) // only failure is a terminal state until the final operation.
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  val isDeletingAccount: StateFlow<Boolean> = merge(
+    activeSubscriptionResource,
+    cancelSubscriptionResource,
+    profileResource,
+    deleteResource,
+    signOutResource
+  ).transform { r ->
+    emit(r != null && r !is Resource.Failure) // only failure is a terminal state until the final operation.
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
-  internal val apiErrorStrRes: StateFlow<Int?> =
-    merge(profileResource, deleteResource, signOutResource).transform { r ->
-      emit(
-        when (r?.error) {
-          null -> null
-          is NetworkError -> R.string.network_error
-          else -> R.string.unknown_error
-        }
-      )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  internal val apiErrorStrRes: StateFlow<Int?> = merge(
+    activeSubscriptionResource.filterNot { it?.error is SubscriptionNotFoundError },
+    cancelSubscriptionResource.filterNot { it?.error is SubscriptionNotFoundError },
+    profileResource,
+    deleteResource,
+    signOutResource
+  ).transform { r ->
+    emit(
+      when (r?.error) {
+        null -> null
+        is NetworkError -> R.string.network_error
+        else -> R.string.unknown_error
+      }
+    )
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   internal val isFlowComplete = MutableStateFlow(false)
 
   fun deleteAccount() = viewModelScope.launch {
-    // TODO: cancel subscription before deleting the account.
-    accountRepository.getProfile()
+    subscriptionRepository.getActive()
       .flowOn(Dispatchers.IO)
-      .collect(profileResource)
+      .collect(activeSubscriptionResource)
+
+    val subscription = activeSubscriptionResource.value?.data
+    if (apiErrorStrRes.value == null && subscription != null) {
+      subscriptionRepository.cancel(subscription)
+        .flowOn(Dispatchers.IO)
+        .collect(cancelSubscriptionResource)
+    }
+
+    if (apiErrorStrRes.value == null) {
+      accountRepository.getProfile()
+        .flowOn(Dispatchers.IO)
+        .collect(profileResource)
+    }
 
     val accountId = profileResource.value?.data?.accountId
     if (apiErrorStrRes.value == null && accountId != null) {

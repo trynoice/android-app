@@ -13,6 +13,7 @@ import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionPlan
 import io.github.ashutoshgngwr.may.May
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.transform
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -110,6 +111,36 @@ class SubscriptionRepository @Inject constructor(
   )
 
   /**
+   * Returns a [Flow] that emits the currently active subscription as a [Resource].
+   *
+   * On failures, the flow emits [Resource.Failure] with:
+   * - [SubscriptionNotFoundError] when the user doesn't own an active subscription.
+   * - [NetworkError] on network errors.
+   * - [HttpException] on api errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
+   */
+  fun getActive(): Flow<Resource<Subscription>> = fetchNetworkBoundResource(
+    loadFromCache = { cacheStore.getAs("${SUBSCRIPTION_KEY_PREFIX}/active") },
+    loadFromNetwork = {
+      apiClient.subscriptions()
+        .list(onlyActive = true, stripeReturnUrl = STRIPE_RETURN_URL)
+        .firstOrNull()
+        ?: throw SubscriptionNotFoundError
+    },
+    cacheNetworkResult = { cacheStore.put("${SUBSCRIPTION_KEY_PREFIX}/active", it) },
+    loadFromNetworkErrorTransform = { e ->
+      Log.i(LOG_TAG, "getActive:", e)
+      when {
+        e is HttpException && e.code() == 404 -> SubscriptionNotFoundError
+        e is IOException -> NetworkError
+        else -> e
+      }
+    },
+  )
+
+  /**
    * Returns a [Flow] that emits the requested subscription page as a [Resource].
    *
    * On failures, the flow emits [Resource.Failure] with:
@@ -170,25 +201,22 @@ class SubscriptionRepository @Inject constructor(
    * @see fetchNetworkBoundResource
    * @see Resource
    */
-  fun isSubscribed(): Flow<Resource<Boolean>> = fetchNetworkBoundResource(
-    loadFromCache = { cacheStore.getAs(IS_SUBSCRIBED_KEY) },
-    loadFromNetwork = { apiClient.subscriptions().list(true).isNotEmpty() },
-    cacheNetworkResult = { cacheStore.put(IS_SUBSCRIBED_KEY, it) },
-    loadFromNetworkErrorTransform = { e ->
-      Log.i(LOG_TAG, "isSubscribed:", e)
-      when (e) {
-        is IOException -> NetworkError
-        else -> e
+  fun isSubscribed(): Flow<Resource<Boolean>> = getActive().transform { r ->
+    emit(
+      when {
+        r is Resource.Loading -> Resource.Loading(r.data != null)
+        r is Resource.Success -> Resource.Success(r.data != null)
+        r is Resource.Failure && r.error is SubscriptionNotFoundError -> Resource.Success(false)
+        else -> Resource.Failure(requireNotNull(r.error), r.data != null)
       }
-    },
-  )
+    )
+  }
 
   companion object {
     private const val LOG_TAG = "SubscriptionRepository"
     private const val SUBSCRIPTION_KEY_PREFIX = "subscription"
     private const val PLANS_CACHE_KEY = "${SUBSCRIPTION_KEY_PREFIX}/plans"
     private const val SUBSCRIPTION_PAGE_PREFIX = "${SUBSCRIPTION_KEY_PREFIX}/page"
-    private const val IS_SUBSCRIBED_KEY = "${SUBSCRIPTION_KEY_PREFIX}/is_subscribed"
 
     private val STRIPE_RETURN_URL = Uri.parse("https://trynoice.com/redirect")
       .buildUpon()
