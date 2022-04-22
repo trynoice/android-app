@@ -74,7 +74,6 @@ android {
   kotlinOptions {
     useIR = true
     jvmTarget = config.kotlinJvmTarget
-    freeCompilerArgs += ["-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
   }
 
   testOptions {
@@ -84,6 +83,11 @@ android {
         testlogger.theme 'mocha'
       }
     }
+  }
+
+  packagingOptions {
+    // https://github.com/Kotlin/kotlinx.coroutines#avoiding-including-the-debug-infrastructure-in-the-resulting-apk
+    resources.excludes += "DebugProbesKt.bin"
   }
 }
 
@@ -105,11 +109,11 @@ dependencies {
   implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
   implementation "androidx.lifecycle:lifecycle-common-java8:$deps.lifecycleVersion"
   implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$deps.lifecycleVersion"
-  implementation 'androidx.media:media:1.5.0'
-  implementation 'androidx.mediarouter:mediarouter:1.2.6'
+  implementation 'androidx.media:media:1.6.0'
+  implementation 'androidx.mediarouter:mediarouter:1.3.0'
   implementation "androidx.navigation:navigation-fragment-ktx:$deps.navVersion"
   implementation "androidx.navigation:navigation-ui-ktx:$deps.navVersion"
-  implementation 'androidx.paging:paging-runtime-ktx:3.1.0'
+  implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
   implementation 'androidx.preference:preference-ktx:1.2.0'
   implementation 'androidx.recyclerview:recyclerview:1.2.1'
   implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
@@ -117,7 +121,7 @@ dependencies {
   implementation 'com.airbnb.android:lottie:4.2.2'
   implementation 'com.caverock:androidsvg-aar:1.4'
   implementation 'com.github.AppIntro:AppIntro:6.2.0'
-  implementation 'com.google.android.exoplayer:exoplayer-core:2.16.1'
+  implementation 'com.google.android.exoplayer:exoplayer-core:2.17.1'
   implementation 'com.google.android.flexbox:flexbox:3.0.0'
   implementation 'com.google.android.material:material:1.5.0'
   implementation 'com.google.code.gson:gson:2.9.0'
@@ -130,17 +134,17 @@ dependencies {
   implementation 'io.github.mrherintsoahasina:flextools:1.0.3'
   implementation 'io.noties.markwon:core:4.6.2'
   implementation 'org.greenrobot:eventbus:3.3.1'
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$deps.coroutinesVersion"
 
   implementation project(":api-client")
 
-  fullImplementation 'com.android.billingclient:billing-ktx:4.0.0'
+  fullImplementation 'com.android.billingclient:billing-ktx:4.1.0'
   fullImplementation 'com.google.android.gms:play-services-base:18.0.1'
   fullImplementation 'com.google.android.gms:play-services-cast-framework:21.0.1'
   fullImplementation 'com.google.android.play:core:1.10.3'
   fullImplementation platform('com.google.firebase:firebase-bom:29.1.0')
   fullImplementation 'com.google.firebase:firebase-analytics-ktx'
   fullImplementation 'com.google.firebase:firebase-crashlytics-ktx'
-  fullImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$deps.coroutinesVersion"
 
 
   kaptTest "com.google.dagger:hilt-android-compiler:$deps.hiltVersion"
@@ -151,8 +155,6 @@ dependencies {
   testImplementation "junit:junit:$deps.junitVersion"
   testImplementation "org.robolectric:robolectric:$deps.robolectricVersion"
   testImplementation 'org.skyscreamer:jsonassert:1.5.0'
-
-  testFullImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$deps.coroutinesVersion"
 
 
   kaptAndroidTest "com.google.dagger:hilt-android-compiler:$deps.hiltVersion"
