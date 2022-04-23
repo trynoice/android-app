@@ -19,7 +19,6 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPlanItemBinding
 import com.github.ashutoshgngwr.noice.databinding.ViewSubscriptionPlansFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
-import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
@@ -126,7 +125,6 @@ fun setBillingPeriodMonths(tv: TextView, months: Int) {
 class ViewSubscriptionPlansViewModel @Inject constructor(
   accountRepository: AccountRepository,
   subscriptionRepository: SubscriptionRepository,
-  networkInfoProvider: NetworkInfoProvider,
   savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -145,10 +143,9 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
 
   internal val apiErrorStrRes: Flow<Int?> = plansResource.transform { r ->
     emit(
-      when {
-        r.data != null && networkInfoProvider.isOffline.value -> null
-        r.error == null -> null
-        r.error is NetworkError -> R.string.network_error
+      when (r.error) {
+        null -> null
+        is NetworkError -> R.string.network_error
         else -> R.string.unknown_error
       }
     )
@@ -159,11 +156,9 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
     activeSubscription = args.activeSubscription
 
     viewModelScope.launch {
-      networkInfoProvider.isOnline.collect {
-        subscriptionRepository.getPlans()
-          .flowOn(Dispatchers.IO)
-          .collect(plansResource)
-      }
+      subscriptionRepository.getPlans()
+        .flowOn(Dispatchers.IO)
+        .collect(plansResource)
     }
   }
 }

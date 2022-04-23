@@ -30,7 +30,6 @@ import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseItemBindin
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseListFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseLoadingItemBinding
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
-import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
 import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
@@ -120,11 +119,10 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
 @HiltViewModel
 class SubscriptionPurchaseListViewModel @Inject constructor(
   subscriptionRepository: SubscriptionRepository,
-  networkInfoProvider: NetworkInfoProvider,
 ) : ViewModel() {
 
   internal val purchasesPager = Pager(PagingConfig(pageSize = 20)) {
-    SubscriptionPurchasePagingDataSource(subscriptionRepository, networkInfoProvider)
+    SubscriptionPurchasePagingDataSource(subscriptionRepository)
   }.flow.cachedIn(viewModelScope)
 }
 
@@ -244,7 +242,6 @@ object SubscriptionComparator : DiffUtil.ItemCallback<Subscription>() {
 
 class SubscriptionPurchasePagingDataSource(
   private val subscriptionRepository: SubscriptionRepository,
-  private val networkInfoProvider: NetworkInfoProvider,
 ) : PagingSource<Int, Subscription>() {
 
   override fun getRefreshKey(state: PagingState<Int, Subscription>): Int? {
@@ -264,10 +261,6 @@ class SubscriptionPurchasePagingDataSource(
       page + 1
     } else {
       null
-    }
-
-    if (resource.data != null && networkInfoProvider.isOffline.value) { // offline mode
-      return LoadResult.Page(resource.data, prevKey = null, nextKey = nextPage)
     }
 
     if (resource.error != null || resource.data == null) {

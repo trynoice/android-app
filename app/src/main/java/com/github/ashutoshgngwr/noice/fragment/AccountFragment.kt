@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
@@ -17,12 +18,12 @@ import com.github.ashutoshgngwr.noice.databinding.AccountFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.repository.errors.NotSignedInError
+import com.github.ashutoshgngwr.noice.viewmodel.NetworkInfoViewModel
 import com.trynoice.api.client.models.Profile
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,6 +31,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
@@ -45,6 +47,7 @@ class AccountFragment : Fragment() {
 
   private lateinit var binding: AccountFragmentBinding
   private val viewModel: AccountViewModel by viewModels()
+  private val networkInfoViewModel: NetworkInfoViewModel by activityViewModels()
   private val mainNavController by lazy {
     Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
   }
@@ -83,6 +86,7 @@ class AccountFragment : Fragment() {
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.loadErrorStrRes
         .filterNotNull()
+        .filter { networkInfoViewModel.isOnline.value } // suppress errors when offline.
         .collect { errRes -> showErrorSnackbar(errRes) }
     }
 
@@ -93,7 +97,6 @@ class AccountFragment : Fragment() {
 @HiltViewModel
 class AccountViewModel @Inject constructor(
   private val accountRepository: AccountRepository,
-  private val networkInfoProvider: NetworkInfoProvider,
   private val subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
@@ -108,12 +111,10 @@ class AccountViewModel @Inject constructor(
 
   internal val loadErrorStrRes: Flow<Int?> = profileResource.transform { resource ->
     emit(
-      when {
-        // ignore errors when cached profile is present and network is offline.
-        resource.data != null && networkInfoProvider.isOffline.value -> null
-        resource.error == null -> null
-        resource.error is NotSignedInError -> null
-        resource.error is NetworkError -> R.string.network_error
+      when (resource.error) {
+        null -> null
+        is NotSignedInError -> null
+        is NetworkError -> R.string.network_error
         else -> R.string.unknown_error
       }
     )
@@ -125,17 +126,15 @@ class AccountViewModel @Inject constructor(
     }
 
     viewModelScope.launch {
-      networkInfoProvider.isOnline.collect {
-        accountRepository.getProfile()
-          .flowOn(Dispatchers.IO)
-          .collect(profileResource)
+      accountRepository.getProfile()
+        .flowOn(Dispatchers.IO)
+        .collect(profileResource)
 
-        // ignore errors here.
-        subscriptionRepository.isSubscribed()
-          .flowOn(Dispatchers.IO)
-          .transform { r -> r.data?.let { emit(it) } }
-          .collect(isSubscribed)
-      }
+      // ignore errors here.
+      subscriptionRepository.isSubscribed()
+        .flowOn(Dispatchers.IO)
+        .transform { r -> r.data?.let { emit(it) } }
+        .collect(isSubscribed)
     }
   }
 }

@@ -13,7 +13,6 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.EditAccountDetailsFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackbar
-import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.errors.DuplicateEmailError
@@ -68,7 +67,6 @@ class EditAccountDetailsFragment : Fragment() {
 @HiltViewModel
 class EditAccountDetailsViewModel @Inject constructor(
   private val accountRepository: AccountRepository,
-  private val networkInfoProvider: NetworkInfoProvider,
 ) : ViewModel() {
 
   val name = MutableStateFlow("")
@@ -106,17 +104,15 @@ class EditAccountDetailsViewModel @Inject constructor(
 
   init {
     viewModelScope.launch {
-      networkInfoProvider.isOnline.collect {
-        accountRepository.getProfile()
-          .flowOn(Dispatchers.IO)
-          .onEach { resource ->
-            if (resource.data != null) {
-              name.emit(resource.data.name)
-              email.emit(resource.data.email)
-            }
+      accountRepository.getProfile()
+        .flowOn(Dispatchers.IO)
+        .onEach { resource ->
+          if (resource.data != null) {
+            name.emit(resource.data.name)
+            email.emit(resource.data.email)
           }
-          .collect(loadResource)
-      }
+        }
+        .collect(loadResource)
     }
   }
 

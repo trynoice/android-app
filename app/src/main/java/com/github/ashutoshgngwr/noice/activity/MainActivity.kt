@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.activity.viewModels
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -29,9 +30,9 @@ import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
-import com.github.ashutoshgngwr.noice.provider.NetworkInfoProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import com.github.ashutoshgngwr.noice.viewmodel.NetworkInfoViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   private lateinit var binding: MainActivityBinding
   private lateinit var navController: NavController
+  private val networkInfoViewModel: NetworkInfoViewModel by viewModels()
 
   @set:Inject
   internal lateinit var reviewFlowProvider: ReviewFlowProvider
@@ -71,9 +73,6 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   @set:Inject
   internal lateinit var playbackController: PlaybackController
-
-  @set:Inject
-  internal lateinit var networkInfoProvider: NetworkInfoProvider
 
   /**
    * indicates whether the activity was delivered a new intent since it was last resumed.
@@ -123,11 +122,11 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   private fun initOfflineIndicator() {
     lifecycleScope.launch {
-      networkInfoProvider.isOffline.collect {
+      networkInfoViewModel.isOnline.collect {
         if (it) {
-          showOfflineIndicator()
-        } else {
           hideOfflineIndicator()
+        } else {
+          showOfflineIndicator()
         }
       }
     }
@@ -143,6 +142,10 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
   }
 
   private fun hideOfflineIndicator() {
+    if (!binding.networkIndicator.isVisible) {
+      return
+    }
+
     binding.networkIndicator.apply {
       setBackgroundResource(R.color.accent)
       setText(R.string.back_online)
