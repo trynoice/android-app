@@ -35,6 +35,8 @@
           android:layout_height="wrap_content"
           android:autofillHints="name"
           android:hint="@string/name"
+          app:counterEnabled="true"
+          app:counterMaxLength="64"
           app:error="@{viewModel.isNameValid ? null : @string/invalid_name}"
           app:errorEnabled="true">
 
@@ -57,6 +59,8 @@
           android:layout_height="wrap_content"
           android:autofillHints="emailAddress"
           android:hint="@string/email"
+          app:counterEnabled="true"
+          app:counterMaxLength="64"
           app:error="@{viewModel.isEmailValid ? null : @string/invalid_email}"
           app:errorEnabled="true">
 

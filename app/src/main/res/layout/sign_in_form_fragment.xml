@@ -55,6 +55,8 @@
         android:layout_marginVertical="8dp"
         android:autofillHints="name"
         android:hint="@string/name"
+        app:counterEnabled="true"
+        app:counterMaxLength="64"
         app:error="@{viewModel.name.isEmpty() || viewModel.isNameValid ? null : @string/invalid_name}"
         app:errorEnabled="true"
         app:isVisible="@{!viewModel.isReturningUser}">
@@ -76,6 +78,8 @@
         android:layout_marginVertical="8dp"
         android:autofillHints="emailAddress"
         android:hint="@string/email"
+        app:counterEnabled="true"
+        app:counterMaxLength="64"
         app:error="@{viewModel.email.isEmpty() || viewModel.isEmailValid ? null : @string/invalid_email}"
         app:errorEnabled="true">
 
