@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignOutFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
@@ -19,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNot
@@ -52,12 +53,15 @@ class SignOutFragment : BottomSheetDialogFragment() {
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.signOutErrorStrRes
         .filterNotNull()
-        .collect { showErrorSnackbar(it) }
+        .collect { causeStrRes ->
+          val msg = getString(R.string.sign_out_error, getString(causeStrRes))
+          showErrorSnackbar(msg.normalizeSpace())
+        }
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.signOutResource
-        .filterNot { it == null || it is Resource.Loading }
+        .filterNot { it is Resource.Loading }
         .collect { dismiss() }
     }
   }
@@ -68,7 +72,7 @@ class SignOutViewModel @Inject constructor(
   private val accountRepository: AccountRepository
 ) : ViewModel() {
 
-  internal val signOutResource = MutableStateFlow<Resource<Unit>?>(null)
+  internal val signOutResource = MutableSharedFlow<Resource<Unit>>()
 
   val isSigningOut: StateFlow<Boolean> = signOutResource.transform { r ->
     emit(r is Resource.Loading)
@@ -76,7 +80,7 @@ class SignOutViewModel @Inject constructor(
 
   val signOutErrorStrRes: Flow<Int?> = signOutResource.transform { r ->
     emit(
-      when (r?.error) {
+      when (r.error) {
         null -> null
         is NetworkError -> R.string.network_error
         else -> R.string.unknown_error

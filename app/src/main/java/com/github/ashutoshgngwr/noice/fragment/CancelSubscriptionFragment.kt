@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.CancelSubscriptionFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
@@ -25,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNot
@@ -65,14 +66,17 @@ class CancelSubscriptionFragment : BottomSheetDialogFragment() {
 
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.cancelResource
-        .filterNot { it == null || it is Resource.Loading }
+        .filterNot { it is Resource.Loading }
         .collect { dismissAndSetFragmentResult(false) }
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.errorStrRes
         .filterNotNull()
-        .collect { showErrorSnackbar(it) }
+        .collect { causeStrRes ->
+          val msg = getString(R.string.cancel_subscription_error, getString(causeStrRes))
+          showErrorSnackbar(msg.normalizeSpace())
+        }
     }
   }
 
@@ -97,7 +101,7 @@ class CancelSubscriptionViewModel @Inject constructor(
     .fromSavedStateHandle(savedStateHandle)
     .subscription
 
-  internal val cancelResource = MutableStateFlow<Resource<Unit>?>(null)
+  internal val cancelResource = MutableSharedFlow<Resource<Unit>>()
 
   val isCancelling: StateFlow<Boolean> = cancelResource.transform { r ->
     emit(r is Resource.Loading)
@@ -105,7 +109,7 @@ class CancelSubscriptionViewModel @Inject constructor(
 
   internal val errorStrRes: Flow<Int?> = cancelResource.transform { r ->
     emit(
-      when (r?.error) {
+      when (r.error) {
         null -> null
         is SubscriptionNotFoundError -> null // ignore
         is NetworkError -> R.string.network_error

@@ -186,8 +186,8 @@
     <string name="sign_out">Sign out</string>
     <string name="update_details">Update details</string>
     <string name="delete_account">Delete account</string>
-    <string name="network_error">The Internet connection was lost!</string>
-    <string name="unknown_error">An unknown error occurred. Please try again later!</string>
+    <string name="network_error">The network is unreachable.</string>
+    <string name="unknown_error">An unknown error occurred.</string>
     <string name="welcome_back">Welcome back!</string>
     <string name="welcome">Welcome!</string>
     <string name="sign_in_message">Please enter your email to sign-in.</string>
@@ -195,7 +195,7 @@
     <string name="email">Email</string>
     <string name="invalid_name">Name is not valid!</string>
     <string name="invalid_email">Email is not valid!</string>
-    <string name="account_locked_error">Your email is temporarily locked from making sign-in attempts. Please try again after %1$s!</string>
+    <string name="account_locked_error">Your email is temporarily locked from making sign-in attempts until %1$s.</string>
     <string name="sign_up_email_sent">We\'ve emailed you a sign-in link at \"%1$s\".</string>
     <string name="sign_in_email_sent">We\'ve emailed you a sign-in link at \"%1$s\" if this address belongs to a registered account.</string>
     <string name="sign_in_link_tip">Please open the received link using Noice to complete the sign-in process.</string>
@@ -211,7 +211,7 @@
     <string name="delete_account_confirmation">On deleting your account, you will immediately lose access to your profile. If you have an ongoing subscription, it will be cancelled. Please note that it may take us a while to completely erase your data from our servers.</string>
     <string name="i_understand">I understand.</string>
     <string name="deleting_account">Deleting account</string>
-    <string name="duplicate_email_error">The updated email is already in use by another account.</string>
+    <string name="duplicate_email_error">That email is associated with another account.</string>
     <string name="account_details_update_success">Your account details were updated successfully.</string>
     <string name="offline">You\'re offline</string>
     <string name="back_online">Back online</string>
@@ -236,14 +236,14 @@
     <string name="benefit_2">Offline playback</string>
     <string name="select_a_plan">Select a plan</string>
     <string name="processing_payment">Processing payment</string>
-    <string name="payment_processing_error">We were unable to process your payment. The amount should be automatically refunded if deducted. If you do not get your refund within a week, please notify us.</string>
+    <string name="payment_processing_error">Uh-oh! We were unable to process your payment. The amount should be automatically refunded if deducted. If you do not get your refund within a week, please notify us.</string>
     <string name="plans">Plans</string>
     <string name="get_premium">Get premium</string>
     <string name="sign_in_to_continue">Please sign-in or sign-up to continue.</string>
     <string name="initialising_subscription">Initialising subscription</string>
     <string name="user_already_subscribed">You are already subscribed.</string>
     <string name="confirming_payment">Confirming payment</string>
-    <string name="subscription_payment_confirmation_failed">Uh-oh! We had some trouble while waiting for the payment confirmation. It may be due to a network error or a delay from the payment provider. We\'ll activate your subscription as soon as we hear from the provider. Please check your subscription status after some time.</string>
+    <string name="subscription_payment_confirmation_failed">Uh-oh! We had some trouble while waiting for the payment confirmation. It may be due to a network error or a delay from the payment provider. We\'ll update your subscription status as soon as we hear from the provider. Please check your subscription status after some time.</string>
     <string name="subscription_payment_complete">Thank you for subscribing to Noice Premium. Your subscription is now active.</string>
     <string name="subscription_payment_cancelled">The subscription payment was cancelled!</string>
     <string name="subscription_purchases">Subscription purchases</string>
@@ -267,5 +267,12 @@
     <string name="looping_sound">This sound loops seamlessly.</string>
     <string name="non_looping_sound">This sound contains breaks in-between.</string>
     <string name="media_sources">Media Sources</string>
-    <string name="profile_load_error">Oops! We were unable to fetch your account details. %1$s</string>
+    <string name="profile_load_error">Oops! We couldn\'t fetch your account details. %1$s</string>
+    <string name="cancel_subscription_error">Oh no! We couldn\'t cancel your subscription. %1$s Please try again!</string>
+    <string name="delete_account_error">Oh no! We couldn\'t delete your account. %1$s Please try again!</string>
+    <string name="account_details_update_error">Oh no! We couldn\'t update your details. %1$s Please try again!</string>
+    <string name="subscription_initialisation_error">Oops! We couldn\'t start the billing flow. %1$s Please try again!</string>
+    <string name="library_load_error">Oops! We couldn\'t fetch the sound library. %1$s</string>
+    <string name="sign_in_email_error">Uh-oh! We couldn\'t email you a sign-in link. %1$s Please try again later!</string>
+    <string name="sign_out_error">Oh no! We couldn\'t sign you out. %1$s Please try again!</string>
 </resources>

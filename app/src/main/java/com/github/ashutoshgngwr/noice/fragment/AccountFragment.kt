@@ -91,8 +91,8 @@ class AccountFragment : Fragment() {
         .filterNotNull()
         .filter { networkInfoViewModel.isOnline.value || viewModel.profile.value == null } // suppress errors when offline.
         .collect { causeStrRes ->
-          val msg = getString(R.string.profile_load_error, getString(causeStrRes)).normalizeSpace()
-          showErrorSnackbar(msg)
+          val msg = getString(R.string.profile_load_error, getString(causeStrRes))
+          showErrorSnackbar(msg.normalizeSpace())
         }
     }
 
