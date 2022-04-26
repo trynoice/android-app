@@ -15,6 +15,7 @@ import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.AccountFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
@@ -29,8 +30,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
@@ -86,8 +89,11 @@ class AccountFragment : Fragment() {
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.loadErrorStrRes
         .filterNotNull()
-        .filter { networkInfoViewModel.isOnline.value } // suppress errors when offline.
-        .collect { errRes -> showErrorSnackbar(errRes) }
+        .filter { networkInfoViewModel.isOnline.value || viewModel.profile.value == null } // suppress errors when offline.
+        .collect { causeStrRes ->
+          val msg = getString(R.string.profile_load_error, getString(causeStrRes)).normalizeSpace()
+          showErrorSnackbar(msg)
+        }
     }
 
     viewModel.loadData()
@@ -103,11 +109,15 @@ class AccountViewModel @Inject constructor(
   val isSignedIn = accountRepository.isSignedIn()
   val isSubscribed = MutableStateFlow(true)
 
-  private val profileResource = MutableStateFlow<Resource<Profile>>(Resource.Loading())
+  private val profileResource = MutableSharedFlow<Resource<Profile>>()
 
-  val profile = profileResource.transform { resource ->
+  val profile: StateFlow<Profile?> = profileResource.transform { resource ->
     resource.data?.also { emit(it) }
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+  val isLoading: StateFlow<Boolean> = profileResource.transform { r ->
+    emit(r is Resource.Loading)
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
   internal val loadErrorStrRes: Flow<Int?> = profileResource.transform { resource ->
     emit(
@@ -120,7 +130,7 @@ class AccountViewModel @Inject constructor(
     )
   }
 
-  internal fun loadData() {
+  fun loadData() {
     if (!isSignedIn.value) {
       return
     }

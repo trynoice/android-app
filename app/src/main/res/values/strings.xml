@@ -267,4 +267,5 @@
     <string name="looping_sound">This sound loops seamlessly.</string>
     <string name="non_looping_sound">This sound contains breaks in-between.</string>
     <string name="media_sources">Media Sources</string>
+    <string name="profile_load_error">Oops! We were unable to fetch your account details. %1$s</string>
 </resources>

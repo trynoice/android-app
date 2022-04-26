@@ -33,7 +33,18 @@ fun Fragment.showErrorSnackbar(
   @StringRes msgRes: Int,
   @BaseTransientBottomBar.Duration length: Int = Snackbar.LENGTH_LONG,
 ): Snackbar {
-  return showSnackbar(msgRes, R.drawable.ic_baseline_error_24, R.color.error, length)
+  return showErrorSnackbar(getString(msgRes), length)
+}
+
+/**
+ * Shows the [Snackbar] with [R.drawable.ic_baseline_error_24] icon and [R.color.error] iconTint,
+ * anchored to [R.id.network_indicator] or [R.id.bottom_nav] (if present) and returns it.
+ */
+fun Fragment.showErrorSnackbar(
+  msg: String,
+  @BaseTransientBottomBar.Duration length: Int = Snackbar.LENGTH_LONG,
+): Snackbar {
+  return showSnackbar(msg, R.drawable.ic_baseline_error_24, R.color.error, length)
 }
 
 /**

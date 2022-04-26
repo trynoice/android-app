@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.databinding.WakeUpTimerFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showSnackbar
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
@@ -216,8 +217,6 @@ class WakeUpTimerFragment : Fragment() {
     showSnackbar(getRelativeDurationString(diffHours, diffMinutes))
   }
 
-  private val matchSpacesRegex = """\s+""".toRegex()
-
   private fun getRelativeDurationString(hours: Int, minutes: Int): String {
     var minutePlural = ""
     if (minutes > 0 || hours == 0) {
@@ -235,7 +234,7 @@ class WakeUpTimerFragment : Fragment() {
     }
 
     return getString(R.string.wake_up_timer_schedule_set, hourPlural, timeBridge, minutePlural)
-      .replace(matchSpacesRegex, " ")
+      .normalizeSpace()
   }
 
   private fun resetControls() {
