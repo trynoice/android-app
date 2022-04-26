@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.DeleteAccountFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
@@ -64,7 +65,10 @@ class DeleteAccountFragment : BottomSheetDialogFragment() {
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.apiErrorStrRes
         .filterNotNull()
-        .collect { showErrorSnackbar(it) }
+        .collect { causeStrRes ->
+          val msg = getString(R.string.delete_account_error, getString(causeStrRes))
+          showErrorSnackbar(msg.normalizeSpace())
+        }
     }
   }
 }

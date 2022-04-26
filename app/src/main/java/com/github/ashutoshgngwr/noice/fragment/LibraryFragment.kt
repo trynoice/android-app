@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
@@ -27,6 +28,7 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.LibraryFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.LibrarySoundGroupListItemBinding
 import com.github.ashutoshgngwr.noice.databinding.LibrarySoundListItemBinding
+import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
@@ -37,14 +39,16 @@ import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
+import com.github.ashutoshgngwr.noice.viewmodel.NetworkInfoViewModel
 import com.trynoice.api.client.models.SoundGroup
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
@@ -80,6 +84,7 @@ class LibraryFragment : Fragment() {
   @set:Inject
   internal lateinit var playbackController: PlaybackController
 
+  private val networkInfoViewModel: NetworkInfoViewModel by activityViewModels()
   private val viewModel: LibraryViewModel by viewModels()
   private val adapter by lazy {
     val navController = Navigation.findNavController(requireActivity(), R.id.home_nav_host_fragment)
@@ -120,7 +125,20 @@ class LibraryFragment : Fragment() {
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.transientErrorStrRes
         .filterNotNull()
-        .collect { showErrorSnackbar(it) }
+        .filter { networkInfoViewModel.isOnline.value } // suppress transient errors when offline.
+        .collect { causeStrRes ->
+          val msg = getString(R.string.library_load_error, getString(causeStrRes))
+          showErrorSnackbar(msg.normalizeSpace())
+        }
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.persistentErrorStrRes
+        .filterNotNull()
+        .collect { causeStrRes ->
+          val msg = getString(R.string.library_load_error, getString(causeStrRes))
+          binding.error.text = msg.normalizeSpace()
+        }
     }
 
     binding.randomPresetButton.setOnLongClickListener {
@@ -186,7 +204,7 @@ class LibraryViewModel @Inject constructor(
   private val soundRepository: SoundRepository,
 ) : ViewModel() {
 
-  private val soundsResource = MutableStateFlow<Resource<List<Sound>>>(Resource.Loading())
+  private val soundsResource = MutableSharedFlow<Resource<List<Sound>>>()
 
   val isLoading: StateFlow<Boolean> = soundsResource.transform { r ->
     emit(r is Resource.Loading)

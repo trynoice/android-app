@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.fragment
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +12,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignInResultFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
@@ -22,15 +25,15 @@ import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.ceil
 
 @AndroidEntryPoint
 class SignInResultFragment : Fragment() {
@@ -59,6 +62,25 @@ class SignInResultFragment : Fragment() {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
     binding.openMailbox.setOnClickListener { openMailbox() }
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.signInError
+        .filterNotNull()
+        .collect { cause ->
+          val causeStr = when (cause) {
+            is AccountTemporarilyLockedError -> {
+              val lockedUntil = System.currentTimeMillis() + cause.timeoutSeconds * 1000L
+              val lockedUntilStr = DateUtils.getRelativeTimeSpanString(context, lockedUntil)
+              getString(R.string.account_locked_error, lockedUntilStr)
+            }
+            is NetworkError -> getString(R.string.network_error)
+            else -> getString(R.string.unknown_error)
+          }
+
+          val msg = getString(R.string.sign_in_email_error, causeStr)
+          binding.error.text = msg.normalizeSpace()
+        }
+    }
+
     viewModel.signIn()
   }
 
@@ -84,7 +106,7 @@ class SignInResultViewModel @Inject constructor(
   val isReturningUser: Boolean
   val email: String
   private val name: String?
-  private val signInResource = MutableStateFlow<Resource<Unit>>(Resource.Loading())
+  private val signInResource = MutableSharedFlow<Resource<Unit>>()
 
   val isSigningIn: StateFlow<Boolean> = signInResource.transform { r ->
     emit(r is Resource.Loading)
@@ -96,27 +118,6 @@ class SignInResultViewModel @Inject constructor(
 
   val signInError: StateFlow<Throwable?> = signInResource.transform { r ->
     emit(r.error)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-  val isAccountLocked: StateFlow<Boolean> = signInError.transform { e ->
-    emit(e is AccountTemporarilyLockedError)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
-
-  val accountLockTimeoutMinutes: StateFlow<Int> = signInError.transform { e ->
-    if (e is AccountTemporarilyLockedError) {
-      emit(ceil(e.timeoutSeconds / 60.0).toInt())
-    }
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
-
-  val signInErrorStrRes: StateFlow<Int?> = signInError.transform { e ->
-    emit(
-      when (e) {
-        null -> null
-        is AccountTemporarilyLockedError -> null
-        is NetworkError -> R.string.network_error
-        else -> R.string.unknown_error
-      }
-    )
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   init {
