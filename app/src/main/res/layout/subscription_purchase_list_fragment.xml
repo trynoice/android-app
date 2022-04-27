@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  android:animateLayoutChanges="true">
 
   <LinearLayout
     android:id="@+id/empty_list_indicator"
@@ -31,6 +33,11 @@
       android:text="@string/view_subscription_plans" />
 
   </LinearLayout>
+
+  <include
+    android:id="@+id/error_container"
+    layout="@layout/simple_error_layout"
+    tools:visibility="gone" />
 
   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     android:id="@+id/swipe_container"

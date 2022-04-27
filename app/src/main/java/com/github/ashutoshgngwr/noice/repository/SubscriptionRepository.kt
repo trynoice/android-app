@@ -144,7 +144,6 @@ class SubscriptionRepository @Inject constructor(
    * Returns a [Flow] that emits the requested subscription page as a [Resource].
    *
    * On failures, the flow emits [Resource.Failure] with:
-   * - [SubscriptionNotFoundError] when page with given index doesn't exist.
    * - [NetworkError] on network errors.
    * - [HttpException] on api errors.
    *
@@ -152,16 +151,13 @@ class SubscriptionRepository @Inject constructor(
    * @see Resource
    */
   fun list(page: Int = 0): Flow<Resource<List<Subscription>>> = fetchNetworkBoundResource(
-    loadFromCache = { cacheStore.getAs("${SUBSCRIPTION_PAGE_PREFIX}/$page") },
     loadFromNetwork = {
       apiClient.subscriptions().list(false, page, stripeReturnUrl = STRIPE_RETURN_URL)
     },
-    cacheNetworkResult = { cacheStore.put("${SUBSCRIPTION_PAGE_PREFIX}/$page", it) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "list:", e)
-      when {
-        e is HttpException && e.code() == 404 -> SubscriptionNotFoundError
-        e is IOException -> NetworkError
+      when (e) {
+        is IOException -> NetworkError
         else -> e
       }
     },
@@ -216,7 +212,6 @@ class SubscriptionRepository @Inject constructor(
     private const val LOG_TAG = "SubscriptionRepository"
     private const val SUBSCRIPTION_KEY_PREFIX = "subscription"
     private const val PLANS_CACHE_KEY = "${SUBSCRIPTION_KEY_PREFIX}/plans"
-    private const val SUBSCRIPTION_PAGE_PREFIX = "${SUBSCRIPTION_KEY_PREFIX}/page"
 
     private val STRIPE_RETURN_URL = Uri.parse("https://trynoice.com/redirect")
       .buildUpon()
