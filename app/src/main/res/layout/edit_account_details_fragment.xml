@@ -13,7 +13,8 @@
 
   <FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
 
     <ScrollView
       android:layout_width="match_parent"
@@ -88,33 +89,12 @@
 
     </ScrollView>
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:gravity="center"
-      android:orientation="vertical"
-      android:padding="16dp"
+    <include
+      android:id="@+id/error_container"
+      layout="@layout/simple_error_layout"
       app:isVisible="@{!viewModel.isLoading &amp;&amp; viewModel.loadErrorStrRes != null}"
-      tools:visibility="gone">
-
-      <TextView
-        android:id="@+id/error"
-        style="@style/Widget.App.TextView.Message.Error.Centered"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-      <Space
-        android:layout_width="wrap_content"
-        android:layout_height="16dp" />
-
-      <Button
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="@{() -> viewModel.loadProfile()}"
-        android:text="@string/retry" />
-
-    </LinearLayout>
+      app:retryAction="@{() -> viewModel.loadProfile()}"
+      tools:visibility="gone" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
       android:layout_width="wrap_content"

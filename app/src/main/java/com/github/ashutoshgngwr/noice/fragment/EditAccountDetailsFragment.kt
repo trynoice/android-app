@@ -57,7 +57,7 @@ class EditAccountDetailsFragment : Fragment() {
         .filterNotNull()
         .collect { causeStrRes ->
           val msg = getString(R.string.profile_load_error, getString(causeStrRes))
-          binding.error.text = msg.normalizeSpace()
+          binding.errorContainer.message = msg.normalizeSpace()
         }
     }
 

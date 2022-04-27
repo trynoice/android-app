@@ -137,7 +137,7 @@ class LibraryFragment : Fragment() {
         .filterNotNull()
         .collect { causeStrRes ->
           val msg = getString(R.string.library_load_error, getString(causeStrRes))
-          binding.error.text = msg.normalizeSpace()
+          binding.errorContainer.message = msg.normalizeSpace()
         }
     }
 

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="kotlin.jvm.functions.Function0" />
+
+    <import type="kotlin.Unit" />
+
+    <variable
+      name="isVisible"
+      type="boolean" />
+
+    <variable
+      name="message"
+      type="String" />
+
+    <variable
+      name="retryAction"
+      type="Function0&lt;Unit>" />
+
+  </data>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp"
+    app:isVisible="@{isVisible}">
+
+    <TextView
+      style="@style/Widget.App.TextView.Message.Error.Centered"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@{message}"
+      tools:text="@string/unknown_error" />
+
+    <Space
+      android:layout_width="wrap_content"
+      android:layout_height="24dp" />
+
+    <Button
+      style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:onClick="@{() -> retryAction.invoke()}"
+      android:text="@string/retry" />
+
+  </LinearLayout>
+
+</layout>
