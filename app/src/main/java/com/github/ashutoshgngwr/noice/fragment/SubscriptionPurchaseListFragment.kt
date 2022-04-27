@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.LayoutInflater
@@ -29,6 +30,7 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseItemBinding
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseListFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseLoadingItemBinding
+import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
@@ -68,16 +70,22 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
     val adapter = SubscriptionPurchaseListAdapter(layoutInflater, this, subscriptionBillingProvider)
     val footerAdapter = SubscriptionPurchaseListLoadStateAdapter(layoutInflater, adapter::retry)
     binding.list.adapter = ConcatAdapter(adapter, footerAdapter)
+    binding.errorContainer.retryAction = adapter::refresh
     adapter.addLoadStateListener { loadStates ->
-      binding.swipeContainer.isRefreshing = loadStates.source.refresh is LoadState.Loading
       footerAdapter.loadState = loadStates.append
-
+      val isRefreshError = loadStates.source.refresh is LoadState.Error
       val isListEmpty = loadStates.source.refresh is LoadState.NotLoading
         && loadStates.append.endOfPaginationReached
         && adapter.itemCount < 1
 
-      binding.swipeContainer.isVisible = !isListEmpty
       binding.emptyListIndicator.isVisible = isListEmpty
+      binding.swipeContainer.isVisible = !isListEmpty && !isRefreshError
+      binding.swipeContainer.isRefreshing = loadStates.source.refresh is LoadState.Loading
+      binding.errorContainer.isVisible = isRefreshError
+
+      if (isRefreshError) {
+        binding.errorContainer.message = buildLoadError(requireContext(), loadStates.source.refresh)
+      }
     }
 
     binding.swipeContainer.setColorSchemeResources(R.color.primary)
@@ -302,12 +310,7 @@ class SubscriptionPurchaseLoadingViewHolder(
     binding.errorContainer.isVisible = loadState is LoadState.Error
     if (loadState is LoadState.Error) {
       binding.retryButton.setOnClickListener { retryAction.invoke() }
-      binding.errorMessage.setText(
-        when (loadState.error) {
-          is NetworkError -> R.string.network_error
-          else -> R.string.unknown_error
-        }
-      )
+      binding.errorMessage.text = buildLoadError(binding.root.context, loadState)
     }
   }
 }
@@ -316,4 +319,16 @@ interface SubscriptionActionClickListener {
   fun onClickManage(subscription: Subscription)
   fun onClickUpgrade(subscription: Subscription)
   fun onClickCancel(subscription: Subscription)
+}
+
+private fun buildLoadError(context: Context, loadState: LoadState): String {
+  require(loadState is LoadState.Error) { "given loadState is not a LoadState.Error instance" }
+  val cause = context.getString(
+    when (loadState.error) {
+      is NetworkError -> R.string.network_error
+      else -> R.string.unknown_error
+    }
+  )
+
+  return context.getString(R.string.subscription_purchases_load_error, cause).normalizeSpace()
 }
