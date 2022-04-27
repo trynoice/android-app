@@ -69,7 +69,7 @@ class ViewSubscriptionPlansFragment : Fragment() {
         .filterNotNull()
         .collect { causeStrRes ->
           val msg = getString(R.string.subscription_plans_load_error, getString(causeStrRes))
-          binding.error.text = msg.normalizeSpace()
+          binding.errorContainer.message = msg.normalizeSpace()
         }
     }
   }

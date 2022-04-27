@@ -16,34 +16,12 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true">
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:gravity="center"
-      android:orientation="vertical"
-      android:padding="16dp"
+    <include
+      android:id="@+id/error_container"
+      layout="@layout/simple_error_layout"
       app:isVisible="@{viewModel.persistentErrorStrRes != null}"
-      tools:visibility="gone">
-
-      <TextView
-        android:id="@+id/error"
-        style="@style/Widget.App.TextView.Message.Error.Centered"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="@string/unknown_error" />
-
-      <Space
-        android:layout_width="wrap_content"
-        android:layout_height="16dp" />
-
-      <Button
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="@{() -> viewModel.loadLibrary()}"
-        android:text="@string/retry" />
-
-    </LinearLayout>
+      app:retryAction="@{() -> viewModel.loadLibrary()}"
+      tools:visibility="gone" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
@@ -86,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:contentDescription="@string/save_preset"
+        android:contentDescription="@string/random_preset"
         android:src="@drawable/ic_baseline_shuffle_24"
         app:layout_constraintBottom_toTopOf="@id/save_preset_button"
         app:layout_constraintEnd_toEndOf="parent" />
