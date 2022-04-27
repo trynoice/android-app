@@ -275,4 +275,5 @@
     <string name="library_load_error">Oops! We couldn\'t fetch the sound library. %1$s</string>
     <string name="sign_in_email_error">Uh-oh! We couldn\'t email you a sign-in link. %1$s Please try again later!</string>
     <string name="sign_out_error">Oh no! We couldn\'t sign you out. %1$s Please try again!</string>
+    <string name="subscription_plans_load_error">Oops! We couldn\'t fetch subscription plans. %1$s</string>
 </resources>

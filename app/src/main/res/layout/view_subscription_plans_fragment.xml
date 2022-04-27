@@ -15,96 +15,124 @@
 
   </data>
 
-  <ScrollView
+  <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:animateLayoutChanges="true">
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:indeterminate="true"
+      app:isVisible="@{viewModel.isLoading}"
+      tools:visibility="gone" />
 
     <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
+      android:gravity="center"
       android:orientation="vertical"
-      android:padding="16dp">
+      android:padding="16dp"
+      app:isVisible="@{!viewModel.isLoading &amp;&amp; viewModel.apiErrorStrRes != null}"
+      tools:visibility="gone">
 
       <TextView
+        android:id="@+id/error"
+        style="@style/Widget.App.TextView.Message.Error.Centered"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/benefits"
-        android:textAppearance="?attr/textAppearanceHeadline5" />
+        android:layout_height="wrap_content" />
 
       <Space
         android:layout_width="wrap_content"
-        android:layout_height="24dp" />
+        android:layout_height="16dp" />
+
+      <Button
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> viewModel.loadPlans()}"
+        android:text="@string/retry" />
+
+    </LinearLayout>
+
+    <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:isVisible="@{!viewModel.isLoading &amp;&amp; viewModel.apiErrorStrRes == null}">
 
       <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
-          style="@style/Widget.App.TextView.SubscriptionBenefit"
-          android:layout_width="wrap_content"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="@string/benefit_0"
-          app:drawableStartCompat="@drawable/ic_baseline_forest_24" />
+          android:text="@string/benefits"
+          android:textAppearance="?attr/textAppearanceHeadline5" />
 
         <Space
           android:layout_width="wrap_content"
-          android:layout_height="8dp" />
+          android:layout_height="24dp" />
 
-        <TextView
-          style="@style/Widget.App.TextView.SubscriptionBenefit"
+        <LinearLayout
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:drawablePadding="16dp"
-          android:text="@string/benefit_1"
-          android:textAppearance="?attr/textAppearanceBody1"
-          app:drawableStartCompat="@drawable/ic_baseline_high_quality_24" />
+          android:layout_gravity="center_horizontal"
+          android:orientation="vertical">
+
+          <TextView
+            style="@style/Widget.App.TextView.SubscriptionBenefit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/benefit_0"
+            app:drawableStartCompat="@drawable/ic_baseline_forest_24" />
+
+          <Space
+            android:layout_width="wrap_content"
+            android:layout_height="8dp" />
+
+          <TextView
+            style="@style/Widget.App.TextView.SubscriptionBenefit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="16dp"
+            android:text="@string/benefit_1"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:drawableStartCompat="@drawable/ic_baseline_high_quality_24" />
+
+          <Space
+            android:layout_width="wrap_content"
+            android:layout_height="8dp" />
+
+          <TextView
+            style="@style/Widget.App.TextView.SubscriptionBenefit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="16dp"
+            android:text="@string/benefit_2"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:drawableStartCompat="@drawable/ic_baseline_download_for_offline_24" />
+
+        </LinearLayout>
 
         <Space
           android:layout_width="wrap_content"
-          android:layout_height="8dp" />
+          android:layout_height="32dp" />
 
         <TextView
-          style="@style/Widget.App.TextView.SubscriptionBenefit"
-          android:layout_width="wrap_content"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:drawablePadding="16dp"
-          android:text="@string/benefit_2"
-          android:textAppearance="?attr/textAppearanceBody1"
-          app:drawableStartCompat="@drawable/ic_baseline_download_for_offline_24" />
-
-      </LinearLayout>
-
-      <Space
-        android:layout_width="wrap_content"
-        android:layout_height="32dp" />
-
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@{viewModel.isSignedIn ? @string/select_a_plan : @string/plans}"
-        android:textAppearance="?attr/textAppearanceHeadline5"
-        tools:text="@string/select_a_plan" />
-
-      <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginVertical="16dp"
-        android:layout_weight="1">
-
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:indeterminate="true"
-          app:isVisible="@{viewModel.isLoading}"
-          tools:visibility="gone" />
+          android:text="@{viewModel.isSignedIn ? @string/select_a_plan : @string/plans}"
+          android:textAppearance="?attr/textAppearanceHeadline5"
+          tools:text="@string/select_a_plan" />
 
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:layout_marginVertical="16dp"
           android:animateLayoutChanges="true"
           android:orientation="vertical"
           app:activePlan="@{viewModel.activeSubscription.plan}"
@@ -113,60 +141,60 @@
           app:onPlanSelected="@{onPlanSelectedListener}"
           app:subscriptionPlans="@{viewModel.plans}" />
 
-      </FrameLayout>
-
-      <Space
-        android:layout_width="wrap_content"
-        android:layout_height="24dp" />
-
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:isVisible="@{!viewModel.isSignedIn}"
-        tools:visibility="gone">
-
-        <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="@string/sign_in_to_continue"
-          android:textAppearance="?attr/textAppearanceBody1" />
-
         <Space
           android:layout_width="wrap_content"
-          android:layout_height="16dp" />
+          android:layout_height="24dp" />
 
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="horizontal">
+          android:orientation="vertical"
+          app:isVisible="@{!viewModel.isSignedIn}"
+          tools:visibility="gone">
 
-          <Button
-            android:id="@+id/sign_up"
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-            android:layout_width="0dp"
+          <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/sign_up" />
+            android:text="@string/sign_in_to_continue"
+            android:textAppearance="?attr/textAppearanceBody1" />
 
           <Space
-            android:layout_width="16dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="16dp" />
 
-          <Button
-            android:id="@+id/sign_in"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
+          <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/sign_in" />
+            android:orientation="horizontal">
+
+            <Button
+              android:id="@+id/sign_up"
+              style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="@string/sign_up" />
+
+            <Space
+              android:layout_width="16dp"
+              android:layout_height="wrap_content" />
+
+            <Button
+              android:id="@+id/sign_in"
+              style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:text="@string/sign_in" />
+
+          </LinearLayout>
 
         </LinearLayout>
 
       </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
-  </ScrollView>
+  </FrameLayout>
 
 </layout>

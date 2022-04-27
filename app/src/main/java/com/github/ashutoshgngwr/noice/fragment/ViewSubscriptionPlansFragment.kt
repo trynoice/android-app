@@ -18,7 +18,7 @@ import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPlanItemBinding
 import com.github.ashutoshgngwr.noice.databinding.ViewSubscriptionPlansFragmentBinding
-import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
+import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
@@ -29,8 +29,7 @@ import com.trynoice.api.client.models.SubscriptionPlan
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
@@ -68,7 +67,10 @@ class ViewSubscriptionPlansFragment : Fragment() {
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.apiErrorStrRes
         .filterNotNull()
-        .collect { strRes -> showErrorSnackbar(strRes) }
+        .collect { causeStrRes ->
+          val msg = getString(R.string.subscription_plans_load_error, getString(causeStrRes))
+          binding.error.text = msg.normalizeSpace()
+        }
     }
   }
 }
@@ -123,25 +125,25 @@ fun setBillingPeriodMonths(tv: TextView, months: Int) {
 
 @HiltViewModel
 class ViewSubscriptionPlansViewModel @Inject constructor(
+  private val subscriptionRepository: SubscriptionRepository,
   accountRepository: AccountRepository,
-  subscriptionRepository: SubscriptionRepository,
   savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
   val isSignedIn = accountRepository.isSignedIn()
   val activeSubscription: Subscription?
 
-  private val plansResource = MutableStateFlow<Resource<List<SubscriptionPlan>>>(Resource.Loading())
+  private val plansResource = MutableSharedFlow<Resource<List<SubscriptionPlan>>>()
 
   val isLoading: StateFlow<Boolean> = plansResource.transform { r ->
-    emit(r.data == null)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    emit(r is Resource.Loading)
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
 
   val plans: StateFlow<List<SubscriptionPlan>> = plansResource.transform { r ->
     emit(r.data ?: emptyList())
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
-  internal val apiErrorStrRes: Flow<Int?> = plansResource.transform { r ->
+  val apiErrorStrRes: StateFlow<Int?> = plansResource.transform { r ->
     emit(
       when (r.error) {
         null -> null
@@ -149,12 +151,15 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   init {
     val args = ViewSubscriptionPlansFragmentArgs.fromSavedStateHandle(savedStateHandle)
     activeSubscription = args.activeSubscription
+    loadPlans()
+  }
 
+  fun loadPlans() {
     viewModelScope.launch {
       subscriptionRepository.getPlans()
         .flowOn(Dispatchers.IO)
