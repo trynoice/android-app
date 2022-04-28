@@ -3,13 +3,13 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools">
 
-  <PreferenceCategory android:title="@string/behavior">
+  <PreferenceCategory android:title="@string/playback">
 
-    <SwitchPreferenceCompat
-      android:icon="@drawable/ic_settings_home_screen"
-      android:key="@string/presets_as_home_screen_key"
-      android:summary="@string/presets_as_home_screen_summary"
-      android:title="@string/presets_as_home_screen" />
+    <Preference
+      android:icon="@drawable/ic_baseline_settings_32"
+      android:key="@string/audio_quality_key"
+      android:title="@string/audio_quality"
+      tools:summary="@string/audio_quality_medium" />
 
     <SeekBarPreference
       android:defaultValue="1"
@@ -19,6 +19,7 @@
       android:summary="@string/sound_fade_in_duration_summary"
       android:title="@string/sound_fade_in_duration"
       app:min="0"
+      app:seekBarIncrement="1"
       app:showSeekBarValue="true" />
 
     <SwitchPreferenceCompat
@@ -64,7 +65,13 @@
       android:icon="@drawable/ic_settings_theme"
       android:key="@string/app_theme_key"
       android:title="@string/app_theme"
-      tools:summary="Light" />
+      tools:summary="@string/app_theme_light" />
+
+    <SwitchPreferenceCompat
+      android:icon="@drawable/ic_settings_home_screen"
+      android:key="@string/presets_as_home_screen_key"
+      android:summary="@string/presets_as_home_screen_summary"
+      android:title="@string/presets_as_home_screen" />
 
     <SwitchPreferenceCompat
       android:defaultValue="true"

@@ -126,7 +126,6 @@
     <string name="pinned_shortcut_created">ホーム画面にショートカットが追加されました!</string>
     <string name="pinned_shortcut_creation_failed">ホーム画面へのショートカットの追加に失敗しました!</string>
     <string name="appearance">見た目</string>
-    <string name="behavior">ふるまい</string>
     <string name="settings">設定</string>
     <string name="app_shortcut_creation_failed">プリセットをアプリショートカットに追加できません!</string>
     <string name="app_shortcut_created">プリセットがアプリショートカットに追加されました!</string>

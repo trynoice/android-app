@@ -122,7 +122,6 @@
     <string name="pinned_shortcut_created">Dem Startbildschirm wurde eine Verknüpfung hinzugefügt!</string>
     <string name="pinned_shortcut_creation_failed">Fehler beim Hinzufügen der Verknüpfung zum Startbildschirm!</string>
     <string name="appearance">Aussehen</string>
-    <string name="behavior">Verhalten</string>
     <string name="presets_as_home_screen">„Voreinstellungen“ als Startbildschirm</string>
     <string name="settings">Einstellungen</string>
     <string name="app_shortcut_created">Voreinstellung wurde zu den Anwendungsverknüpfungen hinzugefügt!</string>

@@ -105,7 +105,6 @@
     <string name="random_preset_description">Los preajustes generados aleatoriamente contendrán sonidos correspondientes al ambiente elegido. Además, los preajustes densos intentarán reproducir más sonidos simultáneamente.</string>
     <string name="app_authors">Ver la lista de los autores de Noice</string>
     <string name="appearance">Apariencia</string>
-    <string name="behavior">Comportamiento</string>
     <string name="presets_as_home_screen">\"Preajustes\" como pantalla de inicio</string>
     <string name="settings">Configuración</string>
     <string name="remove_from_app_shortcuts">Quitar de atajos de aplicación</string>

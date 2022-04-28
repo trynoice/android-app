@@ -115,7 +115,6 @@
     <string name="pinned_shortcut_created">Le raccourci a été ajouté à l\'écran d\'accueil !</string>
     <string name="pinned_shortcut_creation_failed">Échec de l\'ajout du raccourci à l\'écran d\'accueil !</string>
     <string name="appearance">Apparence</string>
-    <string name="behavior">Comportement</string>
     <string name="presets_as_home_screen">« Préréglages » comme écran d\'accueil</string>
     <string name="settings">Paramètres</string>
     <string name="app_shortcut_created">Le préréglage a été ajouté aux raccourcis de l\'application !</string>

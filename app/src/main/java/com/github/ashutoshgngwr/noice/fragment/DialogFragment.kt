@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.ListView
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
@@ -73,7 +74,14 @@ class DialogFragment : BottomSheetDialogFragment() {
    * Adds given [View] to the [R.id.content] layout in the dialog
    */
   private fun addView(view: View) {
-    baseBinding.content.addView(view)
+    val verticalMargin = resources.getDimensionPixelSize(R.dimen.dialog_fragment_view_spacing)
+    val layoutParams = LinearLayout.LayoutParams(
+      LinearLayout.LayoutParams.MATCH_PARENT,
+      LinearLayout.LayoutParams.WRAP_CONTENT
+    )
+
+    layoutParams.setMargins(0, verticalMargin, 0, verticalMargin)
+    baseBinding.content.addView(view, layoutParams)
   }
 
   /**

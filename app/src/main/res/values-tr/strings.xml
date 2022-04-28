@@ -131,7 +131,6 @@
     <string name="pinned_shortcut_created">Kısayol ana ekrana eklendi!</string>
     <string name="pinned_shortcut_creation_failed">Kısayol ana ekrana eklenemedi!</string>
     <string name="appearance">Görünüm</string>
-    <string name="behavior">Davranış</string>
     <string name="presets_as_home_screen">Ana ekran olarak \"mevcut kayıtlar\"</string>
     <string name="settings">Ayarlar</string>
     <string name="share">Paylaş</string>

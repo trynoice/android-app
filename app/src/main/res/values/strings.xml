@@ -132,7 +132,6 @@
     <string name="app_shortcut_creation_failed">Failed to add the preset to app shortcuts!</string>
     <string name="settings">Settings</string>
     <string name="presets_as_home_screen">\"Presets\" as home screen</string>
-    <string name="behavior">Behavior</string>
     <string name="appearance">Appearance</string>
     <string name="sound_fade_in_duration">Sound fade-in duration</string>
     <string name="sound_fade_in_duration_summary">Time duration for fading-in sounds (in seconds)</string>
@@ -277,4 +276,11 @@
     <string name="sign_out_error">Oh no! We couldn\'t sign you out. %1$s Please try again!</string>
     <string name="subscription_plans_load_error">Oops! We couldn\'t fetch subscription plans. %1$s</string>
     <string name="subscription_purchases_load_error">Uh-oh! We couldn\'t fetch your subscription purchase history. %1$s</string>
+    <string name="playback">Playback</string>
+    <string name="audio_quality">Audio quality</string>
+    <string name="audio_quality_summary">Maximum audio quality for streaming. Selecting High and Ultra only works when you\'re subscribed.</string>
+    <string name="audio_quality_low">Low (64 kbps)</string>
+    <string name="audio_quality_medium">Medium (128 kbps)</string>
+    <string name="audio_quality_high">High (224 kbps)</string>
+    <string name="audio_quality_ultra">Ultra (320 kbps)</string>
 </resources>

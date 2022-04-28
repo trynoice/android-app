@@ -109,4 +109,18 @@ class SettingsRepository @Inject constructor(
       context.getString(R.string.enable_media_buttons_key), true
     )
   }
+
+  /**
+   * Sets the value of list preference with key [R.string.audio_quality_key].
+   */
+  fun setMaxAudioBitrate(bitrate: Int) {
+    prefs.edit { putInt(context.getString(R.string.audio_quality_key), bitrate) }
+  }
+
+  /**
+   * Returns the value of list preference with key [R.string.audio_quality_key].
+   */
+  fun getMaxAudioBitrate(): Int {
+    return prefs.getInt(context.getString(R.string.audio_quality_key), 128000)
+  }
 }

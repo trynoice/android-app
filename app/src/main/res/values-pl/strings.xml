@@ -87,7 +87,6 @@
     <string name="help">Pomoc</string>
     <string name="pinned_shortcut_created">Skrót został dodany do ekranu głównego!</string>
     <string name="pinned_shortcut_creation_failed">Nie udało się dodać skrótu do ekranu głównego!</string>
-    <string name="behavior">Zachowanie</string>
     <string name="settings">Ustawienia</string>
     <string name="add_to_app_shortcuts">Dodaj do skrótów aplikacji</string>
     <string name="in_app_feedback__description">Chcielibyśmy usłyszeć od Ciebie o aplikacji. Poświęć chwilę, aby odwiedzić nasze repozytorium GitHub. Jeśli nie podobała Ci się aplikacja, rozważ otwarcie problemu, w którym wyjaśnisz swoje obawy. W przeciwnym razie oznacz projekt gwiazdką, aby okazać miłość i wsparcie.</string>

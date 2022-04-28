@@ -100,7 +100,6 @@
     <string name="pinned_shortcut_created">La scorciatoia è stata aggiunta alla schermata iniziale!</string>
     <string name="pinned_shortcut_creation_failed">Impossibile aggiungere la scorciatoia alla schermata iniziale!</string>
     <string name="appearance">Aspetto</string>
-    <string name="behavior">Comportamento</string>
     <string name="presets_as_home_screen">«Preimpostazioni» come schermata iniziale</string>
     <string name="settings">Impostazioni</string>
     <string name="app_shortcut_created">La preimpostazione è stata aggiunta alle scorciatoie delle app!</string>

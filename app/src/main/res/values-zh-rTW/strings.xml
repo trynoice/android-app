@@ -55,7 +55,6 @@
     <string name="never">不了</string>
     <string name="notification_channel_default__name">媒體播放</string>
     <string name="remove_from_app_shortcuts">從應用捷徑移除</string>
-    <string name="behavior">行為</string>
     <string name="skip_to_next">下一個預設音組</string>
     <string name="ignore_audio_focus_changes">忽略音訊焦點變化</string>
     <string name="share_usage_data_consent_title">資料共享偏好設定</string>

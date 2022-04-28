@@ -20,7 +20,6 @@
     <string name="pinned_shortcut_created">Lối tắt đã được thêm vào màn hình chính!</string>
     <string name="pinned_shortcut_creation_failed">Thêm lối tắt vào màn hình chính thất bại!</string>
     <string name="appearance">Ngoại hình</string>
-    <string name="behavior">Hành vi</string>
     <string name="presets_as_home_screen">\"Thiết lập trước\" làm màn hình chính</string>
     <string name="settings">Cài đặt</string>
     <string name="app_shortcut_creation_failed">Thêm thiết lập trước vào lối tắt ứng dụng thất bại!</string>

@@ -60,6 +60,35 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
   override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
     setPreferencesFromResource(R.xml.settings, rootKey)
+    findPreference<Preference>(R.string.audio_quality_key).apply {
+      val entries = arrayOf(
+        getString(R.string.audio_quality_low),
+        getString(R.string.audio_quality_medium),
+        getString(R.string.audio_quality_high),
+        getString(R.string.audio_quality_ultra),
+      )
+
+      val values = arrayOf(64000, 128000, 224000, 320000)
+      summary = entries[values.indexOf(settingsRepository.getMaxAudioBitrate())]
+      setOnPreferenceClickListener {
+        DialogFragment.show(childFragmentManager) {
+          title(R.string.audio_quality)
+          message(R.string.audio_quality_summary)
+          singleChoiceItems(
+            items = entries,
+            currentChoice = values.indexOf(settingsRepository.getMaxAudioBitrate()),
+            onItemSelected = { position ->
+              settingsRepository.setMaxAudioBitrate(values[position])
+              summary = entries[position]
+            }
+          )
+          negativeButton(R.string.cancel)
+        }
+
+        true
+      }
+    }
+
     findPreference<Preference>(R.string.export_presets_key).setOnPreferenceClickListener {
       createDocumentActivityLauncher.launch("noice-saved-presets.json")
       analyticsProvider.logEvent("presets_export_begin", bundleOf())
