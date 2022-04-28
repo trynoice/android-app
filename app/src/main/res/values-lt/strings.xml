@@ -53,7 +53,6 @@
     <string name="pinned_shortcut_created">Nuoroda buvo įtraukta į pagrindinį ekraną!</string>
     <string name="pinned_shortcut_creation_failed">Nepavyko įtraukti nuorodos į pagrindinį ekraną!</string>
     <string name="appearance">Išvaizda</string>
-    <string name="behavior">Elgsena</string>
     <string name="presets_as_home_screen">„Parinktys“ kaip pagrindinis ekranas</string>
     <string name="settings">Nustatymai</string>
     <string name="app_shortcut_creation_failed">Nepavyko pridėti parinkties į programėlių nuorodas!</string>

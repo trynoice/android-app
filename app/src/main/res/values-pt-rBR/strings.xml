@@ -156,7 +156,6 @@
     <string name="sound_fade_in_duration_summary">Duração de tempo para sons com fade-in (em segundos)</string>
     <string name="sound_fade_in_duration">Duração do fade-in sonoro</string>
     <string name="appearance">Aparência</string>
-    <string name="behavior">Comportamento</string>
     <string name="presets_as_home_screen">\"Predefinições\" como tela inicial</string>
     <string name="settings">Configurações</string>
     <string name="app_shortcut_creation_failed">Não foi possível adicionar a predefinição aos atalhos da aplicação!</string>

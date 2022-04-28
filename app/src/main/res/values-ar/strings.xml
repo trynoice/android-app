@@ -2,7 +2,6 @@
 <resources>
     <string name="share">مشاركة</string>
     <string name="appearance">المَظْهَر</string>
-    <string name="behavior">السلوك</string>
     <string name="settings">إعدادات</string>
     <string name="later">لاحقًا</string>
     <string name="support_development__share">مشاركة مع الأصدقاء</string>

@@ -95,7 +95,6 @@
     <string name="pinned_shortcut_created">Snelkoppeling is toegevoegd aan het startscherm!</string>
     <string name="pinned_shortcut_creation_failed">Kan de snelkoppeling niet toevoegen aan het startscherm!</string>
     <string name="appearance">Uiterlijk</string>
-    <string name="behavior">Gedrag</string>
     <string name="presets_as_home_screen">Opgeslagen instellingen als startscherm</string>
     <string name="settings">Instellingen</string>
     <string name="app_shortcut_creation_failed">Kan de instelling niet toevoegen aan app-snelkoppelingen!</string>

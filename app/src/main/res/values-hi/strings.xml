@@ -140,7 +140,6 @@
     <string name="pinned_shortcut_created">होम स्क्रीन पर शॉर्टकट जोड़ दिया गया है!</string>
     <string name="pinned_shortcut_creation_failed">होम स्क्रीन पर शॉर्टकट जोड़ने में विफल!</string>
     <string name="appearance">दिखावट</string>
-    <string name="behavior">व्यवहार</string>
     <string name="presets_as_home_screen">होम स्क्रीन पर \"प्रीसेट्स\" देंखे</string>
     <string name="settings">सेटिंग्स</string>
     <string name="should_display_sound_icons">ध्वनि चिह्न दिखाएं</string>

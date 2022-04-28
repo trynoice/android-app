@@ -124,7 +124,6 @@
     <string name="sound_fade_in_duration_summary">Äänten häivytyksen kesto (sekunteina)</string>
     <string name="sound_fade_in_duration">Äänen häivytyksen kesto aloittaessa</string>
     <string name="appearance">Ulkoasu</string>
-    <string name="behavior">Käyttäytyminen</string>
     <string name="presets_as_home_screen">\"Esiasetukset\" aloitusnäyttönä</string>
     <string name="settings">Asetukset</string>
     <string name="app_shortcut_creation_failed">Esiasetuksen lisääminen sovelluksen pikavalintoihin epäonnistui!</string>

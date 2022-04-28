@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="behavior">رفتار</string>
     <string name="presets_as_home_screen">«نمونه ها» به عنوان صفحه‌ی خانه</string>
     <string name="settings">تنظیمات</string>
     <string name="app_shortcut_creation_failed">نتوانست گزینش موردنظر را به میانبرهای برنامه بیافزاید!</string>

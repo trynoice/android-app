@@ -128,7 +128,6 @@
     <string name="app_shortcut_created">Mix byl přidán mezi zkratky aplikace!</string>
     <string name="app_shortcut_creation_failed">Nepodařilo se přidat mix mezi zkratky aplikace!</string>
     <string name="settings">Nastavení</string>
-    <string name="behavior">Chování</string>
     <string name="appearance">Vzhled</string>
     <string name="pinned_shortcut_creation_failed">Nepodařilo přidat zkratku aplikace na plochu!</string>
     <string name="pinned_shortcut_created">Zkratka byla přidána na plochu!</string>

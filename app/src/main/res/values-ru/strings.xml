@@ -138,7 +138,6 @@
     <string name="pinned_shortcut_created">Ярлык был добавлен на главный экран!</string>
     <string name="pinned_shortcut_creation_failed">Не удалось добавить ярлык на главный экран!</string>
     <string name="appearance">Внешний вид</string>
-    <string name="behavior">Поведение</string>
     <string name="presets_as_home_screen">\"Пресеты\" на главном экране</string>
     <string name="settings">Настройки</string>
     <string name="app_shortcut_creation_failed">Не удалось добавить предустановку в ярлыки приложений!</string>

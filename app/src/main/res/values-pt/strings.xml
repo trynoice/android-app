@@ -113,7 +113,6 @@
     <string name="sound_fade_in_duration_summary">Duração temporal para o início gradual (fade-in) dos sons (em segundos)</string>
     <string name="sound_fade_in_duration">Duração do início gradual do som</string>
     <string name="appearance">Aparência</string>
-    <string name="behavior">Comportamento</string>
     <string name="presets_as_home_screen">\"Misturas de sons\" como ecrã principal</string>
     <string name="settings">Configurações</string>
     <string name="app_shortcut_creation_failed">Não foi possível adicionar a mistura de sons aos atalhos da aplicação!</string>

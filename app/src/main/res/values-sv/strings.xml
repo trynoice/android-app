@@ -63,7 +63,6 @@
     <string name="pinned_shortcut_created">Genvägen har lagts till på hem-skärmen!</string>
     <string name="pinned_shortcut_creation_failed">Misslyckades att lägga till genvägen till hem-skärmen!</string>
     <string name="appearance">Utseende</string>
-    <string name="behavior">Beteende</string>
     <string name="presets_as_home_screen">Sparade förinställningar som hem-skärm</string>
     <string name="settings">Inställningar</string>
     <string name="app_shortcut_creation_failed">Misslyckades med att lägga till förinställningen i app-genvägar!</string>
