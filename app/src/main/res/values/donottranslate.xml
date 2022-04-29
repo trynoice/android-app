@@ -24,7 +24,6 @@
   <string name="plus4h">4h</string>
   <string name="plus8h">8h</string>
   <string name="presets_as_home_screen_key">pref_saved_presets_as_homescreen</string>
-  <string name="sound_fade_duration_key">sound_fade_duration</string>
   <string name="sound_fade_in_duration_key">sound_fade_in_duration</string>
   <string name="app_theme_key">app_theme</string>
   <string name="ignore_audio_focus_changes_key">ignore_audio_focus_changes</string>
