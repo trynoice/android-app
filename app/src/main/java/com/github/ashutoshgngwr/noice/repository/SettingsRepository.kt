@@ -1,13 +1,19 @@
 package com.github.ashutoshgngwr.noice.repository
 
 import android.content.Context
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.ext.keysFlow
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -70,11 +76,15 @@ class SettingsRepository @Inject constructor(
    * Returns the value of [R.string.sound_fade_in_duration_key] preference in milliseconds.
    */
   fun getSoundFadeInDurationMillis(): Long {
-    return prefs.getInt(
-      context.getString(R.string.sound_fade_in_duration_key),
-      // inherit fallback value from the deprecated preference.
-      prefs.getInt(context.getString(R.string.sound_fade_duration_key), 1)
-    ) * 1000L
+    return prefs.getInt(context.getString(R.string.sound_fade_in_duration_key), 1) * 1000L
+  }
+
+  /**
+   * Returns a [Flow] for key [R.string.sound_fade_in_duration_key] that listens for changes and
+   * emits its latest value.
+   */
+  fun getSoundFadeInDurationMillisAsFlow(): Flow<Long> {
+    return keyFlow(R.string.sound_fade_in_duration_key).map { getSoundFadeInDurationMillis() }
   }
 
   /**
@@ -82,6 +92,14 @@ class SettingsRepository @Inject constructor(
    */
   fun shouldIgnoreAudioFocusChanges(): Boolean {
     return prefs.getBoolean(context.getString(R.string.ignore_audio_focus_changes_key), false)
+  }
+
+  /**
+   * Returns a [Flow] for key [R.string.ignore_audio_focus_changes_key] that listens for changes and
+   * emits its latest value.
+   */
+  fun shouldIgnoreAudioFocusChangesAsFlow(): Flow<Boolean> {
+    return keyFlow(R.string.ignore_audio_focus_changes_key).map { shouldIgnoreAudioFocusChanges() }
   }
 
   /**
@@ -111,6 +129,14 @@ class SettingsRepository @Inject constructor(
   }
 
   /**
+   * Returns a [Flow] for key [R.string.enable_media_buttons_key] that listens for changes and emits
+   * its latest value.
+   */
+  fun isMediaButtonsEnabledAsFlow(): Flow<Boolean> {
+    return keyFlow(R.string.enable_media_buttons_key).map { isMediaButtonsEnabled() }
+  }
+
+  /**
    * Sets the value of list preference with key [R.string.audio_quality_key].
    */
   fun setMaxAudioBitrate(bitrate: Int) {
@@ -122,5 +148,20 @@ class SettingsRepository @Inject constructor(
    */
   fun getMaxAudioBitrate(): Int {
     return prefs.getInt(context.getString(R.string.audio_quality_key), 128000)
+  }
+
+  /**
+   * Returns a [Flow] for key [R.string.audio_quality_key] that listens for changes and emits its
+   * latest value.
+   */
+  fun getMaxAudioBitrateAsFlow(): Flow<Int> {
+    return keyFlow(R.string.audio_quality_key).map { getMaxAudioBitrate() }
+  }
+
+  private fun keyFlow(@StringRes keyStrRes: Int): Flow<String> {
+    val key = context.getString(keyStrRes)
+    return prefs.keysFlow()
+      .filter { it == key }
+      .onStart { emit(key) } // immediately emit a change as soon as the flow collection starts.
   }
 }
