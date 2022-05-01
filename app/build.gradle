@@ -91,7 +91,7 @@ dependencies {
   def junitVersion = '4.13.2'
   def mockkVersion = '1.12.2'
   def espressoVersion = '3.3.0'
-  def coroutinesVersion = '1.6.0'
+  def coroutinesVersion = '1.6.1'
 
   // TODO: move this to stable release. The latest stable release (2.3.5) causes a crash with error
   //  `java.lang.RuntimeException: Unknown animation name: x`
