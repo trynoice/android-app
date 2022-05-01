@@ -117,7 +117,7 @@ dependencies {
   implementation 'com.google.android.exoplayer:exoplayer-core:2.13.3'
   implementation 'com.google.android.flexbox:flexbox:3.0.0'
   implementation 'com.google.android.material:material:1.4.0'
-  implementation 'com.google.code.gson:gson:2.8.9'
+  implementation 'com.google.code.gson:gson:2.9.0'
   implementation 'com.ncorti:slidetoact:0.9.0'
   implementation 'io.github.medyo:android-about-page:2.0.0'
   implementation 'io.github.mrherintsoahasina:flextools:1.0.3'
