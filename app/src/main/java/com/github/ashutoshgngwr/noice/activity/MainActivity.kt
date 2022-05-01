@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.activity.viewModels
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -21,6 +20,7 @@ import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
+import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.fragment.DonationPurchasedCallbackFragmentArgs
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
@@ -32,7 +32,6 @@ import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
-import com.github.ashutoshgngwr.noice.viewmodel.NetworkInfoViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -60,7 +59,6 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   private lateinit var binding: MainActivityBinding
   private lateinit var navController: NavController
-  private val networkInfoViewModel: NetworkInfoViewModel by viewModels()
 
   @set:Inject
   internal lateinit var reviewFlowProvider: ReviewFlowProvider
@@ -122,8 +120,8 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   private fun initOfflineIndicator() {
     lifecycleScope.launch {
-      networkInfoViewModel.isOnline.collect {
-        if (it) {
+      getInternetConnectivityFlow().collect { isConnected ->
+        if (isConnected) {
           hideOfflineIndicator()
         } else {
           showOfflineIndicator()
