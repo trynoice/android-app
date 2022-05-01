@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +14,7 @@ import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.AccountFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
@@ -24,7 +24,6 @@ import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.repository.errors.NotSignedInError
-import com.github.ashutoshgngwr.noice.viewmodel.NetworkInfoViewModel
 import com.trynoice.api.client.models.Profile
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -50,7 +49,7 @@ class AccountFragment : Fragment() {
 
   private lateinit var binding: AccountFragmentBinding
   private val viewModel: AccountViewModel by viewModels()
-  private val networkInfoViewModel: NetworkInfoViewModel by activityViewModels()
+  private val isConnectedToInternet = MutableStateFlow(false)
   private val mainNavController by lazy {
     Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
   }
@@ -87,9 +86,13 @@ class AccountFragment : Fragment() {
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
+      requireContext().getInternetConnectivityFlow().collect(isConnectedToInternet)
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
       viewModel.loadErrorStrRes
         .filterNotNull()
-        .filter { networkInfoViewModel.isOnline.value || viewModel.profile.value == null } // suppress errors when offline.
+        .filter { isConnectedToInternet.value || viewModel.profile.value == null } // suppress errors when offline.
         .collect { causeStrRes ->
           val msg = getString(R.string.profile_load_error, getString(causeStrRes))
           showErrorSnackbar(msg.normalizeSpace())
