@@ -12,12 +12,23 @@
       tools:summary="@string/audio_quality_medium" />
 
     <SeekBarPreference
-      android:defaultValue="1"
-      android:icon="@drawable/ic_settings_fade_in_duration"
+      android:defaultValue="@integer/default_fade_in_duration_seconds"
+      android:icon="@drawable/ic_baseline_north_east_32"
       android:key="@string/sound_fade_in_duration_key"
-      android:max="10"
+      android:max="30"
       android:summary="@string/sound_fade_in_duration_summary"
       android:title="@string/sound_fade_in_duration"
+      app:min="0"
+      app:seekBarIncrement="1"
+      app:showSeekBarValue="true" />
+
+    <SeekBarPreference
+      android:defaultValue="@integer/default_fade_out_duration_seconds"
+      android:icon="@drawable/ic_baseline_south_east_32"
+      android:key="@string/sound_fade_out_duration_key"
+      android:max="30"
+      android:summary="@string/sound_fade_out_duration_summary"
+      android:title="@string/sound_fade_out_duration"
       app:min="0"
       app:seekBarIncrement="1"
       app:showSeekBarValue="true" />
