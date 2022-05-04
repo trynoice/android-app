@@ -135,6 +135,8 @@
     <string name="appearance">Appearance</string>
     <string name="sound_fade_in_duration">Sound fade-in duration</string>
     <string name="sound_fade_in_duration_summary">Time duration for fading-in sounds (in seconds)</string>
+    <string name="sound_fade_out_duration">Sound fade-out duration</string>
+    <string name="sound_fade_out_duration_summary">Time duration for fading-out sounds (in seconds)</string>
     <string name="pinned_shortcut_creation_failed">Failed to add the shortcut to the home screen!</string>
     <string name="pinned_shortcut_created">Shortcut has been added to the home screen!</string>
     <string name="skip_to_prev">Previous preset</string>

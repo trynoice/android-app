@@ -16,6 +16,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 /**
  * [SettingsRepository] implements the data access layer for storing various user preferences.
@@ -73,18 +76,39 @@ class SettingsRepository @Inject constructor(
   }
 
   /**
-   * Returns the value of [R.string.sound_fade_in_duration_key] preference in milliseconds.
+   * Returns the value of [R.string.sound_fade_in_duration_key] preference.
    */
-  fun getSoundFadeInDurationMillis(): Long {
-    return prefs.getInt(context.getString(R.string.sound_fade_in_duration_key), 1) * 1000L
+  fun getSoundFadeInDuration(): Duration {
+    return prefs.getInt(
+      context.getString(R.string.sound_fade_in_duration_key),
+      context.resources.getInteger(R.integer.default_fade_in_duration_seconds)
+    ).toDuration(DurationUnit.SECONDS)
   }
 
   /**
    * Returns a [Flow] for key [R.string.sound_fade_in_duration_key] that listens for changes and
    * emits its latest value.
    */
-  fun getSoundFadeInDurationMillisAsFlow(): Flow<Long> {
-    return keyFlow(R.string.sound_fade_in_duration_key).map { getSoundFadeInDurationMillis() }
+  fun getSoundFadeInDurationAsFlow(): Flow<Duration> {
+    return keyFlow(R.string.sound_fade_in_duration_key).map { getSoundFadeInDuration() }
+  }
+
+  /**
+   * Returns the value of [R.string.sound_fade_out_duration_key] preference.
+   */
+  fun getSoundFadeOutDuration(): Duration {
+    return prefs.getInt(
+      context.getString(R.string.sound_fade_out_duration_key),
+      context.resources.getInteger(R.integer.default_fade_out_duration_seconds)
+    ).toDuration(DurationUnit.SECONDS)
+  }
+
+  /**
+   * Returns a [Flow] for key [R.string.sound_fade_out_duration_key] that listens for changes and
+   * emits its latest value.
+   */
+  fun getSoundFadeOutDurationAsFlow(): Flow<Duration> {
+    return keyFlow(R.string.sound_fade_out_duration_key).map { getSoundFadeOutDuration() }
   }
 
   /**

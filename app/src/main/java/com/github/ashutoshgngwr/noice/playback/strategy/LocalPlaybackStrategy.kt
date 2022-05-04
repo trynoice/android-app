@@ -65,7 +65,7 @@ class LocalPlaybackStrategy(
       player.playWhenReady = true
       // an internal feature of the LocalPlaybackStrategy is that it won't fade-in non-looping sounds
       if (player.repeatMode == ExoPlayer.REPEAT_MODE_ONE && !wasPlaying) {
-        player.fade(0f, volume, settingsRepository.getSoundFadeInDurationMillis())
+        player.fade(0f, volume, settingsRepository.getSoundFadeInDuration().inWholeMilliseconds)
       }
     }
   }
