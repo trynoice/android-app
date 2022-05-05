@@ -66,7 +66,7 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
    */
   internal fun play() {
     isPlaying = true
-    if (sound.isLooping) {
+    if (sound.isContiguous) {
       playbackStrategy.play()
     } else {
       playAndRegisterDelayedCallback()
@@ -95,7 +95,7 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
   internal fun pause() {
     isPlaying = false
     playbackStrategy.pause()
-    if (!sound.isLooping) {
+    if (!sound.isContiguous) {
       handler.removeCallbacksAndMessages(this)
     }
   }
@@ -107,7 +107,7 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
   internal fun stop() {
     isPlaying = false
     playbackStrategy.stop()
-    if (!sound.isLooping) {
+    if (!sound.isContiguous) {
       handler.removeCallbacksAndMessages(this)
     }
   }
@@ -129,7 +129,7 @@ class Player(val soundKey: String, playbackStrategyFactory: PlaybackStrategyFact
     playbackStrategy.stop()
     playbackStrategy = playbackStrategyFactory.newInstance(sound).also {
       it.setVolume(volume.toFloat() / MAX_VOLUME)
-      if (isPlaying && sound.isLooping) { // because non looping will automatically play on scheduled callback.
+      if (isPlaying && sound.isContiguous) { // because non looping will automatically play on scheduled callback.
         it.play()
       }
     }

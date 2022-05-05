@@ -32,7 +32,7 @@ data class Sound(
   /**
    * Whether the sound is contiguous or contains silences in-between.
    */
-  val isLooping: Boolean
+  val isContiguous: Boolean
     get() = maxSilence == 0
 
   /**

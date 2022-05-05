@@ -28,7 +28,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.plus
 import javax.inject.Singleton
 
 
@@ -90,7 +92,7 @@ object InAppBillingProviderModule {
   @Singleton
   fun inAppBillingProvider(@ApplicationContext context: Context): InAppBillingProvider {
     if (isGoogleMobileServiceAvailable(context)) {
-      return RealInAppBillingProvider(context, MainScope())
+      return RealInAppBillingProvider(context, MainScope() + CoroutineName("InAppBillingProvider"))
     }
 
     return DummyInAppBillingProvider

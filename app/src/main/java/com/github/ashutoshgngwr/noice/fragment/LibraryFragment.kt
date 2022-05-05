@@ -377,7 +377,7 @@ class SoundViewHolder(
 //    @SuppressLint("SetTextI18n")
 //    binding.timePeriod.text = "${sound.timePeriod / 60}m ${sound.timePeriod % 60}s"
 //    binding.timePeriod.isEnabled = sound.isPlaying
-    binding.timePeriod.isVisible = !sound.isLooping
+    binding.timePeriod.isVisible = !sound.isContiguous
   }
 }
 
