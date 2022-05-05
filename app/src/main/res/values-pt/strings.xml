@@ -65,7 +65,6 @@
     <string name="birds">Pássaros</string>
     <string name="volume">Volume do som</string>
     <string name="stop">Parar</string>
-    <string name="repeat_time_period">Período de repetição</string>
     <string name="play_pause">reproduzir ou pausar</string>
     <string name="play">Reproduzir</string>
     <string name="save_preset">Guardar mistura de sons</string>
