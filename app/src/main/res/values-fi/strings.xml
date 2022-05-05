@@ -63,7 +63,6 @@
     <string name="birds">Linnut</string>
     <string name="volume">Äänenvoimakkuus</string>
     <string name="stop">Stop</string>
-    <string name="repeat_time_period">Toistuva ajanjakso</string>
     <string name="play_pause">toisto tai tauko</string>
     <string name="play">Toista</string>
     <string name="save_preset">Tallenna esiasetus</string>

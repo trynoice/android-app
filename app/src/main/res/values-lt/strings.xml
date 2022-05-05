@@ -120,7 +120,6 @@
     <string name="stop">Sustabdyti</string>
     <string name="sound_fade_in_duration_summary">Tolygaus garsėjimo pradžioje trukmė (sekundėmis)</string>
     <string name="sound_fade_in_duration">Garso tolygaus garsėjimo pradžioje trukmė</string>
-    <string name="repeat_time_period">Pakartojimo laikotarpis</string>
     <string name="created_by">Sukūrė</string>
     <string name="payment_pending">Kai tik baigsime apdoroti jūsų mokėjimą, apie tai jums pranešime.</string>
     <string name="failed_to_purchase">Nepavyko paleisti mokėjimo srauto. Prašome bandyti vėliau!</string>

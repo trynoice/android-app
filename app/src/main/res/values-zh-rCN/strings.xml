@@ -47,7 +47,6 @@
     <string name="birds">鸟</string>
     <string name="volume">音量</string>
     <string name="stop">停止</string>
-    <string name="repeat_time_period">重复时间段</string>
     <string name="play_pause">播放或暂停</string>
     <string name="play">播放</string>
     <string name="save_preset">保存预设</string>

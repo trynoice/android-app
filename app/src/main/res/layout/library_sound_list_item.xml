@@ -74,17 +74,6 @@
       app:icon="@drawable/ic_action_volume"
       tools:text="25%" />
 
-    <Button
-      android:id="@+id/time_period"
-      style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_margin="4dp"
-      android:contentDescription="@string/repeat_time_period"
-      android:textAllCaps="false"
-      app:icon="@drawable/ic_action_time_period"
-      tools:text="2m 10s" />
-
   </com.google.android.flexbox.FlexboxLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

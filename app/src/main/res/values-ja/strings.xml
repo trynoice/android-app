@@ -51,7 +51,6 @@
     <string name="birds">鳥のさえずり</string>
     <string name="volume">音量</string>
     <string name="stop">停止</string>
-    <string name="repeat_time_period">繰り返し期間</string>
     <string name="play_pause">再生/一時停止</string>
     <string name="play">再生</string>
     <string name="save_preset">プリセットを保存</string>
