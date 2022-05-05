@@ -68,7 +68,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         getString(R.string.audio_quality_ultra),
       )
 
-      val values = arrayOf(64000, 128000, 224000, 320000)
+      val values = SettingsRepository.AUDIO_BITRATES
       summary = entries[values.indexOf(settingsRepository.getMaxAudioBitrate())]
       setOnPreferenceClickListener {
         DialogFragment.show(childFragmentManager) {

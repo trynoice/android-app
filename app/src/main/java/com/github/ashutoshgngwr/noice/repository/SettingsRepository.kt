@@ -30,12 +30,6 @@ class SettingsRepository @Inject constructor(
   private val analyticsProvider: AnalyticsProvider,
 ) {
 
-  companion object {
-    internal const val APP_THEME_LIGHT = 0
-    internal const val APP_THEME_DARK = 1
-    internal const val APP_THEME_SYSTEM_DEFAULT = 2
-  }
-
   private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
   /**
@@ -171,7 +165,7 @@ class SettingsRepository @Inject constructor(
    * Returns the value of list preference with key [R.string.audio_quality_key].
    */
   fun getMaxAudioBitrate(): Int {
-    return prefs.getInt(context.getString(R.string.audio_quality_key), 128000)
+    return prefs.getInt(context.getString(R.string.audio_quality_key), MAX_FREE_AUDIO_BITRATE)
   }
 
   /**
@@ -187,5 +181,14 @@ class SettingsRepository @Inject constructor(
     return prefs.keysFlow()
       .filter { it == key }
       .onStart { emit(key) } // immediately emit a change as soon as the flow collection starts.
+  }
+
+  companion object {
+    internal const val APP_THEME_LIGHT = 0
+    internal const val APP_THEME_DARK = 1
+    internal const val APP_THEME_SYSTEM_DEFAULT = 2
+
+    internal val AUDIO_BITRATES = arrayOf(140800, 211200, 281600, 352000) // avg bitrate * 1.1
+    internal val MAX_FREE_AUDIO_BITRATE = AUDIO_BITRATES[0]
   }
 }

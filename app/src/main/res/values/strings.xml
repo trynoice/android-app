@@ -280,9 +280,9 @@
     <string name="subscription_purchases_load_error">Uh-oh! We couldn\'t fetch your subscription purchase history. %1$s</string>
     <string name="playback">Playback</string>
     <string name="audio_quality">Audio quality</string>
-    <string name="audio_quality_summary">Maximum audio quality for streaming. Selecting High and Ultra only works when you\'re subscribed.</string>
-    <string name="audio_quality_low">Low (64 kbps)</string>
-    <string name="audio_quality_medium">Medium (128 kbps)</string>
-    <string name="audio_quality_high">High (224 kbps)</string>
+    <string name="audio_quality_summary">Maximum audio quality for streaming. Selecting Medium, High and Ultra only works when you\'re subscribed.</string>
+    <string name="audio_quality_low">Low (128 kbps)</string>
+    <string name="audio_quality_medium">Medium (192 kbps)</string>
+    <string name="audio_quality_high">High (256 kbps)</string>
     <string name="audio_quality_ultra">Ultra (320 kbps)</string>
 </resources>
