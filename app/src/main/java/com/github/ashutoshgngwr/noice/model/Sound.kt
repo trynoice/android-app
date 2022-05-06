@@ -14,7 +14,7 @@ import java.io.Serializable
  * @param iconSvg a user-presentable icon of the sound as a SVG string.
  * @param maxSilence The upper limit (in seconds) for the amount of silence to add in-between
  * segments for non-contiguous sounds.
- * @param segmentsBasePath base path for the segments of this sound.
+ * @param segmentsBasePath absolute base path for the segments of this sound on the CDN server.
  * @param segments A list of segments for this sound.
  * @param sources A list of details attributing original clip sources, author and license.
  */

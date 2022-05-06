@@ -166,7 +166,7 @@ abstract class Player protected constructor(
    */
   protected fun requestNextSegment() {
     defaultScope.launch {
-      if (sound?.isContiguous == false) {
+      if (currentSegment != null && sound?.isContiguous == false) {
         val maxSilenceSeconds = requireNotNull(sound?.maxSilence)
         val silenceDuration = Random.nextInt(30, maxSilenceSeconds).toDuration(DurationUnit.SECONDS)
         Log.d(LOG_TAG, "requestNextSegment: adding $silenceDuration silence to non-looping sound.")
