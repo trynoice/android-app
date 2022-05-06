@@ -12,14 +12,11 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.audio.AudioAttributes
-import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
+import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.upstream.DefaultLoadErrorHandlingPolicy
-import com.google.android.exoplayer2.upstream.HttpDataSource
 import com.google.android.exoplayer2.util.EventLogger
 import kotlinx.coroutines.CoroutineScope
-import java.io.IOException
 import com.google.android.exoplayer2.Player as IExoPlayer
 
 /**
@@ -30,6 +27,7 @@ class LocalPlayer(
   soundId: String,
   soundRepository: SoundRepository,
   audioAttributes: AudioAttributesCompat,
+  mediaSourceFactory: MediaSource.Factory,
   defaultScope: CoroutineScope,
 ) : Player(soundId, soundRepository, defaultScope), IExoPlayer.Listener {
 
@@ -45,10 +43,7 @@ class LocalPlayer(
 
   private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context)
     .setTrackSelector(trackSelector)
-    .setMediaSourceFactory(
-      DefaultMediaSourceFactory(context)
-        .setLoadErrorHandlingPolicy(DEFAULT_LOAD_ERROR_HANDLING_POLICY)
-    )
+    .setMediaSourceFactory(mediaSourceFactory)
     .build()
 
   private var fadeAnimator: ValueAnimator? = null
@@ -162,8 +157,7 @@ class LocalPlayer(
   }
 
   override fun onSegmentAvailable(segment: Segment) {
-    // TODO: implement a custom data source factory using API Client to fetch sounds from the CDN.
-    exoPlayer.addMediaItem(MediaItem.fromUri("https://cdn.trynoice.com/library/${segment.path}"))
+    exoPlayer.addMediaItem(MediaItem.fromUri("noice://cdn/${segment.path}"))
     exoPlayer.prepare()
   }
 
@@ -194,15 +188,6 @@ class LocalPlayer(
       doOnStart { volume = fromVolume }
       doOnEnd { callback.invoke() }
       start()
-    }
-  }
-
-  companion object {
-    private val DEFAULT_LOAD_ERROR_HANDLING_POLICY = object : DefaultLoadErrorHandlingPolicy() {
-      override fun isEligibleForFallback(exception: IOException): Boolean {
-        return (exception as? HttpDataSource.InvalidResponseCodeException)?.responseCode == 401
-          || super.isEligibleForFallback(exception)
-      }
     }
   }
 }

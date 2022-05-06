@@ -34,9 +34,9 @@ dependencies {
   def okhttpVersion = '4.9.3'
   def retrofitVersion = '2.9.0'
 
+  api "com.squareup.okhttp3:okhttp:$okhttpVersion"
   api "com.squareup.retrofit2:retrofit:$retrofitVersion"
 
-  implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
   implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
   implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$deps.coroutinesVersion"

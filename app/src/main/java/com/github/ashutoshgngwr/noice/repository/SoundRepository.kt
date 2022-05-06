@@ -91,7 +91,7 @@ class SoundRepository @Inject constructor(
         StandardCharsets.UTF_8.name(),
       ),
       maxSilence = apiSound.maxSilence,
-      segmentsBasePath = "${segmentsBasePath}/${apiSound.id}",
+      segmentsBasePath = "library/${segmentsBasePath}/${apiSound.id}",
       segments = apiSound.segments,
       sources = apiSound.sources,
     )

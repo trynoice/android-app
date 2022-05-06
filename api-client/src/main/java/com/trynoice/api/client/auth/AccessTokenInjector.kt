@@ -4,6 +4,7 @@ import com.trynoice.api.client.auth.annotations.NeedsAccessToken
 import com.trynoice.api.client.ext.isAnnotationPresent
 import okhttp3.Interceptor
 import okhttp3.Response
+import okhttp3.internal.closeQuietly
 
 /**
  * An interceptor for injecting the Authorization header with an access token to the requests
@@ -27,6 +28,7 @@ internal class AccessTokenInjector(
       if (response.code != 401) {
         return response
       }
+      response.closeQuietly() // required when it is a streaming response.
     }
 
     // access token is either missing or expired. Attempt to refresh credentials and retry the
