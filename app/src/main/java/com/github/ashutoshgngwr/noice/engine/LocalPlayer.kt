@@ -24,12 +24,13 @@ import com.google.android.exoplayer2.Player as IExoPlayer
  */
 class LocalPlayer(
   context: Context,
-  soundId: String,
-  soundRepository: SoundRepository,
-  audioAttributes: AudioAttributesCompat,
+  override val soundId: String,
+  override val soundRepository: SoundRepository,
   mediaSourceFactory: MediaSource.Factory,
-  defaultScope: CoroutineScope,
-) : Player(soundId, soundRepository, defaultScope), IExoPlayer.Listener {
+  audioAttributes: AudioAttributesCompat,
+  override val defaultScope: CoroutineScope,
+  override val playbackListener: PlaybackListener,
+) : Player(), IExoPlayer.Listener {
 
   private val trackSelector = DefaultTrackSelector(
     // mixed channel count and mixed sample rate must be enabled because our HLS master playlists
@@ -46,13 +47,19 @@ class LocalPlayer(
     .setMediaSourceFactory(mediaSourceFactory)
     .build()
 
+  override var audioAttributes: AudioAttributesCompat = audioAttributes
+    set(value) {
+      field = value
+      exoPlayer.setAudioAttributesCompat(value, false)
+    }
+
   private var fadeAnimator: ValueAnimator? = null
 
   init {
     exoPlayer.volume = 0F // muted initially (for the fade-in effect)
     exoPlayer.addListener(this)
     exoPlayer.addAnalyticsListener(EventLogger(trackSelector))
-    setAudioAttributes(audioAttributes)
+    exoPlayer.setAudioAttributesCompat(audioAttributes, false)
   }
 
   override fun onIsPlayingChanged(isPlaying: Boolean) {
@@ -96,10 +103,6 @@ class LocalPlayer(
     }
   }
 
-  override fun setAudioAttributes(attributes: AudioAttributesCompat) {
-    exoPlayer.setAudioAttributesCompat(attributes, false)
-  }
-
   override fun setMaxAudioBitrate(bitrate: Int) {
     trackSelector.parameters = trackSelector.parameters.buildUpon()
       .setMaxAudioBitrate(bitrate)
@@ -107,20 +110,18 @@ class LocalPlayer(
   }
 
   override fun playInternal() {
-    if (playbackState == PlaybackState.STOPPING || playbackState == PlaybackState.PAUSING) {
-      // stop fade-out animation, then resume playing and regain lost volume.
-      fadeAnimator?.let {
-        it.removeAllListeners()
-        it.cancel()
+    if (exoPlayer.isPlaying) {
+      // stop fade-out animation if any, then resume playing and regain lost volume.
+      if (fadeAnimator?.isStarted == true || fadeAnimator?.isRunning == true) {
+        fadeAnimator?.removeAllListeners()
+        fadeAnimator?.cancel()
       }
 
-      setPlaybackState(PlaybackState.PLAYING)
-      exoPlayer.fade(exoPlayer.volume, getScaledVolume(), fadeInDuration.inWholeMilliseconds)
-      return
-    }
+      if (exoPlayer.volume != getScaledVolume()) {
+        exoPlayer.fade(exoPlayer.volume, getScaledVolume(), fadeInDuration.inWholeMilliseconds)
+      }
 
-    if (exoPlayer.isPlaying) {
-      return // nothing to do?
+      return
     }
 
     exoPlayer.playWhenReady = true
@@ -188,6 +189,33 @@ class LocalPlayer(
       doOnStart { volume = fromVolume }
       doOnEnd { callback.invoke() }
       start()
+    }
+  }
+
+  /**
+   * A factory to [LocalPlayer] instances.
+   */
+  class Factory(
+    private val context: Context,
+    private val mediaSourceFactory: MediaSource.Factory,
+  ) : Player.Factory {
+
+    override fun createPlayer(
+      soundId: String,
+      soundRepository: SoundRepository,
+      audioAttributes: AudioAttributesCompat,
+      defaultScope: CoroutineScope,
+      playbackListener: PlaybackListener
+    ): Player {
+      return LocalPlayer(
+        context,
+        soundId,
+        soundRepository,
+        mediaSourceFactory,
+        audioAttributes,
+        defaultScope,
+        playbackListener,
+      )
     }
   }
 }

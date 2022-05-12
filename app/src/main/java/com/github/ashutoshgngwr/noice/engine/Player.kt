@@ -2,7 +2,6 @@ package com.github.ashutoshgngwr.noice.engine
 
 import android.util.Log
 import androidx.media.AudioAttributesCompat
-import com.github.ashutoshgngwr.noice.engine.Player.PlaybackState
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import kotlinx.coroutines.CoroutineScope
@@ -11,7 +10,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.launch
-import java.util.concurrent.atomic.AtomicReference
 import kotlin.math.pow
 import kotlin.random.Random
 import kotlin.time.Duration
@@ -27,32 +25,42 @@ import kotlin.time.toDuration
  * [PlaybackState.STOPPED] is a terminal state; a [Player] cannot be re-used once it reaches
  * [PlaybackState.STOPPED] state.
  */
-abstract class Player protected constructor(
-  private val soundId: String,
-  private val soundRepository: SoundRepository,
-  private val defaultScope: CoroutineScope,
-) {
+abstract class Player protected constructor() {
+
+  /**
+   * Audio attributes for playing the audio locally on the host device. A [Player] implementation
+   * must adapt its playback when attributes are updated.
+   */
+  abstract var audioAttributes: AudioAttributesCompat
+
+  /**
+   * Id of the sound being played.
+   */
+  protected abstract val soundId: String
+
+  /**
+   * [SoundRepository] instance for querying sound metadata.
+   */
+  protected abstract val soundRepository: SoundRepository
+
+  /**
+   * An external coroutine scope to perform long running background tasks.
+   */
+  protected abstract val defaultScope: CoroutineScope
+
+  /**
+   * A listener for [PlaybackState] and player volume updates.
+   */
+  protected abstract val playbackListener: PlaybackListener
 
   protected var fadeInDuration = Duration.ZERO; private set
   protected var fadeOutDuration = Duration.ZERO; private set
   protected var sound: Sound? = null; private set
   private var isPremiumSegmentsEnabled = false
-  private var playbackListener: PlaybackListener? = null
   private var volume = DEFAULT_VOLUME
   private var segments = emptyList<Segment>()
   private var currentSegment: Segment? = null
-  private val _playbackState = AtomicReference(PlaybackState.IDLE)
-
-  /**
-   * The current [PlaybackState] of the player.
-   */
-  val playbackState: PlaybackState
-    get() = _playbackState.get()
-
-  /**
-   * Sets [AudioAttributesCompat] for playing media and other Android system calls.
-   */
-  abstract fun setAudioAttributes(attributes: AudioAttributesCompat)
+  private var playbackState = PlaybackState.IDLE
 
   /**
    * Sets fade duration for fading-in sounds when the playback starts.
@@ -82,17 +90,10 @@ abstract class Player protected constructor(
   abstract fun setMaxAudioBitrate(bitrate: Int)
 
   /**
-   * Sets a listener that is invoked each time when the [playbackState] or the volume changes.
-   */
-  fun setPlaybackListener(listener: PlaybackListener?) {
-    playbackListener = listener
-  }
-
-  /**
    * Starts buffering the sound and starts playing its segments once enough data is available.
    */
   fun play() {
-    when (_playbackState.get()) {
+    when (playbackState) {
       PlaybackState.STOPPED -> throw IllegalStateException("attempted to re-use a stopped player")
       PlaybackState.BUFFERING, PlaybackState.PLAYING -> Unit
       PlaybackState.FAILED, PlaybackState.IDLE -> loadSoundMetadata()
@@ -150,10 +151,11 @@ abstract class Player protected constructor(
    * [PlaybackListener].
    */
   protected fun setPlaybackState(state: PlaybackState) {
-    if (_playbackState.getAndSet(state) == state) {
+    if (playbackState == state) {
       return
     }
 
+    playbackState = state
     notifyPlaybackListener()
   }
 
@@ -219,7 +221,7 @@ abstract class Player protected constructor(
         Log.d(LOG_TAG, "loadSoundMetadata: loaded sound metadata")
         sound = resource.data
         recreateSegmentList()
-        if (_playbackState.get() == PlaybackState.BUFFERING) {
+        if (playbackState == PlaybackState.BUFFERING) {
           playInternal()
         }
       } else {
@@ -238,7 +240,7 @@ abstract class Player protected constructor(
 
   private fun notifyPlaybackListener() {
     defaultScope.launch(Dispatchers.Main) {
-      playbackListener?.onPlaybackUpdated(_playbackState.get(), volume)
+      playbackListener.onPlaybackUpdated(playbackState, volume)
     }
   }
 
@@ -246,13 +248,6 @@ abstract class Player protected constructor(
     private const val LOG_TAG = "Player"
     internal const val DEFAULT_VOLUME = 4
     internal const val MAX_VOLUME = 25
-  }
-
-  /**
-   * Represents various lifecycle states of a [Player] instance.
-   */
-  enum class PlaybackState {
-    IDLE, BUFFERING, PLAYING, PAUSING, PAUSED, STOPPING, STOPPED, FAILED,
   }
 
   /**
@@ -278,4 +273,21 @@ abstract class Player protected constructor(
     val from: String? = null,
     val to: String? = null,
   )
+
+  /**
+   * A factory for [Player] instances.
+   */
+  interface Factory {
+
+    /**
+     * Creates a [Player] instance.
+     */
+    fun createPlayer(
+      soundId: String,
+      soundRepository: SoundRepository,
+      audioAttributes: AudioAttributesCompat,
+      defaultScope: CoroutineScope,
+      playbackListener: PlaybackListener
+    ): Player
+  }
 }
