@@ -10,8 +10,6 @@ import androidx.media.VolumeProviderCompat
 import androidx.mediarouter.app.MediaRouteActionProvider
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.playback.strategy.CastPlaybackStrategyFactory
-import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
 import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
 import com.google.android.gms.cast.framework.CastOptions
@@ -67,12 +65,9 @@ class RealCastApiProvider(context: Context) : CastApiProvider {
    * Initializes a new [CastPlaybackStrategyFactory] instance and returns it as
    * [PlaybackStrategyFactory].
    */
-  override fun getPlaybackStrategyFactory(context: Context): PlaybackStrategyFactory =
-    CastPlaybackStrategyFactory(
-      context,
-      requireNotNull(castContext.sessionManager.currentCastSession),
-      context.getString(R.string.cast_namespace__default)
-    )
+// TODO: implement this.
+//  override fun getPlaybackStrategyFactory(context: Context): PlaybackStrategyFactory {
+//  }
 
   /**
    * Creates a new [VolumeProviderCompat] instance that can be used with

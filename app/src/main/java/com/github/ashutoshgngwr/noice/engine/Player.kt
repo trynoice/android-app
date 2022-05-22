@@ -109,16 +109,18 @@ abstract class Player protected constructor() {
   protected abstract fun playInternal()
 
   /**
-   * Pauses the sound playback. If [immediate] is `true`, the playback is paused immediately.
+   * Pauses the sound playback. If [immediate] is `true`, the playback pauses immediately.
    * Otherwise, the playback fades out slowly.
    */
   abstract fun pause(immediate: Boolean)
 
   /**
    * Stops the sound playback with a slow fade-out. The [Player] instance cannot be re-used after
-   * once it transitions from [PlaybackState.STOPPING] to [PlaybackState.STOPPED] state.
+   * once it transitions from [PlaybackState.STOPPING] to [PlaybackState.STOPPED] state. If
+   * [immediate] is `true`, the playback stops immediately. Otherwise, the playback fades out
+   * slowly.
    */
-  abstract fun stop()
+  abstract fun stop(immediate: Boolean)
 
   /**
    * Sets the volume of the player.
@@ -186,7 +188,7 @@ abstract class Player protected constructor() {
           val bridgeName = "${from.name}_${to.name}"
           Segment(
             name = bridgeName,
-            path = "${sound?.segmentsBasePath}/${bridgeName}/${bridgeName}.m3u8",
+            path = "${sound?.segmentsBasePath}/${bridgeName}.m3u8",
             isBridgeSegment = true,
             from = from.name,
             to = to.name,
@@ -234,7 +236,7 @@ abstract class Player protected constructor() {
   private fun recreateSegmentList() {
     segments = sound?.segments
       ?.filter { isPremiumSegmentsEnabled || it.isFree }
-      ?.map { Segment(it.name, "${sound?.segmentsBasePath}/${it.name}/${it.name}.m3u8", false) }
+      ?.map { Segment(it.name, "${sound?.segmentsBasePath}/${it.name}.m3u8", false) }
       ?: emptyList()
   }
 

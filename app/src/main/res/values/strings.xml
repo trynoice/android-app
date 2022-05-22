@@ -284,4 +284,9 @@
     <string name="audio_quality_medium">Medium (192 kbps)</string>
     <string name="audio_quality_high">High (256 kbps)</string>
     <string name="audio_quality_ultra">Ultra (320 kbps)</string>
+    <string name="preset_url_invalid">Preset URL appears to be invalid!</string>
+    <string name="playing">Playing</string>
+    <string name="pausing">Pausing</string>
+    <string name="paused">Paused</string>
+    <string name="stopping">Stopping</string>
 </resources>

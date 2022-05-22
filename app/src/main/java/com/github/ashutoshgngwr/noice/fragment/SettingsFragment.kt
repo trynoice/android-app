@@ -164,7 +164,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
       requireContext().contentResolver.openFileDescriptor(result, "w")?.use {
         val os = FileOutputStream(it.fileDescriptor)
         os.channel.truncate(0L)
-        presetRepository.writeTo(os)
+        presetRepository.exportTo(os)
         os.close()
       }
 
@@ -194,7 +194,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
       }
 
       requireContext().contentResolver.openFileDescriptor(result, "r")?.use {
-        presetRepository.readFrom(FileInputStream(it.fileDescriptor))
+        presetRepository.importFrom(FileInputStream(it.fileDescriptor))
       }
 
       success = true

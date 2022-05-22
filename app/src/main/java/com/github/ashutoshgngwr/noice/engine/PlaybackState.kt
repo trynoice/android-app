@@ -6,5 +6,9 @@ package com.github.ashutoshgngwr.noice.engine
  * and never transitions to the [IDLE], [BUFFERING] and [FAILED] states.
  */
 enum class PlaybackState {
-  IDLE, BUFFERING, PLAYING, PAUSING, PAUSED, STOPPING, STOPPED, FAILED,
+  IDLE, BUFFERING, PLAYING, PAUSING, PAUSED, STOPPING, STOPPED, FAILED;
+
+  fun oneOf(vararg states: PlaybackState): Boolean {
+    return states.contains(this)
+  }
 }

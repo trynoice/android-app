@@ -1,19 +1,24 @@
 package com.github.ashutoshgngwr.noice.repository
 
 import android.content.Context
+import android.net.Uri
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import com.github.ashutoshgngwr.noice.ext.keyFlow
+import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
-import com.github.ashutoshgngwr.noice.playback.Player
 import com.github.ashutoshgngwr.noice.repository.PresetRepository.Companion.PREFERENCE_KEY
+import com.github.ashutoshgngwr.noice.repository.errors.DuplicatePresetError
+import com.github.ashutoshgngwr.noice.repository.errors.PresetNotFoundError
 import com.google.gson.Gson
 import com.google.gson.JsonIOException
 import com.google.gson.JsonSyntaxException
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.qualifiers.ApplicationContext
-import org.json.JSONArray
-import org.json.JSONObject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.OutputStream
@@ -21,8 +26,6 @@ import java.io.OutputStreamWriter
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.math.round
-import kotlin.math.roundToInt
 
 /**
  * [PresetRepository] implements the data access layer for [Preset]. It stores all its data in a
@@ -34,147 +37,66 @@ class PresetRepository @Inject constructor(
   private val gson: Gson,
 ) {
 
-  companion object {
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val PREF_V0 = "presets"
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val PREF_V1 = "presets.v1"
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val PREFERENCE_KEY = PREF_V1
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val EXPORT_VERSION_KEY = "version"
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val EXPORT_DATA_KEY = "data"
-
-    private const val DEFAULT_PRESETS = """[{
-      "id": "808feaed-f4ce-4d1e-9179-ae7aec31180e",
-      "name": "Thunderstorm by @markwmuller",
-      "playerStates": [
-        {
-          "soundKey": "distant_thunder",
-          "timePeriod": 219,
-          "volume": 20
-        },
-        {
-          "soundKey": "heavy_rain",
-          "timePeriod": 300,
-          "volume": 20
-        },
-        {
-          "soundKey": "rolling_thunder",
-          "timePeriod": 294,
-          "volume": 4
-        },
-        {
-          "soundKey": "thunder_crack",
-          "timePeriod": 337,
-          "volume": 17
-        }
-      ]
-    },
-    {
-      "id": "13006e01-9413-45d7-bffc-dc577b077d67",
-      "name": "Beach by @eMPee584",
-      "playerStates": [
-        {
-          "soundKey": "crickets",
-          "timePeriod": 300,
-          "volume": 6
-        },
-        {
-          "soundKey": "screeching_seagulls",
-          "timePeriod": 300,
-          "volume": 6
-        },
-        {
-          "soundKey": "seaside",
-          "timePeriod": 300,
-          "volume": 20
-        },
-        {
-          "soundKey": "soft_wind",
-          "timePeriod": 300,
-          "volume": 6
-        },
-        {
-          "soundKey": "wind_in_palm_trees",
-          "timePeriod": 300,
-          "volume": 15
-        }
-      ]
-    },
-    {
-      "id": "b76ac285-1265-472c-bcdc-aecba3a28fa2",
-      "name": "Camping by @ashutoshgngwr",
-      "playerStates": [
-        {
-          "soundKey": "bonfire",
-          "timePeriod": 300,
-          "volume": 22
-        },
-        {
-          "soundKey": "howling_wolf",
-          "timePeriod": 964,
-          "volume": 3
-        },
-        {
-          "soundKey": "night",
-          "timePeriod": 300,
-          "volume": 6
-        },
-        {
-          "soundKey": "quiet_conversation",
-          "timePeriod": 300,
-          "volume": 5
-        },
-        {
-          "soundKey": "soft_wind",
-          "timePeriod": 300,
-          "volume": 8
-        }
-      ]
-    }]"""
-  }
-
   private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-  init {
-    migrate()
+  /**
+   * Adds the given preset to persistent storage.
+   *
+   * @throws IllegalArgumentException if [Preset.id] is missing.
+   * @throws DuplicatePresetError if a preset with given id already exists.
+   */
+  fun create(preset: Preset) = edit { presets ->
+    require(preset.id.isNotBlank()) { "preset must contain a valid ID" }
+    if (presets.any { it.id == preset.id }) {
+      throw DuplicatePresetError
+    }
+
+    presets.add(preset)
   }
 
   /**
-   * Add the given preset to persistent storage.
+   * Updates the given [preset].
    *
-   * @throws IllegalArgumentException if [Preset.id] is missing
+   * @throws PresetNotFoundError if [preset] id is not present in the persistent storage.
    */
-  fun create(preset: Preset) {
-    if (preset.id.isBlank()) {
-      throw IllegalArgumentException("preset must contain a valid ID")
+  fun update(preset: Preset) = edit { presets ->
+    val index = presets.indexOfFirst { it.id == preset.id }
+    if (index < 0) {
+      throw PresetNotFoundError
     }
 
-    commit(arrayOf(*list(), preset))
+    presets[index] = preset
+  }
+
+  /**
+   * Deletes the preset with given id from the storage.
+   *
+   * @return `true` if a preset was deleted, `false` otherwise.
+   */
+  fun delete(id: String) = edit { presets ->
+    presets.removeAll { it.id == id }
   }
 
   /**
    * Lists all [Preset]s present in the persistent storage.
    */
-  fun list(): Array<Preset> {
-    return gson.fromJson(
-      prefs.getString(PREFERENCE_KEY, DEFAULT_PRESETS),
-      Array<Preset>::class.java
-    )
+  fun list(): List<Preset> {
+    return gson.fromJson(prefs.getString(PREFERENCE_KEY, DEFAULT_PRESETS), PRESET_LIST_TYPE)
+  }
+
+  /**
+   * Returns a [Flow] that emits an [Array] of all [Preset] whenever the list of saved presets is
+   * updated.
+   */
+  fun listFlow(): Flow<List<Preset>> {
+    return prefs.keyFlow(PREFERENCE_KEY).map { list() }
   }
 
   /**
    * Returns the preset with given id. Returns `null` if the [Preset] with given id doesn't exist.
    */
   fun get(id: String?): Preset? {
-    id ?: return null
-    return list().find { it.id == id }
+    return id?.let { list().firstOrNull { p -> p.id == id } }
   }
 
   /**
@@ -187,42 +109,14 @@ class PresetRepository @Inject constructor(
   fun random(tag: Sound.Tag?, intensity: IntRange): Preset {
     // TODO: fix
 //    val library = Sound.filterLibraryByTag(tag).shuffled()
-//    val playerStates = mutableListOf<Preset.PlayerState>()
+//    val playerStates = mutableListOf<Preset.PlaybackState>()
 //    for (i in 0 until Random.nextInt(intensity)) {
 //      val volume = 1 + Random.nextInt(0, Player.MAX_VOLUME)
 //      val timePeriod = Random.nextInt(Player.MIN_TIME_PERIOD, Player.MAX_TIME_PERIOD + 1)
-//      playerStates.add(Preset.PlayerState(library[i], volume, timePeriod))
+//      playerStates.add(Preset.PlaybackState(library[i], volume, timePeriod))
 //    }
 
     return Preset(UUID.randomUUID().toString(), "", emptyArray())
-  }
-
-  /**
-   * Updates the given [preset].
-   *
-   * @throws IllegalArgumentException if [preset] id is not present in the persistent storage.
-   */
-  fun update(preset: Preset) {
-    val presets = list()
-    val index = presets.indexOfFirst { it.id == preset.id }
-    if (index < 0) {
-      throw IllegalArgumentException("cannot update preset with id ${preset.id} as it doesn't exist")
-    }
-
-    presets[index] = preset
-    commit(presets)
-  }
-
-  /**
-   * Deletes the preset with given id from the storage.
-   *
-   * @return `true` on success, `false` on failure.
-   */
-  fun delete(id: String): Boolean {
-    val presets = list().toMutableList()
-    val result = presets.removeAll { it.id == id }
-    commit(presets.toTypedArray())
-    return result
   }
 
   /**
@@ -230,7 +124,7 @@ class PresetRepository @Inject constructor(
    * is JSON.
    */
   @Throws(JsonIOException::class)
-  fun writeTo(stream: OutputStream) {
+  fun exportTo(stream: OutputStream) {
     val data = mapOf(
       EXPORT_VERSION_KEY to PREFERENCE_KEY,
       EXPORT_DATA_KEY to prefs.getString(PREFERENCE_KEY, DEFAULT_PRESETS)
@@ -241,89 +135,145 @@ class PresetRepository @Inject constructor(
 
   /**
    * Reads and saves the presets from an [InputStream] that has the data that was exported using
-   * [writeTo]. It overwrites any existing presets in the storage.
+   * [exportTo]. It overwrites any existing presets in the storage.
    */
   @Throws(JsonIOException::class, JsonSyntaxException::class, IllegalArgumentException::class)
-  fun readFrom(stream: InputStream) {
+  fun importFrom(stream: InputStream) {
     val data = InputStreamReader(stream).use {
       gson.fromJson(it, hashMapOf<String, String?>()::class.java)
     }
 
     val version = data?.get(EXPORT_VERSION_KEY)
     version ?: throw IllegalArgumentException("'version' is missing")
-
-    prefs.edit(commit = true) { putString(version, data[EXPORT_DATA_KEY]) }
-    migrate()
-  }
-
-  private fun commit(presets: Array<Preset>) {
-    prefs.edit(commit = true) { putString(PREFERENCE_KEY, gson.toJson(presets)) }
-  }
-
-  private fun migrate() {
-    migrateToV1()
-    // the chain can continue, e.g. migrateToV2().
+    prefs.edit { putString(version, data[EXPORT_DATA_KEY]) }
   }
 
   /**
-   * [migrateToV1] migrates saved user presets from its old definitions to its current
-   * definitions.
+   * Decodes a preset from a self-contained HTTP URL generated using [writeAsUrl].
    *
-   * Old definitions can be found here:
-   * https://github.com/ashutoshgngwr/noice/blob/2fe643b655e1609f2c857226f6bcfcbf4ece6edd/app/src/main/java/com/github/ashutoshgngwr/noice/sound/Preset.kt
-   *
-   * To sum it up, there are four migration goals:
-   * 1. Assign stable IDs to saved presets
-   * 2. Clean up the naming mess https://github.com/ashutoshgngwr/noice/issues/110
-   * 3. Fix volume type issues https://github.com/ashutoshgngwr/noice/pull/105
-   * 4. Fix time period offset issues introduced in following commits
-   *    - https://github.com/ashutoshgngwr/noice/commit/b449ef643227b65685b71f7780a814c606e6abad
-   *    - https://github.com/ashutoshgngwr/noice/commit/8ef502debd84aeadadaa665acd37c3cee592f521
-   *    - https://github.com/ashutoshgngwr/noice/commit/11eb63ee22f3a03eca982cbd308f06ec164ab300#diff-db23b0e75244cdeb8ead7184bb06cb7cR15-R71
+   * @return the contained [Preset] if the URL is valid, or `null` [Preset] if the URL is invalid.
    */
-  internal fun migrateToV1() {
-    val json = prefs.getString(PREF_V0, null)
-    if (json.isNullOrBlank()) {
-      return
-    }
-
-    val presets = mutableListOf<Preset>()
-    JSONArray(json).forEach<JSONObject> { preset ->
-      val presetName = preset.getString("a")
-      val playerStates = mutableListOf<Preset.PlayerState>()
-
-      preset.getJSONArray("b").forEach<JSONObject> { state ->
-        playerStates.add(
-          Preset.PlayerState(
-            soundKey = state.getString("a"),
-            // with corrections from the old deserializers
-            volume = round(state.getDouble("b") * Player.MAX_VOLUME).roundToInt(),
-            timePeriod = state.getInt("c") + Player.MIN_TIME_PERIOD
-          )
-        )
-      }
-
-      val id = UUID.randomUUID().toString()
-      presets.add(Preset(id, presetName, playerStates.toTypedArray()))
-    }
-
-    prefs.edit(commit = true) {
-      remove(PREF_V0)
-      putString(PREF_V1, gson.toJson(presets.toTypedArray()))
+  fun readFromUrl(url: String): Preset? {
+    val uri = Uri.parse(url)
+    val name = uri.getQueryParameter(URI_PARAM_NAME) ?: ""
+    val playerStatesJSON = uri.getQueryParameter(URI_PARAM_PLAYER_STATES) ?: return null
+    return try {
+      val playerStates = gson.fromJson(playerStatesJSON, Array<PlayerState>::class.java)
+      Preset(name, playerStates)
+    } catch (e: JsonSyntaxException) {
+      null
     }
   }
 
   /**
-   * [forEach] iterator extension for [JSONArray] type
+   * Encodes the preset to a self-contained HTTP URL.
    */
-  private inline fun <reified T> JSONArray.forEach(crossinline f: (T) -> Unit) {
-    for (i in 0 until length()) {
-      val obj = get(i)
-      if (obj !is T) {
-        throw ClassCastException("$obj cannot be cast as ${T::class.qualifiedName}")
-      }
+  fun writeAsUrl(preset: Preset): String {
+    return Uri.Builder()
+      .scheme("https")
+      .authority("trynoice.com")
+      .path("/preset")
+      .appendQueryParameter(URI_PARAM_NAME, preset.name)
+      .appendQueryParameter(URI_PARAM_PLAYER_STATES, gson.toJson(preset.playerStates))
+      .build()
+      .toString()
+  }
 
-      f(get(i) as T)
+  private fun commit(presets: List<Preset>) {
+    prefs.edit { putString(PREFERENCE_KEY, gson.toJson(presets)) }
+  }
+
+  private inline fun edit(block: (MutableList<Preset>) -> Unit) {
+    synchronized(prefs) {
+      val presets: MutableList<Preset> = prefs.getString(PREFERENCE_KEY, DEFAULT_PRESETS)
+        .let { gson.fromJson(it, PRESET_LIST_TYPE) }
+
+      block.invoke(presets)
+      commit(presets)
     }
+  }
+
+  companion object {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    const val PREFERENCE_KEY = "presets.v2"
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    const val EXPORT_VERSION_KEY = "version"
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    const val EXPORT_DATA_KEY = "data"
+
+    private val PRESET_LIST_TYPE by lazy {
+      TypeToken.getParameterized(List::class.java, Preset::class.java).type
+    }
+
+    private const val URI_PARAM_NAME = "n"
+    private const val URI_PARAM_PLAYER_STATES = "ps"
+    private const val DEFAULT_PRESETS = """[{
+      "id": "808feaed-f4ce-4d1e-9179-ae7aec31180e",
+      "name": "Thunderstorm by @markwmuller",
+      "playerStates": [
+        {
+          "soundId": "rain",
+          "volume": 20
+        },
+        {
+          "soundId": "thunder",
+          "volume": 20
+        }
+      ]
+    },
+    {
+      "id": "13006e01-9413-45d7-bffc-dc577b077d67",
+      "name": "Beach by @eMPee584",
+      "playerStates": [
+        {
+          "soundId": "crickets",
+          "volume": 6
+        },
+        {
+          "soundId": "seagulls",
+          "volume": 6
+        },
+        {
+          "soundId": "seashore",
+          "volume": 20
+        },
+        {
+          "soundId": "soft_wind",
+          "volume": 6
+        },
+        {
+          "soundId": "wind_through_palm_trees",
+          "volume": 15
+        }
+      ]
+    },
+    {
+      "id": "b76ac285-1265-472c-bcdc-aecba3a28fa2",
+      "name": "Camping by @ashutoshgngwr",
+      "playerStates": [
+        {
+          "soundId": "campfire",
+          "volume": 22
+        },
+        {
+          "soundId": "night",
+          "volume": 6
+        },
+        {
+          "soundId": "quiet_conversations",
+          "volume": 5
+        },
+        {
+          "soundId": "soft_wind",
+          "volume": 8
+        },
+        {
+          "soundId": "wolves",
+          "volume": 3
+        }
+      ]
+    }]"""
   }
 }

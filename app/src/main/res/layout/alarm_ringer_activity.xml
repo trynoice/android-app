@@ -55,12 +55,25 @@
     android:layout_height="0dp"
     android:layout_weight="1" />
 
-  <com.ncorti.slidetoact.SlideToActView
-    android:id="@+id/dismiss_slider"
-    style="@style/Widget.App.AlarmRinger.DismissSlider"
+  <FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:text="@string/dismiss" />
+    android:layout_height="wrap_content">
+
+    <com.ncorti.slidetoact.SlideToActView
+      android:id="@+id/dismiss_slider"
+      style="@style/Widget.App.AlarmRinger.DismissSlider"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:text="@string/dismiss" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+      android:id="@+id/dismiss_progress"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:indeterminate="true" />
+
+  </FrameLayout>
 
   <Space
     android:layout_width="wrap_content"

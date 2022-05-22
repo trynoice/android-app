@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -20,17 +21,18 @@ import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
+import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.fragment.DonationPurchasedCallbackFragmentArgs
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragmentArgs
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
-import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.EntryPoint
@@ -71,6 +73,9 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   @set:Inject
   internal lateinit var playbackController: PlaybackController
+
+  @set:Inject
+  internal lateinit var presetRepository: PresetRepository
 
   /**
    * indicates whether the activity was delivered a new intent since it was last resumed.
@@ -183,8 +188,13 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
     if (Intent.ACTION_VIEW == intent.action && uri != null) {
       val data = intent.dataString ?: ""
       when {
-        data.startsWith("https://ashutoshgngwr.github.io/noice/preset") || data.startsWith("noice://preset") -> {
-          playbackController.playPresetFromUri(uri)
+        data.startsWith("https://trynoice.com/preset") || data.startsWith("noice://preset") -> {
+          val preset = presetRepository.readFromUrl(data)
+          if (preset != null) {
+            playbackController.play(preset)
+          } else {
+            showSnackBar(R.string.preset_url_invalid)
+          }
         }
 
         SubscriptionBillingCallbackFragment.canHandleUri(data) -> {
@@ -212,9 +222,7 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   override fun onPending(purchase: InAppBillingProvider.Purchase) {
     analyticsProvider.logEvent("purchase_pending", bundleOf())
-    Snackbar.make(binding.mainNavHostFragment, R.string.payment_pending, Snackbar.LENGTH_LONG)
-      .setAnchorView(findViewById(R.id.bottom_nav))
-      .show()
+    showSnackBar(R.string.payment_pending)
   }
 
   override fun onComplete(purchase: InAppBillingProvider.Purchase) {
@@ -234,6 +242,12 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
         ).toBundle(),
       )
     }
+  }
+
+  private fun showSnackBar(@StringRes resId: Int) {
+    Snackbar.make(binding.mainNavHostFragment, resId, Snackbar.LENGTH_LONG)
+      .setAnchorView(findViewById(R.id.bottom_nav) ?: findViewById(R.id.network_indicator))
+      .show()
   }
 
   @EntryPoint

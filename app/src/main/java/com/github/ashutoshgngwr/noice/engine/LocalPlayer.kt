@@ -110,17 +110,12 @@ class LocalPlayer(
   }
 
   override fun playInternal() {
-    if (exoPlayer.isPlaying) {
-      // stop fade-out animation if any, then resume playing and regain lost volume.
-      if (fadeAnimator?.isStarted == true || fadeAnimator?.isRunning == true) {
-        fadeAnimator?.removeAllListeners()
-        fadeAnimator?.cancel()
-      }
-
+    if (exoPlayer.isPlaying) { // maybe pausing or stopping state.
       if (exoPlayer.volume != getScaledVolume()) {
         exoPlayer.fade(exoPlayer.volume, getScaledVolume(), fadeInDuration.inWholeMilliseconds)
       }
 
+      setPlaybackState(PlaybackState.PLAYING)
       return
     }
 
@@ -131,22 +126,28 @@ class LocalPlayer(
   }
 
   override fun pause(immediate: Boolean) {
-    val fadeOutDurationMs = if (immediate) {
+    setPlaybackState(PlaybackState.PAUSING)
+    val fadeOutDurationMs = if (immediate || !exoPlayer.isPlaying) {
       0
     } else {
       fadeOutDuration.inWholeMilliseconds
     }
 
-    setPlaybackState(PlaybackState.PAUSING)
     exoPlayer.fade(exoPlayer.volume, 0F, fadeOutDurationMs) {
       setPlaybackState(PlaybackState.PAUSED)
       exoPlayer.pause()
     }
   }
 
-  override fun stop() {
+  override fun stop(immediate: Boolean) {
     setPlaybackState(PlaybackState.STOPPING)
-    exoPlayer.fade(exoPlayer.volume, 0F, fadeOutDuration.inWholeMilliseconds) {
+    val fadeOutDurationMs = if (immediate || !exoPlayer.isPlaying) {
+      0
+    } else {
+      fadeOutDuration.inWholeMilliseconds
+    }
+
+    exoPlayer.fade(exoPlayer.volume, 0F, fadeOutDurationMs) {
       setPlaybackState(PlaybackState.STOPPED)
       exoPlayer.stop()
       exoPlayer.release()
@@ -182,6 +183,10 @@ class LocalPlayer(
     durationMillis: Long,
     crossinline callback: () -> Unit = {},
   ) {
+    // clearing previous callback is required because a Player might want to transition from
+    // `STOPPING` to `PLAYING` state. If the callback isn't cleared, the callback for fade-out
+    // during stop operation will make ExoPlayer release its resources.
+    fadeAnimator?.removeAllListeners()
     fadeAnimator?.cancel()
     fadeAnimator = ValueAnimator.ofFloat(fromVolume, toVolume).apply {
       duration = durationMillis

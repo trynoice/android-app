@@ -12,12 +12,16 @@ import com.trynoice.api.client.NoiceApiClient
 import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionPlan
 import io.github.ashutoshgngwr.may.May
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.flow.onEach
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.min
 
 /**
  * Implements a data access layer for fetching and manipulating subscription related data.
@@ -187,8 +191,8 @@ class SubscriptionRepository @Inject constructor(
   )
 
   /**
-   * Returns a flow that emits whether the authenticated user owns an active subscription as a
-   * [Resource].
+   * Returns a flow that actively polls the API server and emits whether the authenticated user owns
+   * an active subscription as a [Resource].
    *
    * On failures, the flow emits [Resource.Failure] with:
    * - [NetworkError] on network errors.
@@ -197,15 +201,25 @@ class SubscriptionRepository @Inject constructor(
    * @see fetchNetworkBoundResource
    * @see Resource
    */
-  fun isSubscribed(): Flow<Resource<Boolean>> = getActive().transform { r ->
-    emit(
-      when {
-        r is Resource.Loading -> Resource.Loading(r.data != null)
-        r is Resource.Success -> Resource.Success(r.data != null)
-        r is Resource.Failure && r.error is SubscriptionNotFoundError -> Resource.Success(false)
-        else -> Resource.Failure(requireNotNull(r.error), r.data != null)
-      }
-    )
+  fun isSubscribed(): Flow<Resource<Boolean>> = flow {
+    while (true) {
+      val r = getActive()
+        .onEach { r ->
+          emit(
+            when {
+              r is Resource.Loading -> Resource.Loading(r.data != null)
+              r is Resource.Success -> Resource.Success(r.data != null)
+              r.error is SubscriptionNotFoundError -> Resource.Success(false)
+              r.error is HttpException && r.error.code() == 401 -> Resource.Success(false) // unauthenticated.
+              else -> Resource.Failure(requireNotNull(r.error), r.data != null)
+            }
+          )
+        }
+        .lastOrNull()
+
+      val expiresAt = r?.data?.renewsAt?.time ?: Long.MAX_VALUE
+      delay(min(60_000L, expiresAt - System.currentTimeMillis()))
+    }
   }
 
   companion object {

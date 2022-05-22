@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetFragmentBinding
+import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.model.Sound
-import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -30,6 +31,9 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
   }
 
   private lateinit var binding: RandomPresetFragmentBinding
+
+  @set:Inject
+  internal lateinit var presetRepository: PresetRepository
 
   @set:Inject
   internal lateinit var analyticsProvider: AnalyticsProvider
@@ -64,7 +68,8 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
         else -> RANGE_INTENSITY_ANY
       }
 
-      playbackController.playRandomPreset(tag, intensity)
+      // TODO: fix this
+      playbackController.play(presetRepository.random(tag, intensity))
       dismiss()
 
       // maybe show in-app review dialog to the user

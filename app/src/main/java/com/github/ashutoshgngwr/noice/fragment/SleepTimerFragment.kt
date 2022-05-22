@@ -8,8 +8,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SleepTimerFragmentBinding
+import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.ext.showSnackbar
-import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +38,7 @@ class SleepTimerFragment : Fragment() {
     binding.durationPicker.setResetButtonEnabled(false)
     binding.durationPicker.setOnDurationAddedListener(this::onDurationAdded)
 
-    val duration = playbackController.getScheduledAutoStopRemainingDurationMillis()
+    val duration = playbackController.getStopScheduleRemainingMillis()
     if (duration > 0) {
       binding.countdownView.startCountdown(duration)
       binding.durationPicker.setResetButtonEnabled(true)
@@ -48,7 +48,7 @@ class SleepTimerFragment : Fragment() {
   }
 
   override fun onDestroyView() {
-    val duration = playbackController.getScheduledAutoStopRemainingDurationMillis()
+    val duration = playbackController.getStopScheduleRemainingMillis()
     if (duration > 0) {
       analyticsProvider.logEvent("sleep_timer_set", bundleOf("duration_ms" to duration))
     }
@@ -64,9 +64,9 @@ class SleepTimerFragment : Fragment() {
       analyticsProvider.logEvent("sleep_timer_cancel", bundleOf())
       showSnackbar(R.string.auto_sleep_schedule_cancelled)
     } else {
-      remaining = playbackController.getScheduledAutoStopRemainingDurationMillis()
+      remaining = playbackController.getStopScheduleRemainingMillis()
       remaining += duration
-      playbackController.scheduleAutoStop(remaining)
+      playbackController.scheduleStop(remaining)
       enableResetButton = true
       analyticsProvider.logEvent("sleep_timer_add_duration", bundleOf("duration_ms" to duration))
     }

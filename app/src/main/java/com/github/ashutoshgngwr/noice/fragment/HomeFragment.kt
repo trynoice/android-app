@@ -1,7 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.os.Bundle
-import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -10,23 +9,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
-import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.HomeFragmentBinding
-import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.engine.PlaybackController
+import com.github.ashutoshgngwr.noice.engine.PlaybackState
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import dagger.hilt.android.AndroidEntryPoint
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -34,7 +33,7 @@ import javax.inject.Inject
 class HomeFragment : Fragment() {
 
   private lateinit var binding: HomeFragmentBinding
-  private var playerManagerState = PlaybackStateCompat.STATE_STOPPED
+  private var playerManagerState = PlaybackState.STOPPED
 
   private val navArgs: HomeFragmentArgs by navArgs()
   private val homeNavController: NavController by lazy {
@@ -46,7 +45,7 @@ class HomeFragment : Fragment() {
   }
 
   @set:Inject
-  internal lateinit var eventBus: EventBus
+  internal lateinit var soundRepository: SoundRepository
 
   @set:Inject
   internal lateinit var settingsRepository: SettingsRepository
@@ -63,12 +62,6 @@ class HomeFragment : Fragment() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setHasOptionsMenu(true)
-    eventBus.register(this)
-  }
-
-  override fun onDestroy() {
-    eventBus.unregister(this)
-    super.onDestroy()
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
@@ -86,12 +79,20 @@ class HomeFragment : Fragment() {
     binding.bottomNav.menu.findItem(navArgs.navDestination)?.let {
       NavigationUI.onNavDestinationSelected(it, homeNavController)
     }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      soundRepository.getPlayerManagerState()
+        .collect { state ->
+          playerManagerState = state
+          activity?.invalidateOptionsMenu()
+        }
+    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     castApiProvider.addMenuItem(requireContext(), menu, R.string.cast_media)
     val displayPlaybackControls = homeNavController.currentDestination?.id != R.id.wake_up_timer
-      && PlaybackStateCompat.STATE_STOPPED != playerManagerState
+      && PlaybackState.STOPPED != playerManagerState
 
     if (displayPlaybackControls) {
       addPlaybackToggleMenuItem(menu)
@@ -101,36 +102,26 @@ class HomeFragment : Fragment() {
   }
 
   private fun addPlaybackToggleMenuItem(menu: Menu): MenuItem {
-    return if (PlaybackStateCompat.STATE_PLAYING == playerManagerState) {
-      menu.add(0, R.id.action_pause, 0, R.string.pause).apply {
-        setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-        setIcon(R.drawable.ic_pause_24dp)
-        setOnMenuItemClickListener {
-          playbackController.pause()
-          analyticsProvider.logEvent("playback_toggle_click", bundleOf())
-          true
-        }
-      }
-    } else {
+    return if (playerManagerState.oneOf(PlaybackState.PAUSED, PlaybackState.PAUSING)) {
       menu.add(0, R.id.action_resume, 0, R.string.play).apply {
         setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-        setIcon(R.drawable.ic_play_arrow_24dp)
+        setIcon(R.drawable.ic_baseline_play_arrow_24)
         setOnMenuItemClickListener {
           playbackController.resume()
           analyticsProvider.logEvent("playback_toggle_click", bundleOf())
           true
         }
       }
+    } else {
+      menu.add(0, R.id.action_pause, 0, R.string.pause).apply {
+        setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+        setIcon(R.drawable.ic_baseline_pause_24)
+        setOnMenuItemClickListener {
+          playbackController.pause()
+          analyticsProvider.logEvent("playback_toggle_click", bundleOf())
+          true
+        }
+      }
     }
-  }
-
-  @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-  fun onPlayerManagerUpdate(event: MediaPlayerService.PlaybackUpdateEvent) {
-    if (playerManagerState == event.state) {
-      return
-    }
-
-    playerManagerState = event.state
-    activity?.invalidateOptionsMenu()
   }
 }
