@@ -15,9 +15,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
  */
 @BindingAdapter("android:text")
 fun TextView.setText(@StringRes resId: Int?) {
-  resId ?: return
-  if (resId == ResourcesCompat.ID_NULL) {
-    text = ""
+  if (resId == null || resId == ResourcesCompat.ID_NULL) {
+    text = null
   } else {
     setText(resId)
   }

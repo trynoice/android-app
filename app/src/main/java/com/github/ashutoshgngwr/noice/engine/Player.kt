@@ -248,7 +248,7 @@ abstract class Player protected constructor() {
 
   companion object {
     private const val LOG_TAG = "Player"
-    internal const val DEFAULT_VOLUME = 4
+    internal const val DEFAULT_VOLUME = 20
     internal const val MAX_VOLUME = 25
   }
 

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,7 +15,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.caverock.androidsvg.PreserveAspectRatio
@@ -147,26 +145,17 @@ class LibraryFragment : Fragment(), LibraryListItemController {
         }
     }
 
+    binding.randomPresetButton.setOnClickListener { navController.navigate(R.id.random_preset) }
     binding.randomPresetButton.setOnLongClickListener {
       Toast.makeText(requireContext(), R.string.random_preset, Toast.LENGTH_LONG).show()
       true
     }
 
-    binding.randomPresetButton.setOnClickListener {
-      findNavController().navigate(R.id.random_preset)
-    }
-
-    binding.savePresetButton.setOnLongClickListener {
-      Toast.makeText(requireContext(), R.string.save_preset, Toast.LENGTH_LONG).show()
-      true
-    }
-
     binding.savePresetButton.setOnClickListener {
-      val params = bundleOf("success" to false)
       DialogFragment.show(childFragmentManager) {
         val presets = presetRepository.list()
         title(R.string.save_preset)
-        input(hintRes = R.string.name, validator = {
+        val nameGetter = input(hintRes = R.string.name, validator = {
           when {
             it.isBlank() -> R.string.preset_name_cannot_be_empty
             presets.any { p -> it == p.name } -> R.string.preset_already_exists
@@ -176,21 +165,18 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
-          val name = getInputText()
-          val playerStates = viewModel.playerStates.value
-          presetRepository.create(Preset(name, playerStates))
+          presetRepository.create(Preset(nameGetter.invoke(), viewModel.playerStates.value))
           binding.savePresetButton.hide()
           showSuccessSnackbar(R.string.preset_saved)
-          params.putBoolean("success", true)
-          analyticsProvider.logEvent("preset_name", bundleOf("item_length" to name.length))
-          val soundCount = playerStates.size
-          analyticsProvider.logEvent("preset_sounds", bundleOf("items_count" to soundCount))
           // maybe show in-app review dialog to the user
           reviewFlowProvider.maybeAskForReview(requireActivity())
         }
-
-        onDismiss { analyticsProvider.logEvent("preset_create", params) }
       }
+    }
+
+    binding.savePresetButton.setOnLongClickListener {
+      Toast.makeText(requireContext(), R.string.save_preset, Toast.LENGTH_LONG).show()
+      true
     }
 
     analyticsProvider.setCurrentScreen("library", LibraryFragment::class)
@@ -211,8 +197,8 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
   override fun onSoundVolumeClicked(sound: Sound, currentVolume: Int) {
     DialogFragment.show(childFragmentManager) {
-// TODO:     title(sound.name)
-      message(R.string.volume)
+      title(sound.name)
+      message(R.string.volume, textAppearance = R.style.TextAppearance_MaterialComponents_Headline6)
       slider(
         viewID = R.id.volume_slider,
         to = PlaybackController.MAX_SOUND_VOLUME.toFloat(),

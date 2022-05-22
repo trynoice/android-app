@@ -14,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.ListView
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
+import androidx.annotation.StyleRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.TextViewCompat
 import androidx.core.widget.addTextChangedListener
@@ -43,11 +44,8 @@ class DialogFragment : BottomSheetDialogFragment() {
   }
 
   private lateinit var baseBinding: DialogFragmentBaseBinding
-  private lateinit var textInputBinding: DialogFragmentTextInputBinding
-
   private var onDismissListener: (() -> Unit)? = null
-
-  private val viewModel: ViewModel by viewModels()
+  private val viewModel: DialogViewModel by viewModels()
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     baseBinding = DialogFragmentBaseBinding.inflate(inflater, container, false)
@@ -104,7 +102,7 @@ class DialogFragment : BottomSheetDialogFragment() {
    */
   private fun @receiver:androidx.annotation.AttrRes Int.resolveAttributeValue(): Int {
     val value = TypedValue()
-    requireNotNull(dialog).context.theme.resolveAttribute(this, value, true)
+    requireDialog().context.theme.resolveAttribute(this, value, true)
     return value.data
   }
 
@@ -113,6 +111,13 @@ class DialogFragment : BottomSheetDialogFragment() {
    */
   fun title(@StringRes resId: Int) {
     baseBinding.title.text = getString(resId)
+  }
+
+  /**
+   * Sets the title of the dialog
+   */
+  fun title(title: String) {
+    baseBinding.title.text = title
   }
 
   /**
@@ -152,10 +157,13 @@ class DialogFragment : BottomSheetDialogFragment() {
    * Creates a [MarkdownTextView] with given string resource and adds it to [R.id.content] layout
    * in the dialog.
    */
-  fun message(@StringRes resId: Int, vararg formatArgs: Any) {
+  fun message(
+    @StringRes resId: Int,
+    vararg formatArgs: Any,
+    @StyleRes textAppearance: Int = android.R.attr.textAppearance.resolveAttributeValue()
+  ) {
     addView(
       MarkdownTextView(requireContext()).apply {
-        val textAppearance = android.R.attr.textAppearance.resolveAttributeValue()
         TextViewCompat.setTextAppearance(this, textAppearance)
         setMarkdown(getString(resId, *formatArgs))
       }
@@ -171,6 +179,7 @@ class DialogFragment : BottomSheetDialogFragment() {
    * @param validator a validation function that is called on text every time it is changed. It
    * should return a String resource id to display it as an error. If no error is to be displayed,
    * it should return 0.
+   * @return a lambda function that returns the current value from the text field.
    */
   fun input(
     @StringRes hintRes: Int = 0,
@@ -178,9 +187,9 @@ class DialogFragment : BottomSheetDialogFragment() {
     type: Int = InputType.TYPE_CLASS_TEXT,
     singleLine: Boolean = true,
     validator: (String) -> Int = { 0 }
-  ) {
-    textInputBinding =
-      DialogFragmentTextInputBinding.inflate(layoutInflater, baseBinding.content, false)
+  ): InputTextGetter {
+    val textInputBinding = DialogFragmentTextInputBinding
+      .inflate(layoutInflater, baseBinding.content, false)
     addView(textInputBinding.root)
 
     baseBinding.positive.isEnabled = false
@@ -198,18 +207,8 @@ class DialogFragment : BottomSheetDialogFragment() {
         textInputBinding.textInputLayout.error = getString(errResID)
       }
     }
-  }
 
-  /**
-   * returns the text in the text field added using [input]. don't know what it'll do if called
-   * without invoking [input] \o/
-   */
-  fun getInputText(): String {
-    if (!this::textInputBinding.isInitialized) {
-      throw IllegalStateException("getInputText() called without setting up input field")
-    }
-
-    return textInputBinding.editText.text.toString()
+    return { textInputBinding.editText.text.toString() }
   }
 
   /**
@@ -277,14 +276,18 @@ class DialogFragment : BottomSheetDialogFragment() {
       addView(this)
     }
   }
+}
+
+/**
+ * Since [DialogFragment.setRetainInstance] is deprecated, need to persist state in a view model.
+ */
+class DialogViewModel : androidx.lifecycle.ViewModel() {
 
   /**
-   * Since [setRetainInstance] is deprecated, need to persist state in a view model.
+   * A lambda for calling functions to configure the dialog, passed while invoking
+   * [DialogFragment.show].
    */
-  class ViewModel : androidx.lifecycle.ViewModel() {
-    /**
-     * A lambda for calling functions to configure the dialog, passed while invoking [show].
-     */
-    internal var displayOptions: (DialogFragment.() -> Unit)? = null
-  }
+  internal var displayOptions: (DialogFragment.() -> Unit)? = null
 }
+
+typealias InputTextGetter = () -> String
