@@ -109,7 +109,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
 
   override fun onDeleteClicked(item: PresetListItem) {
     val params = bundleOf("success" to false)
-    DialogFragment.show(requireActivity().supportFragmentManager) {
+    DialogFragment.show(childFragmentManager) {
       title(R.string.delete)
       message(R.string.preset_delete_confirmation, item.preset.name)
       negativeButton(R.string.cancel)
@@ -137,15 +137,17 @@ class PresetsFragment : Fragment(), PresetListItemController {
   }
 
   override fun onRenameClicked(item: PresetListItem) {
-    val params = bundleOf("success" to false)
     DialogFragment.show(childFragmentManager) {
+      val presets = presetRepository.list()
       title(R.string.rename)
-      input(
+      val nameGetter = input(
         hintRes = R.string.name,
         preFillValue = item.preset.name,
-        validator = {
+        validator = { name ->
           when {
-            it.isBlank() -> R.string.preset_name_cannot_be_empty
+            name.isBlank() -> R.string.preset_name_cannot_be_empty
+            name == item.preset.name -> 0
+            presets.any { it.name == name } -> R.string.preset_already_exists
             else -> 0
           }
         }
@@ -153,16 +155,10 @@ class PresetsFragment : Fragment(), PresetListItemController {
 
       negativeButton(R.string.cancel)
       positiveButton(R.string.save) {
-        val name = getInputText()
-        presetRepository.update(item.preset.copy(name = name))
-
+        presetRepository.update(item.preset.copy(name = nameGetter.invoke()))
         // maybe show in-app review dialog to the user
         reviewFlowProvider.maybeAskForReview(requireActivity())
-        params.putBoolean("success", true)
-        analyticsProvider.logEvent("preset_name", bundleOf("item_length" to name.length))
       }
-
-      onDismiss { analyticsProvider.logEvent("preset_rename", params) }
     }
   }
 
