@@ -14,7 +14,6 @@ import com.github.ashutoshgngwr.noice.provider.InAppDonationFragmentProvider
 import com.github.ashutoshgngwr.noice.provider.OpenCollectiveDonationFragmentProvider
 import com.github.ashutoshgngwr.noice.provider.PlaystoreReviewFlowProvider
 import com.github.ashutoshgngwr.noice.provider.RealAnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.RealCastApiProvider
 import com.github.ashutoshgngwr.noice.provider.RealCrashlyticsProvider
 import com.github.ashutoshgngwr.noice.provider.RealInAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
@@ -47,9 +46,10 @@ object CastApiProviderModule {
   @Provides
   @Singleton
   fun castApiProvider(@ApplicationContext context: Context): CastApiProvider {
-    if (isGoogleMobileServiceAvailable(context)) {
-      return RealCastApiProvider(context)
-    }
+    // TODO: implement cast
+//    if (isGoogleMobileServiceAvailable(context)) {
+//      return RealCastApiProvider(context)
+//    }
 
     return DummyCastApiProvider
   }
