@@ -54,8 +54,8 @@
         <category android:name="android.intent.category.BROWSABLE" />
 
         <data
-          android:host="ashutoshgngwr.github.io"
-          android:pathPrefix="/noice/preset"
+          android:host="trynoice.com"
+          android:path="/preset"
           android:scheme="https" />
 
       </intent-filter>
@@ -110,7 +110,7 @@
 
     </activity>
 
-    <service android:name=".MediaPlayerService" />
+    <service android:name=".engine.PlaybackService" />
 
     <receiver
       android:name=".WakeUpTimerManager$BootReceiver"

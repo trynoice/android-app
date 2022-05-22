@@ -56,9 +56,6 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
   }
 
   @set:Inject
-  internal lateinit var subscriptionRepository: SubscriptionRepository
-
-  @set:Inject
   internal lateinit var subscriptionBillingProvider: SubscriptionBillingProvider
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {

@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.model
 import com.trynoice.api.client.models.SoundGroup
 import com.trynoice.api.client.models.SoundSegment
 import com.trynoice.api.client.models.SoundSource
+import com.trynoice.api.client.models.SoundTag
 import java.io.Serializable
 
 /**
@@ -16,6 +17,7 @@ import java.io.Serializable
  * segments for non-contiguous sounds.
  * @param segmentsBasePath absolute base path for the segments of this sound on the CDN server.
  * @param segments A list of segments for this sound.
+ * @param tags A list of tags that associate with this sound.
  * @param sources A list of details attributing original clip sources, author and license.
  */
 data class Sound(
@@ -26,6 +28,7 @@ data class Sound(
   val maxSilence: Int,
   val segmentsBasePath: String,
   val segments: List<SoundSegment>,
+  val tags: List<SoundTag>,
   val sources: List<SoundSource>,
 ) : Serializable {
 

@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,24 +15,25 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.caverock.androidsvg.PreserveAspectRatio
 import com.caverock.androidsvg.SVG
-import com.github.ashutoshgngwr.noice.MediaPlayerService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.LibraryFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.LibrarySoundGroupListItemBinding
 import com.github.ashutoshgngwr.noice.databinding.LibrarySoundListItemBinding
+import com.github.ashutoshgngwr.noice.engine.PlaybackController
+import com.github.ashutoshgngwr.noice.engine.PlaybackState
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
+import com.github.ashutoshgngwr.noice.ext.showSuccessSnackbar
+import com.github.ashutoshgngwr.noice.model.PlayerState
+import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
-import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
@@ -45,32 +47,27 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LibraryFragment : Fragment() {
+class LibraryFragment : Fragment(), LibraryListItemController {
 
   private lateinit var binding: LibraryFragmentBinding
 
-//  private var players = emptyMap<String, Player>()
-
-  @set:Inject
-  internal lateinit var eventBus: EventBus
-
   @set:Inject
   internal lateinit var presetRepository: PresetRepository
+
+  @set:Inject
+  internal lateinit var soundRepository: SoundRepository
 
   @set:Inject
   internal lateinit var settingsRepository: SettingsRepository
@@ -84,26 +81,11 @@ class LibraryFragment : Fragment() {
   @set:Inject
   internal lateinit var playbackController: PlaybackController
 
-  private val isConnectedToInternet = MutableStateFlow(false)
+  private var isConnectedToInternet = false
   private val viewModel: LibraryViewModel by viewModels()
-  private val adapter by lazy {
-    val navController = Navigation.findNavController(requireActivity(), R.id.home_nav_host_fragment)
-    LibraryListAdapter(layoutInflater, settingsRepository, navController)
-  }
-
-  @Subscribe(sticky = true, threadMode = ThreadMode.ASYNC)
-  fun onPlayerManagerUpdate(event: MediaPlayerService.PlaybackUpdateEvent) {
-//    this.players = event.players
-//    val showSavePresetFAB = !presetRepository.list().contains(Preset.from("", players.values))
-//
-//    view?.post {
-//      adapter.notifyDataSetChanged()
-//      if (showSavePresetFAB && event.state == PlaybackStateCompat.STATE_PLAYING) {
-//        binding.savePresetButton.show()
-//      } else {
-//        binding.savePresetButton.hide()
-//      }
-//    }
+  private val adapter by lazy { LibraryListAdapter(layoutInflater, this) }
+  private val navController by lazy {
+    Navigation.findNavController(requireActivity(), R.id.home_nav_host_fragment)
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
@@ -119,17 +101,37 @@ class LibraryFragment : Fragment() {
     binding.soundList.adapter = adapter
 
     viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.libraryDataSet.collect(adapter::dataSet::set)
+      settingsRepository.shouldDisplaySoundIconsAsFlow().collect(adapter::setIconsEnabled)
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
-      requireContext().getInternetConnectivityFlow().collect(isConnectedToInternet)
+      viewModel.libraryItems.collect(adapter::setLibraryItems)
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.playerStates.collect(adapter::setPlayerStates)
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.isSavePresetButtonVisible.collect { isVisible ->
+        if (isVisible) {
+          binding.savePresetButton.show()
+        } else {
+          binding.savePresetButton.hide()
+        }
+      }
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      requireContext().getInternetConnectivityFlow().collect { isConnected ->
+        isConnectedToInternet = isConnected
+      }
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.transientErrorStrRes
         .filterNotNull()
-        .filter { isConnectedToInternet.value } // suppress transient errors when offline.
+        .filter { isConnectedToInternet } // suppress transient errors when offline.
         .collect { causeStrRes ->
           val msg = getString(R.string.library_load_error, getString(causeStrRes))
           showErrorSnackbar(msg.normalizeSpace())
@@ -174,47 +176,71 @@ class LibraryFragment : Fragment() {
 
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
-//          val name = getInputText()
-//          val preset = Preset.from(name, players.values)
-//          presetRepository.create(preset)
-//          binding.savePresetButton.hide()
-//          showSuccessSnackbar(R.string.preset_saved)
-//          playbackController.requestUpdateEvent()
-//
-//          params.putBoolean("success", true)
-//          analyticsProvider.logEvent("preset_name", bundleOf("item_length" to name.length))
-//          val soundCount = preset.playerStates.size
-//          analyticsProvider.logEvent("preset_sounds", bundleOf("items_count" to soundCount))
-//          // maybe show in-app review dialog to the user
-//          reviewFlowProvider.maybeAskForReview(requireActivity())
+          val name = getInputText()
+          val playerStates = viewModel.playerStates.value
+          presetRepository.create(Preset(name, playerStates))
+          binding.savePresetButton.hide()
+          showSuccessSnackbar(R.string.preset_saved)
+          params.putBoolean("success", true)
+          analyticsProvider.logEvent("preset_name", bundleOf("item_length" to name.length))
+          val soundCount = playerStates.size
+          analyticsProvider.logEvent("preset_sounds", bundleOf("items_count" to soundCount))
+          // maybe show in-app review dialog to the user
+          reviewFlowProvider.maybeAskForReview(requireActivity())
         }
 
         onDismiss { analyticsProvider.logEvent("preset_create", params) }
       }
     }
 
-    eventBus.register(this)
     analyticsProvider.setCurrentScreen("library", LibraryFragment::class)
   }
 
-  override fun onDestroyView() {
-    eventBus.unregister(this)
-    super.onDestroyView()
+  override fun onSoundInfoClicked(sound: Sound) {
+    val args = LibrarySoundInfoFragmentArgs(sound)
+    navController.navigate(R.id.library_sound_info, args.toBundle())
+  }
+
+  override fun onSoundPlayClicked(sound: Sound) {
+    playbackController.play(sound.id)
+  }
+
+  override fun onSoundStopClicked(sound: Sound) {
+    playbackController.stop(sound.id)
+  }
+
+  override fun onSoundVolumeClicked(sound: Sound, currentVolume: Int) {
+    DialogFragment.show(childFragmentManager) {
+// TODO:     title(sound.name)
+      message(R.string.volume)
+      slider(
+        viewID = R.id.volume_slider,
+        to = PlaybackController.MAX_SOUND_VOLUME.toFloat(),
+        value = currentVolume.toFloat(),
+        labelFormatter = { "${(it * 100).toInt() / PlaybackController.MAX_SOUND_VOLUME}%" },
+        changeListener = { playbackController.setVolume(sound.id, it.toInt()) }
+      )
+
+      positiveButton(R.string.okay)
+    }
   }
 }
 
 @HiltViewModel
 class LibraryViewModel @Inject constructor(
   private val soundRepository: SoundRepository,
+  private val presetRepository: PresetRepository,
 ) : ViewModel() {
 
   private val soundsResource = MutableSharedFlow<Resource<List<Sound>>>()
+  private val playerManagerState = soundRepository.getPlayerManagerState()
+  internal val playerStates = soundRepository.getPlayerStates()
 
   val isLoading: StateFlow<Boolean> = soundsResource.transform { r ->
     emit(r is Resource.Loading)
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
-  internal val libraryDataSet: StateFlow<List<LibraryListItem>> = soundsResource.transform { r ->
+  internal val libraryItems: StateFlow<List<LibraryListItem>> = soundsResource.transform { r ->
     var lastGroupId: String? = null
     val dataSet = mutableListOf<LibraryListItem>()
     r.data
@@ -222,10 +248,10 @@ class LibraryViewModel @Inject constructor(
       ?.forEach { sound ->
         if (lastGroupId != sound.group.id) {
           lastGroupId = sound.group.id
-          dataSet.add(LibraryListItem(R.layout.library_sound_group_list_item, sound.group))
+          dataSet.add(LibraryListItem(R.layout.library_sound_group_list_item, group = sound.group))
         }
 
-        dataSet.add(LibraryListItem(R.layout.library_sound_list_item, sound))
+        dataSet.add(LibraryListItem(R.layout.library_sound_list_item, sound = sound))
       }
 
     emit(dataSet)
@@ -251,6 +277,12 @@ class LibraryViewModel @Inject constructor(
     )
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+  internal val isSavePresetButtonVisible: StateFlow<Boolean> =
+    combine(playerManagerState, playerStates) { playerManagerState, playerStates ->
+      playerManagerState != PlaybackState.STOPPED
+        && presetRepository.list().none { it.hasMatchingPlayerStates(playerStates) }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
   init {
     loadLibrary()
   }
@@ -264,134 +296,14 @@ class LibraryViewModel @Inject constructor(
   }
 }
 
-data class LibraryListItem(@LayoutRes val layoutID: Int, val data: Any)
-
-abstract class LibraryListItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-  abstract fun bind(data: Any)
-}
-
-class SoundGroupViewHolder(
-  private val binding: LibrarySoundGroupListItemBinding,
-) : LibraryListItemViewHolder(binding.root) {
-
-  override fun bind(data: Any) {
-    val group = data as SoundGroup
-    binding.root.text = group.name
-  }
-}
-
-class SoundViewHolder(
-  private val binding: LibrarySoundListItemBinding,
-  private val settingsRepository: SettingsRepository,
-  navController: NavController,
-) : LibraryListItemViewHolder(binding.root) {
-
-  private lateinit var soundId: String
-
-  init {
-    binding.info.setOnClickListener {
-      val args = LibrarySoundInfoFragmentArgs(it.tag as Sound)
-      navController.navigate(R.id.library_sound_info, args.toBundle())
-    }
-  }
-
-//  init {
-//    binding.root.setOnClickListener {
-//      dataSet.getOrNull(bindingAdapterPosition)?.also {
-//        if (players.containsKey(it.data)) {
-//          playbackController.stop(it.data)
-//        } else {
-//          playbackController.play(it.data)
-//        }
-//      }
-//    }
-//
-//    binding.volumeButton.setOnClickListener { showSoundControlDialog() }
-//    binding.timePeriodButton.setOnClickListener { showSoundControlDialog() }
-//  }
-//
-//  private fun showSoundControlDialog() {
-//    val listItem = dataSet.getOrNull(bindingAdapterPosition) ?: return
-//    val player = players[listItem.data] ?: return
-//    val sound = Sound.get(listItem.data)
-//
-//    DialogFragment.show(childFragmentManager) {
-//      title(sound.titleResID)
-//      message(R.string.volume)
-//      slider(
-//        viewID = R.id.volume_slider,
-//        to = Player.MAX_VOLUME.toFloat(),
-//        value = player.volume.toFloat(),
-//        labelFormatter = { "${(it * 100).toInt() / Player.MAX_VOLUME}%" },
-//        changeListener = { player.setVolume(it.toInt()) }
-//      )
-//
-//      if (!sound.isLooping) {
-//        message(R.string.repeat_time_period)
-//        slider(
-//          viewID = R.id.time_period_slider,
-//          from = Player.MIN_TIME_PERIOD.toFloat(),
-//          to = Player.MAX_TIME_PERIOD.toFloat(),
-//          value = player.timePeriod.toFloat(),
-//          labelFormatter = { "${it.toInt() / 60}m ${it.toInt() % 60}s" },
-//          changeListener = { player.timePeriod = it.toInt() }
-//        )
-//      }
-//
-//      positiveButton(R.string.okay)
-//      onDismiss { playbackController.requestUpdateEvent() }
-//    }
-//
-//    analyticsProvider.logEvent("sound_controls_open", bundleOf("sound_key" to listItem.data))
-//  }
-
-  override fun bind(data: Any) {
-    val sound = data as Sound
-    soundId = sound.id
-    binding.title.text = sound.name
-    binding.icon.isVisible = settingsRepository.shouldDisplaySoundIcons()
-    if (settingsRepository.shouldDisplaySoundIcons()) {
-      binding.icon.post {
-        val icon = SVG.getFromString(sound.iconSvg)
-        icon.documentPreserveAspectRatio = PreserveAspectRatio.END
-        icon.documentWidth = binding.icon.width.toFloat()
-        icon.documentHeight = binding.icon.height.toFloat()
-        val color = ContextCompat.getColor(binding.icon.context, R.color.background_darker)
-        binding.icon.setSVG(icon, "svg { fill: #${Integer.toHexString(color and 0x00ffffff)} }")
-      }
-    }
-
-    binding.info.tag = sound
-//    binding.play.setIconResource(
-//      if (sound.isPlaying) {
-//        R.drawable.ic_pause_24dp
-//      } else {
-//        R.drawable.ic_play_arrow_24dp
-//      }
-//    )
-//
-//    @SuppressLint("SetTextI18n")
-//    binding.volume.text = "${(sound.volume * 100) / Player.MAX_VOLUME}%"
-//    binding.volume.isEnabled = sound.isPlaying
-//
-//    @SuppressLint("SetTextI18n")
-//    binding.timePeriod.text = "${sound.timePeriod / 60}m ${sound.timePeriod % 60}s"
-//    binding.timePeriod.isEnabled = sound.isPlaying
-  }
-}
-
 class LibraryListAdapter(
   private val layoutInflater: LayoutInflater,
-  private val settingsRepository: SettingsRepository,
-  private val navController: NavController,
+  private val itemController: LibraryListItemController,
 ) : RecyclerView.Adapter<LibraryListItemViewHolder>() {
 
-  var dataSet: List<LibraryListItem> = emptyList()
-    set(value) {
-      val diff = DiffUtil.calculateDiff(LibraryListDiffCallback(field, value))
-      field = value
-      diff.dispatchUpdatesTo(this)
-    }
+  private val libraryItems = mutableListOf<LibraryListItem>()
+  private val playerStates = mutableMapOf<String, PlayerState>()
+  private var isIconsEnabled = false
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryListItemViewHolder {
     return when (viewType) {
@@ -402,7 +314,7 @@ class LibraryListAdapter(
 
       R.layout.library_sound_list_item -> {
         val binding = LibrarySoundListItemBinding.inflate(layoutInflater, parent, false)
-        SoundViewHolder(binding, settingsRepository, navController)
+        SoundViewHolder(binding, itemController)
       }
 
       else -> throw IllegalArgumentException("unknown view type: $viewType")
@@ -410,39 +322,165 @@ class LibraryListAdapter(
   }
 
   override fun getItemCount(): Int {
-    return dataSet.size
+    return libraryItems.size
   }
 
   override fun getItemViewType(position: Int): Int {
-    return dataSet[position].layoutID
+    return libraryItems[position].layoutId
   }
 
   override fun onBindViewHolder(holder: LibraryListItemViewHolder, position: Int) {
-    holder.bind(dataSet[position].data)
+    holder.bind(libraryItems[position], isIconsEnabled)
+  }
+
+  fun setIconsEnabled(enabled: Boolean) {
+    if (isIconsEnabled == enabled) {
+      return
+    }
+
+    isIconsEnabled = enabled
+    notifyItemRangeChanged(0, libraryItems.size)
+  }
+
+  fun setLibraryItems(items: List<LibraryListItem>) {
+    if (libraryItems.isNotEmpty()) {
+      val removedCount = libraryItems.size
+      libraryItems.clear()
+      notifyItemRangeRemoved(0, removedCount)
+    }
+
+    libraryItems.addAll(items)
+    notifyItemRangeInserted(0, items.size)
+    applyPlayerStates()
+  }
+
+  fun setPlayerStates(states: Array<PlayerState>) {
+    playerStates.clear()
+    states.forEach { playerStates[it.soundId] = it }
+    applyPlayerStates()
+  }
+
+  private fun applyPlayerStates() {
+    libraryItems.forEachIndexed { i, item ->
+      val newState = playerStates[item.sound?.id]
+      // explicitly compare PlaybackState since PlayerState doesn't consider it in equality checks.
+      if (item.playerState != newState || item.playerState?.playbackState != newState?.playbackState) {
+        libraryItems[i] = item.copy(playerState = playerStates[item.sound?.id])
+        notifyItemChanged(i)
+      }
+    }
   }
 }
 
-private class LibraryListDiffCallback(
-  private val old: List<LibraryListItem>,
-  private val new: List<LibraryListItem>,
-) : DiffUtil.Callback() {
+abstract class LibraryListItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-  override fun getOldListSize(): Int = old.size
-  override fun getNewListSize(): Int = new.size
+  fun bind(item: LibraryListItem, isIconsEnabled: Boolean) {
+    if (item.group != null) {
+      bind(item.group)
+    }
 
-  override fun areItemsTheSame(oldPos: Int, newPos: Int): Boolean {
-    val oldData = old[oldPos].data
-    val newData = new[newPos].data
-    return when {
-      oldData is Sound && newData is Sound -> oldData.id == newData.id
-      oldData is SoundGroup && newData is SoundGroup -> oldData.id == newData.id
-      else -> false
+    if (item.sound != null) {
+      bind(item.sound, item.playerState, isIconsEnabled)
     }
   }
 
-  override fun areContentsTheSame(oldPos: Int, newPos: Int): Boolean {
-    val oldData = old[oldPos].data
-    val newData = old[newPos].data
-    return oldData == newData
+  abstract fun bind(soundGroup: SoundGroup)
+  abstract fun bind(sound: Sound, playerState: PlayerState?, isIconsEnabled: Boolean)
+}
+
+class SoundGroupViewHolder(
+  private val binding: LibrarySoundGroupListItemBinding,
+) : LibraryListItemViewHolder(binding.root) {
+
+  override fun bind(soundGroup: SoundGroup) {
+    binding.root.text = soundGroup.name
+  }
+
+  override fun bind(sound: Sound, playerState: PlayerState?, isIconsEnabled: Boolean) {
+    throw UnsupportedOperationException()
   }
 }
+
+class SoundViewHolder(
+  private val binding: LibrarySoundListItemBinding,
+  private val controller: LibraryListItemController,
+) : LibraryListItemViewHolder(binding.root) {
+
+  private lateinit var sound: Sound
+  private var playerState: PlayerState? = null
+
+  init {
+    binding.info.setOnClickListener { controller.onSoundInfoClicked(sound) }
+    binding.play.setOnClickListener {
+      if (playerState.isStopped) {
+        controller.onSoundPlayClicked(sound)
+      } else {
+        controller.onSoundStopClicked(sound)
+      }
+    }
+
+    binding.volume.setOnClickListener {
+      val currentVolume = playerState?.volume ?: PlaybackController.DEFAULT_SOUND_VOLUME
+      controller.onSoundVolumeClicked(sound, currentVolume)
+    }
+  }
+
+  override fun bind(soundGroup: SoundGroup) {
+    throw UnsupportedOperationException()
+  }
+
+  override fun bind(sound: Sound, playerState: PlayerState?, isIconsEnabled: Boolean) {
+    this.sound = sound
+    this.playerState = playerState
+
+    binding.bufferingIndicator.isVisible = playerState?.playbackState == PlaybackState.BUFFERING
+    binding.title.text = sound.name
+    binding.icon.isVisible = isIconsEnabled
+    if (isIconsEnabled) {
+      binding.icon.post {
+        val icon = SVG.getFromString(sound.iconSvg)
+        icon.documentPreserveAspectRatio = PreserveAspectRatio.END
+        icon.documentWidth = binding.icon.width.toFloat()
+        icon.documentHeight = binding.icon.height.toFloat()
+        val color = ContextCompat.getColor(binding.icon.context, R.color.background_darker)
+        binding.icon.setSVG(icon, "svg { fill: #${Integer.toHexString(color and 0x00ffffff)} }")
+      }
+    }
+
+    val isStopped = playerState.isStopped
+    binding.play.setIconResource(
+      if (isStopped) {
+        R.drawable.ic_baseline_play_arrow_24
+      } else {
+        R.drawable.ic_baseline_stop_24
+      }
+    )
+
+    val volume = playerState?.volume ?: PlaybackController.DEFAULT_SOUND_VOLUME
+    @SuppressLint("SetTextI18n")
+    binding.volume.text = "${(volume * 100) / PlaybackController.MAX_SOUND_VOLUME}%"
+    binding.volume.isEnabled = !isStopped
+  }
+
+  private val PlayerState?.isStopped: Boolean
+    get() = this?.playbackState?.oneOf(
+      PlaybackState.IDLE,
+      PlaybackState.STOPPING,
+      PlaybackState.STOPPED,
+      PlaybackState.FAILED
+    ) ?: true
+}
+
+interface LibraryListItemController {
+  fun onSoundInfoClicked(sound: Sound)
+  fun onSoundPlayClicked(sound: Sound)
+  fun onSoundStopClicked(sound: Sound)
+  fun onSoundVolumeClicked(sound: Sound, currentVolume: Int)
+}
+
+data class LibraryListItem(
+  @LayoutRes val layoutId: Int,
+  val group: SoundGroup? = null,
+  val sound: Sound? = null,
+  val playerState: PlayerState? = null,
+)

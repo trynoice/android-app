@@ -9,6 +9,7 @@ import java.io.Serializable
  * @param segmentsBasePath The path relative to the library manifest where individual segment clips
  * are accessible at `${segmentsBasePath}/${sound.id}/${segment.name}.m3u8`.
  * @param groups A list of groups for categorising sounds.
+ * @param tags A list of tags for declaring keywords related to sounds.
  * @param sounds A list of available sounds in the library.
  */
 data class LibraryManifest(
@@ -18,6 +19,9 @@ data class LibraryManifest(
 
   @Expose
   val groups: List<SoundGroup>,
+
+  @Expose
+  val tags: List<SoundTag>,
 
   @Expose
   val sounds: List<Sound>,
@@ -39,6 +43,21 @@ data class SoundGroup(
 ) : Serializable
 
 /**
+ * An entity describing a keyword for sounds.
+ *
+ * @param id A unique stable snake-cased identifier for a tag.
+ * @param name A user-presentable name for this tag.
+ */
+data class SoundTag(
+
+  @Expose
+  val id: String,
+
+  @Expose
+  val name: String,
+) : Serializable
+
+/**
  * An entity describing various attributes of a sound.
  *
  * @param id A unique stable snake-cased identifier for a sound.
@@ -50,6 +69,7 @@ data class SoundGroup(
  * range to add after each segment. Moreover, sounds are considered as contiguous if `maxSilence` is
  * set to 0.
  * @param segments A list of segments for this sound.
+ * @param tags IDs of existing [SoundTag]s that associate with this sound.
  * @param sources A list of details attributing original clip sources, author and license.
  */
 data class Sound(
@@ -71,6 +91,9 @@ data class Sound(
 
   @Expose
   val segments: List<SoundSegment>,
+
+  @Expose
+  val tags: List<String>,
 
   @Expose
   val sources: List<SoundSource>,

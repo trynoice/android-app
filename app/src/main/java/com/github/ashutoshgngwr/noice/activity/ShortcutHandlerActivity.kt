@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,16 +39,17 @@ class ShortcutHandlerActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
 
     val params = bundleOf()
-    intent.getStringExtra(EXTRA_PRESET_ID)?.also {
+    intent.getStringExtra(EXTRA_PRESET_ID)?.also { presetId ->
       // id is passed with the intent. For app version <= 0.15.0, preset id was treated as shortcut
       // id. Hence, using preset id as fallback in cases where shortcut id is null.
-      reportShortcutUsage(intent.getStringExtra(EXTRA_SHORTCUT_ID) ?: it)
+      reportShortcutUsage(intent.getStringExtra(EXTRA_SHORTCUT_ID) ?: presetId)
 
-      if (presetRepository.get(it) == null) {
+      val preset = presetRepository.get(presetId)
+      if (preset == null) {
         Toast.makeText(this, R.string.preset_does_not_exist, Toast.LENGTH_LONG).show()
         params.putBoolean("success", false)
       } else {
-        playbackController.playPreset(it)
+        playbackController.play(preset)
         params.putBoolean("success", true)
       }
     }

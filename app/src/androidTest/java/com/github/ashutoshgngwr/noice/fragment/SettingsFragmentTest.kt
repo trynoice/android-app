@@ -59,7 +59,7 @@ class SettingsFragmentTest {
   @Test
   fun testExportPresets() {
     val exportData = "test-preset-data"
-    every { mockPresetRepository.writeTo(any()) } answers {
+    every { mockPresetRepository.exportTo(any()) } answers {
       firstArg<OutputStream>().write(exportData.toByteArray())
     }
 
@@ -81,7 +81,7 @@ class SettingsFragmentTest {
   @Test
   fun testImportPresets() {
     val importData = "test-preset-data"
-    every { mockPresetRepository.readFrom(any()) } answers {
+    every { mockPresetRepository.importFrom(any()) } answers {
       assertEquals(importData, firstArg<InputStream>().readBytes().decodeToString())
     }
 
@@ -94,7 +94,7 @@ class SettingsFragmentTest {
     try {
       file.writeText(importData)
       fragmentScenario.onFragment { it.onOpenDocumentResult(Uri.fromFile(file)) }
-      verify(exactly = 1) { mockPresetRepository.readFrom(any()) }
+      verify(exactly = 1) { mockPresetRepository.importFrom(any()) }
     } finally {
       file.delete()
     }

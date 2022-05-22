@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.Menu
 import androidx.annotation.StringRes
 import androidx.media.VolumeProviderCompat
-import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
 
 /**
  * [CastApiProvider] is an abstract declaration of the non-free Google Cast APIs that are used in the app.
@@ -21,7 +20,8 @@ interface CastApiProvider {
   /**
    * Returns a [PlaybackStrategyFactory] that plays media on a cast device.
    */
-  fun getPlaybackStrategyFactory(context: Context): PlaybackStrategyFactory
+  // TODO:
+//  fun getPlaybackStrategyFactory(context: Context): PlaybackStrategyFactory
 
   /**
    * Returns a [VolumeProviderCompat] that controls volume of the cast device.
@@ -60,9 +60,9 @@ interface CastApiProvider {
  */
 object DummyCastApiProvider : CastApiProvider {
 
-  override fun getPlaybackStrategyFactory(context: Context): PlaybackStrategyFactory {
-    throw IllegalStateException("getPlaybackStrategyFactory() must not be invoked on DummyCastApiProvider")
-  }
+//  override fun getPlaybackStrategyFactory(context: Context): PlaybackStrategyFactory {
+//    throw IllegalStateException("getPlaybackStrategyFactory() must not be invoked on DummyCastApiProvider")
+//  }
 
   override fun getVolumeProvider(): VolumeProviderCompat {
     throw IllegalStateException("getVolumeProvider() must not be invoked on DummyCastApiProvider")

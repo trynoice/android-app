@@ -6,14 +6,12 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.ext.keysFlow
+import com.github.ashutoshgngwr.noice.ext.keyFlow
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.time.Duration
@@ -128,6 +126,14 @@ class SettingsRepository @Inject constructor(
   }
 
   /**
+   * Returns a [Flow] for key [R.string.should_display_sound_icons_key] that listens for changes and
+   * emits its latest value.
+   */
+  fun shouldDisplaySoundIconsAsFlow(): Flow<Boolean> {
+    return keyFlow(R.string.should_display_sound_icons_key).map { shouldDisplaySoundIcons() }
+  }
+
+  /**
    * Enables/disables the data collection preferences on the [AnalyticsProvider] and the
    * [CrashlyticsProvider]. Both providers persist these settings across app sessions, so there's no
    * need to handle their persistence.
@@ -177,10 +183,7 @@ class SettingsRepository @Inject constructor(
   }
 
   private fun keyFlow(@StringRes keyStrRes: Int): Flow<String> {
-    val key = context.getString(keyStrRes)
-    return prefs.keysFlow()
-      .filter { it == key }
-      .onStart { emit(key) } // immediately emit a change as soon as the flow collection starts.
+    return prefs.keyFlow(context.getString(keyStrRes))
   }
 
   companion object {
