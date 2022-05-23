@@ -453,7 +453,6 @@ class SoundViewHolder(
       PlaybackState.IDLE,
       PlaybackState.STOPPING,
       PlaybackState.STOPPED,
-      PlaybackState.FAILED
     ) ?: true
 }
 
