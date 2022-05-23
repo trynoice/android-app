@@ -5,20 +5,23 @@ import android.net.Uri
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.ext.keyFlow
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
-import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.repository.PresetRepository.Companion.PREFERENCE_KEY
 import com.github.ashutoshgngwr.noice.repository.errors.DuplicatePresetError
+import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.repository.errors.PresetNotFoundError
 import com.google.gson.Gson
 import com.google.gson.JsonIOException
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
+import com.trynoice.api.client.models.SoundTag
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.transform
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.OutputStream
@@ -26,6 +29,7 @@ import java.io.OutputStreamWriter
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.random.Random
 
 /**
  * [PresetRepository] implements the data access layer for [Preset]. It stores all its data in a
@@ -34,6 +38,7 @@ import javax.inject.Singleton
 @Singleton
 class PresetRepository @Inject constructor(
   @ApplicationContext context: Context,
+  private val soundRepository: SoundRepository,
   private val gson: Gson,
 ) {
 
@@ -100,23 +105,33 @@ class PresetRepository @Inject constructor(
   }
 
   /**
-   * [random] generates a nameless random preset using the provided sound [tag] and [intensity].
-   * If sound [tag] is null, full library is considered for randomly selecting sounds for the
-   * preset. If it is non-null, only sounds containing the provided tag are considered.
-   * [intensity] is a [IntRange] that hints the lower and upper bounds for the number of sounds
-   * present in the generated preset. A number is chosen randomly in this range.
+   * Returns a [Flow] that emits a generated preset based on given [tags] and [soundCount].
+   *
+   * On failures, the flow emits [Resource.Failure] with:
+   * - [NetworkError] on network errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
    */
-  fun random(tag: Sound.Tag?, intensity: IntRange): Preset {
-    // TODO: fix
-//    val library = Sound.filterLibraryByTag(tag).shuffled()
-//    val playerStates = mutableListOf<Preset.PlaybackState>()
-//    for (i in 0 until Random.nextInt(intensity)) {
-//      val volume = 1 + Random.nextInt(0, Player.MAX_VOLUME)
-//      val timePeriod = Random.nextInt(Player.MIN_TIME_PERIOD, Player.MAX_TIME_PERIOD + 1)
-//      playerStates.add(Preset.PlaybackState(library[i], volume, timePeriod))
-//    }
-
-    return Preset(UUID.randomUUID().toString(), "", emptyArray())
+  fun generate(tags: Set<SoundTag>, soundCount: Int): Flow<Resource<Preset>> {
+    return soundRepository.list().transform { r ->
+      emit(
+        when {
+          r is Resource.Loading -> Resource.Loading(null)
+          r.data != null -> {
+            r.data.sortedByDescending { it.tags.intersect(tags).size }
+              .take(soundCount * 2)
+              .shuffled()
+              .take(soundCount)
+              .map { PlayerState(it.id, Random.nextInt(8, PlaybackController.MAX_SOUND_VOLUME)) }
+              .toTypedArray()
+              .let { Preset("", it) }
+              .let { Resource.Success(it) }
+          }
+          else -> Resource.Failure(r.error ?: Exception())
+        }
+      )
+    }
   }
 
   /**

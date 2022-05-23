@@ -79,7 +79,6 @@
     <string name="okay">OK</string>
     <string name="mood">Tunnetila</string>
     <string name="light">Kevyt</string>
-    <string name="random_preset_description">Luodut satunnaiset esiasetukset sisältävät valittua tunnetilaa vastaavia ääniä. Lisäksi tiivis esiasetus yrittää soittaa useampia ääniä samanaikaisesti.</string>
     <string name="intensity">Intensiteetti</string>
     <string name="focus">Keskittynyt</string>
     <string name="dense">Tiivis</string>

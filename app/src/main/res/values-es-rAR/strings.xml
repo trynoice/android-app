@@ -46,7 +46,6 @@
     <string name="mood">Estado de ánimo</string>
     <string name="focus">Concentrado</string>
     <string name="intensity">Intensidad</string>
-    <string name="random_preset_description">Los preajustes generados aleatoriamente contendrán sonidos correspondientes al estado de ánimo elegido. Además, los preajustes densos intentarán reproducir simultáneamente más sonidos.</string>
     <string name="random_preset">Preajuste aleatorio</string>
     <string name="preset_already_exists">¡Ya existe un preajuste con ese nombre!</string>
     <string name="okay">De acuerdo</string>

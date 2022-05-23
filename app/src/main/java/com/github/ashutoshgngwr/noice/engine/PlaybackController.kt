@@ -153,12 +153,13 @@ class PlaybackController @Inject constructor(@ApplicationContext private val con
     }
 
     /**
-     * Returns a [PendingIntent] that issues a command to the [PlaybackService] to play a random
-     * preset.
+     * Returns a [PendingIntent] that issues a command to the [PlaybackService] to generate and play
+     * a random preset.
      */
     fun buildRandomPresetActionPendingIntent(context: Context): PendingIntent {
-      // TODO: implement this
-      return buildPendingIntent(context, 0x3D) { action = PlaybackService.ACTION_STOP }
+      return buildPendingIntent(context, 0x3D) {
+        action = PlaybackService.ACTION_PLAY_RANDOM_PRESET
+      }
     }
 
     /**

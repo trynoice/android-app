@@ -28,9 +28,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.random.Random
 
 @AndroidEntryPoint
 class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
@@ -254,6 +256,16 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
 
         skipPreset(skipDir)
       }
+
+      ACTION_PLAY_RANDOM_PRESET -> {
+        lifecycleScope.launch {
+          presetRepository.generate(emptySet(), Random.nextInt(2, 6))
+            .flowOn(Dispatchers.IO)
+            .last()
+            .data
+            ?.also { playerManager.play(it) }
+        }
+      }
     }
 
     return super.onStartCommand(intent, flags, startId)
@@ -332,6 +344,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     internal const val ACTION_SET_AUDIO_USAGE = "setAudioUsage"
     internal const val ACTION_SKIP_PRESET = "skipPreset"
     internal const val ACTION_SET_SOUND_VOLUME = "setSoundVolume"
+    internal const val ACTION_PLAY_RANDOM_PRESET = "playRandomPreset"
 
     internal const val INTENT_EXTRA_SOUND_ID = "soundId"
     internal const val INTENT_EXTRA_PRESET = "preset"

@@ -89,7 +89,6 @@
     <string name="app_theme_system_default">系统默认</string>
     <string name="app_theme_dark">深色</string>
     <string name="app_theme_light">浅色</string>
-    <string name="random_preset_description">随机生成的预设将包含与所选情绪相对应的声音。此外，密集预设还会尝试引入更多声音同时播放。</string>
     <string name="app_shortcut_created">预设已被添加到应用快捷方式中!</string>
     <string name="app_shortcut_removed">预设已从应用快捷方式中删除！</string>
     <string name="remove_from_app_shortcuts">从应用快捷方式中删除</string>

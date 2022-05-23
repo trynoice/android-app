@@ -101,7 +101,6 @@
     <string name="add_to_home_screen">Añadir a la pantalla de inicio</string>
     <string name="okay">Vale</string>
     <string name="pinned_shortcuts_not_supported">Su aplicación de inicio predeterminada no admite añadir accesos directos.</string>
-    <string name="random_preset_description">Los preajustes generados aleatoriamente contendrán sonidos correspondientes al ambiente elegido. Además, los preajustes densos intentarán reproducir más sonidos simultáneamente.</string>
     <string name="app_authors">Ver la lista de los autores de Noice</string>
     <string name="appearance">Apariencia</string>
     <string name="presets_as_home_screen">\"Preajustes\" como pantalla de inicio</string>

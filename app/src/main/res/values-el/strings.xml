@@ -58,7 +58,6 @@
     <string name="okay">Εντάξει</string>
     <string name="mood">Διάθεση</string>
     <string name="light">Ελαφριά</string>
-    <string name="random_preset_description">Οι παραγόμενες τυχαίες συνθέσεις θα περιέχουν ήχους που αντιστοιχούν στην επιλεχθείσα διάθεση. Επιπλέον, οι ισχυρές συνθέσεις θα προσπαθήσουν να αναπαράξουν περισσότερους ήχους ταυτόχρονα.</string>
     <string name="intensity">Ένταση</string>
     <string name="focus">Συγκέντρωση</string>
     <string name="dense">Ισχυρή</string>

@@ -94,7 +94,6 @@
     <string name="add_to_home_screen">Додати на головний екран</string>
     <string name="relax">Розслаблений</string>
     <string name="mood">Настрій</string>
-    <string name="random_preset_description">Згенеровані випадкові поєднання міститимуть звуки, що відповідають вибраному настрою. Крім того, насичені поєднання намагатимуться відтворювати більше звуків одночасно.</string>
     <string name="intensity">Насиченість</string>
     <string name="focus">Зосереджений</string>
     <string name="dense">Насичена</string>

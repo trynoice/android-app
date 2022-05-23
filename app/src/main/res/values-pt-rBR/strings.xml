@@ -119,7 +119,6 @@
     <string name="random_preset">Predefinição aleatória</string>
     <string name="mood">Atmosfera</string>
     <string name="light">Leve</string>
-    <string name="random_preset_description">Predefinições geradas aleatoriamente conterão sons correspondendo à atmosfera selecionada. Além disso, pré-definições densas tentarão reproduzir mais sons simultaneamente.</string>
     <string name="intensity">Intensidade</string>
     <string name="focus">Foco</string>
     <string name="dense">Denso</string>

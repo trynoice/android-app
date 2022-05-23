@@ -9,7 +9,6 @@
     <string name="okay">OK</string>
     <string name="mood">Atmosfera</string>
     <string name="light">Ligeiro</string>
-    <string name="random_preset_description">As misturas de sons geradas de forma aleatória irão conter sons correspondentes à atmosfera escolhida. Além disso, as misturas de sons densas tentarão reproduzir mais sons em simultâneo.</string>
     <string name="intensity">Intensidade</string>
     <string name="focus">Foco</string>
     <string name="dense">Denso</string>

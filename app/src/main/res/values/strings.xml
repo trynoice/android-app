@@ -15,7 +15,7 @@
     <string name="dense">Dense</string>
     <string name="focus">Focus</string>
     <string name="intensity">Intensity</string>
-    <string name="random_preset_description">Generated random presets will contain sounds corresponding to the chosen mood. Moreover, dense presets will attempt to play more sounds simultaneously.</string>
+    <string name="random_preset_description">Generated random presets is likely to contain sounds with chosen keywords. Moreover, intense presets will attempt to play more sounds simultaneously.</string>
     <string name="light">Light</string>
     <string name="mood">Mood</string>
     <string name="okay">Okay</string>
@@ -289,4 +289,8 @@
     <string name="pausing">Pausing</string>
     <string name="paused">Paused</string>
     <string name="stopping">Stopping</string>
+    <string name="keywords">Keywords</string>
+    <string name="loading">Loading</string>
+    <string name="tags_load_error">Oh no! We couldn\'t load sound keywords. %1$s Please try again!</string>
+    <string name="generate_preset_error">Uh-oh! We failed to generate a preset. %1$s Please try again!</string>
 </resources>
