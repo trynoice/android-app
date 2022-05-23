@@ -4,12 +4,17 @@ import android.util.Log
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
+import kotlin.math.min
 import kotlin.math.pow
 import kotlin.random.Random
 import kotlin.time.Duration
@@ -24,8 +29,18 @@ import kotlin.time.toDuration
  * A [Player] transitions through various [PlaybackState]s during its lifecycle.
  * [PlaybackState.STOPPED] is a terminal state; a [Player] cannot be re-used once it reaches
  * [PlaybackState.STOPPED] state.
+ *
+ * @param soundId id of the sound being played.
+ * @param soundRepository a [SoundRepository] instance for querying sound metadata.
+ * @param externalScope an external coroutine scope to perform long running background tasks.
+ * @param playbackListener a listener for [PlaybackState] and player volume updates.
  */
-abstract class Player protected constructor() {
+abstract class Player protected constructor(
+  private val soundId: String,
+  private val soundRepository: SoundRepository,
+  externalScope: CoroutineScope,
+  private val playbackListener: PlaybackListener,
+) {
 
   /**
    * Audio attributes for playing the audio locally on the host device. A [Player] implementation
@@ -34,24 +49,10 @@ abstract class Player protected constructor() {
   abstract var audioAttributes: AudioAttributesCompat
 
   /**
-   * Id of the sound being played.
+   * An internal coroutine scope created from the supplied external scope to perform long running
+   * background tasks.
    */
-  protected abstract val soundId: String
-
-  /**
-   * [SoundRepository] instance for querying sound metadata.
-   */
-  protected abstract val soundRepository: SoundRepository
-
-  /**
-   * An external coroutine scope to perform long running background tasks.
-   */
-  protected abstract val defaultScope: CoroutineScope
-
-  /**
-   * A listener for [PlaybackState] and player volume updates.
-   */
-  protected abstract val playbackListener: PlaybackListener
+  protected val defaultScope = externalScope + SupervisorJob() + CoroutineName("Player($soundId)")
 
   protected var fadeInDuration = Duration.ZERO; private set
   protected var fadeOutDuration = Duration.ZERO; private set
@@ -61,6 +62,7 @@ abstract class Player protected constructor() {
   private var segments = emptyList<Segment>()
   private var currentSegment: Segment? = null
   private var playbackState = PlaybackState.IDLE
+  private var retryDelayMillis = MIN_RETRY_DELAY_MILLIS
 
   /**
    * Sets fade duration for fading-in sounds when the playback starts.
@@ -95,8 +97,8 @@ abstract class Player protected constructor() {
   fun play() {
     when (playbackState) {
       PlaybackState.STOPPED -> throw IllegalStateException("attempted to re-use a stopped player")
+      PlaybackState.IDLE -> loadSoundMetadata()
       PlaybackState.BUFFERING, PlaybackState.PLAYING -> Unit
-      PlaybackState.FAILED, PlaybackState.IDLE -> loadSoundMetadata()
       else -> playInternal()
     }
   }
@@ -159,6 +161,11 @@ abstract class Player protected constructor() {
 
     playbackState = state
     notifyPlaybackListener()
+
+    // cancel internal scope.
+    if (state == PlaybackState.STOPPED) {
+      defaultScope.cancel()
+    }
   }
 
   /**
@@ -221,6 +228,7 @@ abstract class Player protected constructor() {
 
       if (resource?.data != null) {
         Log.d(LOG_TAG, "loadSoundMetadata: loaded sound metadata")
+        retryDelayMillis = MIN_RETRY_DELAY_MILLIS
         sound = resource.data
         recreateSegmentList()
         if (playbackState == PlaybackState.BUFFERING) {
@@ -228,7 +236,12 @@ abstract class Player protected constructor() {
         }
       } else {
         Log.w(LOG_TAG, "loadSoundMetadata: failed to load sound metadata", resource?.error)
-        setPlaybackState(PlaybackState.FAILED)
+        retryDelayMillis.toDuration(DurationUnit.MILLISECONDS)
+          .also { Log.i(LOG_TAG, "loadSoundMetadata: retrying in $it") }
+
+        delay(retryDelayMillis)
+        retryDelayMillis = min(retryDelayMillis * 2, MAX_RETRY_DELAY_MILLIS)
+        loadSoundMetadata()
       }
     }
   }
@@ -241,13 +254,13 @@ abstract class Player protected constructor() {
   }
 
   private fun notifyPlaybackListener() {
-    defaultScope.launch(Dispatchers.Main) {
-      playbackListener.onPlaybackUpdated(playbackState, volume)
-    }
+    playbackListener.onPlaybackUpdated(playbackState, volume)
   }
 
   companion object {
     private const val LOG_TAG = "Player"
+    private const val MIN_RETRY_DELAY_MILLIS = 1 * 1000L
+    private const val MAX_RETRY_DELAY_MILLIS = 30 * 1000L
     internal const val DEFAULT_VOLUME = 20
     internal const val MAX_VOLUME = 25
   }

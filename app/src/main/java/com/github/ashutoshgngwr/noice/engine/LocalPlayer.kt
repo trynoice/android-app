@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.engine
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import androidx.media.AudioAttributesCompat
@@ -17,6 +18,11 @@ import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.util.EventLogger
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.math.min
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 import com.google.android.exoplayer2.Player as IExoPlayer
 
 /**
@@ -24,13 +30,13 @@ import com.google.android.exoplayer2.Player as IExoPlayer
  */
 class LocalPlayer(
   context: Context,
-  override val soundId: String,
-  override val soundRepository: SoundRepository,
+  soundId: String,
+  soundRepository: SoundRepository,
   mediaSourceFactory: MediaSource.Factory,
   audioAttributes: AudioAttributesCompat,
-  override val defaultScope: CoroutineScope,
-  override val playbackListener: PlaybackListener,
-) : Player(), IExoPlayer.Listener {
+  externalScope: CoroutineScope,
+  playbackListener: PlaybackListener,
+) : Player(soundId, soundRepository, externalScope, playbackListener), IExoPlayer.Listener {
 
   private val trackSelector = DefaultTrackSelector(
     // mixed channel count and mixed sample rate must be enabled because our HLS master playlists
@@ -54,6 +60,7 @@ class LocalPlayer(
     }
 
   private var fadeAnimator: ValueAnimator? = null
+  private var retryDelayMillis = MIN_RETRY_DELAY_MILLIS
 
   init {
     exoPlayer.volume = 0F // muted initially (for the fade-in effect)
@@ -64,6 +71,7 @@ class LocalPlayer(
 
   override fun onIsPlayingChanged(isPlaying: Boolean) {
     if (isPlaying) {
+      retryDelayMillis = MIN_RETRY_DELAY_MILLIS
       setPlaybackState(PlaybackState.PLAYING)
       // fade-in or restore volume whenever player starts after buffering or paused states.
       if (sound?.isContiguous == true) {
@@ -86,20 +94,28 @@ class LocalPlayer(
     // only request next segment for non-contiguous sounds when the current segment has finished
     // playing. Otherwise, the silence period will start before the current segment is over.
     if (playbackState == IExoPlayer.STATE_ENDED && sound?.isContiguous == false) {
+      Log.d(LOG_TAG, "onPlaybackStateChanged: requesting next segment")
+      requestNextSegment()
+    }
+  }
+
+  override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+    // request next segment for contiguous sounds whenever ExoPlayer is playing the last item in its
+    // playlist to ensure gap-less playback.
+    if (sound?.isContiguous == true && !exoPlayer.hasNextMediaItem()) {
+      Log.d(LOG_TAG, "onMediaItemTransition: requesting next segment")
       requestNextSegment()
     }
   }
 
   override fun onPlayerError(error: PlaybackException) {
-    exoPlayer.stop()
-    setPlaybackState(PlaybackState.FAILED)
-  }
+    defaultScope.launch {
+      retryDelayMillis.toDuration(DurationUnit.MILLISECONDS)
+        .also { Log.d(LOG_TAG, "onPlayerError: retrying playback in $it") }
 
-  override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
-    // request next segment for contiguous sounds whenever ExoPlayer is playing the last item in its
-    // playlist.
-    if (sound?.isContiguous == true && !exoPlayer.hasNextMediaItem()) {
-      requestNextSegment()
+      delay(retryDelayMillis)
+      retryDelayMillis = min(retryDelayMillis * 2, MAX_RETRY_DELAY_MILLIS)
+      exoPlayer.prepare()
     }
   }
 
@@ -195,6 +211,12 @@ class LocalPlayer(
       doOnEnd { callback.invoke() }
       start()
     }
+  }
+
+  companion object {
+    private const val LOG_TAG = "LocalPlayer"
+    private const val MIN_RETRY_DELAY_MILLIS = 1 * 1000L
+    private const val MAX_RETRY_DELAY_MILLIS = 30 * 1000L
   }
 
   /**
