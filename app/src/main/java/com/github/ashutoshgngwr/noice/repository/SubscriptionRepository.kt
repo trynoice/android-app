@@ -126,14 +126,12 @@ class SubscriptionRepository @Inject constructor(
    * @see Resource
    */
   fun getActive(): Flow<Resource<Subscription>> = fetchNetworkBoundResource(
-    loadFromCache = { cacheStore.getAs("${SUBSCRIPTION_KEY_PREFIX}/active") },
     loadFromNetwork = {
       apiClient.subscriptions()
         .list(onlyActive = true, stripeReturnUrl = STRIPE_RETURN_URL)
         .firstOrNull()
         ?: throw SubscriptionNotFoundError
     },
-    cacheNetworkResult = { cacheStore.put("${SUBSCRIPTION_KEY_PREFIX}/active", it) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "getActive:", e)
       when {

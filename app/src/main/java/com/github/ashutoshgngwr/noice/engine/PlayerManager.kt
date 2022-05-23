@@ -75,6 +75,10 @@ class PlayerManager(
   }
 
   override fun onAudioFocusLost(transient: Boolean) {
+    if (playbackState.oneOf(PlaybackState.PAUSED, PlaybackState.STOPPED)) {
+      return
+    }
+
     if (transient) {
       pauseIndefinitely(true)
     } else {
@@ -120,9 +124,11 @@ class PlayerManager(
       if (playbackState == PlaybackState.STOPPED) {
         players.remove(soundId)
         _playerStates.remove(soundId)
-        if (players.isEmpty()) {
-          audioFocusManager.abandonFocus()
-        }
+        analyticsProvider.logPlayerStopEvent(soundId)
+      }
+
+      if (players.isEmpty()) { // playback has stopped
+        audioFocusManager.abandonFocus()
       }
 
       notifyPlaybackListener()
@@ -134,10 +140,7 @@ class PlayerManager(
    * No-op if the sound corresponding to the given [soundId] isn't active.
    */
   fun stop(soundId: String) {
-    players[soundId]?.also {
-      it.stop(false)
-      analyticsProvider.logPlayerStopEvent(soundId)
-    }
+    players[soundId]?.stop(false)
   }
 
   /**
@@ -149,7 +152,6 @@ class PlayerManager(
    */
   fun pause(immediate: Boolean = false) {
     pauseIndefinitely(immediate)
-    stopOnIdleJob?.cancel()
     stopOnIdleJob = defaultScope.launch {
       delay(5.minutes)
       stop(true)
@@ -157,6 +159,7 @@ class PlayerManager(
   }
 
   private fun pauseIndefinitely(immediate: Boolean) {
+    stopOnIdleJob?.cancel()
     players.forEach { it.value.pause(immediate) }
   }
 

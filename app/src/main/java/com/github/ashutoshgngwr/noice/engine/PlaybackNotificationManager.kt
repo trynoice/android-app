@@ -46,53 +46,41 @@ class PlaybackNotificationManager(
     setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
   }
 
-  private val randomPresetAction: NotificationCompat.Action by lazy {
-    NotificationCompat.Action(
-      R.drawable.ic_baseline_shuffle_32,
-      context.getString(R.string.random_preset),
-      PlaybackController.buildRandomPresetActionPendingIntent(context)
-    )
-  }
+  private val randomPresetAction = NotificationCompat.Action(
+    R.drawable.ic_baseline_shuffle_32,
+    context.getString(R.string.random_preset),
+    PlaybackController.buildRandomPresetActionPendingIntent(context)
+  )
 
-  private val skipPrevAction: NotificationCompat.Action by lazy {
-    NotificationCompat.Action(
-      R.drawable.ic_baseline_skip_previous_32,
-      context.getString(R.string.skip_to_prev),
-      PlaybackController.buildSkipPrevActionPendingIntent(context)
-    )
-  }
+  private val skipPrevAction = NotificationCompat.Action(
+    R.drawable.ic_baseline_skip_previous_32,
+    context.getString(R.string.skip_to_prev),
+    PlaybackController.buildSkipPrevActionPendingIntent(context)
+  )
 
-  private val skipNextAction: NotificationCompat.Action by lazy {
-    NotificationCompat.Action(
-      R.drawable.ic_baseline_skip_next_32,
-      context.getString(R.string.skip_to_next),
-      PlaybackController.buildSkipNextActionPendingIntent(context)
-    )
-  }
+  private val skipNextAction = NotificationCompat.Action(
+    R.drawable.ic_baseline_skip_next_32,
+    context.getString(R.string.skip_to_next),
+    PlaybackController.buildSkipNextActionPendingIntent(context)
+  )
 
-  private val pauseAction: NotificationCompat.Action by lazy {
-    NotificationCompat.Action(
-      R.drawable.ic_baseline_pause_32,
-      context.getString(R.string.pause),
-      PlaybackController.buildPauseActionPendingIntent(context)
-    )
-  }
+  private val pauseAction = NotificationCompat.Action(
+    R.drawable.ic_baseline_pause_32,
+    context.getString(R.string.pause),
+    PlaybackController.buildPauseActionPendingIntent(context)
+  )
 
-  private val playAction: NotificationCompat.Action by lazy {
-    NotificationCompat.Action(
-      R.drawable.ic_baseline_play_arrow_32,
-      context.getString(R.string.play),
-      PlaybackController.buildResumeActionPendingIntent(context)
-    )
-  }
+  private val playAction = NotificationCompat.Action(
+    R.drawable.ic_baseline_play_arrow_32,
+    context.getString(R.string.play),
+    PlaybackController.buildResumeActionPendingIntent(context)
+  )
 
-  private val closeAction: NotificationCompat.Action by lazy {
-    NotificationCompat.Action(
-      R.drawable.ic_baseline_close_32,
-      context.getString(R.string.stop),
-      PlaybackController.buildStopActionPendingIntent(context)
-    )
-  }
+  private val closeAction = NotificationCompat.Action(
+    R.drawable.ic_baseline_close_32,
+    context.getString(R.string.stop),
+    PlaybackController.buildStopActionPendingIntent(context)
+  )
 
   init {
     initChannel(context)
@@ -114,7 +102,14 @@ class PlaybackNotificationManager(
         addAction(skipPrevAction)
       }
 
-      if (state.oneOf(PlaybackState.PAUSED, PlaybackState.PAUSING, PlaybackState.STOPPING)) {
+      if (
+        state.oneOf(
+          PlaybackState.PAUSED,
+          PlaybackState.PAUSING,
+          PlaybackState.STOPPED,
+          PlaybackState.STOPPING,
+        )
+      ) {
         addAction(playAction)
       } else {
         addAction(pauseAction)
@@ -146,17 +141,14 @@ class PlaybackNotificationManager(
       return
     }
 
-    val channel = NotificationChannel(
-      CHANNEL_ID,
-      context.getString(R.string.notification_channel_default__name),
-      NotificationManager.IMPORTANCE_LOW
-    )
-
-    channel.description = context.getString(R.string.notification_channel_default__description)
-    channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-    channel.setShowBadge(false)
-    NotificationManagerCompat.from(context)
-      .createNotificationChannel(channel)
+    val channelName = context.getString(R.string.notification_channel_default__name)
+    NotificationChannel(CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_LOW)
+      .apply {
+        description = context.getString(R.string.notification_channel_default__description)
+        lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+        setShowBadge(false)
+      }
+      .also { NotificationManagerCompat.from(context).createNotificationChannel(it) }
   }
 
   companion object {
