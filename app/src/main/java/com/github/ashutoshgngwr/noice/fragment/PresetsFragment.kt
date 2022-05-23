@@ -26,6 +26,7 @@ import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.databinding.PresetsFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.PresetsListItemBinding
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
+import com.github.ashutoshgngwr.noice.engine.PlaybackState
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackbar
 import com.github.ashutoshgngwr.noice.model.Preset
@@ -85,11 +86,15 @@ class PresetsFragment : Fragment(), PresetListItemController {
       viewModel.presetListItems.collect(adapter::setItems)
     }
 
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.activePresetId.collect(adapter::setActivePresetId)
+    }
+
     analyticsProvider.setCurrentScreen("presets", PresetsFragment::class)
   }
 
   override fun onPlaybackToggled(item: PresetListItem) {
-    if (viewModel.activePreset.value == item.preset) {
+    if (viewModel.activePresetId.value == item.preset.id) {
       playbackController.stop()
     } else {
       playbackController.play(item.preset)
@@ -116,7 +121,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
       positiveButton(R.string.delete) {
         presetRepository.delete(item.preset.id)
         // then stop playback if recently deleted preset was playing
-        if (viewModel.activePreset.value?.id == item.preset.id) {
+        if (viewModel.activePresetId.value == item.preset.id) {
           playbackController.stop()
         }
 
@@ -230,19 +235,24 @@ class PresetsViewModel @Inject constructor(
   private val presets: StateFlow<List<Preset>> = presetRepository.listFlow()
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
-  internal val activePreset: StateFlow<Preset?> =
-    combine(presets, soundRepository.getPlayerStates()) { presets, states ->
-      presets.find { it.hasMatchingPlayerStates(states) }
+  internal val activePresetId: StateFlow<String?> =
+    combine(presets, soundRepository.getPlayerStates()) { presets, playerStates ->
+      playerStates
+        // exclude stopping and stopped players from active preset
+        .filterNot { it.playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
+        .toTypedArray()
+        .let { s -> presets.find { p -> p.hasMatchingPlayerStates(s) } }
+        ?.id
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   private val appShortcuts = MutableStateFlow(emptyList<ShortcutInfoCompat>())
 
   internal val presetListItems: StateFlow<List<PresetListItem>> =
-    combine(presets, activePreset, appShortcuts) { presets, activePreset, appShortcuts ->
+    combine(presets, appShortcuts) { presets, appShortcuts ->
       val items = mutableListOf<PresetListItem>()
       presets.forEach { preset ->
         val hasAppShortcut = appShortcuts.any { it.id == preset.id }
-        items.add(PresetListItem(preset, activePreset == preset, hasAppShortcut))
+        items.add(PresetListItem(preset, hasAppShortcut))
       }
 
       items
@@ -263,6 +273,7 @@ class PresetListAdapter(
 ) : RecyclerView.Adapter<PresetViewHolder>() {
 
   private val items = mutableListOf<PresetListItem>()
+  private var activePresetId: String? = null
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PresetViewHolder {
     val binding = PresetsListItemBinding.inflate(layoutInflater, parent, false)
@@ -274,7 +285,7 @@ class PresetListAdapter(
   }
 
   override fun onBindViewHolder(holder: PresetViewHolder, position: Int) {
-    holder.bind(items[position])
+    holder.bind(items[position], activePresetId == items[position].preset.id)
   }
 
   fun setItems(items: List<PresetListItem>) {
@@ -288,6 +299,19 @@ class PresetListAdapter(
       notifyItemRangeRemoved(updated, updated - items.size)
     } else {
       notifyItemRangeInserted(updated, items.size - updated)
+    }
+  }
+
+  fun setActivePresetId(id: String?) {
+    val oldActivePos = items.indexOfFirst { it.preset.id == activePresetId }
+    val newActivePos = items.indexOfFirst { it.preset.id == id }
+    activePresetId = id
+    if (oldActivePos > -1) {
+      notifyItemChanged(oldActivePos)
+    }
+
+    if (newActivePos > -1) {
+      notifyItemChanged(newActivePos)
     }
   }
 }
@@ -328,10 +352,10 @@ class PresetViewHolder(
     }
   }
 
-  fun bind(item: PresetListItem) {
+  fun bind(item: PresetListItem, isPlaying: Boolean) {
     this.item = item
     binding.title.text = item.preset.name
-    binding.playButton.isChecked = item.isPlaying
+    binding.playButton.isChecked = isPlaying
   }
 }
 
@@ -347,6 +371,5 @@ interface PresetListItemController {
 
 data class PresetListItem(
   val preset: Preset,
-  val isPlaying: Boolean,
   val hasAppShortcut: Boolean,
 )

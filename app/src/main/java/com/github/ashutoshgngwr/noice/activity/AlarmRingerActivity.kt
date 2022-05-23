@@ -70,6 +70,16 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     setContentView(binding.root)
     showWhenLocked()
     ringerStartTime = System.currentTimeMillis()
+
+    lifecycleScope.launch {
+      soundRepository.getPlayerManagerState()
+        .first { it == PlaybackState.PAUSED }
+
+      playbackController.setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
+      val duration = System.currentTimeMillis() - ringerStartTime
+      analyticsProvider.logEvent("alarm_ringer_session", bundleOf("duration_ms" to duration))
+      finish()
+    }
   }
 
   override fun onNewIntent(intent: Intent?) {
@@ -113,15 +123,6 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     binding.dismissSlider.isVisible = false
     binding.dismissProgress.isVisible = true
     playbackController.pause()
-    lifecycleScope.launch {
-      soundRepository.getPlayerManagerState()
-        .first { it == PlaybackState.PAUSED }
-
-      playbackController.setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
-      val duration = System.currentTimeMillis() - ringerStartTime
-      analyticsProvider.logEvent("alarm_ringer_session", bundleOf("duration_ms" to duration))
-      finish()
-    }
   }
 
   private fun enableImmersiveMode() {

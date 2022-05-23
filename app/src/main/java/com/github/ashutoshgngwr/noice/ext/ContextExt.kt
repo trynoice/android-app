@@ -43,6 +43,10 @@ fun Context.startCustomTab(@StringRes uriStringRes: Int) {
   startCustomTab(getString(uriStringRes))
 }
 
+/**
+ * Returns a [callback flow][callbackFlow] that watches and emits device's internet connectivity
+ * status for as long as it has a collector.
+ */
 fun Context.getInternetConnectivityFlow(): Flow<Boolean> = callbackFlow {
   val connectivityManager = requireNotNull(getSystemService<ConnectivityManager>())
   trySend(
@@ -50,7 +54,6 @@ fun Context.getInternetConnectivityFlow(): Flow<Boolean> = callbackFlow {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
       connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
         ?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-
     } else {
       @Suppress("DEPRECATION")
       connectivityManager.activeNetworkInfo?.isConnectedOrConnecting

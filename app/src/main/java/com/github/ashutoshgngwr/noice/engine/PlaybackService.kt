@@ -28,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -261,8 +261,8 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
         lifecycleScope.launch {
           presetRepository.generate(emptySet(), Random.nextInt(2, 6))
             .flowOn(Dispatchers.IO)
-            .last()
-            .data
+            .lastOrNull()
+            ?.data
             ?.also { playerManager.play(it) }
         }
       }
@@ -290,8 +290,8 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     Log.d(LOG_TAG, "onPlaybackUpdate: managerState=$playerManagerState playerStates=$playerStates")
     val currentPreset = presets.find { it.hasMatchingPlayerStates(playerStates) }
     soundRepository.updatePlaybackStates(playerManagerState, playerStates)
-    mediaSessionManager.setPlaybackState(playerManagerState)
     mediaSessionManager.setPresetTitle(currentPreset?.name)
+    mediaSessionManager.setPlaybackState(playerManagerState)
     if (playerManagerState == PlaybackState.STOPPED) {
       Log.d(LOG_TAG, "onPlaybackUpdate: playback stopped, releasing resources")
       stopForeground(true)

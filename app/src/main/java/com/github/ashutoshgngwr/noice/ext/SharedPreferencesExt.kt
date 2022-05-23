@@ -29,8 +29,8 @@ fun SharedPreferences.keyFlow(key: String): Flow<String> {
 }
 
 /**
- * Returns a [callback Flow][callbackFlow] that emits a key from [this] [SharedPreferences] every
- * time its value changes.
+ * Returns a [callback Flow][callbackFlow] that emits a key from this [SharedPreferences] every time
+ * its value changes.
  */
 private fun SharedPreferences.keysFlow(): Flow<String> = callbackFlow {
   val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key: String? ->

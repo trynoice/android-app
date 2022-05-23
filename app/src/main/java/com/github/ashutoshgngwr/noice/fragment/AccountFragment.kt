@@ -49,7 +49,7 @@ class AccountFragment : Fragment() {
 
   private lateinit var binding: AccountFragmentBinding
   private val viewModel: AccountViewModel by viewModels()
-  private val isConnectedToInternet = MutableStateFlow(false)
+  private var isConnectedToInternet = false
   private val mainNavController by lazy {
     Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
   }
@@ -86,13 +86,13 @@ class AccountFragment : Fragment() {
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
-      requireContext().getInternetConnectivityFlow().collect(isConnectedToInternet)
+      requireContext().getInternetConnectivityFlow().collect { isConnectedToInternet = it }
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.loadErrorStrRes
         .filterNotNull()
-        .filter { isConnectedToInternet.value || viewModel.profile.value == null } // suppress errors when offline.
+        .filter { isConnectedToInternet || viewModel.profile.value == null } // suppress errors when offline.
         .collect { causeStrRes ->
           val msg = getString(R.string.profile_load_error, getString(causeStrRes))
           showErrorSnackbar(msg.normalizeSpace())

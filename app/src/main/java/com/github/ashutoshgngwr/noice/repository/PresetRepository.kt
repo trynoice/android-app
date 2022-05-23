@@ -74,9 +74,7 @@ class PresetRepository @Inject constructor(
   }
 
   /**
-   * Deletes the preset with given id from the storage.
-   *
-   * @return `true` if a preset was deleted, `false` otherwise.
+   * Deletes the preset with given id from the storage. No-op if such a preset doesn't exist.
    */
   fun delete(id: String) = edit { presets ->
     presets.removeAll { it.id == id }
