@@ -33,7 +33,6 @@
     <string name="wake_up_timer">مؤقّت الاستيقاظ</string>
     <string name="sleep_timer">مؤقّت النوم</string>
     <string name="about">حول</string>
-    <string name="random_preset_description">ستحتوي الإعدادات المسبقة العشوائية على أصوات تتوافق مع الحالة المزاجية المختارة. علاوة على ذلك، ستحاول الإعدادات المسبقة الكثيفة تشغيل المزيد من الأصوات في وقت واحد.</string>
     <string name="focus">ركز</string>
     <string name="intensity_any">الكل</string>
     <string name="mood_any">الكل</string>

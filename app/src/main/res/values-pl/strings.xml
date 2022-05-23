@@ -98,7 +98,6 @@
     <string name="preset_does_not_exist">Ustawienie wstępne nie istnieje. Mogło zostać usunięte!</string>
     <string name="random_preset">Losowe ustawienie wstępne</string>
     <string name="mood">Nastrój</string>
-    <string name="random_preset_description">Wygenerowane losowe ustawienia wstępne będą zawierały dźwięki odpowiadające wybranemu nastrojowi. Ponadto zwarte ustawienia wstępne spróbują odtwarzać więcej dźwięków jednocześnie.</string>
     <string name="dense">Gęsty</string>
     <string name="invalid_import_file_format">Format importowanego pliku jest nieprawidłowy!</string>
     <string name="failed_to_read_file">Błąd odczytu wybranego pliku!</string>

@@ -115,7 +115,6 @@
     </plurals>
     <string name="time_bridge">и</string>
     <string name="wake_up_timer_schedule_set" tools:ignore="StringFormatCount">Будильник выключится в %1$s %2$s %3$s</string>
-    <string name="random_preset_description">Сгенерированные случайные пресеты будут содержать звуки, соответствующие выбранному настроению. Более того, плотные пресеты будут пытаться проигрывать больше звуков одновременно.</string>
     <string name="app_authors">Посмотреть список авторов Noice</string>
     <string name="invalid_import_file_format">Неверный формат импортируемого файла!</string>
     <string name="failed_to_read_file">Ошибка чтения выбранного файла!</string>

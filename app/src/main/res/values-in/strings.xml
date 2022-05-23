@@ -113,7 +113,6 @@
     </plurals>
     <string name="time_bridge">dan</string>
     <string name="wake_up_timer_schedule_set">Alarm akan mati dalam %1$s %2$s %3$s</string>
-    <string name="random_preset_description">Preset acak yang dihasilkan akan memiliki suara sesuai dengan suasana yang dipilih. Selain itu, preset padat akan berusaha memainkan lebih banyak suara secara bersamaan.</string>
     <string name="unsaved_preset">Preset Belum Tersimpan</string>
     <string name="skip_to_next">Preset berikutnya</string>
     <string name="skip_to_prev">Preset sebelumnya</string>

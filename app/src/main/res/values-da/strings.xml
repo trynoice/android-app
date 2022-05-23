@@ -21,7 +21,6 @@
     <string name="okay">Okay</string>
     <string name="mood">Humør</string>
     <string name="light">Let</string>
-    <string name="random_preset_description">Genererede tilfældige forudinstillinger vil indeholde lyde, der passer til den valgte stemning. Desuden til tætte forudinstillinger forsøge at spille flere lide samtidig.</string>
     <string name="intensity">Intensitivitet</string>
     <string name="focus">Fokuseret</string>
     <string name="mood_any">Enhver</string>

@@ -84,7 +84,6 @@
     <string name="okay">قبول</string>
     <string name="mood">حال</string>
     <string name="light">سبک</string>
-    <string name="random_preset_description">گزینش‌های تصادفی صدایی متناظر با حال انتخاب شده خواهند داشت. به علاوه، گزینش‌های متراکم تلاش به پخش همزمان صدای بیشتری خواهند کرد.</string>
     <string name="intensity">شدت</string>
     <string name="focus">تمرکز</string>
     <string name="dense">متراکم</string>

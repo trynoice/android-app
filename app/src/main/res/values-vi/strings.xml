@@ -101,7 +101,6 @@
     <string name="okay">OK</string>
     <string name="mood">Tâm trạng</string>
     <string name="light">Thưa</string>
-    <string name="random_preset_description">Các thiết lập trước đã tạo sẽ chứa các âm thanh tương ứng với tâm trạng được chọn. Thêm nữa, các thiết lập trước dày đặc sẽ cố phát ra nhiều âm thanh hơn trong một lúc.</string>
     <string name="intensity">Cường độ</string>
     <string name="focus">Tập trung</string>
     <string name="dense">Dày đặc</string>

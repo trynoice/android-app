@@ -4,36 +4,46 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.VisibleForTesting
+import androidx.core.view.forEach
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetFragmentBinding
+import com.github.ashutoshgngwr.noice.databinding.RandomPresetTagChipBinding
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
-import com.github.ashutoshgngwr.noice.model.Sound
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
+import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import com.github.ashutoshgngwr.noice.repository.Resource
+import com.github.ashutoshgngwr.noice.repository.SoundRepository
+import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import com.trynoice.api.client.models.SoundTag
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class RandomPresetFragment : BottomSheetDialogFragment() {
 
-  companion object {
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val RANGE_INTENSITY_LIGHT = 2 until 5
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val RANGE_INTENSITY_DENSE = 3 until 8
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val RANGE_INTENSITY_ANY = 2 until 8
-  }
-
   private lateinit var binding: RandomPresetFragmentBinding
-
-  @set:Inject
-  internal lateinit var presetRepository: PresetRepository
+  private val viewModel: RandomPresetViewModel by viewModels()
 
   @set:Inject
   internal lateinit var analyticsProvider: AnalyticsProvider
@@ -50,36 +60,128 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-    //flexCheckedButton in XML is not working so we set manually.
-    binding.presetIntensityAny.isChecked = true
-    binding.presetTypeAny.isChecked = true
+    binding.lifecycleOwner = viewLifecycleOwner
+    binding.viewModel = viewModel
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.tags.collect { tags ->
+        tags.forEach { tag ->
+          val binding = RandomPresetTagChipBinding.inflate(layoutInflater, binding.tags, true)
+          binding.root.text = tag.name
+          binding.root.tag = tag
+        }
+      }
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.tagsLoadErrorStrRes
+        .filterNotNull()
+        .collect { causeStrRes ->
+          showErrorSnackbar(getString(R.string.tags_load_error, getString(causeStrRes)))
+          dismiss()
+        }
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.generatedPreset
+        .filterNotNull()
+        .collect { preset ->
+          playbackController.play(preset)
+          dismiss()
+
+          // maybe show in-app review dialog to the user
+          reviewFlowProvider.maybeAskForReview(requireActivity())
+        }
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.generatePresetErrorStrRes
+        .filterNotNull()
+        .collect { causeStrRes ->
+          showErrorSnackbar(getString(R.string.generate_preset_error, getString(causeStrRes)))
+          dismiss()
+        }
+    }
 
     binding.playButton.setOnClickListener {
-      val tag = when (binding.presetType.checkedRadioButtonId) {
-        R.id.preset_type__focus -> Sound.Tag.FOCUS
-        R.id.preset_type__relax -> Sound.Tag.RELAX
-        else -> null
-      }
+      val soundCount = binding.intensity.value.toInt()
+      val tags = binding.tags.getSelectedChips()
+        .map { it.tag as SoundTag }
+        .toSet()
 
-      val intensity = when (binding.presetIntensity.checkedRadioButtonId) {
-        R.id.preset_intensity__light -> RANGE_INTENSITY_LIGHT
-        R.id.preset_intensity__dense -> RANGE_INTENSITY_DENSE
-        else -> RANGE_INTENSITY_ANY
-      }
-
-      // TODO: fix this
-      playbackController.play(presetRepository.random(tag, intensity))
-      dismiss()
-
-      // maybe show in-app review dialog to the user
-      reviewFlowProvider.maybeAskForReview(requireActivity())
+      viewModel.generatePreset(tags, soundCount)
     }
 
-    binding.cancelButton.setOnClickListener {
-      dismiss()
-    }
-
+    binding.cancelButton.setOnClickListener { dismiss() }
     analyticsProvider.setCurrentScreen("random_preset", RandomPresetFragment::class)
+  }
+
+  private fun ChipGroup.getSelectedChips(): List<Chip> {
+    val result = mutableListOf<Chip>()
+    forEach { view ->
+      if (view is Chip && view.isChecked) {
+        result.add(view)
+      }
+    }
+
+    return result
+  }
+}
+
+@HiltViewModel
+class RandomPresetViewModel @Inject constructor(
+  soundRepository: SoundRepository,
+  private val presetRepository: PresetRepository,
+) : ViewModel() {
+
+  private val tagsResource = MutableStateFlow<Resource<List<SoundTag>>>(Resource.Loading())
+  private val generatePresetResource = MutableStateFlow<Resource<Preset>?>(null)
+
+  val isLoading: StateFlow<Boolean> = combine(tagsResource, generatePresetResource) { t, p ->
+    t is Resource.Loading || p is Resource.Loading
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+  val tags: StateFlow<List<SoundTag>> = tagsResource.transform { r ->
+    r.data?.also { emit(it.sortedBy { t -> t.name }) }
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
+  val tagsLoadErrorStrRes: StateFlow<Int?> = tagsResource.transform { r ->
+    emit(
+      when {
+        r.error == null || r.data != null -> null // cached data is fine.
+        r.error is NetworkError -> R.string.network_error
+        else -> R.string.unknown_error
+      }
+    )
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+  internal val generatePresetErrorStrRes: StateFlow<Int?> = generatePresetResource.transform { r ->
+    emit(
+      when (r?.error) {
+        null -> null
+        is NetworkError -> R.string.network_error
+        else -> R.string.unknown_error
+      }
+    )
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+  internal val generatedPreset: StateFlow<Preset?> = generatePresetResource.transform { r ->
+    emit(r?.data)
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+  init {
+    viewModelScope.launch {
+      soundRepository.listTags()
+        .flowOn(Dispatchers.IO)
+        .collect(tagsResource)
+    }
+  }
+
+  fun generatePreset(tags: Set<SoundTag>, soundCount: Int) {
+    viewModelScope.launch {
+      presetRepository.generate(tags, soundCount)
+        .flowOn(Dispatchers.IO)
+        .collect(generatePresetResource)
+    }
   }
 }

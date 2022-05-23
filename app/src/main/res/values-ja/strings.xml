@@ -67,7 +67,6 @@
     <string name="okay">OK</string>
     <string name="mood">雰囲気</string>
     <string name="light">重なりの少ない音</string>
-    <string name="random_preset_description">ランダムプリセットは、選択された雰囲気の音を含んで作成されます。また、重なりの多い音のプリセットはより多くの音を同時に再生します。</string>
     <string name="intensity">音の多さ</string>
     <string name="focus">集中</string>
     <string name="dense">重なりの多い音</string>

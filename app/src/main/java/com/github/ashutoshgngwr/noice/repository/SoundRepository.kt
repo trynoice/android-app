@@ -112,6 +112,28 @@ class SoundRepository @Inject constructor(
   }
 
   /**
+   * Returns a [Flow] that emits a list of all [SoundTag]s as a [Resource].
+   *
+   * On failures, the flow emits [Resource.Failure] with:
+   * - [NetworkError] on network errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
+   */
+  fun listTags(): Flow<Resource<List<SoundTag>>> = fetchNetworkBoundResource(
+    loadFromCache = { cacheStore.getAs(TAGS_KEY) },
+    loadFromNetwork = { apiClient.cdn().libraryManifest().tags },
+    cacheNetworkResult = { cacheStore.put(TAGS_KEY, it) },
+    loadFromNetworkErrorTransform = { e ->
+      Log.i(LOG_TAG, "listTags:", e)
+      when (e) {
+        is IOException -> NetworkError
+        else -> e
+      }
+    },
+  )
+
+  /**
    * Updates and publishes the shared playback state to subscribing clients via [StateFlow]s.
    */
   fun updatePlaybackStates(playerManagerState: PlaybackState, playerStates: Array<PlayerState>) {
@@ -137,5 +159,6 @@ class SoundRepository @Inject constructor(
   companion object {
     private const val LOG_TAG = "SoundRepository"
     private const val SOUND_KEY_PREFIX = "sound"
+    private const val TAGS_KEY = "${SOUND_KEY_PREFIX}/tags"
   }
 }

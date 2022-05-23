@@ -81,7 +81,6 @@
     <string name="preset_already_exists">Instelling met de opgegeven naam bestaat al!</string>
     <string name="random_preset">Willekeurige instelling</string>
     <string name="mood">Stemming</string>
-    <string name="random_preset_description">Gegenereerde willekeurige instellingen bevatten geluiden die overeenkomen met de gekozen stemming. Bovendien zullen dichte instellingen proberen om meer geluiden tegelijkertijd af te spelen.</string>
     <string name="intensity">Intensiteit</string>
     <string name="focus">Focus</string>
     <string name="dense">Dicht</string>

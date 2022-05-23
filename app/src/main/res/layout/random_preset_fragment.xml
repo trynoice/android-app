@@ -1,148 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  xmlns:tools="http://schemas.android.com/tools">
 
-  <LinearLayout
+  <data>
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.RandomPresetViewModel" />
+
+  </data>
+
+  <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="24dp">
+    android:layout_height="wrap_content">
 
-    <TextView
+    <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="@string/random_preset"
-      android:textAppearance="?attr/titleTextAppearance" />
+      android:padding="24dp">
 
-    <Space
-      android:layout_width="match_parent"
-      android:layout_height="24dp" />
+      <include
+        layout="@layout/simple_progress_layout"
+        app:isVisible="@{viewModel.isLoading}"
+        app:message="@{@string/loading}" />
 
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="@string/random_preset_description"
-      android:textAppearance="?android:attr/textAppearance" />
-
-    <Space
-      android:layout_width="match_parent"
-      android:layout_height="16dp" />
-
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="@string/mood"
-      android:textAppearance="?attr/textAppearanceHeadline6" />
-
-    <Space
-      android:layout_width="match_parent"
-      android:layout_height="8dp" />
-
-    <io.github.mrherintsoahasina.flextools.FlexRadioGroup
-      android:id="@+id/preset_type"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      app:alignContent="stretch"
-      app:alignItems="stretch"
-      app:flexCheckedButton="@id/preset_type__any"
-      app:flexWrap="wrap">
-
-      <RadioButton
-        android:id="@+id/preset_type__any"
-        android:layout_width="wrap_content"
+      <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:text="@string/mood_any" />
+        android:orientation="vertical"
+        app:isVisible="@{!viewModel.isLoading}"
+        tools:theme="@style/Theme.App.BottomSheetDialog">
 
-      <RadioButton
-        android:id="@+id/preset_type__focus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:text="@string/focus" />
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/random_preset"
+          android:textAppearance="?attr/titleTextAppearance" />
 
-      <RadioButton
-        android:id="@+id/preset_type__relax"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:text="@string/relax" />
+        <Space
+          android:layout_width="match_parent"
+          android:layout_height="20dp" />
 
-    </io.github.mrherintsoahasina.flextools.FlexRadioGroup>
+        <TextView
+          style="@style/Widget.App.TextView.Message"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/random_preset_description" />
 
-    <Space
-      android:layout_width="match_parent"
-      android:layout_height="16dp" />
+        <Space
+          android:layout_width="match_parent"
+          android:layout_height="16dp" />
 
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="@string/intensity"
-      android:textAppearance="?attr/textAppearanceHeadline6" />
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/keywords"
+          android:textAppearance="?attr/textAppearanceHeadline6" />
 
-    <Space
-      android:layout_width="match_parent"
-      android:layout_height="8dp" />
+        <Space
+          android:layout_width="match_parent"
+          android:layout_height="12dp" />
 
-    <io.github.mrherintsoahasina.flextools.FlexRadioGroup
-      android:id="@+id/preset_intensity"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      app:alignContent="stretch"
-      app:alignItems="stretch"
-      app:flexCheckedButton="@id/preset_intensity__any"
-      app:flexWrap="wrap">
+        <com.google.android.material.chip.ChipGroup
+          android:id="@+id/tags"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:singleSelection="false" />
 
-      <RadioButton
-        android:id="@+id/preset_intensity__any"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:text="@string/intensity_any" />
+        <Space
+          android:layout_width="match_parent"
+          android:layout_height="16dp" />
 
-      <RadioButton
-        android:id="@+id/preset_intensity__light"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:text="@string/light" />
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/intensity"
+          android:textAppearance="?attr/textAppearanceHeadline6" />
 
-      <RadioButton
-        android:id="@+id/preset_intensity__dense"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:text="@string/dense" />
+        <Space
+          android:layout_width="match_parent"
+          android:layout_height="12dp" />
 
-    </io.github.mrherintsoahasina.flextools.FlexRadioGroup>
+        <com.google.android.material.slider.Slider
+          android:id="@+id/intensity"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:stepSize="1.0"
+          android:value="3.0"
+          android:valueFrom="1.0"
+          android:valueTo="6.0" />
 
-    <Space
-      android:layout_width="match_parent"
-      android:layout_height="24dp" />
+        <Space
+          android:layout_width="match_parent"
+          android:layout_height="24dp" />
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="end">
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="end">
 
-      <Button
-        android:id="@+id/cancel_button"
-        style="?attr/buttonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/cancel" />
+          <Button
+            android:id="@+id/cancel_button"
+            style="?attr/buttonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel" />
 
-      <Button
-        android:id="@+id/play_button"
-        style="?attr/buttonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/play" />
+          <Button
+            android:id="@+id/play_button"
+            style="?attr/buttonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/play" />
 
-    </LinearLayout>
+        </LinearLayout>
 
-  </LinearLayout>
+      </LinearLayout>
 
-</androidx.core.widget.NestedScrollView>
+    </FrameLayout>
+
+  </androidx.core.widget.NestedScrollView>
+
+</layout>

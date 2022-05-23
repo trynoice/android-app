@@ -16,7 +16,6 @@
     <string name="okay">Gerai</string>
     <string name="mood">Nuotaika</string>
     <string name="light">Lengvas</string>
-    <string name="random_preset_description">Sugeneruotuose atsitiktinėse parinktyse bus garsų, atitinkančių pasirinktą nuotaiką. Be to, tankūs išankstiniai nustatymai bandys vienu metu groti daugiau garsų.</string>
     <string name="intensity">Intensyvumas</string>
     <string name="focus">Sutelkianti dėmesį</string>
     <string name="dense">Tankus</string>

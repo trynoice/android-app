@@ -65,11 +65,6 @@ data class Sound(
     return markdownBuilder.toString()
   }
 
-  // TODO: remove this.
-  enum class Tag {
-    FOCUS, RELAX
-  }
-
   companion object {
     private val spdxListedLicenses = mapOf(
       "CC-BY-3.0" to SpdxListedLicense(
