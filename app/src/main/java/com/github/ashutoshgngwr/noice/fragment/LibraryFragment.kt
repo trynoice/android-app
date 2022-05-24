@@ -219,8 +219,11 @@ class LibraryViewModel @Inject constructor(
 ) : ViewModel() {
 
   private val soundsResource = MutableSharedFlow<Resource<List<Sound>>>()
-  private val playerManagerState = soundRepository.getPlayerManagerState()
-  internal val playerStates = soundRepository.getPlayerStates()
+  private val playerManagerState: StateFlow<PlaybackState> = soundRepository.getPlayerManagerState()
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PlaybackState.STOPPED)
+
+  internal val playerStates: StateFlow<Array<PlayerState>> = soundRepository.getPlayerStates()
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyArray())
 
   val isLoading: StateFlow<Boolean> = soundsResource.transform { r ->
     emit(r is Resource.Loading)
@@ -293,8 +296,8 @@ class LibraryListAdapter(
   private val itemController: LibraryListItemController,
 ) : RecyclerView.Adapter<LibraryListItemViewHolder>() {
 
-  private val libraryItems = mutableListOf<LibraryListItem>()
-  private val playerStates = mutableMapOf<String, PlayerState>()
+  private var libraryItems = emptyList<LibraryListItem>()
+  private var playerStates = emptyMap<String, PlayerState?>()
   private var isIconsEnabled = false
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryListItemViewHolder {
@@ -322,7 +325,8 @@ class LibraryListAdapter(
   }
 
   override fun onBindViewHolder(holder: LibraryListItemViewHolder, position: Int) {
-    holder.bind(libraryItems[position], isIconsEnabled)
+    val playerState = playerStates[libraryItems[position].sound?.id]
+    holder.bind(libraryItems[position], playerState, isIconsEnabled)
   }
 
   fun setIconsEnabled(enabled: Boolean) {
@@ -337,27 +341,22 @@ class LibraryListAdapter(
   fun setLibraryItems(items: List<LibraryListItem>) {
     if (libraryItems.isNotEmpty()) {
       val removedCount = libraryItems.size
-      libraryItems.clear()
+      libraryItems = emptyList()
       notifyItemRangeRemoved(0, removedCount)
     }
 
-    libraryItems.addAll(items)
+    libraryItems = items
     notifyItemRangeInserted(0, items.size)
-    applyPlayerStates()
   }
 
   fun setPlayerStates(states: Array<PlayerState>) {
-    playerStates.clear()
-    states.forEach { playerStates[it.soundId] = it }
-    applyPlayerStates()
-  }
-
-  private fun applyPlayerStates() {
-    libraryItems.forEachIndexed { i, item ->
-      val newState = playerStates[item.sound?.id]
-      // explicitly compare PlaybackState since PlayerState doesn't consider it in equality checks.
-      if (item.playerState != newState || item.playerState?.playbackState != newState?.playbackState) {
-        libraryItems[i] = item.copy(playerState = playerStates[item.sound?.id])
+    val oldStates = playerStates
+    playerStates = states.associateBy { it.soundId }
+    for (i in libraryItems.indices) {
+      val soundId = libraryItems[i].sound?.id ?: continue
+      val oldState = oldStates[soundId]
+      val newState = playerStates[soundId]
+      if (oldState != newState || oldState?.playbackState != newState?.playbackState) {
         notifyItemChanged(i)
       }
     }
@@ -366,13 +365,13 @@ class LibraryListAdapter(
 
 abstract class LibraryListItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-  fun bind(item: LibraryListItem, isIconsEnabled: Boolean) {
+  fun bind(item: LibraryListItem, playerState: PlayerState?, isIconsEnabled: Boolean) {
     if (item.group != null) {
       bind(item.group)
     }
 
     if (item.sound != null) {
-      bind(item.sound, item.playerState, isIconsEnabled)
+      bind(item.sound, playerState, isIconsEnabled)
     }
   }
 
@@ -473,5 +472,4 @@ data class LibraryListItem(
   @LayoutRes val layoutId: Int,
   val group: SoundGroup? = null,
   val sound: Sound? = null,
-  val playerState: PlayerState? = null,
 )

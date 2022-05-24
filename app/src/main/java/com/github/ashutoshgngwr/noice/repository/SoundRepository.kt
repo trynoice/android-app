@@ -124,17 +124,17 @@ class SoundRepository @Inject constructor(
   }
 
   /**
-   * Returns a [StateFlow] that emits the Player Manager's current [PlaybackState].
+   * Returns a [Flow] that emits the Player Manager's current [PlaybackState].
    */
-  fun getPlayerManagerState(): StateFlow<PlaybackState> {
+  fun getPlayerManagerState(): Flow<PlaybackState> {
     return playerManagerState
   }
 
   /**
-   * Returns a [StateFlow] that emits an array of [PlayerState]s of all players managed by the
-   * Player Manager.
+   * Returns a [Flow] that emits an array of [PlayerState]s of all players managed by the Player
+   * Manager.
    */
-  fun getPlayerStates(): StateFlow<Array<PlayerState>> {
+  fun getPlayerStates(): Flow<Array<PlayerState>> {
     return playerStates
   }
 
