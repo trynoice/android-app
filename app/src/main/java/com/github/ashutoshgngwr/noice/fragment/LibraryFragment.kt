@@ -166,7 +166,6 @@ class LibraryFragment : Fragment(), LibraryListItemController {
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
           presetRepository.create(Preset(nameGetter.invoke(), viewModel.playerStates.value))
-          binding.savePresetButton.hide()
           showSuccessSnackbar(R.string.preset_saved)
           // maybe show in-app review dialog to the user
           reviewFlowProvider.maybeAskForReview(requireActivity())
@@ -214,8 +213,8 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
 @HiltViewModel
 class LibraryViewModel @Inject constructor(
+  presetRepository: PresetRepository,
   private val soundRepository: SoundRepository,
-  private val presetRepository: PresetRepository,
 ) : ViewModel() {
 
   private val soundsResource = MutableSharedFlow<Resource<List<Sound>>>()
@@ -266,17 +265,20 @@ class LibraryViewModel @Inject constructor(
     )
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-  internal val isSavePresetButtonVisible: StateFlow<Boolean> =
-    combine(playerManagerState, playerStates) { playerManagerState, playerStates ->
-      playerStates
-        // exclude stopping and stopped players from active preset
-        .filterNot { it.playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
-        .toTypedArray()
-        .let { s ->
-          playerManagerState != PlaybackState.STOPPED
-            && presetRepository.list().none { p -> p.hasMatchingPlayerStates(s) }
-        }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  internal val isSavePresetButtonVisible: StateFlow<Boolean> = combine(
+    playerManagerState,
+    playerStates,
+    presetRepository.listFlow(),
+  ) { playerManagerState, playerStates, presets ->
+    playerStates
+      // exclude stopping and stopped players from active preset
+      .filterNot { it.playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
+      .toTypedArray()
+      .let { s ->
+        playerManagerState != PlaybackState.STOPPED
+          && presets.none { p -> p.hasMatchingPlayerStates(s) }
+      }
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
   init {
     loadLibrary()
