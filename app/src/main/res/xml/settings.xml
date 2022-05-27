@@ -7,9 +7,9 @@
 
     <Preference
       android:icon="@drawable/ic_baseline_settings_32"
-      android:key="@string/audio_quality_key"
+      android:key="@string/audio_bitrate_key"
       android:title="@string/audio_quality"
-      tools:summary="@string/audio_quality_medium" />
+      tools:summary="@string/audio_quality_low" />
 
     <SeekBarPreference
       android:defaultValue="@integer/default_fade_in_duration_seconds"

@@ -5,12 +5,11 @@ import android.media.AudioManager
 import android.util.Log
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.engine.exoplayer.CdnSoundDataSource
-import com.github.ashutoshgngwr.noice.engine.exoplayer.CdnSoundLoadErrorHandlingPolicy
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
-import com.google.android.exoplayer2.source.hls.HlsMediaSource
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.trynoice.api.client.NoiceApiClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -27,6 +26,7 @@ class PlayerManager(
   private val context: Context,
   private val apiClient: NoiceApiClient,
   private val soundRepository: SoundRepository,
+  private var audioBitrate: String,
   private var audioAttributes: AudioAttributesCompat,
   private val analyticsProvider: AnalyticsProvider,
   private val defaultScope: CoroutineScope,
@@ -35,8 +35,8 @@ class PlayerManager(
 
   private var fadeInDuration = Duration.ZERO
   private var fadeOutDuration = Duration.ZERO
-  private var maxAudioBitrate = 0
   private var isPremiumSegmentsEnabled = false
+
   private var playerFactory: Player.Factory = buildLocalPlayerFactory()
   private var audioFocusManager: AudioFocusManager =
     DefaultAudioFocusManager(context, audioAttributes, this)
@@ -96,6 +96,7 @@ class PlayerManager(
       playerFactory.createPlayer(
         soundId,
         soundRepository,
+        audioBitrate,
         audioAttributes,
         defaultScope,
         buildPlayerPlaybackListener(soundId)
@@ -103,7 +104,6 @@ class PlayerManager(
         setFadeInDuration(fadeInDuration)
         setFadeOutDuration(fadeOutDuration)
         setPremiumSegmentsEnabled(isPremiumSegmentsEnabled)
-        setMaxAudioBitrate(maxAudioBitrate)
       }
     }
 
@@ -288,9 +288,13 @@ class PlayerManager(
   /**
    * Sets the max audio bitrate to use for streaming sounds.
    */
-  fun setMaxAudioBitrate(bitrate: Int) {
-    maxAudioBitrate = bitrate
-    players.values.forEach { it.setMaxAudioBitrate(bitrate) }
+  fun setAudioBitrate(bitrate: String) {
+    if (bitrate == audioBitrate) {
+      return
+    }
+
+    audioBitrate = bitrate
+    players.values.forEach { it.setAudioBitrate(bitrate) }
   }
 
   /**
@@ -302,11 +306,8 @@ class PlayerManager(
   }
 
   private fun buildLocalPlayerFactory(): Player.Factory {
-    return LocalPlayer.Factory(
-      context,
-      HlsMediaSource.Factory(CdnSoundDataSource.Factory(apiClient))
-        .setLoadErrorHandlingPolicy(CdnSoundLoadErrorHandlingPolicy()),
-    )
+    return ProgressiveMediaSource.Factory(CdnSoundDataSource.Factory(apiClient))
+      .let { LocalPlayer.Factory(context, it) }
   }
 
   private fun notifyPlaybackListener() {

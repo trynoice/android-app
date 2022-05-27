@@ -92,7 +92,6 @@ android {
 }
 
 dependencies {
-  def exoplayerVersion = '2.17.1'
   def fragmentVersion = '1.4.1'
 
   def espressoVersion = '3.4.0'
@@ -122,8 +121,7 @@ dependencies {
   implementation 'com.airbnb.android:lottie:4.2.2'
   implementation 'com.caverock:androidsvg-aar:1.4'
   implementation 'com.github.AppIntro:AppIntro:6.2.0'
-  implementation "com.google.android.exoplayer:exoplayer-core:$exoplayerVersion"
-  implementation "com.google.android.exoplayer:exoplayer-hls:$exoplayerVersion"
+  implementation 'com.google.android.exoplayer:exoplayer-core:2.17.1'
   implementation 'com.google.android.flexbox:flexbox:3.0.0'
   implementation 'com.google.android.material:material:1.5.0'
   implementation 'com.google.code.gson:gson:2.9.0'

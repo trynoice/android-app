@@ -70,7 +70,7 @@ class SettingsRepository @Inject constructor(
   /**
    * Returns the value of [R.string.sound_fade_in_duration_key] preference.
    */
-  fun getSoundFadeInDuration(): Duration {
+  private fun getSoundFadeInDuration(): Duration {
     return prefs.getInt(
       context.getString(R.string.sound_fade_in_duration_key),
       context.resources.getInteger(R.integer.default_fade_in_duration_seconds)
@@ -88,7 +88,7 @@ class SettingsRepository @Inject constructor(
   /**
    * Returns the value of [R.string.sound_fade_out_duration_key] preference.
    */
-  fun getSoundFadeOutDuration(): Duration {
+  private fun getSoundFadeOutDuration(): Duration {
     return prefs.getInt(
       context.getString(R.string.sound_fade_out_duration_key),
       context.resources.getInteger(R.integer.default_fade_out_duration_seconds)
@@ -146,7 +146,7 @@ class SettingsRepository @Inject constructor(
   /**
    * Returns the value of switch preference with key [R.string.enable_media_buttons_key]
    */
-  fun isMediaButtonsEnabled(): Boolean {
+  private fun isMediaButtonsEnabled(): Boolean {
     return prefs.getBoolean(
       context.getString(R.string.enable_media_buttons_key), true
     )
@@ -161,25 +161,26 @@ class SettingsRepository @Inject constructor(
   }
 
   /**
-   * Sets the value of list preference with key [R.string.audio_quality_key].
+   * Sets the value of list preference with key [R.string.audio_bitrate_key].
    */
-  fun setMaxAudioBitrate(bitrate: Int) {
-    prefs.edit { putInt(context.getString(R.string.audio_quality_key), bitrate) }
+  fun setAudioQuality(quality: AudioQuality) {
+    prefs.edit { putString(context.getString(R.string.audio_bitrate_key), quality.bitrate) }
   }
 
   /**
-   * Returns the value of list preference with key [R.string.audio_quality_key].
+   * Returns the value of list preference with key [R.string.audio_bitrate_key].
    */
-  fun getMaxAudioBitrate(): Int {
-    return prefs.getInt(context.getString(R.string.audio_quality_key), MAX_FREE_AUDIO_BITRATE)
+  fun getAudioQuality(): AudioQuality {
+    return prefs.getString(context.getString(R.string.audio_bitrate_key), null)
+      .let { AudioQuality.fromBitrate(it) }
   }
 
   /**
-   * Returns a [Flow] for key [R.string.audio_quality_key] that listens for changes and emits its
+   * Returns a [Flow] for key [R.string.audio_bitrate_key] that listens for changes and emits its
    * latest value.
    */
-  fun getMaxAudioBitrateAsFlow(): Flow<Int> {
-    return keyFlow(R.string.audio_quality_key).map { getMaxAudioBitrate() }
+  fun getAudioQualityAsFlow(): Flow<AudioQuality> {
+    return keyFlow(R.string.audio_bitrate_key).map { getAudioQuality() }
   }
 
   private fun keyFlow(@StringRes keyStrRes: Int): Flow<String> {
@@ -191,7 +192,25 @@ class SettingsRepository @Inject constructor(
     internal const val APP_THEME_DARK = 1
     internal const val APP_THEME_SYSTEM_DEFAULT = 2
 
-    internal val AUDIO_BITRATES = arrayOf(140800, 211200, 281600, 352000) // avg bitrate * 1.1
-    internal val MAX_FREE_AUDIO_BITRATE = AUDIO_BITRATES[0]
+    val FREE_AUDIO_QUALITY = AudioQuality.fromBitrate(null)
+  }
+
+  enum class AudioQuality(val bitrate: String) {
+    LOW("128k"), MEDIUM("192k"), HIGH("256k"), ULTRA_HIGH("320k");
+
+    companion object {
+      /**
+       * Returns an [AudioQuality] corresponding to the given [bitrate]. If the [bitrate] is `null`,
+       * it returns the default audio bitrate.
+       */
+      fun fromBitrate(bitrate: String?): AudioQuality {
+        return when (bitrate) {
+          "192k" -> MEDIUM
+          "256k" -> HIGH
+          "320k" -> ULTRA_HIGH
+          else -> LOW
+        }
+      }
+    }
   }
 }

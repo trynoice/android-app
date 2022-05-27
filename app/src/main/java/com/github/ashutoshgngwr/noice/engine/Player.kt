@@ -38,6 +38,7 @@ import kotlin.time.toDuration
 abstract class Player protected constructor(
   private val soundId: String,
   private val soundRepository: SoundRepository,
+  private var audioBitrate: String,
   externalScope: CoroutineScope,
   private val playbackListener: PlaybackListener,
 ) {
@@ -87,9 +88,26 @@ abstract class Player protected constructor(
   }
 
   /**
-   * Sets maximum allowed bitrate when streaming segments.
+   * Sets the audio bitrate for streaming.
    */
-  abstract fun setMaxAudioBitrate(bitrate: Int)
+  fun setAudioBitrate(bitrate: String) {
+    if (bitrate == audioBitrate) {
+      return
+    }
+
+    audioBitrate = bitrate
+    recreateSegmentList()
+    if (playbackState == PlaybackState.PLAYING) {
+      clearSegmentQueue()
+      playInternal()
+    }
+  }
+
+  /**
+   * Clears the segments that have been previously queued, including the one that is currently
+   * playing.
+   */
+  protected abstract fun clearSegmentQueue()
 
   /**
    * Starts buffering the sound and starts playing its segments once enough data is available.
@@ -195,7 +213,7 @@ abstract class Player protected constructor(
           val bridgeName = "${from.name}_${to.name}"
           Segment(
             name = bridgeName,
-            path = "${sound?.segmentsBasePath}/${bridgeName}.m3u8",
+            path = "${sound?.segmentsBasePath}/${bridgeName}/${audioBitrate}.mp3",
             isBridgeSegment = true,
             from = from.name,
             to = to.name,
@@ -249,7 +267,7 @@ abstract class Player protected constructor(
   private fun recreateSegmentList() {
     segments = sound?.segments
       ?.filter { isPremiumSegmentsEnabled || it.isFree }
-      ?.map { Segment(it.name, "${sound?.segmentsBasePath}/${it.name}.m3u8", false) }
+      ?.map { Segment(it.name, "${sound?.segmentsBasePath}/${it.name}/${audioBitrate}.mp3", false) }
       ?: emptyList()
   }
 
@@ -300,6 +318,7 @@ abstract class Player protected constructor(
     fun createPlayer(
       soundId: String,
       soundRepository: SoundRepository,
+      audioBitrate: String,
       audioAttributes: AudioAttributesCompat,
       defaultScope: CoroutineScope,
       playbackListener: PlaybackListener

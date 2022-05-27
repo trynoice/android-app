@@ -26,6 +26,8 @@ import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.lastOrNull
@@ -57,6 +59,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
 
   private var isConnectedToInternet = false
   private var presets = emptyList<Preset>()
+  private val isSubscribed = MutableStateFlow(false)
 
   private val mainActivityPi: PendingIntent by lazy {
     var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
@@ -80,6 +83,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
       this,
       apiClient,
       soundRepository,
+      settingsRepository.getAudioQuality().bitrate,
       PlayerManager.DEFAULT_AUDIO_ATTRIBUTES,
       analyticsProvider,
       lifecycleScope,
@@ -151,7 +155,11 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
         .flowOn(Dispatchers.IO)
         .filterNot { !isConnectedToInternet && it.error is NetworkError }
         .transform { r -> r.data?.also { emit(it) } }
-        .collect { playerManager.setPremiumSegmentsEnabled(it) }
+        .collect(isSubscribed)
+    }
+
+    lifecycleScope.launch {
+      isSubscribed.collect { playerManager.setPremiumSegmentsEnabled(it) }
     }
 
     // watch and adapt user settings as they change.
@@ -188,9 +196,11 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     }
 
     lifecycleScope.launch {
-      settingsRepository.getMaxAudioBitrateAsFlow()
+      combine(isSubscribed, settingsRepository.getAudioQualityAsFlow()) { subscribed, quality ->
+        if (subscribed) quality else SettingsRepository.FREE_AUDIO_QUALITY
+      }
         .flowOn(Dispatchers.IO)
-        .collect { playerManager.setMaxAudioBitrate(it) }
+        .collect { playerManager.setAudioBitrate(it.bitrate) }
     }
   }
 
