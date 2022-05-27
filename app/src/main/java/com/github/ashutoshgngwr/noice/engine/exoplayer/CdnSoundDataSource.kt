@@ -21,8 +21,7 @@ import java.io.IOException
  * An ExoPlayer [DataSource] that fetches sound data from the [CDN][NoiceApiClient.cdn]. Although it
  * doesn't implement [HttpDataSource][com.google.android.exoplayer2.upstream.HttpDataSource], it
  * throws relevant [HttpDataSourceException] and [InvalidResponseCodeException] instances to exhibit
- * a similar behaviour. It is also compatible with ExoPlayer's default load error handling policy
- * (works with [InvalidResponseCodeException] instances).
+ * a similar behaviour.
  */
 class CdnSoundDataSource private constructor(
   private val apiClient: NoiceApiClient,

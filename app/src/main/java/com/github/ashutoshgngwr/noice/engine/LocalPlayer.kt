@@ -9,13 +9,12 @@ import androidx.core.animation.doOnStart
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.google.android.exoplayer2.C
+import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.util.EventLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -33,24 +32,25 @@ class LocalPlayer(
   soundId: String,
   soundRepository: SoundRepository,
   mediaSourceFactory: MediaSource.Factory,
+  audioBitrate: String,
   audioAttributes: AudioAttributesCompat,
   externalScope: CoroutineScope,
   playbackListener: PlaybackListener,
-) : Player(soundId, soundRepository, externalScope, playbackListener), IExoPlayer.Listener {
-
-  private val trackSelector = DefaultTrackSelector(
-    // mixed channel count and mixed sample rate must be enabled because our HLS master playlists
-    // lack information about the sample rate and channel count for variant streams.
-    DefaultTrackSelector.ParametersBuilder(context)
-      .setAllowAudioMixedChannelCountAdaptiveness(true)
-      .setAllowAudioMixedSampleRateAdaptiveness(true)
-      .build(),
-    AdaptiveTrackSelection.Factory()
-  )
+) : Player(soundId, soundRepository, audioBitrate, externalScope, playbackListener),
+  IExoPlayer.Listener {
 
   private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context)
-    .setTrackSelector(trackSelector)
     .setMediaSourceFactory(mediaSourceFactory)
+    .setLoadControl(
+      DefaultLoadControl.Builder()
+        .setBufferDurationsMs(
+          10_000,
+          20_000,
+          DefaultLoadControl.DEFAULT_BUFFER_FOR_PLAYBACK_MS,
+          DefaultLoadControl.DEFAULT_BUFFER_FOR_PLAYBACK_AFTER_REBUFFER_MS,
+        )
+        .build()
+    )
     .build()
 
   override var audioAttributes: AudioAttributesCompat = audioAttributes
@@ -65,7 +65,7 @@ class LocalPlayer(
   init {
     exoPlayer.volume = 0F // muted initially (for the fade-in effect)
     exoPlayer.addListener(this)
-    exoPlayer.addAnalyticsListener(EventLogger(trackSelector))
+    exoPlayer.addAnalyticsListener(EventLogger(null))
     exoPlayer.setAudioAttributesCompat(audioAttributes, false)
   }
 
@@ -119,10 +119,8 @@ class LocalPlayer(
     }
   }
 
-  override fun setMaxAudioBitrate(bitrate: Int) {
-    trackSelector.parameters = trackSelector.parameters.buildUpon()
-      .setMaxAudioBitrate(bitrate)
-      .build()
+  override fun clearSegmentQueue() {
+    exoPlayer.clearMediaItems()
   }
 
   override fun playInternal() {
@@ -230,6 +228,7 @@ class LocalPlayer(
     override fun createPlayer(
       soundId: String,
       soundRepository: SoundRepository,
+      audioBitrate: String,
       audioAttributes: AudioAttributesCompat,
       defaultScope: CoroutineScope,
       playbackListener: PlaybackListener
@@ -239,6 +238,7 @@ class LocalPlayer(
         soundId,
         soundRepository,
         mediaSourceFactory,
+        audioBitrate,
         audioAttributes,
         defaultScope,
         playbackListener,

@@ -60,7 +60,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
   override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
     setPreferencesFromResource(R.xml.settings, rootKey)
-    findPreference<Preference>(R.string.audio_quality_key).apply {
+    findPreference<Preference>(R.string.audio_bitrate_key).apply {
       val entries = arrayOf(
         getString(R.string.audio_quality_low),
         getString(R.string.audio_quality_medium),
@@ -68,17 +68,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
         getString(R.string.audio_quality_ultra),
       )
 
-      val values = SettingsRepository.AUDIO_BITRATES
-      summary = entries[values.indexOf(settingsRepository.getMaxAudioBitrate())]
+      val values = SettingsRepository.AudioQuality.values()
+      summary = entries[values.indexOf(settingsRepository.getAudioQuality())]
       setOnPreferenceClickListener {
         DialogFragment.show(childFragmentManager) {
           title(R.string.audio_quality)
           message(R.string.audio_quality_summary)
           singleChoiceItems(
             items = entries,
-            currentChoice = values.indexOf(settingsRepository.getMaxAudioBitrate()),
+            currentChoice = values.indexOf(settingsRepository.getAudioQuality()),
             onItemSelected = { position ->
-              settingsRepository.setMaxAudioBitrate(values[position])
+              settingsRepository.setAudioQuality(values[position])
               summary = entries[position]
             }
           )
