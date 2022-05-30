@@ -18,6 +18,7 @@ import kotlinx.coroutines.sync.withLock
 import okhttp3.Cache
 import okhttp3.OkHttp
 import okhttp3.OkHttpClient
+import okhttp3.internal.userAgent
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.HttpException
 import retrofit2.Retrofit
@@ -34,8 +35,9 @@ import java.util.*
 class NoiceApiClient(
   context: Context,
   gson: Gson,
-  baseUrl: String = "https://api.trynoice.com",
-  userAgent: String = "noice-api-client"
+  apiBaseUrl: String = "https://api.trynoice.com",
+  cdnBaseUrl: String = "https://cdn.trynoice.com",
+  userAgent: String = "noice-api-client",
 ) {
 
   private val credentialRepository = AuthCredentialRepository(context)
@@ -76,7 +78,7 @@ class NoiceApiClient(
   private val retrofit: Retrofit by lazy {
     Retrofit.Builder()
       .client(okhttpClient)
-      .baseUrl(baseUrl)
+      .baseUrl(apiBaseUrl)
       .addConverterFactory(
         GsonConverterFactory.create(
           gson.newBuilder()
@@ -95,10 +97,10 @@ class NoiceApiClient(
     retrofit.newBuilder()
       .client(
         okhttpClient.newBuilder()
-          .cache(Cache(File(context.cacheDir, "cdn-cache"), 1024 * 1024 * 1024 /* 1GB */))
+          .cache(Cache(File(context.cacheDir, "cdn-cache"), 256 * 1024 * 1024 /* 256 MB */))
           .build()
       )
-      .baseUrl("https://cdn.trynoice.com")
+      .baseUrl(cdnBaseUrl)
       .build()
       .create()
   }
