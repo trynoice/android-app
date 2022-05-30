@@ -9,6 +9,10 @@
       name="viewModel"
       type="com.github.ashutoshgngwr.noice.fragment.InAppDonationViewModel" />
 
+    <variable
+      name="skuDetailsClickListener"
+      type="com.github.ashutoshgngwr.noice.fragment.OnSkuDetailsClickListener" />
+
   </data>
 
   <FrameLayout
@@ -61,7 +65,7 @@
         app:flexWrap="wrap"
         app:isVisible="@{viewModel.error == null}"
         app:justifyContent="space_evenly"
-        app:onClickSkuDetails="@{viewModel.skuDetailsClickListener}" />
+        app:onClickSkuDetails="@{skuDetailsClickListener}" />
 
     </LinearLayout>
 

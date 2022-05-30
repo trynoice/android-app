@@ -43,7 +43,7 @@ class InAppDonationFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    viewModel.skuDetailsClickListener = OnSkuDetailsClickListener { skuDetails ->
+    binding.skuDetailsClickListener = OnSkuDetailsClickListener { skuDetails ->
       try {
         billingProvider.purchase(requireActivity(), skuDetails)
       } catch (e: InAppBillingProviderException) {
@@ -80,7 +80,6 @@ class InAppDonationViewModel @Inject constructor(
   billingProvider: InAppBillingProvider,
 ) : ViewModel() {
 
-  var skuDetailsClickListener = OnSkuDetailsClickListener {}
   val skuDetails = MutableStateFlow<List<InAppBillingProvider.SkuDetails>>(emptyList())
   val isLoading = MutableStateFlow(true)
   val error = MutableStateFlow<Throwable?>(null)

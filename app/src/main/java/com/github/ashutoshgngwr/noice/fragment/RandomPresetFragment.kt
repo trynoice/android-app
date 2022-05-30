@@ -28,7 +28,7 @@ import com.trynoice.api.client.models.SoundTag
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -134,8 +134,8 @@ class RandomPresetViewModel @Inject constructor(
   private val presetRepository: PresetRepository,
 ) : ViewModel() {
 
-  private val tagsResource = MutableStateFlow<Resource<List<SoundTag>>>(Resource.Loading())
-  private val generatePresetResource = MutableStateFlow<Resource<Preset>?>(null)
+  private val tagsResource = MutableSharedFlow<Resource<List<SoundTag>>>()
+  private val generatePresetResource = MutableSharedFlow<Resource<Preset>>()
 
   val isLoading: StateFlow<Boolean> = combine(tagsResource, generatePresetResource) { t, p ->
     t is Resource.Loading || p is Resource.Loading
@@ -157,7 +157,7 @@ class RandomPresetViewModel @Inject constructor(
 
   internal val generatePresetErrorStrRes: StateFlow<Int?> = generatePresetResource.transform { r ->
     emit(
-      when (r?.error) {
+      when (r.error) {
         null -> null
         is NetworkError -> R.string.network_error
         else -> R.string.unknown_error
@@ -166,7 +166,7 @@ class RandomPresetViewModel @Inject constructor(
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   internal val generatedPreset: StateFlow<Preset?> = generatePresetResource.transform { r ->
-    emit(r?.data)
+    emit(r.data)
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   init {

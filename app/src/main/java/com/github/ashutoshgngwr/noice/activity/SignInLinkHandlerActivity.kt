@@ -15,7 +15,7 @@ import com.github.ashutoshgngwr.noice.repository.errors.NotSignedInError
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flowOn
@@ -64,7 +64,7 @@ class SignInLinkHandlerViewModel @Inject constructor(
   private val accountRepository: AccountRepository,
 ) : ViewModel() {
 
-  private val signInResource = MutableStateFlow<Resource<Unit>>(Resource.Loading())
+  private val signInResource = MutableSharedFlow<Resource<Unit>>()
 
   val isSigningIn: StateFlow<Boolean> = signInResource.transform { r ->
     emit(r is Resource.Loading)

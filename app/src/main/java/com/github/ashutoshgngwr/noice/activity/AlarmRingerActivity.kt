@@ -95,7 +95,7 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     // https://developer.android.com/reference/android/app/Activity#onNewIntent(android.content.Intent)
     val preset = presetRepository.get(intent.getStringExtra(EXTRA_PRESET_ID))
     if (preset == null) {
-      Log.w(LOG_TAG, "onResume(): preset is null")
+      Log.w(LOG_TAG, "onResume: preset is null")
       finish()
       return
     }
@@ -119,7 +119,7 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
   override fun onBackPressed() = Unit
 
   override fun onSlideComplete(view: SlideToActView) {
-    Log.d(LOG_TAG, "onStop(): pausing playback")
+    Log.d(LOG_TAG, "onSlideComplete: pausing playback")
     binding.dismissSlider.isVisible = false
     binding.dismissProgress.isVisible = true
     playbackController.pause()

@@ -26,7 +26,7 @@ import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flowOn
@@ -59,7 +59,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
 
   private var isConnectedToInternet = false
   private var presets = emptyList<Preset>()
-  private val isSubscribed = MutableStateFlow(false)
+  private val isSubscribed = MutableSharedFlow<Boolean>()
 
   private val mainActivityPi: PendingIntent by lazy {
     var piFlags = PendingIntent.FLAG_UPDATE_CURRENT

@@ -68,7 +68,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         getString(R.string.audio_quality_ultra),
       )
 
-      val values = SettingsRepository.AudioQuality.values()
+      val values = arrayOf(
+        SettingsRepository.AudioQuality.LOW,
+        SettingsRepository.AudioQuality.MEDIUM,
+        SettingsRepository.AudioQuality.HIGH,
+        SettingsRepository.AudioQuality.ULTRA_HIGH,
+      )
+
       summary = entries[values.indexOf(settingsRepository.getAudioQuality())]
       setOnPreferenceClickListener {
         DialogFragment.show(childFragmentManager) {
