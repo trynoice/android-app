@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +10,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignInFormFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import org.apache.commons.validator.routines.EmailValidator
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -67,23 +72,21 @@ class SignInFormViewModel @Inject constructor(savedStateHandle: SavedStateHandle
     .isReturningUser
 
   val name = MutableStateFlow("")
-  val isNameValid = MutableStateFlow(isReturningUser)
   val email = MutableStateFlow("")
-  val isEmailValid = MutableStateFlow(false)
 
-  fun validateName() {
+  val isNameValid: StateFlow<Boolean> = name.transform { name ->
     // maxLength: 64
     // minLength: 1
-    val v = name.value
-    isNameValid.value = isReturningUser || (v.isNotBlank() && v.length <= 64)
-  }
+    emit(isReturningUser || (name.isNotBlank() && name.length <= 64))
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
-  fun validateEmail() {
+  val isEmailValid: StateFlow<Boolean> = email.transform { email ->
     // maxLength: 64
     // minLength: 3
-    val v = email.value
-    isEmailValid.value = v.isNotBlank()
-      && v.length <= 64
-      && EmailValidator.getInstance(false, false).isValid(v)
-  }
+    emit(
+      email.isNotBlank()
+        && email.length <= 64
+        && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    )
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 }

@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
-import org.apache.commons.validator.routines.EmailValidator
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -99,7 +99,7 @@ class EditAccountDetailsViewModel @Inject constructor(
     emit(
       email.isNotBlank()
         && email.length <= 64
-        && EmailValidator.getInstance(false, false).isValid(email)
+        && Patterns.EMAIL_ADDRESS.matcher(email).matches()
     )
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 

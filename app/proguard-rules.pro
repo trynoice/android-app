@@ -27,3 +27,7 @@
 
 # Preserve names of all fragment classes for analytics
 -keepnames class com.github.ashutoshgngwr.noice.fragment.*
+
+# keep parcelable and serializable classes
+-keepnames class * extends android.os.Parcelable
+-keepnames class * extends java.io.Serializable

@@ -64,7 +64,6 @@
         <com.google.android.material.textfield.TextInputEditText
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:afterTextChanged="@{() -> viewModel.validateName()}"
           android:inputType="textCapWords"
           android:text="@={viewModel.name}" />
 
@@ -86,7 +85,6 @@
         <com.google.android.material.textfield.TextInputEditText
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:afterTextChanged="@{() -> viewModel.validateEmail()}"
           android:inputType="textWebEmailAddress"
           android:text="@={viewModel.email}" />
 
