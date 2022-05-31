@@ -41,10 +41,21 @@ class GooglePlaySubscriptionBillingProvider(
       activeSubscription
     }
 
-    val skuDetails = billingProvider.queryDetails(InAppBillingProvider.SkuType.SUBS, listOf(sku))
+    // we have set-up the Google Play subscription products such that each subscription has a single
+    // base plan with at-most two offers (including the base plan without an offer). It may have
+    // multiple pricing phases and the best way to find the the correct offer is to look for an
+    // offer with maximum number of pricing phases. The offer with most number of pricing phases
+    // should be the most economical offer.
+    val details = billingProvider.queryDetails(InAppBillingProvider.ProductType.SUBS, listOf(sku))
+    val offerToken = details.first()
+      .subscriptionOfferDetails
+      ?.maxByOrNull { it.pricingPhases.size }
+      ?.offerToken
+
     billingProvider.purchase(
       activity,
-      skuDetails.first(),
+      details.first(),
+      subscriptionOfferToken = offerToken,
       oldPurchaseToken = activePurchaseToken,
       obfuscatedAccountId = subscription.id.toString(),
     )

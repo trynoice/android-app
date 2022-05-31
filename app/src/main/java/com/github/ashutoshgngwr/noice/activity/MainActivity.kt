@@ -227,7 +227,7 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   override fun onComplete(purchase: InAppBillingProvider.Purchase) {
     analyticsProvider.logEvent("purchase_complete", bundleOf())
-    if (DonationFragmentProvider.IN_APP_DONATION_SKUS.containsAll(purchase.skus)) {
+    if (DonationFragmentProvider.IN_APP_DONATION_PRODUCTS.containsAll(purchase.productIds)) {
       navController.navigate(
         R.id.donation_purchased_callback,
         DonationPurchasedCallbackFragmentArgs(purchase).toBundle()
