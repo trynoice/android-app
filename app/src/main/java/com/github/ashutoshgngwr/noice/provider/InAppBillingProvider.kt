@@ -17,25 +17,27 @@ interface InAppBillingProvider {
   fun setPurchaseListener(listener: PurchaseListener?)
 
   /**
-   * Query details of the given [skus].
+   * Query details of the given [productIds].
    *
-   * @return List of [SkuDetails] for provided [skus].
+   * @return a list of [ProductDetails] for provided [productIds].
    * @throws InAppBillingProviderException when the query fails.
    */
-  suspend fun queryDetails(type: SkuType, skus: List<String>): List<SkuDetails>
+  suspend fun queryDetails(type: ProductType, productIds: List<String>): List<ProductDetails>
 
   /**
-   * Starts purchase flow for the given [sku].
+   * Starts purchase flow for the given product [details].
    *
    * @param activity current activity context to launch the billing flow.
-   * @param sku [SkuDetails] of the in-app product or subscription to purchase.
+   * @param details [ProductDetails] of the in-app product or subscription to purchase.
+   * @param subscriptionOfferToken selected offer token for subscription products.
    * @param oldPurchaseToken purchase token of the active subscription to launch an upgrade flow.
    * @param obfuscatedAccountId an identifier to identify purchase on the server-side.
    * @throws InAppBillingProviderException on failing to launch the billing flow.
    */
   fun purchase(
     activity: Activity,
-    sku: SkuDetails,
+    details: ProductDetails,
+    subscriptionOfferToken: String? = null,
     oldPurchaseToken: String? = null,
     obfuscatedAccountId: String? = null,
   )
@@ -71,27 +73,43 @@ interface InAppBillingProvider {
   }
 
   /**
-   * Declares constants used by Google IAB to distinguish in-app and subscriptions SKU types.
+   * Declares constants used by Google IAB to distinguish in-app and subscriptions product types.
    */
-  enum class SkuType(val value: String) : Serializable {
+  enum class ProductType(val value: String) : Serializable {
     INAPP("inapp"),
     SUBS("subs"),
   }
 
   /**
-   * a wrapper for the SkuDetails object from Google IAB.
+   * a wrapper for the ProductDetails object from Google IAB.
    */
-  data class SkuDetails(
+  data class ProductDetails(
+    val oneTimeOfferDetails: OneTimeOfferDetails?,
+    val subscriptionOfferDetails: List<SubscriptionOfferDetails>?,
+    val rawObject: Any,
+  ) : Serializable
+
+  data class OneTimeOfferDetails(
     val price: String,
     val priceAmountMicros: Long,
-    val originalJSON: String,
+  ) : Serializable
+
+  data class SubscriptionOfferDetails(
+    val offerToken: String,
+    val pricingPhases: List<SubscriptionPricingPhase>,
+  ) : Serializable
+
+  data class SubscriptionPricingPhase(
+    val price: String,
+    val priceAmountMicros: Long,
+    val billingPeriod: String,
   ) : Serializable
 
   /**
    * a wrapper for the Purchase object from Google IAB.
    */
   data class Purchase(
-    val skus: List<String>,
+    val productIds: List<String>,
     val purchaseToken: String,
     val purchaseState: Int,
     val obfuscatedAccountId: String?,
@@ -111,13 +129,14 @@ class InAppBillingProviderException(msg: String) : Exception(msg)
 object DummyInAppBillingProvider : InAppBillingProvider {
   override fun setPurchaseListener(listener: InAppBillingProvider.PurchaseListener?) = Unit
   override suspend fun queryDetails(
-    type: InAppBillingProvider.SkuType,
-    skus: List<String>
-  ): List<InAppBillingProvider.SkuDetails> = emptyList()
+    type: InAppBillingProvider.ProductType,
+    productIds: List<String>,
+  ): List<InAppBillingProvider.ProductDetails> = emptyList()
 
   override fun purchase(
     activity: Activity,
-    sku: InAppBillingProvider.SkuDetails,
+    details: InAppBillingProvider.ProductDetails,
+    subscriptionOfferToken: String?,
     oldPurchaseToken: String?,
     obfuscatedAccountId: String?,
   ) = Unit

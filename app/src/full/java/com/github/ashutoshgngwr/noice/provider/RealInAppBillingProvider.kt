@@ -2,30 +2,29 @@ package com.github.ashutoshgngwr.noice.provider
 
 import android.app.Activity
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.util.Base64
 import android.util.Log
 import androidx.core.content.edit
-import androidx.core.os.postDelayed
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ConsumeParams
+import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
-import com.android.billingclient.api.SkuDetails
-import com.android.billingclient.api.SkuDetailsParams
+import com.android.billingclient.api.QueryProductDetailsParams
+import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.consumePurchase
+import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
-import com.android.billingclient.api.querySkuDetails
 import com.github.ashutoshgngwr.noice.ext.getMutableStringSet
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.security.KeyFactory
 import java.security.PublicKey
@@ -52,7 +51,6 @@ class RealInAppBillingProvider(
 
   private val securityKey: PublicKey
   private val client: BillingClient
-  private val handler = Handler(Looper.getMainLooper())
   private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
   private val gson = GsonBuilder().create()
 
@@ -101,9 +99,9 @@ class RealInAppBillingProvider(
       prefs.getStringSet(PREF_PENDING_NOTIFICATIONS, null)?.forEach { json ->
         val bpp = gson.fromJson(json, InAppBillingProvider.Purchase::class.java)
         if (bpp.purchaseState == Purchase.PurchaseState.PENDING) {
-          handler.post { listener.onPending(bpp) }
+          defaultScope.launch(Dispatchers.Main) { listener.onPending(bpp) }
         } else if (bpp.purchaseState == Purchase.PurchaseState.PURCHASED) {
-          handler.post { listener.onComplete(bpp) }
+          defaultScope.launch(Dispatchers.Main) { listener.onComplete(bpp) }
         }
       }
 
@@ -111,44 +109,74 @@ class RealInAppBillingProvider(
     }
 
   override suspend fun queryDetails(
-    type: InAppBillingProvider.SkuType,
-    skus: List<String>
-  ): List<InAppBillingProvider.SkuDetails> {
-    val p = SkuDetailsParams.newBuilder()
-      .setSkusList(skus)
-      .setType(type.value)
+    type: InAppBillingProvider.ProductType,
+    productIds: List<String>
+  ): List<InAppBillingProvider.ProductDetails> {
+    val result = QueryProductDetailsParams.newBuilder()
+      .setProductList(productIds.map { productId ->
+        QueryProductDetailsParams.Product.newBuilder()
+          .setProductId(productId)
+          .setProductType(type.value)
+          .build()
+      })
       .build()
+      .let { client.queryProductDetails(it) }
 
-    val result = client.querySkuDetails(p)
     if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
       throw inAppBillingProviderException(result.billingResult)
     }
 
-    return result.skuDetailsList?.map {
-      InAppBillingProvider.SkuDetails(it.price, it.priceAmountMicros, it.originalJson)
-    } ?: throw InAppBillingProviderException("sku details list is null")
+    return result.productDetailsList?.map { productDetails ->
+      InAppBillingProvider.ProductDetails(
+        oneTimeOfferDetails = productDetails.oneTimePurchaseOfferDetails?.let { offerDetails ->
+          InAppBillingProvider.OneTimeOfferDetails(
+            price = offerDetails.formattedPrice,
+            priceAmountMicros = offerDetails.priceAmountMicros,
+          )
+        },
+        subscriptionOfferDetails = productDetails.subscriptionOfferDetails?.map { offerDetails ->
+          InAppBillingProvider.SubscriptionOfferDetails(
+            offerToken = offerDetails.offerToken,
+            pricingPhases = offerDetails.pricingPhases.pricingPhaseList.map { pricingPhase ->
+              InAppBillingProvider.SubscriptionPricingPhase(
+                price = pricingPhase.formattedPrice,
+                priceAmountMicros = pricingPhase.priceAmountMicros,
+                billingPeriod = pricingPhase.billingPeriod,
+              )
+            },
+          )
+        },
+        rawObject = productDetails,
+      )
+    } ?: throw InAppBillingProviderException("product details list is null")
   }
 
   override fun purchase(
     activity: Activity,
-    sku: InAppBillingProvider.SkuDetails,
+    details: InAppBillingProvider.ProductDetails,
+    subscriptionOfferToken: String?,
     oldPurchaseToken: String?,
     obfuscatedAccountId: String?,
   ) {
-    val paramsBuilder = BillingFlowParams.newBuilder()
-      .setSkuDetails(SkuDetails(sku.originalJSON))
+    val productDetailsParamsBuilder = BillingFlowParams.ProductDetailsParams.newBuilder()
+      .setProductDetails(details.rawObject as ProductDetails)
+    subscriptionOfferToken?.also { productDetailsParamsBuilder.setOfferToken(it) }
 
-    oldPurchaseToken?.let {
-      paramsBuilder.setSubscriptionUpdateParams(
+    val billingFlowParamsBuilder = BillingFlowParams.newBuilder()
+      .setIsOfferPersonalized(false)
+      .setProductDetailsParamsList(listOf(productDetailsParamsBuilder.build()))
+
+    oldPurchaseToken?.also {
+      billingFlowParamsBuilder.setSubscriptionUpdateParams(
         BillingFlowParams.SubscriptionUpdateParams.newBuilder()
-          .setOldSkuPurchaseToken(it)
-          .setReplaceSkusProrationMode(BillingFlowParams.ProrationMode.IMMEDIATE_WITH_TIME_PRORATION)
+          .setOldPurchaseToken(it)
+          .setReplaceProrationMode(BillingFlowParams.ProrationMode.IMMEDIATE_WITH_TIME_PRORATION)
           .build()
       )
     }
 
-    obfuscatedAccountId?.let { paramsBuilder.setObfuscatedAccountId(it) }
-    val result = client.launchBillingFlow(activity, paramsBuilder.build())
+    obfuscatedAccountId?.also { billingFlowParamsBuilder.setObfuscatedAccountId(it) }
+    val result = client.launchBillingFlow(activity, billingFlowParamsBuilder.build())
     if (result.responseCode != BillingClient.BillingResponseCode.OK) {
       throw inAppBillingProviderException(result)
     }
@@ -181,8 +209,8 @@ class RealInAppBillingProvider(
   private suspend fun refreshPurchases() {
     try {
       processPurchases(
-        queryPurchases(InAppBillingProvider.SkuType.INAPP)
-          + queryPurchases(InAppBillingProvider.SkuType.SUBS),
+        queryPurchases(InAppBillingProvider.ProductType.INAPP)
+          + queryPurchases(InAppBillingProvider.ProductType.SUBS),
         true
       )
     } catch (e: InAppBillingProviderException) {
@@ -201,7 +229,7 @@ class RealInAppBillingProvider(
       when (p.purchaseState) {
         Purchase.PurchaseState.PURCHASED -> {
           if (!isVerifiedPurchase(p)) {
-            Log.i(LOG_TAG, "processPurchases: signature verification failed sku=${p.skus}")
+            Log.i(LOG_TAG, "processPurchases: signature verification failed products=${p.products}")
             continue
           }
 
@@ -216,7 +244,7 @@ class RealInAppBillingProvider(
           }
         }
 
-        else -> Log.i(LOG_TAG, "processPurchases: unspecified purchase state skus=${p.skus}")
+        else -> Log.i(LOG_TAG, "processPurchases: invalid purchase state products=${p.products}")
       }
     }
 
@@ -234,12 +262,22 @@ class RealInAppBillingProvider(
   }
 
   private fun retryServiceConnectionWithExponentialBackoff() {
-    handler.postDelayed(reconnectDelayMillis) { client.startConnection(this) }
+    this.also { listener ->
+      defaultScope.launch(Dispatchers.Main) {
+        delay(reconnectDelayMillis)
+        client.startConnection(listener)
+      }
+    }
+
     reconnectDelayMillis = min(2 * reconnectDelayMillis, RECONNECT_DELAY_MAX_MILLIS)
   }
 
-  private suspend fun queryPurchases(type: InAppBillingProvider.SkuType): List<Purchase> {
-    val result = client.queryPurchasesAsync(type.value)
+  private suspend fun queryPurchases(type: InAppBillingProvider.ProductType): List<Purchase> {
+    val result = QueryPurchasesParams.newBuilder()
+      .setProductType(type.value)
+      .build()
+      .let { client.queryPurchasesAsync(it) }
+
     if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
       throw inAppBillingProviderException(result.billingResult)
     }
@@ -274,7 +312,7 @@ class RealInAppBillingProvider(
 
   private fun notifyPurchase(purchase: Purchase) {
     val bpp = InAppBillingProvider.Purchase(
-      skus = purchase.skus,
+      productIds = purchase.products,
       purchaseToken = purchase.purchaseToken,
       purchaseState = purchase.purchaseState,
       obfuscatedAccountId = purchase.accountIdentifiers?.obfuscatedAccountId,
@@ -292,11 +330,11 @@ class RealInAppBillingProvider(
       }
 
       purchase.purchaseState == Purchase.PurchaseState.PENDING -> {
-        handler.post { purchaseListener?.onPending(bpp) }
+        defaultScope.launch(Dispatchers.Main) { purchaseListener?.onPending(bpp) }
       }
 
       purchase.purchaseState == Purchase.PurchaseState.PURCHASED -> {
-        handler.post { purchaseListener?.onComplete(bpp) }
+        defaultScope.launch(Dispatchers.Main) { purchaseListener?.onComplete(bpp) }
       }
     }
   }

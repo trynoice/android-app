@@ -15,7 +15,7 @@ interface DonationFragmentProvider {
   fun get(): Fragment
 
   companion object {
-    val IN_APP_DONATION_SKUS = listOf(
+    val IN_APP_DONATION_PRODUCTS = listOf(
       "donate_usd1", "donate_usd2", "donate_usd5",
       "donate_usd10", "donate_usd15", "donate_usd25",
     )

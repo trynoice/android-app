@@ -43,9 +43,9 @@ class InAppDonationFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    binding.skuDetailsClickListener = OnSkuDetailsClickListener { skuDetails ->
+    binding.productSelectedListener = OnProductSelectedListener { productDetails ->
       try {
-        billingProvider.purchase(requireActivity(), skuDetails)
+        billingProvider.purchase(requireActivity(), productDetails)
       } catch (e: InAppBillingProviderException) {
         Log.w(LOG_TAG, "onViewCreated: failed to launch billing flow", e)
         showErrorSnackbar(R.string.failed_to_purchase)
@@ -54,23 +54,23 @@ class InAppDonationFragment : Fragment() {
   }
 }
 
-@BindingAdapter("donationSkuDetailsList", "onClickSkuDetails")
-fun setDonationSkuDetailsList(
+@BindingAdapter("donationProductDetailsList", "onProductSelected")
+fun setDonationProductDetailsList(
   container: ViewGroup,
-  skuDetailsList: List<InAppBillingProvider.SkuDetails>,
-  clickListener: OnSkuDetailsClickListener
+  productDetailsList: List<InAppBillingProvider.ProductDetails>,
+  selectedListener: OnProductSelectedListener,
 ) {
-  val sortedSkuDetailsList = skuDetailsList.sortedBy { it.priceAmountMicros }
-  if (container.tag == sortedSkuDetailsList) {
+  val sorted = productDetailsList.sortedBy { it.oneTimeOfferDetails?.priceAmountMicros }
+  if (container.tag == sorted) {
     return
   }
 
-  container.tag = sortedSkuDetailsList
+  container.tag = sorted
   container.removeAllViews()
-  sortedSkuDetailsList.forEach { skuDetails ->
+  sorted.forEach { productDetails ->
     val b = MaterialButton(container.context, null, R.attr.materialButtonOutlinedStyle)
-    b.text = skuDetails.price
-    b.setOnClickListener { clickListener.onClick(skuDetails) }
+    b.text = productDetails.oneTimeOfferDetails?.price
+    b.setOnClickListener { selectedListener.onProductSelected(productDetails) }
     container.addView(b)
   }
 }
@@ -80,7 +80,7 @@ class InAppDonationViewModel @Inject constructor(
   billingProvider: InAppBillingProvider,
 ) : ViewModel() {
 
-  val skuDetails = MutableStateFlow<List<InAppBillingProvider.SkuDetails>>(emptyList())
+  val productDetails = MutableStateFlow<List<InAppBillingProvider.ProductDetails>>(emptyList())
   val isLoading = MutableStateFlow(true)
   val error = MutableStateFlow<Throwable?>(null)
 
@@ -88,13 +88,13 @@ class InAppDonationViewModel @Inject constructor(
     viewModelScope.launch(Dispatchers.IO) {
       try {
         val details = billingProvider.queryDetails(
-          InAppBillingProvider.SkuType.INAPP,
-          DonationFragmentProvider.IN_APP_DONATION_SKUS,
+          InAppBillingProvider.ProductType.INAPP,
+          DonationFragmentProvider.IN_APP_DONATION_PRODUCTS,
         )
 
-        skuDetails.emit(details)
+        productDetails.emit(details)
       } catch (e: InAppBillingProviderException) {
-        Log.w(LOG_TAG, "failed to get sku details", e)
+        Log.w(LOG_TAG, "failed to get product details", e)
         error.emit(e)
       } finally {
         isLoading.emit(false)
@@ -107,6 +107,6 @@ class InAppDonationViewModel @Inject constructor(
   }
 }
 
-fun interface OnSkuDetailsClickListener {
-  fun onClick(skuDetails: InAppBillingProvider.SkuDetails)
+fun interface OnProductSelectedListener {
+  fun onProductSelected(productDetails: InAppBillingProvider.ProductDetails)
 }
