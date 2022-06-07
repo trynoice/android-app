@@ -104,6 +104,18 @@
         android:text="@{viewModel.isReturningUser ? @string/sign_in : @string/sign_up}"
         tools:text="@string/sign_up" />
 
+      <Space
+        android:layout_width="wrap_content"
+        android:layout_height="16dp" />
+
+      <com.github.ashutoshgngwr.noice.widget.MarkdownTextView
+        style="@style/Widget.App.TextView.Message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up_tos"
+        android:textAppearance="?attr/textAppearanceBody2"
+        app:isVisible="@{!viewModel.isReturningUser}" />
+
     </LinearLayout>
 
   </ScrollView>
