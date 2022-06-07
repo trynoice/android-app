@@ -18,7 +18,6 @@ import kotlinx.coroutines.sync.withLock
 import okhttp3.Cache
 import okhttp3.OkHttp
 import okhttp3.OkHttpClient
-import okhttp3.internal.userAgent
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.HttpException
 import retrofit2.Retrofit
@@ -35,8 +34,8 @@ import java.util.*
 class NoiceApiClient(
   context: Context,
   gson: Gson,
-  apiBaseUrl: String = "https://api.trynoice.com",
-  cdnBaseUrl: String = "https://cdn.trynoice.com",
+  apiBaseUrl: String = if (BuildConfig.DEBUG) "https://api.staging.trynoice.com" else "https://api.trynoice.com",
+  cdnBaseUrl: String = if (BuildConfig.DEBUG) "https://cdn.staging.trynoice.com" else "https://cdn.trynoice.com",
   userAgent: String = "noice-api-client",
 ) {
 
