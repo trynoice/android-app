@@ -96,7 +96,7 @@ class NoiceApiClient(
     retrofit.newBuilder()
       .client(
         okhttpClient.newBuilder()
-          .cache(Cache(File(context.cacheDir, "cdn-cache"), 256 * 1024 * 1024 /* 256 MB */))
+          .cache(Cache(File(context.cacheDir, "cdn-cache"), 1024 * 1024 * 1024 /* 1 GB */))
           .build()
       )
       .baseUrl(cdnBaseUrl)
