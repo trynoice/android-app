@@ -5,7 +5,6 @@ import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.upstream.BaseDataSource
 import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DataSourceException
 import com.google.android.exoplayer2.upstream.DataSpec
 import com.google.android.exoplayer2.upstream.HttpDataSource.HttpDataSourceException
 import com.google.android.exoplayer2.upstream.HttpDataSource.InvalidResponseCodeException
@@ -35,12 +34,16 @@ class CdnSoundDataSource private constructor(
     // mostly copied from the okhttp data source from the okhttp extension for ExoPlayer.
     // https://github.com/google/ExoPlayer/blob/release-v2/extensions/okhttp/
 
+    // We're not using range headers since OkHttp won't cache partial content responses. Requesting
+    // for a full resource should be a more economical solution since CDN always responds with
+    // `Cache-Control` and `ETag` headers and the API Client is configured to cache responses for
+    // CDN requests.
+
     this.dataSpec = dataSpec
     transferInitializing(dataSpec)
-    val rangeEnd = if (dataSpec.length == LENGTH_UNSET) "" else dataSpec.length.toString()
     val response = try {
       apiClient.cdn()
-        .resource(requireNotNull(dataSpec.uri.path), "bytes=${dataSpec.position}-${rangeEnd}")
+        .resource(requireNotNull(dataSpec.uri.path))
         .execute()
     } catch (e: IOException) {
       throw HttpDataSourceException.createForIOException(
@@ -50,37 +53,23 @@ class CdnSoundDataSource private constructor(
 
     this.response = response
     if (!response.isSuccessful) { // handle unsuccessful response
-      val cause = if (response.code() == 416) {
-        DataSourceException(PlaybackException.ERROR_CODE_IO_READ_POSITION_OUT_OF_RANGE)
-      } else {
-        IOException(HttpException(response))
-      }
-
-      try {
-        // must throw InvalidResponseCodeException here as our load error policy depends on it.
-        throw InvalidResponseCodeException(
-          response.code(),
-          response.message(),
-          cause,
-          response.headers().toMultimap(),
-          dataSpec,
-          Util.EMPTY_BYTE_ARRAY,
-        )
-      } finally {
-        closeQuietly()
-      }
+      closeQuietly()
+      throw InvalidResponseCodeException(
+        response.code(),
+        response.message(),
+        IOException(HttpException(response)),
+        response.headers().toMultimap(),
+        dataSpec,
+        Util.EMPTY_BYTE_ARRAY,
+      )
     }
 
-    // If we requested a range starting from a non-zero position and received a 200 rather than a
-    // 206, then the server does not support partial requests. We'll need to manually skip to the
-    // requested position.
-    val toSkip = if (response.code() == 200 && dataSpec.position != 0L) dataSpec.position else 0
     // Determine the length of the data to be read, after skipping.
     val toRead = if (dataSpec.length != LENGTH_UNSET) {
       dataSpec.length
     } else {
       val contentLength = response?.body()?.contentLength() ?: -1L
-      if (contentLength != -1L) contentLength - toSkip else LENGTH_UNSET
+      if (contentLength != -1L) contentLength - dataSpec.position else LENGTH_UNSET
     }
 
     opened = true
@@ -88,9 +77,9 @@ class CdnSoundDataSource private constructor(
     try {
       val skipped = requireNotNull(response.body())
         .byteStream()
-        .skip(toSkip)
+        .skip(dataSpec.position)
 
-      if (skipped != toSkip) {
+      if (skipped != dataSpec.position) {
         closeQuietly()
         throw HttpDataSourceException(
           dataSpec,
