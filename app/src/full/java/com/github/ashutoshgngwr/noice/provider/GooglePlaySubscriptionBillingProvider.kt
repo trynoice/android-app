@@ -16,7 +16,7 @@ class GooglePlaySubscriptionBillingProvider(
 ) : SubscriptionBillingProvider {
 
   override suspend fun getPlans(): List<SubscriptionPlan> {
-    return apiClient.subscriptions().getPlans(SubscriptionPlan.PROVIDER_GOOGLE_PLAY)
+    return apiClient.subscriptions().getPlans(SubscriptionPlan.Provider.GOOGLE_PLAY)
   }
 
   override suspend fun launchBillingFlow(
@@ -24,7 +24,7 @@ class GooglePlaySubscriptionBillingProvider(
     plan: SubscriptionPlan,
     activeSubscription: Subscription?,
   ) {
-    require(plan.provider == SubscriptionPlan.PROVIDER_GOOGLE_PLAY) {
+    require(plan.provider == SubscriptionPlan.Provider.GOOGLE_PLAY) {
       "google play provider launched billing flow for non-google-play subscription plan"
     }
 
@@ -62,6 +62,6 @@ class GooglePlaySubscriptionBillingProvider(
   }
 
   override fun canUpgrade(s: Subscription): Boolean {
-    return s.isActive && s.plan.provider == SubscriptionPlan.PROVIDER_GOOGLE_PLAY
+    return s.isActive && s.plan.provider == SubscriptionPlan.Provider.GOOGLE_PLAY
   }
 }

@@ -64,7 +64,7 @@ class StripeSubscriptionBillingProvider(
 ) : SubscriptionBillingProvider {
 
   override suspend fun getPlans(): List<SubscriptionPlan> {
-    return apiClient.subscriptions().getPlans(SubscriptionPlan.PROVIDER_STRIPE)
+    return apiClient.subscriptions().getPlans(SubscriptionPlan.Provider.STRIPE)
   }
 
   override suspend fun launchBillingFlow(
@@ -72,7 +72,7 @@ class StripeSubscriptionBillingProvider(
     plan: SubscriptionPlan,
     activeSubscription: Subscription?,
   ) {
-    require(plan.provider == SubscriptionPlan.PROVIDER_STRIPE) {
+    require(plan.provider == SubscriptionPlan.Provider.STRIPE) {
       "stripe provider launched subscription flow for non-stripe plan"
     }
 

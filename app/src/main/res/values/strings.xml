@@ -294,4 +294,5 @@
     <string name="tags_load_error">Oh no! We couldn\'t load sound keywords. %1$s Please try again!</string>
     <string name="generate_preset_error">Uh-oh! We failed to generate a preset. %1$s Please try again!</string>
     <string name="sign_up_tos">By continuing, you agree to our [Terms of Service](https://trynoice.com/terms-of-service) and [Privacy Policy](https://trynoice.com/privacy-policy).</string>
+    <string name="gift_card">Gift Card</string>
 </resources>

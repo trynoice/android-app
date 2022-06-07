@@ -37,7 +37,7 @@ interface SubscriptionApi {
    * @throws java.io.IOException on network error.
    */
   @GET("/v1/subscriptions/plans")
-  suspend fun getPlans(@Query("provider") provider: String? = null): List<SubscriptionPlan>
+  suspend fun getPlans(@Query("provider") provider: SubscriptionPlan.Provider? = null): List<SubscriptionPlan>
 
   /**
    * Initiates the subscription flow for the authenticated user. The flow might vary with payment
