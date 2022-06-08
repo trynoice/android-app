@@ -23,10 +23,6 @@
     <string name="play_pause">putar atau jeda</string>
     <string name="stop">Berhenti</string>
     <string name="volume">Volume suara</string>
-    <string name="birds">Burung</string>
-    <string name="distant_thunder">Gemuruh di kejauhan</string>
-    <string name="light_rain">Hujan ringan</string>
-    <string name="rolling_thunder">Gemuruh bergulir</string>
     <string name="delete">Hapus</string>
     <string name="open_context_menu">Buka menu konteks</string>
     <string name="preset_delete_confirmation">Konfirmasi hapus %s?</string>

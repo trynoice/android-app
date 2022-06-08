@@ -21,10 +21,6 @@
     <string name="play_pause">odtwarzaj lub wstrzymaj</string>
     <string name="stop">Zakończ</string>
     <string name="volume">Głośność dźwięku</string>
-    <string name="birds">Ptaki</string>
-    <string name="distant_thunder">Odległy grzmot</string>
-    <string name="light_rain">Lekki deszcz</string>
-    <string name="rolling_thunder">Dudniący grzmot</string>
     <string name="delete">Usuń</string>
     <string name="open_context_menu">Otwórz menu kontekstowe</string>
     <string name="preset_delete_confirmation">Czy na pewno chcesz usunąć %s?</string>

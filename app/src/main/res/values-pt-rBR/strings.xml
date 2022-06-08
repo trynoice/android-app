@@ -23,10 +23,6 @@
     <string name="play_pause">tocar ou pausar som</string>
     <string name="stop">Parar</string>
     <string name="volume">Volume do som</string>
-    <string name="birds">Pássaros</string>
-    <string name="distant_thunder">Trovoadas distantes</string>
-    <string name="light_rain">Chuva leve</string>
-    <string name="rolling_thunder">Trovoada iminente</string>
     <string name="delete">Remover</string>
     <string name="open_context_menu">Abrir menu</string>
     <string name="preset_delete_confirmation">Deseja mesmo remover \"%s\"?</string>

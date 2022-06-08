@@ -22,10 +22,6 @@
     <string name="play_pause">Lecture ou pause</string>
     <string name="stop">Arrêter</string>
     <string name="volume">Volume</string>
-    <string name="birds">Oiseaux</string>
-    <string name="distant_thunder">Tonnerre distant</string>
-    <string name="light_rain">Pluie légère</string>
-    <string name="rolling_thunder">Roulement de tonnerre</string>
     <string name="delete">Supprimer</string>
     <string name="open_context_menu">Menu contextuel</string>
     <string name="preset_delete_confirmation">Confirmer la suppression de %s ?</string>
@@ -47,7 +43,7 @@
     <string name="app_theme_light">Clair</string>
     <string name="app_theme_dark">Sombre</string>
     <string name="app_theme_system_default">Système</string>
-    <string name="app_description">Détendez-vous et augmentez votre productivité grâce à des bruits naturels apaisants.</string>
+    <string name="app_description">Détendez-vous et améliorez votre concentration grâce à des bruits naturels apaisants.</string>
     <string name="appintro__chromecast_desc">
     Utilisez Noice pour envoyer l\'ambiance créée vers un appareil équipé de Chromecast comme des enceintes, une télé, etc.
   </string>

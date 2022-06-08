@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="light_rain">Let regn</string>
-    <string name="distant_thunder">Fjern torden</string>
-    <string name="birds">Fugle</string>
     <string name="volume">Lydstyrke</string>
     <string name="stop">Stop</string>
     <string name="play_pause">afspil eller paus</string>
@@ -28,4 +25,28 @@
     <string name="help">Hjælp</string>
     <string name="app_theme">Tema</string>
     <string name="about">Om os</string>
+    <string name="library">Bibliotek</string>
+    <string name="add_to_home_screen">Tilføj til hjemmeskærm</string>
+    <string name="delete">Slet</string>
+    <string name="preset_delete_confirmation">Sikker på at slette %s\?</string>
+    <string name="rename">Omdøb</string>
+    <string name="pinned_shortcuts_not_supported">Din standard hjemmeskærm understøtter ikke tilføjning af genveje.</string>
+    <string name="sleep_timer_description">Noice vil selv slukke når tiden går ud. Brug knapperne nedenunder for at tilføje tid og starte timere.</string>
+    <string name="schedule">Plan</string>
+    <string name="wake_up_timer_cancelled">Vågn op timer annuleret!</string>
+    <string name="time_bridge">og</string>
+    <string name="app_theme_light">Lys</string>
+    <plurals name="time_hours">
+        <item quantity="one">%1$d time</item>
+        <item quantity="other">%1$d timer</item>
+    </plurals>
+    <plurals name="time_minutes">
+        <item quantity="one">%1$d minut</item>
+        <item quantity="other">%1$d minutter</item>
+    </plurals>
+    <string name="auto_sleep_schedule_cancelled">Automatisk søvntimer annulleret!</string>
+    <string name="preset_deleted">Forudindstillet slettet!</string>
+    <string name="preset_does_not_exist">Forindstilling findes ikke. Den er muligvis blevet slettet!</string>
+    <string name="preset_info__description">Du har endnu ikke oprettet nogen forudindstillinger. Du kan oprette en forudindstilling ved at gå til biblioteket og afspille lyde. Klik derefter på knappen, der vises i nederste hjørne af skærmen.</string>
+    <string name="presets_as_home_screen_summary">Vis \"presets\" ved appstart (kræver genstart af appen)</string>
 </resources>

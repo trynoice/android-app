@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="wake_up_timer">Despertador</string>
-    <string name="presets">Misturas de sons</string>
+    <string name="wake_up_timer">Temporizador de despertar</string>
+    <string name="presets">Predefinições</string>
     <string name="dismiss">Dispensar</string>
     <string name="cancel">Cancelar</string>
     <string name="random_preset">Mistura aleatória</string>
     <string name="okay">OK</string>
     <string name="intensity">Intensidade</string>
     <string name="submit_feedback">Enviar comentários</string>
-    <string name="support_development">Apoiar desenvolvimento</string>
-    <string name="sleep_timer">Suspensão programada</string>
+    <string name="support_development">Desenvolvimento de suporte</string>
+    <string name="sleep_timer">Despertador</string>
     <string name="report_issue">Reportar problemas</string>
     <string name="library">Biblioteca</string>
     <string name="help">Ajuda</string>
@@ -51,10 +51,6 @@
     <string name="open_context_menu">Abrir menu contextual</string>
     <string name="delete">Eliminar</string>
     <string name="add_to_home_screen">Adicionar ao ecrã inicial</string>
-    <string name="rolling_thunder">Trovoada iminente</string>
-    <string name="light_rain">Chuva ligeira</string>
-    <string name="distant_thunder">Trovoada distante</string>
-    <string name="birds">Pássaros</string>
     <string name="volume">Volume do som</string>
     <string name="stop">Parar</string>
     <string name="play_pause">reproduzir ou pausar</string>

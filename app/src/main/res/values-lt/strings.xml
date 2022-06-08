@@ -103,10 +103,6 @@
     <string name="open_context_menu">Atidaryti kontekstinį meniu</string>
     <string name="delete">Ištrinti</string>
     <string name="add_to_home_screen">Pridėti į pagrindinį ekraną</string>
-    <string name="rolling_thunder">Tolimas griaustinis</string>
-    <string name="light_rain">Lengvas lietus</string>
-    <string name="distant_thunder">Tolimas griaustinis</string>
-    <string name="birds">Paukščiai</string>
     <string name="volume">Garsumas</string>
     <string name="stop">Sustabdyti</string>
     <string name="sound_fade_in_duration_summary">Tolygaus garsėjimo pradžioje trukmė (sekundėmis)</string>

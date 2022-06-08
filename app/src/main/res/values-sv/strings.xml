@@ -18,10 +18,6 @@
     <string name="play_pause">spela eller pausa</string>
     <string name="stop">Stopp</string>
     <string name="volume">Ljudvolym</string>
-    <string name="birds">Fåglar</string>
-    <string name="distant_thunder">Distant åska</string>
-    <string name="light_rain">Milt regn</string>
-    <string name="rolling_thunder">Åskmuller</string>
     <string name="delete">Ta bort</string>
     <string name="open_context_menu">Öppna kontext-meny</string>
     <string name="preset_delete_confirmation">Vill du ta bort %s?</string>

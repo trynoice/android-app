@@ -45,10 +45,6 @@
     <string name="open_context_menu">コンテキストメニューを開く</string>
     <string name="delete">削除</string>
     <string name="add_to_home_screen">ホーム画面に追加</string>
-    <string name="rolling_thunder">轟く雷鳴</string>
-    <string name="light_rain">弱い雨</string>
-    <string name="distant_thunder">遠くの雷鳴</string>
-    <string name="birds">鳥のさえずり</string>
     <string name="volume">音量</string>
     <string name="stop">停止</string>
     <string name="play_pause">再生/一時停止</string>

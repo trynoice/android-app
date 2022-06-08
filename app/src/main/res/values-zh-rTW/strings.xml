@@ -18,16 +18,12 @@
     <string name="play_pause">播放或暫停</string>
     <string name="stop">停止</string>
     <string name="volume">音量</string>
-    <string name="birds">鳥</string>
-    <string name="distant_thunder">遠方傳來的雷聲</string>
     <string name="sleep_timer">睡眠倒數</string>
     <string name="cancel">取消</string>
     <string name="preset_saved">預設音組已儲存！</string>
     <string name="pause">暫停</string>
     <string name="save_preset">儲存預設音組</string>
     <string name="save">儲存</string>
-    <string name="light_rain">毛毛雨</string>
-    <string name="rolling_thunder">雷聲隆隆</string>
     <string name="add_to_home_screen">加到主頁面</string>
     <string name="delete">刪除</string>
     <string name="rename">重新命名</string>

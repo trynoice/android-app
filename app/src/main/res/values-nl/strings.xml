@@ -18,10 +18,6 @@
     <string name="play_pause">Speel af of pauzeer</string>
     <string name="stop">Stop</string>
     <string name="volume">Volume</string>
-    <string name="birds">Vogels</string>
-    <string name="distant_thunder">Onweer in de verte</string>
-    <string name="light_rain">Lichte regenbui</string>
-    <string name="rolling_thunder">Onweer</string>
     <string name="delete">Verwijder</string>
     <string name="open_context_menu">Open optiemenu</string>
     <string name="preset_delete_confirmation">Weet je zeker dat je %s wilt verwijderen?</string>

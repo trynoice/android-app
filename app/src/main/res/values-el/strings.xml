@@ -5,7 +5,7 @@
     <string name="appintro__getting_started_desc_0">Σύρετε προς τα αριστερά για να δείτε όλα τα χαρακτηριστικά!</string>
     <string name="appintro__chromecast_title">Συμβατό με Chromecast</string>
     <string name="appintro__chromecast_desc">Χρησιμοποιήστε την εφαρμογή για μετάδοση του ήχου της σε άλλες συσκευές Chromecast, όπως ηχεία, τηλεοράσεις κλπ.</string>
-    <string name="app_description">Χαλαρώστε και αυξήστε την παραγωγικότητα σας με φυσικό, χαλαρωτικό ήχο.</string>
+    <string name="app_description">Χαλαρώστε και βελτιώστε την συγκέντρωση σας με φυσικό, χαλαρωτικό ήχο.</string>
     <string name="app_theme_system_default">Συστήματος</string>
     <string name="app_theme_dark">Σκούρο</string>
     <string name="app_theme_light">Ανοικτό</string>
@@ -36,10 +36,6 @@
     <string name="open_context_menu">Άνοιγμα μενού περιεχομένου</string>
     <string name="delete">Διαγραφή</string>
     <string name="add_to_home_screen">Προσθήκη στην αρχική οθόνη</string>
-    <string name="rolling_thunder">Κυλιόμενος κεραυνός</string>
-    <string name="light_rain">Ελαφριά βροχή</string>
-    <string name="distant_thunder">Μακρινός κεραυνός</string>
-    <string name="birds">Πουλιά</string>
     <string name="volume">Ένταση ήχου</string>
     <string name="stop">Λήξη</string>
     <string name="play_pause">έναρξη ή παύση</string>

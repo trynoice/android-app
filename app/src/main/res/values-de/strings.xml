@@ -26,10 +26,6 @@
     <string name="play_pause">Abspielen / pausieren</string>
     <string name="stop">Stopp</string>
     <string name="volume">Lautstärke</string>
-    <string name="birds">Vögel</string>
-    <string name="distant_thunder">Ferner Donner</string>
-    <string name="light_rain">Leichter Regen</string>
-    <string name="rolling_thunder">Rollender Donner</string>
     <string name="add_to_home_screen">zum Startbildschirm hinzufügen</string>
     <string name="delete">Löschen</string>
     <string name="open_context_menu">Öffne das Kontext-Menü</string>
@@ -58,7 +54,7 @@
     <string name="app_theme_light">Hell</string>
     <string name="app_theme_dark">Dunkel</string>
     <string name="app_theme_system_default">Systemstandard</string>
-    <string name="app_description">Entspannen Sie sich und steigern Sie Ihre Produktivität mit natürlichen, beruhigenden Geräuschen.</string>
+    <string name="app_description">Entspannen Sie sich und verbessern Sie Ihre Konzentration mit natürlichen beruhigenden Geräuschen.</string>
     <string name="appintro__chromecast_desc">
     Benutze Noice um die Stimmung zu anderen Chromecast aktivierten Geräten wie Lautsprechern, TVs, etc zu übertragen.
   </string>

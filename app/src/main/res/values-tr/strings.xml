@@ -25,10 +25,6 @@
     <string name="play_pause">oynat ya da durdur</string>
     <string name="stop">Bitir</string>
     <string name="volume">Ses seviyesi</string>
-    <string name="birds">Kuşlar</string>
-    <string name="distant_thunder">Uzak gök gürültüsü</string>
-    <string name="light_rain">Hafif yağmur</string>
-    <string name="rolling_thunder">Gök gürlemesi</string>
     <string name="add_to_home_screen">Ana ekrana ekle</string>
     <string name="delete">Sil</string>
     <string name="open_context_menu">İçerik menüsünü aç</string>
@@ -56,7 +52,7 @@
     <string name="app_theme_light">Açık</string>
     <string name="app_theme_dark">Koyu</string>
     <string name="app_theme_system_default">Sistem Varsayılanı</string>
-    <string name="app_description">Doğal sakinleştirici sesle rahatlayın ve üretkenliğinizi arttırın.</string>
+    <string name="app_description">Doğal sakinleştirici sesle rahatlayın ve odaklanmanızı iyileştirin.</string>
     <string name="appintro__chromecast_desc">
     Noice kullanarak hoparlör, TV vb. Chromecast kullanan cihazlara ambiyansı
     yansıtabilirsiniz.

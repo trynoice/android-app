@@ -22,10 +22,6 @@
     <string name="play_pause">बजाएं या रोकें</string>
     <string name="stop">बंद करे</string>
     <string name="volume">ध्वनि की मात्रा</string>
-    <string name="birds">पक्षी</string>
-    <string name="distant_thunder">दूरी पर गड़गड़ाहट</string>
-    <string name="light_rain">हलकी बारिश</string>
-    <string name="rolling_thunder">घूमती गड़गड़ाहट</string>
     <string name="delete">हटाएं</string>
     <string name="open_context_menu">संदर्भ मेनू खोलें</string>
     <string name="preset_delete_confirmation">%s को हटाने की पुष्टि करें?</string>

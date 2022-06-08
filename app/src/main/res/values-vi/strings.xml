@@ -49,7 +49,7 @@
     <string name="appintro__getting_started_desc_0">Vuốt sang trái để biết tất cả tính năng!</string>
     <string name="appintro__chromecast_title">Đã bật Chromecast</string>
     <string name="appintro__chromecast_desc">Sử dụng Noice để truyền sự bao quanh của nó đến các thiết bị có Chromecast khác như loa, TV, v.v.</string>
-    <string name="app_description">Thư giãn và tăng năng suất bằng tiếng ồn tự nhiên để thư giãn.</string>
+    <string name="app_description">Thư giãn và tập trung hơn bằng tiếng ồn tự nhiên thư giãn.</string>
     <string name="app_theme_system_default">Mặc định hệ thống</string>
     <string name="app_theme_dark">Tối</string>
     <string name="app_theme_light">Sáng</string>
@@ -78,10 +78,6 @@
     <string name="open_context_menu">Mở menu ngữ cảnh</string>
     <string name="delete">Xoá</string>
     <string name="add_to_home_screen">Thêm vào màn hình chính</string>
-    <string name="rolling_thunder">Tiếng sấm cuộn</string>
-    <string name="light_rain">Mưa nhỏ</string>
-    <string name="distant_thunder">Tiếng sấm ở xa</string>
-    <string name="birds">Chim chóc</string>
     <string name="volume">Âm lượng âm thanh</string>
     <string name="stop">Dừng</string>
     <string name="play_pause">phát hoặc tạm dừng</string>

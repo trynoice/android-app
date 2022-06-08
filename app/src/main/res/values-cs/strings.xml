@@ -26,10 +26,6 @@
     <string name="play_pause">Přehrát/Pozastavit</string>
     <string name="stop">Stop</string>
     <string name="volume">Hlasitost</string>
-    <string name="birds">Ptáci</string>
-    <string name="distant_thunder">Vzdálená bouřka</string>
-    <string name="light_rain">Slabý déšť</string>
-    <string name="rolling_thunder">Hřímání</string>
     <string name="add_to_home_screen">Přidat na domovskou obrazovku</string>
     <string name="delete">Odstranit</string>
     <string name="open_context_menu">Otevřít kontextovou nabídku</string>

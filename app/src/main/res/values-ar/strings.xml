@@ -13,8 +13,6 @@
     <string name="time_bridge">و</string>
     <string name="rename">إعادة تسمية</string>
     <string name="delete">حذف</string>
-    <string name="light_rain">مطر خفيف</string>
-    <string name="birds">طيور</string>
     <string name="stop">توقّف</string>
     <string name="name">الاسم</string>
     <string name="cancel">إلغاء</string>
@@ -44,8 +42,6 @@
     <string name="preset_delete_confirmation">تأكيد الحذف %s؟</string>
     <string name="open_context_menu">افتح قائمة السياق</string>
     <string name="add_to_home_screen">إضافة إلى الشاشة الرئيسية</string>
-    <string name="rolling_thunder">الرعد المتكرر</string>
-    <string name="distant_thunder">رعد بعيد</string>
     <string name="volume">حجم الصوت</string>
     <string name="save_preset">حفظ الإعداد المسبق</string>
     <string name="preset_saved">تم حفظ الإعداد المسبق!</string>
@@ -111,7 +107,7 @@
     <string name="appintro__getting_started_desc_0">اسحب لليسار للتعرف على جميع الميزات!</string>
     <string name="appintro__chromecast_title">تم تمكين Chromecast</string>
     <string name="appintro__chromecast_desc">استخدم Noice لإرسال أجواءه إلى الأجهزة الأخرى التي تدعم Chromecast مثل مكبرات الصوت وأجهزة التلفزيون وما إلى ذلك.</string>
-    <string name="app_description">استرخ وعزز الإنتاجية مع ضوضاء مهدئة طبيعية.</string>
+    <string name="app_description">استرخ وحسن التركيز مع ضوضاء مهدئة طبيعية.</string>
     <string name="app_theme_system_default">الإعدادات الإفتراضية</string>
     <string name="wake_up_timer_description">سيبدأ Noice في الإعداد المسبق المحدد عندما ينتهي المؤقت. استخدم الأزرار أدناه لتحديد إعداد مسبق وضبط الوقت المطلوب لبدء مؤقت الاستيقاظ.</string>
     <string name="wake_up_timer_schedule_set">سوف ينطلق المنبه في %1$s %2$s %3$s</string>

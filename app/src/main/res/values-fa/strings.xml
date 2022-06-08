@@ -61,10 +61,6 @@
     <string name="open_context_menu">باز کردن منوی موردی</string>
     <string name="delete">حذف</string>
     <string name="add_to_home_screen">اضافه به صفحه‌ی خانه</string>
-    <string name="rolling_thunder">تندر قلتان</string>
-    <string name="light_rain">باران سبک</string>
-    <string name="distant_thunder">تندر دوردست</string>
-    <string name="birds">پرندگان</string>
     <string name="volume">حجم صدا</string>
     <string name="stop">ایست</string>
     <string name="play_pause">پخش یا مکث</string>

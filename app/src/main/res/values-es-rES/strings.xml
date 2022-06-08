@@ -22,10 +22,6 @@
     <string name="play_pause">Reproducir o pausar</string>
     <string name="stop">Detener</string>
     <string name="volume">Volumen del sonido</string>
-    <string name="birds">Pájaros</string>
-    <string name="distant_thunder">Truenos lejanos</string>
-    <string name="light_rain">Lluvia suave</string>
-    <string name="rolling_thunder">Retumbado de truenos</string>
     <string name="delete">Eliminar</string>
     <string name="open_context_menu">Abrir menú contextual</string>
     <string name="preset_delete_confirmation">¿Confirma que quiere eliminar «%s»\?</string>
@@ -41,7 +37,7 @@
     <string name="app_theme_light">Claro</string>
     <string name="app_theme_dark">Oscuro</string>
     <string name="app_theme_system_default">Por defecto del sistema</string>
-    <string name="app_description">Relájese y aumente la productividad con un mínimo ruido de fondo.</string>
+    <string name="app_description">Relájese y mejore la concentración con ruido natural y tranquilizante.</string>
     <string name="appintro__chromecast_desc">
     Utilice Noise para transmitir su ambiente a otros dispositivos conectados a Chromecast, como altavoces, televisores, etc.
   </string>

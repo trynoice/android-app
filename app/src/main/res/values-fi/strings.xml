@@ -26,7 +26,7 @@
     <string name="appintro__getting_started_desc_0">Tutustu kaikkiin ominaisuuksiin pyyhkäisemällä vasemmalle!</string>
     <string name="appintro__chromecast_title">Chromecast käytössä</string>
     <string name="appintro__chromecast_desc">Käytä Noicea tunnelman siirtämiseen muihin Chromecast-yhteensopiviin laitteisiin, kuten kaiuttimiin, televisioihin jne.</string>
-    <string name="app_description">Rentoudu ja lisää tuottavuutta minimaalisella taustamelulla.</string>
+    <string name="app_description">Rentoudu ja paranna keskittymistä luonnollisen rauhoittavan melun avulla.</string>
     <string name="app_theme_system_default">Järjestelmän oletus</string>
     <string name="app_theme_dark">Tumma</string>
     <string name="app_theme_light">Vaalea</string>
@@ -57,10 +57,6 @@
     <string name="open_context_menu">Avaa kontekstivalikko</string>
     <string name="delete">Poista</string>
     <string name="add_to_home_screen">Lisää aloitusnäytölle</string>
-    <string name="rolling_thunder">Jyrisevä ukkonen</string>
-    <string name="light_rain">Kevyt sade</string>
-    <string name="distant_thunder">Kaukainen ukkonen</string>
-    <string name="birds">Linnut</string>
     <string name="volume">Äänenvoimakkuus</string>
     <string name="stop">Stop</string>
     <string name="play_pause">toisto tai tauko</string>

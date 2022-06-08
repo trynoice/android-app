@@ -2,7 +2,6 @@
 <resources>
     <string name="open_context_menu">Åpne kontekstmeny</string>
     <string name="delete">Slett</string>
-    <string name="light_rain">Lett regn</string>
     <string name="volume">Lydstyrke</string>
     <string name="stop">Stopp</string>
     <string name="play">Spill</string>
