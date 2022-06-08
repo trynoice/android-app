@@ -11,7 +11,7 @@
     <string name="wake_up_timer">Wake-up Timer</string>
     <string name="submit_feedback">Submit Feedback</string>
     <string name="intensity">Intensity</string>
-    <string name="random_preset_description">Generated random presets is likely to contain sounds with chosen keywords. Moreover, intense presets will attempt to play more sounds simultaneously.</string>
+    <string name="random_preset_description">The generated preset is likely to contain sounds with chosen keywords. Moreover, intense presets will attempt to play more sounds simultaneously.</string>
     <string name="okay">Okay</string>
     <string name="random_preset">Random Preset</string>
     <string name="cancel">Cancel</string>
@@ -90,17 +90,13 @@
   </string>
     <string name="appintro__timer_title">Trouble falling asleep or waking up?</string>
     <string name="support_development__donate">Donate</string>
-    <string name="support_development__donate_description">If you have not purchased the premium subscription of Noice, you can make a one-time payment. It will help us sustain the development of the free features in Noice and keep them ad-free forever.</string>
+    <string name="support_development__donate_description">If you have not purchased the premium subscription, you can make a one-time payment. It will help us sustain the development of the free features and keep them ad-free forever.</string>
     <string name="support_development__donate_google_play_description">Your payment will be securely handled by Google Play. Depending on your location, additional taxes _may be_ added to the final amount.</string>
     <string name="support_development__donate_thank_you_description">
     We wholeheartedly thank you for your generous contribution to the Noice project.
   </string>
     <string name="support_development__share">Share with friends</string>
-    <string name="support_development__share_description">
-    You can also help by sharing Noice with your friends. More users will allow us to receive
-    feedback from a number of different perspectives. It will help us in making Noice better than
-    ever.
-  </string>
+    <string name="support_development__share_description">You can also help us by telling your friends about us. More users will provide us feedback from several different perspectives and help us improve our services.</string>
     <string name="cast_media">Connect to Chromecast</string>
     <string name="in_app_feedback__description">
     We\'d love to hear from you about the app. Please take a moment to visit our GitHub repository.
@@ -181,8 +177,8 @@
     <string name="sign_in_message">Please enter your email to sign-in.</string>
     <string name="sign_up_message">Please enter your name and email to sign-up.</string>
     <string name="email">Email</string>
-    <string name="invalid_name">Name is not valid!</string>
-    <string name="invalid_email">Email is not valid!</string>
+    <string name="invalid_name">The entered name is invalid!</string>
+    <string name="invalid_email">The entered email is invalid!</string>
     <string name="account_locked_error">Your email is temporarily locked from making sign-in attempts until %1$s.</string>
     <string name="sign_up_email_sent">We\'ve emailed you a sign-in link at \"%1$s\".</string>
     <string name="sign_in_email_sent">We\'ve emailed you a sign-in link at \"%1$s\" if this address belongs to a registered account.</string>
@@ -199,7 +195,7 @@
     <string name="delete_account_confirmation">On deleting your account, you will immediately lose access to your profile. If you have an ongoing subscription, it will be cancelled. Please note that it may take us a while to completely erase your data from our servers.</string>
     <string name="i_understand">I understand.</string>
     <string name="deleting_account">Deleting account</string>
-    <string name="duplicate_email_error">That email is associated with another account.</string>
+    <string name="duplicate_email_error">The entered email is associated with another account.</string>
     <string name="account_details_update_success">Your account details were updated successfully.</string>
     <string name="offline">You\'re offline</string>
     <string name="back_online">Back online</string>
@@ -240,16 +236,16 @@
     <string name="started_on">Started on %1$s</string>
     <string name="ended_on">Ended on %1$s</string>
     <string name="paid_using">Paid using %1$s</string>
-    <string name="subscription_payment_pending">A payment is pending for this purchase.</string>
+    <string name="subscription_payment_pending">Payment is pending for this purchase.</string>
     <string name="subscription_payment_refunded">We cancelled this purchase and initiated a refund for it.</string>
     <string name="change_plan">Change plan</string>
     <string name="manage_subscription">Manage Subscription</string>
     <string name="cancel_subscription">Cancel Subscription</string>
-    <string name="cancel_subscription_confirmation">Are you sure you want to cancel your subscription to Noice Premium? Your subscription will automatically terminate at the end of the current billing cycle. Your current billing cycle ends on %1$s.</string>
+    <string name="cancel_subscription_confirmation">Are you sure you want to cancel your subscription to Noice Premium\? Upon cancellation, your subscription will automatically terminate at the end of the current billing cycle. Your current billing cycle ends on %1$s.</string>
     <string name="cancelling_subscription">Cancelling subscription</string>
     <string name="no_subscription_purchases_found">We don\'t think that you have tried Noice Premium yet. Your previous subscriptions will appear here once you have used Noice Premium at least once.</string>
     <string name="faqs">Frequently Asked Questions</string>
-    <string name="made_in_india">Made with &#x2764; in India</string>
+    <string name="made_in_india">Made with ❤ in India</string>
     <string name="sound_info">About this sound</string>
     <string name="has_premium_segments">This sound has premium components.</string>
     <string name="looping_sound">This sound loops seamlessly.</string>
@@ -267,12 +263,12 @@
     <string name="subscription_purchases_load_error">Uh-oh! We couldn\'t fetch your subscription purchase history. %1$s</string>
     <string name="playback">Playback</string>
     <string name="audio_quality">Audio quality</string>
-    <string name="audio_quality_summary">Maximum audio quality for streaming. Selecting Medium, High and Ultra only works when you\'re subscribed.</string>
+    <string name="audio_quality_summary">The maximum audio quality for streaming. Medium, High and Ultra only work when you\'re subscribed.</string>
     <string name="audio_quality_low">Low (128 kbps)</string>
     <string name="audio_quality_medium">Medium (192 kbps)</string>
     <string name="audio_quality_high">High (256 kbps)</string>
     <string name="audio_quality_ultra">Ultra (320 kbps)</string>
-    <string name="preset_url_invalid">Preset URL appears to be invalid!</string>
+    <string name="preset_url_invalid">The preset URL appears to be invalid!</string>
     <string name="playing">Playing</string>
     <string name="pausing">Pausing</string>
     <string name="paused">Paused</string>
@@ -285,5 +281,5 @@
     <string name="gift_card">Gift Card</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_service">Terms of Service</string>
-    <string name="app_license">"Licensed under GNU GPL-3.0 "</string>
+    <string name="app_license">Licensed under GNU GPL-3.0</string>
 </resources>
