@@ -1,0 +1,35 @@
+For mange mennesker kan baggrundslyde være med til at hjælpe med at slappe af og fokussere. Baggrundslyde kan hjælpe med at minimere effekten af stress. I nogle tilfælde, kan det give mere produktivitet. Det hjælper også mennesker med at glemme deres tinitus.
+
+Noice er en app der lader dig lave dine helt egne baggrundslyde ved hjælp af lydkilder fra omgivelserne. Lav dine perfekte omgivelser ved at kombinere forskellige lyde, så du kan glemme forstyrreler og fokussere på din opgave eller bruge de fredelige omgivelser til afslapning.
+
+<b>Muligheder</b>
+- 35 optagede lyde
+- Google Cast (Chromecast) aktiveret(kun Play Store)
+- Auto søvntimer
+- Vækkeur
+- Generere tilfældige lydblandinger
+- Lav din egen blanding af lyde
+- Gem dine ynglingsblandinger
+- Afspil sammen med andre mussikere
+- Individuel lydstyrke kontrol for hver lydkilde
+- Offline afspilning
+- Lys og mørk app themaer
+
+<b>Lyd bibliotek</b>
+- Liv (fugle, grashopper, ulve, menneskets hjerterytme, mm.)
+- Skov (bål, nat, vind, palme treer mm.)
+- Vejr (flere slag regn og torden)
+- Teleportering (café, bibliotek, kontor, havbreden, flodbreden mm.)
+- Køretøjer (bevægende tog, flyvning, knirkende skip, elektrisk bil mm.)
+- Rå lyde (hvid, pink, brun)
+
+<b>Tilladelser</b>
+- <b>stop enheden fra at sove</b>: for at holde enhedens CPU kørende under afspilning
+- <b>køre forgrund proces</b>: for at køre afspilningsprocessen (ikke det samme som brugerflade)
+- <b>kør ved startup</b>: for at være sikker på at vågnop timerne køre gennem genstart
+- <b>fuld internet adgang</b>: for at kunne bruge Chromecast og yde finansiel støtte
+- <b>Se netværks forbindelser</b>: tilføjet på grund af afhængighed, bruges ikke i øjeblikket
+- <b>Google Play betalings service</b>: for at kunne yde finansiel støtning af udvikling
+
+Noice er gratis og open-source software.
+https://github.com/ashutoshgngwr/noice

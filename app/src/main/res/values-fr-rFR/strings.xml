@@ -87,7 +87,7 @@
     <string name="app_theme_light">Clair</string>
     <string name="app_theme_dark">Sombre</string>
     <string name="app_theme_system_default">Système</string>
-    <string name="app_description">Détendez-vous et augmentez votre productivité grâce à des bruits naturels apaisants.</string>
+    <string name="app_description">Détendez-vous et améliorez votre concentration grâce à des bruits naturels apaisants.</string>
     <string name="appintro__chromecast_desc">
     Utilisez Noice pour envoyer l\'ambiance créée vers un appareil équipé de Chromecast comme des enceintes, une télé, etc.
   </string>

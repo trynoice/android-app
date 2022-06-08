@@ -91,7 +91,7 @@
     <string name="app_theme_light">Светлая</string>
     <string name="app_theme_dark">Темная</string>
     <string name="app_theme_system_default">Системная тема</string>
-    <string name="app_description">Расслабьтесь и улучшите производительность с помощью естественного успокаивающего шума.</string>
+    <string name="app_description">Расслабьтесь и улучшите концентрацию внимания с помощью естественного успокаивающего шума.</string>
     <string name="appintro__chromecast_desc">
     Используйте Noice чтобы передать атмосферу на другие устройства с поддержкой Chromecast,
     такие как колонки, ТВ и т.д.
