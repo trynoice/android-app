@@ -10,11 +10,8 @@
     android:id="@+id/title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/dialog_fragment_view_spacing"
     android:textAppearance="?attr/titleTextAppearance" />
-
-  <View
-    android:layout_width="match_parent"
-    android:layout_height="24dp" />
 
   <LinearLayout
     android:id="@+id/content"
@@ -36,7 +33,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="0dp"
-      android:layout_marginTop="16dp"
+      android:layout_marginTop="@dimen/dialog_fragment_view_spacing"
       android:visibility="gone" />
 
     <Space
@@ -49,7 +46,7 @@
       style="?attr/buttonStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
+      android:layout_marginTop="@dimen/dialog_fragment_view_spacing"
       android:visibility="gone" />
 
     <Button
@@ -57,7 +54,7 @@
       style="?attr/buttonStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
+      android:layout_marginTop="@dimen/dialog_fragment_view_spacing"
       android:visibility="gone" />
 
   </LinearLayout>

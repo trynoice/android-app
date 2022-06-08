@@ -20,52 +20,8 @@
     <string name="save_preset">Sauvegarder le réglage</string>
     <string name="play">Lecture</string>
     <string name="play_pause">Lecture ou pause</string>
-    <string name="repeat_time_period">Fréquence de répétition</string>
     <string name="stop">Arrêter</string>
     <string name="volume">Volume</string>
-    <string name="sound_group__life">Vie</string>
-    <string name="sound_group__monsoon">Temps orageux</string>
-    <string name="sound_group__public_gatherings">Lieux publics</string>
-    <string name="sound_group__raw_noise">Sons bruts</string>
-    <string name="sound_group__times_of_day">Moments de la journée</string>
-    <string name="sound_group__vehicles">Véhicules</string>
-    <string name="sound_group__water">Eau</string>
-    <string name="sound_group__wind">Vent</string>
-    <string name="airplane_inflight">Avion en vol</string>
-    <string name="airplane_seatbelt_beeps">Bip de ceintures d\'avion</string>
-    <string name="birds">Oiseaux</string>
-    <string name="bonfire">Feu de bois</string>
-    <string name="brownian_noise">Bruit rouge</string>
-    <string name="coffee_shop">Café</string>
-    <string name="creaking_ship">Grincement sur un bateau</string>
-    <string name="crickets">Criquets</string>
-    <string name="distant_thunder">Tonnerre distant</string>
-    <string name="electric_car">Voiture électrique</string>
-    <string name="heavy_rain">Forte pluie</string>
-    <string name="howling_wolf">Hurlement de loup</string>
-    <string name="human_heartbeat">Battement de cœur humain</string>
-    <string name="light_rain">Pluie légère</string>
-    <string name="moderate_rain">Pluie modérée</string>
-    <string name="morning_in_a_village">Matinée dans un village</string>
-    <string name="moving_train">Train</string>
-    <string name="night">Nuit</string>
-    <string name="office">Bureau</string>
-    <string name="pink_noise">Bruit rose</string>
-    <string name="public_library">Hall de bibliothèque</string>
-    <string name="purring_cat">Ronronnement de chat</string>
-    <string name="quiet_conversation">Conversation calme</string>
-    <string name="rolling_thunder">Roulement de tonnerre</string>
-    <string name="screeching_seagulls">Cri de mouettes</string>
-    <string name="seaside">Bord de mer</string>
-    <string name="soft_wind">Vent doux</string>
-    <string name="thunder_crack">Coup de tonnerre</string>
-    <string name="train_horn">Sifflet de train</string>
-    <string name="walking_through_the_snow">Marche dans la neige</string>
-    <string name="water_hose">Arrosage régulier</string>
-    <string name="water_stream">Ruisseau</string>
-    <string name="white_noise">Bruit blanc</string>
-    <string name="wind_in_chimes_of_shells">Carillons</string>
-    <string name="wind_in_palm_trees">Palmiers</string>
     <string name="delete">Supprimer</string>
     <string name="open_context_menu">Menu contextuel</string>
     <string name="preset_delete_confirmation">Confirmer la suppression de %s ?</string>
@@ -102,14 +58,7 @@
     <string name="appintro__timer_desc">Une ambiance légère peut vous aider à vous endormir plus facilement. Utilisez la minuterie pour laisser Noice s\'éteindre tout seul. De la même manière, pour se réveiller au calme, utilisez le réveil pour régler l\'alarme.</string>
     <string name="appintro__timer_title">Des difficultés à s\'endormir ou à se réveiller ?</string>
     <string name="support_development__donate">Donner</string>
-    <string name="support_development__donate_description">
-    Les dons nous aideront dans\n
-    - le développement de nouvelles fonctionnalités\n
-    - la recherche d\'échantillons sonores de qualité\n
-    - l\'achat de café\n
-  </string>
     <string name="support_development__donate_google_play_description">Votre paiement sera traité de manière sécurisée par Google Play. En fonction de votre localisation, des taxes supplémentaires _peuvent être_ ajoutées au montant final.</string>
-    <string name="support_development__donate_thank_you">Merci !</string>
     <string name="support_development__donate_thank_you_description">
     Nous vous remercions de tout cœur pour votre généreuse contribution au projet Noice.
   </string>
@@ -119,23 +68,14 @@
     nous pourrons avoir plus de retour d\'utilisateurs et ces derniers nous permettons d\'améliorer
     Noice.
   </string>
-    <string name="support_development__why">Pourquoi soutenir le développement ?</string>
-    <string name="support_development__why_description">
-    - Pour rendre possible les futures mises à jour\n
-    - Pour que Noice reste toujours sans publicité\n
-  </string>
     <string name="cast_media">Se connecter à Chromecast</string>
     <string name="notification_channel_default__description">Contrôles de lecture</string>
     <string name="notification_channel_default__name">Lecture audio</string>
     <string name="preset_does_not_exist">Ce préréglage n\'existe pas. Il a peut-être été effacé !</string>
     <string name="add_to_home_screen">Ajouter à l\'écran d\'accueil</string>
-    <string name="relax">Apaisant</string>
     <string name="random_preset">Préréglage aléatoire</string>
     <string name="okay">D\'accord</string>
-    <string name="mood">Ambiance</string>
-    <string name="light">Clair</string>
     <string name="intensity">Intensité</string>
-    <string name="dense">Dense</string>
     <string name="submit_feedback">Soumettre une évaluation</string>
     <string name="in_app_feedback__description">Nous aimerions connaître votre avis sur l\'application. Nous vous prions de consulter notre GitHub. Si vous n\'aimez pas l\'application, nous vous prions d\'ouvrir un billet « issue » afin de nous expliquer vos critiques. Autrement, nous vous prions de noter le projet pour nous montrer votre reconnaissance.</string>
     <string name="wake_up_timer_cancelled">Minuterie du réveil annulée !</string>
@@ -144,9 +84,6 @@
     <string name="never">Jamais</string>
     <string name="later">Plus tard</string>
     <string name="in_app_feedback__title">Soumettre une évaluation</string>
-    <string name="mood_any">N\'importe</string>
-    <string name="intensity_any">N\'importe</string>
-    <string name="focus">Concentré</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minute</item>
         <item quantity="other">%1$d minutes</item>
@@ -157,8 +94,6 @@
     </plurals>
     <string name="time_bridge">et</string>
     <string name="wake_up_timer_schedule_set">L\'alarme s\'éteindra dans %1$s %2$s %3$s</string>
-    <string name="random_preset_description">Les préréglages aléatoires générés contiendront des sons correspondant à l\'ambiance choisie. De plus, les préréglages denses tenteront de jouer plus de sons simultanément.</string>
-    <string name="app_authors">Voir la liste des auteurs de Noice</string>
     <string name="app_shortcut_creation_failed">Échec de l\'ajout du préréglage aux raccourcis d\'applis !</string>
     <string name="remove_from_app_shortcuts">Retirer des raccourcis d\'applis</string>
     <string name="add_to_app_shortcuts">Ajouter aux raccourcis des applis</string>
@@ -166,7 +101,6 @@
     <string name="pinned_shortcut_created">Le raccourci a été ajouté à l\'écran d\'accueil !</string>
     <string name="pinned_shortcut_creation_failed">Échec de l\'ajout du raccourci à l\'écran d\'accueil !</string>
     <string name="appearance">Apparence</string>
-    <string name="behavior">Comportement</string>
     <string name="presets_as_home_screen">« Préréglages » comme écran d\'accueil</string>
     <string name="settings">Paramètres</string>
     <string name="app_shortcut_created">Le préréglage a été ajouté aux raccourcis de l\'application !</string>
@@ -193,7 +127,7 @@
     <string name="others">Autres</string>
     <string name="decline">Refuser</string>
     <string name="accept">Accepter</string>
-    <string name="share_usage_data_consent_message">Nous recueillons des données sur l\'utilisation des applications afin d\'améliorer l\'expérience des utilisateurs. Nous recueillons également des données sur le comportement de l\'application pour analyser et diagnostiquer les erreurs rencontrées lors de son utilisation. Lisez notre [politique de confidentialité] (https://ashutoshgngwr.github.io/noice/privacy-policy) pour plus d\'informations.
+    <string name="share_usage_data_consent_message">Nous recueillons des données sur l\'utilisation des applications afin d\'améliorer l\'expérience des utilisateurs. Nous recueillons également des données sur le comportement de l\'application pour analyser et diagnostiquer les erreurs rencontrées lors de son utilisation. Lisez notre [politique de confidentialité](https://trynoice.com/privacy-policy) pour plus d\'informations.
 \n
 \n Vous pouvez configurer le partage automatique des données à tout moment dans l\'application en allant dans « **Paramètres** &gt; **Partager les données d\'utilisation et de comportement** ».</string>
     <string name="share_usage_data_consent_title">Préférences de partage des données</string>

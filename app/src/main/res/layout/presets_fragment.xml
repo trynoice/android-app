@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <TextView
-    android:id="@+id/empty_list_hint"
+  <data>
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.PresetsViewModel" />
+
+  </data>
+
+  <FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_margin="16dp"
-    android:drawablePadding="16dp"
-    android:gravity="center"
-    android:text="@string/preset_info__description"
-    android:textAppearance="?attr/textAppearanceBody1"
-    android:textColor="@color/material_on_background_disabled"
-    app:drawableTint="@color/material_on_background_disabled"
-    app:drawableTopCompat="@drawable/ic_info_48dp" />
+    android:layout_height="match_parent">
 
-  <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/list"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_margin="16dp"
+      android:drawablePadding="16dp"
+      android:gravity="center"
+      android:text="@string/preset_info__description"
+      android:textAppearance="?attr/textAppearanceBody1"
+      android:textColor="@color/material_on_background_disabled"
+      app:drawableTint="@color/material_on_background_disabled"
+      app:drawableTopCompat="@drawable/ic_info_48dp"
+      app:isVisible="@{viewModel.isEmptyIndicatorVisible}" />
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/list"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:hasFixedSize="@{true}"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+  </FrameLayout>
+
+</layout>

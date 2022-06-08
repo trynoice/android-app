@@ -1,0 +1,49 @@
+plugins {
+  id 'com.android.library'
+  id 'org.jetbrains.kotlin.android'
+
+  id 'com.adarshr.test-logger'
+}
+
+android {
+  compileSdkVersion config.compileSdkVersion
+
+  defaultConfig {
+    minSdkVersion config.minSdkVersion
+    targetSdkVersion config.compileSdkVersion
+    consumerProguardFiles 'retrofit2.pro', 'gson.pro'
+  }
+
+  compileOptions {
+    sourceCompatibility = config.javaCompatibility
+    targetCompatibility = config.javaCompatibility
+  }
+
+  kotlinOptions {
+    useIR = true
+    jvmTarget = config.kotlinJvmTarget
+    freeCompilerArgs += ["-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
+  }
+
+  testOptions.unitTests.all {
+    testlogger.theme 'mocha'
+  }
+}
+
+dependencies {
+  def okhttpVersion = '4.9.3'
+  def retrofitVersion = '2.9.0'
+
+  api "com.squareup.okhttp3:okhttp:$okhttpVersion"
+  api "com.squareup.retrofit2:retrofit:$retrofitVersion"
+
+  implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+  implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$deps.coroutinesVersion"
+
+  testImplementation "androidx.test:core:$deps.testCoreVersion"
+  testImplementation "com.squareup.okhttp3:mockwebserver:$okhttpVersion"
+  testImplementation "junit:junit:$deps.junitVersion"
+  testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$deps.coroutinesVersion"
+  testImplementation "org.robolectric:robolectric:$deps.robolectricVersion"
+}

@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.engine.PlaybackController
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ShortcutHandlerActivity : AppCompatActivity() {
 
   companion object {
@@ -23,28 +26,36 @@ class ShortcutHandlerActivity : AppCompatActivity() {
     const val EXTRA_SHORTCUT_TYPE = "shortcut_type"
   }
 
-  private val analyticsProvider by lazy { NoiceApplication.of(this).analyticsProvider }
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
+
+  @set:Inject
+  internal lateinit var presetRepository: PresetRepository
+
+  @set:Inject
+  internal lateinit var playbackController: PlaybackController
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
     val params = bundleOf()
-    intent.getStringExtra(EXTRA_PRESET_ID)?.also {
+    intent.getStringExtra(EXTRA_PRESET_ID)?.also { presetId ->
       // id is passed with the intent. For app version <= 0.15.0, preset id was treated as shortcut
       // id. Hence, using preset id as fallback in cases where shortcut id is null.
-      reportShortcutUsage(intent.getStringExtra(EXTRA_SHORTCUT_ID) ?: it)
+      reportShortcutUsage(intent.getStringExtra(EXTRA_SHORTCUT_ID) ?: presetId)
 
-      if (PresetRepository.newInstance(this).get(it) == null) {
+      val preset = presetRepository.get(presetId)
+      if (preset == null) {
         Toast.makeText(this, R.string.preset_does_not_exist, Toast.LENGTH_LONG).show()
         params.putBoolean("success", false)
       } else {
-        PlaybackController.playPreset(this, it)
+        playbackController.play(preset)
         params.putBoolean("success", true)
       }
     }
 
     Intent(this, MainActivity::class.java)
-      .putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.presets)
+      .putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.home_presets)
       .also { startActivity(it) }
 
     finish()

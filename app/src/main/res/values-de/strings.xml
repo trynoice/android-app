@@ -10,16 +10,9 @@
     <string name="support_development">Unterstütze die Entwicklung</string>
     <string name="wake_up_timer">Aufwach-Timer</string>
     <string name="submit_feedback">Feedback abgeben</string>
-    <string name="mood_any">Zufall</string>
-    <string name="intensity_any">Zufall</string>
-    <string name="dense">Dicht</string>
-    <string name="focus">Fokus</string>
     <string name="intensity">Intensität</string>
-    <string name="light">Hell</string>
-    <string name="mood">Stimmung</string>
     <string name="okay">Ok</string>
     <string name="random_preset">zufällige Voreinstellung</string>
-    <string name="relax">Entspannen</string>
     <string name="cancel">Abbrechen</string>
     <string name="dismiss">Ausblenden</string>
     <string name="name">Name</string>
@@ -31,52 +24,8 @@
     <string name="save_preset">Voreinstellung speichern</string>
     <string name="play">Abspielen</string>
     <string name="play_pause">Abspielen / pausieren</string>
-    <string name="repeat_time_period">Wiederholungszeit</string>
     <string name="stop">Stopp</string>
     <string name="volume">Lautstärke</string>
-    <string name="sound_group__life">Leben</string>
-    <string name="sound_group__monsoon">Monsun</string>
-    <string name="sound_group__public_gatherings">Öffentliches Zusammenkommen</string>
-    <string name="sound_group__raw_noise">Grobes Rauschen</string>
-    <string name="sound_group__times_of_day">Tageszeiten</string>
-    <string name="sound_group__vehicles">Fahrzeuge</string>
-    <string name="sound_group__water">Wasser</string>
-    <string name="sound_group__wind">der Wind</string>
-    <string name="airplane_inflight">Im Flugzeug</string>
-    <string name="airplane_seatbelt_beeps">Flugzeug-Anschnallsignal</string>
-    <string name="birds">Vögel</string>
-    <string name="bonfire">Lagerfeuer</string>
-    <string name="brownian_noise">Brownsches Rauschen</string>
-    <string name="coffee_shop">Kaffeehaus</string>
-    <string name="creaking_ship">Knarrendes Schiff</string>
-    <string name="crickets">Grillen</string>
-    <string name="distant_thunder">Ferner Donner</string>
-    <string name="electric_car">Elektroauto</string>
-    <string name="heavy_rain">Starker Regen</string>
-    <string name="howling_wolf">Heulender Wolf</string>
-    <string name="human_heartbeat">Menschlicher Herzschlag</string>
-    <string name="light_rain">Leichter Regen</string>
-    <string name="moderate_rain">Milder Regen</string>
-    <string name="morning_in_a_village">Dörfliche Morgenstimmung</string>
-    <string name="moving_train">Fahrender Zug</string>
-    <string name="night">Nacht</string>
-    <string name="office">Büro</string>
-    <string name="pink_noise">Rosa Rauschen</string>
-    <string name="public_library">Öffentliche Bibliothek</string>
-    <string name="purring_cat">Schnurrende Katze</string>
-    <string name="quiet_conversation">Stille Unterhaltung</string>
-    <string name="rolling_thunder">Rollender Donner</string>
-    <string name="screeching_seagulls">Kreischende Möwen</string>
-    <string name="seaside">Am Meer</string>
-    <string name="soft_wind">Leichter Wind</string>
-    <string name="thunder_crack">Donnerschlag</string>
-    <string name="train_horn">Zugsignal</string>
-    <string name="walking_through_the_snow">Durch den Schnee gehen</string>
-    <string name="water_hose">Wasserschlauch</string>
-    <string name="water_stream">Wasserlauf</string>
-    <string name="white_noise">Weißes Rauschen</string>
-    <string name="wind_in_chimes_of_shells">Wind in Glockenspiel aus Muscheln</string>
-    <string name="wind_in_palm_trees">Wind in Palmen</string>
     <string name="add_to_home_screen">zum Startbildschirm hinzufügen</string>
     <string name="delete">Löschen</string>
     <string name="open_context_menu">Öffne das Kontext-Menü</string>
@@ -126,24 +75,12 @@
   </string>
     <string name="appintro__timer_title">Schwierigkeiten einzuschlafen oder aufzuwachen?</string>
     <string name="support_development__donate">Spenden</string>
-    <string name="support_development__donate_description">
-    Spenden helfen uns dabei\n
-    - in neue Funktionen zu investieren\n
-    - bessere Audiosamples zu kuratieren\n
-    - Kaffee zu kaufen\n
-  </string>
     <string name="support_development__donate_google_play_description">Deine Spende wird sicher über Google Play abgewickelt. Je nach Land _können_ weitere Steuern zum Endbetrag hinzukommen.</string>
-    <string name="support_development__donate_thank_you">Vielen Dank!</string>
     <string name="support_development__donate_thank_you_description">
     Wir danken dir von ganzem Herzen für deine großzügige Spende an das Noice-Projekt.
   </string>
     <string name="support_development__share">Mit Freunden teilen</string>
     <string name="support_development__share_description">Noice mit Freunden zu teilen ist fast genau so wichtig wie Geld zu spenden. Mit mehr Downloads können wir Feedback aus vielen unterschiedlichen Perspektiven erhalten, welches uns dabei hilft Noice noch besser zu machen.</string>
-    <string name="support_development__why">Warum solltest du unterstützen?</string>
-    <string name="support_development__why_description">
-    - Um zukünftige Updates zu ermöglichen\n
-    - Um Noice für immer werbefrei zu halten\n
-  </string>
     <string name="cast_media">Mit Chromecast verbinden</string>
     <string name="in_app_feedback__description">
     Wir würden uns freuen von Ihnen über die App zu hören. Bitte nehmen Sie sich einen Moment um das Github Repositorie zu besuchen.
@@ -165,15 +102,12 @@
         <item quantity="other">%1$d Stunden</item>
     </plurals>
     <string name="time_bridge">und</string>
-    <string name="random_preset_description">Generierte Zufall voreinstellungen enthalten Sounds, die der gewählten Stimmen entsprechend. Darüber hinaus versuchen dichte Voreinstellungen, mehr Sounds gleichzeitig abzuspielen.</string>
-    <string name="app_authors">Liste der Noice-Autoren anzeigen</string>
     <string name="app_shortcut_creation_failed">Das Hinzufügen der Voreinstellung zu Anwendungsverknüpfungen ist fehlgeschlagen!</string>
     <string name="remove_from_app_shortcuts">Aus Anwendungsverknüpfungen entfernen</string>
     <string name="add_to_app_shortcuts">Zu Anwendungsverknüpfungen hinzufügen</string>
     <string name="pinned_shortcut_created">Dem Startbildschirm wurde eine Verknüpfung hinzugefügt!</string>
     <string name="pinned_shortcut_creation_failed">Fehler beim Hinzufügen der Verknüpfung zum Startbildschirm!</string>
     <string name="appearance">Aussehen</string>
-    <string name="behavior">Verhalten</string>
     <string name="presets_as_home_screen">„Voreinstellungen“ als Startbildschirm</string>
     <string name="settings">Einstellungen</string>
     <string name="app_shortcut_created">Voreinstellung wurde zu den Anwendungsverknüpfungen hinzugefügt!</string>
@@ -206,7 +140,7 @@
     <string name="should_share_usage_data_summary">Automatisch Nutzungs- und Verhaltensdaten mit den Entwicklern teilen</string>
     <string name="should_share_usage_data">Nutzungs- und Verhaltensdaten teilen</string>
     <string name="others">Andere</string>
-    <string name="share_usage_data_consent_message">Wir sammeln Nutzungsdaten der App um die Benutzererfahrung zu verbessern. Wir sammeln außerdem Verhaltensdaten der App um auftretende Fehler während der Verwendung zu analysieren und diagnostizieren. Lies unsere [Datenschutzbestimmungen] (https://ashutoshgngwr.github.io/noice/privacy-policy) für weitere Informationen.
+    <string name="share_usage_data_consent_message">Wir sammeln Nutzungsdaten der App um die Benutzererfahrung zu verbessern. Wir sammeln außerdem Verhaltensdaten der App um auftretende Fehler während der Verwendung zu analysieren und diagnostizieren. Lies unsere [Datenschutzbestimmungen](https://trynoice.com/privacy-policy) für weitere Informationen.
 \n
 \nDu kannst das automatische Teilen von Daten jederzeit unter \"**Einstellungen** &gt; **Nutzungs- und Verhaltensdaten teilen**\" verwalten.</string>
     <string name="share_usage_data_consent_title">Präferenzen beim Teilen von Daten</string>

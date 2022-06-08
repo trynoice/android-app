@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sound_group__life">Vivo</string>
     <string name="play">Ludi</string>
     <string name="save">Konservi</string>
     <string name="pause">Paŭzigi</string>
@@ -11,8 +10,5 @@
     <string name="help">Helpo</string>
     <string name="app_theme">Etoso</string>
     <string name="about">Pri</string>
-    <string name="focus">Fokuso</string>
     <string name="report_issue">Raporti Problemojn</string>
-    <string name="mood_any">Ajna</string>
-    <string name="intensity_any">Ajna</string>
 </resources>

@@ -7,4 +7,4 @@
 - Fixed text overflow in the app intro
 - Fixed a bug in audio focus management
 
-See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG
+See detailed changelog at https://trynoice.com/changelog

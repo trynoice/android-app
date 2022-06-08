@@ -13,20 +13,22 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.BuildConfig
-import com.github.ashutoshgngwr.noice.EspressoX
-import com.github.ashutoshgngwr.noice.NoiceApplication
+import com.github.ashutoshgngwr.noice.InAppBillingProviderModule
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.playback.PlaybackController
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.BillingProvider
-import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
+import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
@@ -34,13 +36,28 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@HiltAndroidTest
+@UninstallModules(InAppBillingProviderModule::class)
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
 
+  @get:Rule
+  val hiltRule = HiltAndroidRule(this)
+
   private lateinit var activityScenario: ActivityScenario<MainActivity>
+
+  @BindValue
+  internal lateinit var mockSettingsRepository: SettingsRepository
+
+  @BindValue
+  internal lateinit var mockPlaybackController: PlaybackController
+
+  @BindValue
+  internal lateinit var mockBillingProvider: InAppBillingProvider
 
   @Before
   fun setup() {
@@ -51,6 +68,9 @@ class MainActivityTest {
         putBoolean(MainActivity.PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true)
       }
 
+    mockSettingsRepository = mockk(relaxed = true)
+    mockPlaybackController = mockk(relaxed = true)
+    mockBillingProvider = mockk(relaxed = true)
     activityScenario = launch(MainActivity::class.java)
   }
 
@@ -70,7 +90,7 @@ class MainActivityTest {
       }
 
     activityScenario.onActivity {
-      val navController = it.findNavController(R.id.nav_host_fragment)
+      val navController = it.findNavController(R.id.main_nav_host_fragment)
       assertEquals(R.id.about, navController.currentDestination?.id)
     }
   }
@@ -83,11 +103,8 @@ class MainActivityTest {
       AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
     )
 
-    val mockRepo = mockk<SettingsRepository>(relaxed = true)
-    mockkObject(SettingsRepository)
-    every { SettingsRepository.newInstance(any()) } returns mockRepo
     for (nightMode in nightModes) {
-      every { mockRepo.getAppThemeAsNightMode() } returns nightMode
+      every { mockSettingsRepository.getAppThemeAsNightMode() } returns nightMode
       activityScenario.recreate()
       assertEquals(nightMode, AppCompatDelegate.getDefaultNightMode())
     }
@@ -95,13 +112,11 @@ class MainActivityTest {
 
   @Test
   fun testPresetUriIntent() {
-    mockkObject(PlaybackController)
     val inputs = arrayOf(
       "https://ashutoshgngwr.github.io/noice/preset?name=test&playerStates=[]",
       "noice://preset?name=test&playerStates=[]"
     )
 
-    every { PlaybackController.playPresetFromUri(any(), any()) } returns Unit
     for (input in inputs) {
       val uri = Uri.parse(input)
       activityScenario.onActivity {
@@ -112,20 +127,12 @@ class MainActivityTest {
         )
       }
 
-      verify(exactly = 1, timeout = 5000L) { PlaybackController.playPresetFromUri(any(), uri) }
+      verify(exactly = 1, timeout = 5000L) { mockPlaybackController.playPresetFromUri(uri) }
     }
   }
 
   @Test
   fun testUsageDataCollectionDialog() {
-    val mockAnalyticsProvider: AnalyticsProvider = mockk(relaxed = true)
-    val mockCrashlyticsProvider: CrashlyticsProvider = mockk(relaxed = true)
-
-    ApplicationProvider.getApplicationContext<NoiceApplication>().apply {
-      analyticsProvider = mockAnalyticsProvider
-      crashlyticsProvider = mockCrashlyticsProvider
-    }
-
     PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
       .edit { remove(MainActivity.PREF_HAS_SEEN_DATA_COLLECTION_CONSENT) }
 
@@ -139,10 +146,7 @@ class MainActivityTest {
       .check(matches(isDisplayed()))
 
     onView(withText(R.string.accept)).perform(click())
-    verify(exactly = 1) {
-      mockAnalyticsProvider.setCollectionEnabled(true)
-      mockCrashlyticsProvider.setCollectionEnabled(true)
-    }
+    verify(exactly = 1) { mockSettingsRepository.setShouldShareUsageData(true) }
   }
 
   @Test
@@ -151,29 +155,22 @@ class MainActivityTest {
       return
     }
 
-    val mockBillingProvider: BillingProvider = mockk(relaxed = true)
-    ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .billingProvider = mockBillingProvider
-
-    activityScenario.recreate()
-
-    val slot = slot<BillingProvider.PurchaseListener>()
-    verify { mockBillingProvider.init(any(), capture(slot)) }
+    val slot = slot<InAppBillingProvider.PurchaseListener>()
+    verify { mockBillingProvider.setPurchaseListener(capture(slot)) }
     assertTrue(slot.isCaptured)
 
     activityScenario.onActivity {
-      slot.captured.onPending(listOf("test-sku"))
+      slot.captured.onPending(mockk())
     }
 
     onView(withText(R.string.payment_pending))
       .check(matches(isDisplayed()))
 
-    val testOrderID = "test-order-id"
+    val purchase = mockk<InAppBillingProvider.Purchase>(relaxed = true)
     activityScenario.onActivity {
-      slot.captured.onComplete(listOf(), testOrderID)
+      slot.captured.onComplete(purchase)
     }
 
-    EspressoX.onViewInDialog(withId(R.id.positive)).perform(click()) // close the dialog
-    verify { mockBillingProvider.consumePurchase(testOrderID) }
+    coVerify(exactly = 1, timeout = 15000) { mockBillingProvider.consumePurchase(purchase) }
   }
 }

@@ -2,66 +2,73 @@ package com.github.ashutoshgngwr.noice.playback
 
 import android.content.Context
 import android.media.AudioManager
+import android.media.VolumeProvider
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioManagerCompat
 import androidx.media.VolumeProviderCompat
 import androidx.test.core.app.ApplicationProvider
-import com.github.ashutoshgngwr.noice.NoiceApplication
+import com.github.ashutoshgngwr.noice.CastApiProviderModule
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.playback.strategy.PlaybackStrategyFactory
-import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
+import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.shadow.ShadowMediaSession
 import com.github.ashutoshgngwr.noice.shadow.ShadowMediaSessionCompat
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import io.mockk.MockKAnnotations
 import io.mockk.called
 import io.mockk.clearMocks
 import io.mockk.every
-import io.mockk.impl.annotations.InjectionLookupType
 import io.mockk.impl.annotations.OverrideMockKs
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.slot
-import io.mockk.spyk
 import io.mockk.unmockkAll
 import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLooper
 
+@HiltAndroidTest
+@UninstallModules(CastApiProviderModule::class)
 @RunWith(RobolectricTestRunner::class)
 @Config(shadows = [ShadowMediaSession::class, ShadowMediaSessionCompat::class])
 class PlayerManagerTest {
 
-  private lateinit var mockCastAPIProvider: CastAPIProvider
+  @get:Rule
+  val hiltRule = HiltAndroidRule(this)
+
   private lateinit var players: HashMap<String, Player>
   private lateinit var settingsRepository: SettingsRepository
 
-  @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
+  @BindValue
+  internal lateinit var mockCastApiProvider: CastApiProvider
+
+  @OverrideMockKs
   private lateinit var playerManager: PlayerManager
 
   @Before
   fun setup() {
-    mockCastAPIProvider = mockk(relaxed = true)
-    ApplicationProvider.getApplicationContext<NoiceApplication>()
-      .castAPIProvider = mockCastAPIProvider
-
     // always have a fake player in manager's state
     players = hashMapOf("test" to mockk(relaxed = true) {
       every { soundKey } returns "test"
     })
 
     settingsRepository = mockk(relaxed = true)
-
+    mockCastApiProvider = mockk(relaxed = true)
     val context = ApplicationProvider.getApplicationContext<Context>()
     playerManager = PlayerManager(context, MediaSessionCompat(context, "test"))
     MockKAnnotations.init(this)
@@ -255,24 +262,27 @@ class PlayerManagerTest {
     assertEquals(0, players.size)
     verify(exactly = 1) {
       // should clear session callbacks
-      mockCastAPIProvider.unregisterSessionListener(any())
+      mockCastApiProvider.unregisterSessionListener(any())
     }
   }
 
   @Test
   fun testUpdatePlaybackStrategies() {
-    val listenerSlot = slot<CastAPIProvider.SessionListener>()
+    val listenerSlot = slot<CastApiProvider.SessionListener>()
     verify(exactly = 1) {
-      mockCastAPIProvider.registerSessionListener(capture(listenerSlot))
+      mockCastApiProvider.registerSessionListener(capture(listenerSlot))
     }
 
     val mockPlaybackStrategy = mockk<PlaybackStrategyFactory>(relaxed = true)
-    val spyVolumeProvider = spyk<VolumeProviderCompat>()
-    every { mockCastAPIProvider.getPlaybackStrategyFactory(any()) } returns mockPlaybackStrategy
-    every { mockCastAPIProvider.getVolumeProvider() } returns spyVolumeProvider
+    val mockVolumeProvider = mockk<VolumeProviderCompat> {
+      every { volumeProvider } returns mockk<VolumeProvider>(relaxed = true)
+    }
+
+    every { mockCastApiProvider.getPlaybackStrategyFactory(any()) } returns mockPlaybackStrategy
+    every { mockCastApiProvider.getVolumeProvider() } returns mockVolumeProvider
     listenerSlot.captured.onSessionBegin() // invoke the session begin callback
     verify(exactly = 1) { players.getValue("test").updatePlaybackStrategy(mockPlaybackStrategy) }
-    assertEquals(spyVolumeProvider, ShadowMediaSessionCompat.currentVolumeProvider)
+    assertEquals(mockVolumeProvider, ShadowMediaSessionCompat.currentVolumeProvider)
     clearMocks(mockPlaybackStrategy, players.getValue("test"))
 
     listenerSlot.captured.onSessionEnd()

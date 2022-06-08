@@ -10,9 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.ListView
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
+import androidx.annotation.StyleRes
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.TextViewCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentManager
@@ -41,17 +44,10 @@ class DialogFragment : BottomSheetDialogFragment() {
   }
 
   private lateinit var baseBinding: DialogFragmentBaseBinding
-  private lateinit var textInputBinding: DialogFragmentTextInputBinding
-
   private var onDismissListener: (() -> Unit)? = null
+  private val viewModel: DialogViewModel by viewModels()
 
-  private val viewModel: ViewModel by viewModels()
-
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     baseBinding = DialogFragmentBaseBinding.inflate(inflater, container, false)
     return baseBinding.root
   }
@@ -65,6 +61,9 @@ class DialogFragment : BottomSheetDialogFragment() {
     super.onDismiss(dialog)
   }
 
+  /**
+   * Always called when the dialog is closed.
+   */
   fun onDismiss(listener: () -> Unit) {
     onDismissListener = listener
   }
@@ -72,8 +71,15 @@ class DialogFragment : BottomSheetDialogFragment() {
   /**
    * Adds given [View] to the [R.id.content] layout in the dialog
    */
-  private fun addContentView(view: View) {
-    baseBinding.content.addView(view)
+  private fun addView(view: View) {
+    val verticalMargin = resources.getDimensionPixelSize(R.dimen.dialog_fragment_view_spacing)
+    val layoutParams = LinearLayout.LayoutParams(
+      LinearLayout.LayoutParams.MATCH_PARENT,
+      LinearLayout.LayoutParams.WRAP_CONTENT
+    )
+
+    layoutParams.setMargins(0, verticalMargin, 0, verticalMargin)
+    baseBinding.content.addView(view, layoutParams)
   }
 
   /**
@@ -96,7 +102,7 @@ class DialogFragment : BottomSheetDialogFragment() {
    */
   private fun @receiver:androidx.annotation.AttrRes Int.resolveAttributeValue(): Int {
     val value = TypedValue()
-    requireNotNull(dialog).context.theme.resolveAttribute(this, value, true)
+    requireDialog().context.theme.resolveAttribute(this, value, true)
     return value.data
   }
 
@@ -105,6 +111,13 @@ class DialogFragment : BottomSheetDialogFragment() {
    */
   fun title(@StringRes resId: Int) {
     baseBinding.title.text = getString(resId)
+  }
+
+  /**
+   * Sets the title of the dialog
+   */
+  fun title(title: String) {
+    baseBinding.title.text = title
   }
 
   /**
@@ -144,10 +157,13 @@ class DialogFragment : BottomSheetDialogFragment() {
    * Creates a [MarkdownTextView] with given string resource and adds it to [R.id.content] layout
    * in the dialog.
    */
-  fun message(@StringRes resId: Int, vararg formatArgs: Any) {
-    addContentView(
+  fun message(
+    @StringRes resId: Int,
+    vararg formatArgs: Any,
+    @StyleRes textAppearance: Int = android.R.attr.textAppearance.resolveAttributeValue()
+  ) {
+    addView(
       MarkdownTextView(requireContext()).apply {
-        val textAppearance = android.R.attr.textAppearance.resolveAttributeValue()
         TextViewCompat.setTextAppearance(this, textAppearance)
         setMarkdown(getString(resId, *formatArgs))
       }
@@ -163,6 +179,7 @@ class DialogFragment : BottomSheetDialogFragment() {
    * @param validator a validation function that is called on text every time it is changed. It
    * should return a String resource id to display it as an error. If no error is to be displayed,
    * it should return 0.
+   * @return a lambda function that returns the current value from the text field.
    */
   fun input(
     @StringRes hintRes: Int = 0,
@@ -170,10 +187,10 @@ class DialogFragment : BottomSheetDialogFragment() {
     type: Int = InputType.TYPE_CLASS_TEXT,
     singleLine: Boolean = true,
     validator: (String) -> Int = { 0 }
-  ) {
-    textInputBinding =
-      DialogFragmentTextInputBinding.inflate(layoutInflater, baseBinding.content, false)
-    addContentView(textInputBinding.root)
+  ): InputTextGetter {
+    val textInputBinding = DialogFragmentTextInputBinding
+      .inflate(layoutInflater, baseBinding.content, false)
+    addView(textInputBinding.root)
 
     baseBinding.positive.isEnabled = false
     textInputBinding.textInputLayout.hint = getString(hintRes)
@@ -190,18 +207,8 @@ class DialogFragment : BottomSheetDialogFragment() {
         textInputBinding.textInputLayout.error = getString(errResID)
       }
     }
-  }
 
-  /**
-   * returns the text in the text field added using [input]. don't know what it'll do if called
-   * without invoking [input] \o/
-   */
-  fun getInputText(): String {
-    if (!this::textInputBinding.isInitialized) {
-      throw IllegalStateException("getInputText() called without setting up input field")
-    }
-
-    return textInputBinding.editText.text.toString()
+    return { textInputBinding.editText.text.toString() }
   }
 
   /**
@@ -218,7 +225,7 @@ class DialogFragment : BottomSheetDialogFragment() {
     onItemSelected: (Int) -> Unit = { }
   ) {
     require(currentChoice >= -1 && currentChoice < items.size)
-    addContentView(
+    addView(
       ListView(requireContext()).apply {
         id = android.R.id.list
         dividerHeight = 0
@@ -241,8 +248,11 @@ class DialogFragment : BottomSheetDialogFragment() {
     )
   }
 
+  /**
+   * Adds a [Slider] to the dialog with given parameters.
+   */
   fun slider(
-    @IdRes viewID: Int = 0,
+    @IdRes viewID: Int = ResourcesCompat.ID_NULL,
     step: Float = 1.0f,
     from: Float = 0.0f,
     to: Float = -1.0f,
@@ -263,17 +273,21 @@ class DialogFragment : BottomSheetDialogFragment() {
         }
       }
 
-      addContentView(this)
+      addView(this)
     }
   }
+}
+
+/**
+ * Since [DialogFragment.setRetainInstance] is deprecated, need to persist state in a view model.
+ */
+class DialogViewModel : androidx.lifecycle.ViewModel() {
 
   /**
-   * Since [setRetainInstance] is deprecated, need to persist state in a view model.
+   * A lambda for calling functions to configure the dialog, passed while invoking
+   * [DialogFragment.show].
    */
-  class ViewModel : androidx.lifecycle.ViewModel() {
-    /**
-     * A lambda for calling functions to configure the dialog, passed while invoking [show].
-     */
-    internal var displayOptions: (DialogFragment.() -> Unit)? = null
-  }
+  internal var displayOptions: (DialogFragment.() -> Unit)? = null
 }
+
+typealias InputTextGetter = () -> String

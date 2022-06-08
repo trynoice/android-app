@@ -32,4 +32,4 @@ Noice es una aplicación que te permite crear un ambiente personalizado usando c
 - <b>Servicio de facturación de Google Play</b>: para permitir contribuciones financieras para apoyar el desarrollo
 
 Noice es un software libre y de código abierto.
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

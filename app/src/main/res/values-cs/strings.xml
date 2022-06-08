@@ -10,17 +10,9 @@
     <string name="support_development">Podpořit vývoj</string>
     <string name="wake_up_timer">Časovač spuštění</string>
     <string name="submit_feedback">Odeslat zpětnou vazbu</string>
-    <string name="mood_any">Jakákoliv</string>
-    <string name="intensity_any">Jakákoliv</string>
-    <string name="dense">Hutná</string>
-    <string name="focus">Soustředění</string>
     <string name="intensity">Intenzita</string>
-    <string name="random_preset_description">Vygenerované náhodné mixy budou obsahovat zvuky korespondující s vaší náladou. Hutné mixy se navíc budou snažit přehrávat i více stop najednou.</string>
-    <string name="light">Lehká</string>
-    <string name="mood">Nálada</string>
     <string name="okay">Budiž</string>
     <string name="random_preset">Náhodný mix</string>
-    <string name="relax">Uvolnění</string>
     <string name="cancel">Zrušit</string>
     <string name="dismiss">Zahodit</string>
     <string name="name">Název</string>
@@ -32,52 +24,8 @@
     <string name="save_preset">Uložit mix</string>
     <string name="play">Přehrát</string>
     <string name="play_pause">Přehrát/Pozastavit</string>
-    <string name="repeat_time_period">Doba opakování</string>
     <string name="stop">Stop</string>
     <string name="volume">Hlasitost</string>
-    <string name="sound_group__life">Život</string>
-    <string name="sound_group__monsoon">Monzun</string>
-    <string name="sound_group__public_gatherings">Civilizace</string>
-    <string name="sound_group__raw_noise">Syntentický šum</string>
-    <string name="sound_group__times_of_day">Denní doba</string>
-    <string name="sound_group__vehicles">Vozidla</string>
-    <string name="sound_group__water">Voda</string>
-    <string name="sound_group__wind">Vítr</string>
-    <string name="airplane_inflight">Paluba letadla</string>
-    <string name="airplane_seatbelt_beeps">Pípání bezpečnostních pásů v letadle</string>
-    <string name="birds">Ptáci</string>
-    <string name="bonfire">Táborák</string>
-    <string name="brownian_noise">Hnědý šum</string>
-    <string name="coffee_shop">Kavárna</string>
-    <string name="creaking_ship">Vrzající loď</string>
-    <string name="crickets">Cvrčci</string>
-    <string name="distant_thunder">Vzdálená bouřka</string>
-    <string name="electric_car">Elektromobil</string>
-    <string name="heavy_rain">Silný déšť</string>
-    <string name="howling_wolf">Vytí vlka</string>
-    <string name="human_heartbeat">Zvuk lidského srdce</string>
-    <string name="light_rain">Slabý déšť</string>
-    <string name="moderate_rain">Střední déšť</string>
-    <string name="morning_in_a_village">Ráno na vesnici</string>
-    <string name="moving_train">Jedoucí vlak</string>
-    <string name="night">Noc</string>
-    <string name="office">Kancelář</string>
-    <string name="pink_noise">Růžový šum</string>
-    <string name="public_library">Veřejná knihovna</string>
-    <string name="purring_cat">Předení kočky</string>
-    <string name="quiet_conversation">Tichá konverzace</string>
-    <string name="rolling_thunder">Hřímání</string>
-    <string name="screeching_seagulls">Křik racků</string>
-    <string name="seaside">Pobřeží</string>
-    <string name="soft_wind">Mírný vítr</string>
-    <string name="thunder_crack">Prásknutí hromu</string>
-    <string name="train_horn">Troubení vlaku</string>
-    <string name="walking_through_the_snow">Šlápoty ve sněhu</string>
-    <string name="water_hose">Zahradní hadice</string>
-    <string name="water_stream">Zurčení potůčku</string>
-    <string name="white_noise">Bílý šum</string>
-    <string name="wind_in_chimes_of_shells">Vítr vanoucí zvonkohrou z mušlí</string>
-    <string name="wind_in_palm_trees">Vítr vanoucí palmami</string>
     <string name="add_to_home_screen">Přidat na domovskou obrazovku</string>
     <string name="delete">Odstranit</string>
     <string name="open_context_menu">Otevřít kontextovou nabídku</string>
@@ -139,14 +87,7 @@
   </string>
     <string name="appintro__timer_title">Máte problémy s usínáním či se v noci budíte?</string>
     <string name="support_development__donate">Podpořit</string>
-    <string name="support_development__donate_description">
-    Vaše dary nám pomohou\n
-    - investovat čas a peníze do vývoje nových funkcí\n
-    - zakoupení lepších nahrávek zvuků\n
-    - koupit si kafe\n
-  </string>
     <string name="support_development__donate_google_play_description">Vaše platba bude bezpečně zaštítěna službou Google Play. V závisloti na vaší poloze vám __možná__ bude přiúčtována daň z koupě, dle vašich lokálních zákonů.</string>
-    <string name="support_development__donate_thank_you">Děkujeme!</string>
     <string name="support_development__donate_thank_you_description">
     Zcela upřímně vám moc srdečně děkujeme za vaši finanční podporu projektu Noice.
   </string>
@@ -155,11 +96,6 @@
     Sdílením informace o existenci Noice s vašimi přáteli je podobné jako přímé darování peněz. Čím
     vyšší počet stažení, tím silnější zpětnou vazbu dostaneme z různých perspektiv, což nám pomůže
     ke zlepšení kvality celé aplikace.
-  </string>
-    <string name="support_development__why">Proč nás podpořit?</string>
-    <string name="support_development__why_description">
-    - Pro podporu dalšího vývoje\n
-    - Pro udržení Noice nadále bez reklam\n
   </string>
     <string name="cast_media">Propojit s Chromecast</string>
     <string name="in_app_feedback__description">
@@ -172,14 +108,12 @@
     <string name="never">Nikdy</string>
     <string name="notification_channel_default__description">Ovladání přehrávače</string>
     <string name="notification_channel_default__name">Právě hraje</string>
-    <string name="app_authors">Zobrazit seznam autorů Noice</string>
     <string name="add_to_app_shortcuts">Přidat mezi zkratky aplikace</string>
     <string name="remove_from_app_shortcuts">Odebrat ze zkratek aplikace</string>
     <string name="app_shortcut_removed">Mix byl odebrán ze zkratek aplikace!</string>
     <string name="app_shortcut_created">Mix byl přidán mezi zkratky aplikace!</string>
     <string name="app_shortcut_creation_failed">Nepodařilo se přidat mix mezi zkratky aplikace!</string>
     <string name="settings">Nastavení</string>
-    <string name="behavior">Chování</string>
     <string name="appearance">Vzhled</string>
     <string name="pinned_shortcut_creation_failed">Nepodařilo přidat zkratku aplikace na plochu!</string>
     <string name="pinned_shortcut_created">Zkratka byla přidána na plochu!</string>
@@ -202,7 +136,7 @@
     <string name="invalid_import_file_format">Formát souboru pro import je neplatný!</string>
     <string name="should_display_sound_icons">Zobrazovat ikony zvuku</string>
     <string name="share_usage_data_consent_title">Nastavení sdílení dat</string>
-    <string name="share_usage_data_consent_message">Pro vylepšení aplikace sbíráme data o jejím využívání. Také sbíráme data o chování aplikace samotné, abychom mohli lépe analyzovat a diagnostikovat případné chyby, s nimiž byste se mohli potkat. Pro více informací si přečtěte naše [zásady ochrany osobních údajů](https://ashutoshgngwr.github.io/noice/privacy-policy).
+    <string name="share_usage_data_consent_message">Pro vylepšení aplikace sbíráme data o jejím využívání. Také sbíráme data o chování aplikace samotné, abychom mohli lépe analyzovat a diagnostikovat případné chyby, s nimiž byste se mohli potkat. Pro více informací si přečtěte naše [zásady ochrany osobních údajů](https://trynoice.com/privacy-policy).
 \n
 \nPředvolbu automatického sběru dat můžete kdykoliv změnit uvnitř aplikace, skrze \"**Nastavení** &gt; **Odesílat technická data o používání a chování**\".</string>
     <string name="accept">Přijmout</string>

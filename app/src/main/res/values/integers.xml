@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <integer name="default_fade_in_duration_seconds">5</integer>
+  <integer name="default_fade_out_duration_seconds">5</integer>
+</resources>

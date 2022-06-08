@@ -21,4 +21,4 @@ Noice è un'app che ti permette di creare atmosfere personalizzate usando clips 
 - Rumori grezzi (bianco, rosa, marrone)
 
 Noice è un programma libero ed open-source.
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

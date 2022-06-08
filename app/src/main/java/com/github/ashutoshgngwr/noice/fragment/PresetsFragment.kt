@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.StringRes
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ShareCompat
 import androidx.core.content.pm.ShortcutInfoCompat
@@ -15,302 +14,365 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.github.ashutoshgngwr.noice.MediaPlayerService
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.databinding.PresetsFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.PresetsListItemBinding
+import com.github.ashutoshgngwr.noice.engine.PlaybackController
+import com.github.ashutoshgngwr.noice.engine.PlaybackState
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
+import com.github.ashutoshgngwr.noice.ext.showSuccessSnackbar
 import com.github.ashutoshgngwr.noice.model.Preset
-import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
-import com.google.android.material.snackbar.Snackbar
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+import com.github.ashutoshgngwr.noice.repository.SoundRepository
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
+import kotlin.math.min
 
-class PresetsFragment : Fragment() {
+@AndroidEntryPoint
+class PresetsFragment : Fragment(), PresetListItemController {
 
   private lateinit var binding: PresetsFragmentBinding
-  private lateinit var presetRepository: PresetRepository
-  private lateinit var analyticsProvider: AnalyticsProvider
+  private val viewModel: PresetsViewModel by viewModels()
 
-  private var adapter: PresetListAdapter? = null
-  private var activePresetPos = -1
-  private var dataSet = mutableListOf<Preset>()
+  @set:Inject
+  internal lateinit var presetRepository: PresetRepository
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View {
+  @set:Inject
+  internal lateinit var wakeUpTimerManager: WakeUpTimerManager
+
+  @set:Inject
+  internal lateinit var playbackController: PlaybackController
+
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
+
+  @set:Inject
+  internal lateinit var reviewFlowProvider: ReviewFlowProvider
+
+  private val adapter by lazy { PresetListAdapter(layoutInflater, this) }
+
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = PresetsFragmentBinding.inflate(inflater, container, false)
     return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    presetRepository = PresetRepository.newInstance(requireContext())
-    analyticsProvider = NoiceApplication.of(requireContext()).analyticsProvider
-    dataSet = presetRepository.list().toMutableList()
-    adapter = PresetListAdapter(requireContext())
-    binding.list.also {
-      it.adapter = adapter
-      it.setHasFixedSize(true)
-      it.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+    binding.lifecycleOwner = viewLifecycleOwner
+    binding.viewModel = viewModel
+    binding.list.adapter = adapter
+    val itemDecor = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+    binding.list.addItemDecoration(itemDecor)
+    viewModel.loadAppShortcuts(requireContext())
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.presets.collect(adapter::setPresets)
     }
 
-    EventBus.getDefault().register(this)
-    updateEmptyListIndicatorVisibility()
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.presetsWithAppShortcut.collect(adapter::setPresetsWithAppShortcut)
+    }
 
-    val params = bundleOf("items_count" to dataSet.size)
-    analyticsProvider.setCurrentScreen("presets", PresetsFragment::class, params)
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.activePresetId.collect(adapter::setActivePresetId)
+    }
+
+    analyticsProvider.setCurrentScreen("presets", PresetsFragment::class)
   }
 
-  override fun onDestroyView() {
-    EventBus.getDefault().unregister(this)
-    super.onDestroyView()
-  }
-
-  @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-  fun onPlayerManagerUpdate(event: MediaPlayerService.PlaybackUpdateEvent) {
-    val oldPresetPos = activePresetPos
-    activePresetPos = Preset.from("", event.players.values).let { dataSet.indexOf(it) }
-    adapter?.notifyItemChanged(oldPresetPos)
-    adapter?.notifyItemChanged(activePresetPos)
-  }
-
-  private fun updateEmptyListIndicatorVisibility() {
-    if (adapter?.itemCount ?: 0 > 0) {
-      binding.emptyListHint.visibility = View.GONE
+  override fun onPlaybackToggled(preset: Preset) {
+    if (viewModel.activePresetId.value == preset.id) {
+      playbackController.stop()
     } else {
-      binding.emptyListHint.visibility = View.VISIBLE
+      playbackController.play(preset)
     }
   }
 
-  inner class PresetListAdapter(context: Context) : RecyclerView.Adapter<ViewHolder>() {
+  override fun onShareClicked(preset: Preset) {
+    val url = presetRepository.writeAsUrl(preset)
+    ShareCompat.IntentBuilder(binding.root.context)
+      .setType("text/plain")
+      .setChooserTitle(R.string.share)
+      .setText(url)
+      .startChooser()
 
-    private val layoutInflater = LayoutInflater.from(context)
+    analyticsProvider.logEvent("share_preset_uri", bundleOf("item_length" to url.length))
+  }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-      return ViewHolder(PresetsListItemBinding.inflate(layoutInflater, parent, false))
-    }
+  override fun onDeleteClicked(preset: Preset) {
+    val params = bundleOf("success" to false)
+    DialogFragment.show(childFragmentManager) {
+      title(R.string.delete)
+      message(R.string.preset_delete_confirmation, preset.name)
+      negativeButton(R.string.cancel)
+      positiveButton(R.string.delete) {
+        presetRepository.delete(preset.id)
+        // then stop playback if recently deleted preset was playing
+        if (viewModel.activePresetId.value == preset.id) {
+          playbackController.stop()
+        }
 
-    override fun getItemCount(): Int {
-      return dataSet.size
-    }
+        // cancel wake-up timer if it is set to the deleted preset.
+        if (preset.id == wakeUpTimerManager.get()?.presetID) {
+          wakeUpTimerManager.cancel()
+        }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-      holder.binding.title.text = dataSet[position].name
-      holder.binding.playButton.isChecked = position == activePresetPos
+        ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
+        showSuccessSnackbar(R.string.preset_deleted)
+
+        params.putBoolean("success", true)
+        reviewFlowProvider.maybeAskForReview(requireActivity()) // maybe show in-app review dialog to the user
+      }
+
+      onDismiss { analyticsProvider.logEvent("preset_delete", params) }
     }
   }
 
-  inner class ViewHolder(val binding: PresetsListItemBinding) :
-    RecyclerView.ViewHolder(binding.root) {
-
-    private val reviewFlowProvider = NoiceApplication.of(requireContext()).reviewFlowProvider
-
-    init {
-      binding.playButton.setOnClickListener {
-        if (bindingAdapterPosition != activePresetPos) {
-          PlaybackController.playPreset(requireContext(), dataSet[bindingAdapterPosition].id)
-        } else {
-          PlaybackController.stop(requireContext())
-        }
-      }
-
-      val onMenuItemClickListener = PopupMenu.OnMenuItemClickListener {
-        when (it.itemId) {
-          R.id.action_share -> showShareIntentSender()
-          R.id.action_delete -> showDeletePresetConfirmation()
-          R.id.action_rename -> showRenamePresetInput()
-          R.id.action_create_pinned_shortcut -> createPinnedShortcut()
-          R.id.action_create_app_shortcut -> createAppShortcut()
-          R.id.action_remove_app_shortcut -> removeAppShortcut()
-        }
-
-        true
-      }
-
-      binding.menuButton.setOnClickListener {
-        PopupMenu(requireContext(), binding.menuButton).let {
-          it.inflate(R.menu.preset)
-          val hasAppShortcut = hasAppShortcut()
-          it.menu.findItem(R.id.action_create_app_shortcut).isVisible = !hasAppShortcut
-          it.menu.findItem(R.id.action_remove_app_shortcut).isVisible = hasAppShortcut
-          it.setOnMenuItemClickListener(onMenuItemClickListener)
-          it.show()
-        }
-
-        analyticsProvider.logEvent("preset_context_menu_open", bundleOf())
-      }
-    }
-
-    private fun showShareIntentSender() {
-      val uri = dataSet[bindingAdapterPosition].toUri().toString()
-      ShareCompat.IntentBuilder(requireActivity())
-        .setType("text/plain")
-        .setChooserTitle(R.string.share)
-        .setText(uri)
-        .startChooser()
-
-      analyticsProvider.logEvent("share_preset_uri", bundleOf("item_length" to uri.length))
-    }
-
-    private fun createPinnedShortcut() {
-      if (!ShortcutManagerCompat.isRequestPinShortcutSupported(requireContext())) {
-        showSnackBar(R.string.pinned_shortcuts_not_supported)
-        return
-      }
-
-      val info = buildShortcutInfo(UUID.randomUUID().toString(), "pinned")
-      val result = ShortcutManagerCompat.requestPinShortcut(requireContext(), info, null)
-      if (!result) {
-        showSnackBar(R.string.pinned_shortcut_creation_failed)
-      } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-        showSnackBar(R.string.pinned_shortcut_created)
-      }
-
-      val params = bundleOf("success" to result, "shortcut_type" to "pinned")
-      analyticsProvider.logEvent("preset_shortcut_create", params)
-    }
-
-    private fun createAppShortcut() {
-      val list = ShortcutManagerCompat.getDynamicShortcuts(requireContext())
-      val presetID = dataSet[bindingAdapterPosition].id
-      list.add(buildShortcutInfo(presetID, "app"))
-
-      val result = ShortcutManagerCompat.addDynamicShortcuts(requireContext(), list)
-      if (result) {
-        showSnackBar(R.string.app_shortcut_created)
-      } else {
-        showSnackBar(R.string.app_shortcut_creation_failed)
-      }
-
-      val params = bundleOf("success" to result, "shortcut_type" to "app")
-      analyticsProvider.logEvent("preset_shortcut_create", params)
-    }
-
-    private fun removeAppShortcut() {
-      val presetID = dataSet[bindingAdapterPosition].id
-      ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(presetID))
-      showSnackBar(R.string.app_shortcut_removed)
-      analyticsProvider.logEvent("preset_shortcut_remove", bundleOf("shortcut_type" to "app"))
-    }
-
-    private fun hasAppShortcut(): Boolean {
-      ShortcutManagerCompat.getDynamicShortcuts(requireContext()).forEach {
-        if (it.id == dataSet[bindingAdapterPosition].id) {
-          return true
-        }
-      }
-
-      return false
-    }
-
-    private fun buildShortcutInfo(shortcutID: String, type: String): ShortcutInfoCompat {
-      return with(ShortcutInfoCompat.Builder(requireContext(), shortcutID)) {
-        setShortLabel(dataSet[bindingAdapterPosition].name)
-        setIcon(IconCompat.createWithResource(requireContext(), R.mipmap.ic_preset_shortcut))
-        setIntent(
-          Intent(requireContext(), ShortcutHandlerActivity::class.java)
-            .setAction(Intent.ACTION_VIEW)
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_ID, shortcutID)
-            .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_TYPE, type)
-            .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, dataSet[bindingAdapterPosition].id)
-        )
-
-        build()
-      }
-    }
-
-    private fun showRenamePresetInput() {
-      val params = bundleOf("success" to false)
-      DialogFragment.show(childFragmentManager) {
-        title(R.string.rename)
-        input(
-          hintRes = R.string.name,
-          preFillValue = dataSet[bindingAdapterPosition].name,
-          validator = {
-            when {
-              it.isBlank() -> R.string.preset_name_cannot_be_empty
-              dataSet[bindingAdapterPosition].name == it -> 0 // no error if the name didn't change
-              dataSet.any { p -> it == p.name } -> R.string.preset_already_exists
-              else -> 0
-            }
+  override fun onRenameClicked(preset: Preset) {
+    DialogFragment.show(childFragmentManager) {
+      val presets = presetRepository.list()
+      title(R.string.rename)
+      val nameGetter = input(
+        hintRes = R.string.name,
+        preFillValue = preset.name,
+        validator = { name ->
+          when {
+            name.isBlank() -> R.string.preset_name_cannot_be_empty
+            name == preset.name -> 0
+            presets.any { it.name == name } -> R.string.preset_already_exists
+            else -> 0
           }
-        )
-
-        negativeButton(R.string.cancel)
-        positiveButton(R.string.save) {
-          val name = getInputText()
-          dataSet[bindingAdapterPosition].name = name
-          presetRepository.update(dataSet[bindingAdapterPosition])
-          adapter?.notifyItemChanged(bindingAdapterPosition)
-          PlaybackController.requestUpdateEvent(requireContext())
-
-          // maybe show in-app review dialog to the user
-          reviewFlowProvider.maybeAskForReview(requireActivity())
-          params.putBoolean("success", true)
-          analyticsProvider.logEvent("preset_name", bundleOf("item_length" to name.length))
         }
+      )
 
-        onDismiss { analyticsProvider.logEvent("preset_rename", params) }
+      negativeButton(R.string.cancel)
+      positiveButton(R.string.save) {
+        presetRepository.update(preset.copy(name = nameGetter.invoke()))
+        // maybe show in-app review dialog to the user
+        reviewFlowProvider.maybeAskForReview(requireActivity())
       }
-    }
-
-    private fun showDeletePresetConfirmation() {
-      val params = bundleOf("success" to false)
-      DialogFragment.show(requireActivity().supportFragmentManager) {
-        title(R.string.delete)
-        message(R.string.preset_delete_confirmation, dataSet[bindingAdapterPosition].name)
-        negativeButton(R.string.cancel)
-        positiveButton(R.string.delete) {
-          val preset = dataSet.removeAt(bindingAdapterPosition)
-          presetRepository.delete(preset.id)
-          // then stop playback if recently deleted preset was playing
-          if (bindingAdapterPosition == activePresetPos) {
-            PlaybackController.stop(requireContext())
-          }
-
-          if (bindingAdapterPosition < activePresetPos) {
-            activePresetPos -= 1 // account for recent deletion
-          }
-
-          cancelWakeUpTimerIfScheduled(preset.id)
-          ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
-          adapter?.notifyItemRemoved(bindingAdapterPosition)
-          updateEmptyListIndicatorVisibility()
-          showSnackBar(R.string.preset_deleted)
-
-          params.putBoolean("success", true)
-          // maybe show in-app review dialog to the user
-          reviewFlowProvider.maybeAskForReview(requireActivity())
-        }
-
-        onDismiss { analyticsProvider.logEvent("preset_delete", params) }
-      }
-    }
-
-    /**
-     * cancels the wake-up timer if it was scheduled with the given [Preset.id].
-     */
-    private fun cancelWakeUpTimerIfScheduled(@Suppress("SameParameterValue") id: String) {
-      WakeUpTimerManager.get(requireContext())?.also {
-        if (id == it.presetID) {
-          WakeUpTimerManager.cancel(requireContext())
-        }
-      }
-    }
-
-    private fun showSnackBar(@StringRes message: Int) {
-      Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).show()
     }
   }
+
+  override fun onCreatePinnedShortcutClicked(preset: Preset) {
+    if (!ShortcutManagerCompat.isRequestPinShortcutSupported(requireContext())) {
+      showErrorSnackbar(R.string.pinned_shortcuts_not_supported)
+      return
+    }
+
+    val info = buildShortcutInfo(UUID.randomUUID().toString(), "pinned", preset)
+    val result =
+      ShortcutManagerCompat.requestPinShortcut(requireContext(), info, null)
+    if (!result) {
+      showErrorSnackbar(R.string.pinned_shortcut_creation_failed)
+    } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+      showSuccessSnackbar(R.string.pinned_shortcut_created)
+    }
+
+    val params = bundleOf("success" to result, "shortcut_type" to "pinned")
+    analyticsProvider.logEvent("preset_shortcut_create", params)
+  }
+
+  override fun onCreateAppShortcutClicked(preset: Preset) {
+    val list = ShortcutManagerCompat.getDynamicShortcuts(requireContext())
+    list.add(buildShortcutInfo(preset.id, "app", preset))
+    val result = ShortcutManagerCompat.addDynamicShortcuts(requireContext(), list)
+    if (result) {
+      showSuccessSnackbar(R.string.app_shortcut_created)
+    } else {
+      showErrorSnackbar(R.string.app_shortcut_creation_failed)
+    }
+
+    viewModel.loadAppShortcuts(requireContext())
+    val params = bundleOf("success" to result, "shortcut_type" to "app")
+    analyticsProvider.logEvent("preset_shortcut_create", params)
+  }
+
+  override fun onRemoveAppShortcutClicked(preset: Preset) {
+    ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
+    showSuccessSnackbar(R.string.app_shortcut_removed)
+    viewModel.loadAppShortcuts(requireContext())
+    analyticsProvider.logEvent("preset_shortcut_remove", bundleOf("shortcut_type" to "app"))
+  }
+
+  private fun buildShortcutInfo(id: String, type: String, preset: Preset): ShortcutInfoCompat {
+    return ShortcutInfoCompat.Builder(requireContext(), id).run {
+      setShortLabel(preset.name)
+      setIcon(IconCompat.createWithResource(requireContext(), R.mipmap.ic_preset_shortcut))
+      setIntent(
+        Intent(requireContext(), ShortcutHandlerActivity::class.java)
+          .setAction(Intent.ACTION_VIEW)
+          .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+          .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_ID, id)
+          .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_TYPE, type)
+          .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, preset.id)
+      )
+
+      build()
+    }
+  }
+}
+
+@HiltViewModel
+class PresetsViewModel @Inject constructor(
+  presetRepository: PresetRepository,
+  soundRepository: SoundRepository,
+) : ViewModel() {
+
+  internal val presets: StateFlow<List<Preset>> = presetRepository.listFlow()
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
+  internal val activePresetId: StateFlow<String?> =
+    combine(presets, soundRepository.getPlayerStates()) { presets, playerStates ->
+      playerStates
+        // exclude stopping and stopped players from active preset
+        .filterNot { it.playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
+        .toTypedArray()
+        .let { s -> presets.find { p -> p.hasMatchingPlayerStates(s) } }
+        ?.id
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+  internal val presetsWithAppShortcut = MutableStateFlow(emptySet<String>())
+
+  val isEmptyIndicatorVisible: StateFlow<Boolean> = presets.transform { presets ->
+    emit(presets.isEmpty())
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+
+  internal fun loadAppShortcuts(context: Context) {
+    presetsWithAppShortcut.value = ShortcutManagerCompat.getDynamicShortcuts(context)
+      .map { it.id }
+      .toSet()
+  }
+}
+
+class PresetListAdapter(
+  private val layoutInflater: LayoutInflater,
+  private val itemController: PresetListItemController,
+) : RecyclerView.Adapter<PresetViewHolder>() {
+
+  private var presets = emptyList<Preset>()
+  private var presetsWithAppShortcut = emptySet<String>()
+  private var activePresetId: String? = null
+
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PresetViewHolder {
+    val binding = PresetsListItemBinding.inflate(layoutInflater, parent, false)
+    return PresetViewHolder(binding, itemController)
+  }
+
+  override fun getItemCount(): Int {
+    return presets.size
+  }
+
+  override fun onBindViewHolder(holder: PresetViewHolder, position: Int) {
+    val presetId = presets[position].id
+    holder.bind(presets[position], presetId in presetsWithAppShortcut, activePresetId == presetId)
+  }
+
+  fun setPresets(presets: List<Preset>) {
+    // since the dataset is homogeneous, we can update the recycler view items without removing all
+    // items and reinserting them.
+    val updated = this.presets.size
+    this.presets = presets
+    notifyItemRangeChanged(0, min(updated, presets.size))
+    if (updated > presets.size) {
+      notifyItemRangeRemoved(updated, updated - presets.size)
+    } else {
+      notifyItemRangeInserted(updated, presets.size - updated)
+    }
+  }
+
+  fun setPresetsWithAppShortcut(presetIds: Set<String>) {
+    val oldPresetIds = presetsWithAppShortcut
+    presetsWithAppShortcut = presetIds
+    presets.forEachIndexed { i, preset ->
+      if ((preset.id in oldPresetIds) != (preset.id in presetIds)) {
+        notifyItemChanged(i)
+      }
+    }
+  }
+
+  fun setActivePresetId(id: String?) {
+    val oldActivePos = presets.indexOfFirst { it.id == activePresetId }
+    val newActivePos = presets.indexOfFirst { it.id == id }
+    activePresetId = id
+    if (oldActivePos > -1) {
+      notifyItemChanged(oldActivePos)
+    }
+
+    if (newActivePos > -1) {
+      notifyItemChanged(newActivePos)
+    }
+  }
+}
+
+class PresetViewHolder(
+  private val binding: PresetsListItemBinding,
+  private val controller: PresetListItemController,
+) : RecyclerView.ViewHolder(binding.root) {
+
+  private lateinit var preset: Preset
+  private var hasAppShortcut = false
+
+  init {
+    binding.playButton.setOnClickListener {
+      controller.onPlaybackToggled(preset)
+    }
+
+    val onMenuItemClickListener = PopupMenu.OnMenuItemClickListener {
+      when (it.itemId) {
+        R.id.action_share -> controller.onShareClicked(preset)
+        R.id.action_delete -> controller.onDeleteClicked(preset)
+        R.id.action_rename -> controller.onRenameClicked(preset)
+        R.id.action_create_pinned_shortcut -> controller.onCreatePinnedShortcutClicked(preset)
+        R.id.action_create_app_shortcut -> controller.onCreateAppShortcutClicked(preset)
+        R.id.action_remove_app_shortcut -> controller.onRemoveAppShortcutClicked(preset)
+      }
+
+      true
+    }
+
+    binding.menuButton.setOnClickListener {
+      PopupMenu(binding.root.context, binding.menuButton).let { pm ->
+        pm.inflate(R.menu.preset)
+        pm.menu.findItem(R.id.action_create_app_shortcut).isVisible = !hasAppShortcut
+        pm.menu.findItem(R.id.action_remove_app_shortcut).isVisible = hasAppShortcut
+        pm.setOnMenuItemClickListener(onMenuItemClickListener)
+        pm.show()
+      }
+    }
+  }
+
+  fun bind(preset: Preset, hasAppShortcut: Boolean, isPlaying: Boolean) {
+    this.preset = preset
+    this.hasAppShortcut = hasAppShortcut
+    binding.title.text = preset.name
+    binding.playButton.isChecked = isPlaying
+  }
+}
+
+interface PresetListItemController {
+  fun onPlaybackToggled(preset: Preset)
+  fun onShareClicked(preset: Preset)
+  fun onDeleteClicked(preset: Preset)
+  fun onRenameClicked(preset: Preset)
+  fun onCreatePinnedShortcutClicked(preset: Preset)
+  fun onCreateAppShortcutClicked(preset: Preset)
+  fun onRemoveAppShortcutClicked(preset: Preset)
 }

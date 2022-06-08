@@ -16,33 +16,8 @@
     <string name="save_preset">Sparade kombinationer</string>
     <string name="play">Spela</string>
     <string name="play_pause">spela eller pausa</string>
-    <string name="repeat_time_period">Upprepa period</string>
     <string name="stop">Stopp</string>
     <string name="volume">Ljudvolym</string>
-    <string name="airplane_inflight">Flygplan i luften</string>
-    <string name="airplane_seatbelt_beeps">Flygplan bältet-på</string>
-    <string name="birds">Fåglar</string>
-    <string name="bonfire">Brasa</string>
-    <string name="brownian_noise">Brunt brus</string>
-    <string name="coffee_shop">Café</string>
-    <string name="distant_thunder">Distant åska</string>
-    <string name="heavy_rain">Starkt regn</string>
-    <string name="light_rain">Milt regn</string>
-    <string name="moderate_rain">Måttligt regn</string>
-    <string name="morning_in_a_village">Morgon i en by</string>
-    <string name="moving_train">Tåg i rörelse</string>
-    <string name="night">Natt</string>
-    <string name="office">Kontor</string>
-    <string name="pink_noise">Rosa brus</string>
-    <string name="rolling_thunder">Åskmuller</string>
-    <string name="seaside">Vid kusten</string>
-    <string name="soft_wind">Mjuk vind</string>
-    <string name="thunder_crack">Blixt</string>
-    <string name="train_horn">Tågsignal</string>
-    <string name="water_stream">Flod</string>
-    <string name="white_noise">Vitt brus</string>
-    <string name="wind_in_chimes_of_shells">Vindspel</string>
-    <string name="wind_in_palm_trees">Palmträd i vind</string>
     <string name="delete">Ta bort</string>
     <string name="open_context_menu">Öppna kontext-meny</string>
     <string name="preset_delete_confirmation">Vill du ta bort %s?</string>
@@ -58,9 +33,6 @@
     <string name="notification_channel_default__description">Uppspelningskontroller för media</string>
     <string name="notification_channel_default__name">Uppspelning av media</string>
     <string name="okay">Okej</string>
-    <string name="light">Ljust</string>
-    <string name="mood_any">Vilken som helst</string>
-    <string name="intensity_any">Vilken som helst</string>
     <string name="submit_feedback">Skicka feedback</string>
     <string name="help">Hjälp</string>
     <string name="support_development">Stöd utveckling</string>
@@ -83,7 +55,6 @@
     <string name="pinned_shortcut_created">Genvägen har lagts till på hem-skärmen!</string>
     <string name="pinned_shortcut_creation_failed">Misslyckades att lägga till genvägen till hem-skärmen!</string>
     <string name="appearance">Utseende</string>
-    <string name="behavior">Beteende</string>
     <string name="presets_as_home_screen">Sparade förinställningar som hem-skärm</string>
     <string name="settings">Inställningar</string>
     <string name="app_shortcut_creation_failed">Misslyckades med att lägga till förinställningen i app-genvägar!</string>
@@ -91,25 +62,14 @@
     <string name="app_shortcut_removed">Förinställningen har tagits bort från app-genvägar!</string>
     <string name="remove_from_app_shortcuts">Ta bort från app-genvägar</string>
     <string name="add_to_app_shortcuts">Lägg till i app-genvägar</string>
-    <string name="app_authors">Visa listan över Noice-författarna</string>
     <string name="never">Aldrig</string>
     <string name="later">Senare</string>
     <string name="in_app_feedback__title">Skicka in en recension</string>
     <string name="in_app_feedback__description">Vi skulle gärna vilja att du hörde av dig om appen. Vänligen ta en stund för att besöka vårat GitHub-filförråd. Om du inte tycker om appen, vänligen överväg att öppna en rapport som förklarar dina bekymmer. Vänligen ge projektet en stjärna annars för att visa kärlek och stöttning.</string>
-    <string name="support_development__why_description">- För att göra framtida uppdateringar möjliga
-\n- För att hålla Noice fritt från annonser för alltid
-\n</string>
-    <string name="support_development__why">Varför borde du stötta\?</string>
     <string name="support_development__share_description">Att dela Noice med vänner är liknande som att donera pengar. Med större nerladdningar så kommer vi att ha möjlighet att ta emot feedback från ett antal olika perspektiv vilket kan hjälpa oss att göra Noice bättre än tidigare.</string>
     <string name="support_development__share">Dela med vänner</string>
     <string name="support_development__donate_thank_you_description">Vi tackar dig så hjärtligt för ditt generösa bidrag till Noice-projektet.</string>
-    <string name="support_development__donate_thank_you">Tack!</string>
     <string name="support_development__donate_google_play_description">Din betalning kommer att hanteras av Google Play. Summan kommer att konverteras till din lokala valuta. Beroende på din plats så kan ytterligare skatt läggas till i slutsumman.</string>
-    <string name="support_development__donate_description">Donationer kommer att hjälpa oss att
-\n- investera i nya funktioner
-\n- organisera bättre ljudprover
-\n- köpa kaffe
-\n</string>
     <string name="support_development__donate">Donera</string>
     <string name="appintro__timer_title">Har du problem med att somna eller att vakna upp\?</string>
     <string name="appintro__library_title">Skapa dina perfekta omgivningar</string>
@@ -133,31 +93,8 @@
     <string name="presets_as_home_screen_summary">Visa sparade förinställningar när appen startar upp</string>
     <string name="preset_does_not_exist">Förinställningen existerar inte. Den kan ha blivit borttagen!</string>
     <string name="add_to_home_screen">Lägg till på hemskärmen</string>
-    <string name="water_hose">Vattenslang</string>
-    <string name="walking_through_the_snow">Går genom snön</string>
-    <string name="screeching_seagulls">Skrikande måsar</string>
-    <string name="quiet_conversation">Tyst konversation</string>
-    <string name="purring_cat">Spinnande katt</string>
-    <string name="public_library">Publikt bibliotek</string>
-    <string name="human_heartbeat">Mänskligt hjärtslag</string>
-    <string name="howling_wolf">Ylande varg</string>
-    <string name="electric_car">Elektrisk bil</string>
-    <string name="crickets">Syrsor</string>
-    <string name="creaking_ship">Gnälligt skepp</string>
-    <string name="sound_group__wind">Vind</string>
-    <string name="sound_group__water">Vatten</string>
-    <string name="sound_group__vehicles">Fordon</string>
-    <string name="sound_group__times_of_day">Tider på dagen</string>
-    <string name="sound_group__raw_noise">Rått ljud</string>
-    <string name="sound_group__public_gatherings">Publika samlingar</string>
-    <string name="sound_group__monsoon">Monsun</string>
-    <string name="sound_group__life">Liv</string>
     <string name="preset_already_exists">En förinställning med det angivna namnet existerar redan!</string>
-    <string name="relax">Slappna av</string>
     <string name="random_preset">Slumpmässig förinställning</string>
-    <string name="mood">Humör</string>
     <string name="intensity">Intensitet</string>
-    <string name="focus">Fokus</string>
-    <string name="dense">Tät</string>
     <string name="wake_up_timer">Timer för uppväckning</string>
 </resources>

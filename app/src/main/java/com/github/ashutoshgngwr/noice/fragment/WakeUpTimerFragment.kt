@@ -8,25 +8,39 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.databinding.WakeUpTimerFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.normalizeSpace
+import com.github.ashutoshgngwr.noice.ext.showSnackbar
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
-import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class WakeUpTimerFragment : Fragment() {
 
   private lateinit var binding: WakeUpTimerFragmentBinding
-  private lateinit var presetRepository: PresetRepository
-  private lateinit var analyticsProvider: AnalyticsProvider
 
   private var selectedPresetID: String? = null
   private var selectedTime: Long = 0
   private var changedPreset = false
+
+  @set:Inject
+  internal lateinit var presetRepository: PresetRepository
+
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
+
+  @set:Inject
+  internal lateinit var reviewFlowProvider: ReviewFlowProvider
+
+  @set:Inject
+  internal lateinit var wakeUpTimerManager: WakeUpTimerManager
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -43,9 +57,7 @@ class WakeUpTimerFragment : Fragment() {
     binding.setTimeButton.setOnClickListener { onSetTimeClicked() }
     binding.timePicker.setIs24HourView(DateFormat.is24HourFormat(requireContext()))
 
-    presetRepository = PresetRepository.newInstance(requireContext())
-
-    WakeUpTimerManager.get(requireContext())?.also {
+    wakeUpTimerManager.get()?.also {
       if (it.atMillis > System.currentTimeMillis()) {
         selectedPresetID = it.presetID
         selectedTime = it.atMillis
@@ -58,8 +70,6 @@ class WakeUpTimerFragment : Fragment() {
     }
 
     notifyUpdate()
-
-    analyticsProvider = NoiceApplication.of(requireContext()).analyticsProvider
     analyticsProvider.setCurrentScreen("wake_up_timer", WakeUpTimerFragment::class)
   }
 
@@ -74,7 +84,7 @@ class WakeUpTimerFragment : Fragment() {
           selectedPresetID = presetIDs[choice]
           changedPreset = true
           notifyUpdate()
-          WakeUpTimerManager.saveLastUsedPresetID(requireContext(), selectedPresetID)
+          wakeUpTimerManager.saveLastUsedPresetID(selectedPresetID)
         }
         negativeButton(R.string.cancel)
       } else {
@@ -87,7 +97,7 @@ class WakeUpTimerFragment : Fragment() {
   private fun onResetTimeClicked() {
     resetControls()
     notifyUpdate()
-    Snackbar.make(requireView(), R.string.wake_up_timer_cancelled, Snackbar.LENGTH_LONG).show()
+    showSnackbar(R.string.wake_up_timer_cancelled)
     analyticsProvider.logEvent("wake_up_timer_cancel", bundleOf())
   }
 
@@ -124,9 +134,7 @@ class WakeUpTimerFragment : Fragment() {
 
     analyticsProvider.logEvent("wake_up_timer_set", params)
     // maybe show in-app review dialog to the user
-    NoiceApplication.of(requireContext())
-      .reviewFlowProvider
-      .maybeAskForReview(requireActivity())
+    reviewFlowProvider.maybeAskForReview(requireActivity())
   }
 
   /**
@@ -147,12 +155,11 @@ class WakeUpTimerFragment : Fragment() {
     }
 
     if (isTimerValid) {
-      WakeUpTimerManager.set(
-        requireContext(),
+      wakeUpTimerManager.set(
         WakeUpTimerManager.Timer(requireNotNull(selectedPresetID), selectedTime)
       )
     } else {
-      WakeUpTimerManager.cancel(requireContext())
+      wakeUpTimerManager.cancel()
     }
   }
 
@@ -186,7 +193,7 @@ class WakeUpTimerFragment : Fragment() {
   }
 
   private fun loadSharedPrefsSelectedPresetID(): Boolean {
-    selectedPresetID = WakeUpTimerManager.getLastUsedPresetID(requireContext())
+    selectedPresetID = wakeUpTimerManager.getLastUsedPresetID()
     return selectedPresetID != null
   }
 
@@ -207,14 +214,8 @@ class WakeUpTimerFragment : Fragment() {
     val diffHours = TimeUnit.MILLISECONDS.toHours(differenceMillis).toInt()
     val diffMinutes = TimeUnit.MILLISECONDS.toMinutes(differenceMillis).toInt() % 60
 
-    Snackbar.make(
-      requireView(),
-      getRelativeDurationString(diffHours, diffMinutes),
-      Snackbar.LENGTH_LONG
-    ).show()
+    showSnackbar(getRelativeDurationString(diffHours, diffMinutes))
   }
-
-  private val matchSpacesRegex = """\s+""".toRegex()
 
   private fun getRelativeDurationString(hours: Int, minutes: Int): String {
     var minutePlural = ""
@@ -233,7 +234,7 @@ class WakeUpTimerFragment : Fragment() {
     }
 
     return getString(R.string.wake_up_timer_schedule_set, hourPlural, timeBridge, minutePlural)
-      .replace(matchSpacesRegex, " ")
+      .normalizeSpace()
   }
 
   private fun resetControls() {

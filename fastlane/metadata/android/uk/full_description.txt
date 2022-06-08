@@ -31,4 +31,4 @@ Noice — це застосунок, який дає вам можливість
 - <b>білінг сервіси Google Play</b>: щоб увімкнути фінансову допомогу для підтримки розробки
 
 Noice це вільне програмне забезпечення з відкритим програмним кодом
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

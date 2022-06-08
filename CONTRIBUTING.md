@@ -58,7 +58,7 @@ Feel free to add more sounds to Noice taking the following under consideration.
 - If a looping sound doesn't have too many recognisable notes, e.g. cricket
   sound, consider using dual samples. Dual samples make it hard to recognise
   repeating patterns. See [this
-  issue](https://github.com/ashutoshgngwr/noice/issues/62) for more details.
+  issue](https://github.com/trynoice/android-app/issues/62) for more details.
 - Consider applying the [Compressor
   effect](https://en.wikipedia.org/wiki/Dynamic_range_compression#Controls_and_features)
   to the new sounds. We recommend the following settings, but these do not
@@ -77,9 +77,9 @@ Feel free to add more sounds to Noice taking the following under consideration.
   - Variable Speed: Fast
   - Channel Mode: Stereo
 - Once you have the sounds ready, copy the audio files to the
-  [`assets`](https://github.com/ashutoshgngwr/noice/tree/HEAD/app/src/main/assets)
+  [`assets`](https://github.com/trynoice/android-app/tree/HEAD/app/src/main/assets)
   directory and add them to the `LIBRARY` map in
-  [`Sound.kt`](https://github.com/ashutoshgngwr/noice/blob/HEAD/app/src/main/java/com/github/ashutoshgngwr/noice/sound/Sound.kt),
+  [`Sound.kt`](https://github.com/trynoice/android-app/blob/HEAD/app/src/main/java/com/github/trynoice/android-app/sound/Sound.kt),
   e.g.
 
   ```kotlin
@@ -187,7 +187,7 @@ changes is necessary to prepare a new release.
 
 ### Play Store
 
-Noice uses [GitHub actions](https://github.com/ashutoshgngwr/noice/actions) to automatically
+Noice uses [GitHub actions](https://github.com/trynoice/android-app/actions) to automatically
 build and push releases to Google Play store.
 
 - We have been strictly following [Semantic Versioning](https://semver.org) since 0.4.x

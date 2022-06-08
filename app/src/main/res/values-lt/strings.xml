@@ -11,17 +11,9 @@
     <string name="name">Pavadinimas</string>
     <string name="dismiss">Nuleisti</string>
     <string name="cancel">Atšaukti</string>
-    <string name="relax">Atpalaiduojanti</string>
     <string name="random_preset">Atsitiktinė parinktis</string>
     <string name="okay">Gerai</string>
-    <string name="mood">Nuotaika</string>
-    <string name="light">Lengvas</string>
-    <string name="random_preset_description">Sugeneruotuose atsitiktinėse parinktyse bus garsų, atitinkančių pasirinktą nuotaiką. Be to, tankūs išankstiniai nustatymai bandys vienu metu groti daugiau garsų.</string>
     <string name="intensity">Intensyvumas</string>
-    <string name="focus">Sutelkianti dėmesį</string>
-    <string name="dense">Tankus</string>
-    <string name="intensity_any">Bet koks</string>
-    <string name="mood_any">Bet kokia</string>
     <string name="submit_feedback">Pateikti atsiliepimą</string>
     <string name="wake_up_timer">Pabudimo laikmatis</string>
     <string name="support_development">Paremti kūrimą</string>
@@ -53,7 +45,6 @@
     <string name="pinned_shortcut_created">Nuoroda buvo įtraukta į pagrindinį ekraną!</string>
     <string name="pinned_shortcut_creation_failed">Nepavyko įtraukti nuorodos į pagrindinį ekraną!</string>
     <string name="appearance">Išvaizda</string>
-    <string name="behavior">Elgsena</string>
     <string name="presets_as_home_screen">„Parinktys“ kaip pagrindinis ekranas</string>
     <string name="settings">Nustatymai</string>
     <string name="app_shortcut_creation_failed">Nepavyko pridėti parinkties į programėlių nuorodas!</string>
@@ -61,7 +52,6 @@
     <string name="app_shortcut_removed">Parinktis pašalinta iš programėlių nuorodų!</string>
     <string name="remove_from_app_shortcuts">Pašalinti iš programėlių nuorodų</string>
     <string name="add_to_app_shortcuts">Pridėti prie programėlių nuorodų</string>
-    <string name="app_authors">Peržiūrėti Noice autorių sąrašą</string>
     <string name="notification_channel_default__name">Medijos atkūrimas</string>
     <string name="notification_channel_default__description">Medijos atkūrimo valdikliai</string>
     <string name="never">Niekada</string>
@@ -69,20 +59,10 @@
     <string name="in_app_feedback__title">Pateikti atsiliepimą</string>
     <string name="in_app_feedback__description">Norėtume iš jūsų išgirsti apie programėlę. Skirkite akimirką ir apsilankykite mūsų GitHub repozitorijoje. Jei programėlė jums nepatiko, apsvarstykite galimybę atidaryti problemą, kurioje paaiškintumėte savo problemas. Priešingu atveju, prašome suteikti projektui žvaigždutę, kad parodytumėte meilę ir palaikymą.</string>
     <string name="cast_media">Prisijungti prie Chromecast</string>
-    <string name="support_development__why_description">- Kad ateityje būtų galima atlikti atnaujinimus
-\n - Kad Noice visada būtų be reklamų
-\n</string>
-    <string name="support_development__why">Kodėl turėtumėte paremti\?</string>
     <string name="support_development__share_description">Noice bendrinimas su draugais yra panašus į pinigų aukojimą. Su daugiau atsisiuntimų, galėsime gauti atsiliepimų iš įvairių perspektyvų, kurios padės mums padaryti Noice geresnį nei bet kada anksčiau.</string>
     <string name="support_development__share">Bendrinkite su draugais</string>
     <string name="support_development__donate_thank_you_description">Nuoširdžiai dėkojame už dosnų indėlį į projektą Noice.</string>
-    <string name="support_development__donate_thank_you">Ačiū!</string>
     <string name="support_development__donate_google_play_description">Jūsų mokėjimą saugiai atliks Google Play. Priklausomai nuo jūsų gyvenamosios vietos, prie galutinės sumos gali būti pridedami papildomi mokesčiai.</string>
-    <string name="support_development__donate_description">Aukos padės mums
-\n - investuoti į naujas funkcijas
-\n - kuruoti geresnius garsus
-\n - pirkti kavą.
-\n</string>
     <string name="support_development__donate">Paaukoti</string>
     <string name="appintro__timer_title">Sunkiai užmiegate arba pabundate\?</string>
     <string name="appintro__timer_desc">Šiek tiek atmosferos gali padėti užmigti be vargo. Naudokite miego laikmatį, kad Noice išsijungtų. Panašiai, norėdami pabusti ramioje aplinkoje, naudokite pabudimo laikmatį, kad nustatytumėte žadintuvą.</string>
@@ -123,54 +103,10 @@
     <string name="open_context_menu">Atidaryti kontekstinį meniu</string>
     <string name="delete">Ištrinti</string>
     <string name="add_to_home_screen">Pridėti į pagrindinį ekraną</string>
-    <string name="wind_in_palm_trees">Vėjas palmėse</string>
-    <string name="wind_in_chimes_of_shells">Vėjas kriauklių varpeliuose</string>
-    <string name="white_noise">Baltasis triukšmas</string>
-    <string name="water_stream">Vandens srovė</string>
-    <string name="water_hose">Vandens žarna</string>
-    <string name="walking_through_the_snow">Pasivaikščiojimas per sniegą</string>
-    <string name="train_horn">Traukinio signalas</string>
-    <string name="thunder_crack">Perkūno traškėjimas</string>
-    <string name="soft_wind">Švelnus vėjas</string>
-    <string name="seaside">Pajūris</string>
-    <string name="screeching_seagulls">Klykiantys kirai</string>
-    <string name="rolling_thunder">Tolimas griaustinis</string>
-    <string name="quiet_conversation">Tylus pokalbis</string>
-    <string name="purring_cat">Murkianti katė</string>
-    <string name="public_library">Viešoji biblioteka</string>
-    <string name="pink_noise">Rožinis triukšmas</string>
-    <string name="office">Biuras</string>
-    <string name="night">Naktis</string>
-    <string name="moving_train">Judantis traukinys</string>
-    <string name="morning_in_a_village">Rytas kaime</string>
-    <string name="moderate_rain">Vidutinis lietus</string>
-    <string name="light_rain">Lengvas lietus</string>
-    <string name="human_heartbeat">Žmogaus širdies plakimas</string>
-    <string name="howling_wolf">Kaukiantis vilkas</string>
-    <string name="heavy_rain">Smarkus lietus</string>
-    <string name="electric_car">Elektromobilis</string>
-    <string name="distant_thunder">Tolimas griaustinis</string>
-    <string name="crickets">Svirpliai</string>
-    <string name="creaking_ship">Girgždantis laivas</string>
-    <string name="coffee_shop">Kavinė</string>
-    <string name="brownian_noise">Brownian triukšmas</string>
-    <string name="bonfire">Laužas</string>
-    <string name="birds">Paukščiai</string>
-    <string name="airplane_seatbelt_beeps">Lėktuvo saugos diržų pypsėjimas</string>
-    <string name="airplane_inflight">Lėktuvas skrydžio metu</string>
-    <string name="sound_group__wind">Vėjas</string>
-    <string name="sound_group__water">Vanduo</string>
-    <string name="sound_group__vehicles">Transporto priemonės</string>
-    <string name="sound_group__times_of_day">Paros laikas</string>
-    <string name="sound_group__raw_noise">Neapdorotas triukšmas</string>
-    <string name="sound_group__public_gatherings">Vieši susibūrimai</string>
-    <string name="sound_group__monsoon">Monsunas</string>
-    <string name="sound_group__life">Gyvybė</string>
     <string name="volume">Garsumas</string>
     <string name="stop">Sustabdyti</string>
     <string name="sound_fade_in_duration_summary">Tolygaus garsėjimo pradžioje trukmė (sekundėmis)</string>
     <string name="sound_fade_in_duration">Garso tolygaus garsėjimo pradžioje trukmė</string>
-    <string name="repeat_time_period">Pakartojimo laikotarpis</string>
     <string name="created_by">Sukūrė</string>
     <string name="payment_pending">Kai tik baigsime apdoroti jūsų mokėjimą, apie tai jums pranešime.</string>
     <string name="failed_to_purchase">Nepavyko paleisti mokėjimo srauto. Prašome bandyti vėliau!</string>
@@ -185,7 +121,7 @@
     <string name="others">Kita</string>
     <string name="decline">Atmesti</string>
     <string name="accept">Priimti</string>
-    <string name="share_usage_data_consent_message">Renkame programėlės naudojimo duomenis, kad pagerintume naudotojo patirtį. Taip pat renkame programėlės elgsenos duomenis, kad galėtume analizuoti ir diagnozuoti klaidas, su kuriomis susiduriama naudojant programėlę. Daugiau informacijos rasite mūsų [privatumo politikoje] (https://ashutoshgngwr.github.io/noice/privacy-policy).
+    <string name="share_usage_data_consent_message">Renkame programėlės naudojimo duomenis, kad pagerintume naudotojo patirtį. Taip pat renkame programėlės elgsenos duomenis, kad galėtume analizuoti ir diagnozuoti klaidas, su kuriomis susiduriama naudojant programėlę. Daugiau informacijos rasite mūsų [privatumo politikoje](https://trynoice.com/privacy-policy).
 \n
 \n Automatinį dalijimąsi duomenimis bet kuriuo metu galite konfigūruoti programėlėje, eidami į \"**Nustatymai** &gt; **Dalytis naudojimo ir elgsenos duomenimis**\".</string>
     <string name="share_usage_data_consent_title">Duomenų dalijimosi nuostatos</string>

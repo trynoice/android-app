@@ -10,17 +10,10 @@
     <string name="support_development">Support Development</string>
     <string name="wake_up_timer">Wake-up Timer</string>
     <string name="submit_feedback">Submit Feedback</string>
-    <string name="mood_any">Any</string>
-    <string name="intensity_any">Any</string>
-    <string name="dense">Dense</string>
-    <string name="focus">Focus</string>
     <string name="intensity">Intensity</string>
-    <string name="random_preset_description">Generated random presets will contain sounds corresponding to the chosen mood. Moreover, dense presets will attempt to play more sounds simultaneously.</string>
-    <string name="light">Light</string>
-    <string name="mood">Mood</string>
+    <string name="random_preset_description">Generated random presets is likely to contain sounds with chosen keywords. Moreover, intense presets will attempt to play more sounds simultaneously.</string>
     <string name="okay">Okay</string>
     <string name="random_preset">Random Preset</string>
-    <string name="relax">Relax</string>
     <string name="cancel">Cancel</string>
     <string name="dismiss">Dismiss</string>
     <string name="name">Name</string>
@@ -32,52 +25,8 @@
     <string name="save_preset">Save Preset</string>
     <string name="play">Play</string>
     <string name="play_pause">play or pause</string>
-    <string name="repeat_time_period">Repeat time period</string>
     <string name="stop">Stop</string>
     <string name="volume">Sound volume</string>
-    <string name="sound_group__life">Life</string>
-    <string name="sound_group__monsoon">Monsoon</string>
-    <string name="sound_group__public_gatherings">Public Gatherings</string>
-    <string name="sound_group__raw_noise">Raw Noise</string>
-    <string name="sound_group__times_of_day">Times of Day</string>
-    <string name="sound_group__vehicles">Vehicles</string>
-    <string name="sound_group__water">Water</string>
-    <string name="sound_group__wind">Wind</string>
-    <string name="airplane_inflight">Airplane in-flight</string>
-    <string name="airplane_seatbelt_beeps">Airplane seat-belt beeps</string>
-    <string name="birds">Birds</string>
-    <string name="bonfire">Bonfire</string>
-    <string name="brownian_noise">Brownian noise</string>
-    <string name="coffee_shop">Coffee shop</string>
-    <string name="creaking_ship">Creaking ship</string>
-    <string name="crickets">Crickets</string>
-    <string name="distant_thunder">Distant thunder</string>
-    <string name="electric_car">Electric car</string>
-    <string name="heavy_rain">Heavy rain</string>
-    <string name="howling_wolf">Howling wolf</string>
-    <string name="human_heartbeat">Human heartbeat</string>
-    <string name="light_rain">Light rain</string>
-    <string name="moderate_rain">Moderate rain</string>
-    <string name="morning_in_a_village">Morning in a village</string>
-    <string name="moving_train">Moving train</string>
-    <string name="night">Night</string>
-    <string name="office">Office</string>
-    <string name="pink_noise">Pink noise</string>
-    <string name="public_library">Public library</string>
-    <string name="purring_cat">Purring cat</string>
-    <string name="quiet_conversation">Quiet conversation</string>
-    <string name="rolling_thunder">Rolling thunder</string>
-    <string name="screeching_seagulls">Screeching seagulls</string>
-    <string name="seaside">Seaside</string>
-    <string name="soft_wind">Soft wind</string>
-    <string name="thunder_crack">Thunder crack</string>
-    <string name="train_horn">Train horn</string>
-    <string name="walking_through_the_snow">Walking through the snow</string>
-    <string name="water_hose">Water hose</string>
-    <string name="water_stream">Water stream</string>
-    <string name="white_noise">White noise</string>
-    <string name="wind_in_chimes_of_shells">Wind in chimes of shells</string>
-    <string name="wind_in_palm_trees">Wind in palm trees</string>
     <string name="add_to_home_screen">Add to home screen</string>
     <string name="delete">Delete</string>
     <string name="open_context_menu">Open context menu</string>
@@ -141,27 +90,16 @@
   </string>
     <string name="appintro__timer_title">Trouble falling asleep or waking up?</string>
     <string name="support_development__donate">Donate</string>
-    <string name="support_development__donate_description">
-    Donations will help us in\n
-    - investing in new features\n
-    - curating better sound samples\n
-    - buying coffee\n
-  </string>
+    <string name="support_development__donate_description">If you have not purchased the premium subscription of Noice, you can make a one-time payment. It will help us sustain the development of the free features in Noice and keep them ad-free forever.</string>
     <string name="support_development__donate_google_play_description">Your payment will be securely handled by Google Play. Depending on your location, additional taxes _may be_ added to the final amount.</string>
-    <string name="support_development__donate_thank_you">Thank you!</string>
     <string name="support_development__donate_thank_you_description">
     We wholeheartedly thank you for your generous contribution to the Noice project.
   </string>
     <string name="support_development__share">Share with friends</string>
     <string name="support_development__share_description">
-    Sharing Noice with friends is similar to donating money. With higher downloads, we will be able
-    to receive feedback from a number of different perspectives which will help us in making Noice
-    better than ever.
-  </string>
-    <string name="support_development__why">Why should you support?</string>
-    <string name="support_development__why_description">
-    - To make future updates possible\n
-    - To keep Noice ad-free forever\n
+    You can also help by sharing Noice with your friends. More users will allow us to receive
+    feedback from a number of different perspectives. It will help us in making Noice better than
+    ever.
   </string>
     <string name="cast_media">Connect to Chromecast</string>
     <string name="in_app_feedback__description">
@@ -174,7 +112,6 @@
     <string name="never">Never</string>
     <string name="notification_channel_default__description">Media playback controls</string>
     <string name="notification_channel_default__name">Media Playback</string>
-    <string name="app_authors">View list of the Noice Authors</string>
     <string name="add_to_app_shortcuts">Add to app shortcuts</string>
     <string name="remove_from_app_shortcuts">Remove from app shortcuts</string>
     <string name="app_shortcut_removed">Preset has been removed from app shortcuts!</string>
@@ -182,10 +119,11 @@
     <string name="app_shortcut_creation_failed">Failed to add the preset to app shortcuts!</string>
     <string name="settings">Settings</string>
     <string name="presets_as_home_screen">\"Presets\" as home screen</string>
-    <string name="behavior">Behavior</string>
     <string name="appearance">Appearance</string>
     <string name="sound_fade_in_duration">Sound fade-in duration</string>
     <string name="sound_fade_in_duration_summary">Time duration for fading-in sounds (in seconds)</string>
+    <string name="sound_fade_out_duration">Sound fade-out duration</string>
+    <string name="sound_fade_out_duration_summary">Time duration for fading-out sounds (in seconds)</string>
     <string name="pinned_shortcut_creation_failed">Failed to add the shortcut to the home screen!</string>
     <string name="pinned_shortcut_created">Shortcut has been added to the home screen!</string>
     <string name="skip_to_prev">Previous preset</string>
@@ -212,7 +150,7 @@
     <string name="share_usage_data_consent_message">
         We collect app usage data to improve user experience. We also collect app behaviour data to
         analyse and diagnose errors encountered during app usage. Read our [privacy
-        policy](https://ashutoshgngwr.github.io/noice/privacy-policy) for further information.\n\n
+        policy](https://trynoice.com/privacy-policy) for further information.\n\n
         You can configure automatic data sharing at any time inside the app by going to \"**Settings**
         &gt; **Share usage and behaviour data**\".
     </string>
@@ -227,4 +165,125 @@
     <string name="created_by">Created by</string>
     <string name="enable_media_buttons">Enable media buttons</string>
     <string name="enable_media_buttons_summary">Use hardware media buttons to control playback</string>
+    <string name="account">Account</string>
+    <string name="app">App</string>
+    <string name="support">Support</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="view_subscription_plans">View plans</string>
+    <string name="sign_out">Sign out</string>
+    <string name="update_details">Update details</string>
+    <string name="delete_account">Delete account</string>
+    <string name="network_error">The network is unreachable.</string>
+    <string name="unknown_error">An unknown error occurred.</string>
+    <string name="welcome_back">Welcome back!</string>
+    <string name="welcome">Welcome!</string>
+    <string name="sign_in_message">Please enter your email to sign-in.</string>
+    <string name="sign_up_message">Please enter your name and email to sign-up.</string>
+    <string name="email">Email</string>
+    <string name="invalid_name">Name is not valid!</string>
+    <string name="invalid_email">Email is not valid!</string>
+    <string name="account_locked_error">Your email is temporarily locked from making sign-in attempts until %1$s.</string>
+    <string name="sign_up_email_sent">We\'ve emailed you a sign-in link at \"%1$s\".</string>
+    <string name="sign_in_email_sent">We\'ve emailed you a sign-in link at \"%1$s\" if this address belongs to a registered account.</string>
+    <string name="sign_in_link_tip">Please open the received link using Noice to complete the sign-in process.</string>
+    <string name="retry">Retry</string>
+    <string name="open_mailbox">Open Mailbox</string>
+    <string name="mailbox_app_not_found">Uh-oh! We couldn\'t find a mailbox app on your device!</string>
+    <string name="signing_in">Signing in</string>
+    <string name="sign_in_token_error">The sign-in link appears to be invalid. It may have expired. Please try again!</string>
+    <string name="sign_in_sucessful">Successfully signed in!</string>
+    <string name="cont">Continue</string>
+    <string name="sign_out_confirmation">Confirm signing out?</string>
+    <string name="signing_out">Signing out</string>
+    <string name="delete_account_confirmation">On deleting your account, you will immediately lose access to your profile. If you have an ongoing subscription, it will be cancelled. Please note that it may take us a while to completely erase your data from our servers.</string>
+    <string name="i_understand">I understand.</string>
+    <string name="deleting_account">Deleting account</string>
+    <string name="duplicate_email_error">That email is associated with another account.</string>
+    <string name="account_details_update_success">Your account details were updated successfully.</string>
+    <string name="offline">You\'re offline</string>
+    <string name="back_online">Back online</string>
+    <string name="premium">Premium</string>
+    <string name="monthly">Monthly</string>
+    <string name="quarterly">Quarterly</string>
+    <string name="bi_yearly">Bi-yearly</string>
+    <string name="yearly">Yearly</string>
+    <plurals name="n_months">
+        <item quantity="one">%1$d month</item>
+        <item quantity="other">%1$d months</item>
+    </plurals>
+    <plurals name="trial_period">
+        <item quantity="one">First day free</item>
+        <item quantity="other">First %1$d days free</item>
+    </plurals>
+    <string name="total_price">%1$s total</string>
+    <string name="monthly_price">%1$s/month</string>
+    <string name="benefits">Benefits</string>
+    <string name="benefit_0">Natural variations in sounds</string>
+    <string name="benefit_1">High-quality audio streaming</string>
+    <string name="benefit_2">Offline playback</string>
+    <string name="select_a_plan">Select a plan</string>
+    <string name="processing_payment">Processing payment</string>
+    <string name="payment_processing_error">Uh-oh! We were unable to process your payment. The amount should be automatically refunded if deducted. If you do not get your refund within a week, please notify us.</string>
+    <string name="plans">Plans</string>
+    <string name="get_premium">Get premium</string>
+    <string name="sign_in_to_continue">Please sign-in or sign-up to continue.</string>
+    <string name="initialising_subscription">Initialising subscription</string>
+    <string name="user_already_subscribed">You are already subscribed.</string>
+    <string name="confirming_payment">Confirming payment</string>
+    <string name="subscription_payment_confirmation_failed">Uh-oh! We had some trouble while waiting for the payment confirmation. It may be due to a network error or a delay from the payment provider. We\'ll update your subscription status as soon as we hear from the provider. Please check your subscription status after some time.</string>
+    <string name="subscription_payment_complete">Thank you for subscribing to Noice Premium. Your subscription is now active.</string>
+    <string name="subscription_payment_cancelled">The subscription payment was cancelled!</string>
+    <string name="subscription_purchases">Subscription purchases</string>
+    <string name="renews_on">Renews on %1$s</string>
+    <string name="ends_on">Ends on %1$s</string>
+    <string name="started_on">Started on %1$s</string>
+    <string name="ended_on">Ended on %1$s</string>
+    <string name="paid_using">Paid using %1$s</string>
+    <string name="subscription_payment_pending">A payment is pending for this purchase.</string>
+    <string name="subscription_payment_refunded">We cancelled this purchase and initiated a refund for it.</string>
+    <string name="change_plan">Change plan</string>
+    <string name="manage_subscription">Manage Subscription</string>
+    <string name="cancel_subscription">Cancel Subscription</string>
+    <string name="cancel_subscription_confirmation">Are you sure you want to cancel your subscription to Noice Premium? Your subscription will automatically terminate at the end of the current billing cycle. Your current billing cycle ends on %1$s.</string>
+    <string name="cancelling_subscription">Cancelling subscription</string>
+    <string name="no_subscription_purchases_found">We don\'t think that you have tried Noice Premium yet. Your previous subscriptions will appear here once you have used Noice Premium at least once.</string>
+    <string name="faqs">Frequently Asked Questions</string>
+    <string name="made_in_india">Made with &#x2764; in India</string>
+    <string name="sound_info">About this sound</string>
+    <string name="has_premium_segments">This sound has premium components.</string>
+    <string name="looping_sound">This sound loops seamlessly.</string>
+    <string name="non_looping_sound">This sound contains breaks in-between.</string>
+    <string name="media_sources">Media Sources</string>
+    <string name="profile_load_error">Oops! We couldn\'t fetch your account details. %1$s</string>
+    <string name="cancel_subscription_error">Oh no! We couldn\'t cancel your subscription. %1$s Please try again!</string>
+    <string name="delete_account_error">Oh no! We couldn\'t delete your account. %1$s Please try again!</string>
+    <string name="account_details_update_error">Oh no! We couldn\'t update your details. %1$s Please try again!</string>
+    <string name="subscription_initialisation_error">Oops! We couldn\'t start the billing flow. %1$s Please try again!</string>
+    <string name="library_load_error">Oops! We couldn\'t fetch the sound library. %1$s</string>
+    <string name="sign_in_email_error">Uh-oh! We couldn\'t email you a sign-in link. %1$s Please try again later!</string>
+    <string name="sign_out_error">Oh no! We couldn\'t sign you out. %1$s Please try again!</string>
+    <string name="subscription_plans_load_error">Oops! We couldn\'t fetch subscription plans. %1$s</string>
+    <string name="subscription_purchases_load_error">Uh-oh! We couldn\'t fetch your subscription purchase history. %1$s</string>
+    <string name="playback">Playback</string>
+    <string name="audio_quality">Audio quality</string>
+    <string name="audio_quality_summary">Maximum audio quality for streaming. Selecting Medium, High and Ultra only works when you\'re subscribed.</string>
+    <string name="audio_quality_low">Low (128 kbps)</string>
+    <string name="audio_quality_medium">Medium (192 kbps)</string>
+    <string name="audio_quality_high">High (256 kbps)</string>
+    <string name="audio_quality_ultra">Ultra (320 kbps)</string>
+    <string name="preset_url_invalid">Preset URL appears to be invalid!</string>
+    <string name="playing">Playing</string>
+    <string name="pausing">Pausing</string>
+    <string name="paused">Paused</string>
+    <string name="stopping">Stopping</string>
+    <string name="keywords">Keywords</string>
+    <string name="loading">Loading</string>
+    <string name="tags_load_error">Oh no! We couldn\'t load sound keywords. %1$s Please try again!</string>
+    <string name="generate_preset_error">Uh-oh! We failed to generate a preset. %1$s Please try again!</string>
+    <string name="sign_up_tos">By continuing, you agree to our [Terms of Service](https://trynoice.com/terms-of-service) and [Privacy Policy](https://trynoice.com/privacy-policy).</string>
+    <string name="gift_card">Gift Card</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="app_license">"Licensed under GNU GPL-3.0 "</string>
 </resources>

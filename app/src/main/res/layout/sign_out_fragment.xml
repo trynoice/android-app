@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.SignOutViewModel" />
+
+  </data>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:theme="@style/Theme.App.BottomSheetDialog">
+
+    <TextView
+      style="@style/Widget.App.TextView.Message"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/sign_out_confirmation"
+      app:isVisible="@{!viewModel.isSigningOut}" />
+
+    <include
+      layout="@layout/simple_progress_layout"
+      app:isVisible="@{viewModel.isSigningOut}"
+      app:message="@{@string/signing_out}"
+      tools:visibility="gone" />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:gravity="center_vertical|end"
+      android:orientation="horizontal"
+      app:isVisible="@{!viewModel.isSigningOut}">
+
+      <Button
+        android:id="@+id/cancel"
+        style="?attr/buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel" />
+
+      <Space
+        android:layout_width="16dp"
+        android:layout_height="wrap_content" />
+
+      <Button
+        style="?attr/buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> viewModel.signOut()}"
+        android:text="@string/cont" />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</layout>

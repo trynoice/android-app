@@ -6,11 +6,17 @@
     android:name="android.hardware.audio.output"
     android:required="true" />
 
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
-  <uses-permission android:name="android.permission.WAKE_LOCK" />
+  <uses-permission android:name="android.permission.INTERNET" />
 
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+  <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
 
   <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
 
@@ -22,6 +28,7 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/Theme.App"
+    android:usesCleartextTraffic="false"
     tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
     <activity
@@ -47,8 +54,8 @@
         <category android:name="android.intent.category.BROWSABLE" />
 
         <data
-          android:host="ashutoshgngwr.github.io"
-          android:pathPrefix="/noice/preset"
+          android:host="trynoice.com"
+          android:path="/preset"
           android:scheme="https" />
 
       </intent-filter>
@@ -60,9 +67,7 @@
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
 
-        <data
-          android:host="preset"
-          android:scheme="noice" />
+        <data android:scheme="noice" />
 
       </intent-filter>
 
@@ -75,14 +80,37 @@
     <activity
       android:name=".activity.ShortcutHandlerActivity"
       android:excludeFromRecents="true"
-      android:exported="true" />
+      android:exported="true"
+      android:theme="@style/Theme.App.Translucent" />
 
     <activity
       android:name=".activity.AlarmRingerActivity"
       android:excludeFromRecents="true"
       android:launchMode="singleInstance" />
 
-    <service android:name=".MediaPlayerService" />
+    <activity
+      android:name=".activity.SignInLinkHandlerActivity"
+      android:excludeFromRecents="true"
+      android:exported="true"
+      android:theme="@style/Theme.App.SignInLinkHandler">
+
+      <intent-filter android:autoVerify="true">
+
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+          android:host="trynoice.com"
+          android:path="/sign-in"
+          android:scheme="https" />
+
+      </intent-filter>
+
+    </activity>
+
+    <service android:name=".engine.PlaybackService" />
 
     <receiver
       android:name=".WakeUpTimerManager$BootReceiver"

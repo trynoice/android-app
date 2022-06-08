@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="sound"
+      type="com.github.ashutoshgngwr.noice.model.Sound" />
+
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="24dp"
+      tools:theme="@style/Theme.App.BottomSheetDialog">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@{sound.name}"
+        android:textAppearance="?attr/titleTextAppearance"
+        tools:text="Sound Name" />
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+      <TextView
+        style="@style/Widget.App.TextView.Message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        android:text="@string/has_premium_segments"
+        app:drawableStartCompat="@drawable/ic_baseline_check_circle_24"
+        app:drawableTint="@color/primary"
+        app:isVisible="@{sound.hasPremiumSegments}" />
+
+      <TextView
+        style="@style/Widget.App.TextView.Message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        android:text="@string/looping_sound"
+        app:drawableStartCompat="@drawable/ic_baseline_repeat_24"
+        app:drawableTint="@color/primary"
+        app:isVisible="@{sound.contiguous}" />
+
+      <TextView
+        style="@style/Widget.App.TextView.Message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        android:text="@string/non_looping_sound"
+        app:drawableStartCompat="@drawable/ic_baseline_shuffle_24"
+        app:drawableTint="@color/primary"
+        app:isVisible="@{!sound.contiguous}" />
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/media_sources"
+        android:textAppearance="?attr/textAppearanceHeadline6" />
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="12dp" />
+
+      <com.github.ashutoshgngwr.noice.widget.MarkdownTextView
+        style="@style/Widget.App.TextView.Message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:markdown="@{sound.sourcesToMarkdown()}" />
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+
+      <Button
+        android:id="@+id/dismiss"
+        style="?attr/buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/okay" />
+
+    </LinearLayout>
+
+  </androidx.core.widget.NestedScrollView>
+
+</layout>

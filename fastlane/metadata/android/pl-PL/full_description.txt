@@ -32,4 +32,4 @@ Noice to aplikacja, która umożliwia tworzenie spersonalizowanej atmosfery za p
 - <b>Google Play billing service</b>: aby umożliwić datki finansowe na wspieranie rozwoju
 
 Noice jest darmowym oprogramowaniem o otwartym kodzie źródłowym.
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

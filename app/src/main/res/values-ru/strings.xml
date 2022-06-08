@@ -21,52 +21,8 @@
     <string name="save_preset">Сохранить пресет</string>
     <string name="play">Воспроизведение</string>
     <string name="play_pause">Воспроизвести или остановить</string>
-    <string name="repeat_time_period">Период повтора</string>
     <string name="stop">Стоп</string>
     <string name="volume">Громкость</string>
-    <string name="sound_group__life">Жизнь</string>
-    <string name="sound_group__monsoon">Сезон дождей</string>
-    <string name="sound_group__public_gatherings">Общественные собрания</string>
-    <string name="sound_group__raw_noise">Чистый шум</string>
-    <string name="sound_group__times_of_day">Времена дня</string>
-    <string name="sound_group__vehicles">Транспортные средства</string>
-    <string name="sound_group__water">Вода</string>
-    <string name="sound_group__wind">Ветер</string>
-    <string name="airplane_inflight">Полёт в самолёте</string>
-    <string name="airplane_seatbelt_beeps">«Пристегните ремни!»</string>
-    <string name="birds">Птицы</string>
-    <string name="bonfire">Костёр</string>
-    <string name="brownian_noise">Броуновский шум</string>
-    <string name="coffee_shop">Кофейня</string>
-    <string name="creaking_ship">Скрипящий корабль</string>
-    <string name="crickets">Сверчки</string>
-    <string name="distant_thunder">Далекий гром</string>
-    <string name="electric_car">Электроавтомобиль</string>
-    <string name="heavy_rain">Ливень</string>
-    <string name="howling_wolf">Воющий волк</string>
-    <string name="human_heartbeat">Сердцебиение человека</string>
-    <string name="light_rain">Небольшой дождь</string>
-    <string name="moderate_rain">Умеренный дождь</string>
-    <string name="morning_in_a_village">Утро в деревне</string>
-    <string name="moving_train">Движение поезда</string>
-    <string name="night">Ночь</string>
-    <string name="office">Офис</string>
-    <string name="pink_noise">Розовый шум</string>
-    <string name="public_library">Публичная библиотека</string>
-    <string name="purring_cat">Мурлыкающий кот</string>
-    <string name="quiet_conversation">Тихий разговор</string>
-    <string name="rolling_thunder">Раскаты грома</string>
-    <string name="screeching_seagulls">Визг чайки</string>
-    <string name="seaside">Прибой</string>
-    <string name="soft_wind">Легкий ветер</string>
-    <string name="thunder_crack">Удар грома</string>
-    <string name="train_horn">Гудок паровоза</string>
-    <string name="walking_through_the_snow">Прогулка по снегу</string>
-    <string name="water_hose">Водяной шланг</string>
-    <string name="water_stream">Поток воды</string>
-    <string name="white_noise">Белый шум</string>
-    <string name="wind_in_chimes_of_shells">Фурин</string>
-    <string name="wind_in_palm_trees">Шум деревьев</string>
     <string name="delete">Увалить</string>
     <string name="open_context_menu">Открыть контекстное меню</string>
     <string name="preset_delete_confirmation">Подтвердите удаление %s?</string>
@@ -110,14 +66,7 @@
   </string>
     <string name="appintro__timer_title">Сложно засыпать или просыпаться?</string>
     <string name="support_development__donate">Пожертвовать</string>
-    <string name="support_development__donate_description">
-    Пожертвования помогут нам в\n
-    - инвестировании в новые функции\n
-    - добавлении лучших звуков\n
-    - покупке кофе\n
-  </string>
     <string name="support_development__donate_google_play_description">Ваш платеж будет безопасно проведен через Google Play. Дополнительные налоги _могут_ быть добавлены к сумме в зависимости от вашей локации.</string>
-    <string name="support_development__donate_thank_you">Спасибо!</string>
     <string name="support_development__donate_thank_you_description">
     Мы от всего сердца благодарим Вас за вашу щедрую помощь для проекта Noice.
   </string>
@@ -125,11 +74,6 @@
     <string name="support_development__share_description">
     Поделиться Noice с друзьями похоже на пожертвование денег. С большим числом загрузок мы сможем
     получать обратную связь с разными взглядами, что поможет нам сделать Noice еще лучше.
-  </string>
-    <string name="support_development__why">Почему Вам следует поддержать?</string>
-    <string name="support_development__why_description">
-    - Сделать возможными последующие обновления\n
-    - Оставить Noice свободным от рекламы навсегда\n
   </string>
     <string name="cast_media">Подключиться к Chromecast</string>
     <string name="in_app_feedback__description">Нам было бы приятно узнать что Вы думаете о приложении. Выделите, пожалуйста, минутку и посетите наш GitHub репозиторий. Если приложение вам не понравилось, откройте пожалуйста issue с объяснением. В другом случае, поставьте, пожалуйста, звездочку приложению чтобы показать любовь и поддержку.</string>
@@ -140,19 +84,12 @@
     <string name="notification_channel_default__name">Воспроизведение звуков</string>
     <string name="submit_feedback">Отправить отзыв</string>
     <string name="add_to_home_screen">Добавить на домашний экран</string>
-    <string name="light">Светлая</string>
     <string name="intensity">Интенсивность</string>
-    <string name="dense">Плотный</string>
-    <string name="mood_any">Любой</string>
-    <string name="intensity_any">Любой</string>
     <string name="presets_as_home_screen_summary">Показывать \"сохраненные пресеты\" при запуске приложения (требуется перезапуск приложения)</string>
     <string name="preset_does_not_exist">Пресета не существует. Возможно, он был удален!</string>
-    <string name="relax">Расслабиться</string>
     <string name="random_preset">Случайный пресет</string>
-    <string name="mood">Настроение</string>
     <string name="wake_up_timer_cancelled">Таймер пробуждения отменён!</string>
     <string name="pinned_shortcuts_not_supported">Ваш лаунчер по умолчанию не поддерживает добавление ярлыков.</string>
-    <string name="focus">Фокус</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d минуту</item>
         <item quantity="few">%1$d минуты</item>
@@ -167,8 +104,6 @@
     </plurals>
     <string name="time_bridge">и</string>
     <string name="wake_up_timer_schedule_set" tools:ignore="StringFormatCount">Будильник выключится в %1$s %2$s %3$s</string>
-    <string name="random_preset_description">Сгенерированные случайные пресеты будут содержать звуки, соответствующие выбранному настроению. Более того, плотные пресеты будут пытаться проигрывать больше звуков одновременно.</string>
-    <string name="app_authors">Посмотреть список авторов Noice</string>
     <string name="invalid_import_file_format">Неверный формат импортируемого файла!</string>
     <string name="failed_to_read_file">Ошибка чтения выбранного файла!</string>
     <string name="failed_to_write_file">Ошибка при записи в выбранный файл!</string>
@@ -189,7 +124,6 @@
     <string name="pinned_shortcut_created">Ярлык был добавлен на главный экран!</string>
     <string name="pinned_shortcut_creation_failed">Не удалось добавить ярлык на главный экран!</string>
     <string name="appearance">Внешний вид</string>
-    <string name="behavior">Поведение</string>
     <string name="presets_as_home_screen">\"Пресеты\" на главном экране</string>
     <string name="settings">Настройки</string>
     <string name="app_shortcut_creation_failed">Не удалось добавить предустановку в ярлыки приложений!</string>
@@ -206,7 +140,7 @@
     <string name="failed_to_load_inapp_purchases">Не удалось загрузить сведения о покупке в приложении. Пожалуйста, повторите попытку позже!</string>
     <string name="should_share_usage_data_summary">Автоматически отправлять разработчикам данные об использовании и поведении</string>
     <string name="should_share_usage_data">Передача данных об использовании и поведении</string>
-    <string name="share_usage_data_consent_message">Мы собираем данные об использовании приложения для улучшения пользовательского опыта. Мы также собираем данные о поведении приложения для анализа и диагностики ошибок, возникающих во время использования приложения. Для получения дополнительной информации ознакомьтесь с нашей [политикой конфиденциальности] (https://ashutoshgngwr.github.io/noice/privacy-policy).
+    <string name="share_usage_data_consent_message">Мы собираем данные об использовании приложения для улучшения пользовательского опыта. Мы также собираем данные о поведении приложения для анализа и диагностики ошибок, возникающих во время использования приложения. Для получения дополнительной информации ознакомьтесь с нашей [политикой конфиденциальности](https://trynoice.com/privacy-policy).
 \n
 \n Вы можете настроить автоматический обмен данными в любое время в приложении, перейдя в раздел \"**Настройки** &gt; **Обмен данными об использовании и поведении**\".</string>
     <string name="share_usage_data_consent_title">Параметры доступа к данным</string>

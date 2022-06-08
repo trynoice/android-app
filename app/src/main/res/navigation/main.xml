@@ -2,19 +2,238 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/main"
   app:startDestination="@id/home">
 
   <fragment
     android:id="@+id/home"
     android:name="com.github.ashutoshgngwr.noice.fragment.HomeFragment"
     android:label="@string/app_name"
-    tools:layout="@layout/home_fragment" />
+    tools:layout="@layout/home_fragment">
+
+    <argument
+      android:name="navDestination"
+      android:defaultValue="0"
+      app:argType="reference"
+      app:nullable="false" />
+
+    <action
+      android:id="@+id/sign_in_form"
+      app:destination="@id/sign_in_sign_up_form" />
+
+    <action
+      android:id="@+id/sign_up_form"
+      app:destination="@id/sign_in_sign_up_form">
+
+      <argument
+        android:name="isReturningUser"
+        android:defaultValue="false" />
+
+    </action>
+
+    <action
+      android:id="@id/sign_out"
+      app:destination="@id/sign_out" />
+
+    <action
+      android:id="@id/delete_account"
+      app:destination="@id/delete_account" />
+
+    <action
+      android:id="@id/update_account_details"
+      app:destination="@id/update_account_details" />
+
+    <action
+      android:id="@id/view_subscription_plans"
+      app:destination="@id/view_subscription_plans" />
+
+    <action
+      android:id="@+id/get_premium"
+      app:destination="@id/view_subscription_plans" />
+
+    <action
+      android:id="@+id/subscription_purchase_list"
+      app:destination="@id/subscription_purchase_list" />
+
+    <action
+      android:id="@id/settings"
+      app:destination="@id/settings" />
+
+    <action
+      android:id="@id/about"
+      app:destination="@id/about" />
+
+    <action
+      android:id="@id/support_development"
+      app:destination="@id/support_development" />
+
+    <action
+      android:id="@id/help"
+      app:destination="@id/help" />
+
+  </fragment>
 
   <fragment
-    android:id="@+id/sleep_timer"
-    android:name="com.github.ashutoshgngwr.noice.fragment.SleepTimerFragment"
-    android:label="@string/sleep_timer"
-    tools:layout="@layout/sleep_timer_fragment" />
+    android:id="@+id/sign_in_sign_up_form"
+    android:name="com.github.ashutoshgngwr.noice.fragment.SignInFormFragment"
+    android:label="@string/sign_in"
+    tools:layout="@layout/sign_in_form_fragment">
+
+    <argument
+      android:name="isReturningUser"
+      android:defaultValue="true"
+      app:argType="boolean"
+      app:nullable="false" />
+
+    <action
+      android:id="@id/sign_in_result"
+      app:destination="@id/sign_in_result" />
+
+  </fragment>
+
+  <fragment
+    android:id="@+id/sign_in_result"
+    android:name="com.github.ashutoshgngwr.noice.fragment.SignInResultFragment"
+    android:label="@string/sign_in"
+    tools:layout="@layout/sign_in_result_fragment">
+
+    <argument
+      android:name="isReturningUser"
+      android:defaultValue="false"
+      app:argType="boolean"
+      app:nullable="false" />
+
+    <argument
+      android:name="name"
+      android:defaultValue="null"
+      app:argType="string"
+      app:nullable="true" />
+
+    <argument
+      android:name="email"
+      app:argType="string"
+      app:nullable="false" />
+
+  </fragment>
+
+  <dialog
+    android:id="@+id/sign_out"
+    android:name="com.github.ashutoshgngwr.noice.fragment.SignOutFragment"
+    android:label="@string/sign_out"
+    tools:layout="@layout/sign_out_fragment" />
+
+  <dialog
+    android:id="@+id/delete_account"
+    android:name="com.github.ashutoshgngwr.noice.fragment.DeleteAccountFragment"
+    android:label="@string/delete_account"
+    tools:layout="@layout/delete_account_fragment" />
+
+  <fragment
+    android:id="@+id/update_account_details"
+    android:name="com.github.ashutoshgngwr.noice.fragment.EditAccountDetailsFragment"
+    android:label="@string/update_details"
+    tools:layout="@layout/edit_account_details_fragment" />
+
+  <fragment
+    android:id="@+id/view_subscription_plans"
+    android:name="com.github.ashutoshgngwr.noice.fragment.ViewSubscriptionPlansFragment"
+    android:label="@string/premium"
+    tools:layout="@layout/view_subscription_plans_fragment">
+
+    <argument
+      android:name="activeSubscription"
+      android:defaultValue="@null"
+      app:argType="com.trynoice.api.client.models.Subscription"
+      app:nullable="true" />
+
+    <action
+      android:id="@+id/sign_in_form"
+      app:destination="@id/sign_in_sign_up_form" />
+
+    <action
+      android:id="@+id/sign_up_form"
+      app:destination="@id/sign_in_sign_up_form">
+
+      <argument
+        android:name="isReturningUser"
+        android:defaultValue="false" />
+
+    </action>
+
+    <action
+      android:id="@id/launch_subscription_flow"
+      app:destination="@id/launch_subscription_flow" />
+
+  </fragment>
+
+  <dialog
+    android:id="@+id/launch_subscription_flow"
+    android:name="com.github.ashutoshgngwr.noice.fragment.LaunchSubscriptionFlowFragment"
+    android:label="@string/initialising_subscription"
+    tools:layout="@layout/launch_subscription_flow_fragment">
+
+    <argument
+      android:name="plan"
+      app:argType="com.trynoice.api.client.models.SubscriptionPlan"
+      app:nullable="false" />
+
+    <argument
+      android:name="activeSubscription"
+      android:defaultValue="@null"
+      app:argType="com.trynoice.api.client.models.Subscription"
+      app:nullable="true" />
+
+  </dialog>
+
+  <dialog
+    android:id="@+id/subscription_billing_callback"
+    android:name="com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment"
+    android:label="@string/confirming_payment"
+    tools:layout="@layout/subscription_billing_callback_fragment">
+
+    <argument
+      android:name="action"
+      app:argType="string"
+      app:nullable="false" />
+
+    <argument
+      android:name="subscriptionId"
+      app:argType="long" />
+
+    <action
+      android:id="@+id/subscription_purchase_list"
+      app:destination="@id/subscription_purchase_list"
+      app:popUpTo="@id/home" />
+
+  </dialog>
+
+  <fragment
+    android:id="@+id/subscription_purchase_list"
+    android:name="com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment"
+    android:label="@string/subscription_purchases"
+    tools:layout="@layout/subscription_purchase_list_fragment">
+
+    <action
+      android:id="@+id/view_subscription_plans"
+      app:destination="@id/view_subscription_plans" />
+
+    <action
+      android:id="@+id/cancel_subscription"
+      app:destination="@id/cancel_subscription" />
+
+  </fragment>
+
+  <dialog
+    android:id="@+id/cancel_subscription"
+    android:name="com.github.ashutoshgngwr.noice.fragment.CancelSubscriptionFragment"
+    android:label="@string/cancel_subscription"
+    tools:layout="@layout/cancel_subscription_fragment">
+
+    <argument
+      android:name="subscription"
+      app:argType="com.trynoice.api.client.models.Subscription" />
+
+  </dialog>
 
   <fragment
     android:id="@+id/settings"
@@ -33,10 +252,65 @@
     android:label="@string/support_development"
     tools:layout="@layout/support_development_fragment" />
 
+  <dialog
+    android:id="@+id/donation_purchased_callback"
+    android:name="com.github.ashutoshgngwr.noice.fragment.DonationPurchasedCallbackFragment"
+    android:label="@string/processing_payment"
+    tools:layout="@layout/donation_purchased_callback_fragment">
+
+    <argument
+      android:name="purchase"
+      app:argType="com.github.ashutoshgngwr.noice.provider.InAppBillingProvider$Purchase"
+      app:nullable="false" />
+
+  </dialog>
+
   <activity
     android:id="@+id/help"
     android:name="com.github.ashutoshgngwr.noice.activity.AppIntroActivity"
     android:label="@string/help"
     tools:layout="@layout/appintro_intro_layout" />
+
+  <action
+    android:id="@+id/home_presets"
+    app:destination="@id/home"
+    app:popUpTo="@id/home"
+    app:popUpToInclusive="true">
+
+    <argument
+      android:name="navDestination"
+      android:defaultValue="@id/presets" />
+
+  </action>
+
+  <action
+    android:id="@+id/home_wake_up_timer"
+    app:destination="@id/home"
+    app:popUpTo="@id/home"
+    app:popUpToInclusive="true">
+
+    <argument
+      android:name="navDestination"
+      android:defaultValue="@id/wake_up_timer" />
+
+  </action>
+
+  <action
+    android:id="@+id/home_account"
+    app:destination="@id/home"
+    app:popUpTo="@id/home"
+    app:popUpToInclusive="true">
+
+    <argument
+      android:name="navDestination"
+      android:defaultValue="@id/account" />
+
+  </action>
+
+  <action
+    android:id="@id/subscription_purchase_list"
+    app:destination="@id/subscription_purchase_list"
+    app:popUpTo="@id/subscription_purchase_list"
+    app:popUpToInclusive="true" />
 
 </navigation>

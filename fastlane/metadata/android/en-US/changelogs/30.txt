@@ -1,4 +1,4 @@
-It is a mandatory update to make Chromecast work as the new receiver app is incompatible with earlier versions. 
+It is a mandatory update to make Chromecast work as the new receiver app is incompatible with earlier versions.
 
 - Compressed sound library disk size by ~42%
 - Added 11 new sounds
@@ -8,4 +8,4 @@ It is a mandatory update to make Chromecast work as the new receiver app is inco
 - Added app intro slides for first-timers
 - Simplified Chromecast UI on receiver devices
 
-See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG
+See detailed changelog at https://trynoice.com/changelog

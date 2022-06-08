@@ -21,52 +21,8 @@
     <string name="save_preset">Simpan Preset</string>
     <string name="play">Mainkan</string>
     <string name="play_pause">putar atau jeda</string>
-    <string name="repeat_time_period">Ulangi periode waktu</string>
     <string name="stop">Berhenti</string>
     <string name="volume">Volume suara</string>
-    <string name="sound_group__life">Kehidupan</string>
-    <string name="sound_group__monsoon">Musim</string>
-    <string name="sound_group__public_gatherings">Pertemuan Umum</string>
-    <string name="sound_group__raw_noise">Kebisingan Mentah</string>
-    <string name="sound_group__times_of_day">Waktu</string>
-    <string name="sound_group__vehicles">Kendaraan</string>
-    <string name="sound_group__water">Air</string>
-    <string name="sound_group__wind">Angin</string>
-    <string name="airplane_inflight">Pesawat dalam penerbangan</string>
-    <string name="airplane_seatbelt_beeps">Bunyi sabuk pengaman pesawat</string>
-    <string name="birds">Burung</string>
-    <string name="bonfire">Api unggun</string>
-    <string name="brownian_noise">Kebisingan brownian</string>
-    <string name="coffee_shop">Kedai kopi</string>
-    <string name="creaking_ship">Kapal pecah</string>
-    <string name="crickets">Jangkrik</string>
-    <string name="distant_thunder">Gemuruh di kejauhan</string>
-    <string name="electric_car">Mobil listrik</string>
-    <string name="heavy_rain">Hujan deras</string>
-    <string name="howling_wolf">Serigala melolong</string>
-    <string name="human_heartbeat">Detak jantung manusia</string>
-    <string name="light_rain">Hujan ringan</string>
-    <string name="moderate_rain">Hujan sedang</string>
-    <string name="morning_in_a_village">Pagi di desa</string>
-    <string name="moving_train">Kereta bergerak</string>
-    <string name="night">Malam</string>
-    <string name="office">Kantor</string>
-    <string name="pink_noise">Kebisingan merah muda</string>
-    <string name="public_library">Perpustakaan umum</string>
-    <string name="purring_cat">Mendengkur kucing</string>
-    <string name="quiet_conversation">Percakapan senyap</string>
-    <string name="rolling_thunder">Gemuruh bergulir</string>
-    <string name="screeching_seagulls">Burung camar yang melengking</string>
-    <string name="seaside">Tepi laut</string>
-    <string name="soft_wind">Angin lembut</string>
-    <string name="thunder_crack">Gemuruh retak</string>
-    <string name="train_horn">Klakson kereta</string>
-    <string name="walking_through_the_snow">Berjalan melintasi salju</string>
-    <string name="water_hose">Selang air</string>
-    <string name="water_stream">Aliran air</string>
-    <string name="white_noise">Kebisingan putih</string>
-    <string name="wind_in_chimes_of_shells">Angin di lonceng kerang</string>
-    <string name="wind_in_palm_trees">Angin di pohon palem</string>
     <string name="delete">Hapus</string>
     <string name="open_context_menu">Buka menu konteks</string>
     <string name="preset_delete_confirmation">Konfirmasi hapus %s?</string>
@@ -112,25 +68,13 @@
  </string>
     <string name="appintro__timer_title">Kesulitan tidur atau bangun?</string>
     <string name="support_development__donate">Donasi</string>
-    <string name="support_development__donate_description">
-    Donasi akan membantu kami dalam \n
-    - berinvestasi dalam fitur baru \n
-    - membuat sampel suara yang lebih baik \n
-    - membeli kopi \n
- </string>
     <string name="support_development__donate_google_play_description">Pembayaran Anda akan ditangani dengan aman oleh Google Play. Tergantung pada lokasi Anda, pajak tambahan _mungkin_ ditambahkan ke jumlah akhir.</string>
-    <string name="support_development__donate_thank_you">Terima kasih!</string>
     <string name="support_development__donate_thank_you_description">Kami berterima kasih dengan sepenuh hati atas kemurahhatian Anda untuk berkontribusi dalam proyek Noice.</string>
     <string name="support_development__share">Bagikan dengan teman</string>
     <string name="support_development__share_description">
     Berbagi Noice dengan teman sama dengan mendonasikan uang. Dengan unduhan yang lebih tinggi, kami
     akan dapat menerima umpan balik dari sejumlah berbagai perspektif yang akan membantu kami
     membuat Noice lebih baik dari sebelumnya.
- </string>
-    <string name="support_development__why">Mengapa Anda harus mendukung?</string>
-    <string name="support_development__why_description">
-    - Untuk memungkinkan pembaruan di masa mendatang \n
-    - Untuk membuat Noice bebas iklan selamanya \n
  </string>
     <string name="cast_media">Hubungkan ke Chromecast</string>
     <string name="in_app_feedback__description">
@@ -146,13 +90,7 @@
     <string name="pinned_shortcuts_not_supported">Launcher default anda tidak mendukung untuk menambahkan shortcuts.</string>
     <string name="preset_does_not_exist">Preset tidak tersedia. Mungkin sudah dihapus!</string>
     <string name="add_to_home_screen">Tambahkan di layar utama</string>
-    <string name="relax">Rileks</string>
     <string name="random_preset">Preset Acak</string>
-    <string name="mood">Suasana</string>
-    <string name="light">Cahaya</string>
-    <string name="focus">Fokus</string>
-    <string name="mood_any">Apapun</string>
-    <string name="intensity_any">Apapun</string>
     <string name="submit_feedback">Masukan Feedback</string>
     <string name="wake_up_timer_cancelled">Timer Wake-up terbatalkan!</string>
     <string name="presets_as_home_screen_summary">Tampilkan \"preset\" pada startup aplikasi (memerlukan restart aplikasi)</string>
@@ -165,14 +103,12 @@
     </plurals>
     <string name="time_bridge">dan</string>
     <string name="wake_up_timer_schedule_set">Alarm akan mati dalam %1$s %2$s %3$s</string>
-    <string name="random_preset_description">Preset acak yang dihasilkan akan memiliki suara sesuai dengan suasana yang dipilih. Selain itu, preset padat akan berusaha memainkan lebih banyak suara secara bersamaan.</string>
     <string name="unsaved_preset">Preset Belum Tersimpan</string>
     <string name="skip_to_next">Preset berikutnya</string>
     <string name="skip_to_prev">Preset sebelumnya</string>
     <string name="pinned_shortcut_created">Pintasan telah ditambahkan ke layar beranda!</string>
     <string name="pinned_shortcut_creation_failed">Gagal menambahkan pintasan ke layar beranda!</string>
     <string name="appearance">Tampilan</string>
-    <string name="behavior">Perilaku</string>
     <string name="settings">Pengaturan</string>
     <string name="remove_from_app_shortcuts">Hapus dari pintasan aplikasi</string>
     <string name="add_to_app_shortcuts">Tambah ke pintasan aplikasi</string>
@@ -193,9 +129,7 @@
     <string name="app_shortcut_creation_failed">Preset gagal ditambahkan ke pintasan aplikasi!</string>
     <string name="app_shortcut_created">Preset telah ditambahkan ke pintasan aplikasi!</string>
     <string name="app_shortcut_removed">Preset telah dihapus dari pintasan aplikasi!</string>
-    <string name="dense">Padat</string>
     <string name="presets_as_home_screen">\"Preset\" sebagai layar beranda</string>
-    <string name="app_authors">Lihat daftar Penulis Noice</string>
     <string name="should_display_sound_icons">Tunjukkan ikon suara</string>
     <string name="should_share_usage_data_summary">Secara otomatis berbagi data penggunaan dan perilaku dengan pengembang</string>
     <string name="should_share_usage_data">Bagikan data penggunaan dan perilaku</string>
@@ -210,7 +144,7 @@
     <string name="payment_pending">Kami akan memberi tahu Anda segera setelah kami selesai memproses pembayaran Anda.</string>
     <string name="export_presets_successful">Berhasil mengekspor preset ke file!</string>
     <string name="import_presets_successful">Berhasil mengimpor preset dari file!</string>
-    <string name="share_usage_data_consent_message">Kami mengumpulkan data penggunaan aplikasi untuk meningkatkan pengalaman pengguna. Kami juga mengumpulkan data perilaku aplikasi untuk menganalisis dan mendiagnosis kesalahan yang ditemukan selama penggunaan aplikasi. Baca [kebijakan privasi](https://ashutoshgngwr.github.io/noice/privacy-policy) kami untuk informasi lebih lanjut.
+    <string name="share_usage_data_consent_message">Kami mengumpulkan data penggunaan aplikasi untuk meningkatkan pengalaman pengguna. Kami juga mengumpulkan data perilaku aplikasi untuk menganalisis dan mendiagnosis kesalahan yang ditemukan selama penggunaan aplikasi. Baca [kebijakan privasi](https://trynoice.com/privacy-policy) kami untuk informasi lebih lanjut.
 \n
 \n Anda dapat mengonfigurasi berbagi data otomatis kapan saja di dalam aplikasi dengan membuka \"**Setelan** &gt; **Berbagi data penggunaan dan perilaku**\".</string>
     <string name="failed_to_load_inapp_purchases">Gagal memuat detail pembelian dalam aplikasi. Silakan coba lagi nanti!</string>

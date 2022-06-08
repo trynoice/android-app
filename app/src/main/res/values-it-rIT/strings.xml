@@ -16,33 +16,8 @@
     <string name="save_preset">Salva preimpostazione</string>
     <string name="play">Riproduci</string>
     <string name="play_pause">riproduci o pausa</string>
-    <string name="repeat_time_period">Periodo di ripetizione</string>
     <string name="stop">Ferma</string>
     <string name="volume">Volume del suono</string>
-    <string name="airplane_inflight">Aereo in volo</string>
-    <string name="airplane_seatbelt_beeps">Bip cinture di sicurezza in aereo</string>
-    <string name="birds">Uccelli</string>
-    <string name="bonfire">Falò</string>
-    <string name="brownian_noise">Rumore marrone</string>
-    <string name="coffee_shop">Caffetteria</string>
-    <string name="distant_thunder">Tuono distante</string>
-    <string name="heavy_rain">Pioggia forte</string>
-    <string name="light_rain">Pioggia leggera</string>
-    <string name="moderate_rain">Pioggia moderata</string>
-    <string name="morning_in_a_village">Mattino in un villaggio</string>
-    <string name="moving_train">Treno in movimento</string>
-    <string name="night">Notte</string>
-    <string name="office">Ufficio</string>
-    <string name="pink_noise">Rumore Rosa</string>
-    <string name="rolling_thunder">Rombo di tuono</string>
-    <string name="seaside">Litorale</string>
-    <string name="soft_wind">Vento leggero</string>
-    <string name="thunder_crack">Scarica di fulmine</string>
-    <string name="train_horn">Fischio di treno</string>
-    <string name="water_stream">Flusso d\'acqua</string>
-    <string name="white_noise">Rumore bianco</string>
-    <string name="wind_in_chimes_of_shells">Vento tra le conciglie</string>
-    <string name="wind_in_palm_trees">Vento tra le palme</string>
     <string name="delete">Rimuovi</string>
     <string name="preset_delete_confirmation">Confermi rimozione di %s?</string>
     <string name="preset_deleted">Preimpostazione rimossa!</string>
@@ -55,19 +30,13 @@
     <string name="notification_channel_default__description">Controlli di riproduzione</string>
     <string name="notification_channel_default__name">Riproduzione dei media</string>
     <string name="okay">Va bene</string>
-    <string name="mood">Stato d\'animo</string>
-    <string name="light">Chiaro</string>
     <string name="intensity">Intensità</string>
-    <string name="dense">Denso</string>
-    <string name="mood_any">Qualsiasi</string>
-    <string name="intensity_any">Qualsiasi</string>
     <string name="submit_feedback">Invia feedback</string>
     <string name="support_development">Supporta lo sviluppo</string>
     <string name="help">Aiuto</string>
     <string name="preset_already_exists">Un preimpostato con questo nome esiste già!</string>
     <string name="random_preset">Preset casuale</string>
     <string name="support_development__share">Condividi</string>
-    <string name="support_development__donate_thank_you">Grazie!</string>
     <string name="support_development__donate">Dona</string>
     <string name="appintro__getting_started_title">Benvenuto</string>
     <string name="appintro__getting_started_desc_1">Iniziamo!</string>
@@ -75,28 +44,8 @@
     <string name="rename">Rinomina</string>
     <string name="open_context_menu">Apri menú contestuale</string>
     <string name="add_to_home_screen">Aggiungi a schermata home</string>
-    <string name="walking_through_the_snow">Camminando nella neve</string>
-    <string name="screeching_seagulls">Gabbiani</string>
-    <string name="quiet_conversation">Conversazione sottovoce</string>
-    <string name="purring_cat">Fusa</string>
-    <string name="public_library">Biblioteca</string>
-    <string name="human_heartbeat">Battito del cuore</string>
-    <string name="howling_wolf">Lupo che ulula</string>
-    <string name="electric_car">Auto elettrica</string>
-    <string name="crickets">Grilli</string>
-    <string name="creaking_ship">Scricchiolii della nave</string>
-    <string name="sound_group__wind">Vento</string>
-    <string name="sound_group__water">Acqua</string>
-    <string name="sound_group__vehicles">Veicoli</string>
-    <string name="sound_group__monsoon">Monsone</string>
-    <string name="sound_group__life">Vita</string>
     <string name="preset_info__description">Non hai ancora creato alcun preset. Per creare un preset, vai nella Libreria e riproduci i suoni. Poi clicca sul pulsante Salva che appare nell\'angolo dello schermo.</string>
     <string name="preset_does_not_exist">Preset non esistente. Potrebbe essere stato cancellato!</string>
-    <string name="water_hose">Manichetta dell\'acqua</string>
-    <string name="sound_group__times_of_day">Ore del giorno</string>
-    <string name="sound_group__raw_noise">Rumore grezzo</string>
-    <string name="sound_group__public_gatherings">Riunioni pubbliche</string>
-    <string name="relax">Lenitivo</string>
     <string name="wake_up_timer">Timer risveglio</string>
     <string name="sleep_timer_description">Noice si riavvierà allo scadere del tempo. Usa i pulsanti sotto per aggiungere del tempo e avviare il timer.</string>
     <string name="presets_as_home_screen_summary">Mostra «preimpostazioni» all\'avvio dell\'app (necessita il riavvio dell\'app)</string>
@@ -104,11 +53,6 @@
     <string name="wake_up_timer_description">Noice eseguirà il preset selezionato allo scadere del tempo. Usa i pulsanti sotto per selezionare un preset e impostare il tempo desiderato per il timer di risveglio.</string>
     <string name="wake_up_timer_cancelled">Timer di risveglio annullato!</string>
     <string name="schedule">Programma</string>
-    <string name="support_development__donate_description">Le donazioni ci aiutano a
-\n- investire in nuove funzionalità
-\n- preparare migliori campionamenti
-\n- comprare il caffè
-\n</string>
     <string name="appintro__timer_title">Hai problemi a coricarti o a risvegliarti\?</string>
     <string name="appintro__timer_desc">Un po\' di atmosfera può aiutarti ad addormentarti senza fatica. Usa il timer di spegnimento per permettere a Noice di spegnersi automaticamente. Allo stesso modo, per risvegliarti in un ambiente tranquillo, puoi usare il timer di risveglio per impostare la sveglia.</string>
     <string name="appintro__library_title">Crea i tuoi ambienti perfetti</string>
@@ -118,14 +62,9 @@
     <string name="appintro__getting_started_desc_0">Scorri a sinistra per conoscere tutte le funzionalità!</string>
     <string name="appintro__chromecast_title">Abilitato a Chromecast</string>
     <string name="appintro__chromecast_desc">Usa Noice per trasmettere l\'atmosfera ad altri dispositivi abilitati a Chromecast, come altoparlanti, TV, ecc.</string>
-    <string name="support_development__why_description">- Per rendere possibili aggiornamenti futuri
-\n- Per mantenere Noice privo di pubblicità
-\n</string>
-    <string name="support_development__why">Perché dovresti aiutarci\?</string>
     <string name="support_development__share_description">Condividere Noice con i tuoi amici è come regalare denaro. Con un più alto numero di downloads, potremo ricevere feedback più variegato, e ciò ci aiuterà a fare di Noice un software migliore.</string>
     <string name="support_development__donate_thank_you_description">Ti ringraziamo con tutto il cuore per il tuo contributo generoso al progetto Noice.</string>
     <string name="support_development__donate_google_play_description">Il tuo pagamento sarà gestito in modo sicuro da Google Play. A seconda della tua località, possono essere aggiunte tasse supplementari all\'importo finale.</string>
-    <string name="focus">Messa a fuoco</string>
     <string name="never">Mai</string>
     <string name="later">Più tardi</string>
     <string name="in_app_feedback__title">Sottoponi una recensione</string>
@@ -141,15 +80,12 @@
     </plurals>
     <string name="time_bridge">e</string>
     <string name="wake_up_timer_schedule_set">La sveglia si spegnerà in %1$s %2$s %3$s</string>
-    <string name="random_preset_description">Le preimpostazioni casuali generati conterranno suoni corrispondenti allo stato d\'animo selezionato. Inoltre, preimpostazioni dense cercheranno di riprodurre più suoni simultaneamente.</string>
-    <string name="app_authors">Visualizza l\'elenco degli autori di Noice</string>
     <string name="app_shortcut_creation_failed">Impossibile aggiungere il preimpostato alle scorciatoie delle app!</string>
     <string name="remove_from_app_shortcuts">Rimuovi dalle scorciatoie delle app</string>
     <string name="add_to_app_shortcuts">Aggiungi alle scorciatoie delle app</string>
     <string name="pinned_shortcut_created">La scorciatoia è stata aggiunta alla schermata iniziale!</string>
     <string name="pinned_shortcut_creation_failed">Impossibile aggiungere la scorciatoia alla schermata iniziale!</string>
     <string name="appearance">Aspetto</string>
-    <string name="behavior">Comportamento</string>
     <string name="presets_as_home_screen">«Preimpostazioni» come schermata iniziale</string>
     <string name="settings">Impostazioni</string>
     <string name="app_shortcut_created">La preimpostazione è stata aggiunta alle scorciatoie delle app!</string>
@@ -180,7 +116,7 @@
     <string name="others">Altri</string>
     <string name="decline">Rifiuta</string>
     <string name="accept">Accetta</string>
-    <string name="share_usage_data_consent_message">Raccogliamo i dati di utilizzo dell\'applicazione per migliorare l\'esperienza dell\'utente. Raccogliamo anche dati sul comportamento dell\'app per analizzare e diagnosticare gli errori riscontrati durante l\'uso dell\'app. Leggi la nostra [informativa sulla riservatezza](https://ashutoshgngwr.github.io/noice/privacy-policy) per ulteriori informazioni.
+    <string name="share_usage_data_consent_message">Raccogliamo i dati di utilizzo dell\'applicazione per migliorare l\'esperienza dell\'utente. Raccogliamo anche dati sul comportamento dell\'app per analizzare e diagnosticare gli errori riscontrati durante l\'uso dell\'app. Leggi la nostra [informativa sulla riservatezza](https://trynoice.com/privacy-policy) per ulteriori informazioni.
 \n
 \n Puoi configurare la condivisione automatica dei dati in qualsiasi momento all\'interno dell\'app andando su «**Impostazioni** &gt; **Condividi dati di utilizzo e comportamento**».</string>
     <string name="share_usage_data_consent_title">Preferenze di condivisione dei dati</string>

@@ -32,4 +32,4 @@
 - <b>υπηρεσία χρέωσης Google Play</b>: για τη δυνατότητα δωρεών
 
 Το Noice είναι δωρεάν και ανοικτού κώδικα.
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

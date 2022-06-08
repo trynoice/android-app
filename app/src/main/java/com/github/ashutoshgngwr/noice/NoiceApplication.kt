@@ -1,85 +1,61 @@
 package com.github.ashutoshgngwr.noice
 
+import android.app.Application
 import android.content.Context
-import androidx.annotation.CallSuper
-import androidx.annotation.VisibleForTesting
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.BillingProvider
-import com.github.ashutoshgngwr.noice.provider.CastAPIProvider
-import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
-import com.github.ashutoshgngwr.noice.provider.DonateViewProvider
-import com.github.ashutoshgngwr.noice.provider.DummyAnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.DummyBillingProvider
-import com.github.ashutoshgngwr.noice.provider.DummyCastAPIProvider
-import com.github.ashutoshgngwr.noice.provider.DummyCrashlyticsProvider
-import com.github.ashutoshgngwr.noice.provider.GitHubReviewFlowProvider
-import com.github.ashutoshgngwr.noice.provider.OpenCollectiveDonateViewProvider
-import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
-import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import android.os.Build
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.trynoice.api.client.NoiceApiClient
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.HiltAndroidApp
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import io.github.ashutoshgngwr.may.May
+import java.io.File
+import javax.inject.Singleton
 
-open class NoiceApplication : android.app.Application() {
+@HiltAndroidApp
+class NoiceApplication : Application() {
 
-  companion object {
-    /**
-     * Convenience method that returns [NoiceApplication] from the provided [context].
-     */
-    fun of(context: Context): NoiceApplication = context.applicationContext as NoiceApplication
+  @Module
+  @InstallIn(SingletonComponent::class)
+  object GsonModule {
+    @Provides
+    @Singleton
+    fun gson(): Gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
   }
 
-  lateinit var castAPIProvider: CastAPIProvider
-    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    internal set
-
-  lateinit var reviewFlowProvider: ReviewFlowProvider
-    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    internal set
-
-  lateinit var crashlyticsProvider: CrashlyticsProvider
-    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    internal set
-
-  lateinit var analyticsProvider: AnalyticsProvider
-    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    internal set
-
-  lateinit var billingProvider: BillingProvider
-    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    internal set
-
-  lateinit var donateViewProvider: DonateViewProvider
-    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    internal set
-
-  override fun onCreate() {
-    super.onCreate()
-    initProviders()
-    SettingsRepository.newInstance(this)
-      .shouldShareUsageData()
-      .also {
-        analyticsProvider.setCollectionEnabled(it)
-        crashlyticsProvider.setCollectionEnabled(it)
-      }
+  @Module
+  @InstallIn(SingletonComponent::class)
+  object ApiModule {
+    @Provides
+    @Singleton
+    fun client(@ApplicationContext context: Context, gson: Gson): NoiceApiClient {
+      return NoiceApiClient(
+        context = context,
+        gson = gson,
+        userAgent = "${context.getString(R.string.app_name)}/${BuildConfig.VERSION_NAME} " +
+          "(Android ${Build.VERSION.RELEASE}; ${Build.MANUFACTURER} ${Build.MODEL})",
+      )
+    }
   }
 
-  /**
-   * [initProviders] is invoked when application is created (in [onCreate]). It can be overridden by
-   * a subclass to swap default implementations of [castAPIProvider], [reviewFlowProvider],
-   * [crashlyticsProvider], [analyticsProvider], [billingProvider] and [donateViewProvider].
-   */
-  @CallSuper
-  protected open fun initProviders() {
-    castAPIProvider = DummyCastAPIProvider
-    reviewFlowProvider = GitHubReviewFlowProvider
-    crashlyticsProvider = DummyCrashlyticsProvider
-    analyticsProvider = DummyAnalyticsProvider
-    billingProvider = DummyBillingProvider
-    donateViewProvider = OpenCollectiveDonateViewProvider
-  }
+  @Module
+  @InstallIn(SingletonComponent::class)
+  object CacheStoreModule {
+    @Provides
+    @Singleton
+    fun cacheStore(@ApplicationContext context: Context): May {
+      val cacheStoreDir = File(context.cacheDir, "api-client-cache").also { it.mkdirs() }
+      val cacheStoreFile = File(cacheStoreDir, "${BuildConfig.VERSION_NAME}.may.db")
 
-  /**
-   * Indicates if Google Mobile Services are available on the client device.
-   */
-  open fun isGoogleMobileServicesAvailable(): Boolean {
-    return false
+      // delete old cache stores. a single store may have multiple files (with same basename).
+      cacheStoreDir.listFiles { f -> !f.name.startsWith(BuildConfig.VERSION_NAME) }
+        ?.forEach { f -> f.deleteRecursively() }
+
+      return May.openOrCreateDatastore(cacheStoreFile)
+    }
   }
 }

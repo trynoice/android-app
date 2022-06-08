@@ -13,27 +13,40 @@ import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.github.ashutoshgngwr.noice.BuildConfig
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
+import com.github.ashutoshgngwr.noice.ext.showSuccessSnackbar
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
-import com.google.android.material.snackbar.Snackbar
 import com.google.gson.JsonIOException
 import com.google.gson.JsonSyntaxException
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
 
   companion object {
     private val TAG = SettingsFragment::class.simpleName
   }
 
-  private lateinit var settingsRepository: SettingsRepository
-  private lateinit var presetRepository: PresetRepository
-  private lateinit var app: NoiceApplication
+  @set:Inject
+  internal lateinit var settingsRepository: SettingsRepository
+
+  @set:Inject
+  internal lateinit var presetRepository: PresetRepository
+
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
+
+  @set:Inject
+  internal lateinit var crashlyticsProvider: CrashlyticsProvider
 
   private val createDocumentActivityLauncher = registerForActivityResult(
     ActivityResultContracts.CreateDocument(),
@@ -47,19 +60,50 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
   override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
     setPreferencesFromResource(R.xml.settings, rootKey)
-    settingsRepository = SettingsRepository.newInstance(requireContext())
-    presetRepository = PresetRepository.newInstance(requireContext())
-    app = NoiceApplication.of(requireContext())
+    findPreference<Preference>(R.string.audio_bitrate_key).apply {
+      val entries = arrayOf(
+        getString(R.string.audio_quality_low),
+        getString(R.string.audio_quality_medium),
+        getString(R.string.audio_quality_high),
+        getString(R.string.audio_quality_ultra),
+      )
+
+      val values = arrayOf(
+        SettingsRepository.AudioQuality.LOW,
+        SettingsRepository.AudioQuality.MEDIUM,
+        SettingsRepository.AudioQuality.HIGH,
+        SettingsRepository.AudioQuality.ULTRA_HIGH,
+      )
+
+      summary = entries[values.indexOf(settingsRepository.getAudioQuality())]
+      setOnPreferenceClickListener {
+        DialogFragment.show(childFragmentManager) {
+          title(R.string.audio_quality)
+          message(R.string.audio_quality_summary)
+          singleChoiceItems(
+            items = entries,
+            currentChoice = values.indexOf(settingsRepository.getAudioQuality()),
+            onItemSelected = { position ->
+              settingsRepository.setAudioQuality(values[position])
+              summary = entries[position]
+            }
+          )
+          negativeButton(R.string.cancel)
+        }
+
+        true
+      }
+    }
 
     findPreference<Preference>(R.string.export_presets_key).setOnPreferenceClickListener {
       createDocumentActivityLauncher.launch("noice-saved-presets.json")
-      app.analyticsProvider.logEvent("presets_export_begin", bundleOf())
+      analyticsProvider.logEvent("presets_export_begin", bundleOf())
       true
     }
 
     findPreference<Preference>(R.string.import_presets_key).setOnPreferenceClickListener {
       openDocumentActivityLauncher.launch(arrayOf("application/json"))
-      app.analyticsProvider.logEvent("presets_import_begin", bundleOf())
+      analyticsProvider.logEvent("presets_import_begin", bundleOf())
       true
     }
 
@@ -70,8 +114,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         negativeButton(R.string.cancel)
         positiveButton(R.string.okay) {
           ShortcutManagerCompat.removeAllDynamicShortcuts(requireContext())
-          showSnackBar(R.string.all_app_shortcuts_removed)
-          app.analyticsProvider.logEvent("preset_shortcut_remove_all", bundleOf())
+          showSuccessSnackbar(R.string.all_app_shortcuts_removed)
+          analyticsProvider.logEvent("preset_shortcut_remove_all", bundleOf())
         }
       }
 
@@ -90,7 +134,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
               settingsRepository.setAppTheme(theme)
               summary = getAppThemeString()
               requireActivity().recreate()
-              app.analyticsProvider.logEvent("theme_set", bundleOf("theme" to theme))
+              analyticsProvider.logEvent("theme_set", bundleOf("theme" to theme))
             }
           )
           negativeButton(R.string.cancel)
@@ -106,14 +150,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
     findPreference<SwitchPreferenceCompat>(R.string.should_share_usage_data_key)
       .setOnPreferenceChangeListener { _, checked ->
         if (checked is Boolean) {
-          app.crashlyticsProvider.setCollectionEnabled(checked)
-          app.analyticsProvider.setCollectionEnabled(checked)
+          settingsRepository.setShouldShareUsageData(checked)
         }
 
         true
       }
 
-    app.analyticsProvider.setCurrentScreen("settings", SettingsFragment::class)
+    analyticsProvider.setCurrentScreen("settings", SettingsFragment::class)
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -127,28 +170,24 @@ class SettingsFragment : PreferenceFragmentCompat() {
       requireContext().contentResolver.openFileDescriptor(result, "w")?.use {
         val os = FileOutputStream(it.fileDescriptor)
         os.channel.truncate(0L)
-        presetRepository.writeTo(os)
+        presetRepository.exportTo(os)
         os.close()
       }
 
       success = true
-      showSnackBar(R.string.export_presets_successful)
+      showSuccessSnackbar(R.string.export_presets_successful)
     } catch (e: Throwable) {
       Log.w(TAG, "failed to export saved presets", e)
+      crashlyticsProvider.log("failed to export saved presets")
+      crashlyticsProvider.recordException(e)
       when (e) {
         is FileNotFoundException,
         is IOException,
-        is JsonIOException -> {
-          showSnackBar(R.string.failed_to_write_file)
-          app.crashlyticsProvider.apply {
-            log("failed to export saved presets")
-            recordException(e)
-          }
-        }
+        is JsonIOException -> showErrorSnackbar(R.string.failed_to_write_file)
         else -> throw e
       }
     } finally {
-      app.analyticsProvider.logEvent("presets_export_complete", bundleOf("success" to success))
+      analyticsProvider.logEvent("presets_export_complete", bundleOf("success" to success))
     }
   }
 
@@ -161,39 +200,37 @@ class SettingsFragment : PreferenceFragmentCompat() {
       }
 
       requireContext().contentResolver.openFileDescriptor(result, "r")?.use {
-        presetRepository.readFrom(FileInputStream(it.fileDescriptor))
+        presetRepository.importFrom(FileInputStream(it.fileDescriptor))
       }
 
       success = true
-      showSnackBar(R.string.import_presets_successful)
+      showSuccessSnackbar(R.string.import_presets_successful)
     } catch (e: Throwable) {
-      Log.i(TAG, e.stackTraceToString())
+      Log.w(TAG, "failed to import saved presets", e)
       when (e) {
         is FileNotFoundException,
         is IOException,
         is JsonIOException -> {
-          showSnackBar(R.string.failed_to_read_file)
-          app.crashlyticsProvider.apply {
-            log("failed to import saved presets")
-            recordException(e)
-          }
+          showErrorSnackbar(R.string.failed_to_read_file)
+          crashlyticsProvider.log("failed to import saved presets")
+          crashlyticsProvider.recordException(e)
         }
         is JsonSyntaxException,
-        is IllegalArgumentException -> showSnackBar(R.string.invalid_import_file_format)
-        else -> throw e
+        is IllegalArgumentException -> showErrorSnackbar(R.string.invalid_import_file_format)
+        else -> {
+          crashlyticsProvider.log("failed to import saved presets")
+          crashlyticsProvider.recordException(e)
+          throw e
+        }
       }
     } finally {
-      app.analyticsProvider.logEvent("presets_import_complete", bundleOf("success" to success))
+      analyticsProvider.logEvent("presets_import_complete", bundleOf("success" to success))
     }
   }
 
   private fun <T : Preference> findPreference(@StringRes keyResID: Int): T {
     return findPreference(getString(keyResID))
       ?: throw IllegalArgumentException("preference key not found")
-  }
-
-  private fun showSnackBar(@StringRes message: Int) {
-    Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).show()
   }
 
   private fun getAppThemeString(): String {

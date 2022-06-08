@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="bonfire">Sua</string>
-    <string name="birds">Txoriak</string>
-    <string name="sound_group__wind">Haizea</string>
-    <string name="sound_group__water">Ura</string>
-    <string name="sound_group__vehicles">Ibilgailuak</string>
-    <string name="sound_group__monsoon">Montzoia</string>
-    <string name="sound_group__life">Bizitza</string>
     <string name="stop">Gelditu</string>
     <string name="play">Erreproduzitu</string>
     <string name="save">Gorde</string>
     <string name="intensity">Intentsitatea</string>
-    <string name="focus">Fokuratu</string>
-    <string name="dense">Trinkoa</string>
-    <string name="mood_any">Edozein</string>
-    <string name="intensity_any">Edozein</string>
     <string name="support_development">Garapena babestu</string>
     <string name="report_issue">Arazoen berri eman</string>
     <string name="library">Liburutegia</string>

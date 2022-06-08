@@ -31,4 +31,4 @@ Noice là ứng dụng cho phép bạn tạo những âm thanh êm dịu từ nh
 - <b>Dịch vụ thanh toán Google</b>: nếu các bạn muốn ủng hộ tụi mình nè
 
 Noice là một phần mềm mã nguồn mở miễn phí.
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="support_development__why">なぜサポートを頂きたいのか\?</string>
     <string name="support_development__share_description">友達とNoiceを共有することは、お金を寄付することに似ています。ダウンロード数が増えれば、様々な視点からのご意見を受けられ、Noiceをより良いものにできるでしょう。</string>
     <string name="support_development__share">友達に共有</string>
     <string name="support_development__donate_thank_you_description">Noiceプロジェクトに多大なご協力をいただき、心より感謝申し上げます。</string>
-    <string name="support_development__donate_thank_you">ありがとうございます!</string>
     <string name="support_development__donate_google_play_description">あなたの購入はGoogle Playを介して安全に処理されます。地域によっては、_もしかすると_最終的に追加の税金が付加されるかもしれません。</string>
-    <string name="support_development__donate_description">寄付することで以下のような形で開発者を手助けすることができます
-\n- 新機能の開発
-\n- より高品質なサウンドサンプルの採用
-\n- コーヒーの購入
-\n</string>
     <string name="support_development__donate">寄付</string>
     <string name="appintro__timer_title">眠りにつきにくかったり、起床しにくかったりしませんか\?</string>
     <string name="appintro__timer_desc">少しの環境音で、眠りにつきやすくなります。スリープタイマーを使うことで、Noiceを自動的にシャットダウンできます。同様に、穏やかな環境で目を覚ましたいときには、起床タイマーを使ってアラームをセットできます。</string>
@@ -52,52 +45,8 @@
     <string name="open_context_menu">コンテキストメニューを開く</string>
     <string name="delete">削除</string>
     <string name="add_to_home_screen">ホーム画面に追加</string>
-    <string name="wind_in_palm_trees">ヤシの木に吹く風</string>
-    <string name="wind_in_chimes_of_shells">貝の風鈴</string>
-    <string name="white_noise">ホワイトノイズ</string>
-    <string name="water_stream">水の流れ</string>
-    <string name="water_hose">水用ホース</string>
-    <string name="walking_through_the_snow">雪上歩行</string>
-    <string name="train_horn">電車の警笛</string>
-    <string name="thunder_crack">雷鳴</string>
-    <string name="soft_wind">弱い風</string>
-    <string name="seaside">波打ち際</string>
-    <string name="screeching_seagulls">カモメの鳴き声</string>
-    <string name="rolling_thunder">轟く雷鳴</string>
-    <string name="quiet_conversation">静かな会話</string>
-    <string name="purring_cat">喉を鳴らす猫</string>
-    <string name="public_library">公共図書館</string>
-    <string name="pink_noise">ピンクノイズ</string>
-    <string name="office">オフィス</string>
-    <string name="night">夜</string>
-    <string name="moving_train">走る列車</string>
-    <string name="morning_in_a_village">田舎の朝</string>
-    <string name="moderate_rain">やや強い雨</string>
-    <string name="light_rain">弱い雨</string>
-    <string name="human_heartbeat">人の鼓動</string>
-    <string name="howling_wolf">狼の遠吠え</string>
-    <string name="heavy_rain">激しい雨</string>
-    <string name="electric_car">電気自動車</string>
-    <string name="distant_thunder">遠くの雷鳴</string>
-    <string name="crickets">秋の虫</string>
-    <string name="creaking_ship">きしむ舟</string>
-    <string name="coffee_shop">コーヒーショップ</string>
-    <string name="brownian_noise">ブラウンノイズ</string>
-    <string name="bonfire">焚き火</string>
-    <string name="birds">鳥のさえずり</string>
-    <string name="airplane_seatbelt_beeps">飛行機のシートベルト着用ビープ音</string>
-    <string name="airplane_inflight">フライト中の飛行機</string>
-    <string name="sound_group__wind">風の音</string>
-    <string name="sound_group__water">水の音</string>
-    <string name="sound_group__vehicles">乗物</string>
-    <string name="sound_group__times_of_day">生活の時間</string>
-    <string name="sound_group__raw_noise">ノイズ</string>
-    <string name="sound_group__public_gatherings">公共空間</string>
-    <string name="sound_group__monsoon">雨音</string>
-    <string name="sound_group__life">生活音</string>
     <string name="volume">音量</string>
     <string name="stop">停止</string>
-    <string name="repeat_time_period">繰り返し期間</string>
     <string name="play_pause">再生/一時停止</string>
     <string name="play">再生</string>
     <string name="save_preset">プリセットを保存</string>
@@ -109,17 +58,9 @@
     <string name="name">名前</string>
     <string name="dismiss">閉じる</string>
     <string name="cancel">キャンセル</string>
-    <string name="relax">リラックス</string>
     <string name="random_preset">ランダムプリセット</string>
     <string name="okay">OK</string>
-    <string name="mood">雰囲気</string>
-    <string name="light">重なりの少ない音</string>
-    <string name="random_preset_description">ランダムプリセットは、選択された雰囲気の音を含んで作成されます。また、重なりの多い音のプリセットはより多くの音を同時に再生します。</string>
     <string name="intensity">音の多さ</string>
-    <string name="focus">集中</string>
-    <string name="dense">重なりの多い音</string>
-    <string name="mood_any">指定しない</string>
-    <string name="intensity_any">指定しない</string>
     <string name="submit_feedback">意見を送信する</string>
     <string name="wake_up_timer">起床タイマー</string>
     <string name="support_development">開発を支援する</string>
@@ -130,7 +71,6 @@
     <string name="help">ヘルプ</string>
     <string name="app_theme">テーマ</string>
     <string name="about">このアプリについて</string>
-    <string name="app_authors">Noiceの作成者一覧を見る</string>
     <string name="notification_channel_default__name">メディア再生</string>
     <string name="notification_channel_default__description">メディア再生コントロール</string>
     <string name="never">二度と表示しない</string>
@@ -138,9 +78,6 @@
     <string name="in_app_feedback__title">レビューを投稿</string>
     <string name="in_app_feedback__description">アプリについてのご意見をお待ちしています。私たちのGitHubリポジトリをご覧ください。アプリが気に入らなかった場合、気になる点を説明するためにissueの作成をご検討ください。そうでなければ、あなたの愛とサポートを示すためにぜひプロジェクトにスターを付けてください。</string>
     <string name="cast_media">Chromecastに接続</string>
-    <string name="support_development__why_description">- 将来のアップデートを継続するため
-\n- Noiceを永遠に広告無しのアプリとして継続するため
-\n</string>
     <string name="presets_as_home_screen">プリセットをホーム画面として保存</string>
     <string name="payment_pending">お支払いの処理が完了したら、すぐにお知らせします。</string>
     <string name="failed_to_purchase">支払フローを開始できませんでした。後でもう一度お試しください!</string>
@@ -150,7 +87,7 @@
     <string name="others">その他</string>
     <string name="decline">拒否</string>
     <string name="accept">承認</string>
-    <string name="share_usage_data_consent_message">開発チームは、ユーザー体験を向上させるためにアプリの使用データを収集します。また、アプリの使用中に発生したエラーを分析・診断するために、アプリの動作データを収集しています。詳細については、当社の[プライバシーポリシー](https://ashutoshgngwr.github.io/noice/privacy-policy)をご覧ください。
+    <string name="share_usage_data_consent_message">開発チームは、ユーザー体験を向上させるためにアプリの使用データを収集します。また、アプリの使用中に発生したエラーを分析・診断するために、アプリの動作データを収集しています。詳細については、当社の[プライバシーポリシー](https://trynoice.com/privacy-policy)をご覧ください。
 \n
 \n お客様は、アプリ内の「**設定** &gt; **使用状況と動作データの共有**」で、いつでも自動データ共有を設定することができます。</string>
     <string name="share_usage_data_consent_title">データ共有の設定</string>
@@ -175,7 +112,6 @@
     <string name="pinned_shortcut_created">ホーム画面にショートカットが追加されました!</string>
     <string name="pinned_shortcut_creation_failed">ホーム画面へのショートカットの追加に失敗しました!</string>
     <string name="appearance">見た目</string>
-    <string name="behavior">ふるまい</string>
     <string name="settings">設定</string>
     <string name="app_shortcut_creation_failed">プリセットをアプリショートカットに追加できません!</string>
     <string name="app_shortcut_created">プリセットがアプリショートカットに追加されました!</string>

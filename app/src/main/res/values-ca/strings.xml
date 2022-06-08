@@ -9,6 +9,4 @@
     <string name="app_theme">Tema</string>
     <string name="library">Librería</string>
     <string name="submit_feedback">Enviar Feedback</string>
-    <string name="mood_any">Cualquiera</string>
-    <string name="intensity_any">Cualquiera</string>
 </resources>

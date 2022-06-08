@@ -2,14 +2,17 @@
 <resources>
   <string name="app_name">Noice</string>
   <string name="app_copyright">2019–21 the Noice Authors</string>
-  <string name="app_license_url">https://github.com/ashutoshgngwr/noice/blob/master/LICENSE</string>
-  <string name="app_authors_url">https://ashutoshgngwr.github.io/noice/contributors?ref=Android+App</string>
-  <string name="app_changelog_url">https://ashutoshgngwr.github.io/noice/CHANGELOG?ref=Android+App</string>
-  <string name="app_website_url">https://ashutoshgngwr.github.io/noice?ref=Android+App</string>
+  <string name="app_license_url">https://github.com/trynoice/android-app/blob/main/LICENSE</string>
+  <string name="app_authors_url">https://github.com/trynoice/android-app/graphs/contributors</string>
+  <string name="app_changelog_url">https://trynoice.com/changelog</string>
+  <string name="app_website_url">https://trynoice.com</string>
   <string name="app_instagram_url">https://www.instagram.com/trynoice/</string>
   <string name="app_twitter_url">https://twitter.com/trynoice</string>
-  <string name="app_github_url">https://github.com/ashutoshgngwr/noice</string>
-  <string name="app_issues_github_url">https://github.com/ashutoshgngwr/noice/issues</string>
+  <string name="app_github_url">https://github.com/trynoice/android-app</string>
+  <string name="app_issues_github_url">https://github.com/trynoice/android-app/issues</string>
+  <string name="app_faqs_url">https://trynoice.com/faqs</string>
+  <string name="app_privacy_policy_url">https://trynoice.com/privacy-policy</string>
+  <string name="app_tos_url">https://trynoice.com/terms-of-service</string>
   <string name="app_issues_form_url">
     https://docs.google.com/forms/d/e/1FAIpQLSdYhyYjxhJ7IKyiqdc3AE3uINSoRWBw8ROB003gkZ47KeSjWw/viewform?usp=sf_link
   </string>
@@ -23,8 +26,8 @@
   <string name="plus4h">4h</string>
   <string name="plus8h">8h</string>
   <string name="presets_as_home_screen_key">pref_saved_presets_as_homescreen</string>
-  <string name="sound_fade_duration_key">sound_fade_duration</string>
   <string name="sound_fade_in_duration_key">sound_fade_in_duration</string>
+  <string name="sound_fade_out_duration_key">sound_fade_out_duration</string>
   <string name="app_theme_key">app_theme</string>
   <string name="ignore_audio_focus_changes_key">ignore_audio_focus_changes</string>
   <string name="import_presets_key">import_presets</string>
@@ -34,7 +37,10 @@
   <string name="others_key">others</string>
   <string name="should_share_usage_data_key">should_share_usage_data</string>
   <string name="enable_media_buttons_key">enable_media_buttons</string>
+  <string name="audio_bitrate_key">audio_bitrate</string>
   <string name="open_collective_url">https://opencollective.com/noice</string>
   <string name="play_store_url">https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice</string>
   <string name="fdroid_url">https://f-droid.org/app/com.github.ashutoshgngwr.noice</string>
+  <string name="google_play">Google Play</string>
+  <string name="stripe">Stripe</string>
 </resources>

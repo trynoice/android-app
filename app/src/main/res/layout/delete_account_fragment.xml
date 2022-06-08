@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.DeleteAccountViewModel" />
+
+  </data>
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp"
+    tools:theme="@style/Theme.App.BottomSheetDialog">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:isVisible="@{!viewModel.isDeletingAccount}">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_account"
+        android:textAppearance="?attr/titleTextAppearance" />
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+
+      <TextView
+        style="@style/Widget.App.TextView.Message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_account_confirmation" />
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+      <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="@={viewModel.hasConfirmed}"
+        android:text="@string/i_understand" />
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|end"
+        android:orientation="horizontal">
+
+        <Button
+          android:id="@+id/cancel"
+          style="?attr/buttonStyle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/cancel" />
+
+        <Space
+          android:layout_width="16dp"
+          android:layout_height="wrap_content" />
+
+        <Button
+          android:id="@+id/delete"
+          style="?attr/buttonStyle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:enabled="@{viewModel.hasConfirmed}"
+          android:text="@string/delete"
+          android:theme="@style/ThemeOverlay.App.Button.DestructiveAction" />
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <include
+      layout="@layout/simple_progress_layout"
+      app:isVisible="@{viewModel.isDeletingAccount}"
+      app:message="@{@string/deleting_account}" />
+
+  </FrameLayout>
+
+</layout>

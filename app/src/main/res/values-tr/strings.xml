@@ -9,16 +9,9 @@
     <string name="sleep_timer">Uyku Zamanlayıcı</string>
     <string name="support_development">Geliştiriciyi Destekle</string>
     <string name="wake_up_timer">Uyandırma Zamanlayıcı</string>
-    <string name="mood_any">Herhangi</string>
-    <string name="intensity_any">Herhangi</string>
-    <string name="dense">Çeşitli</string>
-    <string name="focus">Odaklanmak</string>
     <string name="intensity">Çeşitlilik</string>
-    <string name="light">Sade</string>
-    <string name="mood">Amaç</string>
     <string name="okay">Tamam</string>
     <string name="random_preset">Rastgele kayıt</string>
-    <string name="relax">Rahatlamak</string>
     <string name="cancel">İptal</string>
     <string name="dismiss">Kapat</string>
     <string name="name">İsim</string>
@@ -30,52 +23,8 @@
     <string name="save_preset">Kayıt Oluştur</string>
     <string name="play">Oynat</string>
     <string name="play_pause">oynat ya da durdur</string>
-    <string name="repeat_time_period">Zamanı tekrarla</string>
     <string name="stop">Bitir</string>
     <string name="volume">Ses seviyesi</string>
-    <string name="sound_group__life">Yaşam</string>
-    <string name="sound_group__monsoon">Muson</string>
-    <string name="sound_group__public_gatherings">Kalabalık</string>
-    <string name="sound_group__raw_noise">Kuru Grültü</string>
-    <string name="sound_group__times_of_day">Günün Zamanları</string>
-    <string name="sound_group__vehicles">Araçlar</string>
-    <string name="sound_group__water">Su</string>
-    <string name="sound_group__wind">Rüzgar</string>
-    <string name="airplane_inflight">Uçak yolculuğu</string>
-    <string name="airplane_seatbelt_beeps">Uçak kemer uyarıları</string>
-    <string name="birds">Kuşlar</string>
-    <string name="bonfire">Kamp ateşi</string>
-    <string name="brownian_noise">Kahverengi gürültü</string>
-    <string name="coffee_shop">Kahve dükkanı</string>
-    <string name="creaking_ship">Gıcırdayan gemi</string>
-    <string name="crickets">Cırcır böcekleri</string>
-    <string name="distant_thunder">Uzak gök gürültüsü</string>
-    <string name="electric_car">Elektrikli araba</string>
-    <string name="heavy_rain">Şiddetli yağmur</string>
-    <string name="howling_wolf">Kurt uluması</string>
-    <string name="human_heartbeat">İnsan kalp atışı</string>
-    <string name="light_rain">Hafif yağmur</string>
-    <string name="moderate_rain">Normal yağmur</string>
-    <string name="morning_in_a_village">Köyde bir sabah</string>
-    <string name="moving_train">Hareket eden tren</string>
-    <string name="night">Gece</string>
-    <string name="office">Ofis</string>
-    <string name="pink_noise">Pembe gürültü</string>
-    <string name="public_library">Halk kütüphanesi</string>
-    <string name="purring_cat">Kedi mırıltısı</string>
-    <string name="quiet_conversation">Kısık sesle konuşma</string>
-    <string name="rolling_thunder">Gök gürlemesi</string>
-    <string name="screeching_seagulls">Martı çığlıkları</string>
-    <string name="seaside">Sahil</string>
-    <string name="soft_wind">Rüzgar</string>
-    <string name="thunder_crack">Gök gürültüsü</string>
-    <string name="train_horn">Tren kornası</string>
-    <string name="walking_through_the_snow">Karda yürümek</string>
-    <string name="water_hose">Sulama hortumu</string>
-    <string name="water_stream">Su kaynağı</string>
-    <string name="white_noise">Beyaz gürültü</string>
-    <string name="wind_in_chimes_of_shells">Deniz kabuğu çıngırtısı</string>
-    <string name="wind_in_palm_trees">Palmiye hışırtıları</string>
     <string name="add_to_home_screen">Ana ekrana ekle</string>
     <string name="delete">Sil</string>
     <string name="open_context_menu">İçerik menüsünü aç</string>
@@ -126,14 +75,7 @@
   </string>
     <string name="appintro__timer_title">Uyku sorunlarınız mı var?</string>
     <string name="support_development__donate">Bağışta bulunun</string>
-    <string name="support_development__donate_description">
-    Bağışlarınız bize şunları sağlar\n
-    - yeni özellikler için yatırım\n
-    - daha iyi ve kaliteli sesler\n
-    - kahve almak\n
-  </string>
     <string name="support_development__donate_google_play_description">Ödemeniz Google Play ile güvenli bir şekilde gerçekleşecektir. Konumunuza bağlı olarak son tutara _belki_ vergi eklenebilir.</string>
-    <string name="support_development__donate_thank_you">Teşekkür ederiz!</string>
     <string name="support_development__donate_thank_you_description">
     Noice projesine olan cömertçe katkınızdan dolayı tüm içtenliğimizle teşekkür ederiz.
   </string>
@@ -142,11 +84,6 @@
     Noice\'i arkadaşlarınızla paylaşmanız para bağışlamanız kadar faydalıdır.
     Daha fazla indirme, Noice\'i daha iyi bir seviyeye doğru geliştirmekte
     yardımcı olacak çeşitli geri dönüşler elde etmemizi sağlayabilir.
-  </string>
-    <string name="support_development__why">Neden desteklemelisiniz?</string>
-    <string name="support_development__why_description">
-    - Gelecek güncellemeleri mümkün kılmak için\n
-    - Noice\'in reklamsız kalmasını sağlamak için\n
   </string>
     <string name="cast_media">Chromecast\'e bağlan</string>
     <string name="in_app_feedback__description">
@@ -172,8 +109,6 @@
     </plurals>
     <string name="time_bridge">ve</string>
     <string name="wake_up_timer_schedule_set">Alarm %1$s %2$s %3$s içinde çalacak</string>
-    <string name="random_preset_description">Oluşturulan rastgele kayıtlar, seçilen amaca karşılık gelen sesleri içerecektir. Dahası, çeşitli kayıtlar aynı anda daha fazla ses çalmaya çalışacaktır.</string>
-    <string name="app_authors">Noice yazarlarının listesini görüntüle</string>
     <string name="app_shortcut_creation_failed">Kayıt, uygulama kısayollarına eklenemedi!</string>
     <string name="app_shortcut_created">Kayıt, uygulama kısayollarına eklendi!</string>
     <string name="app_shortcut_removed">Kayıt, uygulama kısayollarından kaldırıldı!</string>
@@ -182,7 +117,6 @@
     <string name="pinned_shortcut_created">Kısayol ana ekrana eklendi!</string>
     <string name="pinned_shortcut_creation_failed">Kısayol ana ekrana eklenemedi!</string>
     <string name="appearance">Görünüm</string>
-    <string name="behavior">Davranış</string>
     <string name="presets_as_home_screen">Ana ekran olarak \"mevcut kayıtlar\"</string>
     <string name="settings">Ayarlar</string>
     <string name="share">Paylaş</string>
@@ -211,8 +145,8 @@
     <string name="others">Diğer</string>
     <string name="decline">Reddet</string>
     <string name="accept">Kabul et</string>
-    <string name="share_usage_data_consent_message">Kullanıcı deneyimini iyileştirmek için uygulama kullanım verilerini topluyoruz. Ayrıca, uygulama kullanımı sırasında karşılaşılan hataları çözümlemek ve teşhis etmek için uygulama davranış verilerini topluyoruz. Daha fazla bilgi için [gizlilik politikamızı](https://ashutoshgngwr.github.io/noice/privacy-policy) okuyun.
 \n
+    <string name="share_usage_data_consent_message">Kullanıcı deneyimini iyileştirmek için uygulama kullanım verilerini topluyoruz. Ayrıca, uygulama kullanımı sırasında karşılaşılan hataları çözümlemek ve teşhis etmek için uygulama davranış verilerini topluyoruz. Daha fazla bilgi için [gizlilik politikamızı](https://trynoice.com/privacy-policy) okuyun.
 \n \"**Ayarlar** &gt; **Kullanım ve davranış verilerini paylaş**\" seçeneğine giderek uygulama içinde istediğiniz zaman otomatik veri paylaşımını yapılandırabilirsiniz.</string>
     <string name="share_usage_data_consent_title">Veri Paylaşımı Tercihleri</string>
     <string name="created_by">Oluşturan</string>

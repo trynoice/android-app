@@ -1,36 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:animateLayoutChanges="true">
+  xmlns:tools="http://schemas.android.com/tools">
 
-  <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/sound_list"
+  <data>
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.LibraryViewModel" />
+
+  </data>
+
+  <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    android:animateLayoutChanges="true">
 
-  <com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/save_preset_button"
-    style="@style/Widget.App.FloatingActionButton.Primary"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    android:contentDescription="@string/save_preset"
-    android:src="@drawable/ic_action_save"
-    android:visibility="gone"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent" />
+    <include
+      android:id="@+id/error_container"
+      layout="@layout/simple_error_layout"
+      app:isVisible="@{viewModel.persistentErrorStrRes != null}"
+      app:retryAction="@{() -> viewModel.loadLibrary()}"
+      tools:visibility="gone" />
 
-  <com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/random_preset_button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    android:contentDescription="@string/save_preset"
-    android:src="@drawable/ic_shuffle_24dp"
-    app:layout_constraintBottom_toTopOf="@id/save_preset_button"
-    app:layout_constraintEnd_toEndOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:animateLayoutChanges="true"
+      app:isVisible="@{viewModel.persistentErrorStrRes == null}">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+      <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:onRefreshListener="@{() -> viewModel.loadLibrary()}"
+        app:progressCircleColor="@{@color/primary}"
+        app:refreshing="@{viewModel.isLoading}">
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/sound_list"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          app:hasFixedSize="@{true}"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+      </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+      <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/save_preset_button"
+        style="@style/Widget.App.FloatingActionButton.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/save_preset"
+        android:src="@drawable/ic_action_save"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+      <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/random_preset_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/random_preset"
+        android:src="@drawable/ic_baseline_shuffle_24"
+        app:layout_constraintBottom_toTopOf="@id/save_preset_button"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </FrameLayout>
+
+</layout>

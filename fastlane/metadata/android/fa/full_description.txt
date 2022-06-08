@@ -32,4 +32,4 @@ Noice برنامه‌ای است که به شما اجازه می‌دهد با 
 - <b>سرویس صدور صورت‌حساب Google Play</b>: برای فراهم کردن کمک‌های مالی برای حمایت از ساخت
 
 Noice یک نرم‌افزار آزاد و متن‌باز است.
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

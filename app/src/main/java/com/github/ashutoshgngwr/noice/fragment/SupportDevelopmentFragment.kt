@@ -7,14 +7,23 @@ import android.view.ViewGroup
 import androidx.core.app.ShareCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SupportDevelopmentFragmentBinding
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SupportDevelopmentFragment : Fragment() {
 
   private lateinit var binding: SupportDevelopmentFragmentBinding
-  private lateinit var app: NoiceApplication
+
+  @set:Inject
+  internal lateinit var donationFragmentProvider: DonationFragmentProvider
+
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -26,8 +35,9 @@ class SupportDevelopmentFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    app = NoiceApplication.of(requireContext())
-    app.donateViewProvider.addViewToParent(binding.donateViewContainer)
+    childFragmentManager.beginTransaction()
+      .add(R.id.donate_view_container, donationFragmentProvider.get())
+      .commit()
 
     binding.shareButton.setOnClickListener {
       val text = getString(R.string.app_description)
@@ -39,9 +49,9 @@ class SupportDevelopmentFragment : Fragment() {
         .setText("$text\n\n$playStoreURL\n$fdroidURL")
         .startChooser()
 
-      app.analyticsProvider.logEvent("share_app_with_friends", bundleOf())
+      analyticsProvider.logEvent("share_app_with_friends", bundleOf())
     }
 
-    app.analyticsProvider.setCurrentScreen("support_development", SupportDevelopmentFragment::class)
+    analyticsProvider.setCurrentScreen("support_development", SupportDevelopmentFragment::class)
   }
 }

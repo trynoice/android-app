@@ -32,4 +32,4 @@ Noice çevresel sesleri kullanarak kendi ambiyansınızı oluşturmanızı sağl
 - <b>Google Play ödeme hizmeti</b>: geliştirilmesini desteklemek üzere maddi olarak katkıda bulunmayı etkinleştirmek için
 
 Noice özgür ve açık kaynaklı bir yazılımdır.
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

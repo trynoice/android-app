@@ -32,4 +32,4 @@ Noice 是一款可让您使用来自环境噪声源的剪辑创建自定义背�
 - <b>Google Play 计费服务</b>：为支持开发提供捐赠
 
 Noice 是一个免费开源软件。
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

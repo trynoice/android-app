@@ -2,35 +2,56 @@ package com.github.ashutoshgngwr.noice.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
+import androidx.core.os.postDelayed
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.BuildConfig
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
+import com.github.ashutoshgngwr.noice.engine.PlaybackController
+import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
-import com.github.ashutoshgngwr.noice.navigation.Navigable
-import com.github.ashutoshgngwr.noice.playback.PlaybackController
-import com.github.ashutoshgngwr.noice.provider.BillingProvider
+import com.github.ashutoshgngwr.noice.fragment.DonationPurchasedCallbackFragmentArgs
+import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
+import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragmentArgs
+import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
+import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
+import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener {
 
   companion object {
     /**
      * [EXTRA_NAV_DESTINATION] declares the key for intent extra value passed to [MainActivity] for
      * setting the current destination on the [NavController]. The value for this extra should be an
      * id resource representing the action/destination id present in the [main][R.navigation.main]
-     * or [home][R.navigation.home] navigation graphs.
+     * navigation graph.
      */
     internal const val EXTRA_NAV_DESTINATION = "nav_destination"
 
@@ -39,38 +60,51 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
   }
 
   private lateinit var binding: MainActivityBinding
-  private lateinit var settingsRepository: SettingsRepository
-  private lateinit var app: NoiceApplication
   private lateinit var navController: NavController
+
+  @set:Inject
+  internal lateinit var reviewFlowProvider: ReviewFlowProvider
+
+  @set:Inject
+  internal lateinit var billingProvider: InAppBillingProvider
+
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
+
+  @set:Inject
+  internal lateinit var playbackController: PlaybackController
+
+  @set:Inject
+  internal lateinit var presetRepository: PresetRepository
 
   /**
    * indicates whether the activity was delivered a new intent since it was last resumed.
    */
   private var hasNewIntent = false
+  private val handler = Handler(Looper.getMainLooper())
+  private val settingsRepository by lazy {
+    EntryPointAccessors.fromApplication(application, MainActivityEntryPoint::class.java)
+      .settingsRepository()
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    app = NoiceApplication.of(this)
-    settingsRepository = SettingsRepository.newInstance(this)
-
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
     super.onCreate(savedInstanceState)
     binding = MainActivityBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    val navHostFragment = requireNotNull(binding.navHostFragment.getFragment<NavHostFragment>())
+    val navHostFragment = requireNotNull(binding.mainNavHostFragment.getFragment<NavHostFragment>())
     navController = navHostFragment.navController
-
     setupActionBarWithNavController(navController, AppBarConfiguration(navController.graph))
-
     AppIntroActivity.maybeStart(this)
     if (!BuildConfig.IS_FREE_BUILD) {
       maybeShowDataCollectionConsent()
     }
 
-    app.reviewFlowProvider.init(this)
-    app.billingProvider.init(this, this)
-    app.analyticsProvider.logEvent("ui_open", bundleOf("theme" to settingsRepository.getAppTheme()))
+    reviewFlowProvider.init(this)
+    analyticsProvider.logEvent("ui_open", bundleOf("theme" to settingsRepository.getAppTheme()))
     hasNewIntent = true
+    initOfflineIndicator()
   }
 
   private fun maybeShowDataCollectionConsent() {
@@ -83,32 +117,59 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
       isCancelable = false
       title(R.string.share_usage_data_consent_title)
       message(R.string.share_usage_data_consent_message)
+      positiveButton(R.string.accept) { settingsRepository.setShouldShareUsageData(true) }
+      negativeButton(R.string.decline) { settingsRepository.setShouldShareUsageData(false) }
+      onDismiss { prefs.edit { putBoolean(PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true) } }
+    }
+  }
 
-      positiveButton(R.string.accept) {
-        settingsRepository.setShouldShareUsageData(true)
-        app.analyticsProvider.setCollectionEnabled(true)
-        app.crashlyticsProvider.setCollectionEnabled(true)
-        prefs.edit { putBoolean(PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true) }
+  private fun initOfflineIndicator() {
+    lifecycleScope.launch {
+      getInternetConnectivityFlow().collect { isConnected ->
+        if (isConnected) {
+          hideOfflineIndicator()
+        } else {
+          showOfflineIndicator()
+        }
       }
+    }
+  }
 
-      negativeButton(R.string.decline) {
-        settingsRepository.setShouldShareUsageData(false)
-        app.analyticsProvider.setCollectionEnabled(false)
-        app.crashlyticsProvider.setCollectionEnabled(false)
-        prefs.edit { putBoolean(PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true) }
-      }
+  private fun showOfflineIndicator() {
+    handler.removeCallbacksAndMessages(binding.networkIndicator)
+    binding.networkIndicator.apply {
+      setBackgroundResource(R.color.error)
+      setText(R.string.offline)
+      isVisible = true
+    }
+  }
+
+  private fun hideOfflineIndicator() {
+    if (!binding.networkIndicator.isVisible) {
+      return
+    }
+
+    binding.networkIndicator.apply {
+      setBackgroundResource(R.color.accent)
+      setText(R.string.back_online)
+    }
+
+    handler.postDelayed(2500, binding.networkIndicator) {
+      binding.networkIndicator.isVisible = false
     }
   }
 
   override fun onNewIntent(intent: Intent) {
     super.onNewIntent(intent)
     setIntent(intent)
-    navController.handleDeepLink(intent)
-    hasNewIntent = true
+    if (!navController.handleDeepLink(intent)) {
+      hasNewIntent = true
+    }
   }
 
   override fun onResume() {
     super.onResume()
+    billingProvider.setPurchaseListener(this)
 
     // handle the new intent here since onResume() is guaranteed to be called after onNewIntent().
     // https://developer.android.com/reference/android/app/Activity#onNewIntent(android.content.Intent)
@@ -118,43 +179,80 @@ class MainActivity : AppCompatActivity(), BillingProvider.PurchaseListener {
 
     hasNewIntent = false
     if (intent.hasExtra(EXTRA_NAV_DESTINATION)) {
-      val destID = intent.getIntExtra(EXTRA_NAV_DESTINATION, 0)
-      if (!Navigable.navigate(binding.navHostFragment.getFragment(), destID)) {
-        navController.navigate(destID)
-      }
+      navController.navigate(intent.getIntExtra(EXTRA_NAV_DESTINATION, 0))
     } else if (Intent.ACTION_APPLICATION_PREFERENCES == intent.action) {
       navController.navigate(R.id.settings)
     }
 
-    if (Intent.ACTION_VIEW == intent.action &&
-      (intent.dataString?.startsWith("https://ashutoshgngwr.github.io/noice/preset") == true ||
-        intent.dataString?.startsWith("noice://preset") == true)
-    ) {
-      intent.data?.also { PlaybackController.playPresetFromUri(this, it) }
+    val uri = intent.data
+    if (Intent.ACTION_VIEW == intent.action && uri != null) {
+      val data = intent.dataString ?: ""
+      when {
+        data.startsWith("https://trynoice.com/preset") || data.startsWith("noice://preset") -> {
+          val preset = presetRepository.readFromUrl(data)
+          if (preset != null) {
+            playbackController.play(preset)
+          } else {
+            showSnackBar(R.string.preset_url_invalid)
+          }
+        }
+
+        SubscriptionBillingCallbackFragment.canHandleUri(data) -> {
+          navController.navigate(
+            R.id.subscription_billing_callback,
+            SubscriptionBillingCallbackFragment.args(uri),
+          )
+        }
+
+        SubscriptionPurchaseListFragment.URI == data -> {
+          navController.navigate(R.id.subscription_purchase_list)
+        }
+      }
     }
   }
 
-  override fun onDestroy() {
-    app.billingProvider.close()
-    super.onDestroy()
+  override fun onPause() {
+    billingProvider.setPurchaseListener(null)
+    super.onPause()
   }
 
   override fun onSupportNavigateUp(): Boolean {
     return navController.navigateUp() || super.onSupportNavigateUp()
   }
 
-  override fun onPending(skus: List<String>) {
-    Snackbar.make(binding.navHostFragment, R.string.payment_pending, Snackbar.LENGTH_LONG).show()
-    app.analyticsProvider.logEvent("purchase_pending", bundleOf())
+  override fun onPending(purchase: InAppBillingProvider.Purchase) {
+    analyticsProvider.logEvent("purchase_pending", bundleOf())
+    showSnackBar(R.string.payment_pending)
   }
 
-  override fun onComplete(skus: List<String>, orderId: String) {
-    app.analyticsProvider.logEvent("purchase_complete", bundleOf())
-    app.billingProvider.consumePurchase(orderId)
-    DialogFragment.show(supportFragmentManager) {
-      title(R.string.support_development__donate_thank_you)
-      message(R.string.support_development__donate_thank_you_description)
-      positiveButton(R.string.okay)
+  override fun onComplete(purchase: InAppBillingProvider.Purchase) {
+    analyticsProvider.logEvent("purchase_complete", bundleOf())
+    if (DonationFragmentProvider.IN_APP_DONATION_PRODUCTS.containsAll(purchase.productIds)) {
+      navController.navigate(
+        R.id.donation_purchased_callback,
+        DonationPurchasedCallbackFragmentArgs(purchase).toBundle()
+      )
+    } else if (purchase.obfuscatedAccountId != null) {
+      // TODO: how to distinguish between subscription upgrade purchases and new subscription purchases?
+      navController.navigate(
+        R.id.subscription_billing_callback,
+        SubscriptionBillingCallbackFragmentArgs(
+          SubscriptionBillingCallbackFragment.ACTION_SUCCESS,
+          purchase.obfuscatedAccountId.toLong(),
+        ).toBundle(),
+      )
     }
+  }
+
+  private fun showSnackBar(@StringRes resId: Int) {
+    Snackbar.make(binding.mainNavHostFragment, resId, Snackbar.LENGTH_LONG)
+      .setAnchorView(findViewById(R.id.bottom_nav) ?: findViewById(R.id.network_indicator))
+      .show()
+  }
+
+  @EntryPoint
+  @InstallIn(SingletonComponent::class)
+  interface MainActivityEntryPoint {
+    fun settingsRepository(): SettingsRepository
   }
 }

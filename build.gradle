@@ -1,25 +1,38 @@
-buildscript {
-  ext.kotlin_version = '1.6.10'
-  repositories {
-    google()
-    mavenCentral()
-  }
+plugins {
+  id 'com.android.application' version "${agpVersion}" apply false
+  id 'com.android.library' version "${agpVersion}" apply false
+  id 'org.jetbrains.kotlin.android' version "${kotlinVersion}" apply false
+  id 'org.jetbrains.kotlin.kapt' version "${kotlinVersion}" apply false
 
-  dependencies {
-    classpath 'com.android.tools.build:gradle:4.2.2'
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  id 'androidx.navigation.safeargs.kotlin' version "${navVersion}" apply false
+  id 'com.google.dagger.hilt.android' version "${hiltVersion}" apply false
 
-    classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1' // sed:free-build:remove
-    classpath 'com.google.gms:google-services:4.3.10' // sed:free-build:remove
-  }
+  id 'com.google.gms.google-services' version '4.3.10' apply false // sed:free-build:remove
+  id 'com.google.firebase.crashlytics' version '2.8.1' apply false // sed:free-build:remove
+
+  id 'com.adarshr.test-logger' version '3.0.0' apply false
 }
 
-allprojects {
-  repositories {
-    google()
-    mavenCentral()
-    maven { url "https://jitpack.io" }
-  }
+// project-wide constants for sharing configuration and dependency versions across modules.
+project.ext {
+  config = [
+    minSdkVersion    : 21,
+    compileSdkVersion: 31,
+    javaCompatibility: JavaVersion.VERSION_1_8,
+    kotlinJvmTarget  : '1.8',
+  ]
+
+  deps = [
+    coroutinesVersion : '1.6.0',
+    hiltVersion       : "${hiltVersion}",
+    kotlinVersion     : "${kotlinVersion}",
+    lifecycleVersion  : '2.4.1',
+    navVersion        : "${navVersion}",
+
+    junitVersion      : '4.13.2',
+    robolectricVersion: '4.7.3',
+    testCoreVersion   : '1.4.0',
+  ]
 }
 
 task clean(type: Delete) {

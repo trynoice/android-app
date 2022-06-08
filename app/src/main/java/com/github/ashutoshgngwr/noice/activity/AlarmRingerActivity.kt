@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
@@ -17,44 +16,51 @@ import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.media.AudioAttributesCompat
-import com.github.ashutoshgngwr.noice.MediaPlayerService
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.databinding.AlarmRingerActivityBinding
-import com.github.ashutoshgngwr.noice.playback.PlaybackController
-import com.github.ashutoshgngwr.noice.playback.strategy.LocalPlaybackStrategy
+import com.github.ashutoshgngwr.noice.engine.PlaybackController
+import com.github.ashutoshgngwr.noice.engine.PlaybackService
+import com.github.ashutoshgngwr.noice.engine.PlaybackState
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.ncorti.slidetoact.SlideToActView
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteListener {
 
-  companion object {
-    @VisibleForTesting
-    internal const val EXTRA_PRESET_ID = "preset_id"
+  private var ringerStartTime: Long = 0L
+  private lateinit var binding: AlarmRingerActivityBinding
 
-    private const val RC_ALARM = 0x39
-    private val LOG_TAG = AlarmRingerActivity::class.simpleName
+  @set:Inject
+  internal lateinit var presetRepository: PresetRepository
 
-    fun getPendingIntent(context: Context, presetID: String?): PendingIntent {
-      var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE
-      }
+  @set:Inject
+  internal lateinit var soundRepository: SoundRepository
 
-      return Intent(context, AlarmRingerActivity::class.java)
-        .putExtra(EXTRA_PRESET_ID, presetID)
-        .let { PendingIntent.getActivity(context, RC_ALARM, it, piFlags) }
-    }
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
+
+  @set:Inject
+  internal lateinit var playbackController: PlaybackController
+
+  private val settingsRepository by lazy {
+    EntryPointAccessors.fromApplication(application, AlarmRingerActivityEntryPoint::class.java)
+      .settingsRepository()
   }
 
-  private lateinit var binding: AlarmRingerActivityBinding
-  private lateinit var settingsRepository: SettingsRepository
-  private lateinit var analyticsProvider: AnalyticsProvider
-  private var ringerStartTime: Long = 0L
-
   override fun onCreate(savedInstanceState: Bundle?) {
-    settingsRepository = SettingsRepository.newInstance(this)
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
     super.onCreate(savedInstanceState)
 
@@ -63,9 +69,17 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     binding.dismissSlider.onSlideCompleteListener = this
     setContentView(binding.root)
     showWhenLocked()
-
-    analyticsProvider = NoiceApplication.of(this).analyticsProvider
     ringerStartTime = System.currentTimeMillis()
+
+    lifecycleScope.launch {
+      soundRepository.getPlayerManagerState()
+        .first { it == PlaybackState.PAUSED }
+
+      playbackController.setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
+      val duration = System.currentTimeMillis() - ringerStartTime
+      analyticsProvider.logEvent("alarm_ringer_session", bundleOf("duration_ms" to duration))
+      finish()
+    }
   }
 
   override fun onNewIntent(intent: Intent?) {
@@ -79,9 +93,9 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
 
     // handle the new intent here since onResume() is guaranteed to be called after onNewIntent().
     // https://developer.android.com/reference/android/app/Activity#onNewIntent(android.content.Intent)
-    val presetID = intent.getStringExtra(EXTRA_PRESET_ID)
-    if (presetID == null) {
-      Log.d(LOG_TAG, "onResume(): presetID is null")
+    val preset = presetRepository.get(intent.getStringExtra(EXTRA_PRESET_ID))
+    if (preset == null) {
+      Log.w(LOG_TAG, "onResume: preset is null")
       finish()
       return
     }
@@ -93,35 +107,22 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     // to foreground. To prevent `PlaybackController` from causing this error by invoking
     // `startService`, we need to manually start `MediaPlayerService` in the foreground since we can
     // be certain that playPreset action will bring it to foreground before Android System kills it.
-    ContextCompat.startForegroundService(this, Intent(this, MediaPlayerService::class.java))
+    ContextCompat.startForegroundService(this, Intent(this, PlaybackService::class.java))
 
     Log.d(LOG_TAG, "onResume(): starting preset")
-    PlaybackController.setAudioUsage(this, AudioAttributesCompat.USAGE_ALARM)
-    PlaybackController.playPreset(this, presetID)
-  }
-
-  override fun onStop() {
-    super.onStop()
-    if (!isFinishing) {
-      return
-    }
-
-    Log.d(LOG_TAG, "onStop(): pausing playback")
-    PlaybackController.pause(this)
-
-    // TODO: find a better solution to wait for pause transition to finish before switching streams.
-    Handler(mainLooper).postDelayed({
-      PlaybackController.setAudioUsage(this, AudioAttributesCompat.USAGE_MEDIA)
-    }, LocalPlaybackStrategy.DEFAULT_FADE_DURATION)
-
-    val duration = System.currentTimeMillis() - ringerStartTime
-    analyticsProvider.logEvent("alarm_ringer_session", bundleOf("duration_ms" to duration))
+    binding.dismissSlider.isVisible = true
+    binding.dismissProgress.isVisible = false
+    playbackController.setAudioUsage(AudioAttributesCompat.USAGE_ALARM)
+    playbackController.play(preset)
   }
 
   override fun onBackPressed() = Unit
 
   override fun onSlideComplete(view: SlideToActView) {
-    finish()
+    Log.d(LOG_TAG, "onSlideComplete: pausing playback")
+    binding.dismissSlider.isVisible = false
+    binding.dismissProgress.isVisible = true
+    playbackController.pause()
   }
 
   private fun enableImmersiveMode() {
@@ -148,6 +149,34 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
         WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
           WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
       )
+    }
+  }
+
+  @EntryPoint
+  @InstallIn(SingletonComponent::class)
+  interface AlarmRingerActivityEntryPoint {
+    fun settingsRepository(): SettingsRepository
+  }
+
+  companion object {
+    @VisibleForTesting
+    internal const val EXTRA_PRESET_ID = "preset_id"
+
+    private const val RC_ALARM = 0x39
+    private val LOG_TAG = AlarmRingerActivity::class.simpleName
+
+    /**
+     * Returns a [PendingIntent] that starts the [AlarmRingerActivity] with the given [presetID].
+     */
+    fun getPendingIntent(context: Context, presetID: String?): PendingIntent {
+      var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE
+      }
+
+      return Intent(context, AlarmRingerActivity::class.java)
+        .putExtra(EXTRA_PRESET_ID, presetID)
+        .let { PendingIntent.getActivity(context, RC_ALARM, it, piFlags) }
     }
   }
 }

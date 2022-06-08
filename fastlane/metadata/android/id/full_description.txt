@@ -31,4 +31,4 @@ Noice adalah aplikasi yang memungkinkan Anda membuat suasana yang disesuaikan me
 - <b>melihat koneksi jaringan</b>: ditambahkan oleh ketergantungan, saat ini tidak digunakan 
 - <b>Layanan penagihan Google Play</b>: untuk mengaktifkan kontribusi keuangan guna mendukung pengembangan 
 
-Noice adalah perangkat lunak sumber terbuka dan gratis. https://github.com/ashutoshgngwr/noice
+Noice adalah perangkat lunak sumber terbuka dan gratis. https://github.com/trynoice/android-app

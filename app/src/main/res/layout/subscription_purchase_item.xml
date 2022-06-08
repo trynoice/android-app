@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_marginHorizontal="16dp"
+  android:layout_marginVertical="8dp"
+  android:animateLayoutChanges="true"
+  app:cardCornerRadius="16dp"
+  app:cardElevation="0dp"
+  app:contentPadding="24dp"
+  app:strokeColor="@color/background_darker"
+  app:strokeWidth="1dp">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="horizontal">
+
+      <TextView
+        android:id="@+id/billing_period"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textColor="@color/accent"
+        tools:text="Monthly" />
+
+      <Space
+        android:layout_width="8dp"
+        android:layout_height="wrap_content" />
+
+      <TextView
+        android:id="@+id/monthly_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        tools:text="@string/monthly_price" />
+
+    </LinearLayout>
+
+    <Space
+      android:layout_width="wrap_content"
+      android:layout_height="16dp" />
+
+    <TextView
+      android:id="@+id/started_on"
+      style="@style/Widget.App.TextView.Message"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="4dp"
+      app:drawableStartCompat="@drawable/ic_baseline_access_time_24"
+      tools:text="@string/started_on" />
+
+    <TextView
+      android:id="@+id/ended_on"
+      style="@style/Widget.App.TextView.Message"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="4dp"
+      app:drawableStartCompat="@drawable/ic_baseline_access_time_filled_24"
+      tools:text="@string/ended_on" />
+
+    <TextView
+      android:id="@+id/renews_on"
+      style="@style/Widget.App.TextView.Message"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="4dp"
+      app:drawableStartCompat="@drawable/ic_baseline_payment_24"
+      tools:text="@string/renews_on" />
+
+    <TextView
+      android:id="@+id/paid_using"
+      style="@style/Widget.App.TextView.Message"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="4dp"
+      app:drawableStartCompat="@drawable/ic_baseline_paid_24"
+      tools:text="@string/paid_using" />
+
+    <TextView
+      android:id="@+id/payment_pending"
+      style="@style/Widget.App.TextView.Message"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="4dp"
+      android:text="@string/subscription_payment_pending"
+      app:drawableStartCompat="@drawable/ic_baseline_pending_24"
+      app:drawableTint="@color/primary" />
+
+    <TextView
+      android:id="@+id/refunded"
+      style="@style/Widget.App.TextView.Message"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="4dp"
+      android:text="@string/subscription_payment_refunded"
+      app:drawableStartCompat="@drawable/ic_baseline_pending_24"
+      app:drawableTint="@color/primary" />
+
+    <LinearLayout
+      android:id="@+id/action_button_container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="12dp"
+      android:orientation="vertical">
+
+      <Button
+        android:id="@+id/manage"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        android:text="@string/manage_subscription" />
+
+      <Button
+        android:id="@+id/change_plan"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        android:text="@string/change_plan" />
+
+      <Button
+        android:id="@+id/cancel"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        android:text="@string/cancel_subscription"
+        android:theme="@style/ThemeOverlay.App.Button.DestructiveAction" />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

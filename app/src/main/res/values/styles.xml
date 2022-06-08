@@ -24,9 +24,26 @@
     <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
   </style>
 
+  <style name="Theme.App.Translucent">
+    <item name="android:backgroundDimEnabled">false</item>
+    <item name="android:navigationBarColor">@android:color/transparent</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+  </style>
+
+  <style name="Theme.App.SignInLinkHandler" parent="Theme.App.Translucent">
+    <item name="android:backgroundDimEnabled">true</item>
+    <item name="android:navigationBarColor">@color/status_bar</item>
+    <item name="bottomSheetStyle">@style/Widget.App.BottomSheet.Modal</item>
+  </style>
+
   <style name="ThemeOverlay.App.ActionBar" parent="ThemeOverlay.MaterialComponents.ActionBar">
     <item name="colorPrimary">@color/action_bar</item>
-    <item name="colorControlNormal">@color/action_menu_item</item>
+    <item name="colorOnPrimary">?attr/colorOnSurface</item>
   </style>
 
   <style name="Widget.App.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
@@ -66,10 +83,10 @@
   </style>
 
   <style name="Widget.App.BottomSheet.Modal" parent="Widget.Design.BottomSheet.Modal">
-    <item name="shapeAppearance">@style/ShapeAppearance.App.BottomSheetDialog</item>
+    <item name="shapeAppearance">@style/ShapeAppearance.App.BottomSheet.Modal</item>
   </style>
 
-  <style name="ShapeAppearance.App.BottomSheetDialog" parent="">
+  <style name="ShapeAppearance.App.BottomSheet.Modal" parent="">
     <item name="cornerFamily">rounded</item>
     <item name="cornerSizeTopRight">8dp</item>
     <item name="cornerSizeTopLeft">8dp</item>
@@ -142,6 +159,76 @@
 
   <style name="TextAppearance.App.BottomNavigationView.Label" parent="TextAppearance.MaterialComponents.Caption">
     <item name="fontFamily">sans-serif-medium</item>
+  </style>
+
+  <style name="Widget.App.Account.Category.Header" parent="Widget.MaterialComponents.TextView">
+    <item name="android:paddingBottom">8dp</item>
+    <item name="android:paddingEnd">16dp</item>
+    <item name="android:paddingStart">16dp</item>
+    <item name="android:paddingTop">24dp</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:textAppearance">?attr/textAppearanceBody2</item>
+    <item name="android:textColor">?android:attr/textColorSecondary</item>
+  </style>
+
+  <style name="Widget.App.Account.Category.Item" parent="Widget.MaterialComponents.TextView">
+    <item name="android:background">?attr/selectableItemBackground</item>
+    <item name="android:clickable">true</item>
+    <item name="android:drawablePadding">16dp</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:padding">16dp</item>
+    <item name="android:textAppearance">?attr/textAppearanceBody1</item>
+    <item name="drawableEndCompat">@drawable/ic_baseline_navigate_next_24</item>
+  </style>
+
+  <style name="ThemeOverlay.App.Button.DestructiveAction" parent="">
+    <item name="colorPrimary">@color/error</item>
+  </style>
+
+  <style name="Widget.App.TextView.SubscriptionBenefit" parent="Widget.MaterialComponents.TextView">
+    <item name="android:drawablePadding">16dp</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:textAppearance">?attr/textAppearanceBody1</item>
+    <item name="drawableTint">@color/accent</item>
+  </style>
+
+  <style name="TextAppearance.App.SubscriptionPlanItem.Large" parent="TextAppearance.MaterialComponents.Headline6">
+    <item name="android:textSize">18sp</item>
+  </style>
+
+  <style name="TextAppearance.App.SubscriptionPlanItem.Small" parent="TextAppearance.MaterialComponents.Caption">
+    <item name="android:textSize">14sp</item>
+  </style>
+
+  <style name="Widget.App.TextView.Message" parent="Widget.MaterialComponents.TextView">
+    <item name="android:drawablePadding">16dp</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:lineSpacingMultiplier">1.33</item>
+    <item name="android:textAppearance">?attr/textAppearanceBody1</item>
+  </style>
+
+  <style name="Widget.App.TextView.Message.Success">
+    <item name="drawableStartCompat">@drawable/ic_baseline_check_circle_36</item>
+    <item name="drawableTint">?attr/colorAccent</item>
+  </style>
+
+  <style name="Widget.App.TextView.Message.Error">
+    <item name="drawableStartCompat">@drawable/ic_baseline_error_36</item>
+    <item name="drawableTint">@color/error</item>
+  </style>
+
+  <style name="Widget.App.TextView.Message.Error.Centered" parent="Widget.App.TextView.Message">
+    <item name="android:gravity">center</item>
+    <item name="drawableTopCompat">@drawable/ic_baseline_error_36</item>
+    <item name="drawableTint">@color/error</item>
+  </style>
+
+  <style name="Widget.App.Button.OutlinedButton.IconOnly" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <item name="iconPadding">0dp</item>
+    <item name="android:minWidth">48dp</item>
+    <item name="android:minHeight">48dp</item>
+    <item name="android:paddingLeft">12dp</item>
+    <item name="android:paddingRight">12dp</item>
   </style>
 
 </resources>

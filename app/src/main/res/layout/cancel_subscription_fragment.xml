@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.CancelSubscriptionViewModel" />
+
+  </data>
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp"
+    tools:theme="@style/Theme.App.BottomSheetDialog">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:isVisible="@{!viewModel.isCancelling}">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel_subscription"
+        android:textAppearance="?attr/titleTextAppearance" />
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+
+      <TextView
+        android:id="@+id/confirmation_message"
+        style="@style/Widget.App.TextView.Message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/cancel_subscription_confirmation" />
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|end"
+        android:orientation="horizontal">
+
+        <Button
+          android:id="@+id/dismiss"
+          style="?attr/buttonStyle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/dismiss" />
+
+        <Space
+          android:layout_width="16dp"
+          android:layout_height="wrap_content" />
+
+        <Button
+          style="?attr/buttonStyle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:onClick="@{() -> viewModel.cancel()}"
+          android:text="@string/cancel"
+          android:theme="@style/ThemeOverlay.App.Button.DestructiveAction" />
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <include
+      layout="@layout/simple_progress_layout"
+      app:isVisible="@{viewModel.isCancelling}"
+      app:message="@{@string/cancelling_subscription}"
+      tools:visibility="gone" />
+
+  </FrameLayout>
+
+</layout>

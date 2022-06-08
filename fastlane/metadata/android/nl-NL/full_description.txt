@@ -32,4 +32,4 @@ Noice is een app waarmee je een aangepaste sfeer kunt creëren met clips van omg
 - <b>Google Play-factureringsservice</b>: om financiële bijdragen mogelijk te maken ter ondersteuning van ontwikkeling
 
 Noice is gratis en open source software.
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

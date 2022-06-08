@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.SignInFormViewModel" />
+
+  </data>
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:animateLayoutChanges="true"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:paddingHorizontal="16dp"
+      android:paddingVertical="48dp">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text='@{viewModel.isReturningUser ? @string/welcome_back : @string/welcome}'
+        android:textAppearance="?attr/textAppearanceHeadline4"
+        tools:text="@string/welcome" />
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="12dp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@{viewModel.isReturningUser ? @string/sign_in_message : @string/sign_up_message}"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        tools:text="@string/sign_up_message" />
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:autofillHints="name"
+        android:hint="@string/name"
+        app:counterEnabled="true"
+        app:counterMaxLength="64"
+        app:error="@{viewModel.name.isEmpty() || viewModel.isNameValid ? null : @string/invalid_name}"
+        app:errorEnabled="true"
+        app:isVisible="@{!viewModel.isReturningUser}">
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:inputType="textCapWords"
+          android:text="@={viewModel.name}" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:autofillHints="emailAddress"
+        android:hint="@string/email"
+        app:counterEnabled="true"
+        app:counterMaxLength="64"
+        app:error="@{viewModel.email.isEmpty() || viewModel.isEmailValid ? null : @string/invalid_email}"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:inputType="textWebEmailAddress"
+          android:text="@={viewModel.email}" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="8dp" />
+
+      <Button
+        android:id="@+id/sign_in"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="@{viewModel.isNameValid &amp;&amp; viewModel.isEmailValid}"
+        android:paddingVertical="12dp"
+        android:text="@{viewModel.isReturningUser ? @string/sign_in : @string/sign_up}"
+        tools:text="@string/sign_up" />
+
+      <Space
+        android:layout_width="wrap_content"
+        android:layout_height="16dp" />
+
+      <com.github.ashutoshgngwr.noice.widget.MarkdownTextView
+        style="@style/Widget.App.TextView.Message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up_tos"
+        android:textAppearance="?attr/textAppearanceBody2"
+        app:isVisible="@{!viewModel.isReturningUser}" />
+
+    </LinearLayout>
+
+  </ScrollView>
+
+</layout>

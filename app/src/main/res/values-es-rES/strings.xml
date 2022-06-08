@@ -20,52 +20,8 @@
     <string name="save_preset">Guardar preajuste</string>
     <string name="play">Reproducir</string>
     <string name="play_pause">Reproducir o pausar</string>
-    <string name="repeat_time_period">Periodo de repetición</string>
     <string name="stop">Detener</string>
     <string name="volume">Volumen del sonido</string>
-    <string name="sound_group__life">Vida</string>
-    <string name="sound_group__monsoon">Monzón</string>
-    <string name="sound_group__public_gatherings">Reuniones públicas</string>
-    <string name="sound_group__raw_noise">Ruido en crudo</string>
-    <string name="sound_group__times_of_day">Momentos del día</string>
-    <string name="sound_group__vehicles">Vehículos</string>
-    <string name="sound_group__water">Agua</string>
-    <string name="sound_group__wind">Viento</string>
-    <string name="airplane_inflight">Avión en vuelo</string>
-    <string name="airplane_seatbelt_beeps">Señal cinturón del avión</string>
-    <string name="birds">Pájaros</string>
-    <string name="bonfire">Fogata</string>
-    <string name="brownian_noise">Ruido marrón</string>
-    <string name="coffee_shop">Cafetería</string>
-    <string name="creaking_ship">Barco crujiente</string>
-    <string name="crickets">Grillos</string>
-    <string name="distant_thunder">Truenos lejanos</string>
-    <string name="electric_car">Carro eléctrico</string>
-    <string name="heavy_rain">Lluvia fuerte</string>
-    <string name="howling_wolf">Lobo aullando</string>
-    <string name="human_heartbeat">Latido del corazón humano</string>
-    <string name="light_rain">Lluvia suave</string>
-    <string name="moderate_rain">Lluvia moderada</string>
-    <string name="morning_in_a_village">Una mañana en un pueblo</string>
-    <string name="moving_train">Tren en movimiento</string>
-    <string name="night">Noche</string>
-    <string name="office">Oficina</string>
-    <string name="pink_noise">Ruido rosa</string>
-    <string name="public_library">Biblioteca pública</string>
-    <string name="purring_cat">Gato ronroneando</string>
-    <string name="quiet_conversation">Conversación tranquila</string>
-    <string name="rolling_thunder">Retumbado de truenos</string>
-    <string name="screeching_seagulls">Gaviotas chillando</string>
-    <string name="seaside">Orilla del mar</string>
-    <string name="soft_wind">Viento suave</string>
-    <string name="thunder_crack">Rugido de truenos</string>
-    <string name="train_horn">Bocina de tren</string>
-    <string name="walking_through_the_snow">Caminata sobre la nieve</string>
-    <string name="water_hose">Manguera de agua</string>
-    <string name="water_stream">Corriente de agua</string>
-    <string name="white_noise">Ruido blanco</string>
-    <string name="wind_in_chimes_of_shells">Brisa sonajero de viento</string>
-    <string name="wind_in_palm_trees">Brisa palmeras</string>
     <string name="delete">Eliminar</string>
     <string name="open_context_menu">Abrir menú contextual</string>
     <string name="preset_delete_confirmation">¿Confirma que quiere eliminar «%s»\?</string>
@@ -102,36 +58,18 @@
   </string>
     <string name="appintro__timer_title">¿Problemas para conciliar el sueño o para despertar?</string>
     <string name="support_development__donate">Donar</string>
-    <string name="support_development__donate_description">
-    Las donaciones nos ayudarán a\n
-    - invertir en nuevas funciones\n
-    - curar mejores muestras de sonido\n
-    - comprar café\n
-  </string>
     <string name="support_development__donate_google_play_description">Su pago será manejado de forma segura por Google Play. Dependiendo de su ubicación, se pueden agregar impuestos adicionales al monto final.</string>
-    <string name="support_development__donate_thank_you">Gracias!</string>
     <string name="support_development__donate_thank_you_description">
     Le agradecemos de todo corazón su generosa contribución al proyecto Noise.
   </string>
     <string name="support_development__share">Compartir con amigos</string>
     <string name="support_development__share_description">Comparte Noice con amigos es una alternativa a las donaciones. Cuantas mas descargas, podremos recibir comentarios desde diferentes perspectivas que nos ayudará a hacer de Noice mejor que nunca.</string>
-    <string name="support_development__why">¿Por qué debería apoyar\?</string>
-    <string name="support_development__why_description">- Para garantizar futuras actualizaciones
-\n- Para mantener Noice libre de anuncios siempre
-\n</string>
     <string name="cast_media">Conectar a Chromecast</string>
     <string name="notification_channel_default__description">Controles de reproducción de medios</string>
     <string name="notification_channel_default__name">Reproducción de medios</string>
-    <string name="dense">Densa</string>
-    <string name="mood_any">Cualquiera</string>
-    <string name="intensity_any">Cualquiera</string>
     <string name="submit_feedback">Enviar comentarios</string>
     <string name="intensity">Intensidad</string>
-    <string name="relax">Relajado</string>
     <string name="random_preset">Preajuste aleatorio</string>
-    <string name="mood">Ambiente</string>
-    <string name="light">Ligero</string>
-    <string name="focus">Concetrado</string>
     <string name="never">Nunca</string>
     <string name="later">Más tarde</string>
     <string name="in_app_feedback__title">Enviar una reseña</string>
@@ -152,10 +90,7 @@
     <string name="add_to_home_screen">Añadir a la pantalla de inicio</string>
     <string name="okay">Vale</string>
     <string name="pinned_shortcuts_not_supported">Su aplicación de inicio predeterminada no admite añadir accesos directos.</string>
-    <string name="random_preset_description">Los preajustes generados aleatoriamente contendrán sonidos correspondientes al ambiente elegido. Además, los preajustes densos intentarán reproducir más sonidos simultáneamente.</string>
-    <string name="app_authors">Ver la lista de los autores de Noice</string>
     <string name="appearance">Apariencia</string>
-    <string name="behavior">Comportamiento</string>
     <string name="presets_as_home_screen">\"Preajustes\" como pantalla de inicio</string>
     <string name="settings">Configuración</string>
     <string name="remove_from_app_shortcuts">Quitar de atajos de aplicación</string>

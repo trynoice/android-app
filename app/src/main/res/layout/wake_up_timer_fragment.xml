@@ -12,11 +12,11 @@
     android:padding="20dp">
 
     <TextView
+      style="@style/Widget.App.TextView.Message"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:gravity="center"
-      android:text="@string/wake_up_timer_description"
-      android:textAppearance="?attr/textAppearanceBody1" />
+      android:text="@string/wake_up_timer_description" />
 
     <Button
       android:id="@+id/select_preset_button"

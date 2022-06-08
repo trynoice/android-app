@@ -7,8 +7,7 @@
   <color name="action_bar">@color/white_1</color>
   <color name="background">@color/white_0</color>
   <color name="background_dark">@color/white_1</color>
-  <color name="action_menu_item">@color/woodsmoke</color>
-  <color name="sound_icon">@color/shark_0</color>
+  <color name="background_darker">@color/white_2</color>
   <color name="error">@color/red</color>
 
   <color name="ic_launcher_background">@color/white_0</color>
@@ -32,7 +31,9 @@
   <color name="red">#f32516</color>
   <color name="shark_0">#1d1d26</color>
   <color name="shark_1">#23232d</color>
+  <color name="shark_2">#343445</color>
   <color name="white_0">#fefefe</color>
   <color name="white_1">#f1f1f1</color>
+  <color name="white_2">#e9e9e9</color>
   <color name="woodsmoke">#17171D</color>
 </resources>

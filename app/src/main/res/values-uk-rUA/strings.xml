@@ -21,52 +21,8 @@
     <string name="save_preset">Зберегти поєднання</string>
     <string name="play">Відтворити</string>
     <string name="play_pause">відтворити або зупинити</string>
-    <string name="repeat_time_period">Період повтору</string>
     <string name="stop">Стоп</string>
     <string name="volume">Гучність</string>
-    <string name="sound_group__life">Життя</string>
-    <string name="sound_group__monsoon">Мусон</string>
-    <string name="sound_group__public_gatherings">Громадські місця</string>
-    <string name="sound_group__raw_noise">Необроблений шум</string>
-    <string name="sound_group__times_of_day">Часи доби</string>
-    <string name="sound_group__vehicles">Транспортні засоби</string>
-    <string name="sound_group__water">Вода</string>
-    <string name="sound_group__wind">Вітер</string>
-    <string name="airplane_inflight">Політ у літаку</string>
-    <string name="airplane_seatbelt_beeps">Сигнал «Пристебнути ремені»</string>
-    <string name="birds">Птахи</string>
-    <string name="bonfire">Багаття</string>
-    <string name="brownian_noise">Броунівський шум</string>
-    <string name="coffee_shop">Кав\'ярня</string>
-    <string name="creaking_ship">Скрипучий корабель</string>
-    <string name="crickets">Цвіркуни</string>
-    <string name="distant_thunder">Далекий грім</string>
-    <string name="electric_car">Електромобіль</string>
-    <string name="heavy_rain">Злива</string>
-    <string name="howling_wolf">Виття вовка</string>
-    <string name="human_heartbeat">Серцебиття людини</string>
-    <string name="light_rain">Невеликий дощ</string>
-    <string name="moderate_rain">Помірний дощ</string>
-    <string name="morning_in_a_village">Ранок у селі</string>
-    <string name="moving_train">Поїзд у русі</string>
-    <string name="night">Ніч</string>
-    <string name="office">Офіс</string>
-    <string name="pink_noise">Рожевий шум</string>
-    <string name="public_library">Громадська бібліотека</string>
-    <string name="purring_cat">Муркотіння кота</string>
-    <string name="quiet_conversation">Тиха розмова</string>
-    <string name="rolling_thunder">Гуркіт грому</string>
-    <string name="screeching_seagulls">Вереск чайок</string>
-    <string name="seaside">Морський берег</string>
-    <string name="soft_wind">Легкий вітер</string>
-    <string name="thunder_crack">Тріск грому</string>
-    <string name="train_horn">Гудок потяга</string>
-    <string name="walking_through_the_snow">Прогулянка по снігу</string>
-    <string name="water_hose">Водяний шланг</string>
-    <string name="water_stream">Потік води</string>
-    <string name="white_noise">Білий шум</string>
-    <string name="wind_in_chimes_of_shells">Дзвін мушель</string>
-    <string name="wind_in_palm_trees">Вітер у пальмах</string>
     <string name="delete">Видалити</string>
     <string name="open_context_menu">Відкрити контекстне меню</string>
     <string name="preset_delete_confirmation">Підтвердити видалення %s?</string>
@@ -97,20 +53,10 @@
     <string name="appintro__timer_desc">Маленька атмосфера може допомогти вам заснути без зусиль. Скористайтеся таймером сну, щоб дозволити Noice вимкнутися та таймер пробудження, щоб встановити будильник і прокинутись у спокійному оточенні.</string>
     <string name="appintro__timer_title">Важко заснути або прокинутись?</string>
     <string name="support_development__donate">Допомогти</string>
-    <string name="support_development__donate_description">Внески допоможуть нам
-\n - інвестувати у нові функції
-\n - додавати кращі звукові зразки
-\n - купувати каву
-\n</string>
     <string name="support_development__donate_google_play_description">Ваш платіж буде безпечно оброблено через Google Play. Додаткові податки _можуть_ бути додані до кінцевої суми в залежності від вашого місця перебування.</string>
-    <string name="support_development__donate_thank_you">Дякуємо!</string>
     <string name="support_development__donate_thank_you_description">Ми сердешно вдячні за ваш щедрий внесок до проєкту Noice.</string>
     <string name="support_development__share">Поділитися з друзями</string>
     <string name="support_development__share_description">Поділитися Noice з друзями схоже з грошовими внесками. З більшою кількістю завантажень ми зможемо отримувати зворотний зв\'язок з різними точками зору що допоможе нам вдосконалити Noice.</string>
-    <string name="support_development__why">Чому вам варто підтримати\?</string>
-    <string name="support_development__why_description">- Щоб зробити можливими майбутні оновлення
-\n- Щоб залишити Noice вільним від реклами назавжди
-\n</string>
     <string name="cast_media">Під\'єднатись до Chromecast</string>
     <string name="in_app_feedback__description">
     Ми хотіли б почути що Ви думаєте про додаток. Відвідайте, будь ласка, наш GitHub репозиторій.
@@ -122,9 +68,6 @@
     <string name="never">Ніколи</string>
     <string name="notification_channel_default__description">Регулювання відтворення звуків</string>
     <string name="notification_channel_default__name">Відтворення звуків</string>
-    <string name="light">Легка</string>
-    <string name="mood_any">Будь-який</string>
-    <string name="intensity_any">Будь-яка</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d хвилину</item>
         <item quantity="few">%1$d хвилини</item>
@@ -142,12 +85,7 @@
     <string name="wake_up_timer_cancelled">Таймер пробудження скасовано!</string>
     <string name="pinned_shortcuts_not_supported">Ваш лаунчер не підтримує додавання ярликів.</string>
     <string name="add_to_home_screen">Додати на головний екран</string>
-    <string name="relax">Розслаблений</string>
-    <string name="mood">Настрій</string>
-    <string name="random_preset_description">Згенеровані випадкові поєднання міститимуть звуки, що відповідають вибраному настрою. Крім того, насичені поєднання намагатимуться відтворювати більше звуків одночасно.</string>
     <string name="intensity">Насиченість</string>
-    <string name="focus">Зосереджений</string>
-    <string name="dense">Насичена</string>
     <string name="submit_feedback">Надіслати відгук</string>
     <string name="invalid_import_file_format">Неприпустимий формат файлу імпорту!</string>
     <string name="failed_to_read_file">Помилка під час читання вибраного файлу!</string>
@@ -169,7 +107,6 @@
     <string name="pinned_shortcut_created">Ярлик додано на головний екран!</string>
     <string name="pinned_shortcut_creation_failed">Не вдалося додати ярлик на головний екран!</string>
     <string name="appearance">Зовнішній вигляд</string>
-    <string name="behavior">Поведінка</string>
     <string name="presets_as_home_screen">«Поєднання» як головний екран</string>
     <string name="settings">Налаштування</string>
     <string name="app_shortcut_creation_failed">Не вдалося додати поєднання до ярликів застосунку!</string>
@@ -177,7 +114,6 @@
     <string name="app_shortcut_removed">Поєднання вилучено з ярликів застосунку!</string>
     <string name="remove_from_app_shortcuts">Вилучити з ярликів застосунку</string>
     <string name="add_to_app_shortcuts">Додати до ярликів застосунку</string>
-    <string name="app_authors">Переглянути список авторів Noice</string>
     <string name="presets_as_home_screen_summary">Показувати «поєднання» під час запуску (потрібно перезапустити застосунок)</string>
     <string name="preset_does_not_exist">Поєднання не існує. Можливо, його було видалено!</string>
     <string name="random_preset">Випадкове поєднання</string>
@@ -190,7 +126,7 @@
     <string name="others">Інші</string>
     <string name="decline">Відхилити</string>
     <string name="accept">Погодитися</string>
-    <string name="share_usage_data_consent_message">Ми збираємо дані про користування застосунком, щоб покращити роботу. Ми також збираємо дані про поведінку застосунків, щоб аналізувати й діагностувати помилки, які сталися під час користування застосунком. Докладніше у нашій [політиці приватності](https://ashutoshgngwr.github.io/noice/privacy-policy).
+    <string name="share_usage_data_consent_message">Ми збираємо дані про користування застосунком, щоб покращити роботу. Ми також збираємо дані про поведінку застосунків, щоб аналізувати й діагностувати помилки, які сталися під час користування застосунком. Докладніше у нашій [політиці приватності](https://trynoice.com/privacy-policy).
 \n
 \nВи можете налаштувати автоматичне надсилання даних у будь-який час всередині застосунку, за допомогою \"**Налаштування** &gt; **Надсилання даних про користування та поведінку**\".</string>
     <string name="share_usage_data_consent_title">Параметри спільного доступу до даних</string>

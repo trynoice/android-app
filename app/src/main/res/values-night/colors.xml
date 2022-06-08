@@ -3,6 +3,5 @@
   <color name="action_bar">@color/shark_1</color>
   <color name="background">@color/shark_0</color>
   <color name="background_dark">@color/shark_1</color>
-  <color name="action_menu_item">@color/white_0</color>
-  <color name="sound_icon">@color/white_0</color>
+  <color name="background_darker">@color/shark_2</color>
 </resources>

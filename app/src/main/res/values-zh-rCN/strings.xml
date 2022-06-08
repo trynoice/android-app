@@ -7,20 +7,10 @@
     <string name="in_app_feedback__title">提交评论</string>
     <string name="in_app_feedback__description">我们很乐意听到你对该应用的意见。请花点时间访问我们的 GitHub 仓库。如果你不喜欢这个应用，请考虑开一个问题来解释你的担忧。否则，请给项目打星以示爱护和支持。</string>
     <string name="cast_media">媒体转投</string>
-    <string name="support_development__why_description">- 为了使未来的更新成为可能
-\n - 为了让Noice永远没有广告
-\n</string>
-    <string name="support_development__why">你为什么要支持？</string>
     <string name="support_development__share_description">与朋友分享Noice就像捐款一样。随着下载量的增加，我们将能够收到来自不同角度的反馈，这将帮助我们使Noice比以往更好。</string>
     <string name="support_development__share">与朋友分享</string>
     <string name="support_development__donate_thank_you_description">我们衷心感谢你对Noice项目的慷慨捐助。</string>
-    <string name="support_development__donate_thank_you">谢谢你！</string>
     <string name="support_development__donate_google_play_description">您的支付将由Google Play安全接管。金额将被转换为你的当地货币。根据你所在的位置，最终金额可能会增加额外的税收。</string>
-    <string name="support_development__donate_description">捐赠将帮助我们
-\n - 投资新功能
-\n - 策划更好的声音样本
-\n - 买咖啡
-\n</string>
     <string name="support_development__donate">捐助</string>
     <string name="appintro__timer_title">入睡或醒来有困难？</string>
     <string name="appintro__timer_desc">小小的环境可以帮助你毫不费力地入睡。使用睡眠定时器，让Noice自动关闭。同样，要想在平静的环境中醒来，可以使用唤醒定时器来设置闹钟。</string>
@@ -51,52 +41,8 @@
     <string name="open_context_menu">打开上下文菜单</string>
     <string name="delete">删除</string>
     <string name="add_to_home_screen">添加到主屏幕</string>
-    <string name="wind_in_palm_trees">棕榈树中的风</string>
-    <string name="wind_in_chimes_of_shells">风吹响的贝壳</string>
-    <string name="white_noise">白噪声</string>
-    <string name="water_stream">溪流</string>
-    <string name="water_hose">水管</string>
-    <string name="walking_through_the_snow">雪中漫步</string>
-    <string name="train_horn">火车鸣笛</string>
-    <string name="thunder_crack">霹雳</string>
-    <string name="soft_wind">柔和的风</string>
-    <string name="seaside">海边</string>
-    <string name="screeching_seagulls">鸣叫的海鸥</string>
-    <string name="rolling_thunder">滚滚雷鸣</string>
-    <string name="quiet_conversation">轻声交谈</string>
-    <string name="purring_cat">打呼噜的猫</string>
-    <string name="public_library">公共图书馆</string>
-    <string name="pink_noise">粉红噪声</string>
-    <string name="office">办公室</string>
-    <string name="night">夜晚</string>
-    <string name="moving_train">列车行驶</string>
-    <string name="morning_in_a_village">乡间清晨</string>
-    <string name="moderate_rain">中雨</string>
-    <string name="light_rain">小雨</string>
-    <string name="human_heartbeat">人的心跳</string>
-    <string name="howling_wolf">狼嚎</string>
-    <string name="heavy_rain">大雨</string>
-    <string name="electric_car">电动车</string>
-    <string name="distant_thunder">遥远的雷声</string>
-    <string name="crickets">蟋蟀</string>
-    <string name="creaking_ship">吱吱作响的船</string>
-    <string name="coffee_shop">咖啡馆</string>
-    <string name="brownian_noise">布朗噪声</string>
-    <string name="bonfire">篝火</string>
-    <string name="birds">鸟</string>
-    <string name="airplane_seatbelt_beeps">飞机安全带提示音</string>
-    <string name="airplane_inflight">飞机航行中</string>
-    <string name="sound_group__wind">风</string>
-    <string name="sound_group__water">水</string>
-    <string name="sound_group__vehicles">交通工具</string>
-    <string name="sound_group__times_of_day">一天中的不同时段</string>
-    <string name="sound_group__raw_noise">原始噪声</string>
-    <string name="sound_group__public_gatherings">公共场所</string>
-    <string name="sound_group__monsoon">雨季</string>
-    <string name="sound_group__life">生物</string>
     <string name="volume">音量</string>
     <string name="stop">停止</string>
-    <string name="repeat_time_period">重复时间段</string>
     <string name="play_pause">播放或暂停</string>
     <string name="play">播放</string>
     <string name="save_preset">保存预设</string>
@@ -108,17 +54,10 @@
     <string name="name">名称</string>
     <string name="dismiss">忽略</string>
     <string name="cancel">取消</string>
-    <string name="relax">放松</string>
     <string name="random_preset">随机预设</string>
     <string name="okay">好</string>
-    <string name="mood">情绪</string>
-    <string name="light">轻量</string>
     <string name="intensity">强度</string>
     <string name="about">关于</string>
-    <string name="focus">专注</string>
-    <string name="dense">密集</string>
-    <string name="mood_any">任意</string>
-    <string name="intensity_any">任意</string>
     <string name="submit_feedback">提交反馈</string>
     <string name="wake_up_timer">定时唤醒</string>
     <string name="support_development">支持开发</string>
@@ -139,13 +78,10 @@
     <string name="app_theme_system_default">系统默认</string>
     <string name="app_theme_dark">深色</string>
     <string name="app_theme_light">浅色</string>
-    <string name="random_preset_description">随机生成的预设将包含与所选情绪相对应的声音。此外，密集预设还会尝试引入更多声音同时播放。</string>
     <string name="app_shortcut_created">预设已被添加到应用快捷方式中!</string>
     <string name="app_shortcut_removed">预设已从应用快捷方式中删除！</string>
     <string name="remove_from_app_shortcuts">从应用快捷方式中删除</string>
     <string name="add_to_app_shortcuts">添加到应用快捷方式</string>
-    <string name="app_authors">查看 Noice 作者名单</string>
-    <string name="behavior">行为</string>
     <string name="settings">设置</string>
     <string name="app_shortcut_creation_failed">未能将预设添加到应用程序的快捷方式中!</string>
     <string name="appearance">外观</string>
@@ -175,7 +111,7 @@
     <string name="invalid_import_file_format">导入文件的格式无效！</string>
     <string name="failed_to_purchase">发起付款流程失败。请稍后重试！</string>
     <string name="export_presets_summary">将已保存预设的当前快照导出为外部文件</string>
-    <string name="share_usage_data_consent_message">我们收集应用使用数据来改善用户体验。我们同时也会获取应用运行数据来分析、诊断使用过程中遇到的错误。欲知更多细节请阅读我们的 [隐私策略](https://ashutoshgngwr.github.io/noice/privacy-policy)。
+    <string name="share_usage_data_consent_message">我们收集应用使用数据来改善用户体验。我们同时也会获取应用运行数据来分析、诊断使用过程中遇到的错误。欲知更多细节请阅读我们的 [隐私策略](https://trynoice.com/privacy-policy)。
 \n
 \n 您也可以随时前往应用内的「**设置** &gt; **使用情况与运行数据**」配置自动数据共享行为。</string>
     <string name="failed_to_load_inapp_purchases">载入应用内购详情失败。请稍后重试！</string>

@@ -10,4 +10,4 @@
 - Miscellaneous bug fixes & UI improvements
 - Update to privacy policy
 
-See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG
+See detailed changelog at https://trynoice.com/changelog
