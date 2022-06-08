@@ -71,16 +71,9 @@
     <string name="cast_media">Conectar a Chromecast</string>
     <string name="notification_channel_default__description">Controles de reproducción de medios</string>
     <string name="notification_channel_default__name">Reproducción de medios</string>
-    <string name="dense">Densa</string>
-    <string name="mood_any">Cualquiera</string>
-    <string name="intensity_any">Cualquiera</string>
     <string name="submit_feedback">Enviar comentarios</string>
     <string name="intensity">Intensidad</string>
-    <string name="relax">Relajado</string>
     <string name="random_preset">Preajuste aleatorio</string>
-    <string name="mood">Ambiente</string>
-    <string name="light">Ligero</string>
-    <string name="focus">Concetrado</string>
     <string name="never">Nunca</string>
     <string name="later">Más tarde</string>
     <string name="in_app_feedback__title">Enviar una reseña</string>
@@ -101,7 +94,6 @@
     <string name="add_to_home_screen">Añadir a la pantalla de inicio</string>
     <string name="okay">Vale</string>
     <string name="pinned_shortcuts_not_supported">Su aplicación de inicio predeterminada no admite añadir accesos directos.</string>
-    <string name="app_authors">Ver la lista de los autores de Noice</string>
     <string name="appearance">Apariencia</string>
     <string name="presets_as_home_screen">\"Preajustes\" como pantalla de inicio</string>
     <string name="settings">Configuración</string>

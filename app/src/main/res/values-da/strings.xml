@@ -16,14 +16,9 @@
     <string name="name">Navn</string>
     <string name="dismiss">Fjern</string>
     <string name="cancel">Annuler</string>
-    <string name="relax">Afslappet</string>
     <string name="random_preset">Tilfældig forudinstilling</string>
     <string name="okay">Okay</string>
-    <string name="mood">Humør</string>
-    <string name="light">Let</string>
     <string name="intensity">Intensitivitet</string>
-    <string name="focus">Fokuseret</string>
-    <string name="mood_any">Enhver</string>
     <string name="submit_feedback">Indsend tilbagemelding</string>
     <string name="wake_up_timer">Vågn-op Timer</string>
     <string name="support_development">Støt udvikling</string>

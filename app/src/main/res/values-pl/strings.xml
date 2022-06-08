@@ -75,13 +75,8 @@
     <string name="schedule">Zaplanuj</string>
     <string name="pinned_shortcuts_not_supported">Twój domyślny ekran startowy nie wspiera dodawania skrótów.</string>
     <string name="add_to_home_screen">Dodaj do ekranu głównego</string>
-    <string name="relax">Relaks</string>
     <string name="okay">Okej</string>
-    <string name="light">Jasny</string>
     <string name="intensity">Intensywność</string>
-    <string name="focus">Skupienie</string>
-    <string name="mood_any">Jakikolwiek</string>
-    <string name="intensity_any">Jakikolwiek</string>
     <string name="submit_feedback">Wyślij Opinie</string>
     <string name="help">Pomoc</string>
     <string name="pinned_shortcut_created">Skrót został dodany do ekranu głównego!</string>
@@ -97,8 +92,6 @@
     <string name="presets_as_home_screen_summary">Pokaż zapisane ustawienia po uruchomieniu (wymaga restartu aplikacji)</string>
     <string name="preset_does_not_exist">Ustawienie wstępne nie istnieje. Mogło zostać usunięte!</string>
     <string name="random_preset">Losowe ustawienie wstępne</string>
-    <string name="mood">Nastrój</string>
-    <string name="dense">Gęsty</string>
     <string name="invalid_import_file_format">Format importowanego pliku jest nieprawidłowy!</string>
     <string name="failed_to_read_file">Błąd odczytu wybranego pliku!</string>
     <string name="failed_to_write_file">Błąd zapisu do wybranego pliku!</string>
@@ -122,7 +115,6 @@
     <string name="app_shortcut_created">Do skrótów aplikacji dodano ustawienie wstępne!</string>
     <string name="app_shortcut_removed">Ustawienie wstępne zostało usunięte ze skrótów do aplikacji!</string>
     <string name="remove_from_app_shortcuts">Usuń ze skrótów aplikacji</string>
-    <string name="app_authors">Zobacz listę autorów Noice</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minuta</item>
         <item quantity="few">%1$d minuty</item>

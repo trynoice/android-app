@@ -74,16 +74,9 @@
     <string name="name">Nimi</string>
     <string name="dismiss">Hylkää</string>
     <string name="cancel">Peruuta</string>
-    <string name="relax">Rentoutunut</string>
     <string name="random_preset">Satunnaiset esiasetukset</string>
     <string name="okay">OK</string>
-    <string name="mood">Tunnetila</string>
-    <string name="light">Kevyt</string>
     <string name="intensity">Intensiteetti</string>
-    <string name="focus">Keskittynyt</string>
-    <string name="dense">Tiivis</string>
-    <string name="intensity_any">Mikä tahansa</string>
-    <string name="mood_any">Mikä tahansa</string>
     <string name="created_by">Tekijä(t)</string>
     <string name="payment_pending">Ilmoitamme sinulle heti, kun olemme käsitelleet maksusi.</string>
     <string name="failed_to_purchase">Maksuvirran käynnistäminen epäonnistui. Yritä myöhemmin uudelleen!</string>
@@ -129,7 +122,6 @@
     <string name="app_shortcut_removed">Esiasetukset on poistettu sovelluksen pikavalinnoista!</string>
     <string name="remove_from_app_shortcuts">Poista sovelluksen pikavalinnoista</string>
     <string name="add_to_app_shortcuts">Lisää sovelluksen pikavalintoihin</string>
-    <string name="app_authors">Näytä luettelo Noicen tekijöistä</string>
     <string name="notification_channel_default__name">Median toisto</string>
     <string name="notification_channel_default__description">Mediatoiston ohjaimet</string>
     <string name="never">Ei koskaan</string>

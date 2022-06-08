@@ -53,16 +53,9 @@
     <string name="name">Ονομασία</string>
     <string name="dismiss">Εντάξει</string>
     <string name="cancel">Ακύρωση</string>
-    <string name="relax">Χαλαρή</string>
     <string name="random_preset">Τυχαία σύνθεση</string>
     <string name="okay">Εντάξει</string>
-    <string name="mood">Διάθεση</string>
-    <string name="light">Ελαφριά</string>
     <string name="intensity">Ένταση</string>
-    <string name="focus">Συγκέντρωση</string>
-    <string name="dense">Ισχυρή</string>
-    <string name="mood_any">Οποιαδήποτε</string>
-    <string name="intensity_any">Οποιαδήποτε</string>
     <string name="submit_feedback">Υποβολή σχολίων</string>
     <string name="wake_up_timer">Χρονοδιακόπτης έγερσης</string>
     <string name="support_development">Υποστήριξη προγραμματιστή</string>
@@ -118,7 +111,6 @@
     <string name="app_shortcut_removed">Η σύνθεση αφαιρέθηκε από τις συντομεύσεις!</string>
     <string name="remove_from_app_shortcuts">Αφαίρεση από τις συντομεύσεις εφαρμογής</string>
     <string name="add_to_app_shortcuts">Προσθήκη στις συντομεύσεις εφαρμογής</string>
-    <string name="app_authors">Εμφάνιση των συντελεστών του Noice</string>
     <string name="should_display_sound_icons">Εμφάνιση εικονιδίων ήχων</string>
     <string name="should_share_usage_data_summary">Αυτόματη αποστολή δεδομένων χρήσης και συμπεριφοράς στον προγραμματιστή</string>
     <string name="should_share_usage_data">Αποστολή δεδομένων χρήσης και συμπεριφοράς</string>

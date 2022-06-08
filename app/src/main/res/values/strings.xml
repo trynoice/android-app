@@ -10,17 +10,10 @@
     <string name="support_development">Support Development</string>
     <string name="wake_up_timer">Wake-up Timer</string>
     <string name="submit_feedback">Submit Feedback</string>
-    <string name="mood_any">Any</string>
-    <string name="intensity_any">Any</string>
-    <string name="dense">Dense</string>
-    <string name="focus">Focus</string>
     <string name="intensity">Intensity</string>
     <string name="random_preset_description">Generated random presets is likely to contain sounds with chosen keywords. Moreover, intense presets will attempt to play more sounds simultaneously.</string>
-    <string name="light">Light</string>
-    <string name="mood">Mood</string>
     <string name="okay">Okay</string>
     <string name="random_preset">Random Preset</string>
-    <string name="relax">Relax</string>
     <string name="cancel">Cancel</string>
     <string name="dismiss">Dismiss</string>
     <string name="name">Name</string>
@@ -123,7 +116,6 @@
     <string name="never">Never</string>
     <string name="notification_channel_default__description">Media playback controls</string>
     <string name="notification_channel_default__name">Media Playback</string>
-    <string name="app_authors">View list of the Noice Authors</string>
     <string name="add_to_app_shortcuts">Add to app shortcuts</string>
     <string name="remove_from_app_shortcuts">Remove from app shortcuts</string>
     <string name="app_shortcut_removed">Preset has been removed from app shortcuts!</string>

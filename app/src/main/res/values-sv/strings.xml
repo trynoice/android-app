@@ -37,9 +37,6 @@
     <string name="notification_channel_default__description">Uppspelningskontroller för media</string>
     <string name="notification_channel_default__name">Uppspelning av media</string>
     <string name="okay">Okej</string>
-    <string name="light">Ljust</string>
-    <string name="mood_any">Vilken som helst</string>
-    <string name="intensity_any">Vilken som helst</string>
     <string name="submit_feedback">Skicka feedback</string>
     <string name="help">Hjälp</string>
     <string name="support_development">Stöd utveckling</string>
@@ -69,7 +66,6 @@
     <string name="app_shortcut_removed">Förinställningen har tagits bort från app-genvägar!</string>
     <string name="remove_from_app_shortcuts">Ta bort från app-genvägar</string>
     <string name="add_to_app_shortcuts">Lägg till i app-genvägar</string>
-    <string name="app_authors">Visa listan över Noice-författarna</string>
     <string name="never">Aldrig</string>
     <string name="later">Senare</string>
     <string name="in_app_feedback__title">Skicka in en recension</string>
@@ -102,11 +98,7 @@
     <string name="preset_does_not_exist">Förinställningen existerar inte. Den kan ha blivit borttagen!</string>
     <string name="add_to_home_screen">Lägg till på hemskärmen</string>
     <string name="preset_already_exists">En förinställning med det angivna namnet existerar redan!</string>
-    <string name="relax">Slappna av</string>
     <string name="random_preset">Slumpmässig förinställning</string>
-    <string name="mood">Humör</string>
     <string name="intensity">Intensitet</string>
-    <string name="focus">Fokus</string>
-    <string name="dense">Tät</string>
     <string name="wake_up_timer">Timer för uppväckning</string>
 </resources>

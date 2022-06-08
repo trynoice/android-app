@@ -33,22 +33,15 @@
     <string name="app_description">Relajese y aumente su productividad con sonidos de fondo.</string>
     <string name="notification_channel_default__description">Controles de reproducción</string>
     <string name="notification_channel_default__name">Reproducción de medios</string>
-    <string name="light">Claro</string>
-    <string name="dense">Denso</string>
-    <string name="mood_any">Cualquier</string>
-    <string name="intensity_any">Cualquier</string>
     <string name="submit_feedback">Enviar comentarios</string>
     <string name="wake_up_timer">Despertador</string>
     <string name="help">Ayuda</string>
     <string name="support_development">Ayudar con el Desarrollo</string>
     <string name="add_to_home_screen">Agregar a la pantalla de inicio</string>
     <string name="open_context_menu">Abrir menú contextual</string>
-    <string name="mood">Estado de ánimo</string>
-    <string name="focus">Concentrado</string>
     <string name="intensity">Intensidad</string>
     <string name="random_preset">Preajuste aleatorio</string>
     <string name="preset_already_exists">¡Ya existe un preajuste con ese nombre!</string>
     <string name="okay">De acuerdo</string>
-    <string name="relax">Relajado</string>
     <string name="preset_does_not_exist">El preajuste no existe. ¡Es posible que se haya borrado!</string>
 </resources>

@@ -77,13 +77,9 @@
     <string name="notification_channel_default__name">Lecture audio</string>
     <string name="preset_does_not_exist">Ce préréglage n\'existe pas. Il a peut-être été effacé !</string>
     <string name="add_to_home_screen">Ajouter à l\'écran d\'accueil</string>
-    <string name="relax">Apaisant</string>
     <string name="random_preset">Préréglage aléatoire</string>
     <string name="okay">D\'accord</string>
-    <string name="mood">Ambiance</string>
-    <string name="light">Clair</string>
     <string name="intensity">Intensité</string>
-    <string name="dense">Dense</string>
     <string name="submit_feedback">Soumettre une évaluation</string>
     <string name="in_app_feedback__description">Nous aimerions connaître votre avis sur l\'application. Nous vous prions de consulter notre GitHub. Si vous n\'aimez pas l\'application, nous vous prions d\'ouvrir un billet « issue » afin de nous expliquer vos critiques. Autrement, nous vous prions de noter le projet pour nous montrer votre reconnaissance.</string>
     <string name="wake_up_timer_cancelled">Minuterie du réveil annulée !</string>
@@ -92,9 +88,6 @@
     <string name="never">Jamais</string>
     <string name="later">Plus tard</string>
     <string name="in_app_feedback__title">Soumettre une évaluation</string>
-    <string name="mood_any">N\'importe</string>
-    <string name="intensity_any">N\'importe</string>
-    <string name="focus">Concentré</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minute</item>
         <item quantity="other">%1$d minutes</item>
@@ -105,7 +98,6 @@
     </plurals>
     <string name="time_bridge">et</string>
     <string name="wake_up_timer_schedule_set">L\'alarme s\'éteindra dans %1$s %2$s %3$s</string>
-    <string name="app_authors">Voir la liste des auteurs de Noice</string>
     <string name="app_shortcut_creation_failed">Échec de l\'ajout du préréglage aux raccourcis d\'applis !</string>
     <string name="remove_from_app_shortcuts">Retirer des raccourcis d\'applis</string>
     <string name="add_to_app_shortcuts">Ajouter aux raccourcis des applis</string>

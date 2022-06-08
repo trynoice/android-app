@@ -34,12 +34,7 @@
     <string name="notification_channel_default__description">Controlli di riproduzione</string>
     <string name="notification_channel_default__name">Riproduzione dei media</string>
     <string name="okay">Va bene</string>
-    <string name="mood">Stato d\'animo</string>
-    <string name="light">Chiaro</string>
     <string name="intensity">Intensità</string>
-    <string name="dense">Denso</string>
-    <string name="mood_any">Qualsiasi</string>
-    <string name="intensity_any">Qualsiasi</string>
     <string name="submit_feedback">Invia feedback</string>
     <string name="support_development">Supporta lo sviluppo</string>
     <string name="help">Aiuto</string>
@@ -55,7 +50,6 @@
     <string name="add_to_home_screen">Aggiungi a schermata home</string>
     <string name="preset_info__description">Non hai ancora creato alcun preset. Per creare un preset, vai nella Libreria e riproduci i suoni. Poi clicca sul pulsante Salva che appare nell\'angolo dello schermo.</string>
     <string name="preset_does_not_exist">Preset non esistente. Potrebbe essere stato cancellato!</string>
-    <string name="relax">Lenitivo</string>
     <string name="wake_up_timer">Timer risveglio</string>
     <string name="sleep_timer_description">Noice si riavvierà allo scadere del tempo. Usa i pulsanti sotto per aggiungere del tempo e avviare il timer.</string>
     <string name="presets_as_home_screen_summary">Mostra «preimpostazioni» all\'avvio dell\'app (necessita il riavvio dell\'app)</string>
@@ -75,7 +69,6 @@
     <string name="support_development__share_description">Condividere Noice con i tuoi amici è come regalare denaro. Con un più alto numero di downloads, potremo ricevere feedback più variegato, e ciò ci aiuterà a fare di Noice un software migliore.</string>
     <string name="support_development__donate_thank_you_description">Ti ringraziamo con tutto il cuore per il tuo contributo generoso al progetto Noice.</string>
     <string name="support_development__donate_google_play_description">Il tuo pagamento sarà gestito in modo sicuro da Google Play. A seconda della tua località, possono essere aggiunte tasse supplementari all\'importo finale.</string>
-    <string name="focus">Messa a fuoco</string>
     <string name="never">Mai</string>
     <string name="later">Più tardi</string>
     <string name="in_app_feedback__title">Sottoponi una recensione</string>
@@ -91,7 +84,6 @@
     </plurals>
     <string name="time_bridge">e</string>
     <string name="wake_up_timer_schedule_set">La sveglia si spegnerà in %1$s %2$s %3$s</string>
-    <string name="app_authors">Visualizza l\'elenco degli autori di Noice</string>
     <string name="app_shortcut_creation_failed">Impossibile aggiungere il preimpostato alle scorciatoie delle app!</string>
     <string name="remove_from_app_shortcuts">Rimuovi dalle scorciatoie delle app</string>
     <string name="add_to_app_shortcuts">Aggiungi alle scorciatoie delle app</string>

@@ -88,19 +88,12 @@
     <string name="notification_channel_default__name">Воспроизведение звуков</string>
     <string name="submit_feedback">Отправить отзыв</string>
     <string name="add_to_home_screen">Добавить на домашний экран</string>
-    <string name="light">Светлая</string>
     <string name="intensity">Интенсивность</string>
-    <string name="dense">Плотный</string>
-    <string name="mood_any">Любой</string>
-    <string name="intensity_any">Любой</string>
     <string name="presets_as_home_screen_summary">Показывать \"сохраненные пресеты\" при запуске приложения (требуется перезапуск приложения)</string>
     <string name="preset_does_not_exist">Пресета не существует. Возможно, он был удален!</string>
-    <string name="relax">Расслабиться</string>
     <string name="random_preset">Случайный пресет</string>
-    <string name="mood">Настроение</string>
     <string name="wake_up_timer_cancelled">Таймер пробуждения отменён!</string>
     <string name="pinned_shortcuts_not_supported">Ваш лаунчер по умолчанию не поддерживает добавление ярлыков.</string>
-    <string name="focus">Фокус</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d минуту</item>
         <item quantity="few">%1$d минуты</item>
@@ -115,7 +108,6 @@
     </plurals>
     <string name="time_bridge">и</string>
     <string name="wake_up_timer_schedule_set" tools:ignore="StringFormatCount">Будильник выключится в %1$s %2$s %3$s</string>
-    <string name="app_authors">Посмотреть список авторов Noice</string>
     <string name="invalid_import_file_format">Неверный формат импортируемого файла!</string>
     <string name="failed_to_read_file">Ошибка чтения выбранного файла!</string>
     <string name="failed_to_write_file">Ошибка при записи в выбранный файл!</string>

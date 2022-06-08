@@ -94,13 +94,7 @@
     <string name="pinned_shortcuts_not_supported">Launcher default anda tidak mendukung untuk menambahkan shortcuts.</string>
     <string name="preset_does_not_exist">Preset tidak tersedia. Mungkin sudah dihapus!</string>
     <string name="add_to_home_screen">Tambahkan di layar utama</string>
-    <string name="relax">Rileks</string>
     <string name="random_preset">Preset Acak</string>
-    <string name="mood">Suasana</string>
-    <string name="light">Cahaya</string>
-    <string name="focus">Fokus</string>
-    <string name="mood_any">Apapun</string>
-    <string name="intensity_any">Apapun</string>
     <string name="submit_feedback">Masukan Feedback</string>
     <string name="wake_up_timer_cancelled">Timer Wake-up terbatalkan!</string>
     <string name="presets_as_home_screen_summary">Tampilkan \"preset\" pada startup aplikasi (memerlukan restart aplikasi)</string>
@@ -139,9 +133,7 @@
     <string name="app_shortcut_creation_failed">Preset gagal ditambahkan ke pintasan aplikasi!</string>
     <string name="app_shortcut_created">Preset telah ditambahkan ke pintasan aplikasi!</string>
     <string name="app_shortcut_removed">Preset telah dihapus dari pintasan aplikasi!</string>
-    <string name="dense">Padat</string>
     <string name="presets_as_home_screen">\"Preset\" sebagai layar beranda</string>
-    <string name="app_authors">Lihat daftar Penulis Noice</string>
     <string name="should_display_sound_icons">Tunjukkan ikon suara</string>
     <string name="should_share_usage_data_summary">Secara otomatis berbagi data penggunaan dan perilaku dengan pengembang</string>
     <string name="should_share_usage_data">Bagikan data penggunaan dan perilaku</string>

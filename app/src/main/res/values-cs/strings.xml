@@ -10,16 +10,9 @@
     <string name="support_development">Podpořit vývoj</string>
     <string name="wake_up_timer">Časovač spuštění</string>
     <string name="submit_feedback">Odeslat zpětnou vazbu</string>
-    <string name="mood_any">Jakákoliv</string>
-    <string name="intensity_any">Jakákoliv</string>
-    <string name="dense">Hutná</string>
-    <string name="focus">Soustředění</string>
     <string name="intensity">Intenzita</string>
-    <string name="light">Lehká</string>
-    <string name="mood">Nálada</string>
     <string name="okay">Budiž</string>
     <string name="random_preset">Náhodný mix</string>
-    <string name="relax">Uvolnění</string>
     <string name="cancel">Zrušit</string>
     <string name="dismiss">Zahodit</string>
     <string name="name">Název</string>
@@ -119,7 +112,6 @@
     <string name="never">Nikdy</string>
     <string name="notification_channel_default__description">Ovladání přehrávače</string>
     <string name="notification_channel_default__name">Právě hraje</string>
-    <string name="app_authors">Zobrazit seznam autorů Noice</string>
     <string name="add_to_app_shortcuts">Přidat mezi zkratky aplikace</string>
     <string name="remove_from_app_shortcuts">Odebrat ze zkratek aplikace</string>
     <string name="app_shortcut_removed">Mix byl odebrán ze zkratek aplikace!</string>

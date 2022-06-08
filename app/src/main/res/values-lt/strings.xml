@@ -11,16 +11,9 @@
     <string name="name">Pavadinimas</string>
     <string name="dismiss">Nuleisti</string>
     <string name="cancel">Atšaukti</string>
-    <string name="relax">Atpalaiduojanti</string>
     <string name="random_preset">Atsitiktinė parinktis</string>
     <string name="okay">Gerai</string>
-    <string name="mood">Nuotaika</string>
-    <string name="light">Lengvas</string>
     <string name="intensity">Intensyvumas</string>
-    <string name="focus">Sutelkianti dėmesį</string>
-    <string name="dense">Tankus</string>
-    <string name="intensity_any">Bet koks</string>
-    <string name="mood_any">Bet kokia</string>
     <string name="submit_feedback">Pateikti atsiliepimą</string>
     <string name="wake_up_timer">Pabudimo laikmatis</string>
     <string name="support_development">Paremti kūrimą</string>
@@ -59,7 +52,6 @@
     <string name="app_shortcut_removed">Parinktis pašalinta iš programėlių nuorodų!</string>
     <string name="remove_from_app_shortcuts">Pašalinti iš programėlių nuorodų</string>
     <string name="add_to_app_shortcuts">Pridėti prie programėlių nuorodų</string>
-    <string name="app_authors">Peržiūrėti Noice autorių sąrašą</string>
     <string name="notification_channel_default__name">Medijos atkūrimas</string>
     <string name="notification_channel_default__description">Medijos atkūrimo valdikliai</string>
     <string name="never">Niekada</string>

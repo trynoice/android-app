@@ -11,9 +11,7 @@
     <string name="presets">預設音組</string>
     <string name="intensity">強度</string>
     <string name="okay">OK</string>
-    <string name="mood">情緒</string>
     <string name="random_preset">隨機預設音組</string>
-    <string name="relax">放鬆</string>
     <string name="dismiss">關閉</string>
     <string name="name">名稱</string>
     <string name="play">播放</string>
@@ -23,11 +21,6 @@
     <string name="birds">鳥</string>
     <string name="distant_thunder">遠方傳來的雷聲</string>
     <string name="sleep_timer">睡眠倒數</string>
-    <string name="intensity_any">任意</string>
-    <string name="dense">密集</string>
-    <string name="mood_any">任意</string>
-    <string name="focus">專注</string>
-    <string name="light">輕的</string>
     <string name="cancel">取消</string>
     <string name="preset_saved">預設音組已儲存！</string>
     <string name="pause">暫停</string>
@@ -78,7 +71,6 @@
     <string name="support_development__share">和朋友分享</string>
     <string name="in_app_feedback__title">提交回饋</string>
     <string name="notification_channel_default__description">媒體播放控制</string>
-    <string name="app_authors">查看 Noice 作者名單</string>
     <string name="add_to_app_shortcuts">加到應用捷徑</string>
     <string name="remove_all_app_shortcuts">移除所有應用捷徑</string>
     <string name="settings">設置</string>

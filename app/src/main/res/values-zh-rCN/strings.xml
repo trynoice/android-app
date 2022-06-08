@@ -58,17 +58,10 @@
     <string name="name">名称</string>
     <string name="dismiss">忽略</string>
     <string name="cancel">取消</string>
-    <string name="relax">放松</string>
     <string name="random_preset">随机预设</string>
     <string name="okay">好</string>
-    <string name="mood">情绪</string>
-    <string name="light">轻量</string>
     <string name="intensity">强度</string>
     <string name="about">关于</string>
-    <string name="focus">专注</string>
-    <string name="dense">密集</string>
-    <string name="mood_any">任意</string>
-    <string name="intensity_any">任意</string>
     <string name="submit_feedback">提交反馈</string>
     <string name="wake_up_timer">定时唤醒</string>
     <string name="support_development">支持开发</string>
@@ -93,7 +86,6 @@
     <string name="app_shortcut_removed">预设已从应用快捷方式中删除！</string>
     <string name="remove_from_app_shortcuts">从应用快捷方式中删除</string>
     <string name="add_to_app_shortcuts">添加到应用快捷方式</string>
-    <string name="app_authors">查看 Noice 作者名单</string>
     <string name="settings">设置</string>
     <string name="app_shortcut_creation_failed">未能将预设添加到应用程序的快捷方式中!</string>
     <string name="appearance">外观</string>

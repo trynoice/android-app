@@ -4,14 +4,10 @@
     <string name="app_theme">Temoù</string>
     <string name="about">Diwar-benn</string>
     <string name="help">Skoazell</string>
-    <string name="light">Sklaer</string>
-    <string name="mood">Imor</string>
     <string name="random_preset">Kefluniadur dargouezhek</string>
-    <string name="relax">Distenn</string>
     <string name="cancel">Nullañ</string>
     <string name="name">Anv</string>
     <string name="pause">Ehanañ</string>
-    <string name="dense">Doues</string>
     <string name="intensity">Kreñvded</string>
     <string name="report_issue">Danevelliñ kudennoù</string>
     <string name="presets">Pre-keflunadurioù</string>

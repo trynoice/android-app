@@ -91,16 +91,9 @@
     <string name="presets_as_home_screen_summary">ऐप स्टार्टअप पर \"प्रीसेट\" दिखाएं (ऐप को पुनरारंभ करने की आवश्यकता होगी)</string>
     <string name="preset_does_not_exist">प्रीसेट मौजूद नहीं है। यह संभव है कि इसे हटा दिया गया हो!</string>
     <string name="add_to_home_screen">होम स्क्रीन में शामिल करें</string>
-    <string name="relax">शांतिदायक</string>
     <string name="random_preset">यादृच्छिक प्रीसेट</string>
     <string name="okay">ठीक</string>
-    <string name="mood">भाव</string>
-    <string name="light">हलका</string>
     <string name="intensity">सघनता</string>
-    <string name="focus">फोकस</string>
-    <string name="dense">सघन</string>
-    <string name="mood_any">कोई भी</string>
-    <string name="intensity_any">कोई भी</string>
     <string name="submit_feedback">प्रतिपुष्टि दें</string>
     <string name="wake_up_timer_schedule_set" tools:ignore="StringFormatCount">अलार्म %1$s %3$s में बजेगा</string>
     <plurals name="time_minutes">
@@ -117,7 +110,6 @@
     <string name="app_shortcut_removed">प्रीसेट को ऐप शॉर्टकट से हटा दिया गया है!</string>
     <string name="remove_from_app_shortcuts">ऐप शॉर्टकट से निकालें</string>
     <string name="add_to_app_shortcuts">ऐप शॉर्टकट में जोड़ें</string>
-    <string name="app_authors">नोइस ऑथर्स की सूची देखें</string>
     <string name="invalid_import_file_format">आयात फ़ाइल स्वरूप अमान्य है!</string>
     <string name="failed_to_read_file">चयनित फ़ाइल को पढ़ने में विफलता!</string>
     <string name="failed_to_write_file">चयनित फ़ाइल में लिखने में विफलता!</string>

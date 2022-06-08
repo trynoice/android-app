@@ -7,7 +7,6 @@
     <string name="app_shortcut_removed">گزینش موردنظر از میانبرهای برنامه حذف شده است!</string>
     <string name="remove_from_app_shortcuts">حذف از میانبرهای برنامه</string>
     <string name="add_to_app_shortcuts">افزودن به میانبرهای برنامه</string>
-    <string name="app_authors">نمایش فهرست سازندگان Noice</string>
     <string name="notification_channel_default__name">پخش رسانه</string>
     <string name="notification_channel_default__description">کنترل‌کننده‌های پخش رسانه</string>
     <string name="never">هرگز</string>
@@ -79,16 +78,9 @@
     <string name="name">نام</string>
     <string name="dismiss">ترک</string>
     <string name="cancel">بازگشت</string>
-    <string name="relax">آرامش</string>
     <string name="random_preset">گزینش تصادفی</string>
     <string name="okay">قبول</string>
-    <string name="mood">حال</string>
-    <string name="light">سبک</string>
     <string name="intensity">شدت</string>
-    <string name="focus">تمرکز</string>
-    <string name="dense">متراکم</string>
-    <string name="intensity_any">هرکدام</string>
-    <string name="mood_any">هرکدام</string>
     <string name="submit_feedback">ارائه‌ی بازخورد</string>
     <string name="wake_up_timer">زمان‌سنج بیداری</string>
     <string name="support_development">حمایت از ساخت</string>

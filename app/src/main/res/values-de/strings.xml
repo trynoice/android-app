@@ -10,16 +10,9 @@
     <string name="support_development">Unterstütze die Entwicklung</string>
     <string name="wake_up_timer">Aufwach-Timer</string>
     <string name="submit_feedback">Feedback abgeben</string>
-    <string name="mood_any">Zufall</string>
-    <string name="intensity_any">Zufall</string>
-    <string name="dense">Dicht</string>
-    <string name="focus">Fokus</string>
     <string name="intensity">Intensität</string>
-    <string name="light">Hell</string>
-    <string name="mood">Stimmung</string>
     <string name="okay">Ok</string>
     <string name="random_preset">zufällige Voreinstellung</string>
-    <string name="relax">Entspannen</string>
     <string name="cancel">Abbrechen</string>
     <string name="dismiss">Ausblenden</string>
     <string name="name">Name</string>
@@ -113,7 +106,6 @@
         <item quantity="other">%1$d Stunden</item>
     </plurals>
     <string name="time_bridge">und</string>
-    <string name="app_authors">Liste der Noice-Autoren anzeigen</string>
     <string name="app_shortcut_creation_failed">Das Hinzufügen der Voreinstellung zu Anwendungsverknüpfungen ist fehlgeschlagen!</string>
     <string name="remove_from_app_shortcuts">Aus Anwendungsverknüpfungen entfernen</string>
     <string name="add_to_app_shortcuts">Zu Anwendungsverknüpfungen hinzufügen</string>

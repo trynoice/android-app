@@ -6,15 +6,11 @@
     <string name="volume">Lydstyrke</string>
     <string name="stop">Stopp</string>
     <string name="play">Spill</string>
-    <string name="relax">Slapp av</string>
     <string name="pause">Pause</string>
     <string name="name">Navn</string>
     <string name="dismiss">Forkast</string>
     <string name="cancel">Avbryt</string>
     <string name="okay">Okei</string>
-    <string name="light">Lyst</string>
-    <string name="mood_any">Hvilken som helst</string>
-    <string name="intensity_any">Hvilken som helst</string>
     <string name="submit_feedback">Send inn tilbakemeldinger</string>
     <string name="support_development">Støtt utviklingen</string>
     <string name="sleep_timer">Søvntidsur</string>

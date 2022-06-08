@@ -27,7 +27,6 @@
     <string name="app_shortcut_removed">Thiết lập trước đã bị xoá khỏi lối tắt ứng dụng!</string>
     <string name="remove_from_app_shortcuts">Xoá khỏi lối tắt ứng dụng</string>
     <string name="add_to_app_shortcuts">Thêm vào lối tắt ứng dụng</string>
-    <string name="app_authors">Xem danh sách các tác giả của Noice</string>
     <string name="notification_channel_default__description">Điều khiển phát phương tiện</string>
     <string name="never">Không bao giờ</string>
     <string name="later">Để sau</string>
@@ -96,16 +95,9 @@
     <string name="name">Tên</string>
     <string name="dismiss">Bỏ</string>
     <string name="cancel">Huỷ</string>
-    <string name="relax">Thư giãn</string>
     <string name="random_preset">Thiết lập trước ngẫu nhiên</string>
     <string name="okay">OK</string>
-    <string name="mood">Tâm trạng</string>
-    <string name="light">Thưa</string>
     <string name="intensity">Cường độ</string>
-    <string name="focus">Tập trung</string>
-    <string name="dense">Dày đặc</string>
-    <string name="intensity_any">Bất kỳ</string>
-    <string name="mood_any">Bất kỳ</string>
     <string name="submit_feedback">Gửi phản hồi</string>
     <string name="wake_up_timer">Hẹn giờ đánh thức</string>
     <string name="support_development">Hỗ trợ sự phát triển</string>

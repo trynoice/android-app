@@ -98,9 +98,6 @@
     <string name="notification_channel_default__description">Controles de áudio</string>
     <string name="notification_channel_default__name">Reprodução de áudio</string>
     <string name="submit_feedback">Enviar comentários</string>
-    <string name="relax">Relaxar</string>
-    <string name="intensity_any">Qualquer</string>
-    <string name="mood_any">Qualquer</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minuto</item>
         <item quantity="other">%1$d minutos</item>
@@ -117,11 +114,7 @@
     <string name="preset_does_not_exist">Predefinição não existe. Ela pode ter sido deletada!</string>
     <string name="add_to_home_screen">Adicionar à tela inicial</string>
     <string name="random_preset">Predefinição aleatória</string>
-    <string name="mood">Atmosfera</string>
-    <string name="light">Leve</string>
     <string name="intensity">Intensidade</string>
-    <string name="focus">Foco</string>
-    <string name="dense">Denso</string>
     <string name="payment_pending">Notificaremos você assim que terminarmos de processar seu pagamento.</string>
     <string name="failed_to_purchase">Falha ao iniciar o fluxo de pagamento. Por favor, tente novamente mais tarde!</string>
     <string name="failed_to_load_inapp_purchases">Falha ao carregar os detalhes de compra no aplicativo. Por favor, tente novamente mais tarde!</string>
@@ -161,7 +154,6 @@
     <string name="app_shortcut_removed">A predefinição foi removida dos atalhos da aplicação!</string>
     <string name="remove_from_app_shortcuts">Remover dos atalhos da aplicação</string>
     <string name="add_to_app_shortcuts">Adicionar aos atalhos da aplicação</string>
-    <string name="app_authors">Visualizar lista dos autores do Noice</string>
     <string name="created_by">Criado por</string>
     <string name="share_usage_data_consent_message">Coletamos dados de uso do aplicativo para melhorar a experiência do usuário. Também coletamos dados de comportamento do aplicativo para analisar e diagnosticar erros encontrados durante o uso do aplicativo. Leia nossa [política de privacidade](https://trynoice.com/privacy-policy) para obter mais informações.
 \n

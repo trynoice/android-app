@@ -44,11 +44,7 @@
     <string name="appintro__getting_started_desc_1">Laten we beginnen!</string>
     <string name="wake_up_timer_cancelled">Wake-up Timer geannuleerd!</string>
     <string name="schedule">Schema</string>
-    <string name="relax">Ontspan</string>
     <string name="okay">Oké</string>
-    <string name="light">Licht</string>
-    <string name="mood_any">Elk</string>
-    <string name="intensity_any">Elk</string>
     <string name="submit_feedback">Geef feedback</string>
     <string name="support_development">Ondersteun de ontwikkeling</string>
     <string name="help">Hulp</string>
@@ -80,10 +76,7 @@
     <string name="add_to_home_screen">Voeg toe aan startscherm</string>
     <string name="preset_already_exists">Instelling met de opgegeven naam bestaat al!</string>
     <string name="random_preset">Willekeurige instelling</string>
-    <string name="mood">Stemming</string>
     <string name="intensity">Intensiteit</string>
-    <string name="focus">Focus</string>
-    <string name="dense">Dicht</string>
     <string name="ignore_audio_focus_changes_summary_on">Reageer niet wanneer andere apps geluid afspelen</string>
     <string name="ignore_audio_focus_changes_summary_off">Pauzeer wanneer andere apps geluid afspelen</string>
     <string name="ignore_audio_focus_changes">Negeer wijzigingen in de audiofocus</string>
@@ -100,7 +93,6 @@
     <string name="app_shortcut_removed">Instelling is verwijderd uit app-snelkoppelingen!</string>
     <string name="remove_from_app_shortcuts">Verwijder van app-snelkoppelingen</string>
     <string name="add_to_app_shortcuts">Voeg toe aan app-snelkoppelingen</string>
-    <string name="app_authors">Bekijk de lijst van Noice-auteurs</string>
     <string name="in_app_feedback__title">Plaats een recensie</string>
     <string name="in_app_feedback__description">We horen graag van je over de app. Neem even de tijd om onze GitHub-repository te bezoeken. Als je de app niet leuk vond, overweeg dan om een probleem in te dienen waarin je zorgen uitlegt. Ook kunt u het project een ster geven om liefde en steun te tonen.</string>
     <string name="cast_media">Verbinding met Chromecast</string>

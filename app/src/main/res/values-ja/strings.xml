@@ -62,16 +62,9 @@
     <string name="name">名前</string>
     <string name="dismiss">閉じる</string>
     <string name="cancel">キャンセル</string>
-    <string name="relax">リラックス</string>
     <string name="random_preset">ランダムプリセット</string>
     <string name="okay">OK</string>
-    <string name="mood">雰囲気</string>
-    <string name="light">重なりの少ない音</string>
     <string name="intensity">音の多さ</string>
-    <string name="focus">集中</string>
-    <string name="dense">重なりの多い音</string>
-    <string name="mood_any">指定しない</string>
-    <string name="intensity_any">指定しない</string>
     <string name="submit_feedback">意見を送信する</string>
     <string name="wake_up_timer">起床タイマー</string>
     <string name="support_development">開発を支援する</string>
@@ -82,7 +75,6 @@
     <string name="help">ヘルプ</string>
     <string name="app_theme">テーマ</string>
     <string name="about">このアプリについて</string>
-    <string name="app_authors">Noiceの作成者一覧を見る</string>
     <string name="notification_channel_default__name">メディア再生</string>
     <string name="notification_channel_default__description">メディア再生コントロール</string>
     <string name="never">二度と表示しない</string>

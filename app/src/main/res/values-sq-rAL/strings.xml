@@ -41,7 +41,5 @@
     <string name="notification_channel_default__description">Kontrollet e riprodhimit të mediave</string>
     <string name="notification_channel_default__name">Ridëgjim i medias</string>
     <string name="intensity">intensiteti</string>
-    <string name="mood_any">Ndonjë</string>
-    <string name="intensity_any">Ndonjë</string>
     <string name="help">Ndihmë</string>
 </resources>

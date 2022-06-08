@@ -4,16 +4,9 @@
     <string name="presets">Misturas de sons</string>
     <string name="dismiss">Dispensar</string>
     <string name="cancel">Cancelar</string>
-    <string name="relax">Relaxar</string>
     <string name="random_preset">Mistura aleatória</string>
     <string name="okay">OK</string>
-    <string name="mood">Atmosfera</string>
-    <string name="light">Ligeiro</string>
     <string name="intensity">Intensidade</string>
-    <string name="focus">Foco</string>
-    <string name="dense">Denso</string>
-    <string name="intensity_any">Qualquer</string>
-    <string name="mood_any">Qualquer</string>
     <string name="submit_feedback">Enviar comentários</string>
     <string name="support_development">Apoiar desenvolvimento</string>
     <string name="sleep_timer">Suspensão programada</string>
@@ -118,7 +111,6 @@
     <string name="app_shortcut_removed">A mistura de sons foi removida dos atalhos da aplicação!</string>
     <string name="remove_from_app_shortcuts">Remover dos atalhos da aplicação</string>
     <string name="add_to_app_shortcuts">Adicionar aos atalhos da aplicação</string>
-    <string name="app_authors">Ver lista dos autores do Noice</string>
     <string name="notification_channel_default__name">Reprodução do áudio</string>
     <string name="notification_channel_default__description">Controlos do áudio</string>
     <string name="never">Nunca</string>

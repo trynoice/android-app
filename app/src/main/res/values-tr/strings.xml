@@ -9,16 +9,9 @@
     <string name="sleep_timer">Uyku Zamanlayıcı</string>
     <string name="support_development">Geliştiriciyi Destekle</string>
     <string name="wake_up_timer">Uyandırma Zamanlayıcı</string>
-    <string name="mood_any">Herhangi</string>
-    <string name="intensity_any">Herhangi</string>
-    <string name="dense">Çeşitli</string>
-    <string name="focus">Odaklanmak</string>
     <string name="intensity">Çeşitlilik</string>
-    <string name="light">Sade</string>
-    <string name="mood">Amaç</string>
     <string name="okay">Tamam</string>
     <string name="random_preset">Rastgele kayıt</string>
-    <string name="relax">Rahatlamak</string>
     <string name="cancel">İptal</string>
     <string name="dismiss">Kapat</string>
     <string name="name">İsim</string>
@@ -120,7 +113,6 @@
     </plurals>
     <string name="time_bridge">ve</string>
     <string name="wake_up_timer_schedule_set">Alarm %1$s %2$s %3$s içinde çalacak</string>
-    <string name="app_authors">Noice yazarlarının listesini görüntüle</string>
     <string name="app_shortcut_creation_failed">Kayıt, uygulama kısayollarına eklenemedi!</string>
     <string name="app_shortcut_created">Kayıt, uygulama kısayollarına eklendi!</string>
     <string name="app_shortcut_removed">Kayıt, uygulama kısayollarından kaldırıldı!</string>
