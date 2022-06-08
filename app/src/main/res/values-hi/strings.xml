@@ -71,10 +71,7 @@
        हम इस परियोजना में आपके उदार योगदान के लिए तहे दिल से शुक्रिया अदा करते हैं।
   </string>
     <string name="support_development__share">दोस्तों के साथ शेयर करें</string>
-    <string name="support_development__share_description">
-       दोस्तों के साथ ऐप साझा करना पैसे दान करने के समान है। उच्च डाउनलोड के साथ, हम कई अलग-अलग दृष्टिकोणों से प्रतिक्रिया प्राप्त करने
-       में सक्षम होंगे जो हमें ऐप को पहले से बेहतर बनाने में मदद करेगा।
-  </string>
+    <string name="support_development__share_description">आप अपने दोस्तों को हमारे बारे में बताकर भी हमारी मदद कर सकते हैं। अधिक उपयोगकर्ता हमें कई अलग-अलग दृष्टिकोणों से प्रतिक्रिया प्रदान करेंगे और हमारी सेवाओं को बेहतर बनाने में हमारी सहायता करेंगे।</string>
     <string name="cast_media">क्रोमकास्ट से कनेक्ट करें</string>
     <string name="notification_channel_default__description">मीडिया प्लेबैक नियंत्रण</string>
     <string name="notification_channel_default__name">मीडिया प्लेबैक</string>
@@ -148,4 +145,41 @@
     <string name="export_presets_successful">प्रीसेट फ़ाइल में सफलतापूर्वक निर्यात हो गये!</string>
     <string name="enable_media_buttons_summary">प्लेबैक को नियंत्रित करने के लिए हार्डवेयर मीडिया बटन का उपयोग करें</string>
     <string name="enable_media_buttons">मीडिया बटन सक्षम करें</string>
+    <string name="random_preset_description">जेनरेट किए गए प्रीसेट में चुने गए कीवर्ड वाली ध्वनियां होने की संभावना है। इसके अलावा, अधिक जोरदार प्रीसेट एक साथ अधिक ध्वनियाँ चलाने का प्रयास करेंगे।</string>
+    <string name="sound_fade_out_duration">ध्वनि फेड आउट होने की अवधि</string>
+    <string name="sound_fade_out_duration_summary">लुप्त होती ध्वनि के लिए समय अवधि (सेकंड में)</string>
+    <string name="account">खाता</string>
+    <string name="app">ऐप</string>
+    <string name="support">सहायता</string>
+    <string name="sign_in">साइन इन करें</string>
+    <string name="view_subscription_plans">सदस्यता योजनाएं देखें</string>
+    <string name="sign_out">साइन आउट</string>
+    <string name="update_details">विवरण अपडेट करें</string>
+    <string name="network_error">नेटवर्क अगम्य है।</string>
+    <string name="unknown_error">कोई अज्ञात गड़बड़ी हुई है।</string>
+    <string name="welcome_back">वापसी पर आपका स्वागत है!</string>
+    <string name="sign_in_message">साइन इन करने के लिए कृपया अपना ईमेल दर्ज करें।</string>
+    <string name="invalid_email">दर्ज किया गया ईमेल अमान्य है!</string>
+    <string name="account_locked_error">आपका ईमेल अस्थायी रूप से %1$s तक साइन-इन करने का प्रयास करने से लॉक कर दिया गया है।</string>
+    <string name="sign_up_email_sent">हमने आपको \"%1$s\" पर एक साइन-इन लिंक ईमेल किया है।</string>
+    <string name="retry">पुन: प्रयास करें</string>
+    <string name="open_mailbox">मेलबॉक्स खोलें</string>
+    <string name="mailbox_app_not_found">उह ओह! हमें आपके डिवाइस पर मेलबॉक्स ऐप नहीं मिला!</string>
+    <string name="signing_in">हम आपको साइन इन कर रहे हैं</string>
+    <string name="sign_in_sucessful">सफलतापूर्वक साइन इन किया गया!</string>
+    <string name="cont">आगे बढें</string>
+    <string name="sign_out_confirmation">साइन आउट करने की पुष्टि करें\?</string>
+    <string name="signing_out">हम आपको साइन आउट कर रहे हैं</string>
+    <string name="i_understand">मै समझता/समझती हुँ।</string>
+    <string name="support_development__donate_description">यदि आपने प्रीमियम सदस्यता नहीं खरीदी है, तो आप एकमुश्त भुगतान कर सकते हैं। इससे हमें मुफ़्त सुविधाओं को विकसित करने और उन्हें हमेशा के लिए विज्ञापन-मुक्त रखने में मदद मिलेगी।</string>
+    <string name="sign_in_token_error">साइन-इन लिंक अमान्य प्रतीत होता है। हो सकता है कि यह समाप्त हो गया हो। कृपया पुन: प्रयास करें!</string>
+    <string name="sign_up">साइन अप करें</string>
+    <string name="delete_account">अकाउंट डिलीट करें</string>
+    <string name="welcome">आपका स्वागत है!</string>
+    <string name="sign_up_message">साइन अप करने के लिए कृपया अपना नाम और ईमेल दर्ज करें।</string>
+    <string name="invalid_name">दर्ज किया गया नाम अमान्य है!</string>
+    <string name="sign_in_email_sent">यदि यह पता किसी पंजीकृत खाते से संबंधित है तो हमने आपको \"%1$s\" पर एक साइन-इन लिंक ईमेल किया है।</string>
+    <string name="email">ईमेल</string>
+    <string name="sign_in_link_tip">साइन-इन प्रक्रिया को पूरा करने के लिए कृपया Noice का उपयोग करके प्राप्त लिंक खोलें।</string>
+    <string name="delete_account_confirmation">अपना खाता हटाने पर, आप तुरंत अपनी प्रोफ़ाइल खो देंगे। यदि आपके पास एक सतत सदस्यता है, तो इसे रद्द कर दिया जाएगा। कृपया ध्यान दें कि हमारे सर्वर से आपके डेटा को पूरी तरह से मिटाने में हमें कुछ अतिरिक्त समय लग सकता है।</string>
 </resources>
