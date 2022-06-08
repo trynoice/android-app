@@ -23,25 +23,26 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v2
-      - uses: ashutoshgngwr/validate-fastlane-supply-metadata@v1
+      - uses: actions/checkout@v3
+      - uses: ashutoshgngwr/validate-fastlane-supply-metadata@v2
         with:
           usePlayStoreLocales: true
 
   play-store-upload:
     name: Play Store Upload
     needs: validate
-    if: github.repository == 'ashutoshgngwr/noice' && github.event_name == 'push' && contains(github.ref , 'refs/tags/')
+    if: github.event_name == 'push' && startsWith(github.ref , 'refs/tags/')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
+      - uses: actions/checkout@v3
+      - run: bundle install
       - run: echo "$SERVICE_ACCOUNT_KEY" > service-account-key.json
         env:
           SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-      - run: bundle install && bundle exec fastlane upload_metadata
+      - run: bundle exec fastlane upload_metadata
       - if: ${{ always() }}
         run: rm -f service-account-key.json

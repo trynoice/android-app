@@ -57,7 +57,7 @@ function cleanup() {
 trap "cleanup" EXIT
 
 echo "starting $GRADLE_TASK gradle task..."
-./gradlew "$GRADLE_TASK" --stacktrace
+./gradlew "$GRADLE_TASK"
 GRADLE_EXITCODE=$?
 
 if [ $GRADLE_EXITCODE -ne 0 ];  then

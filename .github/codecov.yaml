@@ -3,20 +3,19 @@ coverage:
     project:
       default:
         target: auto
-      android:
-        target: auto
+      api-client:
         flags:
-          - android
-      cast-receiver:
-        target: auto
+          - api-client
+      app:
         flags:
-          - cast_receiver
+          - app
+
 flags:
-  android:
+  api-client:
+    carryforward: true
+    paths:
+      - api-client
+  app:
+    carryforward: true
     paths:
       - app
-    carryforward: true
-  cast_receiver:
-    paths:
-      - cast-receiver
-    carryforward: true

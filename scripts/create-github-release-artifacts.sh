@@ -36,7 +36,7 @@ echo "$JKS_STORE" | base64 --decode > keystore.jks
 
 # build full variant first
 echo "building full apk variant..."
-./gradlew assembleFullRelease --stacktrace
+./gradlew assembleFullRelease
 GRADLE_EXITCODE_FULL=$?
 
 # remove non-free deps from the free build but keep the signingConfig
@@ -46,7 +46,7 @@ sed -i -e '/sed:free-build:remove/d' build.gradle app/build.gradle
 
 # build free variant
 echo "building free apk variant..."
-./gradlew assembleFreeRelease --stacktrace
+./gradlew assembleFreeRelease
 GRADLE_EXITCODE_FREE=$?
 
 # revert gradle files back to their original state
