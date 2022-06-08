@@ -23,7 +23,7 @@ project.ext {
   ]
 
   deps = [
-    coroutinesVersion : '1.6.0',
+    coroutinesVersion : '1.6.2',
     hiltVersion       : "${hiltVersion}",
     kotlinVersion     : "${kotlinVersion}",
     lifecycleVersion  : '2.4.1',
