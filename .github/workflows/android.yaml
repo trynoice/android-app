@@ -8,6 +8,7 @@ on:
       - "[0-9]+.[0-9]+.[0-9]+"
     paths:
       - ".github/workflows/android.yaml"
+      - "api-client/**"
       - "app/**"
       - "gradle/**"
       - "**.gradle"
@@ -20,6 +21,7 @@ on:
       - "[0-9]+.[0-9]+.x"
     paths:
       - ".github/workflows/android.yaml"
+      - "api-client/**"
       - "app/**"
       - "gradle/**"
       - "**.gradle"
