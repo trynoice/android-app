@@ -137,4 +137,6 @@
     <string name="export_presets_successful">Поєднання успішно експортовано до файлу!</string>
     <string name="enable_media_buttons_summary">Використовувати апаратні медіакнопки для керування відтворенням</string>
     <string name="enable_media_buttons">Увімкнути медіакнопки</string>
+    <string name="random_preset_description">Згенероване поєднання, імовірно, міститиме звуки з вибраними ключовими словами. Крім того, інтенсивні поєднання намагатимуться відтворювати більше звуків одночасно.</string>
+    <string name="support_development__donate_description">Якщо ви ще не придбали преміальну передплату, ви можете здійснити одноразовий платіж. Це допоможе нам підтримувати розробку безплатних функцій і ніколи не додавати рекламу.</string>
 </resources>
