@@ -12,8 +12,6 @@ simple bug reports to large features.
 - [Adding sounds](#adding-sounds)
 - [Contributing code](#contributing-code)
   - [Architecture](#architecture)
-    - [Android](#android)
-    - [Cast Receiver](#cast-receiver)
   - [Best Practices](#best-practices)
 - [Guiding Principles](#guiding-principles)
 - [Releases](#releases)
@@ -111,8 +109,6 @@ Most of the code is documented but not very thoroughly.
 
 ### Architecture
 
-#### Android
-
 The Android app is written in Kotlin. It does not adhere to modern architectures
 (e.g. MVVM) or use modern frameworks. The rationale behind the choice was simple
 &mdash; the view interactions are simple, and the views don't mutate too often.
@@ -124,36 +120,6 @@ A `PlayerManager` controls multiple `Player` instances and can have at most one
 
 <p align="center">
   <img align="center" alt="Android app architecture" src="graphics/android-app-architecture.svg" /><br>
-</p>
-
-#### Cast Receiver
-
-The Cast receiver app is written in TypeScript. The TypeScript code transpiles
-to the plain JavaScript to run in the Chromium instance on Chromecast devices.
-The receiver app receives simple commands (JSON) from the `Player` component in
-the Android app using Chromecast Sender and Receiver SDKs.
-
-The receiver app has its `PlayerManager` implementation, which reacts to command
-messages received from the sender Android app. The receiver app fetches the
-audio from the internet instead of employing complicated mechanisms for
-streaming audio over the local network. Hence, the sender app only needs to send
-`soundKey`s with each of its control messages.
-
-On receiving the following message, the `PlayerManager` on the receiver app will
-immediately pause the [`Howl`](https://howlerjs.com/) instances corresponding to
-the keys present in `src` array.
-
-```json
-{
-  "src": ["birds_0.mp3", "birds_1.mp3"],
-  "isLooping": true,
-  "action": "pause",
-  "volume": 0.3
-}
-```
-
-<p align="center">
-  <img alt="Cast receiver app architecture" src="graphics/cast-receiver-architecture.svg" /><br>
 </p>
 
 ### Best Practices

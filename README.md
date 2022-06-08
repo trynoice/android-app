@@ -10,7 +10,6 @@
 [![Translation status](https://hosted.weblate.org/widgets/noice/-/svg-badge.svg)](https://hosted.weblate.org/engage/noice/)
 [![Financial contributors](https://opencollective.com/noice/tiers/badge.svg)](https://opencollective.com/noice)
 [![Android](https://github.com/trynoice/android-app/workflows/Android/badge.svg)](https://github.com/trynoice/android-app/actions?query=workflow%3AAndroid)
-[![Cast Receiver](https://github.com/trynoice/android-app/workflows/Cast%20Receiver/badge.svg)](https://github.com/trynoice/android-app/actions?query=workflow%3A%22Cast+Receiver%22)
 [![codecov](https://codecov.io/gh/trynoice/android-app/branch/master/graph/badge.svg)](https://codecov.io/gh/trynoice/android-app)
 
 For a lot of people, a little background noise is helpful to calm down and focus. In some cases, it's also a boost to productivity. Background noise can also help minimize the effects of stress.
