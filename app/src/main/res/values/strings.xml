@@ -11,7 +11,7 @@
     <string name="wake_up_timer">Wake-up Timer</string>
     <string name="submit_feedback">Submit Feedback</string>
     <string name="intensity">Intensity</string>
-    <string name="random_preset_description">Generated random presets is likely to contain sounds with chosen keywords. Moreover, intense presets will attempt to play more sounds simultaneously.</string>
+    <string name="random_preset_description">The generated preset is likely to contain sounds with chosen keywords. Moreover, intense presets will attempt to play more sounds simultaneously.</string>
     <string name="okay">Okay</string>
     <string name="random_preset">Random Preset</string>
     <string name="cancel">Cancel</string>
@@ -90,17 +90,13 @@
   </string>
     <string name="appintro__timer_title">Trouble falling asleep or waking up?</string>
     <string name="support_development__donate">Donate</string>
-    <string name="support_development__donate_description">If you have not purchased the premium subscription of Noice, you can make a one-time payment. It will help us sustain the development of the free features in Noice and keep them ad-free forever.</string>
+    <string name="support_development__donate_description">If you have not purchased the premium subscription, you can make a one-time payment. It will help us sustain the development of the free features and keep them ad-free forever.</string>
     <string name="support_development__donate_google_play_description">Your payment will be securely handled by Google Play. Depending on your location, additional taxes _may be_ added to the final amount.</string>
     <string name="support_development__donate_thank_you_description">
     We wholeheartedly thank you for your generous contribution to the Noice project.
   </string>
     <string name="support_development__share">Share with friends</string>
-    <string name="support_development__share_description">
-    You can also help by sharing Noice with your friends. More users will allow us to receive
-    feedback from a number of different perspectives. It will help us in making Noice better than
-    ever.
-  </string>
+    <string name="support_development__share_description">You can also help us by telling your friends about us. More users will provide us feedback from several different perspectives and help us improve our services.</string>
     <string name="cast_media">Connect to Chromecast</string>
     <string name="in_app_feedback__description">
     We\'d love to hear from you about the app. Please take a moment to visit our GitHub repository.
@@ -181,8 +177,8 @@
     <string name="sign_in_message">Please enter your email to sign-in.</string>
     <string name="sign_up_message">Please enter your name and email to sign-up.</string>
     <string name="email">Email</string>
-    <string name="invalid_name">Name is not valid!</string>
-    <string name="invalid_email">Email is not valid!</string>
+    <string name="invalid_name">The entered name is invalid!</string>
+    <string name="invalid_email">The entered email is invalid!</string>
     <string name="account_locked_error">Your email is temporarily locked from making sign-in attempts until %1$s.</string>
     <string name="sign_up_email_sent">We\'ve emailed you a sign-in link at \"%1$s\".</string>
     <string name="sign_in_email_sent">We\'ve emailed you a sign-in link at \"%1$s\" if this address belongs to a registered account.</string>
@@ -249,7 +245,7 @@
     <string name="cancelling_subscription">Cancelling subscription</string>
     <string name="no_subscription_purchases_found">We don\'t think that you have tried Noice Premium yet. Your previous subscriptions will appear here once you have used Noice Premium at least once.</string>
     <string name="faqs">Frequently Asked Questions</string>
-    <string name="made_in_india">Made with &#x2764; in India</string>
+    <string name="made_in_india">Made with ❤ in India</string>
     <string name="sound_info">About this sound</string>
     <string name="has_premium_segments">This sound has premium components.</string>
     <string name="looping_sound">This sound loops seamlessly.</string>
