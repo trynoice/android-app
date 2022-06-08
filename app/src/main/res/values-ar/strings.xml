@@ -69,7 +69,7 @@
     <string name="others">الاخرين</string>
     <string name="decline">رفض</string>
     <string name="accept">قبول</string>
-    <string name="share_usage_data_consent_message">نقوم بجمع بيانات استخدام التطبيق لتحسين تجربة المستخدم. نقوم أيضًا بجمع بيانات سلوك التطبيق لتحليل وتشخيص الأخطاء التي تمت مواجهتها أثناء استخدام التطبيق. اقرأ [سياسة الخصوصية] (https://ashutoshgngwr.github.io/noice/privacy-policy) للحصول على مزيد من المعلومات.
+    <string name="share_usage_data_consent_message">نقوم بجمع بيانات استخدام التطبيق لتحسين تجربة المستخدم. نقوم أيضًا بجمع بيانات سلوك التطبيق لتحليل وتشخيص الأخطاء التي تمت مواجهتها أثناء استخدام التطبيق. اقرأ [سياسة الخصوصية](https://trynoice.com/privacy-policy) للحصول على مزيد من المعلومات.
 \n
 \n يمكنك تكوين المشاركة التلقائية للبيانات في أي وقت داخل التطبيق من خلال الانتقال إلى \"** الإعدادات **&gt; ** مشاركة بيانات الاستخدام والسلوك **.</string>
     <string name="share_usage_data_consent_title">تفضيلات مشاركة البيانات</string>

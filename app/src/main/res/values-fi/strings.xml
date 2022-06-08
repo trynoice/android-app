@@ -93,7 +93,7 @@
     <string name="others">Muut</string>
     <string name="decline">Hylkää</string>
     <string name="accept">Hyväksy</string>
-    <string name="share_usage_data_consent_message">Keräämme sovelluksen käyttötietoja käyttäjäkokemuksen parantamiseksi. Keräämme myös sovelluksen käyttäytymistietoja analysoidaksemme ja diagnosoidaksemme sovelluksen käytön aikana ilmeneviä virheitä. Lue [tietosuojakäytäntö](https://ashutoshgngwr.github.io/noice/privacy-policy) saadaksesi lisätietoja.
+    <string name="share_usage_data_consent_message">Keräämme sovelluksen käyttötietoja käyttäjäkokemuksen parantamiseksi. Keräämme myös sovelluksen käyttäytymistietoja analysoidaksemme ja diagnosoidaksemme sovelluksen käytön aikana ilmeneviä virheitä. Lue [tietosuojakäytäntö](https://trynoice.com/privacy-policy) saadaksesi lisätietoja.
 \n
 \nVoit määrittää automaattisen tietojen jakamisen milloin tahansa sovelluksen sisällä valitsemalla \"**Asetukset** &gt; **Käyttö- ja käyttäytymistietojen jakaminen**\".</string>
     <string name="share_usage_data_consent_title">Tietojen jakamisasetukset</string>

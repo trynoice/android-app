@@ -21,4 +21,4 @@ Noice është një aplikacion që ju lejon të krijoni një ambient të personal
 - Zhurma e papërpunuar (e bardhë, rozë, kafe)
 
 Zhurma është softuer falas dhe me burim të hapur.
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

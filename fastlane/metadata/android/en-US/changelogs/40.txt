@@ -6,4 +6,4 @@
 - Fixed inability to pin home screen shortcuts below Android 8
 
 We're continuously working to make Noice better. Please turn on updates to never miss a thing!
-See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG.
+See detailed changelog at https://trynoice.com/changelog

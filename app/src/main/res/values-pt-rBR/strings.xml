@@ -163,7 +163,7 @@
     <string name="add_to_app_shortcuts">Adicionar aos atalhos da aplicação</string>
     <string name="app_authors">Visualizar lista dos autores do Noice</string>
     <string name="created_by">Criado por</string>
-    <string name="share_usage_data_consent_message">Coletamos dados de uso do aplicativo para melhorar a experiência do usuário. Também coletamos dados de comportamento do aplicativo para analisar e diagnosticar erros encontrados durante o uso do aplicativo. Leia nossa [política de privacidade] (https://ashutoshgngwr.github.io/noice/privacy-policy) para obter mais informações.
+    <string name="share_usage_data_consent_message">Coletamos dados de uso do aplicativo para melhorar a experiência do usuário. Também coletamos dados de comportamento do aplicativo para analisar e diagnosticar erros encontrados durante o uso do aplicativo. Leia nossa [política de privacidade](https://trynoice.com/privacy-policy) para obter mais informações.
 \n
 \n Você pode configurar o compartilhamento automático de dados a qualquer momento dentro do aplicativo acessando \"**Configurações** &gt; **Compartilhar dados de uso e comportamento**\".</string>
     <string name="import_presets_successful">Predefinições importadas com sucesso do arquivo!</string>

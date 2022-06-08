@@ -30,7 +30,7 @@ class AboutFragment : Fragment() {
         buildElement(
           R.drawable.ic_about_version,
           "v${BuildConfig.VERSION_NAME}",
-          getString(R.string.app_changelog_url)
+          getString(R.string.app_changelog_url),
         )
       )
 
@@ -38,15 +38,31 @@ class AboutFragment : Fragment() {
         buildElement(
           R.drawable.ic_about_copyright,
           R.string.app_copyright,
-          R.string.app_license_url
+          R.string.app_authors_url,
         )
       )
 
       addItem(
         buildElement(
-          R.drawable.ic_about_group,
-          R.string.app_authors,
-          R.string.app_authors_url
+          R.drawable.ic_baseline_shield_24,
+          R.string.app_license,
+          R.string.app_license_url,
+        )
+      )
+
+      addItem(
+        buildElement(
+          R.drawable.ic_baseline_privacy_tip_24,
+          R.string.privacy_policy,
+          R.string.app_privacy_policy_url,
+        )
+      )
+
+      addItem(
+        buildElement(
+          R.drawable.ic_baseline_policy_24,
+          R.string.terms_of_service,
+          R.string.app_tos_url,
         )
       )
 
@@ -62,9 +78,9 @@ class AboutFragment : Fragment() {
 
       addItem(
         buildElement(
-          R.drawable.about_icon_instagram,
-          R.string.about_instagram,
-          R.string.app_instagram_url
+          R.drawable.about_icon_link,
+          R.string.about_website,
+          R.string.app_website_url
         )
       )
 
@@ -78,17 +94,17 @@ class AboutFragment : Fragment() {
 
       addItem(
         buildElement(
-          R.drawable.about_icon_github,
-          R.string.about_github,
-          R.string.app_github_url
+          R.drawable.about_icon_instagram,
+          R.string.about_instagram,
+          R.string.app_instagram_url
         )
       )
 
       addItem(
         buildElement(
-          R.drawable.about_icon_link,
-          R.string.about_website,
-          R.string.app_website_url
+          R.drawable.about_icon_github,
+          R.string.about_github,
+          R.string.app_github_url
         )
       )
 

@@ -148,7 +148,7 @@
     <string name="invalid_import_file_format">Formát souboru pro import je neplatný!</string>
     <string name="should_display_sound_icons">Zobrazovat ikony zvuku</string>
     <string name="share_usage_data_consent_title">Nastavení sdílení dat</string>
-    <string name="share_usage_data_consent_message">Pro vylepšení aplikace sbíráme data o jejím využívání. Také sbíráme data o chování aplikace samotné, abychom mohli lépe analyzovat a diagnostikovat případné chyby, s nimiž byste se mohli potkat. Pro více informací si přečtěte naše [zásady ochrany osobních údajů](https://ashutoshgngwr.github.io/noice/privacy-policy).
+    <string name="share_usage_data_consent_message">Pro vylepšení aplikace sbíráme data o jejím využívání. Také sbíráme data o chování aplikace samotné, abychom mohli lépe analyzovat a diagnostikovat případné chyby, s nimiž byste se mohli potkat. Pro více informací si přečtěte naše [zásady ochrany osobních údajů](https://trynoice.com/privacy-policy).
 \n
 \nPředvolbu automatického sběru dat můžete kdykoliv změnit uvnitř aplikace, skrze \"**Nastavení** &gt; **Odesílat technická data o používání a chování**\".</string>
     <string name="accept">Přijmout</string>

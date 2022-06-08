@@ -2,15 +2,17 @@
 <resources>
   <string name="app_name">Noice</string>
   <string name="app_copyright">2019–21 the Noice Authors</string>
-  <string name="app_license_url">https://github.com/ashutoshgngwr/noice/blob/master/LICENSE</string>
-  <string name="app_authors_url">https://ashutoshgngwr.github.io/noice/contributors?ref=Android+App</string>
-  <string name="app_changelog_url">https://ashutoshgngwr.github.io/noice/CHANGELOG?ref=Android+App</string>
-  <string name="app_website_url">https://ashutoshgngwr.github.io/noice?ref=Android+App</string>
+  <string name="app_license_url">https://github.com/trynoice/android-app/blob/main/LICENSE</string>
+  <string name="app_authors_url">https://github.com/trynoice/android-app/graphs/contributors</string>
+  <string name="app_changelog_url">https://trynoice.com/changelog</string>
+  <string name="app_website_url">https://trynoice.com</string>
   <string name="app_instagram_url">https://www.instagram.com/trynoice/</string>
   <string name="app_twitter_url">https://twitter.com/trynoice</string>
-  <string name="app_github_url">https://github.com/ashutoshgngwr/noice</string>
-  <string name="app_issues_github_url">https://github.com/ashutoshgngwr/noice/issues</string>
+  <string name="app_github_url">https://github.com/trynoice/android-app</string>
+  <string name="app_issues_github_url">https://github.com/trynoice/android-app/issues</string>
   <string name="app_faqs_url">https://trynoice.com/faqs</string>
+  <string name="app_privacy_policy_url">https://trynoice.com/privacy-policy</string>
+  <string name="app_tos_url">https://trynoice.com/terms-of-service</string>
   <string name="app_issues_form_url">
     https://docs.google.com/forms/d/e/1FAIpQLSdYhyYjxhJ7IKyiqdc3AE3uINSoRWBw8ROB003gkZ47KeSjWw/viewform?usp=sf_link
   </string>

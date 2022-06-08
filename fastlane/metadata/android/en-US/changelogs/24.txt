@@ -3,4 +3,4 @@
 - Fix dark theme (now 35% more dark)
 - Fix app banner in About section
 
-See detailed changelog at https://ashutoshgngwr.github.io/noice/CHANGELOG
+See detailed changelog at https://trynoice.com/changelog

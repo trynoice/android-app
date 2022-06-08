@@ -32,4 +32,4 @@ Noice - tai programėlė, leidžianti sukurti individualią aplinką naudojant a
 - <b>„Google Play“ atsiskaitymo paslauga</b>: įgalinti finansinius įnašus, skirtus plėtrai remti
 
 Noice yra nemokama atvirojo kodo programinė įranga.
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

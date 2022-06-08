@@ -32,4 +32,4 @@ Noice on sovellus, jonka avulla voit luoda räätälöidyn tunnelman käyttämä
 - <b>Google Play -laskutuspalvelu</b>: mahdollistaa rahallisen tukemisen kehityksen tukemiseksi.
 
 Noice on ilmainen ja avoimen lähdekoodin ohjelmisto.
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

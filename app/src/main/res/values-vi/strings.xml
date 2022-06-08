@@ -126,7 +126,7 @@
     <string name="others">Khác</string>
     <string name="decline">Từ chối</string>
     <string name="accept">Chấp nhận</string>
-    <string name="share_usage_data_consent_message">Chúng tôi thu thập dữ liệu sử dụng ứng dụng để cải thiện trải nghiệm người dùng. Chúng tôi cũng thu thập dữ liệu hành vi của ứng dụng để phân tích và chẩn đoán các lỗi gặp phải trong khi sử dụng ứng dụng. Hãy đọc [chính sách riêng tư](https://ashutoshgngwr.github.io/noice/privacy-policy) của chúng tôi để biết thêm thông tin.
+    <string name="share_usage_data_consent_message">Chúng tôi thu thập dữ liệu sử dụng ứng dụng để cải thiện trải nghiệm người dùng. Chúng tôi cũng thu thập dữ liệu hành vi của ứng dụng để phân tích và chẩn đoán các lỗi gặp phải trong khi sử dụng ứng dụng. Hãy đọc [chính sách riêng tư](https://trynoice.com/privacy-policy) của chúng tôi để biết thêm thông tin.
 \n
 \n Bạn có thể thiết lập tự động chia sẻ dữ liệu tại bất cứ lúc nào ở trong ứng dụng bằng cách đi đến \"**Cài đặt** &gt; **Chia sẻ dữ liệu sử dụng và hành vi**\".</string>
     <string name="share_usage_data_consent_title">Cài đặt chia sẻ dữ liệu</string>

@@ -32,4 +32,4 @@ Noice je aplikace, která vám umožní si vytvořit vlastní zvuková prostřed
 - <b>Fakturační služba Google Play</b>: potřebné pro možnost finanční podpory vývoje
 
 Noice je nejen zdarma, ale je i open-source.
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

@@ -152,7 +152,7 @@
     <string name="should_share_usage_data_summary">Automatisch Nutzungs- und Verhaltensdaten mit den Entwicklern teilen</string>
     <string name="should_share_usage_data">Nutzungs- und Verhaltensdaten teilen</string>
     <string name="others">Andere</string>
-    <string name="share_usage_data_consent_message">Wir sammeln Nutzungsdaten der App um die Benutzererfahrung zu verbessern. Wir sammeln außerdem Verhaltensdaten der App um auftretende Fehler während der Verwendung zu analysieren und diagnostizieren. Lies unsere [Datenschutzbestimmungen] (https://ashutoshgngwr.github.io/noice/privacy-policy) für weitere Informationen.
+    <string name="share_usage_data_consent_message">Wir sammeln Nutzungsdaten der App um die Benutzererfahrung zu verbessern. Wir sammeln außerdem Verhaltensdaten der App um auftretende Fehler während der Verwendung zu analysieren und diagnostizieren. Lies unsere [Datenschutzbestimmungen](https://trynoice.com/privacy-policy) für weitere Informationen.
 \n
 \nDu kannst das automatische Teilen von Daten jederzeit unter \"**Einstellungen** &gt; **Nutzungs- und Verhaltensdaten teilen**\" verwalten.</string>
     <string name="share_usage_data_consent_title">Präferenzen beim Teilen von Daten</string>

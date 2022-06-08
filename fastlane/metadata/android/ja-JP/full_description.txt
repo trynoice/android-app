@@ -32,4 +32,4 @@ Noiceは、環境ノイズのクリップを使って、カスタマイズした
 - <b>Google Play billing service</b>：開発支援のための寄付を可能にする
 
 Noiceはフリーでオープンソースのソフトウェアです。
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

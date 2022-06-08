@@ -101,16 +101,16 @@
   </string>
     <string name="appintro__timer_title">Trouble falling asleep or waking up?</string>
     <string name="support_development__donate">Donate</string>
-    <string name="support_development__donate_description">If you have not purchased the premium subscription of Noice, you can help us through a one-time payment. It will help us sustain the development of the free features in Noice and keep them ad-free forever.</string>
+    <string name="support_development__donate_description">If you have not purchased the premium subscription of Noice, you can make a one-time payment. It will help us sustain the development of the free features in Noice and keep them ad-free forever.</string>
     <string name="support_development__donate_google_play_description">Your payment will be securely handled by Google Play. Depending on your location, additional taxes _may be_ added to the final amount.</string>
     <string name="support_development__donate_thank_you_description">
     We wholeheartedly thank you for your generous contribution to the Noice project.
   </string>
     <string name="support_development__share">Share with friends</string>
     <string name="support_development__share_description">
-    Sharing Noice with friends is similar to donating money. With higher downloads, we will be able
-    to receive feedback from a number of different perspectives which will help us in making Noice
-    better than ever.
+    You can also help by sharing Noice with your friends. More users will allow us to receive
+    feedback from a number of different perspectives. It will help us in making Noice better than
+    ever.
   </string>
     <string name="cast_media">Connect to Chromecast</string>
     <string name="in_app_feedback__description">
@@ -162,7 +162,7 @@
     <string name="share_usage_data_consent_message">
         We collect app usage data to improve user experience. We also collect app behaviour data to
         analyse and diagnose errors encountered during app usage. Read our [privacy
-        policy](https://ashutoshgngwr.github.io/noice/privacy-policy) for further information.\n\n
+        policy](https://trynoice.com/privacy-policy) for further information.\n\n
         You can configure automatic data sharing at any time inside the app by going to \"**Settings**
         &gt; **Share usage and behaviour data**\".
     </string>
@@ -295,4 +295,7 @@
     <string name="generate_preset_error">Uh-oh! We failed to generate a preset. %1$s Please try again!</string>
     <string name="sign_up_tos">By continuing, you agree to our [Terms of Service](https://trynoice.com/terms-of-service) and [Privacy Policy](https://trynoice.com/privacy-policy).</string>
     <string name="gift_card">Gift Card</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="app_license">"Licensed under GNU GPL-3.0 "</string>
 </resources>

@@ -156,7 +156,7 @@
     <string name="payment_pending">Kami akan memberi tahu Anda segera setelah kami selesai memproses pembayaran Anda.</string>
     <string name="export_presets_successful">Berhasil mengekspor preset ke file!</string>
     <string name="import_presets_successful">Berhasil mengimpor preset dari file!</string>
-    <string name="share_usage_data_consent_message">Kami mengumpulkan data penggunaan aplikasi untuk meningkatkan pengalaman pengguna. Kami juga mengumpulkan data perilaku aplikasi untuk menganalisis dan mendiagnosis kesalahan yang ditemukan selama penggunaan aplikasi. Baca [kebijakan privasi](https://ashutoshgngwr.github.io/noice/privacy-policy) kami untuk informasi lebih lanjut.
+    <string name="share_usage_data_consent_message">Kami mengumpulkan data penggunaan aplikasi untuk meningkatkan pengalaman pengguna. Kami juga mengumpulkan data perilaku aplikasi untuk menganalisis dan mendiagnosis kesalahan yang ditemukan selama penggunaan aplikasi. Baca [kebijakan privasi](https://trynoice.com/privacy-policy) kami untuk informasi lebih lanjut.
 \n
 \n Anda dapat mengonfigurasi berbagi data otomatis kapan saja di dalam aplikasi dengan membuka \"**Setelan** &gt; **Berbagi data penggunaan dan perilaku**\".</string>
     <string name="failed_to_load_inapp_purchases">Gagal memuat detail pembelian dalam aplikasi. Silakan coba lagi nanti!</string>

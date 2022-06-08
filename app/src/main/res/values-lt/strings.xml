@@ -133,7 +133,7 @@
     <string name="others">Kita</string>
     <string name="decline">Atmesti</string>
     <string name="accept">Priimti</string>
-    <string name="share_usage_data_consent_message">Renkame programėlės naudojimo duomenis, kad pagerintume naudotojo patirtį. Taip pat renkame programėlės elgsenos duomenis, kad galėtume analizuoti ir diagnozuoti klaidas, su kuriomis susiduriama naudojant programėlę. Daugiau informacijos rasite mūsų [privatumo politikoje] (https://ashutoshgngwr.github.io/noice/privacy-policy).
+    <string name="share_usage_data_consent_message">Renkame programėlės naudojimo duomenis, kad pagerintume naudotojo patirtį. Taip pat renkame programėlės elgsenos duomenis, kad galėtume analizuoti ir diagnozuoti klaidas, su kuriomis susiduriama naudojant programėlę. Daugiau informacijos rasite mūsų [privatumo politikoje](https://trynoice.com/privacy-policy).
 \n
 \n Automatinį dalijimąsi duomenimis bet kuriuo metu galite konfigūruoti programėlėje, eidami į \"**Nustatymai** &gt; **Dalytis naudojimo ir elgsenos duomenimis**\".</string>
     <string name="share_usage_data_consent_title">Duomenų dalijimosi nuostatos</string>

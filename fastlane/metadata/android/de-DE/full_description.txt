@@ -32,4 +32,4 @@ Die App Noice erlaubt es dir, deine eigene Geräuschumgebung mit Clips aus diver
 - <b>Google Play-Rechnungsdienst</b>: um finanzielle Unterstützungen für die App Entwicklung zu möglich zu machen
 
 Noice ist freie und quelloffene Software.
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

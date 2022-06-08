@@ -157,8 +157,8 @@
     <string name="others">Diğer</string>
     <string name="decline">Reddet</string>
     <string name="accept">Kabul et</string>
-    <string name="share_usage_data_consent_message">Kullanıcı deneyimini iyileştirmek için uygulama kullanım verilerini topluyoruz. Ayrıca, uygulama kullanımı sırasında karşılaşılan hataları çözümlemek ve teşhis etmek için uygulama davranış verilerini topluyoruz. Daha fazla bilgi için [gizlilik politikamızı](https://ashutoshgngwr.github.io/noice/privacy-policy) okuyun.
 \n
+    <string name="share_usage_data_consent_message">Kullanıcı deneyimini iyileştirmek için uygulama kullanım verilerini topluyoruz. Ayrıca, uygulama kullanımı sırasında karşılaşılan hataları çözümlemek ve teşhis etmek için uygulama davranış verilerini topluyoruz. Daha fazla bilgi için [gizlilik politikamızı](https://trynoice.com/privacy-policy) okuyun.
 \n \"**Ayarlar** &gt; **Kullanım ve davranış verilerini paylaş**\" seçeneğine giderek uygulama içinde istediğiniz zaman otomatik veri paylaşımını yapılandırabilirsiniz.</string>
     <string name="share_usage_data_consent_title">Veri Paylaşımı Tercihleri</string>
     <string name="created_by">Oluşturan</string>

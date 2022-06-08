@@ -123,7 +123,7 @@
     <string name="invalid_import_file_format">导入文件的格式无效！</string>
     <string name="failed_to_purchase">发起付款流程失败。请稍后重试！</string>
     <string name="export_presets_summary">将已保存预设的当前快照导出为外部文件</string>
-    <string name="share_usage_data_consent_message">我们收集应用使用数据来改善用户体验。我们同时也会获取应用运行数据来分析、诊断使用过程中遇到的错误。欲知更多细节请阅读我们的 [隐私策略](https://ashutoshgngwr.github.io/noice/privacy-policy)。
+    <string name="share_usage_data_consent_message">我们收集应用使用数据来改善用户体验。我们同时也会获取应用运行数据来分析、诊断使用过程中遇到的错误。欲知更多细节请阅读我们的 [隐私策略](https://trynoice.com/privacy-policy)。
 \n
 \n 您也可以随时前往应用内的「**设置** &gt; **使用情况与运行数据**」配置自动数据共享行为。</string>
     <string name="failed_to_load_inapp_purchases">载入应用内购详情失败。请稍后重试！</string>

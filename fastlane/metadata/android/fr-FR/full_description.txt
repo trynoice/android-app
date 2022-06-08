@@ -20,4 +20,4 @@ Noice est une application qui permet de créer des ambiances personnalisées à 
 - Bruits colorés (blanc, rose, rouge)
 
 Noice est une application gratuite et open source.
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app

@@ -99,7 +99,7 @@
     <string name="others">その他</string>
     <string name="decline">拒否</string>
     <string name="accept">承認</string>
-    <string name="share_usage_data_consent_message">開発チームは、ユーザー体験を向上させるためにアプリの使用データを収集します。また、アプリの使用中に発生したエラーを分析・診断するために、アプリの動作データを収集しています。詳細については、当社の[プライバシーポリシー](https://ashutoshgngwr.github.io/noice/privacy-policy)をご覧ください。
+    <string name="share_usage_data_consent_message">開発チームは、ユーザー体験を向上させるためにアプリの使用データを収集します。また、アプリの使用中に発生したエラーを分析・診断するために、アプリの動作データを収集しています。詳細については、当社の[プライバシーポリシー](https://trynoice.com/privacy-policy)をご覧ください。
 \n
 \n お客様は、アプリ内の「**設定** &gt; **使用状況と動作データの共有**」で、いつでも自動データ共有を設定することができます。</string>
     <string name="share_usage_data_consent_title">データ共有の設定</string>

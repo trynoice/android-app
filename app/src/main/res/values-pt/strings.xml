@@ -82,7 +82,7 @@
     <string name="others">Outros</string>
     <string name="decline">Recusar</string>
     <string name="accept">Aceitar</string>
-    <string name="share_usage_data_consent_message">Recolhemos dados de utilização da aplicação para melhorar a experiência do utilizador. Também recolhemos dados de comportamento da aplicação para analisar e diagnosticar erros encontrados durante a utilização da aplicação. Leia a nossa [política de privacidade] (https://ashutoshgngwr.github.io/noice/privacy-policy) para obter mais informações.
+    <string name="share_usage_data_consent_message">Recolhemos dados de utilização da aplicação para melhorar a experiência do utilizador. Também recolhemos dados de comportamento da aplicação para analisar e diagnosticar erros encontrados durante a utilização da aplicação. Leia a nossa [política de privacidade](https://trynoice.com/privacy-policy) para obter mais informações.
 \n
 \n Pode configurar a partilha automática de dados a qualquer momento dentro da aplicação em \"**Configurações** &gt; **Partilhar dados de utilização e comportamento**\".</string>
     <string name="share_usage_data_consent_title">Preferências de partilha de dados</string>
