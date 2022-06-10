@@ -1,24 +1,35 @@
-Per molte persone, un lieve suono di sottofondo è utile per calmarsi e focalizzarsi. In alcuni casi, incrementa la produttività. I rumori di sottofondo (ambientali) posso anche a minimizzare gli effetti dello stress.
+Per molte persone, un lieve suono di sottofondo è utile per calmarsi e focalizzarsi. I rumori di sottofondo (ambientali) posso anche a minimizzare gli effetti dello stress. In alcuni casi, incrementa la produttività. Aiuta anche le persone a mascherare il loro acufene.
 
-Noice è un'app che ti permette di creare atmosfere personalizzate usando clips da sorgenti di rumore ambientale. Crea il tuo ambiente perfetto combinando differenti suoni per ridurre le distrazioni così che tu possa focalizzarti sul tuo lavoro, o per generare ambientazioni serene e pacifiche che concilino il sonno.
+Noice è un'app che ti permette di creare atmosfere personalizzate usando clips da sorgenti di rumore ambientale. Crea il tuo ambiente perfetto combinando differenti suoni per ridurre le distrazioni così che tu possa focalizzarti sul tuo lavoro, o per generare ambientazioni serene per rilassarti.
 
 <b>Caratteristiche</b>
 - 35 rumori registrati
-- Google Cast (Chromecast) abilitato [solo versione Play Store]
-- Crea mix personalizzati
-- Timer sveglia
-- Salva i tuoi mix preferiti
+- Google Cast (Chromecast) abilitato (solo versione Play Store)
 - Timer di spegnimento automatico
+- Sveglia
+- Crea mix casuali
+- Crea mix personalizzati
+- Salva i tuoi mix preferiti
 - Funziona contemporanamente ad altri riproduttori musicali
 - Controllo volume individuale per ogni singola sorgente di rumore
 - Riproduzione offline
 - Varianti di temi chiaro e scuro
 
 <b>Libreria Rumori</b>
-- Serie bosco (uccelli, falò, notte, vento, palme, ecc...)
+- Serie vita (uccelli, grilli, lupi, battito umano, ecc.)
+- Serie bosco (falò, notte, vento, palme, ecc.)
 - Serie monsone (pioggia, fulmini)
-- Serie teletrasporto (caffetteria, ufficio, treno in movimento, aereo in volo, litorale, sponda del fiume, ecc...)
+- Serie teletrasporto (caffetteria, libreria, ufficio, litorale, sponda del fiume, ecc.)
+- Serie veicoli (treno in movimento, aereo in volo, nave scricchiolante, macchina elettrica, ecc.)
 - Rumori grezzi (bianco, rosa, marrone)
+
+<b>Permessi</b>
+- <b>impedisci al dispositivo di addormentarsig</b>: per tenere sveglia la CPU del dispositivo durante la riproduzione
+- <b>eseguire il servizio in primo piano</b>: per eseguire il processo del lettore (diverso da UI)
+- <b>esegui all'avvio</b>: per garantire che i timer di sveglia persistano tra i riavvii
+- <b>accesso completo alla rete</b>: per abilitare Chromecast e contributi finanziari
+- <b>visualizzare la connessione di rete</b>: aggiunto da una dipendenza, attualmente non in uso
+- <b>servizio di fatturazione Google Play</b>: per consentire contributi finanziari a sostegno dello sviluppo
 
 Noice è un programma libero ed open-source.
 https://github.com/trynoice/android-app
