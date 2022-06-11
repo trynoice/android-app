@@ -83,6 +83,10 @@ abstract class Player protected constructor(
    * Sets whether this player is allowed to queue non-free sound segments.
    */
   fun setPremiumSegmentsEnabled(enabled: Boolean) {
+    if (enabled == isPremiumSegmentsEnabled) {
+      return
+    }
+
     isPremiumSegmentsEnabled = enabled
     recreateSegmentList()
   }

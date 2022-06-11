@@ -301,6 +301,10 @@ class PlayerManager(
    * Sets whether sounds should try to play premium segments.
    */
   fun setPremiumSegmentsEnabled(enabled: Boolean) {
+    if (enabled == isPremiumSegmentsEnabled) {
+      return
+    }
+
     isPremiumSegmentsEnabled = enabled
     players.values.forEach { it.setPremiumSegmentsEnabled(enabled) }
   }
