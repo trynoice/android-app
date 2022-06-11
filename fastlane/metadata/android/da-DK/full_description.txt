@@ -32,4 +32,4 @@ Noice er en app der lader dig lave dine helt egne baggrundslyde ved hjælp af ly
 - <b>Google Play betalings service</b>: for at kunne yde finansiel støtning af udvikling
 
 Noice er gratis og open-source software.
-https://github.com/ashutoshgngwr/noice
+https://github.com/trynoice/android-app
