@@ -158,7 +158,7 @@ class SubscriptionPurchaseViewHolder(
 
     val context = binding.root.context
     val resources = binding.root.resources
-    binding.billingPeriod.text = if (s.plan.provider == SubscriptionPlan.Provider.GIFT_CARD) {
+    binding.billingPeriod.text = if (s.plan.provider == SubscriptionPlan.PROVIDER_GIFT_CARD) {
       resources.getString(R.string.gift_card)
     } else {
       when (s.plan.billingPeriodMonths) {
@@ -174,7 +174,7 @@ class SubscriptionPurchaseViewHolder(
       }
     }
 
-    if (s.plan.provider == SubscriptionPlan.Provider.GIFT_CARD) {
+    if (s.plan.provider == SubscriptionPlan.PROVIDER_GIFT_CARD) {
       binding.monthlyPrice.isVisible = false
     } else {
       binding.monthlyPrice.text = resources.getString(R.string.monthly_price, s.plan.monthlyPrice)
@@ -215,14 +215,14 @@ class SubscriptionPurchaseViewHolder(
       )
     }
 
-    if (s.plan.provider == SubscriptionPlan.Provider.GIFT_CARD) {
+    if (s.plan.provider == SubscriptionPlan.PROVIDER_GIFT_CARD) {
       binding.paidUsing.isVisible = false
     } else {
       binding.paidUsing.text = resources.getString(
         R.string.paid_using, resources.getString(
           when (s.plan.provider) {
-            SubscriptionPlan.Provider.STRIPE -> R.string.stripe
-            SubscriptionPlan.Provider.GOOGLE_PLAY -> R.string.google_play
+            SubscriptionPlan.PROVIDER_STRIPE -> R.string.stripe
+            SubscriptionPlan.PROVIDER_GOOGLE_PLAY -> R.string.google_play
             else -> throw IllegalArgumentException("unknown payment provider")
           }
         )

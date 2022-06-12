@@ -1,7 +1,6 @@
 package com.trynoice.api.client.models
 
 import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.text.NumberFormat
 import java.util.*
@@ -15,8 +14,8 @@ import java.util.*
  * @param googlePlaySubscriptionId Google Play assigned id of the subscription plan
  * @param priceInIndianPaise price of the plan in Indian Paise (INR * 100)
  * @param provider the provider of the subscription plan. It must be one of
- * [SubscriptionPlan.Provider.GOOGLE_PLAY], [SubscriptionPlan.Provider.STRIPE] or
- * [SubscriptionPlan.Provider.GIFT_CARD].
+ * [SubscriptionPlan.PROVIDER_GOOGLE_PLAY], [SubscriptionPlan.PROVIDER_STRIPE] or
+ * [SubscriptionPlan.PROVIDER_GIFT_CARD].
  * @param trialPeriodDays number of days included as the trial period with the plan
  */
 data class SubscriptionPlan(
@@ -34,7 +33,7 @@ data class SubscriptionPlan(
   val priceInIndianPaise: Int,
 
   @Expose
-  val provider: Provider,
+  val provider: String,
 
   @Expose
   val trialPeriodDays: Int,
@@ -54,20 +53,13 @@ data class SubscriptionPlan(
       else INR_FORMATTER.format(priceInIndianPaise / (billingPeriodMonths * 100))
 
   companion object {
+    const val PROVIDER_GOOGLE_PLAY = "google_play"
+    const val PROVIDER_STRIPE = "stripe"
+    const val PROVIDER_GIFT_CARD = "gift_card"
+
     private val INR_FORMATTER = NumberFormat.getCurrencyInstance().apply {
       currency = Currency.getInstance("INR")
       minimumFractionDigits = 0
     }
-  }
-
-  enum class Provider : Serializable {
-    @SerializedName("google_play")
-    GOOGLE_PLAY,
-
-    @SerializedName("stripe")
-    STRIPE,
-
-    @SerializedName("gift_card")
-    GIFT_CARD,
   }
 }
