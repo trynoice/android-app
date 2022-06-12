@@ -172,7 +172,8 @@ class SettingsRepository @Inject constructor(
    */
   fun getAudioQuality(): AudioQuality {
     return prefs.getString(context.getString(R.string.audio_bitrate_key), null)
-      .let { AudioQuality.fromBitrate(it) }
+      ?.let { AudioQuality.fromBitrate(it) }
+      ?: AudioQuality.MEDIUM
   }
 
   /**
