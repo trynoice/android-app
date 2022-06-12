@@ -87,8 +87,9 @@ abstract class Player protected constructor(
       return
     }
 
+    Log.d(LOG_TAG, "setPremiumSegmentsEnabled: setting premium segments enabled to $enabled")
     isPremiumSegmentsEnabled = enabled
-    recreateSegmentList()
+    invalidateSegmentQueue()
   }
 
   /**
@@ -99,19 +100,29 @@ abstract class Player protected constructor(
       return
     }
 
+    Log.d(LOG_TAG, "setAudioBitrate: setting bitrate to $bitrate")
     audioBitrate = bitrate
+    invalidateSegmentQueue()
+  }
+
+  private fun invalidateSegmentQueue() {
+    Log.d(LOG_TAG, "invalidateSegmentQueue: recreating segment list")
     recreateSegmentList()
-    if (playbackState == PlaybackState.PLAYING) {
-      clearSegmentQueue()
-      playInternal()
+    if (segments.isEmpty()) {
+      Log.d(LOG_TAG, "invalidateSegmentQueue: segments are not available yet")
+      return
     }
+
+    currentSegment = null
+    Log.d(LOG_TAG, "invalidateSegmentQueue: reset segment queue")
+    resetSegmentQueue()
   }
 
   /**
-   * Clears the segments that have been previously queued, including the one that is currently
-   * playing.
+   * Removes the segments present in queue. The implementations should immediately clear their
+   * existing queue and [requestNextSegment].
    */
-  protected abstract fun clearSegmentQueue()
+  protected abstract fun resetSegmentQueue()
 
   /**
    * Starts buffering the sound and starts playing its segments once enough data is available.
@@ -209,7 +220,7 @@ abstract class Player protected constructor(
       val nextSegment = when {
         currentSegment == null -> segments.random()
         currentSegment?.isBridgeSegment == true -> {
-          requireNotNull(segments.find { it.name == currentSegment?.to })
+          segments.find { it.name == currentSegment?.to } ?: segments.random()
         }
         sound?.isContiguous == true -> {
           val from = requireNotNull(currentSegment)

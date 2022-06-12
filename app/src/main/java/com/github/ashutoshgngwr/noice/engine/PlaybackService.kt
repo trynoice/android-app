@@ -19,6 +19,7 @@ import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
@@ -153,6 +154,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     lifecycleScope.launch {
       subscriptionRepository.isSubscribed()
         .flowOn(Dispatchers.IO)
+        .filterNot { it is Resource.Loading }
         .filterNot { !isConnectedToInternet && it.error is NetworkError }
         .transform { r -> r.data?.also { emit(it) } }
         .collect(isSubscribed)
@@ -307,7 +309,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
       stopForeground(true)
       wakeLock.release()
     } else {
-      Log.d(LOG_TAG, "onPlaybackUpdate: playback continuing, ensuring resource acquisition")
+      Log.d(LOG_TAG, "onPlaybackUpdate: playback not stopped, ensuring resource acquisition")
       wakeLock.acquire(WAKELOCK_TIMEOUT)
       playbackNotificationManager.createNotification(playerManagerState, currentPreset)
         .also { startForeground(0x01, it) }

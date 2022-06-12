@@ -15,7 +15,6 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.util.EventLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -60,12 +59,12 @@ class LocalPlayer(
     }
 
   private var fadeAnimator: ValueAnimator? = null
+  private var skipNextFadeInTransition: Boolean = false
   private var retryDelayMillis = MIN_RETRY_DELAY_MILLIS
 
   init {
     exoPlayer.volume = 0F // muted initially (for the fade-in effect)
     exoPlayer.addListener(this)
-    exoPlayer.addAnalyticsListener(EventLogger(null))
     exoPlayer.setAudioAttributesCompat(audioAttributes, false)
   }
 
@@ -74,7 +73,8 @@ class LocalPlayer(
       retryDelayMillis = MIN_RETRY_DELAY_MILLIS
       setPlaybackState(PlaybackState.PLAYING)
       // fade-in or restore volume whenever player starts after buffering or paused states.
-      if (sound?.isContiguous == true) {
+      if (sound?.isContiguous == true && !skipNextFadeInTransition) {
+        skipNextFadeInTransition = false
         exoPlayer.fade(0F, getScaledVolume(), fadeInDuration.inWholeMilliseconds)
       } else {
         exoPlayer.volume = getScaledVolume()
@@ -119,8 +119,21 @@ class LocalPlayer(
     }
   }
 
-  override fun clearSegmentQueue() {
+  override fun resetSegmentQueue() {
+    val wasPlaying = exoPlayer.playWhenReady
+    skipNextFadeInTransition = exoPlayer.isPlaying && fadeAnimator?.isRunning != true
+    if (wasPlaying) {
+      exoPlayer.stop()
+    }
+
     exoPlayer.clearMediaItems()
+    exoPlayer.playWhenReady = wasPlaying
+
+    // `ExoPlayer.clearMediaItems` triggers `onMediaItemTransition` callback so it will
+    // automatically `requestNextSegment` for contiguous sounds.
+    if (sound?.isContiguous == false) {
+      requestNextSegment()
+    }
   }
 
   override fun playInternal() {
