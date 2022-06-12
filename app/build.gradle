@@ -21,8 +21,8 @@ android {
     applicationId 'com.github.ashutoshgngwr.noice'
     minSdk config.minSdkVersion
     targetSdk config.compileSdkVersion
-    versionCode 52
-    versionName '1.3.3'
+    versionCode 53
+    versionName '2.0.0'
     testInstrumentationRunner 'com.github.ashutoshgngwr.noice.InstrumentedTestRunner'
     proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
   }
@@ -117,7 +117,6 @@ dependencies {
   implementation 'androidx.preference:preference-ktx:1.2.0'
   implementation 'androidx.recyclerview:recyclerview:1.2.1'
   implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-  implementation 'commons-validator:commons-validator:1.7'
   implementation 'com.airbnb.android:lottie:5.2.0'
   implementation 'com.caverock:androidsvg-aar:1.4'
   implementation 'com.github.AppIntro:AppIntro:6.2.0'
