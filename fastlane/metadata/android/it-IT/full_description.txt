@@ -31,5 +31,5 @@ Noice è un'app che ti permette di creare atmosfere personalizzate usando clips 
 - <b>visualizzare la connessione di rete</b>: aggiunto da una dipendenza, attualmente non in uso
 - <b>servizio di fatturazione Google Play</b>: per consentire contributi finanziari a sostegno dello sviluppo
 
-Noice è un programma libero ed open-source.
+Noice è un programma open-source.
 https://github.com/trynoice/android-app

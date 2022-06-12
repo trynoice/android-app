@@ -31,5 +31,5 @@ Noice 是一款可让您使用来自环境噪声源的剪辑创建自定义背�
 - <b>查看网络连接</b>：由依赖项添加，当前未使用
 - <b>Google Play 计费服务</b>：为支持开发提供捐赠
 
-Noice 是一个免费开源软件。
+Noice 是开源软件。
 https://github.com/trynoice/android-app
