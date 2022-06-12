@@ -36,7 +36,7 @@ jobs:
   validate-gradle-wrapper:
     name: Validate Gradle Wrapper
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v2
       - uses: gradle/wrapper-validation-action@v1
@@ -44,7 +44,7 @@ jobs:
   api-client-unit-tests:
     name: API Client Unit Tests
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/setup-java@v2
         with:
@@ -60,7 +60,7 @@ jobs:
     name: App Unit Tests
     if: ${{ false }} # TODO: disabled until app unit tests are fixed.
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/setup-java@v2
         with:
@@ -76,7 +76,7 @@ jobs:
     name: App UI tests
     if: ${{ false }} # TODO: disabled until app ui tests are fixed.
     runs-on: macos-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     strategy:
       matrix:
         include:
@@ -117,7 +117,7 @@ jobs:
       # - app-unit-tests
       # - app-ui-tests
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - uses: ruby/setup-ruby@v1
         with:
@@ -152,7 +152,7 @@ jobs:
       # - app-unit-tests
       # - app-ui-tests
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     env:
       FULL_APK: noice-full.apk
       FULL_MAPPING: noice-full-mapping.txt
