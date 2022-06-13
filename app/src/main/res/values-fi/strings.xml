@@ -10,7 +10,7 @@
     <string name="about">Tietoja</string>
     <string name="wake_up_timer">Herätysajastin</string>
     <string name="presets">Esiasetukset</string>
-    <string name="support_development__share_description">Noicen jakaminen ystäviesi kanssa on verrattavissa rahan lahjoittamiseen. Kun latauksia on enemmän, voimme saada palautetta useista eri näkökulmista, mikä auttaa meitä tekemään Noicesta entistäkin paremman.</string>
+    <string name="support_development__share_description">Noicen jakaminen ystäviesi kanssa on verrattavissa rahan lahjoittamiseen. Kun latauksia on enemmän, voimme vastaanottaa palautetta useista eri näkökulmista, joka auttaa meitä tekemään Noicesta entistäkin paremman.</string>
     <string name="support_development__share">Jaa ystäviesi kanssa</string>
     <string name="support_development__donate_thank_you_description">Kiitämme vilpittömästi anteliaasta lahjoituksestasi Noice-hankkeelle.</string>
     <string name="support_development__donate_google_play_description">Google Play käsittelee maksun turvallisesti. Sijainnistasi riippuen lopulliseen summaan voidaan _mahdollisesti_ lisätä ylimääräisiä veroja.</string>
@@ -127,4 +127,6 @@
     <string name="cast_media">Yhdistä Chromecastiin</string>
     <string name="enable_media_buttons_summary">Käytä laitteiston mediapainikkeita ohjataksesi toistoa</string>
     <string name="enable_media_buttons">Käytä media painikkeita</string>
+    <string name="support_development__donate_description">Ellet ole maksanut premium tilausta, voit tehdä sen kertamaksulla. Se tulee auttamaan meitä ylläpitämään ilmaisien ominaisuuksien kehitystä, ja pitämään ne mainoksettomina.</string>
+    <string name="random_preset_description">On mahdollista, että luotu esiasetus sisältää ääniä valituilla avainsanoilla. Lisäksi, intensiiviset esiasetukset yrittävät toistaa useampia ääniä samanaikaisesti.</string>
 </resources>
