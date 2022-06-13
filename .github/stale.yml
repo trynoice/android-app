@@ -12,5 +12,6 @@ staleLabel: stale
 markComment: false
 # Comment to post when closing a stale issue. Set to `false` to disable
 closeComment: >
-  This issue has been automatically closed because it has not had
-  recent activity. Thank you for your contributions.
+  This issue has been automatically closed because it has not had recent
+  activity. Please re-open it if you think that this is an oversight. Thank you
+  for your contributions!

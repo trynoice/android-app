@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Report an issue that you're facing with Noice for Android.
 title: ''
 labels: bug
 assignees: ''
@@ -22,6 +22,8 @@ Steps to reproduce the behavior:
 <!-- If applicable, add screenshots to help explain your problem. -->
 
 ### Others
-- Device: <!-- e.g. Xiaomi Redmi 3 Prime -->
-- Android Version: <!-- [e.g. Oreo, 8.1 -->
-- App Version: <!-- 0.14.0 (F-Droid) -->
+
+- Device: <!-- e.g. Google Pixel XL -->
+- Android Version: <!-- e.g. Oreo, 8.1 -->
+- App Version: <!-- 2.0.0 -->
+- Downloaded From: <!-- (Google Play, F-Droid or GitHub) --->

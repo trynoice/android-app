@@ -1,15 +1,15 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
+about: Suggest and discuss ideas to enhance Noice for Android.
 title: ''
 labels: enhancement
 assignees: ''
 ---
 
-### Is your feature request related to a problem? Please describe.
+### Is your feature request related to a problem?
 <!--
 A clear and concise description of what the problem is.
-Ex. I'm always frustrated when [...]
+e.g. I'm always frustrated when [...]
 -->
 
 ### Describe the solution you'd like
