@@ -11,8 +11,6 @@
 [![Android][gw-android-badge]][gw-android]
 [![codecov][codecov-badge]][codecov]
 
-Relax and improve focus with natural calming noise.
-
 ## Download
 
 <a href="https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice">
