@@ -1,0 +1,1 @@
+WARNING: This update brings many fundamental changes to Noice. Please read https://trynoice.com/changelog/v2-beta-android before proceeding.
