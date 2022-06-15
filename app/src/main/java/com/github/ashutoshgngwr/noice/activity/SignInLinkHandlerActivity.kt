@@ -33,6 +33,8 @@ class SignInLinkHandlerActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     val isSupportedUri = intent.dataString?.startsWith("https://trynoice.com/sign-in") == true
+      || intent.dataString?.startsWith("noice://sign-in") == true
+
     val signInToken = intent.data?.getQueryParameter("token")
     if (Intent.ACTION_VIEW != intent.action || !isSupportedUri || signInToken == null) {
       finish()

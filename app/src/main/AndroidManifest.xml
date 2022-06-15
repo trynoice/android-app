@@ -67,7 +67,22 @@
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
 
-        <data android:scheme="noice" />
+        <data
+          android:host="preset"
+          android:scheme="noice" />
+
+      </intent-filter>
+
+      <intent-filter>
+
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+          android:host="subscriptions"
+          android:scheme="noice" />
 
       </intent-filter>
 
@@ -105,6 +120,19 @@
           android:host="trynoice.com"
           android:path="/sign-in"
           android:scheme="https" />
+
+      </intent-filter>
+
+      <intent-filter>
+
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+          android:host="sign-in"
+          android:scheme="noice" />
 
       </intent-filter>
 
