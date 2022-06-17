@@ -95,7 +95,7 @@
     <string name="in_app_feedback__title">إرسال مراجعة</string>
     <string name="in_app_feedback__description">نود أن نسمع منك عن التطبيق. يرجى قضاء بعض الوقت لزيارة مستودع GitHub الخاص بنا. إذا لم يعجبك التطبيق ، فيرجى التفكير في فتح مشكلة تشرح مخاوفك. بخلاف ذلك ، يرجى تمييز المشروع بنجمة لإظهار الحب والدعم.</string>
     <string name="cast_media">اتصل بجهاز Chromecast</string>
-    <string name="support_development__share_description">مشاركة Noice مع الأصدقاء التبرع بالمال. و بالتنزيلات عالية ، سنتمكن من تلقي التعليقات من عدد من وجهات النظر المختلفة والتي ستساعدنا في جعل Noice أفضل من أي وقت مضى.</string>
+    <string name="support_development__share_description">يمكنك أيضًا مساعدتنا بإخبار أصدقائك عنا. سيزودنا المزيد من المستخدمين بتعليقات من عدة وجهات نظر مختلفة ويساعدوننا في تحسين خدماتنا.</string>
     <string name="support_development__donate_thank_you_description">نشكرك من صميم القلب على مساهمتك السخية في مشروع Noice.</string>
     <string name="support_development__donate_google_play_description">سيتم التعامل مع دفعتك بأمان بواسطة Google Play. اعتمادًا على موقعك ، يمكن إضافة ضرائب إضافية إلى المبلغ النهائي.</string>
     <string name="appintro__timer_title">صعوبة في النوم أو الاستيقاظ؟</string>
@@ -135,4 +135,26 @@
     </plurals>
     <string name="enable_media_buttons_summary">استخدم أزرار وسائط الجهاز للتحكم في التشغيل</string>
     <string name="enable_media_buttons">تمكين أزرار الوسائط</string>
+    <string name="support_development__donate_description">إذا لم تكن قد اشتريت الاشتراك المميز ، فيمكنك إجراء دفعة لمرة واحدة. سيساعدنا ذلك في الحفاظ على تطوير الميزات المجانية وإبقائها خالية من الإعلانات إلى الأبد.</string>
+    <string name="app">التطبيق</string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="invalid_name">الاسم الذي تم إدخاله غير صالح!</string>
+    <string name="welcome">أهلًا وسهلًا!</string>
+    <string name="unknown_error">حدث خطأ غير معروف.</string>
+    <string name="sign_up">التسجيل</string>
+    <string name="view_subscription_plans">عرض الخطط</string>
+    <string name="sign_up_message">يرجى إدخال اسمك وبريدك الإلكتروني للتسجيل.</string>
+    <string name="sign_out">تسجيل الخروج</string>
+    <string name="account">حساب</string>
+    <string name="sign_in_message">يرجى إدخال بريدك الإلكتروني لتسجيل الدخول.</string>
+    <string name="random_preset_description">من المرجح أن يحتوي الإعداد المسبق الذي تم إنشاؤه على أصوات مع كلمات رئيسية مختارة. علاوة على ذلك ، ستحاول الإعدادات المسبقة المكثفة تشغيل المزيد من الأصوات في وقت واحد.</string>
+    <string name="sound_fade_out_duration">مدة تلاشي الصوت</string>
+    <string name="sound_fade_out_duration_summary">المدة الزمنية للأصوات المتلاشية (بالثواني)</string>
+    <string name="support">الدعم</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="update_details">تحديث التفاصيل</string>
+    <string name="delete_account">حذف الحساب</string>
+    <string name="network_error">لا يمكن الوصول إلى الشبكة.</string>
+    <string name="invalid_email">البريد الإلكتروني المدخل غير صالح!</string>
+    <string name="welcome_back">مرحبًا بعودتك!</string>
 </resources>

@@ -141,4 +141,5 @@
     <string name="export_presets_successful">Préréglages exportés avec succès vers le fichier !</string>
     <string name="enable_media_buttons_summary">Utiliser les boutons multimédias physiques pour contrôler la lecture</string>
     <string name="enable_media_buttons">Activer les boutons multimédias</string>
+    <string name="random_preset_description">Le préréglage généré est susceptible de contenir des sons avec les mots-clés choisis. De plus, les préréglages intenses tenteront de jouer davantage de sons simultanément.</string>
 </resources>
