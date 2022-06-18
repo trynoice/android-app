@@ -151,4 +151,5 @@
     <string name="created_by">Создано</string>
     <string name="import_presets_successful">Пресеты успешно импортированы из файла!</string>
     <string name="export_presets_successful">Пресеты успешно экспортированы в файл!</string>
+    <string name="random_preset_description">Сгенерированный пресет, скорее всего, будет содержать звуки с выбранными ключевыми словами. Более того, интенсивные пресеты будут пытаться воспроизводить больше звуков одновременно.</string>
 </resources>
