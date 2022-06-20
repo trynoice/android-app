@@ -80,11 +80,7 @@
     Noice projesine olan cömertçe katkınızdan dolayı tüm içtenliğimizle teşekkür ederiz.
   </string>
     <string name="support_development__share">Arkadaşlarınızla paylaşın</string>
-    <string name="support_development__share_description">
-    Noice\'i arkadaşlarınızla paylaşmanız para bağışlamanız kadar faydalıdır.
-    Daha fazla indirme, Noice\'i daha iyi bir seviyeye doğru geliştirmekte
-    yardımcı olacak çeşitli geri dönüşler elde etmemizi sağlayabilir.
-  </string>
+    <string name="support_development__share_description">Arkadaşlarınıza bizden bahsederek de bize yardımcı olabilirsiniz. Daha fazla kullanıcı bize farklı açılardan geri bildirim sağlayacak ve hizmetlerimizi geliştirmemize yardımcı olacaktır.</string>
     <string name="cast_media">Chromecast\'e bağlan</string>
     <string name="in_app_feedback__description">
     GitHub adresimizi ziyaret edip düşüncelerinizi bizimle paylaşmanızdan
@@ -156,4 +152,30 @@
     <string name="export_presets_successful">Kayıtlar başarıyla dosyaya aktarıldı!</string>
     <string name="enable_media_buttons_summary">Oynatmayı denetlemek için donanımsal ortam düğmelerini kullanın</string>
     <string name="enable_media_buttons">Ortam düğmelerini etkinleştir</string>
+    <string name="sign_in">Oturum aç</string>
+    <string name="delete_account">Hesabı sil</string>
+    <string name="welcome_back">Tekrar hoş geldiniz!</string>
+    <string name="retry">Yeniden dene</string>
+    <string name="sound_fade_out_duration_summary">Azalan seslerin süresi (saniye cinsinden)</string>
+    <string name="support">Destek</string>
+    <string name="view_subscription_plans">Planları görüntüle</string>
+    <string name="welcome">Hoş geldiniz!</string>
+    <string name="sign_in_email_sent">Bu adres kayıtlı bir hesaba aitse, size \"%1$s\" adresinde bir oturum açma bağlantısını e-postayla gönderdik.</string>
+    <string name="app">Uygulama</string>
+    <string name="email">E-posta</string>
+    <string name="network_error">Ağa erişilemiyor.</string>
+    <string name="account">Hesap</string>
+    <string name="sign_out">Çıkış yap</string>
+    <string name="sign_up">Kaydol</string>
+    <string name="sign_up_message">Kaydolmak için lütfen adınızı ve e-postanızı girin.</string>
+    <string name="invalid_name">Girilen ad geçersiz!</string>
+    <string name="sound_fade_out_duration">Sesin azalma süresi</string>
+    <string name="sign_in_message">Oturum açmak için lütfen e-postanızı girin.</string>
+    <string name="sign_in_link_tip">Oturum açma işlemini tamamlamak için lütfen Noice\'ı kullanarak alınan bağlantıyı açın.</string>
+    <string name="random_preset_description">Oluşturulan ön ayarın seçilen anahtar kelimelere sahip sesler içermesi muhtemeldir. Ayrıca yoğun ön ayarlar aynı anda daha fazla ses çalmaya çalışacaktır.</string>
+    <string name="support_development__donate_description">Premium abonelik satın almadıysanız, tek seferlik bir ödeme yapabilirsiniz. Bu ödeme, ücretsiz özelliklerin gelişimini sürdürmemize ve onları sonsuza kadar reklamsız tutmamıza yardımcı olacaktır.</string>
+    <string name="invalid_email">Girilen e-posta geçersiz!</string>
+    <string name="unknown_error">Bilinmeyen bir hata oluştu.</string>
+    <string name="account_locked_error">E-postanızın %1$s zamanına kadar oturum açma girişiminde bulunması geçici olarak engellenmiştir.</string>
+    <string name="sign_up_email_sent">Size \"%1$s\" adresinde bir oturum açma bağlantısını e-posta ile gönderdik.</string>
 </resources>
