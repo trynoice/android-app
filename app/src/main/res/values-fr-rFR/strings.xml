@@ -142,4 +142,7 @@
     <string name="enable_media_buttons_summary">Utiliser les boutons multimédias physiques pour contrôler la lecture</string>
     <string name="enable_media_buttons">Activer les boutons multimédias</string>
     <string name="random_preset_description">Le préréglage généré est susceptible de contenir des sons avec les mots-clés choisis. De plus, les préréglages intenses tenteront de jouer davantage de sons simultanément.</string>
+    <string name="account">Compte</string>
+    <string name="support_development__donate_description">Si vous n\'avez pas souscrit à l\'abonnement premium, vous pouvez effectuer un paiement unique. Cela nous aidera à poursuivre le développement de fonctionnalités gratuites et à les garder sans publicité pour toujours.</string>
+    <string name="app">Application</string>
 </resources>
