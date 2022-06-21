@@ -205,7 +205,7 @@ class SubscriptionRepository @Inject constructor(
         .onEach { r ->
           emit(
             when {
-              r is Resource.Loading -> Resource.Loading(r.data != null)
+              r is Resource.Loading -> Resource.Loading(null)
               r is Resource.Success -> Resource.Success(r.data != null)
               r.error is SubscriptionNotFoundError -> Resource.Success(false)
               r.error is HttpException && r.error.code() == 401 -> Resource.Success(false) // unauthenticated.
