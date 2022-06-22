@@ -65,7 +65,10 @@ class PlayerManager(
         playbackStates.isEmpty() -> PlaybackState.STOPPED
         playbackStates.all { it == PlaybackState.STOPPING } -> PlaybackState.STOPPING
         playbackStates.all { it == PlaybackState.PAUSED } -> PlaybackState.PAUSED
-        playbackStates.all { it == PlaybackState.PAUSING } -> PlaybackState.PAUSING
+        playbackStates.all {
+          // some players may be stopping during a pause transition.
+          it.oneOf(PlaybackState.PAUSING, PlaybackState.STOPPING)
+        } -> PlaybackState.PAUSING
         else -> PlaybackState.PLAYING
       }
     }
@@ -160,7 +163,14 @@ class PlayerManager(
 
   private fun pauseIndefinitely(immediate: Boolean) {
     stopOnIdleJob?.cancel()
-    players.forEach { it.value.pause(immediate) }
+    players.forEach { (id, player) ->
+      // do not pause 'STOPPING' players.
+      if (_playerStates[id]?.playbackState != PlaybackState.STOPPING) {
+        player.pause(immediate)
+      } else if (immediate) {
+        player.stop(true)
+      }
+    }
   }
 
   /**
@@ -170,7 +180,12 @@ class PlayerManager(
   fun resume() {
     stopOnIdleJob?.cancel()
     if (audioFocusManager.hasFocus()) {
-      players.forEach { it.value.play() }
+      players.forEach { (id, player) ->
+        // do not resume 'STOPPING' players.
+        if (_playerStates[id]?.playbackState != PlaybackState.STOPPING) {
+          player.play()
+        }
+      }
     } else {
       audioFocusManager.requestFocus()
     }
