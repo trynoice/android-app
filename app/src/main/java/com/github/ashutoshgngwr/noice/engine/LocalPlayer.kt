@@ -153,36 +153,46 @@ class LocalPlayer(
   }
 
   override fun pause(immediate: Boolean) {
-    setPlaybackState(PlaybackState.PAUSING)
-    val fadeOutDurationMs = if (immediate || !exoPlayer.isPlaying) {
-      0
-    } else {
-      fadeOutDuration.inWholeMilliseconds
+    if (immediate || !exoPlayer.isPlaying) {
+      pauseImmediately()
+      return
     }
 
-    exoPlayer.fade(exoPlayer.volume, 0F, fadeOutDurationMs) {
-      setPlaybackState(PlaybackState.PAUSED)
-      exoPlayer.pause()
+    setPlaybackState(PlaybackState.PAUSING)
+    exoPlayer.fade(exoPlayer.volume, 0F, fadeOutDuration.inWholeMilliseconds) {
+      pauseImmediately()
     }
+  }
+
+  private fun pauseImmediately() {
+    setPlaybackState(PlaybackState.PAUSED)
+    exoPlayer.pause()
   }
 
   override fun stop(immediate: Boolean) {
-    setPlaybackState(PlaybackState.STOPPING)
-    val fadeOutDurationMs = if (immediate || !exoPlayer.isPlaying) {
-      0
-    } else {
-      fadeOutDuration.inWholeMilliseconds
+    if (immediate || !exoPlayer.isPlaying) {
+      stopImmediately()
+      return
     }
 
-    exoPlayer.fade(exoPlayer.volume, 0F, fadeOutDurationMs) {
-      setPlaybackState(PlaybackState.STOPPED)
-      exoPlayer.stop()
-      exoPlayer.release()
+    setPlaybackState(PlaybackState.STOPPING)
+    exoPlayer.fade(exoPlayer.volume, 0F, fadeOutDuration.inWholeMilliseconds) {
+      stopImmediately()
     }
   }
 
+  private fun stopImmediately() {
+    setPlaybackState(PlaybackState.STOPPED)
+    exoPlayer.stop()
+    exoPlayer.release()
+  }
+
   override fun setVolumeInternal(volume: Float) {
-    exoPlayer.fade(exoPlayer.volume, volume, 1_500L)
+    if (exoPlayer.isPlaying) {
+      exoPlayer.fade(exoPlayer.volume, volume, 1_500L)
+    } else {
+      exoPlayer.volume = getScaledVolume()
+    }
   }
 
   override fun onSegmentAvailable(segment: Segment) {
