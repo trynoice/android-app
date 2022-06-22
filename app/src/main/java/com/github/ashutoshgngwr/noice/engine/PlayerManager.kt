@@ -119,7 +119,7 @@ class PlayerManager(
 
   private fun buildPlayerPlaybackListener(soundId: String): Player.PlaybackListener {
     return Player.PlaybackListener { playbackState, volume ->
-      Log.d(LOG_TAG, "Player.PlaybackListener: id=$soundId state=$playbackState volume=$volume")
+      Log.i(LOG_TAG, "Player.PlaybackListener: id=$soundId state=$playbackState volume=$volume")
       _playerStates[soundId] = PlayerState(soundId, volume, playbackState)
       if (playbackState == PlaybackState.STOPPED) {
         players.remove(soundId)

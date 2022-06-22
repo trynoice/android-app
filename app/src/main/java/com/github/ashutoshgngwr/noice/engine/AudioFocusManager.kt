@@ -68,14 +68,20 @@ class NoopAudioFocusManager(override val listener: AudioFocusManager.Listener) :
 
   override fun requestFocus() {
     hasFocus = true
+    Log.i(LOG_TAG, "requestFocus: audio focus request granted")
     listener.onAudioFocusGained()
   }
 
   override fun abandonFocus() {
+    Log.i(LOG_TAG, "abandonFocus: audio focus request granted")
     hasFocus = false
   }
 
   override fun setAttributes(audioAttributes: AudioAttributesCompat) = Unit
+
+  companion object {
+    private const val LOG_TAG = "NoopAudioFocusManager"
+  }
 }
 
 /**
@@ -135,21 +141,21 @@ class DefaultAudioFocusManager(
 
     when (AudioManagerCompat.requestAudioFocus(audioManager, focusRequest)) {
       AudioManager.AUDIOFOCUS_REQUEST_DELAYED -> {
-        Log.i(LOG_TAG, "requestAudioFocus: audio focus request is delayed")
+        Log.i(LOG_TAG, "requestFocus: audio focus request is delayed")
         playbackDelayed = true
         hasFocus = false
         resumeOnFocusGain = false
         listener.onAudioFocusLost(true)
       }
       AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
-        Log.w(LOG_TAG, "requestAudioFocus: audio focus request failed")
+        Log.w(LOG_TAG, "requestFocus: audio focus request failed")
         hasFocus = false
         playbackDelayed = false
         resumeOnFocusGain = false
         listener.onAudioFocusLost(false)
       }
       AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
-        Log.i(LOG_TAG, "requestAudioFocus: audio focus request granted")
+        Log.i(LOG_TAG, "requestFocus: audio focus request granted")
         hasFocus = true
         playbackDelayed = false
         resumeOnFocusGain = false
@@ -161,10 +167,10 @@ class DefaultAudioFocusManager(
   override fun abandonFocus() {
     when (AudioManagerCompat.abandonAudioFocusRequest(audioManager, focusRequest)) {
       AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
-        Log.w(LOG_TAG, "abandonAudioFocus: audio focus request failed")
+        Log.w(LOG_TAG, "abandonFocus: audio focus request failed")
       }
       AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
-        Log.i(LOG_TAG, "abandonAudioFocus: audio focus request granted")
+        Log.i(LOG_TAG, "abandonFocus: audio focus request granted")
         hasFocus = false
         playbackDelayed = false
         resumeOnFocusGain = false
@@ -186,6 +192,6 @@ class DefaultAudioFocusManager(
   }
 
   companion object {
-    private const val LOG_TAG = "AudioFocusManager"
+    private const val LOG_TAG = "DefaultAudioFocusManager"
   }
 }

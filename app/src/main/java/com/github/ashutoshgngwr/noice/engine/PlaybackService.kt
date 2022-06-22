@@ -299,7 +299,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     playerManagerState: PlaybackState,
     playerStates: Array<PlayerState>
   ) {
-    Log.d(LOG_TAG, "onPlaybackUpdate: managerState=$playerManagerState playerStates=$playerStates")
+    Log.i(LOG_TAG, "onPlaybackUpdate: managerState=$playerManagerState")
     val currentPreset = presets.find { it.hasMatchingPlayerStates(playerStates) }
     soundRepository.updatePlaybackStates(playerManagerState, playerStates)
     mediaSessionManager.setPresetTitle(currentPreset?.name)
