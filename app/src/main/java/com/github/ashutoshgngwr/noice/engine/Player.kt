@@ -263,18 +263,19 @@ abstract class Player protected constructor(
   private fun loadSoundMetadata() {
     setPlaybackState(PlaybackState.BUFFERING)
     defaultScope.launch {
-      Log.d(LOG_TAG, "loadSoundMetadata: loading sound metadata")
+      Log.d(LOG_TAG, "loadSoundMetadata: loading sound metadata for $soundId")
       val resource = soundRepository.get(soundId)
         .flowOn(Dispatchers.IO)
         .lastOrNull()
 
       if (resource?.data != null) {
-        Log.d(LOG_TAG, "loadSoundMetadata: loaded sound metadata")
+        Log.d(LOG_TAG, "loadSoundMetadata: loaded sound metadata for $soundId")
         retryDelayMillis = MIN_RETRY_DELAY_MILLIS
         sound = resource.data
         recreateSegmentList()
         isMetadataLoaded = true
         if (playbackState == PlaybackState.BUFFERING) {
+          Log.d(LOG_TAG, "loadSoundMetadata: starting playback")
           playInternal()
         }
       } else {

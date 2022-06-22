@@ -84,8 +84,13 @@ class LocalPlayer(
 
   override fun onIsLoadingChanged(isLoading: Boolean) {
     // This event is delivered whenever ExoPlayer is loading data, even if it is currently playing.
-    // Therefore, we set only buffering state when our player isn't actually playing.
-    if (isLoading && !exoPlayer.isPlaying) {
+    // Therefore, we set only buffering state when our player isn't actually playing, but is about
+    // to play.
+    if (!isLoading) {
+      return
+    }
+
+    if (exoPlayer.playWhenReady && !exoPlayer.isPlaying) {
       setPlaybackState(PlaybackState.BUFFERING)
     }
   }
@@ -146,9 +151,12 @@ class LocalPlayer(
       return
     }
 
+    setPlaybackState(PlaybackState.BUFFERING)
     exoPlayer.playWhenReady = true
     if (exoPlayer.mediaItemCount == 0) {
       requestNextSegment()
+    } else {
+      exoPlayer.prepare()
     }
   }
 
