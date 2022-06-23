@@ -63,7 +63,7 @@
     Le agradecemos de todo corazón su generosa contribución al proyecto Noise.
   </string>
     <string name="support_development__share">Compartir con amigos</string>
-    <string name="support_development__share_description">Comparte Noice con amigos es una alternativa a las donaciones. Cuantas mas descargas, podremos recibir comentarios desde diferentes perspectivas que nos ayudará a hacer de Noice mejor que nunca.</string>
+    <string name="support_development__share_description">También puedes ayudarnos contándoles a tus amigos sobre nosotros. Más usuarios nos brindarán comentarios desde varias perspectivas diferentes y nos ayudarán a mejorar nuestros servicios.</string>
     <string name="cast_media">Conectar a Chromecast</string>
     <string name="notification_channel_default__description">Controles de reproducción de medios</string>
     <string name="notification_channel_default__name">Reproducción de medios</string>
@@ -129,7 +129,7 @@
     <string name="should_display_sound_icons">Mostrar iconos de sonido</string>
     <string name="export_presets_successful">¡Preajustes exportados con éxito al archivo!</string>
     <string name="import_presets_successful">¡Preajustes importados con éxito del archivo!</string>
-    <string name="share_usage_data_consent_message">Recopilamos datos de uso de la aplicación para mejorar la experiencia del usuario. También recopilamos datos de comportamiento de la aplicación para analizar y diagnosticar errores encontrados durante el uso de la aplicación. Lea nuestra [Política de privacidad] (https://ashutoshgnggwr.github.io/noice/privacy-policy) para obtener más información.
+    <string name="share_usage_data_consent_message">Recopilamos datos de uso de la aplicación para mejorar la experiencia del usuario. También recopilamos datos de comportamiento de la aplicación para analizar y diagnosticar errores encontrados durante el uso de la aplicación. Lea nuestra [Política de privacidad] (https://trynoice.com/privacy-policy) para obtener más información.
 \n
 \n Puede configurar el intercambio automático de datos en cualquier momento dentro de la aplicación yendo a \"**Configuración** &gt; **Compartir el uso y los datos de comportamiento**\".</string>
     <string name="share_usage_data_consent_title">Preferencias para Compartir Datos</string>
