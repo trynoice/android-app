@@ -282,4 +282,8 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_service">Terms of Service</string>
     <string name="app_license">Licensed under GNU GPL-3.0</string>
+    <string name="redeem_gift_card">Redeem gift card</string>
+    <string name="gift_card_code">Gift card code</string>
+    <string name="invalid_gift_card_code">The entered gift card code is invalid!</string>
+    <string name="redeem">Redeem</string>
 </resources>

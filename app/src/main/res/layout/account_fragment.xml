@@ -124,6 +124,17 @@
             app:isVisible="@{!viewModel.isSubscribed}" />
 
           <TextView
+            android:id="@+id/redeem_gift_card_form"
+            style="@style/Widget.App.Account.Category.Item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{listItemClickListener}"
+            android:text="@string/redeem_gift_card"
+            android:visibility="visible"
+            app:drawableStartCompat="@drawable/ic_baseline_redeem_32"
+            app:isVisible="@{!viewModel.isSubscribed}" />
+
+          <TextView
             android:id="@+id/subscription_purchase_list"
             style="@style/Widget.App.Account.Category.Item"
             android:layout_width="match_parent"

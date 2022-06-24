@@ -52,6 +52,10 @@
       app:destination="@id/view_subscription_plans" />
 
     <action
+      android:id="@+id/redeem_gift_card_form"
+      app:destination="@id/redeem_gift_card_form" />
+
+    <action
       android:id="@+id/subscription_purchase_list"
       app:destination="@id/subscription_purchase_list" />
 
@@ -206,6 +210,12 @@
       app:popUpTo="@id/home" />
 
   </dialog>
+
+  <dialog
+    android:id="@+id/redeem_gift_card_form"
+    android:name="com.github.ashutoshgngwr.noice.fragment.RedeemGiftCardFormFragment"
+    android:label="@string/redeem_gift_card"
+    tools:layout="@layout/redeem_gift_card_form_fragment" />
 
   <fragment
     android:id="@+id/subscription_purchase_list"

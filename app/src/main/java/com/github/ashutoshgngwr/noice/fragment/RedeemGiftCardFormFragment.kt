@@ -1,0 +1,45 @@
+package com.github.ashutoshgngwr.noice.fragment
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.github.ashutoshgngwr.noice.databinding.RedeemGiftCardFormFragmentBinding
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.transform
+
+class RedeemGiftCardFormFragment : BottomSheetDialogFragment() {
+
+  private lateinit var binding: RedeemGiftCardFormFragmentBinding
+  private val viewModel: RedeemGiftCardFormViewModel by viewModels()
+
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
+    binding = RedeemGiftCardFormFragmentBinding.inflate(inflater, container, false)
+    return binding.root
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    binding.lifecycleOwner = viewLifecycleOwner
+    binding.viewModel = viewModel
+    binding.cancel.setOnClickListener { dismiss() }
+    binding.redeem.setOnClickListener {
+      // TODO:
+    }
+  }
+}
+
+class RedeemGiftCardFormViewModel : ViewModel() {
+
+  val code = MutableStateFlow("")
+
+  val isCodeValid: StateFlow<Boolean> = code.transform { code ->
+    emit(code.isNotBlank() && code.length <= 32)
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+}
