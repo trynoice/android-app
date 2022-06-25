@@ -178,4 +178,23 @@
     <string name="unknown_error">Bilinmeyen bir hata oluştu.</string>
     <string name="account_locked_error">E-postanızın %1$s zamanına kadar oturum açma girişiminde bulunması geçici olarak engellenmiştir.</string>
     <string name="sign_up_email_sent">Size \"%1$s\" adresinde bir oturum açma bağlantısını e-posta ile gönderdik.</string>
+    <string name="sign_in_token_error">Giriş yapma linki geçersiz görünüyor. Zamanı dolmuş olabilir. Lütfen tekrar deneyin!</string>
+    <string name="delete_account_confirmation">Hesabınızı sildiğinizde profilinize olan erişimi kaybedersiniz. Eğer devam eden bi aboneliğiniz varsa iptal edilecektir. Sunucularımızdan, kişisel bilgilerinizin silinmesinin uzun sürebileceğini lütfen aklınızda tutun.</string>
+    <string name="back_online">Çevrimiçi oldunuz</string>
+    <string name="cont">Devam et</string>
+    <string name="quarterly">3 Aylık</string>
+    <string name="mailbox_app_not_found">Amanın! Cihazınızda bir e-posta uygulaması bulamadık!</string>
+    <string name="sign_out_confirmation">Oturumu kapatmayı onaylıyor musunuz\?</string>
+    <string name="offline">Çevrimdışısınız</string>
+    <string name="bi_yearly">İki yıllık</string>
+    <string name="sign_in_sucessful">Başarıyla giriş yapıldı!</string>
+    <string name="premium">Premium</string>
+    <string name="open_mailbox">Posta kutusunu aç</string>
+    <string name="signing_in">Giriş yapılıyor</string>
+    <string name="yearly">Yıllık</string>
+    <string name="signing_out">Çıkış yapılıyor</string>
+    <string name="i_understand">Anlıyorum.</string>
+    <string name="monthly">Aylık</string>
+    <string name="duplicate_email_error">Girdiğiniz e-posta başka bir hesapta kullanılıyor.</string>
+    <string name="account_details_update_success">Hesap bilgileriniz güncellendi.</string>
 </resources>
