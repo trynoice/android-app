@@ -7,7 +7,7 @@
     <string name="in_app_feedback__title">提交评论</string>
     <string name="in_app_feedback__description">我们很乐意听到你对该应用的意见。请花点时间访问我们的 GitHub 仓库。如果你不喜欢这个应用，请考虑开一个问题来解释你的担忧。否则，请给项目打星以示爱护和支持。</string>
     <string name="cast_media">媒体转投</string>
-    <string name="support_development__share_description">你也可以通过与朋友分享 Noice 来提供帮助。更多用户使我们将能够收到来自众多不同角度的反馈，这将帮助我们把 Noice 变得比以往更好。</string>
+    <string name="support_development__share_description">你也可以通过向朋友介绍 Noice 帮助我们。更多的用户会给我们提供多个不同角度的反馈，并帮助我们改进我们的服务。</string>
     <string name="support_development__share">与朋友分享</string>
     <string name="support_development__donate_thank_you_description">我们衷心感谢你对Noice项目的慷慨捐助。</string>
     <string name="support_development__donate_google_play_description">您的支付将由Google Play安全接管。金额将被转换为你的当地货币。根据你所在的位置，最终金额可能会增加额外的税收。</string>
