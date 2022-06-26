@@ -252,4 +252,15 @@
     <string name="invalid_name">Il nome inserito non è valido!</string>
     <string name="subscription_payment_pending">Il pagamento è in attesa per questo acquisto.</string>
     <string name="audio_quality_summary">La massima qualità audio per lo streaming. Media, Alta e Ultra funzionano solo quando sei abbonato.</string>
+    <string name="invalid_gift_card_code">Il codice della carta regalo inserito non è valido!</string>
+    <string name="gift_card_load_error">Oops! Non siamo riusciti a recuperare la carta regalo. %1$s</string>
+    <string name="gift_card_already_redeemed">La carta regalo associata al codice inserito è già stata riscattata.</string>
+    <string name="gift_card_expired">La carta regalo associata al codice inserito è scaduta.</string>
+    <string name="gift_card_redeem_error">Oh no! Non siamo riusciti a riscattare la tua carta regalo. %1$s</string>
+    <string name="gift_card_code">Regala carta regalo</string>
+    <string name="redeem_gift_card">Riscatta carta regalo</string>
+    <string name="redeem">Riscatta</string>
+    <string name="gift_card_not_found">Il codice inserito non esiste.</string>
+    <string name="gift_card_details">Riscattare questa carta regalo vi offrirà l\'abbonamento premium fino al %1$s.</string>
+    <string name="redeemed_using_code">Riscattata usando \'%1$s\'</string>
 </resources>
