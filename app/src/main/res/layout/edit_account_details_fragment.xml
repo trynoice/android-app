@@ -19,6 +19,7 @@
     <ScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:fillViewport="true"
       android:orientation="vertical"
       app:isVisible="@{!viewModel.isLoading &amp;&amp; viewModel.loadErrorStrRes == null}">
 
@@ -75,7 +76,8 @@
 
         <Space
           android:layout_width="match_parent"
-          android:layout_height="16dp" />
+          android:layout_height="0dp"
+          android:layout_weight="1" />
 
         <Button
           style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
