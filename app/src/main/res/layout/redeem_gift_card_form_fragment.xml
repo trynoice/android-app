@@ -68,12 +68,12 @@
         android:layout_height="wrap_content" />
 
       <Button
-        android:id="@+id/redeem"
+        android:id="@+id/cont"
         style="?attr/buttonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="@{viewModel.isCodeValid}"
-        android:text="@string/redeem" />
+        android:text="@string/cont" />
 
     </LinearLayout>
 

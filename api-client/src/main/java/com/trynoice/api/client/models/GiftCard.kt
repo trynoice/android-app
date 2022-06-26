@@ -25,4 +25,14 @@ data class GiftCard(
 
   @Expose
   val expiresAt: Date? = null,
-) : Serializable
+) : Serializable {
+
+  /**
+   * Whether the gift card has not expired and redeemed, i.e. is available to redeem.
+   */
+  val isRedeemable: Boolean
+    get() = !(isRedeemed || isExpired)
+
+  private val isExpired: Boolean
+    get() = expiresAt?.before(Date()) == true
+}

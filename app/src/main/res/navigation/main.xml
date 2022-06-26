@@ -215,7 +215,26 @@
     android:id="@+id/redeem_gift_card_form"
     android:name="com.github.ashutoshgngwr.noice.fragment.RedeemGiftCardFormFragment"
     android:label="@string/redeem_gift_card"
-    tools:layout="@layout/redeem_gift_card_form_fragment" />
+    tools:layout="@layout/redeem_gift_card_form_fragment">
+
+    <action
+      android:id="@+id/gift_card_details"
+      app:destination="@id/gift_card_details"
+      app:popUpTo="@id/home" />
+
+  </dialog>
+
+  <dialog
+    android:id="@+id/gift_card_details"
+    android:name="com.github.ashutoshgngwr.noice.fragment.GiftCardDetailsFragment"
+    android:label="@string/redeem_gift_card"
+    tools:layout="@layout/gift_card_details_fragment">
+
+    <argument
+      android:name="giftCardCode"
+      app:argType="string" />
+
+  </dialog>
 
   <fragment
     android:id="@+id/subscription_purchase_list"
