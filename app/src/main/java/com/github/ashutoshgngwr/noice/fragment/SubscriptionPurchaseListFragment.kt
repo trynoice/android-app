@@ -243,7 +243,7 @@ class SubscriptionPurchaseViewHolder(
   }
 
   companion object {
-    private const val DATE_FMT_FLAGS = DateUtils.FORMAT_SHOW_DATE
+    private const val DATE_FMT_FLAGS = DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME
   }
 }
 
