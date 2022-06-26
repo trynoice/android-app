@@ -1,0 +1,4 @@
+- Added interface to redeem gift cards
+- Fixed miscellaneous bugs
+
+WARNING: Upgrading from v1 to v2 beta will cause data loss. Please read https://trynoice.com/changelog/v2-beta-android before proceeding.
