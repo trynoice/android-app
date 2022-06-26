@@ -220,7 +220,8 @@
     <action
       android:id="@+id/gift_card_details"
       app:destination="@id/gift_card_details"
-      app:popUpTo="@id/home" />
+      app:popUpTo="@id/redeem_gift_card_form"
+      app:popUpToInclusive="true" />
 
   </dialog>
 
@@ -233,6 +234,30 @@
     <argument
       android:name="giftCardCode"
       app:argType="string" />
+
+    <action
+      android:id="@+id/redeem_gift_card"
+      app:destination="@id/redeem_gift_card"
+      app:popUpTo="@id/gift_card_details"
+      app:popUpToInclusive="true" />
+
+  </dialog>
+
+  <dialog
+    android:id="@+id/redeem_gift_card"
+    android:name="com.github.ashutoshgngwr.noice.fragment.RedeemGiftCardFragment"
+    android:label="@string/redeem_gift_card"
+    tools:layout="@layout/redeem_gift_card_fragment">
+
+    <argument
+      android:name="giftCard"
+      app:argType="com.trynoice.api.client.models.GiftCard" />
+
+    <action
+      android:id="@id/subscription_purchase_list"
+      app:destination="@id/subscription_purchase_list"
+      app:popUpTo="@id/redeem_gift_card"
+      app:popUpToInclusive="true" />
 
   </dialog>
 

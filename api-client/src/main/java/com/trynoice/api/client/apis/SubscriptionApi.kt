@@ -181,6 +181,6 @@ interface SubscriptionApi {
    * @return the newly activated subscription on successful redemption of the gift card.
    */
   @NeedsAccessToken
-  @POST("/giftCards/{code}/redeem")
+  @POST("/v1/subscriptions/giftCards/{code}/redeem")
   suspend fun redeemGiftCard(@Path("code") code: String): Subscription
 }

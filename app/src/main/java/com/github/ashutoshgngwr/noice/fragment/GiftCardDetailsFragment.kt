@@ -10,6 +10,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.GiftCardDetailsFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
@@ -40,6 +41,9 @@ class GiftCardDetailsFragment : BottomSheetDialogFragment() {
 
   private lateinit var binding: GiftCardDetailsFragmentBinding
   private val viewModel: GiftCardDetailsViewModel by viewModels()
+  private val mainNavController by lazy {
+    Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
+  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = GiftCardDetailsFragmentBinding.inflate(inflater, container, false)
@@ -51,7 +55,9 @@ class GiftCardDetailsFragment : BottomSheetDialogFragment() {
     binding.viewModel = viewModel
     binding.cancel.setOnClickListener { dismiss() }
     binding.redeem.setOnClickListener {
-      // TODO
+      val giftCard = requireNotNull(viewModel.giftCard.value)
+      val args = RedeemGiftCardFragmentArgs(giftCard)
+      mainNavController.navigate(R.id.redeem_gift_card, args.toBundle())
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
