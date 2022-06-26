@@ -292,4 +292,5 @@
     <string name="gift_card_expired">The gift card with the given code has expired.</string>
     <string name="gift_card_details">Redeeming this gift card will offer you the premium subscription until %1$s.</string>
     <string name="gift_card_redeem_error">Oh no! We couldn\'t redeem your gift card. %1$s</string>
+    <string name="redeemed_using_code">Redeemed using \'%1$s\'</string>
 </resources>

@@ -158,7 +158,8 @@ class SubscriptionPurchaseViewHolder(
 
     val context = binding.root.context
     val resources = binding.root.resources
-    binding.billingPeriod.text = if (s.plan.provider == SubscriptionPlan.PROVIDER_GIFT_CARD) {
+    val isGiftCardPurchase = s.plan.provider == SubscriptionPlan.PROVIDER_GIFT_CARD
+    binding.billingPeriod.text = if (isGiftCardPurchase) {
       resources.getString(R.string.gift_card)
     } else {
       when (s.plan.billingPeriodMonths) {
@@ -174,9 +175,8 @@ class SubscriptionPurchaseViewHolder(
       }
     }
 
-    if (s.plan.provider == SubscriptionPlan.PROVIDER_GIFT_CARD) {
-      binding.monthlyPrice.isVisible = false
-    } else {
+    binding.monthlyPrice.isVisible = !isGiftCardPurchase
+    if (!isGiftCardPurchase) {
       binding.monthlyPrice.text = resources.getString(R.string.monthly_price, s.plan.monthlyPrice)
     }
 
@@ -215,8 +215,11 @@ class SubscriptionPurchaseViewHolder(
       )
     }
 
-    if (s.plan.provider == SubscriptionPlan.PROVIDER_GIFT_CARD) {
-      binding.paidUsing.isVisible = false
+    binding.paidUsing.isVisible = !isGiftCardPurchase
+    binding.redeemedUsing.isVisible = isGiftCardPurchase
+
+    if (isGiftCardPurchase) {
+      binding.redeemedUsing.text = resources.getString(R.string.redeemed_using_code, s.giftCardCode)
     } else {
       binding.paidUsing.text = resources.getString(
         R.string.paid_using, resources.getString(
