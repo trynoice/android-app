@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.RedeemGiftCardFormViewModel" />
+
+  </data>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:theme="?attr/bottomSheetDialogTheme">
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/redeem_gift_card"
+      android:textAppearance="?attr/titleTextAppearance" />
+
+    <Space
+      android:layout_width="match_parent"
+      android:layout_height="24dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="@string/gift_card_code"
+      app:counterEnabled="true"
+      app:counterMaxLength="32"
+      app:error="@{viewModel.code.isEmpty() || viewModel.isCodeValid ? null : @string/invalid_gift_card_code}"
+      app:errorEnabled="true">
+
+      <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textCapWords"
+        android:text="@={viewModel.code}" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Space
+      android:layout_width="match_parent"
+      android:layout_height="16dp" />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical|end"
+      android:orientation="horizontal">
+
+      <Button
+        android:id="@+id/cancel"
+        style="?attr/buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel" />
+
+      <Space
+        android:layout_width="16dp"
+        android:layout_height="wrap_content" />
+
+      <Button
+        android:id="@+id/cont"
+        style="?attr/buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="@{viewModel.isCodeValid}"
+        android:text="@string/cont" />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</layout>

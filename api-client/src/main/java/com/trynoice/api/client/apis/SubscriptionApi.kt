@@ -1,6 +1,7 @@
 package com.trynoice.api.client.apis
 
 import com.trynoice.api.client.auth.annotations.NeedsAccessToken
+import com.trynoice.api.client.models.GiftCard
 import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionFlowParams
 import com.trynoice.api.client.models.SubscriptionFlowResult
@@ -145,4 +146,41 @@ interface SubscriptionApi {
   @NeedsAccessToken
   @DELETE("/v1/subscriptions/{subscriptionId}")
   suspend fun cancel(@Path("subscriptionId") subscriptionId: Long)
+
+  /**
+   * Retrieves an issued gift card.
+   *
+   * Responses:
+   *  - 200: the requested gift card.
+   *  - 400: request is not valid.
+   *  - 401: access token is invalid.
+   *  - 404: gift card doesn't exist.
+   *  - 500: internal server error.
+   *
+   * @param code must not be blank.
+   * @return the requested gift card.
+   */
+  @NeedsAccessToken
+  @GET("/v1/subscriptions/giftCards/{code}")
+  suspend fun getGiftCard(@Path("code") code: String): GiftCard
+
+  /**
+   * Redeems an issued gift card and creates a subscription for the authenticated user.
+   *
+   * Responses:
+   *  - 201: gift card redemption successful.
+   *  - 400: request is not valid.
+   *  - 401: access token is invalid.
+   *  - 404: gift card doesn't exist.
+   *  - 409: user already has an active subscription.
+   *  - 410: gift card has expired.
+   *  - 422: gift card has already been redeemed.
+   *  - 500: internal server error.
+   *
+   * @param code must not be blank.
+   * @return the newly activated subscription on successful redemption of the gift card.
+   */
+  @NeedsAccessToken
+  @POST("/v1/subscriptions/giftCards/{code}/redeem")
+  suspend fun redeemGiftCard(@Path("code") code: String): Subscription
 }

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.GiftCardDetailsViewModel" />
+
+  </data>
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24dp"
+    tools:theme="?attr/bottomSheetDialogTheme">
+
+    <include
+      layout="@layout/simple_progress_layout"
+      app:isVisible="@{viewModel.isLoading}"
+      app:message="@{@string/loading}"
+      tools:visibility="gone" />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:isVisible="@{!viewModel.isLoading}">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/redeem_gift_card"
+        android:textAppearance="?attr/titleTextAppearance" />
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+
+      <TextView
+        style="@style/Widget.App.TextView.Message.Error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@{viewModel.giftCard.isRedeemed ? @string/gift_card_already_redeemed : @string/gift_card_expired}"
+        app:isVisible="@{!viewModel.giftCard.isRedeemable}"
+        tools:visibility="gone" />
+
+      <TextView
+        android:id="@+id/details"
+        style="@style/Widget.App.TextView.Message.Success"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:isVisible="@{viewModel.giftCard.isRedeemable}"
+        tools:text="@string/gift_card_details" />
+
+      <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|end"
+        android:orientation="horizontal">
+
+        <Button
+          android:id="@+id/cancel"
+          style="?attr/buttonStyle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@{viewModel.giftCard.isRedeemable ? @string/cancel : @string/okay}"
+          tools:text="@string/cancel" />
+
+        <Button
+          android:id="@+id/redeem"
+          style="?attr/buttonStyle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/redeem"
+          app:isVisible="@{viewModel.giftCard.isRedeemable}" />
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+  </FrameLayout>
+
+</layout>

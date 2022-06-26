@@ -6,9 +6,13 @@ import android.util.Log
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
 import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.repository.errors.AlreadySubscribedError
+import com.github.ashutoshgngwr.noice.repository.errors.GiftCardExpiredError
+import com.github.ashutoshgngwr.noice.repository.errors.GiftCardNotFoundError
+import com.github.ashutoshgngwr.noice.repository.errors.GiftCardRedeemedError
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundError
 import com.trynoice.api.client.NoiceApiClient
+import com.trynoice.api.client.models.GiftCard
 import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionPlan
 import io.github.ashutoshgngwr.may.May
@@ -219,6 +223,58 @@ class SubscriptionRepository @Inject constructor(
       delay(min(60_000L, expiresAt - System.currentTimeMillis()))
     }
   }
+
+  /**
+   * Returns a [Flow] that emits the requested gift card as a [Resource].
+   *
+   * On failures, the flow emits [Resource.Failure] with:
+   * - [GiftCardNotFoundError] when the gift card with the requested code doesn't exist.
+   * - [NetworkError] on network errors.
+   * - [HttpException] on api errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
+   */
+  fun getGiftCard(code: String): Flow<Resource<GiftCard>> = fetchNetworkBoundResource(
+    loadFromNetwork = { apiClient.subscriptions().getGiftCard(code) },
+    loadFromNetworkErrorTransform = { e ->
+      Log.i(LOG_TAG, "getGiftCard:", e)
+      when {
+        e is HttpException && e.code() == 404 -> GiftCardNotFoundError
+        e is IOException -> NetworkError
+        else -> e
+      }
+    }
+  )
+
+  /**
+   * Returns a [Flow] that emits the current state of gift card redeem operation as a [Resource].
+   *
+   * On failures, the flow emits [Resource.Failure] with:
+   * - [GiftCardNotFoundError] when the gift card with the requested code doesn't exist.
+   * - [AlreadySubscribedError] when the user already owns another active subscription.
+   * - [GiftCardExpiredError]  when the gift card with the requested code has expired.
+   * - [GiftCardRedeemedError] when the gift card with the requested code has already been redeemed.
+   * - [NetworkError] on network errors.
+   * - [HttpException] on api errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
+   */
+  fun redeemGiftCard(card: GiftCard): Flow<Resource<Subscription>> = fetchNetworkBoundResource(
+    loadFromNetwork = { apiClient.subscriptions().redeemGiftCard(card.code) },
+    loadFromNetworkErrorTransform = { e ->
+      Log.i(LOG_TAG, "redeemGiftCard:", e)
+      when {
+        e is HttpException && e.code() == 404 -> GiftCardNotFoundError
+        e is HttpException && e.code() == 409 -> AlreadySubscribedError
+        e is HttpException && e.code() == 410 -> GiftCardExpiredError
+        e is HttpException && e.code() == 422 -> GiftCardRedeemedError // gift card has already been redeemed.
+        e is IOException -> NetworkError
+        else -> e
+      }
+    }
+  )
 
   companion object {
     private const val LOG_TAG = "SubscriptionRepository"

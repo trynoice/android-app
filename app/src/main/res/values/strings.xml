@@ -282,4 +282,15 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_service">Terms of Service</string>
     <string name="app_license">Licensed under GNU GPL-3.0</string>
+    <string name="redeem_gift_card">Redeem gift card</string>
+    <string name="gift_card_code">Gift card code</string>
+    <string name="invalid_gift_card_code">The entered gift card code is invalid!</string>
+    <string name="redeem">Redeem</string>
+    <string name="gift_card_load_error">Oops! We couldn\'t fetch the gift card. %1$s</string>
+    <string name="gift_card_not_found">The given code doesn\'t exist.</string>
+    <string name="gift_card_already_redeemed">The gift card with the given code has already been redeemed.</string>
+    <string name="gift_card_expired">The gift card with the given code has expired.</string>
+    <string name="gift_card_details">Redeeming this gift card will offer you the premium subscription until %1$s.</string>
+    <string name="gift_card_redeem_error">Oh no! We couldn\'t redeem your gift card. %1$s</string>
+    <string name="redeemed_using_code">Redeemed using \'%1$s\'</string>
 </resources>

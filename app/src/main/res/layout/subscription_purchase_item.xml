@@ -87,6 +87,15 @@
       tools:text="@string/paid_using" />
 
     <TextView
+      android:id="@+id/redeemed_using"
+      style="@style/Widget.App.TextView.Message"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="4dp"
+      app:drawableStartCompat="@drawable/ic_baseline_redeem_24"
+      tools:text="@string/redeemed_using_code" />
+
+    <TextView
       android:id="@+id/payment_pending"
       style="@style/Widget.App.TextView.Message"
       android:layout_width="match_parent"

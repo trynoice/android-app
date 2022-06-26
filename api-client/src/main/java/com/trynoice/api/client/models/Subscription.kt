@@ -23,6 +23,7 @@ import java.util.*
  * when the subscription is active and provided by Stripe.
  * @param googlePlayPurchaseToken Google Play purchase token corresponding to this subscription
  * purchase. only present when the subscription is active and provided by Google Play.
+ * @param giftCardCode the gift card code if this subscription was activated using a gift card.
  */
 data class Subscription(
 
@@ -58,4 +59,7 @@ data class Subscription(
 
   @Expose
   val googlePlayPurchaseToken: String? = null,
+
+  @Expose
+  val giftCardCode: String? = null,
 ) : Serializable
