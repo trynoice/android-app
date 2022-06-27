@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,8 +38,8 @@ class AboutFragment : Fragment() {
       addItem(
         buildElement(
           R.drawable.ic_about_copyright,
-          R.string.app_copyright,
-          R.string.app_authors_url,
+          getString(R.string.app_copyright, Calendar.getInstance().get(Calendar.YEAR)),
+          getString(R.string.app_authors_url),
         )
       )
 
@@ -66,15 +67,25 @@ class AboutFragment : Fragment() {
         )
       )
 
+      addGroup(getString(R.string.reach_us))
+
       if (!BuildConfig.IS_FREE_BUILD) {
         addItem(
           buildElement(
             R.drawable.about_icon_google_play,
-            R.string.about_play_store,
+            R.string.write_review_play_store,
             R.string.play_store_url,
           )
         )
       }
+
+      addItem(
+        buildElement(
+          R.drawable.about_icon_email,
+          getString(R.string.connect_through_email),
+          "mailto:trynoiceapp@gmail.com"
+        )
+      )
 
       addItem(
         buildElement(
@@ -109,7 +120,7 @@ class AboutFragment : Fragment() {
       )
 
       addGroup(getString(R.string.created_by))
-      addTwitter(creatorTwitter, creatorName)
+      addTwitter("ashutoshgngwr", "Ashutosh Gangwar")
       create()
     }
   }
@@ -130,10 +141,5 @@ class AboutFragment : Fragment() {
     return Element(title, iconId)
       .setAutoApplyIconTint(true)
       .setOnClickListener { it.context.startCustomTab(url) }
-  }
-
-  companion object {
-    private const val creatorTwitter = "ashutoshgngwr"
-    private const val creatorName = "Ashutosh Gangwar"
   }
 }
