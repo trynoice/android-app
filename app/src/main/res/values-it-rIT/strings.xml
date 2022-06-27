@@ -263,4 +263,9 @@
     <string name="gift_card_not_found">Il codice inserito non esiste.</string>
     <string name="gift_card_details">Riscattare questa carta regalo vi offrirà l\'abbonamento premium fino al %1$s.</string>
     <string name="redeemed_using_code">Riscattata usando \'%1$s\'</string>
+    <string name="write_review_play_store">Scrivi una recensione su Google Play</string>
+    <string name="third_party_attributions">Attribuzioni di terzi</string>
+    <string name="oss_licenses">Licenze software open-source</string>
+    <string name="connect_through_email">Contattaci tramite email</string>
+    <string name="reach_us">Contattaci</string>
 </resources>
