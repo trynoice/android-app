@@ -1,5 +1,7 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.content.Intent
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import dagger.hilt.android.AndroidEntryPoint
 import mehdi.sakout.aboutpage.AboutPage
 import mehdi.sakout.aboutpage.Element
@@ -37,8 +40,8 @@ class AboutFragment : Fragment() {
       addItem(
         buildElement(
           R.drawable.ic_about_copyright,
-          R.string.app_copyright,
-          R.string.app_authors_url,
+          getString(R.string.app_copyright, Calendar.getInstance().get(Calendar.YEAR)),
+          getString(R.string.app_authors_url),
         )
       )
 
@@ -66,15 +69,25 @@ class AboutFragment : Fragment() {
         )
       )
 
+      addGroup(getString(R.string.reach_us))
+
       if (!BuildConfig.IS_FREE_BUILD) {
         addItem(
           buildElement(
             R.drawable.about_icon_google_play,
-            R.string.about_play_store,
+            R.string.write_review_play_store,
             R.string.play_store_url,
           )
         )
       }
+
+      addItem(
+        buildElement(
+          R.drawable.about_icon_email,
+          getString(R.string.connect_through_email),
+          "mailto:trynoiceapp@gmail.com"
+        )
+      )
 
       addItem(
         buildElement(
@@ -109,7 +122,65 @@ class AboutFragment : Fragment() {
       )
 
       addGroup(getString(R.string.created_by))
-      addTwitter(creatorTwitter, creatorName)
+      addTwitter("ashutoshgngwr", "Ashutosh Gangwar")
+
+      addGroup(getString(R.string.third_party_attributions))
+      addItem(
+        buildElement(R.drawable.ic_baseline_shield_24, getString(R.string.oss_licenses)) {
+          Intent(requireContext(), OssLicensesMenuActivity::class.java)
+            .putExtra("title", getString(R.string.oss_licenses))
+            .also { startActivity(it) }
+        }
+      )
+
+      addItem(
+        buildElement(
+          R.drawable.ic_launcher_24dp,
+          "white noise icon by Juraj Sedlák",
+          "https://thenounproject.com/term/white-noise/1287855/"
+        )
+      )
+
+      addItem(
+        buildElement(
+          R.drawable.ic_appintro_chromecast,
+          "Chromecast icon by Oliver Silvérus, SE",
+          "https://thenounproject.com/term/chromecast/2135765"
+        )
+      )
+
+      addItem(
+        buildElement(
+          R.drawable.ic_appintro_library,
+          "Ecosystem icon by Made x Made",
+          "https://thenounproject.com/term/ecosystem/2318259"
+        )
+      )
+
+      addItem(
+        buildElement(
+          R.drawable.ic_appintro_presets,
+          "Equalizer icon by Souvik Bhattacharjee",
+          "https://thenounproject.com/term/equalizer/1596234"
+        )
+      )
+
+      addItem(
+        buildElement(
+          R.drawable.ic_settings_audio_focus,
+          "Listen icon by snide",
+          "https://thenounproject.com/term/listen/317779/"
+        )
+      )
+
+      addItem(
+        buildElement(
+          R.drawable.ic_appintro_sleep_timer,
+          "Sleeping icon by Koson Rattanaphan, TH",
+          "https://thenounproject.com/term/sleeping/3434765"
+        )
+      )
+
       create()
     }
   }
@@ -127,13 +198,16 @@ class AboutFragment : Fragment() {
   }
 
   private fun buildElement(@DrawableRes iconId: Int, title: String, url: String): Element {
-    return Element(title, iconId)
-      .setAutoApplyIconTint(true)
-      .setOnClickListener { it.context.startCustomTab(url) }
+    return buildElement(iconId, title) { it.context.startCustomTab(url) }
   }
 
-  companion object {
-    private const val creatorTwitter = "ashutoshgngwr"
-    private const val creatorName = "Ashutosh Gangwar"
+  private fun buildElement(
+    @DrawableRes iconId: Int,
+    title: String,
+    clickListener: View.OnClickListener,
+  ): Element {
+    return Element(title, iconId)
+      .setAutoApplyIconTint(true)
+      .setOnClickListener(clickListener)
   }
 }

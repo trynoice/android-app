@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">Noice</string>
-  <string name="app_copyright">2019–21 the Noice Authors</string>
+  <string name="app_copyright">2019–%1$d the Noice Authors</string>
   <string name="app_license_url">https://github.com/trynoice/android-app/blob/main/LICENSE</string>
   <string name="app_authors_url">https://github.com/trynoice/android-app/graphs/contributors</string>
   <string name="app_changelog_url">https://trynoice.com/changelog</string>
