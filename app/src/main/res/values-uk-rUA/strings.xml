@@ -277,4 +277,9 @@
     <string name="gift_card_load_error">Йой! Нам не вдалося отримати подарункову картку. %1$s</string>
     <string name="gift_card_details">Активуючи цю подарункову картку, ви отримаєте преміальну передплату до %1$s.</string>
     <string name="gift_card_redeem_error">О ні! Не вдалося активувати подарункову картку. %1$s</string>
+    <string name="write_review_play_store">Напишіть відгук у Google Play</string>
+    <string name="third_party_attributions">Сторонні атрибуції</string>
+    <string name="connect_through_email">Зв\'язатися електронною поштою</string>
+    <string name="reach_us">Зв\'язок з нами</string>
+    <string name="oss_licenses">Ліцензії на програмне забезпечення з відкритим кодом</string>
 </resources>
