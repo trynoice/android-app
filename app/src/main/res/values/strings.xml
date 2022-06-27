@@ -296,4 +296,6 @@
     <string name="reach_us">Reach us</string>
     <string name="write_review_play_store">Write a review on Google Play</string>
     <string name="connect_through_email">Connect through email</string>
+    <string name="third_party_attributions">Third-party attributions</string>
+    <string name="oss_licenses">Open-source software licenses</string>
 </resources>
