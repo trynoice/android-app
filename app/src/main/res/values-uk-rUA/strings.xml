@@ -266,4 +266,20 @@
     <string name="invalid_email">Введено недійсну електронну адресу!</string>
     <string name="subscription_payment_pending">Оплата за цю покупку очікується.</string>
     <string name="cancel_subscription_confirmation">Ви впевнені, що хочете скасувати передплату Noice Premium\? Після скасування ваша передплата автоматично припиниться в кінці поточного платіжного циклу. Ваш поточний платіжний цикл закінчується %1$s.</string>
+    <string name="gift_card_code">Код подарункової картки</string>
+    <string name="redeem">Активувати</string>
+    <string name="gift_card_already_redeemed">Подарункова картка з цим кодом вже активована.</string>
+    <string name="redeemed_using_code">Активовано за допомогою «%1$s»</string>
+    <string name="gift_card_not_found">Цього коду не існує.</string>
+    <string name="invalid_gift_card_code">Введений код подарункової картки недійсний!</string>
+    <string name="redeem_gift_card">Активувати подарункову картку</string>
+    <string name="gift_card_expired">Термін дії подарункової картки з вказаним кодом закінчився.</string>
+    <string name="gift_card_load_error">Йой! Нам не вдалося отримати подарункову картку. %1$s</string>
+    <string name="gift_card_details">Активуючи цю подарункову картку, ви отримаєте преміальну передплату до %1$s.</string>
+    <string name="gift_card_redeem_error">О ні! Не вдалося активувати подарункову картку. %1$s</string>
+    <string name="write_review_play_store">Напишіть відгук у Google Play</string>
+    <string name="third_party_attributions">Сторонні атрибуції</string>
+    <string name="connect_through_email">Зв\'язатися електронною поштою</string>
+    <string name="reach_us">Зв\'язок з нами</string>
+    <string name="oss_licenses">Ліцензії на програмне забезпечення з відкритим кодом</string>
 </resources>
