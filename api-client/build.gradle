@@ -31,7 +31,7 @@ android {
 }
 
 dependencies {
-  def okhttpVersion = '4.9.3'
+  def okhttpVersion = '4.10.0'
   def retrofitVersion = '2.9.0'
 
   api "com.squareup.okhttp3:okhttp:$okhttpVersion"
