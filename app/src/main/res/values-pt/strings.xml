@@ -20,7 +20,7 @@
     <string name="appintro__getting_started_desc_0">Arrastar para a esquerda para conhecer todas as funcionalidades!</string>
     <string name="appintro__chromecast_title">Chromecast ativado</string>
     <string name="appintro__chromecast_desc">Utilize o Noice para transmitir o seu ambiente paraa outros dispositivos compatíveis com Chromecast, como colunas de som portáteis, televisões, etc.</string>
-    <string name="app_description">Relaxe e melhore a sua produtividade com um pouco de ruído de fundo.</string>
+    <string name="app_description">Relaxe e melhore a sua concentração com ruído de fundo calmante natural.</string>
     <string name="app_theme_system_default">Usado pelo sistema</string>
     <string name="app_theme_dark">Escuro</string>
     <string name="app_theme_light">Claro</string>
@@ -114,7 +114,7 @@
     <string name="in_app_feedback__title">Enviar uma avaliação</string>
     <string name="in_app_feedback__description">Adoraríamos saber a sua opinião sobre a aplicação. Reserve um momento para visitar o nosso repositório no GitHub. Se não gostou da aplicação, considere reportar um problema explicando as suas razões. Também pode avaliar o projeto com estrelas para mostrar amor e apoio.</string>
     <string name="cast_media">Conectar ao Chromecast</string>
-    <string name="support_development__share_description">Partilhar o Noice com amigos é semelhante a fazer um donativo monetário. Com mais descarregamentos da aplicação, seremos capazes de receber comentários e opiniões de uma série de pontos de vista diferentes que nos ajudarão a tornar o Noice melhor do que nunca.</string>
+    <string name="support_development__share_description">Também pode ajudar-nos contando aos seus amigos sobre nós. Mais utilizadores irão dar comentários e opiniões de muitos pontos de vista diferentes que nos ajudarão a melhorar os nossos serviços.</string>
     <string name="support_development__share">Partilhar com os amigos</string>
     <string name="support_development__donate_thank_you_description">Agradecemos-lhe muito sinceramente a sua generosa contribuição para o projeto Noice.</string>
     <string name="support_development__donate_google_play_description">O seu pagamento será tratado com segurança pelo Google Play. Dependendo da sua localização, _poderão_ ser aplicados impostos adicionais ao valor final.</string>
@@ -127,4 +127,5 @@
     <string name="appintro__presets_desc">Depois de reproduzir alguns sons, pode usar o botão \"Guardar\" no canto inferior do ecrã para guardar a sua mistura de sons. Para reutilizar uma mistura de sons armazenada, vá à lista de mistura de sons na barra inferior.</string>
     <string name="enable_media_buttons_summary">Usar os botões de média de hardware para controlar a reprodução</string>
     <string name="enable_media_buttons">Ativar botões de média</string>
+    <string name="account">Conta</string>
 </resources>
