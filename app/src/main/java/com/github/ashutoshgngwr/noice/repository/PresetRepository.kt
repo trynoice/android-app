@@ -9,6 +9,8 @@ import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.ext.keyFlow
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.model.PresetV0
+import com.github.ashutoshgngwr.noice.model.PresetV1
 import com.github.ashutoshgngwr.noice.repository.PresetRepository.Companion.PREFERENCE_KEY
 import com.github.ashutoshgngwr.noice.repository.errors.DuplicatePresetError
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
@@ -43,6 +45,14 @@ class PresetRepository @Inject constructor(
 ) {
 
   private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+  init {
+    if (prefs.getString(PREFERENCE_KEY, null).isNullOrBlank()) {
+      prefs.edit { putString(PREFERENCE_KEY, DEFAULT_PRESETS) }
+    }
+
+    migrate()
+  }
 
   /**
    * Adds the given preset to persistent storage.
@@ -84,7 +94,7 @@ class PresetRepository @Inject constructor(
    * Lists all [Preset]s present in the persistent storage.
    */
   fun list(): List<Preset> {
-    return gson.fromJson(prefs.getString(PREFERENCE_KEY, DEFAULT_PRESETS), PRESET_LIST_TYPE)
+    return gson.fromJson(prefs.getString(PREFERENCE_KEY, "[]"), PRESET_LIST_TYPE)
   }
 
   /**
@@ -140,7 +150,7 @@ class PresetRepository @Inject constructor(
   fun exportTo(stream: OutputStream) {
     val data = mapOf(
       EXPORT_VERSION_KEY to PREFERENCE_KEY,
-      EXPORT_DATA_KEY to prefs.getString(PREFERENCE_KEY, DEFAULT_PRESETS)
+      EXPORT_DATA_KEY to prefs.getString(PREFERENCE_KEY, "[]")
     )
 
     OutputStreamWriter(stream).use { gson.toJson(data, it) }
@@ -158,7 +168,12 @@ class PresetRepository @Inject constructor(
 
     val version = data?.get(EXPORT_VERSION_KEY)
     version ?: throw IllegalArgumentException("'version' is missing")
-    prefs.edit { putString(version, data[EXPORT_DATA_KEY]) }
+    prefs.edit {
+      clear()
+      putString(version, data[EXPORT_DATA_KEY])
+    }
+
+    migrate()
   }
 
   /**
@@ -198,7 +213,7 @@ class PresetRepository @Inject constructor(
 
   private inline fun edit(block: (MutableList<Preset>) -> Unit) {
     synchronized(prefs) {
-      val presets: MutableList<Preset> = prefs.getString(PREFERENCE_KEY, DEFAULT_PRESETS)
+      val presets: MutableList<Preset> = prefs.getString(PREFERENCE_KEY, "[]")
         .let { gson.fromJson(it, PRESET_LIST_TYPE) }
 
       block.invoke(presets)
@@ -206,19 +221,102 @@ class PresetRepository @Inject constructor(
     }
   }
 
+  private fun migrate() {
+    migrateToV1()
+    migrateToV2()
+  }
+
+  /**
+   * [migrateToV1] migrates saved user presets from its old definitions to its current
+   * definitions.
+   *
+   * Old definitions can be found here:
+   * https://github.com/ashutoshgngwr/noice/blob/2fe643b655e1609f2c857226f6bcfcbf4ece6edd/app/src/main/java/com/github/ashutoshgngwr/noice/sound/Preset.kt
+   *
+   * To sum it up, there are four migration goals:
+   * 1. Assign stable IDs to saved presets
+   * 2. Clean up the naming mess https://github.com/ashutoshgngwr/noice/issues/110
+   * 3. Fix volume type issues https://github.com/ashutoshgngwr/noice/pull/105
+   * 4. Fix time period offset issues introduced in following commits
+   *    - https://github.com/ashutoshgngwr/noice/commit/b449ef643227b65685b71f7780a814c606e6abad
+   *    - https://github.com/ashutoshgngwr/noice/commit/8ef502debd84aeadadaa665acd37c3cee592f521
+   *    - https://github.com/ashutoshgngwr/noice/commit/11eb63ee22f3a03eca982cbd308f06ec164ab300#diff-db23b0e75244cdeb8ead7184bb06cb7cR15-R71
+   */
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal fun migrateToV1() = synchronized(prefs) {
+    val presetsV0 = prefs.getString(PREF_V0, "[]")
+      .let { gson.fromJson<List<PresetV0>>(it, GSON_TYPE_V0) }
+    if (presetsV0.isNullOrEmpty()) {
+      return
+    }
+
+    val presetsV1 = prefs.getString(PREF_V1, "[]")
+      .let { gson.fromJson<MutableList<PresetV1>>(it, GSON_TYPE_V1) }
+    presetsV0.forEach { presetV0 ->
+      val presetV1 = presetV0.toPresetV1()
+      // only append to existing presets if another preset with same player states doesn't exist.
+      if (presetsV1.none { it.playerStates == presetV1.playerStates }) {
+        presetsV1.add(presetV1)
+      }
+    }
+
+    prefs.edit {
+      remove(PREF_V0)
+      putString(PREF_V1, gson.toJson(presetsV1))
+    }
+  }
+
+  /**
+   * Migrates V1 presets to V2 presets to adapt for the following changes:
+   *  - V2 Presets don't understand `timePeriod` field from [PresetV1.PlayerState].
+   *  - V2 sound library use `soundId` field instead of `soundKey`.
+   */
+  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  internal fun migrateToV2() = synchronized(prefs) {
+    val presetsV1 = prefs.getString(PREF_V1, "[]")
+      .let { gson.fromJson<List<PresetV1>>(it, GSON_TYPE_V1) }
+    if (presetsV1.isNullOrEmpty()) {
+      return
+    }
+
+    val presetsV2 = prefs.getString(PREF_V2, "[]")
+      .let { gson.fromJson<MutableList<Preset>>(it, GSON_TYPE_V2) }
+    presetsV1.forEach { presetV1 ->
+      val presetV2 = presetV1.toPresetV2()
+      // only append to existing presets if another preset with same player states doesn't exist.
+      if (presetsV2.none { it.playerStates.contentEquals(presetV2.playerStates) }) {
+        presetsV2.add(presetV2)
+      }
+    }
+
+    prefs.edit {
+      remove(PREF_V1)
+      putString(PREF_V2, gson.toJson(presetsV2))
+    }
+  }
+
   companion object {
+    private const val PREF_V0 = "presets"
+    private const val PREF_V1 = "presets.v1"
+    private const val PREF_V2 = "presets.v2"
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val PREFERENCE_KEY = "presets.v2"
+    const val PREFERENCE_KEY = PREF_V2
+
+    private val GSON_TYPE_V0 = TypeToken.getParameterized(List::class.java, PresetV0::class.java)
+      .type
+
+    private val GSON_TYPE_V1 = TypeToken.getParameterized(List::class.java, PresetV1::class.java)
+      .type
+
+    private val GSON_TYPE_V2 = TypeToken.getParameterized(List::class.java, Preset::class.java).type
+    private val PRESET_LIST_TYPE = GSON_TYPE_V2
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     const val EXPORT_VERSION_KEY = "version"
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     const val EXPORT_DATA_KEY = "data"
-
-    private val PRESET_LIST_TYPE by lazy {
-      TypeToken.getParameterized(List::class.java, Preset::class.java).type
-    }
 
     private const val URI_PARAM_NAME = "n"
     private const val URI_PARAM_PLAYER_STATES = "ps"
