@@ -22,7 +22,7 @@ interface SubscriptionBillingProvider {
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    *
-   * @see com.trynoice.api.client.apis.SubscriptionApi.getPlans
+   * @see com.trynoice.api.client.apis.SubscriptionApi.listPlans
    */
   suspend fun getPlans(): List<SubscriptionPlan>
 
@@ -64,7 +64,7 @@ class StripeSubscriptionBillingProvider(
 ) : SubscriptionBillingProvider {
 
   override suspend fun getPlans(): List<SubscriptionPlan> {
-    return apiClient.subscriptions().getPlans(SubscriptionPlan.PROVIDER_STRIPE)
+    return apiClient.subscriptions().listPlans(SubscriptionPlan.PROVIDER_STRIPE)
   }
 
   override suspend fun launchBillingFlow(

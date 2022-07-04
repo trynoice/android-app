@@ -33,12 +33,16 @@ interface SubscriptionApi {
    *  - 500: internal server error.
    *
    * @param provider filter listed plans by the given provider. (optional)
+   * @param currency optional ISO 4217 currency code for including converted prices with plans.
    * @return [List]<[SubscriptionPlan]>
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
   @GET("/v1/subscriptions/plans")
-  suspend fun getPlans(@Query("provider") provider: String? = null): List<SubscriptionPlan>
+  suspend fun listPlans(
+    @Query("provider") provider: String? = null,
+    @Query("currency") currency: String? = null,
+  ): List<SubscriptionPlan>
 
   /**
    * Initiates the subscription flow for the authenticated user. The flow might vary with payment
@@ -90,6 +94,8 @@ interface SubscriptionApi {
    * @param onlyActive return only the active subscription (single instance).
    * @param stripeReturnUrl optional redirect URL for exiting Stripe customer portal.
    * @param page 0-indexed page number.
+   * @param currency optional ISO 4217 currency code for including converted prices with the
+   * subscription's plan.
    * @return a list of subscription purchases; empty list if the page number is higher than
    * available data.
    * @throws retrofit2.HttpException on API error.
@@ -101,6 +107,7 @@ interface SubscriptionApi {
     @Query("onlyActive") onlyActive: Boolean = false,
     @Query("page") page: Int = 0,
     @Query("stripeReturnUrl") stripeReturnUrl: String? = null,
+    @Query("currency") currency: String? = null,
   ): List<Subscription>
 
   /**
@@ -116,6 +123,8 @@ interface SubscriptionApi {
    *
    * @param subscriptionId id of the subscription entity.
    * @param stripeReturnUrl optional redirect URL for exiting Stripe customer portal.
+   * @param currency optional ISO 4217 currency code for including converted prices with the
+   * subscription's plan.
    * @return the requested [Subscription] entity.
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
@@ -125,6 +134,7 @@ interface SubscriptionApi {
   suspend fun get(
     @Path("subscriptionId") subscriptionId: Long,
     @Query("stripeReturnUrl") stripeReturnUrl: String? = null,
+    @Query("currency") currency: String? = null,
   ): Subscription
 
   /**

@@ -16,7 +16,7 @@ class GooglePlaySubscriptionBillingProvider(
 ) : SubscriptionBillingProvider {
 
   override suspend fun getPlans(): List<SubscriptionPlan> {
-    return apiClient.subscriptions().getPlans(SubscriptionPlan.PROVIDER_GOOGLE_PLAY)
+    return apiClient.subscriptions().listPlans(SubscriptionPlan.PROVIDER_GOOGLE_PLAY)
   }
 
   override suspend fun launchBillingFlow(
