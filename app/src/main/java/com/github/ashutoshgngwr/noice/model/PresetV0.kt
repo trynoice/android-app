@@ -23,12 +23,6 @@ data class PresetV0(
   @Expose @SerializedName("b") val playerStates: List<PlayerState>,
 ) {
 
-  data class PlayerState(
-    @Expose @SerializedName("a") val soundKey: String,
-    @Expose @SerializedName("b") val volume: Double,
-    @Expose @SerializedName("c") val timePeriod: Int,
-  )
-
   /**
    * Converts this [PresetV0] to [PresetV1].
    */
@@ -47,4 +41,10 @@ data class PresetV0(
         },
     )
   }
+
+  data class PlayerState(
+    @Expose @SerializedName("a") val soundKey: String,
+    @Expose @SerializedName("b") val volume: Double,
+    @Expose @SerializedName("c") val timePeriod: Int,
+  )
 }
