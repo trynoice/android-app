@@ -270,4 +270,20 @@
     <string name="sign_in_email_error">उह ओह! हम आपको साइन-इन लिंक ईमेल नहीं कर सके। %1$s कृपया बाद में पुन: प्रयास करें!</string>
     <string name="library_load_error">उफ़! हम ध्वनि पुस्तकालय प्राप्त नहीं कर सके। %1$s</string>
     <string name="audio_quality_summary">स्ट्रीमिंग के लिए अधिकतम ऑडियो क्वालिटी। मीडियम, हाई और अल्ट्रा केवल तभी काम करते हैं जब आप सब्स्क्राइब्ड होते हैं।</string>
+    <string name="redeem_gift_card">गिफ्ट कार्ड रिडीम करें</string>
+    <string name="gift_card_code">गिफ्ट कार्ड का कोड</string>
+    <string name="invalid_gift_card_code">दर्ज किया गया गिफ्ट कार्ड का कोड अमान्य है!</string>
+    <string name="redeem">रिडीम</string>
+    <string name="gift_card_not_found">दिया गया कोड मौजूद नहीं है।</string>
+    <string name="gift_card_load_error">उफ़! हम उपहार कार्ड प्राप्त नहीं कर सके। %1$s</string>
+    <string name="gift_card_expired">दिए गए कोड वाले गिफ्ट कार्ड की समय-सीमा समाप्त हो गई है।</string>
+    <string name="gift_card_details">इस गिफ्ट कार्ड को रिडीम करने से आपको %1$s तक प्रीमियम सदस्यता मिलेगी।</string>
+    <string name="redeemed_using_code">\'%1$s\' का उपयोग कर रिडीम किया</string>
+    <string name="reach_us">हमसे संपर्क करें</string>
+    <string name="write_review_play_store">गूगल प्ले पर समीक्षा लिखें</string>
+    <string name="connect_through_email">ईमेल के माध्यम से जुड़ें</string>
+    <string name="oss_licenses">ओपन-सोर्स सॉफ्टवेयर लाइसेंस</string>
+    <string name="gift_card_already_redeemed">दिए गए कोड वाला गिफ्ट कार्ड पहले ही रिडीम किया जा चुका है।</string>
+    <string name="gift_card_redeem_error">धत्तेरे की! हम आपका गिफ्ट कार्ड रिडीम नहीं कर सके। %1$s</string>
+    <string name="third_party_attributions">थर्ड-पार्टी एट्रिब्यूशन</string>
 </resources>
