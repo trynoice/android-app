@@ -80,7 +80,7 @@ class NoopAudioFocusManager(override val listener: AudioFocusManager.Listener) :
   override fun setAttributes(audioAttributes: AudioAttributesCompat) = Unit
 
   companion object {
-    private const val LOG_TAG = "NoopAudioFocusManager"
+    private const val LOG_TAG = "NoopAFocusManager"
   }
 }
 
@@ -192,6 +192,6 @@ class DefaultAudioFocusManager(
   }
 
   companion object {
-    private const val LOG_TAG = "DefaultAudioFocusManager"
+    private const val LOG_TAG = "DefaultAFocusManager"
   }
 }

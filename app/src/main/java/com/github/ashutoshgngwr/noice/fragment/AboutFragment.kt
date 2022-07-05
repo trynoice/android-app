@@ -1,7 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.content.Intent
-import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +16,7 @@ import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import dagger.hilt.android.AndroidEntryPoint
 import mehdi.sakout.aboutpage.AboutPage
 import mehdi.sakout.aboutpage.Element
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint

@@ -51,12 +51,12 @@
     <plurals name="time_hours">
         <item quantity="one">%1$d hodinu</item>
         <item quantity="few">%1$d hodiny</item>
-        <item quantity="other">%1$d hodin</item>
+        <item quantity="many">%1$d hodin</item>
     </plurals>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minutu</item>
         <item quantity="few">%1$d minuty</item>
-        <item quantity="other">%1$d minut</item>
+        <item quantity="many">%1$d minut</item>
     </plurals>
     <string name="wake_up_timer_description">
     Noice se sám spustí po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
