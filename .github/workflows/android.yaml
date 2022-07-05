@@ -38,8 +38,24 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: gradle/wrapper-validation-action@v1
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/setup-java@v2
+        with:
+          distribution: adopt
+          java-version: ${{ env.JAVA_VERSION }}
+      - uses: actions/checkout@v3
+      - run: ./gradlew lint --no-daemon
+      - if: ${{ always() }}
+        uses: yutailang0119/action-android-lint@v3
+        with:
+          report-path: "**/build/reports/*.xml"
 
   api-client-unit-tests:
     name: API Client Unit Tests
@@ -112,6 +128,7 @@ jobs:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     needs:
       - validate-gradle-wrapper
+      - lint
       - api-client-unit-tests
       # TODO: disabled until app tests are fixed.
       # - app-unit-tests
@@ -147,6 +164,7 @@ jobs:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     needs:
       - validate-gradle-wrapper
+      - lint
       - api-client-unit-tests
       # Disabled until app tests are fixed.
       # - app-unit-tests
