@@ -47,9 +47,11 @@ class SubscriptionRepository @Inject constructor(
    * @see fetchNetworkBoundResource
    * @see Resource
    */
-  fun getPlans(): Flow<Resource<List<SubscriptionPlan>>> = fetchNetworkBoundResource(
+  fun listPlans(
+    currencyCode: String? = null,
+  ): Flow<Resource<List<SubscriptionPlan>>> = fetchNetworkBoundResource(
     loadFromCache = { cacheStore.getAs(PLANS_CACHE_KEY) },
-    loadFromNetwork = { subscriptionBillingProvider.getPlans() },
+    loadFromNetwork = { subscriptionBillingProvider.listPlans(currencyCode) },
     cacheNetworkResult = { plans -> cacheStore.put(PLANS_CACHE_KEY, plans) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "getPlans:", e)
@@ -102,10 +104,17 @@ class SubscriptionRepository @Inject constructor(
    * @see fetchNetworkBoundResource
    * @see Resource
    */
-  fun get(subscriptionId: Long): Flow<Resource<Subscription>> = fetchNetworkBoundResource(
+  fun get(
+    subscriptionId: Long,
+    currencyCode: String? = null,
+  ): Flow<Resource<Subscription>> = fetchNetworkBoundResource(
     loadFromCache = { cacheStore.getAs("${SUBSCRIPTION_KEY_PREFIX}/${subscriptionId}") },
     loadFromNetwork = {
-      apiClient.subscriptions().get(subscriptionId, stripeReturnUrl = STRIPE_RETURN_URL)
+      apiClient.subscriptions().get(
+        subscriptionId,
+        stripeReturnUrl = STRIPE_RETURN_URL,
+        currency = currencyCode,
+      )
     },
     cacheNetworkResult = { s -> cacheStore.put("${SUBSCRIPTION_KEY_PREFIX}/${subscriptionId}", s) },
     loadFromNetworkErrorTransform = { e ->
@@ -156,9 +165,17 @@ class SubscriptionRepository @Inject constructor(
    * @see fetchNetworkBoundResource
    * @see Resource
    */
-  fun list(page: Int = 0): Flow<Resource<List<Subscription>>> = fetchNetworkBoundResource(
+  fun list(
+    page: Int = 0,
+    currencyCode: String? = null,
+  ): Flow<Resource<List<Subscription>>> = fetchNetworkBoundResource(
     loadFromNetwork = {
-      apiClient.subscriptions().list(false, page, stripeReturnUrl = STRIPE_RETURN_URL)
+      apiClient.subscriptions().list(
+        false,
+        page = page,
+        stripeReturnUrl = STRIPE_RETURN_URL,
+        currency = currencyCode,
+      )
     },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "list:", e)

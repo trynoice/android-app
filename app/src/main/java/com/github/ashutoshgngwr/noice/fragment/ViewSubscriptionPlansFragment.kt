@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.os.ConfigurationCompat
 import androidx.core.view.forEach
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
@@ -37,6 +38,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -72,6 +74,14 @@ class ViewSubscriptionPlansFragment : Fragment() {
           binding.errorContainer.message = msg.normalizeSpace()
         }
     }
+
+    val currencyCode = ConfigurationCompat.getLocales(resources.configuration)
+      .get(0)
+      .let { Currency.getInstance(it) }
+      .currencyCode
+
+    binding.errorContainer.retryAction = { viewModel.loadPlans(currencyCode) }
+    viewModel.loadPlans(currencyCode)
   }
 }
 
@@ -153,15 +163,18 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
     )
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+  val isShowingLocalPrices = plans.transform { plans ->
+    emit(plans.all { it.requestedCurrencyCode != null && it.requestedCurrencyCode != "INR" })
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
   init {
     val args = ViewSubscriptionPlansFragmentArgs.fromSavedStateHandle(savedStateHandle)
     activeSubscription = args.activeSubscription
-    loadPlans()
   }
 
-  fun loadPlans() {
+  fun loadPlans(currencyCode: String) {
     viewModelScope.launch {
-      subscriptionRepository.getPlans()
+      subscriptionRepository.listPlans(currencyCode)
         .flowOn(Dispatchers.IO)
         .collect(plansResource)
     }

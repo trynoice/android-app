@@ -213,7 +213,7 @@
         <item quantity="other">First %1$d days free</item>
     </plurals>
     <string name="total_price">%1$s total</string>
-    <string name="monthly_price">%1$s/month</string>
+    <string name="monthly_price">%1$s per month</string>
     <string name="benefits">Benefits</string>
     <string name="benefit_0">Natural variations in sounds</string>
     <string name="benefit_1">High-quality audio streaming</string>
@@ -298,4 +298,5 @@
     <string name="connect_through_email">Connect through email</string>
     <string name="third_party_attributions">Third-party attributions</string>
     <string name="oss_licenses">Open-source software licenses</string>
+    <string name="showing_localised_prices">Prices converted from [INR](https://en.wikipedia.org/wiki/Indian_rupee). Actual prices may vary slightly.</string>
 </resources>

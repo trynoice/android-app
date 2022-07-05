@@ -6,6 +6,7 @@ import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.ConfigurationCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -19,6 +20,7 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -40,10 +42,14 @@ import com.trynoice.api.client.models.SubscriptionPlan
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -92,7 +98,9 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.purchasesPager.collectLatest(adapter::submitData)
+      viewModel.purchasesData
+        .filterNotNull()
+        .collectLatest(adapter::submitData)
     }
 
     setFragmentResultListener(CancelSubscriptionFragment.RESULT_KEY) { _, bundle ->
@@ -100,6 +108,11 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
         adapter.refresh()
       }
     }
+
+    ConfigurationCompat.getLocales(resources.configuration)
+      .get(0)
+      .let { Currency.getInstance(it) }
+      .also { viewModel.createPager(it.currencyCode) }
   }
 
   override fun onClickManage(subscription: Subscription) {
@@ -123,12 +136,26 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
 
 @HiltViewModel
 class SubscriptionPurchaseListViewModel @Inject constructor(
-  subscriptionRepository: SubscriptionRepository,
+  private val subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
-  internal val purchasesPager = Pager(PagingConfig(pageSize = 20)) {
-    SubscriptionPurchasePagingDataSource(subscriptionRepository)
-  }.flow.cachedIn(viewModelScope)
+  internal val purchasesData = MutableStateFlow<PagingData<Subscription>?>(null)
+  private var currencyCode: String? = null
+  private var pagerJob: Job? = null
+
+  internal fun createPager(currencyCode: String) {
+    if (this.currencyCode == currencyCode) {
+      return
+    }
+
+    this.currencyCode = currencyCode
+    pagerJob?.cancel()
+    pagerJob = viewModelScope.launch {
+      Pager(PagingConfig(pageSize = 20)) {
+        SubscriptionPurchasePagingDataSource(subscriptionRepository, currencyCode)
+      }.flow.cachedIn(this).collect(purchasesData)
+    }
+  }
 }
 
 class SubscriptionPurchaseListAdapter(
@@ -263,6 +290,7 @@ object SubscriptionComparator : DiffUtil.ItemCallback<Subscription>() {
 
 class SubscriptionPurchasePagingDataSource(
   private val subscriptionRepository: SubscriptionRepository,
+  private val currencyCode: String,
 ) : PagingSource<Int, Subscription>() {
 
   override fun getRefreshKey(state: PagingState<Int, Subscription>): Int? {
@@ -274,7 +302,7 @@ class SubscriptionPurchasePagingDataSource(
 
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Subscription> {
     val page = params.key ?: 0
-    val resource = subscriptionRepository.list(page)
+    val resource = subscriptionRepository.list(page, currencyCode)
       .flowOn(Dispatchers.IO)
       .last()
 
