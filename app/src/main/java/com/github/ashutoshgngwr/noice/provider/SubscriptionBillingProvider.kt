@@ -22,9 +22,9 @@ interface SubscriptionBillingProvider {
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    *
-   * @see com.trynoice.api.client.apis.SubscriptionApi.getPlans
+   * @see com.trynoice.api.client.apis.SubscriptionApi.listPlans
    */
-  suspend fun getPlans(): List<SubscriptionPlan>
+  suspend fun listPlans(currencyCode: String? = null): List<SubscriptionPlan>
 
   /**
    * Initiates the subscription billing flow by requesting the API to create a new subscription
@@ -63,8 +63,8 @@ class StripeSubscriptionBillingProvider(
   private val apiClient: NoiceApiClient
 ) : SubscriptionBillingProvider {
 
-  override suspend fun getPlans(): List<SubscriptionPlan> {
-    return apiClient.subscriptions().getPlans(SubscriptionPlan.PROVIDER_STRIPE)
+  override suspend fun listPlans(currencyCode: String?): List<SubscriptionPlan> {
+    return apiClient.subscriptions().listPlans(SubscriptionPlan.PROVIDER_STRIPE, currencyCode)
   }
 
   override suspend fun launchBillingFlow(
