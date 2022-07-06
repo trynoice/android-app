@@ -175,13 +175,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
       settingsRepository.isMediaButtonsEnabledAsFlow()
         .flowOn(Dispatchers.IO)
         .collect { isEnabled ->
-          mediaSessionManager.setCallback(
-            if (isEnabled) {
-              mediaSessionManagerCallback
-            } else {
-              null
-            }
-          )
+          mediaSessionManager.setCallback(if (isEnabled) mediaSessionManagerCallback else null)
         }
     }
 
@@ -217,7 +211,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
       ACTION_SET_SOUND_VOLUME -> {
         val volume = intent.getIntExtra(INTENT_EXTRA_SOUND_VOLUME, -1)
         require(volume in 0..Player.MAX_VOLUME) {
-          "intent extra '${INTENT_EXTRA_SOUND_VOLUME}' must be in range [0, ${Player.MAX_VOLUME}]"
+          "intent extra '${INTENT_EXTRA_SOUND_VOLUME}=${volume}' must be in range [0, ${Player.MAX_VOLUME}]"
         }
 
         playerManager.setVolume(getSoundIdExtra(intent), volume)
@@ -233,7 +227,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
       ACTION_SCHEDULE_STOP -> {
         val atMillis = intent.getLongExtra(INTENT_EXTRA_SCHEDULED_STOP_AT_MILLIS, -1)
         require(atMillis > 0) {
-          "intent extra '${INTENT_EXTRA_SCHEDULED_STOP_AT_MILLIS}' must be a long positive integer"
+          "intent extra '${INTENT_EXTRA_SCHEDULED_STOP_AT_MILLIS}' must be a positive long integer"
         }
 
         playerManager.scheduleStop(atMillis)
@@ -261,7 +255,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
         val skipDir = intent.getIntExtra(INTENT_EXTRA_PRESET_SKIP_DIRECTION, 0)
         require(skipDir == PRESET_SKIP_DIRECTION_PREV || skipDir == PRESET_SKIP_DIRECTION_PREV) {
           """
-            intent extra '${INTENT_EXTRA_PRESET_SKIP_DIRECTION}' must be be one of
+            intent extra '${INTENT_EXTRA_PRESET_SKIP_DIRECTION}=${skipDir}' must be be one of
             '${PRESET_SKIP_DIRECTION_PREV}' or '${PRESET_SKIP_DIRECTION_NEXT}'"
           """.trimIndent()
         }
