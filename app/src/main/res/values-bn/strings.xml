@@ -11,6 +11,9 @@
     <string name="sleep_timer">ঘুমের সময় নির্ণায়ক</string>
     <string name="wake_up_timer">ঘুম ভাঙ্গার সময় নির্ণায়ক</string>
     <string name="support_development">উন্নয়নকে সমর্থন করুন</string>
-    <string name="presets">পূর্বনির্ধারিত</string>
+    <string name="presets">পূর্বনির্ধারিতসমূহ</string>
     <string name="okay">ঠিক আছে</string>
+    <string name="pause">বিরত</string>
+    <string name="dismiss">খারিজ</string>
+    <string name="cancel">বাতিল করুন</string>
 </resources>
