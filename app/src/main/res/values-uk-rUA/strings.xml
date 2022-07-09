@@ -215,7 +215,7 @@
     <string name="quarterly">Щоквартально</string>
     <string name="bi_yearly">Раз на два роки</string>
     <string name="yearly">Щорічно</string>
-    <string name="monthly_price">%1$s/місяць</string>
+    <string name="monthly_price">%1$s на місяць</string>
     <string name="benefits">Переваги</string>
     <string name="benefit_0">Варіації природних звуків</string>
     <string name="benefit_1">Високоякісне потокове аудіо</string>
@@ -282,4 +282,5 @@
     <string name="connect_through_email">Зв\'язатися електронною поштою</string>
     <string name="reach_us">Зв\'язок з нами</string>
     <string name="oss_licenses">Ліцензії на програмне забезпечення з відкритим кодом</string>
+    <string name="showing_localised_prices">Ціни конвертовані з [INR](https://uk.wikipedia.org/wiki/%D0%86%D0%BD%D0%B4%D1%96%D0%B9%D1%81%D1%8C%D0%BA%D0%B0_%D1%80%D1%83%D0%BF%D1%96%D1%8F). Фактичні ціни можуть дещо відрізнятися.</string>
 </resources>

@@ -157,7 +157,7 @@
     <string name="update_details">更新明细</string>
     <string name="sign_in_token_error">登录链接无效。它可能已过期。请重试！</string>
     <string name="i_understand">我明白了。</string>
-    <string name="monthly_price">%1$s每月</string>
+    <string name="monthly_price">每月%1$s</string>
     <string name="benefits">收益</string>
     <string name="benefit_2">离线播放</string>
     <string name="plans">订阅计划</string>

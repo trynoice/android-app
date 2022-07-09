@@ -5,7 +5,7 @@
     <string name="help">Помощь</string>
     <string name="library">Библиотека звуков</string>
     <string name="report_issue">Сообщить о проблеме</string>
-    <string name="presets">Предустановки</string>
+    <string name="presets">Пресеты</string>
     <string name="sleep_timer">Таймер</string>
     <string name="support_development">Поддержать разработку</string>
     <string name="wake_up_timer">Таймер пробуждения</string>
@@ -53,7 +53,7 @@
     такие как колонки, ТВ и т.д.
   </string>
     <string name="appintro__chromecast_title">Chromecast включен</string>
-    <string name="appintro__getting_started_desc_0">Проведите влево чтобы узнать все функции!</string>
+    <string name="appintro__getting_started_desc_0">Проведите влево, чтобы узнать обо всех функциях!</string>
     <string name="appintro__getting_started_desc_1">Давайте начнем!</string>
     <string name="appintro__getting_started_title">Добро пожаловать</string>
     <string name="appintro__presets_desc">После воспроизведения нескольких звуков Вы можете использовать кнопку внизу экрана чтобы сохранить микс. Чтобы использовать сохраненный микс, откройте список пресетов в меню приложения.</string>
@@ -71,10 +71,7 @@
     Мы от всего сердца благодарим Вас за вашу щедрую помощь для проекта Noice.
   </string>
     <string name="support_development__share">Поделиться с друзьями</string>
-    <string name="support_development__share_description">
-    Поделиться Noice с друзьями похоже на пожертвование денег. С большим числом загрузок мы сможем
-    получать обратную связь с разными взглядами, что поможет нам сделать Noice еще лучше.
-  </string>
+    <string name="support_development__share_description">Вы также можете помочь нам, рассказав о нас своим друзьям. Больше пользователей предоставят нам отзывы с разными точками зрения и помогут нам улучшить наши услуги.</string>
     <string name="cast_media">Подключиться к Chromecast</string>
     <string name="in_app_feedback__description">Нам было бы приятно узнать что Вы думаете о приложении. Выделите, пожалуйста, минутку и посетите наш GitHub репозиторий. Если приложение вам не понравилось, откройте пожалуйста issue с объяснением. В другом случае, поставьте, пожалуйста, звездочку приложению чтобы показать любовь и поддержку.</string>
     <string name="in_app_feedback__title">Отправить отзыв</string>
@@ -103,7 +100,7 @@
         <item quantity="other">%1$d часов</item>
     </plurals>
     <string name="time_bridge">и</string>
-    <string name="wake_up_timer_schedule_set" tools:ignore="StringFormatCount">Будильник выключится в %1$s %2$s %3$s</string>
+    <string name="wake_up_timer_schedule_set" tools:ignore="StringFormatCount">Будильник сработает в %1$s %2$s %3$s</string>
     <string name="invalid_import_file_format">Неверный формат импортируемого файла!</string>
     <string name="failed_to_read_file">Ошибка чтения выбранного файла!</string>
     <string name="failed_to_write_file">Ошибка при записи в выбранный файл!</string>
@@ -152,4 +149,34 @@
     <string name="import_presets_successful">Пресеты успешно импортированы из файла!</string>
     <string name="export_presets_successful">Пресеты успешно экспортированы в файл!</string>
     <string name="random_preset_description">Сгенерированный пресет, скорее всего, будет содержать звуки с выбранными ключевыми словами. Более того, интенсивные пресеты будут пытаться воспроизводить больше звуков одновременно.</string>
+    <string name="support_development__donate_description">Если вы не приобрели премиум-подписку, вы можете совершить разовый платеж. Это поможет нам поддерживать разработку бесплатных функций и навсегда сохранить их без рекламы.</string>
+    <string name="sound_fade_out_duration_summary">Продолжительность затухающих звуков (в секундах)</string>
+    <string name="support">Поддержка</string>
+    <string name="sign_in_message">Пожалуйста, введите эл. почту для входа.</string>
+    <string name="unknown_error">Произошла неизвестная ошибка.</string>
+    <string name="account_locked_error">Ваша эл. почта временно заблокирована от попыток входа до %1$s.</string>
+    <string name="retry">Повторить</string>
+    <string name="sign_in_token_error">Ссылка для входа кажется недействительной. Возможно, истек срок. Пожалуйста, попробуйте снова!</string>
+    <string name="invalid_name">Введенное имя недействительно!</string>
+    <string name="email">Эл. почта</string>
+    <string name="sign_up_email_sent">Мы отправили вам на почту \"%1$s\" ссылку для входа.</string>
+    <string name="account">Учетная запись</string>
+    <string name="sign_in">Войти</string>
+    <string name="invalid_email">Введенная эл. почта недействительна!</string>
+    <string name="delete_account">Удалить учетную запись</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="signing_in">Вход</string>
+    <string name="sound_fade_out_duration">Длительность затухания звука</string>
+    <string name="view_subscription_plans">Посмотреть цены</string>
+    <string name="welcome_back">Добро пожаловать обратно!</string>
+    <string name="open_mailbox">Открыть почту</string>
+    <string name="sign_out">Выйти</string>
+    <string name="update_details">Обновить сведения</string>
+    <string name="network_error">Сеть недоступна.</string>
+    <string name="sign_in_sucessful">Успешный вход!</string>
+    <string name="app">Приложение</string>
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="sign_up_message">Пожалуйста, введите имя и эл. почту для регистрации.</string>
+    <string name="sign_in_link_tip">Пожалуйста, откройте полученную ссылку с помощью Noice, чтобы завершить процесс входа.</string>
+    <string name="mailbox_app_not_found">Ой! Нам не удалось найти почтовое приложение на вашем устройстве!</string>
 </resources>
