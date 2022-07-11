@@ -201,7 +201,7 @@
         <item quantity="other">पहले %1$d दिन मुफ़्त</item>
     </plurals>
     <string name="total_price">कुल %1$s</string>
-    <string name="monthly_price">%1$s/माह</string>
+    <string name="monthly_price">%1$s प्रति माह</string>
     <string name="benefits">फ़ायदे</string>
     <string name="benefit_1">उच्च क्वालिटी वाली ऑडियो स्ट्रीमिंग</string>
     <string name="processing_payment">हम आपका भुगतान संसाधित कर रहे हैं</string>
@@ -286,4 +286,5 @@
     <string name="gift_card_already_redeemed">दिए गए कोड वाला गिफ्ट कार्ड पहले ही रिडीम किया जा चुका है।</string>
     <string name="gift_card_redeem_error">धत्तेरे की! हम आपका गिफ्ट कार्ड रिडीम नहीं कर सके। %1$s</string>
     <string name="third_party_attributions">थर्ड-पार्टी एट्रिब्यूशन</string>
+    <string name="showing_localised_prices">कीमतें [भारतीय रुपये](https://en.wikipedia.org/wiki/Indian_rupee) से बदली गई हैं। वास्तविक कीमतों में थोड़ा अंतर हो सकता है।</string>
 </resources>
