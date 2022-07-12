@@ -182,7 +182,7 @@
     <string name="duplicate_email_error">L\'email inserita è associata a un altro account.</string>
     <string name="account_details_update_success">I dettagli del tuo account sono stati aggiornati con successo.</string>
     <string name="total_price">%1$s totale</string>
-    <string name="monthly_price">%1$s/mese</string>
+    <string name="monthly_price">%1$s per mese</string>
     <string name="offline">Sei offline</string>
     <string name="back_online">Torna online</string>
     <string name="premium">Premium</string>
