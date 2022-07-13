@@ -247,4 +247,5 @@
     <string name="sign_in_message">Veuillez entrer votre e-mail pour vous connecter.</string>
     <string name="showing_localised_prices">Les prix sont convertis depuis des [INR](https://fr.wikipedia.org/wiki/Roupie_indienne). Le prix exact peut légèrement varié.</string>
     <string name="subscription_payment_pending">Le paiement est en attente pour cet achat.</string>
+    <string name="sound_fade_out_duration">Durée du fondu sonore</string>
 </resources>
