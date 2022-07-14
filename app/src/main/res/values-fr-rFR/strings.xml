@@ -214,7 +214,7 @@
     <string name="cancel_subscription_error">Oh non ! Nous n\'avons pas pu annuler votre souscription. %1$s Veuillez réessayer !</string>
     <plurals name="trial_period">
         <item quantity="one">Premier jour gratuit</item>
-        <item quantity="other">%1$d premiers jours gratuits</item>
+        <item quantity="many">%1$d premiers jours gratuits</item>
     </plurals>
     <string name="processing_payment">Traitement du paiement</string>
     <string name="loading">Chargement</string>
@@ -229,7 +229,7 @@
     <string name="welcome_back">Content de vous revoir !</string>
     <plurals name="n_months">
         <item quantity="one">%1$d mois</item>
-        <item quantity="other">%1$d mois</item>
+        <item quantity="many">%1$d mois</item>
     </plurals>
     <string name="monthly_price">%1$s par mois</string>
     <string name="gift_card_not_found">Le code donné n\'existe pas.</string>
