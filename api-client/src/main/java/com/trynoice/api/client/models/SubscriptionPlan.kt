@@ -73,7 +73,10 @@ data class SubscriptionPlan(
 
   private fun formatPrice(price: Double, currencyCode: String): String {
     return NumberFormat.getCurrencyInstance()
-      .apply { currency = Currency.getInstance(currencyCode) }
+      .apply {
+        currency = Currency.getInstance(currencyCode)
+        minimumFractionDigits = if (price % 1 == 0.0) 0 else minimumFractionDigits
+      }
       .format(price)
   }
 
