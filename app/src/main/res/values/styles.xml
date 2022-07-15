@@ -67,7 +67,7 @@
     <item name="android:gravity">center_vertical</item>
     <item name="android:textAppearance">?attr/textAppearanceBodyMedium</item>
     <item name="drawableStartCompat">@drawable/ic_baseline_check_circle_36</item>
-    <item name="drawableTint">?attr/colorPrimary</item>
+    <item name="drawableTint">@color/green_500</item>
   </style>
 
   <style name="Widget.App.TextView.Message.Error" parent="android:Widget.TextView">

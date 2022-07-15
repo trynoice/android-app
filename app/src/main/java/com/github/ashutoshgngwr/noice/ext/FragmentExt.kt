@@ -15,7 +15,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 
 /**
- * Shows the [Snackbar] with [R.drawable.ic_baseline_check_circle_24] icon and [R.color.accent]
+ * Shows the [Snackbar] with [R.drawable.ic_baseline_check_circle_24] icon and [R.color.green_500]
  * iconTint, anchored to [R.id.network_indicator] or [R.id.bottom_nav] (if present) and returns it.
  */
 fun Fragment.showSuccessSnackbar(
@@ -23,15 +23,15 @@ fun Fragment.showSuccessSnackbar(
   @BaseTransientBottomBar.Duration length: Int = Snackbar.LENGTH_LONG,
 ): Snackbar {
   return showSnackbar(
-    msgRes,
-    R.drawable.ic_baseline_check_circle_24,
-    R.color.md_theme_primary,
-    length
+    msgRes = msgRes,
+    icon = R.drawable.ic_baseline_check_circle_24,
+    iconTint = R.color.green_500,
+    length = length,
   )
 }
 
 /**
- * Shows the [Snackbar] with [R.drawable.ic_baseline_error_24] icon and [R.color.error] iconTint,
+ * Shows the [Snackbar] with [R.drawable.ic_baseline_error_24] icon and [R.color.red_500] iconTint,
  * anchored to [R.id.network_indicator] or [R.id.bottom_nav] (if present) and returns it.
  */
 fun Fragment.showErrorSnackbar(
@@ -42,14 +42,19 @@ fun Fragment.showErrorSnackbar(
 }
 
 /**
- * Shows the [Snackbar] with [R.drawable.ic_baseline_error_24] icon and [R.color.error] iconTint,
+ * Shows the [Snackbar] with [R.drawable.ic_baseline_error_24] icon and [R.color.red_500] iconTint,
  * anchored to [R.id.network_indicator] or [R.id.bottom_nav] (if present) and returns it.
  */
 fun Fragment.showErrorSnackbar(
   msg: String,
   @BaseTransientBottomBar.Duration length: Int = Snackbar.LENGTH_LONG,
 ): Snackbar {
-  return showSnackbar(msg, R.drawable.ic_baseline_error_24, R.color.md_theme_error, length)
+  return showSnackbar(
+    msg = msg,
+    icon = R.drawable.ic_baseline_error_24,
+    iconTint = R.color.red_500,
+    length = length
+  )
 }
 
 /**
@@ -64,7 +69,7 @@ fun Fragment.showErrorSnackbar(
 fun Fragment.showSnackbar(
   @StringRes msgRes: Int,
   @DrawableRes icon: Int = ResourcesCompat.ID_NULL,
-  @ColorRes iconTint: Int = R.color.md_theme_error,
+  @ColorRes iconTint: Int? = null,
   @BaseTransientBottomBar.Duration length: Int = Snackbar.LENGTH_LONG,
 ): Snackbar {
   return showSnackbar(getString(msgRes), icon, iconTint, length)
@@ -82,7 +87,7 @@ fun Fragment.showSnackbar(
 fun Fragment.showSnackbar(
   msg: String,
   @DrawableRes icon: Int = ResourcesCompat.ID_NULL,
-  @ColorRes iconTint: Int = R.color.md_theme_primary,
+  @ColorRes iconTint: Int? = null,
   @BaseTransientBottomBar.Duration length: Int = Snackbar.LENGTH_LONG,
 ): Snackbar {
   // pass Snackbar a view that is likely to be available even if current fragment is currently being
@@ -100,9 +105,8 @@ fun Fragment.showSnackbar(
       tv.compoundDrawablePadding = context.resources
         .getDimensionPixelSize(R.dimen.snackbar_icon_padding)
 
-      TextViewCompat.setCompoundDrawableTintList(
-        tv, ResourcesCompat.getColorStateList(context.resources, iconTint, context.theme)
-      )
+      iconTint?.let { ResourcesCompat.getColorStateList(context.resources, it, context.theme) }
+        ?.also { TextViewCompat.setCompoundDrawableTintList(tv, it) }
 
       tv.setCompoundDrawablesWithIntrinsicBounds(
         icon,

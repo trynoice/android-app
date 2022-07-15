@@ -29,6 +29,9 @@
   <color name="md_theme_inversePrimary">#53DEA2</color>
   <color name="md_theme_surfaceTint">#006C48</color>
 
+  <color name="green_500">#4caf50</color>
+  <color name="red_500">#f44336</color>
+
   <color name="ic_launcher_background">#fefefe</color>
   <color name="ic_preset_shortcut_background">#fefefe</color>
   <color name="ic_preset_shortcut_foreground">#17171d</color>
