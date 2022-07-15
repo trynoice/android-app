@@ -91,7 +91,7 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
       }
     }
 
-    binding.swipeContainer.setColorSchemeResources(R.color.primary)
+// TODO:    binding.swipeContainer.setColorSchemeResources(R.color.primary)
     binding.swipeContainer.setOnRefreshListener(adapter::refresh)
     binding.viewSubscriptionPlans.setOnClickListener {
       mainNavController.navigate(R.id.view_subscription_plans)

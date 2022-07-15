@@ -3,7 +3,6 @@
 
   <style name="Base.V27.Theme.App" parent="Base.V23.Theme.App">
     <item name="android:windowLightNavigationBar">?isLightTheme</item>
-    <item name="android:navigationBarColor">@color/action_bar</item>
   </style>
 
   <style name="Base.Theme.App" parent="Base.V27.Theme.App" />

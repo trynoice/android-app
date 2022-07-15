@@ -5,9 +5,8 @@
   android:id="@+id/main"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:paddingStart="15dp"
+  android:paddingHorizontal="@dimen/root_layout_padding"
   android:paddingTop="@dimen/appintro_statusbar_height"
-  android:paddingEnd="15dp"
   android:paddingBottom="@dimen/appintro2_bottombar_height"
   tools:background="@color/appintro_background_color">
 
@@ -51,4 +50,5 @@
     app:layout_constraintTop_toBottomOf="@+id/image"
     app:layout_constraintVertical_weight="3"
     tools:text="This is a demo of the AppIntro Library" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

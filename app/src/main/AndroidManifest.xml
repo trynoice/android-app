@@ -90,7 +90,7 @@
 
     <activity
       android:name=".activity.AppIntroActivity"
-      android:theme="@style/Theme.MaterialComponents.NoActionBar" />
+      android:theme="@style/Theme.Material3.Dark.NoActionBar" />
 
     <activity
       android:name=".activity.ShortcutHandlerActivity"

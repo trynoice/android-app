@@ -12,6 +12,7 @@ import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.core.os.postDelayed
 import androidx.core.view.isVisible
+import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -34,6 +35,7 @@ import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import com.google.android.material.elevation.SurfaceColors
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -89,9 +91,14 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   override fun onCreate(savedInstanceState: Bundle?) {
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
+    val surface2Color = SurfaceColors.SURFACE_2.getColor(this)
+    window.statusBarColor = surface2Color
+    window.navigationBarColor = surface2Color
     super.onCreate(savedInstanceState)
+
     binding = MainActivityBinding.inflate(layoutInflater)
     setContentView(binding.root)
+    binding.networkIndicator.setBackgroundColor(surface2Color)
 
     val navHostFragment = requireNotNull(binding.mainNavHostFragment.getFragment<NavHostFragment>())
     navController = navHostFragment.navController
@@ -138,9 +145,12 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
   private fun showOfflineIndicator() {
     handler.removeCallbacksAndMessages(binding.networkIndicator)
     binding.networkIndicator.apply {
-      setBackgroundResource(R.color.error)
       setText(R.string.offline)
       isVisible = true
+      TextViewCompat.setTextAppearance(
+        this,
+        R.style.TextAppearance_App_MainActivity_NetworkIndicator_Offline
+      )
     }
   }
 
@@ -150,8 +160,11 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
     }
 
     binding.networkIndicator.apply {
-      setBackgroundResource(R.color.accent)
       setText(R.string.back_online)
+      TextViewCompat.setTextAppearance(
+        this,
+        R.style.TextAppearance_App_MainActivity_NetworkIndicator_Online
+      )
     }
 
     handler.postDelayed(2500, binding.networkIndicator) {

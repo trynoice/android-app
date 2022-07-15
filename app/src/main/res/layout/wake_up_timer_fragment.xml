@@ -9,24 +9,24 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="@dimen/root_layout_padding">
 
     <TextView
-      style="@style/Widget.App.TextView.Message"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:gravity="center"
-      android:text="@string/wake_up_timer_description" />
+      android:text="@string/wake_up_timer_description"
+      android:textAppearance="?attr/textAppearanceBodyMedium" />
 
     <Button
       android:id="@+id/select_preset_button"
       style="?attr/materialButtonOutlinedStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginVertical="20dp"
+      android:layout_marginVertical="24dp"
       android:text="@string/select_preset"
-      app:drawableEndCompat="@drawable/ic_action_expand"
-      app:drawableTint="?attr/colorAccent" />
+      app:icon="@drawable/ic_action_expand"
+      app:iconGravity="end" />
 
     <TimePicker
       android:id="@+id/time_picker"
@@ -49,18 +49,18 @@
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         android:text="@string/reset"
         app:drawableTint="?attr/colorAccent" />
 
+      <Space
+        android:layout_width="16dp"
+        android:layout_height="wrap_content" />
+
       <Button
         android:id="@+id/set_time_button"
-        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/schedule"
-        app:drawableTint="?attr/colorAccent" />
+        android:text="@string/schedule" />
 
     </LinearLayout>
 

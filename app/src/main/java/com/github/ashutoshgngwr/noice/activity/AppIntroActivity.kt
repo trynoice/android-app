@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.ActivityCompat
@@ -44,7 +45,7 @@ class AppIntroActivity : AppIntro() {
     isColorTransitionsEnabled = true
     showStatusBar(true)
 
-    setStatusBarColor(ActivityCompat.getColor(this, R.color.status_bar))
+    setStatusBarColor(Color.TRANSPARENT)
     setTransformer(
       AppIntroPageTransformerType.Parallax(
         titleParallaxFactor = 1.0,

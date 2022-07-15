@@ -8,13 +8,14 @@
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background_dark"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/root_layout_padding">
 
     <androidx.cardview.widget.CardView
-      style="?attr/materialCardViewStyle"
+      style="?attr/materialCardViewFilledStyle"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      app:cardCornerRadius="8dp"
       app:contentPadding="16dp">
 
       <LinearLayout
@@ -26,7 +27,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="@string/support_development__donate"
-          android:textAppearance="?attr/textAppearanceHeadline6"
+          android:textAppearance="?attr/textAppearanceTitleLarge"
           android:textColor="?attr/colorAccent" />
 
         <Space
@@ -34,10 +35,10 @@
           android:layout_height="16dp" />
 
         <TextView
-          style="@style/Widget.App.TextView.Message"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="@string/support_development__donate_description" />
+          android:text="@string/support_development__donate_description"
+          android:textAppearance="?attr/textAppearanceBodyMedium" />
 
         <Space
           android:layout_width="wrap_content"
@@ -52,10 +53,15 @@
 
     </androidx.cardview.widget.CardView>
 
+    <Space
+      android:layout_width="wrap_content"
+      android:layout_height="16dp" />
+
     <androidx.cardview.widget.CardView
-      style="?attr/materialCardViewStyle"
+      style="?attr/materialCardViewFilledStyle"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      app:cardCornerRadius="8dp"
       app:contentPadding="16dp">
 
       <LinearLayout
@@ -67,7 +73,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="@string/support_development__share"
-          android:textAppearance="?attr/textAppearanceHeadline6"
+          android:textAppearance="?attr/textAppearanceTitleLarge"
           android:textColor="?attr/colorAccent" />
 
         <Space
@@ -75,10 +81,10 @@
           android:layout_height="16dp" />
 
         <TextView
-          style="@style/Widget.App.TextView.Message"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="@string/support_development__share_description" />
+          android:text="@string/support_development__share_description"
+          android:textAppearance="?attr/textAppearanceBodyMedium" />
 
         <Space
           android:layout_width="wrap_content"

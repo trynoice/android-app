@@ -12,14 +12,14 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="@dimen/root_layout_padding">
 
     <TextView
-      style="@style/Widget.App.TextView.Message"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:gravity="center"
-      android:text="@string/no_subscription_purchases_found" />
+      android:text="@string/no_subscription_purchases_found"
+      android:textAppearance="?attr/textAppearanceBodyMedium" />
 
     <Space
       android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
 
     <Button
       android:id="@+id/view_subscription_plans"
-      style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+      style="?attr/materialButtonOutlinedStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/view_subscription_plans" />

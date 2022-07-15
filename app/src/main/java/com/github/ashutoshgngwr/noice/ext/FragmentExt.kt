@@ -22,7 +22,12 @@ fun Fragment.showSuccessSnackbar(
   @StringRes msgRes: Int,
   @BaseTransientBottomBar.Duration length: Int = Snackbar.LENGTH_LONG,
 ): Snackbar {
-  return showSnackbar(msgRes, R.drawable.ic_baseline_check_circle_24, R.color.accent, length)
+  return showSnackbar(
+    msgRes,
+    R.drawable.ic_baseline_check_circle_24,
+    R.color.md_theme_primary,
+    length
+  )
 }
 
 /**
@@ -44,7 +49,7 @@ fun Fragment.showErrorSnackbar(
   msg: String,
   @BaseTransientBottomBar.Duration length: Int = Snackbar.LENGTH_LONG,
 ): Snackbar {
-  return showSnackbar(msg, R.drawable.ic_baseline_error_24, R.color.error, length)
+  return showSnackbar(msg, R.drawable.ic_baseline_error_24, R.color.md_theme_error, length)
 }
 
 /**
@@ -59,7 +64,7 @@ fun Fragment.showErrorSnackbar(
 fun Fragment.showSnackbar(
   @StringRes msgRes: Int,
   @DrawableRes icon: Int = ResourcesCompat.ID_NULL,
-  @ColorRes iconTint: Int = R.color.accent,
+  @ColorRes iconTint: Int = R.color.md_theme_error,
   @BaseTransientBottomBar.Duration length: Int = Snackbar.LENGTH_LONG,
 ): Snackbar {
   return showSnackbar(getString(msgRes), icon, iconTint, length)
@@ -77,7 +82,7 @@ fun Fragment.showSnackbar(
 fun Fragment.showSnackbar(
   msg: String,
   @DrawableRes icon: Int = ResourcesCompat.ID_NULL,
-  @ColorRes iconTint: Int = R.color.accent,
+  @ColorRes iconTint: Int = R.color.md_theme_primary,
   @BaseTransientBottomBar.Duration length: Int = Snackbar.LENGTH_LONG,
 ): Snackbar {
   // pass Snackbar a view that is likely to be available even if current fragment is currently being

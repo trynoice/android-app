@@ -36,7 +36,7 @@ class PlaybackNotificationManager(
     .setMediaSession(mediaSessionToken)
 
   private val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID).apply {
-    color = ContextCompat.getColor(context, R.color.primary_dark)
+    color = ContextCompat.getColor(context, R.color.md_theme_primary)
     setContentIntent(contentIntentPi)
     setDeleteIntent(PlaybackController.buildStopActionPendingIntent(context))
     setShowWhen(false)

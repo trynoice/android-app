@@ -15,8 +15,7 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toEndOf="@id/title"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:ignore="ContentDescription" />
+    app:layout_constraintTop_toTopOf="parent" />
 
   <TextView
     android:id="@+id/title"
@@ -27,7 +26,7 @@
     android:layout_marginEnd="8dp"
     android:ellipsize="end"
     android:maxLines="3"
-    android:textAppearance="?attr/textAppearanceListItem"
+    android:textAppearance="?attr/textAppearanceBodyLarge"
     app:layout_constrainedWidth="true"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
@@ -36,7 +35,7 @@
 
   <com.google.android.material.progressindicator.CircularProgressIndicator
     android:id="@+id/buffering_indicator"
-    style="@style/Widget.MaterialComponents.CircularProgressIndicator.ExtraSmall"
+    style="@style/Widget.Material3.CircularProgressIndicator.ExtraSmall"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="16dp"
@@ -60,28 +59,28 @@
 
     <Button
       android:id="@+id/info"
-      style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+      style="@style/Widget.App.Button.IconButton.Outlined"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_margin="4dp"
+      android:layout_margin="6dp"
       android:contentDescription="@string/sound_info"
       app:icon="@drawable/ic_outline_info_24" />
 
     <com.google.android.material.button.MaterialButton
       android:id="@+id/play"
-      style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+      style="@style/Widget.App.Button.IconButton.Outlined"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_margin="4dp"
+      android:layout_margin="6dp"
       android:contentDescription="@string/play_pause"
       app:icon="@drawable/ic_baseline_play_arrow_24" />
 
     <Button
       android:id="@+id/volume"
-      style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+      style="@style/Widget.Material3.Button.OutlinedButton.Icon"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_margin="4dp"
+      android:layout_margin="6dp"
       android:contentDescription="@string/volume"
       app:icon="@drawable/ic_action_volume"
       tools:text="25%" />

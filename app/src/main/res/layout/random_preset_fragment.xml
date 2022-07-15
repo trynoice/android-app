@@ -18,7 +18,7 @@
     <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:padding="24dp">
+      android:padding="@dimen/modal_layout_padding">
 
       <include
         layout="@layout/simple_progress_layout"
@@ -30,23 +30,23 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:isVisible="@{!viewModel.isLoading}"
-        tools:theme="@style/Theme.App.BottomSheetDialog">
+        tools:theme="?attr/bottomSheetDialogTheme">
 
         <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="@string/random_preset"
-          android:textAppearance="?attr/titleTextAppearance" />
+          android:textAppearance="?attr/textAppearanceHeadlineMedium" />
 
         <Space
           android:layout_width="match_parent"
-          android:layout_height="20dp" />
+          android:layout_height="24dp" />
 
         <TextView
-          style="@style/Widget.App.TextView.Message"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="@string/random_preset_description" />
+          android:text="@string/random_preset_description"
+          android:textAppearance="?attr/textAppearanceBodyMedium" />
 
         <Space
           android:layout_width="match_parent"
@@ -56,7 +56,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="@string/keywords"
-          android:textAppearance="?attr/textAppearanceHeadline6" />
+          android:textAppearance="?attr/textAppearanceTitleLarge" />
 
         <Space
           android:layout_width="match_parent"
@@ -76,7 +76,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="@string/intensity"
-          android:textAppearance="?attr/textAppearanceHeadline6" />
+          android:textAppearance="?attr/textAppearanceTitleLarge" />
 
         <Space
           android:layout_width="match_parent"
@@ -102,14 +102,16 @@
 
           <Button
             android:id="@+id/cancel_button"
-            style="?attr/buttonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel" />
 
+          <Space
+            android:layout_width="16dp"
+            android:layout_height="wrap_content" />
+
           <Button
             android:id="@+id/play_button"
-            style="?attr/buttonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/play" />

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -39,6 +38,7 @@ import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
+import com.google.android.material.elevation.SurfaceColors
 import com.trynoice.api.client.models.SoundGroup
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -197,7 +197,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
   override fun onSoundVolumeClicked(sound: Sound, currentVolume: Int) {
     DialogFragment.show(childFragmentManager) {
       title(sound.name)
-      message(R.string.volume, textAppearance = R.style.TextAppearance_MaterialComponents_Headline6)
+      message(R.string.volume, textAppearance = R.style.TextAppearance_Material3_TitleLarge)
       slider(
         viewID = R.id.volume_slider,
         to = PlaybackController.MAX_SOUND_VOLUME.toFloat(),
@@ -435,7 +435,7 @@ class SoundViewHolder(
         icon.documentPreserveAspectRatio = PreserveAspectRatio.END
         icon.documentWidth = binding.icon.width.toFloat()
         icon.documentHeight = binding.icon.height.toFloat()
-        val color = ContextCompat.getColor(binding.icon.context, R.color.background_darker)
+        val color = SurfaceColors.SURFACE_3.getColor(binding.icon.context)
         binding.icon.setSVG(icon, "svg { fill: #${Integer.toHexString(color and 0x00ffffff)} }")
       }
     }

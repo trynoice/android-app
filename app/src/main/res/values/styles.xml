@@ -1,234 +1,114 @@
 <resources>
 
-  <style name="Base.V21.Theme.App" parent="Theme.MaterialComponents.DayNight" />
-
-  <style name="Base.Theme.App" parent="Base.V21.Theme.App">
-    <item name="android:statusBarColor">@color/status_bar</item>
-    <item name="android:navigationBarColor">@color/status_bar</item>
+  <style name="Widget.App.Button.IconButton.Outlined" parent="Widget.Material3.Button.IconButton">
+    <item name="strokeColor">@color/m3_button_outline_color_selector</item>
+    <item name="strokeWidth">@dimen/m3_btn_stroke_size</item>
   </style>
 
-  <style name="Theme.App" parent="Base.Theme.App">
-    <item name="android:colorBackground">@color/background</item>
-    <item name="colorPrimary">@color/primary</item>
-    <item name="colorPrimaryDark">@color/primary_dark</item>
-    <item name="colorAccent">@color/accent</item>
-    <item name="actionBarStyle">@style/Widget.MaterialComponents.ActionBar.Solid</item>
-    <item name="actionBarTheme">@style/ThemeOverlay.App.ActionBar</item>
-    <item name="actionBarPopupTheme">@style/Widget.App.PopupMenu</item>
-    <item name="floatingActionButtonStyle">@style/Widget.App.FloatingActionButton</item>
-    <item name="popupMenuStyle">@style/Widget.App.PopupMenu</item>
-    <item name="bottomSheetDialogTheme">@style/Theme.App.BottomSheetDialog</item>
-    <item name="mediaRouteTheme">@style/Theme.App.MediaRouter</item>
-    <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
-    <item name="aboutStyle">@style/Widget.App.AboutPage</item>
-    <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
-  </style>
-
-  <style name="Theme.App.Translucent">
-    <item name="android:backgroundDimEnabled">false</item>
-    <item name="android:navigationBarColor">@android:color/transparent</item>
-    <item name="android:statusBarColor">@android:color/transparent</item>
-    <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="android:windowContentOverlay">@null</item>
-    <item name="android:windowIsTranslucent">true</item>
-    <item name="windowActionBar">false</item>
-    <item name="windowNoTitle">true</item>
-  </style>
-
-  <style name="Theme.App.SignInLinkHandler" parent="Theme.App.Translucent">
-    <item name="android:backgroundDimEnabled">true</item>
-    <item name="android:navigationBarColor">@color/status_bar</item>
-    <item name="bottomSheetStyle">@style/Widget.App.BottomSheet.Modal</item>
-  </style>
-
-  <style name="ThemeOverlay.App.ActionBar" parent="ThemeOverlay.MaterialComponents.ActionBar">
-    <item name="colorPrimary">@color/action_bar</item>
-    <item name="colorOnPrimary">?attr/colorOnSurface</item>
-  </style>
-
-  <style name="Widget.App.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
-    <item name="tint">?attr/colorOnBackground</item>
-    <item name="backgroundTint">@color/background_dark</item>
-  </style>
-
-  <style name="Widget.App.FloatingActionButton.Primary">
-    <item name="tint">?attr/colorOnPrimarySurface</item>
-    <item name="backgroundTint">?attr/colorPrimarySurface</item>
-  </style>
-
-  <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
-    <item name="android:layout_marginTop">7dp</item>
-    <item name="android:layout_marginBottom">7dp</item>
-    <item name="cardBackgroundColor">@color/background</item>
-    <item name="cardElevation">2dp</item>
-    <item name="contentPadding">10dp</item>
-  </style>
-
-  <style name="Widget.App.PopupMenu" parent="Widget.MaterialComponents.PopupMenu">
-    <item name="android:popupBackground">@drawable/popup_menu_bg</item>
-    <item name="popupMenuBackground">?android:attr/popupBackground</item>
-  </style>
-
-  <style name="Theme.App.BottomSheetDialog" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
-    <item name="android:colorBackground">@color/background_dark</item>
-    <item name="colorPrimary">@color/primary</item>
-    <!-- RadioButtons use the secondary color but we don't really have a secondary color so... -->
-    <item name="colorSecondary">@color/primary</item>
-    <item name="bottomSheetStyle">@style/Widget.App.BottomSheet.Modal</item>
-    <item name="titleTextAppearance">@style/TextAppearance.App.BottomSheetDialog.Title</item>
-    <!-- following attributes are mostly unnecessary with current values. just for reference -->
-    <item name="buttonStyle">@style/Widget.MaterialComponents.Button.TextButton.Dialog</item>
-    <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
-    <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
-  </style>
-
-  <style name="Widget.App.BottomSheet.Modal" parent="Widget.Design.BottomSheet.Modal">
-    <item name="shapeAppearance">@style/ShapeAppearance.App.BottomSheet.Modal</item>
-  </style>
-
-  <style name="ShapeAppearance.App.BottomSheet.Modal" parent="">
-    <item name="cornerFamily">rounded</item>
-    <item name="cornerSizeTopRight">8dp</item>
-    <item name="cornerSizeTopLeft">8dp</item>
-    <item name="cornerSizeBottomRight">0dp</item>
-    <item name="cornerSizeBottomLeft">0dp</item>
-  </style>
-
-  <style name="TextAppearance.App.BottomSheetDialog.Title" parent="TextAppearance.MaterialComponents.Headline4">
-    <item name="android:textSize">28sp</item>
-  </style>
-
-  <style name="TextAppearance.App.CountdownTextView" parent="TextAppearance.MaterialComponents.Headline3">
-    <item name="android:textColor">?attr/colorAccent</item>
+  <style name="TextAppearance.App.CountdownTextView" parent="TextAppearance.Material3.DisplayMedium">
+    <item name="android:textColor">?attr/colorPrimary</item>
   </style>
 
   <style name="TextAppearance.App.CountdownTextView.Disabled">
     <item name="android:textColor">@color/material_on_background_disabled</item>
   </style>
 
-  <style name="Widget.App.DurationPicker.Button.AddTime" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+  <style name="Widget.App.DurationPicker.Button.AddTime" parent="Widget.Material3.Button.TextButton.Icon">
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_margin">5dp</item>
-    <item name="android:padding">14dp</item>
-    <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
+    <item name="android:layout_margin">8dp</item>
+    <item name="android:textAppearance">?attr/textAppearanceTitleLarge</item>
     <item name="icon">@drawable/ic_action_add</item>
-  </style>
-
-  <style name="Base.Theme.App.MediaRouter" parent="Theme.MediaRouter.Light" />
-
-  <!-- This theme is a pure function of hit and trial. Following worked at the time. -->
-  <style name="Theme.App.MediaRouter" parent="Base.Theme.App.MediaRouter">
-    <item name="android:windowBackground">@color/background_dark</item>
-    <item name="android:colorBackground">@color/background_dark</item>
-    <item name="colorPrimary">@color/primary</item>
-    <item name="colorAccent">@color/accent</item>
-    <item name="colorBackgroundFloating">@color/background_dark</item>
-    <item name="mediaRouteControlPanelThemeOverlay">@style/ThemeOverlay.MediaRouter.Light</item>
-  </style>
-
-  <style name="Widget.App.AboutPage" parent="about_About">
-    <item name="aboutBackground">@color/background</item>
-    <item name="aboutElementIconTint">@color/primary_dark</item>
   </style>
 
   <style name="Widget.App.AlarmRinger.DismissSlider" parent="SlideToActView">
     <item name="slider_height">72dp</item>
     <item name="border_radius">28dp</item>
-    <item name="inner_color">@color/background</item>
-    <item name="outer_color">@color/accent</item>>
+    <item name="inner_color">?attr/colorOnPrimary</item>
+    <item name="outer_color">?attr/colorPrimary</item>>
     <item name="text_appearance">@style/TextAppearance.App.AlarmRinger.DismissSlider</item>
   </style>
 
-  <style name="TextAppearance.App.AlarmRinger.DismissSlider" parent="TextAppearance.MaterialComponents.Headline6">
-    <item name="android:textColor">@color/background</item>
+  <style name="TextAppearance.App.AlarmRinger.DismissSlider" parent="TextAppearance.Material3.TitleLarge">
+    <item name="android:textColor">?attr/colorOnPrimary</item>
     <item name="android:textAllCaps">true</item>
     <item name="android:letterSpacing">0.1</item>
   </style>
 
-  <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
-    <item name="backgroundTint">@color/background_dark</item>
-    <item name="labelVisibilityMode">labeled</item>
-    <item name="itemTextAppearanceInactive">
-      @style/TextAppearance.App.BottomNavigationView.Label
-    </item>
-    <item name="itemTextAppearanceActive">
-      @style/TextAppearance.App.BottomNavigationView.Label
-    </item>
-  </style>
-
-  <style name="TextAppearance.App.BottomNavigationView.Label" parent="TextAppearance.MaterialComponents.Caption">
-    <item name="fontFamily">sans-serif-medium</item>
-  </style>
-
-  <style name="Widget.App.Account.Category.Header" parent="Widget.MaterialComponents.TextView">
+  <style name="Widget.App.Account.Category.Header" parent="android:Widget.TextView">
     <item name="android:paddingBottom">8dp</item>
-    <item name="android:paddingEnd">16dp</item>
-    <item name="android:paddingStart">16dp</item>
+    <item name="android:paddingEnd">@dimen/root_layout_padding</item>
+    <item name="android:paddingStart">@dimen/root_layout_padding</item>
     <item name="android:paddingTop">24dp</item>
     <item name="android:textAllCaps">true</item>
-    <item name="android:textAppearance">?attr/textAppearanceBody2</item>
+    <item name="android:textAppearance">?attr/textAppearanceLabelMedium</item>
     <item name="android:textColor">?android:attr/textColorSecondary</item>
   </style>
 
-  <style name="Widget.App.Account.Category.Item" parent="Widget.MaterialComponents.TextView">
+  <style name="Widget.App.Account.Category.Item" parent="android:Widget.TextView">
     <item name="android:background">?attr/selectableItemBackground</item>
     <item name="android:clickable">true</item>
     <item name="android:drawablePadding">16dp</item>
     <item name="android:gravity">center_vertical</item>
-    <item name="android:padding">16dp</item>
-    <item name="android:textAppearance">?attr/textAppearanceBody1</item>
+    <item name="android:padding">@dimen/root_layout_padding</item>
+    <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
     <item name="drawableEndCompat">@drawable/ic_baseline_navigate_next_24</item>
   </style>
 
-  <style name="ThemeOverlay.App.Button.DestructiveAction" parent="">
-    <item name="colorPrimary">@color/error</item>
+  <style name="Widget.App.SubscriptionPlan.Benefits.LineItem" parent="android:Widget.TextView">
+    <item name="android:drawablePadding">12dp</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
+    <item name="drawableTint">?attr/colorPrimary</item>
   </style>
 
-  <style name="Widget.App.TextView.SubscriptionBenefit" parent="Widget.MaterialComponents.TextView">
+  <style name="Widget.App.TextView.Message.Success" parent="android:Widget.TextView">
     <item name="android:drawablePadding">16dp</item>
     <item name="android:gravity">center_vertical</item>
-    <item name="android:textAppearance">?attr/textAppearanceBody1</item>
-    <item name="drawableTint">@color/accent</item>
-  </style>
-
-  <style name="TextAppearance.App.SubscriptionPlanItem.Large" parent="TextAppearance.MaterialComponents.Headline6">
-    <item name="android:textSize">18sp</item>
-  </style>
-
-  <style name="TextAppearance.App.SubscriptionPlanItem.Small" parent="TextAppearance.MaterialComponents.Caption">
-    <item name="android:textSize">14sp</item>
-  </style>
-
-  <style name="Widget.App.TextView.Message" parent="Widget.MaterialComponents.TextView">
-    <item name="android:drawablePadding">16dp</item>
-    <item name="android:gravity">center_vertical</item>
-    <item name="android:lineSpacingMultiplier">1.33</item>
-    <item name="android:textAppearance">?attr/textAppearanceBody1</item>
-  </style>
-
-  <style name="Widget.App.TextView.Message.Success">
+    <item name="android:textAppearance">?attr/textAppearanceBodyMedium</item>
     <item name="drawableStartCompat">@drawable/ic_baseline_check_circle_36</item>
-    <item name="drawableTint">?attr/colorAccent</item>
+    <item name="drawableTint">?attr/colorPrimary</item>
   </style>
 
-  <style name="Widget.App.TextView.Message.Error">
+  <style name="Widget.App.TextView.Message.Error" parent="android:Widget.TextView">
+    <item name="android:drawablePadding">16dp</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:textAppearance">?attr/textAppearanceBodyMedium</item>
     <item name="drawableStartCompat">@drawable/ic_baseline_error_36</item>
-    <item name="drawableTint">@color/error</item>
+    <item name="drawableTint">?attr/colorError</item>
   </style>
 
-  <style name="Widget.App.TextView.Message.Error.Centered" parent="Widget.App.TextView.Message">
+  <style name="Widget.App.TextView.Message.Error.Centered">
     <item name="android:gravity">center</item>
+    <item name="drawableStartCompat">@null</item>
     <item name="drawableTopCompat">@drawable/ic_baseline_error_36</item>
-    <item name="drawableTint">@color/error</item>
   </style>
 
-  <style name="Widget.App.Button.OutlinedButton.IconOnly" parent="Widget.MaterialComponents.Button.OutlinedButton">
-    <item name="iconPadding">0dp</item>
-    <item name="android:minWidth">48dp</item>
-    <item name="android:minHeight">48dp</item>
-    <item name="android:paddingLeft">12dp</item>
-    <item name="android:paddingRight">12dp</item>
+  <style name="Widget.App.SubscriptionPurchase.LineItem" parent="android:Widget.TextView">
+    <item name="android:drawablePadding">12dp</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:paddingBottom">4dp</item>
+    <item name="android:paddingTop">4dp</item>
+    <item name="android:textAppearance">?attr/textAppearanceBodyMedium</item>
+  </style>
+
+  <style name="Widget.App.LibrarySoundInfo.LineItem" parent="android:Widget.TextView">
+    <item name="android:drawablePadding">12dp</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:paddingBottom">4dp</item>
+    <item name="android:paddingTop">4dp</item>
+    <item name="android:textAppearance">?attr/textAppearanceBodyMedium</item>
+    <item name="drawableTint">?attr/colorPrimary</item>
+  </style>
+
+  <style name="TextAppearance.App.MainActivity.NetworkIndicator" parent="TextAppearance.Material3.LabelMedium" />
+
+  <style name="TextAppearance.App.MainActivity.NetworkIndicator.Offline">
+    <item name="android:textColor">?attr/colorError</item>
+  </style>
+
+  <style name="TextAppearance.App.MainActivity.NetworkIndicator.Online">
+    <item name="android:textColor">?attr/colorPrimary</item>
   </style>
 
 </resources>

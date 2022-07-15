@@ -15,21 +15,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="24dp"
+    android:padding="@dimen/modal_layout_padding"
     tools:theme="?attr/bottomSheetDialogTheme">
 
     <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/redeem_gift_card"
-      android:textAppearance="?attr/titleTextAppearance" />
+      android:textAppearance="?attr/textAppearanceHeadlineMedium" />
 
     <Space
       android:layout_width="match_parent"
       android:layout_height="24dp" />
 
     <com.google.android.material.textfield.TextInputLayout
-      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      style="?attr/textInputOutlinedStyle"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:hint="@string/gift_card_code"
@@ -58,7 +58,6 @@
 
       <Button
         android:id="@+id/cancel"
-        style="?attr/buttonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cancel" />
@@ -69,7 +68,6 @@
 
       <Button
         android:id="@+id/cont"
-        style="?attr/buttonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="@{viewModel.isCodeValid}"

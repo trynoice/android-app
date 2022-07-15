@@ -1,39 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="primary">@color/meadow_0</color>
-  <color name="primary_dark">@color/meadow_1</color>
-  <color name="accent">@color/meadow_0</color>
-  <color name="status_bar">@color/woodsmoke</color>
-  <color name="action_bar">@color/white_1</color>
-  <color name="background">@color/white_0</color>
-  <color name="background_dark">@color/white_1</color>
-  <color name="background_darker">@color/white_2</color>
-  <color name="error">@color/red</color>
+  <color name="seed">#1eb980</color>
+  <color name="md_theme_primary">#006C48</color>
+  <color name="md_theme_onPrimary">#FFFFFF</color>
+  <color name="md_theme_primaryContainer">#73FBBC</color>
+  <color name="md_theme_onPrimaryContainer">#002113</color>
+  <color name="md_theme_secondary">#4D6356</color>
+  <color name="md_theme_onSecondary">#FFFFFF</color>
+  <color name="md_theme_secondaryContainer">#D0E8D8</color>
+  <color name="md_theme_onSecondaryContainer">#0A1F15</color>
+  <color name="md_theme_tertiary">#3C6472</color>
+  <color name="md_theme_onTertiary">#FFFFFF</color>
+  <color name="md_theme_tertiaryContainer">#C0E9FA</color>
+  <color name="md_theme_onTertiaryContainer">#001F28</color>
+  <color name="md_theme_error">#BA1A1A</color>
+  <color name="md_theme_errorContainer">#FFDAD6</color>
+  <color name="md_theme_onError">#FFFFFF</color>
+  <color name="md_theme_onErrorContainer">#410002</color>
+  <color name="md_theme_background">#FBFDF8</color>
+  <color name="md_theme_onBackground">#191C1A</color>
+  <color name="md_theme_surface">#FBFDF8</color>
+  <color name="md_theme_onSurface">#191C1A</color>
+  <color name="md_theme_surfaceVariant">#DCE5DD</color>
+  <color name="md_theme_onSurfaceVariant">#404943</color>
+  <color name="md_theme_outline">#707973</color>
+  <color name="md_theme_inverseOnSurface">#EFF1ED</color>
+  <color name="md_theme_inverseSurface">#2E312F</color>
+  <color name="md_theme_inversePrimary">#53DEA2</color>
+  <color name="md_theme_surfaceTint">#006C48</color>
 
-  <color name="ic_launcher_background">@color/white_0</color>
-  <color name="ic_preset_shortcut_background">@color/white_0</color>
+  <color name="ic_launcher_background">#fefefe</color>
+  <color name="ic_preset_shortcut_background">#fefefe</color>
+  <color name="ic_preset_shortcut_foreground">#17171d</color>
 
   <!-- app intro colors -->
-  <color name="appintro_slide_0__background">@color/shark_1</color>
-  <color name="appintro_slide_1__background">@color/elm</color>
-  <color name="appintro_slide_2__background">@color/purple_heart</color>
-  <color name="appintro_slide_3__background">@color/apple_blossom</color>
-  <color name="appintro_slide_4__background">@color/affair</color>
-  <color name="appintro_slide_5__background">@color/meadow_1</color>
-  <color name="appintro__text_color">#EFEFEF</color>
-
-  <color name="affair">#684488</color>
-  <color name="apple_blossom">#a63d40</color>
-  <color name="elm">#1f7a8c</color>
-  <color name="meadow_0">#1eb980</color>
-  <color name="meadow_1">#168a60</color>
-  <color name="purple_heart">#5946d8</color>
-  <color name="red">#f32516</color>
-  <color name="shark_0">#1d1d26</color>
-  <color name="shark_1">#23232d</color>
-  <color name="shark_2">#343445</color>
-  <color name="white_0">#fefefe</color>
-  <color name="white_1">#f1f1f1</color>
-  <color name="white_2">#e9e9e9</color>
-  <color name="woodsmoke">#17171D</color>
+  <color name="appintro_slide_0__background">#23232d</color>
+  <color name="appintro_slide_1__background">#1f7a8c</color>
+  <color name="appintro_slide_2__background">#5946d8</color>
+  <color name="appintro_slide_3__background">#a63d40</color>
+  <color name="appintro_slide_4__background">#684488</color>
+  <color name="appintro_slide_5__background">#168a60</color>
+  <color name="appintro__text_color">#fefefe</color>
 </resources>
