@@ -5,4 +5,10 @@
     <item>@string/app_theme_dark</item>
     <item>@string/app_theme_system_default</item>
   </string-array>
+
+  <array name="swipe_refresh_layout_progress_spinner_colors">
+    <item>?attr/colorPrimary</item>
+    <item>?attr/colorSecondary</item>
+    <item>?attr/colorTertiary</item>
+  </array>
 </resources>

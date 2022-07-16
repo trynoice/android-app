@@ -15,7 +15,7 @@
 
   </data>
 
-  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+  <com.github.ashutoshgngwr.noice.widget.SwipeRefreshLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:onRefreshListener="@{() -> viewModel.loadData()}"
@@ -259,6 +259,6 @@
 
     </androidx.core.widget.NestedScrollView>
 
-  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+  </com.github.ashutoshgngwr.noice.widget.SwipeRefreshLayout>
 
 </layout>

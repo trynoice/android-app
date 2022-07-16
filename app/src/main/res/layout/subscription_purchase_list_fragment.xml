@@ -39,7 +39,7 @@
     layout="@layout/simple_error_layout"
     tools:visibility="gone" />
 
-  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+  <com.github.ashutoshgngwr.noice.widget.SwipeRefreshLayout
     android:id="@+id/swipe_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -52,6 +52,6 @@
       android:paddingVertical="8dp"
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+  </com.github.ashutoshgngwr.noice.widget.SwipeRefreshLayout>
 
 </FrameLayout>

@@ -37,6 +37,7 @@
     <item name="aboutStyle">@style/Widget.App.AboutPage</item>
     <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
     <item name="mediaRouteTheme">@style/Theme.App.MediaRouter</item>
+    <item name="swipeRefreshLayoutStyle">@style/Widget.App.SwipeRefreshLayout</item>
   </style>
 
   <style name="Theme.App.Translucent">
@@ -75,6 +76,11 @@
     <!--    <item name="colorAccent">@color/accent</item>-->
     <!--    <item name="colorBackgroundFloating">@color/background_dark</item>-->
     <!--    <item name="mediaRouteControlPanelThemeOverlay">@style/ThemeOverlay.MediaRouter.Light</item>-->
+  </style>
+
+  <style name="Widget.App.SwipeRefreshLayout" parent="">
+    <item name="progressSpinnerColors">@array/swipe_refresh_layout_progress_spinner_colors</item>
+    <item name="progressBackgroundColor">?attr/colorSurfaceVariant</item>
   </style>
 
 </resources>

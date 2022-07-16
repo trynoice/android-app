@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!-- Default style for SwipeRefreshLayout. -->
+  <attr name="swipeRefreshLayoutStyle" format="reference" />
+
+  <declare-styleable name="SwipeRefreshLayout">
+
+    <!-- An array of colors for the setting the colors used in the progress animation. The first
+    color will also be the color of the bar that grows in response to a user swipe gesture. -->
+    <attr name="progressSpinnerColors" format="reference" />
+
+    <!-- Set the background color of the progress spinner disc. -->
+    <attr name="progressBackgroundColor" format="reference|color" />
+
+  </declare-styleable>
+
+</resources>

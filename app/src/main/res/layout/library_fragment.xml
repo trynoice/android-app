@@ -29,7 +29,7 @@
       android:animateLayoutChanges="true"
       app:isVisible="@{viewModel.persistentErrorStrRes == null}">
 
-      <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+      <com.github.ashutoshgngwr.noice.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:onRefreshListener="@{() -> viewModel.loadLibrary()}"
@@ -42,7 +42,7 @@
           app:hasFixedSize="@{true}"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-      </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+      </com.github.ashutoshgngwr.noice.widget.SwipeRefreshLayout>
 
       <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/save_preset_button"
