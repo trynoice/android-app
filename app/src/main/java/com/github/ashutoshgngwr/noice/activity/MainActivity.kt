@@ -91,11 +91,11 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   override fun onCreate(savedInstanceState: Bundle?) {
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
+    super.onCreate(savedInstanceState)
+
     val surface2Color = SurfaceColors.SURFACE_2.getColor(this)
     window.statusBarColor = surface2Color
     window.navigationBarColor = surface2Color
-    super.onCreate(savedInstanceState)
-
     binding = MainActivityBinding.inflate(layoutInflater)
     setContentView(binding.root)
     binding.networkIndicator.setBackgroundColor(surface2Color)
