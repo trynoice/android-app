@@ -218,4 +218,24 @@
         <item quantity="other">%1$d ay</item>
     </plurals>
     <string name="benefit_1">Yüksek kalitede ses akışı</string>
+    <string name="cancelling_subscription">Abonelik iptal ediliyor</string>
+    <string name="subscription_payment_confirmation_failed">Amanın! Ödeme onayını beklerken bir sorunla karşılaştık. Ağ hatası veya ödeme sağlayıcısındaki bir gecikmeden dolayı olabilir. Abonelik durumunu sağlayıcıdan bir cevap alır almaz güncelleyeceğiz. Lütfen abonelik durumunu bir süre sonra tekrar kontrol et.</string>
+    <string name="ended_on">%1$s tarihinde bitti</string>
+    <string name="get_premium">Premium edin</string>
+    <string name="initialising_subscription">Abonelik başlatılıyor</string>
+    <string name="subscription_payment_complete">Noice Premium\'a abone olduğu için teşekkürler. Aboneliğin şu anda aktif.</string>
+    <string name="ends_on">%1$s tarihinde biter</string>
+    <string name="paid_using">%1$s kullanılarak ödendi</string>
+    <string name="subscription_payment_refunded">Bu satın almayı iptal etti ve para iade süreci başlattık.</string>
+    <string name="faqs">Sıkça Sorulan Sorular</string>
+    <string name="renews_on">%1$s tarihinde yenilenir</string>
+    <string name="manage_subscription">Aboneliği Yönet</string>
+    <string name="sign_in_to_continue">Lütfen devam etmek için giriş yapın veya hesap oluşturun.</string>
+    <string name="payment_processing_error">Amanın! Ödemeni alamadık. Eğer ücret alındıysa otomatik olarak iade edilmiş olmalı. Eğer iade işlemi bir hafta içinde gerçekleşmezse lütfen bize bildir.</string>
+    <string name="user_already_subscribed">Zaten aboneliğin mevcut.</string>
+    <string name="change_plan">Plan değiştir</string>
+    <string name="started_on">%1$s tarihinde başladı</string>
+    <string name="cancel_subscription">Aboneliği İptal et</string>
+    <string name="subscription_payment_pending">Bu satın alma için ödeme bekliyor.</string>
+    <string name="cancel_subscription_confirmation">Noice Premium aboneliğini iptal etmek istediğine emin misin\? İptal etmenle birlikte aboneliğin mevcut ödeme dönemi sonunta otomatik olarak sonlandırılacak. Mevcut ödeme dönemin %1$s tarihinde bitecek.</string>
 </resources>
