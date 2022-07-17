@@ -217,4 +217,5 @@
         <item quantity="one">%1$d ay</item>
         <item quantity="other">%1$d ay</item>
     </plurals>
+    <string name="benefit_1">Yüksek kalitede ses akışı</string>
 </resources>
