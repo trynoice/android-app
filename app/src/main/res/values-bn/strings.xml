@@ -13,7 +13,18 @@
     <string name="support_development">উন্নয়নকে সমর্থন করুন</string>
     <string name="presets">পূর্বনির্ধারিতসমূহ</string>
     <string name="okay">ঠিক আছে</string>
-    <string name="pause">বিরত</string>
+    <string name="pause">বিরতি</string>
     <string name="dismiss">খারিজ</string>
     <string name="cancel">বাতিল করুন</string>
+    <string name="stop">বন্ধ</string>
+    <string name="preset_saved">প্রিসেট সংরক্ষিত হলো!</string>
+    <string name="save_preset">সংরক্ষিত প্রিসেট</string>
+    <string name="preset_already_exists">একই নামের প্রিসেট ইতিমধ্যেই বিদ্যমান!</string>
+    <string name="save">সংরক্ষিত</string>
+    <string name="play_pause">বাজান অথবা বিরতি</string>
+    <string name="volume">শব্দের স্তর</string>
+    <string name="play">বাজান</string>
+    <string name="preset_name_cannot_be_empty">প্রিসেট নাম খালি থাকতে পারবে না!</string>
+    <string name="random_preset">এলোমেলো প্রিসেট</string>
+    <string name="random_preset_description">জেনারেট করা প্রিসেটে নির্বাচিত কীওয়ার্ড সহ শব্দ থাকতে পারে। অধিকন্তু, তীব্র প্রিসেটগুলি একই সাথে আরও শব্দ বাজানোর চেষ্টা করবে।</string>
 </resources>
