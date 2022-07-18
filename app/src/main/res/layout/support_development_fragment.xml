@@ -28,7 +28,7 @@
           android:layout_height="wrap_content"
           android:text="@string/support_development__donate"
           android:textAppearance="?attr/textAppearanceTitleLarge"
-          android:textColor="?attr/colorAccent" />
+          android:textColor="?attr/colorOnSurfaceVariant" />
 
         <Space
           android:layout_width="wrap_content"
@@ -38,7 +38,8 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="@string/support_development__donate_description"
-          android:textAppearance="?attr/textAppearanceBodyMedium" />
+          android:textAppearance="?attr/textAppearanceBodyMedium"
+          android:textColor="?attr/colorOnSurfaceVariant" />
 
         <Space
           android:layout_width="wrap_content"
@@ -74,7 +75,7 @@
           android:layout_height="wrap_content"
           android:text="@string/support_development__share"
           android:textAppearance="?attr/textAppearanceTitleLarge"
-          android:textColor="?attr/colorAccent" />
+          android:textColor="?attr/colorOnSurfaceVariant" />
 
         <Space
           android:layout_width="wrap_content"
@@ -84,7 +85,8 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="@string/support_development__share_description"
-          android:textAppearance="?attr/textAppearanceBodyMedium" />
+          android:textAppearance="?attr/textAppearanceBodyMedium"
+          android:textColor="?attr/colorOnSurfaceVariant" />
 
         <Space
           android:layout_width="wrap_content"

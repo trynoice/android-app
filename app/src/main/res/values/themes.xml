@@ -31,10 +31,10 @@
     <item name="colorOutline">@color/md_theme_outline</item>
     <item name="colorOnSurfaceInverse">@color/md_theme_inverseOnSurface</item>
     <item name="colorSurfaceInverse">@color/md_theme_inverseSurface</item>
-    <item name="elevationOverlayColor">@color/md_theme_surfaceTint</item>
     <item name="colorPrimaryInverse">@color/md_theme_inversePrimary</item>
 
     <item name="aboutStyle">@style/Widget.App.AboutPage</item>
+    <item name="actionBarStyle">@style/Widget.App.ActionBar.Solid</item>
     <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
     <item name="mediaRouteTheme">@style/Theme.App.MediaRouter</item>
     <item name="swipeRefreshLayoutStyle">@style/Widget.App.SwipeRefreshLayout</item>
@@ -58,6 +58,10 @@
   <style name="Widget.App.AboutPage" parent="about_About">
     <item name="aboutBackground">?android:attr/colorBackground</item>
     <item name="aboutElementIconTint">?attr/colorPrimary</item>
+  </style>
+
+  <style name="Widget.App.ActionBar.Solid" parent="Widget.Material3.ActionBar.Solid">
+    <item name="elevation">2dp</item>
   </style>
 
   <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
