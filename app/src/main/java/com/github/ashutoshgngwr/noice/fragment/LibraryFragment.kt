@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +39,6 @@ import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
-import com.google.android.material.elevation.SurfaceColors
 import com.trynoice.api.client.models.SoundGroup
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -430,13 +430,16 @@ class SoundViewHolder(
     binding.title.text = sound.name
     binding.icon.isVisible = isIconsEnabled
     if (isIconsEnabled) {
+      val iconColor = TypedValue()
+        .also { binding.icon.context.theme.resolveAttribute(R.attr.colorSurfaceVariant, it, true) }
+        .data
+
       binding.icon.post {
         val icon = SVG.getFromString(sound.iconSvg)
         icon.documentPreserveAspectRatio = PreserveAspectRatio.END
         icon.documentWidth = binding.icon.width.toFloat()
         icon.documentHeight = binding.icon.height.toFloat()
-        val color = SurfaceColors.SURFACE_3.getColor(binding.icon.context)
-        binding.icon.setSVG(icon, "svg { fill: #${Integer.toHexString(color and 0x00ffffff)} }")
+        binding.icon.setSVG(icon, "svg { fill: #${Integer.toHexString(iconColor and 0x00ffffff)} }")
       }
     }
 

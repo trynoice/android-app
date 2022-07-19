@@ -111,4 +111,8 @@
     <item name="android:textColor">?attr/colorPrimary</item>
   </style>
 
+  <style name="ThemeOverlay.App.Button.DestructiveAction" parent="">
+    <item name="colorPrimary">?attr/colorError</item>
+  </style>
+
 </resources>

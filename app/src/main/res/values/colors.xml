@@ -27,7 +27,6 @@
   <color name="md_theme_inverseOnSurface">#EFF1ED</color>
   <color name="md_theme_inverseSurface">#2E312F</color>
   <color name="md_theme_inversePrimary">#53DEA2</color>
-  <color name="md_theme_surfaceTint">#006C48</color>
 
   <color name="green_500">#4caf50</color>
   <color name="red_500">#f44336</color>

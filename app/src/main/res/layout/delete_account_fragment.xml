@@ -36,8 +36,8 @@
       <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceBodyMedium"
-        android:text="@string/delete_account_confirmation" />
+        android:text="@string/delete_account_confirmation"
+        android:textAppearance="?attr/textAppearanceBodyMedium" />
 
       <Space
         android:layout_width="match_parent"
@@ -75,7 +75,7 @@
           android:layout_height="wrap_content"
           android:enabled="@{viewModel.hasConfirmed}"
           android:text="@string/delete"
-          android:textColor="?attr/colorError" />
+          android:theme="@style/ThemeOverlay.App.Button.DestructiveAction" />
 
       </LinearLayout>
 

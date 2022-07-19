@@ -65,7 +65,7 @@
           android:layout_height="wrap_content"
           android:onClick="@{() -> viewModel.cancel()}"
           android:text="@string/cancel"
-          android:textColor="?attr/colorError" />
+          android:theme="@style/ThemeOverlay.App.Button.DestructiveAction" />
 
       </LinearLayout>
 

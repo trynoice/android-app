@@ -138,7 +138,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="4dp"
         android:text="@string/cancel_subscription"
-        android:textColor="?attr/colorError" />
+        android:theme="@style/ThemeOverlay.App.Button.DestructiveAction" />
 
     </LinearLayout>
 
