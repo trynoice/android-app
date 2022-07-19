@@ -27,8 +27,8 @@ import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.engine.PlaybackState
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
-import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
-import com.github.ashutoshgngwr.noice.ext.showSuccessSnackbar
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
@@ -132,7 +132,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
         .filter { isConnectedToInternet } // suppress transient errors when offline.
         .collect { causeStrRes ->
           val msg = getString(R.string.library_load_error, getString(causeStrRes))
-          showErrorSnackbar(msg.normalizeSpace())
+          showErrorSnackBar(msg.normalizeSpace())
         }
     }
 
@@ -166,7 +166,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
           presetRepository.create(Preset(nameGetter.invoke(), viewModel.playerStates.value))
-          showSuccessSnackbar(R.string.preset_saved)
+          showSuccessSnackBar(R.string.preset_saved)
           // maybe show in-app review dialog to the user
           reviewFlowProvider.maybeAskForReview(requireActivity())
         }

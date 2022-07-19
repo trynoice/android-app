@@ -26,4 +26,7 @@
   <color name="md_theme_inverseOnSurface">#191C1A</color>
   <color name="md_theme_inverseSurface">#E1E3DF</color>
   <color name="md_theme_inversePrimary">#006C48</color>
+
+  <color name="snack_bar_success_surface">@color/green_50</color>
+  <color name="snack_bar_success_on_surface">@color/green_800</color>
 </resources>

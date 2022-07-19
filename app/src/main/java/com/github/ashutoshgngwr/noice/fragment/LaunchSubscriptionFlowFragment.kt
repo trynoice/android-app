@@ -13,7 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.LaunchSubscriptionFlowFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
-import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.AlreadySubscribedError
@@ -55,7 +55,7 @@ class LaunchSubscriptionFlowFragment : BottomSheetDialogFragment() {
         .filterNotNull()
         .collect { causeStrRes ->
           val msg = getString(R.string.subscription_initialisation_error, getString(causeStrRes))
-          showErrorSnackbar(msg.normalizeSpace())
+          showErrorSnackBar(msg.normalizeSpace())
         }
     }
   }

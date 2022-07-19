@@ -28,8 +28,12 @@
   <color name="md_theme_inverseSurface">#2E312F</color>
   <color name="md_theme_inversePrimary">#53DEA2</color>
 
+  <color name="snack_bar_success_surface">@color/green_800</color>
+  <color name="snack_bar_success_on_surface">@color/green_50</color>
+
+  <color name="green_50">#e8f5e9</color>
   <color name="green_500">#4caf50</color>
-  <color name="red_500">#f44336</color>
+  <color name="green_800">#2e7d32</color>
 
   <color name="ic_launcher_background">#fefefe</color>
   <color name="ic_preset_shortcut_background">#fefefe</color>

@@ -27,8 +27,8 @@ import com.github.ashutoshgngwr.noice.databinding.PresetsFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.PresetsListItemBinding
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.engine.PlaybackState
-import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
-import com.github.ashutoshgngwr.noice.ext.showSuccessSnackbar
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
@@ -135,7 +135,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
         }
 
         ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
-        showSuccessSnackbar(R.string.preset_deleted)
+        showSuccessSnackBar(R.string.preset_deleted)
 
         params.putBoolean("success", true)
         reviewFlowProvider.maybeAskForReview(requireActivity()) // maybe show in-app review dialog to the user
@@ -173,7 +173,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
 
   override fun onCreatePinnedShortcutClicked(preset: Preset) {
     if (!ShortcutManagerCompat.isRequestPinShortcutSupported(requireContext())) {
-      showErrorSnackbar(R.string.pinned_shortcuts_not_supported)
+      showErrorSnackBar(R.string.pinned_shortcuts_not_supported)
       return
     }
 
@@ -181,9 +181,9 @@ class PresetsFragment : Fragment(), PresetListItemController {
     val result =
       ShortcutManagerCompat.requestPinShortcut(requireContext(), info, null)
     if (!result) {
-      showErrorSnackbar(R.string.pinned_shortcut_creation_failed)
+      showErrorSnackBar(R.string.pinned_shortcut_creation_failed)
     } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-      showSuccessSnackbar(R.string.pinned_shortcut_created)
+      showSuccessSnackBar(R.string.pinned_shortcut_created)
     }
 
     val params = bundleOf("success" to result, "shortcut_type" to "pinned")
@@ -195,9 +195,9 @@ class PresetsFragment : Fragment(), PresetListItemController {
     list.add(buildShortcutInfo(preset.id, "app", preset))
     val result = ShortcutManagerCompat.addDynamicShortcuts(requireContext(), list)
     if (result) {
-      showSuccessSnackbar(R.string.app_shortcut_created)
+      showSuccessSnackBar(R.string.app_shortcut_created)
     } else {
-      showErrorSnackbar(R.string.app_shortcut_creation_failed)
+      showErrorSnackBar(R.string.app_shortcut_creation_failed)
     }
 
     viewModel.loadAppShortcuts(requireContext())
@@ -207,7 +207,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
 
   override fun onRemoveAppShortcutClicked(preset: Preset) {
     ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
-    showSuccessSnackbar(R.string.app_shortcut_removed)
+    showSuccessSnackBar(R.string.app_shortcut_removed)
     viewModel.loadAppShortcuts(requireContext())
     analyticsProvider.logEvent("preset_shortcut_remove", bundleOf("shortcut_type" to "app"))
   }

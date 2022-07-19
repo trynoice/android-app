@@ -115,4 +115,27 @@
     <item name="colorPrimary">?attr/colorError</item>
   </style>
 
+  <style name="Widget.App.Snackbar" parent="">
+    <item name="snackbarStyle">@style/Widget.Material3.Snackbar</item>
+    <item name="snackbarTextViewStyle">@style/Widget.App.Snackbar.TextView</item>
+  </style>
+
+  <style name="Widget.App.Snackbar.Error">
+    <item name="colorPrimaryInverse">?attr/colorError</item>
+    <item name="colorSurfaceInverse">?attr/colorOnErrorContainer</item>
+    <item name="colorOnSurfaceInverse">?attr/colorErrorContainer</item>
+  </style>
+
+  <style name="Widget.App.Snackbar.Success">
+    <item name="colorPrimaryInverse">@color/snack_bar_success_on_surface</item>
+    <item name="colorSurfaceInverse">@color/snack_bar_success_surface</item>
+    <item name="colorOnSurfaceInverse">@color/snack_bar_success_on_surface</item>
+  </style>
+
+  <style name="Widget.App.Snackbar.TextView" parent="Widget.Material3.Snackbar.TextView">
+    <item name="android:gravity">center_vertical|start</item>
+    <item name="android:drawablePadding">12dp</item>
+    <item name="android:textColor">?attr/colorOnSurfaceInverse</item>
+    <item name="drawableTint">?attr/colorOnSurfaceInverse</item>
+  </style>
 </resources>

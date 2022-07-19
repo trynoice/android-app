@@ -1,121 +1,66 @@
 package com.github.ashutoshgngwr.noice.ext
 
-import android.view.Gravity
 import android.view.View
-import android.widget.TextView
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.isVisible
-import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.R
-import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.google.android.material.snackbar.Snackbar
+import com.github.ashutoshgngwr.noice.activity.MainActivity
+import com.github.ashutoshgngwr.noice.widget.SnackBar
 
 /**
- * Shows the [Snackbar] with [R.drawable.ic_baseline_check_circle_24] icon and [R.color.green_500]
- * iconTint, anchored to [R.id.network_indicator] or [R.id.bottom_nav] (if present) and returns it.
+ * Shows info level [SnackBar]. It anchors the snack bar to bottom navigation view or network
+ * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showSuccessSnackbar(
-  @StringRes msgRes: Int,
-  @BaseTransientBottomBar.Duration length: Int = Snackbar.LENGTH_LONG,
-): Snackbar {
-  return showSnackbar(
-    msgRes = msgRes,
-    icon = R.drawable.ic_baseline_check_circle_24,
-    iconTint = R.color.green_500,
-    length = length,
-  )
+fun Fragment.showInfoSnackBar(@StringRes msgResId: Int) {
+  showInfoSnackBar(getString(msgResId))
 }
 
 /**
- * Shows the [Snackbar] with [R.drawable.ic_baseline_error_24] icon and [R.color.red_500] iconTint,
- * anchored to [R.id.network_indicator] or [R.id.bottom_nav] (if present) and returns it.
+ * Shows info level [SnackBar]. It anchors the snack bar to bottom navigation view or network
+ * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showErrorSnackbar(
-  @StringRes msgRes: Int,
-  @BaseTransientBottomBar.Duration length: Int = Snackbar.LENGTH_LONG,
-): Snackbar {
-  return showErrorSnackbar(getString(msgRes), length)
+fun Fragment.showInfoSnackBar(msg: String) {
+  SnackBar.info(snackBarView(), msg)
+    .setAnchorView((activity as? MainActivity)?.findSnackBarAnchorView())
+    .show()
 }
 
 /**
- * Shows the [Snackbar] with [R.drawable.ic_baseline_error_24] icon and [R.color.red_500] iconTint,
- * anchored to [R.id.network_indicator] or [R.id.bottom_nav] (if present) and returns it.
+ * Shows success level [SnackBar]. It anchors the snack bar to bottom navigation view or network
+ * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showErrorSnackbar(
-  msg: String,
-  @BaseTransientBottomBar.Duration length: Int = Snackbar.LENGTH_LONG,
-): Snackbar {
-  return showSnackbar(
-    msg = msg,
-    icon = R.drawable.ic_baseline_error_24,
-    iconTint = R.color.red_500,
-    length = length
-  )
+fun Fragment.showSuccessSnackBar(@StringRes msgResId: Int) {
+  showSuccessSnackBar(getString(msgResId))
 }
 
 /**
- * Shows a [Snackbar] anchored to [R.id.network_indicator] or [R.id.bottom_nav] (if present) and
- * returns it.
- *
- * @param msgRes id of the string to show on [Snackbar].
- * @param icon icon to display at the start of text.
- * @param iconTint tint of the icon.
- * @param length length of the [Snackbar].
+ * Shows success level [SnackBar]. It anchors the snack bar to bottom navigation view or network
+ * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showSnackbar(
-  @StringRes msgRes: Int,
-  @DrawableRes icon: Int = ResourcesCompat.ID_NULL,
-  @ColorRes iconTint: Int? = null,
-  @BaseTransientBottomBar.Duration length: Int = Snackbar.LENGTH_LONG,
-): Snackbar {
-  return showSnackbar(getString(msgRes), icon, iconTint, length)
+fun Fragment.showSuccessSnackBar(msg: String) {
+  SnackBar.success(snackBarView(), msg)
+    .setAnchorView((activity as? MainActivity)?.findSnackBarAnchorView())
+    .show()
 }
 
 /**
- * Shows a [Snackbar] anchored to [R.id.network_indicator] or [R.id.bottom_nav] (if present) and
- * returns it.
- *
- * @param msg text to show on [Snackbar].
- * @param icon icon to display at the start of text.
- * @param iconTint tint of the icon.
- * @param length length of the [Snackbar].
+ * Shows error level [SnackBar]. It anchors the snack bar to bottom navigation view or network
+ * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showSnackbar(
-  msg: String,
-  @DrawableRes icon: Int = ResourcesCompat.ID_NULL,
-  @ColorRes iconTint: Int? = null,
-  @BaseTransientBottomBar.Duration length: Int = Snackbar.LENGTH_LONG,
-): Snackbar {
-  // pass Snackbar a view that is likely to be available even if current fragment is currently being
-  // destroyed. This happens frequently in case of bottom sheet dialog fragments.
-  val treeNode = activity?.findViewById(R.id.main_nav_host_fragment) ?: requireView()
-  val networkIndicator = activity?.findViewById<View>(R.id.network_indicator)
-  return Snackbar.make(treeNode, msg, length).apply {
-    anchorView = activity?.findViewById(R.id.bottom_nav)
-    if (networkIndicator?.isVisible == true && anchorView == null) {
-      anchorView = networkIndicator
-    }
+fun Fragment.showErrorSnackBar(@StringRes msgResId: Int) {
+  showErrorSnackBar(getString(msgResId))
+}
 
-    this.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.also { tv ->
-      tv.gravity = Gravity.CENTER_VERTICAL or Gravity.START
-      tv.compoundDrawablePadding = context.resources
-        .getDimensionPixelSize(R.dimen.snackbar_icon_padding)
+/**
+ * Shows error level [SnackBar]. It anchors the snack bar to bottom navigation view or network
+ * indicator if this fragment is hosted by the MainActivity.
+ */
+fun Fragment.showErrorSnackBar(msg: String) {
+  SnackBar.error(snackBarView(), msg)
+    .setAnchorView((activity as? MainActivity)?.findSnackBarAnchorView())
+    .show()
+}
 
-      iconTint?.let { ResourcesCompat.getColorStateList(context.resources, it, context.theme) }
-        ?.also { TextViewCompat.setCompoundDrawableTintList(tv, it) }
-
-      tv.setCompoundDrawablesWithIntrinsicBounds(
-        icon,
-        ResourcesCompat.ID_NULL,
-        ResourcesCompat.ID_NULL,
-        ResourcesCompat.ID_NULL
-      )
-    }
-
-    show()
-  }
+private fun Fragment.snackBarView(): View {
+  return activity?.findViewById(R.id.main_nav_host_fragment) ?: requireView()
 }

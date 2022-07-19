@@ -15,7 +15,7 @@ import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.CancelSubscriptionFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
-import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
@@ -75,7 +75,7 @@ class CancelSubscriptionFragment : BottomSheetDialogFragment() {
         .filterNotNull()
         .collect { causeStrRes ->
           val msg = getString(R.string.cancel_subscription_error, getString(causeStrRes))
-          showErrorSnackbar(msg.normalizeSpace())
+          showErrorSnackBar(msg.normalizeSpace())
         }
     }
   }

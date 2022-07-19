@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.annotation.StringRes
+import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -35,8 +35,8 @@ import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import com.github.ashutoshgngwr.noice.widget.SnackBar
 import com.google.android.material.elevation.SurfaceColors
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
@@ -206,7 +206,9 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
           if (preset != null) {
             playbackController.play(preset)
           } else {
-            showSnackBar(R.string.preset_url_invalid)
+            SnackBar.error(binding.mainNavHostFragment, R.string.preset_url_invalid)
+              .setAnchorView(findSnackBarAnchorView())
+              .show()
           }
         }
 
@@ -235,7 +237,9 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   override fun onPending(purchase: InAppBillingProvider.Purchase) {
     analyticsProvider.logEvent("purchase_pending", bundleOf())
-    showSnackBar(R.string.payment_pending)
+    SnackBar.info(binding.mainNavHostFragment, R.string.payment_pending)
+      .setAnchorView(findSnackBarAnchorView())
+      .show()
   }
 
   override fun onComplete(purchase: InAppBillingProvider.Purchase) {
@@ -257,10 +261,9 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
     }
   }
 
-  private fun showSnackBar(@StringRes resId: Int) {
-    Snackbar.make(binding.mainNavHostFragment, resId, Snackbar.LENGTH_LONG)
-      .setAnchorView(findViewById(R.id.bottom_nav) ?: findViewById(R.id.network_indicator))
-      .show()
+  fun findSnackBarAnchorView(): View? {
+    return findViewById(R.id.bottom_nav)
+      ?: findViewById<View>(R.id.network_indicator).takeIf { it.isVisible }
   }
 
   @EntryPoint
