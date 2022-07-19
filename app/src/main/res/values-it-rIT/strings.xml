@@ -156,7 +156,7 @@
     <string name="account">Account</string>
     <string name="support">Supporto</string>
     <string name="sign_in">Accedi</string>
-    <string name="app">App</string>
+    <string name="app">Applicazione</string>
     <string name="sign_up">Registrati</string>
     <string name="view_subscription_plans">Vedi i piani</string>
     <string name="sign_out">Disconnetti</string>
@@ -268,4 +268,5 @@
     <string name="oss_licenses">Licenze software open-source</string>
     <string name="connect_through_email">Contattaci tramite email</string>
     <string name="reach_us">Contattaci</string>
+    <string name="showing_localised_prices">Prezzi convertiti da [INR](https://en.wikipedia.org/wiki/Indian_rupee). I prezzi effettivi possono variare leggermente.</string>
 </resources>
