@@ -36,6 +36,7 @@
   <color name="green_800">#2e7d32</color>
 
   <color name="ic_launcher_background">#fefefe</color>
+  <color name="ic_launcher_foreground">#17171d</color>
   <color name="ic_preset_shortcut_background">#fefefe</color>
   <color name="ic_preset_shortcut_foreground">#17171d</color>
 
