@@ -12,7 +12,7 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.databinding.WakeUpTimerFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
-import com.github.ashutoshgngwr.noice.ext.showSnackbar
+import com.github.ashutoshgngwr.noice.ext.showInfoSnackBar
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
@@ -97,7 +97,7 @@ class WakeUpTimerFragment : Fragment() {
   private fun onResetTimeClicked() {
     resetControls()
     notifyUpdate()
-    showSnackbar(R.string.wake_up_timer_cancelled)
+    showInfoSnackBar(R.string.wake_up_timer_cancelled)
     analyticsProvider.logEvent("wake_up_timer_cancel", bundleOf())
   }
 
@@ -214,7 +214,7 @@ class WakeUpTimerFragment : Fragment() {
     val diffHours = TimeUnit.MILLISECONDS.toHours(differenceMillis).toInt()
     val diffMinutes = TimeUnit.MILLISECONDS.toMinutes(differenceMillis).toInt() % 60
 
-    showSnackbar(getRelativeDurationString(diffHours, diffMinutes))
+    showInfoSnackBar(getRelativeDurationString(diffHours, diffMinutes))
   }
 
   private fun getRelativeDurationString(hours: Int, minutes: Int): String {

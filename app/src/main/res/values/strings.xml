@@ -299,4 +299,6 @@
     <string name="third_party_attributions">Third-party attributions</string>
     <string name="oss_licenses">Open-source software licenses</string>
     <string name="showing_localised_prices">Prices converted from [INR](https://en.wikipedia.org/wiki/Indian_rupee). Actual prices may vary slightly.</string>
+    <string name="use_material_you_colors">Use Material You colors</string>
+    <string name="use_material_you_colors_summary">Inherit Material You color palette from the Android system</string>
 </resources>

@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:background="@color/background_dark"
+  android:background="?attr/colorSecondaryContainer"
   android:paddingHorizontal="16dp"
-  android:paddingTop="16dp"
+  android:paddingTop="12dp"
   android:paddingBottom="8dp"
-  android:textAppearance="?attr/textAppearanceButton" />
+  android:textAllCaps="true"
+  android:textAppearance="?attr/textAppearanceLabelMedium"
+  android:textColor="?attr/colorOnSecondaryContainer"
+  tools:text="Category Title" />

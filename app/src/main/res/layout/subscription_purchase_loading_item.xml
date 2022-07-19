@@ -27,8 +27,7 @@
       android:layout_height="wrap_content"
       android:layout_weight="1"
       android:drawablePadding="12dp"
-      android:textAppearance="?attr/textAppearanceBody2"
-      android:textColor="@color/error"
+      android:textColor="?attr/colorError"
       app:drawableStartCompat="@drawable/ic_baseline_error_24"
       tools:text="@string/network_error" />
 
@@ -38,11 +37,11 @@
 
     <Button
       android:id="@+id/retry_button"
-      style="@style/Widget.MaterialComponents.Button.TextButton"
+      style="?attr/materialButtonOutlinedStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:minWidth="0dp"
-      android:paddingHorizontal="12dp"
+      android:paddingHorizontal="16dp"
       android:text="@string/retry" />
 
   </LinearLayout>

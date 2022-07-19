@@ -12,27 +12,30 @@
   </data>
 
   <com.google.android.material.card.MaterialCardView
+    style="?attr/materialCardViewFilledStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="8dp"
     android:orientation="horizontal"
-    app:cardBackgroundColor="@color/background_darker"
     app:cardCornerRadius="24dp"
     app:cardElevation="0dp"
-    app:contentPadding="0dp">
+    app:contentPadding="16dp"
+    app:strokeWidth="0dp">
 
+    <!-- Padding bottom on the constraint layout offsets center imbalance due to line height of
+    large title text. -->
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_marginHorizontal="32dp"
-      android:layout_marginVertical="24dp">
+      android:layout_height="wrap_content"
+      android:paddingHorizontal="16dp"
+      android:paddingBottom="6sp">
 
       <TextView
         android:id="@+id/billing_period"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:textAppearance="@style/TextAppearance.App.SubscriptionPlanItem.Large"
+        android:paddingVertical="4dp"
+        android:textAppearance="?attr/textAppearanceTitleLarge"
         app:billingPeriodMonths="@{plan.billingPeriodMonths}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -42,9 +45,9 @@
         android:id="@+id/trial_period"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:paddingVertical="4dp"
         android:text="@{@plurals/trial_period(plan.trialPeriodDays, plan.trialPeriodDays)}"
-        android:textAppearance="@style/TextAppearance.App.SubscriptionPlanItem.Small"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/billing_period"
         tools:text="First 14 days free" />
@@ -53,22 +56,24 @@
         android:id="@+id/total_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:paddingVertical="4dp"
         android:text="@{@string/total_price(plan.totalPrice)}"
-        android:textAppearance="@style/TextAppearance.App.SubscriptionPlanItem.Large"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        app:layout_constraintBottom_toBottomOf="@id/billing_period"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/billing_period"
         tools:text="@string/total_price" />
 
       <TextView
         android:id="@+id/monthly_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:paddingVertical="4dp"
         android:text="@{@string/monthly_price(plan.monthlyPrice)}"
-        android:textAppearance="@style/TextAppearance.App.SubscriptionPlanItem.Small"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        app:layout_constraintBottom_toBottomOf="@id/trial_period"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/total_price"
+        app:layout_constraintTop_toTopOf="@id/trial_period"
         tools:text="@string/monthly_price" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

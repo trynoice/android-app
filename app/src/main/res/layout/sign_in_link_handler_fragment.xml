@@ -7,7 +7,7 @@
 
     <variable
       name="viewModel"
-      type="com.github.ashutoshgngwr.noice.fragment.CancelSubscriptionViewModel" />
+      type="com.github.ashutoshgngwr.noice.activity.SignInLinkHandlerViewModel" />
 
   </data>
 
@@ -17,32 +17,32 @@
     android:padding="@dimen/modal_layout_padding"
     tools:theme="?attr/bottomSheetDialogTheme">
 
+    <include
+      layout="@layout/simple_progress_layout"
+      app:isVisible="@{viewModel.isSigningIn}"
+      app:message="@{@string/signing_in}"
+      tools:visibility="gone" />
+
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      app:isVisible="@{!viewModel.isCancelling}">
+      app:isVisible="@{!viewModel.isSigningIn}">
 
       <TextView
+        style="@style/Widget.App.TextView.Message.Success"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/cancel_subscription"
-        android:textAppearance="?attr/textAppearanceHeadlineMedium" />
-
-      <Space
-        android:layout_width="match_parent"
-        android:layout_height="24dp" />
+        android:text="@string/sign_in_sucessful"
+        app:isVisible="@{viewModel.signInErrorStrRes == null}" />
 
       <TextView
-        android:id="@+id/confirmation_message"
+        style="@style/Widget.App.TextView.Message.Error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceBodyMedium"
-        tools:text="@string/cancel_subscription_confirmation" />
-
-      <Space
-        android:layout_width="match_parent"
-        android:layout_height="16dp" />
+        android:text="@{viewModel.signInErrorStrRes}"
+        app:isVisible="@{viewModel.signInErrorStrRes != null}"
+        tools:visibility="gone" />
 
       <LinearLayout
         android:layout_width="match_parent"
@@ -51,31 +51,25 @@
         android:orientation="horizontal">
 
         <Button
+          android:id="@+id/continuu"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:text="@string/cont"
+          app:isVisible="@{viewModel.signInErrorStrRes == null}" />
+
+        <Button
           android:id="@+id/dismiss"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="@string/dismiss" />
-
-        <Space
-          android:layout_width="16dp"
-          android:layout_height="wrap_content" />
-
-        <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:onClick="@{() -> viewModel.cancel()}"
-          android:text="@string/cancel"
-          android:theme="@style/ThemeOverlay.App.Button.DestructiveAction" />
+          android:layout_marginTop="8dp"
+          android:text="@string/dismiss"
+          app:isVisible="@{viewModel.signInErrorStrRes != null}"
+          tools:visibility="gone" />
 
       </LinearLayout>
 
     </LinearLayout>
-
-    <include
-      layout="@layout/simple_progress_layout"
-      app:isVisible="@{viewModel.isCancelling}"
-      app:message="@{@string/cancelling_subscription}"
-      tools:visibility="gone" />
 
   </FrameLayout>
 

@@ -13,8 +13,8 @@ import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.EditAccountDetailsFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
-import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
-import com.github.ashutoshgngwr.noice.ext.showSuccessSnackbar
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.errors.DuplicateEmailError
@@ -64,7 +64,7 @@ class EditAccountDetailsFragment : Fragment() {
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.updateResource
         .filter { it is Resource.Success }
-        .collect { showSuccessSnackbar(R.string.account_details_update_success) }
+        .collect { showSuccessSnackBar(R.string.account_details_update_success) }
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
@@ -72,7 +72,7 @@ class EditAccountDetailsFragment : Fragment() {
         .filterNotNull()
         .collect { causeStrRes ->
           val msg = getString(R.string.account_details_update_error, getString(causeStrRes))
-          showErrorSnackbar(msg.normalizeSpace())
+          showErrorSnackBar(msg.normalizeSpace())
         }
     }
 

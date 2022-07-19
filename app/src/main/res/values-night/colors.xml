@@ -1,7 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="action_bar">@color/shark_1</color>
-  <color name="background">@color/shark_0</color>
-  <color name="background_dark">@color/shark_1</color>
-  <color name="background_darker">@color/shark_2</color>
+  <color name="md_theme_primary">#53DEA2</color>
+  <color name="md_theme_onPrimary">#003824</color>
+  <color name="md_theme_primaryContainer">#005235</color>
+  <color name="md_theme_onPrimaryContainer">#73FBBC</color>
+  <color name="md_theme_secondary">#B4CCBC</color>
+  <color name="md_theme_onSecondary">#20352A</color>
+  <color name="md_theme_secondaryContainer">#364B3F</color>
+  <color name="md_theme_onSecondaryContainer">#D0E8D8</color>
+  <color name="md_theme_tertiary">#A4CDDD</color>
+  <color name="md_theme_onTertiary">#063542</color>
+  <color name="md_theme_tertiaryContainer">#234C5A</color>
+  <color name="md_theme_onTertiaryContainer">#C0E9FA</color>
+  <color name="md_theme_error">#FFB4AB</color>
+  <color name="md_theme_errorContainer">#93000A</color>
+  <color name="md_theme_onError">#690005</color>
+  <color name="md_theme_onErrorContainer">#FFDAD6</color>
+  <color name="md_theme_background">#191C1A</color>
+  <color name="md_theme_onBackground">#E1E3DF</color>
+  <color name="md_theme_surface">#191C1A</color>
+  <color name="md_theme_onSurface">#E1E3DF</color>
+  <color name="md_theme_surfaceVariant">#404943</color>
+  <color name="md_theme_onSurfaceVariant">#C0C9C1</color>
+  <color name="md_theme_outline">#8A938C</color>
+  <color name="md_theme_inverseOnSurface">#191C1A</color>
+  <color name="md_theme_inverseSurface">#E1E3DF</color>
+  <color name="md_theme_inversePrimary">#006C48</color>
+
+  <color name="snack_bar_success_surface">@color/green_50</color>
+  <color name="snack_bar_success_on_surface">@color/green_800</color>
 </resources>

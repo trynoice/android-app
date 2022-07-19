@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.annotation.StringRes
+import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -12,6 +12,7 @@ import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.core.os.postDelayed
 import androidx.core.view.isVisible
+import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -34,7 +35,8 @@ import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
-import com.google.android.material.snackbar.Snackbar
+import com.github.ashutoshgngwr.noice.widget.SnackBar
+import com.google.android.material.elevation.SurfaceColors
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
@@ -90,8 +92,13 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
   override fun onCreate(savedInstanceState: Bundle?) {
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
     super.onCreate(savedInstanceState)
+
+    val surface2Color = SurfaceColors.SURFACE_2.getColor(this)
+    window.statusBarColor = surface2Color
+    window.navigationBarColor = surface2Color
     binding = MainActivityBinding.inflate(layoutInflater)
     setContentView(binding.root)
+    binding.networkIndicator.setBackgroundColor(surface2Color)
 
     val navHostFragment = requireNotNull(binding.mainNavHostFragment.getFragment<NavHostFragment>())
     navController = navHostFragment.navController
@@ -138,9 +145,12 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
   private fun showOfflineIndicator() {
     handler.removeCallbacksAndMessages(binding.networkIndicator)
     binding.networkIndicator.apply {
-      setBackgroundResource(R.color.error)
       setText(R.string.offline)
       isVisible = true
+      TextViewCompat.setTextAppearance(
+        this,
+        R.style.TextAppearance_App_MainActivity_NetworkIndicator_Offline
+      )
     }
   }
 
@@ -150,8 +160,11 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
     }
 
     binding.networkIndicator.apply {
-      setBackgroundResource(R.color.accent)
       setText(R.string.back_online)
+      TextViewCompat.setTextAppearance(
+        this,
+        R.style.TextAppearance_App_MainActivity_NetworkIndicator_Online
+      )
     }
 
     handler.postDelayed(2500, binding.networkIndicator) {
@@ -193,7 +206,9 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
           if (preset != null) {
             playbackController.play(preset)
           } else {
-            showSnackBar(R.string.preset_url_invalid)
+            SnackBar.error(binding.mainNavHostFragment, R.string.preset_url_invalid)
+              .setAnchorView(findSnackBarAnchorView())
+              .show()
           }
         }
 
@@ -222,7 +237,9 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   override fun onPending(purchase: InAppBillingProvider.Purchase) {
     analyticsProvider.logEvent("purchase_pending", bundleOf())
-    showSnackBar(R.string.payment_pending)
+    SnackBar.info(binding.mainNavHostFragment, R.string.payment_pending)
+      .setAnchorView(findSnackBarAnchorView())
+      .show()
   }
 
   override fun onComplete(purchase: InAppBillingProvider.Purchase) {
@@ -244,10 +261,9 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
     }
   }
 
-  private fun showSnackBar(@StringRes resId: Int) {
-    Snackbar.make(binding.mainNavHostFragment, resId, Snackbar.LENGTH_LONG)
-      .setAnchorView(findViewById(R.id.bottom_nav) ?: findViewById(R.id.network_indicator))
-      .show()
+  fun findSnackBarAnchorView(): View? {
+    return findViewById(R.id.bottom_nav)
+      ?: findViewById<View>(R.id.network_indicator).takeIf { it.isVisible }
   }
 
   @EntryPoint

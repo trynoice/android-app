@@ -43,13 +43,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/root_layout_padding">
 
         <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="@string/benefits"
-          android:textAppearance="?attr/textAppearanceHeadline5" />
+          android:textAppearance="?attr/textAppearanceTitleLarge" />
 
         <Space
           android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
           android:orientation="vertical">
 
           <TextView
-            style="@style/Widget.App.TextView.SubscriptionBenefit"
+            style="@style/Widget.App.SubscriptionPlan.Benefits.LineItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/benefit_0"
@@ -73,12 +73,10 @@
             android:layout_height="8dp" />
 
           <TextView
-            style="@style/Widget.App.TextView.SubscriptionBenefit"
+            style="@style/Widget.App.SubscriptionPlan.Benefits.LineItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="16dp"
             android:text="@string/benefit_1"
-            android:textAppearance="?attr/textAppearanceBody1"
             app:drawableStartCompat="@drawable/ic_baseline_high_quality_24" />
 
           <Space
@@ -86,25 +84,23 @@
             android:layout_height="8dp" />
 
           <TextView
-            style="@style/Widget.App.TextView.SubscriptionBenefit"
+            style="@style/Widget.App.SubscriptionPlan.Benefits.LineItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="16dp"
             android:text="@string/benefit_2"
-            android:textAppearance="?attr/textAppearanceBody1"
             app:drawableStartCompat="@drawable/ic_baseline_download_for_offline_24" />
 
         </LinearLayout>
 
         <Space
           android:layout_width="wrap_content"
-          android:layout_height="32dp" />
+          android:layout_height="24dp" />
 
         <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="@{viewModel.isSignedIn ? @string/select_a_plan : @string/plans}"
-          android:textAppearance="?attr/textAppearanceHeadline5"
+          android:textAppearance="?attr/textAppearanceTitleLarge"
           tools:text="@string/select_a_plan" />
 
         <LinearLayout
@@ -125,11 +121,11 @@
           app:isVisible="@{viewModel.isShowingLocalPrices}" />
 
         <com.github.ashutoshgngwr.noice.widget.MarkdownTextView
-          style="@style/Widget.App.TextView.Message"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:drawablePadding="12dp"
           android:text="@string/showing_localised_prices"
-          android:textAppearance="?attr/textAppearanceBody2"
+          android:textAppearance="?attr/textAppearanceBodyMedium"
           app:drawableStartCompat="@drawable/ic_outline_info_24"
           app:isVisible="@{viewModel.isShowingLocalPrices}" />
 
@@ -148,7 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/sign_in_to_continue"
-            android:textAppearance="?attr/textAppearanceBody1" />
+            android:textAppearance="?attr/textAppearanceBodyMedium" />
 
           <Space
             android:layout_width="wrap_content"
@@ -161,7 +157,6 @@
 
             <Button
               android:id="@+id/sign_up"
-              style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_weight="1"
@@ -173,7 +168,7 @@
 
             <Button
               android:id="@+id/sign_in"
-              style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+              style="?attr/materialButtonOutlinedStyle"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_weight="1"

@@ -13,7 +13,7 @@ import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.RedeemGiftCardFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
-import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.AlreadySubscribedError
@@ -69,7 +69,7 @@ class RedeemGiftCardFragment : BottomSheetDialogFragment() {
         .filterNotNull()
         .map { getString(it) }
         .map { getString(R.string.gift_card_redeem_error, it).normalizeSpace() }
-        .collect { showErrorSnackbar(it) }
+        .collect { showErrorSnackBar(it) }
     }
   }
 }

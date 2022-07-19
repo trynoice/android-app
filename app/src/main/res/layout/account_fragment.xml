@@ -15,11 +15,10 @@
 
   </data>
 
-  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+  <com.github.ashutoshgngwr.noice.widget.SwipeRefreshLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:onRefreshListener="@{() -> viewModel.loadData()}"
-    app:progressCircleColor="@{@color/primary}"
     app:refreshing="@{viewModel.isLoading}">
 
     <androidx.core.widget.NestedScrollView
@@ -35,9 +34,9 @@
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginHorizontal="16dp"
-          android:layout_marginVertical="32dp"
           android:orientation="vertical"
+          android:paddingHorizontal="@dimen/root_layout_padding"
+          android:paddingVertical="32dp"
           app:isVisible="@{viewModel.isSignedIn &amp;&amp; viewModel.profile != null}">
 
           <TextView
@@ -45,7 +44,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@{viewModel.profile.name}"
-            android:textAppearance="?attr/textAppearanceHeadline5"
+            android:textAppearance="?attr/textAppearanceTitleLarge"
             tools:text="Jane Doe" />
 
           <Space
@@ -57,8 +56,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@{viewModel.profile.email}"
-            android:textAppearance="?attr/textAppearanceCaption"
-            android:textSize="16sp"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
             tools:text="jane.doe@emailservice.org" />
 
         </LinearLayout>
@@ -254,13 +252,13 @@
           android:layout_marginVertical="48dp"
           android:gravity="center"
           android:text="@string/made_in_india"
-          android:textAppearance="?attr/textAppearanceBody2"
+          android:textAppearance="?attr/textAppearanceLabelMedium"
           android:textColor="?android:attr/textColorSecondary" />
 
       </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+  </com.github.ashutoshgngwr.noice.widget.SwipeRefreshLayout>
 
 </layout>

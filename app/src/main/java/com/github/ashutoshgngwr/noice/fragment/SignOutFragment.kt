@@ -11,7 +11,7 @@ import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignOutFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
-import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
@@ -55,7 +55,7 @@ class SignOutFragment : BottomSheetDialogFragment() {
         .filterNotNull()
         .collect { causeStrRes ->
           val msg = getString(R.string.sign_out_error, getString(causeStrRes))
-          showErrorSnackbar(msg.normalizeSpace())
+          showErrorSnackBar(msg.normalizeSpace())
         }
     }
 

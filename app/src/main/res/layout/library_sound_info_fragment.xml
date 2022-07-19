@@ -19,48 +19,42 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      android:padding="24dp"
-      tools:theme="@style/Theme.App.BottomSheetDialog">
+      android:padding="@dimen/modal_layout_padding"
+      tools:theme="?attr/bottomSheetDialogTheme">
 
       <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@{sound.name}"
-        android:textAppearance="?attr/titleTextAppearance"
+        android:textAppearance="?attr/textAppearanceHeadlineMedium"
         tools:text="Sound Name" />
 
       <Space
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        android:layout_height="24dp" />
 
       <TextView
-        style="@style/Widget.App.TextView.Message"
+        style="@style/Widget.App.LibrarySoundInfo.LineItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
         android:text="@string/has_premium_segments"
         app:drawableStartCompat="@drawable/ic_baseline_check_circle_24"
-        app:drawableTint="@color/primary"
         app:isVisible="@{sound.hasPremiumSegments}" />
 
       <TextView
-        style="@style/Widget.App.TextView.Message"
+        style="@style/Widget.App.LibrarySoundInfo.LineItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
         android:text="@string/looping_sound"
         app:drawableStartCompat="@drawable/ic_baseline_repeat_24"
-        app:drawableTint="@color/primary"
         app:isVisible="@{sound.contiguous}" />
 
       <TextView
-        style="@style/Widget.App.TextView.Message"
+        style="@style/Widget.App.LibrarySoundInfo.LineItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
         android:text="@string/non_looping_sound"
         app:drawableStartCompat="@drawable/ic_baseline_shuffle_24"
-        app:drawableTint="@color/primary"
         app:isVisible="@{!sound.contiguous}" />
 
       <Space
@@ -71,16 +65,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/media_sources"
-        android:textAppearance="?attr/textAppearanceHeadline6" />
+        android:textAppearance="?attr/textAppearanceTitleLarge" />
 
       <Space
         android:layout_width="match_parent"
         android:layout_height="12dp" />
 
       <com.github.ashutoshgngwr.noice.widget.MarkdownTextView
-        style="@style/Widget.App.TextView.Message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
         app:markdown="@{sound.sourcesToMarkdown()}" />
 
       <Space
@@ -89,7 +83,6 @@
 
       <Button
         android:id="@+id/dismiss"
-        style="?attr/buttonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"

@@ -4,14 +4,14 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:orientation="vertical"
-  android:padding="24dp">
+  android:padding="@dimen/modal_layout_padding">
 
   <TextView
     android:id="@+id/title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="@dimen/dialog_fragment_view_spacing"
-    android:textAppearance="?attr/titleTextAppearance" />
+    android:layout_marginBottom="24dp"
+    android:textAppearance="?attr/textAppearanceHeadlineMedium" />
 
   <LinearLayout
     android:id="@+id/content"
@@ -29,7 +29,6 @@
     <!-- marginStart is added by the default button style. See styles.xml for details. -->
     <Button
       android:id="@+id/neutral"
-      style="?attr/buttonStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="0dp"
@@ -43,7 +42,6 @@
 
     <Button
       android:id="@+id/negative"
-      style="?attr/buttonStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/dialog_fragment_view_spacing"
@@ -51,7 +49,6 @@
 
     <Button
       android:id="@+id/positive"
-      style="?attr/buttonStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/dialog_fragment_view_spacing"

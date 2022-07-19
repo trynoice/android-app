@@ -14,7 +14,7 @@
   <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="24dp"
+    android:padding="@dimen/modal_layout_padding"
     tools:theme="?attr/bottomSheetDialogTheme">
 
     <include
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/redeem_gift_card"
-        android:textAppearance="?attr/titleTextAppearance" />
+        android:textAppearance="?attr/textAppearanceHeadlineMedium" />
 
       <Space
         android:layout_width="match_parent"
@@ -49,9 +49,9 @@
 
       <TextView
         android:id="@+id/details"
-        style="@style/Widget.App.TextView.Message.Success"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
         app:isVisible="@{viewModel.giftCard.isRedeemable}"
         tools:text="@string/gift_card_details" />
 
@@ -67,15 +67,17 @@
 
         <Button
           android:id="@+id/cancel"
-          style="?attr/buttonStyle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="@{viewModel.giftCard.isRedeemable ? @string/cancel : @string/okay}"
           tools:text="@string/cancel" />
 
+        <Space
+          android:layout_width="16dp"
+          android:layout_height="wrap_content" />
+
         <Button
           android:id="@+id/redeem"
-          style="?attr/buttonStyle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="@string/redeem"

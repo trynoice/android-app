@@ -14,8 +14,8 @@
   <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="24dp"
-    tools:theme="@style/Theme.App.BottomSheetDialog">
+    android:padding="@dimen/modal_layout_padding"
+    tools:theme="?attr/bottomSheetDialogTheme">
 
     <LinearLayout
       android:layout_width="match_parent"
@@ -27,17 +27,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/delete_account"
-        android:textAppearance="?attr/titleTextAppearance" />
+        android:textAppearance="?attr/textAppearanceHeadlineMedium" />
 
       <Space
         android:layout_width="match_parent"
         android:layout_height="24dp" />
 
       <TextView
-        style="@style/Widget.App.TextView.Message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/delete_account_confirmation" />
+        android:text="@string/delete_account_confirmation"
+        android:textAppearance="?attr/textAppearanceBodyMedium" />
 
       <Space
         android:layout_width="match_parent"
@@ -61,7 +61,6 @@
 
         <Button
           android:id="@+id/cancel"
-          style="?attr/buttonStyle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="@string/cancel" />
@@ -72,7 +71,6 @@
 
         <Button
           android:id="@+id/delete"
-          style="?attr/buttonStyle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:enabled="@{viewModel.hasConfirmed}"

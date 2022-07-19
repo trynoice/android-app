@@ -19,11 +19,9 @@
     android:id="@+id/network_indicator"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="3dp"
     android:gravity="center"
     android:padding="1dp"
-    android:textColor="?colorOnPrimarySurface"
-    android:textSize="11sp"
+    android:textAppearance="@style/TextAppearance.App.MainActivity.NetworkIndicator"
     android:visibility="gone" />
 
 </LinearLayout>

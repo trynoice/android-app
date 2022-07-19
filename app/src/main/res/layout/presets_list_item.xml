@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:gravity="center_vertical"
   android:orientation="horizontal"
-  android:padding="16dp">
+  android:padding="@dimen/root_layout_padding">
 
   <CheckBox
     android:id="@+id/play_button"
-    style="?attr/checkboxStyle"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_marginHorizontal="6dp"
     android:background="?android:selectableItemBackgroundBorderless"
     android:button="@drawable/ic_action_play_stop_circled_toggle"
-    android:buttonTint="?attr/colorAccent"
-    android:contentDescription="@string/play_pause" />
+    android:contentDescription="@string/play_pause"
+    app:buttonTint="?attr/colorPrimary" />
 
   <TextView
     android:id="@+id/title"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
+    android:layout_marginHorizontal="12dp"
     android:layout_weight="1"
     android:ellipsize="end"
     android:singleLine="true"
-    android:textAppearance="?attr/textAppearanceListItem" />
+    android:textAppearance="?attr/textAppearanceBodyLarge"
+    tools:text="Preset Title" />
 
   <ImageButton
     android:id="@+id/menu_button"
-    style="?attr/imageButtonStyle"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="?android:selectableItemBackgroundBorderless"

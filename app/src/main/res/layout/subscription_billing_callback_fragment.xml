@@ -14,7 +14,8 @@
   <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="24dp">
+    android:padding="@dimen/modal_layout_padding"
+    tools:theme="?attr/bottomSheetDialogTheme">
 
     <include
       layout="@layout/simple_progress_layout"
@@ -51,10 +52,10 @@
       </FrameLayout>
 
       <TextView
-        style="@style/Widget.App.TextView.Message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/subscription_payment_cancelled"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
         app:isVisible="@{viewModel.wasCancelled}"
         tools:visibility="gone" />
 
@@ -64,7 +65,6 @@
 
       <Button
         android:id="@+id/okay"
-        style="?attr/buttonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"

@@ -2,6 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
+  style="?attr/materialCardViewOutlinedStyle"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:layout_marginHorizontal="16dp"
@@ -10,7 +11,6 @@
   app:cardCornerRadius="16dp"
   app:cardElevation="0dp"
   app:contentPadding="24dp"
-  app:strokeColor="@color/background_darker"
   app:strokeWidth="1dp">
 
   <LinearLayout
@@ -29,8 +29,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        android:textColor="@color/accent"
+        android:textAppearance="?attr/textAppearanceTitleLarge"
+        android:textColor="?attr/colorPrimary"
         tools:text="Monthly" />
 
       <Space
@@ -41,7 +41,7 @@
         android:id="@+id/monthly_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textAppearance="?attr/textAppearanceBodyLarge"
         tools:text="@string/monthly_price" />
 
     </LinearLayout>
@@ -52,79 +52,72 @@
 
     <TextView
       android:id="@+id/started_on"
-      style="@style/Widget.App.TextView.Message"
+      style="@style/Widget.App.SubscriptionPurchase.LineItem"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginVertical="4dp"
       app:drawableStartCompat="@drawable/ic_baseline_access_time_24"
       tools:text="@string/started_on" />
 
     <TextView
       android:id="@+id/ended_on"
-      style="@style/Widget.App.TextView.Message"
+      style="@style/Widget.App.SubscriptionPurchase.LineItem"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginVertical="4dp"
       app:drawableStartCompat="@drawable/ic_baseline_access_time_filled_24"
       tools:text="@string/ended_on" />
 
     <TextView
       android:id="@+id/renews_on"
-      style="@style/Widget.App.TextView.Message"
+      style="@style/Widget.App.SubscriptionPurchase.LineItem"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginVertical="4dp"
       app:drawableStartCompat="@drawable/ic_baseline_payment_24"
       tools:text="@string/renews_on" />
 
     <TextView
       android:id="@+id/paid_using"
-      style="@style/Widget.App.TextView.Message"
+      style="@style/Widget.App.SubscriptionPurchase.LineItem"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginVertical="4dp"
       app:drawableStartCompat="@drawable/ic_baseline_paid_24"
       tools:text="@string/paid_using" />
 
     <TextView
       android:id="@+id/redeemed_using"
-      style="@style/Widget.App.TextView.Message"
+      style="@style/Widget.App.SubscriptionPurchase.LineItem"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginVertical="4dp"
       app:drawableStartCompat="@drawable/ic_baseline_redeem_24"
       tools:text="@string/redeemed_using_code" />
 
     <TextView
       android:id="@+id/payment_pending"
-      style="@style/Widget.App.TextView.Message"
+      style="@style/Widget.App.SubscriptionPurchase.LineItem"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginVertical="4dp"
       android:text="@string/subscription_payment_pending"
       app:drawableStartCompat="@drawable/ic_baseline_pending_24"
-      app:drawableTint="@color/primary" />
+      app:drawableTint="?attr/colorError" />
 
     <TextView
       android:id="@+id/refunded"
-      style="@style/Widget.App.TextView.Message"
+      style="@style/Widget.App.SubscriptionPurchase.LineItem"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginVertical="4dp"
       android:text="@string/subscription_payment_refunded"
       app:drawableStartCompat="@drawable/ic_baseline_pending_24"
-      app:drawableTint="@color/primary" />
+      app:drawableTint="?attr/colorError" />
 
     <LinearLayout
       android:id="@+id/action_button_container"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="12dp"
+      android:layout_marginTop="16dp"
       android:orientation="vertical">
 
       <Button
         android:id="@+id/manage"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="4dp"
@@ -132,7 +125,7 @@
 
       <Button
         android:id="@+id/change_plan"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="4dp"
@@ -140,7 +133,7 @@
 
       <Button
         android:id="@+id/cancel"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="4dp"

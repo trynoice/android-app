@@ -14,7 +14,8 @@
   <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="24dp">
+    android:padding="@dimen/modal_layout_padding"
+    tools:theme="?attr/bottomSheetDialogTheme">
 
     <include
       layout="@layout/simple_progress_layout"
@@ -50,7 +51,6 @@
 
       <Button
         android:id="@+id/dismiss"
-        style="?attr/buttonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"

@@ -2,12 +2,12 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,8 +27,8 @@ import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.engine.PlaybackState
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
-import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
-import com.github.ashutoshgngwr.noice.ext.showSuccessSnackbar
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
@@ -132,7 +132,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
         .filter { isConnectedToInternet } // suppress transient errors when offline.
         .collect { causeStrRes ->
           val msg = getString(R.string.library_load_error, getString(causeStrRes))
-          showErrorSnackbar(msg.normalizeSpace())
+          showErrorSnackBar(msg.normalizeSpace())
         }
     }
 
@@ -166,7 +166,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
           presetRepository.create(Preset(nameGetter.invoke(), viewModel.playerStates.value))
-          showSuccessSnackbar(R.string.preset_saved)
+          showSuccessSnackBar(R.string.preset_saved)
           // maybe show in-app review dialog to the user
           reviewFlowProvider.maybeAskForReview(requireActivity())
         }
@@ -197,7 +197,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
   override fun onSoundVolumeClicked(sound: Sound, currentVolume: Int) {
     DialogFragment.show(childFragmentManager) {
       title(sound.name)
-      message(R.string.volume, textAppearance = R.style.TextAppearance_MaterialComponents_Headline6)
+      message(R.string.volume, textAppearance = R.style.TextAppearance_Material3_TitleLarge)
       slider(
         viewID = R.id.volume_slider,
         to = PlaybackController.MAX_SOUND_VOLUME.toFloat(),
@@ -430,13 +430,16 @@ class SoundViewHolder(
     binding.title.text = sound.name
     binding.icon.isVisible = isIconsEnabled
     if (isIconsEnabled) {
+      val iconColor = TypedValue()
+        .also { binding.icon.context.theme.resolveAttribute(R.attr.colorSurfaceVariant, it, true) }
+        .data
+
       binding.icon.post {
         val icon = SVG.getFromString(sound.iconSvg)
         icon.documentPreserveAspectRatio = PreserveAspectRatio.END
         icon.documentWidth = binding.icon.width.toFloat()
         icon.documentHeight = binding.icon.height.toFloat()
-        val color = ContextCompat.getColor(binding.icon.context, R.color.background_darker)
-        binding.icon.setSVG(icon, "svg { fill: #${Integer.toHexString(color and 0x00ffffff)} }")
+        binding.icon.setSVG(icon, "svg { fill: #${Integer.toHexString(iconColor and 0x00ffffff)} }")
       }
     }
 

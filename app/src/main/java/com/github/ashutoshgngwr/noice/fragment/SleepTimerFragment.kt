@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SleepTimerFragmentBinding
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
-import com.github.ashutoshgngwr.noice.ext.showSnackbar
+import com.github.ashutoshgngwr.noice.ext.showInfoSnackBar
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,7 +62,7 @@ class SleepTimerFragment : Fragment() {
     if (duration < 0) { // duration picker reset
       playbackController.clearScheduledAutoStop()
       analyticsProvider.logEvent("sleep_timer_cancel", bundleOf())
-      showSnackbar(R.string.auto_sleep_schedule_cancelled)
+      showInfoSnackBar(R.string.auto_sleep_schedule_cancelled)
     } else {
       remaining = playbackController.getStopScheduleRemainingMillis()
       remaining += duration

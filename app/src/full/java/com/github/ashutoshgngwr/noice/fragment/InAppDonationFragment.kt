@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.InAppDonationFragmentBinding
-import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProviderException
@@ -48,7 +48,7 @@ class InAppDonationFragment : Fragment() {
         billingProvider.purchase(requireActivity(), productDetails)
       } catch (e: InAppBillingProviderException) {
         Log.w(LOG_TAG, "onViewCreated: failed to launch billing flow", e)
-        showErrorSnackbar(R.string.failed_to_purchase)
+        showErrorSnackBar(R.string.failed_to_purchase)
       }
     }
   }

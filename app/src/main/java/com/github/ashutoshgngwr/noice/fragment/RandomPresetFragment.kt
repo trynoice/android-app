@@ -13,7 +13,7 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetTagChipBinding
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
-import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
@@ -77,7 +77,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
       viewModel.tagsLoadErrorStrRes
         .filterNotNull()
         .collect { causeStrRes ->
-          showErrorSnackbar(getString(R.string.tags_load_error, getString(causeStrRes)))
+          showErrorSnackBar(getString(R.string.tags_load_error, getString(causeStrRes)))
           dismiss()
         }
     }
@@ -98,7 +98,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
       viewModel.generatePresetErrorStrRes
         .filterNotNull()
         .collect { causeStrRes ->
-          showErrorSnackbar(getString(R.string.generate_preset_error, getString(causeStrRes)))
+          showErrorSnackBar(getString(R.string.generate_preset_error, getString(causeStrRes)))
           dismiss()
         }
     }

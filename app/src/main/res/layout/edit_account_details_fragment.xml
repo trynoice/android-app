@@ -27,12 +27,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
+        android:paddingHorizontal="@dimen/root_layout_padding"
         android:paddingVertical="24dp">
 
         <com.google.android.material.textfield.TextInputLayout
           android:id="@+id/name"
-          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+          style="?attr/textInputOutlinedStyle"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:autofillHints="name"
@@ -52,11 +52,11 @@
 
         <Space
           android:layout_width="match_parent"
-          android:layout_height="8dp" />
+          android:layout_height="16dp" />
 
         <com.google.android.material.textfield.TextInputLayout
           android:id="@+id/email"
-          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+          style="?attr/textInputOutlinedStyle"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:autofillHints="emailAddress"
@@ -80,7 +80,6 @@
           android:layout_weight="1" />
 
         <Button
-          style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:enabled="@{viewModel.isNameValid &amp;&amp; viewModel.isEmailValid}"

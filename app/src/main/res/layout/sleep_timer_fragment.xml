@@ -8,29 +8,33 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp">
+    android:padding="@dimen/root_layout_padding">
 
     <com.github.ashutoshgngwr.noice.widget.CountdownTextView
       android:id="@+id/countdown_view"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_margin="10dp"
       android:gravity="center" />
 
+    <Space
+      android:layout_width="wrap_content"
+      android:layout_height="24dp" />
+
     <TextView
-      style="@style/Widget.App.TextView.Message"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_margin="20dp"
       android:gravity="center"
-      android:text="@string/sleep_timer_description" />
+      android:text="@string/sleep_timer_description"
+      android:textAppearance="?attr/textAppearanceBodyMedium" />
+
+    <Space
+      android:layout_width="wrap_content"
+      android:layout_height="24dp" />
 
     <com.github.ashutoshgngwr.noice.widget.DurationPicker
       android:id="@+id/duration_picker"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_margin="10dp" />
+      android:layout_height="wrap_content" />
 
   </LinearLayout>
 

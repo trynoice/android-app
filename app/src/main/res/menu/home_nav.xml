@@ -13,7 +13,7 @@
 
   <item
     android:id="@+id/sleep_timer"
-    android:icon="@drawable/ic_timer_24dp"
+    android:icon="@drawable/ic_baseline_hourglass_bottom_24"
     android:title="@string/sleep_timer" />
 
   <item

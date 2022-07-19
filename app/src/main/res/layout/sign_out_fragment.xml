@@ -15,14 +15,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="24dp"
-    tools:theme="@style/Theme.App.BottomSheetDialog">
+    android:padding="@dimen/modal_layout_padding"
+    tools:theme="?attr/bottomSheetDialogTheme">
 
     <TextView
-      style="@style/Widget.App.TextView.Message"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/sign_out_confirmation"
+      android:textAppearance="?attr/textAppearanceBodyMedium"
       app:isVisible="@{!viewModel.isSigningOut}" />
 
     <include
@@ -34,14 +34,13 @@
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="8dp"
+      android:layout_marginTop="16dp"
       android:gravity="center_vertical|end"
       android:orientation="horizontal"
       app:isVisible="@{!viewModel.isSigningOut}">
 
       <Button
         android:id="@+id/cancel"
-        style="?attr/buttonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cancel" />
@@ -51,7 +50,6 @@
         android:layout_height="wrap_content" />
 
       <Button
-        style="?attr/buttonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="@{() -> viewModel.signOut()}"

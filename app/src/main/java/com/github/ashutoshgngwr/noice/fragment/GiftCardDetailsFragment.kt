@@ -14,7 +14,7 @@ import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.GiftCardDetailsFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
-import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.GiftCardNotFoundError
@@ -78,7 +78,7 @@ class GiftCardDetailsFragment : BottomSheetDialogFragment() {
         .filterNotNull()
         .map { getString(it) }
         .collect { cause ->
-          showErrorSnackbar(getString(R.string.gift_card_load_error, cause).normalizeSpace())
+          showErrorSnackBar(getString(R.string.gift_card_load_error, cause).normalizeSpace())
           dismiss()
         }
     }

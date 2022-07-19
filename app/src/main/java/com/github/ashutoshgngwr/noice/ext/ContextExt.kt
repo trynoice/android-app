@@ -11,8 +11,8 @@ import androidx.annotation.StringRes
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.getSystemService
-import androidx.core.content.res.ResourcesCompat
 import com.github.ashutoshgngwr.noice.R
+import com.google.android.material.elevation.SurfaceColors
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.callbackFlow
  * [uri].
  */
 fun Context.startCustomTab(uri: String) {
-  val tbColor = ResourcesCompat.getColor(resources, R.color.action_bar, theme)
+  val tbColor = SurfaceColors.SURFACE_2.getColor(this)
   val colorParams = CustomTabColorSchemeParams.Builder()
     .setToolbarColor(tbColor)
     .setNavigationBarColor(tbColor)

@@ -17,7 +17,7 @@ import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignInResultFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
-import com.github.ashutoshgngwr.noice.ext.showErrorSnackbar
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.errors.AccountTemporarilyLockedError
@@ -92,7 +92,7 @@ class SignInResultFragment : Fragment() {
           .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
       )
     } catch (e: ActivityNotFoundException) {
-      showErrorSnackbar(R.string.mailbox_app_not_found)
+      showErrorSnackBar(R.string.mailbox_app_not_found)
     }
   }
 }
