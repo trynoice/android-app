@@ -61,6 +61,13 @@ class SettingsRepository @Inject constructor(
   }
 
   /**
+   * Returns the current value of switch preference with key [R.string.use_material_you_colors_key].
+   */
+  fun shouldUseMaterialYouColors(): Boolean {
+    return prefs.getBoolean(context.getString(R.string.use_material_you_colors_key), true)
+  }
+
+  /**
    * Returns the current value of switch preference with key [R.string.presets_as_home_screen_key].
    */
   fun shouldDisplayPresetsAsHomeScreen(): Boolean {

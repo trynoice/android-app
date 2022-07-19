@@ -79,6 +79,13 @@
       tools:summary="@string/app_theme_light" />
 
     <SwitchPreferenceCompat
+      android:defaultValue="true"
+      android:icon="@drawable/ic_baseline_palette_32"
+      android:key="@string/use_material_you_colors_key"
+      android:summary="@string/use_material_you_colors_summary"
+      android:title="@string/use_material_you_colors" />
+
+    <SwitchPreferenceCompat
       android:icon="@drawable/ic_settings_home_screen"
       android:key="@string/presets_as_home_screen_key"
       android:summary="@string/presets_as_home_screen_summary"

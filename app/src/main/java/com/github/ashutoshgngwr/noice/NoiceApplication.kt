@@ -3,6 +3,9 @@ package com.github.ashutoshgngwr.noice
 import android.app.Application
 import android.content.Context
 import android.os.Build
+import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import com.google.android.material.color.DynamicColors
+import com.google.android.material.color.DynamicColorsOptions
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.trynoice.api.client.NoiceApiClient
@@ -14,10 +17,22 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.github.ashutoshgngwr.may.May
 import java.io.File
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @HiltAndroidApp
 class NoiceApplication : Application() {
+
+  @set:Inject
+  internal lateinit var settingsRepository: SettingsRepository
+
+  override fun onCreate() {
+    super.onCreate()
+    DynamicColorsOptions.Builder()
+      .setPrecondition { _, _ -> settingsRepository.shouldUseMaterialYouColors() }
+      .build()
+      .also { DynamicColors.applyToActivitiesIfAvailable(this, it) }
+  }
 
   @Module
   @InstallIn(SingletonComponent::class)

@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
@@ -142,6 +143,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         true
       }
+    }
+
+    findPreference<SwitchPreferenceCompat>(R.string.use_material_you_colors_key).apply {
+      isVisible = Build.VERSION.SDK_INT >= 31
+      setOnPreferenceChangeListener { _, _ -> requireActivity().recreate(); true }
     }
 
     findPreference<PreferenceCategory>(R.string.others_key)
