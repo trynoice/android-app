@@ -18,6 +18,7 @@
   <com.github.ashutoshgngwr.noice.widget.SwipeRefreshLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:enabled="@{viewModel.isSignedIn}"
     app:onRefreshListener="@{() -> viewModel.loadData()}"
     app:refreshing="@{viewModel.isLoading}">
 
