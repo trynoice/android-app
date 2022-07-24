@@ -225,4 +225,5 @@
     <string name="ends_on">%1$s后结束</string>
     <string name="cancel_subscription_confirmation">是否确实要取消对Noice高级版的订阅？取消后，您的订阅将在当前计费周期结束时自动终止。您当前的计费周期将在%1$s结束。</string>
     <string name="sign_out_error">糟糕！我们无法注销您的账户。%1$s后重试！</string>
+    <string name="made_in_india">印度用心制造</string>
 </resources>

@@ -238,4 +238,6 @@
     <string name="cancel_subscription">Aboneliği İptal et</string>
     <string name="subscription_payment_pending">Bu satın alma için ödeme bekliyor.</string>
     <string name="cancel_subscription_confirmation">Noice Premium aboneliğini iptal etmek istediğine emin misin\? İptal etmenle birlikte aboneliğin mevcut ödeme dönemi sonunta otomatik olarak sonlandırılacak. Mevcut ödeme dönemin %1$s tarihinde bitecek.</string>
+    <string name="has_premium_segments">Bu ses birinci sınıf bileşenlere sahiptir.</string>
+    <string name="sound_info">Bu ses hakkında</string>
 </resources>

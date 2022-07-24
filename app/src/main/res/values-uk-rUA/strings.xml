@@ -283,4 +283,6 @@
     <string name="reach_us">Зв\'язок з нами</string>
     <string name="oss_licenses">Ліцензії на програмне забезпечення з відкритим кодом</string>
     <string name="showing_localised_prices">Ціни конвертовані з [INR](https://uk.wikipedia.org/wiki/%D0%86%D0%BD%D0%B4%D1%96%D0%B9%D1%81%D1%8C%D0%BA%D0%B0_%D1%80%D1%83%D0%BF%D1%96%D1%8F). Фактичні ціни можуть дещо відрізнятися.</string>
+    <string name="use_material_you_colors">Використовувати кольори Material You</string>
+    <string name="use_material_you_colors_summary">Успадковувати колірну палітру Material You системи Android</string>
 </resources>
