@@ -33,7 +33,6 @@ import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseItemBindin
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseListFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseLoadingItemBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
-import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
@@ -115,7 +114,7 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
   }
 
   override fun onClickManage(subscription: Subscription) {
-    subscription.stripeCustomerPortalUrl?.also { activity?.startCustomTab(it) }
+    mainNavController.navigate(R.id.launch_stripe_customer_portal)
   }
 
   override fun onClickUpgrade(subscription: Subscription) {
@@ -262,7 +261,7 @@ class SubscriptionPurchaseViewHolder(
     binding.paymentPending.isVisible = s.isPaymentPending
     binding.actionButtonContainer.isVisible = s.isActive
     if (s.isActive) {
-      binding.manage.isVisible = s.stripeCustomerPortalUrl != null
+      binding.manage.isVisible = s.plan.provider == SubscriptionPlan.PROVIDER_STRIPE
       binding.manage.setOnClickListener { actionClickListener.onClickManage(s) }
       binding.changePlan.isVisible = subscriptionBillingProvider.canUpgrade(s)
       binding.changePlan.setOnClickListener { actionClickListener.onClickUpgrade(s) }

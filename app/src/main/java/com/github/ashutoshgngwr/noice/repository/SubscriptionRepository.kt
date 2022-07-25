@@ -109,13 +109,7 @@ class SubscriptionRepository @Inject constructor(
     currencyCode: String? = null,
   ): Flow<Resource<Subscription>> = fetchNetworkBoundResource(
     loadFromCache = { cacheStore.getAs("${SUBSCRIPTION_KEY_PREFIX}/${subscriptionId}") },
-    loadFromNetwork = {
-      apiClient.subscriptions().get(
-        subscriptionId,
-        stripeReturnUrl = STRIPE_RETURN_URL,
-        currency = currencyCode,
-      )
-    },
+    loadFromNetwork = { apiClient.subscriptions().get(subscriptionId, currency = currencyCode) },
     cacheNetworkResult = { s -> cacheStore.put("${SUBSCRIPTION_KEY_PREFIX}/${subscriptionId}", s) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "get:", e)
@@ -141,7 +135,7 @@ class SubscriptionRepository @Inject constructor(
   fun getActive(): Flow<Resource<Subscription>> = fetchNetworkBoundResource(
     loadFromNetwork = {
       apiClient.subscriptions()
-        .list(onlyActive = true, stripeReturnUrl = STRIPE_RETURN_URL)
+        .list(onlyActive = true)
         .firstOrNull()
         ?: throw SubscriptionNotFoundError
     },
@@ -170,12 +164,8 @@ class SubscriptionRepository @Inject constructor(
     currencyCode: String? = null,
   ): Flow<Resource<List<Subscription>>> = fetchNetworkBoundResource(
     loadFromNetwork = {
-      apiClient.subscriptions().list(
-        false,
-        page = page,
-        stripeReturnUrl = STRIPE_RETURN_URL,
-        currency = currencyCode,
-      )
+      apiClient.subscriptions()
+        .list(false, page = page, currency = currencyCode)
     },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "list:", e)
@@ -261,7 +251,7 @@ class SubscriptionRepository @Inject constructor(
         e is IOException -> NetworkError
         else -> e
       }
-    }
+    },
   )
 
   /**
@@ -278,7 +268,7 @@ class SubscriptionRepository @Inject constructor(
    * @see fetchNetworkBoundResource
    * @see Resource
    */
-  fun redeemGiftCard(card: GiftCard): Flow<Resource<Subscription>> = fetchNetworkBoundResource(
+  fun redeemGiftCard(card: GiftCard): Flow<Resource<Unit>> = fetchNetworkBoundResource(
     loadFromNetwork = { apiClient.subscriptions().redeemGiftCard(card.code) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "redeemGiftCard:", e)
@@ -290,7 +280,33 @@ class SubscriptionRepository @Inject constructor(
         e is IOException -> NetworkError
         else -> e
       }
-    }
+    },
+  )
+
+  /**
+   * Returns a [Flow] that emits the current state of stripe customer portal url operation as a
+   * [Resource].
+   *
+   * On failures, the flow emits [Resource.Failure] with:
+   * - [NetworkError] on network errors.
+   * - [HttpException] on api errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
+   */
+  fun stripeCustomerPortalUrl(): Flow<Resource<String>> = fetchNetworkBoundResource(
+    loadFromNetwork = {
+      apiClient.subscriptions()
+        .stripeCustomerPortalUrl(STRIPE_RETURN_URL)
+        .url
+    },
+    loadFromNetworkErrorTransform = { e ->
+      Log.i(LOG_TAG, "stripeCustomerPortalUrl:", e)
+      when (e) {
+        is IOException -> NetworkError
+        else -> e
+      }
+    },
   )
 
   companion object {

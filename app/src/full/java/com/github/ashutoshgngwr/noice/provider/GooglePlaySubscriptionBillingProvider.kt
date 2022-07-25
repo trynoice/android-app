@@ -33,12 +33,12 @@ class GooglePlaySubscriptionBillingProvider(
     }
 
     val activePurchaseToken = activeSubscription?.googlePlayPurchaseToken
-    val subscription: Subscription = if (activePurchaseToken == null) {
+    val subscriptionId: Long = if (activePurchaseToken == null) {
       apiClient.subscriptions()
         .create(SubscriptionFlowParams(plan.id))
-        .subscription
+        .subscriptionId
     } else {
-      activeSubscription
+      activeSubscription.id
     }
 
     // we have set-up the Google Play subscription products such that each subscription has a single
@@ -57,7 +57,7 @@ class GooglePlaySubscriptionBillingProvider(
       details.first(),
       subscriptionOfferToken = offerToken,
       oldPurchaseToken = activePurchaseToken,
-      obfuscatedAccountId = subscription.id.toString(),
+      obfuscatedAccountId = subscriptionId.toString(),
     )
   }
 

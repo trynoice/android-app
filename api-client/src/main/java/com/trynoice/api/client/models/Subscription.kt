@@ -19,8 +19,6 @@ import java.util.*
  * @param endedAt epoch millis when the subscription has ended.
  * @param renewsAt epoch millis when the current billing cycle ends and the next one starts. always
  * present unless the subscription is inactive.
- * @param stripeCustomerPortalUrl Stripe customer portal URL to manage subscriptions. only present
- * when the subscription is active and provided by Stripe.
  * @param googlePlayPurchaseToken Google Play purchase token corresponding to this subscription
  * purchase. only present when the subscription is active and provided by Google Play.
  * @param giftCardCode the gift card code if this subscription was activated using a gift card.
@@ -53,9 +51,6 @@ data class Subscription(
 
   @Expose
   val renewsAt: Date? = null,
-
-  @Expose
-  val stripeCustomerPortalUrl: String? = null,
 
   @Expose
   val googlePlayPurchaseToken: String? = null,

@@ -272,10 +272,19 @@
       app:destination="@id/view_subscription_plans" />
 
     <action
+      android:id="@+id/launch_stripe_customer_portal"
+      app:destination="@id/launch_stripe_customer_portal" />
+
+    <action
       android:id="@+id/cancel_subscription"
       app:destination="@id/cancel_subscription" />
 
   </fragment>
+
+  <dialog
+    android:id="@+id/launch_stripe_customer_portal"
+    android:name="com.github.ashutoshgngwr.noice.fragment.LaunchStripeCustomerPortalFragment"
+    tools:layout="@layout/simple_progress_layout" />
 
   <dialog
     android:id="@+id/cancel_subscription"

@@ -5,27 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.databinding.RedeemGiftCardFragmentBinding
+import com.github.ashutoshgngwr.noice.databinding.LaunchStripeCustomerPortalFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
-import com.github.ashutoshgngwr.noice.repository.errors.AlreadySubscribedError
+import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -35,72 +32,66 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RedeemGiftCardFragment : BottomSheetDialogFragment() {
+class LaunchStripeCustomerPortalFragment : BottomSheetDialogFragment() {
 
-  private lateinit var binding: RedeemGiftCardFragmentBinding
-  private val viewModel: RedeemGiftCardViewModel by viewModels()
-  private val mainNavController by lazy {
-    Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
-  }
+  private lateinit var binding: LaunchStripeCustomerPortalFragmentBinding
+  private val viewModel: LaunchStripeCustomerPortalViewModel by viewModels()
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
-    binding = RedeemGiftCardFragmentBinding.inflate(inflater, container, false)
+    binding = LaunchStripeCustomerPortalFragmentBinding.inflate(inflater, container, false)
     return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    isCancelable = false
     binding.lifecycleOwner = viewLifecycleOwner
     viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.redeemResource
-        .filterNot { it is Resource.Loading }
-        .collect { dismiss() }
+      viewModel.customerPortalUrl
+        .filterNotNull()
+        .collect { url ->
+          dismiss()
+          activity?.startCustomTab(url)
+        }
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.shouldShowPurchaseList
-        .filter { it }
-        .collect { mainNavController.navigate(R.id.subscription_purchase_list) }
-    }
-
-    viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.errStrRes
+      viewModel.errorStrRes
         .filterNotNull()
         .map { getString(it) }
-        .map { getString(R.string.gift_card_redeem_error, it).normalizeSpace() }
-        .collect { showErrorSnackBar(it) }
+        .map { getString(R.string.stripe_customer_portal_error, it).normalizeSpace() }
+        .collect {
+          dismiss()
+          showErrorSnackBar(it)
+        }
     }
   }
 }
 
 @HiltViewModel
-class RedeemGiftCardViewModel @Inject constructor(
-  savedStateHandle: SavedStateHandle,
+class LaunchStripeCustomerPortalViewModel @Inject constructor(
   subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
-  internal val redeemResource = MutableStateFlow<Resource<Unit>>(Resource.Loading())
+  private val customerPortalUrlResource = MutableSharedFlow<Resource<String>>()
 
-  internal val shouldShowPurchaseList: StateFlow<Boolean> = redeemResource.transform { r ->
-    emit(r is Resource.Success)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  internal val customerPortalUrl: StateFlow<String?> = customerPortalUrlResource.transform { r ->
+    r.data?.also { emit(it) }
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-  internal val errStrRes: StateFlow<Int?> = redeemResource.transform { r ->
+  internal val errorStrRes: StateFlow<Int?> = customerPortalUrlResource.transform { r ->
     emit(
       when (r.error) {
         null -> null
-        is AlreadySubscribedError -> R.string.user_already_subscribed
+        NetworkError -> R.string.network_error
         else -> R.string.unknown_error
       }
     )
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   init {
-    val args = RedeemGiftCardFragmentArgs.fromSavedStateHandle(savedStateHandle)
     viewModelScope.launch {
-      subscriptionRepository.redeemGiftCard(args.giftCard)
+      subscriptionRepository.stripeCustomerPortalUrl()
         .flowOn(Dispatchers.IO)
-        .collect(redeemResource)
+        .collect(customerPortalUrlResource)
     }
   }
 }
