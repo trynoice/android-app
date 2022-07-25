@@ -2,9 +2,10 @@ package com.trynoice.api.client.apis
 
 import com.trynoice.api.client.auth.annotations.NeedsAccessToken
 import com.trynoice.api.client.models.GiftCard
+import com.trynoice.api.client.models.StripeCustomerPortalUrlResponse
 import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionFlowParams
-import com.trynoice.api.client.models.SubscriptionFlowResult
+import com.trynoice.api.client.models.SubscriptionFlowResponse
 import com.trynoice.api.client.models.SubscriptionPlan
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -70,14 +71,14 @@ interface SubscriptionApi {
    *  - 500: internal server error.
    *
    * @param params `successUrl` and `cancelUrl` are only required for Stripe plans.
-   * @return a [SubscriptionFlowResult] containing a new subscription entity and an optional stripe
-   * checkout session url for subscriptions created with Stripe plans.
+   * @return a [SubscriptionFlowResponse] containing id of the new subscription entity and an
+   * optional stripe checkout session url for subscriptions created with Stripe plans.
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
   @NeedsAccessToken
-  @POST("/v1/subscriptions")
-  suspend fun create(@Body params: SubscriptionFlowParams): SubscriptionFlowResult
+  @POST("/v2/subscriptions")
+  suspend fun create(@Body params: SubscriptionFlowParams): SubscriptionFlowResponse
 
   /**
    * Lists a [page] of subscriptions purchased by the authenticated user. Each [page] contains
@@ -92,7 +93,6 @@ interface SubscriptionApi {
    *  - 500: internal server error.
    *
    * @param onlyActive return only the active subscription (single instance).
-   * @param stripeReturnUrl optional redirect URL for exiting Stripe customer portal.
    * @param page 0-indexed page number.
    * @param currency optional ISO 4217 currency code for including converted prices with the
    * subscription's plan.
@@ -102,11 +102,10 @@ interface SubscriptionApi {
    * @throws java.io.IOException on network error.
    */
   @NeedsAccessToken
-  @GET("/v1/subscriptions")
+  @GET("/v2/subscriptions")
   suspend fun list(
     @Query("onlyActive") onlyActive: Boolean = false,
     @Query("page") page: Int = 0,
-    @Query("stripeReturnUrl") stripeReturnUrl: String? = null,
     @Query("currency") currency: String? = null,
   ): List<Subscription>
 
@@ -122,7 +121,6 @@ interface SubscriptionApi {
    *  - 500: internal server error.
    *
    * @param subscriptionId id of the subscription entity.
-   * @param stripeReturnUrl optional redirect URL for exiting Stripe customer portal.
    * @param currency optional ISO 4217 currency code for including converted prices with the
    * subscription's plan.
    * @return the requested [Subscription] entity.
@@ -130,10 +128,9 @@ interface SubscriptionApi {
    * @throws java.io.IOException on network error.
    */
   @NeedsAccessToken
-  @GET("/v1/subscriptions/{subscriptionId}")
+  @GET("/v2/subscriptions/{subscriptionId}")
   suspend fun get(
     @Path("subscriptionId") subscriptionId: Long,
-    @Query("stripeReturnUrl") stripeReturnUrl: String? = null,
     @Query("currency") currency: String? = null,
   ): Subscription
 
@@ -188,9 +185,25 @@ interface SubscriptionApi {
    *  - 500: internal server error.
    *
    * @param code must not be blank.
-   * @return the newly activated subscription on successful redemption of the gift card.
    */
   @NeedsAccessToken
-  @POST("/v1/subscriptions/giftCards/{code}/redeem")
-  suspend fun redeemGiftCard(@Path("code") code: String): Subscription
+  @POST("/v2/subscriptions/giftCards/{code}/redeem")
+  suspend fun redeemGiftCard(@Path("code") code: String)
+
+  /**
+   * Get the Stripe Customer Portal URL to allow customer to manage their subscription purchases.
+   *
+   * Responses:
+   *  - 200: a response containing the Stripe Customer Portal URL.
+   *  - 400: request is not valid.
+   *  - 401: access token is invalid.
+   *  - 404: customer isn't associated with Stripe.
+   *  - 500: internal server error.
+   *
+   * @param returnUrl a not blank redirect URL for exiting the Stripe customer portal.
+   * @return a response containing the Stripe Customer Portal URL.
+   */
+  @NeedsAccessToken
+  @GET("/v1/subscriptions/stripe/customerPortalUrl")
+  suspend fun stripeCustomerPortalUrl(@Query("returnUrl") returnUrl: String): StripeCustomerPortalUrlResponse
 }

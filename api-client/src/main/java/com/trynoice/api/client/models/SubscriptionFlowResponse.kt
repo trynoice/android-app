@@ -7,14 +7,14 @@ import java.io.Serializable
  * Result returned by the [create subscription][com.trynoice.api.client.apis.SubscriptionApi.create]
  * operation.
  *
- * @param subscription the newly created subscription.
+ * @param subscriptionId id of the the newly created subscription.
  * @param stripeCheckoutSessionUrl Checkout url for billing this subscription. Only present if
  * provider is 'stripe'.
  */
-data class SubscriptionFlowResult(
+data class SubscriptionFlowResponse(
 
   @Expose
-  val subscription: Subscription,
+  val subscriptionId: Long,
 
   @Expose
   val stripeCheckoutSessionUrl: String? = null

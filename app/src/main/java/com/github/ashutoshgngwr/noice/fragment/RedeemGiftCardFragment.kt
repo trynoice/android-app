@@ -18,7 +18,6 @@ import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.AlreadySubscribedError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.trynoice.api.client.models.Subscription
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -80,7 +79,7 @@ class RedeemGiftCardViewModel @Inject constructor(
   subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
-  internal val redeemResource = MutableStateFlow<Resource<Subscription>>(Resource.Loading())
+  internal val redeemResource = MutableStateFlow<Resource<Unit>>(Resource.Loading())
 
   internal val shouldShowPurchaseList: StateFlow<Boolean> = redeemResource.transform { r ->
     emit(r is Resource.Success)
