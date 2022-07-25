@@ -114,8 +114,7 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
   }
 
   override fun onClickManage(subscription: Subscription) {
-    // TODO: query Stripe Customer Portal URL from the API endpoint.
-    // subscription.stripeCustomerPortalUrl?.also { activity?.startCustomTab(it) }
+    mainNavController.navigate(R.id.launch_stripe_customer_portal)
   }
 
   override fun onClickUpgrade(subscription: Subscription) {

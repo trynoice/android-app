@@ -1,0 +1,97 @@
+package com.github.ashutoshgngwr.noice.fragment
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
+import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.databinding.LaunchStripeCustomerPortalFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.normalizeSpace
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.ext.startCustomTab
+import com.github.ashutoshgngwr.noice.repository.Resource
+import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
+import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@AndroidEntryPoint
+class LaunchStripeCustomerPortalFragment : BottomSheetDialogFragment() {
+
+  private lateinit var binding: LaunchStripeCustomerPortalFragmentBinding
+  private val viewModel: LaunchStripeCustomerPortalViewModel by viewModels()
+
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
+    binding = LaunchStripeCustomerPortalFragmentBinding.inflate(inflater, container, false)
+    return binding.root
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    binding.lifecycleOwner = viewLifecycleOwner
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.customerPortalUrl
+        .filterNotNull()
+        .collect { url ->
+          dismiss()
+          activity?.startCustomTab(url)
+        }
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.errorStrRes
+        .filterNotNull()
+        .map { getString(it) }
+        .map { getString(R.string.stripe_customer_portal_error, it).normalizeSpace() }
+        .collect {
+          dismiss()
+          showErrorSnackBar(it)
+        }
+    }
+  }
+}
+
+@HiltViewModel
+class LaunchStripeCustomerPortalViewModel @Inject constructor(
+  subscriptionRepository: SubscriptionRepository,
+) : ViewModel() {
+
+  private val customerPortalUrlResource = MutableSharedFlow<Resource<String>>()
+
+  internal val customerPortalUrl: StateFlow<String?> = customerPortalUrlResource.transform { r ->
+    r.data?.also { emit(it) }
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+  internal val errorStrRes: StateFlow<Int?> = customerPortalUrlResource.transform { r ->
+    emit(
+      when (r.error) {
+        null -> null
+        NetworkError -> R.string.network_error
+        else -> R.string.unknown_error
+      }
+    )
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+  init {
+    viewModelScope.launch {
+      subscriptionRepository.stripeCustomerPortalUrl()
+        .flowOn(Dispatchers.IO)
+        .collect(customerPortalUrlResource)
+    }
+  }
+}

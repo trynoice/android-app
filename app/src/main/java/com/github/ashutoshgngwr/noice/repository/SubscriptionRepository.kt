@@ -251,7 +251,7 @@ class SubscriptionRepository @Inject constructor(
         e is IOException -> NetworkError
         else -> e
       }
-    }
+    },
   )
 
   /**
@@ -280,7 +280,33 @@ class SubscriptionRepository @Inject constructor(
         e is IOException -> NetworkError
         else -> e
       }
-    }
+    },
+  )
+
+  /**
+   * Returns a [Flow] that emits the current state of stripe customer portal url operation as a
+   * [Resource].
+   *
+   * On failures, the flow emits [Resource.Failure] with:
+   * - [NetworkError] on network errors.
+   * - [HttpException] on api errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
+   */
+  fun stripeCustomerPortalUrl(): Flow<Resource<String>> = fetchNetworkBoundResource(
+    loadFromNetwork = {
+      apiClient.subscriptions()
+        .stripeCustomerPortalUrl(STRIPE_RETURN_URL)
+        .url
+    },
+    loadFromNetworkErrorTransform = { e ->
+      Log.i(LOG_TAG, "stripeCustomerPortalUrl:", e)
+      when (e) {
+        is IOException -> NetworkError
+        else -> e
+      }
+    },
   )
 
   companion object {
