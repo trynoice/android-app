@@ -144,9 +144,9 @@ class AccountViewModel @Inject constructor(
         .collect(profileResource)
 
       // ignore errors here.
-      subscriptionRepository.isSubscribed()
+      subscriptionRepository.getActive()
         .flowOn(Dispatchers.IO)
-        .transform { r -> r.data?.let { emit(it) } }
+        .transform { r -> emit(r.data != null) }
         .collect(isSubscribed)
     }
   }

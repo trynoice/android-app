@@ -34,6 +34,7 @@ import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseListFragme
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseLoadingItemBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
+import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.trynoice.api.client.models.Subscription
@@ -310,11 +311,11 @@ class SubscriptionPurchasePagingDataSource(
       null
     }
 
-    if (resource.error != null || resource.data == null) {
-      return LoadResult.Error(resource.error ?: throw NullPointerException("resource data is null"))
+    if (resource is Resource.Success || (resource.error is NetworkError && resource.data != null)) {
+      return LoadResult.Page(resource.data ?: emptyList(), prevKey = null, nextKey = nextPage)
     }
 
-    return LoadResult.Page(resource.data, prevKey = null, nextKey = nextPage)
+    return LoadResult.Error(resource.error ?: throw NullPointerException("resource data is null"))
   }
 }
 
