@@ -133,17 +133,18 @@ class SubscriptionRepository @Inject constructor(
    * @see Resource
    */
   fun getActive(): Flow<Resource<Subscription>> = fetchNetworkBoundResource(
+    loadFromCache = { cacheStore.getAs("${SUBSCRIPTION_KEY_PREFIX}/active") },
     loadFromNetwork = {
       apiClient.subscriptions()
         .list(onlyActive = true)
         .firstOrNull()
         ?: throw SubscriptionNotFoundError
     },
+    cacheNetworkResult = { cacheStore.put("${SUBSCRIPTION_KEY_PREFIX}/active", it) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "getActive:", e)
-      when {
-        e is HttpException && e.code() == 404 -> SubscriptionNotFoundError
-        e is IOException -> NetworkError
+      when (e) {
+        is IOException -> NetworkError
         else -> e
       }
     },
@@ -163,10 +164,12 @@ class SubscriptionRepository @Inject constructor(
     page: Int = 0,
     currencyCode: String? = null,
   ): Flow<Resource<List<Subscription>>> = fetchNetworkBoundResource(
+    loadFromCache = { cacheStore.getAs("${SUBSCRIPTION_KEY_PREFIX}/page/$page") },
     loadFromNetwork = {
       apiClient.subscriptions()
         .list(false, page = page, currency = currencyCode)
     },
+    cacheNetworkResult = { cacheStore.put("${SUBSCRIPTION_KEY_PREFIX}/page/$page", it) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "list:", e)
       when (e) {
@@ -210,22 +213,24 @@ class SubscriptionRepository @Inject constructor(
    * @see fetchNetworkBoundResource
    * @see Resource
    */
-  fun isSubscribed(): Flow<Resource<Boolean>> = flow {
+  fun pollSubscriptionStatus(): Flow<Resource<Boolean>> = flow {
+    var first = true
     while (true) {
       val r = getActive()
         .onEach { r ->
           emit(
             when {
-              r is Resource.Loading -> Resource.Loading(null)
+              first && r is Resource.Loading -> Resource.Loading(r.data != null)
               r is Resource.Success -> Resource.Success(r.data != null)
               r.error is SubscriptionNotFoundError -> Resource.Success(false)
               r.error is HttpException && r.error.code() == 401 -> Resource.Success(false) // unauthenticated.
-              else -> Resource.Failure(requireNotNull(r.error), r.data != null)
+              else -> Resource.Failure(r.error ?: IllegalStateException(), r.data != null)
             }
           )
         }
         .lastOrNull()
 
+      first = false
       val expiresAt = r?.data?.renewsAt?.time ?: Long.MAX_VALUE
       delay(min(60_000L, expiresAt - System.currentTimeMillis()))
     }

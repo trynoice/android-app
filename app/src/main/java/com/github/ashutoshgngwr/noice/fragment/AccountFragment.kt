@@ -36,6 +36,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -144,9 +145,9 @@ class AccountViewModel @Inject constructor(
         .collect(profileResource)
 
       // ignore errors here.
-      subscriptionRepository.isSubscribed()
+      subscriptionRepository.getActive()
         .flowOn(Dispatchers.IO)
-        .transform { r -> r.data?.let { emit(it) } }
+        .map { r -> r.data != null }
         .collect(isSubscribed)
     }
   }
