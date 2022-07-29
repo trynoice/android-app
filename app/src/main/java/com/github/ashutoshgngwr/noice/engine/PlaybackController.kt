@@ -1,14 +1,23 @@
 package com.github.ashutoshgngwr.noice.engine
 
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Build
+import android.os.IBinder
 import androidx.core.content.edit
 import androidx.media.AudioAttributesCompat
 import androidx.preference.PreferenceManager
+import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.max
@@ -124,6 +133,65 @@ class PlaybackController @Inject constructor(@ApplicationContext private val con
     val intent = Intent(context, PlaybackService::class.java)
     intentBuilder.invoke(intent)
     context.startService(intent)
+  }
+
+  /**
+   * Returns a [Flow] that emits the Player Manager's current [PlaybackState].
+   */
+  fun getPlayerManagerState(): Flow<PlaybackState> = callbackFlow {
+    var playerManagerStateCollectionJob: Job? = null
+    val connection = object : ServiceConnection {
+      override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        playerManagerStateCollectionJob = launch {
+          (service as? PlaybackServiceBinder)
+            ?.playerManagerState
+            ?.collect { trySend(it) }
+        }
+      }
+
+      override fun onServiceDisconnected(name: ComponentName?) {
+        playerManagerStateCollectionJob?.cancel()
+        playerManagerStateCollectionJob = null
+      }
+    }
+
+    Intent(context, PlaybackService::class.java)
+      .also { context.bindService(it, connection, Context.BIND_AUTO_CREATE) }
+
+    awaitClose {
+      context.unbindService(connection)
+      playerManagerStateCollectionJob?.cancel()
+    }
+  }
+
+  /**
+   * Returns a [Flow] that emits an array of [PlayerState]s of all players managed by the Player
+   * Manager.
+   */
+  fun getPlayerStates(): Flow<Array<PlayerState>> = callbackFlow {
+    var playerStatesCollectionJob: Job? = null
+    val connection = object : ServiceConnection {
+      override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        playerStatesCollectionJob = launch {
+          (service as? PlaybackServiceBinder)
+            ?.playerStates
+            ?.collect { trySend(it) }
+        }
+      }
+
+      override fun onServiceDisconnected(name: ComponentName?) {
+        playerStatesCollectionJob?.cancel()
+        playerStatesCollectionJob = null
+      }
+    }
+
+    Intent(context, PlaybackService::class.java)
+      .also { context.bindService(it, connection, Context.BIND_AUTO_CREATE) }
+
+    awaitClose {
+      context.unbindService(connection)
+      playerStatesCollectionJob?.cancel()
+    }
   }
 
   companion object {

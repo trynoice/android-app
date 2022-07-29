@@ -23,7 +23,6 @@ import com.github.ashutoshgngwr.noice.engine.PlaybackState
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
-import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -43,9 +42,6 @@ class HomeFragment : Fragment() {
   private val homeNavGraph: NavGraph by lazy {
     homeNavController.navInflater.inflate(R.navigation.home)
   }
-
-  @set:Inject
-  internal lateinit var soundRepository: SoundRepository
 
   @set:Inject
   internal lateinit var settingsRepository: SettingsRepository
@@ -81,7 +77,7 @@ class HomeFragment : Fragment() {
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
-      soundRepository.getPlayerManagerState()
+      playbackController.getPlayerManagerState()
         .collect { state ->
           playerManagerState = state
           activity?.invalidateOptionsMenu()

@@ -26,7 +26,6 @@ import com.github.ashutoshgngwr.noice.engine.PlaybackState
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
-import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.ncorti.slidetoact.SlideToActView
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -45,9 +44,6 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
 
   @set:Inject
   internal lateinit var presetRepository: PresetRepository
-
-  @set:Inject
-  internal lateinit var soundRepository: SoundRepository
 
   @set:Inject
   internal lateinit var analyticsProvider: AnalyticsProvider
@@ -72,7 +68,7 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     ringerStartTime = System.currentTimeMillis()
 
     lifecycleScope.launch {
-      soundRepository.getPlayerManagerState()
+      playbackController.getPlayerManagerState()
         .first { it == PlaybackState.PAUSED }
 
       playbackController.setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)

@@ -65,9 +65,6 @@ class LibraryFragment : Fragment(), LibraryListItemController {
   internal lateinit var presetRepository: PresetRepository
 
   @set:Inject
-  internal lateinit var soundRepository: SoundRepository
-
-  @set:Inject
   internal lateinit var settingsRepository: SettingsRepository
 
   @set:Inject
@@ -214,14 +211,16 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 @HiltViewModel
 class LibraryViewModel @Inject constructor(
   presetRepository: PresetRepository,
+  playbackController: PlaybackController,
   private val soundRepository: SoundRepository,
 ) : ViewModel() {
 
   private val soundsResource = MutableSharedFlow<Resource<List<Sound>>>()
-  private val playerManagerState: StateFlow<PlaybackState> = soundRepository.getPlayerManagerState()
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PlaybackState.STOPPED)
+  private val playerManagerState: StateFlow<PlaybackState> =
+    playbackController.getPlayerManagerState()
+      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PlaybackState.STOPPED)
 
-  internal val playerStates: StateFlow<Array<PlayerState>> = soundRepository.getPlayerStates()
+  internal val playerStates: StateFlow<Array<PlayerState>> = playbackController.getPlayerStates()
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyArray())
 
   val isLoading: StateFlow<Boolean> = soundsResource.transform { r ->

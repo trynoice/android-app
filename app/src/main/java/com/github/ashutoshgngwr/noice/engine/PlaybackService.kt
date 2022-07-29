@@ -6,7 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.AudioManager
+import android.os.Binder
 import android.os.Build
+import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
 import androidx.core.content.getSystemService
@@ -26,7 +28,9 @@ import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flowOn
@@ -60,6 +64,9 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
   private var isConnectedToInternet = false
   private var presets = emptyList<Preset>()
   private val isSubscribed = MutableSharedFlow<Boolean>()
+  private val playerManagerState = MutableStateFlow(PlaybackState.STOPPED)
+  private val playerStates = MutableStateFlow(emptyArray<PlayerState>())
+  private val serviceBinder = PlaybackServiceBinder(playerManagerState, playerStates)
 
   private val mainActivityPi: PendingIntent by lazy {
     var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
@@ -127,6 +134,11 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
         playerManager.pause(true)
       }
     }
+  }
+
+  override fun onBind(intent: Intent): IBinder {
+    super.onBind(intent)
+    return serviceBinder
   }
 
   override fun onCreate() {
@@ -293,7 +305,8 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
   ) {
     Log.i(LOG_TAG, "onPlaybackUpdate: managerState=$playerManagerState")
     val currentPreset = presets.find { it.hasMatchingPlayerStates(playerStates) }
-    soundRepository.updatePlaybackStates(playerManagerState, playerStates)
+    this.playerManagerState.value = playerManagerState
+    this.playerStates.value = playerStates
     mediaSessionManager.setPresetTitle(currentPreset?.name)
     mediaSessionManager.setPlaybackState(playerManagerState)
     if (playerManagerState == PlaybackState.STOPPED) {
@@ -361,3 +374,8 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     internal const val PRESET_SKIP_DIRECTION_PREV = PlayerManager.PRESET_SKIP_DIRECTION_PREV
   }
 }
+
+class PlaybackServiceBinder(
+  val playerManagerState: Flow<PlaybackState>,
+  val playerStates: Flow<Array<PlayerState>>,
+) : Binder()

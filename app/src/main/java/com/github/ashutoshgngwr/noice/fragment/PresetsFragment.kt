@@ -33,7 +33,6 @@ import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
-import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -233,14 +232,14 @@ class PresetsFragment : Fragment(), PresetListItemController {
 @HiltViewModel
 class PresetsViewModel @Inject constructor(
   presetRepository: PresetRepository,
-  soundRepository: SoundRepository,
+  playbackController: PlaybackController,
 ) : ViewModel() {
 
   internal val presets: StateFlow<List<Preset>> = presetRepository.listFlow()
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
   internal val activePresetId: StateFlow<String?> =
-    combine(presets, soundRepository.getPlayerStates()) { presets, playerStates ->
+    combine(presets, playbackController.getPlayerStates()) { presets, playerStates ->
       playerStates
         // exclude stopping and stopped players from active preset
         .filterNot { it.playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
