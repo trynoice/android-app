@@ -302,4 +302,5 @@
     <string name="use_material_you_colors">Use Material You colors</string>
     <string name="use_material_you_colors_summary">Inherit Material You color palette from the Android system</string>
     <string name="stripe_customer_portal_error">Oops! We couldn\'t open the billing portal. %1$s Please try again!</string>
+    <string name="download_sound">Download Sound</string>
 </resources>
