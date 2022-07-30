@@ -60,6 +60,7 @@ class SignInLinkHandlerFragment : BottomSheetDialogFragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    isCancelable = false
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
     binding.dismiss.setOnClickListener { requireActivity().finish() }
