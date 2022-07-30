@@ -159,7 +159,7 @@
     <string name="sign_in_token_error">Ссылка для входа кажется недействительной. Возможно, истек срок. Пожалуйста, попробуйте снова!</string>
     <string name="invalid_name">Введенное имя недействительно!</string>
     <string name="email">Эл. почта</string>
-    <string name="sign_up_email_sent">Мы отправили вам на почту \"%1$s\" ссылку для входа.</string>
+    <string name="sign_up_email_sent">Мы отправили вам эл. письмо на «%1$s» со ссылкой для входа.</string>
     <string name="account">Учетная запись</string>
     <string name="sign_in">Войти</string>
     <string name="invalid_email">Введенная эл. почта недействительна!</string>
@@ -179,4 +179,14 @@
     <string name="sign_up_message">Пожалуйста, введите имя и эл. почту для регистрации.</string>
     <string name="sign_in_link_tip">Пожалуйста, откройте полученную ссылку с помощью Noice, чтобы завершить процесс входа.</string>
     <string name="mailbox_app_not_found">Ой! Нам не удалось найти почтовое приложение на вашем устройстве!</string>
+    <string name="cont">Продолжить</string>
+    <string name="sign_out_confirmation">Подтвердить выход\?</string>
+    <string name="delete_account_confirmation">При удалении учетной записи вы немедленно потеряете доступ к своему профилю. Если у вас есть действующая подписка, она будет отменена. Обратите внимание, что полное удаление ваших данных с наших серверов может занять некоторое время.</string>
+    <string name="sign_in_email_sent">Мы отправили вам по эл. почте ссылку для входа на «%1$s», если этот адрес принадлежит зарегистрированной учетной записи.</string>
+    <string name="signing_out">Выход</string>
+    <string name="duplicate_email_error">Введенный адрес эл. почты связан с другой учетной записью.</string>
+    <string name="offline">Вы не в сети</string>
+    <string name="i_understand">Я понимаю.</string>
+    <string name="deleting_account">Удаление учетной записи</string>
+    <string name="account_details_update_success">Данные вашей учетной записи успешно обновлены.</string>
 </resources>
