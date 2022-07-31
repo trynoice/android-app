@@ -18,6 +18,7 @@ import com.trynoice.api.client.models.SubscriptionPlan
 import io.github.ashutoshgngwr.may.May
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.flow.onEach
@@ -26,6 +27,8 @@ import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.min
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 /**
  * Implements a data access layer for fetching and manipulating subscription related data.
@@ -217,10 +220,12 @@ class SubscriptionRepository @Inject constructor(
     var first = true
     while (true) {
       val r = getActive()
+        // consider only the first loading event and ignore latter loading events.
+        .filterNot { !first && it is Resource.Loading }
         .onEach { r ->
           emit(
             when {
-              first && r is Resource.Loading -> Resource.Loading(r.data != null)
+              r is Resource.Loading -> Resource.Loading(r.data != null)
               r is Resource.Success -> Resource.Success(r.data != null)
               r.error is SubscriptionNotFoundError -> Resource.Success(false)
               r.error is HttpException && r.error.code() == 401 -> Resource.Success(false) // unauthenticated.
@@ -231,8 +236,15 @@ class SubscriptionRepository @Inject constructor(
         .lastOrNull()
 
       first = false
-      val expiresAt = r?.data?.renewsAt?.time ?: Long.MAX_VALUE
-      delay(min(60_000L, expiresAt - System.currentTimeMillis()))
+      val expiresAt = r?.data?.renewsAt?.time
+      val delay = if (expiresAt == null || expiresAt < System.currentTimeMillis()) {
+        60_000L
+      } else {
+        min(60_000L, expiresAt - System.currentTimeMillis())
+      }.toDuration(DurationUnit.MILLISECONDS)
+
+      Log.d(LOG_TAG, "pollSubscriptionStatus: scheduling poll after $delay")
+      delay(delay)
     }
   }
 
