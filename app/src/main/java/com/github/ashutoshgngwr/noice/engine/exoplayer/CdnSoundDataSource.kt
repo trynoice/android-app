@@ -74,23 +74,23 @@ class CdnSoundDataSource private constructor(
 
     opened = true
     transferStarted(dataSpec)
-    try {
-      val skipped = requireNotNull(response.body())
+    val skipped = try {
+      requireNotNull(response.body())
         .byteStream()
         .skip(dataSpec.position)
-
-      if (skipped != dataSpec.position) {
-        closeQuietly()
-        throw HttpDataSourceException(
-          dataSpec,
-          PlaybackException.ERROR_CODE_IO_READ_POSITION_OUT_OF_RANGE,
-          HttpDataSourceException.TYPE_OPEN,
-        )
-      }
     } catch (e: IOException) {
       closeQuietly()
       throw HttpDataSourceException.createForIOException(
         e, dataSpec, HttpDataSourceException.TYPE_OPEN
+      )
+    }
+
+    if (skipped != dataSpec.position) {
+      closeQuietly()
+      throw HttpDataSourceException(
+        dataSpec,
+        PlaybackException.ERROR_CODE_IO_READ_POSITION_OUT_OF_RANGE,
+        HttpDataSourceException.TYPE_OPEN,
       )
     }
 
@@ -121,7 +121,7 @@ class CdnSoundDataSource private constructor(
   }
 
   override fun getUri(): Uri? {
-    return response?.raw()?.request?.url?.toString()?.let { Uri.parse(it) }
+    return if (opened) dataSpec.uri else null
   }
 
   override fun close() {
