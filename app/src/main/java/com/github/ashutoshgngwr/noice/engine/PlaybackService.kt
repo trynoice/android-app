@@ -16,7 +16,6 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.activity.MainActivity
-import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
@@ -24,7 +23,6 @@ import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
-import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -32,10 +30,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNot
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.lastOrNull
-import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.random.Random
@@ -61,7 +59,6 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
   @set:Inject
   internal lateinit var analyticsProvider: AnalyticsProvider
 
-  private var isConnectedToInternet = false
   private var presets = emptyList<Preset>()
   private val isSubscribed = MutableSharedFlow<Boolean>()
   private val playerManagerState = MutableStateFlow(PlaybackState.STOPPED)
@@ -156,17 +153,12 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
         }
     }
 
-    // watch internet connection state to correctly infer subscription state
-    lifecycleScope.launch {
-      getInternetConnectivityFlow().collect { isConnectedToInternet = it }
-    }
-
     // watch if user's subscription status changes during a playback session.
     lifecycleScope.launch {
       subscriptionRepository.pollSubscriptionStatus()
         .flowOn(Dispatchers.IO)
-        .filterNot { !isConnectedToInternet && it.error is NetworkError }
-        .transform { r -> r.data?.also { emit(it) } }
+        .map { it.data }
+        .filterNotNull()
         .collect(isSubscribed)
     }
 
