@@ -96,7 +96,7 @@ dependencies {
   def fragmentVersion = '1.4.1'
 
   def espressoVersion = '3.4.0'
-  def mockkVersion = '1.12.4'
+  def mockkVersion = '1.12.5'
 
   kapt "com.google.dagger:hilt-compiler:$deps.hiltVersion"
 
