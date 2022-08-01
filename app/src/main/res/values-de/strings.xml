@@ -154,7 +154,7 @@
     <string name="sign_in_link_tip">Bitte öffnen Sie den erhaltenen Link mit Noice, um den Anmeldevorgang abzuschließen.</string>
     <string name="account_locked_error">Ihre E-Mail ist vorübergehend für Anmeldeversuche bis %1$s gesperrt.</string>
     <string name="open_mailbox">Briefkasten öffnen</string>
-    <string name="sign_up_email_sent">Wir haben Ihnen einen Anmeldelink per E-Mail an \"%1$s\" geschickt.</string>
+    <string name="sign_up_email_sent">Wir haben Ihnen einen Anmeldelink per E-Mail an „%1$s“ geschickt.</string>
     <string name="sign_out">Abmelden</string>
     <string name="sign_in_token_error">Der Anmeldelink scheint ungültig zu sein. Möglicherweise ist er abgelaufen. Bitte versuchen Sie es erneut!</string>
     <string name="sign_up">Registrieren</string>
@@ -164,7 +164,7 @@
     <string name="unknown_error">Ein unbekannter Fehler ist aufgetreten.</string>
     <string name="cont">Fortfahren</string>
     <string name="welcome">Willkommen!</string>
-    <string name="sign_in_email_sent">Wir haben Ihnen per E-Mail einen Anmeldelink an \"%1$s\" geschickt, wenn diese Adresse zu einem registrierten Konto gehört.</string>
+    <string name="sign_in_email_sent">Wir haben Ihnen per E-Mail einen Anmeldelink an „%1$s“ geschickt, wenn diese Adresse zu einem registrierten Konto gehört.</string>
     <string name="email">E-Mail</string>
     <string name="delete_account">Konto löschen</string>
     <string name="network_error">Das Netzwerk ist nicht erreichbar.</string>
@@ -184,5 +184,5 @@
     <string name="mailbox_app_not_found">Oh, oh! Wir konnten keine Mailbox-App auf Ihrem Gerät finden!</string>
     <string name="invalid_email">Die eingegebene E-Mail ist ungültig!</string>
     <string name="view_subscription_plans">Pläne ansehen</string>
-    <string name="app"></string>
+    <string name="app"/>
 </resources>
