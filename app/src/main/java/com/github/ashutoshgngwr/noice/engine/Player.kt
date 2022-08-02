@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.engine
 import android.util.Log
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.model.Sound
+import com.github.ashutoshgngwr.noice.model.SoundSegment
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -53,15 +54,15 @@ abstract class Player protected constructor(
    * An internal coroutine scope created from the supplied external scope to perform long running
    * background tasks.
    */
-  protected val defaultScope = externalScope + SupervisorJob() + CoroutineName("Player($soundId)")
+  protected val defaultScope = externalScope + SupervisorJob() + CoroutineName("Player#$soundId")
 
   protected var fadeInDuration = Duration.ZERO; private set
   protected var fadeOutDuration = Duration.ZERO; private set
   protected var sound: Sound? = null; private set
   private var isPremiumSegmentsEnabled = false
   private var volume = DEFAULT_VOLUME
-  private var segments = emptyList<Segment>()
-  private var currentSegment: Segment? = null
+  private var segments = emptyList<SoundSegment>()
+  private var currentSegment: SoundSegment? = null
   private var playbackState = PlaybackState.IDLE
   private var retryDelayMillis = MIN_RETRY_DELAY_MILLIS
   private var isMetadataLoaded = false
@@ -233,22 +234,14 @@ abstract class Player protected constructor(
         }
         sound?.isContiguous == true -> {
           val from = requireNotNull(currentSegment)
-          val to = segments.random()
-          val bridgeName = "${from.name}_${to.name}"
-          Segment(
-            name = bridgeName,
-            path = "${sound?.segmentsBasePath}/${bridgeName}/${audioBitrate}.mp3",
-            isBridgeSegment = true,
-            from = from.name,
-            to = to.name,
-          )
+          segments.filter { it.isBridgeSegment && it.name.startsWith(from.name) }.random()
         }
         else -> segments.random()
       }
 
       currentSegment = nextSegment
       Log.d(LOG_TAG, "requestNextSegment: queuing $nextSegment")
-      onSegmentAvailable(nextSegment)
+      onSegmentAvailable("noice://cdn/${nextSegment.path(audioBitrate)}")
     }
   }
 
@@ -256,9 +249,11 @@ abstract class Player protected constructor(
    * Invoked whenever the next segment is available following a [requestNextSegment] invocation from
    * a sub-class.
    *
-   * @param segment the sound segment that should be played next.
+   * @param uri uri of the sound segment that should be played next. The URI format is
+   * `noice://cdn/{segmentPath}`, where `segmentPath` is the absolute path of a media file on the
+   * CDN.
    */
-  protected abstract fun onSegmentAvailable(segment: Segment)
+  protected abstract fun onSegmentAvailable(uri: String)
 
   private fun loadSoundMetadata() {
     setPlaybackState(PlaybackState.BUFFERING)
@@ -293,7 +288,6 @@ abstract class Player protected constructor(
   private fun recreateSegmentList() {
     segments = sound?.segments
       ?.filter { isPremiumSegmentsEnabled || it.isFree }
-      ?.map { Segment(it.name, "${sound?.segmentsBasePath}/${it.name}/${audioBitrate}.mp3", false) }
       ?: emptyList()
   }
 
@@ -315,23 +309,6 @@ abstract class Player protected constructor(
   fun interface PlaybackListener {
     fun onPlaybackUpdated(state: PlaybackState, volume: Int)
   }
-
-  /**
-   * Internal representation of a [sound segment][com.trynoice.api.client.models.SoundSegment].
-   *
-   * @param name name of the segment.
-   * @param path full path of this segment relative to the `library-manifest.json`.
-   * @param isBridgeSegment whether this is bridge segment.
-   * @param from if it [isBridgeSegment], then name of the segment that this segment bridges from.
-   * @param to if it [isBridgeSegment], then name of the segment that this segment bridges to.
-   */
-  protected data class Segment(
-    val name: String,
-    val path: String,
-    val isBridgeSegment: Boolean,
-    val from: String? = null,
-    val to: String? = null,
-  )
 
   /**
    * A factory for [Player] instances.

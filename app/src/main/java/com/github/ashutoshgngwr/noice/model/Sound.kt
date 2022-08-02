@@ -1,7 +1,6 @@
 package com.github.ashutoshgngwr.noice.model
 
 import com.trynoice.api.client.models.SoundGroup
-import com.trynoice.api.client.models.SoundSegment
 import com.trynoice.api.client.models.SoundSource
 import com.trynoice.api.client.models.SoundTag
 import java.io.Serializable
@@ -15,7 +14,6 @@ import java.io.Serializable
  * @param iconSvg a user-presentable icon of the sound as a SVG string.
  * @param maxSilence The upper limit (in seconds) for the amount of silence to add in-between
  * segments for non-contiguous sounds.
- * @param segmentsBasePath absolute base path for the segments of this sound on the CDN server.
  * @param segments A list of segments for this sound.
  * @param tags A list of tags that associate with this sound.
  * @param sources A list of details attributing original clip sources, author and license.
@@ -26,7 +24,6 @@ data class Sound(
   val name: String,
   val iconSvg: String,
   val maxSilence: Int,
-  val segmentsBasePath: String,
   val segments: List<SoundSegment>,
   val tags: List<SoundTag>,
   val sources: List<SoundSource>,

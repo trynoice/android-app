@@ -203,8 +203,8 @@ class LocalPlayer(
     }
   }
 
-  override fun onSegmentAvailable(segment: Segment) {
-    exoPlayer.addMediaItem(MediaItem.fromUri("noice://cdn/${segment.path}"))
+  override fun onSegmentAvailable(uri: String) {
+    exoPlayer.addMediaItem(MediaItem.fromUri(uri))
     exoPlayer.prepare()
   }
 
