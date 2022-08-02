@@ -129,8 +129,8 @@
     <string name="sound_fade_in_duration_summary">Durata del tempo per i suoni in dissolvenza (in secondi)</string>
     <string name="sound_fade_out_duration">Durata sfumatura suono</string>
     <string name="audio_quality_ultra">Ultra (320 kbps)</string>
-    <string name="invalid_email">L\'email inserita non è valida!</string>
-    <string name="account_locked_error">La tua email è temporaneamente bloccata dall\'effettuare tentativi di accesso fino a %1$s.</string>
+    <string name="invalid_email">L\'e-mail inserita non è valida!</string>
+    <string name="account_locked_error">La tua e-mail è temporaneamente bloccata dall\'effettuare tentativi di accesso fino a %1$s.</string>
     <string name="retry">Riprova</string>
     <string name="open_mailbox">Apri la casella di posta</string>
     <string name="cont">Continua</string>
@@ -165,11 +165,11 @@
     <string name="unknown_error">Si è verificato un errore sconosciuto.</string>
     <string name="welcome_back">Bentornato!</string>
     <string name="welcome">Benvenuto!</string>
-    <string name="sign_in_message">Inserisci la tua email per accedere per favore.</string>
-    <string name="sign_up_message">Inserisci il tuo nome e la tua email per registrarti per favore.</string>
+    <string name="sign_in_message">Inserisci la tua e-mail per accedere per favore.</string>
+    <string name="sign_up_message">Inserisci il tuo nome e la tua e-mail per registrarti per favore.</string>
     <string name="email">Email</string>
-    <string name="sign_up_email_sent">Ti abbiamo inviato un link di accesso all\'email \"%1$s\".</string>
-    <string name="sign_in_email_sent">Ti abbiamo inviato un link di accesso all\'email \"%1$s\" se questo indirizzo appartiene a un account registrato.</string>
+    <string name="sign_up_email_sent">Ti abbiamo inviato un link di accesso all\'e-mail «%1$s».</string>
+    <string name="sign_in_email_sent">Ti abbiamo inviato un link di accesso all\'e-mail «%1$s» se questo indirizzo appartiene a un account registrato.</string>
     <string name="sign_in_link_tip">Apri il link ricevuto utilizzando Noice per completare il processo di accesso per favore.</string>
     <string name="mailbox_app_not_found">Uh-oh! Non abbiamo trovato un\'app con la casella di posta sul tuo dispositivo!</string>
     <string name="signing_in">Accedendo</string>
@@ -179,7 +179,7 @@
     <string name="signing_out">Disconnettendo</string>
     <string name="i_understand">Ho capito.</string>
     <string name="deleting_account">Cancellando l\'account</string>
-    <string name="duplicate_email_error">L\'email inserita è associata a un altro account.</string>
+    <string name="duplicate_email_error">L\'e-mail inserita è associata a un altro account.</string>
     <string name="account_details_update_success">I dettagli del tuo account sono stati aggiornati con successo.</string>
     <string name="total_price">%1$s totale</string>
     <string name="monthly_price">%1$s per mese</string>
@@ -229,7 +229,7 @@
     <string name="profile_load_error">Oops! Non siamo riusciti a recuperare i dettagli del tuo account. %1$s</string>
     <string name="delete_account_error">Oh no! Non siamo riusiciti a cancellare il tuo account. %1$s Riprova!</string>
     <string name="subscription_initialisation_error">Oops! Non siamo riusiciti ad avviare il ciclo di fatturazione. %1$s Riprova!</string>
-    <string name="sign_in_email_error">Uh-oh! Non siamo riusciti a inviarti il link per accedere via email. %1$s Riprova più tardi!</string>
+    <string name="sign_in_email_error">Uh-oh! Non siamo riusciti a inviarti il link per accedere via e-mail. %1$s Riprova più tardi!</string>
     <string name="sign_out_error">Oh no! Non siamo riusciti a disconnetterti. %1$s Riprova!</string>
     <string name="subscription_plans_load_error">Oops! Non siamo riusciti a recuperare i piani di abbonamento. %1$s</string>
     <string name="subscription_purchases_load_error">Uh-oh! Non siamo riusciti a recuperare la tua cronologia degli acquisti degli abbonamenti. %1$s</string>
@@ -266,7 +266,9 @@
     <string name="write_review_play_store">Scrivi una recensione su Google Play</string>
     <string name="third_party_attributions">Attribuzioni di terzi</string>
     <string name="oss_licenses">Licenze software open-source</string>
-    <string name="connect_through_email">Contattaci tramite email</string>
+    <string name="connect_through_email">Contattaci tramite e-mail</string>
     <string name="reach_us">Contattaci</string>
     <string name="showing_localised_prices">Prezzi convertiti da [INR](https://en.wikipedia.org/wiki/Indian_rupee). I prezzi effettivi possono variare leggermente.</string>
+    <string name="stripe_customer_portal_error">Ops! Non è stato possibile aprire il portale di fatturazione. %1$s Si prega di riprovare!</string>
+    <string name="use_material_you_colors">Usa i colori Material You</string>
 </resources>
