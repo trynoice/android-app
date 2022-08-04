@@ -93,12 +93,15 @@ android {
 }
 
 dependencies {
+  def androidXHiltVersion = '1.0.0'
+  def exoPlayerVersion = '2.17.1'
   def fragmentVersion = '1.4.1'
 
   def espressoVersion = '3.4.0'
   def mockkVersion = '1.12.4'
 
   kapt "com.google.dagger:hilt-compiler:$deps.hiltVersion"
+  kapt "androidx.hilt:hilt-compiler:$androidXHiltVersion"
 
   implementation 'androidx.activity:activity-ktx:1.4.0'
   implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -108,6 +111,7 @@ dependencies {
   implementation 'androidx.core:core-ktx:1.7.0'
   implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
   implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
+  implementation "androidx.hilt:hilt-work:$androidXHiltVersion"
   implementation "androidx.lifecycle:lifecycle-common-java8:$deps.lifecycleVersion"
   implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$deps.lifecycleVersion"
   implementation 'androidx.media:media:1.6.0'
@@ -118,10 +122,12 @@ dependencies {
   implementation 'androidx.preference:preference-ktx:1.2.0'
   implementation 'androidx.recyclerview:recyclerview:1.2.1'
   implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+  implementation 'androidx.work:work-runtime-ktx:2.7.1'
   implementation 'com.airbnb.android:lottie:5.2.0'
   implementation 'com.caverock:androidsvg-aar:1.4'
   implementation 'com.github.AppIntro:AppIntro:6.2.0'
-  implementation 'com.google.android.exoplayer:exoplayer-core:2.17.1'
+  implementation "com.google.android.exoplayer:exoplayer-core:$exoPlayerVersion"
+  implementation "com.google.android.exoplayer:extension-workmanager:$exoPlayerVersion"
   implementation 'com.google.android.flexbox:flexbox:3.0.0'
   implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
   implementation 'com.google.android.material:material:1.6.1'

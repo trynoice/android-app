@@ -25,6 +25,7 @@ import com.github.ashutoshgngwr.noice.databinding.LibrarySoundGroupListItemBindi
 import com.github.ashutoshgngwr.noice.databinding.LibrarySoundListItemBinding
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.engine.PlaybackState
+import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadsRefreshWorker
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
@@ -403,6 +404,11 @@ class SoundViewHolder(
 
   init {
     binding.info.setOnClickListener { controller.onSoundInfoClicked(sound) }
+    binding.download.setOnClickListener {
+      // TODO:
+      SoundDownloadsRefreshWorker.addSoundDownload(binding.download.context, sound.id)
+    }
+
     binding.play.setOnClickListener {
       if (playerState.isStopped) {
         controller.onSoundPlayClicked(sound)

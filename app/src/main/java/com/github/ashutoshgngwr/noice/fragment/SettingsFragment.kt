@@ -15,6 +15,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadsRefreshWorker
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
@@ -87,6 +88,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             onItemSelected = { position ->
               settingsRepository.setAudioQuality(values[position])
               summary = entries[position]
+              SoundDownloadsRefreshWorker.refreshDownloads(requireContext())
             }
           )
           negativeButton(R.string.cancel)

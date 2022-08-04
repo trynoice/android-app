@@ -31,7 +31,8 @@ data class SoundSegment(
   }
 
   /**
-   * Returns the absolute path of the segment on the CDN server for the given [bitrate].
+   * Returns the full path of the segment on the CDN server for the given [bitrate] (without the
+   * leading '`/`').
    */
   fun path(bitrate: String): String {
     return "${basePath}/${bitrate}.mp3"

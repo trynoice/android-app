@@ -3,7 +3,17 @@ package com.github.ashutoshgngwr.noice
 import android.app.Application
 import android.content.Context
 import android.os.Build
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import com.google.android.exoplayer2.database.DatabaseProvider
+import com.google.android.exoplayer2.database.StandaloneDatabaseProvider
+import com.google.android.exoplayer2.offline.DefaultDownloadIndex
+import com.google.android.exoplayer2.offline.DownloadIndex
+import com.google.android.exoplayer2.offline.WritableDownloadIndex
+import com.google.android.exoplayer2.upstream.cache.Cache
+import com.google.android.exoplayer2.upstream.cache.NoOpCacheEvictor
+import com.google.android.exoplayer2.upstream.cache.SimpleCache
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.DynamicColorsOptions
 import com.google.gson.Gson
@@ -21,10 +31,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @HiltAndroidApp
-class NoiceApplication : Application() {
+class NoiceApplication : Application(), Configuration.Provider {
 
   @set:Inject
   internal lateinit var settingsRepository: SettingsRepository
+
+  @set:Inject
+  internal lateinit var workerFactory: HiltWorkerFactory
 
   override fun onCreate() {
     super.onCreate()
@@ -32,6 +45,12 @@ class NoiceApplication : Application() {
       .setPrecondition { _, _ -> settingsRepository.shouldUseMaterialYouColors() }
       .build()
       .also { DynamicColors.applyToActivitiesIfAvailable(this, it) }
+  }
+
+  override fun getWorkManagerConfiguration(): Configuration {
+    return Configuration.Builder()
+      .setWorkerFactory(workerFactory)
+      .build()
   }
 
   @Module
@@ -71,6 +90,34 @@ class NoiceApplication : Application() {
         ?.forEach { f -> f.deleteRecursively() }
 
       return May.openOrCreateDatastore(cacheStoreFile)
+    }
+  }
+
+  @Module
+  @InstallIn(SingletonComponent::class)
+  object ExoPlayerOfflineModule {
+    @Provides
+    @Singleton
+    fun databaseProvider(@ApplicationContext context: Context): DatabaseProvider {
+      return StandaloneDatabaseProvider(context)
+    }
+
+    @Provides
+    @Singleton
+    fun cache(@ApplicationContext context: Context, databaseProvider: DatabaseProvider): Cache {
+      return SimpleCache(File(context.filesDir, "sounds"), NoOpCacheEvictor(), databaseProvider)
+    }
+
+    @Provides
+    @Singleton
+    fun writableDownloadIndex(databaseProvider: DatabaseProvider): WritableDownloadIndex {
+      return DefaultDownloadIndex(databaseProvider)
+    }
+
+    @Provides
+    @Singleton
+    fun readableDownloadIndex(downloadIndex: WritableDownloadIndex): DownloadIndex {
+      return downloadIndex
     }
   }
 }
