@@ -241,7 +241,7 @@ abstract class Player protected constructor(
 
       currentSegment = nextSegment
       Log.d(LOG_TAG, "requestNextSegment: queuing $nextSegment")
-      onSegmentAvailable("noice://cdn/${nextSegment.path(audioBitrate)}")
+      onSegmentAvailable("noice://cdn/library/${nextSegment.path(audioBitrate)}")
     }
   }
 

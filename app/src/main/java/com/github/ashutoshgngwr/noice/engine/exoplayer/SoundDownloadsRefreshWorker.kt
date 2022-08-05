@@ -150,7 +150,7 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
   }
 
   private suspend fun getResourceETag(path: String): String {
-    val response = withContext(Dispatchers.IO) { apiClient.cdn().resourceMetadata(path) }
+    val response = withContext(Dispatchers.IO) { apiClient.cdn().resourceMetadata("library/$path") }
     if (!response.isSuccessful) {
       throw HttpException(response)
     }
@@ -159,7 +159,7 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
   }
 
   private fun addExoPlayerDownload(segmentPath: String, segmentETag: ByteArray) {
-    DownloadRequest.Builder(segmentPath, "noice://cdn/${segmentPath}".toUri())
+    DownloadRequest.Builder(segmentPath, "noice://cdn/library/${segmentPath}".toUri())
       .setData(segmentETag)
       .build()
       .also { DownloadService.sendAddDownload(context, SoundDownloadService::class.java, it, true) }

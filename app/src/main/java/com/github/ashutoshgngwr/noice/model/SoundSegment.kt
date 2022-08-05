@@ -11,8 +11,8 @@ import java.io.Serializable
  * @param isBridgeSegment whether this is bridge segment.
  * @param from if it [isBridgeSegment], then name of the segment that this segment bridges from.
  * @param to if it [isBridgeSegment], then name of the segment that this segment bridges to.
- * @param basePath absolute path prefix of this segment on the CDN server where individual bitrate
- * files are located.
+ * @param basePath path prefix of this segment relative to `library-manifest.json` on the CDN server
+ * where individual bitrate files are located.
  */
 data class SoundSegment(
   val name: String,
@@ -31,8 +31,8 @@ data class SoundSegment(
   }
 
   /**
-   * Returns the full path of the segment on the CDN server for the given [bitrate] (without the
-   * leading '`/`').
+   * Returns the full path of the segment relative to the `library-manifest.json` on the CDN server
+   * for the given [bitrate].
    */
   fun path(bitrate: String): String {
     return "${basePath}/${bitrate}.mp3"

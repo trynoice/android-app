@@ -40,7 +40,7 @@ class SoundRepository @Inject constructor(
       val manifest = apiClient.cdn().libraryManifest()
       val groups = manifest.groups.associateBy { it.id }
       manifest.sounds.map { apiSound ->
-        val segmentsBasePath = "library/${manifest.segmentsBasePath}/${apiSound.id}"
+        val segmentsBasePath = "${manifest.segmentsBasePath}/${apiSound.id}"
         val segments = mutableListOf<SoundSegment>()
         for (apiSegment in apiSound.segments) {
           segments.add(
