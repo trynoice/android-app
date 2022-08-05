@@ -194,11 +194,8 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
      * Adds an expedited request to download the sound with the given [soundId].
      */
     fun addSoundDownload(context: Context, soundId: String) {
-      val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-      val soundIds = prefs.getMutableStringSet(PREF_DOWNLOADED_SOUND_IDS)
-      val isAdded = soundIds.add(soundId)
-      prefs.edit { putStringSet(PREF_DOWNLOADED_SOUND_IDS, soundIds) }
-
+      var isAdded = false
+      editDownloadedSoundIds(context) { isAdded = it.add(soundId) }
       if (isAdded) {
         refreshDownloads(context, true)
       }
@@ -208,19 +205,18 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
      * Adds an expedited request to remove the downloads for the sound with the given [soundId].
      */
     fun removeSoundDownload(context: Context, soundId: String) {
-      val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-      val soundIds = prefs.getMutableStringSet(PREF_DOWNLOADED_SOUND_IDS)
-      val isRemoved = soundIds.remove(soundId)
-      prefs.edit { putStringSet(PREF_DOWNLOADED_SOUND_IDS, soundIds) }
-
+      var isRemoved = false
+      editDownloadedSoundIds(context) { isRemoved = it.remove(soundId) }
       if (isRemoved) {
         refreshDownloads(context, true)
       }
     }
 
     /**
-     * Adds an expedited request to check if all previously requested sounds have been downloaded
-     * and are in sync with the CDN server.
+     * Adds a request to check if all previously requested sounds have been downloaded and are in
+     * sync with the CDN server.
+     *
+     * @param expedited whether to make the work manager request expedited.
      */
     fun refreshDownloads(context: Context, expedited: Boolean = false) {
       OneTimeWorkRequestBuilder<SoundDownloadsRefreshWorker>()
@@ -237,6 +233,31 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
           WorkManager.getInstance(context)
             .enqueueUniqueWork("SoundDownloadsRefreshWork", ExistingWorkPolicy.REPLACE, it)
         }
+    }
+
+    /**
+     * Adds an expedited request to remove all sound downloads.
+     */
+    fun removeAllSoundDownloads(context: Context) {
+      var removedCount = 0
+      editDownloadedSoundIds(context) { soundIds ->
+        removedCount = soundIds.size
+        soundIds.clear()
+      }
+
+      if (removedCount > 0) {
+        refreshDownloads(context, true)
+      }
+    }
+
+    private inline fun editDownloadedSoundIds(
+      context: Context,
+      block: (MutableSet<String>) -> Unit,
+    ) {
+      val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+      val soundIds = prefs.getMutableStringSet(PREF_DOWNLOADED_SOUND_IDS)
+      block.invoke(soundIds)
+      prefs.edit { putStringSet(PREF_DOWNLOADED_SOUND_IDS, soundIds) }
     }
   }
 }

@@ -99,9 +99,12 @@
 
   </PreferenceCategory>
 
-  <PreferenceCategory
-    android:key="@string/others_key"
-    android:title="@string/others">
+  <PreferenceCategory android:title="@string/others">
+
+    <Preference
+      android:icon="@drawable/ic_settings_delete_sweep"
+      android:key="@string/remove_all_sound_downloads_key"
+      android:title="@string/remove_all_sound_downloads" />
 
     <SwitchPreferenceCompat
       android:defaultValue="false"

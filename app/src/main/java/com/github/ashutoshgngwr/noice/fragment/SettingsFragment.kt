@@ -10,7 +10,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.os.bundleOf
 import androidx.preference.Preference
-import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.github.ashutoshgngwr.noice.BuildConfig
@@ -115,7 +114,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         title(R.string.remove_all_app_shortcuts)
         message(R.string.remove_all_app_shortcuts_confirmation)
         negativeButton(R.string.cancel)
-        positiveButton(R.string.okay) {
+        positiveButton(R.string.delete) {
           ShortcutManagerCompat.removeAllDynamicShortcuts(requireContext())
           showSuccessSnackBar(R.string.all_app_shortcuts_removed)
           analyticsProvider.logEvent("preset_shortcut_remove_all", bundleOf())
@@ -152,10 +151,22 @@ class SettingsFragment : PreferenceFragmentCompat() {
       setOnPreferenceChangeListener { _, _ -> requireActivity().recreate(); true }
     }
 
-    findPreference<PreferenceCategory>(R.string.others_key)
-      .isVisible = !BuildConfig.IS_FREE_BUILD
+    findPreference<Preference>(R.string.remove_all_sound_downloads_key).setOnPreferenceClickListener {
+      DialogFragment.show(childFragmentManager) {
+        title(R.string.remove_all_sound_downloads)
+        message(R.string.remove_all_sound_downloads_confirmation)
+        negativeButton(R.string.cancel)
+        positiveButton(R.string.delete) {
+          SoundDownloadsRefreshWorker.removeAllSoundDownloads(requireContext())
+          showSuccessSnackBar(R.string.sound_downloads_scheduled_for_removal)
+        }
+      }
+
+      true
+    }
 
     findPreference<SwitchPreferenceCompat>(R.string.should_share_usage_data_key)
+      .also { it.isVisible = !BuildConfig.IS_FREE_BUILD }
       .setOnPreferenceChangeListener { _, checked ->
         if (checked is Boolean) {
           settingsRepository.setShouldShareUsageData(checked)
