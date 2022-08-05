@@ -6,7 +6,6 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.HEAD
 import retrofit2.http.Streaming
 import retrofit2.http.Url
 
@@ -30,6 +29,20 @@ interface CdnApi {
   suspend fun libraryManifest(): LibraryManifest
 
   /**
+   * Retrieves the MD5 checksums for all files present in the library. The checksum for any file
+   * library
+   *
+   * Responses:
+   * - 200: library manifest download successful.
+   * - 500: internal server error.
+   *
+   * @throws retrofit2.HttpException on HTTP errors.
+   * @throws java.io.IOException on network errors.
+   */
+  @GET("/library/md5sums.json")
+  suspend fun md5sums(): Map<String, String>
+
+  /**
    * Retrieves a protected or public resource from the CDN and returns it as a [Streaming]
    * [Response].
    *
@@ -46,21 +59,4 @@ interface CdnApi {
   @Streaming
   @GET
   fun resource(@Url resourcePath: String): Call<ResponseBody>
-
-  /**
-   * Retrieves the metadata of a protected or public resource from the CDN and returns it as a
-   * [Response].
-   *
-   * Responses:
-   * - 200: if the resource is found.
-   * - 401: if the resource is found, but the user needs to be authenticated.
-   * - 403: if the resource is found, but the user doesn't have access to it.
-   * - 404: if the resource isn't found.
-   * - 500: on internal server errors.
-   *
-   * @param resourcePath absolute path of the resource on the CDN server.
-   */
-  @NeedsAccessToken
-  @HEAD
-  suspend fun resourceMetadata(@Url resourcePath: String): Response<Void>
 }

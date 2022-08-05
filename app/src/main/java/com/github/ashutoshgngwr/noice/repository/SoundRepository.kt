@@ -139,6 +139,27 @@ class SoundRepository @Inject constructor(
     },
   )
 
+  /**
+   * Returns a [Flow] that emits a map of library paths (relative to `library-manifest.json`) to
+   * their md5sums as a [Resource].
+   *
+   * On failures, the flow emits [Resource.Failure] with:
+   * - [NetworkError] on network errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
+   */
+  fun getMd5sums(): Flow<Resource<Map<String, String>>> = fetchNetworkBoundResource(
+    loadFromNetwork = { apiClient.cdn().md5sums() },
+    loadFromNetworkErrorTransform = { e ->
+      Log.i(LOG_TAG, "getMd5sums:", e)
+      when (e) {
+        is IOException -> NetworkError
+        else -> e
+      }
+    },
+  )
+
   companion object {
     private const val LOG_TAG = "SoundRepository"
     private const val SOUND_KEY_PREFIX = "sound"

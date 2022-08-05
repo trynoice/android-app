@@ -28,13 +28,11 @@ import com.google.android.exoplayer2.database.DatabaseIOException
 import com.google.android.exoplayer2.offline.DownloadIndex
 import com.google.android.exoplayer2.offline.DownloadRequest
 import com.google.android.exoplayer2.offline.DownloadService
-import com.trynoice.api.client.NoiceApiClient
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
 import java.time.Duration
 
 /**
@@ -56,7 +54,6 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
   private val subscriptionRepository: SubscriptionRepository,
   private val soundRepository: SoundRepository,
   private val settingsRepository: SettingsRepository,
-  private val apiClient: NoiceApiClient,
   private val downloadIndex: DownloadIndex,
 ) : CoroutineWorker(context, params) {
 
@@ -85,14 +82,11 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
       }
     }
 
-    val segmentETags = mutableMapOf<String, ByteArray>()
-    segmentPaths.forEach { path ->
-      try {
-        segmentETags[path] = withContext(Dispatchers.IO) { getResourceETag(path).toByteArray() }
-      } catch (e: Throwable) {
-        Log.e(LOG_TAG, "doWork: failed to get ETag for CDN resource $path", e)
-        return Result.retry()
-      }
+    val md5sums = try {
+      withContext(Dispatchers.IO) { getMd5sums() }
+    } catch (e: Throwable) {
+      Log.e(LOG_TAG, "doWork: failed to get md5sums for CDN resource", e)
+      return Result.retry()
     }
 
     try {
@@ -100,7 +94,7 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
       while (downloadCursor.moveToNext()) {
         // check if this download is still needed and is up to date with the CDN server.
         val request = downloadCursor.download.request
-        if (request.id in segmentPaths && request.data.contentEquals(segmentETags[request.id])) {
+        if (request.id in segmentPaths && request.data.contentEquals(md5sums[request.id])) {
           Log.d(LOG_TAG, "doWork: ${request.id} is unchanged")
           segmentPaths.remove(request.id)
         } else {
@@ -118,7 +112,7 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
     // schedule remaining downloads
     segmentPaths.forEach { path ->
       Log.d(LOG_TAG, "doWork: adding exoplayer download request for $path")
-      addExoPlayerDownload(path, segmentETags.getValue(path))
+      addExoPlayerDownload(path, md5sums.getValue(path))
     }
 
     return Result.success()
@@ -149,18 +143,18 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
     return resource.data
   }
 
-  private suspend fun getResourceETag(path: String): String {
-    val response = withContext(Dispatchers.IO) { apiClient.cdn().resourceMetadata("library/$path") }
-    if (!response.isSuccessful) {
-      throw HttpException(response)
+  private suspend fun getMd5sums(): Map<String, ByteArray> {
+    val resource = soundRepository.getMd5sums().lastOrNull()
+    if (resource !is Resource.Success || resource.data == null) {
+      throw resource?.error ?: Exception("Resource is not Success and error was null")
     }
 
-    return requireNotNull(response.headers()["ETag"]) { "HEAD request for a CDN resource metadata had null ETag" }
+    return resource.data.mapValues { it.value.toByteArray() }
   }
 
-  private fun addExoPlayerDownload(segmentPath: String, segmentETag: ByteArray) {
+  private fun addExoPlayerDownload(segmentPath: String, md5sum: ByteArray) {
     DownloadRequest.Builder(segmentPath, "noice://cdn/library/${segmentPath}".toUri())
-      .setData(segmentETag)
+      .setData(md5sum)
       .build()
       .also { DownloadService.sendAddDownload(context, SoundDownloadService::class.java, it, true) }
   }
