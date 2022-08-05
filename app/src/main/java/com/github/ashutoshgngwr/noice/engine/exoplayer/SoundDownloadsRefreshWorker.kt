@@ -165,7 +165,7 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
 
   companion object {
     private const val LOG_TAG = "SoundDownloadsRefreshWo"
-    private const val PREF_DOWNLOADED_SOUND_IDS = "downloadedSoundIds"
+    private const val PREF_DOWNLOADED_SOUND_IDS = "downloaded_sound_ids"
 
     /**
      * Adds an expedited request to download the sound with the given [soundId].
