@@ -64,7 +64,7 @@ class SoundRepository @Inject constructor(
                 isFree = apiSegment.isFree && toApiSegment.isFree,
                 isBridgeSegment = true,
                 from = apiSegment.name,
-                to = apiSegment.name,
+                to = toApiSegment.name,
                 basePath = "${segmentsBasePath}/${bridgeName}",
               )
             )
