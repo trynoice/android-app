@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.engine.exoplayer
 
+import android.app.Notification
 import android.content.Context
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -57,13 +58,37 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
   private val downloadIndex: DownloadIndex,
 ) : CoroutineWorker(context, params) {
 
-  override suspend fun doWork(): Result {
-    setForeground(getForegroundInfo())
+  private val notification: Notification by lazy {
+    SoundDownloadsNotificationChannelHelper.initChannel(context)
+    NotificationCompat.Builder(context, SoundDownloadsNotificationChannelHelper.CHANNEL_ID)
+      .setContentTitle(context.getString(R.string.checking_sound_downloads))
+      .setTicker(context.getString(R.string.checking_sound_downloads))
+      .setProgress(0, 0, true)
+      .setSmallIcon(R.drawable.ic_launcher_24dp)
+      .setOngoing(true)
+      .setShowWhen(false)
+      .setSilent(true)
+      .build()
+  }
 
-    // ensure that user has an active subscription or return with success.
-    if (!withContext(Dispatchers.IO) { hasSubscription() }) {
-      Log.i(LOG_TAG, "doWork: user doesn't have an active subscription")
-      return Result.success()
+  override suspend fun doWork(): Result {
+    try {
+      // ensure that user has an active subscription or return with success.
+      if (!withContext(Dispatchers.IO) { hasSubscription() }) {
+        Log.i(LOG_TAG, "doWork: user doesn't have an active subscription")
+        return Result.success()
+      }
+    } catch (e: Throwable) {
+      Log.e(LOG_TAG, "doWork: failed to check user's subscription status", e)
+      return Result.retry()
+    }
+
+    try {
+      setForeground(getForegroundInfo())
+    } catch (e: Throwable) {
+      // since the work is not long running, it is not a fatal error. The intent behind starting the
+      // worker in foreground is to update user about app's activity.
+      Log.w(LOG_TAG, "doWork: failed to bring worker to the foreground", e)
     }
 
     val soundIds = PreferenceManager.getDefaultSharedPreferences(context)
@@ -82,10 +107,10 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
       }
     }
 
-    val md5sums = try {
-      withContext(Dispatchers.IO) { getMd5sums() }
+    val md5sums: Map<String, ByteArray> = try {
+      if (segmentPaths.isEmpty()) emptyMap() else withContext(Dispatchers.IO) { getMd5sums() }
     } catch (e: Throwable) {
-      Log.e(LOG_TAG, "doWork: failed to get md5sums for CDN resource", e)
+      Log.e(LOG_TAG, "doWork: failed to get md5sums for CDN resources", e)
       return Result.retry()
     }
 
@@ -115,23 +140,21 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
       addExoPlayerDownload(path, md5sums.getValue(path))
     }
 
+    DownloadService.sendResumeDownloads(context, SoundDownloadService::class.java, true)
     return Result.success()
   }
 
   override suspend fun getForegroundInfo(): ForegroundInfo {
-    SoundDownloadsNotificationChannelHelper.initChannel(context)
-    return ForegroundInfo(
-      0x03,
-      NotificationCompat.Builder(context, SoundDownloadsNotificationChannelHelper.CHANNEL_ID)
-        .setContentTitle(context.getString(R.string.checking_downloaded_sounds))
-        .setProgress(0, 0, true)
-        .setSmallIcon(R.drawable.ic_launcher_24dp)
-        .build()
-    )
+    return ForegroundInfo(0x03, notification)
   }
 
   private suspend fun hasSubscription(): Boolean {
-    return subscriptionRepository.getActive().lastOrNull() is Resource.Success
+    val resource = subscriptionRepository.isSubscribed().lastOrNull()
+    if (resource !is Resource.Success || resource.data == null) {
+      throw resource?.error ?: Exception("Resource is not Success and error was null")
+    }
+
+    return resource.data
   }
 
   private suspend fun getSound(soundId: String): Sound {
@@ -172,11 +195,13 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
      */
     fun addSoundDownload(context: Context, soundId: String) {
       val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-      prefs.getMutableStringSet(PREF_DOWNLOADED_SOUND_IDS)
-        .also { it.add(soundId) }
-        .also { prefs.edit { putStringSet(PREF_DOWNLOADED_SOUND_IDS, it) } }
+      val soundIds = prefs.getMutableStringSet(PREF_DOWNLOADED_SOUND_IDS)
+      val isAdded = soundIds.add(soundId)
+      prefs.edit { putStringSet(PREF_DOWNLOADED_SOUND_IDS, soundIds) }
 
-      refreshDownloads(context)
+      if (isAdded) {
+        refreshDownloads(context, true)
+      }
     }
 
     /**
@@ -184,19 +209,22 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
      */
     fun removeSoundDownload(context: Context, soundId: String) {
       val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-      prefs.getMutableStringSet(PREF_DOWNLOADED_SOUND_IDS)
-        .also { it.remove(soundId) }
-        .also { prefs.edit { putStringSet(PREF_DOWNLOADED_SOUND_IDS, it) } }
+      val soundIds = prefs.getMutableStringSet(PREF_DOWNLOADED_SOUND_IDS)
+      val isRemoved = soundIds.remove(soundId)
+      prefs.edit { putStringSet(PREF_DOWNLOADED_SOUND_IDS, soundIds) }
 
-      refreshDownloads(context)
+      if (isRemoved) {
+        refreshDownloads(context, true)
+      }
     }
 
     /**
      * Adds an expedited request to check if all previously requested sounds have been downloaded
      * and are in sync with the CDN server.
      */
-    fun refreshDownloads(context: Context) {
+    fun refreshDownloads(context: Context, expedited: Boolean = false) {
       OneTimeWorkRequestBuilder<SoundDownloadsRefreshWorker>()
+        .also { if (expedited) it.setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST) }
         .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
         .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, Duration.ofSeconds(10))
         .setConstraints(

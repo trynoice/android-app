@@ -305,5 +305,5 @@
     <string name="download_sound">Download Sound</string>
     <string name="notification_channel_sound_downloads__description">Progress notifications related to sound downloads.</string>
     <string name="notification_channel_sound_downloads__name">Sound Downloads</string>
-    <string name="checking_downloaded_sounds">Checking downloaded sounds</string>
+    <string name="checking_sound_downloads">Checking sound downloads</string>
 </resources>

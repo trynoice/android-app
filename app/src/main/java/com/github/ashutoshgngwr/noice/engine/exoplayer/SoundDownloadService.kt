@@ -4,7 +4,6 @@ import android.app.Notification
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
-import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.google.android.exoplayer2.ext.workmanager.WorkManagerScheduler
 import com.google.android.exoplayer2.offline.DefaultDownloaderFactory
@@ -34,9 +33,18 @@ class SoundDownloadService : DownloadService(0x2, DEFAULT_FOREGROUND_NOTIFICATIO
   internal lateinit var apiClient: NoiceApiClient
 
   private val downloadExecutor = Executors.newFixedThreadPool(2)
-  private val notificationHelper by lazy {
+  private val notificationHelper: DownloadNotificationHelper by lazy {
     SoundDownloadsNotificationChannelHelper.initChannel(this)
     DownloadNotificationHelper(this, SoundDownloadsNotificationChannelHelper.CHANNEL_ID)
+  }
+
+  private val notificationContentIntent: PendingIntent by lazy {
+    var flags = PendingIntent.FLAG_UPDATE_CURRENT
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      flags = flags or PendingIntent.FLAG_IMMUTABLE
+    }
+
+    PendingIntent.getActivity(this, 0x03, Intent(this, MainActivity::class.java), flags)
   }
 
   override fun getDownloadManager(): DownloadManager {
@@ -56,18 +64,10 @@ class SoundDownloadService : DownloadService(0x2, DEFAULT_FOREGROUND_NOTIFICATIO
     downloads: MutableList<Download>,
     notMetRequirements: Int
   ): Notification {
-    var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE
-    }
-
-    val contentIntent = Intent(this, MainActivity::class.java)
-      .let { PendingIntent.getActivity(this, 0x03, it, piFlags) }
-
     return notificationHelper.buildProgressNotification(
       this,
-      R.drawable.ic_launcher_24dp,
-      contentIntent,
+      android.R.drawable.stat_sys_download,
+      notificationContentIntent,
       null,
       downloads,
       notMetRequirements,

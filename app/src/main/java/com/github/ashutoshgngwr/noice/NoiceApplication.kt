@@ -105,7 +105,11 @@ class NoiceApplication : Application(), Configuration.Provider {
     @Provides
     @Singleton
     fun cache(@ApplicationContext context: Context, databaseProvider: DatabaseProvider): Cache {
-      return SimpleCache(File(context.filesDir, "sounds"), NoOpCacheEvictor(), databaseProvider)
+      return SimpleCache(
+        File(context.filesDir, "offline-sounds"),
+        NoOpCacheEvictor(),
+        databaseProvider
+      )
     }
 
     @Provides
