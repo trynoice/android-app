@@ -39,6 +39,7 @@ import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
+import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.trynoice.api.client.models.SoundGroup
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,12 +47,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -61,12 +64,6 @@ import javax.inject.Inject
 class LibraryFragment : Fragment(), LibraryListItemController {
 
   private lateinit var binding: LibraryFragmentBinding
-
-  @set:Inject
-  internal lateinit var presetRepository: PresetRepository
-
-  @set:Inject
-  internal lateinit var settingsRepository: SettingsRepository
 
   @set:Inject
   internal lateinit var analyticsProvider: AnalyticsProvider
@@ -97,7 +94,11 @@ class LibraryFragment : Fragment(), LibraryListItemController {
     binding.soundList.adapter = adapter
 
     viewLifecycleOwner.lifecycleScope.launch {
-      settingsRepository.shouldDisplaySoundIconsAsFlow().collect(adapter::setIconsEnabled)
+      viewModel.isLibraryIconsEnabled.collect(adapter::setIconsEnabled)
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.isSubscribed.collect(adapter::setDownloadButtonVisible)
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
@@ -151,7 +152,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
     binding.savePresetButton.setOnClickListener {
       DialogFragment.show(childFragmentManager) {
-        val presets = presetRepository.list()
+        val presets = viewModel.listPresets()
         title(R.string.save_preset)
         val nameGetter = input(hintRes = R.string.name, validator = {
           when {
@@ -163,7 +164,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
-          presetRepository.create(Preset(nameGetter.invoke(), viewModel.playerStates.value))
+          viewModel.saveCurrentPreset(nameGetter.invoke())
           showSuccessSnackBar(R.string.preset_saved)
           // maybe show in-app review dialog to the user
           reviewFlowProvider.maybeAskForReview(requireActivity())
@@ -211,15 +212,17 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
 @HiltViewModel
 class LibraryViewModel @Inject constructor(
-  presetRepository: PresetRepository,
-  playbackController: PlaybackController,
+  private val subscriptionRepository: SubscriptionRepository,
   private val soundRepository: SoundRepository,
+  private val presetRepository: PresetRepository,
+  settingsRepository: SettingsRepository,
+  playbackController: PlaybackController,
 ) : ViewModel() {
 
   private val soundsResource = MutableSharedFlow<Resource<List<Sound>>>()
-  private val playerManagerState: StateFlow<PlaybackState> =
-    playbackController.getPlayerManagerState()
-      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PlaybackState.STOPPED)
+  private val playerManagerState: StateFlow<PlaybackState> = playbackController
+    .getPlayerManagerState()
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PlaybackState.STOPPED)
 
   internal val playerStates: StateFlow<Array<PlayerState>> = playbackController.getPlayerStates()
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyArray())
@@ -280,6 +283,12 @@ class LibraryViewModel @Inject constructor(
       }
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
+  internal val isLibraryIconsEnabled: StateFlow<Boolean> = settingsRepository
+    .shouldDisplaySoundIconsAsFlow()
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+  internal val isSubscribed = MutableStateFlow(false)
+
   init {
     loadLibrary()
   }
@@ -290,6 +299,21 @@ class LibraryViewModel @Inject constructor(
         .flowOn(Dispatchers.IO)
         .collect(soundsResource)
     }
+
+    viewModelScope.launch {
+      subscriptionRepository.isSubscribed()
+        .flowOn(Dispatchers.IO)
+        .map { it.data ?: false }
+        .collect(isSubscribed)
+    }
+  }
+
+  internal fun saveCurrentPreset(name: String) {
+    presetRepository.create(Preset(name, playerStates.value))
+  }
+
+  internal fun listPresets(): List<Preset> {
+    return presetRepository.list()
   }
 }
 
@@ -301,6 +325,7 @@ class LibraryListAdapter(
   private var libraryItems = emptyList<LibraryListItem>()
   private var playerStates = emptyMap<String, PlayerState?>()
   private var isIconsEnabled = false
+  private var isDownloadButtonVisible = false
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryListItemViewHolder {
     return when (viewType) {
@@ -328,7 +353,7 @@ class LibraryListAdapter(
 
   override fun onBindViewHolder(holder: LibraryListItemViewHolder, position: Int) {
     val playerState = playerStates[libraryItems[position].sound?.id]
-    holder.bind(libraryItems[position], playerState, isIconsEnabled)
+    holder.bind(libraryItems[position], playerState, isIconsEnabled, isDownloadButtonVisible)
   }
 
   fun setIconsEnabled(enabled: Boolean) {
@@ -363,22 +388,42 @@ class LibraryListAdapter(
       }
     }
   }
+
+  fun setDownloadButtonVisible(isVisible: Boolean) {
+    if (isDownloadButtonVisible == isVisible) {
+      return
+    }
+
+    isDownloadButtonVisible = isVisible
+    notifyItemRangeChanged(0, libraryItems.size)
+  }
 }
 
 abstract class LibraryListItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-  fun bind(item: LibraryListItem, playerState: PlayerState?, isIconsEnabled: Boolean) {
+  fun bind(
+    item: LibraryListItem,
+    playerState: PlayerState?,
+    isIconsEnabled: Boolean,
+    isDownloadButtonVisible: Boolean,
+  ) {
     if (item.group != null) {
       bind(item.group)
     }
 
     if (item.sound != null) {
-      bind(item.sound, playerState, isIconsEnabled)
+      bind(item.sound, playerState, isIconsEnabled, isDownloadButtonVisible)
     }
   }
 
   abstract fun bind(soundGroup: SoundGroup)
-  abstract fun bind(sound: Sound, playerState: PlayerState?, isIconsEnabled: Boolean)
+
+  abstract fun bind(
+    sound: Sound,
+    playerState: PlayerState?,
+    isIconsEnabled: Boolean,
+    isDownloadButtonVisible: Boolean,
+  )
 }
 
 class SoundGroupViewHolder(
@@ -389,7 +434,12 @@ class SoundGroupViewHolder(
     binding.root.text = soundGroup.name
   }
 
-  override fun bind(sound: Sound, playerState: PlayerState?, isIconsEnabled: Boolean) {
+  override fun bind(
+    sound: Sound,
+    playerState: PlayerState?,
+    isIconsEnabled: Boolean,
+    isDownloadButtonVisible: Boolean,
+  ) {
     throw UnsupportedOperationException()
   }
 }
@@ -427,7 +477,12 @@ class SoundViewHolder(
     throw UnsupportedOperationException()
   }
 
-  override fun bind(sound: Sound, playerState: PlayerState?, isIconsEnabled: Boolean) {
+  override fun bind(
+    sound: Sound,
+    playerState: PlayerState?,
+    isIconsEnabled: Boolean,
+    isDownloadButtonVisible: Boolean,
+  ) {
     this.sound = sound
     this.playerState = playerState
 
@@ -448,6 +503,7 @@ class SoundViewHolder(
       }
     }
 
+    binding.download.isVisible = isDownloadButtonVisible
     val isStopped = playerState.isStopped
     binding.play.setIconResource(
       if (isStopped) {
