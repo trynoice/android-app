@@ -38,8 +38,8 @@ import kotlin.time.toDuration
  */
 abstract class Player protected constructor(
   private val soundId: String,
-  private val soundRepository: SoundRepository,
   private var audioBitrate: String,
+  private val soundRepository: SoundRepository,
   externalScope: CoroutineScope,
   private val playbackListener: PlaybackListener,
 ) {

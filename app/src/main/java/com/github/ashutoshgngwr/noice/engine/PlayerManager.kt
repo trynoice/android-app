@@ -4,13 +4,12 @@ import android.content.Context
 import android.media.AudioManager
 import android.util.Log
 import androidx.media.AudioAttributesCompat
-import com.github.ashutoshgngwr.noice.engine.exoplayer.CdnSoundDataSource
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.trynoice.api.client.NoiceApiClient
+import com.google.android.exoplayer2.upstream.DataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -24,10 +23,10 @@ import kotlin.time.Duration.Companion.minutes
  */
 class PlayerManager(
   private val context: Context,
-  private val apiClient: NoiceApiClient,
-  private val soundRepository: SoundRepository,
   private var audioBitrate: String,
   private var audioAttributes: AudioAttributesCompat,
+  private val soundRepository: SoundRepository,
+  private val exoPlayerDataSourceFactory: DataSource.Factory,
   private val analyticsProvider: AnalyticsProvider,
   private val defaultScope: CoroutineScope,
   private val playbackListener: PlaybackListener,
@@ -325,7 +324,7 @@ class PlayerManager(
   }
 
   private fun buildLocalPlayerFactory(): Player.Factory {
-    return ProgressiveMediaSource.Factory(CdnSoundDataSource.Factory(apiClient))
+    return ProgressiveMediaSource.Factory(exoPlayerDataSourceFactory)
       .let { LocalPlayer.Factory(context, it) }
   }
 
