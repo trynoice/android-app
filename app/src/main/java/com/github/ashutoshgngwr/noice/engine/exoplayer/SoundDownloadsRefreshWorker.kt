@@ -37,7 +37,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.withContext
-import java.time.Duration
+import java.util.concurrent.TimeUnit
 
 /**
  * A worker that implements a facade to download sounds using ExoPlayer's [DownloadService]. Use
@@ -242,7 +242,7 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
       OneTimeWorkRequestBuilder<SoundDownloadsRefreshWorker>()
         .also { if (expedited) it.setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST) }
         .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-        .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, Duration.ofSeconds(10))
+        .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 10, TimeUnit.SECONDS)
         .setConstraints(
           Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
