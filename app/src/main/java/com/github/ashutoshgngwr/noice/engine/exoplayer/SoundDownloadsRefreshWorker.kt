@@ -29,6 +29,7 @@ import com.google.android.exoplayer2.database.DatabaseIOException
 import com.google.android.exoplayer2.offline.DownloadIndex
 import com.google.android.exoplayer2.offline.DownloadRequest
 import com.google.android.exoplayer2.offline.DownloadService
+import com.google.gson.Gson
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -56,6 +57,7 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
   private val soundRepository: SoundRepository,
   private val settingsRepository: SettingsRepository,
   private val downloadIndex: DownloadIndex,
+  private val gson: Gson,
 ) : CoroutineWorker(context, params) {
 
   private val notification: Notification by lazy {
@@ -94,21 +96,21 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
     val soundIds = PreferenceManager.getDefaultSharedPreferences(context)
       .getStringSet(PREF_DOWNLOADED_SOUND_IDS, emptySet()) ?: return Result.failure()
 
-    val segmentPaths = mutableSetOf<String>()
+    val segmentPathsToSoundIds = mutableMapOf<String, String>()
     val audioBitrate = settingsRepository.getAudioQuality().bitrate
     soundIds.forEach { soundId ->
       try {
         withContext(Dispatchers.IO) { getSound(soundId) }
           .segments
-          .forEach { segmentPaths.add(it.path(audioBitrate)) }
+          .forEach { segmentPathsToSoundIds[it.path(audioBitrate)] = soundId }
       } catch (e: Throwable) {
         Log.e(LOG_TAG, "doWork: failed to retrieve sound $soundId", e)
         return Result.retry()
       }
     }
 
-    val md5sums: Map<String, ByteArray> = try {
-      if (segmentPaths.isEmpty()) emptyMap() else withContext(Dispatchers.IO) { getMd5sums() }
+    val md5sums: Map<String, String> = try {
+      if (soundIds.isEmpty()) emptyMap() else withContext(Dispatchers.IO) { getMd5sums() }
     } catch (e: Throwable) {
       Log.e(LOG_TAG, "doWork: failed to get md5sums for CDN resources", e)
       return Result.retry()
@@ -119,13 +121,22 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
       while (downloadCursor.moveToNext()) {
         // check if this download is still needed and is up to date with the CDN server.
         val request = downloadCursor.download.request
-        if (request.id in segmentPaths && request.data.contentEquals(md5sums[request.id])) {
-          Log.d(LOG_TAG, "doWork: ${request.id} is unchanged")
-          segmentPaths.remove(request.id)
-        } else {
-          Log.d(LOG_TAG, "doWork: ${request.id} is changed or removed")
+        if (request.id !in segmentPathsToSoundIds) {
+          Log.d(LOG_TAG, "doWork: ${request.id} has been removed")
           removeExoPlayerDownload(request.id)
+          continue
         }
+
+        val metadataJson = request.data.decodeToString()
+        val metadata = gson.fromJson(metadataJson, SoundDownloadMetadata::class.java)
+        if (metadata.md5sum != md5sums[request.id]) {
+          Log.d(LOG_TAG, "doWork: ${request.id} has changed")
+          removeExoPlayerDownload(request.id)
+          continue
+        }
+
+        Log.d(LOG_TAG, "doWork: ${request.id} is unchanged")
+        segmentPathsToSoundIds.remove(request.id)
       }
 
       downloadCursor.close()
@@ -135,9 +146,9 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
     }
 
     // schedule remaining downloads
-    segmentPaths.forEach { path ->
+    segmentPathsToSoundIds.forEach { (path, soundId) ->
       Log.d(LOG_TAG, "doWork: adding exoplayer download request for $path")
-      addExoPlayerDownload(path, md5sums.getValue(path))
+      addExoPlayerDownload(path, SoundDownloadMetadata(md5sums.getValue(path), soundId))
     }
 
     DownloadService.sendResumeDownloads(context, SoundDownloadService::class.java, true)
@@ -166,18 +177,18 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
     return resource.data
   }
 
-  private suspend fun getMd5sums(): Map<String, ByteArray> {
+  private suspend fun getMd5sums(): Map<String, String> {
     val resource = soundRepository.getMd5sums().lastOrNull()
     if (resource !is Resource.Success || resource.data == null) {
       throw resource?.error ?: Exception("Resource is not Success and error was null")
     }
 
-    return resource.data.mapValues { it.value.toByteArray() }
+    return resource.data
   }
 
-  private fun addExoPlayerDownload(segmentPath: String, md5sum: ByteArray) {
+  private fun addExoPlayerDownload(segmentPath: String, metadata: SoundDownloadMetadata) {
     DownloadRequest.Builder(segmentPath, "noice://cdn/library/${segmentPath}".toUri())
-      .setData(md5sum)
+      .setData(gson.toJson(metadata).encodeToByteArray())
       .build()
       .also { DownloadService.sendAddDownload(context, SoundDownloadService::class.java, it, true) }
   }
