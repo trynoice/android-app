@@ -32,7 +32,6 @@ class SoundDownloadService : DownloadService(0x2, DEFAULT_FOREGROUND_NOTIFICATIO
   @set:Inject
   internal lateinit var apiClient: NoiceApiClient
 
-  private val downloadExecutor = Executors.newFixedThreadPool(2)
   private val notificationHelper: DownloadNotificationHelper by lazy {
     SoundDownloadsNotificationChannelHelper.initChannel(this)
     DownloadNotificationHelper(this, SoundDownloadsNotificationChannelHelper.CHANNEL_ID)
@@ -51,7 +50,7 @@ class SoundDownloadService : DownloadService(0x2, DEFAULT_FOREGROUND_NOTIFICATIO
     return CacheDataSource.Factory()
       .setCache(downloadCache)
       .setUpstreamDataSourceFactory(CdnSoundDataSource.Factory(apiClient))
-      .let { DefaultDownloaderFactory(it, downloadExecutor) }
+      .let { DefaultDownloaderFactory(it, Executors.newFixedThreadPool(2)) }
       .let { DownloadManager(this, downloadIndex, it) }
       .also { it.maxParallelDownloads = 2 }
   }
@@ -72,10 +71,5 @@ class SoundDownloadService : DownloadService(0x2, DEFAULT_FOREGROUND_NOTIFICATIO
       downloads,
       notMetRequirements,
     )
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    downloadExecutor.shutdown()
   }
 }
