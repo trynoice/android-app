@@ -309,4 +309,6 @@
     <string name="remove_all_sound_downloads">Remove all sound downloads</string>
     <string name="remove_all_sound_downloads_confirmation">It will remove all sounds downloaded for offline playback. Do you want to proceed?</string>
     <string name="sound_downloads_scheduled_for_removal">All sound downloads were successfully scheduled for removal.</string>
+    <string name="remove_sound_download">Remove %1$s</string>
+    <string name="remove_sound_download_confirmation">Confirm removing a sound downloaded for offline playback?</string>
 </resources>

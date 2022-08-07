@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.engine.exoplayer
+package com.github.ashutoshgngwr.noice.model
 
 import com.google.gson.annotations.Expose
 

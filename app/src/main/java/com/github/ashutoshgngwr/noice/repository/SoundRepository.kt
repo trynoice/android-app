@@ -2,13 +2,20 @@ package com.github.ashutoshgngwr.noice.repository
 
 import android.util.Log
 import com.github.ashutoshgngwr.noice.model.Sound
+import com.github.ashutoshgngwr.noice.model.SoundDownloadMetadata
+import com.github.ashutoshgngwr.noice.model.SoundDownloadState
 import com.github.ashutoshgngwr.noice.model.SoundSegment
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.repository.errors.SoundNotFoundError
+import com.google.android.exoplayer2.offline.Download
+import com.google.android.exoplayer2.offline.DownloadIndex
+import com.google.gson.Gson
 import com.trynoice.api.client.NoiceApiClient
 import com.trynoice.api.client.models.SoundTag
 import io.github.ashutoshgngwr.may.May
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.transform
 import java.io.IOException
 import java.net.URLDecoder
@@ -23,6 +30,8 @@ import javax.inject.Singleton
 class SoundRepository @Inject constructor(
   private val apiClient: NoiceApiClient,
   private val cacheStore: May,
+  private val downloadIndex: DownloadIndex,
+  private val gson: Gson,
 ) {
 
   /**
@@ -159,6 +168,30 @@ class SoundRepository @Inject constructor(
       }
     },
   )
+
+  fun getDownloadStates(): Flow<Map<String, SoundDownloadState>> = flow {
+    while (true) {
+      val downloads = downloadIndex.getDownloads()
+      val states = mutableMapOf<String, SoundDownloadState>()
+      while (downloads.moveToNext()) {
+        val download = downloads.download
+        val metadataJson = download.request.data.decodeToString()
+        val metadata = gson.fromJson(metadataJson, SoundDownloadMetadata::class.java)
+        if (states[metadata.soundId] == SoundDownloadState.DOWNLOADING) {
+          continue
+        }
+
+        states[metadata.soundId] = when (download.state) {
+          Download.STATE_COMPLETED -> SoundDownloadState.DOWNLOADED
+          else -> SoundDownloadState.DOWNLOADING
+        }
+      }
+
+      downloads.close()
+      emit(states)
+      delay(500L)
+    }
+  }
 
   companion object {
     private const val LOG_TAG = "SoundRepository"

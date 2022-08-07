@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice.fragment
 
 import android.annotation.SuppressLint
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -33,6 +34,7 @@ import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
+import com.github.ashutoshgngwr.noice.model.SoundDownloadState
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
@@ -107,6 +109,10 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.playerStates.collect(adapter::setPlayerStates)
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.downloadStates.collect(adapter::setDownloadStates)
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
@@ -208,6 +214,21 @@ class LibraryFragment : Fragment(), LibraryListItemController {
       positiveButton(R.string.okay)
     }
   }
+
+  override fun onSoundDownloadClicked(sound: Sound) {
+    SoundDownloadsRefreshWorker.addSoundDownload(requireContext(), sound.id)
+  }
+
+  override fun onRemoveSoundDownloadClicked(sound: Sound) {
+    DialogFragment.show(childFragmentManager) {
+      title(getString(R.string.remove_sound_download, sound.name))
+      message(R.string.remove_sound_download_confirmation)
+      negativeButton(R.string.cancel)
+      positiveButton(R.string.delete) {
+        SoundDownloadsRefreshWorker.removeSoundDownload(requireContext(), sound.id)
+      }
+    }
+  }
 }
 
 @HiltViewModel
@@ -226,6 +247,11 @@ class LibraryViewModel @Inject constructor(
 
   internal val playerStates: StateFlow<Array<PlayerState>> = playbackController.getPlayerStates()
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyArray())
+
+  internal val downloadStates: StateFlow<Map<String, SoundDownloadState>> = soundRepository
+    .getDownloadStates()
+    .flowOn(Dispatchers.IO)
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
 
   val isLoading: StateFlow<Boolean> = soundsResource.transform { r ->
     emit(r is Resource.Loading)
@@ -326,6 +352,7 @@ class LibraryListAdapter(
   private var playerStates = emptyMap<String, PlayerState?>()
   private var isIconsEnabled = false
   private var isDownloadButtonVisible = false
+  private var downloadStates = emptyMap<String, SoundDownloadState>()
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryListItemViewHolder {
     return when (viewType) {
@@ -352,8 +379,14 @@ class LibraryListAdapter(
   }
 
   override fun onBindViewHolder(holder: LibraryListItemViewHolder, position: Int) {
-    val playerState = playerStates[libraryItems[position].sound?.id]
-    holder.bind(libraryItems[position], playerState, isIconsEnabled, isDownloadButtonVisible)
+    val soundId = libraryItems[position].sound?.id
+    holder.bind(
+      libraryItems[position],
+      playerStates[soundId],
+      isIconsEnabled,
+      isDownloadButtonVisible,
+      downloadStates[soundId] ?: SoundDownloadState.NOT_DOWNLOADED
+    )
   }
 
   fun setIconsEnabled(enabled: Boolean) {
@@ -397,6 +430,17 @@ class LibraryListAdapter(
     isDownloadButtonVisible = isVisible
     notifyItemRangeChanged(0, libraryItems.size)
   }
+
+  fun setDownloadStates(states: Map<String, SoundDownloadState>) {
+    val oldStates = downloadStates
+    downloadStates = states
+    for (i in libraryItems.indices) {
+      val soundId = libraryItems[i].sound?.id ?: continue
+      if (oldStates[soundId] != downloadStates[soundId]) {
+        notifyItemChanged(i)
+      }
+    }
+  }
 }
 
 abstract class LibraryListItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -406,13 +450,14 @@ abstract class LibraryListItemViewHolder(view: View) : RecyclerView.ViewHolder(v
     playerState: PlayerState?,
     isIconsEnabled: Boolean,
     isDownloadButtonVisible: Boolean,
+    downloadState: SoundDownloadState,
   ) {
     if (item.group != null) {
       bind(item.group)
     }
 
     if (item.sound != null) {
-      bind(item.sound, playerState, isIconsEnabled, isDownloadButtonVisible)
+      bind(item.sound, playerState, isIconsEnabled, isDownloadButtonVisible, downloadState)
     }
   }
 
@@ -423,6 +468,7 @@ abstract class LibraryListItemViewHolder(view: View) : RecyclerView.ViewHolder(v
     playerState: PlayerState?,
     isIconsEnabled: Boolean,
     isDownloadButtonVisible: Boolean,
+    downloadState: SoundDownloadState,
   )
 }
 
@@ -439,6 +485,7 @@ class SoundGroupViewHolder(
     playerState: PlayerState?,
     isIconsEnabled: Boolean,
     isDownloadButtonVisible: Boolean,
+    downloadState: SoundDownloadState,
   ) {
     throw UnsupportedOperationException()
   }
@@ -451,12 +498,15 @@ class SoundViewHolder(
 
   private lateinit var sound: Sound
   private var playerState: PlayerState? = null
+  private var downloadState = SoundDownloadState.NOT_DOWNLOADED
 
   init {
     binding.info.setOnClickListener { controller.onSoundInfoClicked(sound) }
     binding.download.setOnClickListener {
-      // TODO:
-      SoundDownloadsRefreshWorker.addSoundDownload(binding.download.context, sound.id)
+      when (downloadState) {
+        SoundDownloadState.NOT_DOWNLOADED -> controller.onSoundDownloadClicked(sound)
+        else -> controller.onRemoveSoundDownloadClicked(sound)
+      }
     }
 
     binding.play.setOnClickListener {
@@ -482,9 +532,11 @@ class SoundViewHolder(
     playerState: PlayerState?,
     isIconsEnabled: Boolean,
     isDownloadButtonVisible: Boolean,
+    downloadState: SoundDownloadState,
   ) {
     this.sound = sound
     this.playerState = playerState
+    this.downloadState = downloadState
 
     binding.bufferingIndicator.isVisible = playerState?.playbackState == PlaybackState.BUFFERING
     binding.title.text = sound.name
@@ -504,6 +556,16 @@ class SoundViewHolder(
     }
 
     binding.download.isVisible = isDownloadButtonVisible
+    binding.download.setIconResource(
+      when (downloadState) {
+        SoundDownloadState.NOT_DOWNLOADED -> R.drawable.ic_outline_download_for_offline_24
+        SoundDownloadState.DOWNLOADING -> R.drawable.ic_baseline_downloading_24
+        SoundDownloadState.DOWNLOADED -> R.drawable.ic_outline_offline_pin_24
+      }
+    )
+
+    (binding.download.icon as? AnimatedVectorDrawable)?.start()
+
     val isStopped = playerState.isStopped
     binding.play.setIconResource(
       if (isStopped) {
@@ -532,6 +594,8 @@ interface LibraryListItemController {
   fun onSoundPlayClicked(sound: Sound)
   fun onSoundStopClicked(sound: Sound)
   fun onSoundVolumeClicked(sound: Sound, currentVolume: Int)
+  fun onSoundDownloadClicked(sound: Sound)
+  fun onRemoveSoundDownloadClicked(sound: Sound)
 }
 
 data class LibraryListItem(
