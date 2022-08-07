@@ -79,6 +79,8 @@ class LocalPlayer(
       } else {
         exoPlayer.volume = getScaledVolume()
       }
+    } else if (exoPlayer.playWhenReady && exoPlayer.isLoading) {
+      setPlaybackState(PlaybackState.BUFFERING)
     }
   }
 
