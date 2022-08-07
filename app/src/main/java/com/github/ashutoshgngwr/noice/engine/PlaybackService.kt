@@ -16,6 +16,7 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.activity.MainActivity
+import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDataSourceFactory
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
@@ -23,6 +24,7 @@ import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
+import com.google.android.exoplayer2.upstream.cache.Cache
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -57,6 +59,9 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
   internal lateinit var apiClient: NoiceApiClient
 
   @set:Inject
+  internal lateinit var soundDownloadCache: Cache
+
+  @set:Inject
   internal lateinit var analyticsProvider: AnalyticsProvider
 
   private var presets = emptyList<Preset>()
@@ -82,13 +87,17 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     PlaybackNotificationManager(this, mainActivityPi, mediaSessionManager.getSessionToken())
   }
 
+  private val soundDataSourceFactory: SoundDataSourceFactory by lazy {
+    SoundDataSourceFactory(apiClient, soundDownloadCache)
+  }
+
   private val playerManager: PlayerManager by lazy {
     PlayerManager(
       this,
-      apiClient,
-      soundRepository,
       settingsRepository.getAudioQuality().bitrate,
       PlayerManager.DEFAULT_AUDIO_ATTRIBUTES,
+      soundRepository,
+      soundDataSourceFactory,
       analyticsProvider,
       lifecycleScope,
       this
@@ -163,7 +172,10 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     }
 
     lifecycleScope.launch {
-      isSubscribed.collect { playerManager.setPremiumSegmentsEnabled(it) }
+      isSubscribed.collect { subscribed ->
+        soundDataSourceFactory.enableDownloadedSounds = subscribed
+        playerManager.setPremiumSegmentsEnabled(subscribed)
+      }
     }
 
     // watch and adapt user settings as they change.

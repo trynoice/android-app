@@ -29,13 +29,13 @@ import com.google.android.exoplayer2.Player as IExoPlayer
 class LocalPlayer(
   context: Context,
   soundId: String,
-  soundRepository: SoundRepository,
-  mediaSourceFactory: MediaSource.Factory,
   audioBitrate: String,
   audioAttributes: AudioAttributesCompat,
+  soundRepository: SoundRepository,
+  mediaSourceFactory: MediaSource.Factory,
   externalScope: CoroutineScope,
   playbackListener: PlaybackListener,
-) : Player(soundId, soundRepository, audioBitrate, externalScope, playbackListener),
+) : Player(soundId, audioBitrate, soundRepository, externalScope, playbackListener),
   IExoPlayer.Listener {
 
   private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context)
@@ -203,8 +203,8 @@ class LocalPlayer(
     }
   }
 
-  override fun onSegmentAvailable(segment: Segment) {
-    exoPlayer.addMediaItem(MediaItem.fromUri("noice://cdn/${segment.path}"))
+  override fun onSegmentAvailable(uri: String) {
+    exoPlayer.addMediaItem(MediaItem.fromUri(uri))
     exoPlayer.prepare()
   }
 
@@ -267,10 +267,10 @@ class LocalPlayer(
       return LocalPlayer(
         context,
         soundId,
-        soundRepository,
-        mediaSourceFactory,
         audioBitrate,
         audioAttributes,
+        soundRepository,
+        mediaSourceFactory,
         defaultScope,
         playbackListener,
       )

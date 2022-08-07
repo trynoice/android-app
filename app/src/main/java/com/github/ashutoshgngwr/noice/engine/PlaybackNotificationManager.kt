@@ -39,6 +39,7 @@ class PlaybackNotificationManager(
     color = ContextCompat.getColor(context, R.color.md_theme_primary)
     setContentIntent(contentIntentPi)
     setDeleteIntent(PlaybackController.buildStopActionPendingIntent(context))
+    setOngoing(true)
     setShowWhen(false)
     setSilent(true)
     setSmallIcon(R.drawable.ic_launcher_24dp)

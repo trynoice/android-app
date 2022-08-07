@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import retrofit2.HttpException
 import java.io.IOException
@@ -206,6 +207,29 @@ class SubscriptionRepository @Inject constructor(
   )
 
   /**
+   * Returns a flow that emits whether the authenticated user owns an active subscription as a
+   * [Resource].
+   *
+   * On failures, the flow emits [Resource.Failure] with:
+   * - [NetworkError] on network errors.
+   * - [HttpException] on api errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
+   */
+  fun isSubscribed(): Flow<Resource<Boolean>> = getActive().map(this::isSubscribed)
+
+  private fun isSubscribed(r: Resource<Subscription>): Resource<Boolean> {
+    return when {
+      r is Resource.Loading -> Resource.Loading(r.data != null)
+      r is Resource.Success -> Resource.Success(r.data != null)
+      r.error is SubscriptionNotFoundError -> Resource.Success(false)
+      r.error is HttpException && r.error.code() == 401 -> Resource.Success(false) // unauthenticated.
+      else -> Resource.Failure(r.error ?: IllegalStateException(), r.data != null)
+    }
+  }
+
+  /**
    * Returns a flow that actively polls the API server and emits whether the authenticated user owns
    * an active subscription as a [Resource].
    *
@@ -222,17 +246,7 @@ class SubscriptionRepository @Inject constructor(
       val r = getActive()
         // consider only the first loading event and ignore latter loading events.
         .filterNot { !first && it is Resource.Loading }
-        .onEach { r ->
-          emit(
-            when {
-              r is Resource.Loading -> Resource.Loading(r.data != null)
-              r is Resource.Success -> Resource.Success(r.data != null)
-              r.error is SubscriptionNotFoundError -> Resource.Success(false)
-              r.error is HttpException && r.error.code() == 401 -> Resource.Success(false) // unauthenticated.
-              else -> Resource.Failure(r.error ?: IllegalStateException(), r.data != null)
-            }
-          )
-        }
+        .onEach { this@flow.emit(isSubscribed(it)) }
         .lastOrNull()
 
       first = false

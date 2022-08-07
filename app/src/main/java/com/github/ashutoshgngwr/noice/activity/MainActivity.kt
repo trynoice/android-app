@@ -23,6 +23,7 @@ import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
+import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadsRefreshWorker
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.fragment.DonationPurchasedCallbackFragmentArgs
@@ -108,6 +109,7 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
       maybeShowDataCollectionConsent()
     }
 
+    SoundDownloadsRefreshWorker.refreshDownloads(this)
     reviewFlowProvider.init(this)
     analyticsProvider.logEvent("ui_open", bundleOf("theme" to settingsRepository.getAppTheme()))
     hasNewIntent = true

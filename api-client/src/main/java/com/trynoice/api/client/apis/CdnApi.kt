@@ -4,6 +4,7 @@ import com.trynoice.api.client.auth.annotations.NeedsAccessToken
 import com.trynoice.api.client.models.LibraryManifest
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Streaming
 import retrofit2.http.Url
@@ -28,8 +29,22 @@ interface CdnApi {
   suspend fun libraryManifest(): LibraryManifest
 
   /**
-   * Retrieves a protected or public resource from the CDN and returns it as a [Call] to a
-   * [Streaming] [ResponseBody].
+   * Retrieves the MD5 checksums for all files present in the library.
+   *
+   * Responses:
+   * - 200: library manifest download successful.
+   * - 500: internal server error.
+   *
+   * @return a map of file paths (relative to `library-manifest.json`) to their md5sums.
+   * @throws retrofit2.HttpException on HTTP errors.
+   * @throws java.io.IOException on network errors.
+   */
+  @GET("/library/md5sums.json")
+  suspend fun md5sums(): Map<String, String>
+
+  /**
+   * Retrieves a protected or public resource from the CDN and returns it as a [Streaming]
+   * [Response].
    *
    * Responses:
    * - 200: if the resource is found.

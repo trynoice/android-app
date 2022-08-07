@@ -203,6 +203,9 @@ class SettingsRepository @Inject constructor(
     val FREE_AUDIO_QUALITY = AudioQuality.fromBitrate(null)
   }
 
+  /**
+   * Represents audio quality bit-rates supported by the CDN server.
+   */
   enum class AudioQuality(val bitrate: String) {
     LOW("128k"), MEDIUM("192k"), HIGH("256k"), ULTRA_HIGH("320k");
 

@@ -33,8 +33,8 @@
   <string name="import_presets_key">import_presets</string>
   <string name="export_presets_key">export_presets</string>
   <string name="remove_all_app_shortcuts_key">remove_all_app_shortcuts</string>
+  <string name="remove_all_sound_downloads_key">remove_all_sound_downloads</string>
   <string name="should_display_sound_icons_key">should_display_sound_icons</string>
-  <string name="others_key">others</string>
   <string name="should_share_usage_data_key">should_share_usage_data</string>
   <string name="enable_media_buttons_key">enable_media_buttons</string>
   <string name="audio_bitrate_key">audio_bitrate</string>

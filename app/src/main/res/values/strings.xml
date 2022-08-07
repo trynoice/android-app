@@ -302,4 +302,13 @@
     <string name="use_material_you_colors">Use Material You colors</string>
     <string name="use_material_you_colors_summary">Inherit Material You color palette from the Android system</string>
     <string name="stripe_customer_portal_error">Oops! We couldn\'t open the billing portal. %1$s Please try again!</string>
+    <string name="download_sound">Download Sound</string>
+    <string name="notification_channel_sound_downloads__description">Progress notifications related to sound downloads.</string>
+    <string name="notification_channel_sound_downloads__name">Sound Downloads</string>
+    <string name="checking_sound_downloads">Checking sound downloads</string>
+    <string name="remove_all_sound_downloads">Remove all sound downloads</string>
+    <string name="remove_all_sound_downloads_confirmation">It will remove all sounds downloaded for offline playback. Do you want to proceed?</string>
+    <string name="sound_downloads_scheduled_for_removal">All sound downloads were successfully scheduled for removal.</string>
+    <string name="remove_sound_download">Remove %1$s</string>
+    <string name="remove_sound_download_confirmation">Confirm removing a sound downloaded for offline playback?</string>
 </resources>

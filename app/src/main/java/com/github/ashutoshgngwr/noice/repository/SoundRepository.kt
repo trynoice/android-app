@@ -2,12 +2,20 @@ package com.github.ashutoshgngwr.noice.repository
 
 import android.util.Log
 import com.github.ashutoshgngwr.noice.model.Sound
+import com.github.ashutoshgngwr.noice.model.SoundDownloadMetadata
+import com.github.ashutoshgngwr.noice.model.SoundDownloadState
+import com.github.ashutoshgngwr.noice.model.SoundSegment
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.repository.errors.SoundNotFoundError
+import com.google.android.exoplayer2.offline.Download
+import com.google.android.exoplayer2.offline.DownloadIndex
+import com.google.gson.Gson
 import com.trynoice.api.client.NoiceApiClient
 import com.trynoice.api.client.models.SoundTag
 import io.github.ashutoshgngwr.may.May
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.transform
 import java.io.IOException
 import java.net.URLDecoder
@@ -22,6 +30,8 @@ import javax.inject.Singleton
 class SoundRepository @Inject constructor(
   private val apiClient: NoiceApiClient,
   private val cacheStore: May,
+  private val downloadIndex: DownloadIndex,
+  private val gson: Gson,
 ) {
 
   /**
@@ -39,6 +49,37 @@ class SoundRepository @Inject constructor(
       val manifest = apiClient.cdn().libraryManifest()
       val groups = manifest.groups.associateBy { it.id }
       manifest.sounds.map { apiSound ->
+        val segmentsBasePath = "${manifest.segmentsBasePath}/${apiSound.id}"
+        val segments = mutableListOf<SoundSegment>()
+        for (apiSegment in apiSound.segments) {
+          segments.add(
+            SoundSegment(
+              name = apiSegment.name,
+              isFree = apiSegment.isFree,
+              isBridgeSegment = false,
+              basePath = "${segmentsBasePath}/${apiSegment.name}",
+            )
+          )
+
+          if (apiSound.maxSilence > 0) {
+            continue
+          }
+
+          for (toApiSegment in apiSound.segments) {
+            val bridgeName = "${apiSegment.name}_${toApiSegment.name}"
+            segments.add(
+              SoundSegment(
+                name = bridgeName,
+                isFree = apiSegment.isFree && toApiSegment.isFree,
+                isBridgeSegment = true,
+                from = apiSegment.name,
+                to = toApiSegment.name,
+                basePath = "${segmentsBasePath}/${bridgeName}",
+              )
+            )
+          }
+        }
+
         Sound(
           id = apiSound.id,
           group = groups.getValue(apiSound.groupId),
@@ -48,8 +89,7 @@ class SoundRepository @Inject constructor(
             StandardCharsets.UTF_8.name(),
           ),
           maxSilence = apiSound.maxSilence,
-          segmentsBasePath = "library/${manifest.segmentsBasePath}/${apiSound.id}",
-          segments = apiSound.segments,
+          segments = segments,
           tags = manifest.tags.filter { apiSound.tags.contains(it.id) },
           sources = apiSound.sources,
         )
@@ -107,6 +147,55 @@ class SoundRepository @Inject constructor(
       }
     },
   )
+
+  /**
+   * Returns a [Flow] that emits a map of CDN paths (relative to `library-manifest.json`) to
+   * their md5sums as a [Resource].
+   *
+   * On failures, the flow emits [Resource.Failure] with:
+   * - [NetworkError] on network errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
+   */
+  fun getMd5sums(): Flow<Resource<Map<String, String>>> = fetchNetworkBoundResource(
+    loadFromNetwork = { apiClient.cdn().md5sums() },
+    loadFromNetworkErrorTransform = { e ->
+      Log.i(LOG_TAG, "getMd5sums:", e)
+      when (e) {
+        is IOException -> NetworkError
+        else -> e
+      }
+    },
+  )
+
+  /**
+   * Returns a flow that actively polls ExoPlayer's [DownloadIndex] and emits a map of sound ids
+   * (that are currently downloading or have finished downloading) to their [SoundDownloadState].
+   */
+  fun getDownloadStates(): Flow<Map<String, SoundDownloadState>> = flow {
+    while (true) {
+      val downloads = downloadIndex.getDownloads()
+      val states = mutableMapOf<String, SoundDownloadState>()
+      while (downloads.moveToNext()) {
+        val download = downloads.download
+        val metadataJson = download.request.data.decodeToString()
+        val metadata = gson.fromJson(metadataJson, SoundDownloadMetadata::class.java)
+        if (states[metadata.soundId] == SoundDownloadState.DOWNLOADING) {
+          continue
+        }
+
+        states[metadata.soundId] = when (download.state) {
+          Download.STATE_COMPLETED -> SoundDownloadState.DOWNLOADED
+          else -> SoundDownloadState.DOWNLOADING
+        }
+      }
+
+      emit(states)
+      downloads.close()
+      delay(500L)
+    }
+  }
 
   companion object {
     private const val LOG_TAG = "SoundRepository"
