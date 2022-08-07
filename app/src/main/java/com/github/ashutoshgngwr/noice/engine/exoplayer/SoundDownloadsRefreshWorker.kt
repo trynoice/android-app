@@ -241,7 +241,6 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
     fun refreshDownloads(context: Context, expedited: Boolean = false) {
       OneTimeWorkRequestBuilder<SoundDownloadsRefreshWorker>()
         .also { if (expedited) it.setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST) }
-        .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
         .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 10, TimeUnit.SECONDS)
         .setConstraints(
           Constraints.Builder()

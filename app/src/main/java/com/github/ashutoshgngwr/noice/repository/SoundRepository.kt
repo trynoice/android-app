@@ -149,7 +149,7 @@ class SoundRepository @Inject constructor(
   )
 
   /**
-   * Returns a [Flow] that emits a map of library paths (relative to `library-manifest.json`) to
+   * Returns a [Flow] that emits a map of CDN paths (relative to `library-manifest.json`) to
    * their md5sums as a [Resource].
    *
    * On failures, the flow emits [Resource.Failure] with:
@@ -169,6 +169,10 @@ class SoundRepository @Inject constructor(
     },
   )
 
+  /**
+   * Returns a flow that actively polls ExoPlayer's [DownloadIndex] and emits a map of sound ids
+   * (that are currently downloading or have finished downloading) to their [SoundDownloadState].
+   */
   fun getDownloadStates(): Flow<Map<String, SoundDownloadState>> = flow {
     while (true) {
       val downloads = downloadIndex.getDownloads()
@@ -187,8 +191,8 @@ class SoundRepository @Inject constructor(
         }
       }
 
-      downloads.close()
       emit(states)
+      downloads.close()
       delay(500L)
     }
   }

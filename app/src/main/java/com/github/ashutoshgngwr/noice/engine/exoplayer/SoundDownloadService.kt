@@ -62,7 +62,7 @@ class SoundDownloadService : DownloadService(0x2, DEFAULT_FOREGROUND_NOTIFICATIO
 
   override fun getForegroundNotification(
     downloads: MutableList<Download>,
-    notMetRequirements: Int
+    notMetRequirements: Int,
   ): Notification {
     return notificationHelper.buildProgressNotification(
       this,
@@ -75,7 +75,7 @@ class SoundDownloadService : DownloadService(0x2, DEFAULT_FOREGROUND_NOTIFICATIO
   }
 
   override fun onDestroy() {
-    downloadExecutor.shutdown()
     super.onDestroy()
+    downloadExecutor.shutdown()
   }
 }

@@ -29,13 +29,13 @@ interface CdnApi {
   suspend fun libraryManifest(): LibraryManifest
 
   /**
-   * Retrieves the MD5 checksums for all files present in the library. The checksum for any file
-   * library
+   * Retrieves the MD5 checksums for all files present in the library.
    *
    * Responses:
    * - 200: library manifest download successful.
    * - 500: internal server error.
    *
+   * @return a map of file paths (relative to `library-manifest.json`) to their md5sums.
    * @throws retrofit2.HttpException on HTTP errors.
    * @throws java.io.IOException on network errors.
    */
