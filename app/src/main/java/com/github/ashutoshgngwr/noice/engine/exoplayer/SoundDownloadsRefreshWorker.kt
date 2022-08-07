@@ -27,6 +27,7 @@ import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.google.android.exoplayer2.database.DatabaseIOException
+import com.google.android.exoplayer2.offline.Download
 import com.google.android.exoplayer2.offline.DownloadIndex
 import com.google.android.exoplayer2.offline.DownloadRequest
 import com.google.android.exoplayer2.offline.DownloadService
@@ -120,14 +121,22 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
     try {
       val downloadCursor = withContext(Dispatchers.IO) { downloadIndex.getDownloads() }
       while (downloadCursor.moveToNext()) {
-        // check if this download is still needed and is up to date with the CDN server.
         val request = downloadCursor.download.request
+        // check if this item wasn't removed from the download list.
         if (request.id !in segmentPathsToSoundIds) {
           Log.d(LOG_TAG, "doWork: ${request.id} has been removed")
           removeExoPlayerDownload(request.id)
           continue
         }
 
+        // check if this item didn't fail to download.
+        if (downloadCursor.download.state == Download.STATE_FAILED) {
+          Log.d(LOG_TAG, "doWork: ${request.id} failed to download and will be rescheduled")
+          removeExoPlayerDownload(request.id)
+          continue
+        }
+
+        // check if this item is in sync with the CDN server.
         val metadataJson = request.data.decodeToString()
         val metadata = gson.fromJson(metadataJson, SoundDownloadMetadata::class.java)
         if (metadata.md5sum != md5sums[request.id]) {
@@ -152,7 +161,6 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
       addExoPlayerDownload(path, SoundDownloadMetadata(md5sums.getValue(path), soundId))
     }
 
-    DownloadService.sendResumeDownloads(context, SoundDownloadService::class.java, true)
     return Result.success()
   }
 
