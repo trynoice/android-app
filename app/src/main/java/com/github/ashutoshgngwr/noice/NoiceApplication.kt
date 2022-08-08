@@ -82,14 +82,7 @@ class NoiceApplication : Application(), Configuration.Provider {
     @Provides
     @Singleton
     fun cacheStore(@ApplicationContext context: Context): May {
-      val cacheStoreDir = File(context.filesDir, "api-client-cache").also { it.mkdirs() }
-      val cacheStoreFile = File(cacheStoreDir, "${BuildConfig.VERSION_NAME}.may.db")
-
-      // delete old cache stores. a single store may have multiple files (with same basename).
-      cacheStoreDir.listFiles { f -> !f.name.startsWith(BuildConfig.VERSION_NAME) }
-        ?.forEach { f -> f.deleteRecursively() }
-
-      return May.openOrCreateDatastore(cacheStoreFile)
+      return May.openOrCreateDatastore(context, "app-cache.may.db", Context.MODE_PRIVATE)
     }
   }
 
