@@ -18,7 +18,7 @@ plugins {
 project.ext {
   config = [
     minSdkVersion    : 21,
-    compileSdkVersion: 31,
+    compileSdkVersion: 32,
     javaCompatibility: JavaVersion.VERSION_1_8,
     kotlinJvmTarget  : '1.8',
   ]
