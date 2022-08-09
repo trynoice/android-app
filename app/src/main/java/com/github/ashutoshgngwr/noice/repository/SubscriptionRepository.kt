@@ -25,9 +25,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import retrofit2.HttpException
 import java.io.IOException
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.min
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -137,7 +139,10 @@ class SubscriptionRepository @Inject constructor(
    * @see Resource
    */
   fun getActive(): Flow<Resource<Subscription>> = fetchNetworkBoundResource(
-    loadFromCache = { cacheStore.getAs("${SUBSCRIPTION_KEY_PREFIX}/active") },
+    loadFromCache = {
+      cacheStore.getAs<Subscription>("${SUBSCRIPTION_KEY_PREFIX}/active")
+        ?.takeIf { it.renewsAt?.after(Date()) ?: false }
+    },
     loadFromNetwork = {
       apiClient.subscriptions()
         .list(onlyActive = true)
@@ -250,15 +255,14 @@ class SubscriptionRepository @Inject constructor(
         .lastOrNull()
 
       first = false
-      val expiresAt = r?.data?.renewsAt?.time
-      val delay = if (expiresAt == null || expiresAt < System.currentTimeMillis()) {
-        60_000L
-      } else {
-        min(60_000L, expiresAt - System.currentTimeMillis())
-      }.toDuration(DurationUnit.MILLISECONDS)
+      val pollDelay = r?.data?.renewsAt
+        ?.takeIf { it.after(Date()) }
+        ?.let { min(5 * 60_000L, it.time - System.currentTimeMillis()) }
+        ?.toDuration(DurationUnit.MILLISECONDS)
+        ?: 1.minutes
 
-      Log.d(LOG_TAG, "pollSubscriptionStatus: scheduling poll after $delay")
-      delay(delay)
+      Log.d(LOG_TAG, "pollSubscriptionStatus: scheduling poll after $pollDelay")
+      delay(pollDelay)
     }
   }
 
