@@ -256,7 +256,7 @@ class PresetRepository @Inject constructor(
       val presetV1 = presetV0.toPresetV1()
       // only append to existing presets if another preset with same player states doesn't exist.
       if (presetsV1.none { it.playerStates == presetV1.playerStates }) {
-        presetsV1.add(presetV1)
+        presetsV1.add(presetV1.copy(name = "${presetV1.name} (v0)"))
       }
     }
 
@@ -285,7 +285,7 @@ class PresetRepository @Inject constructor(
       val presetV2 = presetV1.toPresetV2()
       // only append to existing presets if another preset with same player states doesn't exist.
       if (presetsV2.none { it.playerStates.contentEquals(presetV2.playerStates) }) {
-        presetsV2.add(presetV2)
+        presetsV2.add(presetV2.copy(name = "${presetV2.name} (v1)"))
       }
     }
 
