@@ -362,6 +362,7 @@ class PresetViewHolder(
     this.preset = preset
     this.hasAppShortcut = hasAppShortcut
     binding.title.text = preset.name
+    binding.title.isSelected = true
     binding.playButton.isChecked = isPlaying
   }
 }
