@@ -50,7 +50,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
   internal lateinit var crashlyticsProvider: CrashlyticsProvider
 
   private val createDocumentActivityLauncher = registerForActivityResult(
-    ActivityResultContracts.CreateDocument(),
+    ActivityResultContracts.CreateDocument("application/json"),
     this::onCreateDocumentResult
   )
 

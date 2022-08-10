@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -29,7 +30,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), MenuProvider {
 
   private lateinit var binding: HomeFragmentBinding
   private var playerManagerState = PlaybackState.STOPPED
@@ -55,17 +56,13 @@ class HomeFragment : Fragment() {
   @set:Inject
   internal lateinit var playbackController: PlaybackController
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setHasOptionsMenu(true)
-  }
-
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = HomeFragmentBinding.inflate(inflater, container, false)
     return binding.root
   }
 
   override fun onViewCreated(view: View, state: Bundle?) {
+    requireActivity().addMenuProvider(this, viewLifecycleOwner)
     if (settingsRepository.shouldDisplayPresetsAsHomeScreen()) {
       homeNavGraph.setStartDestination(R.id.presets)
     }
@@ -85,39 +82,43 @@ class HomeFragment : Fragment() {
     }
   }
 
-  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+  override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
     castApiProvider.addMenuItem(requireContext(), menu, R.string.cast_media)
     val displayPlaybackControls = homeNavController.currentDestination?.id != R.id.wake_up_timer
       && PlaybackState.STOPPED != playerManagerState
 
     if (displayPlaybackControls) {
-      addPlaybackToggleMenuItem(menu)
+      if (playerManagerState.oneOf(PlaybackState.PAUSED, PlaybackState.PAUSING)) {
+        createResumeMenuItem(menu)
+      } else {
+        createPauseMenuItem(menu)
+      }
     }
-
-    super.onCreateOptionsMenu(menu, inflater)
   }
 
-  private fun addPlaybackToggleMenuItem(menu: Menu): MenuItem {
-    return if (playerManagerState.oneOf(PlaybackState.PAUSED, PlaybackState.PAUSING)) {
-      menu.add(0, R.id.action_resume, 0, R.string.play).apply {
-        setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-        setIcon(R.drawable.ic_baseline_play_arrow_24)
-        setOnMenuItemClickListener {
-          playbackController.resume()
-          analyticsProvider.logEvent("playback_toggle_click", bundleOf())
-          true
-        }
+  override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+    return false
+  }
+
+  private fun createPauseMenuItem(menu: Menu): MenuItem {
+    return menu.add(0, R.id.action_pause, 0, R.string.pause)
+      .apply { setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM) }
+      .setIcon(R.drawable.ic_baseline_pause_24)
+      .setOnMenuItemClickListener {
+        playbackController.pause()
+        analyticsProvider.logEvent("playback_toggle_click", bundleOf())
+        true
       }
-    } else {
-      menu.add(0, R.id.action_pause, 0, R.string.pause).apply {
-        setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-        setIcon(R.drawable.ic_baseline_pause_24)
-        setOnMenuItemClickListener {
-          playbackController.pause()
-          analyticsProvider.logEvent("playback_toggle_click", bundleOf())
-          true
-        }
+  }
+
+  private fun createResumeMenuItem(menu: Menu): MenuItem {
+    return menu.add(0, R.id.action_resume, 0, R.string.play)
+      .apply { setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM) }
+      .setIcon(R.drawable.ic_baseline_play_arrow_24)
+      .setOnMenuItemClickListener {
+        playbackController.resume()
+        analyticsProvider.logEvent("playback_toggle_click", bundleOf())
+        true
       }
-    }
   }
 }

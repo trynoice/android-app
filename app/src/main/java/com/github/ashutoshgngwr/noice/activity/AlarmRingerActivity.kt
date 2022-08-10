@@ -128,7 +128,7 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     }
 
     WindowCompat.setDecorFitsSystemWindows(window, false)
-    WindowCompat.getInsetsController(window, binding.root)?.apply {
+    WindowCompat.getInsetsController(window, binding.root).apply {
       systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
       hide(WindowInsetsCompat.Type.systemBars())
     }
