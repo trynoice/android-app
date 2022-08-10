@@ -189,4 +189,5 @@
     <string name="i_understand">Я понимаю.</string>
     <string name="deleting_account">Удаление учетной записи</string>
     <string name="account_details_update_success">Данные вашей учетной записи успешно обновлены.</string>
+    <string name="premium">Премиум</string>
 </resources>
