@@ -5,8 +5,8 @@ plugins {
   id 'org.jetbrains.kotlin.kapt' version "${kotlinVersion}" apply false
 
   id 'androidx.navigation.safeargs.kotlin' version "${navVersion}" apply false
-  id 'com.google.android.gms.oss-licenses-plugin' version '0.10.5' apply false
   id 'com.google.dagger.hilt.android' version "${hiltVersion}" apply false
+  id 'com.mikepenz.aboutlibraries.plugin' version "${aboutLibrariesVersion}" apply false
 
   id 'com.google.gms.google-services' version '4.3.10' apply false // sed:free-build:remove
   id 'com.google.firebase.crashlytics' version '2.8.1' apply false // sed:free-build:remove
@@ -24,15 +24,16 @@ project.ext {
   ]
 
   deps = [
-    coroutinesVersion : '1.6.4',
-    hiltVersion       : "${hiltVersion}",
-    kotlinVersion     : "${kotlinVersion}",
-    lifecycleVersion  : '2.5.1',
-    navVersion        : "${navVersion}",
+    aboutLibrariesVersion: "${aboutLibrariesVersion}",
+    coroutinesVersion    : '1.6.4',
+    hiltVersion          : "${hiltVersion}",
+    kotlinVersion        : "${kotlinVersion}",
+    lifecycleVersion     : '2.5.1',
+    navVersion           : "${navVersion}",
 
-    junitVersion      : '4.13.2',
-    robolectricVersion: '4.8.1',
-    testCoreVersion   : '1.4.0',
+    junitVersion         : '4.13.2',
+    robolectricVersion   : '4.8.1',
+    testCoreVersion      : '1.4.0',
   ]
 }
 

@@ -307,7 +307,19 @@
     android:id="@+id/about"
     android:name="com.github.ashutoshgngwr.noice.fragment.AboutFragment"
     android:label="@string/about"
-    tools:layout="@layout/about_page" />
+    tools:layout="@layout/about_page">
+
+    <action
+      android:id="@+id/oss_licenses"
+      app:destination="@id/oss_licenses" />
+
+  </fragment>
+
+  <fragment
+    android:id="@+id/oss_licenses"
+    android:name="com.mikepenz.aboutlibraries.ui.LibsSupportFragment"
+    android:label="@string/oss_licenses"
+    tools:layout="@layout/fragment_opensource" />
 
   <fragment
     android:id="@+id/support_development"
