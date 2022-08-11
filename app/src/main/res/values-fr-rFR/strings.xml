@@ -286,4 +286,13 @@
     <string name="sign_in_link_tip">Veuillez ouvrir le lien reçu en utilisant Noice pour compléter le processus de connexion.</string>
     <string name="subscription_payment_confirmation_failed">Oh oh ! Nous avons eu des problèmes lors de l\'attente de la confirmation du paiement. Cela peut être dû à une erreur de réseau ou à un retard du fournisseur de paiement. Nous mettrons à jour l\'état de votre abonnement dès que nous aurons des nouvelles du fournisseur. Veuillez vérifier l\'état de votre abonnement après un certain temps.</string>
     <string name="use_material_you_colors">Utiliser des couleurs Material You</string>
+    <string name="remove_all_sound_downloads_confirmation">Cela va supprimer tous les sons téléchargés pour une lecture hors-ligne. Voulez-vous continuer \?</string>
+    <string name="sound_downloads_scheduled_for_removal">La suppression de tous les sons téléchargés est planifiée.</string>
+    <string name="notification_channel_sound_downloads__name">Sons téléchargés</string>
+    <string name="notification_channel_sound_downloads__description">Notifications de progression liées au sons téléchargés.</string>
+    <string name="remove_sound_download_confirmation">Confirmez-vous la suppression de tous les sons téléchargés pour la lecture hors-ligne \?</string>
+    <string name="remove_all_sound_downloads">Effacer tous les sons téléchargés</string>
+    <string name="remove_sound_download">Supprimer %1$s</string>
+    <string name="download_sound">Téléchargement de sons</string>
+    <string name="checking_sound_downloads">Vérification des sons téléchargés</string>
 </resources>
