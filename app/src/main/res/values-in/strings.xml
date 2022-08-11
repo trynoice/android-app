@@ -5,7 +5,7 @@
     <string name="help">Bantuan</string>
     <string name="library">Perpustakaan</string>
     <string name="report_issue">Laporkan Masalah</string>
-    <string name="presets">Preset</string>
+    <string name="presets">Prasetel</string>
     <string name="sleep_timer">Pengatur Waktu Tidur</string>
     <string name="support_development">Dukung Pengembangan</string>
     <string name="wake_up_timer">Pengatur Waktu Bangun</string>
@@ -150,4 +150,26 @@
     <string name="failed_to_load_inapp_purchases">Gagal memuat detail pembelian dalam aplikasi. Silakan coba lagi nanti!</string>
     <string name="created_by">Dibuat oleh</string>
     <string name="enable_media_buttons_summary">Gunakan tombol media perangkat keras untuk mengontrol pemutaran</string>
+    <string name="delete_account">Hapus akun</string>
+    <string name="invalid_name">Nama yang dimasukkan tidak berlaku!</string>
+    <string name="sign_up_message">Silakan masukkan nama dan surel Anda untuk mendaftar.</string>
+    <string name="account_locked_error">Surel Anda sedang dikunci untuk sementara dari upaya masuk hingga %1$s.</string>
+    <string name="email">Surel</string>
+    <string name="sound_fade_out_duration_summary">Durasi waktu untuk suara yang memudar (dalam detik)</string>
+    <string name="update_details">Detil pembaharuan</string>
+    <string name="network_error">Jaringan tidak dapat dijangkau.</string>
+    <string name="sign_in_message">Silakan masukkan email Anda untuk masuk.</string>
+    <string name="invalid_email">Surel yang dimasukkan tidak berlaku!</string>
+    <string name="sign_up">Daftar</string>
+    <string name="view_subscription_plans">Lihat rencana</string>
+    <string name="welcome_back">Selamat datang!</string>
+    <string name="sound_fade_out_duration">Durasi pemudaran suara</string>
+    <string name="support">Dukung</string>
+    <string name="sign_in">Masuk</string>
+    <string name="unknown_error">Terjadi galat tak diketahui.</string>
+    <string name="support_development__donate_description">Jika Anda belum membeli langganan premium, Anda dapat melakukan pembayaran sekali. Ini akan membantu kami mempertahankan pengembangan fitur gratis dan membiarkannya tetap bebas iklan selamanya.</string>
+    <string name="random_preset_description">Prasetel yang dihasilkan kemungkinan berisi suara dengan kata kunci yang dipilih. Selain itu, prasetel intens akan berupaya memainkan suara lebih banyak secara bersamaan.</string>
+    <string name="account">Akun</string>
+    <string name="app">Apli</string>
+    <string name="sign_out">Keluar</string>
 </resources>
