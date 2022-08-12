@@ -172,4 +172,36 @@
     <string name="account">Akun</string>
     <string name="app">Apli</string>
     <string name="sign_out">Keluar</string>
+    <string name="deleting_account">Hapus akun</string>
+    <string name="sign_up_email_sent">Kami telah mengirim email berisi tautan untuk masuk ke \"%1$s\".</string>
+    <string name="monthly">Bulanan</string>
+    <string name="offline">Anda offline</string>
+    <string name="yearly">Tahunan</string>
+    <string name="i_understand">Saya mengerti.</string>
+    <string name="monthly_price">%1$s per bulan</string>
+    <string name="duplicate_email_error">Email yang dimasukkan telah terhubung dengan akun lain.</string>
+    <string name="sign_in_email_sent">Kami telah mengirim email berisi tautan untuk masuk ke \"%1$s\" jika email ini telah terdaftar.</string>
+    <string name="mailbox_app_not_found">Uh-oh! Kami tidak bisa menemukan aplikasi kotak surat di perangkatmu!</string>
+    <string name="sign_in_token_error">Tautan untuk masuk sepertinya tidak valid. Kemungkinan sudah kadaluarsa. Harap coba lagi!</string>
+    <string name="sign_out_confirmation">Yakin keluar\?</string>
+    <string name="account_details_update_success">Detail akun Anda berhasil diperbarui.</string>
+    <string name="quarterly">3 Bulanan</string>
+    <string name="benefits">Manfaat</string>
+    <string name="welcome">Selamat datang!</string>
+    <string name="retry">Ulangi</string>
+    <string name="sign_in_sucessful">Sukses masuk!</string>
+    <string name="cont">Lanjut</string>
+    <string name="back_online">Kembali online</string>
+    <string name="premium">Premium</string>
+    <string name="total_price">%1$s total</string>
+    <string name="sign_in_link_tip">Tolong buka tautan yang telah diterima menggunakan Noice untuk menyelesaikan proses masuk.</string>
+    <string name="open_mailbox">Buka Kotak Surat</string>
+    <string name="signing_in">Masuk</string>
+    <string name="signing_out">Keluar</string>
+    <plurals name="n_months">
+        <item quantity="other">%1$d bulan</item>
+    </plurals>
+    <plurals name="trial_period">
+        <item quantity="other">%1$d hari pertama gratis</item>
+    </plurals>
 </resources>
