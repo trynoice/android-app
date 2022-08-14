@@ -1,0 +1,2 @@
+Wir arbeiten ständig daran, Noice besser zu machen. Bitte schalten Sie automatische Updates ein, um nichts zu verpassen!
+Bitte besuchen Sie https://github.com/trynoice/android-app/releases, um zu sehen, was in dieser Version neu ist.
