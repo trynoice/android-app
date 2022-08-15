@@ -172,6 +172,4 @@ dependencies {
   androidTestImplementation "com.google.dagger:hilt-android-testing:$deps.hiltVersion"
   androidTestImplementation "io.mockk:mockk-android:$mockkVersion"
   androidTestImplementation "junit:junit:$deps.junitVersion"
-
-  androidTestFullImplementation 'tools.fastlane:screengrab:2.1.1'
 }
