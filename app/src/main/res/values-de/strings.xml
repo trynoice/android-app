@@ -80,7 +80,7 @@
     Wir danken dir von ganzem Herzen für deine großzügige Spende an das Noice-Projekt.
   </string>
     <string name="support_development__share">Mit Freunden teilen</string>
-    <string name="support_development__share_description">Noice mit Freunden zu teilen ist fast genau so wichtig wie Geld zu spenden. Mit mehr Downloads können wir Feedback aus vielen unterschiedlichen Perspektiven erhalten, welches uns dabei hilft Noice noch besser zu machen.</string>
+    <string name="support_development__share_description">Noice mit Freunden zu teilen ist fast genau so wichtig wie Geld zu spenden. Erzähle auch gerne deinen Freunden von uns. Mit mehr Nutzern können wir Feedback aus vielen unterschiedlichen Perspektiven erhalten, welches uns dabei hilft unsere Dienste noch besser zu machen.</string>
     <string name="cast_media">Mit Chromecast verbinden</string>
     <string name="in_app_feedback__description">
     Wir würden uns freuen von Ihnen über die App zu hören. Bitte nehmen Sie sich einen Moment um das Github Repositorie zu besuchen.
@@ -184,5 +184,29 @@
     <string name="mailbox_app_not_found">Oh, oh! Wir konnten keine Mailbox-App auf Ihrem Gerät finden!</string>
     <string name="invalid_email">Die eingegebene E-Mail ist ungültig!</string>
     <string name="view_subscription_plans">Pläne ansehen</string>
-    <string name="app"/>
+    <string name="app">App</string>
+    <string name="subscription_payment_confirmation_failed">Oje! Wir hatten Probleme beim Warten auf die Zahlungsbestätigung. Möglicherweise handelt es sich um einen Netzwerkfehler oder eine Verzögerung durch den Zahlungsanbieter. Wir werden Ihren Abonnementstatus aktualisieren, sobald wir vom Anbieter hören. Bitte überprüfen Sie den Status Ihres Abonnements nach einiger Zeit.</string>
+    <string name="payment_processing_error">Oh-oh! Wir konnten deine Zahlung nicht verarbeiten. Der Betrag sollte automatisch zurückerstattet werden, falls er abgerechnet wurde. Wenn du in der nächsten Woche keine Rückerstattung bekommst, bitte gib uns Bescheid.</string>
+    <string name="back_online">Wieder online</string>
+    <string name="account_details_update_success">Deine Account-Informationen wurden erfolgreich aktualisiert.</string>
+    <string name="yearly">Jährlich</string>
+    <string name="benefit_2">Offline Wiedergabe</string>
+    <string name="get_premium">Holen Sie sich Premium</string>
+    <string name="monthly_price">%1$s pro Monat</string>
+    <string name="benefits">Vorteile</string>
+    <string name="monthly">Monatlich</string>
+    <string name="processing_payment">Bearbeite Zahlung</string>
+    <string name="total_price">Insgesamt %1$s</string>
+    <string name="confirming_payment">Bestätige Zahlung</string>
+    <string name="subscription_payment_cancelled">Die Zahlung des Abonnements wurde storniert!</string>
+    <string name="quarterly">Vierteljährlich</string>
+    <string name="benefit_1">Audio streaming in hoher Qualität</string>
+    <string name="offline">Du bist offline</string>
+    <string name="premium">Premium</string>
+    <string name="random_preset_description">Die erzeugte Voreinstellung enthält wahrscheinlich Klänge mit den gewählten Schlüsselwörtern. Außerdem wird bei intensiven Voreinstellungen versucht, mehrere Sounds gleichzeitig abzuspielen.</string>
+    <string name="benefit_0">Natürliche Variationen von Klängen</string>
+    <string name="sign_in_to_continue">Bitte logge dich ein oder erstelle ein Konto um fortzufahren.</string>
+    <string name="duplicate_email_error">Die eingegebene E-Mail ist bereits mit einem anderen Konto verknüpft.</string>
+    <string name="remove_sound_download_confirmation">Bestätigen Sie das Entfernen eines für die Offline-Wiedergabe heruntergeladenen Tons\?</string>
+    <string name="remove_sound_download">%1$s entfernen</string>
 </resources>

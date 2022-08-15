@@ -289,4 +289,16 @@
     <string name="showing_localised_prices">कीमतें [भारतीय रुपये](https://en.wikipedia.org/wiki/Indian_rupee) से बदली गई हैं। वास्तविक कीमतों में थोड़ा अंतर हो सकता है।</string>
     <string name="use_material_you_colors">मटीरियल यू कलर्स का इस्तेमाल करें</string>
     <string name="use_material_you_colors_summary">एंड्रॉइड सिस्टम से मटीरियल यू कलर पैलेट को इनहेरिट करेगा</string>
+    <string name="stripe_customer_portal_error">उफ़! हम बिलिंग पोर्टल नहीं खोल सके. %1$s कृपया पुन: प्रयास करें!</string>
+    <string name="download_sound">ध्वनि डाउनलोड करें</string>
+    <string name="remove_sound_download">%1$s को हटाएं</string>
+    <string name="remove_all_sound_downloads_confirmation">यह ऑफ़लाइन प्लेबैक के लिए डाउनलोड की गई सभी ध्वनियों को हटा देगा। क्या आप आगे बढ़ना चाहते हैं\?</string>
+    <string name="notification_channel_sound_downloads__description">ध्वनि डाउनलोड से संबंधित प्रगति सूचनाएं।</string>
+    <string name="sound_download_scheduled_for_removal">डाउनलोड की गई ध्वनियों से निकालने के लिए %1$s को शेड्यूल किया जा रहा है।</string>
+    <string name="notification_channel_sound_downloads__name">ध्वनि डाउनलोड्स</string>
+    <string name="checking_sound_downloads">डाउनलोड की गई ध्वनियाँ जांची जा रही है</string>
+    <string name="sound_downloads_scheduled_for_removal">डाउनलोड की गई सभी ध्वनियां निकालने के लिए सफलतापूर्वक शेड्यूल कर दी गई हैं।</string>
+    <string name="remove_all_sound_downloads">डाउनलोड की गई सभी ध्वनियां हटाएं</string>
+    <string name="remove_sound_download_confirmation">ऑफ़लाइन प्लेबैक के लिए डाउनलोड की गई ध्वनि निकालने की पुष्टि करें\?</string>
+    <string name="sound_scheduled_for_download">डाउनलोड के लिए %1$s शेड्यूल किया जा रहा है।</string>
 </resources>
