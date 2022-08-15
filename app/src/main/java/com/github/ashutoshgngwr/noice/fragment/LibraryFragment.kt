@@ -302,8 +302,11 @@ class LibraryViewModel @Inject constructor(
     presetRepository.listFlow(),
   ) { playerManagerState, playerStates, presets ->
     playerStates
-      // exclude stopping and stopped players from active preset
-      .filterNot { it.playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
+      // exclude stopping and stopped players from active preset if manager is not stopping.
+      .filterNot {
+        playerManagerState != PlaybackState.STOPPING
+          && it.playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED)
+      }
       .toTypedArray()
       .let { s ->
         playerManagerState != PlaybackState.STOPPED
