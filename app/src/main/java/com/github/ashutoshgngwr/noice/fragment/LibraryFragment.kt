@@ -217,6 +217,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
   override fun onSoundDownloadClicked(sound: Sound) {
     SoundDownloadsRefreshWorker.addSoundDownload(requireContext(), sound.id)
+    showSuccessSnackBar(getString(R.string.sound_scheduled_for_download, sound.name))
   }
 
   override fun onRemoveSoundDownloadClicked(sound: Sound) {
@@ -226,6 +227,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
       negativeButton(R.string.cancel)
       positiveButton(R.string.delete) {
         SoundDownloadsRefreshWorker.removeSoundDownload(requireContext(), sound.id)
+        showSuccessSnackBar(getString(R.string.sound_download_scheduled_for_removal, sound.name))
       }
     }
   }
