@@ -295,4 +295,6 @@
     <string name="remove_sound_download">Supprimer %1$s</string>
     <string name="download_sound">Téléchargement de sons</string>
     <string name="checking_sound_downloads">Vérification des sons téléchargés</string>
+    <string name="sound_scheduled_for_download">Planification de %1$s pour le téléchargement.</string>
+    <string name="sound_download_scheduled_for_removal">Planification %1$s pour la suppression de téléchargements son.</string>
 </resources>
