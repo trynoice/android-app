@@ -4,8 +4,6 @@ on:
     branches:
       - main
       - "[0-9]+.[0-9]+.x"
-    tags:
-      - "[0-9]+.[0-9]+.[0-9]+"
     paths:
       - "fastlane/**"
       - ".github/workflows/fastlane-metadata.yaml"
@@ -31,7 +29,7 @@ jobs:
   play-store-upload:
     name: Play Store Upload
     needs: validate
-    if: github.event_name == 'push' && startsWith(github.ref , 'refs/tags/')
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
