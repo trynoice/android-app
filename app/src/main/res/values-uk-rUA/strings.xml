@@ -295,4 +295,6 @@
     <string name="remove_all_sound_downloads_confirmation">Буде вилучено всі звуки, завантажені для офлайн-відтворення. Бажаєте продовжити\?</string>
     <string name="checking_sound_downloads">Перевірка завантаження звуків</string>
     <string name="remove_all_sound_downloads">Вилучити всі завантажені звуки</string>
+    <string name="sound_scheduled_for_download">Планування %1$s для завантаження.</string>
+    <string name="sound_download_scheduled_for_removal">Планування вилучення %1$s із завантажень звуку.</string>
 </resources>
