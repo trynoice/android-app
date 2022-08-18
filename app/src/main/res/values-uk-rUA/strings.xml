@@ -39,18 +39,16 @@
     <string name="app_theme_dark">Темна</string>
     <string name="app_theme_system_default">За системними налаштуваннями</string>
     <string name="app_description">Розслабтеся та зосередьтеся за допомогою природного заспокійливого шуму.</string>
-    <string name="appintro__chromecast_desc">Користуйтеся Noice щоб передати його атмосферу до інших Chromecast сумісних пристроїв, таких як гучномовці, ТВ тощо.</string>
+    <string name="appintro__chromecast_desc">Використовуйте Noice для передавання його атмосфери до інших сумісних із Chromecast пристроїв, як-от колонки, ТВ тощо.</string>
     <string name="appintro__chromecast_title">Chromecast увімкнено</string>
-    <string name="appintro__getting_started_desc_0">
-    Проведіть пальцем ліворуч щоб дізнатись всі функції!
-  </string>
+    <string name="appintro__getting_started_desc_0">Посуньте ліворуч, щоб дізнатись про всі функції!</string>
     <string name="appintro__getting_started_desc_1">Почнімо!</string>
     <string name="appintro__getting_started_title">Вітаємо</string>
     <string name="appintro__presets_desc">Після відтворення кількох звуків ви можете натиснути кнопку у нижньому куті, щоб зберегти свої поєднання. Щоб застосувати їх ви можете перейти до списку поєднань через меню застосунку.</string>
     <string name="appintro__presets_title">Збережіть свої улюблені мікси</string>
     <string name="appintro__library_desc">Використовуйте повзунок гучності, щоб відрегулювати гучність звуків. За кожного програвання нециклічних звуків період затримки обирається випадково з діапазону за допомогою повзунка часу.</string>
-    <string name="appintro__library_title">Створіть своє ідеальне оточення</string>
-    <string name="appintro__timer_desc">Маленька атмосфера може допомогти вам заснути без зусиль. Скористайтеся таймером сну, щоб дозволити Noice вимкнутися та таймер пробудження, щоб встановити будильник і прокинутись у спокійному оточенні.</string>
+    <string name="appintro__library_title">Створіть своє ідеальне середовище</string>
+    <string name="appintro__timer_desc">Власна атмосфера може допомогти вам заснути без зусиль. Скористайтеся таймером сну, щоб дозволити Noice вимкнутися та таймер пробудження, щоб установити будильник і прокинутись у спокійному середовищі.</string>
     <string name="appintro__timer_title">Важко заснути або прокинутись?</string>
     <string name="support_development__donate">Допомогти</string>
     <string name="support_development__donate_google_play_description">Ваш платіж буде безпечно оброблено через Google Play. Додаткові податки _можуть_ бути додані до кінцевої суми в залежності від вашого місця перебування.</string>
@@ -58,11 +56,7 @@
     <string name="support_development__share">Поділитися з друзями</string>
     <string name="support_development__share_description">Ви також можете допомогти нам, розповівши про нас своїм друзям. Більше користувачів надасть нам різні погляди та допоможуть удосконалити наші послуги.</string>
     <string name="cast_media">Під\'єднатись до Chromecast</string>
-    <string name="in_app_feedback__description">
-    Ми хотіли б почути що Ви думаєте про додаток. Відвідайте, будь ласка, наш GitHub репозиторій.
-    Якщо Вам не сподобався додаток, будь ласка, відкрийте issue з поясненням. В іншому випадку, будь
-    ласка, поставте проєкту зірочку щоб показати любов та підтримку.
-  </string>
+    <string name="in_app_feedback__description">Ми хотіли б почути, що ви думаєте про застосунок. Будь ласка, відвідайте наш репозиторій на GitHub. Якщо вам не сподобався застосунок, будь ласка, відкрийте обговорення з поясненням. В іншому випадку, будь ласка, поставте проєкту зірочку, щоб висловити свою любов і підтримку.</string>
     <string name="in_app_feedback__title">Відправити рецензію</string>
     <string name="later">Пізніше</string>
     <string name="never">Ніколи</string>
@@ -187,8 +181,8 @@
     <string name="account">Обліковий запис</string>
     <string name="app">Застосунок</string>
     <string name="view_subscription_plans">Переглянути плани</string>
-    <string name="sign_in_message">Введіть свою електронну пошту для входу.</string>
-    <string name="sign_up_message">Введіть своє ім\'я та електронну пошту, щоб зареєструватися.</string>
+    <string name="sign_in_message">Введіть свою електронну адресу для входу.</string>
+    <string name="sign_up_message">Введіть своє ім\'я та електронну адресу, щоб зареєструватися.</string>
     <string name="email">Е-пошта</string>
     <string name="account_locked_error">Ваша електронна пошта тимчасово заблокована від спроб входу до %1$s.</string>
     <string name="sign_up_email_sent">Ми надіслали вам посилання для входу на адресу «%1$s».</string>
