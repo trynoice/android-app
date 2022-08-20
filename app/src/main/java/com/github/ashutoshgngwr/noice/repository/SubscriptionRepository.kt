@@ -16,13 +16,14 @@ import com.trynoice.api.client.models.GiftCard
 import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionPlan
 import io.github.ashutoshgngwr.may.May
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNot
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.withTimeoutOrNull
 import retrofit2.HttpException
 import java.io.IOException
 import java.util.*
@@ -248,11 +249,18 @@ class SubscriptionRepository @Inject constructor(
   fun pollSubscriptionStatus(): Flow<Resource<Boolean>> = flow {
     var first = true
     while (true) {
-      val r = getActive()
-        // consider only the first loading event and ignore latter loading events.
-        .filterNot { !first && it is Resource.Loading }
-        .onEach { this@flow.emit(isSubscribed(it)) }
-        .lastOrNull()
+      val isUserSignedIn = apiClient.isSignedIn()
+      val r = if (isUserSignedIn) {
+        getActive()
+          // consider only the first loading event and ignore latter loading events.
+          .filterNot { !first && it is Resource.Loading }
+          .onEach { this@flow.emit(isSubscribed(it)) }
+          .lastOrNull()
+      } else {
+        this@flow.emit(Resource.Success(false))
+        Log.d(LOG_TAG, "pollSubscriptionStatus: user is not signed-in")
+        null
+      }
 
       first = false
       val pollDelay = r?.data?.renewsAt
@@ -261,8 +269,15 @@ class SubscriptionRepository @Inject constructor(
         ?.toDuration(DurationUnit.MILLISECONDS)
         ?: 1.minutes
 
-      Log.d(LOG_TAG, "pollSubscriptionStatus: scheduling poll after $pollDelay")
-      delay(pollDelay)
+      Log.d(
+        LOG_TAG,
+        "pollSubscriptionStatus: scheduling poll after $pollDelay or sooner if sign-in state changes"
+      )
+      // wait until timeout or signed-in state change
+      withTimeoutOrNull(pollDelay) {
+        apiClient.getSignedInState()
+          .firstOrNull { it != isUserSignedIn }
+      }
     }
   }
 
