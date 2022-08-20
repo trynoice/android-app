@@ -1,35 +1,52 @@
-For a lot of people, a little background noise is helpful to calm down and focus. Background noise can help minimise the effects of stress. In some cases, it's also a boost to productivity. It also helps people in masking their tinnitus.
+For a lot of people, a little uniform background noise is helpful to remain calm and focused. In some cases, it also boosts productivity and lowers the effects of stress and anxiety. Background noise also masks tinnitus, calms agitated infants and improves reading and meditation experiences.
 
-Noice is an app that allows you to create a customised ambience using clips from environmental noise sources. Create your perfect surroundings by combining different sounds to drown out distractions so you can focus on your work or generate peaceful environments for relaxation.
+Noice is an app that allows you to create personalised sound environments. It enables you to combine different sounds at different volume levels to create perfect ambient atmospheres. These custom sound surroundings let you drown out distractions and allow you to concentrate. You can also use it to generate a serene, peaceful aura that encourages you to relax and fall asleep.
 
-<b>Features</b>
-- 35 recorded noises
-- Google Cast (Chromecast) enabled (on Play Store only)
-- Auto sleep timer
-- Alarm Clock
-- Generate random mixes
-- Make a customised mix
-- Save your favourite mixes
-- Play alongside other music players
-- Individual volume control for each noise source
-- Offline playback
-- Light and dark app theme variants
+<b>BENEFITS</b>
+• Reduce your stress and anxiety using a personalised ambience
+• Relax and unwind in a pacifying environment of your choice
+• Boost your productivity by replacing distracting noise
+• Improve concentration by being in a consistent atmosphere
+• Aid your reading and meditation experience with natural soundscapes
+• Calm down your babies using relaxing sounds
+• Mask your tinnitus with easing noise
+• Block distractions to lay back and fall asleep
+• Soothe your migraines and headaches
 
-<b>Noise library</b>
-- Life set (birds, crickets, wolf, human heartbeat, etc.)
-- Forest set (bonfire, night, wind, palm trees, etc.)
-- Monsoon set (rain, thunders)
-- Teleportation set (coffee shop, library, office, seaside, riverbank, etc.)
-- Vehicle set (moving train, in-flight, creaking ship, electric car, etc.)
-- Raw noise (white, pink, brownian)
+<b>PREMIUM FEATURES</b>
+• Randomised synthesis of natural variations in sounds, e.g., the intensity of rain will vary with time
+• Full offline playback
+• Ultra high-quality audio for streaming and downloading (up to 320 kbps)
 
-<b>Permissions</b>
-- <b>prevent device from sleeping</b>: to keep device CPU awake during playback
-- <b>run foreground service</b>: to run the player process (different than UI)
-- <b>run at startup</b>: to ensure that wake-up timers persist across reboots
-- <b>full network access</b>: to enable Chromecast and financial contributions
-- <b>view network connections</b>: added by a dependency, currently not in use
-- <b>Google Play billing service</b>: to enable financial contributions for supporting development
+<b>FREE FEATURES</b>
+• Rich sound library
+• Google Cast or Chromecast enabled*
+• Auto sleep timer
+• Alarm Clock
+• Make and save your personalised mixes
+• Random mix generator to suit your every mood
+• Individual volume control for each sound
+• Play alongside a currently playing music player
+• Use Material You Dynamic colours on Android 12L or higher
+• No advertisements of any kind
+
+<i>* Chromecast is only available when you download Noice from Google Play.</i>
+
+<b>SOUND LIBRARY</b>
+• Life (birds, crickets, wolves, heartbeat, purring cat)
+• Weather (morning or dawn, night, rain, thunder)
+• Places (bonfire or campfire, coffee shop, library, office, seaside, riverbank, scuba diving)
+• Travel (train, in-flight, creaking ship, electric car)
+• Things (fan, wall clock, wind chimes)
+• Raw noise (white, pink, brownian)
+
+<b>APP PERMISSIONS</b>
+• <b>view network connections</b>: for sound streaming and downloading
+• <b>full network access</b>: for communicating with the Noice servers, sound streaming and downloading
+• <b>run at startup</b>: for ensuring that Alarms persist across device reboots
+• <b>prevent device from sleeping</b>: for uninterrupted playback when the device is asleep
+• <b>install shortcuts</b>: for adding Preset Shortcuts to the home screen
+• <b>run foreground service</b>: for continuous playback when the app is in the background
 
 Noice is open-source software.
 https://github.com/trynoice/android-app
