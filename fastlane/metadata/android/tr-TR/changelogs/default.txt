@@ -1,2 +1,2 @@
 Noice'i daha iyi hale getirmek için sürekli çalışıyoruz. Hiçbir şeyi kaçırmamak için lütfen otomatik güncellemeleri açın!
-Bu sürümdeki yenilikleri görmek için lütfen https://github.com/trynoice/android-app/releases adresini ziyaret edin.
+Bu sürümdeki yenilikleri görmek için: https://github.com/trynoice/android-app/releases
