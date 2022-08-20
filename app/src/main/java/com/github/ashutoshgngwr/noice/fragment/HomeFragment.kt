@@ -85,7 +85,7 @@ class HomeFragment : Fragment(), MenuProvider {
   override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
     castApiProvider.addMenuItem(requireContext(), menu, R.string.cast_media)
     val displayPlaybackControls = homeNavController.currentDestination?.id != R.id.wake_up_timer
-      && PlaybackState.STOPPED != playerManagerState
+      && !playerManagerState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED)
 
     if (displayPlaybackControls) {
       if (playerManagerState.oneOf(PlaybackState.PAUSED, PlaybackState.PAUSING)) {
