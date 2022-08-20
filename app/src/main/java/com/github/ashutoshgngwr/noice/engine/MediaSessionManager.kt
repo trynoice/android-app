@@ -75,13 +75,13 @@ class MediaSessionManager(context: Context, sessionActivityPi: PendingIntent) {
    */
   fun setPlaybackState(state: PlaybackState) {
     when (state) {
-      PlaybackState.STOPPED -> playbackStateBuilder.setState(
+      PlaybackState.STOPPED, PlaybackState.STOPPING -> playbackStateBuilder.setState(
         PlaybackStateCompat.STATE_STOPPED,
         PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
         0f,
       )
 
-      PlaybackState.PAUSED -> playbackStateBuilder.setState(
+      PlaybackState.PAUSED, PlaybackState.PAUSING -> playbackStateBuilder.setState(
         PlaybackStateCompat.STATE_PAUSED,
         PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
         0f,
