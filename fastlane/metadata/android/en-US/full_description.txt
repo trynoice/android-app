@@ -14,8 +14,7 @@ Noice is an app that allows you to create personalised sound environments. It en
 • Soothe your migraines and headaches
 
 <b>PREMIUM FEATURES</b>
-• Looping sounds are longer
-• Non-looping sounds have multiple variants/samples
+• Longer sounds with multiple variants/samples
 • Randomised synthesis of natural variations in sounds, e.g., the intensity of rain will vary with time
 • Full offline playback
 • Ultra high-quality audio for streaming and downloading (up to 320 kbps)
