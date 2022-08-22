@@ -76,16 +76,8 @@
     <item name="bottomSheetStyle">@style/Widget.App.BottomSheet.Modal</item>
   </style>
 
-  <style name="Widget.App.BottomSheet.Modal" parent="Widget.Design.BottomSheet.Modal">
-    <item name="shapeAppearance">@style/ShapeAppearance.App.BottomSheet.Modal</item>
-  </style>
-
-  <style name="ShapeAppearance.App.BottomSheet.Modal" parent="">
-    <item name="cornerFamily">rounded</item>
-    <item name="cornerSizeTopRight">12dp</item>
-    <item name="cornerSizeTopLeft">12dp</item>
-    <item name="cornerSizeBottomRight">0dp</item>
-    <item name="cornerSizeBottomLeft">0dp</item>
+  <style name="Widget.App.BottomSheet.Modal" parent="Widget.Material3.BottomSheet.Modal">
+    <item name="shapeAppearance">?attr/shapeAppearanceCornerMedium</item>
   </style>
 
   <style name="Base.Theme.App.MediaRouter" parent="Theme.MediaRouter.Light" />
