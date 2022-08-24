@@ -32,4 +32,20 @@
     <string name="open_context_menu">প্রসঙ্গ মেনু খুলুন</string>
     <string name="delete">অপসারণ</string>
     <string name="preset_deleted">পূর্বনির্ধারিত অপসারিত হয়েছে!</string>
+    <string name="add_to_home_screen">নীড়পর্দায় যোগ করুন</string>
+    <string name="wake_up_timer_cancelled">ঘুম-ভাঙার টাইমার বাতিল করা হয়েছে!</string>
+    <string name="preset_info__description">আপনি এখনও কোনও প্রিসেট তৈরি করেননি। একটি প্রিসেট তৈরি করতে, লাইব্রেরিতে যান এবং শব্দগুলি চালান৷ তারপরে পর্দার নীচের কোণে প্রদর্শিত সংরক্ষণ বোতামটিতে ক্লিক করুন।</string>
+    <string name="select_preset">প্রিসেট নির্বাচন করুন</string>
+    <string name="time_bridge">ও</string>
+    <plurals name="time_hours">
+        <item quantity="one">%1$d ঘন্টা</item>
+        <item quantity="other">%1$d ঘন্টা</item>
+    </plurals>
+    <string name="schedule">সময়সূচী</string>
+    <string name="presets_as_home_screen_summary">অ্যাপ স্টার্টআপে \"প্রিসেট\" দেখান (অ্যাপ রিস্টার্ট প্রয়োজন)</string>
+    <string name="pinned_shortcuts_not_supported">আপনার পূর্বনির্ধারিত লঞ্চার শর্টকাট যুক্তকরণ সমর্থন করে না।</string>
+    <string name="reset">পুনর্নির্ধারণ</string>
+    <string name="rename">পুনঃনামকরণ</string>
+    <string name="wake_up_timer_schedule_set">অ্যালার্ম %1$s %2$s %3$s এর মধ্যে বন্ধ হয়ে যাবে</string>
+    <string name="sleep_timer_description">টাইমার শেষ হলে নইস নিজেই বন্ধ হয়ে যাবে। সময় যোগ করতে এবং টাইমার শুরু করতে নীচের বোতামগুলি ব্যবহার করুন৷</string>
 </resources>
