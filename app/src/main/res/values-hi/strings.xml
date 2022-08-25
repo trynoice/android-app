@@ -301,5 +301,5 @@
     <string name="remove_all_sound_downloads">डाउनलोड की गई सभी ध्वनियां हटाएं</string>
     <string name="remove_sound_download_confirmation">ऑफ़लाइन प्लेबैक के लिए डाउनलोड की गई ध्वनि निकालने की पुष्टि करें\?</string>
     <string name="sound_scheduled_for_download">डाउनलोड के लिए %1$s शेड्यूल किया जा रहा है।</string>
-    <string name="play_sound_before_adjusting_volume">"इस ध्वनि का वॉल्यूम नियंत्रित करने के लिए इसे  प्लैबैक करना जरूरी है"</string>
+    <string name="play_sound_before_adjusting_volume">इस ध्वनि का वॉल्यूम नियंत्रित करने के लिए इसे प्लैबैक करना जरूरी है।</string>
 </resources>
