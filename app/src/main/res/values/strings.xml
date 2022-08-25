@@ -313,4 +313,5 @@
     <string name="remove_sound_download_confirmation">Confirm removing a sound downloaded for offline playback?</string>
     <string name="sound_scheduled_for_download">Scheduling %1$s for download.</string>
     <string name="sound_download_scheduled_for_removal">Scheduling %1$s for removal from sound downloads.</string>
+    <string name="play_sound_before_adjusting_volume">You need to play this sound before you can adjust its volume.</string>
 </resources>

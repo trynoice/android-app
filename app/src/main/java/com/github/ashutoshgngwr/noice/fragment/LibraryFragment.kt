@@ -30,6 +30,7 @@ import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadsRefreshWork
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.ext.showInfoSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
@@ -199,14 +200,19 @@ class LibraryFragment : Fragment(), LibraryListItemController {
     playbackController.stop(sound.id)
   }
 
-  override fun onSoundVolumeClicked(sound: Sound, currentVolume: Int) {
+  override fun onSoundVolumeClicked(sound: Sound, playerState: PlayerState?) {
+    if (playerState.isStopped) {
+      showInfoSnackBar(R.string.play_sound_before_adjusting_volume)
+      return
+    }
+
     DialogFragment.show(childFragmentManager) {
       title(sound.name)
       message(R.string.volume, textAppearance = R.style.TextAppearance_Material3_TitleLarge)
       slider(
         viewID = R.id.volume_slider,
         to = PlaybackController.MAX_SOUND_VOLUME.toFloat(),
-        value = currentVolume.toFloat(),
+        value = (playerState?.volume ?: PlaybackController.DEFAULT_SOUND_VOLUME).toFloat(),
         labelFormatter = { "${(it * 100).toInt() / PlaybackController.MAX_SOUND_VOLUME}%" },
         changeListener = { playbackController.setVolume(sound.id, it.toInt()) }
       )
@@ -520,8 +526,7 @@ class SoundViewHolder(
     }
 
     binding.volume.setOnClickListener {
-      val currentVolume = playerState?.volume ?: PlaybackController.DEFAULT_SOUND_VOLUME
-      controller.onSoundVolumeClicked(sound, currentVolume)
+      controller.onSoundVolumeClicked(sound, playerState)
     }
   }
 
@@ -580,22 +585,14 @@ class SoundViewHolder(
     val volume = playerState?.volume ?: PlaybackController.DEFAULT_SOUND_VOLUME
     @SuppressLint("SetTextI18n")
     binding.volume.text = "${(volume * 100) / PlaybackController.MAX_SOUND_VOLUME}%"
-    binding.volume.isEnabled = !isStopped
   }
-
-  private val PlayerState?.isStopped: Boolean
-    get() = this?.playbackState?.oneOf(
-      PlaybackState.IDLE,
-      PlaybackState.STOPPING,
-      PlaybackState.STOPPED,
-    ) ?: true
 }
 
 interface LibraryListItemController {
   fun onSoundInfoClicked(sound: Sound)
   fun onSoundPlayClicked(sound: Sound)
   fun onSoundStopClicked(sound: Sound)
-  fun onSoundVolumeClicked(sound: Sound, currentVolume: Int)
+  fun onSoundVolumeClicked(sound: Sound, playerState: PlayerState?)
   fun onSoundDownloadClicked(sound: Sound)
   fun onRemoveSoundDownloadClicked(sound: Sound)
 }
@@ -605,3 +602,10 @@ data class LibraryListItem(
   val group: SoundGroup? = null,
   val sound: Sound? = null,
 )
+
+private val PlayerState?.isStopped: Boolean
+  get() = this?.playbackState?.oneOf(
+    PlaybackState.IDLE,
+    PlaybackState.STOPPING,
+    PlaybackState.STOPPED,
+  ) ?: true
