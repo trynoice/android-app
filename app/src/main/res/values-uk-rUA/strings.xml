@@ -174,7 +174,7 @@
     <string name="loading">Завантаження</string>
     <string name="gift_card">Подарункова карта</string>
     <string name="no_subscription_purchases_found">Ми думаємо, що ви ще не спробували Noice Premium. Ваші попередні передплати з\'являться тут, коли ви використаєте Noice Premium принаймні один раз.</string>
-    <string name="audio_quality_summary">Найвища якість звуку для потокового передавання. Середня, висока та ультра працюють лише за передплатою.</string>
+    <string name="audio_quality_summary">Найвища якість звуку для потокового передавання. Середня, висока та ультра працюватиуть лише якщо ви передплатили Noice Premium.</string>
     <string name="sign_up_tos">Продовжуючи, ви погоджуєтеся з нашими [Умовами надання послуг](https://trynoice.com/terms-of-service) і [Політикою приватності](https://trynoice.com/privacy-policy).</string>
     <string name="sound_fade_out_duration">Тривалість загасання звуку</string>
     <string name="sound_fade_out_duration_summary">Тривалість загасання звуків (у секундах)</string>
@@ -292,4 +292,5 @@
     <string name="sound_scheduled_for_download">Планування %1$s для завантаження.</string>
     <string name="sound_download_scheduled_for_removal">Планування вилучення %1$s із завантажень звуку.</string>
     <string name="play_sound_before_adjusting_volume">Вам потрібно відтворити цей звук, перш ніж ви зможете регулювати його гучність.</string>
+    <string name="benefit_3">Триваліші звуки з більшою кількістю зразків</string>
 </resources>
