@@ -82,7 +82,11 @@ class LibraryFragment : Fragment(), LibraryListItemController {
   private var isConnectedToInternet = false
   private val viewModel: LibraryViewModel by viewModels()
   private val adapter by lazy { LibraryListAdapter(layoutInflater, this) }
-  private val navController by lazy {
+  private val mainNavController by lazy {
+    Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
+  }
+
+  private val homeNavController by lazy {
     Navigation.findNavController(requireActivity(), R.id.home_nav_host_fragment)
   }
 
@@ -100,10 +104,6 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.isLibraryIconsEnabled.collect(adapter::setIconsEnabled)
-    }
-
-    viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.isSubscribed.collect(adapter::setDownloadButtonVisible)
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
@@ -153,7 +153,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
         }
     }
 
-    binding.randomPresetButton.setOnClickListener { navController.navigate(R.id.random_preset) }
+    binding.randomPresetButton.setOnClickListener { homeNavController.navigate(R.id.random_preset) }
     binding.randomPresetButton.setOnLongClickListener {
       Toast.makeText(requireContext(), R.string.random_preset, Toast.LENGTH_LONG).show()
       true
@@ -191,7 +191,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
   override fun onSoundInfoClicked(sound: Sound) {
     val args = LibrarySoundInfoFragmentArgs(sound)
-    navController.navigate(R.id.library_sound_info, args.toBundle())
+    homeNavController.navigate(R.id.library_sound_info, args.toBundle())
   }
 
   override fun onSoundPlayClicked(sound: Sound) {
@@ -224,6 +224,11 @@ class LibraryFragment : Fragment(), LibraryListItemController {
   }
 
   override fun onSoundDownloadClicked(sound: Sound) {
+    if (!viewModel.isSubscribed.value) {
+      mainNavController.navigate(R.id.view_subscription_plans)
+      return
+    }
+
     SoundDownloadsRefreshWorker.addSoundDownload(requireContext(), sound.id)
     showSuccessSnackBar(getString(R.string.sound_scheduled_for_download, sound.name))
   }
@@ -255,12 +260,16 @@ class LibraryViewModel @Inject constructor(
     .getPlayerManagerState()
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PlaybackState.STOPPED)
 
+  internal val isSubscribed = MutableStateFlow(false)
+
   internal val playerStates: StateFlow<Array<PlayerState>> = playbackController.getPlayerStates()
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyArray())
 
   internal val downloadStates: StateFlow<Map<String, SoundDownloadState>> = soundRepository
     .getDownloadStates()
     .flowOn(Dispatchers.IO)
+    // emit download states only when user owns an active subscription
+    .combine(isSubscribed) { states, subscribed -> if (subscribed) states else emptyMap() }
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
 
   val isLoading: StateFlow<Boolean> = soundsResource.transform { r ->
@@ -323,8 +332,6 @@ class LibraryViewModel @Inject constructor(
     .shouldDisplaySoundIconsAsFlow()
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
-  internal val isSubscribed = MutableStateFlow(false)
-
   init {
     loadLibrary()
   }
@@ -361,7 +368,6 @@ class LibraryListAdapter(
   private var libraryItems = emptyList<LibraryListItem>()
   private var playerStates = emptyMap<String, PlayerState?>()
   private var isIconsEnabled = false
-  private var isDownloadButtonVisible = false
   private var downloadStates = emptyMap<String, SoundDownloadState>()
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryListItemViewHolder {
@@ -394,7 +400,6 @@ class LibraryListAdapter(
       libraryItems[position],
       playerStates[soundId],
       isIconsEnabled,
-      isDownloadButtonVisible,
       downloadStates[soundId] ?: SoundDownloadState.NOT_DOWNLOADED
     )
   }
@@ -432,15 +437,6 @@ class LibraryListAdapter(
     }
   }
 
-  fun setDownloadButtonVisible(isVisible: Boolean) {
-    if (isDownloadButtonVisible == isVisible) {
-      return
-    }
-
-    isDownloadButtonVisible = isVisible
-    notifyItemRangeChanged(0, libraryItems.size)
-  }
-
   fun setDownloadStates(states: Map<String, SoundDownloadState>) {
     val oldStates = downloadStates
     downloadStates = states
@@ -459,7 +455,6 @@ abstract class LibraryListItemViewHolder(view: View) : RecyclerView.ViewHolder(v
     item: LibraryListItem,
     playerState: PlayerState?,
     isIconsEnabled: Boolean,
-    isDownloadButtonVisible: Boolean,
     downloadState: SoundDownloadState,
   ) {
     if (item.group != null) {
@@ -467,7 +462,7 @@ abstract class LibraryListItemViewHolder(view: View) : RecyclerView.ViewHolder(v
     }
 
     if (item.sound != null) {
-      bind(item.sound, playerState, isIconsEnabled, isDownloadButtonVisible, downloadState)
+      bind(item.sound, playerState, isIconsEnabled, downloadState)
     }
   }
 
@@ -477,7 +472,6 @@ abstract class LibraryListItemViewHolder(view: View) : RecyclerView.ViewHolder(v
     sound: Sound,
     playerState: PlayerState?,
     isIconsEnabled: Boolean,
-    isDownloadButtonVisible: Boolean,
     downloadState: SoundDownloadState,
   )
 }
@@ -494,7 +488,6 @@ class SoundGroupViewHolder(
     sound: Sound,
     playerState: PlayerState?,
     isIconsEnabled: Boolean,
-    isDownloadButtonVisible: Boolean,
     downloadState: SoundDownloadState,
   ) {
     throw UnsupportedOperationException()
@@ -540,7 +533,6 @@ class SoundViewHolder(
     sound: Sound,
     playerState: PlayerState?,
     isIconsEnabled: Boolean,
-    isDownloadButtonVisible: Boolean,
     downloadState: SoundDownloadState,
   ) {
     this.sound = sound
@@ -560,7 +552,6 @@ class SoundViewHolder(
       }
     }
 
-    binding.download.isVisible = isDownloadButtonVisible
     binding.download.setIconResource(
       when (downloadState) {
         SoundDownloadState.NOT_DOWNLOADED -> R.drawable.ic_outline_download_for_offline_24
