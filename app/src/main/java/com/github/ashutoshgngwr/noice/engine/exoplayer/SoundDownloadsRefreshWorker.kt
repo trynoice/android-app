@@ -26,6 +26,7 @@ import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
+import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundError
 import com.google.android.exoplayer2.database.DatabaseIOException
 import com.google.android.exoplayer2.offline.Download
 import com.google.android.exoplayer2.offline.DownloadIndex
@@ -37,6 +38,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
 
 /**
@@ -169,12 +171,13 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
   }
 
   private suspend fun hasSubscription(): Boolean {
-    val resource = subscriptionRepository.isSubscribed().lastOrNull()
-    if (resource !is Resource.Success || resource.data == null) {
-      throw resource?.error ?: Exception("Resource is not Success and error was null")
+    val resource = subscriptionRepository.getActive().lastOrNull()
+    return when {
+      resource is Resource.Success && resource.data != null -> true
+      resource?.error is SubscriptionNotFoundError -> false
+      resource?.error is HttpException && resource.error.code() == 401 -> false
+      else -> throw resource?.error ?: Exception("Resource is not Success and error was null")
     }
-
-    return resource.data
   }
 
   private suspend fun getSound(soundId: String): Sound {
