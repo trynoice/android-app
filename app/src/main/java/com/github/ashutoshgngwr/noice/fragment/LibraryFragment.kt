@@ -556,7 +556,7 @@ class SoundViewHolder(
       when (downloadState) {
         SoundDownloadState.NOT_DOWNLOADED -> R.drawable.ic_outline_download_for_offline_24
         SoundDownloadState.DOWNLOADING -> R.drawable.ic_baseline_downloading_24
-        SoundDownloadState.DOWNLOADED -> R.drawable.ic_outline_offline_pin_24
+        SoundDownloadState.DOWNLOADED -> R.drawable.ic_baseline_offline_pin_24
       }
     )
 
