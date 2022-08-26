@@ -52,14 +52,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -248,7 +246,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
 @HiltViewModel
 class LibraryViewModel @Inject constructor(
-  private val subscriptionRepository: SubscriptionRepository,
+  subscriptionRepository: SubscriptionRepository,
   private val soundRepository: SoundRepository,
   private val presetRepository: PresetRepository,
   settingsRepository: SettingsRepository,
@@ -260,7 +258,8 @@ class LibraryViewModel @Inject constructor(
     .getPlayerManagerState()
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PlaybackState.STOPPED)
 
-  internal val isSubscribed = MutableStateFlow(false)
+  internal val isSubscribed = subscriptionRepository.isSubscribed()
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
   internal val playerStates: StateFlow<Array<PlayerState>> = playbackController.getPlayerStates()
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyArray())
@@ -341,13 +340,6 @@ class LibraryViewModel @Inject constructor(
       soundRepository.list()
         .flowOn(Dispatchers.IO)
         .collect(soundsResource)
-    }
-
-    viewModelScope.launch {
-      subscriptionRepository.isSubscribed()
-        .flowOn(Dispatchers.IO)
-        .map { it.data ?: false }
-        .collect(isSubscribed)
     }
   }
 

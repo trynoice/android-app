@@ -1,7 +1,12 @@
 package com.github.ashutoshgngwr.noice.repository
 
 import android.app.Activity
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.net.Uri
+import android.os.IBinder
 import android.util.Log
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
 import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
@@ -11,34 +16,31 @@ import com.github.ashutoshgngwr.noice.repository.errors.GiftCardNotFoundError
 import com.github.ashutoshgngwr.noice.repository.errors.GiftCardRedeemedError
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundError
+import com.github.ashutoshgngwr.noice.service.SubscriptionStatusPollService
+import com.github.ashutoshgngwr.noice.service.SubscriptionStatusPollServiceBinder
 import com.trynoice.api.client.NoiceApiClient
 import com.trynoice.api.client.models.GiftCard
 import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionPlan
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.ashutoshgngwr.may.May
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterNot
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.lastOrNull
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.withTimeoutOrNull
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.math.min
-import kotlin.time.Duration.Companion.minutes
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 /**
  * Implements a data access layer for fetching and manipulating subscription related data.
  */
 @Singleton
 class SubscriptionRepository @Inject constructor(
+  @ApplicationContext private val context: Context,
   private val subscriptionBillingProvider: SubscriptionBillingProvider,
   private val apiClient: NoiceApiClient,
   private val cacheStore: May,
@@ -213,71 +215,32 @@ class SubscriptionRepository @Inject constructor(
   )
 
   /**
-   * Returns a flow that emits whether the authenticated user owns an active subscription as a
-   * [Resource].
-   *
-   * On failures, the flow emits [Resource.Failure] with:
-   * - [NetworkError] on network errors.
-   * - [HttpException] on api errors.
-   *
-   * @see fetchNetworkBoundResource
-   * @see Resource
+   * Returns a flow that actively polls the API client for user's current subscription status and
+   * emits it.
    */
-  fun isSubscribed(): Flow<Resource<Boolean>> = getActive().map(this::isSubscribed)
+  fun isSubscribed(): Flow<Boolean> = callbackFlow {
+    var isSubscribedCollectionJob: Job? = null
+    val connection = object : ServiceConnection {
+      override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        isSubscribedCollectionJob = launch {
+          (service as? SubscriptionStatusPollServiceBinder)
+            ?.isSubscribed
+            ?.collect { this@callbackFlow.trySend(it) }
+        }
+      }
 
-  private fun isSubscribed(r: Resource<Subscription>): Resource<Boolean> {
-    return when {
-      r is Resource.Loading -> Resource.Loading(r.data != null)
-      r is Resource.Success -> Resource.Success(r.data != null)
-      r.error is SubscriptionNotFoundError -> Resource.Success(false)
-      r.error is HttpException && r.error.code() == 401 -> Resource.Success(false) // unauthenticated.
-      else -> Resource.Failure(r.error ?: IllegalStateException(), r.data != null)
+      override fun onServiceDisconnected(name: ComponentName?) {
+        isSubscribedCollectionJob?.cancel()
+        isSubscribedCollectionJob = null
+      }
     }
-  }
 
-  /**
-   * Returns a flow that actively polls the API server and emits whether the authenticated user owns
-   * an active subscription as a [Resource].
-   *
-   * On failures, the flow emits [Resource.Failure] with:
-   * - [NetworkError] on network errors.
-   * - [HttpException] on api errors.
-   *
-   * @see fetchNetworkBoundResource
-   * @see Resource
-   */
-  fun pollSubscriptionStatus(): Flow<Resource<Boolean>> = flow {
-    var first = true
-    while (true) {
-      val isUserSignedIn = apiClient.isSignedIn()
-      val r = if (isUserSignedIn) {
-        getActive()
-          // consider only the first loading event and ignore latter loading events.
-          .filterNot { !first && it is Resource.Loading }
-          .onEach { this@flow.emit(isSubscribed(it)) }
-          .lastOrNull()
-      } else {
-        this@flow.emit(Resource.Success(false))
-        Log.d(LOG_TAG, "pollSubscriptionStatus: user is not signed-in")
-        null
-      }
+    Intent(context, SubscriptionStatusPollService::class.java)
+      .also { context.bindService(it, connection, Context.BIND_AUTO_CREATE) }
 
-      first = false
-      val pollDelay = r?.data?.renewsAt
-        ?.takeIf { it.after(Date()) }
-        ?.let { min(5 * 60_000L, it.time - System.currentTimeMillis()) }
-        ?.toDuration(DurationUnit.MILLISECONDS)
-        ?: 1.minutes
-
-      Log.d(
-        LOG_TAG,
-        "pollSubscriptionStatus: scheduling poll after $pollDelay or sooner if sign-in state changes"
-      )
-      // wait until timeout or signed-in state change
-      withTimeoutOrNull(pollDelay) {
-        apiClient.getSignedInState()
-          .firstOrNull { it != isUserSignedIn }
-      }
+    awaitClose {
+      isSubscribedCollectionJob?.cancel()
+      context.unbindService(connection)
     }
   }
 

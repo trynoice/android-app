@@ -30,13 +30,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -107,11 +105,12 @@ class AccountFragment : Fragment() {
 @HiltViewModel
 class AccountViewModel @Inject constructor(
   private val accountRepository: AccountRepository,
-  private val subscriptionRepository: SubscriptionRepository,
+  subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
   val isSignedIn = accountRepository.isSignedIn()
-  val isSubscribed = MutableStateFlow(true)
+  val isSubscribed = subscriptionRepository.isSubscribed()
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
 
   private val profileResource = MutableSharedFlow<Resource<Profile>>()
 
@@ -143,12 +142,6 @@ class AccountViewModel @Inject constructor(
       accountRepository.getProfile()
         .flowOn(Dispatchers.IO)
         .collect(profileResource)
-
-      // ignore errors here.
-      subscriptionRepository.isSubscribed()
-        .flowOn(Dispatchers.IO)
-        .map { it.data ?: false }
-        .collect(isSubscribed)
     }
   }
 }
