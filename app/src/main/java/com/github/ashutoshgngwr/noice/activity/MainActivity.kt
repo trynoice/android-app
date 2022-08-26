@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice.activity
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -93,10 +94,11 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
   override fun onCreate(savedInstanceState: Bundle?) {
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
     super.onCreate(savedInstanceState)
-
     val surface2Color = SurfaceColors.SURFACE_2.getColor(this)
-    window.statusBarColor = surface2Color
-    window.navigationBarColor = surface2Color
+    // only use material 3's surface colors when it's possible to have light system bars.
+    if (Build.VERSION.SDK_INT >= 23) window.statusBarColor = surface2Color
+    if (Build.VERSION.SDK_INT >= 27) window.navigationBarColor = surface2Color
+
     binding = MainActivityBinding.inflate(layoutInflater)
     setContentView(binding.root)
     binding.networkIndicator.setBackgroundColor(surface2Color)
