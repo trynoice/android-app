@@ -65,6 +65,17 @@
             style="@style/Widget.App.SubscriptionPlan.Benefits.LineItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/benefit_3"
+            app:drawableStartCompat="@drawable/ic_baseline_self_improvement_24" />
+
+          <Space
+            android:layout_width="wrap_content"
+            android:layout_height="8dp" />
+
+          <TextView
+            style="@style/Widget.App.SubscriptionPlan.Benefits.LineItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/benefit_0"
             app:drawableStartCompat="@drawable/ic_baseline_forest_24" />
 

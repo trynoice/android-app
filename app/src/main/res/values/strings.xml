@@ -218,6 +218,7 @@
     <string name="benefit_0">Natural variations in sounds</string>
     <string name="benefit_1">High-quality audio streaming</string>
     <string name="benefit_2">Offline playback</string>
+    <string name="benefit_3">Longer sounds with more samples</string>
     <string name="select_a_plan">Select a plan</string>
     <string name="processing_payment">Processing payment</string>
     <string name="payment_processing_error">Uh-oh! We were unable to process your payment. The amount should be automatically refunded if deducted. If you do not get your refund within a week, please notify us.</string>
