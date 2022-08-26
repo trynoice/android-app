@@ -269,7 +269,7 @@
     <string name="delete_account_error">धत्तेरे की! हम आपका खाता नहीं हटा सके। %1$s कृपया पुन: प्रयास करें!</string>
     <string name="sign_in_email_error">उह ओह! हम आपको साइन-इन लिंक ईमेल नहीं कर सके। %1$s कृपया बाद में पुन: प्रयास करें!</string>
     <string name="library_load_error">उफ़! हम ध्वनि पुस्तकालय प्राप्त नहीं कर सके। %1$s</string>
-    <string name="audio_quality_summary">स्ट्रीमिंग के लिए अधिकतम ऑडियो क्वालिटी। मीडियम, हाई और अल्ट्रा केवल तभी काम करते हैं जब आप सब्स्क्राइब्ड होते हैं।</string>
+    <string name="audio_quality_summary">स्ट्रीमिंग के लिए अधिकतम ऑडियो क्वालिटी। मीडियम, हाई और अल्ट्रा केवल तभी काम करेंगे जब आपने नोइस प्रीमियम की सदस्यता ली होगी।</string>
     <string name="redeem_gift_card">गिफ्ट कार्ड रिडीम करें</string>
     <string name="gift_card_code">गिफ्ट कार्ड का कोड</string>
     <string name="invalid_gift_card_code">दर्ज किया गया गिफ्ट कार्ड का कोड अमान्य है!</string>
@@ -301,4 +301,6 @@
     <string name="remove_all_sound_downloads">डाउनलोड की गई सभी ध्वनियां हटाएं</string>
     <string name="remove_sound_download_confirmation">ऑफ़लाइन प्लेबैक के लिए डाउनलोड की गई ध्वनि निकालने की पुष्टि करें\?</string>
     <string name="sound_scheduled_for_download">डाउनलोड के लिए %1$s शेड्यूल किया जा रहा है।</string>
+    <string name="play_sound_before_adjusting_volume">इस ध्वनि का वॉल्यूम नियंत्रित करने के लिए इसे प्लैबैक करना जरूरी है।</string>
+    <string name="benefit_3">अधिक नमूनों के साथ लंबी ध्वनियाँ</string>
 </resources>

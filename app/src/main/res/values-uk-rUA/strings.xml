@@ -291,4 +291,5 @@
     <string name="remove_all_sound_downloads">Вилучити всі завантажені звуки</string>
     <string name="sound_scheduled_for_download">Планування %1$s для завантаження.</string>
     <string name="sound_download_scheduled_for_removal">Планування вилучення %1$s із завантажень звуку.</string>
+    <string name="play_sound_before_adjusting_volume">Вам потрібно відтворити цей звук, перш ніж ви зможете регулювати його гучність.</string>
 </resources>
