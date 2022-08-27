@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -110,15 +111,11 @@ class SignInResultViewModel @Inject constructor(
 
   val isSigningIn: StateFlow<Boolean> = signInResource.transform { r ->
     emit(r is Resource.Loading)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
 
-  val isSignInSuccess: StateFlow<Boolean> = signInResource.transform { r ->
-    emit(r is Resource.Success)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
-
-  val signInError: StateFlow<Throwable?> = signInResource.transform { r ->
-    emit(r.error)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  val signInError: StateFlow<Throwable?> = signInResource
+    .map { it.error }
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   init {
     val navArgs = SignInResultFragmentArgs.fromSavedStateHandle(savedStateHandle)
@@ -132,10 +129,6 @@ class SignInResultViewModel @Inject constructor(
   }
 
   fun signIn() {
-    if (isSignInSuccess.value || isSigningIn.value) {
-      return
-    }
-
     viewModelScope.launch {
       val flow = if (isReturningUser) {
         accountRepository.signIn(email)

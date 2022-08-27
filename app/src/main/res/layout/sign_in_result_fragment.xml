@@ -5,69 +5,56 @@
 
   <data>
 
-    <import type="com.airbnb.lottie.LottieDrawable" />
-
     <variable
       name="viewModel"
       type="com.github.ashutoshgngwr.noice.fragment.SignInResultViewModel" />
 
   </data>
 
-  <ScrollView
+  <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:padding="@dimen/root_layout_padding">
 
     <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:animateLayoutChanges="true"
+      android:layout_height="match_parent"
       android:gravity="center"
       android:orientation="vertical"
-      android:paddingHorizontal="@dimen/root_layout_padding"
-      android:paddingVertical="48dp">
+      app:isVisible="@{!viewModel.isSigningIn &amp;&amp; viewModel.signInError == null}">
 
-      <com.airbnb.lottie.LottieAnimationView
+      <TextView
+        style="@style/Widget.App.TextView.Message.Success.Centered"
         android:layout_width="match_parent"
-        android:layout_height="192dp"
-        app:isVisible="@{viewModel.signInError == null}"
-        app:lottie_autoPlay="true"
-        app:lottie_rawRes="@raw/lottie_email_sent"
-        app:lottie_speed="1.5"
-        app:maxFrame="@{viewModel.isSigningIn ? 75 : Integer.MAX_VALUE}"
-        app:repeatCount="@{viewModel.isSigningIn ? LottieDrawable.INFINITE : 0}" />
-
-      <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="match_parent"
-        android:layout_height="192dp"
-        app:isVisible="@{viewModel.signInError != null}"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="false"
-        app:lottie_rawRes="@raw/lottie_error"
-        app:lottie_speed="1.5"
-        tools:visibility="gone" />
+        android:layout_height="wrap_content"
+        android:text="@{(viewModel.isReturningUser ? @string/sign_in_email_sent(viewModel.email) : @string/sign_up_email_sent(viewModel.email)) + `\n\n` + @string/sign_in_link_tip}"
+        tools:text="@string/sign_up_email_sent" />
 
       <Space
         android:layout_width="match_parent"
         android:layout_height="24dp" />
 
-      <TextView
-        android:layout_width="match_parent"
+      <Button
+        android:id="@+id/open_mailbox"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@{(viewModel.isReturningUser ? @string/sign_in_email_sent(viewModel.email) : @string/sign_up_email_sent(viewModel.email)) + `\n\n` + @string/sign_in_link_tip}"
-        android:textAppearance="?attr/textAppearanceBodyMedium"
-        app:isVisible="@{viewModel.isSignInSuccess}"
-        tools:text="@string/sign_up_email_sent" />
+        android:text="@string/open_mailbox" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:orientation="vertical"
+      app:isVisible="@{!viewModel.isSigningIn &amp;&amp; viewModel.signInError != null}"
+      tools:visibility="gone">
 
       <TextView
         android:id="@+id/error"
+        style="@style/Widget.App.TextView.Message.Error.Centered"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textAppearance="?attr/textAppearanceBodyMedium"
-        app:isVisible="@{viewModel.signInError != null}"
-        tools:visibility="gone" />
+        android:layout_height="wrap_content" />
 
       <Space
         android:layout_width="match_parent"
@@ -78,19 +65,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="@{() -> viewModel.signIn()}"
-        android:text="@string/retry"
-        app:isVisible="@{viewModel.signInError != null}"
-        tools:visibility="gone" />
-
-      <Button
-        android:id="@+id/open_mailbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/open_mailbox"
-        app:isVisible="@{viewModel.isSignInSuccess}" />
+        android:text="@string/retry" />
 
     </LinearLayout>
 
-  </ScrollView>
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:indeterminate="true"
+      app:isVisible="@{viewModel.isSigningIn}"
+      tools:visibility="gone" />
+
+  </FrameLayout>
 
 </layout>

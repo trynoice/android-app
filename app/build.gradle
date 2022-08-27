@@ -123,7 +123,6 @@ dependencies {
   implementation 'androidx.recyclerview:recyclerview:1.2.1'
   implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
   implementation 'androidx.work:work-runtime-ktx:2.7.1'
-  implementation 'com.airbnb.android:lottie:5.2.0'
   implementation 'com.caverock:androidsvg-aar:1.4'
   implementation 'com.github.AppIntro:AppIntro:6.2.0'
   implementation "com.google.android.exoplayer:exoplayer-core:$exoPlayerVersion"
