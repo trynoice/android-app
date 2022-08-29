@@ -5,7 +5,7 @@
     <string name="help">Помощь</string>
     <string name="library">Библиотека звуков</string>
     <string name="report_issue">Сообщить о проблеме</string>
-    <string name="presets">Шаблоны</string>
+    <string name="presets">Пресеты</string>
     <string name="sleep_timer">Таймер сна</string>
     <string name="support_development">Поддержать разработку</string>
     <string name="wake_up_timer">Таймер пробуждения</string>
@@ -187,7 +187,7 @@
     <string name="gift_card_not_found">Указанный код не существует.</string>
     <string name="gift_card_expired">Срок действия подарочной карты с указанным кодом истёк.</string>
     <string name="gift_card_redeem_error">О нет! Нам не удалось активировать вашу подарочную карту. %1$s</string>
-    <string name="gift_card_details">Используя эту подарочную карту, вы получите премиум-подписку до %1$s.</string>
+    <string name="gift_card_details">Использовав эту подарочную карту, вы получите премиум-подписку до %1$s.</string>
     <string name="reach_us">Связаться с нами</string>
     <string name="write_review_play_store">Написать отзыв в Google Play</string>
     <string name="connect_through_email">Связаться с помощью электронной почты</string>
@@ -256,8 +256,8 @@
     <string name="pausing">Ставим на паузу</string>
     <string name="benefits">Преимущества</string>
     <string name="subscription_payment_confirmation_failed">Ой! У нас возникли проблемы с ожиданием подтверждения платежа. Это может быть связано с ошибкой сети или задержкой поставщика платежных услуг. Мы обновим статус вашей подписки, как только получим подтверждение. Пожалуйста, проверьте статус вашей подписки через некоторое время.</string>
-    <string name="renews_on">Продление на %1$s</string>
-    <string name="looping_sound">Этот звук повторяется незаметно.</string>
+    <string name="renews_on">Продление %1$s</string>
+    <string name="looping_sound">Этот звук плавно повторяется.</string>
     <string name="library_load_error">Ой! Нам не удалось загрузить звуковую библиотеку. %1$s</string>
     <string name="subscription_plans_load_error">Ой! Нам не удалось загрузить тарифные планы подписки. %1$s</string>
     <string name="playing">Играет</string>
@@ -265,8 +265,8 @@
     <string name="gift_card">Подарочная карта</string>
     <string name="subscription_purchases">Покупки по подписке</string>
     <string name="change_plan">Изменить тарифный план</string>
-    <string name="faqs">Часто Задаваемые Вопросы</string>
-    <string name="made_in_india">Сделано с любовью в Индии</string>
+    <string name="faqs">Часто задаваемые вопросы</string>
+    <string name="made_in_india">Сделано с ❤ в Индии</string>
     <string name="has_premium_segments">Этот звук имеет премиум компоненты.</string>
     <string name="cancel_subscription_error">О нет! Мы не смогли отменить вашу подписку. %1$s Пожалуйста, повторите попытку!</string>
     <string name="delete_account_error">О нет! Мы не смогли удалить ваш аккаунт. %1$s Пожалуйста, повторите попытку!</string>
@@ -279,10 +279,26 @@
     <string name="monthly_price">%1$s в месяц</string>
     <string name="showing_localised_prices">Цены конвертированы из Индийской Рупии (https://en.wikipedia.org/wiki/Indian_rupee). Реальные цены могут незначительно отличаться.</string>
     <plurals name="trial_period">
-        <item quantity="one">Первый день - бесплатно</item>
-        <item quantity="few">Первые %1$d дня - бесплатно</item>
-        <item quantity="many">Первые %1$d дней - бесплатно</item>
-        <item quantity="other">Первые %1$d дней - бесплатно</item>
+        <item quantity="one">Первый день бесплатно</item>
+        <item quantity="few">Первые %1$d дня бесплатно</item>
+        <item quantity="many">Первые %1$d дней бесплатно</item>
+        <item quantity="other">Первые %1$d дней бесплатно</item>
     </plurals>
-    <string name="audio_quality_summary">Максимальное качество звука для потоковой передачи. Среднее, Высокое и Очень Высокое работают только при наличии подписки.</string>
+    <string name="audio_quality_summary">Максимальное качество звука для потоковой передачи. Среднее, высокое и очень высокое будут работать только при наличии подписки Noice Premium.</string>
+    <string name="preset_url_invalid">URL-адрес пресета кажется недействительным!</string>
+    <string name="paid_using">Оплачено с использованием %1$s</string>
+    <string name="ended_on">Завершено %1$s</string>
+    <string name="media_sources">Источники медиа</string>
+    <string name="ends_on">Заканчивается %1$s</string>
+    <string name="started_on">Начато %1$s</string>
+    <string name="notification_channel_sound_downloads__description">Уведомления о процессе загрузки звука.</string>
+    <string name="benefit_3">Более продолжительные звуки с большим количеством сэмплов</string>
+    <string name="non_looping_sound">Этот звук содержит промежуточные перерывы.</string>
+    <string name="third_party_attributions">Сторонние атрибуции</string>
+    <string name="use_material_you_colors">Используйте цвета Material You</string>
+    <string name="checking_sound_downloads">Проверка загрузки звука</string>
+    <string name="sound_scheduled_for_download">Планирование загрузки %1$s.</string>
+    <string name="sound_download_scheduled_for_removal">Планирование удаления %1$s из загрузки звука.</string>
+    <string name="play_sound_before_adjusting_volume">Вам нужно воспроизвести этот звук, прежде чем вы сможете регулировать его громкость.</string>
+    <string name="use_material_you_colors_summary">Наследовать цветовую палитру Material You из системы Android</string>
 </resources>
