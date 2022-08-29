@@ -260,7 +260,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
 
       ACTION_SKIP_PRESET -> {
         val skipDir = intent.getIntExtra(INTENT_EXTRA_PRESET_SKIP_DIRECTION, 0)
-        require(skipDir == PRESET_SKIP_DIRECTION_PREV || skipDir == PRESET_SKIP_DIRECTION_PREV) {
+        require(skipDir == PRESET_SKIP_DIRECTION_PREV || skipDir == PRESET_SKIP_DIRECTION_NEXT) {
           """
             intent extra '${INTENT_EXTRA_PRESET_SKIP_DIRECTION}=${skipDir}' must be be one of
             '${PRESET_SKIP_DIRECTION_PREV}' or '${PRESET_SKIP_DIRECTION_NEXT}'"
