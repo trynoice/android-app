@@ -192,7 +192,7 @@
     <string name="cont">Continue</string>
     <string name="sign_out_confirmation">Confirm signing out?</string>
     <string name="signing_out">Signing out</string>
-    <string name="delete_account_confirmation">On deleting your account, you will immediately lose access to your profile. If you have an ongoing subscription, it will be cancelled. Please note that it may take us a while to completely erase your data from our servers.</string>
+    <string name="delete_account_confirmation">You will immediately lose access to your account upon deletion. If you have an ongoing subscription to Noice Premium, we will stop charging you for it. If you change your mind, you can restore your account by signing in again any time before 7 days after deletion. After this period, we will permanently erase your account data from our servers.</string>
     <string name="i_understand">I understand.</string>
     <string name="deleting_account">Deleting account</string>
     <string name="duplicate_email_error">The entered email is associated with another account.</string>
