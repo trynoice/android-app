@@ -301,7 +301,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     playerStates: Array<PlayerState>
   ) {
     Log.i(LOG_TAG, "onPlaybackUpdate: managerState=$playerManagerState")
-    val currentPreset = presets.find { it.hasMatchingPlayerStates(playerStates) }
+    val currentPreset = findCurrentPreset(playerStates)
     this.playerManagerState.value = playerManagerState
     this.playerStates.value = playerStates
     mediaSessionManager.setPresetTitle(currentPreset?.name)
@@ -316,6 +316,13 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
       playbackNotificationManager.createNotification(playerManagerState, currentPreset)
         .also { startForeground(0x01, it) }
     }
+  }
+
+  private fun findCurrentPreset(playerStates: Array<PlayerState>): Preset? {
+    return playerStates
+      .filterNot { it.playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
+      .toTypedArray()
+      .let { states -> presets.find { it.hasMatchingPlayerStates(states) } }
   }
 
   private fun getSoundIdExtra(intent: Intent): String {
