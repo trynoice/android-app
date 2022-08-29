@@ -84,6 +84,7 @@
         <item quantity="one">%1$d valanda</item>
         <item quantity="few">%1$d valandos</item>
         <item quantity="many">%1$d valandų</item>
+        <item quantity="other">%1$d valandų</item>
     </plurals>
     <string name="time_bridge">ir</string>
     <string name="wake_up_timer_schedule_set">Žadintuvas įsijungs po %1$s %2$s %3$s</string>
@@ -115,6 +116,7 @@
         <item quantity="one">%1$d minutė</item>
         <item quantity="few">%1$d minutės</item>
         <item quantity="many">%1$d minučių</item>
+        <item quantity="other">%1$d minučių</item>
     </plurals>
     <string name="should_share_usage_data_summary">Automatinis naudojimo ir elgsenos duomenų bendrinimas su kūrėjais</string>
     <string name="should_share_usage_data">Dalytis naudojimo ir elgsenos duomenimis</string>
