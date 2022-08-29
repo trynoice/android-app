@@ -214,10 +214,6 @@
     <string name="ends_on">Se termine le %1$s</string>
     <string name="ended_on">Terminé le %1$s</string>
     <string name="cancel_subscription_error">Oh non ! Nous n\'avons pas pu annuler votre souscription. %1$s Veuillez réessayer !</string>
-    <plurals name="trial_period">
-        <item quantity="one">Premier jour gratuit</item>
-        <item quantity="other">%1$d premiers jours gratuits</item>
-    </plurals>
     <string name="processing_payment">Traitement du paiement</string>
     <string name="loading">Chargement</string>
     <string name="audio_quality_high">Haute (256 kb/s)</string>

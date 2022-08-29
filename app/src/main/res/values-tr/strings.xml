@@ -141,7 +141,7 @@
     <string name="others">Diğer</string>
     <string name="decline">Reddet</string>
     <string name="accept">Kabul et</string>
-\n
+    \n
     <string name="share_usage_data_consent_message">Kullanıcı deneyimini iyileştirmek için uygulama kullanım verilerini topluyoruz. Ayrıca, uygulama kullanımı sırasında karşılaşılan hataları çözümlemek ve teşhis etmek için uygulama davranış verilerini topluyoruz. Daha fazla bilgi için [gizlilik politikamızı](https://trynoice.com/privacy-policy) okuyun.
 \n \"**Ayarlar** &gt; **Kullanım ve davranış verilerini paylaş**\" seçeneğine giderek uygulama içinde istediğiniz zaman otomatik veri paylaşımını yapılandırabilirsiniz.</string>
     <string name="share_usage_data_consent_title">Veri Paylaşımı Tercihleri</string>
@@ -204,10 +204,6 @@
     <string name="subscription_payment_cancelled">Abonelik ödemesi iptal edildi!</string>
     <string name="update_details">Ayrıntıları güncelle</string>
     <string name="plans">Planlar</string>
-    <plurals name="trial_period">
-        <item quantity="one">İlk gün ücretsiz</item>
-        <item quantity="other">İlk %1$d gün ücretsiz</item>
-    </plurals>
     <string name="benefit_2">Çevrimdışı oynatma</string>
     <string name="select_a_plan">Bir plan seçin</string>
     <string name="confirming_payment">Ödeme onaylanıyor</string>

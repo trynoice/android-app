@@ -102,10 +102,6 @@
     <string name="share">Delen</string>
     <string name="wake_up_timer">Wekker</string>
     <string name="random_preset_description">De gegenereerde voorinstelling bevat waarschijnlijk geluiden met de gekozen sleutelwoorden. Daarnaast zullen intense voorinstellingen proberen meerdere geluiden tegelijk af te spelen.</string>
-    <plurals name="trial_period">
-        <item quantity="one">Eerste dag gratis</item>
-        <item quantity="other">Eerste %1$d dagen gratis</item>
-    </plurals>
     <string name="share_usage_data_consent_title">Voorkeuren voor het delen van data</string>
     <string name="created_by">Gemaakt door</string>
     <string name="select_a_plan">Abonnement selecteren</string>

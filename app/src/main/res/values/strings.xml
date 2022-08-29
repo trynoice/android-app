@@ -208,10 +208,6 @@
         <item quantity="one">%1$d month</item>
         <item quantity="other">%1$d months</item>
     </plurals>
-    <plurals name="trial_period">
-        <item quantity="one">First day free</item>
-        <item quantity="other">First %1$d days free</item>
-    </plurals>
     <string name="total_price">%1$s total</string>
     <string name="monthly_price">%1$s per month</string>
     <string name="benefits">Benefits</string>
@@ -315,4 +311,9 @@
     <string name="sound_scheduled_for_download">Scheduling %1$s for download.</string>
     <string name="sound_download_scheduled_for_removal">Scheduling %1$s for removal from sound downloads.</string>
     <string name="play_sound_before_adjusting_volume">You need to play this sound before you can adjust its volume.</string>
+    <string name="trial_period">Trial Period: %1$s</string>
+    <plurals name="n_days">
+        <item quantity="one">%1$d day</item>
+        <item quantity="other">%1$d days</item>
+    </plurals>
 </resources>

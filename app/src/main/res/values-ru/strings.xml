@@ -278,11 +278,5 @@
     <string name="remove_sound_download_confirmation">Вы уверены, что хотите удалить звук, загруженный для автономного воспроизведения\?</string>
     <string name="monthly_price">%1$s в месяц</string>
     <string name="showing_localised_prices">Цены конвертированы из Индийской Рупии (https://en.wikipedia.org/wiki/Indian_rupee). Реальные цены могут незначительно отличаться.</string>
-    <plurals name="trial_period">
-        <item quantity="one">Первый день - бесплатно</item>
-        <item quantity="few">Первые %1$d дня - бесплатно</item>
-        <item quantity="many">Первые %1$d дней - бесплатно</item>
-        <item quantity="other">Первые %1$d дней - бесплатно</item>
-    </plurals>
     <string name="audio_quality_summary">Максимальное качество звука для потоковой передачи. Среднее, Высокое и Очень Высокое работают только при наличии подписки.</string>
 </resources>

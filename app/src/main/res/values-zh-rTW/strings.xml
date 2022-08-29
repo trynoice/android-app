@@ -126,9 +126,6 @@
     <string name="signing_out">登出中</string>
     <string name="duplicate_email_error">輸入的電子郵件已與另一個帳戶有連結。</string>
     <string name="monthly">每月</string>
-    <plurals name="trial_period">
-        <item quantity="other">前 %1$d 天免費</item>
-    </plurals>
     <string name="benefits">好處</string>
     <string name="benefit_0">聲音的自然變化</string>
     <string name="payment_processing_error">Uh-oh！我們無法處理您的付款，如果扣除，金額應自動退還。如果您在一周內沒有收到退款，請通知我們。</string>

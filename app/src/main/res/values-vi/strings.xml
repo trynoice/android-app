@@ -152,9 +152,6 @@
     <string name="sign_in_message">Vui lòng nhập email của bạn để đăng nhập.</string>
     <string name="sign_in_link_tip">Vui lòng mở liên kết đã nhận bằng Noice để hoàn thành quá trình đăng nhập.</string>
     <string name="signing_out">Đang đăng xuất</string>
-    <plurals name="trial_period">
-        <item quantity="other">Miễn phí %1$d ngày đầu</item>
-    </plurals>
     <string name="benefit_1">Truyền âm thanh chất lượng cao</string>
     <string name="confirming_payment">Đang xác nhận thanh toán</string>
     <string name="subscription_payment_complete">Cảm ơn bạn vì đã đăng ký Noice Premium. Gói đăng ký của bạn đã hoạt động.</string>

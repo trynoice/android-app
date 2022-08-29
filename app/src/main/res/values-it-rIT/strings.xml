@@ -194,10 +194,6 @@
         <item quantity="one">%1$d mese</item>
         <item quantity="other">%1$d mesi</item>
     </plurals>
-    <plurals name="trial_period">
-        <item quantity="one">Primo giorno gratis</item>
-        <item quantity="other">Primi %1$d giorni gratis</item>
-    </plurals>
     <string name="benefits">Benefici</string>
     <string name="benefit_0">Variazioni naturali dei suoni</string>
     <string name="benefit_1">Streaming audio di alta qualità</string>

@@ -204,10 +204,6 @@
     <string name="sound_fade_out_duration_summary">Duração do tempo para sons de fade-out (em segundos)</string>
     <string name="sign_in_message">Por favor, digite seu e-mail para entrar.</string>
     <string name="quarterly">Trimestral</string>
-    <plurals name="trial_period">
-        <item quantity="one">Primeiro dia grátis</item>
-        <item quantity="other">Primeiros %1$d dias grátis</item>
-    </plurals>
     <string name="subscription_plans_load_error">Ops! Não foi possível buscar planos de assinatura. %1$s</string>
     <string name="open_mailbox">Abri Caixa de Correio</string>
     <string name="benefit_2">Reprodução sem conexão</string>

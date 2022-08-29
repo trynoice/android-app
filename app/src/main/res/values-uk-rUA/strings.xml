@@ -199,12 +199,6 @@
     <string name="duplicate_email_error">Введена електронна адреса пов’язана з іншим обліковим записом.</string>
     <string name="offline">Ви офлайн</string>
     <string name="back_online">Повернутися в онлайн-режим</string>
-    <plurals name="trial_period">
-        <item quantity="one">Перший день безплатно</item>
-        <item quantity="few">Перші %1$d дні безплатно</item>
-        <item quantity="many">Перші %1$d днів безплатно</item>
-        <item quantity="other">Перші %1$d днів безплатно</item>
-    </plurals>
     <string name="total_price">Усього %1$s</string>
     <string name="quarterly">Щоквартально</string>
     <string name="bi_yearly">Раз на два роки</string>

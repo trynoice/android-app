@@ -196,10 +196,6 @@
         <item quantity="one">%1$d महीना</item>
         <item quantity="other">%1$d महीने</item>
     </plurals>
-    <plurals name="trial_period">
-        <item quantity="one">पहला दिन मुफ़्त</item>
-        <item quantity="other">पहले %1$d दिन मुफ़्त</item>
-    </plurals>
     <string name="total_price">कुल %1$s</string>
     <string name="monthly_price">%1$s प्रति माह</string>
     <string name="benefits">फ़ायदे</string>

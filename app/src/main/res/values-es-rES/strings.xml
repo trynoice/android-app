@@ -181,10 +181,6 @@
     <string name="sign_in">Iniciar sesión</string>
     <string name="ends_on">Finaliza el %1$s</string>
     <string name="subscription_payment_refunded">Cancelamos esta compra e iniciamos un reembolso por ella.</string>
-    <plurals name="trial_period">
-        <item quantity="one">Primer día gratis</item>
-        <item quantity="other">Primeros %1$d días gratis</item>
-    </plurals>
     <string name="email">Correo Electrónico</string>
     <string name="sign_in_sucessful">¡Inicio de sesión exitoso!</string>
     <string name="manage_subscription">Administrar suscripción</string>

@@ -201,7 +201,4 @@
     <plurals name="n_months">
         <item quantity="other">%1$d bulan</item>
     </plurals>
-    <plurals name="trial_period">
-        <item quantity="other">%1$d hari pertama gratis</item>
-    </plurals>
 </resources>

@@ -210,10 +210,6 @@
     <string name="remove_sound_download_confirmation">Bestätigen Sie das Entfernen eines für die Offline-Wiedergabe heruntergeladenen Tons\?</string>
     <string name="remove_sound_download">%1$s entfernen</string>
     <string name="stripe_customer_portal_error">Huch! Wir konnten das Rechnungsportal nicht öffnen. %1$s Bitte versuchen Sie es erneut!</string>
-    <plurals name="trial_period">
-        <item quantity="one">Erster Tag gratis</item>
-        <item quantity="other">Erste %1$d Tage gratis</item>
-    </plurals>
     <string name="redeem_gift_card">Geschenkkarte einlösen</string>
     <string name="gift_card_code">Code der Geschenkkarte</string>
     <string name="invalid_gift_card_code">Der eingegebene Geschenkkartencode ist ungültig!</string>
