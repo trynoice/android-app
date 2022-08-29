@@ -150,7 +150,7 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
 
   val plans: StateFlow<List<SubscriptionPlan>> = plansResource.transform { r ->
-    emit(r.data ?: emptyList())
+    emit(r.data?.sortedBy { it.priceInIndianPaise / it.billingPeriodMonths } ?: emptyList())
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
   val apiErrorStrRes: StateFlow<Int?> = plansResource.transform { r ->

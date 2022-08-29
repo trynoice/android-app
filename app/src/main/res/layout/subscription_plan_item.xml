@@ -53,28 +53,26 @@
         tools:text="@string/trial_period" />
 
       <TextView
-        android:id="@+id/total_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingVertical="4dp"
-        android:text="@{@string/total_price(plan.totalPrice)}"
-        android:textAppearance="?attr/textAppearanceTitleMedium"
-        app:layout_constraintBottom_toBottomOf="@id/billing_period"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/billing_period"
-        tools:text="@string/total_price" />
-
-      <TextView
-        android:id="@+id/monthly_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="4dp"
         android:text="@{@string/monthly_price(plan.monthlyPrice)}"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        app:layout_constraintBottom_toBottomOf="@id/billing_period"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/billing_period"
+        tools:text="@string/monthly_price" />
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingVertical="4dp"
+        android:text="@{@string/total_price(plan.totalPrice)}"
         android:textAppearance="?attr/textAppearanceBodyMedium"
         app:layout_constraintBottom_toBottomOf="@id/trial_period"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/trial_period"
-        tools:text="@string/monthly_price" />
+        tools:text="@string/total_price" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
