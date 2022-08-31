@@ -26,7 +26,6 @@ import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.databinding.PresetsFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.PresetsListItemBinding
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
-import com.github.ashutoshgngwr.noice.engine.PlaybackState
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
 import com.github.ashutoshgngwr.noice.model.Preset
@@ -240,12 +239,7 @@ class PresetsViewModel @Inject constructor(
 
   internal val activePresetId: StateFlow<String?> =
     combine(presets, playbackController.getPlayerStates()) { presets, playerStates ->
-      playerStates
-        // exclude stopping and stopped players from active preset
-        .filterNot { it.playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
-        .toTypedArray()
-        .let { s -> presets.find { p -> p.hasMatchingPlayerStates(s) } }
-        ?.id
+      presets.find { p -> p.hasMatchingPlayerStates(playerStates) }?.id
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
   internal val presetsWithAppShortcut = MutableStateFlow(emptySet<String>())

@@ -44,22 +44,15 @@ class PlayerManager(
   private var scheduledStopJob: Job? = null
 
   private val players = ConcurrentHashMap<String, Player>()
-  private val _playerStates = ConcurrentHashMap<String, PlayerState>()
-
-  /**
-   * The [PlayerState]s containing [PlaybackState]s and volumes of currently active sounds in the
-   * manager.
-   */
-  internal val playerStates: Array<PlayerState>
-    get() = _playerStates.values.toTypedArray()
+  private val playerStates = ConcurrentHashMap<String, PlayerState>()
 
   /**
    * The aggregate [PlaybackState] of the [PlayerManager] depending on the individual playback
    * states of the currently active sounds.
    */
-  internal val playbackState: PlaybackState
+  private val playbackState: PlaybackState
     get() {
-      val playbackStates = this._playerStates.values.map { it.playbackState }
+      val playbackStates = this.playerStates.values.map { it.playbackState }
       return when {
         playbackStates.isEmpty() -> PlaybackState.STOPPED
         playbackStates.all { it == PlaybackState.STOPPING } -> PlaybackState.STOPPING
@@ -94,7 +87,7 @@ class PlayerManager(
    */
   fun play(soundId: String) {
     val player = players.getOrPut(soundId) {
-      _playerStates.putIfAbsent(soundId, PlayerState(soundId, Player.DEFAULT_VOLUME))
+      playerStates.putIfAbsent(soundId, PlayerState(soundId, Player.DEFAULT_VOLUME))
       playerFactory.createPlayer(
         soundId,
         soundRepository,
@@ -122,10 +115,10 @@ class PlayerManager(
   private fun buildPlayerPlaybackListener(soundId: String): Player.PlaybackListener {
     return Player.PlaybackListener { playbackState, volume ->
       Log.i(LOG_TAG, "Player.PlaybackListener: id=$soundId state=$playbackState volume=$volume")
-      _playerStates[soundId] = PlayerState(soundId, volume, playbackState)
+      playerStates[soundId] = PlayerState(soundId, volume, playbackState)
       if (playbackState == PlaybackState.STOPPED) {
         players.remove(soundId)
-        _playerStates.remove(soundId)
+        playerStates.remove(soundId)
         analyticsProvider.logPlayerStopEvent(soundId)
       }
 
@@ -164,7 +157,7 @@ class PlayerManager(
     stopOnIdleJob?.cancel()
     players.forEach { (id, player) ->
       // do not pause 'STOPPING' players.
-      if (_playerStates[id]?.playbackState != PlaybackState.STOPPING) {
+      if (playerStates[id]?.playbackState != PlaybackState.STOPPING) {
         player.pause(immediate)
       } else if (immediate) {
         player.stop(true)
@@ -181,7 +174,7 @@ class PlayerManager(
     if (audioFocusManager.hasFocus()) {
       players.forEach { (id, player) ->
         // do not resume 'STOPPING' players.
-        if (_playerStates[id]?.playbackState != PlaybackState.STOPPING) {
+        if (playerStates[id]?.playbackState != PlaybackState.STOPPING) {
           player.play()
         }
       }
@@ -329,6 +322,14 @@ class PlayerManager(
   }
 
   private fun notifyPlaybackListener() {
+    val managerState = playbackState
+    val playerStates = playerStates.values.filterNot {
+      // unless all players are either stopping or stopped, only consider not stopping or stopped
+      // players for the notification event.
+      managerState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED)
+        || it.playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED)
+    }.toTypedArray()
+
     playbackListener.onPlaybackUpdate(playbackState, playerStates)
   }
 

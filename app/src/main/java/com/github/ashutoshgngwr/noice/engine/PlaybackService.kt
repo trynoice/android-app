@@ -161,7 +161,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
         .collect { p ->
           presets = p
           // refresh currently playing preset and stuff.
-          onPlaybackUpdate(playerManager.playbackState, playerManager.playerStates)
+          onPlaybackUpdate(playerManagerState.value, playerStates.value)
         }
     }
 
@@ -301,7 +301,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     playerStates: Array<PlayerState>
   ) {
     Log.i(LOG_TAG, "onPlaybackUpdate: managerState=$playerManagerState")
-    val currentPreset = findCurrentPreset(playerStates)
+    val currentPreset = presets.find { it.hasMatchingPlayerStates(playerStates) }
     this.playerManagerState.value = playerManagerState
     this.playerStates.value = playerStates
     mediaSessionManager.setPresetTitle(currentPreset?.name)
@@ -318,13 +318,6 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     }
   }
 
-  private fun findCurrentPreset(playerStates: Array<PlayerState>): Preset? {
-    return playerStates
-      .filterNot { it.playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
-      .toTypedArray()
-      .let { states -> presets.find { it.hasMatchingPlayerStates(states) } }
-  }
-
   private fun getSoundIdExtra(intent: Intent): String {
     return requireNotNull(intent.getStringExtra(INTENT_EXTRA_SOUND_ID)) {
       "intent extra '${INTENT_EXTRA_SOUND_ID}' is required to send '${intent.action}' command"
@@ -332,8 +325,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
   }
 
   private fun skipPreset(direction: Int) {
-    val activePlayerStates = playerManager.playerStates
-    val currentPos = presets.indexOfFirst { it.hasMatchingPlayerStates(activePlayerStates) }
+    val currentPos = presets.indexOfFirst { it.hasMatchingPlayerStates(playerStates.value) }
     if (currentPos < 0) { // not playing a saved preset.
       return
     }

@@ -315,14 +315,8 @@ class LibraryViewModel @Inject constructor(
     playerStates,
     presetRepository.listFlow(),
   ) { playerManagerState, playerStates, presets ->
-    playerStates
-      // exclude stopping and stopped players from active preset.
-      .filterNot { it.playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
-      .toTypedArray()
-      .let { s ->
-        !playerManagerState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED)
-          && presets.none { p -> p.hasMatchingPlayerStates(s) }
-      }
+    !playerManagerState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED)
+      && presets.none { p -> p.hasMatchingPlayerStates(playerStates) }
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
   internal val isLibraryIconsEnabled: StateFlow<Boolean> = settingsRepository
