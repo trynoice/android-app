@@ -2,7 +2,6 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.AnimatedVectorDrawable
-import android.os.Build
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -10,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -535,12 +533,16 @@ class SoundViewHolder(
     binding.title.text = sound.name
     binding.icon.isVisible = isIconsEnabled
     if (isIconsEnabled) {
+      val iconColor = TypedValue()
+        .also { binding.icon.context.theme.resolveAttribute(R.attr.colorSurfaceVariant, it, true) }
+        .data
+
       binding.icon.post {
         val icon = SVG.getFromString(sound.iconSvg)
         icon.documentPreserveAspectRatio = PreserveAspectRatio.END
         icon.documentWidth = binding.icon.width.toFloat()
         icon.documentHeight = binding.icon.height.toFloat()
-        binding.icon.setSVG(icon, "svg { fill: ${getIconColorHtml()}; }")
+        binding.icon.setSVG(icon, "svg { fill: #${Integer.toHexString(iconColor and 0x00ffffff)} }")
       }
     }
 
@@ -566,19 +568,6 @@ class SoundViewHolder(
     val volume = playerState?.volume ?: PlaybackController.DEFAULT_SOUND_VOLUME
     @SuppressLint("SetTextI18n")
     binding.volume.text = "${(volume * 100) / PlaybackController.MAX_SOUND_VOLUME}%"
-  }
-
-  private fun getIconColorHtml(): String {
-    // on some devices (MIUI, in particular), the attribute value is not getting correctly resolved.
-    // Therefore, using a hack to reinforce correct behaviour and avoid resolving attribute value
-    // where dynamic colors aren't available.
-    return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-      ContextCompat.getColor(binding.icon.context, R.color.md_theme_surfaceVariant)
-    } else {
-      TypedValue()
-        .also { binding.icon.context.theme.resolveAttribute(R.attr.colorSurfaceVariant, it, true) }
-        .data
-    }.let { "#${Integer.toHexString(it and 0x00ffffff)}" }
   }
 }
 
