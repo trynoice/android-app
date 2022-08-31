@@ -22,8 +22,8 @@ android {
     applicationId 'com.github.ashutoshgngwr.noice'
     minSdk config.minSdkVersion
     targetSdk config.compileSdkVersion
-    versionCode 58
-    versionName '2.2.2'
+    versionCode 59
+    versionName '2.2.3'
     testInstrumentationRunner 'com.github.ashutoshgngwr.noice.InstrumentedTestRunner'
     proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
   }
