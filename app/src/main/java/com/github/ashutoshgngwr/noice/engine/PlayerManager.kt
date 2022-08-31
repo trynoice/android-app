@@ -40,6 +40,8 @@ class PlayerManager(
   private var audioFocusManager: AudioFocusManager =
     DefaultAudioFocusManager(context, audioAttributes, this)
 
+  // a flag to temporarily disable `playbackListener` invocations in `notifyPlaybackListener()`.
+  private var enablePlaybackListenerNotification = true
   private var stopOnIdleJob: Job? = null
   private var scheduledStopJob: Job? = null
 
@@ -202,6 +204,9 @@ class PlayerManager(
    * Starts playing the sounds and sets their volumes as specified in the given [preset].
    */
   fun play(preset: Preset) {
+    // temporarily disable the plethora of events that will bubble up due to so many changes
+    // playback at once.
+    enablePlaybackListenerNotification = false
     // stop players that are not present in preset state
     players.keys
       .subtract(preset.playerStates.map { it.soundId }.toSet())
@@ -212,6 +217,9 @@ class PlayerManager(
       play(it.soundId)
       setVolume(it.soundId, it.volume)
     }
+
+    enablePlaybackListenerNotification = true
+    notifyPlaybackListener()
   }
 
   /**
@@ -322,6 +330,10 @@ class PlayerManager(
   }
 
   private fun notifyPlaybackListener() {
+    if (!enablePlaybackListenerNotification) {
+      return
+    }
+
     val managerState = playbackState
     val playerStates = playerStates.values.filterNot {
       // unless all players are either stopping or stopped, only consider not stopping or stopped
