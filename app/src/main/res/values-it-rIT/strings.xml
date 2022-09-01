@@ -163,11 +163,11 @@
     <string name="update_details">Dettagli aggiornamento</string>
     <string name="delete_account">Elimina account</string>
     <string name="unknown_error">Si è verificato un errore sconosciuto.</string>
-    <string name="welcome_back">Bentornato!</string>
-    <string name="welcome">Benvenuto!</string>
+    <string name="welcome_back">Bentornato/a!</string>
+    <string name="welcome">Benvenuto/a!</string>
     <string name="sign_in_message">Inserisci la tua e-mail per accedere per favore.</string>
     <string name="sign_up_message">Inserisci il tuo nome e la tua e-mail per registrarti per favore.</string>
-    <string name="email">Email</string>
+    <string name="email">E-mail</string>
     <string name="sign_up_email_sent">Ti abbiamo inviato un link di accesso all\'e-mail «%1$s».</string>
     <string name="sign_in_email_sent">Ti abbiamo inviato un link di accesso all\'e-mail «%1$s» se questo indirizzo appartiene a un account registrato.</string>
     <string name="sign_in_link_tip">Apri il link ricevuto utilizzando Noice per completare il processo di accesso per favore.</string>

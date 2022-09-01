@@ -273,7 +273,7 @@
     <string name="benefit_1">Streaming audio de haute qualité</string>
     <string name="subscription_payment_refunded">Nous avons annulé cet achat et demandé un remboursement.</string>
     <string name="preset_url_invalid">L\'URL prédéfinie semble être invalide !</string>
-    <string name="audio_quality_summary">La qualité audio maximale pour le streaming. Moyenne, Haute et Ultra ne fonctionnent que si vous êtes abonné·e.</string>
+    <string name="audio_quality_summary">La qualité audio maximale pour le streaming. Moyenne, Élevée et Ultra ne fonctionnent que si vous êtes abonné·e à Noice Premium.</string>
     <string name="profile_load_error">Oups ! Nous n\'avons pas pu récupérer les détails de votre compte. %1$s</string>
     <string name="non_looping_sound">Ce son contient des pauses entre les deux.</string>
     <string name="payment_processing_error">Oh oh ! Nous n\'avons pas été en mesure de traiter votre paiement. Le montant devrait être automatiquement remboursé s\'il a été déduit. Si vous ne recevez pas votre remboursement dans la semaine, veuillez nous en informer.</string>
@@ -296,4 +296,6 @@
     <string name="checking_sound_downloads">Vérification des sons téléchargés</string>
     <string name="sound_scheduled_for_download">Planification de %1$s pour le téléchargement.</string>
     <string name="sound_download_scheduled_for_removal">Planification %1$s pour la suppression de téléchargements son.</string>
+    <string name="benefit_3">Des sons plus longs avec plus d\'échantillons</string>
+    <string name="play_sound_before_adjusting_volume">Vous devez jouer ce son avant de pouvoir régler son volume.</string>
 </resources>
