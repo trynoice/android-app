@@ -10,7 +10,7 @@
     <string name="pause">Ehanañ</string>
     <string name="intensity">Kreñvded</string>
     <string name="report_issue">Danevelliñ kudennoù</string>
-    <string name="presets">Pre-keflunadurioù</string>
+    <string name="presets">Reoliadenn</string>
     <string name="sleep_timer">Munuter Kousk</string>
     <string name="preset_saved">Kefluniad enrollet !</string>
     <string name="okay">A-du</string>
@@ -26,4 +26,13 @@
     <string name="appintro__getting_started_title">Donemat</string>
     <string name="save_preset">Enrollañ ar c\'hefluniad</string>
     <string name="stop">Paouez</string>
+    <string name="support_development">Skoazellañ an Diorren</string>
+    <string name="add_to_home_screen">Ouzhpennañ d\'ar skramm degemer</string>
+    <string name="preset_delete_confirmation">Kadarnaat dilamidigezh %s \?</string>
+    <string name="wake_up_timer">Dihuner</string>
+    <string name="submit_feedback">Kinnig ur Priziad</string>
+    <string name="play">Lenn</string>
+    <string name="dismiss">Nac\'hañ</string>
+    <string name="play_pause">lenn pe ehanañ</string>
+    <string name="volume">Ampled son</string>
 </resources>
