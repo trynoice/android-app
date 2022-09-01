@@ -128,7 +128,7 @@
     <string name="support_development__donate_description">如果您尚未购买过高级版订阅，您可以一次性支付。这将帮助我们维持免费功能的发展，并且保持无植入广告。</string>
     <string name="view_subscription_plans">查看订阅计划</string>
     <string name="sign_in_email_sent">如果您的邮箱地址就是注册账户，我们已向\"%1$s\"发送了一封包含登录链接的邮件。</string>
-    <string name="delete_account_confirmation">删除您的帐户后，您将立即无法访问您的个人资料。您正在进行的订阅也将被取消。请注意，我们可能需要一段时间才能从服务器上完全删除您的数据。</string>
+    <string name="delete_account_confirmation">一旦删除，您将立即失去账户访问权。如果您有进行中的 Noice 高级版订阅，我们将停止向您收取费用。如果您改变主意，可以在删除前 7 天前的任何时间再次登录来恢复您的账户。超过此期限后，我们将从我们的服务器上永久删除您的账户数据。</string>
     <string name="payment_processing_error">糟糕！我们无法处理您的付款。如果已经扣款，金额将会自动退还。如果您在一周内没有收到退款，请尽快联系我们。</string>
     <string name="sign_in_message">请输入您的email以登录。</string>
     <string name="bi_yearly">每两年</string>
@@ -240,9 +240,9 @@
     <string name="privacy_policy">隐私政策</string>
     <string name="loading">加载中</string>
     <string name="gift_card">礼物卡</string>
-    <string name="has_premium_segments">这种声音有优质的成分。</string>
+    <string name="has_premium_segments">此声音含高级版才有的片段。</string>
     <string name="audio_quality">音质</string>
-    <string name="audio_quality_summary">流媒体的最高音频质量。 仅当您订阅了 Noice Premium 时，Medium、High 和 Ultra 才有效。</string>
+    <string name="audio_quality_summary">在线播放的最高音质。 仅当您订阅了 Noice 高级版时，才可使用 Medium、High 和 Ultra 音质。</string>
     <string name="audio_quality_medium">中 (192 kbps)</string>
     <string name="benefit_3">更长的声音和更多的样本</string>
     <string name="audio_quality_low">低 (128 kbps)</string>
@@ -250,4 +250,5 @@
     <string name="sign_up_tos">继续，即表示您同意我们的 [服务条款](https://trynoice.com/terms-of-service) 和 [隐私政策](https://trynoice.com/privacy-policy)。</string>
     <string name="invalid_gift_card_code">输入的礼品卡代码无效！</string>
     <string name="redeem">赎回</string>
+    <string name="trial_period">试用期：%1$s</string>
 </resources>
