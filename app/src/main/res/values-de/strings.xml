@@ -174,7 +174,7 @@
     <string name="signing_in">Anmeldung</string>
     <string name="sign_in_sucessful">Erfolgreich eingeloggt!</string>
     <string name="sign_in">Anmelden</string>
-    <string name="delete_account_confirmation">Wenn Sie Ihr Konto löschen, verlieren Sie sofort den Zugang zu Ihrem Profil. Wenn Sie ein laufendes Abonnement haben, wird dieses gekündigt. Bitte beachten Sie, dass es eine Weile dauern kann, bis wir Ihre Daten vollständig von unseren Servern gelöscht haben.</string>
+    <string name="delete_account_confirmation">Bei der Löschung verlieren Sie sofort den Zugang zu Ihrem Konto. Wenn Sie ein laufendes Abonnement für Noice Premium haben, werden wir Ihnen dafür keine Gebühren mehr berechnen. Wenn Sie Ihre Meinung ändern, können Sie Ihr Konto wiederherstellen, indem Sie sich innerhalb von 7 Tagen nach der Löschung erneut anmelden. Nach Ablauf dieser Frist werden wir Ihre Kontodaten dauerhaft von unseren Servern löschen.</string>
     <string name="invalid_name">Der eingegebene Name ist ungültig!</string>
     <string name="sign_out_confirmation">Abmeldung bestätigen\?</string>
     <string name="welcome_back">Willkommen zurück!</string>
@@ -275,7 +275,7 @@
     <string name="audio_quality_ultra">Ultra (320 kbps)</string>
     <string name="audio_quality_high">Hoch (256 kbps)</string>
     <string name="ended_on">Endete am %1$s</string>
-    <string name="audio_quality_summary">Die maximale Audioqualität für Streaming. Mittel, Hoch und Ultra funktionieren nur, wenn Sie ein Abonnement haben.</string>
+    <string name="audio_quality_summary">Die maximale Audioqualität für das Streaming. Medium, High und Ultra funktionieren nur, wenn Sie Noice Premium abonniert haben.</string>
     <string name="gift_card">Geschenkkarte</string>
     <string name="select_a_plan">Plan auswählen</string>
     <string name="library_load_error">Huch! Wir konnten die Soundbibliothek nicht abrufen. %1$s</string>
@@ -301,4 +301,11 @@
     <string name="remove_all_sound_downloads">Alle Sound-Downloads entfernen</string>
     <string name="sound_downloads_scheduled_for_removal">Alle Sound-Downloads wurden erfolgreich für die Entfernung geplant.</string>
     <string name="use_material_you_colors_summary">Vererbung der Material You-Farbpalette aus dem Android-System</string>
+    <string name="benefit_3">Längere Töne mit mehr Proben</string>
+    <string name="play_sound_before_adjusting_volume">Sie müssen diesen Ton abspielen, bevor Sie seine Lautstärke einstellen können.</string>
+    <string name="trial_period">Probezeit: %1$s</string>
+    <plurals name="n_days">
+        <item quantity="one">%1$d Tag</item>
+        <item quantity="other">%1$d Tage</item>
+    </plurals>
 </resources>
