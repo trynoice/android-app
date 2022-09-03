@@ -94,11 +94,7 @@
     Zcela upřímně vám moc srdečně děkujeme za vaši finanční podporu projektu Noice.
   </string>
     <string name="support_development__share">Sdílet s přáteli</string>
-    <string name="support_development__share_description">
-    Sdílením informace o existenci Noice s vašimi přáteli je podobné jako přímé darování peněz. Čím
-    vyšší počet stažení, tím silnější zpětnou vazbu dostaneme z různých perspektiv, což nám pomůže
-    ke zlepšení kvality celé aplikace.
-  </string>
+    <string name="support_development__share_description">Můžete nám také pomoci tím, že o nás řeknete svým přátelům. Více uživatelů nám poskytne zpětnou vazbu z několika různých pohledů a pomůže nám zlepšit naše služby.</string>
     <string name="cast_media">Propojit s Chromecast</string>
     <string name="in_app_feedback__description">
     Rádi bychom slyšeli váš názor na naší appku. Udělejte si, prosíme, na nás čas a navštivte náš GitHub.
@@ -158,4 +154,79 @@
     <string name="import_presets_successful">Ze souboru byly úspěšně importovány vaše mixy!</string>
     <string name="export_presets_successful">Mixy byly úspěšně exportovány do zvoleného souboru!</string>
     <string name="sound_fade_in_duration_summary">Délka postupného náběhu dodatečných zvuků při přehrávání (v sekundách)</string>
+    <string name="benefit_3">Delší zvuky s více vzorky</string>
+    <string name="manage_subscription">Spravovat předplatné</string>
+    <string name="sign_up">Registrace</string>
+    <string name="sign_in">Přihlásit se</string>
+    <string name="sign_in_sucessful">Přihlášení úspěšné!</string>
+    <string name="delete_account_confirmation">Po smazání okamžitě ztratíte přístup ke svému účtu. Pokud máte aktivní předplatné Noice Premium, přestaneme vám ho účtovat. Pokud si to rozmyslíte, můžete svůj účet obnovit opětovným přihlášením kdykoli před uplynutím 7 dnů od vymazání. Po uplynutí této doby údaje o vašem účtu z našich serverů trvale vymažeme.</string>
+    <string name="payment_processing_error">Ajaj! Nepodařilo se zpracovat platbu. Pokud byla částka odečtena, měla by být automaticky vrácena. Pokud nebude vrácena do týdne, prosím, informujte nás.</string>
+    <string name="subscription_payment_confirmation_failed">Ajaj! Při čekání na potvrzení platby nastaly problémy. To může být způsobeno chybou sítě nebo zpožděním ze strany poskytovatele plateb. Jakmile se nám poskytovatel ozve, aktualizujeme stav vašeho předplatného. Po nějaké době prosím zkontrolujte stav předplatného.</string>
+    <string name="started_on">Odběr ode dne %1$s</string>
+    <string name="subscription_payment_pending">Platba za tento nákup čeká na vyřízení.</string>
+    <string name="get_premium">Získat prémium</string>
+    <string name="signing_out">Odhlašování</string>
+    <string name="offline">Jste offline</string>
+    <string name="app">Aplikace</string>
+    <string name="unknown_error">Došlo k neznámé chybě.</string>
+    <string name="user_already_subscribed">Již máte předplatné.</string>
+    <string name="welcome_back">Vítejte zpět!</string>
+    <string name="sign_up_message">Pro registraci zadejte své jméno a e-mail.</string>
+    <string name="retry">Opakovat</string>
+    <string name="paid_using">Zaplaceno pomocí %1$s</string>
+    <string name="delete_account">Smazat účet</string>
+    <string name="sign_out_confirmation">Opravdu chcete odhlásit\?</string>
+    <string name="cont">Pokračovat</string>
+    <string name="sound_fade_out_duration_summary">Doba trvání doznívání zvuků (v sekundách)</string>
+    <string name="sign_out">Odhlásit se</string>
+    <string name="network_error">Síť je nedostupná.</string>
+    <string name="yearly">Roční</string>
+    <string name="email">E-mail</string>
+    <string name="deleting_account">Mažu účet</string>
+    <string name="subscription_payment_complete">Děkujeme, že jste si předplatili Noice Premium. Vaše předplatné je nyní aktivní.</string>
+    <string name="invalid_email">Zadaný e-mail je neplatný!</string>
+    <string name="cancel_subscription">Zrušit předplatné</string>
+    <string name="ended_on">Skončil dne %1$s</string>
+    <string name="update_details">Aktualizovat podrobnosti</string>
+    <string name="subscription_payment_cancelled">Platba předplatného byla zrušena!</string>
+    <string name="monthly_price">%1$s měsíčně</string>
+    <string name="back_online">Zpět online</string>
+    <string name="signing_in">Přihlašování</string>
+    <string name="sign_in_to_continue">Pro pokračování se prosím přihlaste nebo zaregistrujte.</string>
+    <string name="mailbox_app_not_found">Ajaj! Nepodařilo se nám na vašem zařízení najít poštovní aplikaci!</string>
+    <string name="open_mailbox">Otevřít poštovní schránku</string>
+    <string name="sign_in_link_tip">Pro dokončení přihlášení otevřte obdržený odkaz pomocí aplikace Noice.</string>
+    <string name="account">Účet</string>
+    <string name="benefits">Výhody</string>
+    <string name="support_development__donate_description">Pokud jste si nezakoupili prémiové předplatné, můžete provést jednorázovou platbu. Pomůže nám to s vývojem bezplatných funkcí a udržet je navždy bez reklam.</string>
+    <string name="monthly">Měsíční</string>
+    <string name="quarterly">Čtvrtletní</string>
+    <string name="subscription_purchases">Nákupy předplatného</string>
+    <string name="confirming_payment">Potvrzuji platbu</string>
+    <string name="sign_in_email_sent">Pokud tato adresa patří k registrovanému účtu, měl by vám přijít e-mail s přihlašovacím odkazem na \"%1$s\".</string>
+    <string name="invalid_name">Zadané jméno je neplatné!</string>
+    <string name="renews_on">Obnoví se dne %1$s</string>
+    <string name="benefit_1">Streamování zvuku ve vysoké kvalitě</string>
+    <string name="total_price">Celkem %1$s</string>
+    <string name="sign_up_email_sent">Poslali jsme vám e-mailem odkaz pro přihlášení na \"%1$s\".</string>
+    <string name="sound_fade_out_duration">Délka doznívání zvuku</string>
+    <string name="welcome">Vítejte!</string>
+    <string name="subscription_payment_refunded">Tento nákup jsme zrušili a zahájili jeho vrácení.</string>
+    <string name="ends_on">Končí dne %1$s</string>
+    <string name="sign_in_token_error">Zdá se, že přihlašovací odkaz je neplatný. Je možné, že jeho platnost vypršela. Zkuste to prosím znovu!</string>
+    <string name="account_locked_error">Váš e-mail je dočasně zablokován pro pokusy o přihlášení až do %1$s.</string>
+    <string name="i_understand">Rozumím.</string>
+    <string name="sign_in_message">Pro přihlášení zadejte svůj e-mail.</string>
+    <string name="support">Podpora</string>
+    <string name="select_a_plan">Vybrat plán</string>
+    <string name="random_preset_description">Vygenerovaná předvolba bude pravděpodobně obsahovat zvuky s vybranými klíčovými slovy. Intenzivní předvolby se navíc pokusí přehrát více zvuků současně.</string>
+    <string name="benefit_2">Offline přehrávání</string>
+    <string name="processing_payment">Zpracovávám platbu</string>
+    <plurals name="n_months">
+        <item quantity="one">%1$d měsíc</item>
+        <item quantity="few">%1$d měsíce</item>
+        <item quantity="other">%1$d měsíců</item>
+    </plurals>
+    <string name="duplicate_email_error">Zadaný e-mail je přidružen k jinému účtu.</string>
+    <string name="account_details_update_success">Údaje o vašem účtu byly úspěšně aktualizovány.</string>
 </resources>
