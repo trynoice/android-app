@@ -259,7 +259,7 @@
     <string name="redeemed_using_code">Remboursé en utilisant « %1$s »</string>
     <string name="sign_in_email_error">Oh oh ! Nous n\'avons pas pu vous envoyer un lien de connexion par courriel. %1$s Veuillez réessayer plus tard !</string>
     <string name="subscription_initialisation_error">Oups ! Nous n\'avons pas pu lancer le flux de facturation. %1$s Veuillez réessayer !</string>
-    <string name="delete_account_confirmation">En supprimant votre compte, vous perdrez immédiatement l\'accès à votre profil. Si vous avez un abonnement en cours, celui-ci sera annulé. Veuillez noter qu\'il peut nous falloir un certain temps pour effacer complètement vos données de nos serveurs.</string>
+    <string name="delete_account_confirmation">Vous perdrez immédiatement l\'accès à votre compte en cas de suppression. Si vous avez un abonnement en cours à Noice Premium, nous cesserons de vous le facturer. Si vous changez d\'avis, vous pouvez restaurer votre compte en vous reconnectant à tout moment dans les 7 jours suivant la suppression. Après cette période, nous effacerons définitivement les données de votre compte de nos serveurs.</string>
     <string name="cancel_subscription_confirmation">Êtes-vous sûr·e de vouloir annuler votre abonnement à Noice Premium \? En cas d\'annulation, votre abonnement sera automatiquement résilié à la fin du cycle de facturation actuel. Votre cycle de facturation actuel se termine le %1$s.</string>
     <string name="sign_in_token_error">Le lien de connexion semble être invalide. Il a peut-être expiré. Veuillez réessayer !</string>
     <string name="subscription_plans_load_error">Oups ! Nous n\'avons pas pu récupérer les plans d\'abonnement. %1$s</string>
@@ -298,4 +298,10 @@
     <string name="sound_download_scheduled_for_removal">Planification %1$s pour la suppression de téléchargements son.</string>
     <string name="benefit_3">Des sons plus longs avec plus d\'échantillons</string>
     <string name="play_sound_before_adjusting_volume">Vous devez jouer ce son avant de pouvoir régler son volume.</string>
+    <plurals name="n_days">
+        <item quantity="one">%1$d jour</item>
+        <item quantity="many">%1$d jours</item>
+        <item quantity="other">%1$d jours</item>
+    </plurals>
+    <string name="trial_period">Période d\'essai : %1$s</string>
 </resources>

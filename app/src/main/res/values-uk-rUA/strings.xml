@@ -195,7 +195,7 @@
     <string name="cont">Продовжити</string>
     <string name="sign_out_confirmation">Підтвердити вихід\?</string>
     <string name="signing_out">Вихід</string>
-    <string name="delete_account_confirmation">Після видалення облікового запису ви негайно втратите доступ до свого профілю. Якщо у вас є чинна передплата, її буде скасовано. Зверніть увагу, що нам може знадобитися деякий час, щоб повністю стерти ваші дані з наших серверів.</string>
+    <string name="delete_account_confirmation">Після видалення ви одразу втратите доступ до свого облікового запису. Якщо у вас є чинна передплата Noice Premium, ми припинимо стягувати плату за неї. Якщо ви передумаєте, ви можете відновити обліковий запис, увійшовши знову в будь-який час до 7 днів після видалення. Після цього періоду ми остаточно видалимо дані вашого облікового запису з наших серверів.</string>
     <string name="duplicate_email_error">Введена електронна адреса пов’язана з іншим обліковим записом.</string>
     <string name="offline">Ви офлайн</string>
     <string name="back_online">Повернутися в онлайн-режим</string>
@@ -287,4 +287,11 @@
     <string name="sound_download_scheduled_for_removal">Планування вилучення %1$s із завантажень звуку.</string>
     <string name="play_sound_before_adjusting_volume">Вам потрібно відтворити цей звук, перш ніж ви зможете регулювати його гучність.</string>
     <string name="benefit_3">Триваліші звуки з більшою кількістю зразків</string>
+    <string name="trial_period">Пробний період: %1$s</string>
+    <plurals name="n_days">
+        <item quantity="one">%1$d день</item>
+        <item quantity="few">%1$d дні</item>
+        <item quantity="many">%1$d днів</item>
+        <item quantity="other">%1$d днів</item>
+    </plurals>
 </resources>
