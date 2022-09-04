@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Build
 import android.os.IBinder
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.media.AudioAttributesCompat
 import androidx.preference.PreferenceManager
@@ -34,7 +35,7 @@ class PlaybackController @Inject constructor(@ApplicationContext private val con
    * Sends the start command to the service with [PlaybackService.ACTION_PLAY_SOUND].
    */
   fun play(soundId: String) {
-    commandPlaybackService {
+    commandPlaybackService(true) {
       action = PlaybackService.ACTION_PLAY_SOUND
       putExtra(PlaybackService.INTENT_EXTRA_SOUND_ID, soundId)
     }
@@ -44,14 +45,14 @@ class PlaybackController @Inject constructor(@ApplicationContext private val con
    * Sends the start command to the service with [PlaybackService.ACTION_STOP_SOUND].
    */
   fun stop(soundId: String) {
-    commandPlaybackService {
+    commandPlaybackService(false) {
       action = PlaybackService.ACTION_STOP_SOUND
       putExtra(PlaybackService.INTENT_EXTRA_SOUND_ID, soundId)
     }
   }
 
   fun setVolume(soundId: String, volume: Int) {
-    commandPlaybackService {
+    commandPlaybackService(false) {
       action = PlaybackService.ACTION_SET_SOUND_VOLUME
       putExtra(PlaybackService.INTENT_EXTRA_SOUND_ID, soundId)
       putExtra(PlaybackService.INTENT_EXTRA_SOUND_VOLUME, volume)
@@ -62,21 +63,21 @@ class PlaybackController @Inject constructor(@ApplicationContext private val con
    * Sends the start command to the service with [PlaybackService.ACTION_PAUSE].
    */
   fun pause() {
-    commandPlaybackService { action = PlaybackService.ACTION_PAUSE }
+    commandPlaybackService(false) { action = PlaybackService.ACTION_PAUSE }
   }
 
   /**
    * Sends the start command to the service with [PlaybackService.ACTION_RESUME].
    */
   fun resume() {
-    commandPlaybackService { action = PlaybackService.ACTION_RESUME }
+    commandPlaybackService(true) { action = PlaybackService.ACTION_RESUME }
   }
 
   /**
    * Sends the start command to the service with [PlaybackService.ACTION_STOP].
    */
   fun stop() {
-    commandPlaybackService { action = PlaybackService.ACTION_STOP }
+    commandPlaybackService(false) { action = PlaybackService.ACTION_STOP }
   }
 
   /**
@@ -84,7 +85,7 @@ class PlaybackController @Inject constructor(@ApplicationContext private val con
    * [preset].
    */
   fun play(preset: Preset) {
-    commandPlaybackService {
+    commandPlaybackService(true) {
       action = PlaybackService.ACTION_PLAY_PRESET
       putExtra(PlaybackService.INTENT_EXTRA_PRESET, preset)
     }
@@ -96,7 +97,7 @@ class PlaybackController @Inject constructor(@ApplicationContext private val con
   fun scheduleStop(afterDurationMillis: Long) {
     val atMillis = System.currentTimeMillis() + afterDurationMillis
     prefs.edit(commit = true) { putLong(PREF_SCHEDULED_STOP_MILLIS, atMillis) }
-    commandPlaybackService {
+    commandPlaybackService(false) {
       action = PlaybackService.ACTION_SCHEDULE_STOP
       putExtra(PlaybackService.INTENT_EXTRA_SCHEDULED_STOP_AT_MILLIS, atMillis)
     }
@@ -107,7 +108,7 @@ class PlaybackController @Inject constructor(@ApplicationContext private val con
    */
   fun clearScheduledAutoStop() {
     prefs.edit { remove(PREF_SCHEDULED_STOP_MILLIS) }
-    commandPlaybackService { action = PlaybackService.ACTION_CLEAR_STOP_SCHEDULE }
+    commandPlaybackService(false) { action = PlaybackService.ACTION_CLEAR_STOP_SCHEDULE }
   }
 
   /**
@@ -123,16 +124,20 @@ class PlaybackController @Inject constructor(@ApplicationContext private val con
    * use.
    */
   fun setAudioUsage(@AudioAttributesCompat.AttributeUsage usage: Int) {
-    commandPlaybackService {
+    commandPlaybackService(false) {
       action = PlaybackService.ACTION_SET_AUDIO_USAGE
       putExtra(PlaybackService.INTENT_EXTRA_AUDIO_USAGE, usage)
     }
   }
 
-  private inline fun commandPlaybackService(intentBuilder: Intent.() -> Unit) {
+  private inline fun commandPlaybackService(foreground: Boolean, intentBuilder: Intent.() -> Unit) {
     val intent = Intent(context, PlaybackService::class.java)
     intentBuilder.invoke(intent)
-    context.startService(intent)
+    if (foreground) {
+      ContextCompat.startForegroundService(context, intent)
+    } else {
+      context.startService(intent)
+    }
   }
 
   /**
@@ -203,21 +208,21 @@ class PlaybackController @Inject constructor(@ApplicationContext private val con
      * Returns a [PendingIntent] that issues resume command to the [PlaybackService].
      */
     fun buildResumeActionPendingIntent(context: Context): PendingIntent {
-      return buildPendingIntent(context, 0x3A) { action = PlaybackService.ACTION_RESUME }
+      return buildPendingIntent(context, 0x3A, true) { action = PlaybackService.ACTION_RESUME }
     }
 
     /**
      * Returns a [PendingIntent] that issues pause command to the [PlaybackService].
      */
     fun buildPauseActionPendingIntent(context: Context): PendingIntent {
-      return buildPendingIntent(context, 0x3B) { action = PlaybackService.ACTION_PAUSE }
+      return buildPendingIntent(context, 0x3B, false) { action = PlaybackService.ACTION_PAUSE }
     }
 
     /**
      * Returns a [PendingIntent] that issues stop command to the [PlaybackService].
      */
     fun buildStopActionPendingIntent(context: Context): PendingIntent {
-      return buildPendingIntent(context, 0x3C) { action = PlaybackService.ACTION_STOP }
+      return buildPendingIntent(context, 0x3C, false) { action = PlaybackService.ACTION_STOP }
     }
 
     /**
@@ -225,7 +230,7 @@ class PlaybackController @Inject constructor(@ApplicationContext private val con
      * a random preset.
      */
     fun buildRandomPresetActionPendingIntent(context: Context): PendingIntent {
-      return buildPendingIntent(context, 0x3D) {
+      return buildPendingIntent(context, 0x3D, true) {
         action = PlaybackService.ACTION_PLAY_RANDOM_PRESET
       }
     }
@@ -235,7 +240,7 @@ class PlaybackController @Inject constructor(@ApplicationContext private val con
      * previous preset.
      */
     fun buildSkipPrevActionPendingIntent(context: Context): PendingIntent {
-      return buildPendingIntent(context, 0x3E) {
+      return buildPendingIntent(context, 0x3E, true) {
         action = PlaybackService.ACTION_SKIP_PRESET
         putExtra(
           PlaybackService.INTENT_EXTRA_PRESET_SKIP_DIRECTION,
@@ -249,7 +254,7 @@ class PlaybackController @Inject constructor(@ApplicationContext private val con
      * preset.
      */
     fun buildSkipNextActionPendingIntent(context: Context): PendingIntent {
-      return buildPendingIntent(context, 0x3F) {
+      return buildPendingIntent(context, 0x3F, true) {
         action = PlaybackService.ACTION_SKIP_PRESET
         putExtra(
           PlaybackService.INTENT_EXTRA_PRESET_SKIP_DIRECTION,
@@ -261,6 +266,7 @@ class PlaybackController @Inject constructor(@ApplicationContext private val con
     private inline fun buildPendingIntent(
       context: Context,
       requestCode: Int,
+      foreground: Boolean,
       intentBuilder: Intent.() -> Unit,
     ): PendingIntent {
       val piFlags = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -271,7 +277,7 @@ class PlaybackController @Inject constructor(@ApplicationContext private val con
 
       val intent = Intent(context, PlaybackService::class.java)
       intentBuilder.invoke(intent)
-      return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      return if (foreground && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         PendingIntent.getForegroundService(context, requestCode, intent, piFlags)
       } else {
         PendingIntent.getService(context, requestCode, intent, piFlags)
