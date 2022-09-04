@@ -138,11 +138,14 @@
 
     </activity>
 
-    <service android:name=".engine.PlaybackService" />
+    <service
+      android:name=".engine.PlaybackService"
+      android:foregroundServiceType="mediaPlayback" />
 
     <service
       android:name=".engine.exoplayer.SoundDownloadService"
-      android:exported="false">
+      android:exported="false"
+      android:foregroundServiceType="dataSync">
 
       <intent-filter>
         <action android:name="com.google.android.exoplayer.downloadService.action.RESTART" />
