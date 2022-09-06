@@ -199,7 +199,7 @@
     <string name="view_subscription_plans">Ver planes</string>
     <string name="payment_processing_error">¡UH oh! No pudimos procesar su pago. La cantidad debe ser reembolsada automáticamente si se deduce. Si no recibe su reembolso dentro de una semana, avísenos.</string>
     <string name="confirming_payment">Confirmado el pago</string>
-    <string name="monthly_price">%1$s/mes</string>
+    <string name="monthly_price">%1$s/ por mes</string>
     <string name="sound_fade_out_duration_summary">Tiempo de duración de los sonidos que se desvanecen (en segundos)</string>
     <string name="mailbox_app_not_found">!Uh-oh! ¡No pudimos encontrar una aplicación de buzón en su dispositivo!</string>
     <string name="benefit_0">Variaciones naturales en los sonidos</string>
@@ -228,4 +228,8 @@
     <string name="i_understand">Entiendo.</string>
     <string name="looping_sound">Este sonido se repite a la perfección.</string>
     <string name="subscription_payment_pending">El pago está pendiente para esta compra.</string>
+    <string name="benefit_3">Sonidos largos con más muestras</string>
+    <string name="cancel_subscription_error">¡Oh no! No se ha podido cancelar la suscripción. %1$s¡Por favor, intentélo de nuevo!</string>
+    <string name="delete_account_error">¡Oh no! No se ha podido eliminar la cuenta. %1$s ¡Por favor, inténtelo de nuevo!</string>
+    <string name="account_details_update_error">¡Oh no! No se ha podido actualizar los datos. %1$s ¡Por favor, inténtelo de nuevo!</string>
 </resources>
