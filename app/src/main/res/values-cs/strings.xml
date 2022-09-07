@@ -225,6 +225,7 @@
     <plurals name="n_months">
         <item quantity="one">%1$d měsíc</item>
         <item quantity="few">%1$d měsíce</item>
+        <item quantity="many">%1$d měsíců</item>
         <item quantity="other">%1$d měsíců</item>
     </plurals>
     <string name="duplicate_email_error">Zadaný e-mail je přidružen k jinému účtu.</string>
