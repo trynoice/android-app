@@ -172,7 +172,7 @@
     <string name="mailbox_app_not_found">Ой! Нам не удалось найти почтовое приложение на вашем устройстве!</string>
     <string name="cont">Продолжить</string>
     <string name="sign_out_confirmation">Подтвердить выход\?</string>
-    <string name="delete_account_confirmation">При удалении учетной записи вы немедленно потеряете доступ к своему профилю. Если у вас есть действующая подписка, она будет отменена. Обратите внимание, что полное удаление ваших данных с наших серверов может занять некоторое время.</string>
+    <string name="delete_account_confirmation">После удаления вы сразу потеряете доступ к своей учётной записи. Если у вас есть действующая подписка на Noice Premium, мы перестанем взимать с вас плату за неё. Если вы передумаете, вы можете восстановить свою учётную запись, снова войдя в неё в любое время в течении 7 дней после удаления. По истечении этого периода мы безвозвратно удалим данные вашей учётной записи с наших серверов.</string>
     <string name="sign_in_email_sent">Мы отправили вам по эл. почте ссылку для входа на «%1$s», если этот адрес принадлежит зарегистрированной учетной записи.</string>
     <string name="signing_out">Выход</string>
     <string name="duplicate_email_error">Введенный адрес эл. почты связан с другой учетной записью.</string>
@@ -295,4 +295,11 @@
     <string name="sound_download_scheduled_for_removal">Планирование удаления %1$s из загрузки звука.</string>
     <string name="play_sound_before_adjusting_volume">Вам нужно воспроизвести этот звук, прежде чем вы сможете регулировать его громкость.</string>
     <string name="use_material_you_colors_summary">Наследовать цветовую палитру Material You из системы Android</string>
+    <string name="trial_period">Пробный период: %1$s</string>
+    <plurals name="n_days">
+        <item quantity="one">%1$d день</item>
+        <item quantity="few">%1$d дня</item>
+        <item quantity="many">%1$d дней</item>
+        <item quantity="other">%1$d дней</item>
+    </plurals>
 </resources>
