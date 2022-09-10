@@ -171,7 +171,7 @@
     <string name="cancelling_subscription">Đang huỷ gói đăng ký</string>
     <string name="subscription_initialisation_error">Chúng tôi không thế bắt đầu thanh toán. %1$s Hãy thử lại!</string>
     <string name="subscription_purchases_load_error">Chúng tôi không thể lấy lịch sử mua gói đăng ký. %1$s</string>
-    <string name="delete_account_confirmation">Khi xoá tài khoản, bạn sẽ lập tức không thể truy cập hồ sơ của bạn. Nếu bạn có gói đăng ký đang hoạt động, nó sẽ bị huỷ. Vui lòng lưu ý rằng chúng tôi sẽ mất một lúc để xoá hoàn toàn dữ liệu của bạn khỏi máy chủ.</string>
+    <string name="delete_account_confirmation">Bạn sẽ ngay lập tức mất quyền truy cập vào tài khoản của mình sau khi xóa. Nếu bạn đang có đăng ký Noice Premium, chúng tôi sẽ ngừng tính phí cho bạn. Nếu đổi ý, bạn có thể khôi phục tài khoản của mình bằng cách đăng nhập lại bất kỳ lúc nào trước 7 ngày sau khi xóa. Sau khoảng thời gian này, chúng tôi sẽ xóa vĩnh viễn dữ liệu tài khoản của bạn khỏi máy chủ của chúng tôi.</string>
     <string name="audio_quality_low">Thấp (128 kbps)</string>
     <string name="app_license">Giấy phép GNU GPL-3.0</string>
     <string name="view_subscription_plans">Xem các kế hoạch</string>
@@ -253,7 +253,7 @@
     <string name="paid_using">Đã thanh toán bằng %1$s</string>
     <string name="media_sources">Nguồn âm thanh</string>
     <string name="profile_load_error">Chúng tôi không thể lấy chi tiết tài khoản của bạn. %1$s</string>
-    <string name="audio_quality_summary">Chất lượng âm thanh cao nhất khi truyền. Trung bình, Cao và Ultra chỉ hoạt động khi bạn đã đăng ký.</string>
+    <string name="audio_quality_summary">Chất lượng âm thanh cao nhất khi truyền. Trung bình, Cao và Ultra chỉ hoạt động khi bạn đã đăng ký Noice Premium.</string>
     <string name="generate_preset_error">Chúng tôi không thể tạo thiết lập. %1$s Vui lòng thử lại!</string>
     <string name="sign_up_tos">Bằng cách tiếp tục, bạn đồng ý với [Điều khoản dịch vụ](https://trynoice.com/terms-of-service) và [Chính sách riêng tư](https://trynoice.com/privacy-policy).</string>
     <string name="redeem">Đổi</string>
@@ -262,4 +262,24 @@
     <string name="monthly_price">%1$s mỗi tháng</string>
     <string name="showing_localised_prices">Giá đã chuyển từ [INR](https://en.wikipedia.org/wiki/Indian_rupee). Giá thực tế có thể dao động nhẹ.</string>
     <string name="cancel_subscription_confirmation">Bạn có chắc bạn muốn huỷ gói đăng ký Noice Premium không\? Khi huỷ, gói đăng ký của bạn sẽ tự động dừng tại điểm kết thúc của chu kỳ thanh toán hiện tại. Chu kỳ thanh toán hiện tại của bạn sẽ kết thúc vào %1$s.</string>
+    <string name="benefit_3">Âm thanh dài hơn với nhiều mẫu hơn</string>
+    <string name="use_material_you_colors">Sử dụng màu sắc Material You</string>
+    <string name="use_material_you_colors_summary">Kế thừa bảng màu Material You từ hệ thống Android</string>
+    <string name="remove_all_sound_downloads_confirmation">Việc này sẽ xóa tất cả các bản âm thanh đã tải xuống để phát lại ngoại tuyến. Bạn có muốn tiến hành không\?</string>
+    <string name="remove_sound_download">Xóa bỏ %1$s</string>
+    <string name="remove_sound_download_confirmation">Xác nhận xóa âm thanh đã tải xuống để phát lại ngoại tuyến\?</string>
+    <string name="sound_scheduled_for_download">Lên lịch %1$s để tải xuống.</string>
+    <string name="sound_download_scheduled_for_removal">Lập lịch %1$s để xóa khỏi bản tải xuống âm thanh.</string>
+    <plurals name="n_days">
+        <item quantity="other">%1$d ngày</item>
+    </plurals>
+    <string name="download_sound">Tải xuống âm thanh</string>
+    <string name="notification_channel_sound_downloads__description">Thông báo tiến trình liên quan đến tải xuống âm thanh.</string>
+    <string name="notification_channel_sound_downloads__name">Tải xuống âm thanh</string>
+    <string name="remove_all_sound_downloads">Xóa tất cả các bản tải xuống âm thanh</string>
+    <string name="checking_sound_downloads">Kiểm tra tải xuống âm thanh</string>
+    <string name="trial_period">Thời gian dùng thử: %1$s</string>
+    <string name="play_sound_before_adjusting_volume">Bạn cần phát âm thanh này trước khi có thể điều chỉnh âm lượng của nó.</string>
+    <string name="stripe_customer_portal_error">Rất tiếc! Chúng tôi không thể mở cổng thông tin thanh toán. %1$s Vui lòng thử lại!</string>
+    <string name="sound_downloads_scheduled_for_removal">Tất cả các bản tải xuống âm thanh đã được lên lịch để xóa.</string>
 </resources>
