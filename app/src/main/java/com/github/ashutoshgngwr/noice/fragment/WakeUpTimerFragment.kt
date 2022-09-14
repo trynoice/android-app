@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.WakeUpTimerManager
@@ -124,7 +125,6 @@ class WakeUpTimerFragment : Fragment() {
     selectedTime = calendar.timeInMillis
 
     notifyUpdate()
-    notifyScheduleLeftTime()
 
     val params = bundleOf(
       "hour" to calendar.get(Calendar.HOUR_OF_DAY),
@@ -146,6 +146,7 @@ class WakeUpTimerFragment : Fragment() {
     val isTimerValid = selectedTime > System.currentTimeMillis() && selectedPreset != null
     binding.setTimeButton.isEnabled = selectedPreset != null
     binding.resetTimeButton.isEnabled = isTimerValid
+    binding.alarmInfoContainer.isVisible = isTimerValid
 
     updateTimePicker()
     if (selectedPreset == null) {
@@ -155,6 +156,7 @@ class WakeUpTimerFragment : Fragment() {
     }
 
     if (isTimerValid) {
+      binding.alarmInfo.text = getDurationString(selectedTime - System.currentTimeMillis())
       wakeUpTimerManager.set(
         WakeUpTimerManager.Timer(requireNotNull(selectedPresetID), selectedTime)
       )
@@ -204,20 +206,9 @@ class WakeUpTimerFragment : Fragment() {
     }
   }
 
-
-  private fun notifyScheduleLeftTime() {
-    val differenceMillis = selectedTime - System.currentTimeMillis()
-    if (differenceMillis < 0) {
-      return // should it ever happen?
-    }
-
-    val diffHours = TimeUnit.MILLISECONDS.toHours(differenceMillis).toInt()
-    val diffMinutes = TimeUnit.MILLISECONDS.toMinutes(differenceMillis).toInt() % 60
-
-    showInfoSnackBar(getRelativeDurationString(diffHours, diffMinutes))
-  }
-
-  private fun getRelativeDurationString(hours: Int, minutes: Int): String {
+  private fun getDurationString(millis: Long): String {
+    val hours = TimeUnit.MILLISECONDS.toHours(millis).toInt()
+    val minutes = TimeUnit.MILLISECONDS.toMinutes(millis).toInt() % 60
     var minutePlural = ""
     if (minutes > 0 || hours == 0) {
       minutePlural = resources.getQuantityString(R.plurals.time_minutes, minutes, minutes)

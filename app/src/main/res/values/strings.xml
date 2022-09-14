@@ -60,8 +60,8 @@
         <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="wake_up_timer_description">
-    Noice will start the selected preset when the timer ends. Use the buttons below to select a
-    preset and set the desired time to start the wake-up timer.
+    Noice will start the selected preset at the specified time. Use the controls below to select a
+    preset and set the desired time to schedule the wake-up timer.
   </string>
     <string name="app_theme_light">Light</string>
     <string name="app_theme_dark">Dark</string>

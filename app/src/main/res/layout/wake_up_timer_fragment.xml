@@ -7,6 +7,7 @@
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="@dimen/root_layout_padding">
@@ -18,15 +19,48 @@
       android:text="@string/wake_up_timer_description"
       android:textAppearance="?attr/textAppearanceBodyMedium" />
 
+    <com.google.android.material.card.MaterialCardView
+      android:id="@+id/alarm_info_container"
+      style="?attr/materialCardViewFilledStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="24dp"
+      app:cardCornerRadius="24dp"
+      app:contentPaddingBottom="12dp"
+      app:contentPaddingLeft="24dp"
+      app:contentPaddingRight="24dp"
+      app:contentPaddingTop="12dp"
+      app:strokeWidth="0dp">
+
+      <TextView
+        android:id="@+id/alarm_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        android:textColor="?attr/colorPrimary"
+        app:drawableStartCompat="@drawable/ic_baseline_check_circle_24"
+        app:drawableTint="?attr/colorPrimary" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <Space
+      android:layout_width="match_parent"
+      android:layout_height="32dp" />
+
     <Button
       android:id="@+id/select_preset_button"
       style="?attr/materialButtonOutlinedStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginVertical="24dp"
       android:text="@string/select_preset"
       app:icon="@drawable/ic_action_expand"
       app:iconGravity="end" />
+
+    <Space
+      android:layout_width="match_parent"
+      android:layout_height="24dp" />
 
     <TimePicker
       android:id="@+id/time_picker"
