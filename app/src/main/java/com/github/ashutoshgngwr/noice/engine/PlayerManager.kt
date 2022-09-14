@@ -117,11 +117,15 @@ class PlayerManager(
   private fun buildPlayerPlaybackListener(soundId: String): Player.PlaybackListener {
     return Player.PlaybackListener { playbackState, volume ->
       Log.i(LOG_TAG, "Player.PlaybackListener: id=$soundId state=$playbackState volume=$volume")
-      playerStates[soundId] = PlayerState(soundId, volume, playbackState)
       if (playbackState == PlaybackState.STOPPED) {
         players.remove(soundId)
         playerStates.remove(soundId)
         analyticsProvider.logPlayerStopEvent(soundId)
+      } else if (players.containsKey(soundId)) {
+        // explicitly check if we still hold a player instance for the given sound id. As it
+        // happens, sometimes a Player receives BUFFERING event after STOPPED event. And hence, the
+        // sound remains stuck in buffering state indefinitely.
+        playerStates[soundId] = PlayerState(soundId, volume, playbackState)
       }
 
       if (players.isEmpty()) { // playback has stopped
