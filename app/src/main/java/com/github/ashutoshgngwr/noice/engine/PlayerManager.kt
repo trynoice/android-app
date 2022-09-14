@@ -338,12 +338,13 @@ class PlayerManager(
       return
     }
 
-    val managerState = playbackState
-    val playerStates = playerStates.values.filterNot {
+    val playerStates = if (playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED)) {
       // unless all players are either stopping or stopped, only consider not stopping or stopped
       // players for the notification event.
-      managerState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED)
-        || it.playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED)
+      playerStates.values
+    } else {
+      playerStates.values
+        .filterNot { it.playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
     }.toTypedArray()
 
     playbackListener.onPlaybackUpdate(playbackState, playerStates)
