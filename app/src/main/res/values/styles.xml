@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
   <style name="Widget.App.Button.IconButton.Outlined" parent="Widget.Material3.Button.IconButton">
@@ -144,4 +145,5 @@
     <item name="android:textColor">?attr/colorOnSurfaceInverse</item>
     <item name="drawableTint">?attr/colorOnSurfaceInverse</item>
   </style>
+
 </resources>
