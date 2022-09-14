@@ -75,10 +75,16 @@ class ViewSubscriptionPlansFragment : Fragment() {
         }
     }
 
-    val currencyCode = ConfigurationCompat.getLocales(resources.configuration)
-      .get(0)
-      .let { Currency.getInstance(it) }
-      .currencyCode
+    val currencyCode = try {
+      ConfigurationCompat.getLocales(resources.configuration)
+        .get(0)
+        .let { Currency.getInstance(it) }
+        .currencyCode
+    } catch (e: Throwable) {
+      // catch "java.lang.IllegalArgumentException: Unsupported ISO 3166 country: ar" or other
+      // similar errors and use a default currency.
+      "USD"
+    }
 
     binding.errorContainer.retryAction = { viewModel.loadPlans(currencyCode) }
     viewModel.loadPlans(currencyCode)
