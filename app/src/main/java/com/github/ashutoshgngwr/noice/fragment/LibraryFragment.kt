@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -523,7 +524,7 @@ class SoundViewHolder(
     this.playerState = playerState
     this.downloadState = downloadState
 
-    binding.bufferingIndicator.isVisible = playerState?.playbackState == PlaybackState.BUFFERING
+    binding.bufferingIndicator.isInvisible = playerState?.playbackState != PlaybackState.BUFFERING
     binding.title.text = sound.name
     binding.icon.isVisible = isIconsEnabled
     if (isIconsEnabled) {

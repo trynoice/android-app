@@ -32,7 +32,6 @@
     app:layout_constraintTop_toTopOf="parent"
     tools:text="Sound Title" />
 
-
   <com.google.android.material.progressindicator.CircularProgressIndicator
     android:id="@+id/buffering_indicator"
     style="@style/Widget.Material3.CircularProgressIndicator.ExtraSmall"
