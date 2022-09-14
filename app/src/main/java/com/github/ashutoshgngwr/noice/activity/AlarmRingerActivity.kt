@@ -16,13 +16,10 @@ import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.databinding.AlarmRingerActivityBinding
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.engine.PlaybackService
-import com.github.ashutoshgngwr.noice.engine.PlaybackState
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
@@ -32,8 +29,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -66,16 +61,6 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     setContentView(binding.root)
     showWhenLocked()
     ringerStartTime = System.currentTimeMillis()
-
-    lifecycleScope.launch {
-      playbackController.getPlayerManagerState()
-        .first { it == PlaybackState.PAUSED }
-
-      playbackController.setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
-      val duration = System.currentTimeMillis() - ringerStartTime
-      analyticsProvider.logEvent("alarm_ringer_session", bundleOf("duration_ms" to duration))
-      finish()
-    }
   }
 
   override fun onNewIntent(intent: Intent?) {
@@ -106,8 +91,6 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     ContextCompat.startForegroundService(this, Intent(this, PlaybackService::class.java))
 
     Log.d(LOG_TAG, "onResume(): starting preset")
-    binding.dismissSlider.isVisible = true
-    binding.dismissProgress.isVisible = false
     playbackController.setAudioUsage(AudioAttributesCompat.USAGE_ALARM)
     playbackController.play(preset)
   }
@@ -116,9 +99,11 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
 
   override fun onSlideComplete(view: SlideToActView) {
     Log.d(LOG_TAG, "onSlideComplete: pausing playback")
-    binding.dismissSlider.isVisible = false
-    binding.dismissProgress.isVisible = true
-    playbackController.pause()
+    playbackController.pause(true)
+    playbackController.setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
+    val duration = System.currentTimeMillis() - ringerStartTime
+    analyticsProvider.logEvent("alarm_ringer_session", bundleOf("duration_ms" to duration))
+    finish()
   }
 
   private fun enableImmersiveMode() {

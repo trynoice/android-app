@@ -212,7 +212,9 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
       ACTION_PLAY_SOUND -> playerManager.play(getSoundIdExtra(intent))
       ACTION_STOP_SOUND -> playerManager.stop(getSoundIdExtra(intent))
       ACTION_RESUME -> playerManager.resume()
-      ACTION_PAUSE -> playerManager.pause()
+      ACTION_PAUSE -> playerManager.pause(
+        intent.getBooleanExtra(INTENT_EXTRA_SKIP_FADE_TRANSITION, false)
+      )
       ACTION_STOP -> playerManager.stop(false)
 
       ACTION_SET_SOUND_VOLUME -> {
@@ -365,6 +367,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     internal const val INTENT_EXTRA_AUDIO_USAGE = "audioUsage"
     internal const val INTENT_EXTRA_PRESET_SKIP_DIRECTION = "presetSkipDirection"
     internal const val INTENT_EXTRA_SOUND_VOLUME = "volume"
+    internal const val INTENT_EXTRA_SKIP_FADE_TRANSITION = "skipFadeTransition"
 
     internal const val PRESET_SKIP_DIRECTION_NEXT = PlayerManager.PRESET_SKIP_DIRECTION_NEXT
     internal const val PRESET_SKIP_DIRECTION_PREV = PlayerManager.PRESET_SKIP_DIRECTION_PREV

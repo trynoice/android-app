@@ -62,8 +62,11 @@ class PlaybackController @Inject constructor(@ApplicationContext private val con
   /**
    * Sends the start command to the service with [PlaybackService.ACTION_PAUSE].
    */
-  fun pause() {
-    commandPlaybackService(false) { action = PlaybackService.ACTION_PAUSE }
+  fun pause(skipFadeTransition: Boolean = false) {
+    commandPlaybackService(false) {
+      action = PlaybackService.ACTION_PAUSE
+      putExtra(PlaybackService.INTENT_EXTRA_SKIP_FADE_TRANSITION, skipFadeTransition)
+    }
   }
 
   /**
