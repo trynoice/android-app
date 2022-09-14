@@ -108,10 +108,18 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
       }
     }
 
-    ConfigurationCompat.getLocales(resources.configuration)
-      .get(0)
-      .let { Currency.getInstance(it) }
-      .also { viewModel.createPager(it.currencyCode) }
+    val currencyCode = try {
+      ConfigurationCompat.getLocales(resources.configuration)
+        .get(0)
+        .let { Currency.getInstance(it) }
+        .currencyCode
+    } catch (e: Throwable) {
+      // catch "java.lang.IllegalArgumentException: Unsupported ISO 3166 country: ar" or other
+      // similar errors and use a default currency.
+      "USD"
+    }
+
+    viewModel.createPager(currencyCode)
   }
 
   override fun onClickManage(subscription: Subscription) {
