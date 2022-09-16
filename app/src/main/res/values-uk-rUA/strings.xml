@@ -34,7 +34,7 @@
     <string name="sleep_timer_description">Noice вимкне себе коли закінчиться таймер. Використовуйте кнопки знизу щоб додати час та запустити таймер.</string>
     <string name="schedule">Розклад</string>
     <string name="select_preset">Вибрати поєднання</string>
-    <string name="wake_up_timer_description">Noice увімкне обрані поєднання коли таймер закінчиться. Використовуйте кнопки знизу щоб вибрати поєднання та встановити обраний час для запуску таймера пробудження.</string>
+    <string name="wake_up_timer_description">У зазначений час увімкнеться обране поєднання. За допомогою кнопок нижче виберіть поєднання та встановіть бажаний час запуску таймера пробудження.</string>
     <string name="app_theme_light">Світла</string>
     <string name="app_theme_dark">Темна</string>
     <string name="app_theme_system_default">За системними налаштуваннями</string>

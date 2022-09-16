@@ -53,7 +53,7 @@
     <string name="app_theme_system_default">Mặc định hệ thống</string>
     <string name="app_theme_dark">Tối</string>
     <string name="app_theme_light">Sáng</string>
-    <string name="wake_up_timer_description">Noice sẽ bắt đầu thiết lập trước đã chọn khi hẹn giờ kết thúc. Hãy sử dụng các nút ở dưới để chọn một thiết lập trước và chọn thời gian mong muốn để bắt đầu hẹn giờ thức dậy.</string>
+    <string name="wake_up_timer_description">Noice sẽ bắt đầu thiết lập trước đã chọn tại một thời điểm được chỉ định. Hãy sử dụng các điều khiển bên dưới để chọn một thiết lập trước và chọn thời gian mong muốn để lên lịch bộ hẹn giờ.</string>
     <plurals name="time_minutes">
         <item quantity="other">%1$d phút</item>
     </plurals>

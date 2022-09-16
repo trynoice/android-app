@@ -1,34 +1,53 @@
-Với nhiều người, những âm thanh êm dịu rất hữu ích để thư giãn và tập trung. Đồng thời, chúng cũng giúp tăng năng suất làm việc. Những âm thanh êm dịu cũng có thể giúp giảm căng thẳng.
+Đối với nhiều người, một chút tiếng ồn xung quanh đồng đều rất hữu ích để giữ bình tĩnh và tập trung. Trong một số trường hợp, nó cũng tăng năng suất và giảm tác động của căng thẳng và lo lắng. Tiếng ồn xung quanh cũng che đi chứng ù tai, làm dịu trẻ sơ sinh bị kích động và cải thiện trải nghiệm đọc và thiền.
 
-Noice là ứng dụng cho phép bạn tạo những âm thanh êm dịu từ những tiếng động của một trường. Kết hợp nhiều tiếng động khác nhau để tạo ra âm thanh hoàn hảo giúp xua đi sự xao nhãng giúp bạn tập trung vào công việc của mình hoặc tạo ra môi trường tốt nhất giúp bạn thư giãn và dễ dàng chìm vào giấc ngủ.
+Noice là một ứng dụng cho phép bạn tạo môi trường âm thanh được cá nhân hóa. Nó cho phép bạn kết hợp các âm thanh khác nhau ở các mức âm lượng khác nhau để tạo ra bầu không khí xung quanh hoàn hảo. Những âm thanh xung quanh tùy chỉnh này cho phép bạn giảm bớt phiền nhiễu và cho phép bạn tập trung. Bạn cũng có thể sử dụng nó để tạo ra một luồng khí thanh bình, yên bình, khuyến khích bạn thư giãn và chìm vào giấc ngủ.
 
+<b> LỢI ÍCH </b>
+• Giảm căng thẳng và lo lắng của bạn bằng cách sử dụng một môi trường được cá nhân hóa
+• Thư giãn và nghỉ ngơi trong một môi trường yên bình do bạn lựa chọn
+• Tăng năng suất của bạn bằng cách thay thế tiếng ồn gây mất tập trung
+• Cải thiện sự tập trung bằng cách ở trong một bầu không khí nhất quán
+• Hỗ trợ trải nghiệm đọc và thiền của bạn bằng các cảnh quan âm thanh tự nhiên
+• Giúp trẻ bình tĩnh bằng cách sử dụng âm thanh thư giãn
+• Che bớt chứng ù tai của bạn bằng cách giảm bớt tiếng ồn
+• Chặn sự phân tâm để nằm lại và chìm vào giấc ngủ
+• Làm dịu chứng đau nửa đầu và đau đầu của bạn
 
-<b>Tính năng</b>
-- 35 âm thanh thu sẵn
-- Hỗ trợ Google Cast (Chromecast) [Playstore]
-- Hẹn giờ báo thức
-- Tạo âm thanh ngẫu nhiên
-- Tạo và lưu hợp âm yêu thích
-- Sử dụng cùng với các trình phát nhạc kahcs
-- Điều chỉnh âm lượng riêng cho mỗi nguồn âm
-- Phát lại ngoài tuyến
-- Chủ đề sáng/tối
+<b> TÍNH NĂNG CAO CẤP </b>
+• Âm thanh dài hơn với nhiều biến thể / mẫu
+• Tổng hợp ngẫu nhiên các biến thể tự nhiên trong âm thanh, ví dụ: cường độ mưa sẽ thay đổi theo thời gian
+• Phát lại hoàn toàn ngoại tuyến
+• Âm thanh chất lượng cực cao để phát trực tuyến và tải xuống (lên đến 320 kbps)
 
-<b>Thư viện âm thanh</b>
-- Bộ thường ngày (tiếng chim, hoạt động thể thao, nhịp tim, ...)
-- Bộ rừng rậm (lửa trại, gió, lá cây,...)
-- Bộ mưa nhiệt đới (tất nhiên là tiếng mưa rồi, có cả sấm nữa...)
-- Địa điểm ngoài (quán cà phê, thư viện, văn phòng, bờ biển,...)
-- Tiếng xe (tàu đang chạy, thuyền, máy bay, xe điện,...)
-- Tiếng ồn ( ừ là tiếng ồn đấy)
+<b> CÁC TÍNH NĂNG MIỄN PHÍ </b>
+• Thư viện âm thanh phong phú
+• Đã bật Google Cast hoặc Chromecast *
+• Hẹn giờ ngủ tự động
+• Đồng hồ báo thức
+• Tạo và lưu các hỗn hợp được cá nhân hóa của bạn
+• Trình tạo hỗn hợp ngẫu nhiên để phù hợp với mọi tâm trạng của bạn
+• Điều khiển âm lượng riêng cho từng âm thanh
+• Chơi cùng với một máy nghe nhạc hiện đang phát
+• Sử dụng Material You Màu động trên Android 12L trở lên
+• Không có bất kỳ loại quảng cáo nào
 
-<b>Cấp quyền</b>
-- <b>Ngăn thiết bị ngủ</b>: để giữ thiết bị hoạt động khi đang phát
-- <b>Chạy tiến trình ngoài</b>: chạy các tiến trình khác ngoài giao diện
-- <b>Chạy khi khởi động</b>: đảm bảo báo thức chạy cả sau khi thiết bị khởi động lại
-- <b>Truy cập mạng</b>: Chromecast và các chức năng khác
-- <b>Xem kết nối mạng</b>: cái này phải thêm vào mới chạy được, không để làm gì nhưng không bỏ được :))
-- <b>Dịch vụ thanh toán Google</b>: nếu các bạn muốn ủng hộ tụi mình nè
+<i> * Chromecast chỉ khả dụng khi bạn tải xuống Noice từ Google Play. </i>
 
-Noice là một phần mềm mã nguồn mở miễn phí.
+<b> THƯ VIỆN ÂM THANH </b>
+• Cuộc sống (chim, dế, sói, nhịp tim, mèo kêu)
+• Thời tiết (sáng hoặc rạng đông, đêm, mưa, sấm sét)
+• Địa điểm (đốt lửa trại hoặc đốt lửa trại, quán cà phê, thư viện, văn phòng, bờ biển, bờ sông, lặn biển)
+• Du lịch (tàu hỏa, trên máy bay, tàu cói, ô tô điện)
+• Những thứ (quạt, đồng hồ treo tường, chuông gió)
+• Tiếng ồn thô (trắng, hồng, nâu)
+
+<b> QUYỀN HẠN ỨNG DỤNG </b>
+• <b> xem các kết nối mạng </b>: để tải xuống và phát trực tuyến âm thanh
+• <b> truy cập mạng đầy đủ </b>: để giao tiếp với máy chủ Noice, truyền phát âm thanh và tải xuống
+• <b> chạy khi khởi động </b>: để đảm bảo rằng Báo thức vẫn tồn tại khi khởi động lại thiết bị
+• <b> ngăn thiết bị ở chế độ ngủ </b>: để giữ cho CPU của thiết bị ở chế độ thức để phát lại không bị gián đoạn khi màn hình tắt
+• <b> cài đặt phím tắt </b>: để thêm Phím tắt cài sẵn vào màn hình chính
+• <b> chạy dịch vụ nền </b>: để phát lại liên tục khi ứng dụng ở chế độ nền
+
+Noice là phần mềm mã nguồn mở.
 https://github.com/trynoice/android-app

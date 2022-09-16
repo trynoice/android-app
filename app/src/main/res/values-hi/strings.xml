@@ -38,10 +38,7 @@
   </string>
     <string name="schedule">शेड्यूल करें</string>
     <string name="select_preset">प्रीसेट का चयन करें</string>
-    <string name="wake_up_timer_description">
-       टाइमर समाप्त होने पर ऐप चयनित प्रीसेट शुरू करेगी। प्रीसेट का चयन करने के लिए नीचे दिए गए बटनों का उपयोग करें और वेक-अप
-       टाइमर शुरू करने के लिए वांछित समय निर्धारित करें।
-  </string>
+    <string name="wake_up_timer_description">नोइस चयनित प्रीसेट को निर्दिष्ट समय पर प्रारंभ करेगा। प्रीसेट का चयन करने के लिए नीचे दिए गए नियंत्रणों का उपयोग करें और वेक-अप टाइमर शेड्यूल करने के लिए वांछित समय सेट करें।</string>
     <string name="app_theme_light">हल्का रंग</string>
     <string name="app_theme_dark">गहरा रंग</string>
     <string name="app_theme_system_default">सिस्टम डिफ़ॉल्ट</string>

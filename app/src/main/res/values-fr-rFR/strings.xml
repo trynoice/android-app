@@ -39,7 +39,7 @@
   </string>
     <string name="schedule">Planifier</string>
     <string name="select_preset">Sélectionner le réglage</string>
-    <string name="wake_up_timer_description">Noice peut démarrer un préréglage au moment du réveil. Utilisez les boutons ci-dessous pour sélectionner un préréglage et l\'heure voulue de réveil.</string>
+    <string name="wake_up_timer_description">Noice fera démarrer la présélection sélectionnée à l\'heure spécifiée. Utilisez les commandes ci-dessous pour sélectionner une présélection et régler l\'heure souhaitée pour programmer la minuterie de réveil.</string>
     <string name="app_theme_light">Clair</string>
     <string name="app_theme_dark">Sombre</string>
     <string name="app_theme_system_default">Système</string>
