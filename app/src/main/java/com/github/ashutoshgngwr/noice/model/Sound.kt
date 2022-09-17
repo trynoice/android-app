@@ -65,12 +65,14 @@ data class Sound(
   companion object {
     private val spdxListedLicenses = mapOf(
       "CC-BY-3.0" to SpdxListedLicense(
-        id = "CC-BY-3.0",
         name = "Creative Commons Attribution 3.0 Unported",
         referenceUrl = "https://spdx.org/licenses/CC-BY-3.0.html",
       ),
+      "CC-BY-4.0" to SpdxListedLicense(
+        name = "Creative Commons Attribution 4.0 International",
+        referenceUrl = "https://spdx.org/licenses/CC-BY-4.0.html",
+      ),
       "GPL-3.0-only" to SpdxListedLicense(
-        id = "GPL-3.0-only",
         name = "GNU General Public License v3.0 only",
         referenceUrl = "https://spdx.org/licenses/GPL-3.0-only.html",
       ),
@@ -78,7 +80,6 @@ data class Sound(
   }
 
   private data class SpdxListedLicense(
-    val id: String,
     val name: String,
     val referenceUrl: String,
   )
