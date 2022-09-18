@@ -33,6 +33,7 @@ import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showInfoSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
+import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.Sound
@@ -183,6 +184,21 @@ class LibraryFragment : Fragment(), LibraryListItemController {
       true
     }
 
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.isLibraryUpdated
+        .filter { it }
+        .collect {
+          DialogFragment.show(childFragmentManager) {
+            title(R.string.sound_library_updated)
+            message(R.string.sound_library_updated_message)
+            negativeButton(R.string.cancel)
+            positiveButton(R.string.review) {
+              requireContext().startCustomTab(R.string.sound_library_release_notes_url)
+            }
+          }
+        }
+    }
+
     analyticsProvider.setCurrentScreen("library", LibraryFragment::class)
   }
 
@@ -322,6 +338,9 @@ class LibraryViewModel @Inject constructor(
 
   internal val isLibraryIconsEnabled: StateFlow<Boolean> = settingsRepository
     .shouldDisplaySoundIconsAsFlow()
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+  internal val isLibraryUpdated: StateFlow<Boolean> = soundRepository.isLibraryUpdated()
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
   init {

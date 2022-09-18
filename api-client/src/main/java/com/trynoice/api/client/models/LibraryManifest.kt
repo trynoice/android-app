@@ -2,6 +2,7 @@ package com.trynoice.api.client.models
 
 import com.google.gson.annotations.Expose
 import java.io.Serializable
+import java.util.*
 
 /**
  * An entity describing the sound library.
@@ -11,6 +12,7 @@ import java.io.Serializable
  * @param groups A list of groups for categorising sounds.
  * @param tags A list of tags for declaring keywords related to sounds.
  * @param sounds A list of available sounds in the library.
+ * @param updatedAt timestamp at which the sound library was last updated.
  */
 data class LibraryManifest(
 
@@ -25,6 +27,9 @@ data class LibraryManifest(
 
   @Expose
   val sounds: List<Sound>,
+
+  @Expose
+  val updatedAt: Date,
 ) : Serializable
 
 /**

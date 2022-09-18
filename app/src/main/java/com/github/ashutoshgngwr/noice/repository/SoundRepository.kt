@@ -197,9 +197,20 @@ class SoundRepository @Inject constructor(
     }
   }
 
+  /**
+   * Returns a flow that emits `true` if the sound library was updated since the last check.
+   */
+  fun isLibraryUpdated(): Flow<Boolean> = flow {
+    val oldUpdatedAt = cacheStore.getAs<Long>(UPDATED_AT_KEY)
+    val newUpdatedAt = apiClient.cdn().libraryManifest().updatedAt.time
+    emit(oldUpdatedAt != null && oldUpdatedAt < newUpdatedAt)
+    cacheStore.put(UPDATED_AT_KEY, newUpdatedAt)
+  }
+
   companion object {
     private const val LOG_TAG = "SoundRepository"
     private const val SOUND_KEY_PREFIX = "sound"
     private const val TAGS_KEY = "${SOUND_KEY_PREFIX}/tags"
+    private const val UPDATED_AT_KEY = "${SOUND_KEY_PREFIX}/updatedAt"
   }
 }

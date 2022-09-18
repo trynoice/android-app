@@ -316,4 +316,7 @@
         <item quantity="one">%1$d day</item>
         <item quantity="other">%1$d days</item>
     </plurals>
+    <string name="sound_library_updated">Sound Library Updated</string>
+    <string name="sound_library_updated_message">We\'ve made a few changes to the sound library. Would you like to review its release notes?</string>
+    <string name="review">Review</string>
 </resources>
