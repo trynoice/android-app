@@ -58,6 +58,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -341,6 +342,7 @@ class LibraryViewModel @Inject constructor(
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
   internal val isLibraryUpdated: StateFlow<Boolean> = soundRepository.isLibraryUpdated()
+    .mapNotNull { it.data }
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
   init {

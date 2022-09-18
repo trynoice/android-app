@@ -200,12 +200,21 @@ class SoundRepository @Inject constructor(
   /**
    * Returns a flow that emits `true` if the sound library was updated since the last check.
    */
-  fun isLibraryUpdated(): Flow<Boolean> = flow {
-    val oldUpdatedAt = cacheStore.getAs<Long>(UPDATED_AT_KEY)
-    val newUpdatedAt = apiClient.cdn().libraryManifest().updatedAt.time
-    emit(oldUpdatedAt != null && oldUpdatedAt < newUpdatedAt)
-    cacheStore.put(UPDATED_AT_KEY, newUpdatedAt)
-  }
+  fun isLibraryUpdated(): Flow<Resource<Boolean>> = fetchNetworkBoundResource(
+    loadFromNetwork = {
+      val oldUpdatedAt = cacheStore.getAs<Long>(UPDATED_AT_KEY)
+      val newUpdatedAt = apiClient.cdn().libraryManifest().updatedAt.time
+      cacheStore.put(UPDATED_AT_KEY, newUpdatedAt)
+      oldUpdatedAt != null && oldUpdatedAt < newUpdatedAt
+    },
+    loadFromNetworkErrorTransform = { e ->
+      Log.i(LOG_TAG, "isLibraryUpdated:", e)
+      when (e) {
+        is IOException -> NetworkError
+        else -> e
+      }
+    }
+  )
 
   companion object {
     private const val LOG_TAG = "SoundRepository"
