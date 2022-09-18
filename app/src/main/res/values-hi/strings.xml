@@ -301,4 +301,7 @@
         <item quantity="other">%1$d दिन</item>
     </plurals>
     <string name="trial_period">परीक्षण अवधि: %1$s</string>
+    <string name="sound_library_updated">ध्वनि संग्रह अपडेट</string>
+    <string name="sound_library_updated_message">हमने ध्वनि संग्रह में कुछ बदलाव किए हैं। क्या आप इसके रिलीज नोटों की समीक्षा करना चाहेंगे\?</string>
+    <string name="review">समीक्षा करें</string>
 </resources>
