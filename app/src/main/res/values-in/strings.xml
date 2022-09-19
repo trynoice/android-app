@@ -40,14 +40,11 @@
 </string>
     <string name="schedule">Jadwal</string>
     <string name="select_preset">Pilih Preset</string>
-    <string name="wake_up_timer_description">
-    Noice akan memulai preset yang dipilih saat timer berakhir. Gunakan tombol di bawah untuk memilih a
-    preset dan atur waktu yang diinginkan untuk memulai pengatur waktu bangun.
-</string>
+    <string name="wake_up_timer_description">Noice akan memulai preset yang dipilih pada waktu yang ditentukan. Gunakan kontrol di bawah ini untuk memilih prasetel dan mengatur waktu yang diinginkan untuk menjadwalkan penghitung waktu bangun.</string>
     <string name="app_theme_light">Terang</string>
     <string name="app_theme_dark">Gelap</string>
     <string name="app_theme_system_default">Sistem default</string>
-    <string name="app_description">Santai dan tingkatkan produktivitas dengan kebisingan latar belakang minimal.</string>
+    <string name="app_description">Bersantai dan tingkatkan fokus dengan suara alami yang menenangkan.</string>
     <string name="appintro__chromecast_desc">
     Gunakan Noice untuk mentransmisikan suasananya ke perangkat berkemampuan Chromecast lainnya seperti speaker, TV, dll.
  </string>
@@ -71,11 +68,7 @@
     <string name="support_development__donate_google_play_description">Pembayaran Anda akan ditangani dengan aman oleh Google Play. Tergantung pada lokasi Anda, pajak tambahan _mungkin_ ditambahkan ke jumlah akhir.</string>
     <string name="support_development__donate_thank_you_description">Kami berterima kasih dengan sepenuh hati atas kemurahhatian Anda untuk berkontribusi dalam proyek Noice.</string>
     <string name="support_development__share">Bagikan dengan teman</string>
-    <string name="support_development__share_description">
-    Berbagi Noice dengan teman sama dengan mendonasikan uang. Dengan unduhan yang lebih tinggi, kami
-    akan dapat menerima umpan balik dari sejumlah berbagai perspektif yang akan membantu kami
-    membuat Noice lebih baik dari sebelumnya.
- </string>
+    <string name="support_development__share_description">Anda juga dapat membantu kami dengan memberi tahu teman anda tentang kami. Lebih banyak pengguna akan memberi kami umpan balik dari beberapa perspektif berbeda dan membantu kami meningkatkan layanan kami.</string>
     <string name="cast_media">Hubungkan ke Chromecast</string>
     <string name="in_app_feedback__description">
     Kami ingin sekali mendengar dari Anda tentang aplikasi ini. Mohon luangkan waktu sejenak untuk mengunjungi repositori GitHub kami.
@@ -201,4 +194,55 @@
     <plurals name="n_months">
         <item quantity="other">%1$d bulan</item>
     </plurals>
+    <string name="payment_processing_error">Uh oh! Kami tidak dapat memproses pembayaran anda. Jumlah tersebut harus dikembalikan secara otomatis jika dikurangi. Jika anda tidak mendapatkan pengembalian dana dalam waktu seminggu, harap beri tahu kami.</string>
+    <string name="subscription_purchases">Pembelian berlangganan</string>
+    <string name="ends_on">Berakhir pada %1$s</string>
+    <string name="subscription_payment_pending">Pembayaran tertunda untuk pembelian ini.</string>
+    <string name="change_plan">Ubah rencana</string>
+    <string name="cancel_subscription">Batalkan Berlangganan</string>
+    <string name="no_subscription_purchases_found">Kami rasa anda belum mencoba Noice Premium. Langganan anda sebelumnya akan muncul di sini setelah anda menggunakan Noice Premium setidaknya sekali.</string>
+    <string name="faqs">Pertanyaan yang Sering Diajukan</string>
+    <string name="made_in_india">Dibuat dengan ❤ di India</string>
+    <string name="sound_info">Tentang suara ini</string>
+    <string name="has_premium_segments">Suara ini memiliki komponen premium.</string>
+    <string name="non_looping_sound">Suara ini mengandung jeda di antaranya.</string>
+    <string name="media_sources">Sumber Media</string>
+    <string name="profile_load_error">Ups! Kami tidak dapat mengambil detail akun Anda. %1$s</string>
+    <string name="cancel_subscription_error">Oh tidak! Kami tidak dapat membatalkan langganan Anda. %1$s Silakan coba lagi!</string>
+    <string name="delete_account_error">Oh tidak! Kami tidak dapat menghapus akun Anda. %1$s Silakan coba lagi!</string>
+    <string name="library_load_error">Ups! Kami tidak dapat mengambil perpustakaan suara. %1$s</string>
+    <string name="subscription_plans_load_error">Ups! Kami tidak dapat mengambil paket langganan. %1$s</string>
+    <string name="subscription_purchases_load_error">Uh oh! Kami tidak dapat mengambil riwayat pembelian langganan Anda. %1$s</string>
+    <string name="playback">Pemutaran</string>
+    <string name="audio_quality">Kualitas audio</string>
+    <string name="delete_account_confirmation">Anda akan segera kehilangan akses ke akun anda setelah dihapus. Jika anda memiliki langganan berkelanjutan ke Noice Premium, kami akan berhenti menagih anda untuk itu. Jika berubah pikiran, anda dapat memulihkan akun dengan masuk lagi kapan saja sebelum 7 hari setelah penghapusan. Setelah periode ini, kami akan menghapus data akun anda secara permanen dari server kami.</string>
+    <string name="cancel_subscription_confirmation">Apakah anda yakin ingin membatalkan langganan Noice Premium\? Setelah pembatalan, langganan anda akan berakhir secara otomatis pada akhir siklus penagihan saat ini. Siklus penagihan anda saat ini berakhir pada %1$s.</string>
+    <string name="confirming_payment">Konfirmasi pembayaran</string>
+    <string name="sign_in_email_error">Uh oh! Kami tidak dapat mengirimkan tautan masuk melalui email kepada Anda. %1$s Coba lagi nanti!</string>
+    <string name="cancelling_subscription">Membatalkan langganan</string>
+    <string name="subscription_payment_confirmation_failed">Uh oh! Kami mengalami beberapa masalah saat menunggu konfirmasi pembayaran. Ini mungkin karena kesalahan jaringan atau penundaan dari penyedia pembayaran. Kami akan memperbarui status langganan anda segera setelah kami mendengar kabar dari penyedia. Silakan periksa status langganan anda setelah beberapa waktu.</string>
+    <string name="get_premium">Dapatkan premium</string>
+    <string name="plans">Rencana</string>
+    <string name="sign_out_error">Oh tidak! Kami tidak dapat mengeluarkan Anda. %1$s Silakan coba lagi!</string>
+    <string name="user_already_subscribed">Kamu sudah berlangganan.</string>
+    <string name="account_details_update_error">Oh tidak! Kami tidak dapat memperbarui detail Anda. %1$s Silakan coba lagi!</string>
+    <string name="subscription_payment_complete">Terima kasih telah berlangganan Noice Premium. Langganan Anda sekarang aktif.</string>
+    <string name="manage_subscription">Kelola Langganan</string>
+    <string name="benefit_2">Pemutaran offline</string>
+    <string name="select_a_plan">Pilih paket</string>
+    <string name="benefit_0">Variasi alami dalam suara</string>
+    <string name="looping_sound">Suara ini berputar dengan mulus.</string>
+    <string name="subscription_initialisation_error">Ups! Kami tidak dapat memulai alur penagihan. %1$s Silakan coba lagi!</string>
+    <string name="processing_payment">Memproses pembayaran</string>
+    <string name="benefit_1">Streaming audio berkualitas tinggi</string>
+    <string name="sign_in_to_continue">Silakan masuk atau daftar untuk melanjutkan.</string>
+    <string name="subscription_payment_cancelled">Pembayaran berlangganan dibatalkan!</string>
+    <string name="renews_on">Diperbarui pada %1$s</string>
+    <string name="started_on">Dimulai pada %1$s</string>
+    <string name="ended_on">Berakhir pada %1$s</string>
+    <string name="paid_using">Dibayar menggunakan %1$s</string>
+    <string name="subscription_payment_refunded">Kami membatalkan pembelian ini dan memulai pengembalian dana.</string>
+    <string name="benefit_3">Suara yang lebih panjang dengan lebih banyak sampel</string>
+    <string name="initialising_subscription">Memulai langganan</string>
+    <string name="audio_quality_summary">Kualitas audio maksimum untuk streaming. Medium, High, dan Ultra hanya akan berfungsi jika Anda berlangganan Noice Premium.</string>
 </resources>

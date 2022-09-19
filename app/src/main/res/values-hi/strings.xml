@@ -217,7 +217,7 @@
     <string name="no_subscription_purchases_found">हमें नहीं लगता कि आपने अभी तक नॉइस प्रीमियम आज़माया है। आपके द्वारा कम से कम एक बार नॉइस प्रीमियम का उपयोग करने के बाद आपकी पिछली सदस्यताएँ यहाँ दिखाई देंगी।</string>
     <string name="faqs">अधिकतर पूछे जाने वाले सवाल</string>
     <string name="subscription_purchases_load_error">उह ओह! हम आपकी सदस्यता खरीदारी इतिहास नहीं प्राप्त कर सके। %1$s</string>
-    <string name="has_premium_segments">इस ध्वनि में प्रीमियम घटक हैं।</string>
+    <string name="has_premium_segments">यह ध्वनि नोइस प्रीमियम के साथ अतिरिक्त वैरिएंट प्रदान करती है।</string>
     <string name="media_sources">मीडिया स्रोत</string>
     <string name="cancel_subscription_error">धत्तेरे की! हम आपकी सदस्यता रद्द नहीं कर सके। %1$s कृपया पुन: प्रयास करें!</string>
     <string name="account_details_update_error">धत्तेरे की! हम आपके विवरण अपडेट नहीं कर सके। %1$s कृपया पुन: प्रयास करें!</string>
@@ -301,4 +301,9 @@
         <item quantity="other">%1$d दिन</item>
     </plurals>
     <string name="trial_period">परीक्षण अवधि: %1$s</string>
+    <string name="sound_library_updated">ध्वनि संग्रह अपडेट</string>
+    <string name="sound_library_updated_message">हमने ध्वनि संग्रह में कुछ बदलाव किए हैं। क्या आप इसके रिलीज नोटों की समीक्षा करना चाहेंगे\?</string>
+    <string name="review">समीक्षा करें</string>
+    <string name="benefit_4">%1$d अतिरिक्त ध्वनियाँ</string>
+    <string name="sound_is_premium">यह ध्वनि नोइस प्रीमियम के साथ उपलब्ध है।</string>
 </resources>
