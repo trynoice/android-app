@@ -305,4 +305,5 @@
     <string name="sound_library_updated_message">हमने ध्वनि संग्रह में कुछ बदलाव किए हैं। क्या आप इसके रिलीज नोटों की समीक्षा करना चाहेंगे\?</string>
     <string name="review">समीक्षा करें</string>
     <string name="benefit_4">%1$d अतिरिक्त ध्वनियाँ</string>
+    <string name="sound_is_premium">यह ध्वनि नोइस प्रीमियम के साथ उपलब्ध है।</string>
 </resources>
