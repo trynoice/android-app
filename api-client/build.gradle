@@ -9,6 +9,7 @@ android {
   compileSdkVersion config.compileSdkVersion
 
   defaultConfig {
+    namespace 'com.trynoice.api.client'
     minSdkVersion config.minSdkVersion
     targetSdkVersion config.compileSdkVersion
     consumerProguardFiles 'retrofit2.pro', 'gson.pro'
