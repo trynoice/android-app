@@ -278,7 +278,7 @@
     <string name="non_looping_sound">Ce son contient des pauses entre les deux.</string>
     <string name="payment_processing_error">Oh oh ! Nous n\'avons pas été en mesure de traiter votre paiement. Le montant devrait être automatiquement remboursé s\'il a été déduit. Si vous ne recevez pas votre remboursement dans la semaine, veuillez nous en informer.</string>
     <string name="sign_up_email_sent">Nous vous avons envoyé un lien pour vous connecter par courriel à l\'adresse « %1$s ».</string>
-    <string name="has_premium_segments">Ce son a des composants de première qualité.</string>
+    <string name="has_premium_segments">Ce son offre des variantes supplémentaires avec Noice Premium.</string>
     <string name="sign_in_email_sent">Nous vous avons envoyé un lien de connexion par courriel sur « %1$s » si cette adresse appartient à un compte enregistré.</string>
     <string name="no_subscription_purchases_found">Nous ne pensons pas que vous ayez déjà essayé Noice Premium. Vos abonnements précédents apparaîtront ici une fois que vous aurez utilisé Noice Premium au moins une fois.</string>
     <string name="media_sources">Sources multimédias</string>
@@ -304,4 +304,9 @@
         <item quantity="other">%1$d jours</item>
     </plurals>
     <string name="trial_period">Période d\'essai : %1$s</string>
+    <string name="sound_library_updated">Bibliothèque sonore mise à jour</string>
+    <string name="sound_library_updated_message">Nous avons apporté quelques modifications à la bibliothèque de sons. Voulez-vous consulter ses notes de mise à jour \?</string>
+    <string name="benefit_4">%1$d sons supplémentaires</string>
+    <string name="sound_is_premium">Ce son est disponible avec Noice Premium.</string>
+    <string name="review">Consulter</string>
 </resources>
