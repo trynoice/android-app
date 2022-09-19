@@ -240,7 +240,7 @@
     <string name="privacy_policy">隐私政策</string>
     <string name="loading">加载中</string>
     <string name="gift_card">礼物卡</string>
-    <string name="has_premium_segments">此声音含高级版才有的片段。</string>
+    <string name="has_premium_segments">Noice 高级版提供此声音的额外变种。</string>
     <string name="audio_quality">音质</string>
     <string name="audio_quality_summary">在线播放的最高音质。 仅当您订阅了 Noice 高级版时，才可使用 Medium、High 和 Ultra 音质。</string>
     <string name="audio_quality_medium">中 (192 kbps)</string>
