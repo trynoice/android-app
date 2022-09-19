@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -58,6 +59,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
@@ -115,6 +117,12 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.downloadStates.collect(adapter::setDownloadStates)
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.isSubscribed
+        .map { !it }
+        .collect(adapter::setSoundPremiumStatusEnabled)
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
@@ -209,6 +217,11 @@ class LibraryFragment : Fragment(), LibraryListItemController {
   }
 
   override fun onSoundPlayClicked(sound: Sound) {
+    if (sound.isPremium && !viewModel.isSubscribed.value) {
+      mainNavController.navigate(R.id.view_subscription_plans)
+      return
+    }
+
     playbackController.play(sound.id)
   }
 
@@ -256,6 +269,13 @@ class LibraryFragment : Fragment(), LibraryListItemController {
         SoundDownloadsRefreshWorker.removeSoundDownload(requireContext(), sound.id)
         showSuccessSnackBar(getString(R.string.sound_download_scheduled_for_removal, sound.name))
       }
+    }
+  }
+
+  override fun onPremiumStatusClicked(sound: Sound) {
+    when {
+      sound.isPremium -> showInfoSnackBar(R.string.sound_is_premium)
+      sound.hasPremiumSegments -> showInfoSnackBar(R.string.has_premium_segments)
     }
   }
 }
@@ -375,6 +395,7 @@ class LibraryListAdapter(
   private var playerStates = emptyMap<String, PlayerState?>()
   private var isIconsEnabled = false
   private var downloadStates = emptyMap<String, SoundDownloadState>()
+  private var isSoundPremiumStatusEnabled = false
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryListItemViewHolder {
     return when (viewType) {
@@ -406,7 +427,8 @@ class LibraryListAdapter(
       libraryItems[position],
       playerStates[soundId],
       isIconsEnabled,
-      downloadStates[soundId] ?: SoundDownloadState.NOT_DOWNLOADED
+      downloadStates[soundId] ?: SoundDownloadState.NOT_DOWNLOADED,
+      isSoundPremiumStatusEnabled,
     )
   }
 
@@ -453,6 +475,15 @@ class LibraryListAdapter(
       }
     }
   }
+
+  fun setSoundPremiumStatusEnabled(enabled: Boolean) {
+    if (isSoundPremiumStatusEnabled == enabled) {
+      return
+    }
+
+    isSoundPremiumStatusEnabled = enabled
+    notifyItemRangeChanged(0, libraryItems.size)
+  }
 }
 
 abstract class LibraryListItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -462,13 +493,14 @@ abstract class LibraryListItemViewHolder(view: View) : RecyclerView.ViewHolder(v
     playerState: PlayerState?,
     isIconsEnabled: Boolean,
     downloadState: SoundDownloadState,
+    isPremiumStatusEnabled: Boolean,
   ) {
     if (item.group != null) {
       bind(item.group)
     }
 
     if (item.sound != null) {
-      bind(item.sound, playerState, isIconsEnabled, downloadState)
+      bind(item.sound, playerState, isIconsEnabled, downloadState, isPremiumStatusEnabled)
     }
   }
 
@@ -479,6 +511,7 @@ abstract class LibraryListItemViewHolder(view: View) : RecyclerView.ViewHolder(v
     playerState: PlayerState?,
     isIconsEnabled: Boolean,
     downloadState: SoundDownloadState,
+    isPremiumStatusEnabled: Boolean,
   )
 }
 
@@ -495,6 +528,7 @@ class SoundGroupViewHolder(
     playerState: PlayerState?,
     isIconsEnabled: Boolean,
     downloadState: SoundDownloadState,
+    isPremiumStatusEnabled: Boolean,
   ) {
     throw UnsupportedOperationException()
   }
@@ -510,6 +544,7 @@ class SoundViewHolder(
   private var downloadState = SoundDownloadState.NOT_DOWNLOADED
 
   init {
+    binding.premiumStatus.setOnClickListener { controller.onPremiumStatusClicked(sound) }
     binding.info.setOnClickListener { controller.onSoundInfoClicked(sound) }
     binding.download.setOnClickListener {
       when (downloadState) {
@@ -540,10 +575,22 @@ class SoundViewHolder(
     playerState: PlayerState?,
     isIconsEnabled: Boolean,
     downloadState: SoundDownloadState,
+    isPremiumStatusEnabled: Boolean,
   ) {
     this.sound = sound
     this.playerState = playerState
     this.downloadState = downloadState
+
+    binding.premiumStatus.isVisible =
+      isPremiumStatusEnabled && (sound.isPremium || sound.hasPremiumSegments)
+
+    binding.premiumStatus.setImageResource(
+      when {
+        sound.isPremium -> R.drawable.ic_baseline_star_rate_24
+        sound.hasPremiumSegments -> R.drawable.ic_baseline_star_half_24
+        else -> ResourcesCompat.ID_NULL
+      }
+    )
 
     binding.bufferingIndicator.isInvisible = playerState?.playbackState != PlaybackState.BUFFERING
     binding.title.text = sound.name
@@ -594,6 +641,7 @@ interface LibraryListItemController {
   fun onSoundVolumeClicked(sound: Sound, playerState: PlayerState?)
   fun onSoundDownloadClicked(sound: Sound)
   fun onRemoveSoundDownloadClicked(sound: Sound)
+  fun onPremiumStatusClicked(sound: Sound)
 }
 
 data class LibraryListItem(

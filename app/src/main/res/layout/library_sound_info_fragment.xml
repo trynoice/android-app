@@ -37,9 +37,17 @@
         style="@style/Widget.App.LibrarySoundInfo.LineItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/sound_is_premium"
+        app:drawableStartCompat="@drawable/ic_baseline_star_rate_24"
+        app:isVisible="@{sound.isPremium}" />
+
+      <TextView
+        style="@style/Widget.App.LibrarySoundInfo.LineItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/has_premium_segments"
-        app:drawableStartCompat="@drawable/ic_baseline_check_circle_24"
-        app:isVisible="@{sound.hasPremiumSegments}" />
+        app:drawableStartCompat="@drawable/ic_baseline_star_half_24"
+        app:isVisible="@{!sound.isPremium &amp;&amp; sound.hasPremiumSegments}" />
 
       <TextView
         style="@style/Widget.App.LibrarySoundInfo.LineItem"

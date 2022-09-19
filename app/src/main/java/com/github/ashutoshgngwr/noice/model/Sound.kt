@@ -14,6 +14,7 @@ import java.io.Serializable
  * @param iconSvg a user-presentable icon of the sound as a SVG string.
  * @param maxSilence The upper limit (in seconds) for the amount of silence to add in-between
  * segments for non-contiguous sounds.
+ * @param isPremium whether the sound is only available to Premium users.
  * @param segments A list of segments for this sound.
  * @param tags A list of tags that associate with this sound.
  * @param sources A list of details attributing original clip sources, author and license.
@@ -24,6 +25,7 @@ data class Sound(
   val name: String,
   val iconSvg: String,
   val maxSilence: Int,
+  val isPremium: Boolean,
   val segments: List<SoundSegment>,
   val tags: List<SoundTag>,
   val sources: List<SoundSource>,

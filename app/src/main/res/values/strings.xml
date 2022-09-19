@@ -244,7 +244,7 @@
     <string name="faqs">Frequently Asked Questions</string>
     <string name="made_in_india">Made with ❤ in India</string>
     <string name="sound_info">About this sound</string>
-    <string name="has_premium_segments">This sound has premium components.</string>
+    <string name="has_premium_segments">This sound offers additional variants with Noice Premium.</string>
     <string name="looping_sound">This sound loops seamlessly.</string>
     <string name="non_looping_sound">This sound contains breaks in-between.</string>
     <string name="media_sources">Media Sources</string>
@@ -319,4 +319,6 @@
     <string name="sound_library_updated">Sound Library Updated</string>
     <string name="sound_library_updated_message">We\'ve made a few changes to the sound library. Would you like to review its release notes?</string>
     <string name="review">Review</string>
+    <string name="benefit_4">%1$d additional sounds</string>
+    <string name="sound_is_premium">This sound is available with Noice Premium.</string>
 </resources>

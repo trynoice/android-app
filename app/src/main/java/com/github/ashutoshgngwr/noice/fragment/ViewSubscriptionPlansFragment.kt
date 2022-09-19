@@ -20,8 +20,10 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPlanItemBinding
 import com.github.ashutoshgngwr.noice.databinding.ViewSubscriptionPlansFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
+import com.github.ashutoshgngwr.noice.model.Sound
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
+import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.google.android.material.card.MaterialCardView
@@ -33,8 +35,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -142,6 +146,7 @@ fun setBillingPeriodMonths(tv: TextView, months: Int) {
 @HiltViewModel
 class ViewSubscriptionPlansViewModel @Inject constructor(
   private val subscriptionRepository: SubscriptionRepository,
+  private val soundRepository: SoundRepository,
   accountRepository: AccountRepository,
   savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -150,14 +155,19 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
   val activeSubscription: Subscription?
 
   private val plansResource = MutableSharedFlow<Resource<List<SubscriptionPlan>>>()
+  private val soundListResource = MutableSharedFlow<Resource<List<Sound>>>()
 
-  val isLoading: StateFlow<Boolean> = plansResource.transform { r ->
-    emit(r is Resource.Loading)
+  val isLoading: StateFlow<Boolean> = combine(plansResource, soundListResource) { p, s ->
+    p is Resource.Loading || s is Resource.Loading
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
 
   val plans: StateFlow<List<SubscriptionPlan>> = plansResource.transform { r ->
     emit(r.data?.sortedBy { it.priceInIndianPaise / it.billingPeriodMonths } ?: emptyList())
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
+  val premiumSoundsCount: StateFlow<Int> = soundListResource
+    .mapNotNull { r -> r.data?.count { it.isPremium } }
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
 
   val apiErrorStrRes: StateFlow<Int?> = plansResource.transform { r ->
     emit(
@@ -183,6 +193,12 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
       subscriptionRepository.listPlans(currencyCode)
         .flowOn(Dispatchers.IO)
         .collect(plansResource)
+    }
+
+    viewModelScope.launch {
+      soundRepository.list()
+        .flowOn(Dispatchers.IO)
+        .collect(soundListResource)
     }
   }
 }

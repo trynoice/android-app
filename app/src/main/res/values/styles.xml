@@ -59,6 +59,8 @@
   <style name="Widget.App.SubscriptionPlan.Benefits.LineItem" parent="android:Widget.TextView">
     <item name="android:drawablePadding">12dp</item>
     <item name="android:gravity">center_vertical</item>
+    <item name="android:paddingBottom">4dp</item>
+    <item name="android:paddingTop">4dp</item>
     <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
     <item name="drawableTint">?attr/colorPrimary</item>
   </style>

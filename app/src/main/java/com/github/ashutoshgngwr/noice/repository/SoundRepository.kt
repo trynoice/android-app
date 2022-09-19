@@ -89,6 +89,7 @@ class SoundRepository @Inject constructor(
             StandardCharsets.UTF_8.name(),
           ),
           maxSilence = apiSound.maxSilence,
+          isPremium = segments.none { it.isFree },
           segments = segments,
           tags = manifest.tags.filter { apiSound.tags.contains(it.id) },
           sources = apiSound.sources,
