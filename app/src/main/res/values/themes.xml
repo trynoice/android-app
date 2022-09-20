@@ -80,16 +80,15 @@
     <item name="shapeAppearance">?attr/shapeAppearanceCornerMedium</item>
   </style>
 
-  <style name="Base.Theme.App.MediaRouter" parent="Theme.MediaRouter.Light" />
+  <style name="Base.Theme.App.MediaRouter" parent="Theme.MediaRouter.Light">
+    <item name="mediaRouteControlPanelThemeOverlay">@style/ThemeOverlay.MediaRouter.Light</item>
+  </style>
 
   <style name="Theme.App.MediaRouter" parent="Base.Theme.App.MediaRouter">
-    <!-- TODO: migrate this material 3 -->
-    <!--    <item name="android:windowBackground">@color/background_dark</item>-->
-    <!--    <item name="android:colorBackground">@color/background_dark</item>-->
-    <!--    <item name="colorPrimary">@color/primary</item>-->
-    <!--    <item name="colorAccent">@color/accent</item>-->
-    <!--    <item name="colorBackgroundFloating">@color/background_dark</item>-->
-    <!--    <item name="mediaRouteControlPanelThemeOverlay">@style/ThemeOverlay.MediaRouter.Light</item>-->
+    <item name="android:windowBackground">@color/md_theme_surface</item>
+    <item name="colorPrimary">@color/md_theme_inversePrimary</item>
+    <item name="colorAccent">@color/md_theme_primary</item>
+    <item name="colorBackgroundFloating">@color/md_theme_surfaceVariant</item>
   </style>
 
   <style name="ThemeOverlay.App.Preference" parent="PreferenceThemeOverlay">
