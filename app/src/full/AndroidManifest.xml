@@ -9,7 +9,7 @@
 
     <meta-data
       android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
-      android:value="com.github.ashutoshgngwr.noice.provider.CastOptionsProvider" />
+      android:value="com.github.ashutoshgngwr.noice.cast.CastOptionsProvider" />
 
     <meta-data
       android:name="firebase_crashlytics_collection_enabled"

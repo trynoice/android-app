@@ -280,12 +280,12 @@ class PlayerManagerTest {
 
     every { mockCastApiProvider.getPlaybackStrategyFactory(any()) } returns mockPlaybackStrategy
     every { mockCastApiProvider.getVolumeProvider() } returns mockVolumeProvider
-    listenerSlot.captured.onSessionBegin() // invoke the session begin callback
+    listenerSlot.captured.onCastSessionBegin() // invoke the session begin callback
     verify(exactly = 1) { players.getValue("test").updatePlaybackStrategy(mockPlaybackStrategy) }
     assertEquals(mockVolumeProvider, ShadowMediaSessionCompat.currentVolumeProvider)
     clearMocks(mockPlaybackStrategy, players.getValue("test"))
 
-    listenerSlot.captured.onSessionEnd()
+    listenerSlot.captured.onCastSessionEnd()
     verify(exactly = 1) { players.getValue("test").updatePlaybackStrategy(any()) }
     verify { mockPlaybackStrategy wasNot called }
   }

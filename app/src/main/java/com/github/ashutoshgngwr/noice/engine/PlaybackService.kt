@@ -20,6 +20,7 @@ import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDataSourceFactory
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
@@ -41,7 +42,8 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 @AndroidEntryPoint
-class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
+class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener,
+  CastApiProvider.SessionListener {
 
   @set:Inject
   internal lateinit var presetRepository: PresetRepository
@@ -60,6 +62,9 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
 
   @set:Inject
   internal lateinit var soundDownloadCache: Cache
+
+  @set:Inject
+  internal lateinit var castApiProvider: CastApiProvider
 
   @set:Inject
   internal lateinit var analyticsProvider: AnalyticsProvider
@@ -153,6 +158,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
   override fun onCreate() {
     super.onCreate()
     registerReceiver(becomingNoisyReceiver, IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY))
+    castApiProvider.registerSessionListener(this)
 
     // watch preset repository
     lifecycleScope.launch {
@@ -290,6 +296,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     Log.d(LOG_TAG, "onDestroy: releasing acquired resources")
     playerManager.stop(true)
     mediaSessionManager.release()
+    castApiProvider.unregisterSessionListener(this)
     unregisterReceiver(becomingNoisyReceiver)
     if (wakeLock.isHeld) {
       wakeLock.release()
@@ -318,6 +325,16 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
       playbackNotificationManager.createNotification(playerManagerState, currentPreset)
         .also { startForeground(0x01, it) }
     }
+  }
+
+  override fun onCastSessionBegin() {
+    Log.i(LOG_TAG, "onCastSessionBegin")
+    // TODO:
+  }
+
+  override fun onCastSessionEnd() {
+    Log.i(LOG_TAG, "onCastSessionEnd")
+    // TODO:
   }
 
   private fun getSoundIdExtra(intent: Intent): String {
