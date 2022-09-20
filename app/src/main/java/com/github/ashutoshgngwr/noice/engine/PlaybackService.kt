@@ -25,6 +25,7 @@ import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.cache.Cache
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.AndroidEntryPoint
@@ -99,13 +100,17 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener,
     SoundDataSourceFactory(apiClient, soundDownloadCache)
   }
 
+  private val localPlayerFactory: Player.Factory by lazy {
+    LocalPlayer.Factory(this, ProgressiveMediaSource.Factory(soundDataSourceFactory))
+  }
+
   private val playerManager: PlayerManager by lazy {
     PlayerManager(
       this,
       settingsRepository.getAudioQuality().bitrate,
       PlayerManager.DEFAULT_AUDIO_ATTRIBUTES,
       soundRepository,
-      soundDataSourceFactory,
+      localPlayerFactory,
       analyticsProvider,
       lifecycleScope,
       this
@@ -249,14 +254,13 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener,
       }
 
       ACTION_SET_AUDIO_USAGE -> when (intent.getIntExtra(INTENT_EXTRA_AUDIO_USAGE, -1)) {
-        // TODO: handle media session manager when the playback is on a remote stream.
         AudioAttributesCompat.USAGE_MEDIA -> {
           playerManager.setAudioAttributes(PlayerManager.DEFAULT_AUDIO_ATTRIBUTES)
-          mediaSessionManager.setPlaybackToLocal(AudioManager.STREAM_MUSIC)
+          mediaSessionManager.setAudioStream(AudioManager.STREAM_MUSIC)
         }
         AudioAttributesCompat.USAGE_ALARM -> {
           playerManager.setAudioAttributes(PlayerManager.ALARM_AUDIO_ATTRIBUTES)
-          mediaSessionManager.setPlaybackToLocal(AudioManager.STREAM_ALARM)
+          mediaSessionManager.setAudioStream(AudioManager.STREAM_ALARM)
         }
         else -> throw IllegalArgumentException(
           """
@@ -328,13 +332,15 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener,
   }
 
   override fun onCastSessionBegin() {
-    Log.i(LOG_TAG, "onCastSessionBegin")
-    // TODO:
+    Log.d(LOG_TAG, "onCastSessionBegin: switching playback to remote")
+    playerManager.setPlayerFactory(castApiProvider.buildPlayerFactory(this))
+    mediaSessionManager.setPlaybackToRemote(castApiProvider.getVolumeProvider())
   }
 
   override fun onCastSessionEnd() {
-    Log.i(LOG_TAG, "onCastSessionEnd")
-    // TODO:
+    Log.i(LOG_TAG, "onCastSessionEnd: switching playback to local")
+    playerManager.setPlayerFactory(localPlayerFactory)
+    mediaSessionManager.setPlaybackToLocal()
   }
 
   private fun getSoundIdExtra(intent: Intent): String {

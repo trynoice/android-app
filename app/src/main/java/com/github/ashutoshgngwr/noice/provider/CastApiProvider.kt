@@ -21,7 +21,7 @@ interface CastApiProvider {
   /**
    * Returns a [Player.Factory] that plays media on a cast device.
    */
-  fun getPlayerFactory(context: Context): Player.Factory
+  fun buildPlayerFactory(context: Context): Player.Factory
 
   /**
    * Returns a [VolumeProviderCompat] that controls volume of the cast device.
@@ -60,7 +60,7 @@ interface CastApiProvider {
  */
 object DummyCastApiProvider : CastApiProvider {
 
-  override fun getPlayerFactory(context: Context): Player.Factory {
+  override fun buildPlayerFactory(context: Context): Player.Factory {
     throw IllegalStateException("getPlayerFactory() must not be invoked on DummyCastApiProvider")
   }
 

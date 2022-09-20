@@ -38,7 +38,7 @@ class RealCastApiProvider(context: Context) : CastApiProvider, SessionManagerLis
   /**
    * Initializes a new [CastPlayer.Factory] instance and returns it as [Player.Factory].
    */
-  override fun getPlayerFactory(context: Context): Player.Factory =
+  override fun buildPlayerFactory(context: Context): Player.Factory =
     CastPlayer.Factory(castContext, "urn:x-cast:com.github.ashutoshgngwr.noice:Player")
 
   /**

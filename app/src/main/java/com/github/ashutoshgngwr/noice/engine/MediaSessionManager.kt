@@ -6,6 +6,7 @@ import android.media.AudioManager
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import androidx.media.VolumeProviderCompat
 import androidx.mediarouter.media.MediaRouter
 import com.github.ashutoshgngwr.noice.R
 
@@ -15,6 +16,8 @@ import com.github.ashutoshgngwr.noice.R
 class MediaSessionManager(context: Context, sessionActivityPi: PendingIntent) {
 
   private var callback: Callback? = null
+  private var audioStream: Int = AudioManager.STREAM_MUSIC
+  private var isPlaybackLocal: Boolean = false
   private val defaultTitle = context.getString(R.string.unsaved_preset)
   private val mediaSession = MediaSessionCompat(context, "${context.packageName}:mediaSession")
   private val playbackStateBuilder = PlaybackStateCompat.Builder()
@@ -29,7 +32,7 @@ class MediaSessionManager(context: Context, sessionActivityPi: PendingIntent) {
   init {
     mediaSession.isActive = true
     mediaSession.setSessionActivity(sessionActivityPi)
-    setPlaybackToLocal(AudioManager.STREAM_MUSIC)
+    setPlaybackToLocal()
     mediaSession.setCallback(object : MediaSessionCompat.Callback() {
       override fun onPlay() {
         callback?.onPlay()
@@ -65,8 +68,28 @@ class MediaSessionManager(context: Context, sessionActivityPi: PendingIntent) {
   /**
    * Sets the audio stream for this media session to update the volume handling.
    */
-  fun setPlaybackToLocal(stream: Int) {
-    mediaSession.setPlaybackToLocal(stream)
+  fun setAudioStream(stream: Int) {
+    audioStream = stream
+    if (isPlaybackLocal) {
+      mediaSession.setPlaybackToLocal(stream)
+    }
+  }
+
+  /**
+   * Configures this session to use local volume handling based on the last audio stream configured
+   * using [setAudioStream].
+   */
+  fun setPlaybackToLocal() {
+    isPlaybackLocal = true
+    mediaSession.setPlaybackToLocal(audioStream)
+  }
+
+  /**
+   * Configures this session to use remote volume handling.
+   */
+  fun setPlaybackToRemote(volumeProvider: VolumeProviderCompat) {
+    isPlaybackLocal = false
+    mediaSession.setPlaybackToRemote(volumeProvider)
   }
 
   /**

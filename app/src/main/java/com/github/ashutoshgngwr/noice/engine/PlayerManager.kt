@@ -8,8 +8,6 @@ import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.upstream.DataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -26,7 +24,7 @@ class PlayerManager(
   private var audioBitrate: String,
   private var audioAttributes: AudioAttributesCompat,
   private val soundRepository: SoundRepository,
-  private val exoPlayerDataSourceFactory: DataSource.Factory,
+  private var playerFactory: Player.Factory,
   private val analyticsProvider: AnalyticsProvider,
   private val defaultScope: CoroutineScope,
   private val playbackListener: PlaybackListener,
@@ -36,7 +34,6 @@ class PlayerManager(
   private var fadeOutDuration = Duration.ZERO
   private var isPremiumSegmentsEnabled = false
 
-  private var playerFactory: Player.Factory = buildLocalPlayerFactory()
   private var audioFocusManager: AudioFocusManager =
     DefaultAudioFocusManager(context, audioAttributes, this)
 
@@ -328,9 +325,19 @@ class PlayerManager(
     players.values.forEach { it.setPremiumSegmentsEnabled(enabled) }
   }
 
-  private fun buildLocalPlayerFactory(): Player.Factory {
-    return ProgressiveMediaSource.Factory(exoPlayerDataSourceFactory)
-      .let { LocalPlayer.Factory(context, it) }
+  /**
+   * Updates the [Player.Factory] for creating new [Player] instances. It also recreates any
+   * existing [Player] instances using the new [factory].
+   */
+  fun setPlayerFactory(factory: Player.Factory) {
+    // TODO: gracefully handle pausing and stopping players here.
+    playerFactory = factory
+    enablePlaybackListenerNotification = false
+    val soundIds = players.keys.toSet()
+    stop(true)
+    soundIds.forEach(this::play)
+    enablePlaybackListenerNotification = true
+    notifyPlaybackListener()
   }
 
   private fun notifyPlaybackListener() {
