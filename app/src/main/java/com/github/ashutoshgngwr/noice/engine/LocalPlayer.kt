@@ -13,8 +13,15 @@ import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackException
+import com.google.android.exoplayer2.RenderersFactory
 import com.google.android.exoplayer2.audio.AudioAttributes
+import com.google.android.exoplayer2.audio.MediaCodecAudioRenderer
+import com.google.android.exoplayer2.extractor.ExtractorsFactory
+import com.google.android.exoplayer2.extractor.mp3.Mp3Extractor
+import com.google.android.exoplayer2.mediacodec.MediaCodecSelector
 import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.upstream.DataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -32,13 +39,14 @@ class LocalPlayer(
   audioBitrate: String,
   audioAttributes: AudioAttributesCompat,
   soundRepository: SoundRepository,
+  renderersFactory: RenderersFactory,
   mediaSourceFactory: MediaSource.Factory,
   externalScope: CoroutineScope,
   playbackListener: PlaybackListener,
 ) : Player(soundId, audioBitrate, soundRepository, externalScope, playbackListener),
   IExoPlayer.Listener {
 
-  private val exoPlayer: ExoPlayer = ExoPlayer.Builder(context)
+  private val exoPlayer = ExoPlayer.Builder(context, renderersFactory, mediaSourceFactory)
     .setMediaSourceFactory(mediaSourceFactory)
     .setLoadControl(
       DefaultLoadControl.Builder()
@@ -255,8 +263,15 @@ class LocalPlayer(
    */
   class Factory(
     private val context: Context,
-    private val mediaSourceFactory: MediaSource.Factory,
+    localDataSourceFactory: DataSource.Factory
   ) : Player.Factory {
+
+    private val mediaSourceFactory = ExtractorsFactory { arrayOf(Mp3Extractor()) }
+      .let { ProgressiveMediaSource.Factory(localDataSourceFactory, it) }
+
+    private val renderersFactory = RenderersFactory { handler, _, audioListener, _, _ ->
+      arrayOf(MediaCodecAudioRenderer(context, MediaCodecSelector.DEFAULT, handler, audioListener))
+    }
 
     override fun createPlayer(
       soundId: String,
@@ -272,6 +287,7 @@ class LocalPlayer(
         audioBitrate,
         audioAttributes,
         soundRepository,
+        renderersFactory,
         mediaSourceFactory,
         defaultScope,
         playbackListener,

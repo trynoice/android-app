@@ -25,7 +25,6 @@ import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.cache.Cache
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.AndroidEntryPoint
@@ -96,12 +95,12 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener,
     PlaybackNotificationManager(this, mainActivityPi, mediaSessionManager.getSessionToken())
   }
 
-  private val soundDataSourceFactory: SoundDataSourceFactory by lazy {
+  private val localDataSourceFactory: SoundDataSourceFactory by lazy {
     SoundDataSourceFactory(apiClient, soundDownloadCache)
   }
 
   private val localPlayerFactory: Player.Factory by lazy {
-    LocalPlayer.Factory(this, ProgressiveMediaSource.Factory(soundDataSourceFactory))
+    LocalPlayer.Factory(this, localDataSourceFactory)
   }
 
   private val playerManager: PlayerManager by lazy {
@@ -178,7 +177,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener,
 
     lifecycleScope.launch {
       isSubscribed.collect { subscribed ->
-        soundDataSourceFactory.enableDownloadedSounds = subscribed
+        localDataSourceFactory.enableDownloadedSounds = subscribed
         playerManager.setPremiumSegmentsEnabled(subscribed)
       }
     }
