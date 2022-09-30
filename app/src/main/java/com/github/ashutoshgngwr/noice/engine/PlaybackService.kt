@@ -90,7 +90,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     PlaybackNotificationManager(this, mainActivityPi, mediaSessionManager.getSessionToken())
   }
 
-  private val soundDataSourceFactory: SoundDataSourceFactory by lazy {
+  private val localDataSourceFactory: SoundDataSourceFactory by lazy {
     SoundDataSourceFactory(apiClient, soundDownloadCache)
   }
 
@@ -100,7 +100,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
       settingsRepository.getAudioQuality().bitrate,
       PlayerManager.DEFAULT_AUDIO_ATTRIBUTES,
       soundRepository,
-      soundDataSourceFactory,
+      localDataSourceFactory,
       analyticsProvider,
       lifecycleScope,
       this
@@ -167,7 +167,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
 
     lifecycleScope.launch {
       isSubscribed.collect { subscribed ->
-        soundDataSourceFactory.enableDownloadedSounds = subscribed
+        localDataSourceFactory.enableDownloadedSounds = subscribed
         playerManager.setPremiumSegmentsEnabled(subscribed)
       }
     }

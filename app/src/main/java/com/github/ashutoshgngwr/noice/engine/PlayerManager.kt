@@ -8,7 +8,6 @@ import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -26,7 +25,7 @@ class PlayerManager(
   private var audioBitrate: String,
   private var audioAttributes: AudioAttributesCompat,
   private val soundRepository: SoundRepository,
-  private val exoPlayerDataSourceFactory: DataSource.Factory,
+  localDataSourceFactory: DataSource.Factory,
   private val analyticsProvider: AnalyticsProvider,
   private val defaultScope: CoroutineScope,
   private val playbackListener: PlaybackListener,
@@ -36,7 +35,7 @@ class PlayerManager(
   private var fadeOutDuration = Duration.ZERO
   private var isPremiumSegmentsEnabled = false
 
-  private var playerFactory: Player.Factory = buildLocalPlayerFactory()
+  private var playerFactory: Player.Factory = LocalPlayer.Factory(context, localDataSourceFactory)
   private var audioFocusManager: AudioFocusManager =
     DefaultAudioFocusManager(context, audioAttributes, this)
 
@@ -326,11 +325,6 @@ class PlayerManager(
 
     isPremiumSegmentsEnabled = enabled
     players.values.forEach { it.setPremiumSegmentsEnabled(enabled) }
-  }
-
-  private fun buildLocalPlayerFactory(): Player.Factory {
-    return ProgressiveMediaSource.Factory(exoPlayerDataSourceFactory)
-      .let { LocalPlayer.Factory(context, it) }
   }
 
   private fun notifyPlaybackListener() {
