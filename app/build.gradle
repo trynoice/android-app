@@ -19,6 +19,7 @@ android {
   compileSdk config.compileSdkVersion
 
   defaultConfig {
+    namespace 'com.github.ashutoshgngwr.noice'
     applicationId 'com.github.ashutoshgngwr.noice'
     minSdk config.minSdkVersion
     targetSdk config.compileSdkVersion
