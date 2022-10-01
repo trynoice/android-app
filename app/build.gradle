@@ -133,7 +133,7 @@ dependencies {
   implementation 'com.google.code.gson:gson:2.9.1'
   implementation "com.google.dagger:hilt-android:$deps.hiltVersion"
   implementation "com.mikepenz:aboutlibraries:${deps.aboutLibrariesVersion}"
-  implementation 'com.ncorti:slidetoact:0.9.0'
+  implementation 'com.ncorti:slidetoact:0.10.0'
   implementation 'io.github.ashutoshgngwr:may:1.0.0'
   implementation 'io.github.medyo:android-about-page:2.0.0'
   implementation 'io.noties.markwon:core:4.6.2'
