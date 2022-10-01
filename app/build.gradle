@@ -99,7 +99,7 @@ dependencies {
   def fragmentVersion = '1.5.1'
 
   def espressoVersion = '3.4.0'
-  def mockkVersion = '1.12.5'
+  def mockkVersion = '1.13.2'
 
   kapt "com.google.dagger:hilt-compiler:$deps.hiltVersion"
   kapt "androidx.hilt:hilt-compiler:$androidXHiltVersion"
