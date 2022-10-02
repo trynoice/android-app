@@ -267,7 +267,7 @@
     <string name="change_plan">Изменить тарифный план</string>
     <string name="faqs">Часто задаваемые вопросы</string>
     <string name="made_in_india">Сделано с ❤ в Индии</string>
-    <string name="has_premium_segments">Этот звук имеет премиум компоненты.</string>
+    <string name="has_premium_segments">Этот звук имеет дополнительные варианты с Noice Premium.</string>
     <string name="cancel_subscription_error">О нет! Мы не смогли отменить вашу подписку. %1$s Пожалуйста, повторите попытку!</string>
     <string name="delete_account_error">О нет! Мы не смогли удалить ваш аккаунт. %1$s Пожалуйста, повторите попытку!</string>
     <string name="cancel_subscription_confirmation">Вы уверены, что хотите отменить подписку на Noice Premium\? После отмены ваша подписка будет автоматически остановлена в конце текущего платёжного цикла. Ваш текущий платёжный цикл заканчивается через %1$s.</string>
@@ -302,4 +302,9 @@
         <item quantity="many">%1$d дней</item>
         <item quantity="other">%1$d дней</item>
     </plurals>
+    <string name="sound_library_updated">Обновлена библиотека звука</string>
+    <string name="sound_library_updated_message">Мы внесли несколько изменений в библиотеку звуков. Хотите ознакомиться с примечаниями к выпуску\?</string>
+    <string name="review">Обзор</string>
+    <string name="benefit_4">%1$d дополнительные звуки</string>
+    <string name="sound_is_premium">Этот звук доступен при использовании Noice Premium.</string>
 </resources>

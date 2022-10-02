@@ -166,7 +166,7 @@
     <string name="confirming_payment">Підтвердження оплати</string>
     <string name="subscription_payment_confirmation_failed">Йой! У нас виникли проблеми під час очікування підтвердження платежу. Це може бути пов\'язано з помилкою мережі або затримкою від постачальника платежів. Ми оновимо стан вашої передплати, як тільки нас повідомить ваш провайдер. Будь ласка, перевірте стан вашої передплати трохи згодом.</string>
     <string name="non_looping_sound">Цей звук містить проміжні перерви.</string>
-    <string name="has_premium_segments">Цей звук має преміальні складники.</string>
+    <string name="has_premium_segments">Цей звук пропонує додаткові варіанти з Noice Premium.</string>
     <string name="audio_quality_low">Низька (128 кбіт/с)</string>
     <string name="audio_quality_medium">Середня (192 кбіт/с)</string>
     <string name="audio_quality_high">Висока (256 кбіт/с)</string>
@@ -297,4 +297,6 @@
     <string name="sound_library_updated">Бібліотека звуків оновлена</string>
     <string name="sound_library_updated_message">Ми внесли деякі зміни до звукової бібліотеки. Бажаєте ознайомитися з примітками до випуску\?</string>
     <string name="review">Ознайомитися</string>
+    <string name="benefit_4">%1$d додаткові звуки</string>
+    <string name="sound_is_premium">Цей звук доступний з Noice Premium.</string>
 </resources>
