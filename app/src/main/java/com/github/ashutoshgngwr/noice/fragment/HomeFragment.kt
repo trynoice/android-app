@@ -7,11 +7,13 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
@@ -30,7 +32,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), MenuProvider {
+class HomeFragment : Fragment(), MenuProvider, NavController.OnDestinationChangedListener {
 
   private lateinit var binding: HomeFragmentBinding
   private var playerManagerState = PlaybackState.STOPPED
@@ -67,6 +69,7 @@ class HomeFragment : Fragment(), MenuProvider {
       homeNavGraph.setStartDestination(R.id.presets)
     }
 
+    homeNavController.addOnDestinationChangedListener(this)
     homeNavController.graph = homeNavGraph
     binding.bottomNav.setupWithNavController(homeNavController)
     binding.bottomNav.menu.findItem(navArgs.navDestination)?.let {
@@ -80,6 +83,11 @@ class HomeFragment : Fragment(), MenuProvider {
           activity?.invalidateOptionsMenu()
         }
     }
+  }
+
+  override fun onDestroyView() {
+    homeNavController.removeOnDestinationChangedListener(this)
+    super.onDestroyView()
   }
 
   override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -120,5 +128,15 @@ class HomeFragment : Fragment(), MenuProvider {
         analyticsProvider.logEvent("playback_toggle_click", bundleOf())
         true
       }
+  }
+
+  override fun onDestinationChanged(
+    controller: NavController,
+    destination: NavDestination,
+    arguments: Bundle?
+  ) {
+    destination.label?.also { label ->
+      (activity as? AppCompatActivity)?.supportActionBar?.title = label
+    }
   }
 }

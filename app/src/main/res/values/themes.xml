@@ -67,9 +67,7 @@
   </style>
 
   <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
-    <item name="labelVisibilityMode">labeled</item>
-    <item name="itemTextAppearanceActive">@style/TextAppearance.Material3.LabelMedium</item>
-    <item name="itemTextAppearanceInactive">@style/TextAppearance.Material3.LabelSmall</item>
+    <item name="labelVisibilityMode">unlabeled</item>
   </style>
 
   <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.Material3.DayNight.BottomSheetDialog">
