@@ -96,4 +96,5 @@
         <item quantity="many">%1$d munutennoù</item>
         <item quantity="other">%1$d munutennoù</item>
     </plurals>
+    <string name="email">Email</string>
 </resources>
