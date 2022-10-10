@@ -97,12 +97,14 @@ dependencies {
   def androidXHiltVersion = '1.0.0'
   def exoPlayerVersion = '2.18.1'
   def fragmentVersion = '1.5.1'
+  def roomVersion = '2.4.3'
 
   def espressoVersion = '3.4.0'
   def mockkVersion = '1.13.2'
 
   kapt "com.google.dagger:hilt-compiler:$deps.hiltVersion"
   kapt "androidx.hilt:hilt-compiler:$androidXHiltVersion"
+  kapt "androidx.room:room-compiler:$roomVersion"
 
   implementation 'androidx.appcompat:appcompat:1.4.2'
   implementation 'androidx.browser:browser:1.4.0'
@@ -119,6 +121,9 @@ dependencies {
   implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
   implementation 'androidx.preference:preference-ktx:1.2.0'
   implementation 'androidx.recyclerview:recyclerview:1.2.1'
+  implementation "androidx.room:room-runtime:$roomVersion"
+  implementation "androidx.room:room-ktx:$roomVersion"
+
   implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
   implementation 'androidx.work:work-runtime-ktx:2.7.1'
   implementation 'com.caverock:androidsvg-aar:1.4'

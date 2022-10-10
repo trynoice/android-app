@@ -4,7 +4,9 @@ import android.app.Application
 import android.content.Context
 import android.os.Build
 import androidx.hilt.work.HiltWorkerFactory
+import androidx.room.Room
 import androidx.work.Configuration
+import com.github.ashutoshgngwr.noice.data.ApplicationDatabase
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.exoplayer2.database.DatabaseProvider
 import com.google.android.exoplayer2.database.StandaloneDatabaseProvider
@@ -83,6 +85,17 @@ class NoiceApplication : Application(), Configuration.Provider {
     @Singleton
     fun cacheStore(@ApplicationContext context: Context): May {
       return May.openOrCreateDatastore(context, "app-cache.may.db", Context.MODE_PRIVATE)
+    }
+  }
+
+  @Module
+  @InstallIn(SingletonComponent::class)
+  object ApplicationDatabaseModule {
+    @Provides
+    @Singleton
+    fun applicationDatabase(@ApplicationContext context: Context): ApplicationDatabase {
+      return Room.databaseBuilder(context, ApplicationDatabase::class.java, "application-database")
+        .build()
     }
   }
 
