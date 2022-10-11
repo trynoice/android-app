@@ -19,7 +19,7 @@ import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.errors.DuplicateEmailError
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
-import com.trynoice.api.client.models.Profile
+import com.github.ashutoshgngwr.noice.repository.models.Profile
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

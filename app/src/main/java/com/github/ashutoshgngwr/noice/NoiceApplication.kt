@@ -6,7 +6,7 @@ import android.os.Build
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.room.Room
 import androidx.work.Configuration
-import com.github.ashutoshgngwr.noice.data.ApplicationDatabase
+import com.github.ashutoshgngwr.noice.data.AppDatabase
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.exoplayer2.database.DatabaseProvider
 import com.google.android.exoplayer2.database.StandaloneDatabaseProvider
@@ -90,11 +90,11 @@ class NoiceApplication : Application(), Configuration.Provider {
 
   @Module
   @InstallIn(SingletonComponent::class)
-  object ApplicationDatabaseModule {
+  object AppDatabaseModule {
     @Provides
     @Singleton
-    fun applicationDatabase(@ApplicationContext context: Context): ApplicationDatabase {
-      return Room.databaseBuilder(context, ApplicationDatabase::class.java, "application-database")
+    fun appDatabase(@ApplicationContext context: Context): AppDatabase {
+      return Room.databaseBuilder(context, AppDatabase::class.java, "${context.packageName}.db")
         .build()
     }
   }

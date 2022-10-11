@@ -1,16 +1,17 @@
 package com.github.ashutoshgngwr.noice.repository
 
 import android.util.Log
+import com.github.ashutoshgngwr.noice.data.AppCacheStore
 import com.github.ashutoshgngwr.noice.repository.errors.AccountTemporarilyLockedError
 import com.github.ashutoshgngwr.noice.repository.errors.DuplicateEmailError
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.repository.errors.NotSignedInError
+import com.github.ashutoshgngwr.noice.repository.models.Profile
+import com.github.ashutoshgngwr.noice.repository.models.toDomainEntity
 import com.trynoice.api.client.NoiceApiClient
-import com.trynoice.api.client.models.Profile
 import com.trynoice.api.client.models.SignInParams
 import com.trynoice.api.client.models.SignUpParams
 import com.trynoice.api.client.models.UpdateProfileParams
-import io.github.ashutoshgngwr.may.May
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import retrofit2.HttpException
@@ -25,7 +26,7 @@ import javax.inject.Singleton
 @Singleton
 class AccountRepository @Inject constructor(
   private val apiClient: NoiceApiClient,
-  private val cacheStore: May,
+  private val cacheStore: AppCacheStore,
 ) {
 
   /**
@@ -45,9 +46,9 @@ class AccountRepository @Inject constructor(
    * @see Resource
    */
   fun getProfile(): Flow<Resource<Profile>> = fetchNetworkBoundResource(
-    loadFromCache = { cacheStore.getAs(PROFILE_CACHE_KEY) },
-    loadFromNetwork = { apiClient.accounts().getProfile() },
-    cacheNetworkResult = { p -> cacheStore.put(PROFILE_CACHE_KEY, p) },
+    loadFromCache = { cacheStore.profile().get()?.toDomainEntity() },
+    loadFromNetwork = { apiClient.accounts().getProfile().toDomainEntity() },
+    cacheNetworkResult = { cacheStore.profile().update(it.toRoomDto()) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "getProfile:", e)
       when {
@@ -145,7 +146,7 @@ class AccountRepository @Inject constructor(
     }
 
     if (response.code() == 429) {
-      val timeoutSeconds = response.headers().get("Retry-After")?.toIntOrNull() ?: 0
+      val timeoutSeconds = response.headers()["Retry-After"]?.toIntOrNull() ?: 0
       throw AccountTemporarilyLockedError(timeoutSeconds)
     }
 
@@ -193,7 +194,7 @@ class AccountRepository @Inject constructor(
   fun signOut(): Flow<Resource<Unit>> = fetchNetworkBoundResource(
     loadFromNetwork = {
       apiClient.signOut()
-      cacheStore.removeAll()
+      cacheStore.clear()
     },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "signOut:", e)
@@ -226,6 +227,5 @@ class AccountRepository @Inject constructor(
 
   companion object {
     private const val LOG_TAG = "AccountRepository"
-    private const val PROFILE_CACHE_KEY = "account/profile"
   }
 }
