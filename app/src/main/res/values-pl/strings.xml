@@ -4,10 +4,10 @@
     <string name="app_theme">Motyw</string>
     <string name="library">Biblioteka</string>
     <string name="report_issue">Zgłoś problem</string>
-    <string name="presets">Zapisane szablony</string>
+    <string name="presets">Zapisane ustawienia</string>
     <string name="sleep_timer">Wyłącznik czasowy</string>
     <string name="support_development">Wesprzyj rozwój</string>
-    <string name="wake_up_timer">Budzik</string>
+    <string name="wake_up_timer">Zegar budzenia</string>
     <string name="cancel">Anuluj</string>
     <string name="dismiss">Odrzuć</string>
     <string name="name">Nazwa</string>
