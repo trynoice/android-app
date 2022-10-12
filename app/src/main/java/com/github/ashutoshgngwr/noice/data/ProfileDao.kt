@@ -7,14 +7,14 @@ import androidx.room.Query
 import com.github.ashutoshgngwr.noice.data.models.ProfileDto
 
 @Dao
-interface ProfileDao {
+abstract class ProfileDao {
 
   @Query("SELECT * FROM profile LIMIT 1")
-  suspend fun get(): ProfileDto?
+  abstract suspend fun get(): ProfileDto?
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  suspend fun update(profile: ProfileDto)
+  abstract suspend fun save(profile: ProfileDto)
 
   @Query("DELETE FROM profile")
-  suspend fun remove()
+  abstract suspend fun remove()
 }

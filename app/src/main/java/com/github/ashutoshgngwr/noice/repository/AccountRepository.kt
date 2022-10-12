@@ -48,7 +48,7 @@ class AccountRepository @Inject constructor(
   fun getProfile(): Flow<Resource<Profile>> = fetchNetworkBoundResource(
     loadFromCache = { cacheStore.profile().get()?.toDomainEntity() },
     loadFromNetwork = { apiClient.accounts().getProfile().toDomainEntity() },
-    cacheNetworkResult = { cacheStore.profile().update(it.toRoomDto()) },
+    cacheNetworkResult = { cacheStore.profile().save(it.toRoomDto()) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "getProfile:", e)
       when {
@@ -218,6 +218,7 @@ class AccountRepository @Inject constructor(
   fun deleteAccount(accountId: Long): Flow<Resource<Unit>> = fetchNetworkBoundResource(
     loadFromNetwork = { apiClient.accounts().delete(accountId) },
     loadFromNetworkErrorTransform = { e ->
+      Log.i(LOG_TAG, "deleteAccount:", e)
       when (e) {
         is IOException -> NetworkError
         else -> e

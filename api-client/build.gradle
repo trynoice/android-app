@@ -23,6 +23,7 @@ android {
   kotlinOptions {
     useIR = true
     jvmTarget = config.kotlinJvmTarget
+    freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
   }
 
   testOptions.unitTests.all {

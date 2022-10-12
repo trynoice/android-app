@@ -76,6 +76,7 @@ android {
   kotlinOptions {
     useIR = true
     jvmTarget = config.kotlinJvmTarget
+    freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
   }
 
   testOptions {
@@ -158,6 +159,7 @@ dependencies {
   testImplementation "com.google.dagger:hilt-android-testing:$deps.hiltVersion"
   testImplementation "io.mockk:mockk:$mockkVersion"
   testImplementation "junit:junit:$deps.junitVersion"
+  testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$deps.coroutinesVersion"
   testImplementation "org.robolectric:robolectric:$deps.robolectricVersion"
   testImplementation 'org.skyscreamer:jsonassert:1.5.1'
 
