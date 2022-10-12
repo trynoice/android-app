@@ -4,10 +4,11 @@ import android.app.Activity
 import android.net.Uri
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
+import com.github.ashutoshgngwr.noice.models.Subscription
+import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
+import com.github.ashutoshgngwr.noice.models.toDomainEntity
 import com.trynoice.api.client.NoiceApiClient
-import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionFlowParams
-import com.trynoice.api.client.models.SubscriptionPlan
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -64,7 +65,9 @@ class StripeSubscriptionBillingProvider(
 ) : SubscriptionBillingProvider {
 
   override suspend fun listPlans(currencyCode: String?): List<SubscriptionPlan> {
-    return apiClient.subscriptions().listPlans(SubscriptionPlan.PROVIDER_STRIPE, currencyCode)
+    return apiClient.subscriptions()
+      .listPlans(SubscriptionPlan.PROVIDER_STRIPE, currencyCode)
+      .toDomainEntity()
   }
 
   override suspend fun launchBillingFlow(

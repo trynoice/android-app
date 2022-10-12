@@ -33,12 +33,12 @@ import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseItemBindin
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseListFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseLoadingItemBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
+import com.github.ashutoshgngwr.noice.models.Subscription
+import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
 import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
-import com.trynoice.api.client.models.Subscription
-import com.trynoice.api.client.models.SubscriptionPlan
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

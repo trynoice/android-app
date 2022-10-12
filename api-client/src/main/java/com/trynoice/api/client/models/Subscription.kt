@@ -1,7 +1,6 @@
 package com.trynoice.api.client.models
 
 import com.google.gson.annotations.Expose
-import java.io.Serializable
 import java.util.*
 
 /**
@@ -57,4 +56,4 @@ data class Subscription(
 
   @Expose
   val giftCardCode: String? = null,
-) : Serializable
+)

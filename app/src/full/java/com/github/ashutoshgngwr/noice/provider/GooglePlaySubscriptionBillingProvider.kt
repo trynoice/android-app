@@ -1,10 +1,11 @@
 package com.github.ashutoshgngwr.noice.provider
 
 import android.app.Activity
+import com.github.ashutoshgngwr.noice.models.Subscription
+import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
+import com.github.ashutoshgngwr.noice.models.toDomainEntity
 import com.trynoice.api.client.NoiceApiClient
-import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionFlowParams
-import com.trynoice.api.client.models.SubscriptionPlan
 
 /**
  * [SubscriptionBillingProvider] implementation that provides subscriptions using Google Play as the
@@ -16,7 +17,9 @@ class GooglePlaySubscriptionBillingProvider(
 ) : SubscriptionBillingProvider {
 
   override suspend fun listPlans(currencyCode: String?): List<SubscriptionPlan> {
-    return apiClient.subscriptions().listPlans(SubscriptionPlan.PROVIDER_GOOGLE_PLAY, currencyCode)
+    return apiClient.subscriptions()
+      .listPlans(SubscriptionPlan.PROVIDER_GOOGLE_PLAY, currencyCode)
+      .toDomainEntity()
   }
 
   override suspend fun launchBillingFlow(

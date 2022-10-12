@@ -12,14 +12,14 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.DeleteAccountFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.models.Profile
+import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundError
-import com.github.ashutoshgngwr.noice.repository.models.Profile
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.trynoice.api.client.models.Subscription
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

@@ -8,7 +8,12 @@ import android.content.ServiceConnection
 import android.net.Uri
 import android.os.IBinder
 import android.util.Log
+import com.github.ashutoshgngwr.noice.data.AppCacheStore
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
+import com.github.ashutoshgngwr.noice.models.Subscription
+import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
+import com.github.ashutoshgngwr.noice.models.toDomainEntity
+import com.github.ashutoshgngwr.noice.models.toRoomDto
 import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.repository.errors.AlreadySubscribedError
 import com.github.ashutoshgngwr.noice.repository.errors.GiftCardExpiredError
@@ -20,10 +25,7 @@ import com.github.ashutoshgngwr.noice.service.SubscriptionStatusPollService
 import com.github.ashutoshgngwr.noice.service.SubscriptionStatusPollServiceBinder
 import com.trynoice.api.client.NoiceApiClient
 import com.trynoice.api.client.models.GiftCard
-import com.trynoice.api.client.models.Subscription
-import com.trynoice.api.client.models.SubscriptionPlan
 import dagger.hilt.android.qualifiers.ApplicationContext
-import io.github.ashutoshgngwr.may.May
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -31,7 +33,6 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -41,9 +42,9 @@ import javax.inject.Singleton
 @Singleton
 class SubscriptionRepository @Inject constructor(
   @ApplicationContext private val context: Context,
-  private val subscriptionBillingProvider: SubscriptionBillingProvider,
+  private val billingProvider: SubscriptionBillingProvider,
   private val apiClient: NoiceApiClient,
-  private val cacheStore: May,
+  private val cacheStore: AppCacheStore,
 ) {
 
   /**
@@ -59,9 +60,9 @@ class SubscriptionRepository @Inject constructor(
   fun listPlans(
     currencyCode: String? = null,
   ): Flow<Resource<List<SubscriptionPlan>>> = fetchNetworkBoundResource(
-    loadFromCache = { cacheStore.getAs(PLANS_CACHE_KEY) },
-    loadFromNetwork = { subscriptionBillingProvider.listPlans(currencyCode) },
-    cacheNetworkResult = { plans -> cacheStore.put(PLANS_CACHE_KEY, plans) },
+    loadFromCache = { cacheStore.subscriptionPlans().list().toDomainEntity() },
+    loadFromNetwork = { billingProvider.listPlans(currencyCode) },
+    cacheNetworkResult = { cacheStore.subscriptionPlans().saveAll(it.toRoomDto()) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "getPlans:", e)
       when (e) {
@@ -89,9 +90,7 @@ class SubscriptionRepository @Inject constructor(
     plan: SubscriptionPlan,
     activeSubscription: Subscription?,
   ): Flow<Resource<Unit>> = fetchNetworkBoundResource(
-    loadFromNetwork = {
-      subscriptionBillingProvider.launchBillingFlow(activity, plan, activeSubscription)
-    },
+    loadFromNetwork = { billingProvider.launchBillingFlow(activity, plan, activeSubscription) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "launchSubscriptionFlow:", e)
       when {
@@ -117,9 +116,13 @@ class SubscriptionRepository @Inject constructor(
     subscriptionId: Long,
     currencyCode: String? = null,
   ): Flow<Resource<Subscription>> = fetchNetworkBoundResource(
-    loadFromCache = { cacheStore.getAs("${SUBSCRIPTION_KEY_PREFIX}/${subscriptionId}") },
-    loadFromNetwork = { apiClient.subscriptions().get(subscriptionId, currency = currencyCode) },
-    cacheNetworkResult = { s -> cacheStore.put("${SUBSCRIPTION_KEY_PREFIX}/${subscriptionId}", s) },
+    loadFromCache = { cacheStore.subscriptions().get(subscriptionId)?.toDomainEntity() },
+    loadFromNetwork = {
+      apiClient.subscriptions()
+        .get(subscriptionId, currency = currencyCode)
+        .toDomainEntity()
+    },
+    cacheNetworkResult = { cacheStore.subscriptions().save(it.toRoomDto()) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "get:", e)
       when {
@@ -143,16 +146,18 @@ class SubscriptionRepository @Inject constructor(
    */
   fun getActive(): Flow<Resource<Subscription>> = fetchNetworkBoundResource(
     loadFromCache = {
-      cacheStore.getAs<Subscription>("${SUBSCRIPTION_KEY_PREFIX}/active")
-        ?.takeIf { it.renewsAt?.after(Date()) ?: false }
+      cacheStore.subscriptions()
+        .getByExpiresAfter(System.currentTimeMillis())
+        .toDomainEntity()
     },
     loadFromNetwork = {
       apiClient.subscriptions()
         .list(onlyActive = true)
         .firstOrNull()
+        ?.toDomainEntity()
         ?: throw SubscriptionNotFoundError
     },
-    cacheNetworkResult = { cacheStore.put("${SUBSCRIPTION_KEY_PREFIX}/active", it) },
+    cacheNetworkResult = { cacheStore.subscriptions().save(it.toRoomDto()) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "getActive:", e)
       when (e) {
@@ -176,12 +181,17 @@ class SubscriptionRepository @Inject constructor(
     page: Int = 0,
     currencyCode: String? = null,
   ): Flow<Resource<List<Subscription>>> = fetchNetworkBoundResource(
-    loadFromCache = { cacheStore.getAs("${SUBSCRIPTION_KEY_PREFIX}/page/$page") },
+    loadFromCache = {
+      cacheStore.subscriptions()
+        .listStarted(page * 20, 20)
+        .toDomainEntity()
+    },
     loadFromNetwork = {
       apiClient.subscriptions()
         .list(false, page = page, currency = currencyCode)
+        .toDomainEntity()
     },
-    cacheNetworkResult = { cacheStore.put("${SUBSCRIPTION_KEY_PREFIX}/page/$page", it) },
+    cacheNetworkResult = { cacheStore.subscriptions().saveAll(it.toRoomDto()) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "list:", e)
       when (e) {
@@ -324,8 +334,6 @@ class SubscriptionRepository @Inject constructor(
 
   companion object {
     private const val LOG_TAG = "SubscriptionRepository"
-    private const val SUBSCRIPTION_KEY_PREFIX = "subscription"
-    private const val PLANS_CACHE_KEY = "${SUBSCRIPTION_KEY_PREFIX}/plans"
 
     private val STRIPE_RETURN_URL = Uri.parse("https://trynoice.com/redirect")
       .buildUpon()

@@ -50,10 +50,10 @@ fun <Data : Any> fetchNetworkBoundResource(
   cacheNetworkResult: suspend (Data) -> Unit = { },
   loadFromNetworkErrorTransform: (Throwable) -> Throwable = { it },
 ): Flow<Resource<Data>> = flow {
-  val cachedData = loadFromCache.invoke()
-  emit(Resource.Loading(cachedData))
-
+  var cachedData: Data? = null
   try {
+    cachedData = loadFromCache.invoke()
+    emit(Resource.Loading(cachedData))
     val data = loadFromNetwork.invoke()
     cacheNetworkResult.invoke(data)
     emit(Resource.Success(data))
