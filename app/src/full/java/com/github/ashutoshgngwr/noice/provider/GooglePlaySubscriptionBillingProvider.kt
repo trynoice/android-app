@@ -16,6 +16,8 @@ class GooglePlaySubscriptionBillingProvider(
   private val billingProvider: InAppBillingProvider,
 ) : SubscriptionBillingProvider {
 
+  override fun getId(): String = SubscriptionPlan.PROVIDER_GOOGLE_PLAY
+
   override suspend fun listPlans(currencyCode: String?): List<SubscriptionPlan> {
     return apiClient.subscriptions()
       .listPlans(SubscriptionPlan.PROVIDER_GOOGLE_PLAY, currencyCode)

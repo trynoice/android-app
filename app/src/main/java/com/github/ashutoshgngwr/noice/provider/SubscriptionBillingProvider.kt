@@ -19,6 +19,11 @@ import kotlinx.coroutines.withContext
 interface SubscriptionBillingProvider {
 
   /**
+   * @return the identifier used in [SubscriptionPlan.provider].
+   */
+  fun getId(): String
+
+  /**
    * @return a list of subscription plans offered by a given provider.
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
@@ -63,6 +68,8 @@ interface SubscriptionBillingProvider {
 class StripeSubscriptionBillingProvider(
   private val apiClient: NoiceApiClient
 ) : SubscriptionBillingProvider {
+
+  override fun getId(): String = SubscriptionPlan.PROVIDER_STRIPE
 
   override suspend fun listPlans(currencyCode: String?): List<SubscriptionPlan> {
     return apiClient.subscriptions()

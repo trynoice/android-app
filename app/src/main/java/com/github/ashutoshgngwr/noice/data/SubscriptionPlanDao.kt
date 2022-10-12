@@ -12,8 +12,8 @@ abstract class SubscriptionPlanDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   abstract suspend fun saveAll(plan: List<SubscriptionPlanDto>)
 
-  @Query("SELECT * FROM subscription_plan")
-  abstract suspend fun list(): List<SubscriptionPlanDto>
+  @Query("SELECT * FROM subscription_plan WHERE (:provider IS NULL OR provider = :provider)")
+  abstract suspend fun list(provider: String? = null): List<SubscriptionPlanDto>
 
   @Query("DELETE FROM subscription_plan")
   abstract suspend fun removeAll()

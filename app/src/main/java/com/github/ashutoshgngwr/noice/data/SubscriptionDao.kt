@@ -13,14 +13,14 @@ import com.github.ashutoshgngwr.noice.data.models.SubscriptionWithPlanDto
 abstract class SubscriptionDao {
 
   @Transaction
-  open fun save(subscription: SubscriptionWithPlanDto) {
+  open suspend fun save(subscription: SubscriptionWithPlanDto) {
     _savePlan(subscription.plan)
     _save(subscription.subscription)
   }
 
   @Transaction
-  open fun saveAll(subscriptions: List<SubscriptionWithPlanDto>) {
-    subscriptions.forEach(this::save)
+  open suspend fun saveAll(subscriptions: List<SubscriptionWithPlanDto>) {
+    subscriptions.forEach { save(it) }
   }
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -34,8 +34,8 @@ abstract class SubscriptionDao {
   abstract suspend fun get(id: Long): SubscriptionWithPlanDto?
 
   @Transaction
-  @Query("SELECT * FROM subscription WHERE renewsAt > :after")
-  abstract suspend fun getByExpiresAfter(after: Long): SubscriptionWithPlanDto
+  @Query("SELECT * FROM subscription WHERE renewsAt > :after ORDER BY renewsAt LIMIT 1")
+  abstract suspend fun getByRenewsAfter(after: Long): SubscriptionWithPlanDto?
 
   @Transaction
   @Query("SELECT * FROM subscription WHERE startedAt IS NOT NULL ORDER BY startedAt DESC LIMIT :count OFFSET :offset")

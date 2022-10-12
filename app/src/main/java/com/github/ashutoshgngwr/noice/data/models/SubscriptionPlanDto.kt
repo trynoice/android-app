@@ -12,5 +12,5 @@ data class SubscriptionPlanDto(
   val priceInIndianPaise: Int,
   val priceInRequestedCurrency: Double? = null,
   val requestedCurrencyCode: String? = null,
-  val googlePlaySubscriptionId: String?,
+  val googlePlaySubscriptionId: String? = null,
 )
