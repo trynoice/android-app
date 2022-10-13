@@ -53,7 +53,7 @@
     <string name="appintro__getting_started_desc_0">Veeg naar links om alle functies te leren kennen!</string>
     <string name="appintro__chromecast_title">Chromecast is ingeschakeld</string>
     <string name="appintro__chromecast_desc">Gebruik Noice om sfeer over te brengen op andere Chromecast-apparaten, zoals luidsprekers, tv\'s, enz.</string>
-    <string name="wake_up_timer_description">Noice start de geselecteerde instelling wanneer de timer afloopt. Gebruik de onderstaande knoppen om een instelling te selecteren en de gewenste tijd in te stellen om de timer te starten.</string>
+    <string name="wake_up_timer_description">Noice start de preset op het opgeven tijdstip. Gebruik de onderstaande besturing om een preset te selecteren en het gewenste tijdstip waarop de wakker af moet gaan in te stellen.</string>
     <plurals name="time_minutes">
         <item quantity="one">%1$d minuut</item>
         <item quantity="other">%1$d minuten</item>
@@ -92,7 +92,7 @@
     <string name="in_app_feedback__title">Een recensie schrijven</string>
     <string name="in_app_feedback__description">We horen graag van je over de app. Neem even de tijd om onze GitHub-repository te bezoeken. Als je de app niet leuk vond, overweeg dan om een probleem in te dienen waarin je zorgen uitlegt. Ook kunt u het project een ster geven om liefde en steun te tonen.</string>
     <string name="cast_media">Verbinding met Chromecast</string>
-    <string name="support_development__share_description">Noice delen met vrienden is vergelijkbaar met geld doneren. Met hogere downloads kunnen we feedback ontvangen vanuit een aantal verschillende perspectieven die ons zullen helpen om Noice beter dan ooit te maken.</string>
+    <string name="support_development__share_description">Je kunt ons ook helpen door je vrienden over ons te vertellen. Meer gebruikers zullen ons vanuit verschillende perspectieven feedback geven en ons helpen onze diensten te verbeteren.</string>
     <string name="support_development__donate_thank_you_description">Wij danken u van harte voor uw genereuze bijdrage aan het Noice-project.</string>
     <string name="support_development__donate_google_play_description">Uw betaling wordt veilig afgehandeld door Google Play. Afhankelijk van uw locatie kunnen er extra belastingen worden toegevoegd aan het uiteindelijke bedrag.</string>
     <string name="all_app_shortcuts_removed">Alle snelkoppelingen zijn verwijderd!</string>
@@ -174,4 +174,6 @@
     <string name="gift_card">Cadeaukaart</string>
     <string name="export_presets_summary">De huidige momentopname van de opgeslagen voorinstellingen naar een extern bestand exporteren</string>
     <string name="support_development__donate_description">Als u het premiumabonnement niet hebt gekocht, kunt u een eenmalige betaling doen. Het zal ons helpen om de ontwikkeling van de gratis functies in stand te houden en ze voor altijd reclamevrij te houden.</string>
+    <string name="import_presets_summary">Als u opgeslagen preset uit een extern bestand importeert, worden bestaande presets overschreven</string>
+    <string name="failed_to_load_inapp_purchases">Kan in-app-aankoopgegevens niet laden. Probeer het later opnieuw!</string>
 </resources>
