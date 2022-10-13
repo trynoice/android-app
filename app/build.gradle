@@ -79,6 +79,12 @@ android {
     freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
   }
 
+  kapt {
+    arguments {
+      arg("room.schemaLocation", "$projectDir/build/generated/schemas")
+    }
+  }
+
   testOptions {
     unitTests {
       includeAndroidResources = true

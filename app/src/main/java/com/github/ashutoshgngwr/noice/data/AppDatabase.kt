@@ -12,7 +12,6 @@ import java.util.*
 @Database(
   entities = [ProfileDto::class, SubscriptionPlanDto::class, SubscriptionDto::class],
   version = 1,
-  exportSchema = false
 )
 @TypeConverters(AppTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
