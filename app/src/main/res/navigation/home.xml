@@ -28,7 +28,7 @@
 
     <argument
       android:name="sound"
-      app:argType="com.github.ashutoshgngwr.noice.model.Sound"
+      app:argType="com.github.ashutoshgngwr.noice.models.Sound"
       app:nullable="false" />
 
   </dialog>

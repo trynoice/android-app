@@ -10,10 +10,16 @@ class AppCacheStore @Inject constructor(private val appDb: AppDatabase) {
   private val profileDao = appDb.profile()
   private val subscriptionPlanDao = appDb.subscriptionPlans()
   private val subscriptionDao = appDb.subscriptions()
+  private val soundDao = appDb.sounds()
 
   fun profile(): ProfileDao = profileDao
   fun subscriptionPlans(): SubscriptionPlanDao = subscriptionPlanDao
   fun subscriptions(): SubscriptionDao = subscriptionDao
+  fun sounds(): SoundDao = soundDao
+
+  suspend fun <R> withTransaction(block: suspend () -> R): R {
+    return appDb.withTransaction(block)
+  }
 
   /**
    * Removes all cache entries from the [AppDatabase].

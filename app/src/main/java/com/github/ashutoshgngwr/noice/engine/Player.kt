@@ -2,8 +2,8 @@ package com.github.ashutoshgngwr.noice.engine
 
 import android.util.Log
 import androidx.media.AudioAttributesCompat
-import com.github.ashutoshgngwr.noice.model.Sound
-import com.github.ashutoshgngwr.noice.model.SoundSegment
+import com.github.ashutoshgngwr.noice.models.Sound
+import com.github.ashutoshgngwr.noice.models.SoundSegment
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope

@@ -37,8 +37,9 @@ import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
-import com.github.ashutoshgngwr.noice.model.Sound
-import com.github.ashutoshgngwr.noice.model.SoundDownloadState
+import com.github.ashutoshgngwr.noice.models.Sound
+import com.github.ashutoshgngwr.noice.models.SoundDownloadState
+import com.github.ashutoshgngwr.noice.models.SoundGroup
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
@@ -47,7 +48,6 @@ import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
-import com.trynoice.api.client.models.SoundGroup
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

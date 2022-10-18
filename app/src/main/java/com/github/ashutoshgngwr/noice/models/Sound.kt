@@ -1,13 +1,9 @@
-package com.github.ashutoshgngwr.noice.model
+package com.github.ashutoshgngwr.noice.models
 
-import com.trynoice.api.client.models.SoundGroup
-import com.trynoice.api.client.models.SoundSource
-import com.trynoice.api.client.models.SoundTag
-import java.io.Serializable
+import com.github.ashutoshgngwr.noice.data.models.SoundDto
+import com.github.ashutoshgngwr.noice.data.models.SoundSourceDto
 
 /**
- * A thin wrapper around [API client's sound model][com.trynoice.api.client.models.Sound].
- *
  * @param id id of the sound.
  * @param group the [SoundGroup] that this [Sound] belongs to.
  * @param name a user-presentable name of the sound.
@@ -28,8 +24,8 @@ data class Sound(
   val isPremium: Boolean,
   val segments: List<SoundSegment>,
   val tags: List<SoundTag>,
-  val sources: List<SoundSource>,
-) : Serializable {
+  val sources: List<Source>,
+) : java.io.Serializable {
 
   /**
    * Whether the sound is contiguous or contains silences in-between.
@@ -64,6 +60,23 @@ data class Sound(
     return markdownBuilder.toString()
   }
 
+  data class Source(
+    val name: String,
+    val url: String,
+    val license: String,
+    val author: SourceAuthor? = null,
+  )
+
+  data class SourceAuthor(
+    val name: String,
+    val url: String,
+  )
+
+  private data class SpdxListedLicense(
+    val name: String,
+    val referenceUrl: String,
+  )
+
   companion object {
     private val spdxListedLicenses = mapOf(
       "CC-BY-3.0" to SpdxListedLicense(
@@ -80,9 +93,39 @@ data class Sound(
       ),
     )
   }
+}
 
-  private data class SpdxListedLicense(
-    val name: String,
-    val referenceUrl: String,
+fun SoundDto.toDomainEntity(): Sound {
+  return Sound(
+    id = sound.id,
+    group = group.toDomainEntity(),
+    name = sound.name,
+    iconSvg = sound.iconSvg,
+    maxSilence = sound.maxSilence,
+    isPremium = sound.isPremium,
+    segments = segments.toDomainEntity(),
+    tags = tags.toDomainEntity(),
+    sources = sources.toDomainEntity(),
+  )
+}
+
+@JvmName("toDomainEntitySoundDto")
+fun List<SoundDto>.toDomainEntity(): List<Sound> {
+  return map { it.toDomainEntity() }
+}
+
+@JvmName("toDomainEntitySoundSourceDto")
+fun List<SoundSourceDto>.toDomainEntity(): List<Sound.Source> = map { dto ->
+  val author: Sound.SourceAuthor? = if (dto.authorName != null && dto.authorUrl != null) {
+    Sound.SourceAuthor(dto.authorName, dto.authorUrl)
+  } else {
+    null
+  }
+
+  Sound.Source(
+    name = dto.name,
+    url = dto.url,
+    license = dto.license,
+    author = author,
   )
 }

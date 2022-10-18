@@ -20,7 +20,7 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPlanItemBinding
 import com.github.ashutoshgngwr.noice.databinding.ViewSubscriptionPlansFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
-import com.github.ashutoshgngwr.noice.model.Sound
+import com.github.ashutoshgngwr.noice.models.Sound
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
@@ -123,7 +123,7 @@ fun setSubscriptionPlans(
     view.isChecked = isActive
     when {
       !canClickItems -> view.isClickable = false
-      canClickItems && isActive -> view.setOnClickListener(null)
+      isActive -> view.setOnClickListener(null)
       else -> view.setOnClickListener {
         onPlanSelectedListener.onPlanSelected(view.tag as SubscriptionPlan)
       }

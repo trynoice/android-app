@@ -11,6 +11,7 @@ import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.PresetV0
 import com.github.ashutoshgngwr.noice.model.PresetV1
+import com.github.ashutoshgngwr.noice.models.SoundTag
 import com.github.ashutoshgngwr.noice.repository.PresetRepository.Companion.PREFERENCE_KEY
 import com.github.ashutoshgngwr.noice.repository.errors.DuplicatePresetError
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
@@ -19,7 +20,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonIOException
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
-import com.trynoice.api.client.models.SoundTag
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
