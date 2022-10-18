@@ -13,21 +13,21 @@ import com.github.ashutoshgngwr.noice.data.models.SubscriptionWithPlanDto
 abstract class SubscriptionDao {
 
   @Transaction
-  open suspend fun save(subscription: SubscriptionWithPlanDto) {
-    _savePlan(subscription.plan)
-    _save(subscription.subscription)
-  }
-
-  @Transaction
   open suspend fun saveAll(subscriptions: List<SubscriptionWithPlanDto>) {
     subscriptions.forEach { save(it) }
   }
 
-  @Insert(onConflict = OnConflictStrategy.REPLACE)
-  abstract fun _save(subscriptionDto: SubscriptionDto)
+  @Transaction
+  open suspend fun save(subscription: SubscriptionWithPlanDto) {
+    save(subscription.plan)
+    save(subscription.subscription)
+  }
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  abstract fun _savePlan(plan: SubscriptionPlanDto)
+  abstract fun save(subscriptionDto: SubscriptionDto)
+
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  abstract fun save(plan: SubscriptionPlanDto)
 
   @Transaction
   @Query("SELECT * FROM subscription WHERE id = :id")
