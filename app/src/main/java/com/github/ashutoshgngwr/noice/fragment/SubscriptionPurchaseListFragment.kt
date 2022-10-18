@@ -226,7 +226,7 @@ class SubscriptionPurchaseViewHolder(
         binding.endedOn.isVisible = true
         binding.endedOn.text = resources.getString(
           R.string.ends_on,
-          s.renewsAt?.let { DateUtils.formatDateTime(context, it.time, DATE_FMT_FLAGS) }
+          DateUtils.formatDateTime(context, s.renewsAt.time, DATE_FMT_FLAGS)
         )
       }
 
@@ -234,7 +234,7 @@ class SubscriptionPurchaseViewHolder(
         binding.endedOn.isVisible = true
         binding.endedOn.text = resources.getString(
           R.string.ended_on,
-          s.endedAt?.let { DateUtils.formatDateTime(context, it.time, DATE_FMT_FLAGS) }
+          DateUtils.formatDateTime(context, s.endedAt.time, DATE_FMT_FLAGS)
         )
       }
 
