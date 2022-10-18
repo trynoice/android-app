@@ -6,10 +6,12 @@ import android.os.IBinder
 import android.util.Log
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
+import com.github.ashutoshgngwr.noice.data.AppCacheStore
+import com.github.ashutoshgngwr.noice.models.Subscription
+import com.github.ashutoshgngwr.noice.models.toDomainEntity
+import com.github.ashutoshgngwr.noice.models.toRoomDto
 import com.trynoice.api.client.NoiceApiClient
-import com.trynoice.api.client.models.Subscription
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.ashutoshgngwr.may.May
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,7 +35,7 @@ class SubscriptionStatusPollService : LifecycleService() {
   internal lateinit var apiClient: NoiceApiClient
 
   @set:Inject
-  internal lateinit var cacheStore: May
+  internal lateinit var cacheStore: AppCacheStore
 
   private val activeSubscription = MutableStateFlow<Subscription?>(null)
   private val serviceBinder = SubscriptionStatusPollServiceBinder(activeSubscription)
@@ -45,8 +47,8 @@ class SubscriptionStatusPollService : LifecycleService() {
 
   override fun onCreate() {
     super.onCreate()
-    activeSubscription.value = getCachedActiveSubscription()
     lifecycleScope.launch(Dispatchers.IO) {
+      activeSubscription.emit(getCachedActiveSubscription())
       while (true) {
         val isSignedIn = apiClient.isSignedIn()
         val active = if (isSignedIn) getActiveSubscription() else null
@@ -67,17 +69,18 @@ class SubscriptionStatusPollService : LifecycleService() {
     return try {
       return apiClient.subscriptions().list(onlyActive = true)
         .firstOrNull()
-        ?.also { cacheStore.put(ACTIVE_SUBSCRIPTION_KEY, it) } // cache latest value
+        ?.toDomainEntity()
+        ?.also { cacheStore.subscriptions().save(it.toRoomDto()) } // cache latest value
     } catch (e: Throwable) {
       Log.i(LOG_TAG, "getActiveSubscription:", e)
       getCachedActiveSubscription() // return the cached value in case of an error
     }
   }
 
-  private fun getCachedActiveSubscription(): Subscription? {
-    return cacheStore.getAs<Subscription>(ACTIVE_SUBSCRIPTION_KEY)
-      // only consider the cached value if the subscription hasn't expired.
-      ?.takeIf { it.renewsAt?.after(Date()) ?: false }
+  private suspend fun getCachedActiveSubscription(): Subscription? {
+    return cacheStore.subscriptions()
+      .getByRenewsAfter(System.currentTimeMillis())
+      ?.toDomainEntity()
   }
 
   private fun computePollDelay(renewsAt: Date?): Duration {
@@ -94,7 +97,6 @@ class SubscriptionStatusPollService : LifecycleService() {
 
   companion object {
     private const val LOG_TAG = "SubscriptionStatusPoll"
-    private const val ACTIVE_SUBSCRIPTION_KEY = "subscriptionStatusPoll/activeSubscription"
   }
 }
 
