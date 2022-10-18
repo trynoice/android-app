@@ -28,7 +28,6 @@ class AppCacheStore @Inject constructor(private val appDb: AppDatabase) {
     appDb.withTransaction {
       profileDao.remove()
       subscriptionDao.removeAll()
-      subscriptionPlanDao.removeAll()
     }
   }
 }

@@ -51,16 +51,6 @@ class SubscriptionPlanDaoTest {
     assertEquals(0, plans.size)
   }
 
-  @Test
-  fun saveAllAndRemoveAll() = runTest {
-    val plan1 = buildPlanDto(1, "test-1")
-    val plan2 = buildPlanDto(2, "test-2")
-    subscriptionPlanDao.saveAll(listOf(plan1, plan2))
-
-    subscriptionPlanDao.removeAll()
-    assertEquals(0, subscriptionPlanDao.list().size)
-  }
-
   private fun buildPlanDto(id: Int, provider: String): SubscriptionPlanDto {
     return SubscriptionPlanDto(
       id = id,
