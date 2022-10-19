@@ -251,7 +251,7 @@
 
     <argument
       android:name="giftCard"
-      app:argType="com.trynoice.api.client.models.GiftCard" />
+      app:argType="com.github.ashutoshgngwr.noice.models.GiftCard" />
 
     <action
       android:id="@id/subscription_purchase_list"

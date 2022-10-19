@@ -59,7 +59,7 @@ class NoiceApplication : Application(), Configuration.Provider {
   object GsonModule {
     @Provides
     @Singleton
-    fun gson(): Gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+    fun gson(): Gson = GsonBuilder().create()
   }
 
   @Module

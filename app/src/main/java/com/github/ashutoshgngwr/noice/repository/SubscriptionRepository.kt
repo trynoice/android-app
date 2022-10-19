@@ -10,6 +10,7 @@ import android.os.IBinder
 import android.util.Log
 import com.github.ashutoshgngwr.noice.data.AppCacheStore
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
+import com.github.ashutoshgngwr.noice.models.GiftCard
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
 import com.github.ashutoshgngwr.noice.models.toDomainEntity
@@ -24,7 +25,6 @@ import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundErro
 import com.github.ashutoshgngwr.noice.service.SubscriptionStatusPollService
 import com.github.ashutoshgngwr.noice.service.SubscriptionStatusPollServiceBinder
 import com.trynoice.api.client.NoiceApiClient
-import com.trynoice.api.client.models.GiftCard
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.awaitClose
@@ -270,7 +270,7 @@ class SubscriptionRepository @Inject constructor(
    * @see Resource
    */
   fun getGiftCard(code: String): Flow<Resource<GiftCard>> = fetchNetworkBoundResource(
-    loadFromNetwork = { apiClient.subscriptions().getGiftCard(code) },
+    loadFromNetwork = { apiClient.subscriptions().getGiftCard(code).toDomainEntity() },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "getGiftCard:", e)
       when {

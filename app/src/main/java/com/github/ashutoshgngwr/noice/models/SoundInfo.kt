@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.models
 
 import com.github.ashutoshgngwr.noice.data.models.SoundInfoDto
 import com.github.ashutoshgngwr.noice.data.models.SoundSourceDto
+import java.io.Serializable
 
 /**
  * @property id id of the sound.
@@ -26,7 +27,7 @@ data class SoundInfo(
   val hasPremiumSegments: Boolean,
   val tags: List<SoundTag>,
   val sources: List<SoundSource>,
-) : java.io.Serializable {
+) : Serializable {
 
   /**
    * Whether the sound is contiguous or contains silences in-between.
