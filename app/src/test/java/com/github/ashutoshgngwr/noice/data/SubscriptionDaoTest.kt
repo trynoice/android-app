@@ -76,7 +76,26 @@ class SubscriptionDaoTest {
   }
 
   @Test
-  fun saveAllAndRemoveAll() = runTest {
+  fun saveAndListPlans() = runTest {
+    val plan1 = buildPlanDto(1, "test-1")
+    val plan2 = buildPlanDto(2, "test-2")
+    subscriptionDao.savePlans(listOf(plan1, plan2))
+
+    var plans = subscriptionDao.listPlans()
+    assertEquals(2, plans.size)
+    assertEquals(listOf(plan1, plan2), plans)
+
+    plans = subscriptionDao.listPlans("test-1")
+    assertEquals(1, plans.size)
+    assertEquals(plan1, plans.firstOrNull())
+
+    subscriptionDao.savePlans(listOf(plan1, plan2.copy(provider = "test-1")))
+    plans = subscriptionDao.listPlans("test-2")
+    assertEquals(0, plans.size)
+  }
+
+  @Test
+  fun saveAllAndRemoveSubscriptions() = runTest {
     val subscription1 = buildSubscriptionWithPlanDto(1, 1)
     val subscription2 = buildSubscriptionWithPlanDto(2, 2)
     subscriptionDao.saveAll(listOf(subscription1, subscription2))
@@ -102,13 +121,17 @@ class SubscriptionDaoTest {
         startedAt = startedAt?.let { Date(it) },
         renewsAt = renewsAt?.let { Date(it) }
       ),
-      plan = SubscriptionPlanDto(
-        id = planId,
-        provider = "test",
-        billingPeriodMonths = 1,
-        trialPeriodDays = 15,
-        priceInIndianPaise = 10000,
-      )
+      plan = buildPlanDto(planId, "test")
+    )
+  }
+
+  private fun buildPlanDto(id: Int, provider: String): SubscriptionPlanDto {
+    return SubscriptionPlanDto(
+      id = id,
+      provider = provider,
+      billingPeriodMonths = 1,
+      trialPeriodDays = 15,
+      priceInIndianPaise = 10000,
     )
   }
 }

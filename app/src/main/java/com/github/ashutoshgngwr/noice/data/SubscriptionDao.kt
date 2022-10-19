@@ -19,7 +19,7 @@ abstract class SubscriptionDao {
 
   @Transaction
   open suspend fun save(subscription: SubscriptionWithPlanDto) {
-    save(subscription.plan)
+    savePlan(subscription.plan)
     save(subscription.subscription)
   }
 
@@ -27,7 +27,10 @@ abstract class SubscriptionDao {
   abstract fun save(subscriptionDto: SubscriptionDto)
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  abstract fun save(plan: SubscriptionPlanDto)
+  abstract fun savePlan(plan: SubscriptionPlanDto)
+
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  abstract suspend fun savePlans(plan: List<SubscriptionPlanDto>)
 
   @Transaction
   @Query("SELECT * FROM subscription WHERE id = :id")
@@ -41,6 +44,12 @@ abstract class SubscriptionDao {
   @Query("SELECT * FROM subscription WHERE startedAt IS NOT NULL ORDER BY startedAt DESC LIMIT :count OFFSET :offset")
   abstract suspend fun listStarted(offset: Int, count: Int): List<SubscriptionWithPlanDto>
 
+  @Query("SELECT * FROM subscription_plan WHERE (:provider IS NULL OR provider = :provider)")
+  abstract suspend fun listPlans(provider: String? = null): List<SubscriptionPlanDto>
+
+  /**
+   * Removes all subscription entities from the database.
+   */
   @Query("DELETE FROM subscription")
   abstract suspend fun removeAll()
 }

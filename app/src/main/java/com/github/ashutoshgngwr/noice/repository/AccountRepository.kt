@@ -195,7 +195,11 @@ class AccountRepository @Inject constructor(
   fun signOut(): Flow<Resource<Unit>> = fetchNetworkBoundResource(
     loadFromNetwork = {
       apiClient.signOut()
-      cacheStore.clear()
+      // clear account related cache.
+      cacheStore.withTransaction {
+        cacheStore.profile().remove()
+        cacheStore.subscriptions().removeAll()
+      }
     },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "signOut:", e)

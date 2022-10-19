@@ -36,8 +36,6 @@ abstract class AppDatabase : RoomDatabase() {
 
   abstract fun profile(): ProfileDao
 
-  abstract fun subscriptionPlans(): SubscriptionPlanDao
-
   abstract fun subscriptions(): SubscriptionDao
 
   abstract fun sounds(): SoundDao

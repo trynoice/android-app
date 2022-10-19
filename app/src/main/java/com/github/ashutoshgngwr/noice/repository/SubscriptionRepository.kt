@@ -61,12 +61,12 @@ class SubscriptionRepository @Inject constructor(
     currencyCode: String? = null,
   ): Flow<Resource<List<SubscriptionPlan>>> = fetchNetworkBoundResource(
     loadFromCache = {
-      cacheStore.subscriptionPlans()
-        .list(billingProvider.getId())
+      cacheStore.subscriptions()
+        .listPlans(billingProvider.getId())
         .toDomainEntity()
     },
     loadFromNetwork = { billingProvider.listPlans(currencyCode) },
-    cacheNetworkResult = { cacheStore.subscriptionPlans().saveAll(it.toRoomDto()) },
+    cacheNetworkResult = { cacheStore.subscriptions().savePlans(it.toRoomDto()) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "getPlans:", e)
       when (e) {
