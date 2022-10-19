@@ -20,7 +20,6 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPlanItemBinding
 import com.github.ashutoshgngwr.noice.databinding.ViewSubscriptionPlansFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
-import com.github.ashutoshgngwr.noice.models.Sound
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
@@ -155,18 +154,18 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
   val activeSubscription: Subscription?
 
   private val plansResource = MutableSharedFlow<Resource<List<SubscriptionPlan>>>()
-  private val soundListResource = MutableSharedFlow<Resource<List<Sound>>>()
+  private val premiumCountResource = MutableSharedFlow<Resource<Int>>()
 
-  val isLoading: StateFlow<Boolean> = combine(plansResource, soundListResource) { p, s ->
-    p is Resource.Loading || s is Resource.Loading
+  val isLoading: StateFlow<Boolean> = combine(plansResource, premiumCountResource) { p, c ->
+    p is Resource.Loading || c is Resource.Loading
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
 
   val plans: StateFlow<List<SubscriptionPlan>> = plansResource.transform { r ->
     emit(r.data?.sortedBy { it.priceInIndianPaise / it.billingPeriodMonths } ?: emptyList())
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
-  val premiumSoundsCount: StateFlow<Int> = soundListResource
-    .mapNotNull { r -> r.data?.count { it.isPremium } }
+  val premiumSoundsCount: StateFlow<Int> = premiumCountResource
+    .mapNotNull { r -> r.data }
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
 
   val apiErrorStrRes: StateFlow<Int?> = plansResource.transform { r ->
@@ -196,9 +195,9 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
     }
 
     viewModelScope.launch {
-      soundRepository.list()
+      soundRepository.countPremium()
         .flowOn(Dispatchers.IO)
-        .collect(soundListResource)
+        .collect(premiumCountResource)
     }
   }
 }

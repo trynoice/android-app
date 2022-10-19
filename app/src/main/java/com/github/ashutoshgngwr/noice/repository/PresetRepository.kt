@@ -122,7 +122,7 @@ class PresetRepository @Inject constructor(
    * @see Resource
    */
   fun generate(tags: Set<SoundTag>, soundCount: Int): Flow<Resource<Preset>> {
-    return soundRepository.list().transform { r ->
+    return soundRepository.listInfo().transform { r ->
       emit(
         when {
           r is Resource.Loading -> Resource.Loading(null)

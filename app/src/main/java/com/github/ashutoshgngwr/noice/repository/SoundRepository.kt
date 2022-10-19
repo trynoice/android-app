@@ -4,13 +4,14 @@ import android.net.Uri
 import android.util.Log
 import com.github.ashutoshgngwr.noice.data.AppCacheStore
 import com.github.ashutoshgngwr.noice.data.models.LibraryUpdateTimeDto
-import com.github.ashutoshgngwr.noice.data.models.SoundMinimalDto
+import com.github.ashutoshgngwr.noice.data.models.SoundMetadataDto
 import com.github.ashutoshgngwr.noice.data.models.SoundSegmentDto
 import com.github.ashutoshgngwr.noice.data.models.SoundSourceDto
 import com.github.ashutoshgngwr.noice.data.models.SoundTagCrossRef
 import com.github.ashutoshgngwr.noice.models.Sound
 import com.github.ashutoshgngwr.noice.models.SoundDownloadMetadata
 import com.github.ashutoshgngwr.noice.models.SoundDownloadState
+import com.github.ashutoshgngwr.noice.models.SoundInfo
 import com.github.ashutoshgngwr.noice.models.SoundTag
 import com.github.ashutoshgngwr.noice.models.toDomainEntity
 import com.github.ashutoshgngwr.noice.models.toRoomDto
@@ -47,14 +48,14 @@ class SoundRepository @Inject constructor(
    * @see fetchNetworkBoundResource
    * @see Resource
    */
-  fun list(): Flow<Resource<List<Sound>>> = fetchNetworkBoundResource(
-    loadFromCache = { cacheStore.sounds().list().toDomainEntity() },
+  fun listInfo(): Flow<Resource<List<SoundInfo>>> = fetchNetworkBoundResource(
+    loadFromCache = { cacheStore.sounds().listInfo().toDomainEntity() },
     loadFromNetwork = {
       loadLibraryManifestInCacheStore()
-      cacheStore.sounds().list().toDomainEntity()
+      cacheStore.sounds().listInfo().toDomainEntity()
     },
     loadFromNetworkErrorTransform = { e ->
-      Log.i(LOG_TAG, "list:", e)
+      Log.i(LOG_TAG, "listInfo:", e)
       when (e) {
         is IOException -> NetworkError
         else -> e
@@ -83,6 +84,30 @@ class SoundRepository @Inject constructor(
     },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "get:", e)
+      when (e) {
+        is IOException -> NetworkError
+        else -> e
+      }
+    },
+  )
+
+  /**
+   * Returns a [Flow] that emits the count of premium [Sound]s in the current library.
+   *
+   * On failures, the flow emits [Resource.Failure] with:
+   * - [NetworkError] on network errors.
+   *
+   * @see fetchNetworkBoundResource
+   * @see Resource
+   */
+  fun countPremium(): Flow<Resource<Int>> = fetchNetworkBoundResource(
+    loadFromCache = { cacheStore.sounds().countPremium() },
+    loadFromNetwork = {
+      loadLibraryManifestInCacheStore()
+      cacheStore.sounds().countPremium()
+    },
+    loadFromNetworkErrorTransform = { e ->
+      Log.i(LOG_TAG, "countPremium:", e)
       when (e) {
         is IOException -> NetworkError
         else -> e
@@ -190,14 +215,15 @@ class SoundRepository @Inject constructor(
     cacheStore.sounds().saveTags(tags)
 
     manifest.sounds.forEach { apiSound ->
-      cacheStore.sounds().saveSound(
-        SoundMinimalDto(
+      cacheStore.sounds().saveMetadata(
+        SoundMetadataDto(
           id = apiSound.id,
           groupId = apiSound.groupId,
           name = apiSound.name,
           iconSvg = Uri.decode(apiSound.icon.removePrefix("data:image/svg+xml,")),
           maxSilence = apiSound.maxSilence,
           isPremium = apiSound.segments.none { it.isFree },
+          hasPremiumSegments = apiSound.segments.any { !it.isFree }
         )
       )
 

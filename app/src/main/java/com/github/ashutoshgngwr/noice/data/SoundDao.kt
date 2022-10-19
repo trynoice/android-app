@@ -8,7 +8,8 @@ import androidx.room.Transaction
 import com.github.ashutoshgngwr.noice.data.models.LibraryUpdateTimeDto
 import com.github.ashutoshgngwr.noice.data.models.SoundDto
 import com.github.ashutoshgngwr.noice.data.models.SoundGroupDto
-import com.github.ashutoshgngwr.noice.data.models.SoundMinimalDto
+import com.github.ashutoshgngwr.noice.data.models.SoundInfoDto
+import com.github.ashutoshgngwr.noice.data.models.SoundMetadataDto
 import com.github.ashutoshgngwr.noice.data.models.SoundSegmentDto
 import com.github.ashutoshgngwr.noice.data.models.SoundSourceDto
 import com.github.ashutoshgngwr.noice.data.models.SoundTagCrossRef
@@ -28,7 +29,7 @@ abstract class SoundDao {
   abstract suspend fun saveLibraryUpdateTime(time: LibraryUpdateTimeDto)
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  abstract suspend fun saveSound(minimal: SoundMinimalDto)
+  abstract suspend fun saveMetadata(info: SoundMetadataDto)
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   abstract suspend fun saveSegment(segment: SoundSegmentDto)
@@ -46,10 +47,16 @@ abstract class SoundDao {
   abstract suspend fun getLibraryUpdateTime(): Date?
 
   @Transaction
-  @Query("SELECT * FROM sound")
-  abstract suspend fun list(): List<SoundDto>
+  @Query("SELECT * FROM sound_metadata")
+  abstract suspend fun listInfo(): List<SoundInfoDto>
 
   @Transaction
-  @Query("SELECT * FROM sound WHERE id = :soundId")
+  @Query("SELECT * FROM sound_metadata WHERE id = :soundId")
   abstract suspend fun get(soundId: String): SoundDto?
+
+  @Query("SELECT * FROM sound_segment WHERE soundId = :soundId")
+  abstract suspend fun listSegments(soundId: String): List<SoundSegmentDto>
+
+  @Query("SELECT COUNT(*) FROM sound_metadata WHERE isPremium = 1")
+  abstract suspend fun countPremium(): Int
 }

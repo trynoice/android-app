@@ -81,7 +81,7 @@ class LocalPlayer(
       retryDelayMillis = MIN_RETRY_DELAY_MILLIS
       setPlaybackState(PlaybackState.PLAYING)
       // fade-in or restore volume whenever player starts after buffering or paused states.
-      if (sound?.isContiguous == true && !skipNextFadeInTransition) {
+      if (sound?.info?.isContiguous == true && !skipNextFadeInTransition) {
         skipNextFadeInTransition = false
         exoPlayer.fade(0F, getScaledVolume(), fadeInDuration.inWholeMilliseconds)
       } else {
@@ -108,7 +108,7 @@ class LocalPlayer(
   override fun onPlaybackStateChanged(playbackState: Int) {
     // only request next segment for non-contiguous sounds when the current segment has finished
     // playing. Otherwise, the silence period will start before the current segment is over.
-    if (playbackState == IExoPlayer.STATE_ENDED && sound?.isContiguous == false) {
+    if (playbackState == IExoPlayer.STATE_ENDED && sound?.info?.isContiguous == false) {
       Log.d(LOG_TAG, "onPlaybackStateChanged: requesting next segment")
       requestNextSegment()
     }
@@ -117,7 +117,7 @@ class LocalPlayer(
   override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
     // request next segment for contiguous sounds whenever ExoPlayer is playing the last item in its
     // playlist to ensure gap-less playback.
-    if (sound?.isContiguous == true && !exoPlayer.hasNextMediaItem()) {
+    if (sound?.info?.isContiguous == true && !exoPlayer.hasNextMediaItem()) {
       Log.d(LOG_TAG, "onMediaItemTransition: requesting next segment")
       requestNextSegment()
     }
@@ -146,7 +146,7 @@ class LocalPlayer(
 
     // `ExoPlayer.clearMediaItems` triggers `onMediaItemTransition` callback so it will
     // automatically `requestNextSegment` for contiguous sounds.
-    if (sound?.isContiguous == false) {
+    if (sound?.info?.isContiguous == false) {
       requestNextSegment()
     }
   }

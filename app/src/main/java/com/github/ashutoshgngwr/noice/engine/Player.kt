@@ -214,14 +214,14 @@ abstract class Player protected constructor(
   /**
    * Asynchronously delivers its sub-classes the next segment to play via [onSegmentAvailable]. For
    * contiguous sounds, this invocation is almost immediate. For non-contiguous sounds, the [Player]
-   * waits a random duration in range [30, [Sound.maxSilence]] seconds before invoking
+   * waits a random duration in range [30, `SoundInfo.maxSilence`] seconds before invoking
    * [onSegmentAvailable]. When [onSegmentAvailable] is invoked, the sub-classes must queue it to be
    * played next.
    */
   protected fun requestNextSegment() {
     defaultScope.launch {
-      if (currentSegment != null && sound?.isContiguous == false) {
-        val maxSilenceSeconds = requireNotNull(sound?.maxSilence)
+      if (currentSegment != null && sound?.info?.isContiguous == false) {
+        val maxSilenceSeconds = requireNotNull(sound?.info?.maxSilence)
         val silenceDuration = Random.nextInt(30, maxSilenceSeconds).toDuration(DurationUnit.SECONDS)
         Log.d(LOG_TAG, "requestNextSegment: adding $silenceDuration silence to non-looping sound.")
         delay(silenceDuration)
@@ -232,7 +232,7 @@ abstract class Player protected constructor(
         currentSegment?.isBridgeSegment == true -> {
           segments.find { it.name == currentSegment?.to } ?: segments.random()
         }
-        sound?.isContiguous == true -> {
+        sound?.info?.isContiguous == true -> {
           val from = requireNotNull(currentSegment)
           segments.filter { it.isBridgeSegment && it.name.startsWith(from.name) }.random()
         }

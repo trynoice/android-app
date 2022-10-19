@@ -7,7 +7,7 @@ import androidx.room.TypeConverters
 import com.github.ashutoshgngwr.noice.data.models.LibraryUpdateTimeDto
 import com.github.ashutoshgngwr.noice.data.models.ProfileDto
 import com.github.ashutoshgngwr.noice.data.models.SoundGroupDto
-import com.github.ashutoshgngwr.noice.data.models.SoundMinimalDto
+import com.github.ashutoshgngwr.noice.data.models.SoundMetadataDto
 import com.github.ashutoshgngwr.noice.data.models.SoundSegmentDto
 import com.github.ashutoshgngwr.noice.data.models.SoundSourceDto
 import com.github.ashutoshgngwr.noice.data.models.SoundTagCrossRef
@@ -23,7 +23,7 @@ import java.util.*
     SubscriptionDto::class,
     SoundGroupDto::class,
     SoundTagDto::class,
-    SoundMinimalDto::class,
+    SoundMetadataDto::class,
     SoundSegmentDto::class,
     SoundTagCrossRef::class,
     SoundSourceDto::class,
