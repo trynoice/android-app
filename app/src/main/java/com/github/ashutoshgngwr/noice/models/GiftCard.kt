@@ -15,10 +15,7 @@ data class GiftCard(
    * Whether the gift card has not expired and redeemed, i.e. is available to redeem.
    */
   val isRedeemable: Boolean
-    get() = !(isRedeemed || isExpired)
-
-  private val isExpired: Boolean
-    get() = expiresAt?.before(Date()) == true
+    get() = !(isRedeemed || expiresAt?.before(Date()) == true)
 }
 
 fun ApiGiftCard.toDomainEntity(): GiftCard {

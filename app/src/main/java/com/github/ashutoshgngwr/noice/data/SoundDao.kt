@@ -54,9 +54,6 @@ abstract class SoundDao {
   @Query("SELECT * FROM sound_metadata WHERE id = :soundId")
   abstract suspend fun get(soundId: String): SoundDto?
 
-  @Query("SELECT * FROM sound_segment WHERE soundId = :soundId")
-  abstract suspend fun listSegments(soundId: String): List<SoundSegmentDto>
-
   @Query("SELECT COUNT(*) FROM sound_metadata WHERE isPremium = 1")
   abstract suspend fun countPremium(): Int
 }
