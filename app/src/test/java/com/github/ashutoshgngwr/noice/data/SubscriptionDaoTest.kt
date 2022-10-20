@@ -12,6 +12,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import java.io.IOException
 import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
@@ -31,6 +32,7 @@ class SubscriptionDaoTest {
   }
 
   @After
+  @Throws(IOException::class)
   fun tearDown() {
     appDb.close()
   }
