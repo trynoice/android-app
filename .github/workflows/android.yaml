@@ -133,8 +133,8 @@ jobs:
       - validate-gradle-wrapper
       - lint
       - api-client-unit-tests
+      - app-unit-tests
       # TODO: disabled until app tests are fixed.
-      # - app-unit-tests
       # - app-ui-tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -170,8 +170,8 @@ jobs:
       - validate-gradle-wrapper
       - lint
       - api-client-unit-tests
-      # Disabled until app tests are fixed.
-      # - app-unit-tests
+      - app-unit-tests
+      # TODO: Disabled until app tests are fixed.
       # - app-ui-tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
