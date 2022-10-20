@@ -70,9 +70,10 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           cache: gradle
       - run: ./gradlew :api-client:testDebugCoverage --no-daemon
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v3
         with:
           flags: api-client
+          files: api-client/build/reports/jacoco/testDebugCoverage/testDebugCoverage.xml
 
   app-unit-tests:
     name: App Unit Tests
@@ -86,9 +87,10 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           cache: gradle
       - run: ./gradlew :app:testDebugCoverage --no-daemon
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v3
         with:
           flags: app
+          files: app/build/reports/jacoco/testFreeDebugCoverage/testFreeDebugCoverage.xml,app/build/reports/jacoco/testFullDebugCoverage/testFullDebugCoverage.xml
 
   app-ui-tests:
     name: App UI tests
@@ -122,7 +124,7 @@ jobs:
           emulator-options: >-
             -no-boot-anim -no-audio -no-snapshot -no-window -camera-back none
             -camera-front none -gpu swiftshader_indirect
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v3
         with:
           flags: app
 
