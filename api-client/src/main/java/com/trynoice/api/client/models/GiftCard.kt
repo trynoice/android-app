@@ -1,38 +1,19 @@
 package com.trynoice.api.client.models
 
-import com.google.gson.annotations.Expose
-import java.io.Serializable
 import java.util.*
 
 /**
  * Represents an issued gift card.
  *
- * @param code code of the gift card.
- * @param hourCredits duration (in hours) of the subscription that the gift card provides on
+ * @property code code of the gift card.
+ * @property hourCredits duration (in hours) of the subscription that the gift card provides on
  * redemption.
- * @param isRedeemed whether the gift card has been redeemed.
- * @param expiresAt optional timestamp when the gift card expires.
+ * @property isRedeemed whether the gift card has been redeemed.
+ * @property expiresAt optional timestamp when the gift card expires.
  */
 data class GiftCard(
-  @Expose
   val code: String,
-
-  @Expose
   val hourCredits: Int,
-
-  @Expose
   val isRedeemed: Boolean,
-
-  @Expose
   val expiresAt: Date? = null,
-) : Serializable {
-
-  /**
-   * Whether the gift card has not expired and redeemed, i.e. is available to redeem.
-   */
-  val isRedeemable: Boolean
-    get() = !(isRedeemed || isExpired)
-
-  private val isExpired: Boolean
-    get() = expiresAt?.before(Date()) == true
-}
+)

@@ -1,6 +1,5 @@
 package com.github.ashutoshgngwr.noice.model
 
-import com.google.gson.annotations.Expose
 import java.io.Serializable
 import java.util.*
 
@@ -9,9 +8,9 @@ import java.util.*
  * players and is used for serializing the state to JSON and persisting it on disk.
  */
 data class Preset(
-  @Expose val id: String,
-  @Expose val name: String,
-  @Expose val playerStates: Array<PlayerState>,
+  val id: String,
+  val name: String,
+  val playerStates: Array<PlayerState>,
 ) : Serializable {
 
   constructor(name: String, playerStates: Array<PlayerState>)

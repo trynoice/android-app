@@ -147,7 +147,7 @@
     <argument
       android:name="activeSubscription"
       android:defaultValue="@null"
-      app:argType="com.trynoice.api.client.models.Subscription"
+      app:argType="com.github.ashutoshgngwr.noice.models.Subscription"
       app:nullable="true" />
 
     <action
@@ -178,13 +178,13 @@
 
     <argument
       android:name="plan"
-      app:argType="com.trynoice.api.client.models.SubscriptionPlan"
+      app:argType="com.github.ashutoshgngwr.noice.models.SubscriptionPlan"
       app:nullable="false" />
 
     <argument
       android:name="activeSubscription"
       android:defaultValue="@null"
-      app:argType="com.trynoice.api.client.models.Subscription"
+      app:argType="com.github.ashutoshgngwr.noice.models.Subscription"
       app:nullable="true" />
 
   </dialog>
@@ -251,7 +251,7 @@
 
     <argument
       android:name="giftCard"
-      app:argType="com.trynoice.api.client.models.GiftCard" />
+      app:argType="com.github.ashutoshgngwr.noice.models.GiftCard" />
 
     <action
       android:id="@id/subscription_purchase_list"
@@ -294,7 +294,7 @@
 
     <argument
       android:name="subscription"
-      app:argType="com.trynoice.api.client.models.Subscription" />
+      app:argType="com.github.ashutoshgngwr.noice.models.Subscription" />
 
   </dialog>
 

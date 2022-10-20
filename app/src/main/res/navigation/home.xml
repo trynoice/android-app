@@ -27,8 +27,8 @@
     tools:layout="@layout/library_sound_info_fragment">
 
     <argument
-      android:name="sound"
-      app:argType="com.github.ashutoshgngwr.noice.model.Sound"
+      android:name="info"
+      app:argType="com.github.ashutoshgngwr.noice.models.SoundInfo"
       app:nullable="false" />
 
   </dialog>

@@ -209,7 +209,7 @@
     <string name="welcome_back">Chào mừng trở lại!</string>
     <string name="open_mailbox">Mở hộp thư</string>
     <string name="subscription_payment_pending">Đang đợi thanh toán cho việc mua này.</string>
-    <string name="has_premium_segments">Âm thanh này có thành phần cao cấp.</string>
+    <string name="has_premium_segments">Âm thanh này có thêm các phiên bản khi bạn có Noice Premium.</string>
     <string name="stopping">Đang dừng</string>
     <string name="subscription_payment_refunded">Chúng tôi đã huỷ việc mua này và khởi tạo việc hoàn tiền.</string>
     <string name="sign_in">Đăng nhập</string>
@@ -282,4 +282,9 @@
     <string name="play_sound_before_adjusting_volume">Bạn cần phát âm thanh này trước khi có thể điều chỉnh âm lượng của nó.</string>
     <string name="stripe_customer_portal_error">Rất tiếc! Chúng tôi không thể mở cổng thông tin thanh toán. %1$s Vui lòng thử lại!</string>
     <string name="sound_downloads_scheduled_for_removal">Tất cả các bản tải xuống âm thanh đã được lên lịch để xóa.</string>
+    <string name="sound_library_updated">Đã cập nhật thư viện âm thanh</string>
+    <string name="sound_library_updated_message">Chúng tôi đã thay đổi thư viện âm thanh một chút. Bạn có muốn xem mô tả của chúng không\?</string>
+    <string name="review">Xem</string>
+    <string name="benefit_4">Thêm %1$d âm thanh</string>
+    <string name="sound_is_premium">Âm thanh này chỉ có ở Noice Premium.</string>
 </resources>

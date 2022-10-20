@@ -16,13 +16,6 @@ plugins {
 
 // project-wide constants for sharing configuration and dependency versions across modules.
 project.ext {
-  config = [
-    minSdkVersion    : 21,
-    compileSdkVersion: 32,
-    javaCompatibility: JavaVersion.VERSION_1_8,
-    kotlinJvmTarget  : '1.8',
-  ]
-
   deps = [
     aboutLibrariesVersion: "${aboutLibrariesVersion}",
     coroutinesVersion    : '1.6.4',
@@ -32,9 +25,37 @@ project.ext {
     navVersion           : "${navVersion}",
 
     junitVersion         : '4.13.2',
-    robolectricVersion   : '4.8.2',
+    robolectricVersion   : '4.9',
     testCoreVersion      : '1.4.0',
   ]
+}
+
+subprojects {
+  afterEvaluate { subproject ->
+    if (!subproject.hasProperty("android")) {
+      return
+    }
+
+    android {
+      compileSdk 32
+
+      defaultConfig {
+        minSdk 21
+        targetSdk 32
+      }
+
+      compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+      }
+
+      kotlinOptions {
+        useIR = true
+        jvmTarget = '1.8'
+        freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
+      }
+    }
+  }
 }
 
 task clean(type: Delete) {

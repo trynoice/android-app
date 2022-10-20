@@ -14,7 +14,6 @@ import com.github.ashutoshgngwr.noice.activity.AlarmRingerActivity
 import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.gson.Gson
-import com.google.gson.annotations.Expose
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -113,7 +112,7 @@ class WakeUpTimerManager @Inject constructor(
   /**
    * [Timer] declares fields necessary to schedule a Wake-up timer.
    */
-  data class Timer(@Expose var presetID: String, @Expose var atMillis: Long)
+  data class Timer(var presetID: String, var atMillis: Long)
 
   /**
    * [BootReceiver] ensures that a scheduled [Timer] is able to persist across device restarts.

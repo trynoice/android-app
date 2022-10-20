@@ -20,7 +20,7 @@ class LibrarySoundInfoFragment : BottomSheetDialogFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
-    binding.sound = args.sound
+    binding.info = args.info
     binding.dismiss.setOnClickListener { dismiss() }
   }
 }

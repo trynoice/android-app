@@ -1,7 +1,6 @@
 package com.github.ashutoshgngwr.noice.model
 
 import com.github.ashutoshgngwr.noice.engine.PlaybackState
-import com.google.gson.annotations.Expose
 import java.io.Serializable
 
 /**
@@ -9,8 +8,8 @@ import java.io.Serializable
  * method to ignore [playbackState] in equality checks.
  */
 data class PlayerState(
-  @Expose val soundId: String,
-  @Expose val volume: Int,
+  val soundId: String,
+  val volume: Int,
   @Transient val playbackState: PlaybackState = PlaybackState.IDLE,
 ) : Serializable {
 

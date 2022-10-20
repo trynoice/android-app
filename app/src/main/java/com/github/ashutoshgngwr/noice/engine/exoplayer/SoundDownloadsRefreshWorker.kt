@@ -20,8 +20,8 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.ext.getMutableStringSet
-import com.github.ashutoshgngwr.noice.model.Sound
-import com.github.ashutoshgngwr.noice.model.SoundDownloadMetadata
+import com.github.ashutoshgngwr.noice.models.Sound
+import com.github.ashutoshgngwr.noice.models.SoundDownloadMetadata
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
