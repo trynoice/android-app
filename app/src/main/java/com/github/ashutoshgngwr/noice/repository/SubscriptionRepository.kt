@@ -65,10 +65,14 @@ class SubscriptionRepository @Inject constructor(
         .listPlans(billingProvider.getId())
         .toDomainEntity()
     },
-    loadFromNetwork = { billingProvider.listPlans(currencyCode) },
+    loadFromNetwork = {
+      apiClient.subscriptions()
+        .listPlans(provider = billingProvider.getId(), currency = currencyCode)
+        .toDomainEntity()
+    },
     cacheNetworkResult = { appDb.subscriptions().savePlans(it.toRoomDto()) },
     loadFromNetworkErrorTransform = { e ->
-      Log.i(LOG_TAG, "getPlans:", e)
+      Log.i(LOG_TAG, "listPlans:", e)
       when (e) {
         is IOException -> NetworkError
         else -> e

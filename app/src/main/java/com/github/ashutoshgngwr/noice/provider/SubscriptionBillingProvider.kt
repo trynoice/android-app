@@ -6,7 +6,6 @@ import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
-import com.github.ashutoshgngwr.noice.models.toDomainEntity
 import com.trynoice.api.client.NoiceApiClient
 import com.trynoice.api.client.models.SubscriptionFlowParams
 import kotlinx.coroutines.Dispatchers
@@ -22,15 +21,6 @@ interface SubscriptionBillingProvider {
    * @return the identifier used in [SubscriptionPlan.provider].
    */
   fun getId(): String
-
-  /**
-   * @return a list of subscription plans offered by a given provider.
-   * @throws retrofit2.HttpException on API error.
-   * @throws java.io.IOException on network error.
-   *
-   * @see com.trynoice.api.client.apis.SubscriptionApi.listPlans
-   */
-  suspend fun listPlans(currencyCode: String? = null): List<SubscriptionPlan>
 
   /**
    * Initiates the subscription billing flow by requesting the API to create a new subscription
@@ -70,12 +60,6 @@ class StripeSubscriptionBillingProvider(
 ) : SubscriptionBillingProvider {
 
   override fun getId(): String = SubscriptionPlan.PROVIDER_STRIPE
-
-  override suspend fun listPlans(currencyCode: String?): List<SubscriptionPlan> {
-    return apiClient.subscriptions()
-      .listPlans(SubscriptionPlan.PROVIDER_STRIPE, currencyCode)
-      .toDomainEntity()
-  }
 
   override suspend fun launchBillingFlow(
     activity: Activity,

@@ -3,7 +3,6 @@ package com.github.ashutoshgngwr.noice.provider
 import android.app.Activity
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
-import com.github.ashutoshgngwr.noice.models.toDomainEntity
 import com.trynoice.api.client.NoiceApiClient
 import com.trynoice.api.client.models.SubscriptionFlowParams
 
@@ -17,12 +16,6 @@ class GooglePlaySubscriptionBillingProvider(
 ) : SubscriptionBillingProvider {
 
   override fun getId(): String = SubscriptionPlan.PROVIDER_GOOGLE_PLAY
-
-  override suspend fun listPlans(currencyCode: String?): List<SubscriptionPlan> {
-    return apiClient.subscriptions()
-      .listPlans(SubscriptionPlan.PROVIDER_GOOGLE_PLAY, currencyCode)
-      .toDomainEntity()
-  }
 
   override suspend fun launchBillingFlow(
     activity: Activity,
