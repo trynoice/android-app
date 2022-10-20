@@ -4,10 +4,10 @@ import android.app.Activity
 import android.net.Uri
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
+import com.github.ashutoshgngwr.noice.models.Subscription
+import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
 import com.trynoice.api.client.NoiceApiClient
-import com.trynoice.api.client.models.Subscription
 import com.trynoice.api.client.models.SubscriptionFlowParams
-import com.trynoice.api.client.models.SubscriptionPlan
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -18,13 +18,9 @@ import kotlinx.coroutines.withContext
 interface SubscriptionBillingProvider {
 
   /**
-   * @return a list of subscription plans offered by a given provider.
-   * @throws retrofit2.HttpException on API error.
-   * @throws java.io.IOException on network error.
-   *
-   * @see com.trynoice.api.client.apis.SubscriptionApi.listPlans
+   * @return the identifier used in [SubscriptionPlan.provider].
    */
-  suspend fun listPlans(currencyCode: String? = null): List<SubscriptionPlan>
+  fun getId(): String
 
   /**
    * Initiates the subscription billing flow by requesting the API to create a new subscription
@@ -63,9 +59,7 @@ class StripeSubscriptionBillingProvider(
   private val apiClient: NoiceApiClient
 ) : SubscriptionBillingProvider {
 
-  override suspend fun listPlans(currencyCode: String?): List<SubscriptionPlan> {
-    return apiClient.subscriptions().listPlans(SubscriptionPlan.PROVIDER_STRIPE, currencyCode)
-  }
+  override fun getId(): String = SubscriptionPlan.PROVIDER_STRIPE
 
   override suspend fun launchBillingFlow(
     activity: Activity,

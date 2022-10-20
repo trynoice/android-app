@@ -33,12 +33,12 @@ import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseItemBindin
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseListFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseLoadingItemBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
+import com.github.ashutoshgngwr.noice.models.Subscription
+import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
 import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
-import com.trynoice.api.client.models.Subscription
-import com.trynoice.api.client.models.SubscriptionPlan
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -226,7 +226,7 @@ class SubscriptionPurchaseViewHolder(
         binding.endedOn.isVisible = true
         binding.endedOn.text = resources.getString(
           R.string.ends_on,
-          s.renewsAt?.let { DateUtils.formatDateTime(context, it.time, DATE_FMT_FLAGS) }
+          DateUtils.formatDateTime(context, s.renewsAt.time, DATE_FMT_FLAGS)
         )
       }
 
@@ -234,7 +234,7 @@ class SubscriptionPurchaseViewHolder(
         binding.endedOn.isVisible = true
         binding.endedOn.text = resources.getString(
           R.string.ended_on,
-          s.endedAt?.let { DateUtils.formatDateTime(context, it.time, DATE_FMT_FLAGS) }
+          DateUtils.formatDateTime(context, s.endedAt.time, DATE_FMT_FLAGS)
         )
       }
 

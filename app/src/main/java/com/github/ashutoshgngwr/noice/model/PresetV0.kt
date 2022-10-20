@@ -1,7 +1,6 @@
 package com.github.ashutoshgngwr.noice.model
 
 import com.github.ashutoshgngwr.noice.engine.Player
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.util.*
 import kotlin.math.roundToInt
@@ -19,8 +18,8 @@ import kotlin.math.roundToInt
  * }]
  */
 data class PresetV0(
-  @Expose @SerializedName("a") val name: String,
-  @Expose @SerializedName("b") val playerStates: List<PlayerState>,
+  @SerializedName("a") val name: String,
+  @SerializedName("b") val playerStates: List<PlayerState>,
 ) {
 
   /**
@@ -43,8 +42,8 @@ data class PresetV0(
   }
 
   data class PlayerState(
-    @Expose @SerializedName("a") val soundKey: String,
-    @Expose @SerializedName("b") val volume: Double,
-    @Expose @SerializedName("c") val timePeriod: Int,
+    @SerializedName("a") val soundKey: String,
+    @SerializedName("b") val volume: Double,
+    @SerializedName("c") val timePeriod: Int,
   )
 }

@@ -1,7 +1,5 @@
 package com.github.ashutoshgngwr.noice.model
 
-import com.google.gson.annotations.Expose
-
 /**
  * Sample JSON:
  *
@@ -16,9 +14,9 @@ import com.google.gson.annotations.Expose
  * }]
  */
 data class PresetV1(
-  @Expose val id: String,
-  @Expose val name: String,
-  @Expose val playerStates: List<PlayerState>,
+  val id: String,
+  val name: String,
+  val playerStates: List<PlayerState>,
 ) {
 
   /**
@@ -79,8 +77,8 @@ data class PresetV1(
   }
 
   data class PlayerState(
-    @Expose val soundKey: String,
-    @Expose val volume: Int,
-    @Expose val timePeriod: Int,
+    val soundKey: String,
+    val volume: Int,
+    val timePeriod: Int,
   )
 }

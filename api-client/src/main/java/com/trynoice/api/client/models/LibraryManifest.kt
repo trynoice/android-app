@@ -1,159 +1,99 @@
 package com.trynoice.api.client.models
 
-import com.google.gson.annotations.Expose
-import java.io.Serializable
 import java.util.*
 
 /**
  * An entity describing the sound library.
  *
- * @param segmentsBasePath The path relative to the library manifest where individual segment clips
- * are accessible at `${segmentsBasePath}/${sound.id}/${segment.name}.m3u8`.
- * @param groups A list of groups for categorising sounds.
- * @param tags A list of tags for declaring keywords related to sounds.
- * @param sounds A list of available sounds in the library.
- * @param updatedAt timestamp at which the sound library was last updated.
+ * @property segmentsBasePath The path relative to the library manifest where individual segment
+ * clips are accessible at `${segmentsBasePath}/${sound.id}/${segment.name}.m3u8`.
+ * @property groups A list of groups for categorising sounds.
+ * @property tags A list of tags for declaring keywords related to sounds.
+ * @property sounds A list of available sounds in the library.
+ * @property updatedAt timestamp at which the sound library was last updated.
  */
 data class LibraryManifest(
-
-  @Expose
   val segmentsBasePath: String,
-
-  @Expose
   val groups: List<SoundGroup>,
-
-  @Expose
   val tags: List<SoundTag>,
-
-  @Expose
   val sounds: List<Sound>,
-
-  @Expose
   val updatedAt: Date,
-) : Serializable
+)
 
 /**
  * An entity describing a sound category.
  *
- * @param id A unique stable snake-cased identifier for a group.
- * @param name A user-presentable name for this group.
+ * @property id A unique stable snake-cased identifier for a group.
+ * @property name A user-presentable name for this group.
  */
-data class SoundGroup(
-
-  @Expose
-  val id: String,
-
-  @Expose
-  val name: String,
-) : Serializable
+data class SoundGroup(val id: String, val name: String)
 
 /**
  * An entity describing a keyword for sounds.
  *
- * @param id A unique stable snake-cased identifier for a tag.
- * @param name A user-presentable name for this tag.
+ * @property id A unique stable snake-cased identifier for a tag.
+ * @property name A user-presentable name for this tag.
  */
-data class SoundTag(
-
-  @Expose
-  val id: String,
-
-  @Expose
-  val name: String,
-) : Serializable
+data class SoundTag(val id: String, val name: String)
 
 /**
  * An entity describing various attributes of a sound.
  *
- * @param id A unique stable snake-cased identifier for a sound.
- * @param groupId ID of an existing [SoundGroup] to which this sound belongs.
- * @param name A user-presentable name for this sound.
- * @param icon A user-presentable SVG icon encoded as a data URI.
- * @param maxSilence The upper limit (in seconds) for the amount of silence to add in-between
+ * @property id A unique stable snake-cased identifier for a sound.
+ * @property groupId ID of an existing [SoundGroup] to which this sound belongs.
+ * @property name A user-presentable name for this sound.
+ * @property icon A user-presentable SVG icon encoded as a data URI.
+ * @property maxSilence The upper limit (in seconds) for the amount of silence to add in-between
  * segments for non-contiguous sounds. Clients should randomly choose the length of silence in this
  * range to add after each segment. Moreover, sounds are considered as contiguous if `maxSilence` is
  * set to 0.
- * @param segments A list of segments for this sound.
- * @param tags IDs of existing [SoundTag]s that associate with this sound.
- * @param sources A list of details attributing original clip sources, author and license.
+ * @property segments A list of segments for this sound.
+ * @property tags IDs of existing [SoundTag]s that associate with this sound.
+ * @property sources A list of details attributing original clip sources, author and license.
  */
 data class Sound(
-
-  @Expose
   val id: String,
-
-  @Expose
   val groupId: String,
-
-  @Expose
   val name: String,
-
-  @Expose
   val icon: String,
-
-  @Expose
   val maxSilence: Int,
-
-  @Expose
   val segments: List<SoundSegment>,
-
-  @Expose
   val tags: List<String>,
-
-  @Expose
   val sources: List<SoundSource>,
-) : Serializable
+)
 
 /**
  * An entity describing a segment of a [Sound].
  *
- * @param name Used for find segments in `${segmentsBasePath}/${soundKey}/${name}.m3u8` path. If the
- * sound is non-contiguous, its bridge segments are found by appending source segment's name to
+ * @property name Used for find segments in `${segmentsBasePath}/${soundKey}/${name}.m3u8` path. If
+ * the sound is non-contiguous, its bridge segments are found by appending source segment's name to
  * destination segment's name, e.g. `raindrops_light_raindrops_heavy.m3u8`.
- * @param isFree A hint whether a segment is available to unsubscribed users. If a user attempts to
- * access resources despite this hint being `false`, the CDN server returns HTTP 403.
+ *
+ * @property isFree A hint whether a segment is available to unsubscribed users. If a user attempts
+ * to access resources despite this hint being `false`, the CDN server returns HTTP 403.
  */
-data class SoundSegment(
-
-  @Expose
-  val name: String,
-
-  @Expose
-  val isFree: Boolean,
-) : Serializable
+data class SoundSegment(val name: String, val isFree: Boolean)
 
 /**
  * An entity describing an original source of a [Sound]'s asset.
  *
- * @param name The name of the source asset.
- * @param url URL of the source asset.
- * @param license A SPDX license code for the source clip.
- * @param author author of the source asset.
+ * @property name The name of the source asset.
+ * @property url URL of the source asset.
+ * @property license A SPDX license code for the source clip.
+ * @property author author of the source asset.
  */
 data class SoundSource(
-
-  @Expose
   val name: String,
-
-  @Expose
   val url: String,
-
-  @Expose
   val license: String,
-
-  @Expose
   val author: SoundSourceAuthor? = null,
-) : Serializable
+)
 
 /**
- * @param name Name of the author.
- * @param url URL of the author.
+ * @property name Name of the author.
+ * @property url URL of the author.
  */
 data class SoundSourceAuthor(
-
-  @Expose
   val name: String,
-
-  @Expose
   val url: String,
-) : Serializable
+)

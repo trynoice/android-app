@@ -7,7 +7,7 @@
 
     <variable
       name="plan"
-      type="com.trynoice.api.client.models.SubscriptionPlan" />
+      type="com.github.ashutoshgngwr.noice.models.SubscriptionPlan" />
 
   </data>
 

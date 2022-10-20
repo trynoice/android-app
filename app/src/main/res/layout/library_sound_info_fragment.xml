@@ -6,8 +6,8 @@
   <data>
 
     <variable
-      name="sound"
-      type="com.github.ashutoshgngwr.noice.model.Sound" />
+      name="info"
+      type="com.github.ashutoshgngwr.noice.models.SoundInfo" />
 
   </data>
 
@@ -25,7 +25,7 @@
       <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@{sound.name}"
+        android:text="@{info.name}"
         android:textAppearance="?attr/textAppearanceHeadlineMedium"
         tools:text="Sound Name" />
 
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:text="@string/sound_is_premium"
         app:drawableStartCompat="@drawable/ic_baseline_star_rate_24"
-        app:isVisible="@{sound.isPremium}" />
+        app:isVisible="@{info.isPremium}" />
 
       <TextView
         style="@style/Widget.App.LibrarySoundInfo.LineItem"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:text="@string/has_premium_segments"
         app:drawableStartCompat="@drawable/ic_baseline_star_half_24"
-        app:isVisible="@{!sound.isPremium &amp;&amp; sound.hasPremiumSegments}" />
+        app:isVisible="@{!info.isPremium &amp;&amp; info.hasPremiumSegments}" />
 
       <TextView
         style="@style/Widget.App.LibrarySoundInfo.LineItem"
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:text="@string/looping_sound"
         app:drawableStartCompat="@drawable/ic_baseline_repeat_24"
-        app:isVisible="@{sound.contiguous}" />
+        app:isVisible="@{info.contiguous}" />
 
       <TextView
         style="@style/Widget.App.LibrarySoundInfo.LineItem"
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:text="@string/non_looping_sound"
         app:drawableStartCompat="@drawable/ic_baseline_shuffle_24"
-        app:isVisible="@{!sound.contiguous}" />
+        app:isVisible="@{!info.contiguous}" />
 
       <Space
         android:layout_width="match_parent"
@@ -83,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceBodyMedium"
-        app:markdown="@{sound.sourcesToMarkdown()}" />
+        app:markdown="@{info.sourcesToMarkdown()}" />
 
       <Space
         android:layout_width="match_parent"

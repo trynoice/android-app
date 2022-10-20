@@ -4,7 +4,9 @@ import android.app.Application
 import android.content.Context
 import android.os.Build
 import androidx.hilt.work.HiltWorkerFactory
+import androidx.room.Room
 import androidx.work.Configuration
+import com.github.ashutoshgngwr.noice.data.AppDatabase
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.exoplayer2.database.DatabaseProvider
 import com.google.android.exoplayer2.database.StandaloneDatabaseProvider
@@ -25,7 +27,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.HiltAndroidApp
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import io.github.ashutoshgngwr.may.May
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -58,7 +59,7 @@ class NoiceApplication : Application(), Configuration.Provider {
   object GsonModule {
     @Provides
     @Singleton
-    fun gson(): Gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+    fun gson(): Gson = GsonBuilder().create()
   }
 
   @Module
@@ -78,11 +79,15 @@ class NoiceApplication : Application(), Configuration.Provider {
 
   @Module
   @InstallIn(SingletonComponent::class)
-  object CacheStoreModule {
+  object AppDatabaseModule {
     @Provides
     @Singleton
-    fun cacheStore(@ApplicationContext context: Context): May {
-      return May.openOrCreateDatastore(context, "app-cache.may.db", Context.MODE_PRIVATE)
+    fun appDatabase(@ApplicationContext context: Context): AppDatabase {
+      // TODO: remove in future versions
+      // clear old cache data store.
+      context.deleteDatabase("app-cache.may.db")
+      return Room.databaseBuilder(context, AppDatabase::class.java, "${context.packageName}.db")
+        .build()
     }
   }
 

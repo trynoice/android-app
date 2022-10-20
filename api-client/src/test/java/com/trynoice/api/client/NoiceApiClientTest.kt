@@ -30,7 +30,7 @@ class NoiceApiClientTest {
 
   @Before
   fun setUp() {
-    gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+    gson = GsonBuilder().create()
     mockServer = MockWebServer()
     mockServer.start()
 
