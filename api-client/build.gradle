@@ -3,31 +3,60 @@ plugins {
   id 'org.jetbrains.kotlin.android'
 
   id 'com.adarshr.test-logger'
+  id 'jacoco'
 }
 
 android {
-  compileSdkVersion config.compileSdkVersion
-
   defaultConfig {
     namespace 'com.trynoice.api.client'
-    minSdkVersion config.minSdkVersion
-    targetSdkVersion config.compileSdkVersion
     consumerProguardFiles 'retrofit2.pro', 'gson.pro'
   }
 
-  compileOptions {
-    sourceCompatibility = config.javaCompatibility
-    targetCompatibility = config.javaCompatibility
+  testOptions {
+    unitTests {
+      includeAndroidResources = true
+      all {
+        testlogger.theme 'mocha'
+        jacoco {
+          includeNoLocationClasses = true
+          excludes = ['jdk.internal.*']
+        }
+      }
+    }
   }
+}
 
-  kotlinOptions {
-    useIR = true
-    jvmTarget = config.kotlinJvmTarget
-    freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
-  }
+project.afterEvaluate {
+  android.libraryVariants.all { variant ->
+    def taskName = "test${variant.name.capitalize()}Coverage"
+    def testTask = "test${variant.name.capitalize()}UnitTest"
+    def srcDirs = ["src/main/java", "src/${variant.name}/java"]
+    def classFiles = fileTree(
+      dir: "${project.buildDir}/tmp/kotlin-classes/${variant.name}",
+      excludes: ['**/R.class',
+                 '**/R$*.class',
+                 '**/*$ViewInjector*.*',
+                 '**/*$ViewBinder*.*',
+                 '**/BuildConfig.*',
+                 '**/Manifest*.*']
+    )
 
-  testOptions.unitTests.all {
-    testlogger.theme 'mocha'
+    def execFile = fileTree(project.buildDir).matching {
+      include "**/*/${testTask}.exec"
+    }
+
+    tasks.create(name: taskName, type: JacocoReport, dependsOn: testTask) {
+      group = 'Reporting'
+      description = "Generate Jacoco coverage reports for the ${variant.name} build variant."
+      sourceDirectories.setFrom(files(srcDirs))
+      classDirectories.setFrom(classFiles)
+      executionData.setFrom(execFile)
+
+      reports {
+        xml.required = true
+        html.required = true
+      }
+    }
   }
 }
 

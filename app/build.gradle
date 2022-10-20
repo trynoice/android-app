@@ -11,18 +11,13 @@ plugins {
   id 'com.google.firebase.crashlytics' // sed:free-build:remove
 
   id 'com.adarshr.test-logger'
+  id 'jacoco'
 }
 
-apply from: 'jacoco.gradle'
-
 android {
-  compileSdk config.compileSdkVersion
-
   defaultConfig {
     namespace 'com.github.ashutoshgngwr.noice'
     applicationId 'com.github.ashutoshgngwr.noice'
-    minSdk config.minSdkVersion
-    targetSdk config.compileSdkVersion
     versionCode 60
     versionName '2.2.4'
     testInstrumentationRunner 'com.github.ashutoshgngwr.noice.InstrumentedTestRunner'
@@ -68,17 +63,6 @@ android {
     }
   }
 
-  compileOptions {
-    sourceCompatibility = config.javaCompatibility
-    targetCompatibility = config.javaCompatibility
-  }
-
-  kotlinOptions {
-    useIR = true
-    jvmTarget = config.kotlinJvmTarget
-    freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
-  }
-
   kapt {
     arguments {
       arg("room.schemaLocation", "$projectDir/build/generated/schemas")
@@ -90,6 +74,10 @@ android {
       includeAndroidResources = true
       all {
         testlogger.theme 'mocha'
+        jacoco {
+          includeNoLocationClasses = true
+          excludes = ['jdk.internal.*']
+        }
       }
     }
   }
@@ -97,6 +85,61 @@ android {
   packagingOptions {
     // https://github.com/Kotlin/kotlinx.coroutines#avoiding-including-the-debug-infrastructure-in-the-resulting-apk
     resources.excludes += "DebugProbesKt.bin"
+  }
+}
+
+project.afterEvaluate {
+  android.applicationVariants.all { variant ->
+    def taskName = "test${variant.name.capitalize()}Coverage"
+    def testTask = "test${variant.name.capitalize()}UnitTest"
+    def srcDirs = ["src/main/java"]
+    if (variant.buildType != null) {
+      srcDirs += "src/${variant.buildType.name}/java" // e.g. debug
+    }
+
+    if (variant.flavorName != null) {
+      srcDirs += "src/${variant.flavorName}/java" // e.g. free
+    }
+
+    if (variant.buildType != null && variant.flavorName != null) {
+      srcDirs += "src/${variant.name}/java" // e.g. freeDebug
+    }
+
+    def classFiles = fileTree(
+      dir: "${project.buildDir}/tmp/kotlin-classes/${variant.name}",
+      excludes: ['**/R.class',
+                 '**/R$*.class',
+                 '**/*$ViewInjector*.*',
+                 '**/*$ViewBinder*.*',
+                 '**/BuildConfig.*',
+                 '**/Manifest*.*']
+    )
+
+    def execFile = fileTree(project.buildDir).matching {
+      include "**/*/${testTask}.exec"
+    }
+
+    tasks.create(name: taskName, type: JacocoReport, dependsOn: testTask) {
+      group = 'Reporting'
+      description = "Generate Jacoco coverage reports for the ${variant.name} build variant."
+      sourceDirectories.setFrom(files(srcDirs))
+      classDirectories.setFrom(classFiles)
+      executionData.setFrom(execFile)
+
+      reports {
+        xml.required = true
+        html.required = true
+      }
+    }
+  }
+
+  tasks.create(name: 'testDebugCoverage', type: JacocoReport) {
+    group = 'Reporting'
+    description = 'Generate Jacoco coverage reports for the all debug build variants.'
+
+    android.applicationVariants
+      .findAll { it.buildType.name == "debug" }
+      .forEach { variant -> dependsOn "test${variant.name.capitalize()}Coverage" }
   }
 }
 
