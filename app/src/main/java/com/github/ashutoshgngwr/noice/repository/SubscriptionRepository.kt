@@ -8,7 +8,7 @@ import android.content.ServiceConnection
 import android.net.Uri
 import android.os.IBinder
 import android.util.Log
-import com.github.ashutoshgngwr.noice.data.AppCacheStore
+import com.github.ashutoshgngwr.noice.data.AppDatabase
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
 import com.github.ashutoshgngwr.noice.models.GiftCard
 import com.github.ashutoshgngwr.noice.models.Subscription
@@ -44,7 +44,7 @@ class SubscriptionRepository @Inject constructor(
   @ApplicationContext private val context: Context,
   private val billingProvider: SubscriptionBillingProvider,
   private val apiClient: NoiceApiClient,
-  private val cacheStore: AppCacheStore,
+  private val appDb: AppDatabase,
 ) {
 
   /**
@@ -61,12 +61,12 @@ class SubscriptionRepository @Inject constructor(
     currencyCode: String? = null,
   ): Flow<Resource<List<SubscriptionPlan>>> = fetchNetworkBoundResource(
     loadFromCache = {
-      cacheStore.subscriptions()
+      appDb.subscriptions()
         .listPlans(billingProvider.getId())
         .toDomainEntity()
     },
     loadFromNetwork = { billingProvider.listPlans(currencyCode) },
-    cacheNetworkResult = { cacheStore.subscriptions().savePlans(it.toRoomDto()) },
+    cacheNetworkResult = { appDb.subscriptions().savePlans(it.toRoomDto()) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "getPlans:", e)
       when (e) {
@@ -120,13 +120,13 @@ class SubscriptionRepository @Inject constructor(
     subscriptionId: Long,
     currencyCode: String? = null,
   ): Flow<Resource<Subscription>> = fetchNetworkBoundResource(
-    loadFromCache = { cacheStore.subscriptions().get(subscriptionId)?.toDomainEntity() },
+    loadFromCache = { appDb.subscriptions().get(subscriptionId)?.toDomainEntity() },
     loadFromNetwork = {
       apiClient.subscriptions()
         .get(subscriptionId, currency = currencyCode)
         .toDomainEntity()
     },
-    cacheNetworkResult = { cacheStore.subscriptions().save(it.toRoomDto()) },
+    cacheNetworkResult = { appDb.subscriptions().save(it.toRoomDto()) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "get:", e)
       when {
@@ -150,7 +150,7 @@ class SubscriptionRepository @Inject constructor(
    */
   fun getActive(): Flow<Resource<Subscription>> = fetchNetworkBoundResource(
     loadFromCache = {
-      cacheStore.subscriptions()
+      appDb.subscriptions()
         .getByRenewsAfter(System.currentTimeMillis())
         ?.toDomainEntity()
     },
@@ -161,7 +161,7 @@ class SubscriptionRepository @Inject constructor(
         ?.toDomainEntity()
         ?: throw SubscriptionNotFoundError
     },
-    cacheNetworkResult = { cacheStore.subscriptions().save(it.toRoomDto()) },
+    cacheNetworkResult = { appDb.subscriptions().save(it.toRoomDto()) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "getActive:", e)
       when (e) {
@@ -186,7 +186,7 @@ class SubscriptionRepository @Inject constructor(
     currencyCode: String? = null,
   ): Flow<Resource<List<Subscription>>> = fetchNetworkBoundResource(
     loadFromCache = {
-      cacheStore.subscriptions()
+      appDb.subscriptions()
         .listStarted(page * 20, 20)
         .toDomainEntity()
     },
@@ -195,7 +195,7 @@ class SubscriptionRepository @Inject constructor(
         .list(false, page = page, currency = currencyCode)
         .toDomainEntity()
     },
-    cacheNetworkResult = { cacheStore.subscriptions().saveAll(it.toRoomDto()) },
+    cacheNetworkResult = { appDb.subscriptions().saveAll(it.toRoomDto()) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "list:", e)
       when (e) {

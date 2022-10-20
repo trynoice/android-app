@@ -6,7 +6,7 @@ import android.os.IBinder
 import android.util.Log
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
-import com.github.ashutoshgngwr.noice.data.AppCacheStore
+import com.github.ashutoshgngwr.noice.data.AppDatabase
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.toDomainEntity
 import com.github.ashutoshgngwr.noice.models.toRoomDto
@@ -35,7 +35,7 @@ class SubscriptionStatusPollService : LifecycleService() {
   internal lateinit var apiClient: NoiceApiClient
 
   @set:Inject
-  internal lateinit var cacheStore: AppCacheStore
+  internal lateinit var appDb: AppDatabase
 
   private val activeSubscription = MutableStateFlow<Subscription?>(null)
   private val serviceBinder = SubscriptionStatusPollServiceBinder(activeSubscription)
@@ -70,7 +70,7 @@ class SubscriptionStatusPollService : LifecycleService() {
       return apiClient.subscriptions().list(onlyActive = true)
         .firstOrNull()
         ?.toDomainEntity()
-        ?.also { cacheStore.subscriptions().save(it.toRoomDto()) } // cache latest value
+        ?.also { appDb.subscriptions().save(it.toRoomDto()) } // cache latest value
     } catch (e: Throwable) {
       Log.i(LOG_TAG, "getActiveSubscription:", e)
       getCachedActiveSubscription() // return the cached value in case of an error
@@ -78,7 +78,7 @@ class SubscriptionStatusPollService : LifecycleService() {
   }
 
   private suspend fun getCachedActiveSubscription(): Subscription? {
-    return cacheStore.subscriptions()
+    return appDb.subscriptions()
       .getByRenewsAfter(System.currentTimeMillis())
       ?.toDomainEntity()
   }

@@ -1,7 +1,8 @@
 package com.github.ashutoshgngwr.noice.repository
 
 import android.util.Log
-import com.github.ashutoshgngwr.noice.data.AppCacheStore
+import androidx.room.withTransaction
+import com.github.ashutoshgngwr.noice.data.AppDatabase
 import com.github.ashutoshgngwr.noice.models.Profile
 import com.github.ashutoshgngwr.noice.models.toDomainEntity
 import com.github.ashutoshgngwr.noice.models.toRoomDto
@@ -27,7 +28,7 @@ import javax.inject.Singleton
 @Singleton
 class AccountRepository @Inject constructor(
   private val apiClient: NoiceApiClient,
-  private val cacheStore: AppCacheStore,
+  private val appDb: AppDatabase,
 ) {
 
   /**
@@ -47,9 +48,9 @@ class AccountRepository @Inject constructor(
    * @see Resource
    */
   fun getProfile(): Flow<Resource<Profile>> = fetchNetworkBoundResource(
-    loadFromCache = { cacheStore.profile().get()?.toDomainEntity() },
+    loadFromCache = { appDb.profile().get()?.toDomainEntity() },
     loadFromNetwork = { apiClient.accounts().getProfile().toDomainEntity() },
-    cacheNetworkResult = { cacheStore.profile().save(it.toRoomDto()) },
+    cacheNetworkResult = { appDb.profile().save(it.toRoomDto()) },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "getProfile:", e)
       when {
@@ -196,9 +197,9 @@ class AccountRepository @Inject constructor(
     loadFromNetwork = {
       apiClient.signOut()
       // clear account related cache.
-      cacheStore.withTransaction {
-        cacheStore.profile().remove()
-        cacheStore.subscriptions().removeAll()
+      appDb.withTransaction {
+        appDb.profile().remove()
+        appDb.subscriptions().removeAll()
       }
     },
     loadFromNetworkErrorTransform = { e ->

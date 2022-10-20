@@ -2,7 +2,8 @@ package com.github.ashutoshgngwr.noice.repository
 
 import android.net.Uri
 import android.util.Log
-import com.github.ashutoshgngwr.noice.data.AppCacheStore
+import androidx.room.withTransaction
+import com.github.ashutoshgngwr.noice.data.AppDatabase
 import com.github.ashutoshgngwr.noice.data.models.LibraryUpdateTimeDto
 import com.github.ashutoshgngwr.noice.data.models.SoundMetadataDto
 import com.github.ashutoshgngwr.noice.data.models.SoundSegmentDto
@@ -34,7 +35,7 @@ import javax.inject.Singleton
 @Singleton
 class SoundRepository @Inject constructor(
   private val apiClient: NoiceApiClient,
-  private val cacheStore: AppCacheStore,
+  private val appDb: AppDatabase,
   private val downloadIndex: DownloadIndex,
   private val gson: Gson,
 ) {
@@ -49,10 +50,10 @@ class SoundRepository @Inject constructor(
    * @see Resource
    */
   fun listInfo(): Flow<Resource<List<SoundInfo>>> = fetchNetworkBoundResource(
-    loadFromCache = { cacheStore.sounds().listInfo().toDomainEntity() },
+    loadFromCache = { appDb.sounds().listInfo().toDomainEntity() },
     loadFromNetwork = {
       loadLibraryManifestInCacheStore()
-      cacheStore.sounds().listInfo().toDomainEntity()
+      appDb.sounds().listInfo().toDomainEntity()
     },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "listInfo:", e)
@@ -74,10 +75,10 @@ class SoundRepository @Inject constructor(
    * @see Resource
    */
   fun get(soundId: String): Flow<Resource<Sound>> = fetchNetworkBoundResource(
-    loadFromCache = { cacheStore.sounds().get(soundId)?.toDomainEntity() },
+    loadFromCache = { appDb.sounds().get(soundId)?.toDomainEntity() },
     loadFromNetwork = {
       loadLibraryManifestInCacheStore()
-      cacheStore.sounds()
+      appDb.sounds()
         .get(soundId)
         ?.toDomainEntity()
         ?: throw SoundNotFoundError
@@ -101,10 +102,10 @@ class SoundRepository @Inject constructor(
    * @see Resource
    */
   fun countPremium(): Flow<Resource<Int>> = fetchNetworkBoundResource(
-    loadFromCache = { cacheStore.sounds().countPremium() },
+    loadFromCache = { appDb.sounds().countPremium() },
     loadFromNetwork = {
       loadLibraryManifestInCacheStore()
-      cacheStore.sounds().countPremium()
+      appDb.sounds().countPremium()
     },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "countPremium:", e)
@@ -125,10 +126,10 @@ class SoundRepository @Inject constructor(
    * @see Resource
    */
   fun listTags(): Flow<Resource<List<SoundTag>>> = fetchNetworkBoundResource(
-    loadFromCache = { cacheStore.sounds().listTags().toDomainEntity() },
+    loadFromCache = { appDb.sounds().listTags().toDomainEntity() },
     loadFromNetwork = {
       loadLibraryManifestInCacheStore()
-      cacheStore.sounds().listTags().toDomainEntity()
+      appDb.sounds().listTags().toDomainEntity()
     },
     loadFromNetworkErrorTransform = { e ->
       Log.i(LOG_TAG, "listTags:", e)
@@ -193,9 +194,9 @@ class SoundRepository @Inject constructor(
    */
   fun isLibraryUpdated(): Flow<Resource<Boolean>> = fetchNetworkBoundResource(
     loadFromNetwork = {
-      val oldUpdatedAt = cacheStore.sounds().getLibraryUpdateTime()
+      val oldUpdatedAt = appDb.sounds().getLibraryUpdateTime()
       val newUpdatedAt = apiClient.cdn().libraryManifest().updatedAt
-      cacheStore.sounds().saveLibraryUpdateTime(LibraryUpdateTimeDto(newUpdatedAt))
+      appDb.sounds().saveLibraryUpdateTime(LibraryUpdateTimeDto(newUpdatedAt))
       oldUpdatedAt != null && oldUpdatedAt < newUpdatedAt
     },
     loadFromNetworkErrorTransform = { e ->
@@ -207,15 +208,15 @@ class SoundRepository @Inject constructor(
     }
   )
 
-  private suspend fun loadLibraryManifestInCacheStore(): Unit = cacheStore.withTransaction {
+  private suspend fun loadLibraryManifestInCacheStore(): Unit = appDb.withTransaction {
     val manifest = apiClient.cdn().libraryManifest()
     val groups = manifest.groups.associate { it.id to it.toRoomDto() }
     val tags = manifest.tags.toRoomDto()
-    cacheStore.sounds().saveGroups(groups.values.toList())
-    cacheStore.sounds().saveTags(tags)
+    appDb.sounds().saveGroups(groups.values.toList())
+    appDb.sounds().saveTags(tags)
 
     manifest.sounds.forEach { apiSound ->
-      cacheStore.sounds().saveMetadata(
+      appDb.sounds().saveMetadata(
         SoundMetadataDto(
           id = apiSound.id,
           groupId = apiSound.groupId,
@@ -229,7 +230,7 @@ class SoundRepository @Inject constructor(
 
       val segmentsBasePath = "${manifest.segmentsBasePath}/${apiSound.id}"
       for (apiSegment in apiSound.segments) {
-        cacheStore.sounds().saveSegment(
+        appDb.sounds().saveSegment(
           SoundSegmentDto(
             soundId = apiSound.id,
             name = apiSegment.name,
@@ -247,7 +248,7 @@ class SoundRepository @Inject constructor(
 
         for (toApiSegment in apiSound.segments) {
           val bridgeName = "${apiSegment.name}_${toApiSegment.name}"
-          cacheStore.sounds().saveSegment(
+          appDb.sounds().saveSegment(
             SoundSegmentDto(
               soundId = apiSound.id,
               name = bridgeName,
@@ -261,9 +262,9 @@ class SoundRepository @Inject constructor(
         }
 
         apiSound.tags.map { SoundTagCrossRef(apiSound.id, it) }
-          .also { cacheStore.sounds().saveSoundTagCrossRefs(it) }
+          .also { appDb.sounds().saveSoundTagCrossRefs(it) }
 
-        cacheStore.sounds().saveSources(
+        appDb.sounds().saveSources(
           apiSound.sources.map { apiSource ->
             SoundSourceDto(
               soundId = apiSound.id,
