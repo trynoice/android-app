@@ -31,7 +31,7 @@ import java.util.*
   ],
   version = 1,
 )
-@TypeConverters(AppTypeConverters::class)
+@TypeConverters(AppDatabaseTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
 
   abstract fun profile(): ProfileDao
@@ -41,7 +41,7 @@ abstract class AppDatabase : RoomDatabase() {
   abstract fun sounds(): SoundDao
 }
 
-class AppTypeConverters {
+class AppDatabaseTypeConverters {
 
   @TypeConverter
   fun fromTimestamp(value: Long?): Date? {
