@@ -41,7 +41,7 @@
     <TextClock
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:drawableTop="@drawable/ic_action_wake_up_timer"
+      android:drawableTop="@drawable/ic_baseline_alarm_24"
       android:drawableTint="?attr/colorOnSurface"
       android:format12Hour=" a"
       android:format24Hour=""

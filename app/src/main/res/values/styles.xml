@@ -19,7 +19,7 @@
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_margin">8dp</item>
     <item name="android:textAppearance">?attr/textAppearanceTitleLarge</item>
-    <item name="icon">@drawable/ic_action_add</item>
+    <item name="icon">@drawable/ic_baseline_add_24</item>
   </style>
 
   <style name="Widget.App.AlarmRinger.DismissSlider" parent="SlideToActView">

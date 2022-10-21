@@ -92,7 +92,7 @@ class HomeFragment : Fragment(), MenuProvider, NavController.OnDestinationChange
 
   override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
     castApiProvider.addMenuItem(requireContext(), menu, R.string.cast_media)
-    val displayPlaybackControls = homeNavController.currentDestination?.id != R.id.wake_up_timer
+    val displayPlaybackControls = homeNavController.currentDestination?.id != R.id.alarms
       && !playerManagerState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED)
 
     if (displayPlaybackControls) {

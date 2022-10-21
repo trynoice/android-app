@@ -33,7 +33,7 @@ class WakeUpTimerManager @Inject constructor(
   }
 
   private fun getPendingIntentForActivity() = Intent(context, MainActivity::class.java).let {
-    it.putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.home_wake_up_timer)
+    it.putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.home_alarms)
     var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
       piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE

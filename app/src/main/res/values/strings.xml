@@ -321,4 +321,8 @@
     <string name="review">Review</string>
     <string name="benefit_4">%1$d additional sounds</string>
     <string name="sound_is_premium">This sound is available with Noice Premium.</string>
+    <string name="alarms">Alarms</string>
+    <string name="add_alarm">Add an Alarm</string>
+    <string name="no_alarms">No Alarms</string>
+    <string name="no_alarms_description">Add new alarms by tapping the \"+\" button!</string>
 </resources>

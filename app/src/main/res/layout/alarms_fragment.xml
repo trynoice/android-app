@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
+
+    <LinearLayout
+      android:id="@+id/empty_list_indicator"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="@dimen/root_layout_padding"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="12dp"
+        android:gravity="center"
+        android:text="@string/no_alarms"
+        android:textAppearance="?attr/textAppearanceHeadlineSmall"
+        android:textColor="?android:attr/textColorHint"
+        app:drawableTint="?android:attr/textColorHint"
+        app:drawableTopCompat="@drawable/ic_baseline_alarm_cross_72" />
+
+      <Space
+        android:layout_width="wrap_content"
+        android:layout_height="12dp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/no_alarms_description"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textColor="?android:attr/textColorHint" />
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/add_alarm_button"
+      style="?attr/floatingActionButtonPrimaryStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/root_layout_padding"
+      android:contentDescription="@string/add_alarm"
+      android:src="@drawable/ic_baseline_add_24"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
