@@ -71,9 +71,9 @@
     <string name="schedule">Zaplanuj</string>
     <string name="pinned_shortcuts_not_supported">Twój domyślny ekran startowy nie wspiera dodawania skrótów.</string>
     <string name="add_to_home_screen">Dodaj do ekranu głównego</string>
-    <string name="okay">Okej</string>
+    <string name="okay">Ok</string>
     <string name="intensity">Intensywność</string>
-    <string name="submit_feedback">Wyślij Opinie</string>
+    <string name="submit_feedback">Wyślij opinię</string>
     <string name="help">Pomoc</string>
     <string name="pinned_shortcut_created">Skrót został dodany do ekranu głównego!</string>
     <string name="pinned_shortcut_creation_failed">Nie udało się dodać skrótu do ekranu głównego!</string>
@@ -129,4 +129,28 @@
     <string name="should_display_sound_icons">Pokaż ikony dźwięku</string>
     <string name="sound_fade_in_duration_summary">Czas zaniku dźwięków (w sekundach)</string>
     <string name="sound_fade_in_duration">Czas zaniku dźwięku</string>
+    <plurals name="n_days">
+        <item quantity="one">%1$d dzień</item>
+        <item quantity="few">%1$d dni</item>
+        <item quantity="many">%1$d dni</item>
+        <item quantity="other">%1$d dni</item>
+    </plurals>
+    <string name="trial_period">Okres próbny: %1$s</string>
+    <string name="remove_sound_download">Usuń %1$s</string>
+    <string name="notification_channel_sound_downloads__description">Powiadomienia o postępie pobierania dźwięków.</string>
+    <string name="stripe_customer_portal_error">Ups! Nie mogliśmy otworzyć portalu rozliczeniowego. %1$s Proszę spróbować ponownie!</string>
+    <string name="use_material_you_colors_summary">Użyj palety kolorów Material You z systemu Android</string>
+    <string name="checking_sound_downloads">Sprawdzanie pobranych dźwięków</string>
+    <string name="remove_all_sound_downloads">Usuń wszystkie pobrane dźwięki</string>
+    <string name="remove_all_sound_downloads_confirmation">Spowoduje to usunięcie wszystkich dźwięków pobranych do odtwarzania w trybie offline. Czy chcesz kontynuować\?</string>
+    <string name="oss_licenses">Licencje oprogramowania otwarto źródłowego</string>
+    <string name="sound_library_updated">Zaktualizowano bibliotekę dźwięków</string>
+    <string name="sound_library_updated_message">Wprowadziliśmy kilka zmian w bibliotece dźwięków. Czy chcesz zobaczyć informacje o wydaniu\?</string>
+    <string name="review">Zobacz</string>
+    <string name="sound_is_premium">Ten dźwięk jest dostępny w Noice Premium.</string>
+    <string name="benefit_4">%1$d dodatkowe dźwięki</string>
+    <string name="use_material_you_colors">Użyj kolorów Material You</string>
+    <string name="showing_localised_prices">Ceny przeliczone z [INR](https://en.wikipedia.org/wiki/Indian_rupee). Aktualne ceny mogą się nieznacznie różnić.</string>
+    <string name="download_sound">Pobierz dźwięk</string>
+    <string name="notification_channel_sound_downloads__name">Pobieranie dźwięku</string>
 </resources>
