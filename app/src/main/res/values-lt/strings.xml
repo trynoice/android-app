@@ -131,4 +131,13 @@
     <string name="export_presets_successful">Parinktys sėkmingai eksportuotos į failą!</string>
     <string name="enable_media_buttons_summary">Atkūrimui valdyti naudokite fizinius įrenginio mygtukus</string>
     <string name="enable_media_buttons">Įgalinti medijos mygtukus</string>
+    <string name="update_details">Atnaujinti informaciją</string>
+    <string name="sign_out">Atsijungti</string>
+    <string name="app">Programėlė</string>
+    <string name="sign_up">Registruotis</string>
+    <string name="view_subscription_plans">Žiūrėti planus</string>
+    <string name="delete_account">Ištrinti paskyrą</string>
+    <string name="support">Pagalba</string>
+    <string name="account">Paskyra</string>
+    <string name="sign_in">Prisijungti</string>
 </resources>
