@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
+import androidx.core.app.ServiceCompat
 import androidx.core.content.getSystemService
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
@@ -39,6 +40,8 @@ import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.random.Random
+import kotlin.reflect.KClass
+import kotlin.reflect.cast
 
 @AndroidEntryPoint
 class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
@@ -227,7 +230,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
       }
 
       ACTION_PLAY_PRESET -> playerManager.play(
-        requireNotNull(intent.getSerializableExtra(INTENT_EXTRA_PRESET) as? Preset) {
+        requireNotNull(intent.getSerializableExtraCompat(INTENT_EXTRA_PRESET, Preset::class)) {
           "intent extra '${INTENT_EXTRA_PRESET}' is required to send '${ACTION_PLAY_PRESET}' command"
         }
       )
@@ -310,7 +313,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     mediaSessionManager.setPlaybackState(playerManagerState)
     if (playerManagerState == PlaybackState.STOPPED) {
       Log.d(LOG_TAG, "onPlaybackUpdate: playback stopped, releasing resources")
-      stopForeground(true)
+      ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
       wakeLock.release()
     } else {
       Log.d(LOG_TAG, "onPlaybackUpdate: playback not stopped, ensuring resource acquisition")
@@ -378,3 +381,16 @@ class PlaybackServiceBinder(
   val playerManagerState: Flow<PlaybackState>,
   val playerStates: Flow<Array<PlayerState>>,
 ) : Binder()
+
+// TODO: remove this extension when a replacement method is available the Androidx Compat libraries.
+private fun <T : java.io.Serializable> Intent.getSerializableExtraCompat(
+  key: String,
+  kClass: KClass<T>
+): T? {
+  return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    getSerializableExtra(key, kClass.java)
+  } else {
+    @Suppress("DEPRECATION")
+    getSerializableExtra(key)?.let { kClass.cast(it) }
+  }
+}
