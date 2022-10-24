@@ -304,4 +304,5 @@
     <string name="remove_sound_download">Eliminar %1$s</string>
     <string name="sound_scheduled_for_download">Organizando %1$s para descarga.</string>
     <string name="sound_download_scheduled_for_removal">Preparando %1$s para su supresión de sonidos descargados.</string>
+    <string name="third_party_attributions">Atribuciones de terceros</string>
 </resources>
