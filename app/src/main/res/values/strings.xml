@@ -325,4 +325,16 @@
     <string name="add_alarm">Add an Alarm</string>
     <string name="no_alarms">No Alarms</string>
     <string name="no_alarms_description">Add new alarms by tapping the \"+\" button!</string>
+    <string name="alarm_permission_rationale_title">Allow Noice to schedule alarms</string>
+    <string name="alarm_permission_rationale_description">
+        We need additional access to schedule alarms on your device.\n\n
+        Please enable **Alarms &amp; reminders** for Noice from its application details in your device\'s system settings.
+    </string>
+    <string name="post_notifications_permission_rationale_title">Allow Noice to show notifications</string>
+    <string name="post_notifications_permission_rationale_description">
+        We need additional permission to show notifications for scheduled alarms. Without
+        notifications, Noice cannot ring alarms at their scheduled time.
+    </string>
+    <string name="proceed">Proceed</string>
+    <string name="alarm_post_notifications_permission_denied">Noice cannot ring alarms without the permission to show notifications!</string>
 </resources>

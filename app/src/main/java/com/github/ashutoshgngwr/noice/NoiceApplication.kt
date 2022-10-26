@@ -3,10 +3,12 @@ package com.github.ashutoshgngwr.noice
 import android.app.Application
 import android.content.Context
 import android.os.Build
+import androidx.core.content.getSystemService
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.room.Room
 import androidx.work.Configuration
 import com.github.ashutoshgngwr.noice.data.AppDatabase
+import com.github.ashutoshgngwr.noice.provider.AlarmProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.exoplayer2.database.DatabaseProvider
 import com.google.android.exoplayer2.database.StandaloneDatabaseProvider
@@ -120,6 +122,18 @@ class NoiceApplication : Application(), Configuration.Provider {
     @Singleton
     fun readableDownloadIndex(downloadIndex: WritableDownloadIndex): DownloadIndex {
       return downloadIndex
+    }
+  }
+
+  @Module
+  @InstallIn(SingletonComponent::class)
+  object AlarmProviderModule {
+    @Provides
+    @Singleton
+    fun alarmProvider(@ApplicationContext context: Context): AlarmProvider {
+      return AlarmProvider(
+        requireNotNull(context.getSystemService()) { "failed to get alarm service" },
+      )
     }
   }
 }
