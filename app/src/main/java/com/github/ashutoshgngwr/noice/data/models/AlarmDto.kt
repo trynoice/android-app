@@ -5,11 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "alarm")
 data class AlarmDto(
-  @PrimaryKey val id: Long,
-  val label: String,
+  @PrimaryKey(autoGenerate = true) val id: Int,
+  val label: String?,
   val isEnabled: Boolean,
   val minuteOfDay: Int,
-  val weeklySchedule: Short,
-  val presetId: String,
+  val weeklySchedule: Int,
+  val presetId: String?,
   val vibrate: Boolean,
 )
