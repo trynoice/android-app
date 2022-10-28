@@ -8,13 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.AlarmsFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.hasSelfPermission
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.ext.showTimePicker
 import com.github.ashutoshgngwr.noice.ext.startAppDetailsSettingsActivity
-import com.github.ashutoshgngwr.noice.provider.AlarmProvider
+import com.github.ashutoshgngwr.noice.repository.AlarmRepository
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -22,9 +29,7 @@ class AlarmsFragment : Fragment() {
 
   private lateinit var binding: AlarmsFragmentBinding
 
-  @set:Inject
-  internal lateinit var alarmProvider: AlarmProvider
-
+  private val viewModel: AlarmsViewModel by viewModels()
   private val requestPermissionsLauncher = registerForActivityResult(
     ActivityResultContracts.RequestPermission(),
     this::onPostNotificationsPermissionRequestResult,
@@ -41,7 +46,7 @@ class AlarmsFragment : Fragment() {
   }
 
   private fun startAddAlarmFlow() {
-    if (!alarmProvider.canScheduleAlarms()) {
+    if (!viewModel.canScheduleAlarms()) {
       showAlarmPermissionRationale()
       return
     }
@@ -51,7 +56,7 @@ class AlarmsFragment : Fragment() {
       return
     }
 
-    // TODO: start the flow to add a new alarm
+    showTimePicker { hour, minute -> viewModel.create(hour, minute) }
   }
 
   private fun showAlarmPermissionRationale() {
@@ -98,5 +103,21 @@ class AlarmsFragment : Fragment() {
 
     showErrorSnackBar(getString(R.string.alarm_post_notifications_permission_denied))
       .setAction(R.string.settings) { requireContext().startAppDetailsSettingsActivity() }
+  }
+}
+
+@HiltViewModel
+class AlarmsViewModel @Inject constructor(
+  private val alarmRepository: AlarmRepository,
+) : ViewModel() {
+
+  internal fun canScheduleAlarms(): Boolean {
+    return alarmRepository.canScheduleAlarms()
+  }
+
+  internal fun create(hour: Int, minute: Int) {
+    viewModelScope.launch(Dispatchers.IO) {
+      alarmRepository.create(hour * 60 + minute)
+    }
   }
 }

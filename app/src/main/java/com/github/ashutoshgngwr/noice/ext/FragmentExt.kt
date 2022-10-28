@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.ext
 
+import android.text.format.DateFormat
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
@@ -7,6 +8,9 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.widget.SnackBar
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
+import java.util.*
 
 /**
  * Shows info level [SnackBar]. It anchors the snack bar to bottom navigation view or network
@@ -64,4 +68,21 @@ fun Fragment.showErrorSnackBar(msg: String): Snackbar {
 
 private fun Fragment.snackBarView(): View {
   return activity?.findViewById(R.id.main_nav_host_fragment) ?: requireView()
+}
+
+inline fun Fragment.showTimePicker(
+  hour: Int? = null,
+  minute: Int? = null,
+  crossinline callback: (hour: Int, minute: Int) -> Unit,
+) {
+  val calendar = Calendar.getInstance()
+  MaterialTimePicker.Builder()
+    .setTimeFormat(if (DateFormat.is24HourFormat(requireContext())) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H)
+    .also { builder -> builder.setHour(hour ?: calendar.get(Calendar.HOUR_OF_DAY)) }
+    .also { builder -> builder.setMinute(minute ?: calendar.get(Calendar.MINUTE)) }
+    .build()
+    .also { picker ->
+      picker.addOnPositiveButtonClickListener { callback.invoke(picker.hour, picker.minute) }
+    }
+    .show(childFragmentManager, "MaterialTimePicker")
 }

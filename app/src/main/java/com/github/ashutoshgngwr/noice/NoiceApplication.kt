@@ -1,14 +1,19 @@
 package com.github.ashutoshgngwr.noice
 
 import android.app.Application
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.core.content.getSystemService
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.room.Room
 import androidx.work.Configuration
+import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.data.AppDatabase
-import com.github.ashutoshgngwr.noice.provider.AlarmProvider
+import com.github.ashutoshgngwr.noice.models.Alarm
+import com.github.ashutoshgngwr.noice.receiver.AlarmReceiver
+import com.github.ashutoshgngwr.noice.repository.AlarmRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.exoplayer2.database.DatabaseProvider
 import com.google.android.exoplayer2.database.StandaloneDatabaseProvider
@@ -127,13 +132,30 @@ class NoiceApplication : Application(), Configuration.Provider {
 
   @Module
   @InstallIn(SingletonComponent::class)
-  object AlarmProviderModule {
+  object AlarmRepositoryModule {
     @Provides
     @Singleton
-    fun alarmProvider(@ApplicationContext context: Context): AlarmProvider {
-      return AlarmProvider(
-        requireNotNull(context.getSystemService()) { "failed to get alarm service" },
-      )
+    fun alarmRepository(@ApplicationContext context: Context, appDb: AppDatabase): AlarmRepository {
+      val piFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+      } else PendingIntent.FLAG_UPDATE_CURRENT
+
+      val piBuilder = object : AlarmRepository.PendingIntentBuilder {
+        override fun buildShowIntent(alarm: Alarm): PendingIntent {
+          // TODO: focus the specified alarm in the list
+          return Intent(context, MainActivity::class.java)
+            .putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.home_alarms)
+            .let { PendingIntent.getActivity(context, alarm.id, it, piFlags) }
+        }
+
+        override fun buildTriggerIntent(alarm: Alarm): PendingIntent {
+          return Intent(context, AlarmReceiver::class.java)
+            .putExtra(AlarmReceiver.EXTRA_ALARM_ID, alarm.id)
+            .let { PendingIntent.getBroadcast(context, alarm.id, it, piFlags) }
+        }
+      }
+
+      return AlarmRepository(requireNotNull(context.getSystemService()), appDb, piBuilder)
     }
   }
 }
