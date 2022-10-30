@@ -337,4 +337,14 @@
     </string>
     <string name="proceed">Proceed</string>
     <string name="alarm_post_notifications_permission_denied">Noice cannot ring alarms without the permission to show notifications!</string>
+    <string name="add_label">Add label</string>
+    <string name="sunday_initial">S</string>
+    <string name="monday_initial">M</string>
+    <string name="tuesday_initial">T</string>
+    <string name="wednesday_initial">W</string>
+    <string name="thursday_initial">T</string>
+    <string name="friday_initial">F</string>
+    <string name="saturday_initial">S</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="not_scheduled">Not scheduled</string>
 </resources>

@@ -171,8 +171,9 @@ dependencies {
   implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
   implementation 'androidx.preference:preference-ktx:1.2.0'
   implementation 'androidx.recyclerview:recyclerview:1.2.1'
-  implementation "androidx.room:room-runtime:$roomVersion"
   implementation "androidx.room:room-ktx:$roomVersion"
+  implementation "androidx.room:room-paging:$roomVersion"
+  implementation "androidx.room:room-runtime:$roomVersion"
 
   implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
   implementation 'androidx.work:work-runtime-ktx:2.7.1'

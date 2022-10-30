@@ -14,6 +14,7 @@ import com.github.ashutoshgngwr.noice.data.AppDatabase
 import com.github.ashutoshgngwr.noice.models.Alarm
 import com.github.ashutoshgngwr.noice.receiver.AlarmReceiver
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.exoplayer2.database.DatabaseProvider
 import com.google.android.exoplayer2.database.StandaloneDatabaseProvider
@@ -135,7 +136,11 @@ class NoiceApplication : Application(), Configuration.Provider {
   object AlarmRepositoryModule {
     @Provides
     @Singleton
-    fun alarmRepository(@ApplicationContext context: Context, appDb: AppDatabase): AlarmRepository {
+    fun alarmRepository(
+      @ApplicationContext context: Context,
+      appDb: AppDatabase,
+      presetRepository: PresetRepository,
+    ): AlarmRepository {
       val piFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
       } else PendingIntent.FLAG_UPDATE_CURRENT
@@ -155,7 +160,12 @@ class NoiceApplication : Application(), Configuration.Provider {
         }
       }
 
-      return AlarmRepository(requireNotNull(context.getSystemService()), appDb, piBuilder)
+      return AlarmRepository(
+        requireNotNull(context.getSystemService()),
+        presetRepository,
+        appDb,
+        piBuilder
+      )
     }
   }
 }

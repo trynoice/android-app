@@ -3,4 +3,5 @@
   <dimen name="dialog_fragment_view_spacing">8dp</dimen>
   <dimen name="root_layout_padding">16dp</dimen>
   <dimen name="modal_layout_padding">24dp</dimen>
+  <dimen name="alarms_weekday_toggle_button_size">32dp</dimen>
 </resources>
