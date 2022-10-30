@@ -236,7 +236,7 @@
     <string name="delete_account_error">¡Oh no! No se ha podido eliminar la cuenta. %1$s ¡Por favor, inténtelo de nuevo!</string>
     <string name="account_details_update_error">¡Oh no! No se ha podido actualizar los datos. %1$s ¡Por favor, inténtelo de nuevo!</string>
     <string name="audio_quality_high">Alto (256 kbps)</string>
-    <string name="tags_load_error">¡Oh, vaya! No pudimos cargar palabras clave de sonido. Por favor, inténtalo otra vez.</string>
+    <string name="tags_load_error">¡No! No pudimos cargar las palabras clave sonoras. %1$s ¡Inténtalo de nuevo!</string>
     <string name="reach_us">Contáctanos</string>
     <string name="write_review_play_store">Escribe una opinión en Google Play</string>
     <string name="connect_through_email">Contactar mediante correo electrónico</string>
@@ -284,7 +284,7 @@
     <string name="gift_card">Tarjeta Regalo</string>
     <string name="playback">Reproducción</string>
     <string name="trial_period">Período de prueba: %1$s</string>
-    <string name="generate_preset_error">Vaya, no se ha podido crear el preajuste. %1$s Vuelve a intentarlo de nuevo</string>
+    <string name="generate_preset_error">¡Uh-oh! No hemos podido generar un preajuste. %1$s ¡Inténtalo de nuevo!</string>
     <string name="audio_quality_medium">Medio (192Kbps)</string>
     <string name="audio_quality_ultra">Ultra (320 kbps)</string>
     <string name="library_load_error">¡Oh, vaya! No pudimos acceder y recuperar la libraría de sonidos. %1$s</string>
