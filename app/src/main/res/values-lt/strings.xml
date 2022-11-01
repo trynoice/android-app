@@ -131,4 +131,24 @@
     <string name="export_presets_successful">Parinktys sėkmingai eksportuotos į failą!</string>
     <string name="enable_media_buttons_summary">Atkūrimui valdyti naudokite fizinius įrenginio mygtukus</string>
     <string name="enable_media_buttons">Įgalinti medijos mygtukus</string>
+    <string name="update_details">Atnaujinti informaciją</string>
+    <string name="sign_out">Atsijungti</string>
+    <string name="app">Programėlė</string>
+    <string name="sign_up">Registruotis</string>
+    <string name="view_subscription_plans">Žiūrėti planus</string>
+    <string name="delete_account">Ištrinti paskyrą</string>
+    <string name="support">Pagalba</string>
+    <string name="account">Paskyra</string>
+    <string name="sign_in">Prisijungti</string>
+    <string name="invalid_email">Įvestas el. paštas neteisingas!</string>
+    <string name="account_locked_error">Jūsų el. paštas laikinai užblokuotas nuo prisijungimo bandymų iki %1$s.</string>
+    <string name="invalid_name">Įvestas vardas yra neteisingas!</string>
+    <string name="welcome">Sveiki!</string>
+    <string name="sign_up_message">Norėdami užsiregistruoti, įveskite savo vardą ir el. pašto adresą.</string>
+    <string name="email">El. paštas</string>
+    <string name="sign_up_email_sent">Prisijungimo nuorodą atsiuntėme el. paštu adresu „%1$s“.</string>
+    <string name="network_error">Tinklas nepasiekiamas.</string>
+    <string name="unknown_error">Įvyko nežinoma klaida.</string>
+    <string name="welcome_back">Sveiki sugrįžę!</string>
+    <string name="sign_in_message">Norėdami prisijungti, įveskite savo el. pašto adresą.</string>
 </resources>

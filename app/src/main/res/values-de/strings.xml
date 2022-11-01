@@ -46,11 +46,7 @@
     <string name="schedule">Zeitplan</string>
     <string name="select_preset">Wähle eine Voreinstellung aus</string>
     <string name="wake_up_timer_cancelled">Aufwach Wecker gelöscht!</string>
-    <string name="wake_up_timer_description">
-    Noice startet die ausgewählte Voreinstellung wenn der Timer endet. Nutze die Knöpfe weiter unten,
-    um eine Voreinstellung auszusuchen und die gewünschte Länge bis zum Start des Aufwach-Timers
-    hinzuzufügen.
-  </string>
+    <string name="wake_up_timer_description">Noice startet die ausgewählte Voreinstellung zur angegebenen Zeit. Verwenden Sie die nachstehenden Steuerelemente, um eine Voreinstellung auszuwählen und die gewünschte Zeit für den Weck-Timer festzulegen.</string>
     <string name="app_theme_light">Hell</string>
     <string name="app_theme_dark">Dunkel</string>
     <string name="app_theme_system_default">Systemstandard</string>
@@ -250,7 +246,7 @@
     <string name="privacy_policy">Datenschutzbestimmungen</string>
     <string name="support">Unterstützung</string>
     <string name="non_looping_sound">Dieser Sound enthält zwischendrin Pausen.</string>
-    <string name="has_premium_segments">Dieser Sound hat Premium-Komponenten.</string>
+    <string name="has_premium_segments">Dieser Sound bietet mit Noice Premium zusätzliche Varianten.</string>
     <string name="change_plan">Plan ändern</string>
     <string name="pausing">Pausiere</string>
     <string name="renews_on">Erneuert sich am %1$s</string>
@@ -272,7 +268,7 @@
     <string name="subscription_initialisation_error">Huch! Wir konnten den Abrechnungsvorgang nicht starten. %1$s Bitte versuchen Sie es erneut!</string>
     <string name="preset_url_invalid">Die voreingestellte URL scheint ungültig zu sein!</string>
     <string name="sign_up_tos">Wenn Sie fortfahren, erklären Sie sich mit unseren [Nutzungsbedingungen](https://trynoice.com/terms-of-service) und [Datenschutzbestimmungen](https://trynoice.com/privacy-policy) einverstanden.</string>
-    <string name="audio_quality_ultra">Ultra (320 kbps)</string>
+    <string name="audio_quality_ultra">Ultra (320 kbit/s)</string>
     <string name="audio_quality_high">Hoch (256 kbps)</string>
     <string name="ended_on">Endete am %1$s</string>
     <string name="audio_quality_summary">Die maximale Audioqualität für das Streaming. Medium, High und Ultra funktionieren nur, wenn Sie Noice Premium abonniert haben.</string>
@@ -308,4 +304,9 @@
         <item quantity="one">%1$d Tag</item>
         <item quantity="other">%1$d Tage</item>
     </plurals>
+    <string name="sound_library_updated">Sound-Bibliothek aktualisiert</string>
+    <string name="sound_library_updated_message">Wir haben ein paar Änderungen an der Soundbibliothek vorgenommen. Möchten Sie die Versionshinweise einsehen\?</string>
+    <string name="review">Rezension</string>
+    <string name="benefit_4">%1$d zusätzliche Klänge</string>
+    <string name="sound_is_premium">Dieser Sound ist mit Noice Premium verfügbar.</string>
 </resources>
