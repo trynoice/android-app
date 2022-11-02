@@ -34,10 +34,12 @@ import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -235,6 +237,7 @@ class PresetsViewModel @Inject constructor(
 ) : ViewModel() {
 
   internal val presets: StateFlow<List<Preset>> = presetRepository.listFlow()
+    .flowOn(Dispatchers.IO)
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
   internal val activePresetId: StateFlow<String?> =

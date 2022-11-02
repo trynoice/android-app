@@ -13,6 +13,9 @@ abstract class AlarmDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   abstract suspend fun save(alarm: AlarmDto)
 
+  @Query("DELETE FROM alarm WHERE id = :alarmId")
+  abstract suspend fun deleteById(alarmId: Int)
+
   @Query("SELECT * FROM alarm ORDER BY minuteOfDay ASC")
-  abstract fun list(): PagingSource<Int, AlarmDto>
+  abstract fun pagingSource(): PagingSource<Int, AlarmDto>
 }

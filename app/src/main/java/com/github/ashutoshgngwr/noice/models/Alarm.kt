@@ -27,7 +27,7 @@ data class Alarm(
     val currentMinuteOfDay = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE)
     val currentDay = calendar.get(Calendar.DAY_OF_WEEK)
     val daysToAdd = if (weeklySchedule == 0) {
-      if (minuteOfDay < currentMinuteOfDay) 1 else 0
+      if (minuteOfDay > currentMinuteOfDay) 0 else 1
     } else if ((weeklySchedule shr currentDay - 1) and 1 == 1 && minuteOfDay > currentMinuteOfDay) {
       0
     } else {

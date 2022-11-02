@@ -4,12 +4,14 @@ import android.Manifest
 import android.os.Build
 import android.os.Bundle
 import android.text.format.DateUtils
-import android.util.Log
+import android.transition.ChangeBounds
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
+import androidx.core.view.postDelayed
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -19,6 +21,7 @@ import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.paging.cachedIn
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.github.ashutoshgngwr.noice.R
@@ -28,13 +31,16 @@ import com.github.ashutoshgngwr.noice.ext.hasSelfPermission
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showTimePicker
 import com.github.ashutoshgngwr.noice.ext.startAppDetailsSettingsActivity
+import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.models.Alarm
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.*
@@ -46,6 +52,7 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
   private lateinit var binding: AlarmsFragmentBinding
 
   private val viewModel: AlarmsViewModel by viewModels()
+  private val adapter: AlarmListAdapter by lazy { AlarmListAdapter(layoutInflater, this) }
   private val requestPermissionsLauncher = registerForActivityResult(
     ActivityResultContracts.RequestPermission(),
     this::onPostNotificationsPermissionRequestResult,
@@ -59,14 +66,11 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.addAlarmButton.setOnClickListener { startAddAlarmFlow() }
-
-    val adapter = AlarmListAdapter(layoutInflater, this)
+    binding.list.adapter = adapter
     adapter.addLoadStateListener { loadStates ->
       binding.emptyListIndicator.isVisible =
         loadStates.append.endOfPaginationReached && adapter.itemCount < 1
     }
-
-    binding.list.adapter = adapter
 
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.alarmsPagingData.collect { pagingData ->
@@ -139,43 +143,105 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
       .setAction(R.string.settings) { requireContext().startAppDetailsSettingsActivity() }
   }
 
+  override fun onAlarmItemCollapsed(bindingAdapterPosition: Int) {
+    binding.list.beginDelayedLayoutBoundsChangeTransition(bindingAdapterPosition)
+    adapter.setExpandedItemPosition(-1, true)
+  }
+
+  override fun onAlarmItemExpanded(bindingAdapterPosition: Int) {
+    if (adapter.expandedPosition > -1) {
+      binding.list.beginDelayedLayoutBoundsChangeTransition(adapter.expandedPosition)
+    }
+
+    binding.list.beginDelayedLayoutBoundsChangeTransition(bindingAdapterPosition)
+    adapter.setExpandedItemPosition(bindingAdapterPosition, true)
+  }
+
   override fun onAlarmLabelClicked(alarm: Alarm) {
-    Log.d("AlarmsFragment", "onAlarmLabelClicked:")
+    DialogFragment.show(childFragmentManager) {
+      title(R.string.edit_label)
+      val valueGetter = input(
+        hintRes = R.string.add_label,
+        preFillValue = alarm.label ?: "",
+      )
+
+      negativeButton(R.string.cancel)
+      positiveButton(R.string.save) {
+        val label = valueGetter.invoke()
+        viewModel.save(alarm.copy(label = label.ifBlank { null }))
+      }
+    }
   }
 
   override fun onAlarmTimeClicked(alarm: Alarm) {
-    Log.d("AlarmsFragment", "onAlarmTimeClicked:")
+    showTimePicker(hour = alarm.minuteOfDay / 60, alarm.minuteOfDay % 60) { hour, minute ->
+      viewModel.save(alarm.copy(minuteOfDay = hour * 60 + minute))
+    }
   }
 
   override fun onAlarmToggled(alarm: Alarm, enabled: Boolean) {
-    Log.d("AlarmsFragment", "onAlarmToggled: enabled=$enabled")
+    viewModel.save(alarm.copy(isEnabled = enabled))
   }
 
   override fun onAlarmWeeklyScheduleChanged(alarm: Alarm, newWeeklySchedule: Int) {
-    Log.d("AlarmsFragment", "onAlarmWeeklyScheduleChanged: schedule=$newWeeklySchedule")
+    viewModel.save(alarm.copy(weeklySchedule = newWeeklySchedule))
   }
 
   override fun onAlarmPresetClicked(alarm: Alarm) {
-    Log.d("AlarmsFragment", "onAlarmPresetClicked:")
+    DialogFragment.show(childFragmentManager) {
+      title(R.string.select_preset)
+      singleChoiceItems(
+        items = mutableListOf(getString(R.string.random_preset))
+          .apply {
+            addAll(
+              viewModel.presets
+                .value
+                .map { it.name }
+            )
+          }.toTypedArray(),
+        currentChoice = 1 + viewModel.presets
+          .value
+          .indexOfFirst { it.id == alarm.preset?.id },
+        onItemSelected = { choice ->
+          val preset = if (choice == 0) null else viewModel.presets.value[choice - 1]
+          viewModel.save(alarm.copy(preset = preset))
+        },
+      )
+
+      negativeButton(R.string.cancel)
+    }
   }
 
   override fun onAlarmVibrationToggled(alarm: Alarm, vibrate: Boolean) {
-    Log.d("AlarmsFragment", "onAlarmVibrationToggled: vibrate=$vibrate")
+    viewModel.save(alarm.copy(vibrate = vibrate))
   }
 
   override fun onAlarmDeleteClicked(alarm: Alarm) {
-    Log.d("AlarmsFragment", "onAlarmDeleteClicked:")
+    adapter.setExpandedItemPosition(-1, false)
+    viewModel.delete(alarm)
+  }
+
+  private fun RecyclerView.beginDelayedLayoutBoundsChangeTransition(position: Int) {
+    findViewHolderForAdapterPosition(position)
+      .let { it?.itemView as? ViewGroup }
+      ?.also { TransitionManager.beginDelayedTransition(it, ChangeBounds()) }
   }
 }
 
 @HiltViewModel
 class AlarmsViewModel @Inject constructor(
   private val alarmRepository: AlarmRepository,
+  presetRepository: PresetRepository,
 ) : ViewModel() {
 
-  internal val alarmsPagingData: StateFlow<PagingData<Alarm>> = alarmRepository.list()
+  internal val alarmsPagingData: StateFlow<PagingData<Alarm>> = alarmRepository.pagingDataFlow()
+    .flowOn(Dispatchers.IO)
     .cachedIn(viewModelScope)
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PagingData.empty())
+
+  internal val presets: StateFlow<List<Preset>> = presetRepository.listFlow()
+    .flowOn(Dispatchers.IO)
+    .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
   internal fun canScheduleAlarms(): Boolean {
     return alarmRepository.canScheduleAlarms()
@@ -183,7 +249,29 @@ class AlarmsViewModel @Inject constructor(
 
   internal fun create(hour: Int, minute: Int) {
     viewModelScope.launch(Dispatchers.IO) {
-      alarmRepository.create(hour * 60 + minute)
+      alarmRepository.save(
+        Alarm(
+          id = 0,
+          label = null,
+          isEnabled = canScheduleAlarms(),
+          minuteOfDay = hour * 60 + minute,
+          weeklySchedule = 0,
+          preset = null,
+          vibrate = true,
+        )
+      )
+    }
+  }
+
+  internal fun save(alarm: Alarm) {
+    viewModelScope.launch(Dispatchers.IO) {
+      alarmRepository.save(alarm)
+    }
+  }
+
+  internal fun delete(alarm: Alarm) {
+    viewModelScope.launch(Dispatchers.IO) {
+      alarmRepository.delete(alarm)
     }
   }
 }
@@ -193,7 +281,7 @@ class AlarmListAdapter(
   private val itemViewController: AlarmItemViewController,
 ) : PagingDataAdapter<Alarm, AlarmViewHolder>(AlarmComparator) {
 
-  private var expandedPosition = -1
+  var expandedPosition = -1; private set
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
     val binding = AlarmItemBinding.inflate(layoutInflater, parent, false)
@@ -203,23 +291,37 @@ class AlarmListAdapter(
   override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {
     val alarm = getItem(position) ?: return
     holder.bind(alarm, expandedPosition == position)
-    holder.binding.expandToggle.setOnClickListener {
-      val previousExpandedPosition = expandedPosition
-      expandedPosition = if (expandedPosition == position) -1 else position
-      if (expandedPosition > -1) notifyItemChanged(expandedPosition)
+  }
+
+  fun setExpandedItemPosition(position: Int, notifyChanges: Boolean) {
+    val previousExpandedPosition = expandedPosition
+    expandedPosition = position
+    if (notifyChanges) {
       if (previousExpandedPosition > -1) notifyItemChanged(previousExpandedPosition)
+      if (position > -1) notifyItemChanged(position)
     }
   }
 }
 
 class AlarmViewHolder(
-  val binding: AlarmItemBinding,
+  private val binding: AlarmItemBinding,
   private val controller: AlarmItemViewController,
 ) : ViewHolder(binding.root) {
 
   private lateinit var alarm: Alarm
+  private var isExpanded = false
 
   init {
+    val expandToggleClickListener = View.OnClickListener {
+      if (isExpanded) {
+        controller.onAlarmItemCollapsed(bindingAdapterPosition)
+      } else {
+        controller.onAlarmItemExpanded(bindingAdapterPosition)
+      }
+    }
+
+    binding.root.setOnClickListener(expandToggleClickListener)
+    binding.expandToggle.setOnClickListener(expandToggleClickListener)
     binding.label.setOnClickListener { controller.onAlarmLabelClicked(alarm) }
     binding.time.setOnClickListener { controller.onAlarmTimeClicked(alarm) }
     binding.enableSwitch.setOnCheckedChangeListener { _, checked ->
@@ -271,11 +373,23 @@ class AlarmViewHolder(
 
   fun bind(alarm: Alarm, isExpanded: Boolean) {
     this.alarm = alarm
+    this.isExpanded = isExpanded
     val context = binding.root.context
 
-    binding.expandToggle.setIconResource(
-      if (isExpanded) R.drawable.ic_round_keyboard_arrow_up_24 else R.drawable.ic_round_keyboard_arrow_down_24
-    )
+    binding.expandToggle.animate()
+      .rotation(if (isExpanded) 180f else 0f)
+      .setDuration(context.resources.getInteger(android.R.integer.config_shortAnimTime).toLong())
+      .start()
+
+    // on enabling these views just before the expansion animation, both of them inherit focused
+    // background from `selectableItemBackground` selector. To prevent it, enable them with a short
+    // delay.
+    binding.root.postDelayed(100L) {
+      binding.label.isClickable = isExpanded
+      binding.label.isEnabled = isExpanded
+      binding.time.isClickable = isExpanded
+      binding.time.isEnabled = isExpanded
+    }
 
     binding.label.isVisible = isExpanded || alarm.label != null
     binding.scheduleToggleContainer.isVisible = isExpanded
@@ -340,6 +454,8 @@ object AlarmComparator : DiffUtil.ItemCallback<Alarm>() {
 }
 
 interface AlarmItemViewController {
+  fun onAlarmItemCollapsed(bindingAdapterPosition: Int)
+  fun onAlarmItemExpanded(bindingAdapterPosition: Int)
   fun onAlarmLabelClicked(alarm: Alarm)
   fun onAlarmTimeClicked(alarm: Alarm)
   fun onAlarmToggled(alarm: Alarm, enabled: Boolean)

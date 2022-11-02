@@ -353,7 +353,8 @@ class LibraryViewModel @Inject constructor(
   internal val isSavePresetButtonVisible: StateFlow<Boolean> = combine(
     playerManagerState,
     playerStates,
-    presetRepository.listFlow(),
+    presetRepository.listFlow()
+      .flowOn(Dispatchers.IO),
   ) { playerManagerState, playerStates, presets ->
     !playerManagerState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED)
       && presets.none { p -> p.hasMatchingPlayerStates(playerStates) }

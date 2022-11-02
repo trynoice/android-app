@@ -6,14 +6,15 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:layout_margin="8dp"
+  android:clickable="true"
+  android:focusable="true"
   app:contentPadding="16dp"
   app:shapeAppearanceOverlay="?attr/shapeAppearanceCornerExtraLarge">
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:animateLayoutChanges="true">
+    android:layout_height="wrap_content">
 
     <com.google.android.material.button.MaterialButton
       android:id="@+id/expand_toggle"
@@ -23,9 +24,10 @@
       android:layout_marginStart="8dp"
       android:minHeight="0dp"
       android:padding="4dp"
-      app:icon="@drawable/ic_round_keyboard_arrow_up_24"
+      app:icon="@drawable/ic_round_keyboard_arrow_down_24"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      app:layout_constraintTop_toTopOf="parent"
+      tools:rotation="180" />
 
     <TextView
       android:id="@+id/label"
@@ -36,6 +38,7 @@
       android:hint="@string/add_label"
       android:textColor="@drawable/alarm_item_activable_text_color"
       app:drawableStartCompat="@drawable/ic_outline_label_24"
+      app:drawableTint="@drawable/alarm_item_activable_text_color"
       app:layout_constraintEnd_toStartOf="@id/expand_toggle"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />

@@ -22,25 +22,18 @@ class AlarmRepository(
   private val pendingIntentBuilder: PendingIntentBuilder,
 ) {
 
-  suspend fun create(minuteOfDay: Int) {
-    val alarm = Alarm(
-      id = 0,
-      label = null,
-      isEnabled = canScheduleAlarms(),
-      minuteOfDay = minuteOfDay,
-      weeklySchedule = 0,
-      preset = null,
-      vibrate = true,
-    )
-
+  suspend fun save(alarm: Alarm) {
     appDb.alarms().save(alarm.toRoomDto())
-    if (alarm.isEnabled) {
-      schedule(alarm)
-    }
+    // TODO: add scheduling logic
   }
 
-  fun list(): Flow<PagingData<Alarm>> {
-    return Pager(PagingConfig(pageSize = 20)) { appDb.alarms().list() }
+  suspend fun delete(alarm: Alarm) {
+    // TODO: cancel the alarm before deleting
+    appDb.alarms().deleteById(alarm.id)
+  }
+
+  fun pagingDataFlow(): Flow<PagingData<Alarm>> {
+    return Pager(PagingConfig(pageSize = 20)) { appDb.alarms().pagingSource() }
       .flow
       .map { pagingData ->
         pagingData.map { it.toDomainEntity(presetRepository.get(it.presetId)) }
