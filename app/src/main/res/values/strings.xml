@@ -348,4 +348,13 @@
     <string name="vibrate">Vibrate</string>
     <string name="not_scheduled">Not scheduled</string>
     <string name="edit_label">Edit Label</string>
+    <string name="notification_channel_alarm_primary__name">Alarms</string>
+    <string name="notification_channel_alarm_primary__description">Notifications shown when a scheduled alarm fires.</string>
+    <string name="notification_channel_alarm_secondary__name">Alarms Fallback</string>
+    <string name="notification_channel_alarm_secondary__description">Notifications shown when a scheduled alarm fires and its selected preset fails to load.</string>
+    <string name="notification_channel_alarm_priming__name">Alarm Priming</string>
+    <string name="notification_channel_alarm_priming__description">Notifications shown when preparing to fire a scheduled alarm.</string>
+    <string name="alarm">Alarm</string>
+    <string name="snooze">Snooze</string>
+    <string name="alarm_ringer_preset_load_error">Failed to load the selected preset for this alarm.</string>
 </resources>

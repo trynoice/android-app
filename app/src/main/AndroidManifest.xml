@@ -19,6 +19,8 @@
 
   <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 
+  <uses-permission android:name="android.permission.VIBRATE" />
+
   <uses-permission android:name="android.permission.WAKE_LOCK" />
 
   <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
@@ -103,8 +105,7 @@
 
     <activity
       android:name=".activity.AlarmRingerActivity"
-      android:excludeFromRecents="true"
-      android:launchMode="singleInstance" />
+      android:excludeFromRecents="true" />
 
     <activity
       android:name=".activity.SignInLinkHandlerActivity"
@@ -169,7 +170,7 @@
 
     </receiver>
 
-    <receiver android:name=".receiver.AlarmReceiver" />
+    <service android:name=".service.AlarmRingerService" />
 
     <provider
       android:name="androidx.startup.InitializationProvider"

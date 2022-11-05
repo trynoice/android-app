@@ -24,12 +24,21 @@ class AlarmRepository(
 
   suspend fun save(alarm: Alarm) {
     appDb.alarms().save(alarm.toRoomDto())
-    // TODO: add scheduling logic
+    alarmManager.cancel(alarm)
+    if (alarm.isEnabled) {
+      alarmManager.setAlarmClock(alarm)
+    }
   }
 
   suspend fun delete(alarm: Alarm) {
-    // TODO: cancel the alarm before deleting
+    alarmManager.cancel(alarm)
     appDb.alarms().deleteById(alarm.id)
+  }
+
+  suspend fun get(alarmId: Int): Alarm? {
+    return appDb.alarms()
+      .getById(alarmId)
+      ?.let { it.toDomainEntity(presetRepository.get(it.presetId)) }
   }
 
   fun pagingDataFlow(): Flow<PagingData<Alarm>> {
@@ -48,9 +57,13 @@ class AlarmRepository(
     return true
   }
 
-  private fun schedule(alarm: Alarm) {
+  private fun AlarmManager.setAlarmClock(alarm: Alarm) {
     AlarmClockInfo(alarm.getTriggerTimeMillis(), pendingIntentBuilder.buildShowIntent(alarm))
-      .also { alarmManager.setAlarmClock(it, pendingIntentBuilder.buildTriggerIntent(alarm)) }
+      .also { setAlarmClock(it, pendingIntentBuilder.buildTriggerIntent(alarm)) }
+  }
+
+  private fun AlarmManager.cancel(alarm: Alarm) {
+    cancel(pendingIntentBuilder.buildTriggerIntent(alarm))
   }
 
   interface PendingIntentBuilder {

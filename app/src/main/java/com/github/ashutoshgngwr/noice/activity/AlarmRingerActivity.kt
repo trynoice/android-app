@@ -1,29 +1,22 @@
 package com.github.ashutoshgngwr.noice.activity
 
-import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Window
 import android.view.WindowManager
-import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.media.AudioAttributesCompat
+import androidx.core.view.isVisible
 import com.github.ashutoshgngwr.noice.databinding.AlarmRingerActivityBinding
-import com.github.ashutoshgngwr.noice.engine.PlaybackController
-import com.github.ashutoshgngwr.noice.engine.PlaybackService
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
-import com.ncorti.slidetoact.SlideToActView
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,23 +25,25 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteListener {
+class AlarmRingerActivity : AppCompatActivity() {
 
-  private var ringerStartTime: Long = 0L
   private lateinit var binding: AlarmRingerActivityBinding
 
   @set:Inject
-  internal lateinit var presetRepository: PresetRepository
+  internal lateinit var serviceController: ServiceController
 
   @set:Inject
   internal lateinit var analyticsProvider: AnalyticsProvider
 
-  @set:Inject
-  internal lateinit var playbackController: PlaybackController
-
   private val settingsRepository by lazy {
     EntryPointAccessors.fromApplication(application, AlarmRingerActivityEntryPoint::class.java)
       .settingsRepository()
+  }
+
+  private val dismissBroadcastReceiver = object : BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent?) {
+      finish()
+    }
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,10 +52,26 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
 
     supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
     binding = AlarmRingerActivityBinding.inflate(layoutInflater)
-    binding.dismissSlider.onSlideCompleteListener = this
+
+    binding.dismiss.setOnClickListener { serviceController.dismiss() }
+    binding.snooze.setOnClickListener {
+      intent.getIntExtra(EXTRA_ALARM_ID, -1)
+        .takeIf { it > -1 }
+        ?.also { serviceController.snooze(it) }
+    }
+
     setContentView(binding.root)
     showWhenLocked()
-    ringerStartTime = System.currentTimeMillis()
+  }
+
+  override fun onStart() {
+    super.onStart()
+    registerReceiver(dismissBroadcastReceiver, IntentFilter(ACTION_DISMISS))
+  }
+
+  override fun onStop() {
+    unregisterReceiver(dismissBroadcastReceiver)
+    super.onStop()
   }
 
   override fun onNewIntent(intent: Intent?) {
@@ -71,39 +82,9 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
   override fun onResume() {
     super.onResume()
     enableImmersiveMode()
-
-    // handle the new intent here since onResume() is guaranteed to be called after onNewIntent().
-    // https://developer.android.com/reference/android/app/Activity#onNewIntent(android.content.Intent)
-    val preset = presetRepository.get(intent.getStringExtra(EXTRA_PRESET_ID))
-    if (preset == null) {
-      Log.w(LOG_TAG, "onResume: preset is null")
-      finish()
-      return
-    }
-
-    // Since activity takes a moment to actually show up, invoking `startService` from `onCreate` or
-    // `onResume` fails with `java.lang.IllegalStateException: Not allowed to start service Intent:
-    // app is in background` on recent Android version (O+). `PlaybackController` can not call
-    // `startForegroundService` since it doesn't know if an action will bring `MediaPlayerService`
-    // to foreground. To prevent `PlaybackController` from causing this error by invoking
-    // `startService`, we need to manually start `MediaPlayerService` in the foreground since we can
-    // be certain that playPreset action will bring it to foreground before Android System kills it.
-    ContextCompat.startForegroundService(this, Intent(this, PlaybackService::class.java))
-
-    Log.d(LOG_TAG, "onResume(): starting preset")
-    playbackController.setAudioUsage(AudioAttributesCompat.USAGE_ALARM)
-    playbackController.play(preset)
-  }
-
-  override fun onBackPressed() = Unit
-
-  override fun onSlideComplete(view: SlideToActView) {
-    Log.d(LOG_TAG, "onSlideComplete: pausing playback")
-    playbackController.pause(true)
-    playbackController.setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
-    val duration = System.currentTimeMillis() - ringerStartTime
-    analyticsProvider.logEvent("alarm_ringer_session", bundleOf("duration_ms" to duration))
-    finish()
+    binding.triggerTime.text = intent?.getStringExtra(EXTRA_ALARM_TRIGGER_TIME)
+    binding.label.text = intent?.getStringExtra(EXTRA_ALARM_LABEL)
+    binding.label.isVisible = !binding.label.text.isNullOrBlank()
   }
 
   private fun enableImmersiveMode() {
@@ -133,31 +114,37 @@ class AlarmRingerActivity : AppCompatActivity(), SlideToActView.OnSlideCompleteL
     }
   }
 
+  companion object {
+    private const val ACTION_DISMISS = "dismiss"
+    private const val EXTRA_ALARM_ID = "alarmId"
+    private const val EXTRA_ALARM_LABEL = "alarmLabel"
+    private const val EXTRA_ALARM_TRIGGER_TIME = "alarmTriggerTime"
+
+    fun buildIntent(
+      context: Context,
+      alarmId: Int,
+      alarmLabel: String?,
+      alarmTriggerTime: String,
+    ): Intent {
+      return Intent(context, AlarmRingerActivity::class.java)
+        .putExtra(EXTRA_ALARM_ID, alarmId)
+        .putExtra(EXTRA_ALARM_LABEL, alarmLabel)
+        .putExtra(EXTRA_ALARM_TRIGGER_TIME, alarmTriggerTime)
+    }
+
+    fun dismiss(context: Context) {
+      context.sendBroadcast(Intent(ACTION_DISMISS))
+    }
+  }
+
+  interface ServiceController {
+    fun dismiss()
+    fun snooze(alarmId: Int)
+  }
+
   @EntryPoint
   @InstallIn(SingletonComponent::class)
   interface AlarmRingerActivityEntryPoint {
     fun settingsRepository(): SettingsRepository
-  }
-
-  companion object {
-    @VisibleForTesting
-    internal const val EXTRA_PRESET_ID = "preset_id"
-
-    private const val RC_ALARM = 0x39
-    private val LOG_TAG = AlarmRingerActivity::class.simpleName
-
-    /**
-     * Returns a [PendingIntent] that starts the [AlarmRingerActivity] with the given [presetID].
-     */
-    fun getPendingIntent(context: Context, presetID: String?): PendingIntent {
-      var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        piFlags = piFlags or PendingIntent.FLAG_IMMUTABLE
-      }
-
-      return Intent(context, AlarmRingerActivity::class.java)
-        .putExtra(EXTRA_PRESET_ID, presetID)
-        .let { PendingIntent.getActivity(context, RC_ALARM, it, piFlags) }
-    }
   }
 }

@@ -16,6 +16,9 @@ abstract class AlarmDao {
   @Query("DELETE FROM alarm WHERE id = :alarmId")
   abstract suspend fun deleteById(alarmId: Int)
 
+  @Query("SELECT * FROM alarm WHERE id = :alarmId")
+  abstract suspend fun getById(alarmId: Int): AlarmDto?
+
   @Query("SELECT * FROM alarm ORDER BY minuteOfDay ASC")
   abstract fun pagingSource(): PagingSource<Int, AlarmDto>
 }

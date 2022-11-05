@@ -10,7 +10,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
-import com.github.ashutoshgngwr.noice.activity.AlarmRingerActivity
 import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.gson.Gson
@@ -56,12 +55,12 @@ class WakeUpTimerManager @Inject constructor(
     }
 
     prefs.edit { putString(PREF_WAKE_UP_TIMER, gson.toJson(timer)) }
-    withAlarmManager(context) {
-      it.setAlarmClock(
-        AlarmManager.AlarmClockInfo(timer.atMillis, getPendingIntentForActivity()),
-        AlarmRingerActivity.getPendingIntent(context, timer.presetID)
-      )
-    }
+//    withAlarmManager(context) {
+//      it.setAlarmClock(
+//        AlarmManager.AlarmClockInfo(timer.atMillis, getPendingIntentForActivity()),
+//        AlarmRingerActivity.getPendingIntent(context, timer.presetID)
+//      )
+//    }
   }
 
   /**
@@ -69,10 +68,10 @@ class WakeUpTimerManager @Inject constructor(
    */
   fun cancel() {
     prefs.edit { remove(PREF_WAKE_UP_TIMER) }
-    withAlarmManager(context) {
-      // don't need concrete timer value for cancelling the alarm.
-      it.cancel(AlarmRingerActivity.getPendingIntent(context, null))
-    }
+//    withAlarmManager(context) {
+//      // don't need concrete timer value for cancelling the alarm.
+//      it.cancel(AlarmRingerActivity.getPendingIntent(context, null))
+//    }
   }
 
   /**

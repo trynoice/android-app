@@ -22,14 +22,6 @@
     <item name="icon">@drawable/ic_baseline_add_24</item>
   </style>
 
-  <style name="Widget.App.AlarmRinger.DismissSlider" parent="SlideToActView">
-    <item name="slider_height">72dp</item>
-    <item name="border_radius">28dp</item>
-    <item name="inner_color">?attr/colorOnPrimary</item>
-    <item name="outer_color">?attr/colorPrimary</item>>
-    <item name="text_appearance">@style/TextAppearance.App.AlarmRinger.DismissSlider</item>
-  </style>
-
   <style name="TextAppearance.App.AlarmRinger.DismissSlider" parent="TextAppearance.Material3.TitleLarge">
     <item name="android:textColor">?attr/colorOnPrimary</item>
     <item name="android:textAllCaps">true</item>

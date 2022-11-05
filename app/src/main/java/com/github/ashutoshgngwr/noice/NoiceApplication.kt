@@ -5,17 +5,19 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.room.Room
 import androidx.work.Configuration
+import com.github.ashutoshgngwr.noice.activity.AlarmRingerActivity
 import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.data.AppDatabase
 import com.github.ashutoshgngwr.noice.models.Alarm
-import com.github.ashutoshgngwr.noice.receiver.AlarmReceiver
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import com.github.ashutoshgngwr.noice.service.AlarmRingerService
 import com.google.android.exoplayer2.database.DatabaseProvider
 import com.google.android.exoplayer2.database.StandaloneDatabaseProvider
 import com.google.android.exoplayer2.offline.DefaultDownloadIndex
@@ -154,9 +156,14 @@ class NoiceApplication : Application(), Configuration.Provider {
         }
 
         override fun buildTriggerIntent(alarm: Alarm): PendingIntent {
-          return Intent(context, AlarmReceiver::class.java)
-            .putExtra(AlarmReceiver.EXTRA_ALARM_ID, alarm.id)
-            .let { PendingIntent.getBroadcast(context, alarm.id, it, piFlags) }
+          return AlarmRingerService.buildRingIntent(context, alarm.id)
+            .let { intent ->
+              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                PendingIntent.getForegroundService(context, alarm.id, intent, piFlags)
+              } else {
+                PendingIntent.getService(context, alarm.id, intent, piFlags)
+              }
+            }
         }
       }
 
@@ -166,6 +173,44 @@ class NoiceApplication : Application(), Configuration.Provider {
         appDb,
         piBuilder
       )
+    }
+  }
+
+  @Module
+  @InstallIn(SingletonComponent::class)
+  object AlarmRingerModule {
+    @Provides
+    @Singleton
+    fun uiController(@ApplicationContext context: Context): AlarmRingerService.UiController {
+      return object : AlarmRingerService.UiController {
+        override fun buildShowIntent(
+          alarmId: Int,
+          alarmLabel: String?,
+          alarmTriggerTime: String,
+        ): Intent {
+          return AlarmRingerActivity.buildIntent(context, alarmId, alarmLabel, alarmTriggerTime)
+        }
+
+        override fun dismiss() {
+          AlarmRingerActivity.dismiss(context)
+        }
+      }
+    }
+
+    @Provides
+    @Singleton
+    fun serviceController(@ApplicationContext context: Context): AlarmRingerActivity.ServiceController {
+      return object : AlarmRingerActivity.ServiceController {
+        override fun dismiss() {
+          AlarmRingerService.buildDismissIntent(context)
+            .also { ContextCompat.startForegroundService(context, it) }
+        }
+
+        override fun snooze(alarmId: Int) {
+          AlarmRingerService.buildSnoozeIntent(context, alarmId)
+            .also { ContextCompat.startForegroundService(context, it) }
+        }
+      }
     }
   }
 }
