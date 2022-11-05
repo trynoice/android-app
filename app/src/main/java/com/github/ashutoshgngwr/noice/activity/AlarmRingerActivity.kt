@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowCompat
@@ -62,6 +63,7 @@ class AlarmRingerActivity : AppCompatActivity() {
 
     setContentView(binding.root)
     showWhenLocked()
+    onBackPressedDispatcher.addCallback(this) { } // no-op
   }
 
   override fun onStart() {
