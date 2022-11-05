@@ -14,6 +14,7 @@ import com.github.ashutoshgngwr.noice.models.toDomainEntity
 import com.github.ashutoshgngwr.noice.models.toRoomDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.util.concurrent.TimeUnit
 
 class AlarmRepository(
   private val alarmManager: AlarmManager,
@@ -57,8 +58,26 @@ class AlarmRepository(
     return true
   }
 
+  suspend fun reportTrigger(alarmId: Int, isSnoozed: Boolean) {
+    val alarm = get(alarmId) ?: return
+    if (alarm.weeklySchedule == 0) {
+      save(alarm.copy(isEnabled = false))
+    }
+
+    if (isSnoozed) {
+      // TODO: add an option in the settings for Snooze duration.
+      alarmManager.setAlarmClock(alarm, System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10))
+    } else if (alarm.weeklySchedule != 0) {
+      alarmManager.setAlarmClock(alarm)
+    }
+  }
+
   private fun AlarmManager.setAlarmClock(alarm: Alarm) {
-    AlarmClockInfo(alarm.getTriggerTimeMillis(), pendingIntentBuilder.buildShowIntent(alarm))
+    setAlarmClock(alarm, alarm.getTriggerTimeMillis())
+  }
+
+  private fun AlarmManager.setAlarmClock(alarm: Alarm, triggerTimeMillis: Long) {
+    AlarmClockInfo(triggerTimeMillis, pendingIntentBuilder.buildShowIntent(alarm))
       .also { setAlarmClock(it, pendingIntentBuilder.buildTriggerIntent(alarm)) }
   }
 

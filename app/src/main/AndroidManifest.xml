@@ -105,7 +105,8 @@
 
     <activity
       android:name=".activity.AlarmRingerActivity"
-      android:excludeFromRecents="true" />
+      android:excludeFromRecents="true"
+      android:launchMode="singleInstance" />
 
     <activity
       android:name=".activity.SignInLinkHandlerActivity"

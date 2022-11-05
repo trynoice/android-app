@@ -94,19 +94,12 @@ class AlarmRingerService : LifecycleService() {
   }
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-    when (intent?.action) {
-      ACTION_RING -> {
-        val alarmId = intent.getIntExtra(EXTRA_ALARM_ID, -1)
-        if (alarmId > -1) lifecycleScope.launch { startRinger(alarmId) }
-      }
-      ACTION_SNOOZE -> {
-        dismissRinger()
-        val alarmId = intent.getIntExtra(EXTRA_ALARM_ID, -1)
-        if (alarmId > -1) {
-          // TODO: handle snooze
-        }
-      }
-      ACTION_DISMISS -> dismissRinger()
+    intent ?: return super.onStartCommand(null, flags, startId)
+    val alarmId = intent.getIntExtra(EXTRA_ALARM_ID, -1)
+    when (intent.action) {
+      ACTION_RING -> lifecycleScope.launch { startRinger(alarmId) }
+      ACTION_SNOOZE -> lifecycleScope.launch { snooze(alarmId) }
+      ACTION_DISMISS -> lifecycleScope.launch { dismiss(alarmId) }
     }
 
     return super.onStartCommand(intent, flags, startId)
@@ -133,7 +126,12 @@ class AlarmRingerService : LifecycleService() {
   }
 
   private suspend fun startRinger(alarmId: Int) {
-    val alarm = withContext(Dispatchers.IO) { alarmRepository.get(alarmId) } ?: return
+    val alarm = withContext(Dispatchers.IO) { alarmRepository.get(alarmId) }
+    if (alarm == null) {
+      withContext(Dispatchers.Main) { stopSelf() }
+      return
+    }
+
     val timeFmtFlags = DateUtils.FORMAT_SHOW_WEEKDAY or DateUtils.FORMAT_SHOW_TIME
     val alarmTriggerTime = DateUtils.formatDateTime(this, System.currentTimeMillis(), timeFmtFlags)
 
@@ -226,7 +224,7 @@ class AlarmRingerService : LifecycleService() {
       .addAction(
         R.drawable.ic_round_close_24,
         getString(R.string.dismiss),
-        buildPendingServiceIntent(buildDismissIntent(this), 0x62),
+        buildPendingServiceIntent(buildDismissIntent(this, alarm.id), 0x62),
       )
       .setFullScreenIntent(
         uiController.buildShowIntent(alarm.id, alarm.label, alarmTriggerTime)
@@ -257,6 +255,16 @@ class AlarmRingerService : LifecycleService() {
       .setShowWhen(true)
       .setAutoCancel(true)
       .build()
+  }
+
+  private suspend fun dismiss(alarmId: Int) {
+    withContext(Dispatchers.IO) { alarmRepository.reportTrigger(alarmId, false) }
+    withContext(Dispatchers.Main) { dismissRinger() }
+  }
+
+  private suspend fun snooze(alarmId: Int) {
+    withContext(Dispatchers.IO) { alarmRepository.reportTrigger(alarmId, true) }
+    withContext(Dispatchers.Main) { dismissRinger() }
   }
 
   private fun dismissRinger() {
@@ -298,9 +306,10 @@ class AlarmRingerService : LifecycleService() {
         .putExtra(EXTRA_ALARM_ID, alarmId)
     }
 
-    fun buildDismissIntent(context: Context): Intent {
+    fun buildDismissIntent(context: Context, alarmId: Int): Intent {
       return Intent(context, AlarmRingerService::class.java)
         .setAction(ACTION_DISMISS)
+        .putExtra(EXTRA_ALARM_ID, alarmId)
     }
   }
 

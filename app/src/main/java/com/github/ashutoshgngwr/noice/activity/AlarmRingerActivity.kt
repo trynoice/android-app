@@ -54,11 +54,12 @@ class AlarmRingerActivity : AppCompatActivity() {
     supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
     binding = AlarmRingerActivityBinding.inflate(layoutInflater)
 
-    binding.dismiss.setOnClickListener { serviceController.dismiss() }
+    binding.dismiss.setOnClickListener {
+      serviceController.dismiss(intent.getIntExtra(EXTRA_ALARM_ID, -1))
+    }
+
     binding.snooze.setOnClickListener {
-      intent.getIntExtra(EXTRA_ALARM_ID, -1)
-        .takeIf { it > -1 }
-        ?.also { serviceController.snooze(it) }
+      serviceController.snooze(intent.getIntExtra(EXTRA_ALARM_ID, -1))
     }
 
     setContentView(binding.root)
@@ -78,7 +79,7 @@ class AlarmRingerActivity : AppCompatActivity() {
 
   override fun onNewIntent(intent: Intent?) {
     super.onNewIntent(intent)
-    setIntent(intent)
+    if (intent != null) setIntent(intent)
   }
 
   override fun onResume() {
@@ -140,7 +141,7 @@ class AlarmRingerActivity : AppCompatActivity() {
   }
 
   interface ServiceController {
-    fun dismiss()
+    fun dismiss(alarmId: Int)
     fun snooze(alarmId: Int)
   }
 

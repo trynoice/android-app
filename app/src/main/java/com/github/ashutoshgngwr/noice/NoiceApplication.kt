@@ -201,8 +201,8 @@ class NoiceApplication : Application(), Configuration.Provider {
     @Singleton
     fun serviceController(@ApplicationContext context: Context): AlarmRingerActivity.ServiceController {
       return object : AlarmRingerActivity.ServiceController {
-        override fun dismiss() {
-          AlarmRingerService.buildDismissIntent(context)
+        override fun dismiss(alarmId: Int) {
+          AlarmRingerService.buildDismissIntent(context, alarmId)
             .also { ContextCompat.startForegroundService(context, it) }
         }
 
