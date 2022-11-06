@@ -18,7 +18,6 @@
 
 # TODO: remove this post migration to models directory.
 -keep class com.github.ashutoshgngwr.noice.model.** { <fields>; }
--keep class com.github.ashutoshgngwr.noice.WakeUpTimerManager$Timer { <fields>; }
 
 # Prevent proguard from stripping interface information from TypeAdapter, TypeAdapterFactory,
 # JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)

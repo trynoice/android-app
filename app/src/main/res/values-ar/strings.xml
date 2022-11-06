@@ -10,7 +10,6 @@
     <string name="appintro__getting_started_desc_1">هيّا لنبدأ!</string>
     <string name="app_theme_dark">داكن</string>
     <string name="app_theme_light">فاتح</string>
-    <string name="time_bridge">و</string>
     <string name="rename">إعادة تسمية</string>
     <string name="delete">حذف</string>
     <string name="stop">توقّف</string>
@@ -25,7 +24,6 @@
     <string name="play">تشغيل</string>
     <string name="save">حفظ</string>
     <string name="pause">إيقاف</string>
-    <string name="wake_up_timer">مؤقّت الاستيقاظ</string>
     <string name="sleep_timer">مؤقّت النوم</string>
     <string name="about">حول</string>
     <string name="submit_feedback">إرسال ملاحظات</string>
@@ -109,30 +107,10 @@
     <string name="appintro__chromecast_desc">استخدم Noice لإرسال أجواءه إلى الأجهزة الأخرى التي تدعم Chromecast مثل مكبرات الصوت وأجهزة التلفزيون وما إلى ذلك.</string>
     <string name="app_description">استرخ وحسن التركيز مع ضوضاء مهدئة طبيعية.</string>
     <string name="app_theme_system_default">الإعدادات الإفتراضية</string>
-    <string name="wake_up_timer_description">سيبدأ Noice في الإعداد المسبق المحدد عندما ينتهي المؤقت. استخدم الأزرار أدناه لتحديد إعداد مسبق وضبط الوقت المطلوب لبدء مؤقت الاستيقاظ.</string>
-    <string name="wake_up_timer_schedule_set">سوف ينطلق المنبه في %1$s %2$s %3$s</string>
-    <string name="wake_up_timer_cancelled">تم إلغاء منبه الاستيقاظ!</string>
     <string name="select_preset">تحديد الإعداد المسبق</string>
-    <string name="schedule">جدول</string>
     <string name="sleep_timer_description">سوف يوقف Noice نفسه عند انتهاء المؤقت. استخدم الأزرار أدناه لإضافة الوقت وبدء تشغيل المؤقت.</string>
     <string name="import_presets_successful">تم استيراد الإعدادات المسبقة بنجاح من الملف!</string>
     <string name="export_presets_successful">تم تصدير الإعدادات المسبقة بنجاح إلى الملف!</string>
-    <plurals name="time_minutes">
-        <item quantity="zero">%1$d دقيقة</item>
-        <item quantity="one">%1$d دقيقة</item>
-        <item quantity="two">%1$d دقيقتان</item>
-        <item quantity="few">%1$d دقائق</item>
-        <item quantity="many">%1$d دقائق</item>
-        <item quantity="other">%1$d دقائق</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="zero">%1$d ساعة</item>
-        <item quantity="one">%1$d ساعة</item>
-        <item quantity="two">%1$d ساعتان</item>
-        <item quantity="few">%1$d ساعات</item>
-        <item quantity="many">%1$d ساعات</item>
-        <item quantity="other">%1$d ساعات</item>
-    </plurals>
     <string name="enable_media_buttons_summary">استخدم أزرار وسائط الجهاز للتحكم في التشغيل</string>
     <string name="enable_media_buttons">تمكين أزرار الوسائط</string>
     <string name="support_development__donate_description">إذا لم تكن قد اشتريت الاشتراك المميز ، فيمكنك إجراء دفعة لمرة واحدة. سيساعدنا ذلك في الحفاظ على تطوير الميزات المجانية وإبقائها خالية من الإعلانات إلى الأبد.</string>

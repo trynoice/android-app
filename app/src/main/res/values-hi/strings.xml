@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="about">ऐप के बारे में</string>
     <string name="app_theme">दिखावट</string>
     <string name="help">सहायता</string>
@@ -8,7 +8,6 @@
     <string name="presets">प्रीसेट</string>
     <string name="sleep_timer">स्लीप टाइमर</string>
     <string name="support_development">विकास का समर्थन करें</string>
-    <string name="wake_up_timer">वेक-अप टाइमर</string>
     <string name="cancel">रद्द करें</string>
     <string name="dismiss">खारिज</string>
     <string name="name">नाम</string>
@@ -36,9 +35,7 @@
     <string name="sleep_timer_description">
        टाइमर खत्म होने पर ऐप खुद ब खुद बंद हो जाएगी। समय जोड़ने और टाइमर शुरू करने के लिए नीचे दिए गए बटनों का उपयोग करें।
   </string>
-    <string name="schedule">शेड्यूल करें</string>
     <string name="select_preset">प्रीसेट का चयन करें</string>
-    <string name="wake_up_timer_description">नोइस चयनित प्रीसेट को निर्दिष्ट समय पर प्रारंभ करेगा। प्रीसेट का चयन करने के लिए नीचे दिए गए नियंत्रणों का उपयोग करें और वेक-अप टाइमर शेड्यूल करने के लिए वांछित समय सेट करें।</string>
     <string name="app_theme_light">हल्का रंग</string>
     <string name="app_theme_dark">गहरा रंग</string>
     <string name="app_theme_system_default">सिस्टम डिफ़ॉल्ट</string>
@@ -77,7 +74,6 @@
     <string name="later">बाद में</string>
     <string name="in_app_feedback__title">समीक्षा जमा करें</string>
     <string name="in_app_feedback__description">हम आपसे ऐप के बारे में सुनना पसंद करेंगे। कृपया हमारे गिटहब रिपॉजिटरी पर जाने के लिए एक क्षण लें। यदि आपको ऐप पसंद नहीं है, तो कृपया अपनी चिंताओं को बताते हुए एक मुद्दे को खोलने पर विचार करें। अन्यथा प्यार और समर्थन दिखाने के लिए, कृपया प्रोजेक्ट को स्टार करें।</string>
-    <string name="wake_up_timer_cancelled">वेक-अप टाइमर रद्द कर दिया!</string>
     <string name="presets_as_home_screen_summary">ऐप स्टार्टअप पर \"प्रीसेट\" दिखाएं (ऐप को पुनरारंभ करने की आवश्यकता होगी)</string>
     <string name="preset_does_not_exist">प्रीसेट मौजूद नहीं है। यह संभव है कि इसे हटा दिया गया हो!</string>
     <string name="add_to_home_screen">होम स्क्रीन में शामिल करें</string>
@@ -85,16 +81,6 @@
     <string name="okay">ठीक</string>
     <string name="intensity">सघनता</string>
     <string name="submit_feedback">प्रतिपुष्टि दें</string>
-    <string name="wake_up_timer_schedule_set" tools:ignore="StringFormatCount">अलार्म %1$s %3$s में बजेगा</string>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d मिनट</item>
-        <item quantity="other">%1$d मिनटों</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d घंटा</item>
-        <item quantity="other">%1$d घंटे</item>
-    </plurals>
-    <string name="time_bridge">और</string>
     <string name="app_shortcut_creation_failed">ऐप शॉर्टकट में प्रीसेट जोड़ने में विफल!</string>
     <string name="app_shortcut_created">ऐप शॉर्टकट्स में प्रीसेट जोड़ा दिया गया है!</string>
     <string name="app_shortcut_removed">प्रीसेट को ऐप शॉर्टकट से हटा दिया गया है!</string>

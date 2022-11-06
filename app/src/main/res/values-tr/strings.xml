@@ -8,7 +8,6 @@
     <string name="presets">Kayıtlar</string>
     <string name="sleep_timer">Uyku Zamanlayıcı</string>
     <string name="support_development">Geliştiriciyi Destekle</string>
-    <string name="wake_up_timer">Uyandırma Zamanlayıcı</string>
     <string name="intensity">Çeşitlilik</string>
     <string name="okay">Tamam</string>
     <string name="random_preset">Rastgele kayıt</string>
@@ -42,13 +41,7 @@
     <string name="sleep_timer_description">
     Süre bittiğinde sesler kesilecektir. Zamanlamak için aşağıdaki tuşları kullanın.
   </string>
-    <string name="schedule">Zamanla</string>
     <string name="select_preset">Kayıt Seç</string>
-    <string name="wake_up_timer_cancelled">Uyandırma zamanlayıcısı iptal edildi!</string>
-    <string name="wake_up_timer_description">
-    Zamanı geldiğinde kayıt başlayacaktır. Kayıt seçmek ve zamanlamak için
-    aşağıdaki tuşları kullanın.
-  </string>
     <string name="app_theme_light">Açık</string>
     <string name="app_theme_dark">Koyu</string>
     <string name="app_theme_system_default">Sistem Varsayılanı</string>
@@ -95,16 +88,6 @@
     <string name="notification_channel_default__name">Arka Plan Oynatıcı</string>
     <string name="presets_as_home_screen_summary">Uygulama başlangıcında \"mevcut kayıtları\" göster (uygulamanın yeniden başlatılmasını gerektirir)</string>
     <string name="submit_feedback">Geri Bildirim Gönder</string>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d dakika</item>
-        <item quantity="other">%1$d dakika</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d saat</item>
-        <item quantity="other">%1$d saat</item>
-    </plurals>
-    <string name="time_bridge">ve</string>
-    <string name="wake_up_timer_schedule_set">Alarm %1$s %2$s %3$s içinde çalacak</string>
     <string name="app_shortcut_creation_failed">Kayıt, uygulama kısayollarına eklenemedi!</string>
     <string name="app_shortcut_created">Kayıt, uygulama kısayollarına eklendi!</string>
     <string name="app_shortcut_removed">Kayıt, uygulama kısayollarından kaldırıldı!</string>

@@ -6,7 +6,6 @@
     <string name="library">聲音庫</string>
     <string name="report_issue">回報問題</string>
     <string name="support_development">支持開發</string>
-    <string name="wake_up_timer">喚醒鬧鐘</string>
     <string name="submit_feedback">提交回饋</string>
     <string name="presets">預設音組</string>
     <string name="intensity">強度</string>
@@ -27,11 +26,6 @@
     <string name="add_to_home_screen">加到主頁面</string>
     <string name="delete">刪除</string>
     <string name="rename">重新命名</string>
-    <string name="schedule">排定</string>
-    <string name="time_bridge">和</string>
-    <plurals name="time_hours">
-        <item quantity="other">%1$d 小時</item>
-    </plurals>
     <string name="app_theme_light">淺</string>
     <string name="app_theme_dark">深</string>
     <string name="appintro__chromecast_title">已啟用 Chromecast</string>
@@ -47,17 +41,12 @@
     <string name="ignore_audio_focus_changes">忽略音訊焦點變化</string>
     <string name="share_usage_data_consent_title">資料共享偏好設定</string>
     <string name="others">其他</string>
-    <string name="wake_up_timer_schedule_set">鬧鐘將於 %1$s %2$s %3$s 後結束</string>
     <string name="preset_deleted">預設音組已刪除！</string>
-    <string name="wake_up_timer_cancelled">喚醒鬧鐘已取消！</string>
     <string name="appearance">外觀</string>
     <string name="open_context_menu">打開環境選單</string>
     <string name="preset_delete_confirmation">確認刪除 %s\?</string>
     <string name="reset">重置</string>
     <string name="select_preset">選擇預設音組</string>
-    <plurals name="time_minutes">
-        <item quantity="other">%1$d 分鐘</item>
-    </plurals>
     <string name="app_theme_system_default">系統預設</string>
     <string name="app_description">通過自然平靜的噪音來放鬆並提高專注力。</string>
     <string name="cast_media">連接 Chromecast</string>
@@ -171,7 +160,6 @@
     <string name="preset_name_cannot_be_empty">預設音組名稱不能爲空！</string>
     <string name="preset_does_not_exist">預設音組不存在。 它可能已經被刪除了！</string>
     <string name="sleep_timer_description">當計時器結束時，Noice將自動關閉， 使用下面的按鈕來新增時間並啓動計時器。</string>
-    <string name="wake_up_timer_description">當計時器結束時，Noice將啓動選定的預設音組，使用下面的按鈕來選擇預設音組並設置想要的時間來啓動喚醒鬧鐘。</string>
     <string name="appintro__presets_desc">播放一些聲音後，您可以使用底部角落的保存按鈕來保存您的混音。 要重複使用存儲的混音，請從底部欄中轉到預設音組列表。</string>
     <string name="appintro__timer_desc">一點氛圍可以幫助您輕鬆入眠，使用睡眠定時器讓 Noice 自行關閉。 同樣的，想要在平靜的環境中醒來，請設置喚醒鬧鐘。</string>
     <string name="support_development__donate_description">如果您尚未購買 premium ，您可以進行一次性付款，它將幫助我們維持免費功能的開發並使其永遠無廣告干擾。</string>

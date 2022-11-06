@@ -8,7 +8,6 @@
     <string name="presets">Mixy</string>
     <string name="sleep_timer">Časovač vypnutí</string>
     <string name="support_development">Podpořit vývoj</string>
-    <string name="wake_up_timer">Časovač spuštění</string>
     <string name="submit_feedback">Odeslat zpětnou vazbu</string>
     <string name="intensity">Intenzita</string>
     <string name="okay">Budiž</string>
@@ -43,26 +42,7 @@
     <string name="sleep_timer_description">
     Noice se sám vypne po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
   </string>
-    <string name="schedule">Nastavit</string>
     <string name="select_preset">Zvolte mix</string>
-    <string name="wake_up_timer_cancelled">Časovač k probuzení zrušen!</string>
-    <string name="wake_up_timer_schedule_set">Alarm se spustí za %1$s %2$s %3$s</string>
-    <string name="time_bridge">a</string>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d hodinu</item>
-        <item quantity="few">%1$d hodiny</item>
-        <item quantity="many">%1$d hodin</item>
-        <item quantity="other">%1$d hodin</item>
-    </plurals>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d minutu</item>
-        <item quantity="few">%1$d minuty</item>
-        <item quantity="many">%1$d minut</item>
-        <item quantity="other">%1$d minut</item>
-    </plurals>
-    <string name="wake_up_timer_description">
-    Noice se sám spustí po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
-  </string>
     <string name="app_theme_light">Světlý</string>
     <string name="app_theme_dark">Tmavý</string>
     <string name="app_theme_system_default">Dle nastavení systému</string>

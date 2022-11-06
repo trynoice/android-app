@@ -8,7 +8,6 @@
     <string name="presets">Voreinstellungen</string>
     <string name="sleep_timer">Einschlaftimer</string>
     <string name="support_development">Unterstütze die Entwicklung</string>
-    <string name="wake_up_timer">Aufwach-Timer</string>
     <string name="submit_feedback">Feedback abgeben</string>
     <string name="intensity">Intensität</string>
     <string name="okay">Ok</string>
@@ -43,14 +42,7 @@
     <string name="auto_sleep_schedule_cancelled">Automatischer Schlaftimer abgebrochen!</string>
     <string name="reset">Zurücksetzen</string>
     <string name="sleep_timer_description">Noice schaltet sich automatisch nach Ablauf des Timers aus. Nutze die Knöpfe weiter unten, um dem Timer Zeit hinzuzufügen oder abzuziehen.</string>
-    <string name="schedule">Zeitplan</string>
     <string name="select_preset">Wähle eine Voreinstellung aus</string>
-    <string name="wake_up_timer_cancelled">Aufwach Wecker gelöscht!</string>
-    <string name="wake_up_timer_description">
-    Noice startet die ausgewählte Voreinstellung wenn der Timer endet. Nutze die Knöpfe weiter unten,
-    um eine Voreinstellung auszusuchen und die gewünschte Länge bis zum Start des Aufwach-Timers
-    hinzuzufügen.
-  </string>
     <string name="app_theme_light">Hell</string>
     <string name="app_theme_dark">Dunkel</string>
     <string name="app_theme_system_default">Systemstandard</string>
@@ -92,16 +84,6 @@
     <string name="never">Nie</string>
     <string name="notification_channel_default__description">Steuerung der Medienwiedergabe</string>
     <string name="notification_channel_default__name">Medienwiedergabe</string>
-    <string name="wake_up_timer_schedule_set">Der Alarm wird in %1$s %2$s %3$s ausgelöst</string>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d Minute</item>
-        <item quantity="other">%1$d Minuten</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d Stunde</item>
-        <item quantity="other">%1$d Stunden</item>
-    </plurals>
-    <string name="time_bridge">und</string>
     <string name="app_shortcut_creation_failed">Das Hinzufügen der Voreinstellung zu Anwendungsverknüpfungen ist fehlgeschlagen!</string>
     <string name="remove_from_app_shortcuts">Aus Anwendungsverknüpfungen entfernen</string>
     <string name="add_to_app_shortcuts">Zu Anwendungsverknüpfungen hinzufügen</string>

@@ -38,8 +38,6 @@
     <string name="support_development__donate">Doneren</string>
     <string name="appintro__getting_started_title">Welkom</string>
     <string name="appintro__getting_started_desc_1">Laten we beginnen!</string>
-    <string name="wake_up_timer_cancelled">Wekker geannuleerd!</string>
-    <string name="schedule">Schema</string>
     <string name="okay">Oké</string>
     <string name="submit_feedback">Feedback geven</string>
     <string name="support_development">Ontwikkeling ondersteunen</string>
@@ -53,17 +51,6 @@
     <string name="appintro__getting_started_desc_0">Veeg naar links om alle functies te leren kennen!</string>
     <string name="appintro__chromecast_title">Chromecast is ingeschakeld</string>
     <string name="appintro__chromecast_desc">Gebruik Noice om sfeer over te brengen op andere Chromecast-apparaten, zoals luidsprekers, tv\'s, enz.</string>
-    <string name="wake_up_timer_description">Noice start de preset op het opgeven tijdstip. Gebruik de onderstaande besturing om een preset te selecteren en het gewenste tijdstip waarop de wakker af moet gaan in te stellen.</string>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d minuut</item>
-        <item quantity="other">%1$d minuten</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d uur</item>
-        <item quantity="other">%1$d uur</item>
-    </plurals>
-    <string name="time_bridge">en</string>
-    <string name="wake_up_timer_schedule_set">Het alarm gaat af over %1$s %2$s %3$s</string>
     <string name="select_preset">Voorinstelling selecteren</string>
     <string name="presets_as_home_screen_summary">\"voorinstellingen\" tonen bij het opstarten van de app (vereist herstart van app)</string>
     <string name="pinned_shortcuts_not_supported">Uw standaardlauncher biedt geen ondersteuning voor het toevoegen van snelkoppelingen.</string>
@@ -100,7 +87,6 @@
     <string name="import_presets">Importeer een bestand</string>
     <string name="export_presets">Naar een bestand exporteren</string>
     <string name="share">Delen</string>
-    <string name="wake_up_timer">Wekker</string>
     <string name="random_preset_description">De gegenereerde voorinstelling bevat waarschijnlijk geluiden met de gekozen sleutelwoorden. Daarnaast zullen intense voorinstellingen proberen meerdere geluiden tegelijk af te spelen.</string>
     <string name="share_usage_data_consent_title">Voorkeuren voor het delen van data</string>
     <string name="created_by">Gemaakt door</string>

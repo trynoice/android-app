@@ -7,7 +7,6 @@
     <string name="presets">Zapisane ustawienia</string>
     <string name="sleep_timer">Wyłącznik czasowy</string>
     <string name="support_development">Wesprzyj rozwój</string>
-    <string name="wake_up_timer">Zegar budzenia</string>
     <string name="cancel">Anuluj</string>
     <string name="dismiss">Odrzuć</string>
     <string name="name">Nazwa</string>
@@ -37,10 +36,6 @@
     Użyj poniższych przycisków, aby dodać czas i uruchomić czasomierz.
   </string>
     <string name="select_preset">Wybierz szablon</string>
-    <string name="wake_up_timer_description">
-    Noice rozpocznie wybrany szablon po upływie czasu. Użyj poniższych przycisków, aby wybrać
-    szablon i dodać żądany czas trwania, aby uruchomić budzik.
-  </string>
     <string name="app_theme_light">Jasny</string>
     <string name="app_theme_dark">Ciemny</string>
     <string name="app_theme_system_default">Domyślny systemowy</string>
@@ -68,7 +63,6 @@
     <string name="appintro__getting_started_desc_1">Zaczynajmy!</string>
     <string name="appintro__getting_started_desc_0">Przesuń w lewo aby poznać wszystkie funkcje!</string>
     <string name="appintro__chromecast_title">Chromecast aktywny</string>
-    <string name="schedule">Zaplanuj</string>
     <string name="pinned_shortcuts_not_supported">Twój domyślny ekran startowy nie wspiera dodawania skrótów.</string>
     <string name="add_to_home_screen">Dodaj do ekranu głównego</string>
     <string name="okay">Okej</string>
@@ -111,21 +105,6 @@
     <string name="app_shortcut_created">Do skrótów aplikacji dodano ustawienie wstępne!</string>
     <string name="app_shortcut_removed">Ustawienie wstępne zostało usunięte ze skrótów do aplikacji!</string>
     <string name="remove_from_app_shortcuts">Usuń ze skrótów aplikacji</string>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d minuta</item>
-        <item quantity="few">%1$d minuty</item>
-        <item quantity="many">%1$d minut</item>
-        <item quantity="other">%1$d minut</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d godzina</item>
-        <item quantity="few">%1$d godziny</item>
-        <item quantity="many">%1$d godzin</item>
-        <item quantity="other">%1$d godzin</item>
-    </plurals>
-    <string name="time_bridge">i</string>
-    <string name="wake_up_timer_schedule_set">Alarm włączy się za %1$s %2$s %3$s</string>
-    <string name="wake_up_timer_cancelled">Anulowano Wake-up Timer!</string>
     <string name="should_display_sound_icons">Pokaż ikony dźwięku</string>
     <string name="sound_fade_in_duration_summary">Czas zaniku dźwięków (w sekundach)</string>
     <string name="sound_fade_in_duration">Czas zaniku dźwięku</string>

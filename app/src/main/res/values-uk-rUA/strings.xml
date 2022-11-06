@@ -8,7 +8,6 @@
     <string name="presets">Поєднання</string>
     <string name="sleep_timer">Таймер сну</string>
     <string name="support_development">Підтримати розробку</string>
-    <string name="wake_up_timer">Таймер пробудження</string>
     <string name="okay">Гаразд</string>
     <string name="cancel">Скасувати</string>
     <string name="dismiss">Відхилити</string>
@@ -32,9 +31,7 @@
     <string name="auto_sleep_schedule_cancelled">Автоматичний таймер сну скасовано!</string>
     <string name="reset">Скинути</string>
     <string name="sleep_timer_description">Noice вимкне себе коли закінчиться таймер. Використовуйте кнопки знизу щоб додати час та запустити таймер.</string>
-    <string name="schedule">Розклад</string>
     <string name="select_preset">Вибрати поєднання</string>
-    <string name="wake_up_timer_description">У зазначений час увімкнеться обране поєднання. За допомогою кнопок нижче виберіть поєднання та встановіть бажаний час запуску таймера пробудження.</string>
     <string name="app_theme_light">Світла</string>
     <string name="app_theme_dark">Темна</string>
     <string name="app_theme_system_default">За системними налаштуваннями</string>
@@ -62,21 +59,6 @@
     <string name="never">Ніколи</string>
     <string name="notification_channel_default__description">Регулювання відтворення звуків</string>
     <string name="notification_channel_default__name">Відтворення звуків</string>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d хвилину</item>
-        <item quantity="few">%1$d хвилини</item>
-        <item quantity="many">%1$d хвилин</item>
-        <item quantity="other">%1$d хвилин</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d годину</item>
-        <item quantity="few">%1$d години</item>
-        <item quantity="many">%1$d годин</item>
-        <item quantity="other">%1$d годин</item>
-    </plurals>
-    <string name="time_bridge">та</string>
-    <string name="wake_up_timer_schedule_set">Будильник спрацює через %1$s %2$s %3$s</string>
-    <string name="wake_up_timer_cancelled">Таймер пробудження скасовано!</string>
     <string name="pinned_shortcuts_not_supported">Ваш лаунчер не підтримує додавання ярликів.</string>
     <string name="add_to_home_screen">Додати на головний екран</string>
     <string name="intensity">Насиченість</string>
