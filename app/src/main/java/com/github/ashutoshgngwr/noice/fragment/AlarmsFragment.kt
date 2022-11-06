@@ -419,7 +419,7 @@ class AlarmViewHolder(
       context.getString(R.string.not_scheduled)
     }
 
-    binding.enableSwitch.isChecked = alarm.isEnabled
+    binding.enableSwitch.setChecked(alarm.isEnabled, false)
 
     binding.sundayToggle.isActivated = alarm.isEnabled
     binding.mondayToggle.isActivated = alarm.isEnabled

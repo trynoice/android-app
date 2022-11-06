@@ -68,7 +68,7 @@
       app:layout_constraintTop_toBottomOf="@id/time"
       tools:text="Tomorrow" />
 
-    <com.google.android.material.materialswitch.MaterialSwitch
+    <com.github.ashutoshgngwr.noice.widget.MaterialSwitchFix
       android:id="@+id/enable_switch"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
