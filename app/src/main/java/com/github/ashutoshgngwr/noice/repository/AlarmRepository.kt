@@ -42,6 +42,17 @@ class AlarmRepository(
       ?.let { it.toDomainEntity(presetRepository.get(it.presetId)) }
   }
 
+  suspend fun listEnabled(): List<Alarm> {
+    val presets = presetRepository.list().associateBy { it.id }
+    return appDb.alarms()
+      .listEnabled()
+      .map { it.toDomainEntity(presets[it.presetId]) }
+  }
+
+  fun countEnabled(): Flow<Int> {
+    return appDb.alarms().countEnabledFlow()
+  }
+
   fun pagingDataFlow(): Flow<PagingData<Alarm>> {
     return Pager(PagingConfig(pageSize = 20)) { appDb.alarms().pagingSource() }
       .flow
@@ -74,14 +85,10 @@ class AlarmRepository(
   }
 
   suspend fun rescheduleAll() {
-    val presets = presetRepository.list().associateBy { it.id }
-    appDb.alarms()
-      .listEnabled()
-      .map { it.toDomainEntity(presets[it.presetId]) }
-      .forEach { alarm ->
-        alarmManager.cancel(alarm)
-        alarmManager.setAlarmClock(alarm)
-      }
+    listEnabled().forEach { alarm ->
+      alarmManager.cancel(alarm)
+      alarmManager.setAlarmClock(alarm)
+    }
   }
 
   private fun AlarmManager.setAlarmClock(alarm: Alarm) {

@@ -17,6 +17,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.paging.cachedIn
@@ -35,16 +37,23 @@ import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.models.Alarm
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
+
+private const val FREE_ALARM_COUNT = 2
 
 @AndroidEntryPoint
 class AlarmsFragment : Fragment(), AlarmItemViewController {
@@ -53,6 +62,10 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
 
   private val viewModel: AlarmsViewModel by viewModels()
   private val adapter: AlarmListAdapter by lazy { AlarmListAdapter(layoutInflater, this) }
+  private val mainNavController: NavController by lazy {
+    Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
+  }
+
   private val requestPermissionsLauncher = registerForActivityResult(
     ActivityResultContracts.RequestPermission(),
     this::onPostNotificationsPermissionRequestResult,
@@ -80,6 +93,15 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
         adapter.submitData(pagingData)
         animator?.supportsChangeAnimations = true
       }
+    }
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.isSubscribed
+        .filterNot { it }
+        .map { viewModel.disableAll(FREE_ALARM_COUNT) }
+        .filter { it > 0 }
+        .flowOn(Dispatchers.IO)
+        .collect { showErrorSnackBar(R.string.alarms_disabled_due_to_subscription_expiration) }
     }
   }
 
@@ -180,6 +202,11 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
   }
 
   override fun onAlarmToggled(alarm: Alarm, enabled: Boolean) {
+    if (enabled && !viewModel.isSubscribed.value && viewModel.enabledCount.value >= FREE_ALARM_COUNT) {
+      mainNavController.navigate(R.id.view_subscription_plans)
+      return
+    }
+
     viewModel.save(alarm.copy(isEnabled = enabled))
   }
 
@@ -232,6 +259,7 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
 class AlarmsViewModel @Inject constructor(
   private val alarmRepository: AlarmRepository,
   presetRepository: PresetRepository,
+  subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
   internal val alarmsPagingData: StateFlow<PagingData<Alarm>> = alarmRepository.pagingDataFlow()
@@ -243,24 +271,29 @@ class AlarmsViewModel @Inject constructor(
     .flowOn(Dispatchers.IO)
     .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
+  internal val enabledCount = alarmRepository.countEnabled()
+    .flowOn(Dispatchers.IO)
+    .stateIn(viewModelScope, SharingStarted.Eagerly, 0)
+
+  internal val isSubscribed: StateFlow<Boolean> = subscriptionRepository.isSubscribed()
+    .stateIn(viewModelScope, SharingStarted.Eagerly, true)
+
   internal fun canScheduleAlarms(): Boolean {
     return alarmRepository.canScheduleAlarms()
   }
 
   internal fun create(hour: Int, minute: Int) {
-    viewModelScope.launch(Dispatchers.IO) {
-      alarmRepository.save(
-        Alarm(
-          id = 0,
-          label = null,
-          isEnabled = canScheduleAlarms(),
-          minuteOfDay = hour * 60 + minute,
-          weeklySchedule = 0,
-          preset = null,
-          vibrate = true,
-        )
+    save(
+      Alarm(
+        id = 0,
+        label = null,
+        isEnabled = canScheduleAlarms() && (isSubscribed.value || enabledCount.value < FREE_ALARM_COUNT),
+        minuteOfDay = hour * 60 + minute,
+        weeklySchedule = 0,
+        preset = null,
+        vibrate = true,
       )
-    }
+    )
   }
 
   internal fun save(alarm: Alarm) {
@@ -273,6 +306,17 @@ class AlarmsViewModel @Inject constructor(
     viewModelScope.launch(Dispatchers.IO) {
       alarmRepository.delete(alarm)
     }
+  }
+
+  internal suspend fun disableAll(offset: Int): Int {
+    val alarms = withContext(Dispatchers.IO) { alarmRepository.listEnabled() }
+    var disabledCount = 0
+    alarms.forEachIndexed { index, alarm ->
+      if (index < offset) return@forEachIndexed
+      save(alarm.copy(isEnabled = false))
+      disabledCount++
+    }
+    return disabledCount
   }
 }
 

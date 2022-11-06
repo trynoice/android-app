@@ -98,6 +98,13 @@
             android:text="@string/benefit_2"
             app:drawableStartCompat="@drawable/ic_baseline_download_for_offline_24" />
 
+          <TextView
+            style="@style/Widget.App.SubscriptionPlan.Benefits.LineItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/benefit_5"
+            app:drawableStartCompat="@drawable/ic_baseline_alarm_24" />
+
         </LinearLayout>
 
         <Space

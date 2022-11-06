@@ -357,4 +357,6 @@
     <string name="alarm">Alarm</string>
     <string name="snooze">Snooze</string>
     <string name="alarm_ringer_preset_load_error">Failed to load the selected preset for this alarm.</string>
+    <string name="alarms_disabled_due_to_subscription_expiration">We had to disable some alarms as your Noice Premium subscription has expired!</string>
+    <string name="benefit_5">Unlimited alarms</string>
 </resources>
