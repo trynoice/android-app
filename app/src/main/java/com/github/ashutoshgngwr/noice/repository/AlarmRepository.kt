@@ -64,12 +64,24 @@ class AlarmRepository(
       save(alarm.copy(isEnabled = false))
     }
 
+    alarmManager.cancel(alarm)
     if (isSnoozed) {
       // TODO: add an option in the settings for Snooze duration.
       alarmManager.setAlarmClock(alarm, System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10))
     } else if (alarm.weeklySchedule != 0) {
       alarmManager.setAlarmClock(alarm)
     }
+  }
+
+  suspend fun rescheduleAll() {
+    val presets = presetRepository.list().associateBy { it.id }
+    appDb.alarms()
+      .listEnabled()
+      .map { it.toDomainEntity(presets[it.presetId]) }
+      .forEach { alarm ->
+        alarmManager.cancel(alarm)
+        alarmManager.setAlarmClock(alarm)
+      }
   }
 
   private fun AlarmManager.setAlarmClock(alarm: Alarm) {

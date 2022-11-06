@@ -19,6 +19,9 @@ abstract class AlarmDao {
   @Query("SELECT * FROM alarm WHERE id = :alarmId")
   abstract suspend fun getById(alarmId: Int): AlarmDto?
 
+  @Query("SELECT * FROM alarm WHERE isEnabled = 1 ORDER BY minuteOfDay ASC")
+  abstract suspend fun listEnabled(): List<AlarmDto>
+
   @Query("SELECT * FROM alarm ORDER BY minuteOfDay ASC")
   abstract fun pagingSource(): PagingSource<Int, AlarmDto>
 }

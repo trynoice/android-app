@@ -161,17 +161,18 @@
 
     <service android:name=".service.SubscriptionStatusPollService" />
 
+    <service android:name=".service.AlarmRingerService" />
+
     <receiver
-      android:name=".WakeUpTimerManager$BootReceiver"
+      android:name=".receiver.BootCompletedReceiver"
       android:exported="true">
 
       <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED" />
+        <action android:name="android.intent.action.QUICKBOOT_POWERON" />
       </intent-filter>
 
     </receiver>
-
-    <service android:name=".service.AlarmRingerService" />
 
     <provider
       android:name="androidx.startup.InitializationProvider"
