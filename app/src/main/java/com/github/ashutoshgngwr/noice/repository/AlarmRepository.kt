@@ -42,13 +42,6 @@ class AlarmRepository(
       ?.let { it.toDomainEntity(presetRepository.get(it.presetId)) }
   }
 
-  suspend fun listEnabled(): List<Alarm> {
-    val presets = presetRepository.list().associateBy { it.id }
-    return appDb.alarms()
-      .listEnabled()
-      .map { it.toDomainEntity(presets[it.presetId]) }
-  }
-
   fun countEnabled(): Flow<Int> {
     return appDb.alarms().countEnabledFlow()
   }
@@ -85,10 +78,26 @@ class AlarmRepository(
   }
 
   suspend fun rescheduleAll() {
-    listEnabled().forEach { alarm ->
-      alarmManager.cancel(alarm)
-      alarmManager.setAlarmClock(alarm)
-    }
+    appDb.alarms()
+      .listEnabled()
+      .map { it.toDomainEntity(null) } // preset association is not needed here
+      .forEach { alarm ->
+        alarmManager.cancel(alarm)
+        alarmManager.setAlarmClock(alarm)
+      }
+  }
+
+  suspend fun disableAll(offset: Int = 0): Int {
+    var disabledCount = 0
+    appDb.alarms()
+      .listEnabled()
+      .forEachIndexed { index, alarmDto ->
+        if (index < offset) return@forEachIndexed
+        appDb.alarms().save(alarmDto.copy(isEnabled = false))
+        disabledCount++
+      }
+
+    return disabledCount
   }
 
   private fun AlarmManager.setAlarmClock(alarm: Alarm) {

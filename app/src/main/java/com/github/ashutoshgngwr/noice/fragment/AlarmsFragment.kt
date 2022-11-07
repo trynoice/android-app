@@ -319,14 +319,7 @@ class AlarmsViewModel @Inject constructor(
   }
 
   internal suspend fun disableAll(offset: Int): Int {
-    val alarms = withContext(Dispatchers.IO) { alarmRepository.listEnabled() }
-    var disabledCount = 0
-    alarms.forEachIndexed { index, alarm ->
-      if (index < offset) return@forEachIndexed
-      save(alarm.copy(isEnabled = false))
-      disabledCount++
-    }
-    return disabledCount
+    return withContext(Dispatchers.IO) { alarmRepository.disableAll(offset) }
   }
 
   internal fun canEnableMoreAlarms(): Boolean {
