@@ -79,11 +79,22 @@
     app:iconSpaceReserved="false">
 
     <SeekBarPreference
-      android:defaultValue="9"
-      android:key="@string/snooze_length_key"
+      android:defaultValue="15"
+      android:key="@string/alarm_ringer_max_duration_key"
       android:max="30"
-      android:summary="@string/snooze_length_summary"
-      android:title="@string/snooze_length"
+      android:summary="@string/alarm_ringer_max_duration_summary"
+      android:title="@string/alarm_ringer_max_duration"
+      app:iconSpaceReserved="false"
+      app:min="1"
+      app:seekBarIncrement="1"
+      app:showSeekBarValue="true" />
+
+    <SeekBarPreference
+      android:defaultValue="9"
+      android:key="@string/alarm_snooze_length_key"
+      android:max="30"
+      android:summary="@string/alarm_snooze_length_summary"
+      android:title="@string/alarm_snooze_length"
       app:iconSpaceReserved="false"
       app:min="1"
       app:seekBarIncrement="1"

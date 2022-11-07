@@ -39,7 +39,8 @@
   <string name="enable_media_buttons_key">enable_media_buttons</string>
   <string name="audio_bitrate_key">audio_bitrate</string>
   <string name="use_material_you_colors_key">use_material_you_colors</string>
-  <string name="snooze_length_key">snooze_length</string>
+  <string name="alarm_snooze_length_key">alarm_snooze_length</string>
+  <string name="alarm_ringer_max_duration_key">alarm_ringer_max_duration</string>
   <string name="open_collective_url">https://opencollective.com/noice</string>
   <string name="play_store_url">https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice</string>
   <string name="fdroid_url">https://f-droid.org/app/com.github.ashutoshgngwr.noice</string>

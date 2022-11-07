@@ -342,6 +342,11 @@
     <string name="alarm_ringer_preset_load_error">Failed to load the selected preset for this alarm.</string>
     <string name="alarms_disabled_due_to_subscription_expiration">We had to disable some alarms as your Noice Premium subscription has expired!</string>
     <string name="benefit_5">Unlimited alarms</string>
-    <string name="snooze_length">Snooze Length</string>
-    <string name="snooze_length_summary">Time duration in minutes for snoozing alarms</string>
+    <string name="alarm_snooze_length">Snooze length</string>
+    <string name="alarm_snooze_length_summary">Time duration in minutes for snoozing alarms</string>
+    <string name="alarm_ringer_max_duration">Reminder duration</string>
+    <string name="alarm_ringer_max_duration_summary">Time duration in minutes, after which to automatically silence the alarm reminder</string>
+    <string name="notification_channel_missed_alarms__name">Missed Alarms</string>
+    <string name="notification_channel_missed_alarms__description">Notifications shown on silencing scheduled alarms after the reminder duration has elapsed.</string>
+    <string name="alarm_missed">Alarm missed</string>
 </resources>

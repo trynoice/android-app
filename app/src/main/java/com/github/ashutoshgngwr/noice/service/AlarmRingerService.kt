@@ -30,8 +30,11 @@ import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.models.Alarm
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -48,10 +51,15 @@ class AlarmRingerService : LifecycleService() {
   internal lateinit var presetRepository: PresetRepository
 
   @set:Inject
+  internal lateinit var settingsRepository: SettingsRepository
+
+  @set:Inject
   internal lateinit var playbackController: PlaybackController
 
   @set:Inject
   internal lateinit var uiController: UiController
+
+  private var autoDismissJob: Job? = null
 
   private val notificationManager: NotificationManager by lazy { requireNotNull(getSystemService()) }
   private val vibrator: Vibrator by lazy {
@@ -89,6 +97,13 @@ class AlarmRingerService : LifecycleService() {
         importance = NotificationManager.IMPORTANCE_LOW,
         nameResId = R.string.notification_channel_alarm_priming__name,
         descriptionResId = R.string.notification_channel_alarm_priming__description,
+      )
+
+      createNotificationChannel(
+        channelId = MISSED_CHANNEL_ID,
+        importance = NotificationManager.IMPORTANCE_LOW,
+        nameResId = R.string.notification_channel_missed_alarms__name,
+        descriptionResId = R.string.notification_channel_missed_alarms__description,
       )
     }
   }
@@ -151,26 +166,32 @@ class AlarmRingerService : LifecycleService() {
       startVibrating()
     }
 
-    if (preset == null) {
+    withContext(Dispatchers.Main) {
       // if we couldn't get a preset to play, start the ringer with default alarm ringtone.
-      withContext(Dispatchers.Main) {
+      if (preset == null) {
         ServiceCompat.stopForeground(this@AlarmRingerService, ServiceCompat.STOP_FOREGROUND_DETACH)
         buildRingerNotification(SECONDARY_CHANNEL_ID, alarm, alarmTriggerTime)
           .also { startForeground(NOTIFICATION_ID_ALARM, it) }
 
         buildPresetLoadFailedNotification(alarmTriggerTime)
           .also { notificationManager.notify(NOTIFICATION_ID_PRIMING, it) }
+      } else {
+        ServiceCompat.stopForeground(this@AlarmRingerService, ServiceCompat.STOP_FOREGROUND_REMOVE)
+        buildRingerNotification(PRIMARY_CHANNEL_ID, alarm, alarmTriggerTime)
+          .also { startForeground(NOTIFICATION_ID_ALARM, it) }
+
+        playbackController.setAudioUsage(AudioAttributesCompat.USAGE_ALARM)
+        playbackController.play(preset)
       }
-      return
-    }
 
-    withContext(Dispatchers.Main) {
-      ServiceCompat.stopForeground(this@AlarmRingerService, ServiceCompat.STOP_FOREGROUND_REMOVE)
-      buildRingerNotification(PRIMARY_CHANNEL_ID, alarm, alarmTriggerTime)
-        .also { startForeground(NOTIFICATION_ID_ALARM, it) }
+      autoDismissJob?.cancel()
+      autoDismissJob = launch {
+        delay(settingsRepository.getAlarmReminderMaxDuration())
+        buildMissedAlarmNotification(alarmTriggerTime)
+          .also { notificationManager.notify(NOTIFICATION_ID_MISSED, it) }
 
-      playbackController.setAudioUsage(AudioAttributesCompat.USAGE_ALARM)
-      playbackController.play(preset)
+        dismiss(alarm.id)
+      }
     }
   }
 
@@ -246,12 +267,12 @@ class AlarmRingerService : LifecycleService() {
     }
   }
 
-  private fun buildPresetLoadFailedNotification(alarmTime: String): Notification {
+  private fun buildPresetLoadFailedNotification(alarmTriggerTime: String): Notification {
     return NotificationCompat.Builder(this, PRIMING_CHANNEL_ID)
       .setSmallIcon(R.drawable.ic_baseline_alarm_24)
       .setContentTitle(getString(R.string.alarm))
       .setContentText(getString(R.string.alarm_ringer_preset_load_error))
-      .setSubText(alarmTime)
+      .setSubText(alarmTriggerTime)
       .setShowWhen(true)
       .setAutoCancel(true)
       .build()
@@ -277,6 +298,16 @@ class AlarmRingerService : LifecycleService() {
     stopSelf()
   }
 
+  private fun buildMissedAlarmNotification(alarmTriggerTime: String): Notification {
+    return NotificationCompat.Builder(this, MISSED_CHANNEL_ID)
+      .setSmallIcon(R.drawable.ic_baseline_alarm_24)
+      .setContentTitle(getString(R.string.alarm_missed))
+      .setContentText(alarmTriggerTime)
+      .setShowWhen(true)
+      .setAutoCancel(true)
+      .build()
+  }
+
   companion object {
     private const val ACTION_RING = "ring"
     private const val ACTION_SNOOZE = "snooze"
@@ -286,8 +317,10 @@ class AlarmRingerService : LifecycleService() {
     private const val PRIMARY_CHANNEL_ID = "com.github.ashutoshgngwr.noice.alarms"
     private const val SECONDARY_CHANNEL_ID = "com.github.ashutoshgngwr.noice.alarmsFallback"
     private const val PRIMING_CHANNEL_ID = "com.github.ashutoshgngwr.noice.alarmPriming"
+    private const val MISSED_CHANNEL_ID = "com.github.ashutoshgngwr.noice.missedAlarms"
     private const val NOTIFICATION_ID_PRIMING = 0x3
     private const val NOTIFICATION_ID_ALARM = 0x4
+    private const val NOTIFICATION_ID_MISSED = 0x5
 
     private val DEFAULT_VIBRATION_PATTERN = longArrayOf(500, 500, 500, 500, 500)
     private val PI_FLAGS = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

@@ -77,7 +77,7 @@ class AlarmRepository(
 
     alarmManager.cancel(alarm)
     if (isSnoozed) {
-      val snoozeMillis = settingsRepository.getSnoozeDuration().inWholeMilliseconds
+      val snoozeMillis = settingsRepository.getAlarmSnoozeDuration().inWholeMilliseconds
       alarmManager.setAlarmClock(alarm, System.currentTimeMillis() + snoozeMillis)
     } else if (alarm.weeklySchedule != 0) {
       alarmManager.setAlarmClock(alarm)

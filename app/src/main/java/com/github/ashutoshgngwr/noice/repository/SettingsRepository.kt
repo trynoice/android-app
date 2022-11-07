@@ -191,8 +191,13 @@ class SettingsRepository @Inject constructor(
     return keyFlow(R.string.audio_bitrate_key).map { getAudioQuality() }
   }
 
-  fun getSnoozeDuration(): Duration {
-    return prefs.getInt(context.getString(R.string.snooze_length_key), 9)
+  fun getAlarmReminderMaxDuration(): Duration {
+    return prefs.getInt(context.getString(R.string.alarm_ringer_max_duration_key), 9)
+      .toDuration(DurationUnit.MINUTES)
+  }
+
+  fun getAlarmSnoozeDuration(): Duration {
+    return prefs.getInt(context.getString(R.string.alarm_snooze_length_key), 9)
       .toDuration(DurationUnit.MINUTES)
   }
 
