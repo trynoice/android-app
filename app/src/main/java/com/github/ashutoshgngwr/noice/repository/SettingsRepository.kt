@@ -191,6 +191,11 @@ class SettingsRepository @Inject constructor(
     return keyFlow(R.string.audio_bitrate_key).map { getAudioQuality() }
   }
 
+  fun getSnoozeDuration(): Duration {
+    return prefs.getInt(context.getString(R.string.snooze_length_key), 9)
+      .toDuration(DurationUnit.MINUTES)
+  }
+
   private fun keyFlow(@StringRes keyStrRes: Int): Flow<String> {
     return prefs.keyFlow(context.getString(keyStrRes))
   }

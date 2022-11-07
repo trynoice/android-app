@@ -142,6 +142,7 @@ class NoiceApplication : Application(), Configuration.Provider {
       @ApplicationContext context: Context,
       appDb: AppDatabase,
       presetRepository: PresetRepository,
+      settingsRepository: SettingsRepository,
     ): AlarmRepository {
       val piFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
@@ -170,6 +171,7 @@ class NoiceApplication : Application(), Configuration.Provider {
       return AlarmRepository(
         requireNotNull(context.getSystemService()),
         presetRepository,
+        settingsRepository,
         appDb,
         piBuilder
       )

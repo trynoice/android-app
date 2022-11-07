@@ -70,6 +70,21 @@
 
   </PreferenceCategory>
 
+  <PreferenceCategory android:title="@string/alarms">
+
+    <SeekBarPreference
+      android:defaultValue="9"
+      android:icon="@drawable/ic_round_snooze_32"
+      android:key="@string/snooze_length_key"
+      android:max="30"
+      android:summary="@string/snooze_length_summary"
+      android:title="@string/snooze_length"
+      app:min="1"
+      app:seekBarIncrement="1"
+      app:showSeekBarValue="true" />
+
+  </PreferenceCategory>
+
   <PreferenceCategory android:title="@string/appearance">
 
     <Preference

@@ -100,9 +100,9 @@
     <string name="presets_as_home_screen">\"Presets\" as home screen</string>
     <string name="appearance">Appearance</string>
     <string name="sound_fade_in_duration">Sound fade-in duration</string>
-    <string name="sound_fade_in_duration_summary">Time duration for fading-in sounds (in seconds)</string>
+    <string name="sound_fade_in_duration_summary">Time duration in seconds for fading-in sounds</string>
     <string name="sound_fade_out_duration">Sound fade-out duration</string>
-    <string name="sound_fade_out_duration_summary">Time duration for fading-out sounds (in seconds)</string>
+    <string name="sound_fade_out_duration_summary">Time duration in seconds for fading-out sounds</string>
     <string name="pinned_shortcut_creation_failed">Failed to add the shortcut to the home screen!</string>
     <string name="pinned_shortcut_created">Shortcut has been added to the home screen!</string>
     <string name="skip_to_prev">Previous preset</string>
@@ -342,4 +342,6 @@
     <string name="alarm_ringer_preset_load_error">Failed to load the selected preset for this alarm.</string>
     <string name="alarms_disabled_due_to_subscription_expiration">We had to disable some alarms as your Noice Premium subscription has expired!</string>
     <string name="benefit_5">Unlimited alarms</string>
+    <string name="snooze_length">Snooze Length</string>
+    <string name="snooze_length_summary">Time duration in minutes for snoozing alarms</string>
 </resources>
