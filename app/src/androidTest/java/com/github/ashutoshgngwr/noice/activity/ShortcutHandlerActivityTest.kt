@@ -8,10 +8,9 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.model.Preset
-import com.github.ashutoshgngwr.noice.playback.PlaybackController
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -23,10 +22,8 @@ import org.hamcrest.Matchers.allOf
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
 @HiltAndroidTest
-@RunWith(AndroidJUnit4::class)
 class ShortcutHandlerActivityTest {
 
   @get:Rule
@@ -71,7 +68,7 @@ class ShortcutHandlerActivityTest {
         )
 
         verify(exactly = playPresetCallCount[i], timeout = 5000L) {
-          mockPlaybackController.playPreset(presetIDExpectations[i])
+          mockPlaybackController.play(presetFindByIdReturns[i] ?: mockk())
         }
       } finally {
         Intents.release()

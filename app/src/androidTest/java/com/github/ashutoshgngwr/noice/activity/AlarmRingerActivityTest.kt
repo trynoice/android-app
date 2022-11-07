@@ -1,90 +1,96 @@
 package com.github.ashutoshgngwr.noice.activity
 
-import android.content.Context
-import android.content.Intent
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.media.AudioAttributesCompat
+import android.app.Activity
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.swipeRight
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
+import androidx.test.espresso.matcher.ViewMatchers.*
+import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.service.AlarmRingerService
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
+import io.mockk.every
 import io.mockk.mockk
-import io.mockk.spyk
 import io.mockk.verify
-import org.junit.After
-import org.junit.Assert.assertEquals
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
 @HiltAndroidTest
-@RunWith(AndroidJUnit4::class)
+@UninstallModules(NoiceApplication.AlarmRingerModule::class)
 class AlarmRingerActivityTest {
 
   @get:Rule
   val hiltRule = HiltAndroidRule(this)
 
   @BindValue
-  internal lateinit var spyPlaybackController: PlaybackController
+  internal lateinit var serviceController: AlarmRingerActivity.ServiceController
+
+  @BindValue
+  internal lateinit var uiController: AlarmRingerService.UiController
+
+  private lateinit var activityScenario: ActivityScenario<AlarmRingerActivity>
 
   @Before
   fun setup() {
-    // since alarm activity ringer has an hack to start media player service in the foreground, the
-    // tests crash complaining `Context.startForegroundService() did not then call
-    // Service.startForeground()` if the PlaybackController is mocked. To work around the error, use
-    // a spy instance and manually stop the service when tearing down the test.
-    val context = ApplicationProvider.getApplicationContext<Context>()
-    spyPlaybackController = spyk(PlaybackController(context, mockk(relaxed = true)))
-  }
-
-  @After
-  fun tearDown() {
-    spyPlaybackController.stop()
-  }
-
-  @Test
-  fun testWithoutPresetID() {
-    val scenario = ActivityScenario.launch(AlarmRingerActivity::class.java)
-    verify(exactly = 1, timeout = 5000L) { spyPlaybackController.pause() }
-    assertEquals(Lifecycle.State.DESTROYED, scenario.state)
-  }
-
-  @Test
-  fun testWithPresetID() {
-    val presetID = "test-preset-id"
-
-    // cannot launch Activity using `ActivityScenario.launch(Intent)` method. For whatever reasons,
-    // it increases the startup time for all subsequent `ActivityScenario.launch(Class)`s from
-    // other classes.
-    launchFragmentInHiltContainer<Fragment>().onFragment {
-      it.startActivity(
-        Intent(it.requireContext(), AlarmRingerActivity::class.java)
-          .putExtra(AlarmRingerActivity.EXTRA_PRESET_ID, presetID)
+    serviceController = mockk()
+    uiController = mockk()
+    activityScenario = ActivityScenario.launch(
+      AlarmRingerActivity.buildIntent(
+        context = ApplicationProvider.getApplicationContext(),
+        alarmId = ALARM_ID,
+        alarmLabel = ALARM_LABEL,
+        alarmTriggerTime = ALARM_TRIGGER_TIME,
       )
-    }
+    )
+  }
 
-    onView(withId(R.id.dismiss_slider)).check(matches(isDisplayed()))
-    verify(exactly = 1, timeout = 5000L) {
-      spyPlaybackController.setAudioUsage(AudioAttributesCompat.USAGE_ALARM)
-      spyPlaybackController.playPreset(presetID)
-    }
+  @Test
+  fun alarmTriggerTimeAndLabel() {
+    onView(withId(R.id.label))
+      .check(matches(isDisplayed()))
+      .check(matches(withText(ALARM_LABEL)))
 
-    onView(withId(R.id.dismiss_slider)).perform(swipeRight())
-    verify(exactly = 1, timeout = 5000L) {
-      spyPlaybackController.setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
-      spyPlaybackController.pause()
-    }
+    onView(withId(R.id.trigger_time))
+      .check(matches(isDisplayed()))
+      .check(matches(withText(ALARM_TRIGGER_TIME)))
+  }
+
+  @Test
+  fun dismiss() {
+    every { serviceController.dismiss(any()) } returns Unit
+    onView(withId(R.id.dismiss))
+      .check(matches(isDisplayed()))
+      .perform(click())
+
+    verify(exactly = 1, timeout = 5000L) { serviceController.dismiss(ALARM_ID) }
+  }
+
+  @Test
+  fun snooze() {
+    every { serviceController.snooze(any()) } returns Unit
+    onView(withId(R.id.snooze))
+      .check(matches(isDisplayed()))
+      .perform(click())
+
+    verify(exactly = 1, timeout = 5000L) { serviceController.snooze(ALARM_ID) }
+  }
+
+  @Test
+  fun dismissActivity() {
+    AlarmRingerActivity.dismiss(ApplicationProvider.getApplicationContext())
+    Assert.assertEquals(Activity.RESULT_CANCELED, activityScenario.result?.resultCode)
+  }
+
+  companion object {
+    private const val ALARM_ID = 1
+    private const val ALARM_LABEL = "test_alarm_label"
+    private const val ALARM_TRIGGER_TIME = "Sunday, 01:00 PM"
   }
 }

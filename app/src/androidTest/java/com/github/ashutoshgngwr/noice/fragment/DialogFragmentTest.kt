@@ -8,7 +8,6 @@ import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
 import com.github.ashutoshgngwr.noice.HiltFragmentScenario
@@ -17,16 +16,15 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
+import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.random.Random
 
 @HiltAndroidTest
-@RunWith(AndroidJUnit4::class)
 class DialogFragmentTest {
 
   @get:Rule
@@ -42,14 +40,16 @@ class DialogFragmentTest {
   @Test
   fun testTitleText() {
     newDialog { title(R.string.app_name) }
-    EspressoX.onViewInDialog(withId(R.id.title), withText(R.string.app_name))
+    onView(allOf(withId(R.id.title), withText(R.string.app_name)))
+      .inRoot(isDialog())
       .check(matches(isDisplayed()))
   }
 
   @Test
   fun testPositiveButton() {
     newDialog { positiveButton(R.string.app_name) }
-    EspressoX.onViewInDialog(withId(R.id.positive), withText(R.string.app_name))
+    onView(allOf(withId(R.id.positive), withText(R.string.app_name)))
+      .inRoot(isDialog())
       .perform(click())
 
     onView(isRoot()).inRoot(not(isDialog()))
@@ -58,7 +58,8 @@ class DialogFragmentTest {
   @Test
   fun testNegativeButton() {
     newDialog { negativeButton(R.string.app_name) }
-    EspressoX.onViewInDialog(withId(R.id.negative), withText(R.string.app_name))
+    onView(allOf(withId(R.id.negative), withText(R.string.app_name)))
+      .inRoot(isDialog())
       .perform(click())
 
     onView(isRoot()).inRoot(not(isDialog()))
@@ -67,7 +68,8 @@ class DialogFragmentTest {
   @Test
   fun testNeutralButton() {
     newDialog { neutralButton(android.R.string.copy) }
-    EspressoX.onViewInDialog(withId(R.id.neutral), withText(android.R.string.copy))
+    onView(allOf(withId(R.id.neutral), withText(android.R.string.copy)))
+      .inRoot(isDialog())
       .perform(click())
 
     onView(isRoot()).inRoot(not(isDialog()))
@@ -76,7 +78,8 @@ class DialogFragmentTest {
   @Test
   fun testMessageText() {
     newDialog { message(R.string.app_name) }
-    EspressoX.onViewInDialog(isDescendantOfA(withId(R.id.content)), withText(R.string.app_name))
+    onView(allOf(isDescendantOfA(withId(R.id.content)), withText(R.string.app_name)))
+      .inRoot(isDialog())
       .check(matches(isDisplayed()))
   }
 
@@ -85,31 +88,37 @@ class DialogFragmentTest {
     val mockValidator = mockk<(String) -> Int>()
     every { mockValidator.invoke("invalid") } returns R.string.app_name
     every { mockValidator.invoke("test") } returns 0
-    val dialogFragment = newDialog {
-      input(
+    lateinit var textGetter: InputTextGetter
+    newDialog {
+      textGetter = input(
         hintRes = R.string.app_name,
         preFillValue = "test",
         validator = mockValidator
       )
     }
 
-    EspressoX.onViewInDialog(isDescendantOfA(withId(R.id.content)), withId(R.id.editText))
+    onView(allOf(isDescendantOfA(withId(R.id.content)), withId(R.id.editText)))
+      .inRoot(isDialog())
       .check(matches(isDisplayed()))
       .perform(replaceText("invalid"))
 
-    EspressoX.onViewInDialog(withId(R.id.textInputLayout))
+    onView(withId(R.id.textInputLayout))
+      .inRoot(isDialog())
       .check(matches(EspressoX.withErrorText(R.string.app_name)))
 
-    EspressoX.onViewInDialog(withId(R.id.positive))
+    onView(withId(R.id.positive))
+      .inRoot(isDialog())
       .check(matches(not(isEnabled())))
 
-    EspressoX.onViewInDialog(isDescendantOfA(withId(R.id.content)), withId(R.id.editText))
+    onView(allOf(isDescendantOfA(withId(R.id.content)), withId(R.id.editText)))
+      .inRoot(isDialog())
       .perform(replaceText("test"))
 
-    EspressoX.onViewInDialog(withId(R.id.textInputLayout))
+    onView(withId(R.id.textInputLayout))
+      .inRoot(isDialog())
       .check(matches(not(EspressoX.withErrorText(R.string.app_name))))
 
-    assertEquals("test", dialogFragment.getInputText())
+    assertEquals("test", textGetter.invoke())
   }
 
   @Test
@@ -124,11 +133,13 @@ class DialogFragmentTest {
     }
 
     items.forEach {
-      EspressoX.onViewInDialog(isDescendantOfA(withId(android.R.id.list)), withText(it))
+      onView(allOf(isDescendantOfA(withId(android.R.id.list)), withText(it)))
+        .inRoot(isDialog())
         .check(matches(isDisplayed()))
     }
 
-    EspressoX.onViewInDialog(isDescendantOfA(withId(android.R.id.list)), withText(items[1]))
+    onView(allOf(isDescendantOfA(withId(android.R.id.list)), withText(items[1])))
+      .inRoot(isDialog())
       .perform(click())
 
     onView(isRoot()).inRoot(not(isDialog()))
@@ -153,23 +164,26 @@ class DialogFragmentTest {
       positiveButton(R.string.okay)
     }
 
-    EspressoX.onViewInDialog(withId(id))
+    onView(withId(id))
+      .inRoot(isDialog())
       .check(matches(isDisplayed()))
       .perform(EspressoX.slide(expectedValue))
 
-    EspressoX.onViewInDialog(withId(R.id.positive)).perform(click())
+    onView(withId(R.id.positive))
+      .inRoot(isDialog())
+      .perform(click())
+
     assertEquals(expectedValue, value)
   }
 
-  private fun newDialog(options: DialogFragment.() -> Unit): DialogFragment {
-    val f = emptyFragmentScenario.withFragment {
-      DialogFragment.show(childFragmentManager, options)
+  private fun newDialog(options: DialogFragment.() -> Unit) {
+    emptyFragmentScenario.onFragment {
+      DialogFragment.show(it.childFragmentManager, options)
     }
 
     // wait for dialog to be visible
-    EspressoX.onViewInDialog(withId(R.id.dialog_root))
+    onView(withId(R.id.dialog_root))
+      .inRoot(isDialog())
       .check(matches(isDisplayed()))
-
-    return f
   }
 }

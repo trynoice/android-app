@@ -10,7 +10,6 @@
 trap "exit" INT
 
 GRADLE_TASK=$1
-TEST_RUNNER_ERROR_LOGS=./test-runner-error-logs.txt
 
 if [ -z "$GRADLE_TASK" ]; then
   echo "Usage: $0 [UI TEST GRADLE TASK]"
@@ -38,31 +37,20 @@ echo "disabling immersive mode confirmations and spell-checker..."
 adb shell settings put secure immersive_mode_confirmations confirmed
 adb shell settings put secure spell_checker_enabled 0
 
-echo "begin collecting test runner logs..."
+echo "begin streaming test runner logs..."
 adb logcat -c # truncate old logs
-adb logcat -v raw -v color -s "TestRunner:*" > "$TEST_RUNNER_ERROR_LOGS" &
+adb logcat -v raw -v color -s "TestRunner:* AndroidJUnitRunner:* MonitoringInstr:E THREAD_STATE:E" &
 LOGCAT_PID=$!
 
 function cleanup() {
-  echo "stop collecting test runner logs..."
+  echo "stop streaming test runner logs..."
   kill "$LOGCAT_PID"
 
-  echo "removing test runner log file..."
-  rm -f "$TEST_RUNNER_ERROR_LOGS"
-
-  echo "stopping gradle daemon..."
+  echo "stop gradle daemons..."
   ./gradlew --stop
 }
 
 trap "cleanup" EXIT
 
 echo "starting $GRADLE_TASK gradle task..."
-./gradlew "$GRADLE_TASK"
-GRADLE_EXITCODE=$?
-
-if [ $GRADLE_EXITCODE -ne 0 ];  then
-  echo ""
-  echo "gradle task '$GRADLE_TASK' has failing tests!" >&2
-  cat "$TEST_RUNNER_ERROR_LOGS" >&2
-  exit 1
-fi
+./gradlew "$GRADLE_TASK" || exit $?

@@ -7,7 +7,6 @@ import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
 import com.github.ashutoshgngwr.noice.HiltFragmentScenario
 import com.github.ashutoshgngwr.noice.R
@@ -17,10 +16,8 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
 @HiltAndroidTest
-@RunWith(AndroidJUnit4::class)
 class SupportDevelopmentFragmentTest {
 
   @get:Rule

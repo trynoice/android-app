@@ -11,14 +11,11 @@ import androidx.annotation.StyleRes
 import androidx.fragment.app.Fragment
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
-import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.MotionEvents
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
-import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.github.ashutoshgngwr.noice.widget.DurationPicker
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -151,13 +148,6 @@ object EspressoX {
   }
 
   /**
-   * Matches [matchers] in a root that [isDialog].
-   */
-  fun onViewInDialog(vararg matchers: Matcher<View>): ViewInteraction {
-    return onView(allOf(*matchers)).inRoot(isDialog())
-  }
-
-  /**
    * https://github.com/android/architecture-samples/blob/2291fc6d2e17a37be584a89b80ee73c207c804c3/app/src/androidTest/java/com/example/android/architecture/blueprints/todoapp/HiltExt.kt#L28-L65
    */
   inline fun <reified F : Fragment> launchFragmentInHiltContainer(
@@ -206,19 +196,5 @@ class HiltFragmentScenario<F : Fragment>(
   fun recreate(): HiltFragmentScenario<F> {
     activityScenario.recreate()
     return this
-  }
-
-  inline fun <T : Any> withFragment(crossinline block: F.() -> T): T {
-    lateinit var value: T
-    var err: Throwable? = null
-    onFragment { fragment ->
-      try {
-        value = block(fragment)
-      } catch (t: Throwable) {
-        err = t
-      }
-    }
-    err?.let { throw it }
-    return value
   }
 }
