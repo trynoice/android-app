@@ -106,7 +106,7 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
   }
 
   private fun startAddAlarmFlow() {
-    if (!viewModel.canScheduleAlarms()) {
+    if (!viewModel.hasScheduleAlarmsPermission()) {
       showAlarmPermissionRationale()
       return
     }
@@ -197,12 +197,22 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
 
   override fun onAlarmTimeClicked(alarm: Alarm) {
     showTimePicker(hour = alarm.minuteOfDay / 60, alarm.minuteOfDay % 60) { hour, minute ->
-      viewModel.save(alarm.copy(minuteOfDay = hour * 60 + minute))
+      viewModel.save(
+        alarm.copy(
+          isEnabled = alarm.isEnabled || viewModel.canEnableMoreAlarms(),
+          minuteOfDay = hour * 60 + minute,
+        )
+      )
     }
   }
 
   override fun onAlarmToggled(alarm: Alarm, enabled: Boolean) {
-    if (enabled && !viewModel.isSubscribed.value && viewModel.enabledCount.value >= FREE_ALARM_COUNT) {
+    if (enabled && !viewModel.hasScheduleAlarmsPermission()) {
+      showAlarmPermissionRationale()
+      return
+    }
+
+    if (enabled && !viewModel.canEnableMoreAlarms()) {
       mainNavController.navigate(R.id.view_subscription_plans)
       return
     }
@@ -271,14 +281,14 @@ class AlarmsViewModel @Inject constructor(
     .flowOn(Dispatchers.IO)
     .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-  internal val enabledCount = alarmRepository.countEnabled()
-    .flowOn(Dispatchers.IO)
-    .stateIn(viewModelScope, SharingStarted.Eagerly, 0)
-
   internal val isSubscribed: StateFlow<Boolean> = subscriptionRepository.isSubscribed()
     .stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
-  internal fun canScheduleAlarms(): Boolean {
+  private val enabledCount = alarmRepository.countEnabled()
+    .flowOn(Dispatchers.IO)
+    .stateIn(viewModelScope, SharingStarted.Eagerly, 0)
+
+  internal fun hasScheduleAlarmsPermission(): Boolean {
     return alarmRepository.canScheduleAlarms()
   }
 
@@ -287,7 +297,7 @@ class AlarmsViewModel @Inject constructor(
       Alarm(
         id = 0,
         label = null,
-        isEnabled = canScheduleAlarms() && (isSubscribed.value || enabledCount.value < FREE_ALARM_COUNT),
+        isEnabled = canEnableMoreAlarms(),
         minuteOfDay = hour * 60 + minute,
         weeklySchedule = 0,
         preset = null,
@@ -317,6 +327,10 @@ class AlarmsViewModel @Inject constructor(
       disabledCount++
     }
     return disabledCount
+  }
+
+  internal fun canEnableMoreAlarms(): Boolean {
+    return hasScheduleAlarmsPermission() && (isSubscribed.value || enabledCount.value < FREE_ALARM_COUNT)
   }
 }
 
