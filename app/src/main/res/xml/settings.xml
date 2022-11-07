@@ -3,130 +3,140 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools">
 
-  <PreferenceCategory android:title="@string/playback">
+  <PreferenceCategory
+    android:title="@string/playback"
+    app:iconSpaceReserved="false">
 
     <Preference
-      android:icon="@drawable/ic_baseline_settings_32"
       android:key="@string/audio_bitrate_key"
       android:title="@string/audio_quality"
+      app:iconSpaceReserved="false"
       tools:summary="@string/audio_quality_low" />
 
     <SeekBarPreference
       android:defaultValue="@integer/default_fade_in_duration_seconds"
-      android:icon="@drawable/ic_baseline_north_east_32"
       android:key="@string/sound_fade_in_duration_key"
       android:max="30"
       android:summary="@string/sound_fade_in_duration_summary"
       android:title="@string/sound_fade_in_duration"
+      app:iconSpaceReserved="false"
       app:min="0"
       app:seekBarIncrement="1"
       app:showSeekBarValue="true" />
 
     <SeekBarPreference
       android:defaultValue="@integer/default_fade_out_duration_seconds"
-      android:icon="@drawable/ic_baseline_south_east_32"
       android:key="@string/sound_fade_out_duration_key"
       android:max="30"
       android:summary="@string/sound_fade_out_duration_summary"
       android:title="@string/sound_fade_out_duration"
+      app:iconSpaceReserved="false"
       app:min="0"
       app:seekBarIncrement="1"
       app:showSeekBarValue="true" />
 
     <SwitchPreferenceCompat
-      android:icon="@drawable/ic_settings_audio_focus"
       android:key="@string/ignore_audio_focus_changes_key"
       android:summaryOff="@string/ignore_audio_focus_changes_summary_off"
       android:summaryOn="@string/ignore_audio_focus_changes_summary_on"
-      android:title="@string/ignore_audio_focus_changes" />
+      android:title="@string/ignore_audio_focus_changes"
+      app:iconSpaceReserved="false" />
 
     <SwitchPreferenceCompat
       android:defaultValue="true"
-      android:icon="@drawable/ic_settings_media_buttons"
       android:key="@string/enable_media_buttons_key"
       android:summary="@string/enable_media_buttons_summary"
-      android:title="@string/enable_media_buttons" />
+      android:title="@string/enable_media_buttons"
+      app:iconSpaceReserved="false" />
 
   </PreferenceCategory>
 
-  <PreferenceCategory android:title="@string/presets">
+  <PreferenceCategory
+    android:title="@string/presets"
+    app:iconSpaceReserved="false">
 
     <Preference
-      android:icon="@drawable/ic_settings_export"
       android:key="@string/export_presets_key"
       android:summary="@string/export_presets_summary"
-      android:title="@string/export_presets" />
+      android:title="@string/export_presets"
+      app:iconSpaceReserved="false" />
 
     <Preference
-      android:icon="@drawable/ic_settings_import"
       android:key="@string/import_presets_key"
       android:summary="@string/import_presets_summary"
-      android:title="@string/import_presets" />
+      android:title="@string/import_presets"
+      app:iconSpaceReserved="false" />
 
     <Preference
-      android:icon="@drawable/ic_settings_delete_sweep"
       android:key="@string/remove_all_app_shortcuts_key"
-      android:title="@string/remove_all_app_shortcuts" />
+      android:title="@string/remove_all_app_shortcuts"
+      app:iconSpaceReserved="false" />
 
   </PreferenceCategory>
 
-  <PreferenceCategory android:title="@string/alarms">
+  <PreferenceCategory
+    android:title="@string/alarms"
+    app:iconSpaceReserved="false">
 
     <SeekBarPreference
       android:defaultValue="9"
-      android:icon="@drawable/ic_round_snooze_32"
       android:key="@string/snooze_length_key"
       android:max="30"
       android:summary="@string/snooze_length_summary"
       android:title="@string/snooze_length"
+      app:iconSpaceReserved="false"
       app:min="1"
       app:seekBarIncrement="1"
       app:showSeekBarValue="true" />
 
   </PreferenceCategory>
 
-  <PreferenceCategory android:title="@string/appearance">
+  <PreferenceCategory
+    android:title="@string/appearance"
+    app:iconSpaceReserved="false">
 
     <Preference
-      android:icon="@drawable/ic_settings_theme"
       android:key="@string/app_theme_key"
       android:title="@string/app_theme"
+      app:iconSpaceReserved="false"
       tools:summary="@string/app_theme_light" />
 
     <SwitchPreferenceCompat
       android:defaultValue="true"
-      android:icon="@drawable/ic_baseline_palette_32"
       android:key="@string/use_material_you_colors_key"
       android:summary="@string/use_material_you_colors_summary"
-      android:title="@string/use_material_you_colors" />
+      android:title="@string/use_material_you_colors"
+      app:iconSpaceReserved="false" />
 
     <SwitchPreferenceCompat
-      android:icon="@drawable/ic_settings_home_screen"
       android:key="@string/presets_as_home_screen_key"
       android:summary="@string/presets_as_home_screen_summary"
-      android:title="@string/presets_as_home_screen" />
+      android:title="@string/presets_as_home_screen"
+      app:iconSpaceReserved="false" />
 
     <SwitchPreferenceCompat
       android:defaultValue="true"
-      android:icon="@drawable/ic_settings_sound_icon"
       android:key="@string/should_display_sound_icons_key"
-      android:title="@string/should_display_sound_icons" />
+      android:title="@string/should_display_sound_icons"
+      app:iconSpaceReserved="false" />
 
   </PreferenceCategory>
 
-  <PreferenceCategory android:title="@string/others">
+  <PreferenceCategory
+    android:title="@string/others"
+    app:iconSpaceReserved="false">
 
     <Preference
-      android:icon="@drawable/ic_settings_delete_sweep"
       android:key="@string/remove_all_sound_downloads_key"
-      android:title="@string/remove_all_sound_downloads" />
+      android:title="@string/remove_all_sound_downloads"
+      app:iconSpaceReserved="false" />
 
     <SwitchPreferenceCompat
       android:defaultValue="false"
-      android:icon="@drawable/ic_settings_analytics"
       android:key="@string/should_share_usage_data_key"
       android:summary="@string/should_share_usage_data_summary"
-      android:title="@string/should_share_usage_data" />
+      android:title="@string/should_share_usage_data"
+      app:iconSpaceReserved="false" />
 
   </PreferenceCategory>
 
