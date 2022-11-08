@@ -64,19 +64,22 @@ class SettingsRepository @Inject constructor(
    * Returns the current value of switch preference with key [R.string.use_material_you_colors_key].
    */
   fun shouldUseMaterialYouColors(): Boolean {
-    return prefs.getBoolean(context.getString(R.string.use_material_you_colors_key), true)
+    return prefs.getBoolean(
+      context.getString(R.string.use_material_you_colors_key),
+      context.resources.getBoolean(R.bool.use_material_you_colors_default_value),
+    )
   }
 
   /**
    * Returns the current value of switch preference with key [R.string.presets_as_home_screen_key].
    */
   fun shouldDisplayPresetsAsHomeScreen(): Boolean {
-    return prefs.getBoolean(context.getString(R.string.presets_as_home_screen_key), false)
+    return prefs.getBoolean(
+      context.getString(R.string.presets_as_home_screen_key),
+      context.resources.getBoolean(R.bool.presets_as_home_screen_default_value),
+    )
   }
 
-  /**
-   * Returns the value of [R.string.sound_fade_in_duration_key] preference.
-   */
   private fun getSoundFadeInDuration(): Duration {
     return prefs.getInt(
       context.getString(R.string.sound_fade_in_duration_key),
@@ -92,9 +95,6 @@ class SettingsRepository @Inject constructor(
     return keyFlow(R.string.sound_fade_in_duration_key).map { getSoundFadeInDuration() }
   }
 
-  /**
-   * Returns the value of [R.string.sound_fade_out_duration_key] preference.
-   */
   private fun getSoundFadeOutDuration(): Duration {
     return prefs.getInt(
       context.getString(R.string.sound_fade_out_duration_key),
@@ -110,10 +110,7 @@ class SettingsRepository @Inject constructor(
     return keyFlow(R.string.sound_fade_out_duration_key).map { getSoundFadeOutDuration() }
   }
 
-  /**
-   * Returns the value of switch preference with key [R.string.ignore_audio_focus_changes_key].
-   */
-  fun shouldIgnoreAudioFocusChanges(): Boolean {
+  private fun shouldIgnoreAudioFocusChanges(): Boolean {
     return prefs.getBoolean(context.getString(R.string.ignore_audio_focus_changes_key), false)
   }
 
@@ -125,11 +122,11 @@ class SettingsRepository @Inject constructor(
     return keyFlow(R.string.ignore_audio_focus_changes_key).map { shouldIgnoreAudioFocusChanges() }
   }
 
-  /**
-   * Returns the value of switch preference with key [R.string.should_display_sound_icons_key].
-   */
-  fun shouldDisplaySoundIcons(): Boolean {
-    return prefs.getBoolean(context.getString(R.string.should_display_sound_icons_key), true)
+  private fun shouldDisplaySoundIcons(): Boolean {
+    return prefs.getBoolean(
+      context.getString(R.string.should_display_sound_icons_key),
+      context.resources.getBoolean(R.bool.should_display_sound_icons_default_value),
+    )
   }
 
   /**
@@ -155,7 +152,8 @@ class SettingsRepository @Inject constructor(
    */
   private fun isMediaButtonsEnabled(): Boolean {
     return prefs.getBoolean(
-      context.getString(R.string.enable_media_buttons_key), true
+      context.getString(R.string.enable_media_buttons_key),
+      context.resources.getBoolean(R.bool.enable_media_buttons_default_value),
     )
   }
 
@@ -191,14 +189,18 @@ class SettingsRepository @Inject constructor(
     return keyFlow(R.string.audio_bitrate_key).map { getAudioQuality() }
   }
 
-  fun getAlarmReminderMaxDuration(): Duration {
-    return prefs.getInt(context.getString(R.string.alarm_ringer_max_duration_key), 9)
-      .toDuration(DurationUnit.MINUTES)
+  fun getAlarmRingerMaxDuration(): Duration {
+    return prefs.getInt(
+      context.getString(R.string.alarm_ringer_max_duration_key),
+      context.resources.getInteger(R.integer.default_alarm_ringer_max_duration_minutes),
+    ).toDuration(DurationUnit.MINUTES)
   }
 
   fun getAlarmSnoozeDuration(): Duration {
-    return prefs.getInt(context.getString(R.string.alarm_snooze_length_key), 9)
-      .toDuration(DurationUnit.MINUTES)
+    return prefs.getInt(
+      context.getString(R.string.alarm_snooze_length_key),
+      context.resources.getInteger(R.integer.default_alarm_snooze_length_minutes),
+    ).toDuration(DurationUnit.MINUTES)
   }
 
   private fun keyFlow(@StringRes keyStrRes: Int): Flow<String> {

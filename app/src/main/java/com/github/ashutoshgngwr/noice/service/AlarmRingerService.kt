@@ -186,7 +186,7 @@ class AlarmRingerService : LifecycleService() {
 
       autoDismissJob?.cancel()
       autoDismissJob = launch {
-        delay(settingsRepository.getAlarmReminderMaxDuration())
+        delay(settingsRepository.getAlarmRingerMaxDuration())
         buildMissedAlarmNotification(alarmTriggerTime)
           .also { notificationManager.notify(NOTIFICATION_ID_MISSED, it) }
 

@@ -43,7 +43,7 @@
       app:iconSpaceReserved="false" />
 
     <SwitchPreferenceCompat
-      android:defaultValue="true"
+      android:defaultValue="@bool/enable_media_buttons_default_value"
       android:key="@string/enable_media_buttons_key"
       android:summary="@string/enable_media_buttons_summary"
       android:title="@string/enable_media_buttons"
@@ -79,7 +79,7 @@
     app:iconSpaceReserved="false">
 
     <SeekBarPreference
-      android:defaultValue="15"
+      android:defaultValue="@integer/default_alarm_ringer_max_duration_minutes"
       android:key="@string/alarm_ringer_max_duration_key"
       android:max="30"
       android:summary="@string/alarm_ringer_max_duration_summary"
@@ -90,7 +90,7 @@
       app:showSeekBarValue="true" />
 
     <SeekBarPreference
-      android:defaultValue="9"
+      android:defaultValue="@integer/default_alarm_snooze_length_minutes"
       android:key="@string/alarm_snooze_length_key"
       android:max="30"
       android:summary="@string/alarm_snooze_length_summary"
@@ -113,20 +113,21 @@
       tools:summary="@string/app_theme_light" />
 
     <SwitchPreferenceCompat
-      android:defaultValue="true"
+      android:defaultValue="@bool/use_material_you_colors_default_value"
       android:key="@string/use_material_you_colors_key"
       android:summary="@string/use_material_you_colors_summary"
       android:title="@string/use_material_you_colors"
       app:iconSpaceReserved="false" />
 
     <SwitchPreferenceCompat
+      android:defaultValue="@bool/presets_as_home_screen_default_value"
       android:key="@string/presets_as_home_screen_key"
       android:summary="@string/presets_as_home_screen_summary"
       android:title="@string/presets_as_home_screen"
       app:iconSpaceReserved="false" />
 
     <SwitchPreferenceCompat
-      android:defaultValue="true"
+      android:defaultValue="@bool/should_display_sound_icons_default_value"
       android:key="@string/should_display_sound_icons_key"
       android:title="@string/should_display_sound_icons"
       app:iconSpaceReserved="false" />
