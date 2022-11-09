@@ -22,7 +22,11 @@ class BootCompletedReceiver : BroadcastReceiver() {
     }
 
     runBlocking {
-      withContext(Dispatchers.IO) { alarmRepository.rescheduleAll() }
+      if (alarmRepository.canScheduleAlarms()) {
+        withContext(Dispatchers.IO) { alarmRepository.rescheduleAll() }
+      } else {
+        withContext(Dispatchers.IO) { alarmRepository.disableAll() }
+      }
     }
   }
 }
