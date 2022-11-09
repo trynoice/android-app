@@ -47,11 +47,10 @@ class AlarmRepository(
   }
 
   fun pagingDataFlow(): Flow<PagingData<Alarm>> {
+    val presets = presetRepository.list().associateBy { it.id }
     return Pager(PagingConfig(pageSize = 20)) { appDb.alarms().pagingSource() }
       .flow
-      .map { pagingData ->
-        pagingData.map { it.toDomainEntity(presetRepository.get(it.presetId)) }
-      }
+      .map { pagingData -> pagingData.map { it.toDomainEntity(presets[it.presetId]) } }
   }
 
   fun canScheduleAlarms(): Boolean {
@@ -65,7 +64,7 @@ class AlarmRepository(
   suspend fun reportTrigger(alarmId: Int, isSnoozed: Boolean) {
     val alarm = get(alarmId) ?: return
     if (alarm.weeklySchedule == 0) {
-      save(alarm.copy(isEnabled = false))
+      appDb.alarms().save(alarm.copy(isEnabled = false).toRoomDto())
     }
 
     alarmManager.cancel(alarm)
