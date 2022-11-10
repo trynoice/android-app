@@ -41,12 +41,10 @@ import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import java.util.*
@@ -309,10 +307,7 @@ class SubscriptionPurchasePagingDataSource(
 
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Subscription> {
     val page = params.key ?: 0
-    val resource = subscriptionRepository.list(page, currencyCode)
-      .flowOn(Dispatchers.IO)
-      .last()
-
+    val resource = subscriptionRepository.list(page, currencyCode).last()
     val nextPage = if (resource.data?.isNotEmpty() == true) {
       page + 1
     } else {

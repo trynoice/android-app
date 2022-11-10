@@ -20,10 +20,10 @@ import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
+import com.github.ashutoshgngwr.noice.AppDispatchers
 import com.github.ashutoshgngwr.noice.ext.getMutableStringSet
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.security.KeyFactory
@@ -44,6 +44,7 @@ import kotlin.math.min
 class RealInAppBillingProvider(
   context: Context,
   private val defaultScope: CoroutineScope,
+  private val appDispatchers: AppDispatchers,
 ) : BillingClientStateListener, PurchasesUpdatedListener, InAppBillingProvider {
 
   private var purchaseListener: InAppBillingProvider.PurchaseListener? = null
@@ -75,7 +76,7 @@ class RealInAppBillingProvider(
     }
 
     reconnectDelayMillis = RECONNECT_DELAY_START_MILLIS
-    defaultScope.launch(Dispatchers.IO) { refreshPurchases() }
+    defaultScope.launch(appDispatchers.io) { refreshPurchases() }
   }
 
   override fun onBillingServiceDisconnected() = retryServiceConnectionWithExponentialBackoff()
@@ -99,9 +100,9 @@ class RealInAppBillingProvider(
       prefs.getStringSet(PREF_PENDING_NOTIFICATIONS, null)?.forEach { json ->
         val bpp = gson.fromJson(json, InAppBillingProvider.Purchase::class.java)
         if (bpp.purchaseState == Purchase.PurchaseState.PENDING) {
-          defaultScope.launch(Dispatchers.Main) { listener.onPending(bpp) }
+          listener.onPending(bpp)
         } else if (bpp.purchaseState == Purchase.PurchaseState.PURCHASED) {
-          defaultScope.launch(Dispatchers.Main) { listener.onComplete(bpp) }
+          listener.onComplete(bpp)
         }
       }
 
@@ -263,7 +264,7 @@ class RealInAppBillingProvider(
 
   private fun retryServiceConnectionWithExponentialBackoff() {
     this.also { listener ->
-      defaultScope.launch(Dispatchers.Main) {
+      defaultScope.launch(appDispatchers.main) {
         delay(reconnectDelayMillis)
         client.startConnection(listener)
       }
@@ -330,11 +331,11 @@ class RealInAppBillingProvider(
       }
 
       purchase.purchaseState == Purchase.PurchaseState.PENDING -> {
-        defaultScope.launch(Dispatchers.Main) { purchaseListener?.onPending(bpp) }
+        defaultScope.launch(appDispatchers.main) { purchaseListener?.onPending(bpp) }
       }
 
       purchase.purchaseState == Purchase.PurchaseState.PURCHASED -> {
-        defaultScope.launch(Dispatchers.Main) { purchaseListener?.onComplete(bpp) }
+        defaultScope.launch(appDispatchers.main) { purchaseListener?.onComplete(bpp) }
       }
     }
   }

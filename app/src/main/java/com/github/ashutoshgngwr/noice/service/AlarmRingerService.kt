@@ -32,12 +32,10 @@ import com.github.ashutoshgngwr.noice.repository.AlarmRepository
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -113,8 +111,8 @@ class AlarmRingerService : LifecycleService() {
     val alarmId = intent.getIntExtra(EXTRA_ALARM_ID, -1)
     when (intent.action) {
       ACTION_RING -> lifecycleScope.launch { startRinger(alarmId) }
-      ACTION_SNOOZE -> lifecycleScope.launch { snooze(alarmId) }
-      ACTION_DISMISS -> lifecycleScope.launch { dismiss(alarmId) }
+      ACTION_SNOOZE -> lifecycleScope.launch { dismiss(alarmId, isSnoozed = true) }
+      ACTION_DISMISS -> lifecycleScope.launch { dismiss(alarmId, isSnoozed = false) }
     }
 
     return super.onStartCommand(intent, flags, startId)
@@ -141,9 +139,9 @@ class AlarmRingerService : LifecycleService() {
   }
 
   private suspend fun startRinger(alarmId: Int) {
-    val alarm = withContext(Dispatchers.IO) { alarmRepository.get(alarmId) }
+    val alarm = alarmRepository.get(alarmId)
     if (alarm == null) {
-      withContext(Dispatchers.Main) { stopSelf() }
+      stopSelf()
       return
     }
 
@@ -151,47 +149,41 @@ class AlarmRingerService : LifecycleService() {
     val alarmTriggerTime = DateUtils.formatDateTime(this, System.currentTimeMillis(), timeFmtFlags)
 
     // since loading the preset may take some time, show a notification.
-    withContext(Dispatchers.Main) {
-      startForeground(NOTIFICATION_ID_PRIMING, buildLoadingNotification(alarmTriggerTime))
-    }
+    startForeground(NOTIFICATION_ID_PRIMING, buildLoadingNotification(alarmTriggerTime))
 
-    val preset: Preset? = withContext(Dispatchers.IO) {
-      alarm.preset // use the alarm's selected preset if it has one
-        ?: presetRepository.list().randomOrNull() // or pick one at random from the saved presets
-        ?: presetRepository.generate(emptySet(), Random.nextInt(2, 6))
-          .lastOrNull()?.data // or attempt to generate one
-    }
+    val preset: Preset? = alarm.preset // use the alarm's selected preset if it has one
+      ?: presetRepository.list().randomOrNull() // or pick one at random from the saved presets
+      ?: presetRepository.generate(emptySet(), Random.nextInt(2, 6))
+        .lastOrNull()?.data // or attempt to generate one
 
     if (alarm.vibrate) {
       startVibrating()
     }
 
-    withContext(Dispatchers.Main) {
-      // if we couldn't get a preset to play, start the ringer with default alarm ringtone.
-      if (preset == null) {
-        ServiceCompat.stopForeground(this@AlarmRingerService, ServiceCompat.STOP_FOREGROUND_DETACH)
-        buildRingerNotification(SECONDARY_CHANNEL_ID, alarm, alarmTriggerTime)
-          .also { startForeground(NOTIFICATION_ID_ALARM, it) }
+    // if we couldn't get a preset to play, start the ringer with default alarm ringtone.
+    if (preset == null) {
+      ServiceCompat.stopForeground(this@AlarmRingerService, ServiceCompat.STOP_FOREGROUND_DETACH)
+      buildRingerNotification(SECONDARY_CHANNEL_ID, alarm, alarmTriggerTime)
+        .also { startForeground(NOTIFICATION_ID_ALARM, it) }
 
-        buildPresetLoadFailedNotification(alarmTriggerTime)
-          .also { notificationManager.notify(NOTIFICATION_ID_PRIMING, it) }
-      } else {
-        ServiceCompat.stopForeground(this@AlarmRingerService, ServiceCompat.STOP_FOREGROUND_REMOVE)
-        buildRingerNotification(PRIMARY_CHANNEL_ID, alarm, alarmTriggerTime)
-          .also { startForeground(NOTIFICATION_ID_ALARM, it) }
+      buildPresetLoadFailedNotification(alarmTriggerTime)
+        .also { notificationManager.notify(NOTIFICATION_ID_PRIMING, it) }
+    } else {
+      ServiceCompat.stopForeground(this@AlarmRingerService, ServiceCompat.STOP_FOREGROUND_REMOVE)
+      buildRingerNotification(PRIMARY_CHANNEL_ID, alarm, alarmTriggerTime)
+        .also { startForeground(NOTIFICATION_ID_ALARM, it) }
 
-        playbackController.setAudioUsage(AudioAttributesCompat.USAGE_ALARM)
-        playbackController.play(preset)
-      }
+      playbackController.setAudioUsage(AudioAttributesCompat.USAGE_ALARM)
+      playbackController.play(preset)
+    }
 
-      autoDismissJob?.cancel()
-      autoDismissJob = launch {
-        delay(settingsRepository.getAlarmRingerMaxDuration())
-        buildMissedAlarmNotification(alarmTriggerTime)
-          .also { notificationManager.notify(NOTIFICATION_ID_MISSED, it) }
+    autoDismissJob?.cancel()
+    autoDismissJob = lifecycleScope.launch {
+      delay(settingsRepository.getAlarmRingerMaxDuration())
+      buildMissedAlarmNotification(alarmTriggerTime)
+        .also { notificationManager.notify(NOTIFICATION_ID_MISSED, it) }
 
-        dismiss(alarm.id)
-      }
+      dismiss(alarm.id, isSnoozed = false)
     }
   }
 
@@ -278,23 +270,14 @@ class AlarmRingerService : LifecycleService() {
       .build()
   }
 
-  private suspend fun dismiss(alarmId: Int) {
-    withContext(Dispatchers.IO) { alarmRepository.reportTrigger(alarmId, false) }
-    withContext(Dispatchers.Main) { dismissRinger() }
-  }
-
-  private suspend fun snooze(alarmId: Int) {
-    withContext(Dispatchers.IO) { alarmRepository.reportTrigger(alarmId, true) }
-    withContext(Dispatchers.Main) { dismissRinger() }
-  }
-
-  private fun dismissRinger() {
+  private suspend fun dismiss(alarmId: Int, isSnoozed: Boolean) {
+    alarmRepository.reportTrigger(alarmId, isSnoozed)
     vibrator.cancel()
     playbackController.pause(true)
     playbackController.setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
 
     uiController.dismiss()
-    ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
+    ServiceCompat.stopForeground(this@AlarmRingerService, ServiceCompat.STOP_FOREGROUND_REMOVE)
     stopSelf()
   }
 

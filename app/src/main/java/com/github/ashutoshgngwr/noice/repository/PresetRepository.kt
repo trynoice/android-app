@@ -11,6 +11,7 @@ import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.PresetV0
 import com.github.ashutoshgngwr.noice.model.PresetV1
+import com.github.ashutoshgngwr.noice.models.SoundInfo
 import com.github.ashutoshgngwr.noice.models.SoundTag
 import com.github.ashutoshgngwr.noice.repository.PresetRepository.Companion.PREFERENCE_KEY
 import com.github.ashutoshgngwr.noice.repository.errors.DuplicatePresetError
@@ -23,7 +24,6 @@ import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.transform
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.OutputStream
@@ -122,8 +122,8 @@ class PresetRepository @Inject constructor(
    * @see Resource
    */
   fun generate(tags: Set<SoundTag>, soundCount: Int): Flow<Resource<Preset>> {
-    return soundRepository.listInfo().transform { r ->
-      emit(
+    return soundRepository.listInfo()
+      .map<Resource<List<SoundInfo>>, Resource<Preset>> { r ->
         when {
           r is Resource.Loading -> Resource.Loading(null)
           r.data != null -> {
@@ -138,8 +138,7 @@ class PresetRepository @Inject constructor(
           }
           else -> Resource.Failure(r.error ?: Exception())
         }
-      )
-    }
+      }
   }
 
   /**

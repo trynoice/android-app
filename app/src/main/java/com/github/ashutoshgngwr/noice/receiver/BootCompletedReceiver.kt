@@ -5,9 +5,7 @@ import android.content.Context
 import android.content.Intent
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -23,9 +21,9 @@ class BootCompletedReceiver : BroadcastReceiver() {
 
     runBlocking {
       if (alarmRepository.canScheduleAlarms()) {
-        withContext(Dispatchers.IO) { alarmRepository.rescheduleAll() }
+        alarmRepository.rescheduleAll()
       } else {
-        withContext(Dispatchers.IO) { alarmRepository.disableAll() }
+        alarmRepository.disableAll()
       }
     }
   }

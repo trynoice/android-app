@@ -23,11 +23,10 @@ import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -47,8 +46,11 @@ class LaunchSubscriptionFlowFragment : BottomSheetDialogFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     isCancelable = false
-    viewModel.onLaunchCompleted = this::dismiss
-    viewModel.launchBillingFlow(requireActivity(), args.plan, args.activeSubscription)
+    viewLifecycleOwner.lifecycleScope.launch {
+      viewModel.isCompleted
+        .filter { it }
+        .collect { dismiss() }
+    }
 
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.launchErrorStrRes
@@ -58,6 +60,8 @@ class LaunchSubscriptionFlowFragment : BottomSheetDialogFragment() {
           showErrorSnackBar(msg.normalizeSpace())
         }
     }
+
+    viewModel.launchBillingFlow(requireActivity(), args.plan, args.activeSubscription)
   }
 }
 
@@ -66,8 +70,8 @@ class LaunchSubscriptionFlowViewModel @Inject constructor(
   private val subscriptionRepository: SubscriptionRepository
 ) : ViewModel() {
 
-  internal var onLaunchCompleted: () -> Unit = {}
   private val launchResource = MutableStateFlow<Resource<Unit>?>(null)
+  internal val isCompleted = MutableStateFlow(false)
   internal val launchErrorStrRes: Flow<Int?> = launchResource.transform { r ->
     emit(
       when (r?.error) {
@@ -91,8 +95,7 @@ class LaunchSubscriptionFlowViewModel @Inject constructor(
     launchResource.value = Resource.Loading()
     viewModelScope.launch {
       subscriptionRepository.launchBillingFlow(activity, plan, activeSubscription)
-        .flowOn(Dispatchers.IO)
-        .onCompletion { onLaunchCompleted.invoke() }
+        .onCompletion { isCompleted.emit(true) }
         .collect(launchResource)
     }
   }

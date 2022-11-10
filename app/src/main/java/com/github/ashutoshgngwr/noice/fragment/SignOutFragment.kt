@@ -18,14 +18,12 @@ import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -89,8 +87,6 @@ class SignOutViewModel @Inject constructor(
   }
 
   fun signOut() = viewModelScope.launch {
-    accountRepository.signOut()
-      .flowOn(Dispatchers.IO)
-      .collect(signOutResource)
+    accountRepository.signOut().collect(signOutResource)
   }
 }

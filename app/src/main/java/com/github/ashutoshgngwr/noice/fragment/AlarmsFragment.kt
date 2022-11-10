@@ -40,16 +40,13 @@ import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNot
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
@@ -100,7 +97,6 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
         .filterNot { it }
         .map { viewModel.disableAll(FREE_ALARM_COUNT) }
         .filter { it > 0 }
-        .flowOn(Dispatchers.IO)
         .collect { showErrorSnackBar(R.string.alarms_disabled_due_to_subscription_expiration) }
     }
   }
@@ -273,19 +269,16 @@ class AlarmsViewModel @Inject constructor(
 ) : ViewModel() {
 
   internal val alarmsPagingData: StateFlow<PagingData<Alarm>> = alarmRepository.pagingDataFlow()
-    .flowOn(Dispatchers.IO)
     .cachedIn(viewModelScope)
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PagingData.empty())
 
   internal val presets: StateFlow<List<Preset>> = presetRepository.listFlow()
-    .flowOn(Dispatchers.IO)
     .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
   internal val isSubscribed: StateFlow<Boolean> = subscriptionRepository.isSubscribed()
     .stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
   private val enabledCount = alarmRepository.countEnabled()
-    .flowOn(Dispatchers.IO)
     .stateIn(viewModelScope, SharingStarted.Eagerly, 0)
 
   internal fun hasScheduleAlarmsPermission(): Boolean {
@@ -307,19 +300,19 @@ class AlarmsViewModel @Inject constructor(
   }
 
   internal fun save(alarm: Alarm) {
-    viewModelScope.launch(Dispatchers.IO) {
+    viewModelScope.launch {
       alarmRepository.save(alarm)
     }
   }
 
   internal fun delete(alarm: Alarm) {
-    viewModelScope.launch(Dispatchers.IO) {
+    viewModelScope.launch {
       alarmRepository.delete(alarm)
     }
   }
 
   internal suspend fun disableAll(offset: Int): Int {
-    return withContext(Dispatchers.IO) { alarmRepository.disableAll(offset) }
+    return alarmRepository.disableAll(offset)
   }
 
   internal fun canEnableMoreAlarms(): Boolean {

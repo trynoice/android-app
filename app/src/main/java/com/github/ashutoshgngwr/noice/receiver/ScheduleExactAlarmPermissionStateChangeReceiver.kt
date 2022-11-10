@@ -6,9 +6,7 @@ import android.content.Context
 import android.content.Intent
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -23,9 +21,7 @@ class ScheduleExactAlarmPermissionStateChangeReceiver : BroadcastReceiver() {
     }
 
     if (!alarmRepository.canScheduleAlarms()) {
-      runBlocking {
-        withContext(Dispatchers.IO) { alarmRepository.disableAll() }
-      }
+      runBlocking { alarmRepository.disableAll() }
     }
   }
 }

@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice.di
 
 import android.content.Context
+import com.github.ashutoshgngwr.noice.AppDispatchers
 import com.github.ashutoshgngwr.noice.provider.GooglePlaySubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.StripeSubscriptionBillingProvider
@@ -23,11 +24,12 @@ object SubscriptionBillingProviderModule {
     @ApplicationContext context: Context,
     apiClient: NoiceApiClient,
     billingProvider: InAppBillingProvider,
+    appDispatchers: AppDispatchers,
   ): SubscriptionBillingProvider {
     if (isGoogleMobileServiceAvailable(context)) {
       return GooglePlaySubscriptionBillingProvider(apiClient, billingProvider)
     }
 
-    return StripeSubscriptionBillingProvider(apiClient)
+    return StripeSubscriptionBillingProvider(apiClient, appDispatchers)
   }
 }

@@ -27,14 +27,12 @@ import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.repository.errors.NotSignedInError
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -139,9 +137,7 @@ class AccountViewModel @Inject constructor(
     }
 
     viewModelScope.launch {
-      accountRepository.getProfile()
-        .flowOn(Dispatchers.IO)
-        .collect(profileResource)
+      accountRepository.getProfile().collect(profileResource)
     }
   }
 }
