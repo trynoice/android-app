@@ -21,7 +21,7 @@ package com.github.ashutoshgngwr.noice.fragment
 //import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
 //import com.github.ashutoshgngwr.noice.HiltFragmentScenario
 //import com.github.ashutoshgngwr.noice.R
-//import com.github.ashutoshgngwr.noice.ReviewFlowProviderModule
+//import com.github.ashutoshgngwr.noice.di.ReviewFlowProviderModule
 //import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
 //import com.github.ashutoshgngwr.noice.engine.PlaybackController
 //import com.github.ashutoshgngwr.noice.model.PlayerState

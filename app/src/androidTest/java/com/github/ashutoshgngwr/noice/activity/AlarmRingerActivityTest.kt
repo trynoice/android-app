@@ -7,8 +7,8 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
-import com.github.ashutoshgngwr.noice.NoiceApplication
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.di.AlarmRingerModule
 import com.github.ashutoshgngwr.noice.service.AlarmRingerService
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -23,7 +23,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
-@UninstallModules(NoiceApplication.AlarmRingerModule::class)
+@UninstallModules(AlarmRingerModule::class)
 class AlarmRingerActivityTest {
 
   @get:Rule

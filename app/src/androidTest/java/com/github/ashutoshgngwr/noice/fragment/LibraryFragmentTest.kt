@@ -15,7 +15,7 @@ package com.github.ashutoshgngwr.noice.fragment
 //import com.github.ashutoshgngwr.noice.MediaPlayerService
 //import com.github.ashutoshgngwr.noice.NoiceApplication
 //import com.github.ashutoshgngwr.noice.R
-//import com.github.ashutoshgngwr.noice.ReviewFlowProviderModule
+//import com.github.ashutoshgngwr.noice.di.ReviewFlowProviderModule
 //import com.github.ashutoshgngwr.noice.model.Preset
 //import com.github.ashutoshgngwr.noice.playback.PlaybackController
 //import com.github.ashutoshgngwr.noice.playback.Player

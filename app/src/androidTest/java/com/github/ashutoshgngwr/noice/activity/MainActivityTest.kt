@@ -19,8 +19,8 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.work.Configuration
 import androidx.work.testing.WorkManagerTestInitHelper
 import com.github.ashutoshgngwr.noice.BuildConfig
-import com.github.ashutoshgngwr.noice.InAppBillingProviderModule
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.di.InAppBillingProviderModule
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
