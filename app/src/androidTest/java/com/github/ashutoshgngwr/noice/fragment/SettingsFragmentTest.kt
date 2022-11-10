@@ -22,7 +22,9 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
+import io.mockk.unmockkAll
 import io.mockk.verify
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -49,8 +51,14 @@ class SettingsFragmentTest {
   @Before
   fun setup() {
     hiltRule.inject()
+    mockkStatic(ShortcutManagerCompat::class)
     mockPresetRepository = mockk()
     fragmentScenario = launchFragmentInHiltContainer()
+  }
+
+  @After
+  fun tearDown() {
+    unmockkAll()
   }
 
   @Test
@@ -99,7 +107,6 @@ class SettingsFragmentTest {
 
   @Test
   fun testRemoveAllAppShortcuts() {
-    mockkStatic(ShortcutManagerCompat::class)
     onView(withId(androidx.preference.R.id.recycler_view))
       .perform(
         RecyclerViewActions.actionOnItem<androidx.preference.PreferenceViewHolder>(

@@ -45,7 +45,7 @@ class BootCompletedReceiverTest {
       Intent(Intent.ACTION_BOOT_COMPLETED)
     )
 
-    coVerify(exactly = 1) { alarmRepository.rescheduleAll() }
+    coVerify(exactly = 1, timeout = 5000L) { alarmRepository.rescheduleAll() }
   }
 
   @Test
@@ -56,6 +56,6 @@ class BootCompletedReceiverTest {
       Intent("android.intent.action.QUICKBOOT_POWERON"),
     )
 
-    coVerify(exactly = 1) { alarmRepository.rescheduleAll() }
+    coVerify(exactly = 1, timeout = 5000L) { alarmRepository.rescheduleAll() }
   }
 }

@@ -8,6 +8,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
+import androidx.room.withTransaction
 import com.github.ashutoshgngwr.noice.data.AppDatabase
 import com.github.ashutoshgngwr.noice.models.Alarm
 import com.github.ashutoshgngwr.noice.models.toDomainEntity
@@ -88,13 +89,16 @@ class AlarmRepository(
 
   suspend fun disableAll(offset: Int = 0): Int {
     var disabledCount = 0
-    appDb.alarms()
-      .listEnabled()
-      .forEachIndexed { index, alarmDto ->
-        if (index < offset) return@forEachIndexed
-        appDb.alarms().save(alarmDto.copy(isEnabled = false))
-        disabledCount++
-      }
+    appDb.withTransaction {
+      appDb.alarms()
+        .listEnabled()
+        .forEachIndexed { index, alarmDto ->
+          if (index < offset) return@forEachIndexed
+          alarmManager.cancel(alarmDto.toDomainEntity(null))
+          appDb.alarms().save(alarmDto.copy(isEnabled = false))
+          disabledCount++
+        }
+    }
 
     return disabledCount
   }

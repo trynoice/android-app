@@ -46,6 +46,6 @@ class ScheduleExactAlarmPermissionStateChangeReceiverTest {
       Intent(AlarmManager.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED)
     )
 
-    coVerify { alarmRepository.disableAll() }
+    coVerify(exactly = 1, timeout = 5000L) { alarmRepository.disableAll() }
   }
 }

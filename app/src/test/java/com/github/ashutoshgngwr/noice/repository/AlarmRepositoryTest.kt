@@ -10,6 +10,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.paging.cachedIn
 import androidx.recyclerview.widget.ListUpdateCallback
+import androidx.room.withTransaction
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.data.AlarmDao
 import com.github.ashutoshgngwr.noice.data.AppDatabase
@@ -23,6 +24,9 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.slot
+import io.mockk.unmockkAll
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
@@ -30,6 +34,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -54,12 +59,16 @@ class AlarmRepositoryTest {
 
   @Before
   fun setUp() {
+    mockkStatic("androidx.room.RoomDatabaseKt")
+
     val context = ApplicationProvider.getApplicationContext<Context>()
     presetRepositoryMock = mockk(relaxed = true)
     settingsRepositoryMock = mockk(relaxed = true)
     alarmDaoMock = mockk(relaxed = true)
     val appDb = mockk<AppDatabase> {
       every { alarms() } returns alarmDaoMock
+      val transactionLambda = slot<suspend () -> Unit>()
+      coEvery { withTransaction(capture(transactionLambda)) } coAnswers { transactionLambda.captured.invoke() }
     }
 
     val alarmManager = requireNotNull(context.getSystemService<AlarmManager>())
@@ -81,12 +90,17 @@ class AlarmRepositoryTest {
     )
   }
 
+  @After
+  fun tearDown() {
+    unmockkAll()
+  }
+
   @Test
   fun saveAndDelete() = runTest {
     assertNull(alarmManagerShadow.peekNextScheduledAlarm())
 
     repository.save(buildAlarm(id = 1, minuteOfDay = 120))
-    coVerify(exactly = 1) {
+    coVerify(exactly = 1, timeout = 5000L) {
       alarmDaoMock.save(buildAlarmDto(id = 1, minuteOfDay = 120))
     }
 
@@ -106,7 +120,7 @@ class AlarmRepositoryTest {
     assertEquals(4, calendar.get(Calendar.HOUR_OF_DAY))
 
     repository.delete(buildAlarm(id = 1, minuteOfDay = 360))
-    coVerify(exactly = 1) { alarmDaoMock.deleteById(1) }
+    coVerify(exactly = 1, timeout = 5000L) { alarmDaoMock.deleteById(1) }
     assertNull(alarmManagerShadow.peekNextScheduledAlarm())
   }
 
@@ -222,7 +236,11 @@ class AlarmRepositoryTest {
         isSnoozed = false,
         expectDisabled = false,
         nextTriggerAfterMinutes = Calendar.getInstance()
-          .apply { add(Calendar.DAY_OF_MONTH, 1) }
+          .apply {
+            if (get(Calendar.HOUR_OF_DAY) * 60 + get(Calendar.HOUR_OF_DAY) > 360) {
+              add(Calendar.DAY_OF_MONTH, 1)
+            }
+          }
           .apply { set(Calendar.HOUR_OF_DAY, 6) }
           .apply { set(Calendar.MINUTE, 0) }
           .apply { set(Calendar.SECOND, 0) }
@@ -248,7 +266,7 @@ class AlarmRepositoryTest {
       coEvery { alarmDaoMock.getById(testCase.alarm.id) } returns testCase.alarm.toRoomDto()
       repository.reportTrigger(testCase.alarm.id, testCase.isSnoozed)
 
-      coVerify(exactly = if (testCase.expectDisabled) 1 else 0) {
+      coVerify(exactly = if (testCase.expectDisabled) 1 else 0, timeout = 5000L) {
         alarmDaoMock.save(withArg { it.id == testCase.alarm.id && !it.isEnabled })
       }
 
@@ -269,7 +287,7 @@ class AlarmRepositoryTest {
   }
 
   @Test
-  fun rescheduleAll() = runTest {
+  fun rescheduleAllAndDisableAll() = runTest {
     val alarms = listOf(
       buildAlarmDto(id = 1, minuteOfDay = 120, isEnabled = true),
       buildAlarmDto(id = 2, minuteOfDay = 240, isEnabled = true),
@@ -288,21 +306,12 @@ class AlarmRepositoryTest {
         calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE),
       )
     }
-  }
 
-  @Test
-  fun disableAll() = runTest {
-    val alarms = listOf(
-      buildAlarmDto(id = 1, minuteOfDay = 1, isEnabled = true),
-      buildAlarmDto(id = 2, minuteOfDay = 2, isEnabled = true),
-      buildAlarmDto(id = 3, minuteOfDay = 3, isEnabled = true),
-    )
-
-    coEvery { alarmDaoMock.listEnabled() } returns alarms
     val offset = 1
     repository.disableAll(offset)
+    assertEquals(offset, alarmManagerShadow.scheduledAlarms.size)
     alarms.forEachIndexed { index, alarm ->
-      coVerify(exactly = if (index < offset) 0 else 1) {
+      coVerify(exactly = if (index < offset) 0 else 1, timeout = 5000L) {
         alarmDaoMock.save(alarm.copy(isEnabled = false))
       }
     }
