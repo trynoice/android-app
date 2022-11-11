@@ -54,7 +54,7 @@ class AlarmRepositoryTest {
   private lateinit var presetRepositoryMock: PresetRepository
   private lateinit var settingsRepositoryMock: SettingsRepository
   private lateinit var alarmDaoMock: AlarmDao
-  private lateinit var alarmManagerShadow: ShadowAlarmManager
+  private lateinit var shadowAlarmManager: ShadowAlarmManager
   private lateinit var repository: AlarmRepository
 
   @Before
@@ -72,7 +72,7 @@ class AlarmRepositoryTest {
     }
 
     val alarmManager = requireNotNull(context.getSystemService<AlarmManager>())
-    alarmManagerShadow = shadowOf(alarmManager)
+    shadowAlarmManager = shadowOf(alarmManager)
     repository = AlarmRepository(
       alarmManager = alarmManager,
       presetRepository = presetRepositoryMock,
@@ -97,14 +97,14 @@ class AlarmRepositoryTest {
 
   @Test
   fun saveAndDelete() = runTest {
-    assertNull(alarmManagerShadow.peekNextScheduledAlarm())
+    assertNull(shadowAlarmManager.peekNextScheduledAlarm())
 
     repository.save(buildAlarm(id = 1, minuteOfDay = 120))
     coVerify(exactly = 1, timeout = 5000L) {
       alarmDaoMock.save(buildAlarmDto(id = 1, minuteOfDay = 120))
     }
 
-    var nextAlarm = alarmManagerShadow.peekNextScheduledAlarm()
+    var nextAlarm = shadowAlarmManager.peekNextScheduledAlarm()
     assertNotNull(nextAlarm)
     val calendar = Calendar.getInstance()
     calendar.timeInMillis = nextAlarm.triggerAtTime
@@ -113,15 +113,15 @@ class AlarmRepositoryTest {
 
     // should cancel and update the registered system alarm
     repository.save(buildAlarm(id = 1, minuteOfDay = 240))
-    assertEquals(1, alarmManagerShadow.scheduledAlarms.size)
-    nextAlarm = alarmManagerShadow.peekNextScheduledAlarm()
+    assertEquals(1, shadowAlarmManager.scheduledAlarms.size)
+    nextAlarm = shadowAlarmManager.peekNextScheduledAlarm()
     assertNotNull(nextAlarm)
     calendar.timeInMillis = nextAlarm.triggerAtTime
     assertEquals(4, calendar.get(Calendar.HOUR_OF_DAY))
 
     repository.delete(buildAlarm(id = 1, minuteOfDay = 360))
     coVerify(exactly = 1, timeout = 5000L) { alarmDaoMock.deleteById(1) }
-    assertNull(alarmManagerShadow.peekNextScheduledAlarm())
+    assertNull(shadowAlarmManager.peekNextScheduledAlarm())
   }
 
   @Test
@@ -260,7 +260,7 @@ class AlarmRepositoryTest {
     every { settingsRepositoryMock.getAlarmSnoozeDuration() } returns snoozeLengthMinutes.minutes
 
     testCases.forEachIndexed { index, testCase ->
-      alarmManagerShadow.scheduledAlarms.clear()
+      shadowAlarmManager.scheduledAlarms.clear()
       clearMocks(alarmDaoMock)
 
       coEvery { alarmDaoMock.getById(testCase.alarm.id) } returns testCase.alarm.toRoomDto()
@@ -270,7 +270,7 @@ class AlarmRepositoryTest {
         alarmDaoMock.save(withArg { it.id == testCase.alarm.id && !it.isEnabled })
       }
 
-      val nextAlarm = alarmManagerShadow.peekNextScheduledAlarm()
+      val nextAlarm = shadowAlarmManager.peekNextScheduledAlarm()
       if (testCase.nextTriggerAfterMinutes == null) {
         assertNull("Testcase #$index failed", nextAlarm)
       } else {
@@ -296,10 +296,10 @@ class AlarmRepositoryTest {
 
     coEvery { alarmDaoMock.listEnabled() } returns alarms
     repository.rescheduleAll()
-    assertEquals(alarms.size, alarmManagerShadow.scheduledAlarms.size)
+    assertEquals(alarms.size, shadowAlarmManager.scheduledAlarms.size)
 
     val calendar = Calendar.getInstance()
-    alarmManagerShadow.scheduledAlarms.forEachIndexed { index, alarm ->
+    shadowAlarmManager.scheduledAlarms.forEachIndexed { index, alarm ->
       calendar.timeInMillis = alarm.triggerAtTime
       assertEquals(
         alarms[index].minuteOfDay,
@@ -309,7 +309,7 @@ class AlarmRepositoryTest {
 
     val offset = 1
     repository.disableAll(offset)
-    assertEquals(offset, alarmManagerShadow.scheduledAlarms.size)
+    assertEquals(offset, shadowAlarmManager.scheduledAlarms.size)
     alarms.forEachIndexed { index, alarm ->
       coVerify(exactly = if (index < offset) 0 else 1, timeout = 5000L) {
         alarmDaoMock.save(alarm.copy(isEnabled = false))

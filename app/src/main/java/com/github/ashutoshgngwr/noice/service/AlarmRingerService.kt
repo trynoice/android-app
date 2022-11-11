@@ -18,6 +18,7 @@ import android.provider.Settings
 import android.text.format.DateUtils
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.getSystemService
@@ -302,8 +303,12 @@ class AlarmRingerService : LifecycleService() {
     private const val PRIMING_CHANNEL_ID = "com.github.ashutoshgngwr.noice.alarmPriming"
     private const val MISSED_CHANNEL_ID = "com.github.ashutoshgngwr.noice.missedAlarms"
     private const val NOTIFICATION_ID_PRIMING = 0x3
-    private const val NOTIFICATION_ID_ALARM = 0x4
-    private const val NOTIFICATION_ID_MISSED = 0x5
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal const val NOTIFICATION_ID_ALARM = 0x4
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal const val NOTIFICATION_ID_MISSED = 0x5
 
     private val DEFAULT_VIBRATION_PATTERN = longArrayOf(500, 500, 500, 500, 500)
     private val PI_FLAGS = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
