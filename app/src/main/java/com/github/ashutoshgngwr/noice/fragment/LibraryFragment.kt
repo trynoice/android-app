@@ -50,17 +50,15 @@ import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -303,7 +301,6 @@ class LibraryViewModel @Inject constructor(
 
   internal val downloadStates: StateFlow<Map<String, SoundDownloadState>> = soundRepository
     .getDownloadStates()
-    .flowOn(Dispatchers.IO)
     // emit download states only when user owns an active subscription
     .combine(isSubscribed) { states, subscribed -> if (subscribed) states else emptyMap() }
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
@@ -363,19 +360,16 @@ class LibraryViewModel @Inject constructor(
     .shouldDisplaySoundIconsAsFlow()
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
-  internal val isLibraryUpdated: StateFlow<Boolean> = soundRepository.isLibraryUpdated()
-    .mapNotNull { it.data }
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  internal val isLibraryUpdated = MutableStateFlow(false)
 
   init {
     loadLibrary()
+    viewModelScope.launch { isLibraryUpdated.emit(soundRepository.isLibraryUpdated()) }
   }
 
   fun loadLibrary() {
     viewModelScope.launch {
-      soundRepository.listInfo()
-        .flowOn(Dispatchers.IO)
-        .collect(soundInfosResource)
+      soundRepository.listInfo().collect(soundInfosResource)
     }
   }
 

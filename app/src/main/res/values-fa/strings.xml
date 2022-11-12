@@ -34,20 +34,7 @@
     <string name="app_theme_system_default">پیش‌فرض سیستم</string>
     <string name="app_theme_dark">تیره</string>
     <string name="app_theme_light">روشن</string>
-    <string name="wake_up_timer_description">وقتی که زمان‌سنج پایان یابد Noice گزینش انتخاب شده را پخش می‌کند. از دکمه‌های زیر برای انتخاب گزینش و تنظیم زمان مطلوب استفاده کنید تا زمان‌سنج بیداری آغاز شود.</string>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d دقیقه</item>
-        <item quantity="other">%1$d دقیقه</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d ساعت</item>
-        <item quantity="other">%1$d ساعت</item>
-    </plurals>
-    <string name="time_bridge">و</string>
-    <string name="wake_up_timer_schedule_set">هشدار در %1$s %2$s %3$s آغاز می‌شود</string>
-    <string name="wake_up_timer_cancelled">زمان‌سنج بیداری لغو شد!</string>
     <string name="select_preset">انتخاب گزینش</string>
-    <string name="schedule">زمان‌بندی</string>
     <string name="sleep_timer_description">وقتی که زمان‌سنج پایان یابد Noice خودش را خاموش می‌کند. از دکمه‌های زیر برای افزودن زمان و آغاز زمان‌سنج استفاده کنید.</string>
     <string name="reset">بازنشانی</string>
     <string name="auto_sleep_schedule_cancelled">زمان‌سنج خودکار خواب لغو شد!</string>
@@ -78,7 +65,6 @@
     <string name="okay">قبول</string>
     <string name="intensity">شدت</string>
     <string name="submit_feedback">ارائه‌ی بازخورد</string>
-    <string name="wake_up_timer">زمان‌سنج بیداری</string>
     <string name="support_development">حمایت از ساخت</string>
     <string name="sleep_timer">زمان‌سنج خواب</string>
     <string name="presets">نمونه ها</string>

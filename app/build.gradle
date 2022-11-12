@@ -148,8 +148,11 @@ dependencies {
   def exoPlayerVersion = '2.18.1'
   def fragmentVersion = '1.5.1'
   def roomVersion = '2.4.3'
+  def workManagerVersion = '2.7.1'
 
-  def espressoVersion = '3.4.0'
+  // TODO: Espresso 3.4.0 causes duplicate class errors during gradle build.
+  //  https://github.com/android/android-test/issues/861
+  def espressoVersion = '3.3.0'
   def mockkVersion = '1.13.2'
 
   kapt "com.google.dagger:hilt-compiler:$deps.hiltVersion"
@@ -171,11 +174,12 @@ dependencies {
   implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
   implementation 'androidx.preference:preference-ktx:1.2.0'
   implementation 'androidx.recyclerview:recyclerview:1.2.1'
-  implementation "androidx.room:room-runtime:$roomVersion"
   implementation "androidx.room:room-ktx:$roomVersion"
+  implementation "androidx.room:room-paging:$roomVersion"
+  implementation "androidx.room:room-runtime:$roomVersion"
 
   implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-  implementation 'androidx.work:work-runtime-ktx:2.7.1'
+  implementation "androidx.work:work-runtime-ktx:$workManagerVersion"
   implementation 'com.caverock:androidsvg-aar:1.4'
   implementation 'com.github.AppIntro:AppIntro:6.2.0'
   implementation "com.google.android.exoplayer:exoplayer-core:$exoPlayerVersion"
@@ -185,7 +189,6 @@ dependencies {
   implementation 'com.google.code.gson:gson:2.10'
   implementation "com.google.dagger:hilt-android:$deps.hiltVersion"
   implementation "com.mikepenz:aboutlibraries:${deps.aboutLibrariesVersion}"
-  implementation 'com.ncorti:slidetoact:0.10.0'
   implementation 'io.github.medyo:android-about-page:2.0.0'
   implementation 'io.noties.markwon:core:4.6.2'
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$deps.coroutinesVersion"
@@ -205,7 +208,7 @@ dependencies {
 
   testImplementation "androidx.test:core:$deps.testCoreVersion"
   testImplementation "com.google.dagger:hilt-android-testing:$deps.hiltVersion"
-  testImplementation "io.mockk:mockk:$mockkVersion"
+  testImplementation "io.mockk:mockk-jvm:$mockkVersion"
   testImplementation "junit:junit:$deps.junitVersion"
   testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$deps.coroutinesVersion"
   testImplementation "org.robolectric:robolectric:$deps.robolectricVersion"
@@ -221,7 +224,11 @@ dependencies {
   androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
   androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
   androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+  androidTestImplementation "androidx.work:work-testing:$workManagerVersion"
   androidTestImplementation "com.google.dagger:hilt-android-testing:$deps.hiltVersion"
-  androidTestImplementation "io.mockk:mockk-android:$mockkVersion"
   androidTestImplementation "junit:junit:$deps.junitVersion"
+
+  androidTestImplementation("io.mockk:mockk-android:$mockkVersion") {
+    exclude group: 'org.junit.jupiter' // causes build errors due to duplicate files in META-INF
+  }
 }

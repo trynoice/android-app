@@ -22,14 +22,12 @@ import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundErro
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
@@ -116,34 +114,25 @@ class DeleteAccountViewModel @Inject constructor(
   internal val isFlowComplete = MutableStateFlow(false)
 
   fun deleteAccount() = viewModelScope.launch {
-    subscriptionRepository.getActive()
-      .flowOn(Dispatchers.IO)
-      .collect(activeSubscriptionResource)
+    subscriptionRepository.getActive().collect(activeSubscriptionResource)
 
     val subscription = activeSubscriptionResource.value?.data
     if (apiErrorStrRes.value == null && subscription != null) {
-      subscriptionRepository.cancel(subscription)
-        .flowOn(Dispatchers.IO)
-        .collect(cancelSubscriptionResource)
+      subscriptionRepository.cancel(subscription).collect(cancelSubscriptionResource)
     }
 
     if (apiErrorStrRes.value == null) {
-      accountRepository.getProfile()
-        .flowOn(Dispatchers.IO)
-        .collect(profileResource)
+      accountRepository.getProfile().collect(profileResource)
     }
 
     val accountId = profileResource.value?.data?.accountId
     if (apiErrorStrRes.value == null && accountId != null) {
-      accountRepository.deleteAccount(accountId)
-        .flowOn(Dispatchers.IO)
-        .collect(deleteResource)
+      accountRepository.deleteAccount(accountId).collect(deleteResource)
     }
 
     if (apiErrorStrRes.value == null) {
-      accountRepository.signOut() // call signOut to clear api client's state.
-        .flowOn(Dispatchers.IO)
-        .collect(signOutResource)
+      // call signOut to clear api client's state.
+      accountRepository.signOut().collect(signOutResource)
     }
 
     isFlowComplete.emit(true)

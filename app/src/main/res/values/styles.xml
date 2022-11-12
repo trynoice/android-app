@@ -19,21 +19,7 @@
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_margin">8dp</item>
     <item name="android:textAppearance">?attr/textAppearanceTitleLarge</item>
-    <item name="icon">@drawable/ic_action_add</item>
-  </style>
-
-  <style name="Widget.App.AlarmRinger.DismissSlider" parent="SlideToActView">
-    <item name="slider_height">72dp</item>
-    <item name="border_radius">28dp</item>
-    <item name="inner_color">?attr/colorOnPrimary</item>
-    <item name="outer_color">?attr/colorPrimary</item>>
-    <item name="text_appearance">@style/TextAppearance.App.AlarmRinger.DismissSlider</item>
-  </style>
-
-  <style name="TextAppearance.App.AlarmRinger.DismissSlider" parent="TextAppearance.Material3.TitleLarge">
-    <item name="android:textColor">?attr/colorOnPrimary</item>
-    <item name="android:textAllCaps">true</item>
-    <item name="android:letterSpacing">0.1</item>
+    <item name="icon">@drawable/ic_baseline_add_24</item>
   </style>
 
   <style name="Widget.App.Account.Category.Header" parent="android:Widget.TextView">
@@ -53,7 +39,7 @@
     <item name="android:gravity">center_vertical</item>
     <item name="android:padding">@dimen/root_layout_padding</item>
     <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
-    <item name="drawableEndCompat">@drawable/ic_baseline_navigate_next_24</item>
+    <item name="drawableEndCompat">@drawable/ic_round_navigate_next_24</item>
   </style>
 
   <style name="Widget.App.SubscriptionPlan.Benefits.LineItem" parent="android:Widget.TextView">
@@ -146,6 +132,33 @@
     <item name="android:drawablePadding">12dp</item>
     <item name="android:textColor">?attr/colorOnSurfaceInverse</item>
     <item name="drawableTint">?attr/colorOnSurfaceInverse</item>
+  </style>
+
+  <style name="Widget.App.Alarms.TextView" parent="">
+    <item name="android:drawablePadding">12dp</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:textAppearance">?attr/textAppearanceBodyMedium</item>
+    <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    <item name="drawableTint">?attr/colorOnSurfaceVariant</item>
+  </style>
+
+  <style name="Widget.App.Alarms.TextView.Clickable">
+    <item name="android:background">?attr/selectableItemBackground</item>
+    <item name="android:clickable">true</item>
+    <item name="android:paddingBottom">8dp</item>
+    <item name="android:paddingTop">8dp</item>
+  </style>
+
+  <style name="Widget.App.Alarms.WeekDayToggleButton" parent="android:Widget.Button.Toggle">
+    <item name="android:minWidth">@dimen/alarms_weekday_toggle_button_size</item>
+    <item name="android:maxWidth">@dimen/alarms_weekday_toggle_button_size</item>
+    <item name="android:minHeight">@dimen/alarms_weekday_toggle_button_size</item>
+    <item name="android:maxHeight">@dimen/alarms_weekday_toggle_button_size</item>
+    <item name="android:background">@drawable/alarm_item_weekday_toggle_bg</item>
+    <item name="android:textColor">@drawable/alarm_item_weekday_toggle_text_color</item>
+    <item name="android:textAppearance">?attr/textAppearanceTitleMedium</item>
+    <item name="android:textOff">@null</item>
+    <item name="android:textOn">@null</item>
   </style>
 
 </resources>

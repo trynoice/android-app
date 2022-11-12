@@ -1,15 +1,21 @@
 package com.github.ashutoshgngwr.noice.ext
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.net.Uri
 import android.os.Build
+import android.provider.Settings
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import com.github.ashutoshgngwr.noice.R
 import com.google.android.material.elevation.SurfaceColors
@@ -41,6 +47,20 @@ fun Context.startCustomTab(uri: String) {
  */
 fun Context.startCustomTab(@StringRes uriStringRes: Int) {
   startCustomTab(getString(uriStringRes))
+}
+
+/**
+ * Starts an activity with [Intent] action [Settings.ACTION_APPLICATION_DETAILS_SETTINGS] for the
+ * current context's package name.
+ */
+fun Context.startAppDetailsSettingsActivity() {
+  try {
+    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+      .setData(Uri.fromParts("package", packageName, null))
+      .also { startActivity(it) }
+  } catch (e: ActivityNotFoundException) {
+    Log.w(this::class.simpleName, "startAppDetailsSettingsActivity: failed to start activity", e)
+  }
 }
 
 /**
@@ -89,4 +109,8 @@ fun Context.getInternetConnectivityFlow(): Flow<Boolean> = callbackFlow {
 
   connectivityManager.registerNetworkCallback(networkRequest, networkCallback)
   awaitClose { connectivityManager.unregisterNetworkCallback(networkCallback) }
+}
+
+fun Context.hasSelfPermission(permission: String): Boolean {
+  return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }

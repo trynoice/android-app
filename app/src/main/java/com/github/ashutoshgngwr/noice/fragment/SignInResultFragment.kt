@@ -24,12 +24,10 @@ import com.github.ashutoshgngwr.noice.repository.errors.AccountTemporarilyLocked
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
@@ -136,7 +134,7 @@ class SignInResultViewModel @Inject constructor(
         accountRepository.signUp(email, requireNotNull(name))
       }
 
-      flow.flowOn(Dispatchers.IO).collect(signInResource)
+      flow.collect(signInResource)
     }
   }
 }

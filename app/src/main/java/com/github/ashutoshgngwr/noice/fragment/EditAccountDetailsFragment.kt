@@ -22,7 +22,6 @@ import com.github.ashutoshgngwr.noice.repository.errors.DuplicateEmailError
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +29,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -129,7 +127,6 @@ class EditAccountDetailsViewModel @Inject constructor(
   fun loadProfile() {
     viewModelScope.launch {
       accountRepository.getProfile()
-        .flowOn(Dispatchers.IO)
         .onEach { resource ->
           if (resource.data != null) {
             name.emit(resource.data.name)
@@ -146,10 +143,7 @@ class EditAccountDetailsViewModel @Inject constructor(
     }
 
     viewModelScope.launch {
-      accountRepository
-        .updateProfile(email.value, name.value)
-        .flowOn(Dispatchers.IO)
-        .collect(updateResource)
+      accountRepository.updateProfile(email.value, name.value).collect(updateResource)
     }
   }
 }

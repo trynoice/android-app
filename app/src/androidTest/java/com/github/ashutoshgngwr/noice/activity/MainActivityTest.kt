@@ -1,7 +1,9 @@
 package com.github.ashutoshgngwr.noice.activity
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.navigation.findNavController
@@ -13,14 +15,16 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.work.Configuration
+import androidx.work.testing.WorkManagerTestInitHelper
 import com.github.ashutoshgngwr.noice.BuildConfig
-import com.github.ashutoshgngwr.noice.InAppBillingProviderModule
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.di.InAppBillingProviderModule
+import com.github.ashutoshgngwr.noice.engine.PlaybackController
+import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
+import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -30,7 +34,6 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
-import io.mockk.unmockkAll
 import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -38,17 +41,18 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
 @HiltAndroidTest
 @UninstallModules(InAppBillingProviderModule::class)
-@RunWith(AndroidJUnit4::class)
 class MainActivityTest {
 
   @get:Rule
   val hiltRule = HiltAndroidRule(this)
 
   private lateinit var activityScenario: ActivityScenario<MainActivity>
+
+  @BindValue
+  internal lateinit var mockPresetRepository: PresetRepository
 
   @BindValue
   internal lateinit var mockSettingsRepository: SettingsRepository
@@ -62,12 +66,21 @@ class MainActivityTest {
   @Before
   fun setup() {
     // mark app intro as seen to run main activity tests in peace
-    PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
+    val context = ApplicationProvider.getApplicationContext<Context>()
+    PreferenceManager.getDefaultSharedPreferences(context)
       .edit {
         putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true)
         putBoolean(MainActivity.PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true)
       }
 
+    // initialise work manager with a no-op executor
+    Configuration.Builder()
+      .setMinimumLoggingLevel(Log.ERROR)
+      .setExecutor { } // no-op
+      .build()
+      .also { WorkManagerTestInitHelper.initializeTestWorkManager(context, it) }
+
+    mockPresetRepository = mockk(relaxed = true)
     mockSettingsRepository = mockk(relaxed = true)
     mockPlaybackController = mockk(relaxed = true)
     mockBillingProvider = mockk(relaxed = true)
@@ -76,7 +89,6 @@ class MainActivityTest {
 
   @After
   fun teardown() {
-    unmockkAll()
     PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
       .edit { clear() }
   }
@@ -112,22 +124,19 @@ class MainActivityTest {
 
   @Test
   fun testPresetUriIntent() {
-    val inputs = arrayOf(
-      "https://ashutoshgngwr.github.io/noice/preset?name=test&playerStates=[]",
-      "noice://preset?name=test&playerStates=[]"
-    )
-
+    val inputs = arrayOf("https://trynoice.com/preset?n=test&ps=[]", "noice://preset?n=test&ps=[]")
     for (input in inputs) {
-      val uri = Uri.parse(input)
+      val mockPreset = mockk<Preset>()
+      every { mockPresetRepository.readFromUrl(input) } returns mockPreset
       activityScenario.onActivity {
         it.startActivity(
           Intent(it, MainActivity::class.java)
             .setAction(Intent.ACTION_VIEW)
-            .setData(uri)
+            .setData(Uri.parse(input))
         )
       }
 
-      verify(exactly = 1, timeout = 5000L) { mockPlaybackController.playPresetFromUri(uri) }
+      verify(exactly = 1, timeout = 5000L) { mockPlaybackController.play(mockPreset) }
     }
   }
 
@@ -152,6 +161,8 @@ class MainActivityTest {
   @Test
   fun testBillingProviderListener() {
     if (BuildConfig.IS_FREE_BUILD) { // free flavor doesn't have billing provider scenarios
+      // a dummy operation to prevent the instrumentation process crash.
+      onView(isRoot()).check(matches(isDisplayed()))
       return
     }
 

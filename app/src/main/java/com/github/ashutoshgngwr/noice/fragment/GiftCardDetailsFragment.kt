@@ -23,13 +23,11 @@ import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -91,7 +89,9 @@ class GiftCardDetailsViewModel @Inject constructor(
   subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
-  private val giftCardResource = MutableSharedFlow<Resource<GiftCard>>()
+  private val giftCardResource = GiftCardDetailsFragmentArgs.fromSavedStateHandle(savedStateHandle)
+    .let { subscriptionRepository.getGiftCard(it.giftCardCode) }
+    .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 
   val isLoading: StateFlow<Boolean> = giftCardResource.transform { r ->
     emit(r is Resource.Loading)
@@ -111,13 +111,4 @@ class GiftCardDetailsViewModel @Inject constructor(
       }
     )
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-  init {
-    val args = GiftCardDetailsFragmentArgs.fromSavedStateHandle(savedStateHandle)
-    viewModelScope.launch {
-      subscriptionRepository.getGiftCard(args.giftCardCode)
-        .flowOn(Dispatchers.IO)
-        .collect(giftCardResource)
-    }
-  }
 }

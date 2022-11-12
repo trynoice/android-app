@@ -13,19 +13,16 @@ import com.github.ashutoshgngwr.noice.databinding.LaunchStripeCustomerPortalFrag
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
-import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -71,7 +68,8 @@ class LaunchStripeCustomerPortalViewModel @Inject constructor(
   subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
-  private val customerPortalUrlResource = MutableSharedFlow<Resource<String>>()
+  private val customerPortalUrlResource = subscriptionRepository.stripeCustomerPortalUrl()
+    .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
 
   internal val customerPortalUrl: StateFlow<String?> = customerPortalUrlResource.transform { r ->
     r.data?.also { emit(it) }
@@ -86,12 +84,4 @@ class LaunchStripeCustomerPortalViewModel @Inject constructor(
       }
     )
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-  init {
-    viewModelScope.launch {
-      subscriptionRepository.stripeCustomerPortalUrl()
-        .flowOn(Dispatchers.IO)
-        .collect(customerPortalUrlResource)
-    }
-  }
 }

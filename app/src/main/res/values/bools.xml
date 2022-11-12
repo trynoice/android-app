@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <bool name="enable_media_buttons_default_value">true</bool>
+  <bool name="should_display_sound_icons_default_value">true</bool>
+  <bool name="use_material_you_colors_default_value">true</bool>
+  <bool name="presets_as_home_screen_default_value">false</bool>
+</resources>

@@ -20,14 +20,11 @@ import com.github.ashutoshgngwr.noice.repository.errors.AlreadySubscribedError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
@@ -79,7 +76,9 @@ class RedeemGiftCardViewModel @Inject constructor(
   subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
-  internal val redeemResource = MutableStateFlow<Resource<Unit>>(Resource.Loading())
+  internal val redeemResource = RedeemGiftCardFragmentArgs.fromSavedStateHandle(savedStateHandle)
+    .let { subscriptionRepository.redeemGiftCard(it.giftCard) }
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), Resource.Loading())
 
   internal val shouldShowPurchaseList: StateFlow<Boolean> = redeemResource.transform { r ->
     emit(r is Resource.Success)
@@ -94,13 +93,4 @@ class RedeemGiftCardViewModel @Inject constructor(
       }
     )
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-  init {
-    val args = RedeemGiftCardFragmentArgs.fromSavedStateHandle(savedStateHandle)
-    viewModelScope.launch {
-      subscriptionRepository.redeemGiftCard(args.giftCard)
-        .flowOn(Dispatchers.IO)
-        .collect(redeemResource)
-    }
-  }
 }

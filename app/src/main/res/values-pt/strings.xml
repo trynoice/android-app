@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="wake_up_timer">Temporizador de despertar</string>
     <string name="presets">Predefinições</string>
     <string name="dismiss">Dispensar</string>
     <string name="cancel">Cancelar</string>
@@ -24,20 +23,7 @@
     <string name="app_theme_system_default">Usado pelo sistema</string>
     <string name="app_theme_dark">Escuro</string>
     <string name="app_theme_light">Claro</string>
-    <string name="wake_up_timer_description">O Noice irá iniciar a mistura de sons selecionada quando o tempo terminar. Use os botões abaixo para selecionar uma mistura de sons e definir a hora desejada para despertar.</string>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d minuto</item>
-        <item quantity="other">%1$d minutos</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d hora</item>
-        <item quantity="other">%1$d horas</item>
-    </plurals>
-    <string name="time_bridge">e</string>
-    <string name="wake_up_timer_schedule_set">O alarme irá tocar dentro de %1$s %2$s %3$s</string>
-    <string name="wake_up_timer_cancelled">Despertador cancelado!</string>
     <string name="select_preset">Selecionar mistura de sons</string>
-    <string name="schedule">Agendar</string>
     <string name="sleep_timer_description">Quando o cronómetro chegar a zero o Noice será fechado. Use os botões abaixo para adicionar tempo e iniciar o cronómetro.</string>
     <string name="reset">Reiniciar</string>
     <string name="auto_sleep_schedule_cancelled">Suspensão automática programada cancelada!</string>

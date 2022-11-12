@@ -21,7 +21,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.WakeUpTimerManager
 import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.databinding.PresetsFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.PresetsListItemBinding
@@ -53,9 +52,6 @@ class PresetsFragment : Fragment(), PresetListItemController {
 
   @set:Inject
   internal lateinit var presetRepository: PresetRepository
-
-  @set:Inject
-  internal lateinit var wakeUpTimerManager: WakeUpTimerManager
 
   @set:Inject
   internal lateinit var playbackController: PlaybackController
@@ -125,11 +121,6 @@ class PresetsFragment : Fragment(), PresetListItemController {
         // then stop playback if recently deleted preset was playing
         if (viewModel.activePresetId.value == preset.id) {
           playbackController.stop()
-        }
-
-        // cancel wake-up timer if it is set to the deleted preset.
-        if (preset.id == wakeUpTimerManager.get()?.presetID) {
-          wakeUpTimerManager.cancel()
         }
 
         ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))

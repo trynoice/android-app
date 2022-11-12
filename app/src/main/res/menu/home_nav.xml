@@ -17,9 +17,9 @@
     android:title="@string/sleep_timer" />
 
   <item
-    android:id="@+id/wake_up_timer"
-    android:icon="@drawable/ic_action_wake_up_timer"
-    android:title="@string/wake_up_timer" />
+    android:id="@+id/alarms"
+    android:icon="@drawable/ic_baseline_alarm_24"
+    android:title="@string/alarms" />
 
   <item
     android:id="@+id/account"

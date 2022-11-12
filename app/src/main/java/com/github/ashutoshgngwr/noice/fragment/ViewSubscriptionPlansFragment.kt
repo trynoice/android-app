@@ -30,13 +30,11 @@ import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.google.android.material.card.MaterialCardView
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
@@ -189,15 +187,11 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
 
   fun loadPlans(currencyCode: String) {
     viewModelScope.launch {
-      subscriptionRepository.listPlans(currencyCode)
-        .flowOn(Dispatchers.IO)
-        .collect(plansResource)
+      subscriptionRepository.listPlans(currencyCode).collect(plansResource)
     }
 
     viewModelScope.launch {
-      soundRepository.countPremium()
-        .flowOn(Dispatchers.IO)
-        .collect(premiumCountResource)
+      soundRepository.countPremium().collect(premiumCountResource)
     }
   }
 }

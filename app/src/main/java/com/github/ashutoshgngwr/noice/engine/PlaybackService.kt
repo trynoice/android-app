@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
+import androidx.core.app.ServiceCompat
 import androidx.core.content.getSystemService
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
@@ -27,18 +28,18 @@ import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.google.android.exoplayer2.upstream.cache.Cache
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.random.Random
+import kotlin.reflect.KClass
+import kotlin.reflect.cast
 
 @AndroidEntryPoint
 class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
@@ -156,13 +157,11 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
 
     // watch preset repository
     lifecycleScope.launch {
-      presetRepository.listFlow()
-        .flowOn(Dispatchers.IO)
-        .collect { p ->
-          presets = p
-          // refresh currently playing preset and stuff.
-          onPlaybackUpdate(playerManagerState.value, playerStates.value)
-        }
+      presetRepository.listFlow().collect { p ->
+        presets = p
+        // refresh currently playing preset and stuff.
+        onPlaybackUpdate(playerManagerState.value, playerStates.value)
+      }
     }
 
     lifecycleScope.launch {
@@ -175,33 +174,27 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     // watch and adapt user settings as they change.
     lifecycleScope.launch {
       settingsRepository.shouldIgnoreAudioFocusChangesAsFlow()
-        .flowOn(Dispatchers.IO)
         .collect { playerManager.setAudioFocusManagementEnabled(!it) }
     }
 
     lifecycleScope.launch {
-      settingsRepository.isMediaButtonsEnabledAsFlow()
-        .flowOn(Dispatchers.IO)
-        .collect { isEnabled ->
-          mediaSessionManager.setCallback(if (isEnabled) mediaSessionManagerCallback else null)
-        }
+      settingsRepository.isMediaButtonsEnabledAsFlow().collect { isEnabled ->
+        mediaSessionManager.setCallback(if (isEnabled) mediaSessionManagerCallback else null)
+      }
     }
 
     lifecycleScope.launch {
       settingsRepository.getSoundFadeInDurationAsFlow()
-        .flowOn(Dispatchers.IO)
         .collect { playerManager.setFadeInDuration(it) }
     }
 
     lifecycleScope.launch {
       settingsRepository.getSoundFadeOutDurationAsFlow()
-        .flowOn(Dispatchers.IO)
         .collect { playerManager.setFadeOutDuration(it) }
     }
 
     lifecycleScope.launch {
       settingsRepository.getAudioQualityAsFlow()
-        .flowOn(Dispatchers.IO)
         .combine(isSubscribed) { quality, subscribed -> if (subscribed) quality else SettingsRepository.FREE_AUDIO_QUALITY }
         .collect { playerManager.setAudioBitrate(it.bitrate) }
     }
@@ -227,7 +220,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
       }
 
       ACTION_PLAY_PRESET -> playerManager.play(
-        requireNotNull(intent.getSerializableExtra(INTENT_EXTRA_PRESET) as? Preset) {
+        requireNotNull(intent.getSerializableExtraCompat(INTENT_EXTRA_PRESET, Preset::class)) {
           "intent extra '${INTENT_EXTRA_PRESET}' is required to send '${ACTION_PLAY_PRESET}' command"
         }
       )
@@ -275,7 +268,6 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
       ACTION_PLAY_RANDOM_PRESET -> {
         lifecycleScope.launch {
           presetRepository.generate(emptySet(), Random.nextInt(2, 6))
-            .flowOn(Dispatchers.IO)
             .lastOrNull()
             ?.data
             ?.also { playerManager.play(it) }
@@ -310,7 +302,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     mediaSessionManager.setPlaybackState(playerManagerState)
     if (playerManagerState == PlaybackState.STOPPED) {
       Log.d(LOG_TAG, "onPlaybackUpdate: playback stopped, releasing resources")
-      stopForeground(true)
+      ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
       wakeLock.release()
     } else {
       Log.d(LOG_TAG, "onPlaybackUpdate: playback not stopped, ensuring resource acquisition")
@@ -378,3 +370,16 @@ class PlaybackServiceBinder(
   val playerManagerState: Flow<PlaybackState>,
   val playerStates: Flow<Array<PlayerState>>,
 ) : Binder()
+
+// TODO: remove this extension when a replacement method is available the Androidx Compat libraries.
+private fun <T : java.io.Serializable> Intent.getSerializableExtraCompat(
+  key: String,
+  kClass: KClass<T>
+): T? {
+  return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    getSerializableExtra(key, kClass.java)
+  } else {
+    @Suppress("DEPRECATION")
+    getSerializableExtra(key)?.let { kClass.cast(it) }
+  }
+}

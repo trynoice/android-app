@@ -12,7 +12,6 @@ import com.github.ashutoshgngwr.noice.models.toDomainEntity
 import com.github.ashutoshgngwr.noice.models.toRoomDto
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -47,7 +46,7 @@ class SubscriptionStatusPollService : LifecycleService() {
 
   override fun onCreate() {
     super.onCreate()
-    lifecycleScope.launch(Dispatchers.IO) {
+    lifecycleScope.launch {
       activeSubscription.emit(getCachedActiveSubscription())
       while (true) {
         val isSignedIn = apiClient.isSignedIn()

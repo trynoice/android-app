@@ -7,11 +7,9 @@ import com.github.ashutoshgngwr.noice.models.SoundSegment
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
@@ -259,10 +257,7 @@ abstract class Player protected constructor(
     setPlaybackState(PlaybackState.BUFFERING)
     defaultScope.launch {
       Log.d(LOG_TAG, "loadSoundMetadata: loading sound metadata for $soundId")
-      val resource = soundRepository.get(soundId)
-        .flowOn(Dispatchers.IO)
-        .lastOrNull()
-
+      val resource = soundRepository.get(soundId).lastOrNull()
       if (resource?.data != null) {
         Log.d(LOG_TAG, "loadSoundMetadata: loaded sound metadata for $soundId")
         retryDelayMillis = MIN_RETRY_DELAY_MILLIS

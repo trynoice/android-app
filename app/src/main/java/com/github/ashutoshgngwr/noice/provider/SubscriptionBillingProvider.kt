@@ -2,13 +2,13 @@ package com.github.ashutoshgngwr.noice.provider
 
 import android.app.Activity
 import android.net.Uri
+import com.github.ashutoshgngwr.noice.AppDispatchers
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
 import com.trynoice.api.client.NoiceApiClient
 import com.trynoice.api.client.models.SubscriptionFlowParams
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
@@ -56,7 +56,8 @@ interface SubscriptionBillingProvider {
  * billing provider.
  */
 class StripeSubscriptionBillingProvider(
-  private val apiClient: NoiceApiClient
+  private val apiClient: NoiceApiClient,
+  private val appDispatchers: AppDispatchers,
 ) : SubscriptionBillingProvider {
 
   override fun getId(): String = SubscriptionPlan.PROVIDER_STRIPE
@@ -86,7 +87,7 @@ class StripeSubscriptionBillingProvider(
       "stripeCheckoutSessionUrl must not be null for stripe subscription flow result."
     }
 
-    withContext(Dispatchers.Main) {
+    withContext(appDispatchers.main) {
       activity.startCustomTab(checkoutSessionUrl)
     }
   }

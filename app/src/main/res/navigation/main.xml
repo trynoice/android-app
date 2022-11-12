@@ -359,14 +359,14 @@
   </action>
 
   <action
-    android:id="@+id/home_wake_up_timer"
+    android:id="@+id/home_alarms"
     app:destination="@id/home"
     app:popUpTo="@id/home"
     app:popUpToInclusive="true">
 
     <argument
       android:name="navDestination"
-      android:defaultValue="@id/wake_up_timer" />
+      android:defaultValue="@id/alarms" />
 
   </action>
 

@@ -9,20 +9,7 @@
     <string name="app_theme_system_default">Συστήματος</string>
     <string name="app_theme_dark">Σκούρο</string>
     <string name="app_theme_light">Ανοικτό</string>
-    <string name="wake_up_timer_description">Η εφαρμογή θα ξεκινήσει την επιλεγμένη σύνθεση όταν λήξει ο χρονοδιακόπτης. Χρησιμοποιείστε τα παρακάτω κουμπιά για να επιλέξετε σύνθεση και την επιθυμητή ώρα έναρξης.</string>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d λεπτό</item>
-        <item quantity="other">%1$d λεπτά</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d ώρα</item>
-        <item quantity="other">%1$d ώρες</item>
-    </plurals>
-    <string name="time_bridge">και</string>
-    <string name="wake_up_timer_schedule_set">Το ξυπνητήρι θα χτυπήσει σε %1$s %2$s %3$s</string>
-    <string name="wake_up_timer_cancelled">Ο χρονοδιακόπτης έγερσης ακυρώθηκε!</string>
     <string name="select_preset">Επιλογή σύνθεσης</string>
-    <string name="schedule">Ορισμός</string>
     <string name="sleep_timer_description">Η εφαρμογή θα τερματιστεί όταν ο χρονοδιακόπτης λήξει. Χρησιμοποιήστε τα παρακάτω κουμπιά για να προσθέσετε χρόνο και να τον ξεκινήσετε.</string>
     <string name="reset">Επαναφορά</string>
     <string name="auto_sleep_schedule_cancelled">Ο χρονοδιακόπτης ύπνου ακυρώθηκε!</string>
@@ -53,7 +40,6 @@
     <string name="okay">Εντάξει</string>
     <string name="intensity">Ένταση</string>
     <string name="submit_feedback">Υποβολή σχολίων</string>
-    <string name="wake_up_timer">Χρονοδιακόπτης έγερσης</string>
     <string name="support_development">Υποστήριξη προγραμματιστή</string>
     <string name="sleep_timer">Χρονοδιακόπτης ύπνου</string>
     <string name="presets">Αποθηκευμένες συνθέσεις</string>

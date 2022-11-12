@@ -20,6 +20,5 @@
     <string name="about">Om</string>
     <string name="appintro__getting_started_title">Velkommen</string>
     <string name="rename">Gi nytt navn</string>
-    <string name="schedule">Timeplan</string>
     <string name="reset">Tilbakestill</string>
 </resources>

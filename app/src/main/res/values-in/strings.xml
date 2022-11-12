@@ -8,7 +8,6 @@
     <string name="presets">Prasetel</string>
     <string name="sleep_timer">Pengatur Waktu Tidur</string>
     <string name="support_development">Dukung Pengembangan</string>
-    <string name="wake_up_timer">Pengatur Waktu Bangun</string>
     <string name="okay">Oke</string>
     <string name="cancel">Batal</string>
     <string name="dismiss">Singkirkan</string>
@@ -38,9 +37,7 @@
     Noice akan mati sendiri ketika timer berakhir. Gunakan tombol di bawah untuk menambahkan waktu dan memulai
     pengatur waktu.
 </string>
-    <string name="schedule">Jadwal</string>
     <string name="select_preset">Pilih Preset</string>
-    <string name="wake_up_timer_description">Noice akan memulai preset yang dipilih pada waktu yang ditentukan. Gunakan kontrol di bawah ini untuk memilih prasetel dan mengatur waktu yang diinginkan untuk menjadwalkan penghitung waktu bangun.</string>
     <string name="app_theme_light">Terang</string>
     <string name="app_theme_dark">Gelap</string>
     <string name="app_theme_system_default">Sistem default</string>
@@ -85,17 +82,8 @@
     <string name="add_to_home_screen">Tambahkan di layar utama</string>
     <string name="random_preset">Preset Acak</string>
     <string name="submit_feedback">Masukan Feedback</string>
-    <string name="wake_up_timer_cancelled">Timer Wake-up terbatalkan!</string>
     <string name="presets_as_home_screen_summary">Tampilkan \"preset\" pada startup aplikasi (memerlukan restart aplikasi)</string>
     <string name="intensity">Intensitas</string>
-    <plurals name="time_minutes">
-        <item quantity="other">%1$d menit</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="other">%1$d jam</item>
-    </plurals>
-    <string name="time_bridge">dan</string>
-    <string name="wake_up_timer_schedule_set">Alarm akan mati dalam %1$s %2$s %3$s</string>
     <string name="unsaved_preset">Preset Belum Tersimpan</string>
     <string name="skip_to_next">Preset berikutnya</string>
     <string name="skip_to_prev">Preset sebelumnya</string>

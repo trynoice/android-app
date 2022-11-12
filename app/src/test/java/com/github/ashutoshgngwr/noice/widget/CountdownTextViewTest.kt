@@ -1,11 +1,12 @@
 package com.github.ashutoshgngwr.noice.widget
 
-import com.github.ashutoshgngwr.noice.activity.MainActivity
+import androidx.appcompat.view.ContextThemeWrapper
+import androidx.test.core.app.ApplicationProvider
+import com.github.ashutoshgngwr.noice.R
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.Robolectric.buildActivity
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowLooper
@@ -19,8 +20,10 @@ class CountdownTextViewTest {
 
   @Before
   fun setup() {
-    val context = buildActivity(MainActivity::class.java).get()
-    view = CountdownTextView(context)
+    view = CountdownTextView(
+      ContextThemeWrapper(ApplicationProvider.getApplicationContext(), R.style.Theme_App)
+    )
+
     shadowLooper = shadowOf(view.countdownHandler.looper)
   }
 

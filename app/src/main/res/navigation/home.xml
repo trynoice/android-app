@@ -46,10 +46,10 @@
     tools:layout="@layout/sleep_timer_fragment" />
 
   <fragment
-    android:id="@+id/wake_up_timer"
-    android:name="com.github.ashutoshgngwr.noice.fragment.WakeUpTimerFragment"
-    android:label="@string/wake_up_timer"
-    tools:layout="@layout/wake_up_timer_fragment" />
+    android:id="@+id/alarms"
+    android:name="com.github.ashutoshgngwr.noice.fragment.AlarmsFragment"
+    android:label="@string/alarms"
+    tools:layout="@layout/alarms_fragment" />
 
   <fragment
     android:id="@+id/account"

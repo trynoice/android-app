@@ -15,7 +15,6 @@ import com.github.ashutoshgngwr.noice.provider.InAppBillingProviderException
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -52,7 +51,7 @@ class DonationPurchaseCallbackViewModel @Inject constructor(
 
   init {
     val args = DonationPurchasedCallbackFragmentArgs.fromSavedStateHandle(savedStateHandle)
-    viewModelScope.launch(Dispatchers.IO) {
+    viewModelScope.launch {
       try {
         billingProvider.consumePurchase(args.purchase)
       } catch (e: InAppBillingProviderException) {

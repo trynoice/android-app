@@ -53,18 +53,7 @@
     <string name="app_theme_system_default">Mặc định hệ thống</string>
     <string name="app_theme_dark">Tối</string>
     <string name="app_theme_light">Sáng</string>
-    <string name="wake_up_timer_description">Noice sẽ bắt đầu thiết lập trước đã chọn tại một thời điểm được chỉ định. Hãy sử dụng các điều khiển bên dưới để chọn một thiết lập trước và chọn thời gian mong muốn để lên lịch bộ hẹn giờ.</string>
-    <plurals name="time_minutes">
-        <item quantity="other">%1$d phút</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="other">%1$d tiếng</item>
-    </plurals>
-    <string name="time_bridge">và</string>
-    <string name="wake_up_timer_schedule_set">Báo thức sẽ kêu sau %1$s %2$s %3$s</string>
-    <string name="wake_up_timer_cancelled">Đã huỷ hẹn giờ thức dậy!</string>
     <string name="select_preset">Chọn thiết lập trước</string>
-    <string name="schedule">Lịch trình</string>
     <string name="sleep_timer_description">Noice sẽ tự tắt khi hẹn giờ kết thúc. Hãy sử dụng các nút ở dưới để thêm thời gian và bắt đầu hẹn giờ.</string>
     <string name="reset">Đặt lại</string>
     <string name="auto_sleep_schedule_cancelled">Đã huỷ hẹn giờ ngủ tự động!</string>
@@ -95,7 +84,6 @@
     <string name="okay">OK</string>
     <string name="intensity">Cường độ</string>
     <string name="submit_feedback">Gửi phản hồi</string>
-    <string name="wake_up_timer">Hẹn giờ đánh thức</string>
     <string name="support_development">Hỗ trợ sự phát triển</string>
     <string name="sleep_timer">Hẹn giờ ngủ</string>
     <string name="presets">Thiết lập trước</string>

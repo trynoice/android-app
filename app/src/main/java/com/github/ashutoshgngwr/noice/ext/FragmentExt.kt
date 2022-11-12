@@ -1,66 +1,88 @@
 package com.github.ashutoshgngwr.noice.ext
 
+import android.text.format.DateFormat
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.widget.SnackBar
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
+import java.util.*
 
 /**
  * Shows info level [SnackBar]. It anchors the snack bar to bottom navigation view or network
  * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showInfoSnackBar(@StringRes msgResId: Int) {
-  showInfoSnackBar(getString(msgResId))
+fun Fragment.showInfoSnackBar(@StringRes msgResId: Int): Snackbar {
+  return showInfoSnackBar(getString(msgResId))
 }
 
 /**
  * Shows info level [SnackBar]. It anchors the snack bar to bottom navigation view or network
  * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showInfoSnackBar(msg: String) {
-  SnackBar.info(snackBarView(), msg)
+fun Fragment.showInfoSnackBar(msg: String): Snackbar {
+  return SnackBar.info(snackBarView(), msg)
     .setAnchorView((activity as? MainActivity)?.findSnackBarAnchorView())
-    .show()
+    .apply { show() }
 }
 
 /**
  * Shows success level [SnackBar]. It anchors the snack bar to bottom navigation view or network
  * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showSuccessSnackBar(@StringRes msgResId: Int) {
-  showSuccessSnackBar(getString(msgResId))
+fun Fragment.showSuccessSnackBar(@StringRes msgResId: Int): Snackbar {
+  return showSuccessSnackBar(getString(msgResId))
 }
 
 /**
  * Shows success level [SnackBar]. It anchors the snack bar to bottom navigation view or network
  * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showSuccessSnackBar(msg: String) {
-  SnackBar.success(snackBarView(), msg)
+fun Fragment.showSuccessSnackBar(msg: String): Snackbar {
+  return SnackBar.success(snackBarView(), msg)
     .setAnchorView((activity as? MainActivity)?.findSnackBarAnchorView())
-    .show()
+    .apply { show() }
 }
 
 /**
  * Shows error level [SnackBar]. It anchors the snack bar to bottom navigation view or network
  * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showErrorSnackBar(@StringRes msgResId: Int) {
-  showErrorSnackBar(getString(msgResId))
+fun Fragment.showErrorSnackBar(@StringRes msgResId: Int): Snackbar {
+  return showErrorSnackBar(getString(msgResId))
 }
 
 /**
  * Shows error level [SnackBar]. It anchors the snack bar to bottom navigation view or network
  * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showErrorSnackBar(msg: String) {
-  SnackBar.error(snackBarView(), msg)
+fun Fragment.showErrorSnackBar(msg: String): Snackbar {
+  return SnackBar.error(snackBarView(), msg)
     .setAnchorView((activity as? MainActivity)?.findSnackBarAnchorView())
-    .show()
+    .apply { show() }
 }
 
 private fun Fragment.snackBarView(): View {
   return activity?.findViewById(R.id.main_nav_host_fragment) ?: requireView()
+}
+
+inline fun Fragment.showTimePicker(
+  hour: Int? = null,
+  minute: Int? = null,
+  crossinline callback: (hour: Int, minute: Int) -> Unit,
+) {
+  val calendar = Calendar.getInstance()
+  MaterialTimePicker.Builder()
+    .setTimeFormat(if (DateFormat.is24HourFormat(requireContext())) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H)
+    .also { builder -> builder.setHour(hour ?: calendar.get(Calendar.HOUR_OF_DAY)) }
+    .also { builder -> builder.setMinute(minute ?: calendar.get(Calendar.MINUTE)) }
+    .build()
+    .also { picker ->
+      picker.addOnPositiveButtonClickListener { callback.invoke(picker.hour, picker.minute) }
+    }
+    .show(childFragmentManager, "MaterialTimePicker")
 }

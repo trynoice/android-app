@@ -19,12 +19,10 @@ import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundErro
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.retry
 import kotlinx.coroutines.flow.transform
@@ -134,7 +132,6 @@ class SubscriptionBillingCallbackViewModel @Inject constructor(
           delay(2500)
           e is SubscriptionNotFoundError && System.currentTimeMillis() < endTimestamp
         }
-        .flowOn(Dispatchers.IO)
         .catch { error.emit(it) }
         .onCompletion { isLoading.emit(false) }
         .collect()

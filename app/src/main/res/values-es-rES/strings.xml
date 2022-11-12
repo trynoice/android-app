@@ -8,7 +8,6 @@
     <string name="presets">Preajustes</string>
     <string name="sleep_timer">Temporizador</string>
     <string name="support_development">Apoyar al desarrollador</string>
-    <string name="wake_up_timer">Despertador</string>
     <string name="cancel">Cancelar</string>
     <string name="dismiss">Descartar</string>
     <string name="name">Nombre</string>
@@ -31,9 +30,7 @@
     <string name="auto_sleep_schedule_cancelled">¡Temporizador cancelado!</string>
     <string name="reset">Restablecer</string>
     <string name="sleep_timer_description">Noice se apagará solo cuando el temporizador termine. Use los botones de abajo para añadir tiempo e iniciar el temporizador.</string>
-    <string name="schedule">Temporizador</string>
     <string name="select_preset">Seleccionar preajuste</string>
-    <string name="wake_up_timer_description">Noice iniciará el preajuste seleccionado a la hora indicada. Use los siguientes botones para seleccionar un preajuste y establecer la hora deseada para iniciar el despertador.</string>
     <string name="app_theme_light">Claro</string>
     <string name="app_theme_dark">Oscuro</string>
     <string name="app_theme_system_default">Por defecto del sistema</string>
@@ -74,19 +71,6 @@
     <string name="later">Más tarde</string>
     <string name="in_app_feedback__title">Enviar una reseña</string>
     <string name="in_app_feedback__description">Nos encantaría saber que le parece la aplicación. Por favor, tómese un momento para visitar nuestro repositorio de GitHub. Si no le gustó la aplicación, considere abrir un reporte para explicar su malestar. De lo contrario, dele una estrella al proyecto para mostrar amor y apoyo.</string>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d minuto</item>
-        <item quantity="many">%1$d minutos</item>
-        <item quantity="other">%1$d minutos</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d hora</item>
-        <item quantity="many">%1$dhoras</item>
-        <item quantity="other">%1$d horas</item>
-    </plurals>
-    <string name="time_bridge">y</string>
-    <string name="wake_up_timer_schedule_set">La alarma sonará en %1$s %2$s %3$s</string>
-    <string name="wake_up_timer_cancelled">¡Despertador cancelado!</string>
     <string name="presets_as_home_screen_summary">Mostrar \"preajustes\" al iniciar la aplicación (requiere reiniciar la aplicación)</string>
     <string name="preset_does_not_exist">El preajuste no existe. ¡Puede haber sido borrada!</string>
     <string name="add_to_home_screen">Añadir a la pantalla de inicio</string>

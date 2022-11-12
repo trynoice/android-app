@@ -1,5 +1,7 @@
 package com.github.ashutoshgngwr.noice
 
+import com.github.ashutoshgngwr.noice.di.AnalyticsProviderModule
+import com.github.ashutoshgngwr.noice.di.CrashlyticsProviderModule
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import dagger.Module
