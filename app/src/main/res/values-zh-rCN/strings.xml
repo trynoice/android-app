@@ -87,7 +87,7 @@
     <string name="ignore_audio_focus_changes_summary_on">当其他应用程序播放音频时，不做任何反应</string>
     <string name="enable_media_buttons_summary">使用硬件媒体按钮控制播放</string>
     <string name="presets_as_home_screen">“预设”作为主屏幕</string>
-    <string name="sound_fade_in_duration_summary">淡入声音的持续时间（以秒为单位）</string>
+    <string name="sound_fade_in_duration_summary">声音淡入的持续时间（以秒为单位）</string>
     <string name="ignore_audio_focus_changes">忽略音频焦点变化</string>
     <string name="should_share_usage_data">分享使用与运行数据</string>
     <string name="should_share_usage_data_summary">自动与开发者分享使用与行为数据</string>
@@ -175,7 +175,7 @@
     <string name="subscription_payment_confirmation_failed">糟糕！我们在等待支付确认时遇到了一些麻烦。这可能是由于网络错误或支付提供商的延迟。我们将在收到提供商的消息后立即更新您的订阅状态。请在一段时间后查看您的订阅状态。</string>
     <string name="support">支持</string>
     <string name="sound_fade_out_duration">音量递减周期</string>
-    <string name="sound_fade_out_duration_summary">声音淡出时间（秒）</string>
+    <string name="sound_fade_out_duration_summary">声音淡出持续时间（秒）</string>
     <string name="app">应用</string>
     <string name="network_error">网络无法访问。</string>
     <string name="welcome_back">欢迎回来！</string>

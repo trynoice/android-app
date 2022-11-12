@@ -25,24 +25,17 @@
     <string name="open_context_menu">संदर्भ मेनू खोलें</string>
     <string name="preset_delete_confirmation">%s को हटाने की पुष्टि करें?</string>
     <string name="preset_deleted">प्रीसेट को हटा दिया गया है!</string>
-    <string name="preset_info__description">
-       आपने अभी तक कोई प्रीसेट नहीं बनाया है। प्रीसेट बनाने के लिए, लाइब्रेरी में जाएँ और ध्वनियाँ बजाएँ। इसके बाद स्क्रीन के निचले
-       कोने पर दिखाई देने वाले सेव बटन पर क्लिक करें।
-  </string>
+    <string name="preset_info__description">ध्वनि बजाकर लाइब्रेरी में सेव बटन का उपयोग करके नए प्रीसेट बनाएं।</string>
     <string name="rename">नाम बदलें</string>
     <string name="auto_sleep_schedule_cancelled">ऑटो स्लीप टाइमर रद्द हो गया है!</string>
     <string name="reset">रद्द करें</string>
-    <string name="sleep_timer_description">
-       टाइमर खत्म होने पर ऐप खुद ब खुद बंद हो जाएगी। समय जोड़ने और टाइमर शुरू करने के लिए नीचे दिए गए बटनों का उपयोग करें।
-  </string>
+    <string name="sleep_timer_description">टाइमर खत्म होने पर नॉइस खुद ब खुद बंद हो जाएगी। समय जोड़ने और टाइमर शुरू करने के लिए नीचे दिए गए बटनों का उपयोग करें।</string>
     <string name="select_preset">प्रीसेट का चयन करें</string>
     <string name="app_theme_light">हल्का रंग</string>
     <string name="app_theme_dark">गहरा रंग</string>
     <string name="app_theme_system_default">सिस्टम डिफ़ॉल्ट</string>
     <string name="app_description">पृष्ठभूमि शोर के साथ आराम और फोकस को बढ़ावा दें।</string>
-    <string name="appintro__chromecast_desc">
-       अन्य क्रोमकास्ट सक्षम डिवाइस जैसे स्पीकर, टीवी, आदि पर ऑडियो चलाने के लिए ऐप का उपयोग करें।
-  </string>
+    <string name="appintro__chromecast_desc">अन्य क्रोमकास्ट सक्षम डिवाइस जैसे स्पीकर, टीवी, आदि पर ऑडियो चलाने के लिए नॉइस का उपयोग करें।</string>
     <string name="appintro__chromecast_title">क्रोमकास्ट सक्षम</string>
     <string name="appintro__getting_started_desc_0">सभी सुविधाओं को जानने के लिए बाएं स्वाइप करें!</string>
     <string name="appintro__getting_started_desc_1">आइए शुरू करते हैं!</string>
@@ -54,16 +47,11 @@
        एक विलंब अवधि को समय स्लाइडर द्वारा निर्धारित सीमा से यादृच्छिक रूप से चुना जाता है।
   </string>
     <string name="appintro__library_title">अपने आदर्श परिवेश का निर्माण करें</string>
-    <string name="appintro__timer_desc">
-       थोड़ा सा परिवेश आपको सहजता से सो जाने में मदद कर सकता है। ऐप को खुद बंद करने के लिए स्लीप टाइमर का उपयोग करें।
-       इसी तरह, शांत वातावरण में जागने के लिए, अलार्म सेट करने के लिए वेक-अप टाइमर का उपयोग करें।
-  </string>
+    <string name="appintro__timer_desc">थोड़ा सा परिवेश आपको सहजता से सो जाने में मदद कर सकता है। नॉइस को खुद बंद करने के लिए स्लीप टाइमर का उपयोग करें। इसी तरह, शांत वातावरण में जागने के लिए, अलार्म सेट करने के लिए वेक-अप टाइमर का उपयोग करें।</string>
     <string name="appintro__timer_title">सोते हुए या जागने में परेशानी?</string>
     <string name="support_development__donate">दान करें</string>
     <string name="support_development__donate_google_play_description">आपका भुगतान गूगल प्ले द्वारा सुरक्षित रूप से नियंत्रित किया जाएगा। आपके स्थान के आधार पर, अतिरिक्त करों को अंतिम राशि में जोड़ा जा सकता है।</string>
-    <string name="support_development__donate_thank_you_description">
-       हम इस परियोजना में आपके उदार योगदान के लिए तहे दिल से शुक्रिया अदा करते हैं।
-  </string>
+    <string name="support_development__donate_thank_you_description">हम नॉइस परियोजना में आपके उदार योगदान के लिए तहे दिल से शुक्रिया अदा करते हैं।</string>
     <string name="support_development__share">दोस्तों के साथ शेयर करें</string>
     <string name="support_development__share_description">आप अपने दोस्तों को हमारे बारे में बताकर भी हमारी मदद कर सकते हैं। अधिक उपयोगकर्ता हमें कई अलग-अलग दृष्टिकोणों से प्रतिक्रिया प्रदान करेंगे और हमारी सेवाओं को बेहतर बनाने में हमारी सहायता करेंगे।</string>
     <string name="cast_media">क्रोमकास्ट से कनेक्ट करें</string>
@@ -121,7 +109,7 @@
 \n
 \nआप \"**सेटिंग्स** &gt; **शेयर उपयोग और व्यवहार डेटा**\" पर जाकर ऐप के अंदर किसी भी समय स्वचालित डेटा साझाकरण को कॉन्फ़िगर कर सकते हैं।</string>
     <string name="share_usage_data_consent_title">डेटा साझाकरण प्राथमिकताएं</string>
-    <string name="sound_fade_in_duration_summary">ध्वनि फ़ेड-इन के लिए समय अवधि (सेकंड में)</string>
+    <string name="sound_fade_in_duration_summary">ध्वनि फ़ेड-इन के लिए सेकंड में समय अवधि</string>
     <string name="sound_fade_in_duration">ध्वनि क्षीणन अवधि</string>
     <string name="created_by">निर्माता</string>
     <string name="import_presets_successful">फ़ाइल से प्रीसेट सफलतापूर्वक आयात हो गए!</string>
@@ -130,7 +118,7 @@
     <string name="enable_media_buttons">मीडिया बटन सक्षम करें</string>
     <string name="random_preset_description">जेनरेट किए गए प्रीसेट में चुने गए कीवर्ड वाली ध्वनियां होने की संभावना है। इसके अलावा, अधिक जोरदार प्रीसेट एक साथ अधिक ध्वनियाँ चलाने का प्रयास करेंगे।</string>
     <string name="sound_fade_out_duration">ध्वनि फेड आउट होने की अवधि</string>
-    <string name="sound_fade_out_duration_summary">लुप्त होती ध्वनि के लिए समय अवधि (सेकंड में)</string>
+    <string name="sound_fade_out_duration_summary">लुप्त होती ध्वनि के लिए सेकंड में समय अवधि</string>
     <string name="account">खाता</string>
     <string name="app">ऐप</string>
     <string name="support">सहायता</string>
@@ -163,8 +151,8 @@
     <string name="invalid_name">दर्ज किया गया नाम अमान्य है!</string>
     <string name="sign_in_email_sent">यदि यह पता किसी पंजीकृत खाते से संबंधित है तो हमने आपको \"%1$s\" पर एक साइन-इन लिंक ईमेल किया है।</string>
     <string name="email">ईमेल</string>
-    <string name="sign_in_link_tip">साइन-इन प्रक्रिया को पूरा करने के लिए कृपया Noice का उपयोग करके प्राप्त लिंक खोलें।</string>
-    <string name="delete_account_confirmation">हटाए जाने पर आप तुरंत अपने खाते तक पहुंच खो देंगे। यदि आपके पास नोइस प्रीमियम की सदस्यता है, तो हम आपसे इसके लिए शुल्क लेना बंद कर देंगे। यदि आप अपना विचार बदलते हैं, तो आप हटाए जाने के 7 दिन पहले किसी भी समय फिर से साइन इन करके अपना खाता पुनर्स्थापित कर सकते हैं। इस अवधि के बाद, हम आपके खाते के डेटा को अपने सर्वर से स्थायी रूप से मिटा देंगे।</string>
+    <string name="sign_in_link_tip">साइन-इन प्रक्रिया को पूरा करने के लिए कृपया नॉइस का उपयोग करके प्राप्त लिंक खोलें।</string>
+    <string name="delete_account_confirmation">हटाए जाने पर आप तुरंत अपने खाते तक पहुंच खो देंगे। यदि आपके पास नॉइस प्रीमियम की सदस्यता है, तो हम आपसे इसके लिए शुल्क लेना बंद कर देंगे। यदि आप अपना विचार बदलते हैं, तो आप हटाए जाने के 7 दिन पहले किसी भी समय फिर से साइन इन करके अपना खाता पुनर्स्थापित कर सकते हैं। इस अवधि के बाद, हम आपके खाते के डेटा को अपने सर्वर से स्थायी रूप से मिटा देंगे।</string>
     <string name="loading">लोड हो रहा है</string>
     <string name="generate_preset_error">उह ओह! हम प्रीसेट जेनरेट करने में विफल रहे। %1$s कृपया पुन: प्रयास करें!</string>
     <string name="sign_up_tos">जारी रखते हुए, आप हमारी [सेवा की शर्तों](https://trynoice.com/terms-of-service) और [गोपनीयता नीति](https://trynoice.com/privacy-policy) के लिए सहमति प्रदान करते हैं।</string>
@@ -203,7 +191,7 @@
     <string name="no_subscription_purchases_found">हमें नहीं लगता कि आपने अभी तक नॉइस प्रीमियम आज़माया है। आपके द्वारा कम से कम एक बार नॉइस प्रीमियम का उपयोग करने के बाद आपकी पिछली सदस्यताएँ यहाँ दिखाई देंगी।</string>
     <string name="faqs">अधिकतर पूछे जाने वाले सवाल</string>
     <string name="subscription_purchases_load_error">उह ओह! हम आपकी सदस्यता खरीदारी इतिहास नहीं प्राप्त कर सके। %1$s</string>
-    <string name="has_premium_segments">यह ध्वनि नोइस प्रीमियम के साथ अतिरिक्त वैरिएंट प्रदान करती है।</string>
+    <string name="has_premium_segments">यह ध्वनि नॉइस प्रीमियम के साथ अतिरिक्त वैरिएंट प्रदान करती है।</string>
     <string name="media_sources">मीडिया स्रोत</string>
     <string name="cancel_subscription_error">धत्तेरे की! हम आपकी सदस्यता रद्द नहीं कर सके। %1$s कृपया पुन: प्रयास करें!</string>
     <string name="account_details_update_error">धत्तेरे की! हम आपके विवरण अपडेट नहीं कर सके। %1$s कृपया पुन: प्रयास करें!</string>
@@ -248,7 +236,7 @@
     <string name="delete_account_error">धत्तेरे की! हम आपका खाता नहीं हटा सके। %1$s कृपया पुन: प्रयास करें!</string>
     <string name="sign_in_email_error">उह ओह! हम आपको साइन-इन लिंक ईमेल नहीं कर सके। %1$s कृपया बाद में पुन: प्रयास करें!</string>
     <string name="library_load_error">उफ़! हम ध्वनि पुस्तकालय प्राप्त नहीं कर सके। %1$s</string>
-    <string name="audio_quality_summary">स्ट्रीमिंग के लिए अधिकतम ऑडियो क्वालिटी। मीडियम, हाई और अल्ट्रा केवल तभी काम करेंगे जब आपने नोइस प्रीमियम की सदस्यता ली होगी।</string>
+    <string name="audio_quality_summary">स्ट्रीमिंग के लिए अधिकतम ऑडियो क्वालिटी। मीडियम, हाई और अल्ट्रा केवल तभी काम करेंगे जब आपने नॉइस प्रीमियम की सदस्यता ली होगी।</string>
     <string name="redeem_gift_card">गिफ्ट कार्ड रिडीम करें</string>
     <string name="gift_card_code">गिफ्ट कार्ड का कोड</string>
     <string name="invalid_gift_card_code">दर्ज किया गया गिफ्ट कार्ड का कोड अमान्य है!</string>
@@ -291,5 +279,47 @@
     <string name="sound_library_updated_message">हमने ध्वनि संग्रह में कुछ बदलाव किए हैं। क्या आप इसके रिलीज नोटों की समीक्षा करना चाहेंगे\?</string>
     <string name="review">समीक्षा करें</string>
     <string name="benefit_4">%1$d अतिरिक्त ध्वनियाँ</string>
-    <string name="sound_is_premium">यह ध्वनि नोइस प्रीमियम के साथ उपलब्ध है।</string>
+    <string name="sound_is_premium">यह ध्वनि नॉइस प्रीमियम के साथ उपलब्ध है।</string>
+    <string name="add_alarm">अलार्म बनाएं</string>
+    <string name="no_alarms_description">\"+\" बटन को टैप करके एक नया अलार्म जोड़ें!</string>
+    <string name="alarm_post_notifications_permission_denied">सूचनाएँ दिखाने की अनुमति के बिना नॉइस अलार्म नहीं बजा सकता!</string>
+    <string name="proceed">आगे बढ़ें</string>
+    <string name="add_label">लेबल जोड़ें</string>
+    <string name="sunday_initial">र</string>
+    <string name="monday_initial">सो</string>
+    <string name="tuesday_initial">मं</string>
+    <string name="wednesday_initial">बु</string>
+    <string name="thursday_initial">गु</string>
+    <string name="edit_label">लेबल संपादन</string>
+    <string name="notification_channel_alarm_primary__name">एलार्म</string>
+    <string name="notification_channel_alarm_primary__description">शेड्यूल किए गए अलार्म के सक्रिय होने पर दिखाई देने वाली सूचनाएं।</string>
+    <string name="notification_channel_alarm_priming__name">अलार्म प्राइमिंग</string>
+    <string name="notification_channel_alarm_priming__description">शेड्यूल किए गए अलार्म को चालू करने की तैयारी करते समय दिखाई गई सूचनाएं।</string>
+    <string name="alarm">अलार्म</string>
+    <string name="snooze">स्नूज़</string>
+    <string name="benefit_5">असीमित अलार्म</string>
+    <string name="alarm_snooze_length_summary">अलार्म स्नूज़ करने के लिए मिनटों में समय अवधि</string>
+    <string name="alarm_ringer_max_duration">रिमाइंडर अवधि</string>
+    <string name="post_notifications_permission_rationale_title">नॉइस को सूचनाएं दिखाने की अनुमति दें</string>
+    <string name="notification_channel_alarm_secondary__name">अलार्म फ़ॉलबैक</string>
+    <string name="alarms">अलार्म</string>
+    <string name="no_alarms">कोई अलार्म नहीं</string>
+    <string name="post_notifications_permission_rationale_description">शेड्यूल किए गए अलार्म की सूचनाएं दिखाने के लिए हमें अतिरिक्त अनुमति चाहिए। सूचनाओं के बिना, नॉइस अपने निर्धारित समय पर अलार्म नहीं बजा सकता।</string>
+    <string name="alarm_permission_rationale_title">नॉइस को अलार्म शेड्यूल करने दें</string>
+    <string name="alarm_permission_rationale_description">हमें आपके डिवाइस पर अलार्म शेड्यूल करने के लिए अतिरिक्त एक्सेस की आवश्यकता है।
+\n
+\nकृपया अपने डिवाइस की सिस्टम सेटिंग में नॉइस के एप्लिकेशन विवरण से इसके लिए **अलार्म और रिमाइंडर** को सक्षम करें।</string>
+    <string name="alarms_disabled_due_to_subscription_expiration">हमें कुछ अलार्म अक्षम करने पड़े क्योंकि आपकी नॉइस प्रीमियम सदस्यता समाप्त हो गई है!</string>
+    <string name="not_scheduled">अनुसूचित नहीं है</string>
+    <string name="friday_initial">शु</string>
+    <string name="vibrate">कंपन</string>
+    <string name="saturday_initial">श</string>
+    <string name="notification_channel_alarm_secondary__description">शेड्यूल किए गए अलार्म के सक्रिय होने और उसके चयनित प्रीसेट के लोड होने में विफल होने पर दिखाई गई सूचनाएं।</string>
+    <string name="alarm_ringer_preset_load_error">इस अलार्म के लिए चयनित प्रीसेट लोड करने में विफल।</string>
+    <string name="alarm_ringer_max_duration_summary">समय अवधि मिनटों में, जिसके बाद अलार्म रिमाइंडर स्वचालित रूप से मौन हो जाएगा</string>
+    <string name="notification_channel_missed_alarms__name">छूटे हुए अलार्म</string>
+    <string name="alarm_missed">अलार्म छूट गया</string>
+    <string name="alarm_snooze_length">स्नूज़ लंबाई</string>
+    <string name="notification_channel_missed_alarms__description">रिमाइंडर की अवधि बीत जाने के बाद शेड्यूल किए गए अलार्म को बंद करने पर दिखाई जाने वाली सूचनाएं।</string>
+    <string name="no_presets">कोई प्रीसेट नहीं</string>
 </resources>

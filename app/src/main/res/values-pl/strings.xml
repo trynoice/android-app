@@ -189,4 +189,14 @@
     <string name="account_locked_error">Twój adres e-mail jest tymczasowo zablokowany przed próbami logowania do %1$s.</string>
     <string name="processing_payment">Przetwarzanie płatności</string>
     <string name="random_preset_description">Wygenerowany preset prawdopodobnie będzie zawierał dźwięki z wybranymi słowami kluczowymi. Co więcej, intensywne presety będą próbowały odtwarzać więcej dźwięków jednocześnie.</string>
+    <plurals name="n_months">
+        <item quantity="one">%1$d miesiąc</item>
+        <item quantity="few">%1$d miesięcy</item>
+        <item quantity="many">%1$d miesięcy</item>
+        <item quantity="other">%1$d miesięcy</item>
+    </plurals>
+    <string name="share_usage_data_consent_message">Zbieramy dane o użytkowaniu aplikacji aby poprawić wrażenia użytkownika. Zbieramy również dane o zachowaniu aplikacji, aby analizować i diagnozować błędy napotkane podczas używania aplikacji. Przeczytaj naszą [politykę prywatności](https://trynoice.com/privacy-policy) po więcej informacji.
+\n
+\nMożesz skonfigurować automatyczne udostępnianie danych w dowolnym momencie w aplikacji, przechodząc do \"**Ustawienia** &gt; **Udostępnij dane o użytkowaniu i zachowaniu**\".</string>
+    <string name="sign_up">Zarejestruj się</string>
 </resources>

@@ -25,7 +25,7 @@
     <string name="open_context_menu">Abrir menú contextual</string>
     <string name="preset_delete_confirmation">¿Confirma que quiere eliminar «%s»\?</string>
     <string name="preset_deleted">¡Preajuste borrado!</string>
-    <string name="preset_info__description">No ha creado ningún preajuste. Para crearlo, vaya a la biblioteca y reproduce los sonidos que quiera. Luego haga clic en el botón Guardar que aparece en la esquina inferior de la pantalla.</string>
+    <string name="preset_info__description">Cree nuevos ajustes preestablecidos al reproducir sonidos y usando el botón Guardar en la Biblioteca.</string>
     <string name="rename">Cambiar nombre</string>
     <string name="auto_sleep_schedule_cancelled">¡Temporizador cancelado!</string>
     <string name="reset">Restablecer</string>
@@ -122,7 +122,7 @@
     <string name="enable_media_buttons">Activar botones multimedia</string>
     <string name="enable_media_buttons_summary">Utilice botones de medios de hardware para controlar la reproducción</string>
     <string name="sound_fade_in_duration">Duración del desvanecimiento del sonido</string>
-    <string name="sound_fade_in_duration_summary">Duración del tiempo para el desvanecimiento de sonidos (en segundos)</string>
+    <string name="sound_fade_in_duration_summary">Tiempo de duración en segundos para los sonidos de desvanecimiento</string>
     <string name="subscription_payment_complete">Gracias por suscribirte a Noice Premium. Su suscripción ya está activa.</string>
     <string name="sign_in_message">Por favor ingrese su correo electrónico para iniciar sesión.</string>
     <string name="deleting_account">Eliminando cuenta</string>
@@ -186,7 +186,7 @@
     <string name="payment_processing_error">¡UH oh! No pudimos procesar su pago. La cantidad debe ser reembolsada automáticamente si se deduce. Si no recibe su reembolso dentro de una semana, avísenos.</string>
     <string name="confirming_payment">Confirmado el pago</string>
     <string name="monthly_price">%1$s/ por mes</string>
-    <string name="sound_fade_out_duration_summary">Tiempo de duración de los sonidos que se desvanecen (en segundos)</string>
+    <string name="sound_fade_out_duration_summary">Tiempo de duración en segundos para los sonidos de desvanecimiento</string>
     <string name="mailbox_app_not_found">!Uh-oh! ¡No pudimos encontrar una aplicación de buzón en su dispositivo!</string>
     <string name="benefit_0">Variaciones naturales en los sonidos</string>
     <string name="subscription_payment_confirmation_failed">¡UH oh! Tuvimos algunos problemas mientras esperábamos la confirmación del pago. Puede deberse a un error de red o a un retraso del proveedor de pago. Actualizaremos el estado de su suscripción tan pronto como tengamos noticias del proveedor. Verifique el estado de su suscripción después de un tiempo.</string>
@@ -270,7 +270,7 @@
     <string name="trial_period">Período de prueba: %1$s</string>
     <string name="generate_preset_error">¡Uh-oh! No hemos podido generar un preajuste. %1$s ¡Inténtalo de nuevo!</string>
     <string name="audio_quality_medium">Medio (192Kbps)</string>
-    <string name="audio_quality_ultra">Ultra (320 kbps)</string>
+    <string name="audio_quality_ultra">Ultra (320 kbit/s)</string>
     <string name="library_load_error">¡Oh, vaya! No pudimos acceder y recuperar la libraría de sonidos. %1$s</string>
     <string name="pausing">En pausa</string>
     <string name="keywords">Palabras clave</string>
@@ -289,4 +289,46 @@
     <string name="sound_scheduled_for_download">Organizando %1$s para descarga.</string>
     <string name="sound_download_scheduled_for_removal">Preparando %1$s para su supresión de sonidos descargados.</string>
     <string name="third_party_attributions">Atribuciones de terceros</string>
+    <string name="tuesday_initial">M</string>
+    <string name="wednesday_initial">X</string>
+    <string name="edit_label">Editar la etiqueta</string>
+    <string name="notification_channel_alarm_primary__name">Alarmas</string>
+    <string name="notification_channel_alarm_primary__description">Notificaciones mostradas cuando se activa una alarma programada.</string>
+    <string name="notification_channel_alarm_secondary__name">Repetición de las alarmas</string>
+    <string name="notification_channel_alarm_secondary__description">Notificaciones que se muestran cuando se activa una alarma programada y su preajuste seleccionado no se carga.</string>
+    <string name="notification_channel_alarm_priming__name">Preparando las alarmas</string>
+    <string name="notification_channel_alarm_priming__description">Notificaciones que se muestran cuando se prepara una alarma programada para activarse.</string>
+    <string name="alarm">Alarma</string>
+    <string name="snooze">Retrasar la alarma</string>
+    <string name="alarm_ringer_preset_load_error">No se pudo cargar el preajuste seleccionado para esta alarma.</string>
+    <string name="alarms_disabled_due_to_subscription_expiration">¡Tuvimos que deshabilitar algunas alarmas porque su suscripción a Noice Premium ha expirado!</string>
+    <string name="benefit_5">Alarmas ilimitadas</string>
+    <string name="alarm_ringer_max_duration_summary">Tiempo de la duración en minutos, después del cual silenciar automáticamente el recordatorio de la alarma</string>
+    <string name="notification_channel_missed_alarms__name">Alarmas perdidas</string>
+    <string name="notification_channel_missed_alarms__description">Notificaciones que se muestran al silenciar las alarmas programadas después de que haya transcurrido la duración del recordatorio.</string>
+    <string name="no_alarms">Sin alarmas</string>
+    <string name="alarms">Alarmas</string>
+    <string name="add_label">Añadir etiqueta</string>
+    <string name="post_notifications_permission_rationale_description">Necesitamos un permiso adicional para mostrar las notificaciones de las alarmas programadas. Sin notificaciones, Noice no puede hacer sonar las alarmas a su hora programada.</string>
+    <string name="add_alarm">Agregar una alarma</string>
+    <string name="alarm_permission_rationale_description">Necesitamos un acceso adicional para programar alarmas en tu dispositivo.
+\n
+\nHabilita **Alarmas y recordatorios** para Noice desde los detalles de la aplicación en los ajustes del sistema de tu dispositivo.</string>
+    <string name="no_alarms_description">¡Agregue una nueva alarma tocando el botón \"+\"!</string>
+    <string name="alarm_permission_rationale_title">Permitir que Voice programe alarmas</string>
+    <string name="post_notifications_permission_rationale_title">Permitir que Noice muestre notificaciones</string>
+    <string name="proceed">Proceder</string>
+    <string name="alarm_post_notifications_permission_denied">¡Noice no puede hacer sonar las alarmas sin el permiso para mostrar las notificaciones!</string>
+    <string name="sunday_initial">D</string>
+    <string name="monday_initial">L</string>
+    <string name="thursday_initial">J</string>
+    <string name="friday_initial">V</string>
+    <string name="vibrate">Vibrar</string>
+    <string name="saturday_initial">S</string>
+    <string name="not_scheduled">No programada</string>
+    <string name="alarm_snooze_length">Duración del retraso de la alarma</string>
+    <string name="alarm_snooze_length_summary">Duración del tiempo en minutos para alarmas pospuestas</string>
+    <string name="alarm_ringer_max_duration">Duración de los recordatorios</string>
+    <string name="alarm_missed">Alarma perdida</string>
+    <string name="no_presets">Sin ajustes preestablecidos</string>
 </resources>
