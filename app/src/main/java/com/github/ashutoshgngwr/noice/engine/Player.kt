@@ -63,7 +63,7 @@ abstract class Player protected constructor(
   private var currentSegment: SoundSegment? = null
   private var playbackState = PlaybackState.IDLE
   private var retryDelayMillis = MIN_RETRY_DELAY_MILLIS
-  private var isMetadataLoaded = false
+  private var metadataState = MetadataState.NOT_LOADED
 
   /**
    * Sets fade duration for fading-in sounds when the playback starts.
@@ -132,14 +132,10 @@ abstract class Player protected constructor(
       PlaybackState.STOPPED -> throw IllegalStateException("attempted to re-use a stopped player")
       PlaybackState.IDLE -> loadSoundMetadata()
       PlaybackState.BUFFERING, PlaybackState.PLAYING -> Unit
-      else -> {
-        // player may have transitioned to paused state while it was loading metadata. Restore
-        // buffering state in that case. Resume playback normally otherwise.
-        if (isMetadataLoaded) {
-          playInternal()
-        } else {
-          setPlaybackState(PlaybackState.BUFFERING)
-        }
+      else -> when (metadataState) {
+        MetadataState.NOT_LOADED -> loadSoundMetadata()
+        MetadataState.LOADING -> setPlaybackState(PlaybackState.BUFFERING) // may have transitioned to paused state while loading
+        MetadataState.LOADED -> playInternal()
       }
     }
   }
@@ -254,6 +250,7 @@ abstract class Player protected constructor(
   protected abstract fun onSegmentAvailable(uri: String)
 
   private fun loadSoundMetadata() {
+    metadataState = MetadataState.LOADING
     setPlaybackState(PlaybackState.BUFFERING)
     defaultScope.launch {
       Log.d(LOG_TAG, "loadSoundMetadata: loading sound metadata for $soundId")
@@ -263,7 +260,7 @@ abstract class Player protected constructor(
         retryDelayMillis = MIN_RETRY_DELAY_MILLIS
         sound = resource.data
         recreateSegmentList()
-        isMetadataLoaded = true
+        metadataState = MetadataState.LOADED
         if (playbackState == PlaybackState.BUFFERING) {
           Log.d(LOG_TAG, "loadSoundMetadata: starting playback")
           playInternal()
@@ -321,5 +318,9 @@ abstract class Player protected constructor(
       defaultScope: CoroutineScope,
       playbackListener: PlaybackListener
     ): Player
+  }
+
+  private enum class MetadataState {
+    NOT_LOADED, LOADING, LOADED,
   }
 }

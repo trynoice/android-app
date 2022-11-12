@@ -68,6 +68,7 @@ class PlayerManager(
    * Android system grants us the audio focus.
    */
   fun play(soundId: String) {
+    val wasPausing = aggregatePlaybackState() == PlaybackState.PAUSING
     val player = players.getOrPut(soundId) {
       playerStates.putIfAbsent(soundId, PlayerState(soundId, Player.DEFAULT_VOLUME))
       playerFactory.createPlayer(
@@ -85,7 +86,7 @@ class PlayerManager(
     }
 
     if (audioFocusManager.hasFocus()) {
-      player.play()
+      if (wasPausing) player.pause(true) else player.play()
     } else {
       audioFocusManager.requestFocus()
     }
