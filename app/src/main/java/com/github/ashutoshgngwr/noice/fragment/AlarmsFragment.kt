@@ -40,6 +40,7 @@ import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
@@ -268,9 +269,8 @@ class AlarmsViewModel @Inject constructor(
   subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
-  internal val alarmsPagingData: StateFlow<PagingData<Alarm>> = alarmRepository.pagingDataFlow()
+  internal val alarmsPagingData: Flow<PagingData<Alarm>> = alarmRepository.pagingDataFlow()
     .cachedIn(viewModelScope)
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PagingData.empty())
 
   internal val presets: StateFlow<List<Preset>> = presetRepository.listFlow()
     .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
@@ -325,7 +325,7 @@ class AlarmListAdapter(
   private val itemViewController: AlarmItemViewController,
 ) : PagingDataAdapter<Alarm, AlarmViewHolder>(AlarmComparator) {
 
-  var expandedPosition = -1; private set
+  var expandedPosition = 0; private set
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
     val binding = AlarmItemBinding.inflate(layoutInflater, parent, false)
