@@ -67,7 +67,7 @@ class LocalPlayer(
     }
 
   private var fadeAnimator: ValueAnimator? = null
-  private var skipNextFadeInTransition: Boolean = false
+  private var skipNextFadeInTransition = false
   private var retryDelayMillis = MIN_RETRY_DELAY_MILLIS
 
   init {
@@ -82,9 +82,9 @@ class LocalPlayer(
       setPlaybackState(PlaybackState.PLAYING)
       // fade-in or restore volume whenever player starts after buffering or paused states.
       if (sound?.info?.isContiguous == true && !skipNextFadeInTransition) {
-        skipNextFadeInTransition = false
         exoPlayer.fade(0F, getScaledVolume(), fadeInDuration.inWholeMilliseconds)
       } else {
+        skipNextFadeInTransition = false
         exoPlayer.volume = getScaledVolume()
       }
     } else if (exoPlayer.playWhenReady && exoPlayer.isLoading) {
