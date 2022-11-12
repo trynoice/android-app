@@ -234,7 +234,7 @@ class PlayerManager(
    */
   fun setAudioAttributes(audioAttributes: AudioAttributesCompat) {
     this.audioAttributes = audioAttributes
-    val wasPlaying = !aggregatePlaybackState().oneOf(PlaybackState.PAUSED, PlaybackState.STOPPED)
+    val wasPlaying = aggregatePlaybackState() == PlaybackState.PLAYING
     if (audioFocusManager.hasFocus()) {
       pause(true)
       audioFocusManager.abandonFocus()
@@ -260,7 +260,7 @@ class PlayerManager(
     }
 
     if (oldManager != audioFocusManager) {
-      val wasPlaying = !aggregatePlaybackState().oneOf(PlaybackState.PAUSED, PlaybackState.STOPPED)
+      val wasPlaying = aggregatePlaybackState() == PlaybackState.PLAYING
       pause(true)
       oldManager.abandonFocus()
       if (wasPlaying) {
@@ -329,7 +329,9 @@ class PlayerManager(
 
   /**
    * @return the aggregate [PlaybackState] of the [PlayerManager] depending on the individual
-   * playback states of the currently active sounds.
+   * playback states of the currently active sounds. The returned [PlaybackState] is always one of
+   * [PlaybackState.PLAYING], [PlaybackState.PAUSING], [PlaybackState.PAUSED],
+   * [PlaybackState.STOPPING] or [PlaybackState.STOPPED].
    */
   private fun aggregatePlaybackState(): PlaybackState {
     val playbackStates = playerStates.values.map { it.playbackState }
