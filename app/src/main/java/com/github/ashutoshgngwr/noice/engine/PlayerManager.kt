@@ -127,7 +127,7 @@ class PlayerManager(
         playerStates[soundId] = PlayerState(soundId, volume, playbackState)
       }
 
-      if (players.isEmpty()) { // playback has stopped
+      if (playbackState.oneOf(PlaybackState.PAUSED, PlaybackState.STOPPED)) {
         audioFocusManager.abandonFocus()
       }
 
