@@ -190,10 +190,10 @@
     <string name="processing_payment">Przetwarzanie płatności</string>
     <string name="random_preset_description">Wygenerowany preset prawdopodobnie będzie zawierał dźwięki z wybranymi słowami kluczowymi. Co więcej, intensywne presety będą próbowały odtwarzać więcej dźwięków jednocześnie.</string>
     <plurals name="n_months">
-        <item quantity="one">miesiąc</item>
-        <item quantity="few">miesięcy</item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="one">%1$d miesiąc</item>
+        <item quantity="few">%1$d miesięcy</item>
+        <item quantity="many">%1$d miesięcy</item>
+        <item quantity="other">%1$d miesięcy</item>
     </plurals>
     <string name="share_usage_data_consent_message">Zbieramy dane o użytkowaniu aplikacji aby poprawić wrażenia użytkownika. Zbieramy również dane o zachowaniu aplikacji, aby analizować i diagnozować błędy napotkane podczas używania aplikacji. Przeczytaj naszą [politykę prywatności](https://trynoice.com/privacy-policy) po więcej informacji.
 \n
