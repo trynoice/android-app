@@ -33,8 +33,7 @@
     <string name="preset_deleted">Preset deleted!</string>
     <string name="preset_does_not_exist">Preset does not exist. It may have been deleted!</string>
     <string name="preset_info__description">
-    You haven\'t created any presets yet. To create a preset, go to the Library and play sounds.
-    Then click on the Save button that appears on the bottom corner of the screen.
+    Create new presets by playing sounds and using the Save button in the Library.
   </string>
     <string name="rename">Rename</string>
     <string name="pinned_shortcuts_not_supported">Your default launcher does not support adding shortcuts.</string>
@@ -349,4 +348,5 @@
     <string name="notification_channel_missed_alarms__name">Missed Alarms</string>
     <string name="notification_channel_missed_alarms__description">Notifications shown on silencing scheduled alarms after the reminder duration has elapsed.</string>
     <string name="alarm_missed">Alarm missed</string>
+    <string name="no_presets">No Presets</string>
 </resources>
