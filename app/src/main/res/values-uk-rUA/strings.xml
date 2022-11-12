@@ -26,7 +26,7 @@
     <string name="open_context_menu">Відкрити контекстне меню</string>
     <string name="preset_delete_confirmation">Підтвердити видалення %s?</string>
     <string name="preset_deleted">Поєднання видалено!</string>
-    <string name="preset_info__description">Ви ще не створили поєднання. Щоб створити його перейдіть до Бібліотеки та відтворіть звуки. Після цього натисніть на кнопку Зберегти яка з\'явиться у нижньому кутку екрана.</string>
+    <string name="preset_info__description">Створюйте нові поєднання, натиснувши нову кнопку Зберегти до бібліотеки під час відтворення звуків.</string>
     <string name="rename">Перейменувати</string>
     <string name="auto_sleep_schedule_cancelled">Автоматичний таймер сну скасовано!</string>
     <string name="reset">Скинути</string>
@@ -106,7 +106,7 @@
 \n
 \nВи можете налаштувати автоматичне надсилання даних у будь-який час всередині застосунку, за допомогою \"**Налаштування** &gt; **Надсилати дані про користування та поведінку**\".</string>
     <string name="share_usage_data_consent_title">Параметри спільного доступу до даних</string>
-    <string name="sound_fade_in_duration_summary">Тривалість стихання звуків (у секундах)</string>
+    <string name="sound_fade_in_duration_summary">Тривалість стихання звуків у секундах</string>
     <string name="sound_fade_in_duration">Тривалість стихання звуку</string>
     <string name="created_by">Створено</string>
     <string name="import_presets_successful">Поєднання успішно імпортовано з файлу!</string>
@@ -159,7 +159,7 @@
     <string name="audio_quality_summary">Найвища якість звуку для потокового передавання. Середня, висока та ультра працюватиуть лише якщо ви передплатили Noice Premium.</string>
     <string name="sign_up_tos">Продовжуючи, ви погоджуєтеся з нашими [Умовами надання послуг](https://trynoice.com/terms-of-service) і [Політикою приватності](https://trynoice.com/privacy-policy).</string>
     <string name="sound_fade_out_duration">Тривалість загасання звуку</string>
-    <string name="sound_fade_out_duration_summary">Тривалість загасання звуків (у секундах)</string>
+    <string name="sound_fade_out_duration_summary">Тривалість загасання звуків у секундах</string>
     <string name="account">Обліковий запис</string>
     <string name="app">Застосунок</string>
     <string name="view_subscription_plans">Переглянути плани</string>
@@ -281,4 +281,46 @@
     <string name="review">Ознайомитися</string>
     <string name="benefit_4">%1$d додаткові звуки</string>
     <string name="sound_is_premium">Цей звук доступний з Noice Premium.</string>
+    <string name="alarms">Будильники</string>
+    <string name="add_alarm">Додати будильник</string>
+    <string name="no_alarms">Немає будильників</string>
+    <string name="no_alarms_description">Додайте новий будильник, торкнувшись кнопки «+»!</string>
+    <string name="alarm_permission_rationale_title">Дозволити Noice планувати будильники</string>
+    <string name="post_notifications_permission_rationale_title">Дозволити Noice показувати сповіщення</string>
+    <string name="proceed">Продовжити</string>
+    <string name="alarm_post_notifications_permission_denied">Без дозволу показувати сповіщення Noice не може дзвеніти!</string>
+    <string name="add_label">Додати мітку</string>
+    <string name="sunday_initial">Н</string>
+    <string name="friday_initial">П</string>
+    <string name="notification_channel_alarm_primary__description">Сповіщення, показувані під час спрацювання запланованого будильника.</string>
+    <string name="notification_channel_alarm_secondary__name">Запасні будильники</string>
+    <string name="notification_channel_alarm_secondary__description">Сповіщення, що з\'являються, коли спрацьовує запланований будильник, а обране для неї поєднання не завантажується.</string>
+    <string name="notification_channel_alarm_priming__name">Підготовка будильника</string>
+    <string name="notification_channel_alarm_priming__description">Показувані перед спрацюванням запланованого будильника сповіщення.</string>
+    <string name="alarm">Будильник</string>
+    <string name="snooze">Відкласти</string>
+    <string name="alarm_ringer_preset_load_error">Не вдалося завантажити вибране поєднання для цього будильника.</string>
+    <string name="alarms_disabled_due_to_subscription_expiration">Ми були змушені вимкнути деякі будильники, оскільки термін дії вашої передплати Noice Premium завершився!</string>
+    <string name="benefit_5">Необмежена кількість будильників</string>
+    <string name="alarm_ringer_max_duration">Тривалість нагадування</string>
+    <string name="alarm_snooze_length_summary">Тривалість відкладання будильників у хвилинах</string>
+    <string name="alarm_ringer_max_duration_summary">Тривалість у хвилинах, після завершення якої відбувається автоматичне вимкнення нагадування про будильник</string>
+    <string name="alarm_missed">Пропущений будильник</string>
+    <string name="no_presets">Немає поєднань</string>
+    <string name="not_scheduled">Не заплановано</string>
+    <string name="wednesday_initial">С</string>
+    <string name="edit_label">Редагувати мітку</string>
+    <string name="monday_initial">П</string>
+    <string name="tuesday_initial">В</string>
+    <string name="saturday_initial">С</string>
+    <string name="vibrate">Вібрувати</string>
+    <string name="alarm_permission_rationale_description">Нам потрібен додатковий доступ для планування будильників на вашому пристрої.
+\n
+\nБудь ласка, увімкніть **Сигнали та нагадування** для Noice в інформації про застосунок в системних налаштуваннях вашого пристрою.</string>
+    <string name="post_notifications_permission_rationale_description">Нам потрібен додатковий дозвіл на показ сповіщень для запланованих будильників. Без сповіщень Noice не може дзвеніти у запланований час.</string>
+    <string name="thursday_initial">Ч</string>
+    <string name="notification_channel_alarm_primary__name">Будильники</string>
+    <string name="notification_channel_missed_alarms__name">Пропущені будильники</string>
+    <string name="alarm_snooze_length">Тривалість відкладання</string>
+    <string name="notification_channel_missed_alarms__description">Сповіщення про вимкнення запланованих будильників після закінчення часу нагадування.</string>
 </resources>
