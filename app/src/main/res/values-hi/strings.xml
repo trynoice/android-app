@@ -25,10 +25,7 @@
     <string name="open_context_menu">संदर्भ मेनू खोलें</string>
     <string name="preset_delete_confirmation">%s को हटाने की पुष्टि करें?</string>
     <string name="preset_deleted">प्रीसेट को हटा दिया गया है!</string>
-    <string name="preset_info__description">
-       आपने अभी तक कोई प्रीसेट नहीं बनाया है। प्रीसेट बनाने के लिए, लाइब्रेरी में जाएँ और ध्वनियाँ बजाएँ। इसके बाद स्क्रीन के निचले
-       कोने पर दिखाई देने वाले सेव बटन पर क्लिक करें।
-  </string>
+    <string name="preset_info__description">ध्वनि बजाकर लाइब्रेरी में सेव बटन का उपयोग करके नए प्रीसेट बनाएं।</string>
     <string name="rename">नाम बदलें</string>
     <string name="auto_sleep_schedule_cancelled">ऑटो स्लीप टाइमर रद्द हो गया है!</string>
     <string name="reset">रद्द करें</string>
@@ -324,4 +321,5 @@
     <string name="alarm_missed">अलार्म छूट गया</string>
     <string name="alarm_snooze_length">स्नूज़ लंबाई</string>
     <string name="notification_channel_missed_alarms__description">रिमाइंडर की अवधि बीत जाने के बाद शेड्यूल किए गए अलार्म को बंद करने पर दिखाई जाने वाली सूचनाएं।</string>
+    <string name="no_presets">कोई प्रीसेट नहीं</string>
 </resources>
