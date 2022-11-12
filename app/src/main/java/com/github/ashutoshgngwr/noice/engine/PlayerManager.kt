@@ -254,7 +254,7 @@ class PlayerManager(
     this.audioAttributes = audioAttributes
     val wasPlaying = !playbackState.oneOf(PlaybackState.PAUSED, PlaybackState.STOPPED)
     if (audioFocusManager.hasFocus()) {
-      pauseIndefinitely(true)
+      pause(true)
       audioFocusManager.abandonFocus()
     }
 
@@ -279,7 +279,7 @@ class PlayerManager(
 
     if (oldManager != audioFocusManager) {
       val wasPlaying = !playbackState.oneOf(PlaybackState.PAUSED, PlaybackState.STOPPED)
-      pauseIndefinitely(true)
+      pause(true)
       oldManager.abandonFocus()
       if (wasPlaying) {
         audioFocusManager.requestFocus()
