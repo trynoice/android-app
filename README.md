@@ -29,8 +29,8 @@ casting audio from Noice using Chromecast.
 
 ## Useful Links
 
-1. [All notable changes](https://trynoice.com/changelog) to the project over
-   time.
+1. [All notable changes](https://github.com/trynoice/android-app/releases) to
+   the project over time.
 2. Translate Noice to your local language on [Weblate][weblate].
 3. [Terms of Service](https://trynoice.com/terms-of-service) and [Privacy
    Policy](https://trynoice.com/privacy-policy) for application users.
