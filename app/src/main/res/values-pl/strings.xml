@@ -162,7 +162,7 @@
     <string name="account_details_update_success">Dane Twojego konta zostały pomyślnie zaktualizowane.</string>
     <string name="sign_in_email_sent">Wysłaliśmy ci link do logowania na \"%1$s\", jeśli ten adres należy do zarejestrowanego konta.</string>
     <string name="update_details">Aktualizuj szczegóły</string>
-    <string name="monthly_price">na miesiąc</string>
+    <string name="monthly_price">%1$s na miesiąc</string>
     <string name="support">Wsparcie</string>
     <string name="unknown_error">Wystąpił nieznany błąd</string>
     <string name="sign_up_message">Proszę wprowadź swoje imię i email, aby się zalogować.</string>
