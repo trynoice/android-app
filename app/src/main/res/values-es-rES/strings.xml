@@ -25,7 +25,7 @@
     <string name="open_context_menu">Abrir menú contextual</string>
     <string name="preset_delete_confirmation">¿Confirma que quiere eliminar «%s»\?</string>
     <string name="preset_deleted">¡Preajuste borrado!</string>
-    <string name="preset_info__description">No ha creado ningún preajuste. Para crearlo, vaya a la biblioteca y reproduce los sonidos que quiera. Luego haga clic en el botón Guardar que aparece en la esquina inferior de la pantalla.</string>
+    <string name="preset_info__description">Cree nuevos ajustes preestablecidos al reproducir sonidos y usando el botón Guardar en la Biblioteca.</string>
     <string name="rename">Cambiar nombre</string>
     <string name="auto_sleep_schedule_cancelled">¡Temporizador cancelado!</string>
     <string name="reset">Restablecer</string>
@@ -313,8 +313,8 @@
     <string name="add_alarm">Agregar una alarma</string>
     <string name="alarm_permission_rationale_description">Necesitamos un acceso adicional para programar alarmas en tu dispositivo.
 \n
-\n Habilita **Alarmas y recordatorios** para Noice desde los detalles de su aplicación en los ajustes del sistema de tu dispositivo.</string>
-    <string name="no_alarms_description">¡Agregue nuevas alarmas tocando el botón \"+\"!</string>
+\nHabilita **Alarmas y recordatorios** para Noice desde los detalles de la aplicación en los ajustes del sistema de tu dispositivo.</string>
+    <string name="no_alarms_description">¡Agregue una nueva alarma tocando el botón \"+\"!</string>
     <string name="alarm_permission_rationale_title">Permitir que Voice programe alarmas</string>
     <string name="post_notifications_permission_rationale_title">Permitir que Noice muestre notificaciones</string>
     <string name="proceed">Proceder</string>
@@ -330,4 +330,5 @@
     <string name="alarm_snooze_length_summary">Duración del tiempo en minutos para alarmas pospuestas</string>
     <string name="alarm_ringer_max_duration">Duración de los recordatorios</string>
     <string name="alarm_missed">Alarma perdida</string>
+    <string name="no_presets">Sin ajustes preestablecidos</string>
 </resources>
