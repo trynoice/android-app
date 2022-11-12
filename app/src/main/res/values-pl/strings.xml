@@ -46,11 +46,7 @@
     Z całego serca dziękujemy Ci za Twój hojny wkład w projekt Noice.
   </string>
     <string name="support_development__share">Podziel się z przyjaciółmi</string>
-    <string name="support_development__share_description">
-    Dzielenie się tą aplikacją z przyjaciółmi jest podobne do przekazywania pieniędzy. Z większą
-    liczbą pobrań, będziemy mogli uzyskać informacje zwrotne z wielu różnych perspektyw, które
-    pomogą nam w uczynieniu Noice lepszym niż kiedykolwiek wcześniej.
-  </string>
+    <string name="support_development__share_description">Możesz nam również pomóc, opowiadając o nas znajomym. Więcej użytkowników przekaże nam opinie z kilku różnych perspektyw i pomoże nam ulepszyć nasze usługi.</string>
     <string name="cast_media">Połącz z Chromecast</string>
     <string name="notification_channel_default__description">Elementy sterujące odtwarzaniem multimediów</string>
     <string name="notification_channel_default__name">Odtwarzanie multimediów</string>
@@ -132,4 +128,65 @@
     <string name="showing_localised_prices">Ceny przeliczone z [INR](https://en.wikipedia.org/wiki/Indian_rupee). Aktualne ceny mogą się nieznacznie różnić.</string>
     <string name="download_sound">Pobierz dźwięk</string>
     <string name="notification_channel_sound_downloads__name">Pobieranie dźwięku</string>
+    <string name="select_a_plan">Wybierz plan</string>
+    <string name="plans">Plany</string>
+    <string name="confirming_payment">Potwierdzenie płatności</string>
+    <string name="failed_to_load_inapp_purchases">Nie udało się wczytać szczegółów zakupu w aplikacji. Spróbuj ponownie później!</string>
+    <string name="export_presets_successful">Pomyślnie wyeksportowano \"Zapisane ustawienia\" do pliku!</string>
+    <string name="delete_account_confirmation">Po usunięciu natychmiast utracisz dostęp do swojego konta. Jeśli masz trwającą subskrypcję Noice Premium, przestaniemy za nią pobierać opłaty. Jeśli zmienisz zdanie, możesz przywrócić swoje konto, logując się ponownie w dowolnym momencie przed upływem 7 dni od usunięcia. Po tym okresie trwale usuniemy dane Twojego konta z naszych serwerów.</string>
+    <string name="support_development__donate_description">Jeśli nie wykupiłeś subskrypcji premium, możesz dokonać jednorazowej płatności. Pomoże nam to w utrzymaniu rozwoju bezpłatnych funkcji i utrzymaniu ich bez reklam na zawsze.</string>
+    <string name="account">Konto</string>
+    <string name="deleting_account">Usuwanie konta</string>
+    <string name="signing_out">Wylogowywanie</string>
+    <string name="others">Inne</string>
+    <string name="sign_in_message">Proszę wprowadź swój email, aby się zalogować.</string>
+    <string name="sign_in_link_tip">Otwórz otrzymany link za pomocą Noice, aby zakończyć proces logowania.</string>
+    <string name="email">Email</string>
+    <string name="mailbox_app_not_found">Uh-oh! Nie mogliśmy znaleźć aplikacji skrzynki pocztowej na Twoim urządzeniu!</string>
+    <string name="accept">Akceptuj</string>
+    <string name="sign_out">Wyloguj się</string>
+    <string name="benefit_2">Odtwarzanie offline</string>
+    <string name="network_error">Sieć jest nieosiągalna.</string>
+    <string name="sign_in_sucessful">Zalogowano się pomyślnie!</string>
+    <string name="offline">Jesteś offline</string>
+    <string name="created_by">Stworzony przez</string>
+    <string name="benefit_1">Wysokiej jakości strumieniowanie audio</string>
+    <string name="enable_media_buttons">Włącz przyciski mediów</string>
+    <string name="yearly">Rocznie</string>
+    <string name="sign_in">Zaloguj się</string>
+    <string name="share_usage_data_consent_title">Preferencje udostępniania danych</string>
+    <string name="should_share_usage_data_summary">Automatycznie udostępniaj programistom dane o użytkowaniu i zachowaniu.</string>
+    <string name="sign_up_email_sent">Wysłaliśmy Ci link do logowania na \"%1$s\".</string>
+    <string name="sign_in_token_error">Wygląda na to, że link do logowania jest nieprawidłowy. Mógł wygasnąć. Proszę spróbuj ponownie!</string>
+    <string name="cont">Kontynuuj</string>
+    <string name="account_details_update_success">Dane Twojego konta zostały pomyślnie zaktualizowane.</string>
+    <string name="sign_in_email_sent">Wysłaliśmy ci link do logowania na \"%1$s\", jeśli ten adres należy do zarejestrowanego konta.</string>
+    <string name="update_details">Aktualizuj szczegóły</string>
+    <string name="monthly_price">na miesiąc</string>
+    <string name="support">Wsparcie</string>
+    <string name="unknown_error">Wystąpił nieznany błąd</string>
+    <string name="sign_up_message">Proszę wprowadź swoje imię i email, aby się zalogować.</string>
+    <string name="open_mailbox">Otwórz skrzynkę pocztową</string>
+    <string name="sound_fade_out_duration">Czas wyciszenia dzwięku</string>
+    <string name="monthly">Miesięcznie</string>
+    <string name="sound_fade_out_duration_summary">Czas trwania wyciszenia dzwięków (w sekundach)</string>
+    <string name="enable_media_buttons_summary">Użyj sprzętowych przycisków multimedialnych do sterowania odtwarzaniem</string>
+    <string name="view_subscription_plans">Pokaż plany</string>
+    <string name="sign_out_confirmation">Potwierdzić wylogowanie\?</string>
+    <string name="quarterly">Kwartalnie</string>
+    <string name="app">Aplikacja</string>
+    <string name="invalid_name">Wprowadzone imię jest nieprawidłowe!</string>
+    <string name="should_share_usage_data">Udostępnij dane o użytkowaniu i zachowaniach.</string>
+    <string name="delete_account">Usuń konto</string>
+    <string name="welcome_back">Witaj ponownie!</string>
+    <string name="welcome">WItaj!</string>
+    <string name="sign_in_to_continue">Zaloguj się lub zarejestruj, aby kontynuować.</string>
+    <string name="invalid_email">Wprowadzony email jest nieprawidłowy!</string>
+    <string name="benefits">Korzyści</string>
+    <string name="retry">Spróbuj ponownie</string>
+    <string name="premium">Premium</string>
+    <string name="duplicate_email_error">Wprowadzony adres e-mail jest powiązany z innym kontem.</string>
+    <string name="account_locked_error">Twój adres e-mail jest tymczasowo zablokowany przed próbami logowania do %1$s.</string>
+    <string name="processing_payment">Przetwarzanie płatności</string>
+    <string name="random_preset_description">Wygenerowany preset prawdopodobnie będzie zawierał dźwięki z wybranymi słowami kluczowymi. Co więcej, intensywne presety będą próbowały odtwarzać więcej dźwięków jednocześnie.</string>
 </resources>

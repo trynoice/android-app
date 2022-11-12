@@ -1,35 +1,53 @@
-Para muchas personas, un poco de ruido de fondo es útil para calmarse y concentrarse. El ruido de fondo puede ayudar a minimizar los efectos del estrés. En algunos casos, también es un impulso a la productividad. También ayuda a las personas a producir sus acúfenos.
+Para muchas personas, un poco de ruido de fondo uniforme es útil para mantener la calma y la concentración. En algunos casos, también aumenta la productividad y reduce los efectos del estrés y la ansiedad. El ruido de fondo también enmascara el tinnitus, calma a los bebés agitados y mejora las experiencias de lectura y meditación.
 
-Noice es una aplicación que te permite crear un ambiente personalizado usando clips de fuentes de ruido ambiental. Cree su entorno perfecto combinando diferentes sonidos para ahogar las distracciones y así que pueda concentrarse en su trabajo o generar entornos pacíficos para la relajación.
+Noice es una aplicación que permite crear ambientes sonoros personalizados. Te permite combinar diferentes sonidos a distintos niveles de volumen para crear atmósferas ambientales perfectas. Estos entornos sonoros personalizados te permiten ahogar las distracciones y concentrarte. También puedes utilizarla para generar un aura de serenidad y tranquilidad que te anime a relajarte y a quedarte dormido
 
-<b>Características</b>
-- 35 sonidos registrados
-- Google Cast (Chromecast) habilitado (solo en Play Store)
-- Temporizador de sueño automático
-- Reloj Despertador
-- Generar mezclas aleatorias
-- Hacer una mezcla personalizada
-- Guarda tus mezclas favoritas
-- Toca junto con otros reproductores de música
-- Control de volumen individual para cada fuente de sonido
-- Reproducción sin conexión
-- Soporte para tema blanco u oscuro
+<b>BENEFICIOS</b>
+• Reduzca su estrés y ansiedad con un ambiente personalizado
+• Relájese y descanse en un entorno apaciguador de su elección
+• Aumente su productividad sustituyendo el ruido que le distrae
+• Mejore la concentración al estar en un ambiente consistente
+• Ayude a su experiencia de lectura y meditación con paisajes sonoros naturales
+• Calme a sus bebés con sonidos relajantes
+• Enmascare su tinnitus con ruidos relajantes
+• Bloquee las distracciones para relajarse y dormirse
+• Alivie sus migrañas y dolores de cabeza
 
-<b>Biblioteca de sonido</b>
-- Vida (pájaros, grillos, lobo, latido del corazón humano, etc.)
-- Forestal (hoguera, noche, viento, palmeras, etc.)
-- Fenómenos naturales(lluvia, truenos)
-- Tele-transportación (cafetería, biblioteca, oficina, playa, ribera, etc.)
-- Vehicular (tren en movimiento, en vuelo, barco crujiente, coche eléctrico, etc.)
-- Ruido crudo (blanco, rosa, marrón)
+<b>CARACTERÍSTICAS PREMIUM</b>
+• Sonidos más largos con múltiples variantes/muestras
+• Síntesis aleatoria de las variaciones naturales de los sonidos, por ejemplo, la intensidad de la lluvia variará con el tiempo
+• Reproducción completa sin conexión
+• Audio de ultra alta calidad para su transmisión y descarga (hasta 320 kbps)
 
-<b>Permisos</b>
-- <b>Evitar que el dispositivo duerma</b>: para mantener la CPU del dispositivo despierta durante la reproducción
-- <b>Ejecutar el servicio en primer plano</b>: para ejecutar el proceso del reproductor (diferente de la interfaz de usuario)
-- <b>Ejecutar en el inicio</b>: para asegurarse de que los temporizadores de activación persisten a través de reinicios
-- <b>Acceso completo a la red</b>: para habilitar Chromecast y contribuciones financieras
-- <b>Ver conexiones de red</b>: añadido por una dependencia, actualmente no está en uso
-- <b>Servicio de facturación de Google Play</b>: para permitir contribuciones financieras para apoyar el desarrollo
+<b>CARACTERÍSTICAS GRATUITAS</b>
+• Amplia biblioteca de sonidos
+• Compatible con Google Cast o Chromecast*.
+• Temporizador de sueño automático
+• Reloj despertador
+• Crea y guarda tus mezclas personalizadas
+• Generador de mezclas aleatorias que se adaptan a tu estado de ánimo
+• Control de volumen individual para cada sonido
+• Reproducción junto a un reproductor de música en curso
+• Utiliza los colores dinámicos de Material You en Android 12L o superior
+• Sin publicidad de ningún tipo
+
+<i>* Chromecast solo está disponible cuando descarga Voice de Google Play.</i>
+
+<b>FONOTECA</b>
+• La vida (pájaros, grillos, lobos, latidos del corazón, ronroneo del gato)
+• El tiempo (la mañana o el amanecer, la noche, la lluvia, los truenos)
+• Lugares (hoguera o fogata, cafetería, biblioteca, oficina, playa, ribera, buceo)
+• Viajes (tren, avión, barco que cruje, coche eléctrico)
+• Cosas (ventilador, reloj de pared, campanas de viento)
+• Ruido bruto (blanco, rosa, marrón)
+
+<b>PERMISOS DE LA APLICACIÓN</b>
+• <b>ver conexiones de red</b>: para la transmisión y descarga de sonido
+• <b>acceso total a la red</b>: para comunicarse con los servidores de Noice, la transmisión de sonido y la descarga
+• <b>ejecutar al inicio</b>: para asegurar que las Alarmas persisten a través de los reinicios del dispositivo.
+• <b>evitar que el dispositivo se duerma</b>: para mantener la CPU del dispositivo despierta y proporcionar una reproducción ininterrumpida cuando la pantalla se apaga.
+• <b>instalar accesos directos</b>: para añadir accesos directos preestablecidos a la pantalla de inicio
+• <b>ejecutar servicio en primer plano</b>: para reproducción continua cuando la aplicación está en segundo plano
 
 Noice es un software de código abierto.
 https://github.com/trynoice/android-app

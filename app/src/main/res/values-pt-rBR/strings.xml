@@ -177,7 +177,7 @@
     <string name="sign_in">Entrar</string>
     <string name="benefits">Benefícios</string>
     <string name="paid_using">Pago usando %1$s</string>
-    <string name="has_premium_segments">Este som tem componentes premium.</string>
+    <string name="has_premium_segments">Este som oferece variantes adicionais com o Noice Premium.</string>
     <string name="subscription_purchases_load_error">Uh-oh! Não foi possível buscar seu histórico de compras de assinatura. %1$s</string>
     <string name="audio_quality_medium">Média (192 kbps)</string>
     <string name="sign_up_email_sent">Enviamos um link de login por e-mail para \"%1$s\".</string>
@@ -194,7 +194,7 @@
     <string name="subscription_payment_refunded">Cancelamos esta compra e iniciamos um reembolso para ela.</string>
     <string name="media_sources">Fontes de mídias</string>
     <string name="signing_out">Desconectando</string>
-    <string name="monthly_price">%1$s/mês</string>
+    <string name="monthly_price">%1$s por mês</string>
     <string name="user_already_subscribed">Você já é subscrito.</string>
     <string name="subscription_payment_complete">Obrigado por se inscrever no Noice Premium. Sua assinatura agora está ativa.</string>
     <string name="cancel_subscription">Cancelar subscrição</string>
@@ -214,7 +214,7 @@
     <string name="plans">Planos</string>
     <string name="looping_sound">Este som se repete sem interrupção.</string>
     <string name="library_load_error">Ops! Não foi possível buscar a biblioteca de sons. %1$s</string>
-    <string name="audio_quality_summary">A máxima qualidade de áudio para streaming. Médio, Alto e Ultra só funcionam quando você está inscrito.</string>
+    <string name="audio_quality_summary">A máxima qualidade de áudio para streaming. Médio, Alto e Ultra só funcionam se você tiver uma assinatura Noice Premium.</string>
     <string name="stopping">Parando</string>
     <string name="view_subscription_plans">Ver planos</string>
     <string name="welcome_back">Bem vindo de volta!</string>
@@ -234,7 +234,7 @@
     <string name="sign_in_token_error">O link de login parece ser inválido. Pode ter expirado. Por favor, tente novamente!</string>
     <string name="sign_in_sucessful">Conectado com sucesso!</string>
     <string name="cont">Continuar</string>
-    <string name="delete_account_confirmation">Ao excluir sua conta, você perderá imediatamente o acesso ao seu perfil. Se você tiver uma assinatura em andamento, ela será cancelada. Observe que pode demorar um pouco para apagar completamente seus dados de nossos servidores.</string>
+    <string name="delete_account_confirmation">Você perderá acesso imediatamente à sua conta ao deletá-la. Se você tiver uma assinatura do Noice Premium em andamento, ela será cancelada. Se você mudar de ideia, você pode restaurar sua conta fazendo login novamente em até 7 dias após a solicitação. Após este período nós removeremos todos os dados de sua conta de nossos servidores.</string>
     <string name="deleting_account">Excluindo conta</string>
     <string name="duplicate_email_error">O e-mail inserido está associado a outra conta.</string>
     <string name="yearly">Anual</string>
@@ -254,6 +254,7 @@
     <string name="privacy_policy">Política de Privacidade</string>
     <plurals name="n_months">
         <item quantity="one">%1$d mes</item>
+        <item quantity="many">%1$d meses</item>
         <item quantity="other">%1$d meses</item>
     </plurals>
     <string name="welcome">Seja Bem vindo!</string>
@@ -275,4 +276,32 @@
     <string name="third_party_attributions">Atribuições de terceiros</string>
     <string name="tags_load_error">Oh não! Não foi possível carregar palavras-chave adequadas. %1$s Por favor, tente novamente!</string>
     <string name="oss_licenses">Licenças de software de código aberto</string>
+    <plurals name="n_days">
+        <item quantity="one">%1$d dia</item>
+        <item quantity="many">%1$d dias</item>
+        <item quantity="other">%1$d dias</item>
+    </plurals>
+    <string name="benefit_3">Sons longos com mais amostras</string>
+    <string name="use_material_you_colors">Usar cores \"Material You\"</string>
+    <string name="download_sound">Baixar som</string>
+    <string name="notification_channel_sound_downloads__description">Notificações de progresso para download de sons.</string>
+    <string name="notification_channel_sound_downloads__name">Downloads de Sons</string>
+    <string name="play_sound_before_adjusting_volume">Você precisa tocar este som antes de ajustar seu volume.</string>
+    <string name="use_material_you_colors_summary">Usar a paleta de cores \"Material You\" do sistema Android</string>
+    <string name="stripe_customer_portal_error">Ops! Não pudemos abrir o portal de pagamento. %1$s Por favor, tente novamente!</string>
+    <string name="showing_localised_prices">Preços convertidos de [INR](https://en.wikipedia.org/wiki/Indian_rupee). As cotações podem variar ligeiramente.</string>
+    <string name="checking_sound_downloads">Verificando sons baixados</string>
+    <string name="remove_all_sound_downloads_confirmation">Isto removerá todos os sons baixados para uso offline. Deseja prosseguir\?</string>
+    <string name="remove_all_sound_downloads">Remover todos os sons baixados</string>
+    <string name="sound_scheduled_for_download">Preparando para baixar %1$s.</string>
+    <string name="sound_download_scheduled_for_removal">Preparando para remover %1$s dos seus sons baixados.</string>
+    <string name="sound_library_updated">Biblioteca de Sons Atualizada</string>
+    <string name="sound_library_updated_message">Nós fizemos algumas mudanças na biblioteca de sons. Gostaria de ver as notas de atualização\?</string>
+    <string name="review">Avaliação</string>
+    <string name="benefit_4">%1$d sons adicionais</string>
+    <string name="sound_is_premium">Este som está disponível com o Noice Premium.</string>
+    <string name="trial_period">Período de teste: %1$s</string>
+    <string name="sound_downloads_scheduled_for_removal">Todos os sons baixados foram programados para remoção com sucesso.</string>
+    <string name="remove_sound_download">Remover %1$s</string>
+    <string name="remove_sound_download_confirmation">Tem certeza que deseja remover um som baixado para uso offline\?</string>
 </resources>

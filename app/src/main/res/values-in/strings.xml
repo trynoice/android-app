@@ -272,4 +272,9 @@
     <string name="notification_channel_sound_downloads__name">Unduhan Suara</string>
     <string name="sound_downloads_scheduled_for_removal">Semua unduhan suara telah berhasil dijadwalkan untuk penghilangan.</string>
     <string name="trial_period">Periode Percobaan: %1$s</string>
+    <string name="audio_quality_ultra">Ultra (320 kbps)</string>
+    <string name="preset_url_invalid">URL tidak valid!</string>
+    <string name="keywords">Kata kunci</string>
+    <string name="tags_load_error">Oh tidak! Kami tidak dapat membuka musik tersebut. %1$s Coba lagi!</string>
+    <string name="bi_yearly">Dua tahunan</string>
 </resources>

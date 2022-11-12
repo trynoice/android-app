@@ -120,7 +120,7 @@
     <string name="retry">Riprova</string>
     <string name="open_mailbox">Apri la casella di posta</string>
     <string name="cont">Continua</string>
-    <string name="delete_account_confirmation">Cancellando il tuo account, perderai immediatamente l\'accesso al tuo profilo. Se hai un abbonamento in corso, verrà cancellato. Si prega di notare che potrebbe volerci un po\' per cancellare completamente i dati dai nostri server.</string>
+    <string name="delete_account_confirmation">Perderai immediatamente accesso al tuo account alla cancellazione. Se hai un abbonamento in corso di Noice Premium, smetteremo di farvelo pagare . Se cambi idea, puoi ripristinare il tuo account accedendo di nuovo 7 giorni prima dopo la cancellazione. Dopo questo periodo, cancelleremo permanentemente i dati del tuo account dai nostri server.</string>
     <string name="random_preset_description">È probabile che la preimpostazione generata contenga suoni con parole chiave scelte. Inoltre, le preimpostazioni intense tenteranno di riprodurre più suoni contemporaneamente.</string>
     <string name="sound_fade_out_duration_summary">Durata di tempo per sfumatura suono (in secondi)</string>
     <string name="network_error">La rete è irraggiungibile.</string>
@@ -178,6 +178,7 @@
     <string name="yearly">Annuale</string>
     <plurals name="n_months">
         <item quantity="one">%1$d mese</item>
+        <item quantity="many">%1$d mesi</item>
         <item quantity="other">%1$d mesi</item>
     </plurals>
     <string name="benefits">Benefici</string>
@@ -204,7 +205,7 @@
     <string name="faqs">Domande frequenti</string>
     <string name="made_in_india">Fatto con ❤ in India</string>
     <string name="sound_info">Di più su questo suono</string>
-    <string name="has_premium_segments">Questo suono ha componenti premium.</string>
+    <string name="has_premium_segments">Questo suono offre ulteriori varianti con Noice Premium.</string>
     <string name="looping_sound">Questo suono si ripete senza interruzioni.</string>
     <string name="non_looping_sound">Questo suono contiene delle pause.</string>
     <string name="media_sources">Fonti multimediali</string>
@@ -233,7 +234,7 @@
     <string name="support_development__donate_description">Se non hai comprato l\'abbonamento premium, è possibile effettuare un pagamento una tantum. Ci aiuterà a sostenere lo sviluppo delle funzionalità gratuite e a mantenerle senza pubblicità per sempre.</string>
     <string name="invalid_name">Il nome inserito non è valido!</string>
     <string name="subscription_payment_pending">Il pagamento è in attesa per questo acquisto.</string>
-    <string name="audio_quality_summary">La massima qualità audio per lo streaming. Media, Alta e Ultra funzionano solo quando sei abbonato.</string>
+    <string name="audio_quality_summary">La massima qualità audio per lo streaming. Media, Alta e Ultra funzionano solo se sei abbonato a Noice Premium.</string>
     <string name="invalid_gift_card_code">Il codice della carta regalo inserito non è valido!</string>
     <string name="gift_card_load_error">Oops! Non siamo riusciti a recuperare la carta regalo. %1$s</string>
     <string name="gift_card_already_redeemed">La carta regalo associata al codice inserito è già stata riscattata.</string>
@@ -253,4 +254,29 @@
     <string name="showing_localised_prices">Prezzi convertiti da [INR](https://en.wikipedia.org/wiki/Indian_rupee). I prezzi effettivi possono variare leggermente.</string>
     <string name="stripe_customer_portal_error">Ops! Non è stato possibile aprire il portale di fatturazione. %1$s Si prega di riprovare!</string>
     <string name="use_material_you_colors">Usa i colori Material You</string>
+    <string name="use_material_you_colors_summary">Eredita la palette di colori Material You dal sistema Android</string>
+    <string name="download_sound">Scarica Suono</string>
+    <string name="benefit_3">Suoni più lunghi con più campioni</string>
+    <string name="notification_channel_sound_downloads__description">Notifica di avanzamento legata al download del suono.</string>
+    <string name="notification_channel_sound_downloads__name">Download Suoni</string>
+    <string name="remove_all_sound_downloads">Rimuovi tutti i download dei suoni</string>
+    <string name="checking_sound_downloads">Controllando i download dei suoni</string>
+    <string name="sound_downloads_scheduled_for_removal">Tutti i download dei suoni sono stati programmati per la rimozione con successo.</string>
+    <string name="remove_sound_download">Rimuovi %1$s</string>
+    <string name="remove_all_sound_downloads_confirmation">Rimuoverà tutti i suoni scaricati per la riproduzione offline. Vuoi procedere\?</string>
+    <string name="sound_download_scheduled_for_removal">Pianificando %1$s per la rimozione dai suoni scaricati.</string>
+    <string name="remove_sound_download_confirmation">Confermi di voler rimuovere un suono scaricato per la riproduzione offline\?</string>
+    <string name="sound_scheduled_for_download">Pianificando %1$s per il download.</string>
+    <string name="play_sound_before_adjusting_volume">Devi riprodurre questo suono prima di poter aggiustare il volume.</string>
+    <string name="sound_library_updated_message">Abbiamo fatto alcune modifiche alla libreria dei suoni. Vuoi revisionare le note di rilascio\?</string>
+    <string name="review">Revisita</string>
+    <string name="sound_library_updated">Libreria dei Suoni Aggiornata</string>
+    <string name="benefit_4">%1$d suoni aggiuntivi</string>
+    <string name="sound_is_premium">Questo suono è disponibile con Noice Premium.</string>
+    <string name="trial_period">Periodo di Prova: %1$s</string>
+    <plurals name="n_days">
+        <item quantity="one">%1$d giorno</item>
+        <item quantity="many">%1$d giorni</item>
+        <item quantity="other">%1$d giorni</item>
+    </plurals>
 </resources>
