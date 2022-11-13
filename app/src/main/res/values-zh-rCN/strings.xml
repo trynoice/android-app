@@ -31,7 +31,7 @@
     <string name="presets_as_home_screen_summary">在应用启动时显示预设（需要重启应用）</string>
     <string name="pinned_shortcuts_not_supported">你的默认启动器不支持添加快捷方式。</string>
     <string name="rename">重命名</string>
-    <string name="preset_info__description">你还没有创建任何预设。要创建预设，请进入库并播放声音。然后点击屏幕下角出现的 \"保存 \"按钮。</string>
+    <string name="preset_info__description">播放声音并使用库中的“保存”按钮来创建新预设。</string>
     <string name="preset_does_not_exist">预设不存在。它可能已被删除！</string>
     <string name="preset_deleted">预设已删除！</string>
     <string name="preset_delete_confirmation">确认删除 %s？</string>
@@ -270,4 +270,8 @@
     <string name="sound_downloads_scheduled_for_removal">已成功计划移除所有音频下载。</string>
     <string name="remove_sound_download_confirmation">确认移除一段可用于离线播放的音频吗？</string>
     <string name="gift_card_load_error">糟糕！我们无法获取礼品卡。%1$s</string>
+    <string name="no_alarms_description">轻按“+”按钮新增闹钟！</string>
+    <string name="alarm_permission_rationale_description">我们需要额外权限才能在你的设备上设定闹钟。
+\n
+\n请在您设备的系统设置中找到 Noice 应用详情，并开启其“闹钟和提醒”权限。</string>
 </resources>
