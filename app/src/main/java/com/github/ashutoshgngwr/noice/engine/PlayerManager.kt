@@ -159,9 +159,10 @@ class PlayerManager(
   fun resume() {
     stopOnIdleJob?.cancel()
     if (audioFocusManager.hasFocus()) {
+      val isManagerStopping = aggregatePlaybackState() == PlaybackState.STOPPING
       players.forEach { (id, player) ->
-        // do not resume 'STOPPING' players.
-        if (playerStates[id]?.playbackState != PlaybackState.STOPPING) {
+        // do not resume 'STOPPING' players if the manager is not stopping.
+        if (isManagerStopping || playerStates[id]?.playbackState != PlaybackState.STOPPING) {
           player.play()
         }
       }
