@@ -11,9 +11,7 @@ import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.model.PresetV0
 import com.github.ashutoshgngwr.noice.model.PresetV1
-import com.github.ashutoshgngwr.noice.models.SoundInfo
 import com.github.ashutoshgngwr.noice.models.SoundTag
-import com.github.ashutoshgngwr.noice.repository.PresetRepository.Companion.PREFERENCE_KEY
 import com.github.ashutoshgngwr.noice.repository.errors.DuplicatePresetError
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.repository.errors.PresetNotFoundError
@@ -31,11 +29,12 @@ import java.io.OutputStreamWriter
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.max
 import kotlin.random.Random
 
 /**
  * [PresetRepository] implements the data access layer for [Preset]. It stores all its data in a
- * shared preference with [PREFERENCE_KEY].
+ * shared preference with [PresetRepository.PRESETS_KEY].
  */
 @Singleton
 class PresetRepository @Inject constructor(
@@ -47,8 +46,20 @@ class PresetRepository @Inject constructor(
   private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
   init {
-    if (prefs.getString(PREFERENCE_KEY, null).isNullOrBlank()) {
-      prefs.edit { putString(PREFERENCE_KEY, DEFAULT_PRESETS) }
+    val syncedUntil = prefs.getInt(
+      DEFAULT_PRESETS_SYNC_VERSION_KEY,
+      if (prefs.contains(PRESETS_KEY)) 0 else -1,
+    )
+
+    DEFAULT_PRESETS.filterKeys { it > syncedUntil }.forEach { (syncVersion, defaultPresets) ->
+      edit { presets ->
+        gson.fromJson<List<Preset>>(defaultPresets, PRESET_LIST_TYPE)
+          .also { presets.addAll(it) }
+      }
+
+      // DEFAULT_PRESETS map provides no key order guarantees.
+      max(syncVersion, prefs.getInt(DEFAULT_PRESETS_SYNC_VERSION_KEY, -1))
+        .also { prefs.edit { putInt(DEFAULT_PRESETS_SYNC_VERSION_KEY, it) } }
     }
 
     migrate()
@@ -94,7 +105,7 @@ class PresetRepository @Inject constructor(
    * Lists all [Preset]s present in the persistent storage.
    */
   fun list(): List<Preset> {
-    return gson.fromJson(prefs.getString(PREFERENCE_KEY, "[]"), PRESET_LIST_TYPE)
+    return gson.fromJson(prefs.getString(PRESETS_KEY, "[]"), PRESET_LIST_TYPE)
   }
 
   /**
@@ -102,7 +113,7 @@ class PresetRepository @Inject constructor(
    * updated.
    */
   fun listFlow(): Flow<List<Preset>> {
-    return prefs.keyFlow(PREFERENCE_KEY).map { list() }
+    return prefs.keyFlow(PRESETS_KEY).map { list() }
   }
 
   /**
@@ -123,7 +134,7 @@ class PresetRepository @Inject constructor(
    */
   fun generate(tags: Set<SoundTag>, soundCount: Int): Flow<Resource<Preset>> {
     return soundRepository.listInfo()
-      .map<Resource<List<SoundInfo>>, Resource<Preset>> { r ->
+      .map { r ->
         when {
           r is Resource.Loading -> Resource.Loading(null)
           r.data != null -> {
@@ -148,8 +159,8 @@ class PresetRepository @Inject constructor(
   @Throws(JsonIOException::class)
   fun exportTo(stream: OutputStream) {
     val data = mapOf(
-      EXPORT_VERSION_KEY to PREFERENCE_KEY,
-      EXPORT_DATA_KEY to prefs.getString(PREFERENCE_KEY, "[]")
+      EXPORT_VERSION_KEY to PRESETS_KEY,
+      EXPORT_DATA_KEY to prefs.getString(PRESETS_KEY, "[]")
     )
 
     OutputStreamWriter(stream).use { gson.toJson(data, it) }
@@ -207,15 +218,16 @@ class PresetRepository @Inject constructor(
   }
 
   private fun commit(presets: List<Preset>) {
-    prefs.edit { putString(PREFERENCE_KEY, gson.toJson(presets)) }
+    prefs.edit { putString(PRESETS_KEY, gson.toJson(presets)) }
   }
 
   private inline fun edit(block: (MutableList<Preset>) -> Unit) {
     synchronized(prefs) {
-      val presets: MutableList<Preset> = prefs.getString(PREFERENCE_KEY, "[]")
+      val presets: MutableList<Preset> = prefs.getString(PRESETS_KEY, "[]")
         .let { gson.fromJson(it, PRESET_LIST_TYPE) }
 
       block.invoke(presets)
+      presets.sortBy { it.name.lowercase() }
       commit(presets)
     }
   }
@@ -243,13 +255,13 @@ class PresetRepository @Inject constructor(
    */
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun migrateToV1() = synchronized(prefs) {
-    val presetsV0 = prefs.getString(PREF_V0, "[]")
+    val presetsV0 = prefs.getString(PRESETS_V0_KEY, "[]")
       .let { gson.fromJson<List<PresetV0>>(it, GSON_TYPE_V0) }
     if (presetsV0.isNullOrEmpty()) {
       return
     }
 
-    val presetsV1 = prefs.getString(PREF_V1, "[]")
+    val presetsV1 = prefs.getString(PRESETS_V1_KEY, "[]")
       .let { gson.fromJson<MutableList<PresetV1>>(it, GSON_TYPE_V1) }
     presetsV0.forEach { presetV0 ->
       val presetV1 = presetV0.toPresetV1()
@@ -260,8 +272,8 @@ class PresetRepository @Inject constructor(
     }
 
     prefs.edit {
-      remove(PREF_V0)
-      putString(PREF_V1, gson.toJson(presetsV1))
+      remove(PRESETS_V0_KEY)
+      putString(PRESETS_V1_KEY, gson.toJson(presetsV1))
     }
   }
 
@@ -272,13 +284,13 @@ class PresetRepository @Inject constructor(
    */
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun migrateToV2() = synchronized(prefs) {
-    val presetsV1 = prefs.getString(PREF_V1, "[]")
+    val presetsV1 = prefs.getString(PRESETS_V1_KEY, "[]")
       .let { gson.fromJson<List<PresetV1>>(it, GSON_TYPE_V1) }
     if (presetsV1.isNullOrEmpty()) {
       return
     }
 
-    val presetsV2 = prefs.getString(PREF_V2, "[]")
+    val presetsV2 = prefs.getString(PRESETS_V2_KEY, "[]")
       .let { gson.fromJson<MutableList<Preset>>(it, GSON_TYPE_V2) }
     presetsV1.forEach { presetV1 ->
       val presetV2 = presetV1.toPresetV2()
@@ -288,19 +300,21 @@ class PresetRepository @Inject constructor(
       }
     }
 
-    prefs.edit {
-      remove(PREF_V1)
-      putString(PREF_V2, gson.toJson(presetsV2))
+    prefs.edit { remove(PRESETS_V1_KEY) }
+    edit { presets ->
+      presets.clear()
+      presets.addAll(presetsV2)
     }
   }
 
   companion object {
-    private const val PREF_V0 = "presets"
-    private const val PREF_V1 = "presets.v1"
-    private const val PREF_V2 = "presets.v2"
+    private const val PRESETS_V0_KEY = "presets"
+    private const val PRESETS_V1_KEY = "presets.v1"
+    private const val PRESETS_V2_KEY = "presets.v2"
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val PREFERENCE_KEY = PREF_V2
+    const val PRESETS_KEY = PRESETS_V2_KEY
+    private const val DEFAULT_PRESETS_SYNC_VERSION_KEY = "defaultPresetsSyncVersion"
 
     private val GSON_TYPE_V0 = TypeToken.getParameterized(List::class.java, PresetV0::class.java)
       .type
@@ -319,71 +333,118 @@ class PresetRepository @Inject constructor(
 
     private const val URI_PARAM_NAME = "n"
     private const val URI_PARAM_PLAYER_STATES = "ps"
-    private const val DEFAULT_PRESETS = """[{
-      "id": "808feaed-f4ce-4d1e-9179-ae7aec31180e",
-      "name": "Thunderstorm by @markwmuller",
-      "playerStates": [
-        {
-          "soundId": "rain",
-          "volume": 20
-        },
-        {
-          "soundId": "thunder",
-          "volume": 20
-        }
-      ]
-    },
-    {
-      "id": "13006e01-9413-45d7-bffc-dc577b077d67",
-      "name": "Beach by @eMPee584",
-      "playerStates": [
-        {
-          "soundId": "crickets",
-          "volume": 6
-        },
-        {
-          "soundId": "seagulls",
-          "volume": 6
-        },
-        {
-          "soundId": "seashore",
-          "volume": 20
-        },
-        {
-          "soundId": "soft_wind",
-          "volume": 6
-        },
-        {
-          "soundId": "wind_through_palm_trees",
-          "volume": 15
-        }
-      ]
-    },
-    {
-      "id": "b76ac285-1265-472c-bcdc-aecba3a28fa2",
-      "name": "Camping by @ashutoshgngwr",
-      "playerStates": [
-        {
-          "soundId": "campfire",
-          "volume": 22
-        },
-        {
-          "soundId": "night",
-          "volume": 6
-        },
-        {
-          "soundId": "quiet_conversations",
-          "volume": 5
-        },
-        {
-          "soundId": "soft_wind",
-          "volume": 8
-        },
-        {
-          "soundId": "wolves",
-          "volume": 3
-        }
-      ]
-    }]"""
+
+    /**
+     * A versioned map of default presets such that presets added in later versions can be added to
+     * an existing user's saved presets without recreating the ones that user had already deleted.
+     */
+    private val DEFAULT_PRESETS = mapOf(
+      0 to """
+        [
+          {
+            "id": "808feaed-f4ce-4d1e-9179-ae7aec31180e",
+            "name": "Thunderstorm by @markwmuller",
+            "playerStates": [
+              {
+                "soundId": "rain",
+                "volume": 20
+              },
+              {
+                "soundId": "thunder",
+                "volume": 20
+              }
+            ]
+          },
+          {
+            "id": "13006e01-9413-45d7-bffc-dc577b077d67",
+            "name": "Beach by @eMPee584",
+            "playerStates": [
+              {
+                "soundId": "crickets",
+                "volume": 6
+              },
+              {
+                "soundId": "seagulls",
+                "volume": 6
+              },
+              {
+                "soundId": "seashore",
+                "volume": 20
+              },
+              {
+                "soundId": "soft_wind",
+                "volume": 6
+              },
+              {
+                "soundId": "wind_through_palm_trees",
+                "volume": 15
+              }
+            ]
+          },
+          {
+            "id": "b76ac285-1265-472c-bcdc-aecba3a28fa2",
+            "name": "Camping by @ashutoshgngwr",
+            "playerStates": [
+              {
+                "soundId": "campfire",
+                "volume": 22
+              },
+              {
+                "soundId": "night",
+                "volume": 6
+              },
+              {
+                "soundId": "quiet_conversations",
+                "volume": 5
+              },
+              {
+                "soundId": "soft_wind",
+                "volume": 8
+              },
+              {
+                "soundId": "wolves",
+                "volume": 3
+              }
+            ]
+          }
+        ]""",
+      1 to """
+        [
+          {
+            "id": "b6eb323d-e146-4690-a1a8-b8d6802001b3",
+            "name": "Womb Simulator by @lrq3000",
+            "playerStates": [
+              {
+                "soundId": "brownian_noise",
+                "volume": 25
+              },
+              {
+                "soundId": "rain",
+                "volume": 25
+              },
+              {
+                "soundId": "seashore",
+                "volume": 12
+              },
+              {
+                "soundId": "soft_wind",
+                "volume": 25
+              },
+              {
+                "soundId": "train",
+                "volume": 18
+              },
+              {
+                "soundId": "water_stream",
+                "volume": 8
+              },
+              {
+                "soundId": "wind_through_palm_trees",
+                "volume": 13
+              }
+            ]
+          }
+        ]""",
+    )
   }
 }
