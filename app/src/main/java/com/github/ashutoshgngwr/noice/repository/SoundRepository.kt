@@ -203,74 +203,77 @@ class SoundRepository @Inject constructor(
     }
   }
 
-  private suspend fun loadLibraryManifestInCacheStore(): Unit = appDb.withTransaction {
+  private suspend fun loadLibraryManifestInCacheStore() {
     val manifest = apiClient.cdn().libraryManifest()
     val groups = manifest.groups.associate { it.id to it.toRoomDto() }
     val tags = manifest.tags.toRoomDto()
-    appDb.sounds().saveGroups(groups.values.toList())
-    appDb.sounds().saveTags(tags)
 
-    manifest.sounds.forEach { apiSound ->
-      appDb.sounds().saveMetadata(
-        SoundMetadataDto(
-          id = apiSound.id,
-          groupId = apiSound.groupId,
-          name = apiSound.name,
-          iconSvg = Uri.decode(apiSound.icon.removePrefix("data:image/svg+xml,")),
-          maxSilence = apiSound.maxSilence,
-          isPremium = apiSound.segments.none { it.isFree },
-          hasPremiumSegments = apiSound.segments.any { !it.isFree }
-        )
-      )
+    appDb.withTransaction {
+      appDb.sounds().saveGroups(groups.values.toList())
+      appDb.sounds().saveTags(tags)
 
-      val segmentsBasePath = "${manifest.segmentsBasePath}/${apiSound.id}"
-      for (apiSegment in apiSound.segments) {
-        appDb.sounds().saveSegment(
-          SoundSegmentDto(
-            soundId = apiSound.id,
-            name = apiSegment.name,
-            basePath = "${segmentsBasePath}/${apiSegment.name}",
-            isFree = apiSegment.isFree,
-            isBridgeSegment = false,
-            from = null,
-            to = null,
+      manifest.sounds.forEach { apiSound ->
+        appDb.sounds().saveMetadata(
+          SoundMetadataDto(
+            id = apiSound.id,
+            groupId = apiSound.groupId,
+            name = apiSound.name,
+            iconSvg = Uri.decode(apiSound.icon.removePrefix("data:image/svg+xml,")),
+            maxSilence = apiSound.maxSilence,
+            isPremium = apiSound.segments.none { it.isFree },
+            hasPremiumSegments = apiSound.segments.any { !it.isFree }
           )
         )
 
-        if (apiSound.maxSilence > 0) {
-          continue
-        }
-
-        for (toApiSegment in apiSound.segments) {
-          val bridgeName = "${apiSegment.name}_${toApiSegment.name}"
+        val segmentsBasePath = "${manifest.segmentsBasePath}/${apiSound.id}"
+        for (apiSegment in apiSound.segments) {
           appDb.sounds().saveSegment(
             SoundSegmentDto(
               soundId = apiSound.id,
-              name = bridgeName,
-              isFree = apiSegment.isFree && toApiSegment.isFree,
-              isBridgeSegment = true,
-              from = apiSegment.name,
-              to = toApiSegment.name,
-              basePath = "${segmentsBasePath}/${bridgeName}",
+              name = apiSegment.name,
+              basePath = "${segmentsBasePath}/${apiSegment.name}",
+              isFree = apiSegment.isFree,
+              isBridgeSegment = false,
+              from = null,
+              to = null,
             )
           )
-        }
 
-        apiSound.tags.map { SoundTagCrossRef(apiSound.id, it) }
-          .also { appDb.sounds().saveSoundTagCrossRefs(it) }
+          if (apiSound.maxSilence > 0) {
+            continue
+          }
 
-        appDb.sounds().saveSources(
-          apiSound.sources.map { apiSource ->
-            SoundSourceDto(
-              soundId = apiSound.id,
-              name = apiSource.name,
-              url = apiSource.url,
-              license = apiSource.license,
-              authorName = apiSource.author?.name,
-              authorUrl = apiSource.author?.url,
+          for (toApiSegment in apiSound.segments) {
+            val bridgeName = "${apiSegment.name}_${toApiSegment.name}"
+            appDb.sounds().saveSegment(
+              SoundSegmentDto(
+                soundId = apiSound.id,
+                name = bridgeName,
+                isFree = apiSegment.isFree && toApiSegment.isFree,
+                isBridgeSegment = true,
+                from = apiSegment.name,
+                to = toApiSegment.name,
+                basePath = "${segmentsBasePath}/${bridgeName}",
+              )
             )
           }
-        )
+
+          apiSound.tags.map { SoundTagCrossRef(apiSound.id, it) }
+            .also { appDb.sounds().saveSoundTagCrossRefs(it) }
+
+          appDb.sounds().saveSources(
+            apiSound.sources.map { apiSource ->
+              SoundSourceDto(
+                soundId = apiSound.id,
+                name = apiSource.name,
+                url = apiSource.url,
+                license = apiSource.license,
+                authorName = apiSource.author?.name,
+                authorUrl = apiSource.author?.url,
+              )
+            }
+          )
+        }
       }
     }
   }
