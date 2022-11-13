@@ -43,6 +43,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.map
@@ -77,6 +78,7 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.addAlarmButton.setOnClickListener { startAddAlarmFlow() }
+    (binding.list.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
     binding.list.adapter = adapter
     adapter.addLoadStateListener { loadStates ->
       binding.emptyListIndicator.isVisible =
@@ -84,13 +86,7 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.alarmsPagingData.collect { pagingData ->
-        // prevent flicker when an item updates by temporarily disabling animations.
-        val animator = binding.list.itemAnimator as? SimpleItemAnimator
-        animator?.supportsChangeAnimations = false
-        adapter.submitData(pagingData)
-        animator?.supportsChangeAnimations = true
-      }
+      viewModel.alarmsPagingData.collectLatest(adapter::submitData)
     }
 
     viewLifecycleOwner.lifecycleScope.launch {

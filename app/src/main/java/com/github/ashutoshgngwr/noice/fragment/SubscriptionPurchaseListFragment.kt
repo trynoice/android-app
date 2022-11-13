@@ -44,7 +44,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import java.util.*
@@ -95,9 +94,7 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.purchasesData
-        .filterNotNull()
-        .collectLatest(adapter::submitData)
+      viewModel.purchasesData.collectLatest(adapter::submitData)
     }
 
     setFragmentResultListener(CancelSubscriptionFragment.RESULT_KEY) { _, bundle ->
@@ -144,7 +141,7 @@ class SubscriptionPurchaseListViewModel @Inject constructor(
   private val subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
-  internal val purchasesData = MutableStateFlow<PagingData<Subscription>?>(null)
+  internal val purchasesData = MutableStateFlow<PagingData<Subscription>>(PagingData.empty())
   private var currencyCode: String? = null
   private var pagerJob: Job? = null
 
