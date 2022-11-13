@@ -293,4 +293,20 @@
     <string name="benefit_4">%1$d sons supplémentaires</string>
     <string name="sound_is_premium">Ce son est disponible avec Noice Premium.</string>
     <string name="review">Consulter</string>
+    <string name="alarms">Alarmes</string>
+    <string name="add_alarm">Ajouter une alarme</string>
+    <string name="monday_initial">L</string>
+    <string name="wednesday_initial">Mer</string>
+    <string name="saturday_initial">S</string>
+    <string name="not_scheduled">Non programmé</string>
+    <string name="edit_label">Modifier le label</string>
+    <string name="no_alarms_description">Ajoute une nouvelle alarme en appuyant sur le bouton \"+\"!</string>
+    <string name="no_alarms">Aucune alarmes</string>
+    <string name="friday_initial">V</string>
+    <string name="sunday_initial">D</string>
+    <string name="tuesday_initial">Mar</string>
+    <string name="notification_channel_alarm_primary__name">Alarmes</string>
+    <string name="thursday_initial">J</string>
+    <string name="vibrate">Vibration</string>
+    <string name="alarm">Alarme</string>
 </resources>
