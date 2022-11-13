@@ -29,7 +29,6 @@ import java.io.OutputStreamWriter
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.math.max
 import kotlin.random.Random
 
 /**
@@ -46,22 +45,19 @@ class PresetRepository @Inject constructor(
   private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
   init {
-    val syncedUntil = prefs.getInt(
+    val syncFrom = 1 + prefs.getInt(
       DEFAULT_PRESETS_SYNC_VERSION_KEY,
       if (prefs.contains(PRESETS_KEY)) 0 else -1,
     )
 
-    DEFAULT_PRESETS.filterKeys { it > syncedUntil }.forEach { (syncVersion, defaultPresets) ->
+    DEFAULT_PRESETS.subList(syncFrom, DEFAULT_PRESETS.size).forEach { defaultPresets ->
       edit { presets ->
         gson.fromJson<List<Preset>>(defaultPresets, PRESET_LIST_TYPE)
           .also { presets.addAll(it) }
       }
-
-      // DEFAULT_PRESETS map provides no key order guarantees.
-      max(syncVersion, prefs.getInt(DEFAULT_PRESETS_SYNC_VERSION_KEY, -1))
-        .also { prefs.edit { putInt(DEFAULT_PRESETS_SYNC_VERSION_KEY, it) } }
     }
 
+    prefs.edit { putInt(DEFAULT_PRESETS_SYNC_VERSION_KEY, DEFAULT_PRESETS.size - 1) }
     migrate()
   }
 
@@ -338,113 +334,111 @@ class PresetRepository @Inject constructor(
      * A versioned map of default presets such that presets added in later versions can be added to
      * an existing user's saved presets without recreating the ones that user had already deleted.
      */
-    private val DEFAULT_PRESETS = mapOf(
-      0 to """
-        [
-          {
-            "id": "808feaed-f4ce-4d1e-9179-ae7aec31180e",
-            "name": "Thunderstorm by @markwmuller",
-            "playerStates": [
-              {
-                "soundId": "rain",
-                "volume": 20
-              },
-              {
-                "soundId": "thunder",
-                "volume": 20
-              }
-            ]
-          },
-          {
-            "id": "13006e01-9413-45d7-bffc-dc577b077d67",
-            "name": "Beach by @eMPee584",
-            "playerStates": [
-              {
-                "soundId": "crickets",
-                "volume": 6
-              },
-              {
-                "soundId": "seagulls",
-                "volume": 6
-              },
-              {
-                "soundId": "seashore",
-                "volume": 20
-              },
-              {
-                "soundId": "soft_wind",
-                "volume": 6
-              },
-              {
-                "soundId": "wind_through_palm_trees",
-                "volume": 15
-              }
-            ]
-          },
-          {
-            "id": "b76ac285-1265-472c-bcdc-aecba3a28fa2",
-            "name": "Camping by @ashutoshgngwr",
-            "playerStates": [
-              {
-                "soundId": "campfire",
-                "volume": 22
-              },
-              {
-                "soundId": "night",
-                "volume": 6
-              },
-              {
-                "soundId": "quiet_conversations",
-                "volume": 5
-              },
-              {
-                "soundId": "soft_wind",
-                "volume": 8
-              },
-              {
-                "soundId": "wolves",
-                "volume": 3
-              }
-            ]
-          }
-        ]""",
-      1 to """
-        [
-          {
-            "id": "b6eb323d-e146-4690-a1a8-b8d6802001b3",
-            "name": "Womb Simulator by @lrq3000",
-            "playerStates": [
-              {
-                "soundId": "brownian_noise",
-                "volume": 25
-              },
-              {
-                "soundId": "rain",
-                "volume": 25
-              },
-              {
-                "soundId": "seashore",
-                "volume": 12
-              },
-              {
-                "soundId": "soft_wind",
-                "volume": 25
-              },
-              {
-                "soundId": "train",
-                "volume": 18
-              },
-              {
-                "soundId": "water_stream",
-                "volume": 8
-              },
-              {
-                "soundId": "wind_through_palm_trees",
-                "volume": 13
-              }
-            ]
-          }
-        ]""",
+    private val DEFAULT_PRESETS = listOf(
+      """[
+        {
+          "id": "808feaed-f4ce-4d1e-9179-ae7aec31180e",
+          "name": "Thunderstorm by @markwmuller",
+          "playerStates": [
+            {
+              "soundId": "rain",
+              "volume": 20
+            },
+            {
+              "soundId": "thunder",
+              "volume": 20
+            }
+          ]
+        },
+        {
+          "id": "13006e01-9413-45d7-bffc-dc577b077d67",
+          "name": "Beach by @eMPee584",
+          "playerStates": [
+            {
+              "soundId": "crickets",
+              "volume": 6
+            },
+            {
+              "soundId": "seagulls",
+              "volume": 6
+            },
+            {
+              "soundId": "seashore",
+              "volume": 20
+            },
+            {
+              "soundId": "soft_wind",
+              "volume": 6
+            },
+            {
+              "soundId": "wind_through_palm_trees",
+              "volume": 15
+            }
+          ]
+        },
+        {
+          "id": "b76ac285-1265-472c-bcdc-aecba3a28fa2",
+          "name": "Camping by @ashutoshgngwr",
+          "playerStates": [
+            {
+              "soundId": "campfire",
+              "volume": 22
+            },
+            {
+              "soundId": "night",
+              "volume": 6
+            },
+            {
+              "soundId": "quiet_conversations",
+              "volume": 5
+            },
+            {
+              "soundId": "soft_wind",
+              "volume": 8
+            },
+            {
+              "soundId": "wolves",
+              "volume": 3
+            }
+          ]
+        }
+      ]""",
+      """[
+        {
+          "id": "b6eb323d-e146-4690-a1a8-b8d6802001b3",
+          "name": "Womb Simulator by @lrq3000",
+          "playerStates": [
+            {
+              "soundId": "brownian_noise",
+              "volume": 25
+            },
+            {
+              "soundId": "rain",
+              "volume": 25
+            },
+            {
+              "soundId": "seashore",
+              "volume": 12
+            },
+            {
+              "soundId": "soft_wind",
+              "volume": 25
+            },
+            {
+              "soundId": "train",
+              "volume": 18
+            },
+            {
+              "soundId": "water_stream",
+              "volume": 8
+            },
+            {
+              "soundId": "wind_through_palm_trees",
+              "volume": 13
+            }
+          ]
+        }
+      ]""",
     )
   }
 }
