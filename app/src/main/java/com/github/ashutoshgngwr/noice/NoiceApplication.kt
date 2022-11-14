@@ -1,8 +1,10 @@
 package com.github.ashutoshgngwr.noice
 
 import android.app.Application
+import android.content.Intent
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
+import com.github.ashutoshgngwr.noice.receiver.AlarmInitReceiver
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.DynamicColorsOptions
@@ -24,6 +26,10 @@ class NoiceApplication : Application(), Configuration.Provider {
       .setPrecondition { _, _ -> settingsRepository.shouldUseMaterialYouColors() }
       .build()
       .also { DynamicColors.applyToActivitiesIfAvailable(this, it) }
+
+    Intent(this, AlarmInitReceiver::class.java)
+      .setAction(AlarmInitReceiver.ACTION_INIT)
+      .also { sendBroadcast(it) }
   }
 
   override fun getWorkManagerConfiguration(): Configuration {
