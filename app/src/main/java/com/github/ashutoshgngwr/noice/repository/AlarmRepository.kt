@@ -25,10 +25,11 @@ class AlarmRepository(
 ) {
 
   suspend fun save(alarm: Alarm) {
-    appDb.alarms().save(alarm.toRoomDto())
-    alarmManager.cancel(alarm)
-    if (alarm.isEnabled) {
-      alarmManager.setAlarmClock(alarm)
+    val alarmId = appDb.alarms().save(alarm.toRoomDto())
+    val saved = alarm.copy(id = alarmId.toInt())
+    alarmManager.cancel(saved)
+    if (saved.isEnabled) {
+      alarmManager.setAlarmClock(saved)
     }
   }
 

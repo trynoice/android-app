@@ -99,9 +99,10 @@ class AlarmRepositoryTest {
   fun saveAndDelete() = runTest {
     assertNull(shadowAlarmManager.peekNextScheduledAlarm())
 
-    repository.save(buildAlarm(id = 1, minuteOfDay = 120))
+    coEvery { alarmDaoMock.save(any()) } returns 1
+    repository.save(buildAlarm(id = 0, minuteOfDay = 120))
     coVerify(exactly = 1, timeout = 5000L) {
-      alarmDaoMock.save(buildAlarmDto(id = 1, minuteOfDay = 120))
+      alarmDaoMock.save(buildAlarmDto(id = 0, minuteOfDay = 120))
     }
 
     var nextAlarm = shadowAlarmManager.peekNextScheduledAlarm()
@@ -113,6 +114,10 @@ class AlarmRepositoryTest {
 
     // should cancel and update the registered system alarm
     repository.save(buildAlarm(id = 1, minuteOfDay = 240))
+    coVerify(exactly = 1, timeout = 5000L) {
+      alarmDaoMock.save(buildAlarmDto(id = 1, minuteOfDay = 240))
+    }
+
     assertEquals(1, shadowAlarmManager.scheduledAlarms.size)
     nextAlarm = shadowAlarmManager.peekNextScheduledAlarm()
     assertNotNull(nextAlarm)
