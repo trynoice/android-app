@@ -8,6 +8,8 @@ import android.content.Context
 import android.content.Intent
 import android.media.AudioAttributes
 import android.media.AudioManager
+import android.media.MediaPlayer
+import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
@@ -15,7 +17,6 @@ import android.os.VibrationAttributes
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
-import android.provider.Settings
 import android.text.format.DateUtils
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -28,7 +29,10 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.engine.AudioFocusManager
+import com.github.ashutoshgngwr.noice.engine.DefaultAudioFocusManager
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
+import com.github.ashutoshgngwr.noice.engine.PlayerManager
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.models.Alarm
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
@@ -44,7 +48,7 @@ import kotlin.random.Random
 import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
-class AlarmRingerService : LifecycleService() {
+class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
 
   @set:Inject
   internal lateinit var alarmRepository: AlarmRepository
@@ -61,6 +65,7 @@ class AlarmRingerService : LifecycleService() {
   @set:Inject
   internal lateinit var uiController: UiController
 
+  private var defaultRingtonePlayer: MediaPlayer? = null
   private var autoDismissJob: Job? = null
 
   private val notificationManager: NotificationManager by lazy { requireNotNull(getSystemService()) }
@@ -78,38 +83,30 @@ class AlarmRingerService : LifecycleService() {
       .apply { setReferenceCounted(false) }
   }
 
+  private val audioFocusManager: AudioFocusManager by lazy {
+    DefaultAudioFocusManager(this, PlayerManager.ALARM_AUDIO_ATTRIBUTES, this)
+  }
+
   override fun onCreate() {
     super.onCreate()
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
       Log.d(LOG_TAG, "onCreate: init notification channels")
       createNotificationChannel(
-        channelId = PRIMARY_CHANNEL_ID,
+        channelId = CHANNEL_ID_RINGER,
         importance = NotificationManager.IMPORTANCE_HIGH,
         nameResId = R.string.notification_channel_alarm_primary__name,
         descriptionResId = R.string.notification_channel_alarm_primary__description,
       )
 
       createNotificationChannel(
-        channelId = SECONDARY_CHANNEL_ID,
-        importance = NotificationManager.IMPORTANCE_HIGH,
-        nameResId = R.string.notification_channel_alarm_secondary__name,
-        descriptionResId = R.string.notification_channel_alarm_secondary__description,
-        soundUri = Settings.System.DEFAULT_ALARM_ALERT_URI,
-        audioAttributes = AudioAttributes.Builder()
-          .setUsage(AudioAttributes.USAGE_ALARM)
-          .setLegacyStreamType(AudioManager.STREAM_ALARM)
-          .build(),
-      )
-
-      createNotificationChannel(
-        channelId = PRIMING_CHANNEL_ID,
+        channelId = CHANNEL_ID_PRIMING,
         importance = NotificationManager.IMPORTANCE_LOW,
         nameResId = R.string.notification_channel_alarm_priming__name,
         descriptionResId = R.string.notification_channel_alarm_priming__description,
       )
 
       createNotificationChannel(
-        channelId = MISSED_CHANNEL_ID,
+        channelId = CHANNEL_ID_MISSED,
         importance = NotificationManager.IMPORTANCE_LOW,
         nameResId = R.string.notification_channel_missed_alarms__name,
         descriptionResId = R.string.notification_channel_missed_alarms__description,
@@ -139,22 +136,28 @@ class AlarmRingerService : LifecycleService() {
     return super.onStartCommand(intent, flags, startId)
   }
 
+  override fun onAudioFocusGained() {
+    defaultRingtonePlayer?.start()
+  }
+
+  override fun onAudioFocusLost(transient: Boolean) {
+    defaultRingtonePlayer?.pause()
+  }
+
   @RequiresApi(Build.VERSION_CODES.O)
   private fun createNotificationChannel(
     channelId: String,
     importance: Int,
     @StringRes nameResId: Int,
     @StringRes descriptionResId: Int,
-    soundUri: Uri? = null,
-    audioAttributes: AudioAttributes? = null,
   ) {
     NotificationChannel(channelId, getString(nameResId), importance)
       .apply {
         description = getString(descriptionResId)
         lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-        enableVibration(false)
         setShowBadge(false)
-        setSound(soundUri, audioAttributes)
+        enableVibration(false)
+        setSound(null, null)
       }
       .also { notificationManager.createNotificationChannel(it) }
   }
@@ -178,28 +181,23 @@ class AlarmRingerService : LifecycleService() {
       ?: presetRepository.generate(emptySet(), Random.nextInt(2, 6))
         .lastOrNull()?.data // or attempt to generate one
 
+    if (preset != null) {
+      Log.d(LOG_TAG, "startRinger: starting preset: $preset")
+      playbackController.setAudioUsage(AudioAttributesCompat.USAGE_ALARM)
+      playbackController.play(preset)
+    } else {
+      Log.d(LOG_TAG, "startRinger: starting default ringtone")
+      playDefaultRingtone()
+      buildPresetLoadFailedNotification(alarmTriggerTime)
+        .also { notificationManager.notify(NOTIFICATION_ID_PRIMING, it) }
+    }
+
     if (alarm.vibrate) {
       startVibrating()
     }
 
-    // if we couldn't get a preset to play, start the ringer with default alarm ringtone.
-    if (preset == null) {
-      Log.d(LOG_TAG, "startRinger: starting default ringtone")
-      ServiceCompat.stopForeground(this@AlarmRingerService, ServiceCompat.STOP_FOREGROUND_DETACH)
-      buildRingerNotification(SECONDARY_CHANNEL_ID, alarm, alarmTriggerTime)
-        .also { startForeground(NOTIFICATION_ID_ALARM, it) }
-
-      buildPresetLoadFailedNotification(alarmTriggerTime)
-        .also { notificationManager.notify(NOTIFICATION_ID_PRIMING, it) }
-    } else {
-      Log.d(LOG_TAG, "startRinger: starting preset: $preset")
-      ServiceCompat.stopForeground(this@AlarmRingerService, ServiceCompat.STOP_FOREGROUND_REMOVE)
-      buildRingerNotification(PRIMARY_CHANNEL_ID, alarm, alarmTriggerTime)
-        .also { startForeground(NOTIFICATION_ID_ALARM, it) }
-
-      playbackController.setAudioUsage(AudioAttributesCompat.USAGE_ALARM)
-      playbackController.play(preset)
-    }
+    ServiceCompat.stopForeground(this@AlarmRingerService, ServiceCompat.STOP_FOREGROUND_REMOVE)
+    startForeground(NOTIFICATION_ID_ALARM, buildRingerNotification(alarm, alarmTriggerTime))
 
     autoDismissJob?.cancel()
     autoDismissJob = lifecycleScope.launch {
@@ -213,7 +211,7 @@ class AlarmRingerService : LifecycleService() {
   }
 
   private fun buildLoadingNotification(contentText: String): Notification {
-    return NotificationCompat.Builder(this, PRIMING_CHANNEL_ID)
+    return NotificationCompat.Builder(this, CHANNEL_ID_PRIMING)
       .setSmallIcon(R.drawable.ic_baseline_alarm_24)
       .setContentTitle(getString(R.string.alarm))
       .setContentText(contentText)
@@ -245,12 +243,8 @@ class AlarmRingerService : LifecycleService() {
     }
   }
 
-  private fun buildRingerNotification(
-    channelId: String,
-    alarm: Alarm,
-    alarmTriggerTime: String,
-  ): Notification {
-    return NotificationCompat.Builder(this, channelId)
+  private fun buildRingerNotification(alarm: Alarm, alarmTriggerTime: String): Notification {
+    return NotificationCompat.Builder(this, CHANNEL_ID_RINGER)
       .setSmallIcon(R.drawable.ic_baseline_alarm_24)
       .setContentTitle(getString(R.string.alarm))
       .setContentText(alarmTriggerTime)
@@ -273,6 +267,8 @@ class AlarmRingerService : LifecycleService() {
       .setOngoing(true)
       .setPriority(NotificationCompat.PRIORITY_HIGH)
       .setCategory(NotificationCompat.CATEGORY_ALARM)
+      .setSound(null)
+      .setVibrate(null)
       .build()
   }
 
@@ -285,7 +281,7 @@ class AlarmRingerService : LifecycleService() {
   }
 
   private fun buildPresetLoadFailedNotification(alarmTriggerTime: String): Notification {
-    return NotificationCompat.Builder(this, PRIMING_CHANNEL_ID)
+    return NotificationCompat.Builder(this, CHANNEL_ID_PRIMING)
       .setSmallIcon(R.drawable.ic_baseline_alarm_24)
       .setContentTitle(getString(R.string.alarm))
       .setContentText(getString(R.string.alarm_ringer_preset_load_error))
@@ -298,16 +294,19 @@ class AlarmRingerService : LifecycleService() {
   private suspend fun dismiss(alarmId: Int, isSnoozed: Boolean) {
     Log.d(LOG_TAG, "dismiss: reporting alarm trigger")
     alarmRepository.reportTrigger(alarmId, isSnoozed)
+
     vibrator.cancel()
     playbackController.pause(true)
     playbackController.setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
+    audioFocusManager.abandonFocus()
+    defaultRingtonePlayer?.release()
 
     uiController.dismiss()
     stopService()
   }
 
   private fun buildMissedAlarmNotification(alarmTriggerTime: String): Notification {
-    return NotificationCompat.Builder(this, MISSED_CHANNEL_ID)
+    return NotificationCompat.Builder(this, CHANNEL_ID_MISSED)
       .setSmallIcon(R.drawable.ic_baseline_alarm_24)
       .setContentTitle(getString(R.string.alarm_missed))
       .setContentText(alarmTriggerTime)
@@ -322,6 +321,29 @@ class AlarmRingerService : LifecycleService() {
     stopSelf()
   }
 
+  private fun playDefaultRingtone() {
+    defaultRingtonePlayer?.release()
+    val ringtoneUri = getDefaultAlarmRingtoneUri() ?: return
+    defaultRingtonePlayer = MediaPlayer().apply {
+      isLooping = true
+      setDataSource(this@AlarmRingerService, ringtoneUri)
+      setAudioAttributes(
+        AudioAttributes.Builder()
+          .setUsage(AudioAttributes.USAGE_ALARM)
+          .setLegacyStreamType(AudioManager.STREAM_ALARM)
+          .build()
+      )
+      prepare()
+    }
+
+    audioFocusManager.requestFocus()
+  }
+
+  private fun getDefaultAlarmRingtoneUri(): Uri? {
+    return RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_ALARM)
+      ?: RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_RINGTONE)
+  }
+
   companion object {
     private const val LOG_TAG = "AlarmRingerService"
     private const val ACTION_RING = "ring"
@@ -329,10 +351,9 @@ class AlarmRingerService : LifecycleService() {
     private const val ACTION_DISMISS = "dismiss"
     private const val EXTRA_ALARM_ID = "alarmId"
 
-    private const val PRIMARY_CHANNEL_ID = "com.github.ashutoshgngwr.noice.alarms"
-    private const val SECONDARY_CHANNEL_ID = "com.github.ashutoshgngwr.noice.alarmsFallback"
-    private const val PRIMING_CHANNEL_ID = "com.github.ashutoshgngwr.noice.alarmPriming"
-    private const val MISSED_CHANNEL_ID = "com.github.ashutoshgngwr.noice.missedAlarms"
+    private const val CHANNEL_ID_RINGER = "com.github.ashutoshgngwr.noice.alarms"
+    private const val CHANNEL_ID_PRIMING = "com.github.ashutoshgngwr.noice.alarmPriming"
+    private const val CHANNEL_ID_MISSED = "com.github.ashutoshgngwr.noice.missedAlarms"
     private const val NOTIFICATION_ID_PRIMING = 0x3
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)

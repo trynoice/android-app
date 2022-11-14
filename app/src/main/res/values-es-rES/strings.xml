@@ -294,8 +294,6 @@
     <string name="edit_label">Editar la etiqueta</string>
     <string name="notification_channel_alarm_primary__name">Alarmas</string>
     <string name="notification_channel_alarm_primary__description">Notificaciones mostradas cuando se activa una alarma programada.</string>
-    <string name="notification_channel_alarm_secondary__name">Repetición de las alarmas</string>
-    <string name="notification_channel_alarm_secondary__description">Notificaciones que se muestran cuando se activa una alarma programada y su preajuste seleccionado no se carga.</string>
     <string name="notification_channel_alarm_priming__name">Preparando las alarmas</string>
     <string name="notification_channel_alarm_priming__description">Notificaciones que se muestran cuando se prepara una alarma programada para activarse.</string>
     <string name="alarm">Alarma</string>
