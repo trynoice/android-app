@@ -301,7 +301,6 @@
     <string name="alarm_snooze_length_summary">अलार्म स्नूज़ करने के लिए मिनटों में समय अवधि</string>
     <string name="alarm_ringer_max_duration">रिमाइंडर अवधि</string>
     <string name="post_notifications_permission_rationale_title">नॉइस को सूचनाएं दिखाने की अनुमति दें</string>
-    <string name="notification_channel_alarm_secondary__name">अलार्म फ़ॉलबैक</string>
     <string name="alarms">अलार्म</string>
     <string name="no_alarms">कोई अलार्म नहीं</string>
     <string name="post_notifications_permission_rationale_description">शेड्यूल किए गए अलार्म की सूचनाएं दिखाने के लिए हमें अतिरिक्त अनुमति चाहिए। सूचनाओं के बिना, नॉइस अपने निर्धारित समय पर अलार्म नहीं बजा सकता।</string>
@@ -314,7 +313,6 @@
     <string name="friday_initial">शु</string>
     <string name="vibrate">कंपन</string>
     <string name="saturday_initial">श</string>
-    <string name="notification_channel_alarm_secondary__description">शेड्यूल किए गए अलार्म के सक्रिय होने और उसके चयनित प्रीसेट के लोड होने में विफल होने पर दिखाई गई सूचनाएं।</string>
     <string name="alarm_ringer_preset_load_error">इस अलार्म के लिए चयनित प्रीसेट लोड करने में विफल।</string>
     <string name="alarm_ringer_max_duration_summary">समय अवधि मिनटों में, जिसके बाद अलार्म रिमाइंडर स्वचालित रूप से मौन हो जाएगा</string>
     <string name="notification_channel_missed_alarms__name">छूटे हुए अलार्म</string>
