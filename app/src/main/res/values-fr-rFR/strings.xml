@@ -309,4 +309,15 @@
     <string name="thursday_initial">J</string>
     <string name="vibrate">Vibration</string>
     <string name="alarm">Alarme</string>
+    <string name="alarm_permission_rationale_title">Permettre à Noice de programmer des alarmes</string>
+    <string name="post_notifications_permission_rationale_title">Autoriser Noice à afficher les notifications</string>
+    <string name="proceed">Poursuivre</string>
+    <string name="add_label">Ajouter un label</string>
+    <string name="notification_channel_alarm_primary__description">Notifications affichées lorsqu\'une alarme programmée se déclenche.</string>
+    <string name="alarm_permission_rationale_description">Nous avons besoin d\'un accès supplémentaire pour programmer des alarmes sur votre appareil.
+\n
+\nVeuillez activer **Alarmes et rappels** pour Noice à partir des détails de son application dans les paramètres système de votre appareil.</string>
+    <string name="post_notifications_permission_rationale_description">Nous avons besoin d\'une autorisation supplémentaire pour afficher des notifications pour les alarmes programmées. Sans notifications, Noice ne peut pas faire sonner les alarmes à l\'heure prévue.</string>
+    <string name="alarm_post_notifications_permission_denied">Noice ne peut pas faire sonner les alarmes sans l\'autorisation d\'afficher les notifications !</string>
+    <string name="notification_channel_alarm_secondary__description">Notifications affichées lorsqu\'une alarme programmée se déclenche et que la présélection sélectionnée ne se charge pas.</string>
 </resources>
