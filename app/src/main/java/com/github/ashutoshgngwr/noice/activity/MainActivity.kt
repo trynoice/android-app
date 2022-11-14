@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.AlarmClock
 import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
@@ -195,37 +196,44 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
     }
 
     hasNewIntent = false
-    if (intent.hasExtra(EXTRA_NAV_DESTINATION)) {
-      navController.navigate(intent.getIntExtra(EXTRA_NAV_DESTINATION, 0))
-    } else if (Intent.ACTION_APPLICATION_PREFERENCES == intent.action) {
-      navController.navigate(R.id.settings)
-    }
+    val dataString = intent.dataString ?: ""
+    when {
+      intent.hasExtra(EXTRA_NAV_DESTINATION) -> {
+        navController.navigate(intent.getIntExtra(EXTRA_NAV_DESTINATION, 0))
+      }
 
-    val uri = intent.data
-    if (Intent.ACTION_VIEW == intent.action && uri != null) {
-      val data = intent.dataString ?: ""
-      when {
-        data.startsWith("https://trynoice.com/preset") || data.startsWith("noice://preset") -> {
-          val preset = presetRepository.readFromUrl(data)
-          if (preset != null) {
-            playbackController.play(preset)
-          } else {
-            SnackBar.error(binding.mainNavHostFragment, R.string.preset_url_invalid)
-              .setAnchorView(findSnackBarAnchorView())
-              .show()
-          }
-        }
+      Intent.ACTION_APPLICATION_PREFERENCES == intent.action -> {
+        navController.navigate(R.id.settings)
+      }
 
-        SubscriptionBillingCallbackFragment.canHandleUri(data) -> {
-          navController.navigate(
-            R.id.subscription_billing_callback,
-            SubscriptionBillingCallbackFragment.args(uri),
-          )
-        }
+      AlarmClock.ACTION_SHOW_ALARMS == intent.action -> {
+        navController.navigate(R.id.home_alarms)
+      }
 
-        SubscriptionPurchaseListFragment.URI == data -> {
-          navController.navigate(R.id.subscription_purchase_list)
+      Intent.ACTION_VIEW == intent.action &&
+        (dataString.startsWith("https://trynoice.com/preset") ||
+          dataString.startsWith("noice://preset")) -> {
+
+        val preset = presetRepository.readFromUrl(dataString)
+        if (preset != null) {
+          playbackController.play(preset)
+        } else {
+          SnackBar.error(binding.mainNavHostFragment, R.string.preset_url_invalid)
+            .setAnchorView(findSnackBarAnchorView())
+            .show()
         }
+      }
+
+      Intent.ACTION_VIEW == intent.action &&
+        SubscriptionBillingCallbackFragment.canHandleUri(dataString) -> {
+
+        intent.data
+          ?.let { SubscriptionBillingCallbackFragment.args(it) }
+          ?.also { navController.navigate(R.id.subscription_billing_callback, it) }
+      }
+
+      Intent.ACTION_VIEW == intent.action && SubscriptionPurchaseListFragment.URI == dataString -> {
+        navController.navigate(R.id.subscription_purchase_list)
       }
     }
   }
