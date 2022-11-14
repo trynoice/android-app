@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 abstract class AlarmDao {
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  abstract suspend fun save(alarm: AlarmDto)
+  abstract suspend fun save(alarm: AlarmDto): Long
 
   @Query("DELETE FROM alarm WHERE id = :alarmId")
   abstract suspend fun deleteById(alarmId: Int)

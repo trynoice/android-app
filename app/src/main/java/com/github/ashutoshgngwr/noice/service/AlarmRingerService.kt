@@ -145,6 +145,7 @@ class AlarmRingerService : LifecycleService() {
   private suspend fun startRinger(alarmId: Int) {
     val alarm = alarmRepository.get(alarmId)
     if (alarm == null) {
+      Log.w(LOG_TAG, "startRinger: alarm [id=${alarmId}] not found, stopping service")
       stopSelf()
       return
     }
