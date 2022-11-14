@@ -10,6 +10,7 @@ import android.media.AudioAttributes
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
+import android.os.PowerManager
 import android.os.VibrationAttributes
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -40,6 +41,7 @@ import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.random.Random
+import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
 class AlarmRingerService : LifecycleService() {
@@ -68,6 +70,12 @@ class AlarmRingerService : LifecycleService() {
     } else {
       requireNotNull(getSystemService())
     }
+  }
+
+  private val wakeLock: PowerManager.WakeLock by lazy {
+    requireNotNull(getSystemService<PowerManager>())
+      .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "noice:AlarmRingerService")
+      .apply { setReferenceCounted(false) }
   }
 
   override fun onCreate() {
@@ -109,12 +117,21 @@ class AlarmRingerService : LifecycleService() {
     }
   }
 
+  override fun onDestroy() {
+    if (wakeLock.isHeld) wakeLock.release()
+    super.onDestroy()
+  }
+
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     intent ?: return super.onStartCommand(null, flags, startId)
     Log.d(LOG_TAG, "onStartCommand: received new intent")
     val alarmId = intent.getIntExtra(EXTRA_ALARM_ID, -1)
     when (intent.action) {
-      ACTION_RING -> lifecycleScope.launch { startRinger(alarmId) }
+      ACTION_RING -> {
+        val wakeLockTimeout = settingsRepository.getAlarmRingerMaxDuration() + 15.seconds
+        wakeLock.acquire(wakeLockTimeout.inWholeMilliseconds)
+        lifecycleScope.launch { startRinger(alarmId) }
+      }
       ACTION_SNOOZE -> lifecycleScope.launch { dismiss(alarmId, isSnoozed = true) }
       ACTION_DISMISS -> lifecycleScope.launch { dismiss(alarmId, isSnoozed = false) }
     }
@@ -146,7 +163,7 @@ class AlarmRingerService : LifecycleService() {
     val alarm = alarmRepository.get(alarmId)
     if (alarm == null) {
       Log.w(LOG_TAG, "startRinger: alarm [id=${alarmId}] not found, stopping service")
-      stopSelf()
+      stopService()
       return
     }
 
@@ -286,8 +303,7 @@ class AlarmRingerService : LifecycleService() {
     playbackController.setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
 
     uiController.dismiss()
-    ServiceCompat.stopForeground(this@AlarmRingerService, ServiceCompat.STOP_FOREGROUND_REMOVE)
-    stopSelf()
+    stopService()
   }
 
   private fun buildMissedAlarmNotification(alarmTriggerTime: String): Notification {
@@ -298,6 +314,12 @@ class AlarmRingerService : LifecycleService() {
       .setShowWhen(true)
       .setAutoCancel(true)
       .build()
+  }
+
+  private fun stopService() {
+    if (wakeLock.isHeld) wakeLock.release()
+    ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
+    stopSelf()
   }
 
   companion object {
