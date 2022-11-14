@@ -294,7 +294,6 @@
     <string name="vibrate">Vibra</string>
     <string name="not_scheduled">Non programmata</string>
     <string name="notification_channel_alarm_primary__description">Notifiche visualizzate quando viene attivata una sveglia programmata.</string>
-    <string name="notification_channel_alarm_secondary__name">Sveglie di riserva</string>
     <string name="notification_channel_alarm_priming__name">Innesco sveglie</string>
     <string name="notification_channel_alarm_priming__description">Notifiche visualizzate quando si prepara a lanciare una sveglia programmata.</string>
     <string name="snooze">Snooze</string>
@@ -312,7 +311,6 @@
     <string name="edit_label">Modifica etichetta</string>
     <string name="notification_channel_alarm_primary__name">Sveglie</string>
     <string name="saturday_initial">S</string>
-    <string name="notification_channel_alarm_secondary__description">Notifiche visualizzate quando una sveglia pianificata viene attivata e il preset selezionato non viene caricato.</string>
     <string name="alarm">Sveglia</string>
     <string name="alarm_ringer_preset_load_error">Impossibile caricare il preset selezionato per questa sveglia.</string>
     <string name="alarms_disabled_due_to_subscription_expiration">Abbiamo dovuto disattivare alcune sveglie visto che il vostro abbonamento Noice Premium è scaduto!</string>

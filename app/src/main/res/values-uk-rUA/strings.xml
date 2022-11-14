@@ -293,7 +293,6 @@
     <string name="sunday_initial">Н</string>
     <string name="friday_initial">П</string>
     <string name="notification_channel_alarm_primary__description">Сповіщення, показувані під час спрацювання запланованого будильника.</string>
-    <string name="notification_channel_alarm_secondary__name">Запасні будильники</string>
     <string name="notification_channel_alarm_secondary__description">Сповіщення, що з\'являються, коли спрацьовує запланований будильник, а обране для неї поєднання не завантажується.</string>
     <string name="notification_channel_alarm_priming__name">Підготовка будильника</string>
     <string name="notification_channel_alarm_priming__description">Показувані перед спрацюванням запланованого будильника сповіщення.</string>
