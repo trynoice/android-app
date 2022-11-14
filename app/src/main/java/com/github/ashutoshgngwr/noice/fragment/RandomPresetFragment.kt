@@ -146,7 +146,7 @@ class RandomPresetViewModel @Inject constructor(
   val tagsLoadErrorStrRes: StateFlow<Int?> = tagsResource.transform { r ->
     emit(
       when {
-        r.error == null || r.data != null -> null // cached data is fine.
+        r.error == null || r.data?.isNotEmpty() == true -> null // cached data is fine.
         r.error is NetworkError -> R.string.network_error
         else -> R.string.unknown_error
       }

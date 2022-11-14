@@ -330,7 +330,7 @@ class LibraryViewModel @Inject constructor(
   internal val transientErrorStrRes: Flow<Int?> = soundInfosResource.transform { r ->
     emit(
       when {
-        r.error == null || r.data == null -> null // show persistent error if there's no data
+        r.error == null || r.data.isNullOrEmpty() -> null // show persistent error if there's no data
         r.error is NetworkError -> R.string.network_error
         else -> R.string.unknown_error
       }
@@ -340,7 +340,7 @@ class LibraryViewModel @Inject constructor(
   val persistentErrorStrRes: StateFlow<Int?> = soundInfosResource.transform { r ->
     emit(
       when {
-        r.error == null || r.data != null -> null // show transient error if data is available
+        r.error == null || r.data?.isNotEmpty() == true -> null // show transient error if data is available
         r.error is NetworkError -> R.string.network_error
         else -> R.string.unknown_error
       }

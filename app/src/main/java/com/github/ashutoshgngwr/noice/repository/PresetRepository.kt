@@ -133,7 +133,7 @@ class PresetRepository @Inject constructor(
       .map { r ->
         when {
           r is Resource.Loading -> Resource.Loading(null)
-          r.data != null -> {
+          r.data?.isNotEmpty() == true -> {
             r.data.sortedByDescending { it.tags.intersect(tags).size }
               .take(soundCount * 2)
               .shuffled()

@@ -311,7 +311,7 @@ class SubscriptionPurchasePagingDataSource(
       null
     }
 
-    if (resource is Resource.Success || (resource.error is NetworkError && resource.data != null)) {
+    if (resource is Resource.Success || (resource.error is NetworkError && resource.data?.isNotEmpty() == true)) {
       return LoadResult.Page(resource.data ?: emptyList(), prevKey = null, nextKey = nextPage)
     }
 
