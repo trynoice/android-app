@@ -16,6 +16,7 @@ import android.os.Vibrator
 import android.os.VibratorManager
 import android.provider.Settings
 import android.text.format.DateUtils
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
@@ -72,6 +73,7 @@ class AlarmRingerService : LifecycleService() {
   override fun onCreate() {
     super.onCreate()
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      Log.d(LOG_TAG, "onCreate: init notification channels")
       createNotificationChannel(
         channelId = PRIMARY_CHANNEL_ID,
         importance = NotificationManager.IMPORTANCE_HIGH,
@@ -109,6 +111,7 @@ class AlarmRingerService : LifecycleService() {
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     intent ?: return super.onStartCommand(null, flags, startId)
+    Log.d(LOG_TAG, "onStartCommand: received new intent")
     val alarmId = intent.getIntExtra(EXTRA_ALARM_ID, -1)
     when (intent.action) {
       ACTION_RING -> lifecycleScope.launch { startRinger(alarmId) }
@@ -163,6 +166,7 @@ class AlarmRingerService : LifecycleService() {
 
     // if we couldn't get a preset to play, start the ringer with default alarm ringtone.
     if (preset == null) {
+      Log.d(LOG_TAG, "startRinger: starting default ringtone")
       ServiceCompat.stopForeground(this@AlarmRingerService, ServiceCompat.STOP_FOREGROUND_DETACH)
       buildRingerNotification(SECONDARY_CHANNEL_ID, alarm, alarmTriggerTime)
         .also { startForeground(NOTIFICATION_ID_ALARM, it) }
@@ -170,6 +174,7 @@ class AlarmRingerService : LifecycleService() {
       buildPresetLoadFailedNotification(alarmTriggerTime)
         .also { notificationManager.notify(NOTIFICATION_ID_PRIMING, it) }
     } else {
+      Log.d(LOG_TAG, "startRinger: starting preset: $preset")
       ServiceCompat.stopForeground(this@AlarmRingerService, ServiceCompat.STOP_FOREGROUND_REMOVE)
       buildRingerNotification(PRIMARY_CHANNEL_ID, alarm, alarmTriggerTime)
         .also { startForeground(NOTIFICATION_ID_ALARM, it) }
@@ -180,6 +185,7 @@ class AlarmRingerService : LifecycleService() {
 
     autoDismissJob?.cancel()
     autoDismissJob = lifecycleScope.launch {
+      Log.d(LOG_TAG, "startRinger: start delayed auto dismiss job")
       delay(settingsRepository.getAlarmRingerMaxDuration())
       buildMissedAlarmNotification(alarmTriggerTime)
         .also { notificationManager.notify(NOTIFICATION_ID_MISSED, it) }
@@ -272,6 +278,7 @@ class AlarmRingerService : LifecycleService() {
   }
 
   private suspend fun dismiss(alarmId: Int, isSnoozed: Boolean) {
+    Log.d(LOG_TAG, "dismiss: reporting alarm trigger")
     alarmRepository.reportTrigger(alarmId, isSnoozed)
     vibrator.cancel()
     playbackController.pause(true)
@@ -293,6 +300,7 @@ class AlarmRingerService : LifecycleService() {
   }
 
   companion object {
+    private const val LOG_TAG = "AlarmRingerService"
     private const val ACTION_RING = "ring"
     private const val ACTION_SNOOZE = "snooze"
     private const val ACTION_DISMISS = "dismiss"
