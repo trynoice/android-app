@@ -19,6 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.paging.cachedIn
@@ -59,7 +60,9 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
 
   private lateinit var binding: AlarmsFragmentBinding
 
+  private var hasHandledFocusedAlarmArg = false
   private val viewModel: AlarmsViewModel by viewModels()
+  private val args: AlarmsFragmentArgs by navArgs()
   private val adapter: AlarmListAdapter by lazy { AlarmListAdapter(layoutInflater, this) }
   private val mainNavController: NavController by lazy {
     Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
@@ -83,6 +86,23 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
     adapter.addLoadStateListener { loadStates ->
       binding.emptyListIndicator.isVisible =
         loadStates.append.endOfPaginationReached && adapter.itemCount < 1
+
+      if (!hasHandledFocusedAlarmArg) {
+        if (args.focusedAlarmId < 0) {
+          hasHandledFocusedAlarmArg = true
+        } else {
+          // items may take a while to load, so wait for the item with requested id to appear.
+          adapter.snapshot()
+            .items
+            .indexOfFirst { it.id == args.focusedAlarmId }
+            .takeIf { it > -1 }
+            ?.also { pos ->
+              onAlarmItemExpanded(pos)
+              binding.list.scrollToPosition(pos)
+              hasHandledFocusedAlarmArg = true
+            }
+        }
+      }
     }
 
     viewLifecycleOwner.lifecycleScope.launch {

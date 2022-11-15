@@ -8,6 +8,7 @@ import androidx.core.content.getSystemService
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.data.AppDatabase
+import com.github.ashutoshgngwr.noice.fragment.AlarmsFragmentArgs
 import com.github.ashutoshgngwr.noice.models.Alarm
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
@@ -38,9 +39,10 @@ object AlarmRepositoryModule {
 
     val piBuilder = object : AlarmRepository.PendingIntentBuilder {
       override fun buildShowIntent(alarm: Alarm): PendingIntent {
-        // TODO: focus the specified alarm in the list
+        val alarmsFragmentArgs = AlarmsFragmentArgs(alarm.id).toBundle()
         return Intent(context, MainActivity::class.java)
-          .putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.home_alarms)
+          .putExtra(MainActivity.EXTRA_HOME_DESTINATION, R.id.alarms)
+          .putExtra(MainActivity.EXTRA_HOME_DESTINATION_ARGS, alarmsFragmentArgs)
           .let { PendingIntent.getActivity(context, alarm.id, it, piFlags) }
       }
 

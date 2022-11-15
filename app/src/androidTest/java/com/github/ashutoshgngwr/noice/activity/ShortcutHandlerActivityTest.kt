@@ -42,7 +42,7 @@ class ShortcutHandlerActivityTest {
   }
 
   @Test
-  fun testOnCreate() {
+  fun onCreate() {
     val presetIDExpectations = arrayOf("invalid-id", "valid-id")
     val presetFindByIdReturns = arrayOf(null, mockk<Preset>(relaxed = true))
     val playPresetCallCount = arrayOf(0, 1)
@@ -62,7 +62,7 @@ class ShortcutHandlerActivityTest {
         Intents.intended(
           allOf(
             hasComponent(MainActivity::class.qualifiedName),
-            hasExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.home_presets)
+            hasExtra(MainActivity.EXTRA_HOME_DESTINATION, R.id.presets)
           ),
           Intents.times(1)
         )

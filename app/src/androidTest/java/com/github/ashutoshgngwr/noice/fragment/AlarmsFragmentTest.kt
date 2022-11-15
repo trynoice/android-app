@@ -255,6 +255,28 @@ class AlarmsFragmentTest {
   }
 
   @Test
+  fun focusedAlarmIdNavArg() {
+    val alarms = listOf(
+      buildAlarm(id = 0, minuteOfDay = 60),
+      buildAlarm(id = 1, minuteOfDay = 120),
+      buildAlarm(id = 2, minuteOfDay = 180),
+      buildAlarm(id = 3, minuteOfDay = 240),
+    )
+
+    every { alarmRepositoryMock.pagingDataFlow() } returns flowOf(PagingData.from(alarms))
+    launchFragmentInHiltContainer<AlarmsFragment>(
+      fragmentArgs = AlarmsFragmentArgs(3).toBundle(),
+    )
+
+    onView(withId(R.id.list))
+      .check(matches(isDisplayed()))
+      .perform(scrollToPosition<AlarmViewHolder>(0))
+      .check(itemAtPosition(0, R.id.delete, matches(not(isDisplayed()))))
+      .perform(scrollToPosition<AlarmViewHolder>(3))
+      .check(itemAtPosition(3, R.id.delete, matches(isDisplayed())))
+  }
+
+  @Test
   fun addAlarm() {
     every { alarmRepositoryMock.canScheduleAlarms() } returns false
     every { alarmRepositoryMock.pagingDataFlow() } returns flowOf(PagingData.empty())

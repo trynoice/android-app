@@ -49,7 +49,14 @@
     android:id="@+id/alarms"
     android:name="com.github.ashutoshgngwr.noice.fragment.AlarmsFragment"
     android:label="@string/alarms"
-    tools:layout="@layout/alarms_fragment" />
+    tools:layout="@layout/alarms_fragment">
+
+    <argument
+      android:name="focused_alarm_id"
+      android:defaultValue="-1"
+      app:argType="integer" />
+
+  </fragment>
 
   <fragment
     android:id="@+id/account"

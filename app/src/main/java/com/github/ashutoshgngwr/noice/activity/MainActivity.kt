@@ -29,6 +29,7 @@ import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadsRefreshWork
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.fragment.DonationPurchasedCallbackFragmentArgs
+import com.github.ashutoshgngwr.noice.fragment.HomeFragmentArgs
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragmentArgs
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
@@ -53,12 +54,16 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   companion object {
     /**
-     * [EXTRA_NAV_DESTINATION] declares the key for intent extra value passed to [MainActivity] for
-     * setting the current destination on the [NavController]. The value for this extra should be an
-     * id resource representing the action/destination id present in the [main][R.navigation.main]
-     * navigation graph.
+     * If set, the activity navigates to the given destination in the home fragment. The value is a
+     * reference id to a destination inside the home navigation graph.
      */
-    internal const val EXTRA_NAV_DESTINATION = "nav_destination"
+    internal const val EXTRA_HOME_DESTINATION = "homeDestination"
+
+    /**
+     * If set, the activity uses the given value as navigation args to the destination specified by
+     * [EXTRA_HOME_DESTINATION]. The value is a [Bundle].
+     */
+    internal const val EXTRA_HOME_DESTINATION_ARGS = "homeDestinationArgs"
 
     @VisibleForTesting
     internal const val PREF_HAS_SEEN_DATA_COLLECTION_CONSENT = "has_seen_data_collection_consent"
@@ -198,8 +203,13 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
     hasNewIntent = false
     val dataString = intent.dataString ?: ""
     when {
-      intent.hasExtra(EXTRA_NAV_DESTINATION) -> {
-        navController.navigate(intent.getIntExtra(EXTRA_NAV_DESTINATION, 0))
+      intent.hasExtra(EXTRA_HOME_DESTINATION) -> {
+        val args = HomeFragmentArgs(
+          navDestination = intent.getIntExtra(EXTRA_HOME_DESTINATION, 0),
+          navDestinationArgs = intent.getBundleExtra(EXTRA_HOME_DESTINATION_ARGS),
+        ).toBundle()
+
+        navController.navigate(R.id.home, args)
       }
 
       Intent.ACTION_APPLICATION_PREFERENCES == intent.action -> {
@@ -207,7 +217,7 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
       }
 
       AlarmClock.ACTION_SHOW_ALARMS == intent.action -> {
-        navController.navigate(R.id.home_alarms)
+        navController.navigate(R.id.home, HomeFragmentArgs(R.id.alarms).toBundle())
       }
 
       Intent.ACTION_VIEW == intent.action &&

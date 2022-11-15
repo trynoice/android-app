@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -17,7 +18,6 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.HomeFragmentBinding
@@ -72,8 +72,8 @@ class HomeFragment : Fragment(), MenuProvider, NavController.OnDestinationChange
     homeNavController.addOnDestinationChangedListener(this)
     homeNavController.graph = homeNavGraph
     binding.bottomNav.setupWithNavController(homeNavController)
-    binding.bottomNav.menu.findItem(navArgs.navDestination)?.let {
-      NavigationUI.onNavDestinationSelected(it, homeNavController)
+    if (navArgs.navDestination != ResourcesCompat.ID_NULL) {
+      homeNavController.navigate(navArgs.navDestination, navArgs.navDestinationArgs)
     }
 
     viewLifecycleOwner.lifecycleScope.launch {

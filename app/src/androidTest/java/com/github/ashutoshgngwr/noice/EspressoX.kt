@@ -155,7 +155,7 @@ object EspressoX {
    * https://github.com/android/architecture-samples/blob/2291fc6d2e17a37be584a89b80ee73c207c804c3/app/src/androidTest/java/com/example/android/architecture/blueprints/todoapp/HiltExt.kt#L28-L65
    */
   inline fun <reified F : Fragment> launchFragmentInHiltContainer(
-    fragmentArgs: Bundle? = null,
+    fragmentArgs: Bundle = Bundle(),
     @StyleRes themeResId: Int = R.style.Theme_App,
   ): HiltFragmentScenario<F> {
     val context = ApplicationProvider.getApplicationContext<Context>()
