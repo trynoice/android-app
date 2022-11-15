@@ -280,7 +280,7 @@
         <item quantity="other">%1$d giorni</item>
     </plurals>
     <string name="alarms">Sveglie</string>
-    <string name="no_alarms_description">Aggiungi una nuova sveglia toccando il pulsante \"+\"!</string>
+    <string name="no_alarms_description">Aggiungi una nuova sveglia toccando il pulsante +!</string>
     <string name="alarm_permission_rationale_title">Consenti a Noice di programmare le sveglie</string>
     <string name="post_notifications_permission_rationale_title">Consenti a Noice di mostrare le notifiche</string>
     <string name="alarm_post_notifications_permission_denied">Noice non può far suonare le sveglie senza il permesso di mostrare le notifiche!</string>
@@ -296,11 +296,11 @@
     <string name="notification_channel_alarm_primary__description">Notifiche visualizzate quando viene attivata una sveglia programmata.</string>
     <string name="notification_channel_alarm_priming__name">Innesco sveglie</string>
     <string name="notification_channel_alarm_priming__description">Notifiche visualizzate quando si prepara a lanciare una sveglia programmata.</string>
-    <string name="snooze">Snooze</string>
+    <string name="snooze">Rimanda</string>
     <string name="benefit_5">Sveglie illimitate</string>
     <string name="alarm_ringer_max_duration_summary">Durata in minuti, dopo il quale il promemoria della sveglia viene silenziato automaticamente</string>
     <string name="alarm_missed">Sveglia mancata</string>
-    <string name="no_presets">Nessun preset</string>
+    <string name="no_presets">Nessuna preimpostazione</string>
     <string name="no_alarms">No sveglie</string>
     <string name="add_alarm">Aggiungi una sveglia</string>
     <string name="proceed">Procedi</string>
