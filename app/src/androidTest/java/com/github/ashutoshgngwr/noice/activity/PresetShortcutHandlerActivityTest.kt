@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.activity
 
 import android.app.Activity
 import android.app.Instrumentation
+import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
@@ -24,7 +25,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
-class ShortcutHandlerActivityTest {
+class PresetShortcutHandlerActivityTest {
 
   @get:Rule
   val hiltRule = HiltAndroidRule(this)
@@ -46,6 +47,7 @@ class ShortcutHandlerActivityTest {
     val presetIDExpectations = arrayOf("invalid-id", "valid-id")
     val presetFindByIdReturns = arrayOf(null, mockk<Preset>(relaxed = true))
     val playPresetCallCount = arrayOf(0, 1)
+    val context = ApplicationProvider.getApplicationContext<Context>()
 
     for (i in presetIDExpectations.indices) {
       every { mockPresetRepository.get(presetIDExpectations[i]) } returns presetFindByIdReturns[i]
@@ -54,10 +56,10 @@ class ShortcutHandlerActivityTest {
         .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, Intent()))
 
       try {
-        Intent(ApplicationProvider.getApplicationContext(), ShortcutHandlerActivity::class.java)
-          .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_ID, presetIDExpectations[i])
-          .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, presetIDExpectations[i])
-          .also { ActivityScenario.launch<ShortcutHandlerActivity>(it) }
+        Intent(context, PresetShortcutHandlerActivity::class.java)
+          .putExtra(PresetShortcutHandlerActivity.EXTRA_SHORTCUT_ID, presetIDExpectations[i])
+          .putExtra(PresetShortcutHandlerActivity.EXTRA_PRESET_ID, presetIDExpectations[i])
+          .also { ActivityScenario.launch<PresetShortcutHandlerActivity>(it) }
 
         Intents.intended(
           allOf(

@@ -21,7 +21,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
+import com.github.ashutoshgngwr.noice.activity.PresetShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.databinding.PresetsFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.PresetsListItemBinding
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
@@ -206,12 +206,12 @@ class PresetsFragment : Fragment(), PresetListItemController {
       setShortLabel(preset.name)
       setIcon(IconCompat.createWithResource(requireContext(), R.mipmap.ic_preset_shortcut))
       setIntent(
-        Intent(requireContext(), ShortcutHandlerActivity::class.java)
+        Intent(requireContext(), PresetShortcutHandlerActivity::class.java)
           .setAction(Intent.ACTION_VIEW)
           .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-          .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_ID, id)
-          .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_TYPE, type)
-          .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, preset.id)
+          .putExtra(PresetShortcutHandlerActivity.EXTRA_SHORTCUT_ID, id)
+          .putExtra(PresetShortcutHandlerActivity.EXTRA_SHORTCUT_TYPE, type)
+          .putExtra(PresetShortcutHandlerActivity.EXTRA_PRESET_ID, preset.id)
       )
 
       build()

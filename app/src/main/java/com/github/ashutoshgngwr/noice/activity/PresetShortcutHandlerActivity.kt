@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ShortcutHandlerActivity : AppCompatActivity() {
+class PresetShortcutHandlerActivity : AppCompatActivity() {
 
   companion object {
     const val EXTRA_PRESET_ID = "preset_name"

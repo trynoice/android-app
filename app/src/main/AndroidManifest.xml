@@ -103,7 +103,7 @@
       android:theme="@style/Theme.Material3.Dark.NoActionBar" />
 
     <activity
-      android:name=".activity.ShortcutHandlerActivity"
+      android:name=".activity.PresetShortcutHandlerActivity"
       android:excludeFromRecents="true"
       android:exported="true"
       android:theme="@style/Theme.App.Translucent" />
