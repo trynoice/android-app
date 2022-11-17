@@ -24,13 +24,15 @@ class AlarmRepository(
   private val pendingIntentBuilder: PendingIntentBuilder,
 ) {
 
-  suspend fun save(alarm: Alarm) {
+  suspend fun save(alarm: Alarm): Int {
     val alarmId = appDb.alarms().save(alarm.toRoomDto())
     val saved = alarm.copy(id = alarmId.toInt())
     alarmManager.cancel(saved)
     if (saved.isEnabled) {
       alarmManager.setAlarmClock(saved)
     }
+
+    return saved.id
   }
 
   suspend fun delete(alarm: Alarm) {

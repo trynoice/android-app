@@ -100,7 +100,8 @@ class AlarmRepositoryTest {
     assertNull(shadowAlarmManager.peekNextScheduledAlarm())
 
     coEvery { alarmDaoMock.save(any()) } returns 1
-    repository.save(buildAlarm(id = 0, minuteOfDay = 120))
+    val savedId = repository.save(buildAlarm(id = 0, minuteOfDay = 120))
+    assertEquals(1, savedId)
     coVerify(exactly = 1, timeout = 5000L) {
       alarmDaoMock.save(buildAlarmDto(id = 0, minuteOfDay = 120))
     }
