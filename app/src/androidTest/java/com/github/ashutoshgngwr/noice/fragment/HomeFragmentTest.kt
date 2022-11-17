@@ -1,31 +1,26 @@
 package com.github.ashutoshgngwr.noice.fragment
 
-import android.content.Context
-import android.util.Log
-import androidx.core.content.edit
-import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.preference.PreferenceManager
-import androidx.test.core.app.ActivityScenario
-import androidx.test.core.app.ApplicationProvider
+import androidx.annotation.IdRes
+import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.work.Configuration
-import androidx.work.testing.WorkManagerTestInitHelper
 import com.github.ashutoshgngwr.noice.EspressoX
+import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.activity.AppIntroActivity
-import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
+import com.github.ashutoshgngwr.noice.engine.PlaybackState
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.After
+import kotlinx.coroutines.flow.flowOf
+import org.hamcrest.Matchers.not
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -37,134 +32,100 @@ class HomeFragmentTest {
   @get:Rule
   val hiltRule = HiltAndroidRule(this)
 
-  // activityScenario is more appropriate than FragmentScenario for two reasons.
-  // 1. Activity in fragment scenario doesn't have an action bar (for menu items)
-  // 2. NavController need to be manually injected in a fragment in fragment scenario.
-  private lateinit var activityScenario: ActivityScenario<MainActivity>
+  @BindValue
+  internal lateinit var playbackControllerMock: PlaybackController
 
   @BindValue
-  internal lateinit var mockPlaybackController: PlaybackController
-
-  @BindValue
-  internal lateinit var mockSettingsRepository: SettingsRepository
+  internal lateinit var settingsRepositoryMock: SettingsRepository
 
   @Before
-  fun setup() {
-    val context = ApplicationProvider.getApplicationContext<Context>()
-    PreferenceManager.getDefaultSharedPreferences(context)
-      .edit {
-        putBoolean(AppIntroActivity.PREF_HAS_USER_SEEN_APP_INTRO, true)
-        putBoolean(MainActivity.PREF_HAS_SEEN_DATA_COLLECTION_CONSENT, true)
-      }
-
-    // initialise work manager with a no-op executor
-    Configuration.Builder()
-      .setMinimumLoggingLevel(Log.ERROR)
-      .setExecutor { } // no-op
-      .build()
-      .also { WorkManagerTestInitHelper.initializeTestWorkManager(context, it) }
-
-    mockPlaybackController = mockk(relaxed = true)
-    mockSettingsRepository = mockk(relaxed = true)
-    activityScenario = ActivityScenario.launch(MainActivity::class.java)
-  }
-
-  @After
-  fun teardown() {
-    PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
-      .edit { clear() }
+  fun setUp() {
+    playbackControllerMock = mockk(relaxed = true)
+    settingsRepositoryMock = mockk(relaxed = true)
   }
 
   @Test
-  fun testStartDestination() {
-    onView(withId(R.id.bottom_nav))
-      .check(matches(EspressoX.withBottomNavSelectedItem(R.id.library)))
+  fun startDestination() {
+    launchFragmentInHiltContainer<HomeFragment>().use {
+      onView(withId(R.id.bottom_nav))
+        .check(matches(isDisplayed()))
+        .check(matches(EspressoX.withBottomNavSelectedItem(R.id.library)))
 
-    withHomeNavController {
-      assertEquals(R.id.library, it.currentDestination?.id)
-    }
-
-    every { mockSettingsRepository.shouldDisplayPresetsAsHomeScreen() } returns true
-    activityScenario = ActivityScenario.launch(MainActivity::class.java)
-    onView(withId(R.id.bottom_nav))
-      .check(matches(EspressoX.withBottomNavSelectedItem(R.id.presets)))
-
-    withHomeNavController {
-      assertEquals(R.id.presets, it.currentDestination?.id)
-    }
-  }
-
-//  @Test
-//  fun testPlaybackToggleMenuItem() {
-//    onView(withId(R.id.action_pause))
-//      .check(doesNotExist())
-//
-//    onView(withId(R.id.action_resume))
-//      .check(doesNotExist())
-//
-//    onHomeFragment {
-//      val event = MediaPlayerService.PlaybackUpdateEvent(PlaybackStateCompat.STATE_PLAYING, mapOf())
-//      it.onPlayerManagerUpdate(event)
-//    }
-//
-//    withRetries {
-//      onView(withId(R.id.action_pause))
-//        .check(matches(isDisplayed()))
-//        .perform(click())
-//    }
-//
-//    verify(exactly = 1) { mockPlaybackController.pause() }
-//    onHomeFragment {
-//      val event = MediaPlayerService.PlaybackUpdateEvent(PlaybackStateCompat.STATE_PAUSED, mapOf())
-//      it.onPlayerManagerUpdate(event)
-//    }
-//
-//    withRetries {
-//      onView(withId(R.id.action_resume))
-//        .check(matches(isDisplayed()))
-//        .perform(click())
-//    }
-//  }
-
-  /**
-   * Attempts a view action with retries with [delayMillis] between each attempt. Throws the
-   * original error, if the [action] still fails after all attempts.
-   */
-  private inline fun withRetries(
-    times: Int = 10,
-    delayMillis: Long = 500,
-    crossinline action: () -> Unit
-  ) {
-    var originalError: Throwable? = null
-    repeat(times) {
-      try {
-        action.invoke()
-        return
-      } catch (e: Throwable) {
-        Thread.sleep(delayMillis)
-        if (originalError == null) {
-          originalError = e
-        }
+      it.onFragment { f ->
+        val c = Navigation.findNavController(f.requireActivity(), R.id.home_nav_host_fragment)
+        assertEquals(R.id.library, c.currentDestination?.id)
       }
     }
 
-    throw requireNotNull(originalError) { "all retry attempts exhausted but original error is null" }
-  }
+    every { settingsRepositoryMock.shouldDisplayPresetsAsHomeScreen() } returns true
+    launchFragmentInHiltContainer<HomeFragment>().use {
+      onView(withId(R.id.bottom_nav))
+        .check(matches(isDisplayed()))
+        .check(matches(EspressoX.withBottomNavSelectedItem(R.id.presets)))
 
-  private inline fun onHomeFragment(crossinline block: (HomeFragment) -> Unit) {
-    activityScenario.onActivity {
-      val parent =
-        it.supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as Fragment
-      val home = parent.childFragmentManager.fragments.first() as HomeFragment
-      block.invoke(home)
+      it.onFragment { f ->
+        val c = Navigation.findNavController(f.requireActivity(), R.id.home_nav_host_fragment)
+        assertEquals(R.id.presets, c.currentDestination?.id)
+      }
     }
   }
 
-  private inline fun withHomeNavController(crossinline block: (NavController) -> Unit) {
-    onHomeFragment {
-      val f =
-        it.childFragmentManager.findFragmentById(R.id.home_nav_host_fragment) as NavHostFragment
-      block.invoke(f.navController)
+  @Test
+  fun playbackController() {
+    data class TestCase(
+      val playerManagerState: PlaybackState,
+      @IdRes val currentDestinationId: Int,
+      val expectVisible: Boolean,
+    )
+
+    listOf(
+      TestCase(
+        playerManagerState = PlaybackState.PLAYING,
+        currentDestinationId = R.id.library,
+        expectVisible = true,
+      ),
+      TestCase(
+        playerManagerState = PlaybackState.PLAYING,
+        currentDestinationId = R.id.alarms,
+        expectVisible = false,
+      ),
+      TestCase(
+        playerManagerState = PlaybackState.PLAYING,
+        currentDestinationId = R.id.account,
+        expectVisible = false,
+      ),
+      TestCase(
+        playerManagerState = PlaybackState.PAUSING,
+        currentDestinationId = R.id.presets,
+        expectVisible = true,
+      ),
+      TestCase(
+        playerManagerState = PlaybackState.PAUSED,
+        currentDestinationId = R.id.sleep_timer,
+        expectVisible = true,
+      ),
+      TestCase(
+        playerManagerState = PlaybackState.STOPPING,
+        currentDestinationId = R.id.library,
+        expectVisible = false,
+      ),
+      TestCase(
+        playerManagerState = PlaybackState.STOPPED,
+        currentDestinationId = R.id.library,
+        expectVisible = false,
+      ),
+    ).forEach { testCase ->
+      clearMocks(playbackControllerMock)
+      every { playbackControllerMock.getPlayerManagerState() } returns flowOf(testCase.playerManagerState)
+
+      launchFragmentInHiltContainer<HomeFragment>().use {
+        onView(withId(testCase.currentDestinationId))
+          .check(matches(isDisplayed()))
+          .perform(click())
+
+        onView(withId(R.id.playback_controller))
+          .check(matches(if (testCase.expectVisible) isDisplayed() else not(isDisplayed())))
+      }
     }
   }
 }
