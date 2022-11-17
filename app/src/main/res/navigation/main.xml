@@ -357,4 +357,12 @@
     app:popUpTo="@id/subscription_purchase_list"
     app:popUpToInclusive="true" />
 
+  <!-- on navigating to the home fragment again but with different args, a second entry is added to
+  the backstack. We don't want that! -->
+  <action
+    android:id="@id/home"
+    app:destination="@id/home"
+    app:popUpTo="@id/home"
+    app:popUpToInclusive="true" />
+
 </navigation>
