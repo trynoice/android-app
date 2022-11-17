@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.PlaybackControllerViewModel" />
+
+  </data>
+
+  <com.google.android.material.card.MaterialCardView
+    style="?attr/materialCardViewElevatedStyle"
+    android:layout_width="match_parent"
+    android:layout_height="52dp"
+    app:cardElevation="4dp"
+    app:shapeAppearance="?attr/shapeAppearanceCornerExtraSmall"
+    tools:layout_margin="16dp">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingStart="16dp"
+      android:paddingEnd="8dp">
+
+      <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:text="@{viewModel.activePresetName ?? @string/unsaved_preset}"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textColor="?attr/colorOnSurface"
+        app:selected="@{true}"
+        tools:text="@string/unsaved_preset" />
+
+      <Space
+        android:layout_width="4dp"
+        android:layout_height="wrap_content" />
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/play_toggle"
+        style="@style/Widget.App.PlaybackController.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/play_pause"
+        android:onClick="@{() -> viewModel.togglePlayback()}"
+        app:icon="@{viewModel.isPlaying ? @drawable/ic_baseline_pause_24 : @drawable/ic_baseline_play_arrow_24}"
+        tools:icon="@drawable/ic_baseline_pause_24" />
+
+      <Space
+        android:layout_width="4dp"
+        android:layout_height="wrap_content" />
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/stop"
+        style="@style/Widget.App.PlaybackController.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/stop"
+        android:onClick="@{() -> viewModel.stopPlayback()}"
+        app:icon="@drawable/ic_baseline_stop_24" />
+
+    </LinearLayout>
+
+  </com.google.android.material.card.MaterialCardView>
+
+</layout>

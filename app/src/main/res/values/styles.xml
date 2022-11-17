@@ -161,4 +161,11 @@
     <item name="android:textOn">@null</item>
   </style>
 
+  <style name="Widget.App.PlaybackController.IconButton" parent="Widget.Material3.Button.IconButton">
+    <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    <item name="android:padding">2dp</item>
+    <item name="iconSize">26dp</item>
+    <item name="iconTint">?attr/colorOnSurface</item>
+  </style>
+
 </resources>
