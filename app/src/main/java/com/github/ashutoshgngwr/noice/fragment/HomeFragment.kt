@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -80,7 +80,7 @@ class HomeFragment : Fragment(), MenuProvider, NavController.OnDestinationChange
       playbackController.getPlayerManagerState()
         .collect { state ->
           playerManagerState = state
-          activity?.invalidateOptionsMenu()
+          invalidatePlaybackControllerView()
         }
     }
   }
@@ -92,51 +92,27 @@ class HomeFragment : Fragment(), MenuProvider, NavController.OnDestinationChange
 
   override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
     castApiProvider.addMenuItem(requireContext(), menu, R.string.cast_media)
-    val displayPlaybackControls = homeNavController.currentDestination?.id != R.id.alarms
-      && !playerManagerState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED)
-
-    if (displayPlaybackControls) {
-      if (playerManagerState.oneOf(PlaybackState.PAUSED, PlaybackState.PAUSING)) {
-        createResumeMenuItem(menu)
-      } else {
-        createPauseMenuItem(menu)
-      }
-    }
   }
 
   override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
     return false
   }
 
-  private fun createPauseMenuItem(menu: Menu): MenuItem {
-    return menu.add(0, R.id.action_pause, 0, R.string.pause)
-      .apply { setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM) }
-      .setIcon(R.drawable.ic_baseline_pause_24)
-      .setOnMenuItemClickListener {
-        playbackController.pause()
-        analyticsProvider.logEvent("playback_toggle_click", bundleOf())
-        true
-      }
-  }
-
-  private fun createResumeMenuItem(menu: Menu): MenuItem {
-    return menu.add(0, R.id.action_resume, 0, R.string.play)
-      .apply { setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM) }
-      .setIcon(R.drawable.ic_baseline_play_arrow_24)
-      .setOnMenuItemClickListener {
-        playbackController.resume()
-        analyticsProvider.logEvent("playback_toggle_click", bundleOf())
-        true
-      }
-  }
-
   override fun onDestinationChanged(
     controller: NavController,
     destination: NavDestination,
-    arguments: Bundle?
+    arguments: Bundle?,
   ) {
+    invalidatePlaybackControllerView()
     destination.label?.also { label ->
       (activity as? AppCompatActivity)?.supportActionBar?.title = label
     }
+  }
+
+  private fun invalidatePlaybackControllerView() {
+    binding.playbackController.isVisible =
+      !playerManagerState.oneOf(PlaybackState.STOPPED, PlaybackState.STOPPING)
+        && homeNavController.currentDestination?.id != R.id.alarms
+        && homeNavController.currentDestination?.id != R.id.account
   }
 }
