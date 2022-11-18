@@ -67,6 +67,18 @@
         android:onClick="@{() -> viewModel.stopPlayback()}"
         app:icon="@drawable/ic_baseline_stop_24" />
 
+      <Space
+        android:layout_width="4dp"
+        android:layout_height="wrap_content" />
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/volume"
+        style="@style/Widget.App.PlaybackController.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/master_volume"
+        app:icon="@drawable/ic_action_volume" />
+
     </LinearLayout>
 
   </com.google.android.material.card.MaterialCardView>

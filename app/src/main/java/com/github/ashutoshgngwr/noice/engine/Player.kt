@@ -58,6 +58,7 @@ abstract class Player protected constructor(
   protected var fadeOutDuration = Duration.ZERO; private set
   protected var sound: Sound? = null; private set
   private var isPremiumSegmentsEnabled = false
+  private var masterVolume = 0f
   private var volume = DEFAULT_VOLUME
   private var segments = emptyList<SoundSegment>()
   private var currentSegment: SoundSegment? = null
@@ -161,16 +162,28 @@ abstract class Player protected constructor(
    */
   abstract fun stop(immediate: Boolean)
 
+  fun setMasterVolume(volume: Float) {
+    setVolume(volume, this.volume)
+  }
+
   /**
    * Sets the volume of the player.
    *
    * @param volume must be in range [0, [MAX_VOLUME]].
    */
   fun setVolume(volume: Int) {
-    require(volume in 0..MAX_VOLUME) { "player volume must be in range [0, ${MAX_VOLUME}]" }
-    this.volume = volume
-    setVolumeInternal(getScaledVolume())
+    setVolume(masterVolume, volume)
     notifyPlaybackListener()
+  }
+
+  private fun setVolume(masterVolume: Float, volume: Int) {
+    require(masterVolume in 0.0..1.0) { "master volume must be in range [0, 1]" }
+    require(volume in 0..MAX_VOLUME) { "player volume must be in range [0, ${MAX_VOLUME}]" }
+    this.masterVolume = masterVolume
+    this.volume = volume
+    val scaledVolume = getScaledVolume()
+    Log.d(LOG_TAG, "setVolume: soundId=${soundId} scaled=$scaledVolume")
+    setVolumeInternal(scaledVolume)
   }
 
   /**
@@ -183,7 +196,7 @@ abstract class Player protected constructor(
    */
   protected fun getScaledVolume(): Float {
     // return 0.5f * log(max(1, volume).toFloat(), 5f) // logarithmic
-    return (0.04f * volume.toFloat()).pow(2) // quadratic
+    return (0.04f * masterVolume * volume).pow(2) // quadratic
     // return (0.04f * volume.toFloat()).pow(3) // cubic
   }
 

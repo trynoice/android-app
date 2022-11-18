@@ -67,8 +67,9 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
 
   private var presets = emptyList<Preset>()
   private val playerManagerState = MutableStateFlow(PlaybackState.STOPPED)
+  private val masterVolume = MutableStateFlow(0)
   private val playerStates = MutableStateFlow(emptyArray<PlayerState>())
-  private val serviceBinder = PlaybackServiceBinder(playerManagerState, playerStates)
+  private val serviceBinder = PlaybackServiceBinder(playerManagerState, masterVolume, playerStates)
   private val isSubscribed: SharedFlow<Boolean> by lazy {
     subscriptionRepository.isSubscribed()
       .shareIn(lifecycleScope, SharingStarted.WhileSubscribed(), 0)
@@ -160,7 +161,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
       presetRepository.listFlow().collect { p ->
         presets = p
         // refresh currently playing preset and stuff.
-        onPlaybackUpdate(playerManagerState.value, playerStates.value)
+        onPlaybackUpdate(playerManagerState.value, masterVolume.value, playerStates.value)
       }
     }
 
@@ -210,10 +211,19 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
       )
       ACTION_STOP -> playerManager.stop(false)
 
+      ACTION_SET_MASTER_VOLUME -> {
+        val volume = intent.getIntExtra(INTENT_EXTRA_VOLUME, -1)
+        require(volume in 0..PlayerManager.MAX_VOLUME) {
+          "intent extra '${INTENT_EXTRA_VOLUME}=${volume}' must be in range [0, ${PlayerManager.MAX_VOLUME}]"
+        }
+
+        playerManager.setMasterVolume(volume)
+      }
+
       ACTION_SET_SOUND_VOLUME -> {
-        val volume = intent.getIntExtra(INTENT_EXTRA_SOUND_VOLUME, -1)
+        val volume = intent.getIntExtra(INTENT_EXTRA_VOLUME, -1)
         require(volume in 0..Player.MAX_VOLUME) {
-          "intent extra '${INTENT_EXTRA_SOUND_VOLUME}=${volume}' must be in range [0, ${Player.MAX_VOLUME}]"
+          "intent extra '${INTENT_EXTRA_VOLUME}=${volume}' must be in range [0, ${Player.MAX_VOLUME}]"
         }
 
         playerManager.setVolume(getSoundIdExtra(intent), volume)
@@ -292,11 +302,13 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
 
   override fun onPlaybackUpdate(
     playerManagerState: PlaybackState,
-    playerStates: Array<PlayerState>
+    masterVolume: Int,
+    playerStates: Array<PlayerState>,
   ) {
     Log.i(LOG_TAG, "onPlaybackUpdate: managerState=$playerManagerState")
     val currentPreset = presets.find { it.hasMatchingPlayerStates(playerStates) }
     this.playerManagerState.value = playerManagerState
+    this.masterVolume.value = masterVolume
     this.playerStates.value = playerStates
     mediaSessionManager.setPresetTitle(currentPreset?.name)
     mediaSessionManager.setPlaybackState(playerManagerState)
@@ -350,6 +362,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     internal const val ACTION_CLEAR_STOP_SCHEDULE = "clearStopSchedule"
     internal const val ACTION_SET_AUDIO_USAGE = "setAudioUsage"
     internal const val ACTION_SKIP_PRESET = "skipPreset"
+    internal const val ACTION_SET_MASTER_VOLUME = "setMasterVolume"
     internal const val ACTION_SET_SOUND_VOLUME = "setSoundVolume"
     internal const val ACTION_PLAY_RANDOM_PRESET = "playRandomPreset"
 
@@ -358,7 +371,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     internal const val INTENT_EXTRA_SCHEDULED_STOP_AT_MILLIS = "scheduledStopAtMillis"
     internal const val INTENT_EXTRA_AUDIO_USAGE = "audioUsage"
     internal const val INTENT_EXTRA_PRESET_SKIP_DIRECTION = "presetSkipDirection"
-    internal const val INTENT_EXTRA_SOUND_VOLUME = "volume"
+    internal const val INTENT_EXTRA_VOLUME = "volume"
     internal const val INTENT_EXTRA_SKIP_FADE_TRANSITION = "skipFadeTransition"
 
     internal const val PRESET_SKIP_DIRECTION_NEXT = PlayerManager.PRESET_SKIP_DIRECTION_NEXT
@@ -368,6 +381,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
 
 class PlaybackServiceBinder(
   val playerManagerState: Flow<PlaybackState>,
+  val masterVolume: Flow<Int>,
   val playerStates: Flow<Array<PlayerState>>,
 ) : Binder()
 

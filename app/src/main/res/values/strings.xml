@@ -346,4 +346,5 @@
     <string name="notification_channel_missed_alarms__description">Notifications shown on silencing scheduled alarms after the reminder duration has elapsed.</string>
     <string name="alarm_missed">Alarm missed</string>
     <string name="no_presets">No Presets</string>
+    <string name="master_volume">Master Volume</string>
 </resources>

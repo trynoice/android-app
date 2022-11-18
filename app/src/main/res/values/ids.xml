@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <item name="action_resume" type="id" />
-  <item name="action_pause" type="id" />
   <item name="volume_slider" type="id" />
 </resources>

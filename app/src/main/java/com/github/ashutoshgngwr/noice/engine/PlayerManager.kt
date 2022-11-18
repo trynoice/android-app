@@ -34,6 +34,7 @@ class PlayerManager(
   private var fadeInDuration = Duration.ZERO
   private var fadeOutDuration = Duration.ZERO
   private var isPremiumSegmentsEnabled = false
+  private var masterVolume = MAX_VOLUME
 
   private var playerFactory: Player.Factory = LocalPlayer.Factory(context, localDataSourceFactory)
   private var audioFocusManager: AudioFocusManager =
@@ -79,6 +80,7 @@ class PlayerManager(
         defaultScope,
         buildPlayerPlaybackListener(soundId)
       ).apply {
+        setMasterVolume(masterVolume.toFloat() / MAX_VOLUME)
         setFadeInDuration(fadeInDuration)
         setFadeOutDuration(fadeOutDuration)
         setPremiumSegmentsEnabled(isPremiumSegmentsEnabled)
@@ -177,6 +179,20 @@ class PlayerManager(
   fun stop(immediate: Boolean) {
     stopOnIdleJob?.cancel()
     players.values.forEach { it.stop(immediate) }
+  }
+
+  /**
+   * Sets a volume multiplier that scales volumes of all sounds.
+   */
+  fun setMasterVolume(volume: Int) {
+    if (masterVolume == volume) {
+      return
+    }
+
+    require(volume in 0..MAX_VOLUME) { "master volume must be in range [0, ${MAX_VOLUME}]" }
+    masterVolume = volume
+    players.values.forEach { it.setMasterVolume(volume.toFloat() / MAX_VOLUME) }
+    notifyPlaybackListener()
   }
 
   /**
@@ -325,7 +341,7 @@ class PlayerManager(
         .filterNot { it.playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
     }.toTypedArray()
 
-    playbackListener.onPlaybackUpdate(managerState, playerStates)
+    playbackListener.onPlaybackUpdate(managerState, masterVolume, playerStates)
   }
 
   /**
@@ -351,6 +367,7 @@ class PlayerManager(
   companion object {
     private const val LOG_TAG = "PlayerManager"
 
+    internal const val MAX_VOLUME = 25
     internal const val PRESET_SKIP_DIRECTION_NEXT = 1
     internal const val PRESET_SKIP_DIRECTION_PREV = -1
 
@@ -372,6 +389,10 @@ class PlayerManager(
   }
 
   fun interface PlaybackListener {
-    fun onPlaybackUpdate(playerManagerState: PlaybackState, playerStates: Array<PlayerState>)
+    fun onPlaybackUpdate(
+      playerManagerState: PlaybackState,
+      masterVolume: Int,
+      playerStates: Array<PlayerState>,
+    )
   }
 }

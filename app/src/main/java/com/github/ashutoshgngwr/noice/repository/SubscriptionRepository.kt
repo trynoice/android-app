@@ -1,14 +1,11 @@
 package com.github.ashutoshgngwr.noice.repository
 
 import android.app.Activity
-import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
-import android.content.ServiceConnection
 import android.net.Uri
-import android.os.IBinder
 import android.util.Log
 import com.github.ashutoshgngwr.noice.data.AppDatabase
+import com.github.ashutoshgngwr.noice.ext.bindServiceCallbackFlow
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
 import com.github.ashutoshgngwr.noice.models.GiftCard
 import com.github.ashutoshgngwr.noice.models.Subscription
@@ -26,11 +23,7 @@ import com.github.ashutoshgngwr.noice.service.SubscriptionStatusPollService
 import com.github.ashutoshgngwr.noice.service.SubscriptionStatusPollServiceBinder
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -236,31 +229,10 @@ class SubscriptionRepository @Inject constructor(
    * Returns a flow that actively polls the API client for user's current subscription status and
    * emits it.
    */
-  fun isSubscribed(): Flow<Boolean> = callbackFlow {
-    var isSubscribedCollectionJob: Job? = null
-    val connection = object : ServiceConnection {
-      override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-        isSubscribedCollectionJob = launch {
-          (service as? SubscriptionStatusPollServiceBinder)
-            ?.isSubscribed
-            ?.collect { this@callbackFlow.trySend(it) }
-        }
-      }
-
-      override fun onServiceDisconnected(name: ComponentName?) {
-        isSubscribedCollectionJob?.cancel()
-        isSubscribedCollectionJob = null
-      }
+  fun isSubscribed(): Flow<Boolean> =
+    context.bindServiceCallbackFlow<SubscriptionStatusPollService, SubscriptionStatusPollServiceBinder, Boolean> { binder ->
+      binder.isSubscribed
     }
-
-    Intent(context, SubscriptionStatusPollService::class.java)
-      .also { context.bindService(it, connection, Context.BIND_AUTO_CREATE) }
-
-    awaitClose {
-      isSubscribedCollectionJob?.cancel()
-      context.unbindService(connection)
-    }
-  }
 
   /**
    * Returns a [Flow] that emits the requested gift card as a [Resource].
