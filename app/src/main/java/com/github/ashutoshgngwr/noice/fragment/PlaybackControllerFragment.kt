@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class PlaybackControllerFragment : Fragment() {
@@ -47,6 +48,25 @@ class PlaybackControllerFragment : Fragment() {
       Toast.makeText(requireContext(), R.string.stop, Toast.LENGTH_SHORT).show()
       true
     }
+
+    binding.volume.setOnLongClickListener {
+      Toast.makeText(requireContext(), R.string.master_volume, Toast.LENGTH_SHORT).show()
+      true
+    }
+
+    binding.volume.setOnClickListener {
+      DialogFragment.show(childFragmentManager) {
+        title(R.string.master_volume)
+        slider(
+          viewID = R.id.volume_slider,
+          to = PlaybackController.MAX_MASTER_VOLUME.toFloat(),
+          value = viewModel.masterVolume.value.toFloat(),
+          labelFormatter = { "${(it * 100).roundToInt() / PlaybackController.MAX_MASTER_VOLUME}%" },
+          changeListener = { viewModel.setMasterVolume(it.roundToInt()) }
+        )
+        positiveButton(R.string.okay)
+      }
+    }
   }
 }
 
@@ -67,6 +87,9 @@ class PlaybackControllerViewModel @Inject constructor(
     presets.find { p -> p.hasMatchingPlayerStates(playerStates) }?.name
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+  internal val masterVolume: StateFlow<Int> = playbackController.getMasterVolume()
+    .stateIn(viewModelScope, SharingStarted.Eagerly, 0)
+
   fun togglePlayback() {
     if (isPlaying.value) {
       playbackController.pause()
@@ -77,5 +100,9 @@ class PlaybackControllerViewModel @Inject constructor(
 
   fun stopPlayback() {
     playbackController.stop()
+  }
+
+  internal fun setMasterVolume(volume: Int) {
+    playbackController.setMasterVolume(volume)
   }
 }
