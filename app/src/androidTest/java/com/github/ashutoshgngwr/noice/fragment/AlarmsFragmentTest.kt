@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.fragment
 import android.provider.Settings
 import android.widget.EditText
 import androidx.paging.PagingData
+import androidx.test.espresso.AmbiguousViewMatcherException
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.*
@@ -13,7 +14,6 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.platform.app.InstrumentationRegistry
 import com.github.ashutoshgngwr.noice.EspressoX.clickOn
 import com.github.ashutoshgngwr.noice.EspressoX.itemAtPosition
 import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
@@ -522,19 +522,29 @@ class AlarmsFragmentTest {
       .check(matches(isDisplayed()))
       .perform(click())
 
-    onView(withText(hour.toString()))
-      .inRoot(isDialog())
-      .perform(click())
+    try {
+      onView(withText(hour.toString()))
+        .inRoot(isDialog())
+        .perform(click())
+    } catch (e: AmbiguousViewMatcherException) { // value may already be set to the desired hour
+      onView(withId(com.google.android.material.R.id.material_hour_tv))
+        .inRoot(isDialog())
+        .check(matches(withText(hour.toString())))
+    }
 
     onView(withId(com.google.android.material.R.id.material_minute_tv))
       .inRoot(isDialog())
       .perform(click())
 
-    // add wait because of intermittent NoMatchingViewExceptions.
-    InstrumentationRegistry.getInstrumentation().waitForIdleSync()
-    onView(withText(minute.toString()))
-      .inRoot(isDialog())
-      .perform(click())
+    try {
+      onView(withText(minute.toString()))
+        .inRoot(isDialog())
+        .perform(click())
+    } catch (e: AmbiguousViewMatcherException) { // value may already be set to the desired minute
+      onView(withId(com.google.android.material.R.id.material_minute_tv))
+        .inRoot(isDialog())
+        .check(matches(withText(minute.toString())))
+    }
 
     try {
       onView(withId(com.google.android.material.R.id.material_clock_period_am_button))
