@@ -321,4 +321,5 @@
     <string name="notification_channel_missed_alarms__name">Пропущені будильники</string>
     <string name="alarm_snooze_length">Тривалість відкладання</string>
     <string name="notification_channel_missed_alarms__description">Сповіщення про вимкнення запланованих будильників після закінчення часу нагадування.</string>
+    <string name="master_volume">Основна гучність</string>
 </resources>
