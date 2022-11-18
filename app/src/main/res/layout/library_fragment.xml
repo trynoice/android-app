@@ -39,6 +39,8 @@
           android:id="@+id/sound_list"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
+          android:clipToPadding="false"
+          android:paddingBottom="@{viewModel.isPlaying ? viewModel.isSavePresetButtonVisible ? @dimen/sound_list_padding_extra_extended : @dimen/sound_list_padding_extended : @dimen/sound_list_padding_normal}"
           app:hasFixedSize="@{true}"
           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
@@ -49,7 +51,8 @@
         style="?attr/floatingActionButtonPrimaryStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="76dp"
         android:contentDescription="@string/save_preset"
         android:src="@drawable/ic_action_save"
         android:visibility="gone"
@@ -61,7 +64,8 @@
         style="?attr/floatingActionButtonSecondaryStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="@{viewModel.isPlaying ? viewModel.isSavePresetButtonVisible ? @dimen/random_preset_fab_margin_normal : @dimen/random_preset_fab_margin_extended : @dimen/random_preset_fab_margin_normal}"
         android:contentDescription="@string/random_preset"
         android:src="@drawable/ic_baseline_shuffle_24"
         app:layout_constraintBottom_toTopOf="@id/save_preset_button"

@@ -143,10 +143,8 @@ class LibraryFragment : Fragment(), LibraryListItemController {
       viewModel.transientErrorStrRes
         .filterNotNull()
         .filter { isConnectedToInternet } // suppress transient errors when offline.
-        .collect { causeStrRes ->
-          val msg = getString(R.string.library_load_error, getString(causeStrRes))
-          showErrorSnackBar(msg.normalizeSpace())
-        }
+        .map { getString(R.string.library_load_error, getString(it)) }
+        .collect { showErrorSnackBar(it.normalizeSpace(), snackBarAnchorView()) }
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
@@ -179,7 +177,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
           viewModel.saveCurrentPreset(nameGetter.invoke())
-          showSuccessSnackBar(R.string.preset_saved)
+          showSuccessSnackBar(R.string.preset_saved, snackBarAnchorView())
           // maybe show in-app review dialog to the user
           reviewFlowProvider.maybeAskForReview(requireActivity())
         }
@@ -229,7 +227,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
   override fun onSoundVolumeClicked(soundInfo: SoundInfo, playerState: PlayerState?) {
     if (playerState.isStopped) {
-      showInfoSnackBar(R.string.play_sound_before_adjusting_volume)
+      showInfoSnackBar(R.string.play_sound_before_adjusting_volume, snackBarAnchorView())
       return
     }
 
@@ -255,7 +253,8 @@ class LibraryFragment : Fragment(), LibraryListItemController {
     }
 
     SoundDownloadsRefreshWorker.addSoundDownload(requireContext(), soundInfo.id)
-    showSuccessSnackBar(getString(R.string.sound_scheduled_for_download, soundInfo.name))
+    getString(R.string.sound_scheduled_for_download, soundInfo.name)
+      .also { showSuccessSnackBar(it, snackBarAnchorView()) }
   }
 
   override fun onRemoveSoundDownloadClicked(soundInfo: SoundInfo) {
@@ -266,16 +265,24 @@ class LibraryFragment : Fragment(), LibraryListItemController {
       positiveButton(R.string.delete) {
         SoundDownloadsRefreshWorker.removeSoundDownload(requireContext(), soundInfo.id)
         getString(R.string.sound_download_scheduled_for_removal, soundInfo.name)
-          .also { showSuccessSnackBar(it) }
+          .also { showSuccessSnackBar(it, snackBarAnchorView()) }
       }
     }
   }
 
   override fun onPremiumStatusClicked(soundInfo: SoundInfo) {
     when {
-      soundInfo.isPremium -> showInfoSnackBar(R.string.sound_is_premium)
-      soundInfo.hasPremiumSegments -> showInfoSnackBar(R.string.has_premium_segments)
+      soundInfo.isPremium -> showInfoSnackBar(R.string.sound_is_premium, snackBarAnchorView())
+      soundInfo.hasPremiumSegments -> showInfoSnackBar(
+        R.string.has_premium_segments,
+        snackBarAnchorView(),
+      )
     }
+  }
+
+  private fun snackBarAnchorView(): View? {
+    return activity?.findViewById<View?>(R.id.playback_controller)
+      ?.takeIf { it.isVisible }
   }
 }
 
@@ -289,9 +296,10 @@ class LibraryViewModel @Inject constructor(
 ) : ViewModel() {
 
   private val soundInfosResource = MutableSharedFlow<Resource<List<SoundInfo>>>()
-  private val playerManagerState: StateFlow<PlaybackState> = playbackController
-    .getPlayerManagerState()
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PlaybackState.STOPPED)
+
+  val isPlaying: StateFlow<Boolean> = playbackController.getPlayerManagerState()
+    .map { !it.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
   internal val isSubscribed = subscriptionRepository.isSubscribed()
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
@@ -347,13 +355,12 @@ class LibraryViewModel @Inject constructor(
     )
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-  internal val isSavePresetButtonVisible: StateFlow<Boolean> = combine(
-    playerManagerState,
+  val isSavePresetButtonVisible: StateFlow<Boolean> = combine(
+    isPlaying,
     playerStates,
     presetRepository.listFlow(),
-  ) { playerManagerState, playerStates, presets ->
-    !playerManagerState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED)
-      && presets.none { p -> p.hasMatchingPlayerStates(playerStates) }
+  ) { isPlaying, playerStates, presets ->
+    isPlaying && presets.none { p -> p.hasMatchingPlayerStates(playerStates) }
   }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
   internal val isLibraryIconsEnabled: StateFlow<Boolean> = settingsRepository
