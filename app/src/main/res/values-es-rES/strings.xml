@@ -329,4 +329,5 @@
     <string name="alarm_ringer_max_duration">Duración de los recordatorios</string>
     <string name="alarm_missed">Alarma perdida</string>
     <string name="no_presets">Sin ajustes preestablecidos</string>
+    <string name="master_volume">Volumen principal</string>
 </resources>
