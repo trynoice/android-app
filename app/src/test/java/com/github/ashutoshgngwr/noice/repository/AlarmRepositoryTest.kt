@@ -305,13 +305,15 @@ class AlarmRepositoryTest {
     assertEquals(alarms.size, shadowAlarmManager.scheduledAlarms.size)
 
     val calendar = Calendar.getInstance()
-    shadowAlarmManager.scheduledAlarms.forEachIndexed { index, alarm ->
-      calendar.timeInMillis = alarm.triggerAtTime
-      assertEquals(
-        alarms[index].minuteOfDay,
-        calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE),
-      )
-    }
+    assertEquals(
+      alarms.map { it.minuteOfDay }.toSortedSet(),
+      shadowAlarmManager.scheduledAlarms
+        .map { alarm ->
+          calendar.timeInMillis = alarm.triggerAtTime
+          calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE)
+        }
+        .toSortedSet()
+    )
 
     val offset = 1
     repository.disableAll(offset)
