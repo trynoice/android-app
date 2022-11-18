@@ -13,6 +13,7 @@ import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -124,7 +125,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
         }
 
         ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
-        showSuccessSnackBar(R.string.preset_deleted)
+        showSuccessSnackBar(R.string.preset_deleted, snackBarAnchorView())
 
         params.putBoolean("success", true)
         reviewFlowProvider.maybeAskForReview(requireActivity()) // maybe show in-app review dialog to the user
@@ -162,7 +163,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
 
   override fun onCreatePinnedShortcutClicked(preset: Preset) {
     if (!ShortcutManagerCompat.isRequestPinShortcutSupported(requireContext())) {
-      showErrorSnackBar(R.string.pinned_shortcuts_not_supported)
+      showErrorSnackBar(R.string.pinned_shortcuts_not_supported, snackBarAnchorView())
       return
     }
 
@@ -170,9 +171,9 @@ class PresetsFragment : Fragment(), PresetListItemController {
     val result =
       ShortcutManagerCompat.requestPinShortcut(requireContext(), info, null)
     if (!result) {
-      showErrorSnackBar(R.string.pinned_shortcut_creation_failed)
+      showErrorSnackBar(R.string.pinned_shortcut_creation_failed, snackBarAnchorView())
     } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-      showSuccessSnackBar(R.string.pinned_shortcut_created)
+      showSuccessSnackBar(R.string.pinned_shortcut_created, snackBarAnchorView())
     }
 
     val params = bundleOf("success" to result, "shortcut_type" to "pinned")
@@ -184,9 +185,9 @@ class PresetsFragment : Fragment(), PresetListItemController {
     list.add(buildShortcutInfo(preset.id, "app", preset))
     val result = ShortcutManagerCompat.addDynamicShortcuts(requireContext(), list)
     if (result) {
-      showSuccessSnackBar(R.string.app_shortcut_created)
+      showSuccessSnackBar(R.string.app_shortcut_created, snackBarAnchorView())
     } else {
-      showErrorSnackBar(R.string.app_shortcut_creation_failed)
+      showErrorSnackBar(R.string.app_shortcut_creation_failed, snackBarAnchorView())
     }
 
     viewModel.loadAppShortcuts(requireContext())
@@ -196,7 +197,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
 
   override fun onRemoveAppShortcutClicked(preset: Preset) {
     ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
-    showSuccessSnackBar(R.string.app_shortcut_removed)
+    showSuccessSnackBar(R.string.app_shortcut_removed, snackBarAnchorView())
     viewModel.loadAppShortcuts(requireContext())
     analyticsProvider.logEvent("preset_shortcut_remove", bundleOf("shortcut_type" to "app"))
   }
@@ -216,6 +217,11 @@ class PresetsFragment : Fragment(), PresetListItemController {
 
       build()
     }
+  }
+
+  private fun snackBarAnchorView(): View? {
+    return activity?.findViewById<View?>(R.id.playback_controller)
+      ?.takeIf { it.isVisible }
   }
 }
 

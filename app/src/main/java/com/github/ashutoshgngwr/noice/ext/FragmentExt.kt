@@ -16,17 +16,17 @@ import java.util.*
  * Shows info level [SnackBar]. It anchors the snack bar to bottom navigation view or network
  * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showInfoSnackBar(@StringRes msgResId: Int): Snackbar {
-  return showInfoSnackBar(getString(msgResId))
+fun Fragment.showInfoSnackBar(@StringRes msgResId: Int, anchorView: View? = null): Snackbar {
+  return showInfoSnackBar(getString(msgResId), anchorView)
 }
 
 /**
  * Shows info level [SnackBar]. It anchors the snack bar to bottom navigation view or network
  * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showInfoSnackBar(msg: String): Snackbar {
+fun Fragment.showInfoSnackBar(msg: String, anchorView: View? = null): Snackbar {
   return SnackBar.info(snackBarView(), msg)
-    .setAnchorView((activity as? MainActivity)?.findSnackBarAnchorView())
+    .setAnchorView(anchorView ?: (activity as? MainActivity)?.findSnackBarAnchorView())
     .apply { show() }
 }
 
@@ -34,17 +34,17 @@ fun Fragment.showInfoSnackBar(msg: String): Snackbar {
  * Shows success level [SnackBar]. It anchors the snack bar to bottom navigation view or network
  * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showSuccessSnackBar(@StringRes msgResId: Int): Snackbar {
-  return showSuccessSnackBar(getString(msgResId))
+fun Fragment.showSuccessSnackBar(@StringRes msgResId: Int, anchorView: View? = null): Snackbar {
+  return showSuccessSnackBar(getString(msgResId), anchorView)
 }
 
 /**
  * Shows success level [SnackBar]. It anchors the snack bar to bottom navigation view or network
  * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showSuccessSnackBar(msg: String): Snackbar {
+fun Fragment.showSuccessSnackBar(msg: String, anchorView: View? = null): Snackbar {
   return SnackBar.success(snackBarView(), msg)
-    .setAnchorView((activity as? MainActivity)?.findSnackBarAnchorView())
+    .setAnchorView(anchorView ?: (activity as? MainActivity)?.findSnackBarAnchorView())
     .apply { show() }
 }
 
@@ -52,17 +52,17 @@ fun Fragment.showSuccessSnackBar(msg: String): Snackbar {
  * Shows error level [SnackBar]. It anchors the snack bar to bottom navigation view or network
  * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showErrorSnackBar(@StringRes msgResId: Int): Snackbar {
-  return showErrorSnackBar(getString(msgResId))
+fun Fragment.showErrorSnackBar(@StringRes msgResId: Int, anchorView: View? = null): Snackbar {
+  return showErrorSnackBar(getString(msgResId), anchorView)
 }
 
 /**
  * Shows error level [SnackBar]. It anchors the snack bar to bottom navigation view or network
  * indicator if this fragment is hosted by the MainActivity.
  */
-fun Fragment.showErrorSnackBar(msg: String): Snackbar {
+fun Fragment.showErrorSnackBar(msg: String, anchorView: View? = null): Snackbar {
   return SnackBar.error(snackBarView(), msg)
-    .setAnchorView((activity as? MainActivity)?.findSnackBarAnchorView())
+    .setAnchorView(anchorView ?: (activity as? MainActivity)?.findSnackBarAnchorView())
     .apply { show() }
 }
 

@@ -8,7 +8,9 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="@dimen/root_layout_padding">
+    android:paddingHorizontal="@dimen/root_layout_padding"
+    android:paddingTop="@dimen/root_layout_padding"
+    android:paddingBottom="76dp">
 
     <com.github.ashutoshgngwr.noice.widget.CountdownTextView
       android:id="@+id/countdown_view"
