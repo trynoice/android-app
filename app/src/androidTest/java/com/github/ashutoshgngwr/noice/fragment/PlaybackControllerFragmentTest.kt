@@ -3,8 +3,10 @@ package com.github.ashutoshgngwr.noice.fragment
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
+import com.github.ashutoshgngwr.noice.EspressoX.slide
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.engine.PlaybackState
@@ -140,5 +142,20 @@ class PlaybackControllerFragmentTest {
       .perform(click())
 
     verify(exactly = 1, timeout = 5000) { playbackControllerMock.stop() }
+  }
+
+  @Test
+  fun masterVolumeControl() {
+    launchFragmentInHiltContainer<PlaybackControllerFragment>()
+    onView(withId(R.id.volume))
+      .check(matches(isDisplayed()))
+      .perform(click())
+
+    onView(withId(R.id.volume_slider))
+      .inRoot(isDialog())
+      .check(matches(isDisplayed()))
+      .perform(slide(10f))
+
+    verify(exactly = 1, timeout = 5000) { playbackControllerMock.setMasterVolume(10) }
   }
 }
