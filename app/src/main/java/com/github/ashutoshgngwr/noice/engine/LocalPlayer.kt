@@ -1,11 +1,8 @@
 package com.github.ashutoshgngwr.noice.engine
 
-import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
-import androidx.core.animation.doOnEnd
-import androidx.core.animation.doOnStart
 import androidx.media.AudioAttributesCompat
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.google.android.exoplayer2.C
@@ -23,8 +20,12 @@ import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlin.math.max
 import kotlin.math.min
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -66,7 +67,7 @@ class LocalPlayer(
       exoPlayer.setAudioAttributesCompat(value, false)
     }
 
-  private var fadeAnimator: ValueAnimator? = null
+  private var fadeJob: Job? = null
   private var skipNextFadeInTransition = false
   private var retryDelayMillis = MIN_RETRY_DELAY_MILLIS
 
@@ -82,7 +83,7 @@ class LocalPlayer(
       setPlaybackState(PlaybackState.PLAYING)
       // fade-in or restore volume whenever player starts after buffering or paused states.
       if (sound?.info?.isContiguous == true && !skipNextFadeInTransition) {
-        exoPlayer.fade(0F, getScaledVolume(), fadeInDuration.inWholeMilliseconds)
+        fade(0F, getScaledVolume(), fadeInDuration.inWholeMilliseconds)
       } else {
         skipNextFadeInTransition = false
         exoPlayer.volume = getScaledVolume()
@@ -136,7 +137,7 @@ class LocalPlayer(
 
   override fun resetSegmentQueue() {
     val wasPlaying = exoPlayer.playWhenReady
-    skipNextFadeInTransition = exoPlayer.isPlaying && fadeAnimator?.isRunning != true
+    skipNextFadeInTransition = exoPlayer.isPlaying && fadeJob?.isActive != true
     if (wasPlaying) {
       exoPlayer.stop()
     }
@@ -154,7 +155,7 @@ class LocalPlayer(
   override fun playInternal() {
     if (exoPlayer.isPlaying) { // maybe pausing or stopping state.
       if (exoPlayer.volume != getScaledVolume()) {
-        exoPlayer.fade(exoPlayer.volume, getScaledVolume(), fadeInDuration.inWholeMilliseconds)
+        fade(exoPlayer.volume, getScaledVolume(), fadeInDuration.inWholeMilliseconds)
       }
 
       setPlaybackState(PlaybackState.PLAYING)
@@ -177,7 +178,7 @@ class LocalPlayer(
     }
 
     setPlaybackState(PlaybackState.PAUSING)
-    exoPlayer.fade(exoPlayer.volume, 0F, fadeOutDuration.inWholeMilliseconds) {
+    fade(exoPlayer.volume, 0F, fadeOutDuration.inWholeMilliseconds) {
       pauseImmediately()
     }
   }
@@ -194,7 +195,7 @@ class LocalPlayer(
     }
 
     setPlaybackState(PlaybackState.STOPPING)
-    exoPlayer.fade(exoPlayer.volume, 0F, fadeOutDuration.inWholeMilliseconds) {
+    fade(exoPlayer.volume, 0F, fadeOutDuration.inWholeMilliseconds) {
       stopImmediately()
     }
   }
@@ -207,7 +208,7 @@ class LocalPlayer(
 
   override fun setVolumeInternal(volume: Float) {
     if (exoPlayer.isPlaying) {
-      exoPlayer.fade(exoPlayer.volume, volume, 1_500L)
+      fade(exoPlayer.volume, volume, 1_500L)
     } else {
       exoPlayer.volume = getScaledVolume()
     }
@@ -232,7 +233,7 @@ class LocalPlayer(
       .also { setAudioAttributes(it, handleAudioFocus) }
   }
 
-  private inline fun ExoPlayer.fade(
+  private inline fun fade(
     fromVolume: Float,
     toVolume: Float,
     durationMillis: Long,
@@ -241,14 +242,22 @@ class LocalPlayer(
     // clearing previous callback is required because a Player might want to transition from
     // `STOPPING` to `PLAYING` state. If the callback isn't cleared, the callback for fade-out
     // during stop operation will make ExoPlayer release its resources.
-    fadeAnimator?.removeAllListeners()
-    fadeAnimator?.cancel()
-    fadeAnimator = ValueAnimator.ofFloat(fromVolume, toVolume).apply {
-      duration = durationMillis
-      addUpdateListener { volume = it.animatedValue as Float }
-      doOnStart { volume = fromVolume }
-      doOnEnd { callback.invoke() }
-      start()
+    val oldFadeJob = fadeJob
+    fadeJob = defaultScope.launch {
+      oldFadeJob?.cancelAndJoin()
+
+      val stepSize = (toVolume - fromVolume) / (max(1, durationMillis) / FADE_STEP_DURATION_MILLIS)
+      exoPlayer.volume = fromVolume
+      while (isActive) {
+        exoPlayer.volume = max(0f, min(exoPlayer.volume + stepSize, 1f))
+        if ((stepSize < 0 && exoPlayer.volume <= toVolume) || (stepSize > 0 && exoPlayer.volume >= toVolume)) {
+          exoPlayer.volume = toVolume
+          callback.invoke()
+          break
+        }
+
+        delay(FADE_STEP_DURATION_MILLIS)
+      }
     }
   }
 
@@ -256,6 +265,7 @@ class LocalPlayer(
     private const val LOG_TAG = "LocalPlayer"
     private const val MIN_RETRY_DELAY_MILLIS = 1 * 1000L
     private const val MAX_RETRY_DELAY_MILLIS = 30 * 1000L
+    private const val FADE_STEP_DURATION_MILLIS = 100L
   }
 
   /**
