@@ -319,4 +319,5 @@
     <string name="alarm_snooze_length_summary">Durata in minuti di snoozing delle sveglie</string>
     <string name="notification_channel_missed_alarms__name">Sveglie mancate</string>
     <string name="notification_channel_missed_alarms__description">Notifiche visualizzate quando si silenziano le sveglie programmate dopo la durata del promemoria.</string>
+    <string name="master_volume">Volume principale</string>
 </resources>
