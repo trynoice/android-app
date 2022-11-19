@@ -320,4 +320,5 @@
     <string name="alarm_snooze_length">स्नूज़ लंबाई</string>
     <string name="notification_channel_missed_alarms__description">रिमाइंडर की अवधि बीत जाने के बाद शेड्यूल किए गए अलार्म को बंद करने पर दिखाई जाने वाली सूचनाएं।</string>
     <string name="no_presets">कोई प्रीसेट नहीं</string>
+    <string name="master_volume">मास्टर वॉल्यूम</string>
 </resources>
