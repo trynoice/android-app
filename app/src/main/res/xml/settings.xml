@@ -81,7 +81,7 @@
     <SeekBarPreference
       android:defaultValue="@integer/default_alarm_ringer_max_duration_minutes"
       android:key="@string/alarm_ringer_max_duration_key"
-      android:max="30"
+      android:max="60"
       android:summary="@string/alarm_ringer_max_duration_summary"
       android:title="@string/alarm_ringer_max_duration"
       app:iconSpaceReserved="false"
@@ -92,7 +92,7 @@
     <SeekBarPreference
       android:defaultValue="@integer/default_alarm_snooze_length_minutes"
       android:key="@string/alarm_snooze_length_key"
-      android:max="30"
+      android:max="60"
       android:summary="@string/alarm_snooze_length_summary"
       android:title="@string/alarm_snooze_length"
       app:iconSpaceReserved="false"
