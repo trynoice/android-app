@@ -330,4 +330,6 @@
     <string name="alarm_missed">Alarma perdida</string>
     <string name="no_presets">Sin ajustes preestablecidos</string>
     <string name="master_volume">Volumen principal</string>
+    <string name="alarm_gradually_increase_volume">Aumentar gradualmente el volumen de la alarma</string>
+    <string name="alarm_gradually_increase_volume_summary">Duración en minutos para aumentar gradualmente el volumen cuando se dispara una alarma</string>
 </resources>
