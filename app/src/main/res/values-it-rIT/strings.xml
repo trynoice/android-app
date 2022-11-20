@@ -320,4 +320,6 @@
     <string name="notification_channel_missed_alarms__name">Sveglie mancate</string>
     <string name="notification_channel_missed_alarms__description">Notifiche visualizzate quando si silenziano le sveglie programmate dopo la durata del promemoria.</string>
     <string name="master_volume">Volume principale</string>
+    <string name="alarm_gradually_increase_volume">Aumenta gradualmente il volume della sveglia</string>
+    <string name="alarm_gradually_increase_volume_summary">Durata in minuti per aumentare gradualmente il volume quando la sveglia parte</string>
 </resources>
