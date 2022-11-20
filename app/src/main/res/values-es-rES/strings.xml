@@ -167,7 +167,7 @@
     <string name="sign_in">Iniciar sesión</string>
     <string name="ends_on">Finaliza el %1$s</string>
     <string name="subscription_payment_refunded">Cancelamos esta compra e iniciamos un reembolso por ella.</string>
-    <string name="email">Correo Electrónico</string>
+    <string name="email">Correo electrónico</string>
     <string name="sign_in_sucessful">¡Inicio de sesión exitoso!</string>
     <string name="manage_subscription">Administrar suscripción</string>
     <string name="non_looping_sound">Este sonido contiene pausas intermedias.</string>
