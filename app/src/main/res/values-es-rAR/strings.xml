@@ -39,4 +39,7 @@
     <string name="preset_already_exists">¡Ya existe un preajuste con ese nombre!</string>
     <string name="okay">De acuerdo</string>
     <string name="preset_does_not_exist">El preajuste no existe. ¡Es posible que se haya borrado!</string>
+    <string name="invalid_name">¡El nombre ingresado no es válido!</string>
+    <string name="invalid_email">¡El correo electrónico introducido no es válido!</string>
+    <string name="email">Correo electrónico</string>
 </resources>
