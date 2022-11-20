@@ -113,4 +113,5 @@
     <string name="import_presets_successful">ファイルからプリセットをインポートしました!</string>
     <string name="export_presets_successful">プリセットがファイルに保存されました!</string>
     <string name="enable_media_buttons">メデイアボタンを有効化</string>
+    <string name="email">電子メール</string>
 </resources>
