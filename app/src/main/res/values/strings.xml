@@ -347,4 +347,6 @@
     <string name="alarm_missed">Alarm missed</string>
     <string name="no_presets">No Presets</string>
     <string name="master_volume">Master Volume</string>
+    <string name="alarm_gradually_increase_volume">Gradually increase alarm volume</string>
+    <string name="alarm_gradually_increase_volume_summary">Duration in minutes for gradually increasing the volume when an alarm fires</string>
 </resources>

@@ -40,11 +40,15 @@ import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.min
 import kotlin.random.Random
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
@@ -66,6 +70,7 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
   internal lateinit var uiController: UiController
 
   private var defaultRingtonePlayer: MediaPlayer? = null
+  private var masterVolumeFadeJob: Job? = null
   private var autoDismissJob: Job? = null
 
   private val notificationManager: NotificationManager by lazy { requireNotNull(getSystemService()) }
@@ -181,15 +186,43 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
       ?: presetRepository.generate(emptySet(), Random.nextInt(2, 6))
         .lastOrNull()?.data // or attempt to generate one
 
+    val fadeDurationMillis = min(
+      settingsRepository.getAlarmVolumeRampDuration().inWholeMilliseconds,
+      (settingsRepository.getAlarmRingerMaxDuration() - 1.minutes).inWholeMilliseconds,
+    )
+
     if (preset != null) {
       Log.d(LOG_TAG, "startRinger: starting preset: $preset")
       playbackController.setAudioUsage(AudioAttributesCompat.USAGE_ALARM)
+      if (fadeDurationMillis > 0) playbackController.setMasterVolume(5)
       playbackController.play(preset)
     } else {
       Log.d(LOG_TAG, "startRinger: starting default ringtone")
-      playDefaultRingtone()
+      playDefaultRingtone(if (fadeDurationMillis > 0) 0.2f else 1f)
       buildPresetLoadFailedNotification(alarmTriggerTime)
         .also { notificationManager.notify(NOTIFICATION_ID_PRIMING, it) }
+    }
+
+    masterVolumeFadeJob?.cancelAndJoin()
+    masterVolumeFadeJob = if (fadeDurationMillis > 0) {
+      lifecycleScope.launch {
+        val fadeStepMillis = fadeDurationMillis / (PlaybackController.MAX_MASTER_VOLUME - 5)
+        var volume = 5
+        while (isActive) {
+          volume++
+          playbackController.setMasterVolume(volume)
+          (volume.toFloat() / PlaybackController.MAX_MASTER_VOLUME)
+            .also { defaultRingtonePlayer?.setVolume(it, it) }
+
+          if (volume >= PlaybackController.MAX_MASTER_VOLUME) {
+            break
+          }
+
+          delay(fadeStepMillis)
+        }
+      }
+    } else {
+      null
     }
 
     if (alarm.vibrate) {
@@ -296,8 +329,10 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
     alarmRepository.reportTrigger(alarmId, isSnoozed)
 
     vibrator.cancel()
+    masterVolumeFadeJob?.cancelAndJoin()
     playbackController.pause(true)
     playbackController.setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
+    playbackController.setMasterVolume(PlaybackController.MAX_MASTER_VOLUME)
     audioFocusManager.abandonFocus()
     defaultRingtonePlayer?.release()
 
@@ -321,7 +356,7 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
     stopSelf()
   }
 
-  private fun playDefaultRingtone() {
+  private fun playDefaultRingtone(initialVolume: Float) {
     defaultRingtonePlayer?.release()
     val ringtoneUri = getDefaultAlarmRingtoneUri() ?: return
     defaultRingtonePlayer = MediaPlayer().apply {
@@ -333,6 +368,7 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
           .setLegacyStreamType(AudioManager.STREAM_ALARM)
           .build()
       )
+      setVolume(initialVolume, initialVolume)
       prepare()
     }
 

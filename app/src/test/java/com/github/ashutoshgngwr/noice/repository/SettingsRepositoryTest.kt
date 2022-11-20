@@ -276,4 +276,22 @@ class SettingsRepositoryTest {
       )
     }
   }
+
+  @Test
+  fun getAlarmVolumeRampDuration() {
+    val inputs = arrayOf(null, 2, 4, 7)
+    for (input in inputs) {
+      every {
+        prefs.getInt(context.getString(R.string.alarm_gradually_increase_volume_key), any())
+      } answers { input ?: secondArg() }
+
+      val defaultMinutes = context.resources
+        .getInteger(R.integer.default_alarm_gradually_increase_volume_minutes)
+
+      assertEquals(
+        (input ?: defaultMinutes).minutes,
+        settingsRepository.getAlarmVolumeRampDuration(),
+      )
+    }
+  }
 }

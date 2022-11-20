@@ -81,6 +81,7 @@ class AlarmRingerServiceTest {
     presetRepositoryMock = mockk(relaxed = true)
     settingsRepositoryMock = mockk {
       every { getAlarmRingerMaxDuration() } returns 2.minutes
+      every { getAlarmVolumeRampDuration() } returns 1.minutes
     }
 
     playbackControllerMock = mockk(relaxed = true)
@@ -163,6 +164,10 @@ class AlarmRingerServiceTest {
         .filter { it.id == AlarmRingerService.NOTIFICATION_ID_ALARM }
       assertEquals(1, notifications.size)
       assertTrue(notifications.firstOrNull()?.isOngoing ?: false)
+
+      // assert master volume fade
+      advanceUntilIdle()
+      verify(atLeast = 20) { playbackControllerMock.setMasterVolume(any()) }
     }
   }
 

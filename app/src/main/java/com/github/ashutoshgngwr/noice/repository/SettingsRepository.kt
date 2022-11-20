@@ -203,6 +203,13 @@ class SettingsRepository @Inject constructor(
     ).toDuration(DurationUnit.MINUTES)
   }
 
+  fun getAlarmVolumeRampDuration(): Duration {
+    return prefs.getInt(
+      context.getString(R.string.alarm_gradually_increase_volume_key),
+      context.resources.getInteger(R.integer.default_alarm_gradually_increase_volume_minutes),
+    ).toDuration(DurationUnit.MINUTES)
+  }
+
   private fun keyFlow(@StringRes keyStrRes: Int): Flow<String> {
     return prefs.keyFlow(context.getString(keyStrRes))
   }
