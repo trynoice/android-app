@@ -330,4 +330,7 @@
     <string name="alarm_ringer_max_duration_summary">Durée en minutes, après laquelle le rappel de l\'alarme doit être automatiquement désactivé</string>
     <string name="alarm_snooze_length">Durée de la répétition du réveil</string>
     <string name="notification_channel_alarm_priming__description">Notifications affichées lors de la préparation du déclenchement d\'une alarme programmée.</string>
+    <string name="master_volume">Volume principal</string>
+    <string name="alarm_gradually_increase_volume">Augmenter progressivement le volume de l\'alarme</string>
+    <string name="alarm_gradually_increase_volume_summary">Durée en minutes pour l\'augmentation progressive du volume lors d\'un déclenchement d\'alarme</string>
 </resources>
