@@ -37,4 +37,5 @@
     <string name="preset_does_not_exist">Forindstilling findes ikke. Den er muligvis blevet slettet!</string>
     <string name="preset_info__description">Du har endnu ikke oprettet nogen forudindstillinger. Du kan oprette en forudindstilling ved at gå til biblioteket og afspille lyde. Klik derefter på knappen, der vises i nederste hjørne af skærmen.</string>
     <string name="presets_as_home_screen_summary">Vis \"presets\" ved appstart (kræver genstart af appen)</string>
+    <string name="email">E-mail</string>
 </resources>
