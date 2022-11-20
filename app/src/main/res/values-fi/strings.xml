@@ -115,4 +115,6 @@
     <string name="enable_media_buttons">Käytä media painikkeita</string>
     <string name="support_development__donate_description">Ellet ole maksanut premium tilausta, voit tehdä sen kertamaksulla. Se tulee auttamaan meitä ylläpitämään ilmaisien ominaisuuksien kehitystä, ja pitämään ne mainoksettomina.</string>
     <string name="random_preset_description">On mahdollista, että luotu esiasetus sisältää ääniä valituilla avainsanoilla. Lisäksi, intensiiviset esiasetukset yrittävät toistaa useampia ääniä samanaikaisesti.</string>
+    <string name="invalid_name">Syötetty nimi on virheellinen!</string>
+    <string name="email">Sähköposti</string>
 </resources>
