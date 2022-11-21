@@ -249,4 +249,5 @@
     <string name="terms_of_service">Hizmet Kullanım Şartları</string>
     <string name="gift_card_code">Hediye kart kodu</string>
     <string name="invalid_gift_card_code">Girilen hediye kart kodu geçersiz!</string>
+    <string name="sign_out_error">Olamaz! Hesaptan çıkışınızı yapamadık. %1$s Lütfen tekrar deneyin !</string>
 </resources>
