@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.activity
 
 import android.app.Activity
 import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.ActivityScenario.launchActivityForResult
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -41,7 +42,7 @@ class AlarmRingerActivityTest {
   fun setup() {
     serviceController = mockk()
     uiController = mockk()
-    activityScenario = ActivityScenario.launch(
+    activityScenario = launchActivityForResult(
       AlarmRingerActivity.buildIntent(
         context = ApplicationProvider.getApplicationContext(),
         alarmId = ALARM_ID,

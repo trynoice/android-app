@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import androidx.test.core.app.ActivityScenario.launch
+import androidx.test.core.app.ActivityScenario.launchActivityForResult
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -38,7 +39,7 @@ class AppIntroActivityTest {
 
   @Test
   fun onSkipPressed() {
-    val scenario = launch(AppIntroActivity::class.java)
+    val scenario = launchActivityForResult(AppIntroActivity::class.java)
     onView(withId(R.id.skip))
       .check(matches(isDisplayed()))
       .perform(click())
@@ -55,7 +56,7 @@ class AppIntroActivityTest {
 
   @Test
   fun onDonePressed() {
-    val scenario = launch(AppIntroActivity::class.java)
+    val scenario = launchActivityForResult(AppIntroActivity::class.java)
     while (true) {
       try {
         onView(withId(R.id.done))

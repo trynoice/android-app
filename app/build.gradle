@@ -146,23 +146,21 @@ project.afterEvaluate {
 dependencies {
   def androidXHiltVersion = '1.0.0'
   def exoPlayerVersion = '2.18.1'
-  def fragmentVersion = '1.5.1'
+  def fragmentVersion = '1.5.4'
   def roomVersion = '2.4.3'
   def workManagerVersion = '2.7.1'
 
-  // TODO: Espresso 3.4.0 causes duplicate class errors during gradle build.
-  //  https://github.com/android/android-test/issues/861
-  def espressoVersion = '3.3.0'
+  def espressoVersion = '3.5.0'
   def mockkVersion = '1.13.2'
 
   kapt "com.google.dagger:hilt-compiler:$deps.hiltVersion"
   kapt "androidx.hilt:hilt-compiler:$androidXHiltVersion"
   kapt "androidx.room:room-compiler:$roomVersion"
 
-  implementation 'androidx.appcompat:appcompat:1.4.2'
+  implementation 'androidx.appcompat:appcompat:1.5.1'
   implementation 'androidx.browser:browser:1.4.0'
   implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-  implementation 'androidx.core:core-ktx:1.8.0'
+  implementation 'androidx.core:core-ktx:1.9.0'
   implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
   implementation "androidx.hilt:hilt-work:$androidXHiltVersion"
   implementation "androidx.lifecycle:lifecycle-common-java8:$deps.lifecycleVersion"
@@ -195,9 +193,9 @@ dependencies {
 
   implementation project(":api-client")
 
-  fullImplementation 'com.android.billingclient:billing-ktx:5.0.0'
+  fullImplementation 'com.android.billingclient:billing-ktx:5.1.0'
   fullImplementation 'com.google.android.gms:play-services-base:18.1.0'
-  fullImplementation 'com.google.android.gms:play-services-cast-framework:21.0.1'
+  fullImplementation 'com.google.android.gms:play-services-cast-framework:21.2.0'
   fullImplementation 'com.google.android.play:core:1.10.3'
   fullImplementation platform('com.google.firebase:firebase-bom:29.1.0')
   fullImplementation 'com.google.firebase:firebase-analytics-ktx'
@@ -218,12 +216,12 @@ dependencies {
   kaptAndroidTest "com.google.dagger:hilt-android-compiler:$deps.hiltVersion"
 
   androidTestImplementation "androidx.test:core:$deps.testCoreVersion"
-  androidTestImplementation "androidx.test:rules:1.4.0"
-  androidTestImplementation "androidx.test:runner:1.4.0"
+  androidTestImplementation "androidx.test:rules:1.5.0"
+  androidTestImplementation "androidx.test:runner:1.5.1"
   androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
   androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
   androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
-  androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+  androidTestImplementation 'androidx.test.ext:junit:1.1.4'
   androidTestImplementation "androidx.work:work-testing:$workManagerVersion"
   androidTestImplementation "com.google.dagger:hilt-android-testing:$deps.hiltVersion"
   androidTestImplementation "junit:junit:$deps.junitVersion"
