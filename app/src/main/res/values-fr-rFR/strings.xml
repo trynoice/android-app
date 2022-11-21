@@ -25,10 +25,7 @@
     <string name="open_context_menu">Menu contextuel</string>
     <string name="preset_delete_confirmation">Confirmer la suppression de %s ?</string>
     <string name="preset_deleted">Réglage supprimé !</string>
-    <string name="preset_info__description">
-    Vous n\'avez pas encore de réglage. Pour en créer un, allez dans Bibliothèque et jouez des sons.
-    Puis cliquez sur le bouton Sauvegarder qui apparait en bas à droite.
-  </string>
+    <string name="preset_info__description">Créez de nouveaux préréglages en jouant des sons et en utilisant le bouton Enregistrer dans la bibliothèque.</string>
     <string name="rename">Renommer</string>
     <string name="auto_sleep_schedule_cancelled">Minuterie annulée !</string>
     <string name="reset">Réinitialiser</string>
@@ -96,17 +93,17 @@
     <string name="unsaved_preset">Réglage non-enregistré</string>
     <string name="skip_to_next">Réglage suivant</string>
     <string name="skip_to_prev">Réglage précédent</string>
-    <string name="import_presets_summary">L’importation de préréglages enregistrés depuis un fichier externe écrasera les préréglages existants, le cas échéant</string>
+    <string name="import_presets_summary">L\'importation de préréglages enregistrés depuis un fichier externe écrasera les préréglages existants, le cas échéant</string>
     <string name="import_presets">Importer depuis un fichier</string>
-    <string name="export_presets_summary">Exporter l’instantané actuel des préréglages sauvegardés vers un fichier externe</string>
+    <string name="export_presets_summary">Exporter l\'instantané actuel des préréglages sauvegardés vers un fichier externe</string>
     <string name="export_presets">Exporter dans un fichier</string>
     <string name="share">Partager</string>
-    <string name="invalid_import_file_format">Le format du fichier d’importation n’est pas valide !</string>
+    <string name="invalid_import_file_format">Le format du fichier d\'importation n\'est pas valide !</string>
     <string name="failed_to_read_file">Échec de la lecture du fichier sélectionné !</string>
-    <string name="failed_to_write_file">Échec de l’écriture dans le fichier sélectionné !</string>
-    <string name="all_app_shortcuts_removed">Tous les raccourcis d’applications ont été supprimés !</string>
-    <string name="remove_all_app_shortcuts_confirmation">Ça supprimera tous les raccourcis prédéfinis du menu des raccourcis de l’application. Voulez-vous continuer \?</string>
-    <string name="remove_all_app_shortcuts">Retirer tous les raccourcis de l’appli</string>
+    <string name="failed_to_write_file">Échec de l\'écriture dans le fichier sélectionné !</string>
+    <string name="all_app_shortcuts_removed">Tous les raccourcis d\'applications ont été supprimés !</string>
+    <string name="remove_all_app_shortcuts_confirmation">Ça supprimera tous les raccourcis prédéfinis du menu des raccourcis de l\'application. Voulez-vous continuer \?</string>
+    <string name="remove_all_app_shortcuts">Retirer tous les raccourcis de l\'appli</string>
     <string name="should_display_sound_icons">Afficher les icônes de son</string>
     <string name="should_share_usage_data_summary">Partager automatiquement les données d\'utilisation et de comportement avec les développeurs</string>
     <string name="should_share_usage_data">Partager les données d\'utilisation et de comportement</string>
@@ -119,8 +116,8 @@
     <string name="share_usage_data_consent_title">Préférences de partage des données</string>
     <string name="payment_pending">Nous vous informerons dès que nous aurons fini de traiter votre paiement.</string>
     <string name="failed_to_purchase">Échec du lancement du flux de paiement. Veuillez réessayer plus tard !</string>
-    <string name="failed_to_load_inapp_purchases">Impossible de charger les détails de l’achat interne à l’appli. Veuillez réessayer plus tard !</string>
-    <string name="sound_fade_in_duration_summary">Durée du fondu sonore (en secondes)</string>
+    <string name="failed_to_load_inapp_purchases">Impossible de charger les détails de l\'achat interne à l\'appli. Veuillez réessayer plus tard !</string>
+    <string name="sound_fade_in_duration_summary">Durée en secondes pour les sons en fondu enchaîné</string>
     <string name="sound_fade_in_duration">Durée du fondu sonore</string>
     <string name="created_by">Créé par</string>
     <string name="import_presets_successful">Préréglages importés avec succès depuis le fichier !</string>
@@ -247,7 +244,7 @@
     <string name="cancel_subscription_confirmation">Êtes-vous sûr·e de vouloir annuler votre abonnement à Noice Premium \? En cas d\'annulation, votre abonnement sera automatiquement résilié à la fin du cycle de facturation actuel. Votre cycle de facturation actuel se termine le %1$s.</string>
     <string name="sign_in_token_error">Le lien de connexion semble être invalide. Il a peut-être expiré. Veuillez réessayer !</string>
     <string name="subscription_plans_load_error">Oups ! Nous n\'avons pas pu récupérer les plans d\'abonnement. %1$s</string>
-    <string name="sound_fade_out_duration_summary">Durée de l\'atténuation des sons (en secondes)</string>
+    <string name="sound_fade_out_duration_summary">Durée en secondes de l\'atténuation des sons</string>
     <string name="open_mailbox">Ouvrir la messagerie</string>
     <string name="subscription_purchases">Achats d\'abonnements</string>
     <string name="looping_sound">Ce son passe en boucle sans interruption.</string>
@@ -293,4 +290,47 @@
     <string name="benefit_4">%1$d sons supplémentaires</string>
     <string name="sound_is_premium">Ce son est disponible avec Noice Premium.</string>
     <string name="review">Consulter</string>
+    <string name="alarms">Alarmes</string>
+    <string name="add_alarm">Ajouter une alarme</string>
+    <string name="monday_initial">L</string>
+    <string name="wednesday_initial">Mer</string>
+    <string name="saturday_initial">S</string>
+    <string name="not_scheduled">Non programmé</string>
+    <string name="edit_label">Modifier le label</string>
+    <string name="no_alarms_description">Ajoute une nouvelle alarme en appuyant sur le bouton + !</string>
+    <string name="no_alarms">Aucune alarmes</string>
+    <string name="friday_initial">V</string>
+    <string name="sunday_initial">D</string>
+    <string name="tuesday_initial">Mar</string>
+    <string name="notification_channel_alarm_primary__name">Alarmes</string>
+    <string name="thursday_initial">J</string>
+    <string name="vibrate">Vibration</string>
+    <string name="alarm">Alarme</string>
+    <string name="alarm_permission_rationale_title">Permettre à Noice de programmer des alarmes</string>
+    <string name="post_notifications_permission_rationale_title">Autoriser Noice à afficher les notifications</string>
+    <string name="proceed">Poursuivre</string>
+    <string name="add_label">Ajouter un label</string>
+    <string name="notification_channel_alarm_primary__description">Notifications affichées lorsqu\'une alarme programmée se déclenche.</string>
+    <string name="alarm_permission_rationale_description">Nous avons besoin d\'un accès supplémentaire pour programmer des alarmes sur votre appareil.
+\n
+\nVeuillez activer **Alarmes et rappels** pour Noice à partir des détails de son application dans les paramètres système de votre appareil.</string>
+    <string name="post_notifications_permission_rationale_description">Nous avons besoin d\'une autorisation supplémentaire pour afficher des notifications pour les alarmes programmées. Sans notifications, Noice ne peut pas faire sonner les alarmes à l\'heure prévue.</string>
+    <string name="alarm_post_notifications_permission_denied">Noice ne peut pas faire sonner les alarmes sans l\'autorisation d\'afficher les notifications !</string>
+    <string name="notification_channel_alarm_priming__name">Amorçage d\'alarme</string>
+    <string name="snooze">Répéter</string>
+    <string name="alarm_snooze_length_summary">Durée en minutes des alarmes en répétition</string>
+    <string name="alarm_ringer_max_duration">Durée du rappel</string>
+    <string name="notification_channel_missed_alarms__description">Notifications affichées sur l\'extinction des alarmes programmées après l\'écoulement de la durée du rappel.</string>
+    <string name="no_presets">Aucun préréglage</string>
+    <string name="alarm_ringer_preset_load_error">Impossible de charger le préréglage sélectionné pour cette alarme.</string>
+    <string name="alarms_disabled_due_to_subscription_expiration">Nous avons dû désactiver certaines alarmes car votre abonnement Noice Premium a expiré !</string>
+    <string name="benefit_5">Alarmes illimitées</string>
+    <string name="notification_channel_missed_alarms__name">Alarmes manquées</string>
+    <string name="alarm_missed">Alarme manquée</string>
+    <string name="alarm_ringer_max_duration_summary">Durée en minutes, après laquelle le rappel de l\'alarme doit être automatiquement désactivé</string>
+    <string name="alarm_snooze_length">Durée de la répétition du réveil</string>
+    <string name="notification_channel_alarm_priming__description">Notifications affichées lors de la préparation du déclenchement d\'une alarme programmée.</string>
+    <string name="master_volume">Volume principal</string>
+    <string name="alarm_gradually_increase_volume">Augmenter progressivement le volume de l\'alarme</string>
+    <string name="alarm_gradually_increase_volume_summary">Durée en minutes pour l\'augmentation progressive du volume lors d\'un déclenchement d\'alarme</string>
 </resources>

@@ -26,7 +26,7 @@
     <string name="open_context_menu">Открыть контекстное меню</string>
     <string name="preset_delete_confirmation">Вы точно хотите удалить %s\?</string>
     <string name="preset_deleted">Шаблон удалён!</string>
-    <string name="preset_info__description">Вы ещё не создали ни одного шаблона. Чтобы создать шаблон, зайдите в Библиотеку и воспроизведите звуки. Затем нажмите на кнопку \"Сохранить\", которая появится в нижнем углу экрана.</string>
+    <string name="preset_info__description">Создавайте новые пресеты, воспроизводя звуки и используя кнопку Сохранить в Библиотеке.</string>
     <string name="rename">Переименовать</string>
     <string name="auto_sleep_schedule_cancelled">Таймер автоотключения отменён!</string>
     <string name="reset">Сброс</string>
@@ -114,7 +114,7 @@
 \n
 \n Вы можете настроить автоматический обмен данными в любое время в приложении, перейдя в раздел \"**Настройки** &gt; **Обмен данными об использовании и поведении**\".</string>
     <string name="share_usage_data_consent_title">Параметры доступа к данным</string>
-    <string name="sound_fade_in_duration_summary">Продолжительность затухания звуков (в секундах)</string>
+    <string name="sound_fade_in_duration_summary">Продолжительность времени в секундах для затухающих звуков</string>
     <string name="sound_fade_in_duration">Продолжительность затухания звука</string>
     <string name="enable_media_buttons_summary">Используйте аппаратные мультимедийные кнопки для управления воспроизведением</string>
     <string name="enable_media_buttons">Включить мультимедийные кнопки</string>
@@ -123,7 +123,7 @@
     <string name="export_presets_successful">Шаблоны успешно экспортированы в файл!</string>
     <string name="random_preset_description">Сгенерированный шаблон, скорее всего, будет содержать звуки с выбранными ключевыми словами. Более того, интенсивные шаблоны будут пытаться воспроизводить больше звуков одновременно.</string>
     <string name="support_development__donate_description">Если вы не приобрели премиум-подписку, вы можете совершить разовый платеж. Это поможет нам поддерживать разработку бесплатных функций и навсегда сохранить их без рекламы.</string>
-    <string name="sound_fade_out_duration_summary">Продолжительность затухающих звуков (в секундах)</string>
+    <string name="sound_fade_out_duration_summary">Продолжительность времени в секундах для затухающих звуков</string>
     <string name="support">Поддержка</string>
     <string name="sign_in_message">Пожалуйста, введите эл. почту для входа.</string>
     <string name="unknown_error">Произошла неизвестная ошибка.</string>
@@ -289,4 +289,15 @@
     <string name="review">Обзор</string>
     <string name="benefit_4">%1$d дополнительные звуки</string>
     <string name="sound_is_premium">Этот звук доступен при использовании Noice Premium.</string>
+    <string name="no_alarms_description">Добавьте новый будильник, нажав кнопку \"+\"!</string>
+    <string name="alarm_permission_rationale_title">Разрешить Noice планировать будильники</string>
+    <string name="proceed">Действуйте</string>
+    <string name="alarm_permission_rationale_description">Нам нужен дополнительный доступ для планирования будильников на вашем устройстве.
+\n
+\nПожалуйста, включите **Будильники и напоминания** для Noice в сведениях о приложении в системных настройках вашего устройства.</string>
+    <string name="post_notifications_permission_rationale_title">Разрешите Noice показывать уведомления</string>
+    <string name="add_alarm">Добавить будильник</string>
+    <string name="alarms">Будильники</string>
+    <string name="no_alarms">Нет будильников</string>
+    <string name="post_notifications_permission_rationale_description">Нам необходимо дополнительное разрешение для показа уведомлений о запланированных будильниках. Без уведомлений Noice не сможет подать будильник в назначенное время.</string>
 </resources>

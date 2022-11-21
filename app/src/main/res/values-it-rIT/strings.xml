@@ -44,7 +44,7 @@
     <string name="rename">Rinomina</string>
     <string name="open_context_menu">Apri menú contestuale</string>
     <string name="add_to_home_screen">Aggiungi a schermata home</string>
-    <string name="preset_info__description">Non hai ancora creato alcun preset. Per creare un preset, vai nella Libreria e riproduci i suoni. Poi clicca sul pulsante Salva che appare nell\'angolo dello schermo.</string>
+    <string name="preset_info__description">Crea nuovi preset riproducendo i suoni e utilizzando il pulsante salva nella libreria.</string>
     <string name="preset_does_not_exist">Preset non esistente. Potrebbe essere stato cancellato!</string>
     <string name="sleep_timer_description">Noice si riavvierà allo scadere del tempo. Usa i pulsanti sotto per aggiungere del tempo e avviare il timer.</string>
     <string name="presets_as_home_screen_summary">Mostra «preimpostazioni» all\'avvio dell\'app (necessita il riavvio dell\'app)</string>
@@ -112,7 +112,7 @@
     <string name="sound_fade_in_duration">Durata della dissolvenza del suono</string>
     <string name="export_presets_successful">Preimpostazioni esportate con successo nel file!</string>
     <string name="import_presets_successful">Preimpostazioni importate con successo dal file!</string>
-    <string name="sound_fade_in_duration_summary">Durata del tempo per i suoni in dissolvenza (in secondi)</string>
+    <string name="sound_fade_in_duration_summary">Durata del tempo in secondi per i suoni in dissolvenza</string>
     <string name="sound_fade_out_duration">Durata sfumatura suono</string>
     <string name="audio_quality_ultra">Ultra (320 kbps)</string>
     <string name="invalid_email">L\'e-mail inserita non è valida!</string>
@@ -122,7 +122,7 @@
     <string name="cont">Continua</string>
     <string name="delete_account_confirmation">Perderai immediatamente accesso al tuo account alla cancellazione. Se hai un abbonamento in corso di Noice Premium, smetteremo di farvelo pagare . Se cambi idea, puoi ripristinare il tuo account accedendo di nuovo 7 giorni prima dopo la cancellazione. Dopo questo periodo, cancelleremo permanentemente i dati del tuo account dai nostri server.</string>
     <string name="random_preset_description">È probabile che la preimpostazione generata contenga suoni con parole chiave scelte. Inoltre, le preimpostazioni intense tenteranno di riprodurre più suoni contemporaneamente.</string>
-    <string name="sound_fade_out_duration_summary">Durata di tempo per sfumatura suono (in secondi)</string>
+    <string name="sound_fade_out_duration_summary">Durata di tempo in secondi per sfumatura suono</string>
     <string name="network_error">La rete è irraggiungibile.</string>
     <string name="processing_payment">Processando il pagamento</string>
     <string name="plans">Piani</string>
@@ -279,4 +279,47 @@
         <item quantity="many">%1$d giorni</item>
         <item quantity="other">%1$d giorni</item>
     </plurals>
+    <string name="alarms">Sveglie</string>
+    <string name="no_alarms_description">Aggiungi una nuova sveglia toccando il pulsante +!</string>
+    <string name="alarm_permission_rationale_title">Consenti a Noice di programmare le sveglie</string>
+    <string name="post_notifications_permission_rationale_title">Consenti a Noice di mostrare le notifiche</string>
+    <string name="alarm_post_notifications_permission_denied">Noice non può far suonare le sveglie senza il permesso di mostrare le notifiche!</string>
+    <string name="add_label">Aggiungi etichetta</string>
+    <string name="sunday_initial">D</string>
+    <string name="monday_initial">L</string>
+    <string name="tuesday_initial">M</string>
+    <string name="wednesday_initial">M</string>
+    <string name="thursday_initial">G</string>
+    <string name="friday_initial">V</string>
+    <string name="vibrate">Vibra</string>
+    <string name="not_scheduled">Non programmata</string>
+    <string name="notification_channel_alarm_primary__description">Notifiche visualizzate quando viene attivata una sveglia programmata.</string>
+    <string name="notification_channel_alarm_priming__name">Innesco sveglie</string>
+    <string name="notification_channel_alarm_priming__description">Notifiche visualizzate quando si prepara a lanciare una sveglia programmata.</string>
+    <string name="snooze">Rimanda</string>
+    <string name="benefit_5">Sveglie illimitate</string>
+    <string name="alarm_ringer_max_duration_summary">Durata in minuti, dopo il quale il promemoria della sveglia viene silenziato automaticamente</string>
+    <string name="alarm_missed">Sveglia mancata</string>
+    <string name="no_presets">Nessuna preimpostazione</string>
+    <string name="no_alarms">No sveglie</string>
+    <string name="add_alarm">Aggiungi una sveglia</string>
+    <string name="proceed">Procedi</string>
+    <string name="alarm_permission_rationale_description">Abbiamo bisogno di un accesso aggiuntivo per programmare le sveglie sul tuo dispositivo.
+\n
+\nAttivare **sveglie e promemoria** per Noice dai dettagli dell\'applicazione nelle impostazioni di sistema del dispositivo.</string>
+    <string name="post_notifications_permission_rationale_description">Abbiamo bisogno di un\'autorizzazione aggiuntiva per mostrare le notifiche per le sveglie pianificate. Senza le notifiche, Noice non può far suonare le sveglie all\'ora programmata.</string>
+    <string name="edit_label">Modifica etichetta</string>
+    <string name="notification_channel_alarm_primary__name">Sveglie</string>
+    <string name="saturday_initial">S</string>
+    <string name="alarm">Sveglia</string>
+    <string name="alarm_ringer_preset_load_error">Impossibile caricare il preset selezionato per questa sveglia.</string>
+    <string name="alarms_disabled_due_to_subscription_expiration">Abbiamo dovuto disattivare alcune sveglie visto che il vostro abbonamento Noice Premium è scaduto!</string>
+    <string name="alarm_snooze_length">Lunghezza snooze</string>
+    <string name="alarm_ringer_max_duration">Durata del promemoria</string>
+    <string name="alarm_snooze_length_summary">Durata in minuti di snoozing delle sveglie</string>
+    <string name="notification_channel_missed_alarms__name">Sveglie mancate</string>
+    <string name="notification_channel_missed_alarms__description">Notifiche visualizzate quando si silenziano le sveglie programmate dopo la durata del promemoria.</string>
+    <string name="master_volume">Volume principale</string>
+    <string name="alarm_gradually_increase_volume">Aumenta gradualmente il volume della sveglia</string>
+    <string name="alarm_gradually_increase_volume_summary">Durata in minuti per aumentare gradualmente il volume quando la sveglia parte</string>
 </resources>

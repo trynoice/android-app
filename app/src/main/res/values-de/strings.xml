@@ -295,4 +295,9 @@
     <string name="review">Rezension</string>
     <string name="benefit_4">%1$d zusätzliche Klänge</string>
     <string name="sound_is_premium">Dieser Sound ist mit Noice Premium verfügbar.</string>
+    <string name="alarms">Alarme</string>
+    <string name="add_alarm">Einen Alarm hinzufügen</string>
+    <string name="no_alarms">Keine Alarme</string>
+    <string name="alarm_permission_rationale_title">Noice erlauben, Alarme zu planen</string>
+    <string name="no_alarms_description">Fügen Sie einen neuen Alarm hinzu, indem Sie auf die Schaltfläche + tippen!</string>
 </resources>

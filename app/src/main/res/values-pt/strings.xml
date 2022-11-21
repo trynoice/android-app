@@ -114,4 +114,7 @@
     <string name="enable_media_buttons_summary">Usar os botões de média de hardware para controlar a reprodução</string>
     <string name="enable_media_buttons">Ativar botões de média</string>
     <string name="account">Conta</string>
+    <string name="invalid_name">O nome inserido é inválido!</string>
+    <string name="invalid_email">O endereço inserido é inválido!</string>
+    <string name="email">Correio eletrónico</string>
 </resources>
