@@ -1,6 +1,6 @@
 package com.trynoice.api.client.apis
 
-import com.trynoice.api.client.auth.annotations.NeedsAccessToken
+import com.trynoice.api.client.annotations.InjectAccessToken
 import com.trynoice.api.client.models.Profile
 import com.trynoice.api.client.models.SignInParams
 import com.trynoice.api.client.models.SignUpParams
@@ -69,7 +69,7 @@ interface AccountApi {
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
-  @NeedsAccessToken
+  @InjectAccessToken
   @GET("/v1/accounts/profile")
   suspend fun getProfile(): Profile
 
@@ -87,7 +87,7 @@ interface AccountApi {
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
-  @NeedsAccessToken
+  @InjectAccessToken
   @PATCH("/v1/accounts/profile")
   suspend fun updateProfile(@Body updateProfileParams: UpdateProfileParams)
 
@@ -104,7 +104,7 @@ interface AccountApi {
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
-  @NeedsAccessToken
+  @InjectAccessToken
   @DELETE("/v1/accounts/{id}")
   suspend fun delete(@Path("id") accountId: Long)
 }

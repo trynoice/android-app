@@ -1,4 +1,4 @@
-package com.trynoice.api.client.ext
+package com.trynoice.api.client.interceptors
 
 import okhttp3.Request
 import retrofit2.Invocation

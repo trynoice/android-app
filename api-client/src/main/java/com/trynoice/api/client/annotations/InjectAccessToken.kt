@@ -1,4 +1,4 @@
-package com.trynoice.api.client.auth.annotations
+package com.trynoice.api.client.annotations
 
 /**
  * When applied to a Retrofit interface method, the API Client automatically adds an Authorization
@@ -7,4 +7,4 @@ package com.trynoice.api.client.auth.annotations
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
-internal annotation class NeedsAccessToken
+internal annotation class InjectAccessToken

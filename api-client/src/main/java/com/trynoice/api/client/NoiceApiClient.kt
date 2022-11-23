@@ -6,9 +6,8 @@ import com.trynoice.api.client.apis.AccountApi
 import com.trynoice.api.client.apis.CdnApi
 import com.trynoice.api.client.apis.InternalAccountApi
 import com.trynoice.api.client.apis.SubscriptionApi
-import com.trynoice.api.client.auth.AccessTokenInjector
-import com.trynoice.api.client.auth.AuthCredentialRepository
-import com.trynoice.api.client.auth.RefreshTokenInjector
+import com.trynoice.api.client.interceptors.AccessTokenInjector
+import com.trynoice.api.client.interceptors.RefreshTokenInjector
 import com.trynoice.api.client.models.AuthCredentials
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -60,10 +59,13 @@ class NoiceApiClient(
     .addNetworkInterceptor(HttpLoggingInterceptor().apply {
       level = HttpLoggingInterceptor.Level.BASIC
     })
-    .addInterceptor(AccessTokenInjector(credentialRepository, credentialRefresher = {
-      runBlocking { refreshCredentials() }
-    }))
-    .addInterceptor(RefreshTokenInjector(credentialRepository))
+    .addInterceptor(
+      AccessTokenInjector { refresh ->
+        if (refresh) refreshCredentialsSync()
+        credentialRepository.getAccessToken()
+      }
+    )
+    .addInterceptor(RefreshTokenInjector(credentialRepository::getRefreshToken))
     .addInterceptor { chain ->
       chain.proceed(
         chain.request()
@@ -173,5 +175,9 @@ class NoiceApiClient(
           }
         }
     }
+  }
+
+  private fun refreshCredentialsSync() {
+    runBlocking { refreshCredentials() }
   }
 }

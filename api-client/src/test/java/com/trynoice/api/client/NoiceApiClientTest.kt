@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.trynoice.api.client.auth.AuthCredentialRepository
 import com.trynoice.api.client.models.AuthCredentials
 import com.trynoice.api.client.models.Profile
 import kotlinx.coroutines.test.runTest

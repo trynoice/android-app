@@ -1,6 +1,6 @@
 package com.trynoice.api.client.apis
 
-import com.trynoice.api.client.auth.annotations.NeedsAccessToken
+import com.trynoice.api.client.annotations.InjectAccessToken
 import com.trynoice.api.client.models.LibraryManifest
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -55,7 +55,7 @@ interface CdnApi {
    *
    * @param resourcePath absolute path of the resource on the CDN server.
    */
-  @NeedsAccessToken
+  @InjectAccessToken
   @Streaming
   @GET
   fun resource(@Url resourcePath: String): Call<ResponseBody>

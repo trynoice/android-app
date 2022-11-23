@@ -1,12 +1,8 @@
-package com.trynoice.api.client.auth
+package com.trynoice.api.client
 
 import android.content.Context
 import android.content.SharedPreferences
 import com.trynoice.api.client.models.AuthCredentials
-
-private const val CREDENTIAL_STORE_NAME = "com.trynoice.api.client.auth.credentials"
-private const val REFRESH_TOKEN_KEY = "refresh-token"
-private const val ACCESS_TOKEN_KEY = "access-token"
 
 /**
  * A helper class to manage [SharedPreferences] that stores refresh and access tokens.
@@ -44,5 +40,11 @@ internal class AuthCredentialRepository(context: Context) {
    */
   fun clearCredentials() {
     prefs.edit().clear().apply()
+  }
+
+  companion object {
+    private const val CREDENTIAL_STORE_NAME = "com.trynoice.api.client.auth.credentials"
+    private const val REFRESH_TOKEN_KEY = "refresh-token"
+    private const val ACCESS_TOKEN_KEY = "access-token"
   }
 }
