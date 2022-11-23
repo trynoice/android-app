@@ -12,18 +12,20 @@ Noice is an app that allows you to create personalised sound environments. It en
 • Mask your tinnitus with easing noise
 • Block distractions to lay back and fall asleep
 • Soothe your migraines and headaches
+• Start your days to the gentler sounds of nature with mindful alarms
 
 <b>PREMIUM FEATURES</b>
 • Longer sounds with multiple variants/samples
 • Randomised synthesis of natural variations in sounds, e.g., the intensity of rain will vary with time
 • Full offline playback
 • Ultra high-quality audio for streaming and downloading (up to 320 kbps)
+• Unlimited active alarms
 
 <b>FREE FEATURES</b>
 • Rich sound library
 • Google Cast or Chromecast enabled*
 • Auto sleep timer
-• Alarm Clock
+• Alarm Clock with up to 2 active alarms
 • Make and save your personalised mixes
 • Random mix generator to suit your every mood
 • Individual volume control for each sound
@@ -48,6 +50,8 @@ Noice is an app that allows you to create personalised sound environments. It en
 • <b>prevent device from sleeping</b>: for keeping the device CPU awake to provide uninterrupted playback when the screen turns off
 • <b>install shortcuts</b>: for adding Preset Shortcuts to the home screen
 • <b>run foreground service</b>: for continuous playback when the app is in the background
+• <b>display notifications as full screen activities on a locked device</b>: for displaying the alert when an alarm fires
+• <b>control vibration</b>: for vibrating the device when a vibration-enabled alarm fires
 
 Noice is open-source software.
 https://github.com/trynoice/android-app
