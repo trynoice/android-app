@@ -39,7 +39,7 @@ internal class AccessTokenInjector(
   private fun performRequest(chain: Interceptor.Chain, accessToken: String?): Response {
     val requestBuilder = chain.request().newBuilder()
     if (accessToken != null) {
-      requestBuilder.addHeader("Authorization", "Bearer $accessToken")
+      requestBuilder.header("Authorization", "Bearer $accessToken")
     }
 
     return chain.proceed(requestBuilder.build())

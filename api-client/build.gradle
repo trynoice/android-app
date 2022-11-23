@@ -67,6 +67,7 @@ dependencies {
   api "com.squareup.okhttp3:okhttp:$okhttpVersion"
   api "com.squareup.retrofit2:retrofit:$retrofitVersion"
 
+  implementation "androidx.core:core-ktx:$deps.androidXCoreVersion"
   implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
   implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$deps.coroutinesVersion"

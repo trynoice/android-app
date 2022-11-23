@@ -6,6 +6,7 @@ import com.trynoice.api.client.apis.AccountApi
 import com.trynoice.api.client.apis.CdnApi
 import com.trynoice.api.client.apis.InternalAccountApi
 import com.trynoice.api.client.apis.SubscriptionApi
+import com.trynoice.api.client.interceptors.AcceptLanguageHeaderInjector
 import com.trynoice.api.client.interceptors.AccessTokenInjector
 import com.trynoice.api.client.interceptors.RefreshTokenInjector
 import com.trynoice.api.client.models.AuthCredentials
@@ -59,13 +60,6 @@ class NoiceApiClient(
     .addNetworkInterceptor(HttpLoggingInterceptor().apply {
       level = HttpLoggingInterceptor.Level.BASIC
     })
-    .addInterceptor(
-      AccessTokenInjector { refresh ->
-        if (refresh) refreshCredentialsSync()
-        credentialRepository.getAccessToken()
-      }
-    )
-    .addInterceptor(RefreshTokenInjector(credentialRepository::getRefreshToken))
     .addInterceptor { chain ->
       chain.proceed(
         chain.request()
@@ -74,6 +68,14 @@ class NoiceApiClient(
           .build()
       )
     }
+    .addInterceptor(AcceptLanguageHeaderInjector())
+    .addInterceptor(
+      AccessTokenInjector { refresh ->
+        if (refresh) refreshCredentialsSync()
+        credentialRepository.getAccessToken()
+      }
+    )
+    .addInterceptor(RefreshTokenInjector(credentialRepository::getRefreshToken))
     .build()
 
   private val retrofit: Retrofit by lazy {
