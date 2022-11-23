@@ -11,24 +11,26 @@ Noice é unha aplicación que permite crear ambientes sonoros personalizados. Pe
 • Calma aos teus bebés con sons calmantes
 • Enmascarar o seu tinnitus con ruídos calmantes.
 • Bloquee as distraccións para relaxarse e durmir.
-• Alivia as túas xaquecas e dores de cabeza
+• Alivialas túas xaquecas e dores de cabeza
+• Comezalos teus días cos sons máis suaves da natureza con alarmas conscientes
 
 <b>FUNCIÓNS PREMIUM</b>
 • Sons máis longos con múltiples variantes/mostras
 • Síntese aleatoria de variacións naturais de sons, por exemplo, a intensidade da choiva variará co tempo
 • Reprodución sen conexión completa
 • Son de ultra alta calidade para transmitir e descargar (ata 320 kbps)
+• Alarmas activas ilimitadas
 
 <b>FUNCIÓNS GRATUITAS</b>
 • Ampla biblioteca de sons
 • Compatible con Google Cast ou Chromecast*.
 • Temporizador automático de suspensión
-• Espertador
+• Reloxo espertador con ata 2 alarmas activas
 • Crea e garda as túas mesturas personalizadas
 • Xerador de mesturas aleatorias que se adaptan ao teu estado de ánimo
 • Control de volume individual para cada son
-• Xogar xunto cun reprodutor de música en curso
-• Usa as cores dinámicas de Material You en Android 12L ou superior
+• Xoga xunto cun reprodutor de música en curso
+• Usalas cores dinámicas de Material You en Android 12L ou superior
 • Sen publicidade de ningún tipo
 
 <i>* Chromecast só está dispoñible cando descargas Voice de Google Play.</i>
@@ -45,9 +47,11 @@ Noice é unha aplicación que permite crear ambientes sonoros personalizados. Pe
 • <b>ver conexións de rede</b>: para transmitir e descargar son
 • <b>acceso completo á rede</b>: para comunicarse con servidores Noice, emisión de son e descarga
 • <b>executar ao iniciar</b>: para asegurarse de que as alarmas persistan durante os reinicios do dispositivo.
-• <b>evitar que o dispositivo se durma</b>: para manter a CPU do dispositivo activa e ofrecer unha reprodución ininterrompida cando a pantalla se apaga.
+• <b>evitar co dispositivo se durma</b>: para mantela CPU do dispositivo activa e ofrecer unha reprodución ininterrompida cando a pantalla se apaga.
 • <b>instalar atallos</b>: para engadir atallos predefinidos á pantalla de inicio
-• <b>executar o servizo en primeiro plano</b>: para a reprodución continua cando a aplicación está en segundo plano
+• <b>executalo servizo en primeiro plano</b>: para a reprodución continua cando a aplicación está en segundo plano
+• <b>mostrar notificacións como actividades a pantalla completa nun dispositivo bloqueado</b>: para mostrala alerta cando se activa unha alarma
+• <b>control da vibración</b>: para facer vibralo dispositivo cando se activa unha alarma activada pola vibración
 
 Noice é un software de código aberto.
 https://github.com/trynoice/android-app
