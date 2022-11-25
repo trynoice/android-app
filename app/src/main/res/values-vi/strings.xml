@@ -60,7 +60,7 @@
     <string name="presets_as_home_screen_summary">Hiện \"thiết lập trước\" khi khởi động ứng dụng (yêu cầu khởi động lại ứng dụng)</string>
     <string name="pinned_shortcuts_not_supported">Launcher mặc định của bạn không hỗ trợ việc thêm lối tắt.</string>
     <string name="rename">Đổi tên</string>
-    <string name="preset_info__description">Bạn chưa tạo thiết lập trước nào. Để tạo một thiết lập trước, hãy đi đến Thư viện và phát các âm thanh. Sau đó nhấn nút Lưu hiện ra ở góc dưới cùng của màn hình.</string>
+    <string name="preset_info__description">Tạo thiết lập mới bằng cách phát các đoạn âm thanh và sử dụng nút Lưu có trong thư viện nhé.</string>
     <string name="preset_does_not_exist">Thiết lập trước không tồn tại. Nó có thể đã bị xoá!</string>
     <string name="preset_deleted">Đã xoá thiết lập trước!</string>
     <string name="preset_delete_confirmation">Xác nhận xoá %s\?</string>
@@ -107,7 +107,7 @@
 \n Bạn có thể thiết lập tự động chia sẻ dữ liệu tại bất cứ lúc nào ở trong ứng dụng bằng cách đi đến \"**Cài đặt** &gt; **Chia sẻ dữ liệu sử dụng và hành vi**\".</string>
     <string name="share_usage_data_consent_title">Cài đặt chia sẻ dữ liệu</string>
     <string name="created_by">Được tạo bởi</string>
-    <string name="sound_fade_in_duration_summary">Thời lượng để tăng âm lượng từ từ (tính bằng giây)</string>
+    <string name="sound_fade_in_duration_summary">Thời lượng tính bằng giây đối với âm thanh mờ nhạt dần</string>
     <string name="sound_fade_in_duration">Thời lượng tăng âm lượng từ từ</string>
     <string name="enable_media_buttons_summary">Sử dụng nút phương tiện ở phần cứng để điều khiển việc phát</string>
     <string name="enable_media_buttons">Bật nút phương tiện</string>
@@ -224,7 +224,7 @@
     <string name="audio_quality_ultra">Ultra (320 kbps)</string>
     <string name="playing">Đang phát</string>
     <string name="tags_load_error">Chúng tôi không thể tải từ khoá âm thanh. %1$s Vui lòng thử lại!</string>
-    <string name="sound_fade_out_duration_summary">Thời lượng để giảm âm lượng từ từ (tính theo giây)</string>
+    <string name="sound_fade_out_duration_summary">Thời lượng tính bằng giây để giảm âm lượng từ từ</string>
     <string name="random_preset_description">Thiết lập trước được tạo ra có khả năng cao là có chứa âm thanh với từ khóa được chọn. Thêm nữa, các thiết lập mạnh sẽ cố phát nhiều âm thanh hơn cùng lúc.</string>
     <string name="deleting_account">Đang xoá tài khoản</string>
     <string name="account">Tài khoản</string>
@@ -275,4 +275,29 @@
     <string name="review">Xem</string>
     <string name="benefit_4">Thêm %1$d âm thanh</string>
     <string name="sound_is_premium">Âm thanh này chỉ có ở Noice Premium.</string>
+    <string name="alarms">Báo thức</string>
+    <string name="add_alarm">Thêm một báo thức</string>
+    <string name="no_alarms">Không báo thức</string>
+    <string name="alarm_permission_rationale_title">Cho phép Noice đặt báo thức</string>
+    <string name="post_notifications_permission_rationale_title">Cho phép Noice hiện các thông báo</string>
+    <string name="post_notifications_permission_rationale_description">Chúng tôi cần quyền truy cập bổ sung để hiển thị thông báo cho các báo thức được đặt. Nếu không có các thông báo, Noice không thể rung chuông báo thức vào thời điểm được cài đặt đâu.</string>
+    <string name="proceed">Tiến hành</string>
+    <string name="alarm_post_notifications_permission_denied">Noice không thể rung chuông báo thức mà không có quyền hiển thị thông báo!</string>
+    <string name="add_label">Thêm nhãn</string>
+    <string name="sunday_initial">S</string>
+    <string name="monday_initial">M</string>
+    <string name="tuesday_initial">T</string>
+    <string name="wednesday_initial">W</string>
+    <string name="thursday_initial">T</string>
+    <string name="friday_initial">F</string>
+    <string name="saturday_initial">S</string>
+    <string name="vibrate">Rung</string>
+    <string name="not_scheduled">Chưa được hẹn cài đặt</string>
+    <string name="edit_label">Sửa nhãn</string>
+    <string name="notification_channel_alarm_primary__name">Báo thức</string>
+    <string name="notification_channel_alarm_primary__description">Thông báo sẽ được hiển thị khi tới lúc báo thức được cài đặt vang lên.</string>
+    <string name="no_alarms_description">Thêm một báo thức mới bằng cách nhấp vào nút \"+\" nhé!</string>
+    <string name="alarm_permission_rationale_description">Chúng tôi cần quyền truy cập bổ sung để đặt báo thức trên thiết bị của bạn.
+\n
+\nXin hãy bật chế độ \"Báo thức &amp; nhắc nhở\" cho Noice từ các chi tiết ứng dụng trong mục điều chỉnh hệ thống thiết bị của bạn nhé.</string>
 </resources>
