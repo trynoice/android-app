@@ -137,11 +137,11 @@ class RandomPresetViewModel @Inject constructor(
 
   val isLoading: StateFlow<Boolean> = combine(tagsResource, generatePresetResource) { t, p ->
     t is Resource.Loading || p is Resource.Loading
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   val tags: StateFlow<List<SoundTag>> = tagsResource.transform { r ->
     r.data?.also { emit(it.sortedBy { t -> t.name }) }
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
   val tagsLoadErrorStrRes: StateFlow<Int?> = tagsResource.transform { r ->
     emit(
@@ -151,7 +151,7 @@ class RandomPresetViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal val generatePresetErrorStrRes: StateFlow<Int?> = generatePresetResource.transform { r ->
     emit(
@@ -161,11 +161,11 @@ class RandomPresetViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal val generatedPreset: StateFlow<Preset?> = generatePresetResource.transform { r ->
     emit(r.data)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   init {
     viewModelScope.launch {

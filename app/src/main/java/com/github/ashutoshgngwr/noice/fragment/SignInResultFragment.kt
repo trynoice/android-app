@@ -109,11 +109,11 @@ class SignInResultViewModel @Inject constructor(
 
   val isSigningIn: StateFlow<Boolean> = signInResource.transform { r ->
     emit(r is Resource.Loading)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
   val signInError: StateFlow<Throwable?> = signInResource
     .map { it.error }
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   init {
     val navArgs = SignInResultFragmentArgs.fromSavedStateHandle(savedStateHandle)

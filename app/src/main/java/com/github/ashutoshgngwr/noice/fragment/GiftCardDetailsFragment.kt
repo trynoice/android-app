@@ -91,15 +91,15 @@ class GiftCardDetailsViewModel @Inject constructor(
 
   private val giftCardResource = GiftCardDetailsFragmentArgs.fromSavedStateHandle(savedStateHandle)
     .let { subscriptionRepository.getGiftCard(it.giftCardCode) }
-    .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+    .shareIn(viewModelScope, SharingStarted.Eagerly)
 
   val isLoading: StateFlow<Boolean> = giftCardResource.transform { r ->
     emit(r is Resource.Loading)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
   val giftCard: StateFlow<GiftCard?> = giftCardResource.transform { r ->
     emit(r.data)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal val errStrRes: StateFlow<Int?> = giftCardResource.transform { r ->
     emit(
@@ -110,5 +110,5 @@ class GiftCardDetailsViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 }

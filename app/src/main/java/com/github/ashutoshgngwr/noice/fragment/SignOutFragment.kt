@@ -74,7 +74,7 @@ class SignOutViewModel @Inject constructor(
 
   val isSigningOut: StateFlow<Boolean> = signOutResource.transform { r ->
     emit(r is Resource.Loading)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   val signOutErrorStrRes: Flow<Int?> = signOutResource.transform { r ->
     emit(

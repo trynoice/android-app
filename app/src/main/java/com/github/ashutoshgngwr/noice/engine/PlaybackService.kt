@@ -30,11 +30,8 @@ import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.lastOrNull
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.random.Random
@@ -70,10 +67,6 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
   private val masterVolume = MutableStateFlow(0)
   private val playerStates = MutableStateFlow(emptyArray<PlayerState>())
   private val serviceBinder = PlaybackServiceBinder(playerManagerState, masterVolume, playerStates)
-  private val isSubscribed: SharedFlow<Boolean> by lazy {
-    subscriptionRepository.isSubscribed()
-      .shareIn(lifecycleScope, SharingStarted.WhileSubscribed(), 0)
-  }
 
   private val mainActivityPi: PendingIntent by lazy {
     var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
@@ -166,7 +159,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     }
 
     lifecycleScope.launch {
-      isSubscribed.collect { subscribed ->
+      subscriptionRepository.isSubscribed().collect { subscribed ->
         localDataSourceFactory.enableDownloadedSounds = subscribed
         playerManager.setPremiumSegmentsEnabled(subscribed)
       }
@@ -195,9 +188,11 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener {
     }
 
     lifecycleScope.launch {
-      settingsRepository.getAudioQualityAsFlow()
-        .combine(isSubscribed) { quality, subscribed -> if (subscribed) quality else SettingsRepository.FREE_AUDIO_QUALITY }
-        .collect { playerManager.setAudioBitrate(it.bitrate) }
+      val audioQualityFlow = settingsRepository.getAudioQualityAsFlow()
+      val isSubscribedFlow = subscriptionRepository.isSubscribed()
+      combine(audioQualityFlow, isSubscribedFlow) { quality, subscribed ->
+        if (subscribed) quality else SettingsRepository.FREE_AUDIO_QUALITY
+      }.collect { playerManager.setAudioBitrate(it.bitrate) }
     }
   }
 

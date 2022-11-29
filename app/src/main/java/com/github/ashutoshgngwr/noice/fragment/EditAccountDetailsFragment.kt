@@ -91,7 +91,7 @@ class EditAccountDetailsViewModel @Inject constructor(
 
   val isNameValid: StateFlow<Boolean> = name.transform { name ->
     emit(name.isNotBlank() && name.length <= 64)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   val isEmailValid: StateFlow<Boolean> = email.transform { email ->
     emit(
@@ -99,11 +99,11 @@ class EditAccountDetailsViewModel @Inject constructor(
         && email.length <= 64
         && Patterns.EMAIL_ADDRESS.matcher(email).matches()
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   val isLoading: StateFlow<Boolean> = merge(loadResource, updateResource.filterNotNull())
     .transform { emit(it is Resource.Loading) }
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    .stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
   val loadErrorStrRes: StateFlow<Int?> = loadResource.transform { r ->
     emit(r.error?.let {
@@ -112,7 +112,7 @@ class EditAccountDetailsViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     })
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   val updateErrorStrRes: Flow<Int?> = updateResource.transform { r ->
     emit(r.error?.let {

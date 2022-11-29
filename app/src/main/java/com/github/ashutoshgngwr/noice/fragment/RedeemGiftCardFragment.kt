@@ -78,11 +78,11 @@ class RedeemGiftCardViewModel @Inject constructor(
 
   internal val redeemResource = RedeemGiftCardFragmentArgs.fromSavedStateHandle(savedStateHandle)
     .let { subscriptionRepository.redeemGiftCard(it.giftCard) }
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), Resource.Loading())
+    .stateIn(viewModelScope, SharingStarted.Eagerly, Resource.Loading())
 
   internal val shouldShowPurchaseList: StateFlow<Boolean> = redeemResource.transform { r ->
     emit(r is Resource.Success)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   internal val errStrRes: StateFlow<Int?> = redeemResource.transform { r ->
     emit(
@@ -92,5 +92,5 @@ class RedeemGiftCardViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 }

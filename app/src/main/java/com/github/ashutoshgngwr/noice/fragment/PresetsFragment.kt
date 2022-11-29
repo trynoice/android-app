@@ -232,18 +232,18 @@ class PresetsViewModel @Inject constructor(
 ) : ViewModel() {
 
   internal val presets: StateFlow<List<Preset>> = presetRepository.listFlow()
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
   internal val activePresetId: StateFlow<String?> =
     combine(presets, playbackController.getPlayerStates()) { presets, playerStates ->
       presets.find { p -> p.hasMatchingPlayerStates(playerStates) }?.id
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal val presetsWithAppShortcut = MutableStateFlow(emptySet<String>())
 
   val isEmptyIndicatorVisible: StateFlow<Boolean> = presets.transform { presets ->
     emit(presets.isEmpty())
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
   internal fun loadAppShortcuts(context: Context) {
     presetsWithAppShortcut.value = ShortcutManagerCompat.getDynamicShortcuts(context)

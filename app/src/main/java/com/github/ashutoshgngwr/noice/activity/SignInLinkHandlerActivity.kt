@@ -99,7 +99,7 @@ class SignInLinkHandlerViewModel @Inject constructor(
 
   val isSigningIn: StateFlow<Boolean> = signInResource.transform { r ->
     emit(r is Resource.Loading)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   val signInErrorStrRes: StateFlow<Int?> = signInResource.transform { r ->
     emit(
@@ -110,7 +110,7 @@ class SignInLinkHandlerViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal fun signInWithToken(token: String) {
     if (isSigningIn.value) {

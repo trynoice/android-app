@@ -93,7 +93,7 @@ class DeleteAccountViewModel @Inject constructor(
     signOutResource
   ).transform { r ->
     emit(r != null && r !is Resource.Failure) // only failure is a terminal state until the final operation.
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   internal val apiErrorStrRes: StateFlow<Int?> = merge(
     activeSubscriptionResource.filterNot { it?.error is SubscriptionNotFoundError },
@@ -109,7 +109,7 @@ class DeleteAccountViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal val isFlowComplete = MutableStateFlow(false)
 

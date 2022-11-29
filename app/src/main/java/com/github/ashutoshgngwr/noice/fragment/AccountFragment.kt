@@ -108,17 +108,17 @@ class AccountViewModel @Inject constructor(
 
   val isSignedIn = accountRepository.isSignedIn()
   val isSubscribed = subscriptionRepository.isSubscribed()
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    .stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
   private val profileResource = MutableSharedFlow<Resource<Profile>>()
 
   val profile: StateFlow<Profile?> = profileResource.transform { resource ->
     resource.data?.also { emit(it) }
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   val isLoading: StateFlow<Boolean> = profileResource.transform { r ->
     emit(r is Resource.Loading)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   internal val loadErrorStrRes: Flow<Int?> = profileResource.transform { resource ->
     emit(

@@ -156,15 +156,15 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
 
   val isLoading: StateFlow<Boolean> = combine(plansResource, premiumCountResource) { p, c ->
     p is Resource.Loading || c is Resource.Loading
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
   val plans: StateFlow<List<SubscriptionPlan>> = plansResource.transform { r ->
     emit(r.data?.sortedBy { it.priceInIndianPaise / it.billingPeriodMonths } ?: emptyList())
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
   val premiumSoundsCount: StateFlow<Int> = premiumCountResource
     .mapNotNull { r -> r.data }
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
+    .stateIn(viewModelScope, SharingStarted.Eagerly, 0)
 
   val apiErrorStrRes: StateFlow<Int?> = plansResource.transform { r ->
     emit(
@@ -174,11 +174,11 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   val isShowingLocalPrices = plans.transform { plans ->
     emit(plans.all { it.requestedCurrencyCode != null && it.requestedCurrencyCode != "INR" })
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   init {
     val args = ViewSubscriptionPlansFragmentArgs.fromSavedStateHandle(savedStateHandle)

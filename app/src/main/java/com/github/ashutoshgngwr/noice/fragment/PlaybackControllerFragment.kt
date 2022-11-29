@@ -78,14 +78,14 @@ class PlaybackControllerViewModel @Inject constructor(
 
   val isPlaying: StateFlow<Boolean> = playbackController.getPlayerManagerState()
     .map { it == PlaybackState.PLAYING }
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   val activePresetName: StateFlow<String?> = combine(
     presetRepository.listFlow(),
     playbackController.getPlayerStates(),
   ) { presets, playerStates ->
     presets.find { p -> p.hasMatchingPlayerStates(playerStates) }?.name
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal val masterVolume: StateFlow<Int> = playbackController.getMasterVolume()
     .stateIn(viewModelScope, SharingStarted.Eagerly, 0)

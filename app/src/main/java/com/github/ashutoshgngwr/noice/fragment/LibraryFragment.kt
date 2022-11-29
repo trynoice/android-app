@@ -299,23 +299,23 @@ class LibraryViewModel @Inject constructor(
 
   val isPlaying: StateFlow<Boolean> = playbackController.getPlayerManagerState()
     .map { !it.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   internal val isSubscribed = subscriptionRepository.isSubscribed()
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   internal val playerStates: StateFlow<Array<PlayerState>> = playbackController.getPlayerStates()
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyArray())
+    .stateIn(viewModelScope, SharingStarted.Eagerly, emptyArray())
 
   internal val downloadStates: StateFlow<Map<String, SoundDownloadState>> = soundRepository
     .getDownloadStates()
     // emit download states only when user owns an active subscription
     .combine(isSubscribed) { states, subscribed -> if (subscribed) states else emptyMap() }
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
+    .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
 
   val isLoading: StateFlow<Boolean> = soundInfosResource.transform { r ->
     emit(r is Resource.Loading)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   internal val libraryItems: StateFlow<List<LibraryListItem>> = soundInfosResource.transform { r ->
     var lastGroupId: String? = null
@@ -333,7 +333,7 @@ class LibraryViewModel @Inject constructor(
       }
 
     emit(dataSet)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
   internal val transientErrorStrRes: Flow<Int?> = soundInfosResource.transform { r ->
     emit(
@@ -353,7 +353,7 @@ class LibraryViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   val isSavePresetButtonVisible: StateFlow<Boolean> = combine(
     isPlaying,
@@ -361,11 +361,11 @@ class LibraryViewModel @Inject constructor(
     presetRepository.listFlow(),
   ) { isPlaying, playerStates, presets ->
     isPlaying && presets.none { p -> p.hasMatchingPlayerStates(playerStates) }
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   internal val isLibraryIconsEnabled: StateFlow<Boolean> = settingsRepository
     .shouldDisplaySoundIconsAsFlow()
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   internal val isLibraryUpdated = MutableStateFlow(false)
 

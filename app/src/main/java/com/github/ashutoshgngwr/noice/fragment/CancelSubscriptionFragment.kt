@@ -103,7 +103,7 @@ class CancelSubscriptionViewModel @Inject constructor(
 
   val isCancelling: StateFlow<Boolean> = cancelResource.transform { r ->
     emit(r is Resource.Loading)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   internal val errorStrRes: Flow<Int?> = cancelResource.transform { r ->
     emit(

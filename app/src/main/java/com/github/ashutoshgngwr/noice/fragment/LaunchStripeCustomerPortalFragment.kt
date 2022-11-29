@@ -69,11 +69,11 @@ class LaunchStripeCustomerPortalViewModel @Inject constructor(
 ) : ViewModel() {
 
   private val customerPortalUrlResource = subscriptionRepository.stripeCustomerPortalUrl()
-    .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+    .shareIn(viewModelScope, SharingStarted.Eagerly)
 
   internal val customerPortalUrl: StateFlow<String?> = customerPortalUrlResource.transform { r ->
     r.data?.also { emit(it) }
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal val errorStrRes: StateFlow<Int?> = customerPortalUrlResource.transform { r ->
     emit(
@@ -83,5 +83,5 @@ class LaunchStripeCustomerPortalViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 }
