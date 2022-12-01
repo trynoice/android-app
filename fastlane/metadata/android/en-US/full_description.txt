@@ -50,7 +50,7 @@ Noice is an app that allows you to create personalised sound environments. It en
 • <b>prevent device from sleeping</b>: for keeping the device CPU awake to provide uninterrupted playback when the screen turns off
 • <b>install shortcuts</b>: for adding Preset Shortcuts to the home screen
 • <b>run foreground service</b>: for continuous playback when the app is in the background
-• <b>display notifications as full screen activities on a locked device</b>: for displaying the alert when an alarm fires
+• <b>display full screen notifications on a locked device</b>: for displaying the alert when an alarm fires
 • <b>control vibration</b>: for vibrating the device when a vibration-enabled alarm fires
 
 Noice is open-source software.
