@@ -50,7 +50,6 @@ import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -140,19 +139,15 @@ class LibraryFragment : Fragment(), LibraryListItemController {
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.transientErrorStrRes
+      viewModel.apiErrorStrRes
         .filterNotNull()
-        .filter { isConnectedToInternet } // suppress transient errors when offline.
-        .map { getString(R.string.library_load_error, getString(it)) }
-        .collect { showErrorSnackBar(it.normalizeSpace(), snackBarAnchorView()) }
-    }
-
-    viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.persistentErrorStrRes
-        .filterNotNull()
-        .collect { causeStrRes ->
-          val msg = getString(R.string.library_load_error, getString(causeStrRes))
-          binding.errorContainer.message = msg.normalizeSpace()
+        .map { getString(R.string.library_load_error, getString(it)).normalizeSpace() }
+        .collect { message ->
+          if (adapter.itemCount == 0) {
+            binding.errorContainer.message = message
+          } else if (isConnectedToInternet) {
+            showErrorSnackBar(message, snackBarAnchorView())
+          }
         }
     }
 
@@ -318,7 +313,7 @@ class LibraryViewModel @Inject constructor(
     emit(r is Resource.Loading)
   }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
-  internal val libraryItems: StateFlow<List<LibraryListItem>> = soundInfosResource.transform { r ->
+  val libraryItems: StateFlow<List<LibraryListItem>> = soundInfosResource.transform { r ->
     var lastGroupId: String? = null
     val dataSet = mutableListOf<LibraryListItem>()
     r.data
@@ -336,24 +331,12 @@ class LibraryViewModel @Inject constructor(
     emit(dataSet)
   }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-  internal val transientErrorStrRes: Flow<Int?> = soundInfosResource.transform { r ->
-    emit(
-      when {
-        r.error == null || r.data.isNullOrEmpty() -> null // show persistent error if there's no data
-        r.error is NetworkError -> R.string.network_error
-        else -> R.string.unknown_error
-      }
-    )
-  }
-
-  val persistentErrorStrRes: StateFlow<Int?> = soundInfosResource.transform { r ->
-    emit(
-      when {
-        r.error == null || r.data?.isNotEmpty() == true -> null // show transient error if data is available
-        r.error is NetworkError -> R.string.network_error
-        else -> R.string.unknown_error
-      }
-    )
+  val apiErrorStrRes: StateFlow<Int?> = soundInfosResource.map { r ->
+    when (r.error) {
+      null -> null
+      is NetworkError -> R.string.network_error
+      else -> R.string.unknown_error
+    }
   }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   val isSavePresetButtonVisible: StateFlow<Boolean> = combine(
