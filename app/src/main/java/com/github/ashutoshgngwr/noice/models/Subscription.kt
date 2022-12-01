@@ -81,6 +81,31 @@ fun Subscription.toRoomDto(): SubscriptionWithPlanDto {
   )
 }
 
+@JvmName("toRoomDtoSubscription")
 fun List<Subscription>.toRoomDto(): List<SubscriptionWithPlanDto> {
+  return map { it.toRoomDto() }
+}
+
+fun ApiSubscription.toRoomDto(): SubscriptionWithPlanDto {
+  return SubscriptionWithPlanDto(
+    subscription = SubscriptionDto(
+      id = id,
+      planId = plan.id,
+      isActive = isActive,
+      isPaymentPending = isPaymentPending,
+      isAutoRenewing = isAutoRenewing,
+      isRefunded = isRefunded,
+      startedAt = startedAt,
+      endedAt = endedAt,
+      renewsAt = renewsAt,
+      googlePlayPurchaseToken = googlePlayPurchaseToken,
+      giftCardCode = giftCardCode,
+    ),
+    plan = plan.toRoomDto()
+  )
+}
+
+@JvmName("toRoomDtoApiSubscription")
+fun List<ApiSubscription>.toRoomDto(): List<SubscriptionWithPlanDto> {
   return map { it.toRoomDto() }
 }

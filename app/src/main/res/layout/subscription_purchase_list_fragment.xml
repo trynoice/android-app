@@ -15,19 +15,35 @@
     android:padding="@dimen/root_layout_padding">
 
     <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:drawablePadding="12dp"
+      android:gravity="center"
+      android:text="@string/no_purchases"
+      android:textAppearance="?attr/textAppearanceHeadlineSmall"
+      android:textColor="?android:attr/textColorHint"
+      app:drawableTint="?android:attr/textColorHint"
+      app:drawableTopCompat="@drawable/ic_round_money_off_72" />
+
+    <Space
+      android:layout_width="wrap_content"
+      android:layout_height="16dp" />
+
+    <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:gravity="center"
       android:text="@string/no_subscription_purchases_found"
-      android:textAppearance="?attr/textAppearanceBodyMedium" />
+      android:textAppearance="?attr/textAppearanceBodyMedium"
+      android:textColor="?android:attr/textColorHint" />
 
     <Space
       android:layout_width="wrap_content"
-      android:layout_height="24dp" />
+      android:layout_height="16dp" />
 
     <Button
       android:id="@+id/view_subscription_plans"
-      style="?attr/materialButtonOutlinedStyle"
+      style="@style/Widget.Material3.Button.TextButton"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/view_subscription_plans" />

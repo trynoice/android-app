@@ -349,4 +349,5 @@
     <string name="master_volume">Master Volume</string>
     <string name="alarm_gradually_increase_volume">Gradually increase alarm volume</string>
     <string name="alarm_gradually_increase_volume_summary">Duration in minutes for gradually increasing the volume when an alarm fires</string>
+    <string name="no_purchases">No Purchases</string>
 </resources>

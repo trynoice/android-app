@@ -4,7 +4,16 @@ import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import androidx.paging.LoadType
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.PagingState
+import androidx.paging.RemoteMediator
+import androidx.paging.map
+import androidx.room.withTransaction
 import com.github.ashutoshgngwr.noice.data.AppDatabase
+import com.github.ashutoshgngwr.noice.data.models.SubscriptionWithPlanDto
 import com.github.ashutoshgngwr.noice.ext.bindServiceCallbackFlow
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
 import com.github.ashutoshgngwr.noice.models.GiftCard
@@ -24,6 +33,7 @@ import com.github.ashutoshgngwr.noice.service.SubscriptionStatusPollServiceBinde
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -169,38 +179,42 @@ class SubscriptionRepository @Inject constructor(
   )
 
   /**
-   * Returns a [Flow] that emits the requested subscription page as a [Resource].
-   *
-   * On failures, the flow emits [Resource.Failure] with:
-   * - [NetworkError] on network errors.
-   * - [HttpException] on api errors.
-   *
-   * @see fetchNetworkBoundResource
-   * @see Resource
+   * @return a [Flow] that emits PagingData for subscription purchase history of the current user.
    */
-  fun list(
-    page: Int = 0,
-    currencyCode: String? = null,
-  ): Flow<Resource<List<Subscription>>> = fetchNetworkBoundResource(
-    loadFromCache = {
-      appDb.subscriptions()
-        .listStarted(page * 20, 20)
-        .toDomainEntity()
-    },
-    loadFromNetwork = {
-      apiClient.subscriptions()
-        .list(false, page = page, currency = currencyCode)
-        .toDomainEntity()
-    },
-    cacheNetworkResult = { appDb.subscriptions().saveAll(it.toRoomDto()) },
-    loadFromNetworkErrorTransform = { e ->
-      Log.i(LOG_TAG, "list:", e)
-      when (e) {
-        is IOException -> NetworkError
-        else -> e
+  fun pagingDataFlow(currencyCode: String? = null): Flow<PagingData<Subscription>> = Pager(
+    config = PagingConfig(pageSize = 20),
+    remoteMediator = object : RemoteMediator<Int, SubscriptionWithPlanDto>() {
+      private var currentPage = -1
+
+      override suspend fun load(
+        loadType: LoadType,
+        state: PagingState<Int, SubscriptionWithPlanDto>,
+      ): MediatorResult {
+        if (loadType == LoadType.PREPEND) {
+          return MediatorResult.Success(endOfPaginationReached = true)
+        }
+
+        currentPage = if (loadType == LoadType.REFRESH) 0 else currentPage + 1
+        return try {
+          val subscriptions = apiClient.subscriptions()
+            .list(page = currentPage, currency = currencyCode)
+            .toRoomDto()
+
+          appDb.withTransaction {
+            if (loadType == LoadType.REFRESH) appDb.subscriptions().removeAll()
+            appDb.subscriptions().saveAll(subscriptions)
+          }
+
+          MediatorResult.Success(endOfPaginationReached = subscriptions.isEmpty())
+        } catch (e: Throwable) {
+          Log.i(LOG_TAG, "pagingDataFlow:", e)
+          MediatorResult.Error(e)
+        }
       }
-    },
-  )
+    }
+  ) { appDb.subscriptions().pagingSource() }
+    .flow
+    .map { pagingData -> pagingData.map { it.toDomainEntity() } }
 
   /**
    * Returns a [Flow] that emits the current state of subscription cancel operation as a [Resource].

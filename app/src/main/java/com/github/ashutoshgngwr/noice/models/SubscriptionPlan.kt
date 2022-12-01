@@ -107,3 +107,16 @@ fun SubscriptionPlan.toRoomDto(): SubscriptionPlanDto {
 fun List<SubscriptionPlan>.toRoomDto(): List<SubscriptionPlanDto> {
   return map { it.toRoomDto() }
 }
+
+fun ApiSubscriptionPlan.toRoomDto(): SubscriptionPlanDto {
+  return SubscriptionPlanDto(
+    id = id,
+    provider = provider,
+    billingPeriodMonths = billingPeriodMonths,
+    trialPeriodDays = trialPeriodDays,
+    priceInIndianPaise = priceInIndianPaise,
+    priceInRequestedCurrency = priceInRequestedCurrency,
+    requestedCurrencyCode = requestedCurrencyCode,
+    googlePlaySubscriptionId = googlePlaySubscriptionId,
+  )
+}

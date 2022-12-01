@@ -18,12 +18,8 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
-import androidx.paging.PagingSource
-import androidx.paging.PagingState
 import androidx.paging.cachedIn
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -33,10 +29,10 @@ import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseItemBindin
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseListFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseLoadingItemBinding
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
+import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
 import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
-import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +40,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -73,18 +68,25 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
     binding.errorContainer.retryAction = adapter::refresh
     adapter.addLoadStateListener { loadStates ->
       footerAdapter.loadState = loadStates.append
-      val isRefreshError = loadStates.source.refresh is LoadState.Error
-      val isListEmpty = loadStates.source.refresh is LoadState.NotLoading
+      val isRefreshError = loadStates.refresh is LoadState.Error
+      val isListEmpty = loadStates.refresh is LoadState.NotLoading
         && loadStates.append.endOfPaginationReached
         && adapter.itemCount < 1
 
       binding.emptyListIndicator.isVisible = isListEmpty
-      binding.swipeContainer.isVisible = !isListEmpty && !isRefreshError
-      binding.swipeContainer.isRefreshing = loadStates.source.refresh is LoadState.Loading
-      binding.errorContainer.isVisible = isRefreshError
+      binding.errorContainer.isVisible = isRefreshError && adapter.itemCount < 1
+      binding.swipeContainer.isVisible =
+        !(binding.emptyListIndicator.isVisible || binding.errorContainer.isVisible)
+      binding.swipeContainer.isRefreshing = loadStates.refresh is LoadState.Loading
 
       if (isRefreshError) {
-        binding.errorContainer.message = buildLoadError(requireContext(), loadStates.source.refresh)
+        val message = buildLoadError(requireContext(), loadStates.refresh)
+        if (binding.errorContainer.isVisible) {
+          binding.errorContainer.message = message
+        } else {
+          showErrorSnackBar(message)
+            .setAction(R.string.retry) { adapter.refresh() }
+        }
       }
     }
 
@@ -153,9 +155,9 @@ class SubscriptionPurchaseListViewModel @Inject constructor(
     this.currencyCode = currencyCode
     pagerJob?.cancel()
     pagerJob = viewModelScope.launch {
-      Pager(PagingConfig(pageSize = 20)) {
-        SubscriptionPurchasePagingDataSource(subscriptionRepository, currencyCode)
-      }.flow.cachedIn(this).collect(purchasesData)
+      subscriptionRepository.pagingDataFlow(currencyCode)
+        .cachedIn(this)
+        .collect(purchasesData)
     }
   }
 }
@@ -287,35 +289,6 @@ object SubscriptionComparator : DiffUtil.ItemCallback<Subscription>() {
 
   override fun areContentsTheSame(oldItem: Subscription, newItem: Subscription): Boolean {
     return oldItem == newItem
-  }
-}
-
-class SubscriptionPurchasePagingDataSource(
-  private val subscriptionRepository: SubscriptionRepository,
-  private val currencyCode: String,
-) : PagingSource<Int, Subscription>() {
-
-  override fun getRefreshKey(state: PagingState<Int, Subscription>): Int? {
-    return state.anchorPosition?.let { anchorPosition ->
-      val anchorPage = state.closestPageToPosition(anchorPosition)
-      anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
-    }
-  }
-
-  override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Subscription> {
-    val page = params.key ?: 0
-    val resource = subscriptionRepository.list(page, currencyCode).last()
-    val nextPage = if (resource.data?.isNotEmpty() == true) {
-      page + 1
-    } else {
-      null
-    }
-
-    if (resource is Resource.Success || (resource.error is NetworkError && resource.data?.isNotEmpty() == true)) {
-      return LoadResult.Page(resource.data ?: emptyList(), prevKey = null, nextKey = nextPage)
-    }
-
-    return LoadResult.Error(resource.error ?: throw NullPointerException("resource data is null"))
   }
 }
 
