@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.data
 
+import androidx.paging.PagingSource
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.data.models.SubscriptionDto
@@ -65,16 +66,19 @@ class SubscriptionDaoTest {
   }
 
   @Test
-  fun saveAllAndListStarted() = runTest {
+  fun saveAllAndPagingSource() = runTest {
     val now = System.currentTimeMillis()
     val subscription1 = buildSubscriptionWithPlanDto(1, 1)
     val subscription2 = buildSubscriptionWithPlanDto(2, 2, startedAt = now)
     val subscription3 = buildSubscriptionWithPlanDto(3, 2, startedAt = now - 60000)
     subscriptionDao.saveAll(listOf(subscription1, subscription2, subscription3))
 
-    assertEquals(listOf(subscription2, subscription3), subscriptionDao.listStarted(0, 10))
-    assertEquals(listOf(subscription2), subscriptionDao.listStarted(0, 1))
-    assertEquals(listOf(subscription3), subscriptionDao.listStarted(1, 10))
+    val pagingData = subscriptionDao.pagingSource()
+      .load(PagingSource.LoadParams.Refresh(null, 3, false))
+      .let { it as? PagingSource.LoadResult.Page }
+      ?.data
+
+    assertEquals(listOf(subscription2, subscription3), pagingData)
   }
 
   @Test
