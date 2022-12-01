@@ -62,7 +62,7 @@ class EditAccountDetailsFragment : Fragment() {
     viewLifecycleOwner.lifecycleScope.launch {
       viewModel.updateResource
         .filter { it is Resource.Success }
-        .collect { showSuccessSnackBar(R.string.account_details_update_success) }
+        .collect { showSuccessSnackBar(R.string.account_details_update_success, binding.save) }
     }
 
     viewLifecycleOwner.lifecycleScope.launch {
@@ -70,7 +70,7 @@ class EditAccountDetailsFragment : Fragment() {
         .filterNotNull()
         .collect { causeStrRes ->
           val msg = getString(R.string.account_details_update_error, getString(causeStrRes))
-          showErrorSnackBar(msg.normalizeSpace())
+          showErrorSnackBar(msg.normalizeSpace(), binding.save)
         }
     }
 
