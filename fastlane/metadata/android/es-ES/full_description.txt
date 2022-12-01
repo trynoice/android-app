@@ -12,18 +12,20 @@ Noice es una aplicación que permite crear ambientes sonoros personalizados. Te 
 • Enmascare su tinnitus con ruidos relajantes
 • Bloquee las distracciones para relajarse y dormirse
 • Alivie sus migrañas y dolores de cabeza
+• Comience sus días con los sonidos más suaves de la naturaleza con alarmas conscientes
 
 <b>CARACTERÍSTICAS PREMIUM</b>
 • Sonidos más largos con múltiples variantes/muestras
 • Síntesis aleatoria de las variaciones naturales de los sonidos, por ejemplo, la intensidad de la lluvia variará con el tiempo
 • Reproducción completa sin conexión
 • Audio de ultra alta calidad para su transmisión y descarga (hasta 320 kbps)
+• Alarmas activas ilimitadas
 
 <b>CARACTERÍSTICAS GRATUITAS</b>
 • Amplia biblioteca de sonidos
 • Compatible con Google Cast o Chromecast*.
 • Temporizador de sueño automático
-• Reloj despertador
+• Despertador con hasta 2 alarmas activas
 • Crea y guarda tus mezclas personalizadas
 • Generador de mezclas aleatorias que se adaptan a tu estado de ánimo
 • Control de volumen individual para cada sonido
@@ -48,6 +50,8 @@ Noice es una aplicación que permite crear ambientes sonoros personalizados. Te 
 • <b>evitar que el dispositivo se duerma</b>: para mantener la CPU del dispositivo despierta y proporcionar una reproducción ininterrumpida cuando la pantalla se apaga.
 • <b>instalar accesos directos</b>: para añadir accesos directos preestablecidos a la pantalla de inicio
 • <b>ejecutar servicio en primer plano</b>: para reproducción continua cuando la aplicación está en segundo plano
+• <b>mostrar notificaciones como actividades de pantalla completa en un dispositivo bloqueado</b>: para mostrar la alerta cuando se activa una alarma
+• <b>control de vibración</b>: para hacer vibrar el dispositivo cuando se dispara una alarma habilitada para vibración
 
 Noice es un software de código abierto.
 https://github.com/trynoice/android-app
