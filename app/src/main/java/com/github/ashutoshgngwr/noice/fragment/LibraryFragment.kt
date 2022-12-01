@@ -204,6 +204,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
         }
     }
 
+    viewModel.loadLibrary()
     analyticsProvider.setCurrentScreen("library", LibraryFragment::class)
   }
 
@@ -369,14 +370,10 @@ class LibraryViewModel @Inject constructor(
 
   internal val isLibraryUpdated = MutableStateFlow(false)
 
-  init {
-    loadLibrary()
-    viewModelScope.launch { isLibraryUpdated.emit(soundRepository.isLibraryUpdated()) }
-  }
-
   fun loadLibrary() {
     viewModelScope.launch {
       soundRepository.listInfo().collect(soundInfosResource)
+      isLibraryUpdated.emit(soundRepository.isLibraryUpdated())
     }
   }
 
