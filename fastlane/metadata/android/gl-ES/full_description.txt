@@ -50,7 +50,7 @@ Noice é unha aplicación que permite crear ambientes sonoros personalizados. Pe
 • <b>evitar co dispositivo se durma</b>: para mantela CPU do dispositivo activa e ofrecer unha reprodución ininterrompida cando a pantalla se apaga.
 • <b>instalar atallos</b>: para engadir atallos predefinidos á pantalla de inicio
 • <b>executalo servizo en primeiro plano</b>: para a reprodución continua cando a aplicación está en segundo plano
-• <b>mostrar notificacións como actividades a pantalla completa nun dispositivo bloqueado</b>: para mostrala alerta cando se activa unha alarma
+• <b>mostralas notificacións en pantalla completa nun dispositivo bloqueado</b>: para mostrala alerta cando se activa unha alarma
 • <b>control da vibración</b>: para facer vibralo dispositivo cando se activa unha alarma activada pola vibración
 
 Noice é un software de código aberto.
