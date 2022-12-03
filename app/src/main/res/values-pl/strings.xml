@@ -119,9 +119,6 @@
     <string name="remove_all_sound_downloads">Usuń wszystkie pobrane dźwięki</string>
     <string name="remove_all_sound_downloads_confirmation">Spowoduje to usunięcie wszystkich dźwięków pobranych do odtwarzania w trybie offline. Czy chcesz kontynuować\?</string>
     <string name="oss_licenses">Licencje oprogramowania otwarto źródłowego</string>
-    <string name="sound_library_updated">Zaktualizowano bibliotekę dźwięków</string>
-    <string name="sound_library_updated_message">Wprowadziliśmy kilka zmian w bibliotece dźwięków. Czy chcesz zobaczyć informacje o wydaniu\?</string>
-    <string name="review">Zobacz</string>
     <string name="sound_is_premium">Ten dźwięk jest dostępny w Noice Premium.</string>
     <string name="benefit_4">%1$d dodatkowe dźwięki</string>
     <string name="use_material_you_colors">Użyj kolorów Material You</string>

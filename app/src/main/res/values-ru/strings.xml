@@ -284,9 +284,6 @@
         <item quantity="many">%1$d дней</item>
         <item quantity="other">%1$d дней</item>
     </plurals>
-    <string name="sound_library_updated">Обновлена библиотека звука</string>
-    <string name="sound_library_updated_message">Мы внесли несколько изменений в библиотеку звуков. Хотите ознакомиться с примечаниями к выпуску\?</string>
-    <string name="review">Обзор</string>
     <string name="benefit_4">%1$d дополнительные звуки</string>
     <string name="sound_is_premium">Этот звук доступен при использовании Noice Premium.</string>
     <string name="no_alarms_description">Добавьте новый будильник, нажав кнопку \"+\"!</string>

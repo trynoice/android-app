@@ -295,9 +295,6 @@
     <string name="remove_all_sound_downloads">Remover todos os sons baixados</string>
     <string name="sound_scheduled_for_download">Preparando para baixar %1$s.</string>
     <string name="sound_download_scheduled_for_removal">Preparando para remover %1$s dos seus sons baixados.</string>
-    <string name="sound_library_updated">Biblioteca de Sons Atualizada</string>
-    <string name="sound_library_updated_message">Nós fizemos algumas mudanças na biblioteca de sons. Gostaria de ver as notas de atualização\?</string>
-    <string name="review">Avaliação</string>
     <string name="benefit_4">%1$d sons adicionais</string>
     <string name="sound_is_premium">Este som está disponível com o Noice Premium.</string>
     <string name="trial_period">Período de teste: %1$s</string>

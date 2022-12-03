@@ -252,9 +252,6 @@
     <string name="gift_card_already_redeemed">La tarjeta regalo con el código introducido ya ha sido canjeada.</string>
     <string name="gift_card_redeem_error">¡Oh, vaya! No pudimos canjear su tarjeta regalo. %1$s</string>
     <string name="redeemed_using_code">Canjeado usando %1$s</string>
-    <string name="sound_library_updated">Banco de Sonidos Actualizado</string>
-    <string name="sound_library_updated_message">Hemos realizado algunos cambios en la biblioteca de sonidos. ¿Le gustaría revisar las notas de su publicación\?</string>
-    <string name="review">Opinión</string>
     <plurals name="n_days">
         <item quantity="one">%1$d día</item>
         <item quantity="many">%1$d días</item>

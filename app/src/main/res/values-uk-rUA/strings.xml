@@ -276,9 +276,6 @@
         <item quantity="many">%1$d днів</item>
         <item quantity="other">%1$d днів</item>
     </plurals>
-    <string name="sound_library_updated">Бібліотека звуків оновлена</string>
-    <string name="sound_library_updated_message">Ми внесли деякі зміни до звукової бібліотеки. Бажаєте ознайомитися з примітками до випуску\?</string>
-    <string name="review">Ознайомитися</string>
     <string name="benefit_4">%1$d додаткові звуки</string>
     <string name="sound_is_premium">Цей звук доступний з Noice Premium.</string>
     <string name="alarms">Будильники</string>

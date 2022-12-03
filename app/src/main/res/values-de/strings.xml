@@ -290,9 +290,6 @@
         <item quantity="one">%1$d Tag</item>
         <item quantity="other">%1$d Tage</item>
     </plurals>
-    <string name="sound_library_updated">Sound-Bibliothek aktualisiert</string>
-    <string name="sound_library_updated_message">Wir haben ein paar Änderungen an der Soundbibliothek vorgenommen. Möchten Sie die Versionshinweise einsehen\?</string>
-    <string name="review">Rezension</string>
     <string name="benefit_4">%1$d zusätzliche Klänge</string>
     <string name="sound_is_premium">Dieser Sound ist mit Noice Premium verfügbar.</string>
     <string name="alarms">Alarme</string>

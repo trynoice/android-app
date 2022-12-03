@@ -47,5 +47,4 @@
   <string name="fdroid_url">https://f-droid.org/app/com.github.ashutoshgngwr.noice</string>
   <string name="google_play">Google Play</string>
   <string name="stripe">Stripe</string>
-  <string name="sound_library_release_notes_url">https://trynoice.com/sound-library-release-notes</string>
 </resources>

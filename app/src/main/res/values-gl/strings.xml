@@ -66,7 +66,6 @@
     <string name="notification_channel_sound_downloads__name">Descargas dos sons</string>
     <string name="remove_all_sound_downloads">Elimina todalas descargas dos sons</string>
     <string name="remove_all_sound_downloads_confirmation">Eliminará todolos sons descargados para a reprodución sen conexión. Queres continuar\?</string>
-    <string name="review">Revisión</string>
     <string name="sunday_initial">D</string>
     <string name="sound_downloads_scheduled_for_removal">Todalas descargas dos sons programáronse correctamente para a súa eliminación.</string>
     <string name="remove_sound_download">Eliminar %1$s</string>
@@ -81,8 +80,6 @@
     <string name="alarms">Alarmas</string>
     <string name="play_sound_before_adjusting_volume">Debes reproducir este son para poder axustalo seu volume.</string>
     <string name="trial_period">Período de proba: %1$s</string>
-    <string name="sound_library_updated">Biblioteca dos sons actualizada</string>
-    <string name="sound_library_updated_message">Fixemos algúns cambios na biblioteca dos sons. Queres revisar as súas notas de lanzamento\?</string>
     <string name="benefit_4">%1$d sons adicionais</string>
     <string name="add_alarm">Engade unha alarma</string>
     <string name="no_alarms">Sen alarmas</string>

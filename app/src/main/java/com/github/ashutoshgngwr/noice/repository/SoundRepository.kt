@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.room.withTransaction
 import com.github.ashutoshgngwr.noice.AppDispatchers
 import com.github.ashutoshgngwr.noice.data.AppDatabase
-import com.github.ashutoshgngwr.noice.data.models.LibraryUpdateTimeDto
 import com.github.ashutoshgngwr.noice.data.models.SoundMetadataDto
 import com.github.ashutoshgngwr.noice.data.models.SoundSegmentDto
 import com.github.ashutoshgngwr.noice.data.models.SoundSourceDto
@@ -187,21 +186,6 @@ class SoundRepository @Inject constructor(
       delay(1000L)
     }
   }.flowOn(appDispatchers.io) // downloadIndex is blocking.
-
-  /**
-   * @return `true` if the sound library was updated since the last check.
-   */
-  suspend fun isLibraryUpdated(): Boolean {
-    return try {
-      val oldUpdatedAt = appDb.sounds().getLibraryUpdateTime()
-      val newUpdatedAt = apiClient.cdn().libraryManifest().updatedAt
-      appDb.sounds().saveLibraryUpdateTime(LibraryUpdateTimeDto(newUpdatedAt))
-      oldUpdatedAt != null && oldUpdatedAt < newUpdatedAt
-    } catch (e: Throwable) {
-      Log.w(LOG_TAG, "isLibraryUpdated:", e)
-      false // suppress errors
-    }
-  }
 
   private suspend fun loadLibraryManifestInCacheStore() {
     val manifest = apiClient.cdn().libraryManifest()

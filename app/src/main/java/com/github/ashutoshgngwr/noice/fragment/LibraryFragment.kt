@@ -34,7 +34,6 @@ import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showInfoSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
-import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.models.SoundDownloadState
@@ -51,11 +50,9 @@ import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -182,21 +179,6 @@ class LibraryFragment : Fragment(), LibraryListItemController {
     binding.savePresetButton.setOnLongClickListener {
       Toast.makeText(requireContext(), R.string.save_preset, Toast.LENGTH_LONG).show()
       true
-    }
-
-    viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.isLibraryUpdated
-        .filter { it }
-        .collect {
-          DialogFragment.show(childFragmentManager) {
-            title(R.string.sound_library_updated)
-            message(R.string.sound_library_updated_message)
-            negativeButton(R.string.cancel)
-            positiveButton(R.string.review) {
-              requireContext().startCustomTab(R.string.sound_library_release_notes_url)
-            }
-          }
-        }
     }
 
     viewModel.loadLibrary()
@@ -351,12 +333,9 @@ class LibraryViewModel @Inject constructor(
     .shouldDisplaySoundIconsAsFlow()
     .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
-  internal val isLibraryUpdated = MutableStateFlow(false)
-
   fun loadLibrary() {
     viewModelScope.launch {
       soundRepository.listInfo().collect(soundInfosResource)
-      isLibraryUpdated.emit(soundRepository.isLibraryUpdated())
     }
   }
 

@@ -285,11 +285,8 @@
         <item quantity="other">%1$d jours</item>
     </plurals>
     <string name="trial_period">Période d\'essai : %1$s</string>
-    <string name="sound_library_updated">Bibliothèque sonore mise à jour</string>
-    <string name="sound_library_updated_message">Nous avons apporté quelques modifications à la bibliothèque de sons. Voulez-vous consulter ses notes de mise à jour \?</string>
     <string name="benefit_4">%1$d sons supplémentaires</string>
     <string name="sound_is_premium">Ce son est disponible avec Noice Premium.</string>
-    <string name="review">Consulter</string>
     <string name="alarms">Alarmes</string>
     <string name="add_alarm">Ajouter une alarme</string>
     <string name="monday_initial">L</string>

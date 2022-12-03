@@ -268,9 +268,6 @@
     <string name="remove_sound_download_confirmation">Confermi di voler rimuovere un suono scaricato per la riproduzione offline\?</string>
     <string name="sound_scheduled_for_download">Pianificando %1$s per il download.</string>
     <string name="play_sound_before_adjusting_volume">Devi riprodurre questo suono prima di poter aggiustare il volume.</string>
-    <string name="sound_library_updated_message">Abbiamo fatto alcune modifiche alla libreria dei suoni. Vuoi revisionare le note di rilascio\?</string>
-    <string name="review">Revisita</string>
-    <string name="sound_library_updated">Libreria dei Suoni Aggiornata</string>
     <string name="benefit_4">%1$d suoni aggiuntivi</string>
     <string name="sound_is_premium">Questo suono è disponibile con Noice Premium.</string>
     <string name="trial_period">Periodo di Prova: %1$s</string>
