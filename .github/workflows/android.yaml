@@ -196,12 +196,12 @@ jobs:
       - id: tag_info
         run: |
           export TAG_NAME="${GITHUB_REF/'refs/tags/'/''}"
-          export TAG_BODY="$(git tag  --list --format='%(contents:body)' $TAG_NAME)"
-          export TAG_BODY="${TAG_BODY//'%'/'%25'}"
-          export TAG_BODY="${TAG_BODY//$'\n'/'%0A'}"
-          export TAG_BODY="${TAG_BODY//$'\r'/'%0D'}"
-          echo "::set-output name=name::${TAG_NAME}"
-          echo "::set-output name=body::${TAG_BODY}"
+          {
+            echo "name=$TAG_NAME";
+            echo "body<<EOF";
+            git tag  --list --format='%(contents:body)' $TAG_NAME;
+            echo "EOF";
+          } >> "$GITHUB_OUTPUT"
       - uses: softprops/action-gh-release@v1
         with:
           token: ${{ secrets.BOT_PAT }}
