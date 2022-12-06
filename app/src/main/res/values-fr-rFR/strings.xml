@@ -330,4 +330,5 @@
     <string name="master_volume">Volume principal</string>
     <string name="alarm_gradually_increase_volume">Augmenter progressivement le volume de l\'alarme</string>
     <string name="alarm_gradually_increase_volume_summary">Durée en minutes pour l\'augmentation progressive du volume lors d\'un déclenchement d\'alarme</string>
+    <string name="no_purchases">Aucun achat</string>
 </resources>

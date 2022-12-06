@@ -274,4 +274,24 @@
     <string name="alarm_permission_rationale_description">我们需要额外权限才能在你的设备上设定闹钟。
 \n
 \n请在您设备的系统设置中找到 Noice 应用详情，并开启其“闹钟和提醒”权限。</string>
+    <string name="benefit_4">%1$d 种额外声音</string>
+    <string name="sound_is_premium">该声音仅向 Noice 高级版提供。</string>
+    <string name="add_alarm">添加一个闹钟</string>
+    <string name="no_alarms">没有闹钟</string>
+    <string name="tuesday_initial">二</string>
+    <string name="wednesday_initial">三</string>
+    <string name="thursday_initial">四</string>
+    <string name="friday_initial">五</string>
+    <string name="alarms">闹钟</string>
+    <string name="alarm_permission_rationale_title">允许 Noice 设置闹钟</string>
+    <string name="post_notifications_permission_rationale_description">我们需要附加权限才能设置闹钟。如果没有通知，Noice 无法准时触发闹钟。</string>
+    <string name="alarm_post_notifications_permission_denied">Noice 无法在没有通知权限的情况下设置闹钟响铃！</string>
+    <string name="add_label">添加标签</string>
+    <string name="sunday_initial">日</string>
+    <string name="monday_initial">一</string>
+    <string name="saturday_initial">六</string>
+    <string name="vibrate">振动</string>
+    <string name="not_scheduled">未设置</string>
+    <string name="post_notifications_permission_rationale_title">允许 Noice 展示通知</string>
+    <string name="proceed">继续</string>
 </resources>

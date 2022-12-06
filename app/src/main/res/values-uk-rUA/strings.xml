@@ -321,4 +321,5 @@
     <string name="master_volume">Основна гучність</string>
     <string name="alarm_gradually_increase_volume">Поступово збільшувати гучність будильника</string>
     <string name="alarm_gradually_increase_volume_summary">Тривалість у хвилинах поступового збільшення гучності під час спрацьовування будильника</string>
+    <string name="no_purchases">Нічого не придбано</string>
 </resources>
