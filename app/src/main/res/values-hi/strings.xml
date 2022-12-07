@@ -319,4 +319,5 @@
     <string name="master_volume">मास्टर वॉल्यूम</string>
     <string name="alarm_gradually_increase_volume">अलार्म की मात्रा धीरे-धीरे बढ़े</string>
     <string name="alarm_gradually_increase_volume_summary">अलार्म बजने पर वॉल्यूम धीरे-धीरे बढ़ाने के लिए मिनटों में अवधि</string>
+    <string name="no_purchases">कोई खरीद नहीं</string>
 </resources>
