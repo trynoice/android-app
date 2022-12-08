@@ -35,7 +35,7 @@
     <string name="app_theme_light">Світла</string>
     <string name="app_theme_dark">Темна</string>
     <string name="app_theme_system_default">За системними налаштуваннями</string>
-    <string name="app_description">Розслабтеся та зосередьтеся за допомогою природного заспокійливого шуму.</string>
+    <string name="app_description">Зосереджуйтеся, медитуйте та розслабляйтеся за допомогою природного заспокійливого шуму.</string>
     <string name="appintro__chromecast_desc">Використовуйте Noice для передавання його атмосфери до інших сумісних із Chromecast пристроїв, як-от колонки, ТВ тощо.</string>
     <string name="appintro__chromecast_title">Chromecast увімкнено</string>
     <string name="appintro__getting_started_desc_0">Посуньте ліворуч, щоб дізнатись про всі функції!</string>
