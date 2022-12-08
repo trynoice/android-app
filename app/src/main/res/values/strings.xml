@@ -34,7 +34,7 @@
     <string name="preset_does_not_exist">Preset does not exist. It may have been deleted!</string>
     <string name="preset_info__description">
     Create new presets by playing sounds and using the Save button in the Library.
-  </string>
+    </string>
     <string name="rename">Rename</string>
     <string name="pinned_shortcuts_not_supported">Your default launcher does not support adding shortcuts.</string>
     <string name="presets_as_home_screen_summary">Show \"presets\" on app startup (requires app restart)</string>
@@ -43,15 +43,15 @@
     <string name="sleep_timer_description">
     Noice will shutdown itself when the timer ends. Use the buttons below to add time and start
     the timer.
-  </string>
+    </string>
     <string name="select_preset">Select Preset</string>
     <string name="app_theme_light">Light</string>
     <string name="app_theme_dark">Dark</string>
     <string name="app_theme_system_default">System default</string>
-    <string name="app_description">Relax and improve focus with natural calming noise.</string>
+    <string name="app_description">Focus, meditate and relax with natural calming noise.</string>
     <string name="appintro__chromecast_desc">
     Use Noice to cast its ambience to other Chromecast enabled devices such as speakers, TVs, etc.
-  </string>
+    </string>
     <string name="appintro__chromecast_title">Chromecast enabled</string>
     <string name="appintro__getting_started_desc_0">Swipe left to get to know all the features!</string>
     <string name="appintro__getting_started_desc_1">Let\'s get started!</string>
@@ -59,24 +59,24 @@
     <string name="appintro__presets_desc">
     After playing a few sounds, you can use the save button in the bottom end corner to save your mix.
     To reuse a stored mix, go to "presets" list from the bottom bar.
-  </string>
+    </string>
     <string name="appintro__presets_title">Save your favourite mixes</string>
     <string name="appintro__library_desc">
     Use the volume slider to adjust sound volumes. At each repetition of non-looping sounds, a delay
     period is selected randomly from the range set by the time slider.
-  </string>
+    </string>
     <string name="appintro__library_title">Create your perfect surroundings</string>
     <string name="appintro__timer_desc">
     A little ambience can help you fall asleep effortlessly. Use the sleep timer to let Noice shut
     itself down. Similarly, to wake up to a calm environment, use the wake-up timer to set the alarm.
-  </string>
+    </string>
     <string name="appintro__timer_title">Trouble falling asleep or waking up?</string>
     <string name="support_development__donate">Donate</string>
     <string name="support_development__donate_description">If you have not purchased the premium subscription, you can make a one-time payment. It will help us sustain the development of the free features and keep them ad-free forever.</string>
     <string name="support_development__donate_google_play_description">Your payment will be securely handled by Google Play. Depending on your location, additional taxes _may be_ added to the final amount.</string>
     <string name="support_development__donate_thank_you_description">
     We wholeheartedly thank you for your generous contribution to the Noice project.
-  </string>
+    </string>
     <string name="support_development__share">Share with friends</string>
     <string name="support_development__share_description">You can also help us by telling your friends about us. More users will provide us feedback from several different perspectives and help us improve our services.</string>
     <string name="cast_media">Connect to Chromecast</string>
@@ -84,7 +84,7 @@
     We\'d love to hear from you about the app. Please take a moment to visit our GitHub repository.
     If you didn\'t love the app, please consider opening up an issue explaining your concerns.
     Otherwise, please star the project to show love and support.
-  </string>
+    </string>
     <string name="in_app_feedback__title">Submit a review</string>
     <string name="later">Later</string>
     <string name="never">Never</string>
