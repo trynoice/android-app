@@ -23,7 +23,7 @@
     <string name="appintro__getting_started_desc_0">向左滑动即可了解所有功能!</string>
     <string name="appintro__chromecast_title">已启用 Chromecast</string>
     <string name="appintro__chromecast_desc">使用Noice将其氛围投射到其他支持Chromecast的设备上，如扬声器、电视等。</string>
-    <string name="app_description">用自然舒缓的噪音放松自己，让自己更加专注，提高工作效率。</string>
+    <string name="app_description">通过自然平静的噪音集中注意力、冥想和放松。</string>
     <string name="select_preset">选择预设</string>
     <string name="sleep_timer_description">计时器结束后，Noice将自动关闭。使用下面的按钮来添加时间和启动定时器。</string>
     <string name="reset">重置</string>
