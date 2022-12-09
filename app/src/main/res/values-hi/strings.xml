@@ -34,7 +34,7 @@
     <string name="app_theme_light">हल्का रंग</string>
     <string name="app_theme_dark">गहरा रंग</string>
     <string name="app_theme_system_default">सिस्टम डिफ़ॉल्ट</string>
-    <string name="app_description">पृष्ठभूमि शोर के साथ आराम और फोकस को बढ़ावा दें।</string>
+    <string name="app_description">प्राकृतिक शांत शोर के साथ फोकस में सुधार करें, ध्यान करें और आराम करें।</string>
     <string name="appintro__chromecast_desc">अन्य क्रोमकास्ट सक्षम डिवाइस जैसे स्पीकर, टीवी, आदि पर ऑडियो चलाने के लिए नॉइस का उपयोग करें।</string>
     <string name="appintro__chromecast_title">क्रोमकास्ट सक्षम</string>
     <string name="appintro__getting_started_desc_0">सभी सुविधाओं को जानने के लिए बाएं स्वाइप करें!</string>
