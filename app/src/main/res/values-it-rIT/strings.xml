@@ -26,7 +26,7 @@
     <string name="app_theme_light">Chiaro</string>
     <string name="app_theme_dark">Scuro</string>
     <string name="app_theme_system_default">Predefinito del sistema</string>
-    <string name="app_description">Rilassati e migliora la concentrazione con un rumore calmante naturale.</string>
+    <string name="app_description">Concentrati, medita e rilassati con un rumore calmante naturale.</string>
     <string name="notification_channel_default__description">Controlli di riproduzione</string>
     <string name="notification_channel_default__name">Riproduzione dei media</string>
     <string name="okay">Va bene</string>
