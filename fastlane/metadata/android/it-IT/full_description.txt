@@ -12,18 +12,20 @@ Noice è un'app che permette di creare ambienti sonori personalizzati. Consente 
 • Maschera il tuo acufene con attenuazione del rumore
 • Blocca le distrazioni per rilassarti e addormentarti
 • Lenisci le tue emicranie e mal di testa
+• Inizia le tue giornate con i suoni più delicati della natura con allarmi consapevoli
 
 <b>FUNZIONALITÀ PREMIUM</b>
 • Suoni più lunghi con più varianti/campioni
 • Sintesi randomizzata di variazioni naturali nei suoni, ad esempio, l'intensità della pioggia varia con il tempo
 • Riproduzione offline completa
 • Audio di altissima qualità per lo streaming e il download (fino a 320 kbps)
+• Allarmi attivi illimitati
 
 <b>FUNZIONALITÀ GRATIS</b>
 • Ricca libreria audio
 • Google Cast o Chromecast abilitato*
 • Timer di spegnimento automatico
-• Sveglia
+• Sveglia con fino a 2 allarmi attivi
 • Crea e salva i tuoi mix personalizzati
 • Generatore di mix casuale per soddisfare ogni vostro umore
 • Controllo del volume individuale per ogni suono
@@ -48,6 +50,8 @@ Noice è un'app che permette di creare ambienti sonori personalizzati. Consente 
 • <b>impedire al dispositivo di dormire</b>: per mantenere la CPU del dispositivo sveglia per fornire la riproduzione ininterrotta quando lo schermo si spegne
 • <b>installa scorciatoie</b>: per aggiungere scorciatoie preimpostate alla schermata iniziale
 • <b>eseguire il servizio di primo piano</b>: per la riproduzione continua quando l'app è in background
+• <b>visualizzare le notifiche a schermo intero su un dispositivo bloccato</b>: per visualizzare l'avviso quando un allarme si attiva
+• <b>Controllo vibrazione</b>: per la vibrazione del dispositivo quando un allarme con vibrazione parte
 
 Noice è un software open source.
 https://github.com/trynoice/android-app
