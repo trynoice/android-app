@@ -320,4 +320,5 @@
     <string name="alarm_gradually_increase_volume">अलार्म की मात्रा धीरे-धीरे बढ़े</string>
     <string name="alarm_gradually_increase_volume_summary">अलार्म बजने पर वॉल्यूम धीरे-धीरे बढ़ाने के लिए मिनटों में अवधि</string>
     <string name="no_purchases">कोई खरीद नहीं</string>
+    <string name="cancellation_and_refunds_policy">[भुगतान, रद्दीकरण और धनवापसी नीति](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium) देखें।</string>
 </resources>
