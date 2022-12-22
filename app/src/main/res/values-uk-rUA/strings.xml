@@ -321,4 +321,5 @@
     <string name="alarm_gradually_increase_volume">Поступово збільшувати гучність будильника</string>
     <string name="alarm_gradually_increase_volume_summary">Тривалість у хвилинах поступового збільшення гучності під час спрацьовування будильника</string>
     <string name="no_purchases">Нічого не придбано</string>
+    <string name="cancellation_and_refunds_policy">Перегляньте [політику платежів, скасувань і відшкодувань](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
 </resources>
