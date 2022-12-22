@@ -329,5 +329,5 @@
     <string name="alarm_gradually_increase_volume">Aumentar gradualmente el volumen de la alarma</string>
     <string name="alarm_gradually_increase_volume_summary">Duración en minutos para aumentar gradualmente el volumen cuando se dispara una alarma</string>
     <string name="no_purchases">Sin compras</string>
-    <string name="cancellation_and_refunds_policy">Véase [política de pagos, anulaciones y reembolsos](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
+    <string name="cancellation_and_refunds_policy">Ver [política de pagos, cancelaciones y reembolsos](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
 </resources>
