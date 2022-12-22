@@ -58,7 +58,6 @@
     <string name="connect_through_email">Contacto por correo electrónico</string>
     <string name="third_party_attributions">Atribucións a terceiros</string>
     <string name="use_material_you_colors_summary">Paleta de cores \"Material You\" inherente ao sistema Android</string>
-    <string name="showing_localised_prices">Prezos convertidos de [INR](https://en.wikipedia.org/wiki/Indian_rupee). Os prezos reais poden variar lixeiramente.</string>
     <string name="use_material_you_colors">Usalas cores \"Material You\"</string>
     <string name="stripe_customer_portal_error">Ai! Non puidemos abrilo portal de pago. %1$s Téntao de novo!</string>
     <string name="notification_channel_sound_downloads__description">Notificacións do progreso relacionadas coas descargas de son.</string>

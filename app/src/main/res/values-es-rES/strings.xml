@@ -235,7 +235,6 @@
     <string name="sign_out_error">¡Oh, vaya! No pudimos cerrar su sesión. %1$s ¡Inténtelo de nuevo!</string>
     <string name="sign_up_tos">Si continúa, usted acepta nuestros [Términos de Servicio] (https://trynoice.com/terms-of-service) y nuestra [Política de Privacidad](https://trynoice.com/privacy-policy).</string>
     <string name="oss_licenses">Licencias de Software de Código Libre</string>
-    <string name="showing_localised_prices">Precios convertidos de [INR](https://en.wikipedia.org/wiki/Indian_rupee). El precio exacto puede variar ligeramente.</string>
     <string name="download_sound">Descargar sonido</string>
     <string name="notification_channel_sound_downloads__description">Notificaciones de progreso relacionadas con descargas de sonidos.</string>
     <string name="remove_all_sound_downloads">Eliminar todas las descargas de sonidos</string>

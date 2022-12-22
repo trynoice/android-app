@@ -208,7 +208,8 @@ class SubscriptionPurchaseViewHolder(
 
     binding.monthlyPrice.isVisible = !isGiftCardPurchase
     if (!isGiftCardPurchase) {
-      binding.monthlyPrice.text = resources.getString(R.string.monthly_price, s.plan.monthlyPrice)
+      binding.monthlyPrice.text = s.plan.monthlyPrice(true)
+        .also { resources.getString(R.string.monthly_price, it) }
     }
 
     binding.startedOn.text = s.startedAt?.let {

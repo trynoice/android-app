@@ -118,31 +118,58 @@
           android:textAppearance="?attr/textAppearanceTitleLarge"
           tools:text="@string/select_a_plan" />
 
+        <Space
+          android:layout_width="wrap_content"
+          android:layout_height="24dp" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+          android:id="@+id/pricing_toggle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginBottom="16dp"
+          app:checkedButton="@id/local_pricing"
+          app:isVisible="@{viewModel.canShowLocalPricing}"
+          app:singleSelection="true">
+
+          <Button
+            android:id="@+id/local_pricing"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="USD $" />
+
+          <Button
+            android:id="@+id/actual_pricing"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/actual_pricing" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginVertical="16dp"
-          android:animateLayoutChanges="true"
           android:orientation="vertical"
           app:activePlan="@{viewModel.activeSubscription.plan}"
           app:canClickItems="@{viewModel.isSignedIn}"
-          app:isVisible="@{!viewModel.plans.isEmpty()}"
           app:onPlanSelected="@{onPlanSelectedListener}"
+          app:preferLocalPricing="@{viewModel.preferLocalPricing}"
           app:subscriptionPlans="@{viewModel.plans}" />
 
         <Space
           android:layout_width="wrap_content"
-          android:layout_height="8dp"
-          app:isVisible="@{viewModel.isShowingLocalPrices}" />
+          android:layout_height="24dp" />
 
         <com.github.ashutoshgngwr.noice.widget.MarkdownTextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:drawablePadding="12dp"
-          android:text="@string/showing_localised_prices"
+          android:gravity="center_vertical"
+          android:text="@string/cancellation_and_refunds_policy"
           android:textAppearance="?attr/textAppearanceBodyMedium"
-          app:drawableStartCompat="@drawable/ic_outline_info_24"
-          app:isVisible="@{viewModel.isShowingLocalPrices}" />
+          app:drawableStartCompat="@drawable/ic_outline_info_24" />
 
         <Space
           android:layout_width="wrap_content"

@@ -241,7 +241,6 @@
     <string name="trial_period">试用期：%1$s</string>
     <string name="gift_card_not_found">提交的兑换码不存在。</string>
     <string name="gift_card_details">兑换该礼品卡将为你提供直至 %1$s 的高级版订阅。</string>
-    <string name="showing_localised_prices">价格由 [印度卢比](https://en.wikipedia.org/wiki/Indian_rupee) 转换而来，实际定价可能会有小幅波动。</string>
     <string name="use_material_you_colors">使用 Material You 配色</string>
     <string name="stripe_customer_portal_error">糟糕！我们无法开启付款通道。%1$s 请重试！</string>
     <string name="download_sound">下载音频</string>

@@ -277,7 +277,6 @@
     <string name="connect_through_email">Connect through email</string>
     <string name="third_party_attributions">Third-party attributions</string>
     <string name="oss_licenses">Open-source software licenses</string>
-    <string name="showing_localised_prices">Prices converted from [INR](https://en.wikipedia.org/wiki/Indian_rupee). Actual prices may vary slightly.</string>
     <string name="use_material_you_colors">Use Material You colors</string>
     <string name="use_material_you_colors_summary">Inherit Material You color palette from the Android system</string>
     <string name="stripe_customer_portal_error">Oops! We couldn\'t open the billing portal. %1$s Please try again!</string>
@@ -347,4 +346,5 @@
     <string name="alarm_gradually_increase_volume">Gradually increase alarm volume</string>
     <string name="alarm_gradually_increase_volume_summary">Duration in minutes for gradually increasing the volume when an alarm fires</string>
     <string name="no_purchases">No Purchases</string>
+    <string name="cancellation_and_refunds_policy">See [payments, cancellation and refunds policy](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
 </resources>

@@ -251,7 +251,6 @@
     <string name="oss_licenses">Licenze software open-source</string>
     <string name="connect_through_email">Contattaci tramite e-mail</string>
     <string name="reach_us">Contattaci</string>
-    <string name="showing_localised_prices">Prezzi convertiti da [INR](https://en.wikipedia.org/wiki/Indian_rupee). I prezzi effettivi possono variare leggermente.</string>
     <string name="stripe_customer_portal_error">Ops! Non è stato possibile aprire il portale di fatturazione. %1$s Si prega di riprovare!</string>
     <string name="use_material_you_colors">Usa i colori Material You</string>
     <string name="use_material_you_colors_summary">Eredita la palette di colori Material You dal sistema Android</string>

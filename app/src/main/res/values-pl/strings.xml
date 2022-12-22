@@ -122,7 +122,6 @@
     <string name="sound_is_premium">Ten dźwięk jest dostępny w Noice Premium.</string>
     <string name="benefit_4">%1$d dodatkowe dźwięki</string>
     <string name="use_material_you_colors">Użyj kolorów Material You</string>
-    <string name="showing_localised_prices">Ceny przeliczone z [INR](https://en.wikipedia.org/wiki/Indian_rupee). Aktualne ceny mogą się nieznacznie różnić.</string>
     <string name="download_sound">Pobierz dźwięk</string>
     <string name="notification_channel_sound_downloads__name">Pobieranie dźwięku</string>
     <string name="select_a_plan">Wybierz plan</string>

@@ -248,7 +248,6 @@
     <string name="gift_card_load_error">Chúng tôi không thể lấy thẻ quà. %1$s</string>
     <string name="gift_card_not_found">Mã đã nhập không tồn tại.</string>
     <string name="monthly_price">%1$s mỗi tháng</string>
-    <string name="showing_localised_prices">Giá đã chuyển từ [INR](https://en.wikipedia.org/wiki/Indian_rupee). Giá thực tế có thể dao động nhẹ.</string>
     <string name="cancel_subscription_confirmation">Bạn có chắc bạn muốn huỷ gói đăng ký Noice Premium không\? Khi huỷ, gói đăng ký của bạn sẽ tự động dừng tại điểm kết thúc của chu kỳ thanh toán hiện tại. Chu kỳ thanh toán hiện tại của bạn sẽ kết thúc vào %1$s.</string>
     <string name="benefit_3">Âm thanh dài hơn với nhiều mẫu hơn</string>
     <string name="use_material_you_colors">Sử dụng màu sắc Material You</string>

@@ -274,7 +274,6 @@
     <string name="app_license">Lizenziert unter GNU GPL-3.0</string>
     <string name="gift_card_details">Beim Einlösen dieses Geschenkgutscheins erhalten Sie das Premium-Abonnement bis %1$s.</string>
     <string name="remove_all_sound_downloads_confirmation">Dadurch werden alle für die Offline-Wiedergabe heruntergeladenen Sounds entfernt. Möchten Sie fortfahren\?</string>
-    <string name="showing_localised_prices">Preise umgerechnet von [INR](https://en.wikipedia.org/wiki/Indian_rupee). Tatsächliche Preise können leicht abweichen.</string>
     <string name="use_material_you_colors">Verwenden Sie Material You Farben</string>
     <string name="notification_channel_sound_downloads__name">Sound-Downloads</string>
     <string name="checking_sound_downloads">Überprüfen von Sound-Downloads</string>

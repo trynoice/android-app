@@ -253,7 +253,6 @@
     <string name="gift_card_already_redeemed">दिए गए कोड वाला गिफ्ट कार्ड पहले ही रिडीम किया जा चुका है।</string>
     <string name="gift_card_redeem_error">धत्तेरे की! हम आपका गिफ्ट कार्ड रिडीम नहीं कर सके। %1$s</string>
     <string name="third_party_attributions">थर्ड-पार्टी एट्रिब्यूशन</string>
-    <string name="showing_localised_prices">कीमतें [भारतीय रुपये](https://en.wikipedia.org/wiki/Indian_rupee) से बदली गई हैं। वास्तविक कीमतों में थोड़ा अंतर हो सकता है।</string>
     <string name="use_material_you_colors">मटीरियल यू कलर्स का इस्तेमाल करें</string>
     <string name="use_material_you_colors_summary">एंड्रॉइड सिस्टम से मटीरियल यू कलर पैलेट को इनहेरिट करेगा</string>
     <string name="stripe_customer_portal_error">उफ़! हम बिलिंग पोर्टल नहीं खोल सके. %1$s कृपया पुन: प्रयास करें!</string>

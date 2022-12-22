@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.os.ConfigurationCompat
-import androidx.core.view.forEach
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,10 +26,10 @@ import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
-import com.google.android.material.card.MaterialCardView
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -76,54 +75,52 @@ class ViewSubscriptionPlansFragment : Fragment() {
         }
     }
 
-    val currencyCode = try {
-      ConfigurationCompat.getLocales(resources.configuration)
-        .get(0)
-        .let { Currency.getInstance(it) }
-        .currencyCode
-    } catch (e: Throwable) {
+
+    val currency = ConfigurationCompat.getLocales(resources.configuration)
+      .takeIf { !it.isEmpty }
+      .let { it?.get(0) ?: Locale.getDefault() }
       // catch "java.lang.IllegalArgumentException: Unsupported ISO 3166 country: ar" or other
       // similar errors and use a default currency.
-      "USD"
+      .runCatching { Currency.getInstance(this) }
+      .getOrDefault(Currency.getInstance("USD"))
+
+    binding.errorContainer.retryAction = { viewModel.loadPlans(currency.currencyCode) }
+    "${currency.currencyCode} ${currency.symbol}".also { binding.localPricing.text = it }
+    binding.pricingToggle.addOnButtonCheckedListener { _, checkedId, isChecked ->
+      if (isChecked) viewModel.preferLocalPricing.value = checkedId == R.id.local_pricing
     }
 
-    binding.errorContainer.retryAction = { viewModel.loadPlans(currencyCode) }
-    viewModel.loadPlans(currencyCode)
+    viewModel.loadPlans(currency.currencyCode)
   }
 }
 
-@BindingAdapter("subscriptionPlans", "activePlan", "canClickItems", "onPlanSelected")
+@BindingAdapter(
+  "subscriptionPlans",
+  "activePlan",
+  "canClickItems",
+  "onPlanSelected",
+  "preferLocalPricing",
+)
 fun setSubscriptionPlans(
   container: ViewGroup,
   plans: List<SubscriptionPlan>,
   activePlan: SubscriptionPlan?,
   canClickItems: Boolean,
   onPlanSelectedListener: OnPlanSelectedListener,
+  preferLocalPricing: Boolean,
 ) {
-  if (plans != container.tag) {
-    container.tag = plans
-    container.removeAllViews()
-    val inflater = LayoutInflater.from(container.context)
-    plans.forEach { plan ->
-      val binding = SubscriptionPlanItemBinding.inflate(inflater, container, true)
-      binding.plan = plan
-      binding.root.tag = plan
-    }
-  }
+  container.removeAllViews()
+  val inflater = LayoutInflater.from(container.context)
+  plans.forEach { plan ->
+    val binding = SubscriptionPlanItemBinding.inflate(inflater, container, true)
+    binding.plan = plan
+    binding.isSelected = plan.id == activePlan?.id
+    binding.preferLocalPricing = preferLocalPricing
 
-  // setOnClickListener sets isClickable = true internally, and therefore, isClickable should be
-  // called after it.
-  container.forEach { view ->
-    view as MaterialCardView
-    val isActive = view.tag == activePlan
-    view.isCheckable = isActive
-    view.isChecked = isActive
     when {
-      !canClickItems -> view.isClickable = false
-      isActive -> view.setOnClickListener(null)
-      else -> view.setOnClickListener {
-        onPlanSelectedListener.onPlanSelected(view.tag as SubscriptionPlan)
-      }
+      !canClickItems -> binding.root.isClickable = false
+      binding.isSelected -> binding.root.setOnClickListener(null)
+      else -> binding.root.setOnClickListener { onPlanSelectedListener.onPlanSelected(plan) }
     }
   }
 }
@@ -176,9 +173,11 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
     )
   }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
-  val isShowingLocalPrices = plans.transform { plans ->
+  val canShowLocalPricing = plans.transform { plans ->
     emit(plans.all { it.requestedCurrencyCode != null && it.requestedCurrencyCode != "INR" })
   }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
+
+  val preferLocalPricing = MutableStateFlow(true)
 
   init {
     val args = ViewSubscriptionPlansFragmentArgs.fromSavedStateHandle(savedStateHandle)

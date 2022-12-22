@@ -9,6 +9,14 @@
       name="plan"
       type="com.github.ashutoshgngwr.noice.models.SubscriptionPlan" />
 
+    <variable
+      name="isSelected"
+      type="boolean" />
+
+    <variable
+      name="preferLocalPricing"
+      type="boolean" />
+
   </data>
 
   <com.google.android.material.card.MaterialCardView
@@ -16,6 +24,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="8dp"
+    android:checkable="@{isSelected}"
+    android:checked="@{isSelected}"
     android:orientation="horizontal"
     app:cardCornerRadius="24dp"
     app:cardElevation="0dp"
@@ -56,7 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="4dp"
-        android:text="@{@string/monthly_price(plan.monthlyPrice)}"
+        android:text="@{@string/monthly_price(plan.monthlyPrice(preferLocalPricing))}"
         android:textAppearance="?attr/textAppearanceTitleMedium"
         app:layout_constraintBottom_toBottomOf="@id/billing_period"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +77,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="4dp"
-        android:text="@{@string/total_price(plan.totalPrice)}"
+        android:text="@{@string/total_price(plan.totalPrice(preferLocalPricing))}"
         android:textAppearance="?attr/textAppearanceBodyMedium"
         app:layout_constraintBottom_toBottomOf="@id/trial_period"
         app:layout_constraintEnd_toEndOf="parent"
