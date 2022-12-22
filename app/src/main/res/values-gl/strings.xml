@@ -317,5 +317,5 @@
     <string name="delete_account_confirmation">Inmediatamente perderalo acceso á túa conta trala eliminación. Se tes unha subscrición en curso a Noice Premium, deixaremos de cobrarche por ela. Se cambias de opinión, podes restaurala túa conta iniciando sesión de novo en calquera momento antes de 7 días despois da eliminación. Despois deste período, borraremos permanentemente os datos da túa conta dos nosos servidores.</string>
     <string name="subscription_payment_confirmation_failed">Uh-oh! Tivemos algúns problemas mentres agardabamola confirmación do pago. Pode deberse a un erro da rede ou a un atraso do provedor dos pagos. Actualizaremolo estado da túa subscrición en canto teñamos noticias do provedor. Comprobalo estado da túa subscrición despois dun tempo.</string>
     <string name="no_purchases">Sen compras</string>
-    <string name="cancellation_and_refunds_policy">Consulta [política de pagos, cancelación e reembolsos](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
+    <string name="cancellation_and_refunds_policy">Consulta [política de pagos, cancelacións e reembolsos](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
 </resources>
