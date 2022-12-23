@@ -329,4 +329,5 @@
     <string name="alarm_gradually_increase_volume">Постепенно увеличивайте громкость будильника</string>
     <string name="alarm_gradually_increase_volume_summary">Продолжительность в минутах для постепенного увеличения громкости при срабатывании будильника</string>
     <string name="no_purchases">Нет покупок</string>
+    <string name="cancellation_and_refunds_policy">См. [правила оплаты, отмены и возврата](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
 </resources>
