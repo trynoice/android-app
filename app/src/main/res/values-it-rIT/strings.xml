@@ -319,4 +319,5 @@
     <string name="alarm_gradually_increase_volume">Aumenta gradualmente il volume della sveglia</string>
     <string name="alarm_gradually_increase_volume_summary">Durata in minuti per aumentare gradualmente il volume quando la sveglia parte</string>
     <string name="no_purchases">Nessun acquisto</string>
+    <string name="cancellation_and_refunds_policy">Vedi [pagamenti, annullamenti e politiche di rimborso](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
 </resources>
