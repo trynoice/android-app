@@ -315,4 +315,5 @@
     <string name="no_purchases">没有订阅</string>
     <string name="alarm_gradually_increase_volume">闹钟音量渐响</string>
     <string name="alarm_gradually_increase_volume_summary">闹钟触发时音量逐渐增加的分钟时长</string>
+    <string name="cancellation_and_refunds_policy">查看 [付款、取消和退款政策](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium)。</string>
 </resources>
