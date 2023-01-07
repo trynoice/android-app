@@ -26,7 +26,7 @@ project.ext {
     navVersion           : "${navVersion}",
 
     junitVersion         : '4.13.2',
-    robolectricVersion   : '4.9',
+    robolectricVersion   : '4.9.2',
     testCoreVersion      : '1.5.0',
   ]
 }
