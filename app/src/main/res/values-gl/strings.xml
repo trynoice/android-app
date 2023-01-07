@@ -141,7 +141,7 @@
     <string name="select_preset">Seleccionala preselección</string>
     <string name="app_theme_light">Claro</string>
     <string name="app_theme_dark">Escuro</string>
-    <string name="app_description">Relaxa e mellora a concentración cun ruído calmante e natural.</string>
+    <string name="app_description">Concéntrate, medita e reláxate cun ruído natural calmante.</string>
     <string name="appintro__chromecast_title">Chromecast activado</string>
     <string name="appintro__getting_started_desc_1">Imos comezar!</string>
     <string name="appintro__library_title">Crealo teu ambiente perfecto</string>
@@ -317,4 +317,5 @@
     <string name="delete_account_confirmation">Inmediatamente perderalo acceso á túa conta trala eliminación. Se tes unha subscrición en curso a Noice Premium, deixaremos de cobrarche por ela. Se cambias de opinión, podes restaurala túa conta iniciando sesión de novo en calquera momento antes de 7 días despois da eliminación. Despois deste período, borraremos permanentemente os datos da túa conta dos nosos servidores.</string>
     <string name="subscription_payment_confirmation_failed">Uh-oh! Tivemos algúns problemas mentres agardabamola confirmación do pago. Pode deberse a un erro da rede ou a un atraso do provedor dos pagos. Actualizaremolo estado da túa subscrición en canto teñamos noticias do provedor. Comprobalo estado da túa subscrición despois dun tempo.</string>
     <string name="no_purchases">Sen compras</string>
+    <string name="cancellation_and_refunds_policy">Consulta [política de pagos, cancelacións e reembolsos](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
 </resources>

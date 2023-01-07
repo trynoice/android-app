@@ -35,7 +35,7 @@
     <string name="app_theme_light">Светлая</string>
     <string name="app_theme_dark">Тёмная</string>
     <string name="app_theme_system_default">Системная тема</string>
-    <string name="app_description">Расслабьтесь и улучшите концентрацию внимания с помощью естественного успокаивающего шума.</string>
+    <string name="app_description">Сосредоточьтесь, медитируйте и расслабляйтесь с естественным успокаивающим шумом.</string>
     <string name="appintro__chromecast_desc">
     Используйте Noice чтобы передать атмосферу на другие устройства с поддержкой Chromecast,
     такие как колонки, ТВ и т.д.
@@ -328,4 +328,6 @@
     <string name="master_volume">Основная громкость</string>
     <string name="alarm_gradually_increase_volume">Постепенно увеличивайте громкость будильника</string>
     <string name="alarm_gradually_increase_volume_summary">Продолжительность в минутах для постепенного увеличения громкости при срабатывании будильника</string>
+    <string name="no_purchases">Нет покупок</string>
+    <string name="cancellation_and_refunds_policy">См. [правила оплаты, отмены и возврата](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
 </resources>

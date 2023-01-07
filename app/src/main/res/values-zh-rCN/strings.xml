@@ -23,7 +23,7 @@
     <string name="appintro__getting_started_desc_0">向左滑动即可了解所有功能!</string>
     <string name="appintro__chromecast_title">已启用 Chromecast</string>
     <string name="appintro__chromecast_desc">使用Noice将其氛围投射到其他支持Chromecast的设备上，如扬声器、电视等。</string>
-    <string name="app_description">用自然舒缓的噪音放松自己，让自己更加专注，提高工作效率。</string>
+    <string name="app_description">通过自然平静的噪音集中注意力、冥想和放松。</string>
     <string name="select_preset">选择预设</string>
     <string name="sleep_timer_description">计时器结束后，Noice将自动关闭。使用下面的按钮来添加时间和启动定时器。</string>
     <string name="reset">重置</string>
@@ -293,4 +293,27 @@
     <string name="not_scheduled">未设置</string>
     <string name="post_notifications_permission_rationale_title">允许 Noice 展示通知</string>
     <string name="proceed">继续</string>
+    <string name="notification_channel_alarm_primary__description">定时闹钟触发时会显示的通知。</string>
+    <string name="notification_channel_alarm_priming__name">正在启动闹钟</string>
+    <string name="alarm_ringer_preset_load_error">无法为该闹钟加载所选预设。</string>
+    <string name="snooze">推迟</string>
+    <string name="alarm_snooze_length">推迟时长</string>
+    <string name="alarm_snooze_length_summary">推迟闹钟的分钟时长</string>
+    <string name="alarm_missed">已错过的闹钟</string>
+    <string name="notification_channel_alarm_priming__description">准备触发定时闹钟时显示的通知。</string>
+    <string name="alarm">闹钟</string>
+    <string name="alarms_disabled_due_to_subscription_expiration">因为您的 Noice 高级版订阅已到期我们不得不禁用部分闹钟！</string>
+    <string name="alarm_ringer_max_duration_summary">在特定分钟时长后自动静音闹钟提醒</string>
+    <string name="notification_channel_missed_alarms__name">错过的闹钟</string>
+    <string name="notification_channel_missed_alarms__description">提醒持续时间结束后，显示在无声闹钟设定上的通知。</string>
+    <string name="edit_label">编辑标签</string>
+    <string name="notification_channel_alarm_primary__name">闹钟</string>
+    <string name="benefit_5">无限闹钟数量</string>
+    <string name="alarm_ringer_max_duration">提醒持续时长</string>
+    <string name="no_presets">没有预设</string>
+    <string name="master_volume">主音量</string>
+    <string name="no_purchases">没有订阅</string>
+    <string name="alarm_gradually_increase_volume">闹钟音量渐响</string>
+    <string name="alarm_gradually_increase_volume_summary">闹钟触发时音量逐渐增加的分钟时长</string>
+    <string name="cancellation_and_refunds_policy">查看 [付款、取消和退款政策](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium)。</string>
 </resources>
