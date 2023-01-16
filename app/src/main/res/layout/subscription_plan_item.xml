@@ -42,27 +42,32 @@
 
       <TextView
         android:id="@+id/billing_period"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
         android:paddingVertical="4dp"
         android:textAppearance="?attr/textAppearanceTitleLarge"
         app:billingPeriodMonths="@{plan.billingPeriodMonths}"
+        app:layout_constraintEnd_toStartOf="@id/monthly_price"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/quarterly" />
 
       <TextView
         android:id="@+id/trial_period"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
         android:paddingVertical="4dp"
         android:text="@{@string/trial_period(@plurals/n_days(plan.trialPeriodDays, plan.trialPeriodDays))}"
         android:textAppearance="?attr/textAppearanceBodyMedium"
+        app:layout_constraintEnd_toStartOf="@id/total_price"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/billing_period"
         tools:text="@string/trial_period" />
 
       <TextView
+        android:id="@+id/monthly_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="4dp"
@@ -70,10 +75,10 @@
         android:textAppearance="?attr/textAppearanceTitleMedium"
         app:layout_constraintBottom_toBottomOf="@id/billing_period"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/billing_period"
         tools:text="@string/monthly_price" />
 
       <TextView
+        android:id="@+id/total_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="4dp"
