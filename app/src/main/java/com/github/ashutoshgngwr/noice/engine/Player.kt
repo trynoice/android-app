@@ -13,9 +13,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
+import java.util.*
 import kotlin.math.min
 import kotlin.math.pow
-import kotlin.random.Random
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -228,8 +228,8 @@ abstract class Player protected constructor(
   protected fun requestNextSegment() {
     defaultScope.launch {
       if (currentSegment != null && sound?.info?.isContiguous == false) {
-        val maxSilenceSeconds = requireNotNull(sound?.info?.maxSilence)
-        val silenceDuration = Random.nextInt(30, maxSilenceSeconds).toDuration(DurationUnit.SECONDS)
+        val silenceSeconds = 30 + RANDOM.nextInt(requireNotNull(sound?.info?.maxSilence) - 29)
+        val silenceDuration = silenceSeconds.toDuration(DurationUnit.SECONDS)
         Log.d(LOG_TAG, "requestNextSegment: adding $silenceDuration silence to non-looping sound.")
         delay(silenceDuration)
       }
@@ -306,6 +306,9 @@ abstract class Player protected constructor(
     private const val MAX_RETRY_DELAY_MILLIS = 30 * 1000L
     internal const val DEFAULT_VOLUME = 20
     internal const val MAX_VOLUME = 25
+
+    // Kotlin's random implementation generates the same number in the beginning at each restart.
+    private val RANDOM = Random()
   }
 
   /**
