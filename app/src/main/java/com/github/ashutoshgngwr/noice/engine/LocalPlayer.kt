@@ -215,7 +215,12 @@ class LocalPlayer(
   }
 
   override fun onSegmentAvailable(uri: String) {
+    // when the playlist ends, ExoPlayer enters the `ended` state. It doesn't play any media items
+    // queued in `ended` state. To correctly resume the playback, first transition ExoPlayer to idle
+    // state using `stop` and then queue the media item and resume playback.
+    if (exoPlayer.playbackState == ExoPlayer.STATE_ENDED) exoPlayer.stop()
     exoPlayer.addMediaItem(MediaItem.fromUri(uri))
+    exoPlayer.playWhenReady = true
     exoPlayer.prepare()
   }
 
