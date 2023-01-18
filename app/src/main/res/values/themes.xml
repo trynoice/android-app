@@ -75,7 +75,7 @@
   </style>
 
   <style name="Widget.App.BottomSheet.Modal" parent="Widget.Material3.BottomSheet.Modal">
-    <item name="shapeAppearance">?attr/shapeAppearanceCornerMedium</item>
+    <item name="shapeAppearanceOverlay">?attr/shapeAppearanceCornerMedium</item>
   </style>
 
   <style name="Base.Theme.App.MediaRouter" parent="Theme.MediaRouter.Light" />

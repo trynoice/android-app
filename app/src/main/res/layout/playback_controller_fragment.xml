@@ -16,7 +16,7 @@
     android:layout_width="match_parent"
     android:layout_height="52dp"
     app:cardElevation="4dp"
-    app:shapeAppearance="?attr/shapeAppearanceCornerExtraSmall"
+    app:shapeAppearanceOverlay="?attr/shapeAppearanceCornerExtraSmall"
     tools:layout_margin="16dp">
 
     <LinearLayout

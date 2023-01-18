@@ -27,9 +27,9 @@
     android:checkable="@{isSelected}"
     android:checked="@{isSelected}"
     android:orientation="horizontal"
-    app:cardCornerRadius="24dp"
     app:cardElevation="0dp"
     app:contentPadding="16dp"
+    app:shapeAppearanceOverlay="?attr/shapeAppearanceCornerExtraLarge"
     app:strokeWidth="0dp">
 
     <!-- Padding bottom on the constraint layout offsets center imbalance due to line height of
@@ -37,7 +37,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:paddingHorizontal="16dp"
+      android:paddingHorizontal="8dp"
       android:paddingBottom="6sp">
 
       <TextView
