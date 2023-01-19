@@ -323,7 +323,6 @@
     <string name="notification_channel_alarm_priming__description">Benachrichtigungen, die angezeigt werden, sobald das Läuten eines geplanten Alarms vorbereitet wird.</string>
     <string name="alarm_ringer_preset_load_error">Die ausgewählten Voreinstellungen für diesen Alarm konnten nicht geladen werden.</string>
     <string name="alarms_disabled_due_to_subscription_expiration">Wir mussten ein paar Alarme deaktivieren, da dein Noice Premium Abo abgelaufen ist!</string>
-    <string name="benefit_5">Unlimitierte Alarme</string>
     <string name="alarm_ringer_max_duration_summary">Zeitdauer in Minuten nach der die Alarmerinnerung automatisch gestummt wird</string>
     <string name="notification_channel_missed_alarms__name">Verpasste Alarme</string>
     <string name="cancellation_and_refunds_policy">Siehe [payments, cancellations and refunds policy](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>

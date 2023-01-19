@@ -117,7 +117,6 @@
     <string name="invalid_name">O nome inserido é inválido!</string>
     <string name="invalid_email">O endereço inserido é inválido!</string>
     <string name="email">Correio eletrónico</string>
-    <string name="benefit_3">Sons longos com mais amostras</string>
     <string name="ends_on">Termina em %1$s</string>
     <string name="manage_subscription">Administrar Subscrição</string>
     <string name="cancel_subscription_confirmation">Tem certeza de que deseja cancelar a sua assinatura do Noice Premium\? Após o cancelamento, a sua assinatura será encerrada automaticamente no final do ciclo de cobrança atual. O seu ciclo de cobrança atual termina em %1$s.</string>
@@ -149,7 +148,6 @@
     <string name="quarterly">Trimestral</string>
     <string name="yearly">Anual</string>
     <string name="total_price">%1$s no total</string>
-    <string name="benefit_0">Variações naturais nos sons</string>
     <string name="benefit_2">Reprodução sem conexão</string>
     <string name="select_a_plan">Selecione um plano</string>
     <string name="processing_payment">Processando pagamento</string>
@@ -239,7 +237,6 @@
     <string name="account_locked_error">O seu e-mail está temporariamente bloqueado para tentativas de autenticação até %1$s.</string>
     <string name="cont">Continuar</string>
     <string name="sign_up">Entrar</string>
-    <string name="benefit_1">Transmissão de áudio de alta qualidade</string>
     <string name="support">Suporte</string>
     <string name="view_subscription_plans">Ver planos</string>
     <string name="sign_up_message">Por favor, digite o seu nome e e-mail para se inscrever.</string>
@@ -263,7 +260,6 @@
         <item quantity="many">%1$d dias</item>
         <item quantity="other">%1$d dias</item>
     </plurals>
-    <string name="benefit_4">%1$d sons adicionais</string>
     <string name="sound_is_premium">Este som está disponível com o Noice Premium.</string>
     <string name="alarms">Alarmes</string>
     <string name="add_alarm">Adicionar um Alarme</string>
@@ -297,7 +293,6 @@
     <string name="remove_all_sound_downloads_confirmation">Isto removerá todos os sons descarregados para uso offline. Deseja prosseguir\?</string>
     <string name="alarm_ringer_preset_load_error">Falha ao carregar a predefinição selecionada para este alarme.</string>
     <string name="alarms_disabled_due_to_subscription_expiration">Tivemos que desativar alguns alarmes porque a sua assinatura do Noice Premium expirou!</string>
-    <string name="benefit_5">Alarmes ilimitados</string>
     <string name="delete_account">Apagar conta</string>
     <string name="network_error">Rede não detectada.</string>
     <string name="unknown_error">Ocorreu um erro não esperado.</string>
