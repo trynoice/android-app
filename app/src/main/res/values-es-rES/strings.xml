@@ -133,7 +133,7 @@
     <string name="sign_in_to_continue">Inicia sesión o regístrate para continuar.</string>
     <string name="subscription_payment_cancelled">¡El pago de la suscripción fue cancelado!</string>
     <string name="cancel_subscription_confirmation">¿Seguro quieres cancelar tu suscripción a Noice Premium\? Tras la cancelación, su suscripción finalizará automáticamente al final del ciclo de facturación actual. Su ciclo de facturación actual finaliza el %1$s.</string>
-    <string name="has_premium_segments">Éste sonido ofrece variantes adicionales con Noice Premium.</string>
+    <string name="has_premium_segments">Con Noice Premium tendrás más tipos de sonidos</string>
     <string name="select_a_plan">Seleccionar un plan</string>
     <string name="account_locked_error">Su correo electrónico está bloqueado temporalmente para que no pueda realizar intentos de inicio de sesión hasta el %1$s.</string>
     <string name="sound_info">Acerca de este sonido</string>
@@ -169,7 +169,7 @@
     <string name="email">Correo electrónico</string>
     <string name="sign_in_sucessful">¡Inicio de sesión exitoso!</string>
     <string name="manage_subscription">Administrar suscripción</string>
-    <string name="non_looping_sound">Este sonido contiene pausas intermedias.</string>
+    <string name="non_looping_sound">Contiene pausas intercaladas</string>
     <string name="profile_load_error">¡Ups! No pudimos obtener los detalles de su cuenta. %1$s</string>
     <string name="renews_on">Se renueva el %1$s</string>
     <string name="media_sources">Fuentes de medios</string>
@@ -210,7 +210,7 @@
     </plurals>
     <string name="cont">Continuar</string>
     <string name="i_understand">Entiendo.</string>
-    <string name="looping_sound">Este sonido se repite a la perfección.</string>
+    <string name="looping_sound">Bucles sin interrupciones</string>
     <string name="subscription_payment_pending">El pago está pendiente para esta compra.</string>
     <string name="cancel_subscription_error">¡Oh no! No se ha podido cancelar la suscripción. %1$s¡Por favor, intentélo de nuevo!</string>
     <string name="delete_account_error">¡Oh no! No se ha podido eliminar la cuenta. %1$s ¡Por favor, inténtelo de nuevo!</string>
@@ -252,7 +252,7 @@
         <item quantity="many">%1$d días</item>
         <item quantity="other">%1$d días</item>
     </plurals>
-    <string name="sound_is_premium">Éste sonido se incluye en Noice Premium.</string>
+    <string name="sound_is_premium">Este sonido sólo está disponible con Noice Premium.</string>
     <string name="audio_quality_low">Bajo (128 Kbps)</string>
     <string name="playing">Reproducción en curso</string>
     <string name="loading">Cargando</string>
@@ -324,4 +324,17 @@
     <string name="alarm_gradually_increase_volume_summary">Duración en minutos para aumentar gradualmente el volumen cuando se dispara una alarma</string>
     <string name="no_purchases">Sin compras</string>
     <string name="cancellation_and_refunds_policy">Ver [política de pagos, cancelaciones y reembolsos](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
+    <string name="has_more_clips_with_premium">Este sonido ofrece más variantes del mismo en Noice Premium.</string>
+    <string name="more_sounds">Más sonidos</string>
+    <string name="more_sounds_desc">Libere todo el potencial de su experiencia de relajación y concentración con Noice Premium, con %1$s sonidos adicionales.</string>
+    <string name="more_sound_clips">Más estilos y tipos de sonidos</string>
+    <string name="more_sound_clips_desc">Descubra un nuevo mundo sonoro con nuestros exclusivos clips de sonido adicionales para elevar su experiencia auditiva a un nuevo nivel.</string>
+    <string name="natural_variations">Variaciones naturales</string>
+    <string name="hd_audio">Audio en alta definición</string>
+    <string name="hd_audio_desc">Experimente con el ruido como nunca antes, con la posibilidad de ajustar la calidad de sus sonidos hasta 320 kbps, lo que se traduce en un sonido cristalino y de alta fidelidad.</string>
+    <string name="offline_playback">Reproducción sin conexión</string>
+    <string name="unlimited_alarms">Alarmas ilimitadas</string>
+    <string name="unlimited_alarms_desc">Eleva tu rutina matutina con Noice Premium: programa un número ilimitado de alarmas para empezar el día de forma personalizada y tranquila.</string>
+    <string name="natural_variations_desc">Agregue una nueva dimensión a su escucha con clips adicionales para generar variaciones naturales y mixtas que hacen que cada sonido sea único y menos monótono.</string>
+    <string name="offline_playback_desc">Disfruta de sonidos relajantes en cualquier momento y lugar con las descargas de sonidos sin conexión de Noice, sin necesidad de conexión a Internet.</string>
 </resources>
