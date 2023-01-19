@@ -146,8 +146,8 @@
     <string name="audio_quality">Якість звуку</string>
     <string name="confirming_payment">Підтвердження оплати</string>
     <string name="subscription_payment_confirmation_failed">Йой! У нас виникли проблеми під час очікування підтвердження платежу. Це може бути пов\'язано з помилкою мережі або затримкою від постачальника платежів. Ми оновимо стан вашої передплати, як тільки нас повідомить ваш провайдер. Будь ласка, перевірте стан вашої передплати трохи згодом.</string>
-    <string name="non_looping_sound">Цей звук містить проміжні перерви.</string>
-    <string name="has_premium_segments">Цей звук пропонує додаткові варіанти з Noice Premium.</string>
+    <string name="non_looping_sound">Містить проміжні перерви</string>
+    <string name="has_premium_segments">Пропонує більше звукових кліпів з Noice Premium</string>
     <string name="audio_quality_low">Низька (128 кбіт/с)</string>
     <string name="audio_quality_medium">Середня (192 кбіт/с)</string>
     <string name="audio_quality_high">Висока (256 кбіт/с)</string>
@@ -206,7 +206,7 @@
     <string name="faqs">Часті запитання</string>
     <string name="made_in_india">Зроблено з ❤ в Індії</string>
     <string name="sound_info">Про цей звук</string>
-    <string name="looping_sound">Цей звук плавно повторюється.</string>
+    <string name="looping_sound">Плавно повторюється</string>
     <string name="media_sources">Медіаджерела</string>
     <string name="profile_load_error">Йой! Ми не змогли отримати дані вашого облікового запису. %1$s</string>
     <string name="cancel_subscription_error">О ні! Ми не змогли скасувати вашу передплату. %1$s Повторіть спробу!</string>
@@ -271,7 +271,7 @@
         <item quantity="many">%1$d днів</item>
         <item quantity="other">%1$d днів</item>
     </plurals>
-    <string name="sound_is_premium">Цей звук доступний з Noice Premium.</string>
+    <string name="sound_is_premium">Цей звук доступний лише з Noice Premium.</string>
     <string name="alarms">Будильники</string>
     <string name="add_alarm">Додати будильник</string>
     <string name="no_alarms">Немає будильників</string>
@@ -316,4 +316,17 @@
     <string name="alarm_gradually_increase_volume_summary">Тривалість у хвилинах поступового збільшення гучності під час спрацьовування будильника</string>
     <string name="no_purchases">Нічого не придбано</string>
     <string name="cancellation_and_refunds_policy">Перегляньте [політику платежів, скасувань і відшкодувань](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
+    <string name="unlimited_alarms_desc">Забарвте свою ранкову рутину з Noice Premium - заплануйте необмежену кількість будильників для персоналізованого та спокійного початку дня.</string>
+    <string name="has_more_clips_with_premium">Цей звук пропонує більше звукових кліпів з Noice Premium.</string>
+    <string name="more_sounds_desc">Розкрийте весь потенціал розслаблення та зосередження з Noice Premium з %1$s додатковими звуками.</string>
+    <string name="natural_variations_desc">Додайте новий вимір своєму прослуховуванню за допомогою кліпів, які створюють природні та різноманітні варіації, роблячи кожен звук унікальним і менш монотонним.</string>
+    <string name="more_sounds">Більше звуків</string>
+    <string name="more_sound_clips">Більше звукових кліпів</string>
+    <string name="more_sound_clips_desc">Відкрийте для себе новий світ звуку з нашими ексклюзивними додатковими звуковими кліпами, які підвищать рівень насиченості прослуховування.</string>
+    <string name="natural_variations">Природні варіації</string>
+    <string name="hd_audio">HD аудіо</string>
+    <string name="offline_playback">Офлайн відтворення</string>
+    <string name="offline_playback_desc">Насолоджуйтесь заспокійливими звуками в будь-який час і в будь-якому місці, завантажуючи офлайн-звуки Noice - для відтворення з\'єднання з інтернетом не потрібне.</string>
+    <string name="unlimited_alarms">Необмежена кількість будильників</string>
+    <string name="hd_audio_desc">Відчуйте шум, як ніколи раніше, з можливістю регулювання якості звуку до 320 кбіт/с, що забезпечує кришталево чистий, високоточний звук.</string>
 </resources>
