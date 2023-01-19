@@ -140,7 +140,6 @@
     <string name="sign_in">Se connecter</string>
     <string name="retry">Réessayer</string>
     <string name="signing_out">Déconnexion</string>
-    <string name="benefit_2">Lecture hors-ligne</string>
     <string name="audio_quality">Qualité audio</string>
     <string name="audio_quality_medium">Moyenne (192 kb/s)</string>
     <string name="signing_in">Connexion</string>
@@ -249,8 +248,6 @@
     <string name="looping_sound">Ce son passe en boucle sans interruption.</string>
     <string name="subscription_purchases_load_error">Oh oh ! Nous n\'avons pas pu récupérer l\'historique des achats de votre abonnement. %1$s</string>
     <string name="library_load_error">Oups ! Nous n\'avons pas pu récupérer la bibliothèque de sons. %1$s</string>
-    <string name="benefit_0">Variations naturelles des sons</string>
-    <string name="benefit_1">Streaming audio de haute qualité</string>
     <string name="subscription_payment_refunded">Nous avons annulé cet achat et demandé un remboursement.</string>
     <string name="preset_url_invalid">L\'URL prédéfinie semble être invalide !</string>
     <string name="audio_quality_summary">La qualité audio maximale pour le streaming. Moyenne, Élevée et Ultra ne fonctionnent que si vous êtes abonné·e à Noice Premium.</string>
@@ -276,7 +273,6 @@
     <string name="checking_sound_downloads">Vérification des sons téléchargés</string>
     <string name="sound_scheduled_for_download">Planification de %1$s pour le téléchargement.</string>
     <string name="sound_download_scheduled_for_removal">Planification %1$s pour la suppression de téléchargements son.</string>
-    <string name="benefit_3">Des sons plus longs avec plus d\'échantillons</string>
     <string name="play_sound_before_adjusting_volume">Vous devez jouer ce son avant de pouvoir régler son volume.</string>
     <plurals name="n_days">
         <item quantity="one">%1$d jour</item>
@@ -284,7 +280,6 @@
         <item quantity="other">%1$d jours</item>
     </plurals>
     <string name="trial_period">Période d\'essai : %1$s</string>
-    <string name="benefit_4">%1$d sons supplémentaires</string>
     <string name="sound_is_premium">Ce son est disponible avec Noice Premium.</string>
     <string name="alarms">Alarmes</string>
     <string name="add_alarm">Ajouter une alarme</string>
@@ -320,7 +315,6 @@
     <string name="no_presets">Aucun préréglage</string>
     <string name="alarm_ringer_preset_load_error">Impossible de charger le préréglage sélectionné pour cette alarme.</string>
     <string name="alarms_disabled_due_to_subscription_expiration">Nous avons dû désactiver certaines alarmes car votre abonnement Noice Premium a expiré !</string>
-    <string name="benefit_5">Alarmes illimitées</string>
     <string name="notification_channel_missed_alarms__name">Alarmes manquées</string>
     <string name="alarm_missed">Alarme manquée</string>
     <string name="alarm_ringer_max_duration_summary">Durée en minutes, après laquelle le rappel de l\'alarme doit être automatiquement désactivé</string>

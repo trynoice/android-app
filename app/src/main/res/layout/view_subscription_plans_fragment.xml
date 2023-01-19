@@ -61,49 +61,42 @@
           android:layout_gravity="center_horizontal"
           android:orientation="vertical">
 
-          <TextView
-            style="@style/Widget.App.SubscriptionPlan.Benefits.LineItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{@string/benefit_4(viewModel.premiumSoundsCount)}"
-            app:drawableStartCompat="@drawable/ic_baseline_star_rate_24"
+          <include
+            layout="@layout/subscription_benefit_item"
+            app:description="@{@string/more_sounds_desc(viewModel.premiumSoundsCount)}"
+            app:icon="@{@drawable/ic_baseline_star_rate_24}"
             app:isVisible="@{viewModel.premiumSoundsCount > 0}"
-            tools:text="@string/benefit_4" />
+            app:title="@{@string/more_sounds}" />
 
-          <TextView
-            style="@style/Widget.App.SubscriptionPlan.Benefits.LineItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/benefit_3"
-            app:drawableStartCompat="@drawable/ic_baseline_self_improvement_24" />
+          <include
+            layout="@layout/subscription_benefit_item"
+            app:description="@{@string/more_sound_clips_desc}"
+            app:icon="@{@drawable/ic_baseline_self_improvement_24}"
+            app:title="@{@string/more_sound_clips}" />
 
-          <TextView
-            style="@style/Widget.App.SubscriptionPlan.Benefits.LineItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/benefit_0"
-            app:drawableStartCompat="@drawable/ic_baseline_forest_24" />
+          <include
+            layout="@layout/subscription_benefit_item"
+            app:description="@{@string/natural_variations_desc}"
+            app:icon="@{@drawable/ic_baseline_forest_24}"
+            app:title="@{@string/natural_variations}" />
 
-          <TextView
-            style="@style/Widget.App.SubscriptionPlan.Benefits.LineItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/benefit_1"
-            app:drawableStartCompat="@drawable/ic_baseline_high_quality_24" />
+          <include
+            layout="@layout/subscription_benefit_item"
+            app:description="@{@string/hd_audio_desc}"
+            app:icon="@{@drawable/ic_baseline_high_quality_24}"
+            app:title="@{@string/hd_audio}" />
 
-          <TextView
-            style="@style/Widget.App.SubscriptionPlan.Benefits.LineItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/benefit_2"
-            app:drawableStartCompat="@drawable/ic_baseline_download_for_offline_24" />
+          <include
+            layout="@layout/subscription_benefit_item"
+            app:description="@{@string/offline_playback_desc}"
+            app:icon="@{@drawable/ic_baseline_download_for_offline_24}"
+            app:title="@{@string/offline_playback}" />
 
-          <TextView
-            style="@style/Widget.App.SubscriptionPlan.Benefits.LineItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/benefit_5"
-            app:drawableStartCompat="@drawable/ic_baseline_alarm_24" />
+          <include
+            layout="@layout/subscription_benefit_item"
+            app:description="@{@string/unlimited_alarms_desc}"
+            app:icon="@{@drawable/ic_baseline_alarm_24}"
+            app:title="@{@string/unlimited_alarms}" />
 
         </LinearLayout>
 

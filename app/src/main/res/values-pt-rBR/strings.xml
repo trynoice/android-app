@@ -169,7 +169,6 @@
     <string name="sign_in_to_continue">Faça login ou cadastre-se para continuar.</string>
     <string name="manage_subscription">Administrar Subscrição</string>
     <string name="playing">Tocando</string>
-    <string name="benefit_0">Variações naturais nos sons</string>
     <string name="app">Aplicação</string>
     <string name="subscription_payment_cancelled">O pagamento da assinatura foi cancelado!</string>
     <string name="made_in_india">Feito com ❤ na Índia</string>
@@ -189,7 +188,6 @@
     <string name="quarterly">Trimestral</string>
     <string name="subscription_plans_load_error">Ops! Não foi possível buscar planos de assinatura. %1$s</string>
     <string name="open_mailbox">Abri Caixa de Correio</string>
-    <string name="benefit_2">Reprodução sem conexão</string>
     <string name="payment_processing_error">Uh-oh! Não foi possível processar seu pagamento. O valor deve ser reembolsado automaticamente se deduzido. Se você não receber seu reembolso dentro de uma semana, por favor, avise-nos.</string>
     <string name="subscription_payment_refunded">Cancelamos esta compra e iniciamos um reembolso para ela.</string>
     <string name="media_sources">Fontes de mídias</string>
@@ -263,7 +261,6 @@
     <string name="delete_account">Apagar conta</string>
     <string name="support_development__donate_description">Se você ainda não adquiriu uma subscrição premium, poderá fazer um pagamento único. Isso nos ajudará a manter o desenvolvimento das funcionalidades gratuitas e mante-las livres de publicidade sempre.</string>
     <string name="random_preset_description">É provável que o pre-ajuste gerado pode conter sons das palavras selecionadas. Contudo, os ajustes intensos tentarão reproduzir mais sons simultaneamente.</string>
-    <string name="benefit_1">Transmissão de áudio de alta qualidade</string>
     <string name="subscription_payment_confirmation_failed">Uh-oh! Tivemos alguns problemas enquanto esperávamos a confirmação do pagamento. Pode ser devido a um erro de rede ou a um atraso do provedor de pagamento. Atualizaremos o status da sua assinatura assim que recebermos uma resposta do provedor. Por favor, verifique o status da sua assinatura depois de algum tempo.</string>
     <string name="monthly">Mensal</string>
     <string name="cancel_subscription_confirmation">Tem certeza de que deseja cancelar sua assinatura do Noice Premium\? Após o cancelamento, sua assinatura será encerrada automaticamente no final do ciclo de cobrança atual. Seu ciclo de cobrança atual termina em %1$s.</string>
@@ -281,7 +278,6 @@
         <item quantity="many">%1$d dias</item>
         <item quantity="other">%1$d dias</item>
     </plurals>
-    <string name="benefit_3">Sons longos com mais amostras</string>
     <string name="use_material_you_colors">Usar cores \"Material You\"</string>
     <string name="download_sound">Baixar som</string>
     <string name="notification_channel_sound_downloads__description">Notificações de progresso para download de sons.</string>
@@ -294,7 +290,6 @@
     <string name="remove_all_sound_downloads">Remover todos os sons baixados</string>
     <string name="sound_scheduled_for_download">Preparando para baixar %1$s.</string>
     <string name="sound_download_scheduled_for_removal">Preparando para remover %1$s dos seus sons baixados.</string>
-    <string name="benefit_4">%1$d sons adicionais</string>
     <string name="sound_is_premium">Este som está disponível com o Noice Premium.</string>
     <string name="trial_period">Período de teste: %1$s</string>
     <string name="sound_downloads_scheduled_for_removal">Todos os sons baixados foram programados para remoção com sucesso.</string>

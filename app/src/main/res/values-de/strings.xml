@@ -172,7 +172,6 @@
     <string name="back_online">Wieder online</string>
     <string name="account_details_update_success">Deine Account-Informationen wurden erfolgreich aktualisiert.</string>
     <string name="yearly">Jährlich</string>
-    <string name="benefit_2">Offline Wiedergabe</string>
     <string name="get_premium">Holen Sie sich Premium</string>
     <string name="monthly_price">%1$s pro Monat</string>
     <string name="benefits">Vorteile</string>
@@ -182,11 +181,9 @@
     <string name="confirming_payment">Bestätige Zahlung</string>
     <string name="subscription_payment_cancelled">Die Zahlung des Abonnements wurde storniert!</string>
     <string name="quarterly">Vierteljährlich</string>
-    <string name="benefit_1">Audio streaming in hoher Qualität</string>
     <string name="offline">Du bist offline</string>
     <string name="premium">Premium</string>
     <string name="random_preset_description">Die erzeugte Voreinstellung enthält wahrscheinlich Klänge mit den gewählten Schlüsselwörtern. Außerdem wird bei intensiven Voreinstellungen versucht, mehrere Sounds gleichzeitig abzuspielen.</string>
-    <string name="benefit_0">Natürliche Variationen von Klängen</string>
     <string name="sign_in_to_continue">Bitte logge dich ein oder erstelle ein Konto um fortzufahren.</string>
     <string name="duplicate_email_error">Die eingegebene E-Mail ist bereits mit einem anderen Konto verknüpft.</string>
     <string name="remove_sound_download_confirmation">Bestätigen Sie das Entfernen eines für die Offline-Wiedergabe heruntergeladenen Tons\?</string>
@@ -282,14 +279,12 @@
     <string name="remove_all_sound_downloads">Alle Sound-Downloads entfernen</string>
     <string name="sound_downloads_scheduled_for_removal">Alle Sound-Downloads wurden erfolgreich für die Entfernung geplant.</string>
     <string name="use_material_you_colors_summary">Vererbung der Material You-Farbpalette aus dem Android-System</string>
-    <string name="benefit_3">Längere Töne mit mehr Proben</string>
     <string name="play_sound_before_adjusting_volume">Sie müssen diesen Ton abspielen, bevor Sie seine Lautstärke einstellen können.</string>
     <string name="trial_period">Probezeit: %1$s</string>
     <plurals name="n_days">
         <item quantity="one">%1$d Tag</item>
         <item quantity="other">%1$d Tage</item>
     </plurals>
-    <string name="benefit_4">%1$d zusätzliche Klänge</string>
     <string name="sound_is_premium">Dieser Sound ist mit Noice Premium verfügbar.</string>
     <string name="alarms">Alarme</string>
     <string name="add_alarm">Einen Alarm hinzufügen</string>

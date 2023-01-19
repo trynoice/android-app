@@ -170,7 +170,6 @@
     <string name="total_price">कुल %1$s</string>
     <string name="monthly_price">%1$s प्रति माह</string>
     <string name="benefits">फ़ायदे</string>
-    <string name="benefit_1">उच्च क्वालिटी वाली ऑडियो स्ट्रीमिंग</string>
     <string name="processing_payment">हम आपका भुगतान संसाधित कर रहे हैं</string>
     <string name="plans">सदस्यता योजनाएं</string>
     <string name="get_premium">प्रीमियम पाएं</string>
@@ -217,9 +216,7 @@
     <string name="duplicate_email_error">दर्ज किया गया ईमेल दूसरे खाते से जुड़ा है।</string>
     <string name="account_details_update_success">आपके खाते का विवरण सफलतापूर्वक अपडेट कर दिया गया है।</string>
     <string name="quarterly">त्रैमासिक</string>
-    <string name="benefit_0">ध्वनियों में प्राकृतिक बदलाव</string>
     <string name="select_a_plan">एक योजना चुनें</string>
-    <string name="benefit_2">ऑफ़लाइन प्लेबैक</string>
     <string name="cancel_subscription_confirmation">क्या आप वाकई नॉइस प्रीमियम की सदस्यता रद्द करना चाहते हैं\? रद्द करने पर, आपकी सदस्यता वर्तमान बिलिंग चक्र के अंत में स्वतः समाप्त हो जाएगी। आपका वर्तमान बिलिंग चक्र %1$s को समाप्त होता है।</string>
     <string name="payment_processing_error">उह ओह! हम आपका भुगतान संसाधित करने में असमर्थ रहे। यदि कटौती की जाती है तो राशि स्वचालित रूप से वापस हो जानी चाहिए। यदि एक सप्ताह के भीतर आपको धन वापस नहीं मिलता है, तो कृपया हमें सूचित करें।</string>
     <string name="initialising_subscription">हम आपकी सदस्यता आरंभ कर रहे हैं</string>
@@ -268,13 +265,11 @@
     <string name="remove_sound_download_confirmation">ऑफ़लाइन प्लेबैक के लिए डाउनलोड की गई ध्वनि निकालने की पुष्टि करें\?</string>
     <string name="sound_scheduled_for_download">डाउनलोड के लिए %1$s शेड्यूल किया जा रहा है।</string>
     <string name="play_sound_before_adjusting_volume">इस ध्वनि का वॉल्यूम नियंत्रित करने के लिए इसे प्लैबैक करना जरूरी है।</string>
-    <string name="benefit_3">अधिक नमूनों के साथ लंबी ध्वनियाँ</string>
     <plurals name="n_days">
         <item quantity="one">%1$d दिन</item>
         <item quantity="other">%1$d दिन</item>
     </plurals>
     <string name="trial_period">परीक्षण अवधि: %1$s</string>
-    <string name="benefit_4">%1$d अतिरिक्त ध्वनियाँ</string>
     <string name="sound_is_premium">यह ध्वनि नॉइस प्रीमियम के साथ उपलब्ध है।</string>
     <string name="add_alarm">अलार्म बनाएं</string>
     <string name="no_alarms_description">\"+\" बटन को टैप करके एक नया अलार्म जोड़ें!</string>
@@ -293,7 +288,6 @@
     <string name="notification_channel_alarm_priming__description">शेड्यूल किए गए अलार्म को चालू करने की तैयारी करते समय दिखाई गई सूचनाएं।</string>
     <string name="alarm">अलार्म</string>
     <string name="snooze">स्नूज़</string>
-    <string name="benefit_5">असीमित अलार्म</string>
     <string name="alarm_snooze_length_summary">अलार्म स्नूज़ करने के लिए मिनटों में समय अवधि</string>
     <string name="alarm_ringer_max_duration">रिमाइंडर अवधि</string>
     <string name="post_notifications_permission_rationale_title">नॉइस को सूचनाएं दिखाने की अनुमति दें</string>

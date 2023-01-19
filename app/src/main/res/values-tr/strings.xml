@@ -187,7 +187,6 @@
     <string name="subscription_payment_cancelled">Abonelik ödemesi iptal edildi!</string>
     <string name="update_details">Ayrıntıları güncelle</string>
     <string name="plans">Planlar</string>
-    <string name="benefit_2">Çevrimdışı oynatma</string>
     <string name="select_a_plan">Bir plan seçin</string>
     <string name="confirming_payment">Ödeme onaylanıyor</string>
     <string name="subscription_purchases">Abonelik satın alımları</string>
@@ -196,7 +195,6 @@
         <item quantity="one">%1$d ay</item>
         <item quantity="other">%1$d ay</item>
     </plurals>
-    <string name="benefit_1">Yüksek kalitede ses akışı</string>
     <string name="cancelling_subscription">Abonelik iptal ediliyor</string>
     <string name="subscription_payment_confirmation_failed">Amanın! Ödeme onayını beklerken bir sorunla karşılaştık. Ağ hatası veya ödeme sağlayıcısındaki bir gecikmeden dolayı olabilir. Abonelik durumunu sağlayıcıdan bir cevap alır almaz güncelleyeceğiz. Lütfen abonelik durumunu bir süre sonra tekrar kontrol et.</string>
     <string name="ended_on">%1$s tarihinde bitti</string>
@@ -240,7 +238,6 @@
     <string name="privacy_policy">Gizlilik Politikası</string>
     <string name="account_details_update_error">Olamaz! Ayrıntılarınızı güncelleyemedik. %1$s Lütfen tekrar deneyin!</string>
     <string name="audio_quality_low">Düşük (128 kbps)</string>
-    <string name="benefit_0">Seslerde doğal değişimler</string>
     <string name="made_in_india">❤ ile Hindistan\'da yapılmıştır</string>
     <string name="delete_account_error">Olamaz! Hesabınızı silemedik. %1$s Lütfen tekrar deneyin!</string>
     <string name="audio_quality_ultra">Nihai (320 kbps)</string>

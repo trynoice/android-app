@@ -144,7 +144,6 @@
     <string name="i_understand">我明白了。</string>
     <string name="monthly_price">每月%1$s</string>
     <string name="benefits">收益</string>
-    <string name="benefit_2">离线播放</string>
     <string name="plans">订阅计划</string>
     <string name="user_already_subscribed">您已完成订阅。</string>
     <string name="sign_in_email_error">糟糕！我们无法通过电子邮件向您发送登录链接。%1$s后重试！</string>
@@ -161,7 +160,6 @@
     <string name="sign_in">登录</string>
     <string name="account_locked_error">您的邮箱暂时被锁定，请%1$s后重新登录。</string>
     <string name="sign_out_confirmation">是否确认登出？</string>
-    <string name="benefit_1">高质量音频流</string>
     <string name="media_sources">媒体资源</string>
     <string name="profile_load_error">偶买噶！我们无法获取您的帐户详细信息。%1$s</string>
     <string name="account_details_update_error">糟糕！我们无法更新您的详细信息。%1$s后重试！</string>
@@ -188,7 +186,6 @@
     <string name="offline">您已离线</string>
     <string name="premium">高级版</string>
     <string name="monthly">按月</string>
-    <string name="benefit_0">声音的自然变化</string>
     <string name="processing_payment">处理付款</string>
     <string name="initialising_subscription">初始化订阅</string>
     <string name="confirming_payment">确认付款</string>
@@ -232,7 +229,6 @@
     <string name="audio_quality">音质</string>
     <string name="audio_quality_summary">在线播放的最高音质。 仅当您订阅了 Noice 高级版时，才可使用 Medium、High 和 Ultra 音质。</string>
     <string name="audio_quality_medium">中 (192 kbps)</string>
-    <string name="benefit_3">更长的声音和更多的样本</string>
     <string name="audio_quality_low">低 (128 kbps)</string>
     <string name="preset_url_invalid">预设网址似乎无效！</string>
     <string name="sign_up_tos">继续，即表示您同意我们的 [服务条款](https://trynoice.com/terms-of-service) 和 [隐私政策](https://trynoice.com/privacy-policy)。</string>
@@ -273,7 +269,6 @@
     <string name="alarm_permission_rationale_description">我们需要额外权限才能在你的设备上设定闹钟。
 \n
 \n请在您设备的系统设置中找到 Noice 应用详情，并开启其“闹钟和提醒”权限。</string>
-    <string name="benefit_4">%1$d 种额外声音</string>
     <string name="sound_is_premium">该声音仅向 Noice 高级版提供。</string>
     <string name="add_alarm">添加一个闹钟</string>
     <string name="no_alarms">没有闹钟</string>
@@ -308,7 +303,6 @@
     <string name="notification_channel_missed_alarms__description">提醒持续时间结束后，显示在无声闹钟设定上的通知。</string>
     <string name="edit_label">编辑标签</string>
     <string name="notification_channel_alarm_primary__name">闹钟</string>
-    <string name="benefit_5">无限闹钟数量</string>
     <string name="alarm_ringer_max_duration">提醒持续时长</string>
     <string name="no_presets">没有预设</string>
     <string name="master_volume">主音量</string>

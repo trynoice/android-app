@@ -194,7 +194,6 @@
     <string name="subscription_payment_cancelled">Плата за подписку отменена!</string>
     <string name="sign_out_error">О нет! Не удалось выйти. %1$s Пожалуйста, повторите попытку!</string>
     <string name="initialising_subscription">Активация подписки</string>
-    <string name="benefit_0">Естественные вариации звуков</string>
     <string name="audio_quality">Качество звука</string>
     <string name="payment_processing_error">Ой! Нам не удалось обработать ваш платёж. Сумма должна быть автоматически возвращена, если она была снята с вашего счёта. Если вы не получите возмещение в течение недели - сообщите нам об этом.</string>
     <string name="subscription_payment_refunded">Мы отменили эту покупку и активировали процесс возврата средств за неё.</string>
@@ -222,8 +221,6 @@
     <string name="subscription_initialisation_error">Ой! Мы не смогли запустить процесс выставления счетов. %1$s Пожалуйста, повторите попытку!</string>
     <string name="back_online">Войти в сеть</string>
     <string name="bi_yearly">Раз в два года</string>
-    <string name="benefit_1">Потоковое аудио высокого качества</string>
-    <string name="benefit_2">Воспроизведение в автономном режиме</string>
     <string name="plans">Тарифные планы</string>
     <string name="user_already_subscribed">Вы уже подписаны.</string>
     <string name="subscription_payment_pending">Ожидается оплата этой покупки.</string>
@@ -267,7 +264,6 @@
     <string name="ends_on">Заканчивается %1$s</string>
     <string name="started_on">Начато %1$s</string>
     <string name="notification_channel_sound_downloads__description">Уведомления о процессе загрузки звука.</string>
-    <string name="benefit_3">Более продолжительные звуки с большим количеством сэмплов</string>
     <string name="non_looping_sound">Этот звук содержит промежуточные перерывы.</string>
     <string name="third_party_attributions">Сторонние атрибуции</string>
     <string name="use_material_you_colors">Используйте цвета Material You</string>
@@ -283,7 +279,6 @@
         <item quantity="many">%1$d дней</item>
         <item quantity="other">%1$d дней</item>
     </plurals>
-    <string name="benefit_4">%1$d дополнительные звуки</string>
     <string name="sound_is_premium">Этот звук доступен при использовании Noice Premium.</string>
     <string name="no_alarms_description">Добавьте новый будильник, нажав кнопку \"+\"!</string>
     <string name="alarm_permission_rationale_title">Разрешить Noice планировать будильники</string>
@@ -319,7 +314,6 @@
     <string name="snooze">Вздремнуть</string>
     <string name="alarm_ringer_preset_load_error">Не удалось загрузить выбранную пресет для этого будильника.</string>
     <string name="alarms_disabled_due_to_subscription_expiration">Нам пришлось отключить некоторые оповещения, так как срок действия вашей подписки Noice Premium истек!</string>
-    <string name="benefit_5">Неограниченные будильники</string>
     <string name="alarm_snooze_length">Продолжительность дремоты</string>
     <string name="alarm_snooze_length_summary">Длительность времени в минутах для будильников на дремоту</string>
     <string name="alarm_ringer_max_duration_summary">Продолжительность времени в минутах, по истечении которого автоматически отключается будильник</string>

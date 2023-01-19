@@ -182,9 +182,6 @@
         <item quantity="other">%1$d mesi</item>
     </plurals>
     <string name="benefits">Benefici</string>
-    <string name="benefit_0">Variazioni naturali dei suoni</string>
-    <string name="benefit_1">Streaming audio di alta qualità</string>
-    <string name="benefit_2">Riproduzione offline</string>
     <string name="select_a_plan">Seleziona un piano</string>
     <string name="payment_processing_error">Uh-oh! Non siamo stati in grado di processare il pagamento. L\'importo dovrebbe essere rimborsato automaticamente se detratto. Se non si ottiene il rimborso entro una settimana, si prega di avvisarci.</string>
     <string name="get_premium">Ottieni premium</string>
@@ -255,7 +252,6 @@
     <string name="use_material_you_colors">Usa i colori Material You</string>
     <string name="use_material_you_colors_summary">Eredita la palette di colori Material You dal sistema Android</string>
     <string name="download_sound">Scarica Suono</string>
-    <string name="benefit_3">Suoni più lunghi con più campioni</string>
     <string name="notification_channel_sound_downloads__description">Notifica di avanzamento legata al download del suono.</string>
     <string name="notification_channel_sound_downloads__name">Download Suoni</string>
     <string name="remove_all_sound_downloads">Rimuovi tutti i download dei suoni</string>
@@ -267,7 +263,6 @@
     <string name="remove_sound_download_confirmation">Confermi di voler rimuovere un suono scaricato per la riproduzione offline\?</string>
     <string name="sound_scheduled_for_download">Pianificando %1$s per il download.</string>
     <string name="play_sound_before_adjusting_volume">Devi riprodurre questo suono prima di poter aggiustare il volume.</string>
-    <string name="benefit_4">%1$d suoni aggiuntivi</string>
     <string name="sound_is_premium">Questo suono è disponibile con Noice Premium.</string>
     <string name="trial_period">Periodo di Prova: %1$s</string>
     <plurals name="n_days">
@@ -293,7 +288,6 @@
     <string name="notification_channel_alarm_priming__name">Innesco sveglie</string>
     <string name="notification_channel_alarm_priming__description">Notifiche visualizzate quando si prepara a lanciare una sveglia programmata.</string>
     <string name="snooze">Rimanda</string>
-    <string name="benefit_5">Sveglie illimitate</string>
     <string name="alarm_ringer_max_duration_summary">Durata in minuti, dopo il quale il promemoria della sveglia viene silenziato automaticamente</string>
     <string name="alarm_missed">Sveglia mancata</string>
     <string name="no_presets">Nessuna preimpostazione</string>

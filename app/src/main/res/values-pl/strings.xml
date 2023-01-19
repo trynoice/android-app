@@ -120,7 +120,6 @@
     <string name="remove_all_sound_downloads_confirmation">Spowoduje to usunięcie wszystkich dźwięków pobranych do odtwarzania w trybie offline. Czy chcesz kontynuować\?</string>
     <string name="oss_licenses">Licencje oprogramowania otwarto źródłowego</string>
     <string name="sound_is_premium">Ten dźwięk jest dostępny w Noice Premium.</string>
-    <string name="benefit_4">%1$d dodatkowe dźwięki</string>
     <string name="use_material_you_colors">Użyj kolorów Material You</string>
     <string name="download_sound">Pobierz dźwięk</string>
     <string name="notification_channel_sound_downloads__name">Pobieranie dźwięku</string>
@@ -141,12 +140,10 @@
     <string name="mailbox_app_not_found">Uh-oh! Nie mogliśmy znaleźć aplikacji skrzynki pocztowej na Twoim urządzeniu!</string>
     <string name="accept">Akceptuj</string>
     <string name="sign_out">Wyloguj się</string>
-    <string name="benefit_2">Odtwarzanie offline</string>
     <string name="network_error">Sieć jest nieosiągalna.</string>
     <string name="sign_in_sucessful">Zalogowano się pomyślnie!</string>
     <string name="offline">Jesteś offline</string>
     <string name="created_by">Stworzony przez</string>
-    <string name="benefit_1">Wysokiej jakości strumieniowanie audio</string>
     <string name="enable_media_buttons">Włącz przyciski mediów</string>
     <string name="yearly">Rocznie</string>
     <string name="sign_in">Zaloguj się</string>

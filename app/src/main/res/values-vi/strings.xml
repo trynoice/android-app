@@ -140,7 +140,6 @@
     <string name="sign_in_message">Vui lòng nhập email của bạn để đăng nhập.</string>
     <string name="sign_in_link_tip">Vui lòng mở liên kết đã nhận bằng Noice để hoàn thành quá trình đăng nhập.</string>
     <string name="signing_out">Đang đăng xuất</string>
-    <string name="benefit_1">Truyền âm thanh chất lượng cao</string>
     <string name="confirming_payment">Đang xác nhận thanh toán</string>
     <string name="subscription_payment_complete">Cảm ơn bạn vì đã đăng ký Noice Premium. Gói đăng ký của bạn đã hoạt động.</string>
     <string name="ended_on">Đã kết thúc vào %1$s</string>
@@ -166,7 +165,6 @@
     <string name="sign_out">Đăng xuất</string>
     <string name="cont">Tiếp tục</string>
     <string name="i_understand">Tôi hiểu.</string>
-    <string name="benefit_2">Phát ngoại tuyến</string>
     <string name="payment_processing_error">Chúng tôi không thể xử lý thanh toán. Số tiền sẽ được tự động hoàn lại nếu đã trừ. Nếu bạn không được hoàn tiền trong vòng một tuần, hãy báo cho chúng tôi.</string>
     <string name="sign_in_to_continue">Vui lòng đăng nhập hoặc đăng ký để tiếp tục.</string>
     <string name="made_in_india">Được tạo ra với ❤ ở Ấn Độ</string>
@@ -202,7 +200,6 @@
     <string name="subscription_payment_refunded">Chúng tôi đã huỷ việc mua này và khởi tạo việc hoàn tiền.</string>
     <string name="sign_in">Đăng nhập</string>
     <string name="retry">Thử lại</string>
-    <string name="benefit_0">Dao động tự nhiên tính theo giây</string>
     <string name="subscription_payment_confirmation_failed">Chúng tôi đã gặp vấn đề khi đợi xác nhận thanh toán. Việc này có thể do lỗi mạng hoặc độ trễ của nhà cung cấp thanh toán. Chúng tôi sẽ cập nhật trạng thái đăng ký của bạn ngay sau khi có thông tin từ nhà cung cấp. Vui lòng kiểm tra trạng thái đăng ký của bạn sau một thời gian.</string>
     <string name="sound_info">Về âm thanh này</string>
     <string name="library_load_error">Chúng tôi không thể lấy thư viện âm thanh. %1$s</string>
@@ -249,7 +246,6 @@
     <string name="gift_card_not_found">Mã đã nhập không tồn tại.</string>
     <string name="monthly_price">%1$s mỗi tháng</string>
     <string name="cancel_subscription_confirmation">Bạn có chắc bạn muốn huỷ gói đăng ký Noice Premium không\? Khi huỷ, gói đăng ký của bạn sẽ tự động dừng tại điểm kết thúc của chu kỳ thanh toán hiện tại. Chu kỳ thanh toán hiện tại của bạn sẽ kết thúc vào %1$s.</string>
-    <string name="benefit_3">Âm thanh dài hơn với nhiều mẫu hơn</string>
     <string name="use_material_you_colors">Sử dụng màu sắc Material You</string>
     <string name="use_material_you_colors_summary">Kế thừa bảng màu Material You từ hệ thống Android</string>
     <string name="remove_all_sound_downloads_confirmation">Việc này sẽ xóa tất cả các bản âm thanh đã tải xuống để phát lại ngoại tuyến. Bạn có muốn tiến hành không\?</string>
@@ -269,7 +265,6 @@
     <string name="play_sound_before_adjusting_volume">Bạn cần phát âm thanh này trước khi có thể điều chỉnh âm lượng của nó.</string>
     <string name="stripe_customer_portal_error">Rất tiếc! Chúng tôi không thể mở cổng thông tin thanh toán. %1$s Vui lòng thử lại!</string>
     <string name="sound_downloads_scheduled_for_removal">Tất cả các bản tải xuống âm thanh đã được lên lịch để xóa.</string>
-    <string name="benefit_4">Thêm %1$d âm thanh</string>
     <string name="sound_is_premium">Âm thanh này chỉ có ở Noice Premium.</string>
     <string name="alarms">Báo thức</string>
     <string name="add_alarm">Thêm một báo thức</string>

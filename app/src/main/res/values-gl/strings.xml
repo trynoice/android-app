@@ -79,7 +79,6 @@
     <string name="alarms">Alarmas</string>
     <string name="play_sound_before_adjusting_volume">Debes reproducir este son para poder axustalo seu volume.</string>
     <string name="trial_period">Período de proba: %1$s</string>
-    <string name="benefit_4">%1$d sons adicionais</string>
     <string name="add_alarm">Engade unha alarma</string>
     <string name="no_alarms">Sen alarmas</string>
     <string name="no_alarms_description">Engade unha nova alarma tocando o botón \"+\"!</string>
@@ -103,7 +102,6 @@
     <string name="notification_channel_alarm_priming__name">Preparación das alarmas</string>
     <string name="notification_channel_alarm_priming__description">As notificacións aparecen cando se prepara para disparar unha alarma programada.</string>
     <string name="alarms_disabled_due_to_subscription_expiration">Tivemos que desactivar algunhas alarmas xa que a túa subscrición a Noice Premium caducou!</string>
-    <string name="benefit_5">Alarmas ilimitadas</string>
     <string name="alarm_ringer_preset_load_error">Produciuse un erro ao cargalo preselección seleccionado para esta alarma.</string>
     <string name="alarm_ringer_max_duration_summary">Duración do tempo en minutos, despois do cal silenciar automaticamente o recordatorio da alarma</string>
     <string name="notification_channel_missed_alarms__name">Alarmas perdidas</string>
@@ -211,8 +209,6 @@
     <string name="total_price">%1$s en total</string>
     <string name="monthly_price">%1$s ao mes</string>
     <string name="benefits">Beneficios</string>
-    <string name="benefit_1">Transmisión do audio de alta calidade</string>
-    <string name="benefit_2">Reprodución sen conexión</string>
     <string name="select_a_plan">Seleccione un plan</string>
     <string name="processing_payment">Tramitando o pago</string>
     <string name="plans">Planes</string>
@@ -251,9 +247,7 @@
     <string name="back_online">De volta en liña</string>
     <string name="premium">Premium</string>
     <string name="app">Aplicación</string>
-    <string name="benefit_0">Variacións naturais nos sons</string>
     <string name="subscription_payment_cancelled">Cancelouse o pago da subscrición!</string>
-    <string name="benefit_3">Sons máis longos con máis mostras</string>
     <string name="payment_processing_error">Uh-oh! Non puidemos procesalo teu pago. O importe debe ser reembolsado automaticamente se é deducido. Se non recibe o seu reembolso dentro dunha seman, infórmenos.</string>
     <string name="user_already_subscribed">Xa te atopas subscrito.</string>
     <string name="confirming_payment">Pago confirmado</string>

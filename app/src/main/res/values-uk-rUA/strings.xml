@@ -132,7 +132,6 @@
     <string name="deleting_account">Видалення облікового запису</string>
     <string name="account_details_update_success">Дані вашого облікового запису успішно оновлено.</string>
     <string name="monthly">Щомісячно</string>
-    <string name="benefit_2">Оффлайн відтворення</string>
     <string name="select_a_plan">Вибір плану</string>
     <string name="premium">Преміум</string>
     <plurals name="n_months">
@@ -187,8 +186,6 @@
     <string name="yearly">Щорічно</string>
     <string name="monthly_price">%1$s на місяць</string>
     <string name="benefits">Переваги</string>
-    <string name="benefit_0">Варіації природних звуків</string>
-    <string name="benefit_1">Високоякісне потокове аудіо</string>
     <string name="payment_processing_error">Йой! Ми не змогли обробити ваш платіж. Сума повинна бути автоматично повернена, якщо її стягнено. Якщо ви не отримаєте відшкодування протягом тижня, будь ласка, повідомте нас.</string>
     <string name="plans">Плани</string>
     <string name="get_premium">Отримати преміум</string>
@@ -267,7 +264,6 @@
     <string name="sound_scheduled_for_download">Планування %1$s для завантаження.</string>
     <string name="sound_download_scheduled_for_removal">Планування вилучення %1$s із завантажень звуку.</string>
     <string name="play_sound_before_adjusting_volume">Вам потрібно відтворити цей звук, перш ніж ви зможете регулювати його гучність.</string>
-    <string name="benefit_3">Триваліші звуки з більшою кількістю зразків</string>
     <string name="trial_period">Пробний період: %1$s</string>
     <plurals name="n_days">
         <item quantity="one">%1$d день</item>
@@ -275,7 +271,6 @@
         <item quantity="many">%1$d днів</item>
         <item quantity="other">%1$d днів</item>
     </plurals>
-    <string name="benefit_4">%1$d додаткові звуки</string>
     <string name="sound_is_premium">Цей звук доступний з Noice Premium.</string>
     <string name="alarms">Будильники</string>
     <string name="add_alarm">Додати будильник</string>
@@ -295,7 +290,6 @@
     <string name="snooze">Відкласти</string>
     <string name="alarm_ringer_preset_load_error">Не вдалося завантажити вибране поєднання для цього будильника.</string>
     <string name="alarms_disabled_due_to_subscription_expiration">Ми були змушені вимкнути деякі будильники, оскільки термін дії вашої передплати Noice Premium завершився!</string>
-    <string name="benefit_5">Необмежена кількість будильників</string>
     <string name="alarm_ringer_max_duration">Тривалість нагадування</string>
     <string name="alarm_snooze_length_summary">Тривалість відкладання будильників у хвилинах</string>
     <string name="alarm_ringer_max_duration_summary">Тривалість у хвилинах, після завершення якої відбувається автоматичне вимкнення нагадування про будильник</string>

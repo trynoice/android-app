@@ -193,10 +193,6 @@
     <string name="total_price">%1$s total</string>
     <string name="monthly_price">%1$s per month</string>
     <string name="benefits">Benefits</string>
-    <string name="benefit_0">Natural variations in sounds</string>
-    <string name="benefit_1">High-quality audio streaming</string>
-    <string name="benefit_2">Offline playback</string>
-    <string name="benefit_3">Longer sounds with more samples</string>
     <string name="select_a_plan">Select a plan</string>
     <string name="processing_payment">Processing payment</string>
     <string name="payment_processing_error">Uh-oh! We were unable to process your payment. The amount should be automatically refunded if deducted. If you do not get your refund within a week, please notify us.</string>
@@ -226,9 +222,9 @@
     <string name="faqs">Frequently Asked Questions</string>
     <string name="made_in_india">Made with ❤ in India</string>
     <string name="sound_info">About this sound</string>
-    <string name="has_premium_segments">This sound offers additional variants with Noice Premium.</string>
-    <string name="looping_sound">This sound loops seamlessly.</string>
-    <string name="non_looping_sound">This sound contains breaks in-between.</string>
+    <string name="has_premium_segments">Offers more sound clips with Noice Premium</string>
+    <string name="looping_sound">Loops seamlessly</string>
+    <string name="non_looping_sound">Contains breaks in-between</string>
     <string name="media_sources">Media Sources</string>
     <string name="profile_load_error">Oops! We couldn\'t fetch your account details. %1$s</string>
     <string name="cancel_subscription_error">Oh no! We couldn\'t cancel your subscription. %1$s Please try again!</string>
@@ -297,8 +293,7 @@
         <item quantity="one">%1$d day</item>
         <item quantity="other">%1$d days</item>
     </plurals>
-    <string name="benefit_4">%1$d additional sounds</string>
-    <string name="sound_is_premium">This sound is available with Noice Premium.</string>
+    <string name="sound_is_premium">This sound is only available with Noice Premium.</string>
     <string name="alarms">Alarms</string>
     <string name="add_alarm">Add an Alarm</string>
     <string name="no_alarms">No Alarms</string>
@@ -333,7 +328,6 @@
     <string name="snooze">Snooze</string>
     <string name="alarm_ringer_preset_load_error">Failed to load the selected preset for this alarm.</string>
     <string name="alarms_disabled_due_to_subscription_expiration">We had to disable some alarms as your Noice Premium subscription has expired!</string>
-    <string name="benefit_5">Unlimited alarms</string>
     <string name="alarm_snooze_length">Snooze length</string>
     <string name="alarm_snooze_length_summary">Time duration in minutes for snoozing alarms</string>
     <string name="alarm_ringer_max_duration">Reminder duration</string>
@@ -347,4 +341,17 @@
     <string name="alarm_gradually_increase_volume_summary">Duration in minutes for gradually increasing the volume when an alarm fires</string>
     <string name="no_purchases">No Purchases</string>
     <string name="cancellation_and_refunds_policy">See [payments, cancellations and refunds policy](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
+    <string name="has_more_clips_with_premium">This sound offers more sound clips with Noice Premium.</string>
+    <string name="more_sounds">More Sounds</string>
+    <string name="more_sounds_desc">Unleash the full potential of your relaxation and focus experience with Noice Premium - with %1$s additional sounds.</string>
+    <string name="more_sound_clips">More sound clips</string>
+    <string name="more_sound_clips_desc">Unlock a new world of sound with our exclusive, additional sound clips to elevate your listening experience to a new level of richness.</string>
+    <string name="natural_variations">Natural Variations</string>
+    <string name="natural_variations_desc">Add a new dimension to your listening with added clips to generate natural and diverse variations, making each sound unique and less monotonous.</string>
+    <string name="hd_audio">HD Audio</string>
+    <string name="hd_audio_desc">Experience noise like never before, with the ability to adjust the quality of your sounds up to 320 kbps, resulting in crystal-clear, high-fidelity sound.</string>
+    <string name="offline_playback">Offline Playback</string>
+    <string name="offline_playback_desc">Enjoy soothing sounds anytime, anywhere, with Noice\'s offline sound downloads - no internet connection is required.</string>
+    <string name="unlimited_alarms">Unlimited Alarms</string>
+    <string name="unlimited_alarms_desc">Elevate your morning routine with Noice Premium - schedule an unlimited number of alarms for a personalized and peaceful start to your day.</string>
 </resources>

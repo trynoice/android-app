@@ -250,12 +250,12 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
   override fun onPremiumStatusClicked(soundInfo: SoundInfo) {
     when {
-      soundInfo.isPremium -> showInfoSnackBar(R.string.sound_is_premium, snackBarAnchorView())
-      soundInfo.hasPremiumSegments -> showInfoSnackBar(
-        R.string.has_premium_segments,
-        snackBarAnchorView(),
-      )
+      soundInfo.isPremium -> R.string.sound_is_premium
+      soundInfo.hasPremiumSegments -> R.string.has_more_clips_with_premium
+      else -> null
     }
+      ?.let { showInfoSnackBar(it, snackBarAnchorView()) }
+      ?.setAction(R.string.plans) { mainNavController.navigate(R.id.view_subscription_plans) }
   }
 
   private fun snackBarAnchorView(): View? {

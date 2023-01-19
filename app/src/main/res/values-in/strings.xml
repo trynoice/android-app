@@ -216,13 +216,10 @@
     <string name="account_details_update_error">Oh tidak! Kami tidak dapat memperbarui detail Anda. %1$s Silakan coba lagi!</string>
     <string name="subscription_payment_complete">Terima kasih telah berlangganan Noice Premium. Langganan Anda sekarang aktif.</string>
     <string name="manage_subscription">Kelola Langganan</string>
-    <string name="benefit_2">Pemutaran offline</string>
     <string name="select_a_plan">Pilih paket</string>
-    <string name="benefit_0">Variasi alami dalam suara</string>
     <string name="looping_sound">Suara ini berputar dengan mulus.</string>
     <string name="subscription_initialisation_error">Ups! Kami tidak dapat memulai alur penagihan. %1$s Silakan coba lagi!</string>
     <string name="processing_payment">Memproses pembayaran</string>
-    <string name="benefit_1">Streaming audio berkualitas tinggi</string>
     <string name="sign_in_to_continue">Silakan masuk atau daftar untuk melanjutkan.</string>
     <string name="subscription_payment_cancelled">Pembayaran berlangganan dibatalkan!</string>
     <string name="renews_on">Diperbarui pada %1$s</string>
@@ -230,7 +227,6 @@
     <string name="ended_on">Berakhir pada %1$s</string>
     <string name="paid_using">Dibayar menggunakan %1$s</string>
     <string name="subscription_payment_refunded">Kami membatalkan pembelian ini dan memulai pengembalian dana.</string>
-    <string name="benefit_3">Suara yang lebih panjang dengan lebih banyak sampel</string>
     <string name="initialising_subscription">Memulai langganan</string>
     <string name="audio_quality_summary">Kualitas audio maksimum untuk streaming. Medium, High, dan Ultra hanya akan berfungsi jika Anda berlangganan Noice Premium.</string>
     <string name="redeem">Tebus</string>
@@ -255,7 +251,6 @@
     <string name="redeem_gift_card">Tebus kartu hadiah</string>
     <string name="gift_card_code">Kode kartu hadiah</string>
     <string name="reach_us">Kontak kami</string>
-    <string name="benefit_4">%1$d suara tambahan</string>
     <string name="sound_is_premium">Suara ini hanya tersedia dengan Noice Premium.</string>
     <string name="playing">Memutar</string>
     <string name="loading">Memuat</string>
