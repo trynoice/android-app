@@ -10,16 +10,16 @@
     <string name="support_development">Support Development</string>
     <string name="submit_feedback">Submit Feedback</string>
     <string name="intensity">Intensity</string>
-    <string name="random_preset_description">The generated preset is likely to contain sounds with chosen keywords. Moreover, intense presets will attempt to play more sounds simultaneously.</string>
+    <string name="random_preset_description">The preset will have sounds based on the keywords you choose, and the intense preset will play more sounds together.</string>
     <string name="okay">Okay</string>
     <string name="random_preset">Random Preset</string>
     <string name="cancel">Cancel</string>
     <string name="dismiss">Dismiss</string>
     <string name="name">Name</string>
     <string name="pause">Pause</string>
-    <string name="preset_already_exists">Preset with the given name already exists!</string>
-    <string name="preset_name_cannot_be_empty">Preset name cannot be empty!</string>
-    <string name="preset_saved">Preset saved!</string>
+    <string name="preset_already_exists">A preset with that name already exists. Try a different one!</string>
+    <string name="preset_name_cannot_be_empty">The preset name is missing. Please enter a unique one!</string>
+    <string name="preset_saved">Awesome! Your preset has been saved.</string>
     <string name="save">Save</string>
     <string name="save_preset">Save Preset</string>
     <string name="play">Play</string>
@@ -29,56 +29,38 @@
     <string name="add_to_home_screen">Add to home screen</string>
     <string name="delete">Delete</string>
     <string name="open_context_menu">Open context menu</string>
-    <string name="preset_delete_confirmation">Confirm delete %s?</string>
-    <string name="preset_deleted">Preset deleted!</string>
-    <string name="preset_does_not_exist">Preset does not exist. It may have been deleted!</string>
-    <string name="preset_info__description">
-    Create new presets by playing sounds and using the Save button in the Library.
-    </string>
+    <string name="preset_delete_confirmation">Are you sure you want to delete "%1$s"? You cannot undo this action.</string>
+    <string name="preset_deleted">Your preset has been successfully deleted!</string>
+    <string name="preset_does_not_exist">It looks like this preset is no longer available. It may have been deleted.</string>
+    <string name="preset_info__description">You can easily create your own presets by playing sounds and then saving them from the sound library. Just hit the Save button and give it a unique name.</string>
     <string name="rename">Rename</string>
-    <string name="pinned_shortcuts_not_supported">Your default launcher does not support adding shortcuts.</string>
-    <string name="presets_as_home_screen_summary">Show \"presets\" on app startup (requires app restart)</string>
-    <string name="auto_sleep_schedule_cancelled">Auto sleep timer cancelled!</string>
+    <string name="pinned_shortcuts_not_supported">Sorry, it looks like your home screen app doesn\'t support shortcuts.</string>
+    <string name="presets_as_home_screen_summary">Make your presets visible when you open the app by enabling this option. You\'ll need to restart the app for the changes to take effect.</string>
+    <string name="auto_sleep_schedule_cancelled">Sleep timer cancelled! The app will stay active.</string>
     <string name="reset">Reset</string>
-    <string name="sleep_timer_description">
-    Noice will shutdown itself when the timer ends. Use the buttons below to add time and start
-    the timer.
-    </string>
+    <string name="sleep_timer_description">Noice will automatically turn off when the timer ends. Use the buttons below to set the timer and add more time.</string>
     <string name="select_preset">Select Preset</string>
     <string name="app_theme_light">Light</string>
     <string name="app_theme_dark">Dark</string>
     <string name="app_theme_system_default">System default</string>
     <string name="app_description">Focus, meditate and relax with natural calming noise.</string>
-    <string name="appintro__chromecast_desc">
-    Use Noice to cast its ambience to other Chromecast enabled devices such as speakers, TVs, etc.
-    </string>
+    <string name="appintro__chromecast_desc">Easily share Noice\'s calming ambience on other Chromecast-enabled devices, such as speakers or TVs.</string>
     <string name="appintro__chromecast_title">Chromecast enabled</string>
-    <string name="appintro__getting_started_desc_0">Swipe left to get to know all the features!</string>
+    <string name="appintro__getting_started_desc_0">Explore all the features by swiping left!</string>
     <string name="appintro__getting_started_desc_1">Let\'s get started!</string>
     <string name="appintro__getting_started_title">Welcome</string>
-    <string name="appintro__presets_desc">
-    After playing a few sounds, you can use the save button in the bottom end corner to save your mix.
-    To reuse a stored mix, go to "presets" list from the bottom bar.
-    </string>
+    <string name="appintro__presets_desc">Save your sound mix by clicking the save button in the bottom corner of the library. Find saved mixes in the \'Presets\' tab of the bottom bar.</string>
     <string name="appintro__presets_title">Save your favourite mixes</string>
-    <string name="appintro__library_desc">
-    Use the volume slider to adjust sound volumes. At each repetition of non-looping sounds, a delay
-    period is selected randomly from the range set by the time slider.
-    </string>
-    <string name="appintro__library_title">Create your perfect surroundings</string>
-    <string name="appintro__timer_desc">
-    A little ambience can help you fall asleep effortlessly. Use the sleep timer to let Noice shut
-    itself down. Similarly, to wake up to a calm environment, use the wake-up timer to set the alarm.
-    </string>
-    <string name="appintro__timer_title">Trouble falling asleep or waking up?</string>
+    <string name="appintro__library_desc">Use the volume slider to adjust the volume of each sound. Some sounds will repeat seamlessly, while others will repeat with a random delay.</string>
+    <string name="appintro__library_title">Design your ideal environment</string>
+    <string name="appintro__timer_desc">Fall asleep effortlessly with Noice\'s sleep timer, and wake up to a serene environment with its mindful alarms.</string>
+    <string name="appintro__timer_title">Transform your sleep with Noice</string>
     <string name="support_development__donate">Donate</string>
-    <string name="support_development__donate_description">If you have not purchased the premium subscription, you can make a one-time payment. It will help us sustain the development of the free features and keep them ad-free forever.</string>
-    <string name="support_development__donate_google_play_description">Your payment will be securely handled by Google Play. Depending on your location, additional taxes _may be_ added to the final amount.</string>
-    <string name="support_development__donate_thank_you_description">
-    We wholeheartedly thank you for your generous contribution to the Noice project.
-    </string>
+    <string name="support_development__donate_description">Support Noice\'s development and keep the app ad-free with a one-time donation. Your contribution will help us improve the app for you.</string>
+    <string name="support_development__donate_google_play_description">Your payment will be securely processed by Google Play. Please note that depending on your location, additional taxes _may be_ added to the final amount.</string>
+    <string name="support_development__donate_thank_you_description">Your generous contribution to the Noice project is greatly appreciated and will help us continue to improve the app for you.</string>
     <string name="support_development__share">Share with friends</string>
-    <string name="support_development__share_description">You can also help us by telling your friends about us. More users will provide us feedback from several different perspectives and help us improve our services.</string>
+    <string name="support_development__share_description">Your support doesn\'t have to stop at a donation. You can also help us by spreading the word about Noice to your friends. The more users we have, the more feedback we receive and the better we can make our service for everyone.</string>
     <string name="cast_media">Connect to Chromecast</string>
     <string name="in_app_feedback__description">
     We\'d love to hear from you about the app. Please take a moment to visit our GitHub repository.
@@ -96,7 +78,7 @@
     <string name="app_shortcut_created">Preset has been added to app shortcuts!</string>
     <string name="app_shortcut_creation_failed">Failed to add the preset to app shortcuts!</string>
     <string name="settings">Settings</string>
-    <string name="presets_as_home_screen">\"Presets\" as home screen</string>
+    <string name="presets_as_home_screen">Presets as home screen</string>
     <string name="appearance">Appearance</string>
     <string name="sound_fade_in_duration">Sound fade-in duration</string>
     <string name="sound_fade_in_duration_summary">Time duration in seconds for fading-in sounds</string>
@@ -108,38 +90,32 @@
     <string name="skip_to_next">Next preset</string>
     <string name="unsaved_preset">Unsaved Preset</string>
     <string name="ignore_audio_focus_changes">Ignore audio focus changes</string>
-    <string name="ignore_audio_focus_changes_summary_off">Pause when other apps play audio</string>
-    <string name="ignore_audio_focus_changes_summary_on">Do not react when other apps play audio</string>
+    <string name="ignore_audio_focus_changes_summary_off">Pause Noice when other apps play audio</string>
+    <string name="ignore_audio_focus_changes_summary_on">Continue playing Noice even when other apps play audio</string>
     <string name="share">Share</string>
     <string name="export_presets">Export to a file</string>
-    <string name="export_presets_summary">Export the current snapshot of the saved presets to an external file</string>
+    <string name="export_presets_summary">Save a copy of your current presets to an external file</string>
     <string name="import_presets">Import from a file</string>
-    <string name="import_presets_summary">Importing saved presets from an external file will overwrite existing presets, if any</string>
+    <string name="import_presets_summary">Importing saved presets from an external file will replace any existing presets</string>
     <string name="remove_all_app_shortcuts">Remove all app shortcuts</string>
-    <string name="remove_all_app_shortcuts_confirmation">It will remove all preset shortcuts from the app shortcut menu. Do you want to proceed?</string>
+    <string name="remove_all_app_shortcuts_confirmation">Are you sure you want to remove all preset shortcuts from the app shortcut menu? This action cannot be undone.</string>
     <string name="all_app_shortcuts_removed">All app shortcuts have been removed!</string>
-    <string name="failed_to_write_file">Failure on writing to the selected file!</string>
-    <string name="export_presets_successful">Successfully exported presets to the file!</string>
-    <string name="failed_to_read_file">Failure on reading the selected file!</string>
-    <string name="invalid_import_file_format">The import file format is invalid!</string>
-    <string name="import_presets_successful">Successfully imported presets from the file!</string>
+    <string name="failed_to_write_file">Sorry, we were unable to write to the selected file!</string>
+    <string name="export_presets_successful">Presets exported successfully, enjoy!</string>
+    <string name="failed_to_read_file">Sorry, we couldn\'t read the selected file!</string>
+    <string name="invalid_import_file_format">Invalid file format! Please check the import file.</string>
+    <string name="import_presets_successful">Presets imported successfully, ready to be explored!</string>
     <string name="should_display_sound_icons">Display sound icons</string>
     <string name="share_usage_data_consent_title">Data Sharing Preferences</string>
-    <string name="share_usage_data_consent_message">
-        We collect app usage data to improve user experience. We also collect app behaviour data to
-        analyse and diagnose errors encountered during app usage. Read our [privacy
-        policy](https://trynoice.com/privacy-policy) for further information.\n\n
-        You can configure automatic data sharing at any time inside the app by going to \"**Settings**
-        &gt; **Share usage and behaviour data**\".
-    </string>
+    <string name="share_usage_data_consent_message">We want to make your experience with Noice as smooth as possible. To do that, we collect data on how you use the app and any errors that may occur. It helps us identify issues and improve the app. You can read more about this in our [privacy policy](https://trynoice.com/privacy-policy#android-app-performance-data). You can control your data-sharing preferences at any time in the app settings.</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
     <string name="others">Others</string>
     <string name="should_share_usage_data">Share usage and behaviour data</string>
-    <string name="should_share_usage_data_summary">Automatically share usage and behaviour data with the developers</string>
-    <string name="failed_to_load_inapp_purchases">Failed to load in-app purchase details. Please try again later!</string>
-    <string name="failed_to_purchase">Failed to start payment flow. Please try again later!</string>
-    <string name="payment_pending">We\'ll notify you as soon as we finish processing your payment.</string>
+    <string name="should_share_usage_data_summary">Help us improve Noice by sharing usage and behaviour data with the developers</string>
+    <string name="failed_to_load_inapp_purchases">Sorry, we couldn\'t load the in-app product details. Please try again later!</string>
+    <string name="failed_to_purchase">Sorry, there was an issue starting your purchase. Please try again later!</string>
+    <string name="payment_pending">Your payment is being processed. We\'ll notify you once it\'s complete.</string>
     <string name="created_by">Created by</string>
     <string name="enable_media_buttons">Enable media buttons</string>
     <string name="enable_media_buttons_summary">Use hardware media buttons to control playback</string>
@@ -159,25 +135,25 @@
     <string name="sign_in_message">Please enter your email to sign-in.</string>
     <string name="sign_up_message">Please enter your name and email to sign-up.</string>
     <string name="email">Email</string>
-    <string name="invalid_name">The entered name is invalid!</string>
-    <string name="invalid_email">The entered email is invalid!</string>
-    <string name="account_locked_error">Your email is temporarily locked from making sign-in attempts until %1$s.</string>
-    <string name="sign_up_email_sent">We\'ve emailed you a sign-in link at \"%1$s\".</string>
-    <string name="sign_in_email_sent">We\'ve emailed you a sign-in link at \"%1$s\" if this address belongs to a registered account.</string>
-    <string name="sign_in_link_tip">Please open the received link using Noice to complete the sign-in process.</string>
+    <string name="invalid_name">The name you\'ve entered is invalid</string>
+    <string name="invalid_email">The email you\'ve entered is invalid</string>
+    <string name="account_locked_error">You\'ll be able to request sign-in links for this email again after %1$s.</string>
+    <string name="sign_up_email_sent">We\'ve sent you a sign-in link at %1$s. Please check your inbox!</string>
+    <string name="sign_in_email_sent">We\'ve sent you a sign-in link at %1$s if this email belongs to a registered account. Please check your inbox!</string>
+    <string name="sign_in_link_tip">Complete the sign-in process by clicking the link sent to your email and opening it with Noice.</string>
     <string name="retry">Retry</string>
     <string name="open_mailbox">Open Mailbox</string>
-    <string name="mailbox_app_not_found">Uh-oh! We couldn\'t find a mailbox app on your device!</string>
+    <string name="mailbox_app_not_found">Uh-oh! It looks like you don\'t have an email app on your device.</string>
     <string name="signing_in">Signing in</string>
-    <string name="sign_in_token_error">The sign-in link appears to be invalid. It may have expired. Please try again!</string>
-    <string name="sign_in_sucessful">Successfully signed in!</string>
+    <string name="sign_in_token_error">Oops! The sign-in link seems to be invalid or expired. Please request a new one and try again.</string>
+    <string name="sign_in_sucessful">Welcome aboard! You\'re now successfully signed in.</string>
     <string name="cont">Continue</string>
-    <string name="sign_out_confirmation">Confirm signing out?</string>
+    <string name="sign_out_confirmation">Are you sure you want to sign out? Don\'t worry, you can always come back!</string>
     <string name="signing_out">Signing out</string>
-    <string name="delete_account_confirmation">You will immediately lose access to your account upon deletion. If you have an ongoing subscription to Noice Premium, we will stop charging you for it. If you change your mind, you can restore your account by signing in again any time before 7 days after deletion. After this period, we will permanently erase your account data from our servers.</string>
+    <string name="delete_account_confirmation">Say farewell to your account with a graceful goodbye, knowing that your Noice Premium subscription will be cancelled and your data will be permanently erased from our servers in 7 days. But, if you change your mind, you can easily restore your account before the 7 days are up.</string>
     <string name="i_understand">I understand.</string>
     <string name="deleting_account">Deleting account</string>
-    <string name="duplicate_email_error">The entered email is associated with another account.</string>
+    <string name="duplicate_email_error">The entered email is already in use.</string>
     <string name="account_details_update_success">Your account details were updated successfully.</string>
     <string name="offline">You\'re offline</string>
     <string name="back_online">Back online</string>
@@ -195,15 +171,15 @@
     <string name="benefits">Benefits</string>
     <string name="select_a_plan">Select a plan</string>
     <string name="processing_payment">Processing payment</string>
-    <string name="payment_processing_error">Uh-oh! We were unable to process your payment. The amount should be automatically refunded if deducted. If you do not get your refund within a week, please notify us.</string>
+    <string name="payment_processing_error">Uh-oh! Payment failed. Don\'t worry! Your refund is on the way. If you don\'t see it within a week, let us know.</string>
     <string name="plans">Plans</string>
     <string name="get_premium">Get premium</string>
-    <string name="sign_in_to_continue">Please sign-in or sign-up to continue.</string>
+    <string name="sign_in_to_continue">Please log in or create an account to proceed.</string>
     <string name="initialising_subscription">Initialising subscription</string>
     <string name="user_already_subscribed">You are already subscribed.</string>
     <string name="confirming_payment">Confirming payment</string>
-    <string name="subscription_payment_confirmation_failed">Uh-oh! We had some trouble while waiting for the payment confirmation. It may be due to a network error or a delay from the payment provider. We\'ll update your subscription status as soon as we hear from the provider. Please check your subscription status after some time.</string>
-    <string name="subscription_payment_complete">Thank you for subscribing to Noice Premium. Your subscription is now active.</string>
+    <string name="subscription_payment_confirmation_failed">Uh-oh! We hit a snag while confirming your payment. It could be a network glitch or a delay from the payment provider. Rest assured that we\'ll update your subscription status as soon as we hear back. Please check again later!</string>
+    <string name="subscription_payment_complete">Congratulations! Your Noice Premium subscription is now live and ready to elevate your listening experience.</string>
     <string name="subscription_payment_cancelled">The subscription payment was cancelled!</string>
     <string name="subscription_purchases">Subscription purchases</string>
     <string name="renews_on">Renews on %1$s</string>
@@ -211,26 +187,26 @@
     <string name="started_on">Started on %1$s</string>
     <string name="ended_on">Ended on %1$s</string>
     <string name="paid_using">Paid using %1$s</string>
-    <string name="subscription_payment_pending">Payment is pending for this purchase.</string>
-    <string name="subscription_payment_refunded">We cancelled this purchase and initiated a refund for it.</string>
+    <string name="subscription_payment_pending">Payment pending</string>
+    <string name="subscription_payment_refunded">Purchase cancelled and refund initiated</string>
     <string name="change_plan">Change plan</string>
     <string name="manage_subscription">Manage Subscription</string>
     <string name="cancel_subscription">Cancel Subscription</string>
-    <string name="cancel_subscription_confirmation">Are you sure you want to cancel your subscription to Noice Premium\? Upon cancellation, your subscription will automatically terminate at the end of the current billing cycle. Your current billing cycle ends on %1$s.</string>
+    <string name="cancel_subscription_confirmation">Are you sure you want to cancel your Noice Premium subscription? Your subscription will end at the end of your current billing period, which ends on %1$s.</string>
     <string name="cancelling_subscription">Cancelling subscription</string>
-    <string name="no_subscription_purchases_found">We don\'t think that you have tried Noice Premium yet. Your previous subscriptions will appear here once you have used Noice Premium at least once.</string>
+    <string name="no_subscription_purchases_found">Experience the full potential of Noice with a Premium subscription. Upgrade now and discover exclusive features that will elevate your listening experience.</string>
     <string name="faqs">Frequently Asked Questions</string>
     <string name="made_in_india">Made with ❤ in India</string>
     <string name="sound_info">About this sound</string>
     <string name="has_premium_segments">Offers more sound clips with Noice Premium</string>
-    <string name="looping_sound">Loops seamlessly</string>
-    <string name="non_looping_sound">Contains breaks in-between</string>
+    <string name="looping_sound">Repeats seamlessly</string>
+    <string name="non_looping_sound">Repeats with a random delay</string>
     <string name="media_sources">Media Sources</string>
     <string name="profile_load_error">Oops! We couldn\'t fetch your account details. %1$s</string>
     <string name="cancel_subscription_error">Oh no! We couldn\'t cancel your subscription. %1$s Please try again!</string>
     <string name="delete_account_error">Oh no! We couldn\'t delete your account. %1$s Please try again!</string>
     <string name="account_details_update_error">Oh no! We couldn\'t update your details. %1$s Please try again!</string>
-    <string name="subscription_initialisation_error">Oops! We couldn\'t start the billing flow. %1$s Please try again!</string>
+    <string name="subscription_initialisation_error">Oops! We couldn\'t start the payment process. %1$s Please try again!</string>
     <string name="library_load_error">Oops! We couldn\'t fetch the sound library. %1$s</string>
     <string name="sign_in_email_error">Uh-oh! We couldn\'t email you a sign-in link. %1$s Please try again later!</string>
     <string name="sign_out_error">Oh no! We couldn\'t sign you out. %1$s Please try again!</string>
@@ -259,13 +235,13 @@
     <string name="app_license">Licensed under GNU GPL-3.0</string>
     <string name="redeem_gift_card">Redeem gift card</string>
     <string name="gift_card_code">Gift card code</string>
-    <string name="invalid_gift_card_code">The entered gift card code is invalid!</string>
+    <string name="invalid_gift_card_code">Sorry, the gift card code you entered is invalid!</string>
     <string name="redeem">Redeem</string>
     <string name="gift_card_load_error">Oops! We couldn\'t fetch the gift card. %1$s</string>
     <string name="gift_card_not_found">The given code doesn\'t exist.</string>
     <string name="gift_card_already_redeemed">The gift card with the given code has already been redeemed.</string>
     <string name="gift_card_expired">The gift card with the given code has expired.</string>
-    <string name="gift_card_details">Redeeming this gift card will offer you the premium subscription until %1$s.</string>
+    <string name="gift_card_details">You are ready to unlock the full potential of Noice with this gift card! Redeeming it will offer you Noice Premium access until %1$s.</string>
     <string name="gift_card_redeem_error">Oh no! We couldn\'t redeem your gift card. %1$s</string>
     <string name="redeemed_using_code">Redeemed using \'%1$s\'</string>
     <string name="reach_us">Reach us</string>
@@ -274,39 +250,34 @@
     <string name="third_party_attributions">Third-party attributions</string>
     <string name="oss_licenses">Open-source software licenses</string>
     <string name="use_material_you_colors">Use Material You colors</string>
-    <string name="use_material_you_colors_summary">Inherit Material You color palette from the Android system</string>
+    <string name="use_material_you_colors_summary">Use the same color scheme as your device\'s settings</string>
     <string name="stripe_customer_portal_error">Oops! We couldn\'t open the billing portal. %1$s Please try again!</string>
     <string name="download_sound">Download Sound</string>
     <string name="notification_channel_sound_downloads__description">Progress notifications related to sound downloads.</string>
     <string name="notification_channel_sound_downloads__name">Sound Downloads</string>
     <string name="checking_sound_downloads">Checking sound downloads</string>
     <string name="remove_all_sound_downloads">Remove all sound downloads</string>
-    <string name="remove_all_sound_downloads_confirmation">It will remove all sounds downloaded for offline playback. Do you want to proceed?</string>
-    <string name="sound_downloads_scheduled_for_removal">All sound downloads were successfully scheduled for removal.</string>
+    <string name="remove_all_sound_downloads_confirmation">Are you sure you want to delete all offline sounds?</string>
+    <string name="sound_downloads_scheduled_for_removal">All offline sounds are scheduled for removal. Sit back and relax, we\'ll take care of the rest.</string>
     <string name="remove_sound_download">Remove %1$s</string>
-    <string name="remove_sound_download_confirmation">Confirm removing a sound downloaded for offline playback?</string>
-    <string name="sound_scheduled_for_download">Scheduling %1$s for download.</string>
-    <string name="sound_download_scheduled_for_removal">Scheduling %1$s for removal from sound downloads.</string>
-    <string name="play_sound_before_adjusting_volume">You need to play this sound before you can adjust its volume.</string>
+    <string name="remove_sound_download_confirmation">Are you sure you want to delete the sound you downloaded for offline playback?</string>
+    <string name="sound_scheduled_for_download">Preparing to download %1$s for offline playback.</string>
+    <string name="sound_download_scheduled_for_removal">Removing %1$s from your offline sounds.</string>
+    <string name="play_sound_before_adjusting_volume">Adjusting volume for this sound? You\'ll need to give it a listen first!</string>
     <string name="trial_period">Trial Period: %1$s</string>
     <plurals name="n_days">
         <item quantity="one">%1$d day</item>
         <item quantity="other">%1$d days</item>
     </plurals>
-    <string name="sound_is_premium">This sound is only available with Noice Premium.</string>
+    <string name="sound_is_premium">Upgrade to Noice Premium to access this sound.</string>
     <string name="alarms">Alarms</string>
     <string name="add_alarm">Add an Alarm</string>
     <string name="no_alarms">No Alarms</string>
     <string name="no_alarms_description">Add a new alarm by tapping the \"+\" button!</string>
     <string name="alarm_permission_rationale_title">Allow Noice to schedule alarms</string>
-    <string name="alarm_permission_rationale_description">We need additional access to schedule alarms on your device.
-\n
-\nPlease enable **Alarms &amp; reminders** for Noice from its application details in your device\'s system settings.</string>
+    <string name="alarm_permission_rationale_description">We need additional access to schedule alarms on your device.\n\nPlease enable the "**Alarms &amp; reminders**" permission for Noice in its app info page inside your device's system settings.</string>
     <string name="post_notifications_permission_rationale_title">Allow Noice to show notifications</string>
-    <string name="post_notifications_permission_rationale_description">
-        We need additional permission to show notifications for scheduled alarms. Without
-        notifications, Noice cannot ring alarms at their scheduled time.
-    </string>
+    <string name="post_notifications_permission_rationale_description">Please permit Noice to show notifications for alarms to be able to ring at their scheduled time.</string>
     <string name="proceed">Proceed</string>
     <string name="alarm_post_notifications_permission_denied">Noice cannot ring alarms without the permission to show notifications!</string>
     <string name="add_label">Add label</string>
@@ -326,7 +297,7 @@
     <string name="notification_channel_alarm_priming__description">Notifications shown when preparing to fire a scheduled alarm.</string>
     <string name="alarm">Alarm</string>
     <string name="snooze">Snooze</string>
-    <string name="alarm_ringer_preset_load_error">Failed to load the selected preset for this alarm.</string>
+    <string name="alarm_ringer_preset_load_error">We couldn\'t load the preset you selected for this alarm.</string>
     <string name="alarms_disabled_due_to_subscription_expiration">We had to disable some alarms as your Noice Premium subscription has expired!</string>
     <string name="alarm_snooze_length">Snooze length</string>
     <string name="alarm_snooze_length_summary">Time duration in minutes for snoozing alarms</string>
@@ -353,5 +324,5 @@
     <string name="offline_playback">Offline Playback</string>
     <string name="offline_playback_desc">Enjoy soothing sounds anytime, anywhere, with Noice\'s offline sound downloads - no internet connection is required.</string>
     <string name="unlimited_alarms">Unlimited Alarms</string>
-    <string name="unlimited_alarms_desc">Elevate your morning routine with Noice Premium - schedule an unlimited number of alarms for a personalized and peaceful start to your day.</string>
+    <string name="unlimited_alarms_desc">Elevate your morning routine with Noice Premium - schedule an unlimited number of alarms for a personalised and peaceful start to your day.</string>
 </resources>
