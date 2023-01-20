@@ -275,7 +275,7 @@
     <string name="no_alarms">No Alarms</string>
     <string name="no_alarms_description">Add a new alarm by tapping the \"+\" button!</string>
     <string name="alarm_permission_rationale_title">Allow Noice to schedule alarms</string>
-    <string name="alarm_permission_rationale_description">We need additional access to schedule alarms on your device.\n\nPlease enable the "**Alarms &amp; reminders**" permission for Noice in its app info page inside your device's system settings.</string>
+    <string name="alarm_permission_rationale_description">We need additional access to schedule alarms on your device.\n\nPlease enable the **Alarms &amp; reminders** permission for Noice in its app info page inside your device's system settings.</string>
     <string name="post_notifications_permission_rationale_title">Allow Noice to show notifications</string>
     <string name="post_notifications_permission_rationale_description">Please permit Noice to show notifications for alarms to be able to ring at their scheduled time.</string>
     <string name="proceed">Proceed</string>
