@@ -131,7 +131,7 @@
     <string name="yearly">按年</string>
     <string name="unknown_error">发生未知错误。</string>
     <string name="total_price">合计 %1$s</string>
-    <string name="non_looping_sound">这声音中间有停顿。</string>
+    <string name="non_looping_sound">包含试听</string>
     <string name="account">账户</string>
     <string name="sign_up_email_sent">我们向您\"%1$s\"的邮箱发送了一封包含登录链接的邮件。</string>
     <string name="sign_in_sucessful">成功登录！</string>
@@ -200,7 +200,7 @@
     <string name="subscription_payment_refunded">我们取消了此次购买并开始退款。</string>
     <string name="cancel_subscription">取消订阅</string>
     <string name="faqs">常见问题解答</string>
-    <string name="looping_sound">这种声音循环更顺畅。</string>
+    <string name="looping_sound">流畅循环</string>
     <string name="delete_account_error">糟糕！我们无法删除您的帐户。%1$s后重试！</string>
     <string name="subscription_plans_load_error">糟糕！无法获取订阅计划。%1$s</string>
     <string name="random_preset_description">通过选定关键字能合理生成包含其含义的声音。此外，过于密集的预设将造成多组声音的同时播放。</string>
@@ -225,7 +225,7 @@
     <string name="privacy_policy">隐私政策</string>
     <string name="loading">加载中</string>
     <string name="gift_card">礼物卡</string>
-    <string name="has_premium_segments">Noice 高级版提供此声音的额外变种。</string>
+    <string name="has_premium_segments">Noice 高级版提供更多声音片段</string>
     <string name="audio_quality">音质</string>
     <string name="audio_quality_summary">在线播放的最高音质。 仅当您订阅了 Noice 高级版时，才可使用 Medium、High 和 Ultra 音质。</string>
     <string name="audio_quality_medium">中 (192 kbps)</string>
@@ -269,7 +269,7 @@
     <string name="alarm_permission_rationale_description">我们需要额外权限才能在你的设备上设定闹钟。
 \n
 \n请在您设备的系统设置中找到 Noice 应用详情，并开启其“闹钟和提醒”权限。</string>
-    <string name="sound_is_premium">该声音仅向 Noice 高级版提供。</string>
+    <string name="sound_is_premium">该声音仅在 Noice 高级版中提供。</string>
     <string name="add_alarm">添加一个闹钟</string>
     <string name="no_alarms">没有闹钟</string>
     <string name="tuesday_initial">二</string>
