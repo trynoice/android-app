@@ -12,9 +12,9 @@
     <string name="dismiss">खारिज</string>
     <string name="name">नाम</string>
     <string name="pause">रोकें</string>
-    <string name="preset_already_exists">दिए गए नाम के साथ प्रीसेट पहले से मौजूद है!</string>
-    <string name="preset_name_cannot_be_empty">प्रीसेट नाम खाली नहीं हो सकता है!</string>
-    <string name="preset_saved">प्रीसेट सहेजा गया!</string>
+    <string name="preset_already_exists">इस नाम का एक प्रीसेट पहले से मौजूद है। कोई दूसरा नाम आजमाएं!</string>
+    <string name="preset_name_cannot_be_empty">पूर्व निर्धारित नाम गुम है। कृपया कोई अनूठा नाम दर्ज करें!</string>
+    <string name="preset_saved">अद्भुत! आपका प्रीसेट सहेजा गया है।</string>
     <string name="save">सहेजें</string>
     <string name="save_preset">प्रीसेट सहेजें</string>
     <string name="play">बजाएं</string>
@@ -23,7 +23,7 @@
     <string name="volume">ध्वनि की मात्रा</string>
     <string name="delete">हटाएं</string>
     <string name="open_context_menu">संदर्भ मेनू खोलें</string>
-    <string name="preset_delete_confirmation">%s को हटाने की पुष्टि करें?</string>
+    <string name="preset_delete_confirmation">क्या आप वाकई %1$s हटाना चाहते हैं\? आप इस क्रिया को पूर्ववत नहीं कर सकते।</string>
     <string name="preset_deleted">प्रीसेट को हटा दिया गया है!</string>
     <string name="preset_info__description">ध्वनि बजाकर लाइब्रेरी में सेव बटन का उपयोग करके नए प्रीसेट बनाएं।</string>
     <string name="rename">नाम बदलें</string>
@@ -116,7 +116,7 @@
     <string name="export_presets_successful">प्रीसेट फ़ाइल में सफलतापूर्वक निर्यात हो गये!</string>
     <string name="enable_media_buttons_summary">प्लेबैक को नियंत्रित करने के लिए हार्डवेयर मीडिया बटन का उपयोग करें</string>
     <string name="enable_media_buttons">मीडिया बटन सक्षम करें</string>
-    <string name="random_preset_description">जेनरेट किए गए प्रीसेट में चुने गए कीवर्ड वाली ध्वनियां होने की संभावना है। इसके अलावा, अधिक जोरदार प्रीसेट एक साथ अधिक ध्वनियाँ चलाने का प्रयास करेंगे।</string>
+    <string name="random_preset_description">प्रीसेट में आपके द्वारा चुने गए कीवर्ड के आधार पर ध्वनियाँ होंगी, और तीव्र प्रीसेट एक साथ अधिक ध्वनियाँ बजेंगी।</string>
     <string name="sound_fade_out_duration">ध्वनि फेड आउट होने की अवधि</string>
     <string name="sound_fade_out_duration_summary">लुप्त होती ध्वनि के लिए सेकंड में समय अवधि</string>
     <string name="account">खाता</string>
