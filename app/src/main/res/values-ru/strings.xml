@@ -15,7 +15,7 @@
     <string name="pause">Пауза</string>
     <string name="preset_already_exists">Шаблон с таким именем уже существует!</string>
     <string name="preset_name_cannot_be_empty">Название шаблона не может быть пустым!</string>
-    <string name="preset_saved">Шаблон сохранён!</string>
+    <string name="preset_saved">Потрясающе! Ваш пресет сохранен.</string>
     <string name="save">Сохранить</string>
     <string name="save_preset">Сохранить шаблон</string>
     <string name="play">Воспроизведение</string>
@@ -24,7 +24,7 @@
     <string name="volume">Громкость</string>
     <string name="delete">Удалить</string>
     <string name="open_context_menu">Открыть контекстное меню</string>
-    <string name="preset_delete_confirmation">Вы точно хотите удалить %s\?</string>
+    <string name="preset_delete_confirmation">Вы уверены, что хотите удалить %1$s\? Вы не можете отменить это действие.</string>
     <string name="preset_deleted">Шаблон удалён!</string>
     <string name="preset_info__description">Создавайте новые пресеты, воспроизводя звуки и используя кнопку Сохранить в Библиотеке.</string>
     <string name="rename">Переименовать</string>
@@ -52,7 +52,7 @@
     Небольшая атмосфера поможет заснуть не прилагая усилий. Используйте таймер сна чтобы Noice
     выключил себя, и таймер пробуждения, чтобы проснуться в спокойном окружении.
   </string>
-    <string name="appintro__timer_title">Сложно засыпать или просыпаться?</string>
+    <string name="appintro__timer_title">Преобразите ваш сон с Noice</string>
     <string name="support_development__donate">Пожертвовать</string>
     <string name="support_development__donate_google_play_description">Ваш платеж будет безопасно проведен через Google Play. Дополнительные налоги _могут_ быть добавлены к сумме в зависимости от вашей локации.</string>
     <string name="support_development__donate_thank_you_description">
@@ -71,14 +71,14 @@
     <string name="add_to_home_screen">Добавить на домашний экран</string>
     <string name="intensity">Интенсивность</string>
     <string name="presets_as_home_screen_summary">Показывать \"сохранённые шаблоны\" при запуске приложения (требуется перезапуск приложения)</string>
-    <string name="preset_does_not_exist">Шаблона не существует. Возможно, он был удалён!</string>
+    <string name="preset_does_not_exist">Похоже, этот пресет больше недоступен. Возможно, он был удален.</string>
     <string name="random_preset">Случайный шаблон</string>
     <string name="pinned_shortcuts_not_supported">Ваш лаунчер по умолчанию не поддерживает добавление ярлыков.</string>
     <string name="invalid_import_file_format">Неверный формат импортируемого файла!</string>
     <string name="failed_to_read_file">Ошибка чтения выбранного файла!</string>
     <string name="failed_to_write_file">Ошибка при записи в выбранный файл!</string>
     <string name="all_app_shortcuts_removed">Все ярлыки приложения были удалены!</string>
-    <string name="remove_all_app_shortcuts_confirmation">Это удалит все ярлыки предустановок из контекстного меню приложения. Вы хотите продолжить\?</string>
+    <string name="remove_all_app_shortcuts_confirmation">Вы уверены, что хотите удалить все предустановленные ярлыки из меню приложения\? Это действие не может быть отменено.</string>
     <string name="remove_all_app_shortcuts">Удалить все ярлыки приложения</string>
     <string name="import_presets_summary">Импорт сохраненных предустановок из внешнего файла приведет к перезаписи существующих предустановок, если таковые имеются</string>
     <string name="import_presets">Импортировать из файла</string>
@@ -110,9 +110,7 @@
     <string name="failed_to_load_inapp_purchases">Не удалось загрузить сведения о покупке в приложении. Пожалуйста, повторите попытку позже!</string>
     <string name="should_share_usage_data_summary">Автоматически отправлять разработчикам данные об использовании и поведении</string>
     <string name="should_share_usage_data">Передача данных об использовании и поведении</string>
-    <string name="share_usage_data_consent_message">Мы собираем данные об использовании приложения для улучшения пользовательского опыта. Мы также собираем данные о поведении приложения для анализа и диагностики ошибок, возникающих во время использования приложения. Для получения дополнительной информации ознакомьтесь с нашей [политикой конфиденциальности](https://trynoice.com/privacy-policy).
-\n
-\n Вы можете настроить автоматический обмен данными в любое время в приложении, перейдя в раздел \"**Настройки** &gt; **Обмен данными об использовании и поведении**\".</string>
+    <string name="share_usage_data_consent_message">Мы хотим сделать ваш опыт работы с Noice максимально комфортным. Для этого мы собираем данные о том, как вы используете приложение, и о возможных ошибках. Это помогает нам выявлять проблемы и улучшать приложение. Подробнее об этом вы можете прочитать в нашей [политике конфиденциальности](https://trynoice.com/privacy-policy#android-app-performance-data). Вы можете управлять параметрами обмена данными в любое время в настройках приложения.</string>
     <string name="share_usage_data_consent_title">Параметры доступа к данным</string>
     <string name="sound_fade_in_duration_summary">Продолжительность времени в секундах для затухающих звуков</string>
     <string name="sound_fade_in_duration">Продолжительность затухания звука</string>
@@ -153,7 +151,7 @@
     <string name="sign_in_link_tip">Пожалуйста, откройте полученную ссылку с помощью Noice, чтобы завершить процесс входа.</string>
     <string name="mailbox_app_not_found">Ой! Нам не удалось найти почтовое приложение на вашем устройстве!</string>
     <string name="cont">Продолжить</string>
-    <string name="sign_out_confirmation">Подтвердить выход\?</string>
+    <string name="sign_out_confirmation">Вы уверены, что хотите выйти\? Не волнуйтесь, вы всегда сможете вернуться!</string>
     <string name="delete_account_confirmation">После удаления вы сразу потеряете доступ к своей учётной записи. Если у вас есть действующая подписка на Noice Premium, мы перестанем взимать с вас плату за неё. Если вы передумаете, вы можете восстановить свою учётную запись, снова войдя в неё в любое время в течении 7 дней после удаления. По истечении этого периода мы безвозвратно удалим данные вашей учётной записи с наших серверов.</string>
     <string name="sign_in_email_sent">Мы отправили вам по эл. почте ссылку для входа на «%1$s», если этот адрес принадлежит зарегистрированной учетной записи.</string>
     <string name="signing_out">Выход</string>
@@ -283,9 +281,7 @@
     <string name="no_alarms_description">Добавьте новый будильник, нажав кнопку \"+\"!</string>
     <string name="alarm_permission_rationale_title">Разрешить Noice планировать будильники</string>
     <string name="proceed">Действуйте</string>
-    <string name="alarm_permission_rationale_description">Нам нужен дополнительный доступ для планирования будильников на вашем устройстве.
-\n
-\nПожалуйста, включите **Будильники и напоминания** для Noice в сведениях о приложении в системных настройках вашего устройства.</string>
+    <string name="alarm_permission_rationale_description">Нам нужен дополнительный доступ для планирования будильников на вашем устройстве. Пожалуйста, разрешите доступ к **Будильники и напоминания** для Noice в сведениях о приложении в системных настройках вашего устройства.</string>
     <string name="post_notifications_permission_rationale_title">Разрешите Noice показывать уведомления</string>
     <string name="add_alarm">Добавить будильник</string>
     <string name="alarms">Будильники</string>
