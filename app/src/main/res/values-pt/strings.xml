@@ -148,7 +148,6 @@
     <string name="quarterly">Trimestral</string>
     <string name="yearly">Anual</string>
     <string name="total_price">%1$s no total</string>
-    <string name="benefit_2">Reprodução sem conexão</string>
     <string name="select_a_plan">Selecione um plano</string>
     <string name="processing_payment">Processando pagamento</string>
     <string name="payment_processing_error">Uh-oh! Não foi possível processar o seu pagamento. O valor deve ser reembolsado automaticamente se deduzido. Se não receber o seu reembolso dentro de uma semana, por favor, avise-nos.</string>
