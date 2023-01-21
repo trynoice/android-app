@@ -119,7 +119,7 @@
     <string name="created_by">Создано</string>
     <string name="import_presets_successful">Шаблоны успешно импортированы из файла!</string>
     <string name="export_presets_successful">Шаблоны успешно экспортированы в файл!</string>
-    <string name="random_preset_description">Сгенерированный шаблон, скорее всего, будет содержать звуки с выбранными ключевыми словами. Более того, интенсивные шаблоны будут пытаться воспроизводить больше звуков одновременно.</string>
+    <string name="random_preset_description">Шаблон будет содержать звуки, основанные на выбранными вами ключевыми запросами, и позволяющий играть несколько звуков одновременно.</string>
     <string name="support_development__donate_description">Если вы не приобрели премиум-подписку, вы можете совершить разовый платеж. Это поможет нам поддерживать разработку бесплатных функций и навсегда сохранить их без рекламы.</string>
     <string name="sound_fade_out_duration_summary">Продолжительность времени в секундах для затухающих звуков</string>
     <string name="support">Поддержка</string>
