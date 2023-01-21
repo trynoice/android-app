@@ -51,7 +51,6 @@ subprojects {
       }
 
       kotlinOptions {
-        useIR = true
         jvmTarget = '1.8'
         freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
       }

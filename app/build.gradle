@@ -149,19 +149,19 @@ project.afterEvaluate {
 
 dependencies {
   def androidXHiltVersion = '1.0.0'
-  def exoPlayerVersion = '2.18.1'
-  def fragmentVersion = '1.5.4'
-  def roomVersion = '2.4.3'
+  def exoPlayerVersion = '2.18.2'
+  def fragmentVersion = '1.5.5'
+  def roomVersion = '2.5.0'
   def workManagerVersion = '2.7.1'
 
-  def espressoVersion = '3.5.0'
+  def espressoVersion = '3.5.1'
   def mockkVersion = '1.13.3'
 
   kapt "com.google.dagger:hilt-compiler:$deps.hiltVersion"
   kapt "androidx.hilt:hilt-compiler:$androidXHiltVersion"
   kapt "androidx.room:room-compiler:$roomVersion"
 
-  implementation 'androidx.appcompat:appcompat:1.5.1'
+  implementation 'androidx.appcompat:appcompat:1.6.0'
   implementation 'androidx.browser:browser:1.4.0'
   implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
   implementation "androidx.core:core-ktx:$deps.androidXCoreVersion"
@@ -221,11 +221,11 @@ dependencies {
 
   androidTestImplementation "androidx.test:core:$deps.testCoreVersion"
   androidTestImplementation "androidx.test:rules:1.5.0"
-  androidTestImplementation "androidx.test:runner:1.5.1"
+  androidTestImplementation "androidx.test:runner:1.5.2"
   androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
   androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
   androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
-  androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+  androidTestImplementation 'androidx.test.ext:junit:1.1.5'
   androidTestImplementation "androidx.work:work-testing:$workManagerVersion"
   androidTestImplementation "com.google.dagger:hilt-android-testing:$deps.hiltVersion"
   androidTestImplementation "junit:junit:$deps.junitVersion"
