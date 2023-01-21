@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="looping_sound">Este son reproduce sen problemas.</string>
+    <string name="looping_sound">Bucles sen interrupcions</string>
     <string name="account_details_update_error">Ai non! Non puidemos actualizalos teus datos. %1$s Téntao de novo!</string>
     <string name="audio_quality">Calidade do audio</string>
     <string name="paid_using">Pago usando %1$s</string>
     <string name="no_subscription_purchases_found">Creemos que aínda non probaches Noice Premium. As túas subscricións anteriores aparecerán aquí unha vez que utilizas Noice Premium polo menos unha vez.</string>
-    <string name="non_looping_sound">Este son contén pausas no medio.</string>
+    <string name="non_looping_sound">Contén pausas no medio</string>
     <string name="ended_on">Rematou o %1$s</string>
     <string name="change_plan">Cambialo plan</string>
     <string name="cancel_subscription">Cancelala subscrición</string>
@@ -75,7 +75,7 @@
         <item quantity="one">%1$d día</item>
         <item quantity="other">%1$d días</item>
     </plurals>
-    <string name="sound_is_premium">Este son está dispoñible con Noice Premium.</string>
+    <string name="sound_is_premium">Este son só aptopase con Noice Premium.</string>
     <string name="alarms">Alarmas</string>
     <string name="play_sound_before_adjusting_volume">Debes reproducir este son para poder axustalo seu volume.</string>
     <string name="trial_period">Período de proba: %1$s</string>
@@ -221,7 +221,7 @@
     <string name="subscription_purchases">Compras por subscrición</string>
     <string name="renews_on">Renovalo %1$s</string>
     <string name="faqs">Preguntas máis frecuentes</string>
-    <string name="has_premium_segments">Este son ofrece variantes adicionais con Noice Premium.</string>
+    <string name="has_premium_segments">Noice Premium ofrece máis sons</string>
     <string name="media_sources">Fontes dos medios</string>
     <string name="stopping">Parando</string>
     <string name="keywords">Palabras chave</string>
@@ -312,4 +312,17 @@
     <string name="subscription_payment_confirmation_failed">Uh-oh! Tivemos algúns problemas mentres agardabamola confirmación do pago. Pode deberse a un erro da rede ou a un atraso do provedor dos pagos. Actualizaremolo estado da túa subscrición en canto teñamos noticias do provedor. Comprobalo estado da túa subscrición despois dun tempo.</string>
     <string name="no_purchases">Sen compras</string>
     <string name="cancellation_and_refunds_policy">Consulta [política de pagos, cancelacións e reembolsos](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
+    <string name="more_sounds_desc">Libera todo o potencial da túa experiencia de relaxación e concentración con Noice Premium, con %1$s sons adicionais.</string>
+    <string name="natural_variations_desc">Engade unha nova dimensión á túa audición con clips engadidos para xerar variacións naturais e diversas, facendo que cada son sexa único e menos monótono.</string>
+    <string name="offline_playback_desc">Goza de sons relaxantes en calquera momento e en calquera lugar coas descargas de sons sen conexión de Noice, sen necesidade de conexión a Internet.</string>
+    <string name="has_more_clips_with_premium">Este son ofrece máis vertentes con Noice Premium.</string>
+    <string name="more_sounds">Máis Sons</string>
+    <string name="more_sound_clips">Máis tipos de sons</string>
+    <string name="more_sound_clips_desc">Desbloquea un novo mundo de sons cos nosos exclusivos clips de son adicionais para elevar a túa experiencia auditiva a un novo nivel de riqueza.</string>
+    <string name="natural_variations">Variacións naturais</string>
+    <string name="hd_audio">Audio en HD</string>
+    <string name="hd_audio_desc">Experimenta o ruído coma nunca antes, coa capacidade de axustar a calidade dos teus sons ata 320 kbps, o que dá como resultado un son cristalino e de alta fidelidade.</string>
+    <string name="offline_playback">Reprodución sen conexión</string>
+    <string name="unlimited_alarms">Alarmas ilimitadas</string>
+    <string name="unlimited_alarms_desc">Aumenta a túa rutina matinal con Noice Premium: programa un número ilimitado de alarmas para comezar o día de xeito personalizado e tranquilo.</string>
 </resources>

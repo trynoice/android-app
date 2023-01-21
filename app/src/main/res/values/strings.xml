@@ -135,8 +135,8 @@
     <string name="sign_in_message">Please enter your email to sign-in.</string>
     <string name="sign_up_message">Please enter your name and email to sign-up.</string>
     <string name="email">Email</string>
-    <string name="invalid_name">The name you\'ve entered is invalid</string>
-    <string name="invalid_email">The email you\'ve entered is invalid</string>
+    <string name="invalid_name">The name you\'ve entered is invalid!</string>
+    <string name="invalid_email">The email you\'ve entered is invalid!</string>
     <string name="account_locked_error">You\'ll be able to request sign-in links for this email again after %1$s.</string>
     <string name="sign_up_email_sent">We\'ve sent you a sign-in link at %1$s. Please check your inbox!</string>
     <string name="sign_in_email_sent">We\'ve sent you a sign-in link at %1$s if this email belongs to a registered account. Please check your inbox!</string>
@@ -178,7 +178,7 @@
     <string name="initialising_subscription">Initialising subscription</string>
     <string name="user_already_subscribed">You are already subscribed.</string>
     <string name="confirming_payment">Confirming payment</string>
-    <string name="subscription_payment_confirmation_failed">Uh-oh! We hit a snag while confirming your payment. It could be a network glitch or a delay from the payment provider. Rest assured that we\'ll update your subscription status as soon as we hear back. Please check again later!</string>
+    <string name="subscription_payment_confirmation_failed">Uh-oh! We hit a snag while confirming your payment. It could be a network glitch or a delay from the payment provider. Rest assured that we\'ll update your subscription status as soon as we hear back about the payment. Please check again later!</string>
     <string name="subscription_payment_complete">Congratulations! Your Noice Premium subscription is now live and ready to elevate your listening experience.</string>
     <string name="subscription_payment_cancelled">The subscription payment was cancelled!</string>
     <string name="subscription_purchases">Subscription purchases</string>
@@ -261,7 +261,7 @@
     <string name="sound_downloads_scheduled_for_removal">All offline sounds are scheduled for removal. Sit back and relax, we\'ll take care of the rest.</string>
     <string name="remove_sound_download">Remove %1$s</string>
     <string name="remove_sound_download_confirmation">Are you sure you want to delete the sound you downloaded for offline playback?</string>
-    <string name="sound_scheduled_for_download">Preparing to download %1$s for offline playback.</string>
+    <string name="sound_scheduled_for_download">Adding %1$s to downloads for offline playback.</string>
     <string name="sound_download_scheduled_for_removal">Removing %1$s from your offline sounds.</string>
     <string name="play_sound_before_adjusting_volume">Adjusting volume for this sound? You\'ll need to give it a listen first!</string>
     <string name="trial_period">Trial Period: %1$s</string>

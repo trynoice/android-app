@@ -166,7 +166,7 @@
     <string name="mailbox_app_not_found">Oh, oh! Wir konnten keine Mailbox-App auf Ihrem Gerät finden!</string>
     <string name="invalid_email">Die eingegebene E-Mail ist ungültig!</string>
     <string name="view_subscription_plans">Pläne ansehen</string>
-    <string name="app">App</string>
+    <string name="app">Anwendung</string>
     <string name="subscription_payment_confirmation_failed">Oje! Wir hatten Probleme beim Warten auf die Zahlungsbestätigung. Möglicherweise handelt es sich um einen Netzwerkfehler oder eine Verzögerung durch den Zahlungsanbieter. Wir werden Ihren Abonnementstatus aktualisieren, sobald wir vom Anbieter hören. Bitte überprüfen Sie den Status Ihres Abonnements nach einiger Zeit.</string>
     <string name="payment_processing_error">Oh-oh! Wir konnten deine Zahlung nicht verarbeiten. Der Betrag sollte automatisch zurückerstattet werden, falls er abgerechnet wurde. Wenn du in der nächsten Woche keine Rückerstattung bekommst, bitte gib uns Bescheid.</string>
     <string name="back_online">Wieder online</string>
@@ -298,4 +298,36 @@
     <string name="no_presets">Keine Voreinstellungen</string>
     <string name="master_volume">Hauptlautstärke</string>
     <string name="alarm_gradually_increase_volume">Alarmlautstärke schrittweise erhöhen</string>
+    <string name="post_notifications_permission_rationale_title">Erlaube Noice Benachrichtigungen anzuzeigen</string>
+    <string name="vibrate">Vibrieren</string>
+    <string name="not_scheduled">Nicht geplant</string>
+    <string name="notification_channel_alarm_priming__name">Alarm-Priming</string>
+    <string name="alarm_ringer_max_duration">Erinnerungsdauer</string>
+    <string name="alarm_permission_rationale_description">Wir benötigen zusätzlichen Zugriff um Alarme auf deinem Gerät zu planen.
+\n
+\nBitte aktiviere **Alarme und Erinnerungen** für Noice in seinen Anwendungsdetails in deinen Geräteeinstellungen.</string>
+    <string name="post_notifications_permission_rationale_description">Wir benötigen zusätzliche Rechte um Benachrichtigungen für geplante Alarme zu zeigen. Noice kann ohne Benachrichtigungen keine Alarme zur geplanten Zeit läuten lassen.</string>
+    <string name="proceed">Fortfahren</string>
+    <string name="alarm_post_notifications_permission_denied">Noice kann ohne die Erlaubnis Benachrichtigungen anzuzeigen keine Alarme läuten lassen!</string>
+    <string name="add_label">Label hinzufügen</string>
+    <string name="sunday_initial">S</string>
+    <string name="monday_initial">M</string>
+    <string name="tuesday_initial">D</string>
+    <string name="wednesday_initial">M</string>
+    <string name="thursday_initial">D</string>
+    <string name="friday_initial">F</string>
+    <string name="saturday_initial">S</string>
+    <string name="edit_label">Label bearbeiten</string>
+    <string name="notification_channel_alarm_primary__name">Alarme</string>
+    <string name="notification_channel_alarm_primary__description">Benachrichtigungen werden angezeigt sobald ein geplanter Alarm läutet.</string>
+    <string name="notification_channel_alarm_priming__description">Benachrichtigungen, die angezeigt werden, sobald das Läuten eines geplanten Alarms vorbereitet wird.</string>
+    <string name="alarm_ringer_preset_load_error">Die ausgewählten Voreinstellungen für diesen Alarm konnten nicht geladen werden.</string>
+    <string name="alarms_disabled_due_to_subscription_expiration">Wir mussten ein paar Alarme deaktivieren, da dein Noice Premium Abo abgelaufen ist!</string>
+    <string name="alarm_ringer_max_duration_summary">Zeitdauer in Minuten nach der die Alarmerinnerung automatisch gestummt wird</string>
+    <string name="notification_channel_missed_alarms__name">Verpasste Alarme</string>
+    <string name="cancellation_and_refunds_policy">Siehe [payments, cancellations and refunds policy](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
+    <string name="alarm_snooze_length">Schlummerlänge</string>
+    <string name="alarm_snooze_length_summary">Zeitdauer in Minuten für Schlummeralarme</string>
+    <string name="notification_channel_missed_alarms__description">Benachrichtigungen, die angezeigt werden, wenn geplante Alarme nach Ablauf der Erinnerungsdauer gestummt werden.</string>
+    <string name="alarm_gradually_increase_volume_summary">Dauer in Minuten für die schrittweise Erhöhung der Lautstärke bei Auslösung eines Alarms</string>
 </resources>
