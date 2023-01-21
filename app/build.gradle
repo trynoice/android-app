@@ -18,8 +18,8 @@ android {
   defaultConfig {
     namespace 'com.github.ashutoshgngwr.noice'
     applicationId 'com.github.ashutoshgngwr.noice'
-    versionCode 63
-    versionName '2.4.1'
+    versionCode 64
+    versionName '2.4.2'
     testInstrumentationRunner 'com.github.ashutoshgngwr.noice.InstrumentedTestRunner'
     proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
   }
