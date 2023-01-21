@@ -2,7 +2,6 @@ package com.github.ashutoshgngwr.noice.di
 
 import android.content.Context
 import android.content.Intent
-import androidx.core.content.ContextCompat
 import com.github.ashutoshgngwr.noice.activity.AlarmRingerActivity
 import com.github.ashutoshgngwr.noice.service.AlarmRingerService
 import dagger.Module
@@ -40,12 +39,12 @@ object AlarmRingerModule {
     return object : AlarmRingerActivity.ServiceController {
       override fun dismiss(alarmId: Int) {
         AlarmRingerService.buildDismissIntent(context, alarmId)
-          .also { ContextCompat.startForegroundService(context, it) }
+          .also { context.startService(it) }
       }
 
       override fun snooze(alarmId: Int) {
         AlarmRingerService.buildSnoozeIntent(context, alarmId)
-          .also { ContextCompat.startForegroundService(context, it) }
+          .also { context.startService(it) }
       }
     }
   }
