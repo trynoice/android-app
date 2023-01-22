@@ -125,7 +125,7 @@
     <string name="welcome">Вітаємо!</string>
     <string name="invalid_name">Введена вами назва недійсна!</string>
     <string name="signing_in">Вхід</string>
-    <string name="sign_in_token_error">Схоже, що посилання для входу недійсне. Можливо, завершився термін його дії. Повторіть спробу!</string>
+    <string name="sign_in_token_error">Лишенько! Схоже, що посилання для входу недійсне або завершився термін його дії. ПовторіЗапитайте нове та повторіть спробу!</string>
     <string name="i_understand">Я розумію.</string>
     <string name="deleting_account">Видалення облікового запису</string>
     <string name="account_details_update_success">Дані вашого облікового запису успішно оновлено.</string>
@@ -163,10 +163,10 @@
     <string name="sign_in_message">Введіть свою електронну адресу для входу.</string>
     <string name="sign_up_message">Введіть своє ім\'я та електронну адресу, щоб зареєструватися.</string>
     <string name="email">Е-пошта</string>
-    <string name="account_locked_error">Ваша електронна пошта тимчасово заблокована від спроб входу до %1$s.</string>
+    <string name="account_locked_error">Ви зможете знову запитати посилання для входу на цю електронну пошту після %1$s.</string>
     <string name="sign_up_email_sent">Ми надіслали вам посилання для входу на адресу %1$s. Перевірте свою поштову скриньку!</string>
     <string name="sign_in_email_sent">Ми надіслали вам посилання для входу на адресу %1$s, якщо ця адреса електронної пошти належить зареєстрованому обліковому запису. Перевірте свою поштову скриньку!</string>
-    <string name="sign_in_link_tip">Відкрийте отримане посилання за допомогою Noice, щоб завершити процес входу.</string>
+    <string name="sign_in_link_tip">Заверште процес реєстрації, перейшовши за посиланням, надісланим на вашу електронну пошту, і відкривши його за допомогою Noice.</string>
     <string name="retry">Повторить спробу</string>
     <string name="open_mailbox">Відкрити поштову скриньку</string>
     <string name="mailbox_app_not_found">Йой! Схоже, на вашому пристрої не встановлено застосунок електронної пошти.</string>
