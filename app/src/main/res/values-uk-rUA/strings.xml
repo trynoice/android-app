@@ -125,7 +125,7 @@
     <string name="welcome">Вітаємо!</string>
     <string name="invalid_name">Введена вами назва недійсна!</string>
     <string name="signing_in">Вхід</string>
-    <string name="sign_in_token_error">Лишенько! Схоже, що посилання для входу недійсне або завершився термін його дії. ПовторіЗапитайте нове та повторіть спробу!</string>
+    <string name="sign_in_token_error">Лишенько! Схоже, що посилання для входу недійсне або завершився термін його дії. Запитайте нове та повторіть спробу.</string>
     <string name="i_understand">Я розумію.</string>
     <string name="deleting_account">Видалення облікового запису</string>
     <string name="account_details_update_success">Дані вашого облікового запису успішно оновлено.</string>
@@ -139,12 +139,12 @@
         <item quantity="other">%1$d місяців</item>
     </plurals>
     <string name="processing_payment">Обробка платежу</string>
-    <string name="sign_in_to_continue">Увійдіть або зареєструйтеся, щоб продовжити.</string>
+    <string name="sign_in_to_continue">Увійдіть або створіть обліковий запис, щоб продовжити.</string>
     <string name="user_already_subscribed">Ви вже передплатник.</string>
     <string name="audio_quality">Якість звуку</string>
     <string name="confirming_payment">Підтвердження оплати</string>
-    <string name="subscription_payment_confirmation_failed">Йой! У нас виникли проблеми під час очікування підтвердження платежу. Це може бути пов\'язано з помилкою мережі або затримкою від постачальника платежів. Ми оновимо стан вашої передплати, як тільки нас повідомить ваш провайдер. Будь ласка, перевірте стан вашої передплати трохи згодом.</string>
-    <string name="non_looping_sound">Містить проміжні перерви</string>
+    <string name="subscription_payment_confirmation_failed">Йой! Ми зіткнулися з проблемою під час підтвердження вашого платежу. Це може бути збій у мережі або затримка з боку платіжної системи. Запевняємо, що ми оновимо стан вашої передплати, як тільки отримаємо підтвердження про оплату. Будь ласка, перевірте ще раз пізніше!</string>
+    <string name="non_looping_sound">Повторюється з випадковою затримкою</string>
     <string name="has_premium_segments">Пропонує більше звукових кліпів з Noice Premium</string>
     <string name="audio_quality_low">Низька (128 кбіт/с)</string>
     <string name="audio_quality_medium">Середня (192 кбіт/с)</string>
@@ -152,7 +152,7 @@
     <string name="keywords">Ключові слова</string>
     <string name="loading">Завантаження</string>
     <string name="gift_card">Подарункова карта</string>
-    <string name="no_subscription_purchases_found">Ми думаємо, що ви ще не спробували Noice Premium. Ваші попередні передплати з\'являться тут, коли ви використаєте Noice Premium принаймні один раз.</string>
+    <string name="no_subscription_purchases_found">Розкрийте для себе весь потенціал Noice з передплатою Premium. Оновіть передплату зараз і відкрийте для себе ексклюзивні функції, які покращать ваші відчуття від прослуховування.</string>
     <string name="audio_quality_summary">Найвища якість звуку для потокового передавання. Середня, висока та ультра працюватиуть лише якщо ви передплатили Noice Premium.</string>
     <string name="sign_up_tos">Продовжуючи, ви погоджуєтеся з нашими [Умовами надання послуг](https://trynoice.com/terms-of-service) і [Політикою приватності](https://trynoice.com/privacy-policy).</string>
     <string name="sound_fade_out_duration">Тривалість загасання звуку</string>
@@ -174,8 +174,8 @@
     <string name="cont">Продовжити</string>
     <string name="sign_out_confirmation">Ви впевнені, що хочете вийти\? Не хвилюйтеся, ви завжди можете повернутися!</string>
     <string name="signing_out">Вихід</string>
-    <string name="delete_account_confirmation">Після видалення ви одразу втратите доступ до свого облікового запису. Якщо у вас є чинна передплата Noice Premium, ми припинимо стягувати плату за неї. Якщо ви передумаєте, ви можете відновити обліковий запис, увійшовши знову в будь-який час до 7 днів після видалення. Після цього періоду ми остаточно видалимо дані вашого облікового запису з наших серверів.</string>
-    <string name="duplicate_email_error">Введена електронна адреса пов’язана з іншим обліковим записом.</string>
+    <string name="delete_account_confirmation">Попрощайтеся зі своїм обліковим записом витончено, знаючи, що вашу передплату на Noice Premium буде скасовано, а ваші дані буде остаточно стерто з наших серверів за 7 днів. Але, якщо ви передумаєте, ви можете легко відновити обліковий запис доки не сплило 7 днів.</string>
+    <string name="duplicate_email_error">Введена електронна адреса вже використовується.</string>
     <string name="offline">Ви офлайн</string>
     <string name="back_online">Повернутися в онлайн-режим</string>
     <string name="total_price">Усього %1$s</string>
@@ -184,11 +184,11 @@
     <string name="yearly">Щорічно</string>
     <string name="monthly_price">%1$s на місяць</string>
     <string name="benefits">Переваги</string>
-    <string name="payment_processing_error">Йой! Ми не змогли обробити ваш платіж. Сума повинна бути автоматично повернена, якщо її стягнено. Якщо ви не отримаєте відшкодування протягом тижня, будь ласка, повідомте нас.</string>
+    <string name="payment_processing_error">Ой-ой! Збій платежу. Не хвилюйтеся! Відшкодування вам уже в дорозі. Якщо ви не побачите його протягом тижня, повідомте нас.</string>
     <string name="plans">Плани</string>
     <string name="get_premium">Отримати преміум</string>
     <string name="initialising_subscription">Ініціалізація передплати</string>
-    <string name="subscription_payment_complete">Дякуємо, що передплатили Noice Premium. Ваша передплата тепер активна.</string>
+    <string name="subscription_payment_complete">Вітаємо! Ваша передплата Noice Premium вже активна і готова поліпшити ваші відчуття від прослуховування.</string>
     <string name="subscription_payment_cancelled">Оплату передплати скасовано!</string>
     <string name="subscription_purchases">Покупки за передплатою</string>
     <string name="renews_on">Поновлюється %1$s</string>
@@ -196,7 +196,7 @@
     <string name="started_on">Розпочато %1$s</string>
     <string name="ended_on">Завершено %1$s</string>
     <string name="paid_using">Оплачено за допомогою %1$s</string>
-    <string name="subscription_payment_refunded">Ми скасували цю покупку та ініціювали повернення коштів за неї.</string>
+    <string name="subscription_payment_refunded">Купівлю скасовано та розпочато повернення коштів</string>
     <string name="change_plan">Змінити план</string>
     <string name="manage_subscription">Керувати передплатою</string>
     <string name="cancel_subscription">Скасувати передплату</string>
@@ -204,7 +204,7 @@
     <string name="faqs">Часті запитання</string>
     <string name="made_in_india">Зроблено з ❤ в Індії</string>
     <string name="sound_info">Про цей звук</string>
-    <string name="looping_sound">Плавно повторюється</string>
+    <string name="looping_sound">Повторюється плавно</string>
     <string name="media_sources">Медіаджерела</string>
     <string name="profile_load_error">Йой! Ми не змогли отримати дані вашого облікового запису. %1$s</string>
     <string name="cancel_subscription_error">О ні! Ми не змогли скасувати вашу передплату. %1$s Повторіть спробу!</string>
@@ -220,7 +220,7 @@
     <string name="playing">Відтворення</string>
     <string name="pausing">Призупинення</string>
     <string name="stopping">Зупинення</string>
-    <string name="subscription_initialisation_error">Йой! Нам не вдалося запустити процес виставлення рахунку. %1$s Повторіть спробу!</string>
+    <string name="subscription_initialisation_error">Йой! Нам не вдалося запустити процес обробки платежу. %1$s Повторіть спробу!</string>
     <string name="library_load_error">Йой! Ми не могли отримати звукову бібліотеку. %1$s</string>
     <string name="sign_in_email_error">Ой-йой! Нам не вдалося надіслати вам посилання для входу електронною поштою. %1$s Повторіть спробу!</string>
     <string name="sign_out_error">О ні! Не вдалося виконати вихід. %1$s Повторіть спробу!</string>
@@ -230,17 +230,17 @@
     <string name="generate_preset_error">Ой-йой! Нам не вдалося створити поєднання. %1$s Повторіть спробу!</string>
     <string name="invalid_email">Введена вами електронна адреса недійсна!</string>
     <string name="subscription_payment_pending">Очікується оплата</string>
-    <string name="cancel_subscription_confirmation">Ви впевнені, що хочете скасувати передплату Noice Premium\? Після скасування ваша передплата автоматично припиниться в кінці поточного платіжного циклу. Ваш поточний платіжний цикл закінчується %1$s.</string>
+    <string name="cancel_subscription_confirmation">Ви впевнені, що хочете скасувати передплату Noice Premium\? Ваша передплата завершиться в кінці поточного розрахункового періоду, який закінчується %1$s.</string>
     <string name="gift_card_code">Код подарункової картки</string>
     <string name="redeem">Активувати</string>
     <string name="gift_card_already_redeemed">Подарункова картка з цим кодом вже активована.</string>
     <string name="redeemed_using_code">Активовано за допомогою «%1$s»</string>
     <string name="gift_card_not_found">Цього коду не існує.</string>
-    <string name="invalid_gift_card_code">Введений код подарункової картки недійсний!</string>
+    <string name="invalid_gift_card_code">На жаль, введений вами код подарункової картки недійсний!</string>
     <string name="redeem_gift_card">Активувати подарункову картку</string>
     <string name="gift_card_expired">Термін дії подарункової картки з вказаним кодом закінчився.</string>
     <string name="gift_card_load_error">Йой! Нам не вдалося отримати подарункову картку. %1$s</string>
-    <string name="gift_card_details">Активуючи цю подарункову картку, ви отримаєте преміальну передплату до %1$s.</string>
+    <string name="gift_card_details">З цією подарунковою карткою ви зможете розкрити весь потенціал Noice! Обмінявши її, ви отримаєте доступ до Premium Noice до %1$s.</string>
     <string name="gift_card_redeem_error">О ні! Не вдалося активувати подарункову картку. %1$s</string>
     <string name="write_review_play_store">Напишіть відгук у Google Play</string>
     <string name="third_party_attributions">Сторонні атрибуції</string>
@@ -248,20 +248,20 @@
     <string name="reach_us">Зв\'язок з нами</string>
     <string name="oss_licenses">Ліцензії на програмне забезпечення з відкритим кодом</string>
     <string name="use_material_you_colors">Використовувати кольори Material You</string>
-    <string name="use_material_you_colors_summary">Успадковувати колірну палітру Material You системи Android</string>
+    <string name="use_material_you_colors_summary">Використовуйте ту ж колірну схему, що й у налаштуваннях вашого пристрою</string>
     <string name="stripe_customer_portal_error">Ой! Не вдалося відкрити платіжний портал. %1$s Будь ласка, спробуйте ще раз!</string>
     <string name="notification_channel_sound_downloads__name">Завантаження звуків</string>
-    <string name="sound_downloads_scheduled_for_removal">Усі завантаження звуків успішно заплановано для вилучення.</string>
+    <string name="sound_downloads_scheduled_for_removal">Усі офлайн-звуки заплановані до вилучення. Сідайте зручніше і розслабтеся, ми подбаємо про все інше.</string>
     <string name="remove_sound_download">Вилучити %1$s</string>
-    <string name="remove_sound_download_confirmation">Підтвердити вилучення звуку, завантаженого для офлайн-відтворення\?</string>
+    <string name="remove_sound_download_confirmation">Ви впевнені, що хочете видалити звук, який ви завантажили для офлайн-відтворення\?</string>
     <string name="download_sound">Завантажити звук</string>
     <string name="notification_channel_sound_downloads__description">Сповіщення про перебіг завантажень звуку.</string>
-    <string name="remove_all_sound_downloads_confirmation">Буде вилучено всі звуки, завантажені для офлайн-відтворення. Бажаєте продовжити\?</string>
+    <string name="remove_all_sound_downloads_confirmation">Ви впевнені, що хочете видалити всі офлайн-звуки\?</string>
     <string name="checking_sound_downloads">Перевірка завантаження звуків</string>
     <string name="remove_all_sound_downloads">Вилучити всі завантажені звуки</string>
     <string name="sound_scheduled_for_download">Додавання %1$s до завантажень для офлайн-відтворення.</string>
-    <string name="sound_download_scheduled_for_removal">Планування вилучення %1$s із завантажень звуку.</string>
-    <string name="play_sound_before_adjusting_volume">Вам потрібно відтворити цей звук, перш ніж ви зможете регулювати його гучність.</string>
+    <string name="sound_download_scheduled_for_removal">Вилучення %1$s з офлайн-звуків.</string>
+    <string name="play_sound_before_adjusting_volume">Відрегулювати гучність для цього звуку\? Спершу вам потрібно його прослухати!</string>
     <string name="trial_period">Пробний період: %1$s</string>
     <plurals name="n_days">
         <item quantity="one">%1$d день</item>
@@ -269,7 +269,7 @@
         <item quantity="many">%1$d днів</item>
         <item quantity="other">%1$d днів</item>
     </plurals>
-    <string name="sound_is_premium">Цей звук доступний лише з Noice Premium.</string>
+    <string name="sound_is_premium">Оновіть переплату до Noice Premium, щоб отримати доступ до цього звуку.</string>
     <string name="alarms">Будильники</string>
     <string name="add_alarm">Додати будильник</string>
     <string name="no_alarms">Немає будильників</string>
@@ -286,7 +286,7 @@
     <string name="notification_channel_alarm_priming__description">Показувані перед спрацюванням запланованого будильника сповіщення.</string>
     <string name="alarm">Будильник</string>
     <string name="snooze">Відкласти</string>
-    <string name="alarm_ringer_preset_load_error">Не вдалося завантажити вибране поєднання для цього будильника.</string>
+    <string name="alarm_ringer_preset_load_error">Ми не змогли завантажити поєднання, яке ви вибрали для цього будильника.</string>
     <string name="alarms_disabled_due_to_subscription_expiration">Ми були змушені вимкнути деякі будильники, оскільки термін дії вашої передплати Noice Premium завершився!</string>
     <string name="alarm_ringer_max_duration">Тривалість нагадування</string>
     <string name="alarm_snooze_length_summary">Тривалість відкладання будильників у хвилинах</string>
@@ -300,10 +300,8 @@
     <string name="tuesday_initial">В</string>
     <string name="saturday_initial">С</string>
     <string name="vibrate">Вібрувати</string>
-    <string name="alarm_permission_rationale_description">Нам потрібен додатковий доступ для планування будильників на вашому пристрої.
-\n
-\nБудь ласка, увімкніть **Сигнали та нагадування** для Noice в інформації про застосунок в системних налаштуваннях вашого пристрою.</string>
-    <string name="post_notifications_permission_rationale_description">Нам потрібен додатковий дозвіл на показ сповіщень для запланованих будильників. Без сповіщень Noice не може дзвеніти у запланований час.</string>
+    <string name="alarm_permission_rationale_description">Нам потрібен додатковий доступ для планування будильників на вашому пристрої. Будь ласка, увімкніть **Сигнали та нагадування** для Noice в інформації про застосунок у системних налаштуваннях вашого пристрою.</string>
+    <string name="post_notifications_permission_rationale_description">Дозвольте Noice показувати сповіщення, щоб будильники дзвонили в запланований час.</string>
     <string name="thursday_initial">Ч</string>
     <string name="notification_channel_alarm_primary__name">Будильники</string>
     <string name="notification_channel_missed_alarms__name">Пропущені будильники</string>
