@@ -60,7 +60,7 @@
     <string name="in_app_feedback__title">समीक्षा जमा करें</string>
     <string name="in_app_feedback__description">हम आपसे ऐप के बारे में सुनना पसंद करेंगे। कृपया हमारे गिटहब रिपॉजिटरी पर जाने के लिए एक क्षण लें। यदि आपको ऐप पसंद नहीं है, तो कृपया अपनी चिंताओं को बताते हुए एक मुद्दे को खोलने पर विचार करें। अन्यथा प्यार और समर्थन दिखाने के लिए, कृपया प्रोजेक्ट को स्टार करें।</string>
     <string name="presets_as_home_screen_summary">इस विकल्प को सक्षम करके ऐप खोलने पर अपने प्रीसेट को दृश्यमान बनाएं। परिवर्तनों को प्रभावी करने के लिए आपको ऐप को पुनरारंभ करना होगा।</string>
-    <string name="preset_does_not_exist">ऐसा लगता है कि यह प्रीसेट अब उपलब्ध नहीं है। हो सकता है कि इसे हटा दिया गया हो!</string>
+    <string name="preset_does_not_exist">ऐसा लगता है कि यह प्रीसेट अब उपलब्ध नहीं है। हो सकता है कि इसे हटा दिया गया हो।</string>
     <string name="add_to_home_screen">होम स्क्रीन में शामिल करें</string>
     <string name="random_preset">यादृच्छिक प्रीसेट</string>
     <string name="okay">ठीक</string>
