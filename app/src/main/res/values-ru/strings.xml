@@ -13,8 +13,8 @@
     <string name="dismiss">Отменить</string>
     <string name="name">Название</string>
     <string name="pause">Пауза</string>
-    <string name="preset_already_exists">Шаблон с таким именем уже существует!</string>
-    <string name="preset_name_cannot_be_empty">Название шаблона не может быть пустым!</string>
+    <string name="preset_already_exists">Пресет с таким названием уже существует. Попробуйте другой!</string>
+    <string name="preset_name_cannot_be_empty">Имя пресета отсутствует. Пожалуйста, введите уникальное!</string>
     <string name="preset_saved">Потрясающе! Ваш пресет сохранен.</string>
     <string name="save">Сохранить</string>
     <string name="save_preset">Сохранить шаблон</string>
@@ -25,7 +25,7 @@
     <string name="delete">Удалить</string>
     <string name="open_context_menu">Открыть контекстное меню</string>
     <string name="preset_delete_confirmation">Вы уверены, что хотите удалить %1$s\? Вы не можете отменить это действие.</string>
-    <string name="preset_deleted">Шаблон удалён!</string>
+    <string name="preset_deleted">Ваш пресет успешно удален!</string>
     <string name="preset_info__description">Создавайте новые пресеты, воспроизводя звуки и используя кнопку Сохранить в Библиотеке.</string>
     <string name="rename">Переименовать</string>
     <string name="auto_sleep_schedule_cancelled">Таймер сна отменен! Приложение останется активным.</string>
@@ -119,7 +119,7 @@
     <string name="created_by">Создано</string>
     <string name="import_presets_successful">Шаблоны успешно импортированы из файла!</string>
     <string name="export_presets_successful">Шаблоны успешно экспортированы в файл!</string>
-    <string name="random_preset_description">Шаблон будет содержать звуки, основанные на выбранными вами ключевыми запросами, и позволяющий играть несколько звуков одновременно.</string>
+    <string name="random_preset_description">В пресете будут звуки, основанные на выбранных вами ключевых словах, а в интенсивном пресете будет воспроизводиться больше звуков вместе.</string>
     <string name="support_development__donate_description">Если вы не приобрели премиум-подписку, вы можете совершить разовый платеж. Это поможет нам поддерживать разработку бесплатных функций и навсегда сохранить их без рекламы.</string>
     <string name="sound_fade_out_duration_summary">Продолжительность времени в секундах для затухающих звуков</string>
     <string name="support">Поддержка</string>
