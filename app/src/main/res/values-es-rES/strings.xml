@@ -313,14 +313,14 @@
     <string name="has_more_clips_with_premium">Este sonido ofrece más variantes del mismo en Noice Premium.</string>
     <string name="more_sounds">Más sonidos</string>
     <string name="more_sounds_desc">Libere todo el potencial de su experiencia de relajación y concentración con Noice Premium, con %1$s sonidos adicionales.</string>
-    <string name="more_sound_clips">Más estilos y tipos de sonidos</string>
-    <string name="more_sound_clips_desc">Descubra un nuevo mundo sonoro con nuestros exclusivos clips de sonido adicionales para elevar su experiencia auditiva a un nuevo nivel.</string>
+    <string name="more_sound_clips">Más clips de sonido</string>
+    <string name="more_sound_clips_desc">Añada una nueva dimensión a su escucha con clips de sonido adicionales para que cada sonido sea más único y menos monótono.</string>
     <string name="natural_variations">Variaciones naturales</string>
     <string name="hd_audio">Audio en alta definición</string>
-    <string name="hd_audio_desc">Experimente con el ruido como nunca antes, con la posibilidad de ajustar la calidad de sus sonidos hasta 320 kbps, lo que se traduce en un sonido cristalino y de alta fidelidad.</string>
+    <string name="hd_audio_desc">Experimente el ruido como nunca antes, con la posibilidad de escuchar sonidos hasta a 320 kbps MP3, lo que proporciona un audio cristalino y de alta fidelidad.</string>
     <string name="offline_playback">Reproducción sin conexión</string>
     <string name="unlimited_alarms">Alarmas ilimitadas</string>
     <string name="unlimited_alarms_desc">Eleva tu rutina matutina con Noice Premium: programa un número ilimitado de alarmas para empezar el día de forma personalizada y tranquila.</string>
-    <string name="natural_variations_desc">Agregue una nueva dimensión a su escucha con clips adicionales para generar variaciones naturales y mixtas que hacen que cada sonido sea único y menos monótono.</string>
+    <string name="natural_variations_desc">Dé vida a sus paisajes sonoros con variaciones de sonido reales y naturales generadas a la carta con nuestra tecnología de sonido de vanguardia.</string>
     <string name="offline_playback_desc">Disfruta de sonidos relajantes en cualquier momento y lugar con las descargas de sonidos sin conexión de Noice, sin necesidad de conexión a Internet.</string>
 </resources>
