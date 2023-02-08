@@ -315,12 +315,12 @@
     <string name="has_more_clips_with_premium">This sound offers more sound clips with Noice Premium.</string>
     <string name="more_sounds">More Sounds</string>
     <string name="more_sounds_desc">Unleash the full potential of your relaxation and focus experience with Noice Premium - with %1$s additional sounds.</string>
-    <string name="more_sound_clips">More sound clips</string>
-    <string name="more_sound_clips_desc">Unlock a new world of sound with our exclusive, additional sound clips to elevate your listening experience to a new level of richness.</string>
+    <string name="more_sound_clips">More Sound Clips</string>
+    <string name="more_sound_clips_desc">Add a new dimension to your listening with additional sound clips to make each sound more unique and less monotonous.</string>
     <string name="natural_variations">Natural Variations</string>
-    <string name="natural_variations_desc">Add a new dimension to your listening with added clips to generate natural and diverse variations, making each sound unique and less monotonous.</string>
+    <string name="natural_variations_desc">Bring your soundscapes to life with real and natural sound variations generated on demand with our cutting-edge sound technology.</string>
     <string name="hd_audio">HD Audio</string>
-    <string name="hd_audio_desc">Experience noise like never before, with the ability to adjust the quality of your sounds up to 320 kbps, resulting in crystal-clear, high-fidelity sound.</string>
+    <string name="hd_audio_desc">Experience noise like never before, with the ability to listen to sounds at up to 320 kbps MP3, rendering crystal-clear, high-fidelity audio.</string>
     <string name="offline_playback">Offline Playback</string>
     <string name="offline_playback_desc">Enjoy soothing sounds anytime, anywhere, with Noice\'s offline sound downloads - no internet connection is required.</string>
     <string name="unlimited_alarms">Unlimited Alarms</string>
