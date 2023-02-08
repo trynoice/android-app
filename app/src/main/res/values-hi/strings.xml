@@ -308,12 +308,12 @@
     <string name="alarm_gradually_increase_volume_summary">अलार्म बजने पर वॉल्यूम धीरे-धीरे बढ़ाने के लिए मिनटों में अवधि</string>
     <string name="no_purchases">कोई खरीद नहीं</string>
     <string name="cancellation_and_refunds_policy">[भुगतान, रद्दीकरण और धनवापसी नीति](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium) देखें।</string>
-    <string name="more_sound_clips_desc">अपने सुनने के अनुभव को समृद्धि के एक नए स्तर तक बढ़ाने के लिए हमारे विशेष, अतिरिक्त क्लिप के साथ ध्वनि की एक नई दुनिया को अनलॉक करें।</string>
+    <string name="more_sound_clips_desc">प्रत्येक ध्वनि को अधिक विशिष्ट और कम नीरस बनाने के लिए अतिरिक्त ध्वनि क्लिप के साथ अपने सुनने में एक नया आयाम जोड़ें।</string>
     <string name="has_more_clips_with_premium">यह ध्वनि नॉयस प्रीमियम के साथ अधिक ध्वनि क्लिप प्रदान करती है।</string>
     <string name="more_sounds">अतिरिक्त ध्वनियाँ</string>
     <string name="more_sound_clips">अधिक ध्वनि क्लिप</string>
     <string name="natural_variations">प्राकृतिक विविधताएँ</string>
-    <string name="natural_variations_desc">प्रत्येक ध्वनि को अद्वितीय और कम नीरस बनाने वाली प्राकृतिक और मिश्रित विविधताओं को उत्पन्न करने के लिए अतिरिक्त क्लिप के साथ अपने सुनने में एक नया आयाम जोड़ें।</string>
+    <string name="natural_variations_desc">हमारी अत्याधुनिक ध्वनि तकनीक से मांग पर उत्पन्न होने वाली वास्तविक और प्राकृतिक ध्वनि विविधताओं के साथ अपने ध्वनियों को जीवंत करें।</string>
     <string name="hd_audio">एचडी ऑडियो</string>
     <string name="offline_playback">ऑफ़लाइन प्लेबैक</string>
     <string name="unlimited_alarms">असीमित अलार्म</string>
