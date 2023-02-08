@@ -306,4 +306,6 @@
     <string name="alarm_gradually_increase_volume">闹钟音量渐响</string>
     <string name="alarm_gradually_increase_volume_summary">闹钟触发时音量逐渐增加的分钟时长</string>
     <string name="cancellation_and_refunds_policy">查看 [付款、取消和退款政策](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium)。</string>
+    <string name="natural_variations_desc">将您具有真实和自然的声音变化的音景带入生活，这些变化由我们先进的声音技术按需生成。</string>
+    <string name="hd_audio_desc">以前所未有的方式体验白噪音，能够收听音质高达 320 kbps 的 MP3，呈现水晶般清晰，高保真的音频。</string>
 </resources>
