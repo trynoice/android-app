@@ -26,7 +26,7 @@
     <string name="open_context_menu">Открыть контекстное меню</string>
     <string name="preset_delete_confirmation">Вы уверены, что хотите удалить %1$s\? Вы не можете отменить это действие.</string>
     <string name="preset_deleted">Ваш пресет успешно удален!</string>
-    <string name="preset_info__description">Создавайте новые пресеты, воспроизводя звуки и используя кнопку Сохранить в Библиотеке.</string>
+    <string name="preset_info__description">Вы можете легко создавать собственные пресеты, воспроизводя звуки, а затем сохраняя их из библиотеки звуков. Просто нажмите кнопку Сохранить и дайте ему уникальное имя.</string>
     <string name="rename">Переименовать</string>
     <string name="auto_sleep_schedule_cancelled">Таймер сна отменен! Приложение останется активным.</string>
     <string name="reset">Сброс</string>
@@ -73,7 +73,7 @@
     <string name="presets_as_home_screen_summary">Сделайте свои пресеты видимыми при открытии приложения, включив эту опцию. Нужно будет перезапустить приложение, чтобы изменения вступили в силу.</string>
     <string name="preset_does_not_exist">Похоже, этот пресет больше недоступен. Возможно, он был удален.</string>
     <string name="random_preset">Случайный шаблон</string>
-    <string name="pinned_shortcuts_not_supported">Ваш лаунчер по умолчанию не поддерживает добавление ярлыков.</string>
+    <string name="pinned_shortcuts_not_supported">Извините, похоже, что ваше приложение для домашнего экрана не поддерживает ярлыки.</string>
     <string name="invalid_import_file_format">Неверный формат файла! Пожалуйста, проверьте импортируемый файл.</string>
     <string name="failed_to_read_file">Ошибка чтения выбранного файла!</string>
     <string name="failed_to_write_file">Ошибка при записи в выбранный файл!</string>
