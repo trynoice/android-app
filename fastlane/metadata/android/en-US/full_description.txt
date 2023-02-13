@@ -11,15 +11,8 @@ Noice is an app that allows you to create personalised sound environments. It en
 • Calm down your babies using relaxing sounds
 • Mask your tinnitus with easing noise
 • Block distractions to lay back and fall asleep
-• Soothe your migraines and headaches
 • Start your days to the gentler sounds of nature with mindful alarms
-
-<b>PREMIUM FEATURES</b>
-• Longer sounds with multiple variants/samples
-• Randomised synthesis of natural variations in sounds, e.g., the intensity of rain will vary with time
-• Full offline playback
-• Ultra high-quality audio for streaming and downloading (up to 320 kbps)
-• Unlimited active alarms
+• Soothe your migraines and headaches
 
 <b>FREE FEATURES</b>
 • Rich sound library
@@ -34,6 +27,13 @@ Noice is an app that allows you to create personalised sound environments. It en
 • No advertisements of any kind
 
 <i>* Chromecast is only available when you download Noice from Google Play.</i>
+
+<b>PREMIUM FEATURES</b>
+• Unlock additional audio clips in sounds
+• Real and natural sound variations generated on demand
+• Full offline playback
+• Ultra high-quality audio for streaming and downloading (up to 320 kbps)
+• Unlimited active alarms
 
 <b>SOUND LIBRARY</b>
 • Life (birds, crickets, wolves, heartbeat, purring cat)
