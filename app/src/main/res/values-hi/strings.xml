@@ -185,7 +185,7 @@
     <string name="no_subscription_purchases_found">प्रीमियम सब्सक्रिप्शन के साथ नॉइस की पूरी क्षमता का अनुभव करें। अभी अपग्रेड करें और विशेष सुविधाएं खोजें जो आपके सुनने के अनुभव को बेहतर बनाएंगी।</string>
     <string name="faqs">अधिकतर पूछे जाने वाले सवाल</string>
     <string name="subscription_purchases_load_error">उह ओह! हम आपकी सदस्यता खरीदारी इतिहास नहीं प्राप्त कर सके। %1$s</string>
-    <string name="has_premium_segments">नॉइस प्रीमियम के साथ अधिक साउंड क्लिप प्रदान करती है</string>
+    <string name="has_premium_segments">नॉइस प्रीमियम के साथ अधिक ऑडियो क्लिप प्रदान करती है</string>
     <string name="media_sources">मीडिया स्रोत</string>
     <string name="cancel_subscription_error">धत्तेरे की! हम आपकी सदस्यता रद्द नहीं कर सके। %1$s कृपया पुन: प्रयास करें!</string>
     <string name="account_details_update_error">धत्तेरे की! हम आपके विवरण अपडेट नहीं कर सके। %1$s कृपया पुन: प्रयास करें!</string>
@@ -308,10 +308,10 @@
     <string name="alarm_gradually_increase_volume_summary">अलार्म बजने पर वॉल्यूम धीरे-धीरे बढ़ाने के लिए मिनटों में अवधि</string>
     <string name="no_purchases">कोई खरीद नहीं</string>
     <string name="cancellation_and_refunds_policy">[भुगतान, रद्दीकरण और धनवापसी नीति](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium) देखें।</string>
-    <string name="more_sound_clips_desc">प्रत्येक ध्वनि को अधिक विशिष्ट और कम नीरस बनाने के लिए अतिरिक्त ध्वनि क्लिप के साथ अपने सुनने में एक नया आयाम जोड़ें।</string>
-    <string name="has_more_clips_with_premium">यह ध्वनि नॉयस प्रीमियम के साथ अधिक ध्वनि क्लिप प्रदान करती है।</string>
+    <string name="more_sound_clips_desc">प्रत्येक ध्वनि को अधिक विशिष्ट और कम नीरस बनाने के लिए अतिरिक्त ऑडियो क्लिप के साथ अपने सुनने में एक नया आयाम जोड़ें।</string>
+    <string name="has_more_clips_with_premium">यह ध्वनि नॉयस प्रीमियम के साथ अधिक ऑडियो क्लिप प्रदान करती है।</string>
     <string name="more_sounds">अतिरिक्त ध्वनियाँ</string>
-    <string name="more_sound_clips">अधिक ध्वनि क्लिप</string>
+    <string name="more_sound_clips">अधिक ऑडियो क्लिप्स</string>
     <string name="natural_variations">प्राकृतिक विविधताएँ</string>
     <string name="natural_variations_desc">हमारी अत्याधुनिक ध्वनि तकनीक से मांग पर उत्पन्न होने वाली वास्तविक और प्राकृतिक ध्वनि विविधताओं के साथ अपने ध्वनियों को जीवंत करें।</string>
     <string name="hd_audio">एचडी ऑडियो</string>
