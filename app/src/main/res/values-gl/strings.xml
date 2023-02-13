@@ -219,7 +219,7 @@
     <string name="subscription_purchases">Compras por subscrición</string>
     <string name="renews_on">Renovalo %1$s</string>
     <string name="faqs">Preguntas máis frecuentes</string>
-    <string name="has_premium_segments">Noice Premium ofrece máis sons</string>
+    <string name="has_premium_segments">Ofrece máis arquivos de sons en Noise Premium</string>
     <string name="media_sources">Fontes dos medios</string>
     <string name="stopping">Parando</string>
     <string name="keywords">Palabras chave</string>
@@ -313,8 +313,8 @@
     <string name="offline_playback_desc">Goza de sons relaxantes en calquera momento e en calquera lugar coas descargas de sons sen conexión de Noice, sen necesidade de conexión a Internet.</string>
     <string name="has_more_clips_with_premium">Este son ofrece máis vertentes con Noice Premium.</string>
     <string name="more_sounds">Máis Sons</string>
-    <string name="more_sound_clips">Máis tipos de son</string>
-    <string name="more_sound_clips_desc">Engade unha nova dimensión á túa audición con clips de son adicionais para que cada son sexa máis único e menos monótono.</string>
+    <string name="more_sound_clips">Máis tipos de sons</string>
+    <string name="more_sound_clips_desc">Engade unha nova dimensión á túa audición con máis sons adicionais nos mesmos sons para facelos máis únicos e menos monótonos.</string>
     <string name="natural_variations">Variacións naturais</string>
     <string name="hd_audio">Audio en HD</string>
     <string name="hd_audio_desc">Experimenta o ruído como nunca antes, coa capacidade de escoitar sons en MP3 de ata 320 kbps, que proporciona un son nítido e de alta fidelidade.</string>
