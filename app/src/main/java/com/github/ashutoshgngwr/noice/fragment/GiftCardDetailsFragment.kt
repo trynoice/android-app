@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.GiftCardDetailsFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.models.GiftCard
@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
-import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -58,7 +57,7 @@ class GiftCardDetailsFragment : BottomSheetDialogFragment() {
       mainNavController.navigate(R.id.redeem_gift_card, args.toBundle())
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.giftCard
         .filterNotNull()
         .map { it.hourCredits }
@@ -71,7 +70,7 @@ class GiftCardDetailsFragment : BottomSheetDialogFragment() {
         }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.errStrRes
         .filterNotNull()
         .map { getString(it) }

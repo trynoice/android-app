@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.databinding.DonationPurchasedCallbackFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProviderException
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -34,7 +34,7 @@ class DonationPurchasedCallbackFragment : BottomSheetDialogFragment() {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
     binding.dismiss.setOnClickListener { dismiss() }
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.isLoading.collect { isCancelable = !it }
     }
   }

@@ -12,10 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignInResultFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
@@ -61,7 +61,7 @@ class SignInResultFragment : Fragment() {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
     binding.openMailbox.setOnClickListener { openMailbox() }
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.signInError
         .filterNotNull()
         .collect { cause ->

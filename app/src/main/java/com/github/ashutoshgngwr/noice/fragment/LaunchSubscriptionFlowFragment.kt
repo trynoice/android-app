@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.navArgs
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.LaunchSubscriptionFlowFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.models.Subscription
@@ -46,13 +46,13 @@ class LaunchSubscriptionFlowFragment : BottomSheetDialogFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     isCancelable = false
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.isCompleted
         .filter { it }
         .collect { dismiss() }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.launchErrorStrRes
         .filterNotNull()
         .collect { causeStrRes ->

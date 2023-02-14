@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.core.view.forEach
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetTagChipBinding
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.models.SoundTag
@@ -61,7 +61,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.tags.collect { tags ->
         tags.forEach { tag ->
           val binding = RandomPresetTagChipBinding.inflate(layoutInflater, binding.tags, true)
@@ -71,7 +71,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
       }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.tagsLoadErrorStrRes
         .filterNotNull()
         .collect { causeStrRes ->
@@ -80,7 +80,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.generatedPreset
         .filterNotNull()
         .collect { preset ->
@@ -92,7 +92,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.generatePresetErrorStrRes
         .filterNotNull()
         .collect { causeStrRes ->

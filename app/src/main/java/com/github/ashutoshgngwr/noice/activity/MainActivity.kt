@@ -15,7 +15,6 @@ import androidx.core.os.bundleOf
 import androidx.core.os.postDelayed
 import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -27,6 +26,7 @@ import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadsRefreshWorker
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.fragment.DonationPurchasedCallbackFragmentArgs
 import com.github.ashutoshgngwr.noice.fragment.HomeFragmentArgs
@@ -46,7 +46,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -141,7 +140,7 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
   }
 
   private fun initOfflineIndicator() {
-    lifecycleScope.launch {
+    launchAndRepeatOnStarted {
       getInternetConnectivityFlow().collect { isConnected ->
         if (isConnected) {
           hideOfflineIndicator()

@@ -11,13 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPlanItemBinding
 import com.github.ashutoshgngwr.noice.databinding.ViewSubscriptionPlansFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
@@ -66,7 +66,7 @@ class ViewSubscriptionPlansFragment : Fragment() {
     binding.signIn.setOnClickListener { mainNavController.navigate(R.id.sign_in_form) }
     binding.signUp.setOnClickListener { mainNavController.navigate(R.id.sign_up_form) }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.apiErrorStrRes
         .filterNotNull()
         .collect { causeStrRes ->

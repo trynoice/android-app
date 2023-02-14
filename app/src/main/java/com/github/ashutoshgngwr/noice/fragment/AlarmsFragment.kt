@@ -15,7 +15,6 @@ import androidx.core.view.postDelayed
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -31,6 +30,7 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.AlarmItemBinding
 import com.github.ashutoshgngwr.noice.databinding.AlarmsFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.hasSelfPermission
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showTimePicker
 import com.github.ashutoshgngwr.noice.ext.startAppDetailsSettingsActivity
@@ -105,11 +105,11 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
       }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.alarmsPagingData.collectLatest(adapter::submitData)
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.isSubscribed
         .filterNot { it }
         .map { viewModel.disableAll(FREE_ALARM_COUNT) }

@@ -15,7 +15,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -30,6 +29,7 @@ import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.engine.PlaybackState
 import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadsRefreshWorker
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showInfoSnackBar
@@ -97,29 +97,29 @@ class LibraryFragment : Fragment(), LibraryListItemController {
     binding.soundList.addItemDecoration(itemDecor)
     binding.soundList.adapter = adapter
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.isLibraryIconsEnabled.collect(adapter::setIconsEnabled)
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.libraryItems.collect(adapter::setLibraryItems)
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.playerStates.collect(adapter::setPlayerStates)
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.downloadStates.collect(adapter::setDownloadStates)
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.isSubscribed
         .map { !it }
         .collect(adapter::setSoundPremiumStatusEnabled)
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.isSavePresetButtonVisible.collect { isVisible ->
         if (isVisible) {
           binding.savePresetButton.show()
@@ -129,13 +129,13 @@ class LibraryFragment : Fragment(), LibraryListItemController {
       }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       requireContext().getInternetConnectivityFlow().collect { isConnected ->
         isConnectedToInternet = isConnected
       }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.apiErrorStrRes
         .filterNotNull()
         .map { getString(R.string.library_load_error, getString(it)).normalizeSpace() }

@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignOutFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
@@ -44,11 +44,11 @@ class SignOutFragment : BottomSheetDialogFragment() {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
     binding.cancel.setOnClickListener { dismiss() }
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.isSigningOut.collect { isCancelable = !it }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.signOutErrorStrRes
         .filterNotNull()
         .collect { causeStrRes ->
@@ -57,7 +57,7 @@ class SignOutFragment : BottomSheetDialogFragment() {
         }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.signOutResource
         .filterNot { it is Resource.Loading }
         .collect { dismiss() }

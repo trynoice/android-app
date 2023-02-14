@@ -17,7 +17,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +25,7 @@ import com.github.ashutoshgngwr.noice.activity.PresetShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.databinding.PresetsFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.PresetsListItemBinding
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
 import com.github.ashutoshgngwr.noice.model.Preset
@@ -40,7 +40,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
-import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.min
@@ -77,15 +76,15 @@ class PresetsFragment : Fragment(), PresetListItemController {
     val itemDecor = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
     binding.list.addItemDecoration(itemDecor)
     viewModel.loadAppShortcuts(requireContext())
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.presets.collect(adapter::setPresets)
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.presetsWithAppShortcut.collect(adapter::setPresetsWithAppShortcut)
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.activePresetId.collect(adapter::setActivePresetId)
     }
 
