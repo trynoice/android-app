@@ -7,7 +7,9 @@ import com.github.appintro.AppIntroBaseFragment
 import com.github.appintro.model.SliderPage
 import com.github.ashutoshgngwr.noice.R
 
-class AppIntroFragment(override val layoutId: Int) : AppIntroBaseFragment() {
+class AppIntroFragment : AppIntroBaseFragment() {
+
+  override val layoutId: Int get() = R.layout.app_intro_fragment
 
   companion object {
     /**
@@ -31,7 +33,6 @@ class AppIntroFragment(override val layoutId: Int) : AppIntroBaseFragment() {
     @JvmOverloads
     @JvmStatic
     fun newInstance(
-      layoutId: Int = R.layout.app_intro_fragment,
       title: CharSequence? = null,
       description: CharSequence? = null,
       @DrawableRes imageDrawable: Int = 0,
@@ -43,7 +44,6 @@ class AppIntroFragment(override val layoutId: Int) : AppIntroBaseFragment() {
       @DrawableRes backgroundDrawable: Int = 0
     ): AppIntroFragment {
       return newInstance(
-        layoutId,
         SliderPage(
           title = title,
           description = description,
@@ -66,8 +66,8 @@ class AppIntroFragment(override val layoutId: Int) : AppIntroBaseFragment() {
      *
      * @return An [AppIntroFragment] created instance
      */
-    private fun newInstance(layoutId: Int, sliderPage: SliderPage): AppIntroFragment {
-      val slide = AppIntroFragment(layoutId)
+    private fun newInstance(sliderPage: SliderPage): AppIntroFragment {
+      val slide = AppIntroFragment()
       slide.arguments = sliderPage.toBundle()
       return slide
     }
