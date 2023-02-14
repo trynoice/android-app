@@ -1,56 +1,56 @@
 Para muchas personas, un poco de ruido de fondo uniforme es útil para mantener la calma y la concentración. En algunos casos, también aumenta la productividad y reduce los efectos del estrés y la ansiedad. El ruido de fondo también enmascara el tinnitus, calma a los bebés agitados y mejora las experiencias de lectura y meditación.
 
-Noice es una aplicación que permite crear ambientes sonoros personalizados. Te permite combinar diferentes sonidos a distintos niveles de volumen para crear atmósferas ambientales perfectas. Estos entornos sonoros personalizados te permiten ahogar las distracciones y concentrarte. También puedes utilizarla para generar un aura de serenidad y tranquilidad que te anime a relajarte y a quedarte dormido
+Noice es una aplicación que te permite crear ambientes sonoros personalizados. Le permite combinar diferentes sonidos a diferentes niveles de volumen para crear atmósferas ambientales perfectas. Estos entornos de sonido personalizados le permiten ahogar las distracciones y le permiten concentrarse. También puedes usarlo para generar un aura serena y pacífica que te anime a relajarte y conciliar el sueño.
 
 <b>BENEFICIOS</b>
-• Reduzca su estrés y ansiedad con un ambiente personalizado
-• Relájese y descanse en un entorno apaciguador de su elección
-• Aumente su productividad sustituyendo el ruido que le distrae
-• Mejore la concentración al estar en un ambiente consistente
-• Ayude a su experiencia de lectura y meditación con paisajes sonoros naturales
-• Calme a sus bebés con sonidos relajantes
-• Enmascare su tinnitus con ruidos relajantes
-• Bloquee las distracciones para relajarse y dormirse
-• Alivie sus migrañas y dolores de cabeza
+• Reduzca su estrés y ansiedad usando un ambiente personalizado
+• Relájese y descanse en un ambiente tranquilo de su elección
+• Aumente su productividad reemplazando el ruido que distrae
+• Mejorar la concentración al estar en una atmósfera consistente
+• Mejore su experiencia de lectura y meditación con paisajes sonoros naturales
+• Calma a tus bebés con sonidos relajantes
+• Enmascare su tinnitus con un ruido relajante
+• Bloquee las distracciones para recostarse y quedarse dormido
 • Comience sus días con los sonidos más suaves de la naturaleza con alarmas conscientes
+• Calma tus migrañas y dolores de cabeza
 
-<b>CARACTERÍSTICAS PREMIUM</b>
-• Sonidos más largos con múltiples variantes/muestras
-• Síntesis aleatoria de las variaciones naturales de los sonidos, por ejemplo, la intensidad de la lluvia variará con el tiempo
+<b>FUNCIONES GRATUITAS</b>
+• Rica biblioteca de sonidos
+• Google Cast o Chromecast habilitado*
+• Temporizador de reposo automático
+• Despertador con hasta 2 alarmas activas
+• Haz y guarda tus mezclas personalizadas
+• Generador de mezcla aleatoria para adaptarse a todos sus estados de ánimo
+• Control de volumen individual para cada sonido
+• Juega junto con un reproductor de música que se está reproduciendo actualmente
+• Use los colores de Material You Dynamic en Android 12L o superior
+• Sin anuncios de ningún tipo
+
+<i>* Chromecast solo está disponible cuando descargas Noice de Google Play.</i>
+
+<b>FUNCIONES PREMIUM</b>
+• Desbloquear clips de audio adicionales en sonidos
+• Variaciones de sonido reales y naturales generadas bajo demanda
 • Reproducción completa sin conexión
-• Audio de ultra alta calidad para su transmisión y descarga (hasta 320 kbps)
+• Audio de ultra alta calidad para transmisión y descarga (hasta 320 kbps)
 • Alarmas activas ilimitadas
 
-<b>CARACTERÍSTICAS GRATUITAS</b>
-• Amplia biblioteca de sonidos
-• Compatible con Google Cast o Chromecast*.
-• Temporizador de sueño automático
-• Despertador con hasta 2 alarmas activas
-• Crea y guarda tus mezclas personalizadas
-• Generador de mezclas aleatorias que se adaptan a tu estado de ánimo
-• Control de volumen individual para cada sonido
-• Reproducción junto a un reproductor de música en curso
-• Utiliza los colores dinámicos de Material You en Android 12L o superior
-• Sin publicidad de ningún tipo
-
-<i>* Chromecast solo está disponible cuando descarga Voice de Google Play.</i>
-
-<b>FONOTECA</b>
-• La vida (pájaros, grillos, lobos, latidos del corazón, ronroneo del gato)
-• El tiempo (la mañana o el amanecer, la noche, la lluvia, los truenos)
-• Lugares (hoguera o fogata, cafetería, biblioteca, oficina, playa, ribera, buceo)
-• Viajes (tren, avión, barco que cruje, coche eléctrico)
+<b>BIBLIOTECA DE SONIDO</b>
+• Vida (pájaros, grillos, lobos, latidos del corazón, gato ronroneando)
+• Clima (mañana o amanecer, noche, lluvia, truenos)
+• Lugares (fogata o fogata, cafetería, biblioteca, oficina, playa, ribera, buceo)
+• Viajes (tren, en vuelo, barco chirriante, coche eléctrico)
 • Cosas (ventilador, reloj de pared, campanas de viento)
-• Ruido bruto (blanco, rosa, marrón)
+• Ruido bruto (blanco, rosa, browniano)
 
 <b>PERMISOS DE LA APLICACIÓN</b>
-• <b>ver conexiones de red</b>: para la transmisión y descarga de sonido
-• <b>acceso total a la red</b>: para comunicarse con los servidores de Noice, la transmisión de sonido y la descarga
-• <b>ejecutar al inicio</b>: para asegurar que las Alarmas persisten a través de los reinicios del dispositivo.
-• <b>evitar que el dispositivo se duerma</b>: para mantener la CPU del dispositivo despierta y proporcionar una reproducción ininterrumpida cuando la pantalla se apaga.
-• <b>instalar accesos directos</b>: para añadir accesos directos preestablecidos a la pantalla de inicio
+• <b>ver conexiones de red</b>: para transmisión y descarga de sonido
+• <b>acceso total a la red</b>: para comunicarse con los servidores de Noice, transmitir y descargar sonido
+• <b>ejecutar al inicio</b>: para garantizar que las alarmas persistan al reiniciar el dispositivo
+• <b>evitar que el dispositivo entre en modo de suspensión</b>: para mantener activa la CPU del dispositivo y proporcionar una reproducción ininterrumpida cuando la pantalla se apaga.
+• <b>instalar accesos directos</b>: para agregar accesos directos preestablecidos a la pantalla de inicio
 • <b>ejecutar servicio en primer plano</b>: para reproducción continua cuando la aplicación está en segundo plano
-• <b>mostrar las notificaciones a pantalla completa con el dispositivo bloqueado</b>: para mostrar las alertas cuando se activa una alarma
+• <b>mostrar notificaciones a pantalla completa en un dispositivo bloqueado</b>: para mostrar la alerta cuando se activa una alarma
 • <b>control de vibración</b>: para hacer vibrar el dispositivo cuando se dispara una alarma habilitada para vibración
 
 Noice es un software de código abierto.

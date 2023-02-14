@@ -219,7 +219,7 @@
     <string name="subscription_purchases">Compras por subscrición</string>
     <string name="renews_on">Renovalo %1$s</string>
     <string name="faqs">Preguntas máis frecuentes</string>
-    <string name="has_premium_segments">Noice Premium ofrece máis sons</string>
+    <string name="has_premium_segments">Ofrece máis arquivos de sons en Noise Premium</string>
     <string name="media_sources">Fontes dos medios</string>
     <string name="stopping">Parando</string>
     <string name="keywords">Palabras chave</string>
@@ -309,15 +309,15 @@
     <string name="no_purchases">Sen compras</string>
     <string name="cancellation_and_refunds_policy">Consulta [política de pagos, cancelacións e reembolsos](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
     <string name="more_sounds_desc">Libera todo o potencial da túa experiencia de relaxación e concentración con Noice Premium, con %1$s sons adicionais.</string>
-    <string name="natural_variations_desc">Engade unha nova dimensión á túa audición con clips engadidos para xerar variacións naturais e diversas, facendo que cada son sexa único e menos monótono.</string>
+    <string name="natural_variations_desc">Da vida ás túas paisaxes sonoras con variacións de son reais e naturais xeradas baixo demanda coa nosa tecnoloxía de son de vangarda.</string>
     <string name="offline_playback_desc">Goza de sons relaxantes en calquera momento e en calquera lugar coas descargas de sons sen conexión de Noice, sen necesidade de conexión a Internet.</string>
     <string name="has_more_clips_with_premium">Este son ofrece máis vertentes con Noice Premium.</string>
     <string name="more_sounds">Máis Sons</string>
     <string name="more_sound_clips">Máis tipos de sons</string>
-    <string name="more_sound_clips_desc">Desbloquea un novo mundo de sons cos nosos exclusivos clips de son adicionais para elevar a túa experiencia auditiva a un novo nivel de riqueza.</string>
+    <string name="more_sound_clips_desc">Engade unha nova dimensión á túa audición con máis sons adicionais nos mesmos sons para facelos máis únicos e menos monótonos.</string>
     <string name="natural_variations">Variacións naturais</string>
     <string name="hd_audio">Audio en HD</string>
-    <string name="hd_audio_desc">Experimenta o ruído coma nunca antes, coa capacidade de axustar a calidade dos teus sons ata 320 kbps, o que dá como resultado un son cristalino e de alta fidelidade.</string>
+    <string name="hd_audio_desc">Experimenta o ruído como nunca antes, coa capacidade de escoitar sons en MP3 de ata 320 kbps, que proporciona un son nítido e de alta fidelidade.</string>
     <string name="offline_playback">Reprodución sen conexión</string>
     <string name="unlimited_alarms">Alarmas ilimitadas</string>
     <string name="unlimited_alarms_desc">Aumenta a túa rutina matinal con Noice Premium: programa un número ilimitado de alarmas para comezar o día de xeito personalizado e tranquilo.</string>

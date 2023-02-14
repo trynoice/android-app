@@ -145,7 +145,7 @@
     <string name="confirming_payment">Підтвердження оплати</string>
     <string name="subscription_payment_confirmation_failed">Йой! Ми зіткнулися з проблемою під час підтвердження вашого платежу. Це може бути збій у мережі або затримка з боку платіжної системи. Запевняємо, що ми оновимо стан вашої передплати, як тільки отримаємо підтвердження про оплату. Будь ласка, перевірте ще раз пізніше!</string>
     <string name="non_looping_sound">Повторюється з випадковою затримкою</string>
-    <string name="has_premium_segments">Пропонує більше звукових кліпів з Noice Premium</string>
+    <string name="has_premium_segments">Пропонує більше аудіокліпів з Noice Premium</string>
     <string name="audio_quality_low">Низька (128 кбіт/с)</string>
     <string name="audio_quality_medium">Середня (192 кбіт/с)</string>
     <string name="audio_quality_high">Висока (256 кбіт/с)</string>
@@ -313,16 +313,16 @@
     <string name="no_purchases">Нічого не придбано</string>
     <string name="cancellation_and_refunds_policy">Перегляньте [політику платежів, скасувань і відшкодувань](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
     <string name="unlimited_alarms_desc">Забарвте свою ранкову рутину з Noice Premium - заплануйте необмежену кількість будильників для персоналізованого та спокійного початку дня.</string>
-    <string name="has_more_clips_with_premium">Цей звук пропонує більше звукових кліпів з Noice Premium.</string>
+    <string name="has_more_clips_with_premium">Цей звук пропонує більше аудіокліпів з Noice Premium.</string>
     <string name="more_sounds_desc">Розкрийте весь потенціал розслаблення та зосередження з Noice Premium з %1$s додатковими звуками.</string>
-    <string name="natural_variations_desc">Додайте новий вимір своєму прослуховуванню за допомогою кліпів, які створюють природні та різноманітні варіації, роблячи кожен звук унікальним і менш монотонним.</string>
+    <string name="natural_variations_desc">Оживіть свої звукові пейзажі за допомогою справжніх і природних звукових варіацій, створених на вимогу за допомогою нашої передової звукової технології.</string>
     <string name="more_sounds">Більше звуків</string>
-    <string name="more_sound_clips">Більше звукових кліпів</string>
-    <string name="more_sound_clips_desc">Відкрийте для себе новий світ звуку з нашими ексклюзивними додатковими звуковими кліпами, які підвищать рівень насиченості прослуховування.</string>
+    <string name="more_sound_clips">Більше аудіокліпів</string>
+    <string name="more_sound_clips_desc">Додайте новий вимір вашому прослуховуванню за допомогою додаткових аудіокліпів у звуках, щоб зробити їх унікальнішими та менш монотонними.</string>
     <string name="natural_variations">Природні варіації</string>
     <string name="hd_audio">HD аудіо</string>
     <string name="offline_playback">Офлайн відтворення</string>
     <string name="offline_playback_desc">Насолоджуйтесь заспокійливими звуками в будь-який час і в будь-якому місці, завантажуючи офлайн-звуки Noice - для відтворення з\'єднання з інтернетом не потрібне.</string>
     <string name="unlimited_alarms">Необмежена кількість будильників</string>
-    <string name="hd_audio_desc">Відчуйте шум, як ніколи раніше, з можливістю регулювання якості звуку до 320 кбіт/с, що забезпечує кришталево чистий, високоточний звук.</string>
+    <string name="hd_audio_desc">Відчуйте шум, як ніколи раніше, з можливістю прослуховування звуків у форматі MP3 з бітрейтом до 320 кбіт/с, що забезпечує кришталево чистий, високоточний звук.</string>
 </resources>

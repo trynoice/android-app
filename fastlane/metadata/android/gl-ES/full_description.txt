@@ -1,57 +1,59 @@
-Para moitas persoas, incluso algúns ruídos de fondo son útiles para manter a calma e a concentración. Nalgúns casos, tamén aumenta a produtividade e reduce os efectos do estrés e a ansiedade. O ruído de fondo tamén enmascara o tinnitus, calma os bebés axitados e mellora as experiencias de lectura e meditación.
+Para moitas persoas, incluso algúns ruídos de fondo son útiles para mantela calma e a concentración. Nalgúns casos, tamén aumentala produtividade e reduce os efectos do estrés e a ansiedade. O ruído de fondo tamén enmascara o tinnitus, relaxalos bebés axitados e melloralas experiencias de lectura e meditación.
 
-Noice é unha aplicación que permite crear ambientes sonoros personalizados. Permítelle combinar diferentes sons a diferentes niveis de volume para crear atmosferas ambientais perfectas. Estas paisaxes sonoras personalizadas permítenche afogar as distraccións e concentrarte. Tamén podes usalo para crear unha aura de serenidade e tranquilidade que che anime a relaxarte e adormecer.
+Noice é unha aplicación que permite crear ambientes sonoros personalizados. Permítelle combinar diferentes sons a diferentes niveis de volume para crear atmosferas perfectas. Estes ambientes de son personalizados permítenche afogar as distraccións e permítenche concentrarte. Tamén podes usalo para crear unha aura tranquila e pacífica que che anime a relaxarte e adormecer.
+
 
 <b>BENEFICIOS</b>
-• Reduce o teu estrés e ansiedade cun ambiente personalizado
-• Reláxate nun ambiente relaxante que elixas
+• Reducilo teu estrés e ansiedade utilizando un ambiente personalizado
+• Reláxate nun ambiente tranquilo que elixas
 • Aumente a súa produtividade substituíndo o ruído que distrae
-• Mellorar a concentración estando nun ambiente consistente
-• Axuda á túa experiencia de lectura e meditación con paisaxes sonoras naturais
+• Mellorala concentración atopando nunha boa atmosfera
+• Mellorala túa experiencia de lectura e meditación con sonidos naturais
 • Calma aos teus bebés con sons calmantes
-• Enmascarar o seu tinnitus con ruídos calmantes.
-• Bloquee as distraccións para relaxarse e durmir.
-• Alivialas túas xaquecas e dores de cabeza
-• Comezalos teus días cos sons máis suaves da natureza con alarmas conscientes
+• Enmascaralo seu tinnitus cun ruído calmante
+• Bloquee as distraccións para deitarse e durmir.
+• Comeza os teus días cos sons máis suaves da natureza cas alarmas
+• Calma as túas xaquecas e dores de cabeza
+
+<b>FUNCIÓNS GRATUITAS</b>
+• Rica biblioteca de sons
+• Google Cast ou Chromecast habilitado*
+• Temporizador automático de suspensión
+• Reloxo espertador con ata 2 alarmas activas
+• Fai e garda as túas mesturas personalizadas
+• Xerador de mesturas aleatorias para todolos teus estados de ánimo
+• Control do volume individual para cada son
+• Xoga cos sons que se atopan reproducindose
+• Usa as cores Material You Dynamic en Android 12L ou superior
+• Sen anuncios de ningún tipo
+
+<i>* Chromecast só está dispoñible cando baixas Noice do Google Play.</i>
 
 <b>FUNCIÓNS PREMIUM</b>
-• Sons máis longos con múltiples variantes/mostras
-• Síntese aleatoria de variacións naturais de sons, por exemplo, a intensidade da choiva variará co tempo
-• Reprodución sen conexión completa
+• Desbloquear arquivos de audio e sons adicionais
+• Variacións sonoras reais e naturais xeradas baixo demanda
+• Reprodución sen conexión
 • Son de ultra alta calidade para transmitir e descargar (ata 320 kbps)
 • Alarmas activas ilimitadas
 
-<b>FUNCIÓNS GRATUITAS</b>
-• Ampla biblioteca de sons
-• Compatible con Google Cast ou Chromecast*.
-• Temporizador automático de suspensión
-• Reloxo espertador con ata 2 alarmas activas
-• Crea e garda as túas mesturas personalizadas
-• Xerador de mesturas aleatorias que se adaptan ao teu estado de ánimo
-• Control de volume individual para cada son
-• Xoga xunto cun reprodutor de música en curso
-• Usalas cores dinámicas de Material You en Android 12L ou superior
-• Sen publicidade de ningún tipo
-
-<i>* Chromecast só está dispoñible cando descargas Voice de Google Play.</i>
-
-<b>FONOTECA</b>
-• Vida (paxaros, grilos, lobos, latido do corazón, ronroneo de gato)
-• O tempo (mañá ou amencer, noite, choiva, tronos)
-• Lugares (fogueira ou fogueira, cafetería, biblioteca, oficina, praia, ribeira, mergullo)
-• Viaxes (tren, avión, barco que rechina, coche eléctrico)
+<b>BIBLIOTECA DE SONS</b>
+• Vida (paxaros, grilos, lobos, latexos do corazón, gato ronroneando)
+• Tempo (mañá ou amencer, noite, choiva, trono)
+• Lugares (fogueira ou fogueiras, cafetería, biblioteca, oficina, praia, ribeira, mergullo)
+• Viaxes (tren, voo, barco chirriante, coche eléctrico)
 • Cousas (ventilador, reloxo de parede, campanas de vento)
 • Ruído bruto (branco, rosa, marrón)
 
-<b>PERMISOS DE APLICACIÓN</b>
-• <b>ver conexións de rede</b>: para transmitir e descargar son
-• <b>acceso completo á rede</b>: para comunicarse con servidores Noice, emisión de son e descarga
-• <b>executar ao iniciar</b>: para asegurarse de que as alarmas persistan durante os reinicios do dispositivo.
-• <b>evitar co dispositivo se durma</b>: para mantela CPU do dispositivo activa e ofrecer unha reprodución ininterrompida cando a pantalla se apaga.
+<b>PERMISOS DA APLICACIÓN</b>
+• <b>ollalas conexións a rede</b>: para transmitir e descargar sons
+• <b>acceso completo á rede</b>: para comunicarse cos servidores de Noice, transmitir e descargar sons
+• <b>executar ao iniciar</b>: para garantir cas alarmas persisten cando se reinicia o dispositivo
+• <b>evitar co dispositivo entre en suspensión</b>: para mantela CPU do dispositivo activa e ofrecer unha reprodución ininterrompida cando a pantalla se apaga.
 • <b>instalar atallos</b>: para engadir atallos predefinidos á pantalla de inicio
-• <b>executalo servizo en primeiro plano</b>: para a reprodución continua cando a aplicación está en segundo plano
-• <b>mostralas notificacións en pantalla completa nun dispositivo bloqueado</b>: para mostrala alerta cando se activa unha alarma
-• <b>control da vibración</b>: para facer vibralo dispositivo cando se activa unha alarma activada pola vibración
+• <b>executalo servizo en primeiro plano</b>: para a reprodución continua cando a aplicación atopase en segundo plano
+• <b>mostralas notificacións a pantalla enteira nun dispositivo bloqueado</b>: para mostrala alerta cando se activa unha alarma
+• <b>control da vibración</b>: para facer vibralo dispositivo cando se activa unha alarma
 
-Noice é un software de código aberto.
+
+Noice é de código aberto.
 https://github.com/trynoice/android-app
