@@ -310,4 +310,5 @@
     <string name="hd_audio_desc">以前所未有的方式体验白噪音，能够收听音质高达 320 kbps 的 MP3，呈现水晶般清晰，高保真的音频。</string>
     <string name="more_sound_clips">更多音频片段</string>
     <string name="more_sound_clips_desc">通过额外声音片段增加新聆听维度使它们更加独特和不那么单调。</string>
+    <string name="has_more_clips_with_premium">此声音在 Noice 高级版中提供更多更多音频片段。</string>
 </resources>
