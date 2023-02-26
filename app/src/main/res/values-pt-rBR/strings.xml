@@ -13,8 +13,8 @@
     <string name="dismiss">Dispensar</string>
     <string name="name">Nome</string>
     <string name="pause">Pausar</string>
-    <string name="preset_already_exists">Já existe uma predefinição com o nome fornecido!</string>
-    <string name="preset_name_cannot_be_empty">Uma predefinição não pode ter seu nome vazio!</string>
+    <string name="preset_already_exists">Já existe uma predefinição com o nome fornecido. Tente outro!</string>
+    <string name="preset_name_cannot_be_empty">O nome da predefinição está em falta. Por favor, insira um nome único!</string>
     <string name="preset_saved">Predefinição salva!</string>
     <string name="save">Salvar</string>
     <string name="save_preset">Salvar predefinição</string>
