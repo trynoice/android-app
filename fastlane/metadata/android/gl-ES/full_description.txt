@@ -1,7 +1,6 @@
-Para moitas persoas, incluso algúns ruídos de fondo son útiles para mantela calma e a concentración. Nalgúns casos, tamén aumentala produtividade e reduce os efectos do estrés e a ansiedade. O ruído de fondo tamén enmascara o tinnitus, relaxalos bebés axitados e melloralas experiencias de lectura e meditación.
+Para moitas persoas, incluso algúns ruídos de fondo son útiles para mantela calma e a concentración. Nalgúns casos, tamén aumentala produtividade e reduce os efectos do estrés e a ansiedade. O ruído de fondo tamén enmascara o tinnitus, relaxalos bebés axitados e melloralas experiencias de lectura e meditación. 
 
-Noice é unha aplicación que permite crear ambientes sonoros personalizados. Permítelle combinar diferentes sons a diferentes niveis de volume para crear atmosferas perfectas. Estes ambientes de son personalizados permítenche afogar as distraccións e permítenche concentrarte. Tamén podes usalo para crear unha aura tranquila e pacífica que che anime a relaxarte e adormecer.
-
+Noice é unha aplicación que permite crear ambientes sonoros personalizados. Permítelle combinar diferentes sons a diferentes niveis de volume para crear atmosferas perfectas. Estes ambientes de son personalizados permítenche afogar as distraccións e permítenche concentrarte. Tamén podes usalo para crear unha aura tranquila e pacífica que che anime a relaxarte e adormecer. 
 
 <b>BENEFICIOS</b>
 • Reducilo teu estrés e ansiedade utilizando un ambiente personalizado
@@ -52,8 +51,7 @@ Noice é unha aplicación que permite crear ambientes sonoros personalizados. Pe
 • <b>instalar atallos</b>: para engadir atallos predefinidos á pantalla de inicio
 • <b>executalo servizo en primeiro plano</b>: para a reprodución continua cando a aplicación atopase en segundo plano
 • <b>mostralas notificacións a pantalla enteira nun dispositivo bloqueado</b>: para mostrala alerta cando se activa unha alarma
-• <b>control da vibración</b>: para facer vibralo dispositivo cando se activa unha alarma
-
+• <b>control da vibración</b>: para facer vibralo dispositivo cando se activa unha alarma 
 
 Noice é de código aberto.
 https://github.com/trynoice/android-app
