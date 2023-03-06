@@ -2,4 +2,7 @@
 <resources>
   <integer name="default_fade_in_duration_seconds">5</integer>
   <integer name="default_fade_out_duration_seconds">5</integer>
+  <integer name="default_alarm_ringer_max_duration_minutes">18</integer>
+  <integer name="default_alarm_snooze_length_minutes">9</integer>
+  <integer name="default_alarm_gradually_increase_volume_minutes">1</integer>
 </resources>

@@ -15,7 +15,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -30,11 +29,11 @@ import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.engine.PlaybackState
 import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadsRefreshWorker
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showInfoSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
-import com.github.ashutoshgngwr.noice.ext.startCustomTab
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.models.SoundDownloadState
@@ -50,17 +49,12 @@ import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -103,29 +97,29 @@ class LibraryFragment : Fragment(), LibraryListItemController {
     binding.soundList.addItemDecoration(itemDecor)
     binding.soundList.adapter = adapter
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.isLibraryIconsEnabled.collect(adapter::setIconsEnabled)
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.libraryItems.collect(adapter::setLibraryItems)
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.playerStates.collect(adapter::setPlayerStates)
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.downloadStates.collect(adapter::setDownloadStates)
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.isSubscribed
         .map { !it }
         .collect(adapter::setSoundPremiumStatusEnabled)
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.isSavePresetButtonVisible.collect { isVisible ->
         if (isVisible) {
           binding.savePresetButton.show()
@@ -135,28 +129,22 @@ class LibraryFragment : Fragment(), LibraryListItemController {
       }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       requireContext().getInternetConnectivityFlow().collect { isConnected ->
         isConnectedToInternet = isConnected
       }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.transientErrorStrRes
+    viewLifecycleOwner.launchAndRepeatOnStarted {
+      viewModel.apiErrorStrRes
         .filterNotNull()
-        .filter { isConnectedToInternet } // suppress transient errors when offline.
-        .collect { causeStrRes ->
-          val msg = getString(R.string.library_load_error, getString(causeStrRes))
-          showErrorSnackBar(msg.normalizeSpace())
-        }
-    }
-
-    viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.persistentErrorStrRes
-        .filterNotNull()
-        .collect { causeStrRes ->
-          val msg = getString(R.string.library_load_error, getString(causeStrRes))
-          binding.errorContainer.message = msg.normalizeSpace()
+        .map { getString(R.string.library_load_error, getString(it)).normalizeSpace() }
+        .collect { message ->
+          if (adapter.itemCount == 0) {
+            binding.errorContainer.message = message
+          } else if (isConnectedToInternet) {
+            showErrorSnackBar(message, snackBarAnchorView())
+          }
         }
     }
 
@@ -181,7 +169,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
           viewModel.saveCurrentPreset(nameGetter.invoke())
-          showSuccessSnackBar(R.string.preset_saved)
+          showSuccessSnackBar(R.string.preset_saved, snackBarAnchorView())
           // maybe show in-app review dialog to the user
           reviewFlowProvider.maybeAskForReview(requireActivity())
         }
@@ -193,21 +181,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
       true
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
-      viewModel.isLibraryUpdated
-        .filter { it }
-        .collect {
-          DialogFragment.show(childFragmentManager) {
-            title(R.string.sound_library_updated)
-            message(R.string.sound_library_updated_message)
-            negativeButton(R.string.cancel)
-            positiveButton(R.string.review) {
-              requireContext().startCustomTab(R.string.sound_library_release_notes_url)
-            }
-          }
-        }
-    }
-
+    viewModel.loadLibrary()
     analyticsProvider.setCurrentScreen("library", LibraryFragment::class)
   }
 
@@ -231,7 +205,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
   override fun onSoundVolumeClicked(soundInfo: SoundInfo, playerState: PlayerState?) {
     if (playerState.isStopped) {
-      showInfoSnackBar(R.string.play_sound_before_adjusting_volume)
+      showInfoSnackBar(R.string.play_sound_before_adjusting_volume, snackBarAnchorView())
       return
     }
 
@@ -257,7 +231,8 @@ class LibraryFragment : Fragment(), LibraryListItemController {
     }
 
     SoundDownloadsRefreshWorker.addSoundDownload(requireContext(), soundInfo.id)
-    showSuccessSnackBar(getString(R.string.sound_scheduled_for_download, soundInfo.name))
+    getString(R.string.sound_scheduled_for_download, soundInfo.name)
+      .also { showSuccessSnackBar(it, snackBarAnchorView()) }
   }
 
   override fun onRemoveSoundDownloadClicked(soundInfo: SoundInfo) {
@@ -268,16 +243,24 @@ class LibraryFragment : Fragment(), LibraryListItemController {
       positiveButton(R.string.delete) {
         SoundDownloadsRefreshWorker.removeSoundDownload(requireContext(), soundInfo.id)
         getString(R.string.sound_download_scheduled_for_removal, soundInfo.name)
-          .also { showSuccessSnackBar(it) }
+          .also { showSuccessSnackBar(it, snackBarAnchorView()) }
       }
     }
   }
 
   override fun onPremiumStatusClicked(soundInfo: SoundInfo) {
     when {
-      soundInfo.isPremium -> showInfoSnackBar(R.string.sound_is_premium)
-      soundInfo.hasPremiumSegments -> showInfoSnackBar(R.string.has_premium_segments)
+      soundInfo.isPremium -> R.string.sound_is_premium
+      soundInfo.hasPremiumSegments -> R.string.has_more_clips_with_premium
+      else -> null
     }
+      ?.let { showInfoSnackBar(it, snackBarAnchorView()) }
+      ?.setAction(R.string.plans) { mainNavController.navigate(R.id.view_subscription_plans) }
+  }
+
+  private fun snackBarAnchorView(): View? {
+    return activity?.findViewById<View?>(R.id.playback_controller)
+      ?.takeIf { it.isVisible }
   }
 }
 
@@ -291,28 +274,28 @@ class LibraryViewModel @Inject constructor(
 ) : ViewModel() {
 
   private val soundInfosResource = MutableSharedFlow<Resource<List<SoundInfo>>>()
-  private val playerManagerState: StateFlow<PlaybackState> = playbackController
-    .getPlayerManagerState()
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PlaybackState.STOPPED)
+
+  val isPlaying: StateFlow<Boolean> = playbackController.getPlayerManagerState()
+    .map { !it.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
+    .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   internal val isSubscribed = subscriptionRepository.isSubscribed()
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   internal val playerStates: StateFlow<Array<PlayerState>> = playbackController.getPlayerStates()
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyArray())
+    .stateIn(viewModelScope, SharingStarted.Eagerly, emptyArray())
 
   internal val downloadStates: StateFlow<Map<String, SoundDownloadState>> = soundRepository
     .getDownloadStates()
-    .flowOn(Dispatchers.IO)
     // emit download states only when user owns an active subscription
     .combine(isSubscribed) { states, subscribed -> if (subscribed) states else emptyMap() }
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
+    .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
 
   val isLoading: StateFlow<Boolean> = soundInfosResource.transform { r ->
     emit(r is Resource.Loading)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
-  internal val libraryItems: StateFlow<List<LibraryListItem>> = soundInfosResource.transform { r ->
+  val libraryItems: StateFlow<List<LibraryListItem>> = soundInfosResource.transform { r ->
     var lastGroupId: String? = null
     val dataSet = mutableListOf<LibraryListItem>()
     r.data
@@ -328,54 +311,31 @@ class LibraryViewModel @Inject constructor(
       }
 
     emit(dataSet)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-  internal val transientErrorStrRes: Flow<Int?> = soundInfosResource.transform { r ->
-    emit(
-      when {
-        r.error == null || r.data == null -> null // show persistent error if there's no data
-        r.error is NetworkError -> R.string.network_error
-        else -> R.string.unknown_error
-      }
-    )
-  }
+  val apiErrorStrRes: StateFlow<Int?> = soundInfosResource.map { r ->
+    when (r.error) {
+      null -> null
+      is NetworkError -> R.string.network_error
+      else -> R.string.unknown_error
+    }
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
-  val persistentErrorStrRes: StateFlow<Int?> = soundInfosResource.transform { r ->
-    emit(
-      when {
-        r.error == null || r.data != null -> null // show transient error if data is available
-        r.error is NetworkError -> R.string.network_error
-        else -> R.string.unknown_error
-      }
-    )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-  internal val isSavePresetButtonVisible: StateFlow<Boolean> = combine(
-    playerManagerState,
+  val isSavePresetButtonVisible: StateFlow<Boolean> = combine(
+    isPlaying,
     playerStates,
     presetRepository.listFlow(),
-  ) { playerManagerState, playerStates, presets ->
-    !playerManagerState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED)
-      && presets.none { p -> p.hasMatchingPlayerStates(playerStates) }
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  ) { isPlaying, playerStates, presets ->
+    isPlaying && presets.none { p -> p.hasMatchingPlayerStates(playerStates) }
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   internal val isLibraryIconsEnabled: StateFlow<Boolean> = settingsRepository
     .shouldDisplaySoundIconsAsFlow()
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
-
-  internal val isLibraryUpdated: StateFlow<Boolean> = soundRepository.isLibraryUpdated()
-    .mapNotNull { it.data }
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
-
-  init {
-    loadLibrary()
-  }
+    .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   fun loadLibrary() {
     viewModelScope.launch {
-      soundRepository.listInfo()
-        .flowOn(Dispatchers.IO)
-        .collect(soundInfosResource)
+      soundRepository.listInfo().collect(soundInfosResource)
     }
   }
 

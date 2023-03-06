@@ -78,7 +78,7 @@ class SignInFormViewModel @Inject constructor(savedStateHandle: SavedStateHandle
     // maxLength: 64
     // minLength: 1
     emit(isReturningUser || (name.isNotBlank() && name.length <= 64))
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   val isEmailValid: StateFlow<Boolean> = email.transform { email ->
     // maxLength: 64
@@ -88,5 +88,5 @@ class SignInFormViewModel @Inject constructor(savedStateHandle: SavedStateHandle
         && email.length <= 64
         && Patterns.EMAIL_ADDRESS.matcher(email).matches()
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 }

@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.data
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -41,8 +42,8 @@ abstract class SubscriptionDao {
   abstract suspend fun getByRenewsAfter(after: Long): SubscriptionWithPlanDto?
 
   @Transaction
-  @Query("SELECT * FROM subscription WHERE startedAt IS NOT NULL ORDER BY startedAt DESC LIMIT :count OFFSET :offset")
-  abstract suspend fun listStarted(offset: Int, count: Int): List<SubscriptionWithPlanDto>
+  @Query("SELECT * FROM subscription WHERE startedAt IS NOT NULL ORDER BY startedAt DESC")
+  abstract fun pagingSource(): PagingSource<Int, SubscriptionWithPlanDto>
 
   @Query("SELECT * FROM subscription_plan WHERE (:provider IS NULL OR provider = :provider)")
   abstract suspend fun listPlans(provider: String? = null): List<SubscriptionPlanDto>

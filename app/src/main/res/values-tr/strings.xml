@@ -8,7 +8,6 @@
     <string name="presets">Kayıtlar</string>
     <string name="sleep_timer">Uyku Zamanlayıcı</string>
     <string name="support_development">Geliştiriciyi Destekle</string>
-    <string name="wake_up_timer">Uyandırma Zamanlayıcı</string>
     <string name="intensity">Çeşitlilik</string>
     <string name="okay">Tamam</string>
     <string name="random_preset">Rastgele kayıt</string>
@@ -42,13 +41,7 @@
     <string name="sleep_timer_description">
     Süre bittiğinde sesler kesilecektir. Zamanlamak için aşağıdaki tuşları kullanın.
   </string>
-    <string name="schedule">Zamanla</string>
     <string name="select_preset">Kayıt Seç</string>
-    <string name="wake_up_timer_cancelled">Uyandırma zamanlayıcısı iptal edildi!</string>
-    <string name="wake_up_timer_description">
-    Zamanı geldiğinde kayıt başlayacaktır. Kayıt seçmek ve zamanlamak için
-    aşağıdaki tuşları kullanın.
-  </string>
     <string name="app_theme_light">Açık</string>
     <string name="app_theme_dark">Koyu</string>
     <string name="app_theme_system_default">Sistem Varsayılanı</string>
@@ -95,16 +88,6 @@
     <string name="notification_channel_default__name">Arka Plan Oynatıcı</string>
     <string name="presets_as_home_screen_summary">Uygulama başlangıcında \"mevcut kayıtları\" göster (uygulamanın yeniden başlatılmasını gerektirir)</string>
     <string name="submit_feedback">Geri Bildirim Gönder</string>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d dakika</item>
-        <item quantity="other">%1$d dakika</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d saat</item>
-        <item quantity="other">%1$d saat</item>
-    </plurals>
-    <string name="time_bridge">ve</string>
-    <string name="wake_up_timer_schedule_set">Alarm %1$s %2$s %3$s içinde çalacak</string>
     <string name="app_shortcut_creation_failed">Kayıt, uygulama kısayollarına eklenemedi!</string>
     <string name="app_shortcut_created">Kayıt, uygulama kısayollarına eklendi!</string>
     <string name="app_shortcut_removed">Kayıt, uygulama kısayollarından kaldırıldı!</string>
@@ -204,7 +187,6 @@
     <string name="subscription_payment_cancelled">Abonelik ödemesi iptal edildi!</string>
     <string name="update_details">Ayrıntıları güncelle</string>
     <string name="plans">Planlar</string>
-    <string name="benefit_2">Çevrimdışı oynatma</string>
     <string name="select_a_plan">Bir plan seçin</string>
     <string name="confirming_payment">Ödeme onaylanıyor</string>
     <string name="subscription_purchases">Abonelik satın alımları</string>
@@ -213,7 +195,6 @@
         <item quantity="one">%1$d ay</item>
         <item quantity="other">%1$d ay</item>
     </plurals>
-    <string name="benefit_1">Yüksek kalitede ses akışı</string>
     <string name="cancelling_subscription">Abonelik iptal ediliyor</string>
     <string name="subscription_payment_confirmation_failed">Amanın! Ödeme onayını beklerken bir sorunla karşılaştık. Ağ hatası veya ödeme sağlayıcısındaki bir gecikmeden dolayı olabilir. Abonelik durumunu sağlayıcıdan bir cevap alır almaz güncelleyeceğiz. Lütfen abonelik durumunu bir süre sonra tekrar kontrol et.</string>
     <string name="ended_on">%1$s tarihinde bitti</string>
@@ -257,7 +238,6 @@
     <string name="privacy_policy">Gizlilik Politikası</string>
     <string name="account_details_update_error">Olamaz! Ayrıntılarınızı güncelleyemedik. %1$s Lütfen tekrar deneyin!</string>
     <string name="audio_quality_low">Düşük (128 kbps)</string>
-    <string name="benefit_0">Seslerde doğal değişimler</string>
     <string name="made_in_india">❤ ile Hindistan\'da yapılmıştır</string>
     <string name="delete_account_error">Olamaz! Hesabınızı silemedik. %1$s Lütfen tekrar deneyin!</string>
     <string name="audio_quality_ultra">Nihai (320 kbps)</string>
@@ -266,4 +246,5 @@
     <string name="terms_of_service">Hizmet Kullanım Şartları</string>
     <string name="gift_card_code">Hediye kart kodu</string>
     <string name="invalid_gift_card_code">Girilen hediye kart kodu geçersiz!</string>
+    <string name="sign_out_error">Olamaz! Hesaptan çıkışınızı yapamadık. %1$s Lütfen tekrar deneyin !</string>
 </resources>

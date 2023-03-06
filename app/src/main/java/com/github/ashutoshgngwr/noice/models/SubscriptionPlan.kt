@@ -20,24 +20,26 @@ data class SubscriptionPlan(
   /**
    * A formatted string representing total price of this plan.
    */
-  val totalPrice
-    get(): String = if (priceInRequestedCurrency != null && requestedCurrencyCode != null) {
+  fun totalPrice(preferLocalPricing: Boolean): String {
+    return if (preferLocalPricing && priceInRequestedCurrency != null && requestedCurrencyCode != null) {
       formatPrice(priceInRequestedCurrency, requestedCurrencyCode)
     } else {
       formatPrice(priceInIndianPaise / 100.0, "INR")
     }
+  }
 
   /**
    * A formatted string representing monthly price of this plan.
    */
-  val monthlyPrice
-    get(): String? = when {
-      billingPeriodMonths < 1 -> null
-      priceInRequestedCurrency != null && requestedCurrencyCode != null -> {
+  fun monthlyPrice(preferLocalPricing: Boolean): String {
+    return when {
+      billingPeriodMonths < 1 -> "N/A"
+      preferLocalPricing && priceInRequestedCurrency != null && requestedCurrencyCode != null -> {
         formatPrice(priceInRequestedCurrency / billingPeriodMonths, requestedCurrencyCode)
       }
       else -> formatPrice(priceInIndianPaise / (billingPeriodMonths * 100.0), "INR")
     }
+  }
 
   private fun formatPrice(price: Double, currencyCode: String): String {
     return NumberFormat.getCurrencyInstance()
@@ -106,4 +108,17 @@ fun SubscriptionPlan.toRoomDto(): SubscriptionPlanDto {
 
 fun List<SubscriptionPlan>.toRoomDto(): List<SubscriptionPlanDto> {
   return map { it.toRoomDto() }
+}
+
+fun ApiSubscriptionPlan.toRoomDto(): SubscriptionPlanDto {
+  return SubscriptionPlanDto(
+    id = id,
+    provider = provider,
+    billingPeriodMonths = billingPeriodMonths,
+    trialPeriodDays = trialPeriodDays,
+    priceInIndianPaise = priceInIndianPaise,
+    priceInRequestedCurrency = priceInRequestedCurrency,
+    requestedCurrencyCode = requestedCurrencyCode,
+    googlePlaySubscriptionId = googlePlaySubscriptionId,
+  )
 }

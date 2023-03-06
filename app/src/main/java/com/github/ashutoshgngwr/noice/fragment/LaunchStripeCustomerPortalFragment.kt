@@ -6,29 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.LaunchStripeCustomerPortalFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
-import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -44,7 +40,7 @@ class LaunchStripeCustomerPortalFragment : BottomSheetDialogFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.customerPortalUrl
         .filterNotNull()
         .collect { url ->
@@ -53,7 +49,7 @@ class LaunchStripeCustomerPortalFragment : BottomSheetDialogFragment() {
         }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.errorStrRes
         .filterNotNull()
         .map { getString(it) }
@@ -71,11 +67,12 @@ class LaunchStripeCustomerPortalViewModel @Inject constructor(
   subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
-  private val customerPortalUrlResource = MutableSharedFlow<Resource<String>>()
+  private val customerPortalUrlResource = subscriptionRepository.stripeCustomerPortalUrl()
+    .shareIn(viewModelScope, SharingStarted.Eagerly)
 
   internal val customerPortalUrl: StateFlow<String?> = customerPortalUrlResource.transform { r ->
     r.data?.also { emit(it) }
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal val errorStrRes: StateFlow<Int?> = customerPortalUrlResource.transform { r ->
     emit(
@@ -85,13 +82,5 @@ class LaunchStripeCustomerPortalViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-  init {
-    viewModelScope.launch {
-      subscriptionRepository.stripeCustomerPortalUrl()
-        .flowOn(Dispatchers.IO)
-        .collect(customerPortalUrlResource)
-    }
-  }
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 }

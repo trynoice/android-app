@@ -19,11 +19,9 @@ import com.github.ashutoshgngwr.noice.repository.errors.NotSignedInError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -69,7 +67,7 @@ class SignInLinkHandlerFragment : BottomSheetDialogFragment() {
       startActivity(
         Intent(requireContext(), MainActivity::class.java)
           .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-          .putExtra(MainActivity.EXTRA_NAV_DESTINATION, R.id.home_account)
+          .putExtra(MainActivity.EXTRA_HOME_DESTINATION, R.id.account)
       )
     }
 
@@ -101,7 +99,7 @@ class SignInLinkHandlerViewModel @Inject constructor(
 
   val isSigningIn: StateFlow<Boolean> = signInResource.transform { r ->
     emit(r is Resource.Loading)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   val signInErrorStrRes: StateFlow<Int?> = signInResource.transform { r ->
     emit(
@@ -112,7 +110,7 @@ class SignInLinkHandlerViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal fun signInWithToken(token: String) {
     if (isSigningIn.value) {
@@ -120,9 +118,7 @@ class SignInLinkHandlerViewModel @Inject constructor(
     }
 
     viewModelScope.launch {
-      accountRepository.signInWithToken(token)
-        .flowOn(Dispatchers.IO)
-        .collect(signInResource)
+      accountRepository.signInWithToken(token).collect(signInResource)
     }
   }
 }

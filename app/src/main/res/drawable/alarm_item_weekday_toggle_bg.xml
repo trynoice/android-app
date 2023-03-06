@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:enterFadeDuration="@android:integer/config_shortAnimTime" android:exitFadeDuration="@android:integer/config_shortAnimTime">
+
+  <item android:drawable="@drawable/alarm_item_weekday_toggle_bg_normal" android:state_checked="false" />
+  <item android:drawable="@drawable/alarm_item_weekday_toggle_bg_checked_activated" android:state_activated="true" android:state_checked="true" />
+  <item android:drawable="@drawable/alarm_item_weekday_toggle_bg_checked" android:state_activated="false" android:state_checked="true" />
+
+</selector>

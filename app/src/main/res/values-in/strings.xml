@@ -8,7 +8,6 @@
     <string name="presets">Prasetel</string>
     <string name="sleep_timer">Pengatur Waktu Tidur</string>
     <string name="support_development">Dukung Pengembangan</string>
-    <string name="wake_up_timer">Pengatur Waktu Bangun</string>
     <string name="okay">Oke</string>
     <string name="cancel">Batal</string>
     <string name="dismiss">Singkirkan</string>
@@ -38,9 +37,7 @@
     Noice akan mati sendiri ketika timer berakhir. Gunakan tombol di bawah untuk menambahkan waktu dan memulai
     pengatur waktu.
 </string>
-    <string name="schedule">Jadwal</string>
     <string name="select_preset">Pilih Preset</string>
-    <string name="wake_up_timer_description">Noice akan memulai preset yang dipilih pada waktu yang ditentukan. Gunakan kontrol di bawah ini untuk memilih prasetel dan mengatur waktu yang diinginkan untuk menjadwalkan penghitung waktu bangun.</string>
     <string name="app_theme_light">Terang</string>
     <string name="app_theme_dark">Gelap</string>
     <string name="app_theme_system_default">Sistem default</string>
@@ -85,17 +82,8 @@
     <string name="add_to_home_screen">Tambahkan di layar utama</string>
     <string name="random_preset">Preset Acak</string>
     <string name="submit_feedback">Masukan Feedback</string>
-    <string name="wake_up_timer_cancelled">Timer Wake-up terbatalkan!</string>
     <string name="presets_as_home_screen_summary">Tampilkan \"preset\" pada startup aplikasi (memerlukan restart aplikasi)</string>
     <string name="intensity">Intensitas</string>
-    <plurals name="time_minutes">
-        <item quantity="other">%1$d menit</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="other">%1$d jam</item>
-    </plurals>
-    <string name="time_bridge">dan</string>
-    <string name="wake_up_timer_schedule_set">Alarm akan mati dalam %1$s %2$s %3$s</string>
     <string name="unsaved_preset">Preset Belum Tersimpan</string>
     <string name="skip_to_next">Preset berikutnya</string>
     <string name="skip_to_prev">Preset sebelumnya</string>
@@ -228,13 +216,10 @@
     <string name="account_details_update_error">Oh tidak! Kami tidak dapat memperbarui detail Anda. %1$s Silakan coba lagi!</string>
     <string name="subscription_payment_complete">Terima kasih telah berlangganan Noice Premium. Langganan Anda sekarang aktif.</string>
     <string name="manage_subscription">Kelola Langganan</string>
-    <string name="benefit_2">Pemutaran offline</string>
     <string name="select_a_plan">Pilih paket</string>
-    <string name="benefit_0">Variasi alami dalam suara</string>
     <string name="looping_sound">Suara ini berputar dengan mulus.</string>
     <string name="subscription_initialisation_error">Ups! Kami tidak dapat memulai alur penagihan. %1$s Silakan coba lagi!</string>
     <string name="processing_payment">Memproses pembayaran</string>
-    <string name="benefit_1">Streaming audio berkualitas tinggi</string>
     <string name="sign_in_to_continue">Silakan masuk atau daftar untuk melanjutkan.</string>
     <string name="subscription_payment_cancelled">Pembayaran berlangganan dibatalkan!</string>
     <string name="renews_on">Diperbarui pada %1$s</string>
@@ -242,7 +227,6 @@
     <string name="ended_on">Berakhir pada %1$s</string>
     <string name="paid_using">Dibayar menggunakan %1$s</string>
     <string name="subscription_payment_refunded">Kami membatalkan pembelian ini dan memulai pengembalian dana.</string>
-    <string name="benefit_3">Suara yang lebih panjang dengan lebih banyak sampel</string>
     <string name="initialising_subscription">Memulai langganan</string>
     <string name="audio_quality_summary">Kualitas audio maksimum untuk streaming. Medium, High, dan Ultra hanya akan berfungsi jika Anda berlangganan Noice Premium.</string>
     <string name="redeem">Tebus</string>
@@ -267,9 +251,6 @@
     <string name="redeem_gift_card">Tebus kartu hadiah</string>
     <string name="gift_card_code">Kode kartu hadiah</string>
     <string name="reach_us">Kontak kami</string>
-    <string name="sound_library_updated">Pustaka Suara Diperbarui</string>
-    <string name="review">Ulasan</string>
-    <string name="benefit_4">%1$d suara tambahan</string>
     <string name="sound_is_premium">Suara ini hanya tersedia dengan Noice Premium.</string>
     <string name="playing">Memutar</string>
     <string name="loading">Memuat</string>
@@ -284,4 +265,9 @@
     <string name="notification_channel_sound_downloads__name">Unduhan Suara</string>
     <string name="sound_downloads_scheduled_for_removal">Semua unduhan suara telah berhasil dijadwalkan untuk penghilangan.</string>
     <string name="trial_period">Periode Percobaan: %1$s</string>
+    <string name="audio_quality_ultra">Ultra (320 kbps)</string>
+    <string name="preset_url_invalid">URL tidak valid!</string>
+    <string name="keywords">Kata kunci</string>
+    <string name="tags_load_error">Oh tidak! Kami tidak dapat membuka musik tersebut. %1$s Coba lagi!</string>
+    <string name="bi_yearly">Dua tahunan</string>
 </resources>

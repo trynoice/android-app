@@ -1,6 +1,6 @@
 package com.trynoice.api.client.apis
 
-import com.trynoice.api.client.auth.annotations.NeedsAccessToken
+import com.trynoice.api.client.annotations.InjectAccessToken
 import com.trynoice.api.client.models.GiftCard
 import com.trynoice.api.client.models.StripeCustomerPortalUrlResponse
 import com.trynoice.api.client.models.Subscription
@@ -76,7 +76,7 @@ interface SubscriptionApi {
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
-  @NeedsAccessToken
+  @InjectAccessToken
   @POST("/v2/subscriptions")
   suspend fun create(@Body params: SubscriptionFlowParams): SubscriptionFlowResponse
 
@@ -101,7 +101,7 @@ interface SubscriptionApi {
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
-  @NeedsAccessToken
+  @InjectAccessToken
   @GET("/v2/subscriptions")
   suspend fun list(
     @Query("onlyActive") onlyActive: Boolean = false,
@@ -127,7 +127,7 @@ interface SubscriptionApi {
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
-  @NeedsAccessToken
+  @InjectAccessToken
   @GET("/v2/subscriptions/{subscriptionId}")
   suspend fun get(
     @Path("subscriptionId") subscriptionId: Long,
@@ -150,7 +150,7 @@ interface SubscriptionApi {
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
-  @NeedsAccessToken
+  @InjectAccessToken
   @DELETE("/v1/subscriptions/{subscriptionId}")
   suspend fun cancel(@Path("subscriptionId") subscriptionId: Long)
 
@@ -167,7 +167,7 @@ interface SubscriptionApi {
    * @param code must not be blank.
    * @return the requested gift card.
    */
-  @NeedsAccessToken
+  @InjectAccessToken
   @GET("/v1/subscriptions/giftCards/{code}")
   suspend fun getGiftCard(@Path("code") code: String): GiftCard
 
@@ -186,7 +186,7 @@ interface SubscriptionApi {
    *
    * @param code must not be blank.
    */
-  @NeedsAccessToken
+  @InjectAccessToken
   @POST("/v2/subscriptions/giftCards/{code}/redeem")
   suspend fun redeemGiftCard(@Path("code") code: String)
 
@@ -203,7 +203,7 @@ interface SubscriptionApi {
    * @param returnUrl a not blank redirect URL for exiting the Stripe customer portal.
    * @return a response containing the Stripe Customer Portal URL.
    */
-  @NeedsAccessToken
+  @InjectAccessToken
   @GET("/v1/subscriptions/stripe/customerPortalUrl")
   suspend fun stripeCustomerPortalUrl(@Query("returnUrl") returnUrl: String): StripeCustomerPortalUrlResponse
 }

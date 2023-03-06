@@ -7,17 +7,15 @@ import com.github.ashutoshgngwr.noice.models.SoundSegment
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
+import java.util.*
 import kotlin.math.min
 import kotlin.math.pow
-import kotlin.random.Random
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -60,12 +58,13 @@ abstract class Player protected constructor(
   protected var fadeOutDuration = Duration.ZERO; private set
   protected var sound: Sound? = null; private set
   private var isPremiumSegmentsEnabled = false
+  private var masterVolume = 0f
   private var volume = DEFAULT_VOLUME
   private var segments = emptyList<SoundSegment>()
   private var currentSegment: SoundSegment? = null
   private var playbackState = PlaybackState.IDLE
   private var retryDelayMillis = MIN_RETRY_DELAY_MILLIS
-  private var isMetadataLoaded = false
+  private var metadataState = MetadataState.NOT_LOADED
 
   /**
    * Sets fade duration for fading-in sounds when the playback starts.
@@ -134,14 +133,10 @@ abstract class Player protected constructor(
       PlaybackState.STOPPED -> throw IllegalStateException("attempted to re-use a stopped player")
       PlaybackState.IDLE -> loadSoundMetadata()
       PlaybackState.BUFFERING, PlaybackState.PLAYING -> Unit
-      else -> {
-        // player may have transitioned to paused state while it was loading metadata. Restore
-        // buffering state in that case. Resume playback normally otherwise.
-        if (isMetadataLoaded) {
-          playInternal()
-        } else {
-          setPlaybackState(PlaybackState.BUFFERING)
-        }
+      else -> when (metadataState) {
+        MetadataState.NOT_LOADED -> loadSoundMetadata()
+        MetadataState.LOADING -> setPlaybackState(PlaybackState.BUFFERING) // may have transitioned to paused state while loading
+        MetadataState.LOADED -> playInternal()
       }
     }
   }
@@ -167,16 +162,28 @@ abstract class Player protected constructor(
    */
   abstract fun stop(immediate: Boolean)
 
+  fun setMasterVolume(volume: Float) {
+    setVolume(volume, this.volume)
+  }
+
   /**
    * Sets the volume of the player.
    *
    * @param volume must be in range [0, [MAX_VOLUME]].
    */
   fun setVolume(volume: Int) {
-    require(volume in 0..MAX_VOLUME) { "player volume must be in range [0, ${MAX_VOLUME}]" }
-    this.volume = volume
-    setVolumeInternal(getScaledVolume())
+    setVolume(masterVolume, volume)
     notifyPlaybackListener()
+  }
+
+  private fun setVolume(masterVolume: Float, volume: Int) {
+    require(masterVolume in 0.0..1.0) { "master volume must be in range [0, 1]" }
+    require(volume in 0..MAX_VOLUME) { "player volume must be in range [0, ${MAX_VOLUME}]" }
+    this.masterVolume = masterVolume
+    this.volume = volume
+    val scaledVolume = getScaledVolume()
+    Log.d(LOG_TAG, "setVolume: soundId=${soundId} scaled=$scaledVolume")
+    setVolumeInternal(scaledVolume)
   }
 
   /**
@@ -189,7 +196,7 @@ abstract class Player protected constructor(
    */
   protected fun getScaledVolume(): Float {
     // return 0.5f * log(max(1, volume).toFloat(), 5f) // logarithmic
-    return (0.04f * volume.toFloat()).pow(2) // quadratic
+    return (0.04f * masterVolume * volume).pow(2) // quadratic
     // return (0.04f * volume.toFloat()).pow(3) // cubic
   }
 
@@ -221,8 +228,8 @@ abstract class Player protected constructor(
   protected fun requestNextSegment() {
     defaultScope.launch {
       if (currentSegment != null && sound?.info?.isContiguous == false) {
-        val maxSilenceSeconds = requireNotNull(sound?.info?.maxSilence)
-        val silenceDuration = Random.nextInt(30, maxSilenceSeconds).toDuration(DurationUnit.SECONDS)
+        val silenceSeconds = 30 + RANDOM.nextInt(requireNotNull(sound?.info?.maxSilence) - 29)
+        val silenceDuration = silenceSeconds.toDuration(DurationUnit.SECONDS)
         Log.d(LOG_TAG, "requestNextSegment: adding $silenceDuration silence to non-looping sound.")
         delay(silenceDuration)
       }
@@ -256,19 +263,17 @@ abstract class Player protected constructor(
   protected abstract fun onSegmentAvailable(uri: String)
 
   private fun loadSoundMetadata() {
+    metadataState = MetadataState.LOADING
     setPlaybackState(PlaybackState.BUFFERING)
     defaultScope.launch {
       Log.d(LOG_TAG, "loadSoundMetadata: loading sound metadata for $soundId")
-      val resource = soundRepository.get(soundId)
-        .flowOn(Dispatchers.IO)
-        .lastOrNull()
-
+      val resource = soundRepository.get(soundId).lastOrNull()
       if (resource?.data != null) {
         Log.d(LOG_TAG, "loadSoundMetadata: loaded sound metadata for $soundId")
         retryDelayMillis = MIN_RETRY_DELAY_MILLIS
         sound = resource.data
         recreateSegmentList()
-        isMetadataLoaded = true
+        metadataState = MetadataState.LOADED
         if (playbackState == PlaybackState.BUFFERING) {
           Log.d(LOG_TAG, "loadSoundMetadata: starting playback")
           playInternal()
@@ -301,6 +306,9 @@ abstract class Player protected constructor(
     private const val MAX_RETRY_DELAY_MILLIS = 30 * 1000L
     internal const val DEFAULT_VOLUME = 20
     internal const val MAX_VOLUME = 25
+
+    // Kotlin's random implementation generates the same number in the beginning at each restart.
+    private val RANDOM = Random()
   }
 
   /**
@@ -326,5 +334,9 @@ abstract class Player protected constructor(
       defaultScope: CoroutineScope,
       playbackListener: PlaybackListener
     ): Player
+  }
+
+  private enum class MetadataState {
+    NOT_LOADED, LOADING, LOADED,
   }
 }

@@ -4,20 +4,19 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.trynoice.api.client.auth.AuthCredentialRepository
 import com.trynoice.api.client.models.AuthCredentials
 import com.trynoice.api.client.models.Profile
 import kotlinx.coroutines.test.runTest
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import retrofit2.HttpException
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE)
@@ -36,7 +35,12 @@ class NoiceApiClientTest {
 
     val context = ApplicationProvider.getApplicationContext<Context>()
     credentialRepository = AuthCredentialRepository(context)
-    apiClient = NoiceApiClient(context, gson, mockServer.url("").toString())
+    apiClient = NoiceApiClient(
+      context = context,
+      gson = gson,
+      apiBaseUrl = mockServer.url("").toString(),
+      cdnBaseUrl = mockServer.url("").toString(),
+    )
   }
 
   @After
@@ -141,5 +145,18 @@ class NoiceApiClientTest {
     assertEquals(false, apiClient.getSignedInState().value)
     assertNull(credentialRepository.getRefreshToken())
     assertNull(credentialRepository.getAccessToken())
+  }
+
+  @Test
+  fun acceptLanguageHeaderInjection() = runTest {
+    mockServer.enqueue(
+      MockResponse().setResponseCode(404) // too lazy to create library manifest json.
+    )
+
+    runCatching { apiClient.cdn().libraryManifest() }
+      .onFailure { assertTrue(it is HttpException) }
+
+    runCatching { mockServer.takeRequest() }
+      .onSuccess { assertFalse(it.getHeader("Accept-Language").isNullOrBlank()) }
   }
 }

@@ -3,4 +3,10 @@
   <dimen name="dialog_fragment_view_spacing">8dp</dimen>
   <dimen name="root_layout_padding">16dp</dimen>
   <dimen name="modal_layout_padding">24dp</dimen>
+  <dimen name="alarms_weekday_toggle_button_size">32dp</dimen>
+  <dimen name="sound_list_padding_extra_extended">220dp</dimen>
+  <dimen name="sound_list_padding_extended">148dp</dimen>
+  <dimen name="sound_list_padding_normal">88dp</dimen>
+  <dimen name="random_preset_fab_margin_normal">16dp</dimen>
+  <dimen name="random_preset_fab_margin_extended">76dp</dimen>
 </resources>

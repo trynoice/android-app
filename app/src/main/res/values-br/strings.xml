@@ -29,7 +29,6 @@
     <string name="support_development">Skoazellañ an Diorren</string>
     <string name="add_to_home_screen">Ouzhpennañ d\'ar skramm degemer</string>
     <string name="preset_delete_confirmation">Kadarnaat dilamidigezh %s \?</string>
-    <string name="wake_up_timer">Dihuner</string>
     <string name="submit_feedback">Kinnig ur Priziad</string>
     <string name="play">Lenn</string>
     <string name="dismiss">Nac\'hañ</string>
@@ -62,8 +61,6 @@
     <string name="support">Skoazell</string>
     <string name="i_understand">Kompren a ran.</string>
     <string name="back_online">Kennasket adarre</string>
-    <string name="schedule">Steuñviñ</string>
-    <string name="time_bridge">ha</string>
     <string name="unsaved_preset">Reolidenn non-enrollet</string>
     <string name="sign_in">En em loc\'hañ</string>
     <string name="welcome_back">Donemat adarre !</string>
@@ -73,28 +70,12 @@
     <string name="sign_up">Koumanantiñ</string>
     <string name="delete_account">Skarzhañ ar c\'hont</string>
     <string name="select_preset">Choaz ar reolidenn</string>
-    <string name="wake_up_timer_schedule_set">An dihuner da zistignañ \'barzh %1$s %2$s %3$s</string>
     <string name="support_development__donate">Donezon</string>
     <string name="share">Rannañ</string>
     <string name="export_presets">Ezporzhiañ en ur restr</string>
     <string name="signing_in">O loc\'hañ</string>
     <string name="cont">Kenderc\'hel</string>
     <string name="signing_out">O diloc\'hañ</string>
-    <string name="wake_up_timer_cancelled">Dihuner nullet !</string>
     <string name="appintro__chromecast_title">Chromecast gweredekaet</string>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d eurvezh</item>
-        <item quantity="two">%1$d eurvezh</item>
-        <item quantity="few">%1$d eurvezhioù</item>
-        <item quantity="many">%1$d eurvezhioù</item>
-        <item quantity="other">%1$d eurvezhioù</item>
-    </plurals>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d vunutenn</item>
-        <item quantity="two">%1$d munutennoù</item>
-        <item quantity="few">%1$d munutennoù</item>
-        <item quantity="many">%1$d munutennoù</item>
-        <item quantity="other">%1$d munutennoù</item>
-    </plurals>
-    <string name="email">Email</string>
+    <string name="email">Anvonerezh elektronek</string>
 </resources>

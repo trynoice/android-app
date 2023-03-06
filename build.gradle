@@ -18,6 +18,7 @@ plugins {
 project.ext {
   deps = [
     aboutLibrariesVersion: "${aboutLibrariesVersion}",
+    androidXCoreVersion  : '1.9.0',
     coroutinesVersion    : '1.6.4',
     hiltVersion          : "${hiltVersion}",
     kotlinVersion        : "${kotlinVersion}",
@@ -25,8 +26,8 @@ project.ext {
     navVersion           : "${navVersion}",
 
     junitVersion         : '4.13.2',
-    robolectricVersion   : '4.9',
-    testCoreVersion      : '1.4.0',
+    robolectricVersion   : '4.9.2',
+    testCoreVersion      : '1.5.0',
   ]
 }
 
@@ -37,11 +38,11 @@ subprojects {
     }
 
     android {
-      compileSdk 32
+      compileSdk 33
 
       defaultConfig {
         minSdk 21
-        targetSdk 32
+        targetSdk 33
       }
 
       compileOptions {
@@ -50,7 +51,6 @@ subprojects {
       }
 
       kotlinOptions {
-        useIR = true
         jvmTarget = '1.8'
         freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
       }

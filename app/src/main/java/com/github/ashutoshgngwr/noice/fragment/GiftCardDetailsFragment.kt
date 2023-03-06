@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.GiftCardDetailsFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.models.GiftCard
@@ -23,16 +23,13 @@ import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
-import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -60,7 +57,7 @@ class GiftCardDetailsFragment : BottomSheetDialogFragment() {
       mainNavController.navigate(R.id.redeem_gift_card, args.toBundle())
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.giftCard
         .filterNotNull()
         .map { it.hourCredits }
@@ -73,7 +70,7 @@ class GiftCardDetailsFragment : BottomSheetDialogFragment() {
         }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.errStrRes
         .filterNotNull()
         .map { getString(it) }
@@ -91,15 +88,17 @@ class GiftCardDetailsViewModel @Inject constructor(
   subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
-  private val giftCardResource = MutableSharedFlow<Resource<GiftCard>>()
+  private val giftCardResource = GiftCardDetailsFragmentArgs.fromSavedStateHandle(savedStateHandle)
+    .let { subscriptionRepository.getGiftCard(it.giftCardCode) }
+    .shareIn(viewModelScope, SharingStarted.Eagerly)
 
   val isLoading: StateFlow<Boolean> = giftCardResource.transform { r ->
     emit(r is Resource.Loading)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
   val giftCard: StateFlow<GiftCard?> = giftCardResource.transform { r ->
     emit(r.data)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal val errStrRes: StateFlow<Int?> = giftCardResource.transform { r ->
     emit(
@@ -110,14 +109,5 @@ class GiftCardDetailsViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-  init {
-    val args = GiftCardDetailsFragmentArgs.fromSavedStateHandle(savedStateHandle)
-    viewModelScope.launch {
-      subscriptionRepository.getGiftCard(args.giftCardCode)
-        .flowOn(Dispatchers.IO)
-        .collect(giftCardResource)
-    }
-  }
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 }

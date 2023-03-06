@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import com.github.ashutoshgngwr.noice.data.models.AlarmDto
 import com.github.ashutoshgngwr.noice.data.models.LibraryUpdateTimeDto
 import com.github.ashutoshgngwr.noice.data.models.ProfileDto
 import com.github.ashutoshgngwr.noice.data.models.SoundGroupDto
@@ -28,10 +29,11 @@ import java.util.*
     SoundTagCrossRef::class,
     SoundSourceDto::class,
     LibraryUpdateTimeDto::class,
+    AlarmDto::class,
   ],
   version = 1,
 )
-@TypeConverters(AppTypeConverters::class)
+@TypeConverters(AppDatabaseTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
 
   abstract fun profile(): ProfileDao
@@ -39,9 +41,11 @@ abstract class AppDatabase : RoomDatabase() {
   abstract fun subscriptions(): SubscriptionDao
 
   abstract fun sounds(): SoundDao
+
+  abstract fun alarms(): AlarmDao
 }
 
-class AppTypeConverters {
+class AppDatabaseTypeConverters {
 
   @TypeConverter
   fun fromTimestamp(value: Long?): Date? {

@@ -14,8 +14,13 @@
     <argument
       android:name="navDestination"
       android:defaultValue="0"
-      app:argType="reference"
-      app:nullable="false" />
+      app:argType="reference" />
+
+    <argument
+      android:name="navDestinationArgs"
+      android:defaultValue="@null"
+      app:argType="android.os.Bundle"
+      app:nullable="true" />
 
     <action
       android:id="@+id/sign_in_form"
@@ -347,45 +352,17 @@
     tools:layout="@layout/appintro_intro_layout" />
 
   <action
-    android:id="@+id/home_presets"
-    app:destination="@id/home"
-    app:popUpTo="@id/home"
-    app:popUpToInclusive="true">
-
-    <argument
-      android:name="navDestination"
-      android:defaultValue="@id/presets" />
-
-  </action>
-
-  <action
-    android:id="@+id/home_wake_up_timer"
-    app:destination="@id/home"
-    app:popUpTo="@id/home"
-    app:popUpToInclusive="true">
-
-    <argument
-      android:name="navDestination"
-      android:defaultValue="@id/wake_up_timer" />
-
-  </action>
-
-  <action
-    android:id="@+id/home_account"
-    app:destination="@id/home"
-    app:popUpTo="@id/home"
-    app:popUpToInclusive="true">
-
-    <argument
-      android:name="navDestination"
-      android:defaultValue="@id/account" />
-
-  </action>
-
-  <action
     android:id="@id/subscription_purchase_list"
     app:destination="@id/subscription_purchase_list"
     app:popUpTo="@id/subscription_purchase_list"
+    app:popUpToInclusive="true" />
+
+  <!-- on navigating to the home fragment again but with different args, a second entry is added to
+  the backstack. We don't want that! -->
+  <action
+    android:id="@id/home"
+    app:destination="@id/home"
+    app:popUpTo="@id/home"
     app:popUpToInclusive="true" />
 
 </navigation>

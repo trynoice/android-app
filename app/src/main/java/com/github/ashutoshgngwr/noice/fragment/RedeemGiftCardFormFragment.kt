@@ -47,5 +47,5 @@ class RedeemGiftCardFormViewModel : ViewModel() {
 
   val isCodeValid: StateFlow<Boolean> = code.transform { code ->
     emit(code.isNotBlank() && code.length <= 32)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 }

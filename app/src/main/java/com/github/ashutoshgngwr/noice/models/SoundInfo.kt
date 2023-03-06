@@ -85,12 +85,12 @@ data class SoundSource(
   val url: String,
   val license: String,
   val author: SoundSourceAuthor? = null,
-)
+) : Serializable
 
 data class SoundSourceAuthor(
   val name: String,
   val url: String,
-)
+) : Serializable
 
 
 fun SoundInfoDto.toDomainEntity(): SoundInfo {

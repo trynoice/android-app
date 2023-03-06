@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.AlarmClock
 import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +15,6 @@ import androidx.core.os.bundleOf
 import androidx.core.os.postDelayed
 import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -26,8 +26,10 @@ import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadsRefreshWorker
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.fragment.DonationPurchasedCallbackFragmentArgs
+import com.github.ashutoshgngwr.noice.fragment.HomeFragmentArgs
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragmentArgs
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
@@ -44,7 +46,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -52,12 +53,16 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   companion object {
     /**
-     * [EXTRA_NAV_DESTINATION] declares the key for intent extra value passed to [MainActivity] for
-     * setting the current destination on the [NavController]. The value for this extra should be an
-     * id resource representing the action/destination id present in the [main][R.navigation.main]
-     * navigation graph.
+     * If set, the activity navigates to the given destination in the home fragment. The value is a
+     * reference id to a destination inside the home navigation graph.
      */
-    internal const val EXTRA_NAV_DESTINATION = "nav_destination"
+    internal const val EXTRA_HOME_DESTINATION = "homeDestination"
+
+    /**
+     * If set, the activity uses the given value as navigation args to the destination specified by
+     * [EXTRA_HOME_DESTINATION]. The value is a [Bundle].
+     */
+    internal const val EXTRA_HOME_DESTINATION_ARGS = "homeDestinationArgs"
 
     @VisibleForTesting
     internal const val PREF_HAS_SEEN_DATA_COLLECTION_CONSENT = "has_seen_data_collection_consent"
@@ -135,7 +140,7 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
   }
 
   private fun initOfflineIndicator() {
-    lifecycleScope.launch {
+    launchAndRepeatOnStarted {
       getInternetConnectivityFlow().collect { isConnected ->
         if (isConnected) {
           hideOfflineIndicator()
@@ -195,37 +200,49 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
     }
 
     hasNewIntent = false
-    if (intent.hasExtra(EXTRA_NAV_DESTINATION)) {
-      navController.navigate(intent.getIntExtra(EXTRA_NAV_DESTINATION, 0))
-    } else if (Intent.ACTION_APPLICATION_PREFERENCES == intent.action) {
-      navController.navigate(R.id.settings)
-    }
+    val dataString = intent.dataString ?: ""
+    when {
+      intent.hasExtra(EXTRA_HOME_DESTINATION) -> {
+        val args = HomeFragmentArgs(
+          navDestination = intent.getIntExtra(EXTRA_HOME_DESTINATION, 0),
+          navDestinationArgs = intent.getBundleExtra(EXTRA_HOME_DESTINATION_ARGS),
+        ).toBundle()
 
-    val uri = intent.data
-    if (Intent.ACTION_VIEW == intent.action && uri != null) {
-      val data = intent.dataString ?: ""
-      when {
-        data.startsWith("https://trynoice.com/preset") || data.startsWith("noice://preset") -> {
-          val preset = presetRepository.readFromUrl(data)
-          if (preset != null) {
-            playbackController.play(preset)
-          } else {
-            SnackBar.error(binding.mainNavHostFragment, R.string.preset_url_invalid)
-              .setAnchorView(findSnackBarAnchorView())
-              .show()
-          }
-        }
+        navController.navigate(R.id.home, args)
+      }
 
-        SubscriptionBillingCallbackFragment.canHandleUri(data) -> {
-          navController.navigate(
-            R.id.subscription_billing_callback,
-            SubscriptionBillingCallbackFragment.args(uri),
-          )
-        }
+      Intent.ACTION_APPLICATION_PREFERENCES == intent.action -> {
+        navController.navigate(R.id.settings)
+      }
 
-        SubscriptionPurchaseListFragment.URI == data -> {
-          navController.navigate(R.id.subscription_purchase_list)
+      AlarmClock.ACTION_SHOW_ALARMS == intent.action -> {
+        navController.navigate(R.id.home, HomeFragmentArgs(R.id.alarms).toBundle())
+      }
+
+      Intent.ACTION_VIEW == intent.action &&
+        (dataString.startsWith("https://trynoice.com/preset") ||
+          dataString.startsWith("noice://preset")) -> {
+
+        val preset = presetRepository.readFromUrl(dataString)
+        if (preset != null) {
+          playbackController.play(preset)
+        } else {
+          SnackBar.error(binding.mainNavHostFragment, R.string.preset_url_invalid)
+            .setAnchorView(findSnackBarAnchorView())
+            .show()
         }
+      }
+
+      Intent.ACTION_VIEW == intent.action &&
+        SubscriptionBillingCallbackFragment.canHandleUri(dataString) -> {
+
+        intent.data
+          ?.let { SubscriptionBillingCallbackFragment.args(it) }
+          ?.also { navController.navigate(R.id.subscription_billing_callback, it) }
+      }
+
+      Intent.ACTION_VIEW == intent.action && SubscriptionPurchaseListFragment.URI == dataString -> {
+        navController.navigate(R.id.subscription_purchase_list)
       }
     }
   }
@@ -253,8 +270,7 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
         R.id.donation_purchased_callback,
         DonationPurchasedCallbackFragmentArgs(purchase).toBundle()
       )
-    } else if (purchase.obfuscatedAccountId != null) {
-      // TODO: how to distinguish between subscription upgrade purchases and new subscription purchases?
+    } else if (purchase.obfuscatedAccountId?.toLongOrNull() != null) {
       navController.navigate(
         R.id.subscription_billing_callback,
         SubscriptionBillingCallbackFragmentArgs(

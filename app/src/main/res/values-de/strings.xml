@@ -8,7 +8,6 @@
     <string name="presets">Voreinstellungen</string>
     <string name="sleep_timer">Einschlaftimer</string>
     <string name="support_development">Unterstütze die Entwicklung</string>
-    <string name="wake_up_timer">Aufwach-Timer</string>
     <string name="submit_feedback">Feedback abgeben</string>
     <string name="intensity">Intensität</string>
     <string name="okay">Ok</string>
@@ -43,14 +42,7 @@
     <string name="auto_sleep_schedule_cancelled">Automatischer Schlaftimer abgebrochen!</string>
     <string name="reset">Zurücksetzen</string>
     <string name="sleep_timer_description">Noice schaltet sich automatisch nach Ablauf des Timers aus. Nutze die Knöpfe weiter unten, um dem Timer Zeit hinzuzufügen oder abzuziehen.</string>
-    <string name="schedule">Zeitplan</string>
     <string name="select_preset">Wähle eine Voreinstellung aus</string>
-    <string name="wake_up_timer_cancelled">Aufwach Wecker gelöscht!</string>
-    <string name="wake_up_timer_description">
-    Noice startet die ausgewählte Voreinstellung wenn der Timer endet. Nutze die Knöpfe weiter unten,
-    um eine Voreinstellung auszusuchen und die gewünschte Länge bis zum Start des Aufwach-Timers
-    hinzuzufügen.
-  </string>
     <string name="app_theme_light">Hell</string>
     <string name="app_theme_dark">Dunkel</string>
     <string name="app_theme_system_default">Systemstandard</string>
@@ -92,16 +84,6 @@
     <string name="never">Nie</string>
     <string name="notification_channel_default__description">Steuerung der Medienwiedergabe</string>
     <string name="notification_channel_default__name">Medienwiedergabe</string>
-    <string name="wake_up_timer_schedule_set">Der Alarm wird in %1$s %2$s %3$s ausgelöst</string>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d Minute</item>
-        <item quantity="other">%1$d Minuten</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d Stunde</item>
-        <item quantity="other">%1$d Stunden</item>
-    </plurals>
-    <string name="time_bridge">und</string>
     <string name="app_shortcut_creation_failed">Das Hinzufügen der Voreinstellung zu Anwendungsverknüpfungen ist fehlgeschlagen!</string>
     <string name="remove_from_app_shortcuts">Aus Anwendungsverknüpfungen entfernen</string>
     <string name="add_to_app_shortcuts">Zu Anwendungsverknüpfungen hinzufügen</string>
@@ -184,13 +166,12 @@
     <string name="mailbox_app_not_found">Oh, oh! Wir konnten keine Mailbox-App auf Ihrem Gerät finden!</string>
     <string name="invalid_email">Die eingegebene E-Mail ist ungültig!</string>
     <string name="view_subscription_plans">Pläne ansehen</string>
-    <string name="app">App</string>
+    <string name="app">Anwendung</string>
     <string name="subscription_payment_confirmation_failed">Oje! Wir hatten Probleme beim Warten auf die Zahlungsbestätigung. Möglicherweise handelt es sich um einen Netzwerkfehler oder eine Verzögerung durch den Zahlungsanbieter. Wir werden Ihren Abonnementstatus aktualisieren, sobald wir vom Anbieter hören. Bitte überprüfen Sie den Status Ihres Abonnements nach einiger Zeit.</string>
     <string name="payment_processing_error">Oh-oh! Wir konnten deine Zahlung nicht verarbeiten. Der Betrag sollte automatisch zurückerstattet werden, falls er abgerechnet wurde. Wenn du in der nächsten Woche keine Rückerstattung bekommst, bitte gib uns Bescheid.</string>
     <string name="back_online">Wieder online</string>
     <string name="account_details_update_success">Deine Account-Informationen wurden erfolgreich aktualisiert.</string>
     <string name="yearly">Jährlich</string>
-    <string name="benefit_2">Offline Wiedergabe</string>
     <string name="get_premium">Holen Sie sich Premium</string>
     <string name="monthly_price">%1$s pro Monat</string>
     <string name="benefits">Vorteile</string>
@@ -200,11 +181,9 @@
     <string name="confirming_payment">Bestätige Zahlung</string>
     <string name="subscription_payment_cancelled">Die Zahlung des Abonnements wurde storniert!</string>
     <string name="quarterly">Vierteljährlich</string>
-    <string name="benefit_1">Audio streaming in hoher Qualität</string>
     <string name="offline">Du bist offline</string>
     <string name="premium">Premium</string>
     <string name="random_preset_description">Die erzeugte Voreinstellung enthält wahrscheinlich Klänge mit den gewählten Schlüsselwörtern. Außerdem wird bei intensiven Voreinstellungen versucht, mehrere Sounds gleichzeitig abzuspielen.</string>
-    <string name="benefit_0">Natürliche Variationen von Klängen</string>
     <string name="sign_in_to_continue">Bitte logge dich ein oder erstelle ein Konto um fortzufahren.</string>
     <string name="duplicate_email_error">Die eingegebene E-Mail ist bereits mit einem anderen Konto verknüpft.</string>
     <string name="remove_sound_download_confirmation">Bestätigen Sie das Entfernen eines für die Offline-Wiedergabe heruntergeladenen Tons\?</string>
@@ -250,7 +229,7 @@
     <string name="privacy_policy">Datenschutzbestimmungen</string>
     <string name="support">Unterstützung</string>
     <string name="non_looping_sound">Dieser Sound enthält zwischendrin Pausen.</string>
-    <string name="has_premium_segments">Dieser Sound hat Premium-Komponenten.</string>
+    <string name="has_premium_segments">Dieser Sound bietet mit Noice Premium zusätzliche Varianten.</string>
     <string name="change_plan">Plan ändern</string>
     <string name="pausing">Pausiere</string>
     <string name="renews_on">Erneuert sich am %1$s</string>
@@ -272,7 +251,7 @@
     <string name="subscription_initialisation_error">Huch! Wir konnten den Abrechnungsvorgang nicht starten. %1$s Bitte versuchen Sie es erneut!</string>
     <string name="preset_url_invalid">Die voreingestellte URL scheint ungültig zu sein!</string>
     <string name="sign_up_tos">Wenn Sie fortfahren, erklären Sie sich mit unseren [Nutzungsbedingungen](https://trynoice.com/terms-of-service) und [Datenschutzbestimmungen](https://trynoice.com/privacy-policy) einverstanden.</string>
-    <string name="audio_quality_ultra">Ultra (320 kbps)</string>
+    <string name="audio_quality_ultra">Ultra (320 kbit/s)</string>
     <string name="audio_quality_high">Hoch (256 kbps)</string>
     <string name="ended_on">Endete am %1$s</string>
     <string name="audio_quality_summary">Die maximale Audioqualität für das Streaming. Medium, High und Ultra funktionieren nur, wenn Sie Noice Premium abonniert haben.</string>
@@ -292,7 +271,6 @@
     <string name="app_license">Lizenziert unter GNU GPL-3.0</string>
     <string name="gift_card_details">Beim Einlösen dieses Geschenkgutscheins erhalten Sie das Premium-Abonnement bis %1$s.</string>
     <string name="remove_all_sound_downloads_confirmation">Dadurch werden alle für die Offline-Wiedergabe heruntergeladenen Sounds entfernt. Möchten Sie fortfahren\?</string>
-    <string name="showing_localised_prices">Preise umgerechnet von [INR](https://en.wikipedia.org/wiki/Indian_rupee). Tatsächliche Preise können leicht abweichen.</string>
     <string name="use_material_you_colors">Verwenden Sie Material You Farben</string>
     <string name="notification_channel_sound_downloads__name">Sound-Downloads</string>
     <string name="checking_sound_downloads">Überprüfen von Sound-Downloads</string>
@@ -301,11 +279,55 @@
     <string name="remove_all_sound_downloads">Alle Sound-Downloads entfernen</string>
     <string name="sound_downloads_scheduled_for_removal">Alle Sound-Downloads wurden erfolgreich für die Entfernung geplant.</string>
     <string name="use_material_you_colors_summary">Vererbung der Material You-Farbpalette aus dem Android-System</string>
-    <string name="benefit_3">Längere Töne mit mehr Proben</string>
     <string name="play_sound_before_adjusting_volume">Sie müssen diesen Ton abspielen, bevor Sie seine Lautstärke einstellen können.</string>
     <string name="trial_period">Probezeit: %1$s</string>
     <plurals name="n_days">
         <item quantity="one">%1$d Tag</item>
         <item quantity="other">%1$d Tage</item>
     </plurals>
+    <string name="sound_is_premium">Dieser Sound ist mit Noice Premium verfügbar.</string>
+    <string name="alarms">Alarme</string>
+    <string name="add_alarm">Einen Alarm hinzufügen</string>
+    <string name="no_alarms">Keine Alarme</string>
+    <string name="alarm_permission_rationale_title">Noice erlauben, Alarme zu planen</string>
+    <string name="no_alarms_description">Fügen Sie einen neuen Alarm hinzu, indem Sie auf die Schaltfläche + tippen!</string>
+    <string name="alarm">Alarm</string>
+    <string name="snooze">Schlummern</string>
+    <string name="alarm_missed">Alarm verpasst</string>
+    <string name="no_purchases">Keine Käufe</string>
+    <string name="no_presets">Keine Voreinstellungen</string>
+    <string name="master_volume">Hauptlautstärke</string>
+    <string name="alarm_gradually_increase_volume">Alarmlautstärke schrittweise erhöhen</string>
+    <string name="post_notifications_permission_rationale_title">Erlaube Noice Benachrichtigungen anzuzeigen</string>
+    <string name="vibrate">Vibrieren</string>
+    <string name="not_scheduled">Nicht geplant</string>
+    <string name="notification_channel_alarm_priming__name">Alarm-Priming</string>
+    <string name="alarm_ringer_max_duration">Erinnerungsdauer</string>
+    <string name="alarm_permission_rationale_description">Wir benötigen zusätzlichen Zugriff um Alarme auf deinem Gerät zu planen.
+\n
+\nBitte aktiviere **Alarme und Erinnerungen** für Noice in seinen Anwendungsdetails in deinen Geräteeinstellungen.</string>
+    <string name="post_notifications_permission_rationale_description">Wir benötigen zusätzliche Rechte um Benachrichtigungen für geplante Alarme zu zeigen. Noice kann ohne Benachrichtigungen keine Alarme zur geplanten Zeit läuten lassen.</string>
+    <string name="proceed">Fortfahren</string>
+    <string name="alarm_post_notifications_permission_denied">Noice kann ohne die Erlaubnis Benachrichtigungen anzuzeigen keine Alarme läuten lassen!</string>
+    <string name="add_label">Label hinzufügen</string>
+    <string name="sunday_initial">S</string>
+    <string name="monday_initial">M</string>
+    <string name="tuesday_initial">D</string>
+    <string name="wednesday_initial">M</string>
+    <string name="thursday_initial">D</string>
+    <string name="friday_initial">F</string>
+    <string name="saturday_initial">S</string>
+    <string name="edit_label">Label bearbeiten</string>
+    <string name="notification_channel_alarm_primary__name">Alarme</string>
+    <string name="notification_channel_alarm_primary__description">Benachrichtigungen werden angezeigt sobald ein geplanter Alarm läutet.</string>
+    <string name="notification_channel_alarm_priming__description">Benachrichtigungen, die angezeigt werden, sobald das Läuten eines geplanten Alarms vorbereitet wird.</string>
+    <string name="alarm_ringer_preset_load_error">Die ausgewählten Voreinstellungen für diesen Alarm konnten nicht geladen werden.</string>
+    <string name="alarms_disabled_due_to_subscription_expiration">Wir mussten ein paar Alarme deaktivieren, da dein Noice Premium Abo abgelaufen ist!</string>
+    <string name="alarm_ringer_max_duration_summary">Zeitdauer in Minuten nach der die Alarmerinnerung automatisch gestummt wird</string>
+    <string name="notification_channel_missed_alarms__name">Verpasste Alarme</string>
+    <string name="cancellation_and_refunds_policy">Siehe [payments, cancellations and refunds policy](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
+    <string name="alarm_snooze_length">Schlummerlänge</string>
+    <string name="alarm_snooze_length_summary">Zeitdauer in Minuten für Schlummeralarme</string>
+    <string name="notification_channel_missed_alarms__description">Benachrichtigungen, die angezeigt werden, wenn geplante Alarme nach Ablauf der Erinnerungsdauer gestummt werden.</string>
+    <string name="alarm_gradually_increase_volume_summary">Dauer in Minuten für die schrittweise Erhöhung der Lautstärke bei Auslösung eines Alarms</string>
 </resources>

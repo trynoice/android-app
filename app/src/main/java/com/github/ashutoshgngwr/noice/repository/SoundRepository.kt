@@ -3,8 +3,8 @@ package com.github.ashutoshgngwr.noice.repository
 import android.net.Uri
 import android.util.Log
 import androidx.room.withTransaction
+import com.github.ashutoshgngwr.noice.AppDispatchers
 import com.github.ashutoshgngwr.noice.data.AppDatabase
-import com.github.ashutoshgngwr.noice.data.models.LibraryUpdateTimeDto
 import com.github.ashutoshgngwr.noice.data.models.SoundMetadataDto
 import com.github.ashutoshgngwr.noice.data.models.SoundSegmentDto
 import com.github.ashutoshgngwr.noice.data.models.SoundSourceDto
@@ -25,6 +25,7 @@ import com.trynoice.api.client.NoiceApiClient
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -38,6 +39,7 @@ class SoundRepository @Inject constructor(
   private val appDb: AppDatabase,
   private val downloadIndex: DownloadIndex,
   private val gson: Gson,
+  private val appDispatchers: AppDispatchers,
 ) {
 
   /**
@@ -141,25 +143,21 @@ class SoundRepository @Inject constructor(
   )
 
   /**
-   * Returns a [Flow] that emits a map of CDN paths (relative to `library-manifest.json`) to
-   * their md5sums as a [Resource].
-   *
-   * On failures, the flow emits [Resource.Failure] with:
-   * - [NetworkError] on network errors.
-   *
-   * @see fetchNetworkBoundResource
-   * @see Resource
+   * @return a map of CDN paths (relative to `library-manifest.json`) to their md5sums.
+   * @throws NetworkError on failing the load the resource from the network.
+   * @throws retrofit2.HttpException on unexpected HTTP server errors.
    */
-  fun getMd5sums(): Flow<Resource<Map<String, String>>> = fetchNetworkBoundResource(
-    loadFromNetwork = { apiClient.cdn().md5sums() },
-    loadFromNetworkErrorTransform = { e ->
+  suspend fun getMd5sums(): Map<String, String> {
+    try {
+      return apiClient.cdn().md5sums()
+    } catch (e: Throwable) {
       Log.i(LOG_TAG, "getMd5sums:", e)
-      when (e) {
+      throw when (e) {
         is IOException -> NetworkError
         else -> e
       }
-    },
-  )
+    }
+  }
 
   /**
    * Returns a flow that actively polls ExoPlayer's [DownloadIndex] and emits a map of sound ids
@@ -187,95 +185,79 @@ class SoundRepository @Inject constructor(
       downloads.close()
       delay(1000L)
     }
-  }
+  }.flowOn(appDispatchers.io) // downloadIndex is blocking.
 
-  /**
-   * Returns a flow that emits `true` if the sound library was updated since the last check.
-   */
-  fun isLibraryUpdated(): Flow<Resource<Boolean>> = fetchNetworkBoundResource(
-    loadFromNetwork = {
-      val oldUpdatedAt = appDb.sounds().getLibraryUpdateTime()
-      val newUpdatedAt = apiClient.cdn().libraryManifest().updatedAt
-      appDb.sounds().saveLibraryUpdateTime(LibraryUpdateTimeDto(newUpdatedAt))
-      oldUpdatedAt != null && oldUpdatedAt < newUpdatedAt
-    },
-    loadFromNetworkErrorTransform = { e ->
-      Log.i(LOG_TAG, "isLibraryUpdated:", e)
-      when (e) {
-        is IOException -> NetworkError
-        else -> e
-      }
-    }
-  )
-
-  private suspend fun loadLibraryManifestInCacheStore(): Unit = appDb.withTransaction {
+  private suspend fun loadLibraryManifestInCacheStore() {
     val manifest = apiClient.cdn().libraryManifest()
     val groups = manifest.groups.associate { it.id to it.toRoomDto() }
     val tags = manifest.tags.toRoomDto()
-    appDb.sounds().saveGroups(groups.values.toList())
-    appDb.sounds().saveTags(tags)
 
-    manifest.sounds.forEach { apiSound ->
-      appDb.sounds().saveMetadata(
-        SoundMetadataDto(
-          id = apiSound.id,
-          groupId = apiSound.groupId,
-          name = apiSound.name,
-          iconSvg = Uri.decode(apiSound.icon.removePrefix("data:image/svg+xml,")),
-          maxSilence = apiSound.maxSilence,
-          isPremium = apiSound.segments.none { it.isFree },
-          hasPremiumSegments = apiSound.segments.any { !it.isFree }
-        )
-      )
+    appDb.withTransaction {
+      appDb.sounds().saveGroups(groups.values.toList())
+      appDb.sounds().saveTags(tags)
 
-      val segmentsBasePath = "${manifest.segmentsBasePath}/${apiSound.id}"
-      for (apiSegment in apiSound.segments) {
-        appDb.sounds().saveSegment(
-          SoundSegmentDto(
-            soundId = apiSound.id,
-            name = apiSegment.name,
-            basePath = "${segmentsBasePath}/${apiSegment.name}",
-            isFree = apiSegment.isFree,
-            isBridgeSegment = false,
-            from = null,
-            to = null,
+      manifest.sounds.forEach { apiSound ->
+        appDb.sounds().saveMetadata(
+          SoundMetadataDto(
+            id = apiSound.id,
+            groupId = apiSound.groupId,
+            name = apiSound.name,
+            iconSvg = Uri.decode(apiSound.icon.removePrefix("data:image/svg+xml,")),
+            maxSilence = apiSound.maxSilence,
+            isPremium = apiSound.segments.none { it.isFree },
+            hasPremiumSegments = apiSound.segments.any { !it.isFree }
           )
         )
 
-        if (apiSound.maxSilence > 0) {
-          continue
-        }
-
-        for (toApiSegment in apiSound.segments) {
-          val bridgeName = "${apiSegment.name}_${toApiSegment.name}"
+        val segmentsBasePath = "${manifest.segmentsBasePath}/${apiSound.id}"
+        for (apiSegment in apiSound.segments) {
           appDb.sounds().saveSegment(
             SoundSegmentDto(
               soundId = apiSound.id,
-              name = bridgeName,
-              isFree = apiSegment.isFree && toApiSegment.isFree,
-              isBridgeSegment = true,
-              from = apiSegment.name,
-              to = toApiSegment.name,
-              basePath = "${segmentsBasePath}/${bridgeName}",
+              name = apiSegment.name,
+              basePath = "${segmentsBasePath}/${apiSegment.name}",
+              isFree = apiSegment.isFree,
+              isBridgeSegment = false,
+              from = null,
+              to = null,
             )
           )
-        }
 
-        apiSound.tags.map { SoundTagCrossRef(apiSound.id, it) }
-          .also { appDb.sounds().saveSoundTagCrossRefs(it) }
+          if (apiSound.maxSilence > 0) {
+            continue
+          }
 
-        appDb.sounds().saveSources(
-          apiSound.sources.map { apiSource ->
-            SoundSourceDto(
-              soundId = apiSound.id,
-              name = apiSource.name,
-              url = apiSource.url,
-              license = apiSource.license,
-              authorName = apiSource.author?.name,
-              authorUrl = apiSource.author?.url,
+          for (toApiSegment in apiSound.segments) {
+            val bridgeName = "${apiSegment.name}_${toApiSegment.name}"
+            appDb.sounds().saveSegment(
+              SoundSegmentDto(
+                soundId = apiSound.id,
+                name = bridgeName,
+                isFree = apiSegment.isFree && toApiSegment.isFree,
+                isBridgeSegment = true,
+                from = apiSegment.name,
+                to = toApiSegment.name,
+                basePath = "${segmentsBasePath}/${bridgeName}",
+              )
             )
           }
-        )
+
+          apiSound.tags.map { SoundTagCrossRef(apiSound.id, it) }
+            .also { appDb.sounds().saveSoundTagCrossRefs(it) }
+
+          appDb.sounds().saveSources(
+            apiSound.sources.map { apiSource ->
+              SoundSourceDto(
+                soundId = apiSound.id,
+                name = apiSource.name,
+                url = apiSource.url,
+                license = apiSource.license,
+                authorName = apiSource.author?.name,
+                authorUrl = apiSource.author?.url,
+              )
+            }
+          )
+        }
       }
     }
   }

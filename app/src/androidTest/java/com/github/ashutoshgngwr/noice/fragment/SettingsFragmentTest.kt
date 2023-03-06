@@ -9,9 +9,8 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
 import com.github.ashutoshgngwr.noice.HiltFragmentScenario
 import com.github.ashutoshgngwr.noice.R
@@ -23,19 +22,19 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
+import io.mockk.unmockkAll
 import io.mockk.verify
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
 import javax.inject.Inject
 
 @HiltAndroidTest
-@RunWith(AndroidJUnit4::class)
 class SettingsFragmentTest {
 
   @get:Rule
@@ -52,8 +51,14 @@ class SettingsFragmentTest {
   @Before
   fun setup() {
     hiltRule.inject()
+    mockkStatic(ShortcutManagerCompat::class)
     mockPresetRepository = mockk()
     fragmentScenario = launchFragmentInHiltContainer()
+  }
+
+  @After
+  fun tearDown() {
+    unmockkAll()
   }
 
   @Test
@@ -102,7 +107,6 @@ class SettingsFragmentTest {
 
   @Test
   fun testRemoveAllAppShortcuts() {
-    mockkStatic(ShortcutManagerCompat::class)
     onView(withId(androidx.preference.R.id.recycler_view))
       .perform(
         RecyclerViewActions.actionOnItem<androidx.preference.PreferenceViewHolder>(
@@ -110,7 +114,8 @@ class SettingsFragmentTest {
         )
       )
 
-    EspressoX.onViewInDialog(withId(R.id.positive))
+    onView(withId(R.id.positive))
+      .inRoot(isDialog())
       .perform(click())
 
     verify(exactly = 1) { ShortcutManagerCompat.removeAllDynamicShortcuts(any()) }
@@ -140,7 +145,8 @@ class SettingsFragmentTest {
           )
         )
 
-      EspressoX.onViewInDialog(withText(themes[i]))
+      onView(withText(themes[i]))
+        .inRoot(isDialog())
         .check(matches(isDisplayed()))
         .perform(click())
 

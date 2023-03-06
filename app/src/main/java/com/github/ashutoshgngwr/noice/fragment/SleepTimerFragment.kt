@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SleepTimerFragmentBinding
@@ -62,7 +63,7 @@ class SleepTimerFragment : Fragment() {
     if (duration < 0) { // duration picker reset
       playbackController.clearScheduledAutoStop()
       analyticsProvider.logEvent("sleep_timer_cancel", bundleOf())
-      showInfoSnackBar(R.string.auto_sleep_schedule_cancelled)
+      showInfoSnackBar(R.string.auto_sleep_schedule_cancelled, snackBarAnchorView())
     } else {
       remaining = playbackController.getStopScheduleRemainingMillis()
       remaining += duration
@@ -75,5 +76,10 @@ class SleepTimerFragment : Fragment() {
     binding.countdownView.startCountdown(remaining)
     // maybe show in-app review dialog to the user
     reviewFlowProvider.maybeAskForReview(requireActivity())
+  }
+
+  private fun snackBarAnchorView(): View? {
+    return activity?.findViewById<View?>(R.id.playback_controller)
+      ?.takeIf { it.isVisible }
   }
 }

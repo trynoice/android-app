@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  style="?attr/materialCardViewFilledStyle"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_margin="8dp"
+  android:clickable="true"
+  android:focusable="true"
+  app:contentPadding="16dp"
+  app:shapeAppearanceOverlay="?attr/shapeAppearanceCornerExtraLarge">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/expand_toggle"
+      style="?attr/materialIconButtonOutlinedStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:minHeight="0dp"
+      android:padding="4dp"
+      app:icon="@drawable/ic_round_keyboard_arrow_down_24"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:rotation="180" />
+
+    <TextView
+      android:id="@+id/label"
+      style="@style/Widget.App.Alarms.TextView.Clickable"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="8dp"
+      android:hint="@string/add_label"
+      android:textColor="@drawable/alarm_item_activable_text_color"
+      app:drawableStartCompat="@drawable/ic_outline_label_24"
+      app:drawableTint="@drawable/alarm_item_activable_text_color"
+      app:layout_constraintEnd_toStartOf="@id/expand_toggle"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+      android:id="@+id/time"
+      style="@style/Widget.App.Alarms.TextView.Clickable"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="4dp"
+      android:paddingVertical="0dp"
+      android:textAppearance="?attr/textAppearanceDisplaySmall"
+      android:textColor="@drawable/alarm_item_activable_text_color"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/label"
+      tools:text="12:00" />
+
+    <TextView
+      android:id="@+id/next_trigger"
+      style="@style/Widget.App.Alarms.TextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="8dp"
+      android:paddingVertical="4dp"
+      android:textColor="@drawable/alarm_item_activable_text_color"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/time"
+      tools:text="Tomorrow" />
+
+    <com.github.ashutoshgngwr.noice.widget.MaterialSwitchFix
+      android:id="@+id/enable_switch"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="8dp"
+      app:layout_constraintBottom_toBottomOf="@id/next_trigger"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="@id/next_trigger" />
+
+    <com.google.android.flexbox.FlexboxLayout
+      android:id="@+id/schedule_toggle_container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="8dp"
+      android:clipToPadding="false"
+      android:padding="4dp"
+      app:flexDirection="row"
+      app:flexWrap="nowrap"
+      app:justifyContent="space_between"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/enable_switch">
+
+      <ToggleButton
+        android:id="@+id/sunday_toggle"
+        style="@style/Widget.App.Alarms.WeekDayToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sunday_initial" />
+
+      <ToggleButton
+        android:id="@+id/monday_toggle"
+        style="@style/Widget.App.Alarms.WeekDayToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/monday_initial" />
+
+      <ToggleButton
+        android:id="@+id/tuesday_toggle"
+        style="@style/Widget.App.Alarms.WeekDayToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tuesday_initial" />
+
+      <ToggleButton
+        android:id="@+id/wednesday_toggle"
+        style="@style/Widget.App.Alarms.WeekDayToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wednesday_initial" />
+
+      <ToggleButton
+        android:id="@+id/thursday_toggle"
+        style="@style/Widget.App.Alarms.WeekDayToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/thursday_initial" />
+
+      <ToggleButton
+        android:id="@+id/friday_toggle"
+        style="@style/Widget.App.Alarms.WeekDayToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/friday_initial" />
+
+      <ToggleButton
+        android:id="@+id/saturday_toggle"
+        style="@style/Widget.App.Alarms.WeekDayToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/saturday_initial" />
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <TextView
+      android:id="@+id/preset"
+      style="@style/Widget.App.Alarms.TextView.Clickable"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginVertical="12dp"
+      app:drawableStartCompat="@drawable/ic_round_notifications_active_24"
+      app:layout_constraintTop_toBottomOf="@id/schedule_toggle_container"
+      tools:text="@string/random_preset" />
+
+    <CheckedTextView
+      android:id="@+id/vibrate"
+      style="@style/Widget.App.Alarms.TextView.Clickable"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/vibrate"
+      app:drawableEndCompat="@drawable/checked_text_view_indicator"
+      app:drawableStartCompat="@drawable/ic_round_vibration_24"
+      app:layout_constraintTop_toBottomOf="@id/preset" />
+
+    <TextView
+      android:id="@+id/delete"
+      style="@style/Widget.App.Alarms.TextView.Clickable"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/delete"
+      app:drawableStartCompat="@drawable/ic_round_delete_forever_24"
+      app:layout_constraintTop_toBottomOf="@id/vibrate" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

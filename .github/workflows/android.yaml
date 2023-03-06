@@ -94,18 +94,17 @@ jobs:
 
   app-ui-tests:
     name: App UI tests
-    if: ${{ false }} # TODO: disabled until app ui tests are fixed.
     runs-on: macos-latest
     timeout-minutes: 60
     strategy:
       matrix:
         include:
-          - android: 28
-            target: default
-            gradleTask: :app:createFreeDebugCoverageReport
-          - android: 28
-            target: google_apis
-            gradleTask: :app:createFullDebugCoverageReport
+          - android: 30
+            target: aosp_atd
+            appVariant: FreeDebug
+          - android: 30
+            target: google_atd
+            appVariant: FullDebug
       fail-fast: false
     steps:
       - uses: actions/checkout@v3
@@ -114,16 +113,16 @@ jobs:
           distribution: temurin
           java-version: ${{ env.JAVA_VERSION }}
           cache: gradle
+      - run: ./gradlew :app:assemble${{ matrix.appVariant }}AndroidTest # build before starting the emulator.
       - uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.android }}
           target: ${{ matrix.target }}
-          arch: x86_64
-          ram-size: 3072M
-          script: ./scripts/run-ui-tests.sh ${{ matrix.gradleTask }}
+          arch: x86
+          script: ./scripts/run-ui-tests.sh :app:create${{ matrix.appVariant }}CoverageReport
           emulator-options: >-
-            -no-boot-anim -no-audio -no-snapshot -no-window -camera-back none
-            -camera-front none -gpu swiftshader_indirect
+            -camera-back none -camera-front none -gpu swiftshader_indirect
+            -memory 3000 -no-audio -no-boot-anim -no-snapshot -no-window
       - uses: codecov/codecov-action@v3
         with:
           flags: app
@@ -136,8 +135,7 @@ jobs:
       - lint
       - api-client-unit-tests
       - app-unit-tests
-      # TODO: disabled until app tests are fixed.
-      # - app-ui-tests
+      - app-ui-tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -173,8 +171,7 @@ jobs:
       - lint
       - api-client-unit-tests
       - app-unit-tests
-      # TODO: Disabled until app tests are fixed.
-      # - app-ui-tests
+      - app-ui-tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
@@ -199,12 +196,12 @@ jobs:
       - id: tag_info
         run: |
           export TAG_NAME="${GITHUB_REF/'refs/tags/'/''}"
-          export TAG_BODY="$(git tag  --list --format='%(contents:body)' $TAG_NAME)"
-          export TAG_BODY="${TAG_BODY//'%'/'%25'}"
-          export TAG_BODY="${TAG_BODY//$'\n'/'%0A'}"
-          export TAG_BODY="${TAG_BODY//$'\r'/'%0D'}"
-          echo "::set-output name=name::${TAG_NAME}"
-          echo "::set-output name=body::${TAG_BODY}"
+          {
+            echo "name=$TAG_NAME";
+            echo "body<<EOF";
+            git tag  --list --format='%(contents:body)' $TAG_NAME;
+            echo "EOF";
+          } >> "$GITHUB_OUTPUT"
       - uses: softprops/action-gh-release@v1
         with:
           token: ${{ secrets.BOT_PAT }}

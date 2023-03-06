@@ -1,6 +1,7 @@
 package com.trynoice.api.client.apis
 
-import com.trynoice.api.client.auth.annotations.NeedsAccessToken
+import com.trynoice.api.client.annotations.InjectAcceptLanguageHeader
+import com.trynoice.api.client.annotations.InjectAccessToken
 import com.trynoice.api.client.models.LibraryManifest
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -25,6 +26,7 @@ interface CdnApi {
    * @throws retrofit2.HttpException on HTTP errors.
    * @throws java.io.IOException on network errors.
    */
+  @InjectAcceptLanguageHeader
   @GET("/library/library-manifest.json")
   suspend fun libraryManifest(): LibraryManifest
 
@@ -55,7 +57,7 @@ interface CdnApi {
    *
    * @param resourcePath absolute path of the resource on the CDN server.
    */
-  @NeedsAccessToken
+  @InjectAccessToken
   @Streaming
   @GET
   fun resource(@Url resourcePath: String): Call<ResponseBody>

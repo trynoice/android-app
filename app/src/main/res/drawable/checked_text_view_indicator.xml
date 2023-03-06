@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:enterFadeDuration="@android:integer/config_shortAnimTime" android:exitFadeDuration="@android:integer/config_shortAnimTime">
+
+  <item android:drawable="@drawable/ic_baseline_radio_button_unchecked_24" android:state_checked="false" />
+  <item android:drawable="@drawable/ic_round_check_circle_24" android:state_checked="true" />
+
+</selector>

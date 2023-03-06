@@ -20,18 +20,7 @@
     <string name="app_theme_system_default">システム設定のデフォルト</string>
     <string name="app_theme_dark">ダーク</string>
     <string name="app_theme_light">ライト</string>
-    <string name="wake_up_timer_description">タイマーが終了後、Noiceは選択されたプリセットを再生します。下のボタンでプリセットを選択し、起床タイマーを開始する時間を設定してください。</string>
-    <plurals name="time_minutes">
-        <item quantity="other">%1$d 分</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="other">%1$d 時間</item>
-    </plurals>
-    <string name="time_bridge"> </string>
-    <string name="wake_up_timer_schedule_set">アラームは %1$s %2$s %3$s 後に鳴ります</string>
-    <string name="wake_up_timer_cancelled">起床タイマーがキャンセルされました!</string>
     <string name="select_preset">プリセットを選択</string>
-    <string name="schedule">スケジュール設定</string>
     <string name="sleep_timer_description">Noiceはタイマー終了時にアプリ自体をシャットダウンします。下のボタンで時間を追加してタイマーを開始できます。</string>
     <string name="reset">リセット</string>
     <string name="auto_sleep_schedule_cancelled">自動スリープタイマーがキャンセルされました!</string>
@@ -62,7 +51,6 @@
     <string name="okay">OK</string>
     <string name="intensity">音の多さ</string>
     <string name="submit_feedback">意見を送信する</string>
-    <string name="wake_up_timer">起床タイマー</string>
     <string name="support_development">開発を支援する</string>
     <string name="sleep_timer">スリープタイマー</string>
     <string name="presets">プリセット</string>
@@ -125,4 +113,5 @@
     <string name="import_presets_successful">ファイルからプリセットをインポートしました!</string>
     <string name="export_presets_successful">プリセットがファイルに保存されました!</string>
     <string name="enable_media_buttons">メデイアボタンを有効化</string>
+    <string name="email">電子メール</string>
 </resources>

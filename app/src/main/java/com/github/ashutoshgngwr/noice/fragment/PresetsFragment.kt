@@ -13,19 +13,19 @@ import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.WakeUpTimerManager
-import com.github.ashutoshgngwr.noice.activity.ShortcutHandlerActivity
+import com.github.ashutoshgngwr.noice.activity.PresetShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.databinding.PresetsFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.PresetsListItemBinding
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
 import com.github.ashutoshgngwr.noice.model.Preset
@@ -40,7 +40,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
-import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.min
@@ -53,9 +52,6 @@ class PresetsFragment : Fragment(), PresetListItemController {
 
   @set:Inject
   internal lateinit var presetRepository: PresetRepository
-
-  @set:Inject
-  internal lateinit var wakeUpTimerManager: WakeUpTimerManager
 
   @set:Inject
   internal lateinit var playbackController: PlaybackController
@@ -80,15 +76,15 @@ class PresetsFragment : Fragment(), PresetListItemController {
     val itemDecor = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
     binding.list.addItemDecoration(itemDecor)
     viewModel.loadAppShortcuts(requireContext())
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.presets.collect(adapter::setPresets)
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.presetsWithAppShortcut.collect(adapter::setPresetsWithAppShortcut)
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.activePresetId.collect(adapter::setActivePresetId)
     }
 
@@ -127,13 +123,8 @@ class PresetsFragment : Fragment(), PresetListItemController {
           playbackController.stop()
         }
 
-        // cancel wake-up timer if it is set to the deleted preset.
-        if (preset.id == wakeUpTimerManager.get()?.presetID) {
-          wakeUpTimerManager.cancel()
-        }
-
         ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
-        showSuccessSnackBar(R.string.preset_deleted)
+        showSuccessSnackBar(R.string.preset_deleted, snackBarAnchorView())
 
         params.putBoolean("success", true)
         reviewFlowProvider.maybeAskForReview(requireActivity()) // maybe show in-app review dialog to the user
@@ -171,7 +162,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
 
   override fun onCreatePinnedShortcutClicked(preset: Preset) {
     if (!ShortcutManagerCompat.isRequestPinShortcutSupported(requireContext())) {
-      showErrorSnackBar(R.string.pinned_shortcuts_not_supported)
+      showErrorSnackBar(R.string.pinned_shortcuts_not_supported, snackBarAnchorView())
       return
     }
 
@@ -179,9 +170,9 @@ class PresetsFragment : Fragment(), PresetListItemController {
     val result =
       ShortcutManagerCompat.requestPinShortcut(requireContext(), info, null)
     if (!result) {
-      showErrorSnackBar(R.string.pinned_shortcut_creation_failed)
+      showErrorSnackBar(R.string.pinned_shortcut_creation_failed, snackBarAnchorView())
     } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-      showSuccessSnackBar(R.string.pinned_shortcut_created)
+      showSuccessSnackBar(R.string.pinned_shortcut_created, snackBarAnchorView())
     }
 
     val params = bundleOf("success" to result, "shortcut_type" to "pinned")
@@ -193,9 +184,9 @@ class PresetsFragment : Fragment(), PresetListItemController {
     list.add(buildShortcutInfo(preset.id, "app", preset))
     val result = ShortcutManagerCompat.addDynamicShortcuts(requireContext(), list)
     if (result) {
-      showSuccessSnackBar(R.string.app_shortcut_created)
+      showSuccessSnackBar(R.string.app_shortcut_created, snackBarAnchorView())
     } else {
-      showErrorSnackBar(R.string.app_shortcut_creation_failed)
+      showErrorSnackBar(R.string.app_shortcut_creation_failed, snackBarAnchorView())
     }
 
     viewModel.loadAppShortcuts(requireContext())
@@ -205,7 +196,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
 
   override fun onRemoveAppShortcutClicked(preset: Preset) {
     ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
-    showSuccessSnackBar(R.string.app_shortcut_removed)
+    showSuccessSnackBar(R.string.app_shortcut_removed, snackBarAnchorView())
     viewModel.loadAppShortcuts(requireContext())
     analyticsProvider.logEvent("preset_shortcut_remove", bundleOf("shortcut_type" to "app"))
   }
@@ -215,16 +206,21 @@ class PresetsFragment : Fragment(), PresetListItemController {
       setShortLabel(preset.name)
       setIcon(IconCompat.createWithResource(requireContext(), R.mipmap.ic_preset_shortcut))
       setIntent(
-        Intent(requireContext(), ShortcutHandlerActivity::class.java)
+        Intent(requireContext(), PresetShortcutHandlerActivity::class.java)
           .setAction(Intent.ACTION_VIEW)
           .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-          .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_ID, id)
-          .putExtra(ShortcutHandlerActivity.EXTRA_SHORTCUT_TYPE, type)
-          .putExtra(ShortcutHandlerActivity.EXTRA_PRESET_ID, preset.id)
+          .putExtra(PresetShortcutHandlerActivity.EXTRA_SHORTCUT_ID, id)
+          .putExtra(PresetShortcutHandlerActivity.EXTRA_SHORTCUT_TYPE, type)
+          .putExtra(PresetShortcutHandlerActivity.EXTRA_PRESET_ID, preset.id)
       )
 
       build()
     }
+  }
+
+  private fun snackBarAnchorView(): View? {
+    return activity?.findViewById<View?>(R.id.playback_controller)
+      ?.takeIf { it.isVisible }
   }
 }
 
@@ -235,18 +231,18 @@ class PresetsViewModel @Inject constructor(
 ) : ViewModel() {
 
   internal val presets: StateFlow<List<Preset>> = presetRepository.listFlow()
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
   internal val activePresetId: StateFlow<String?> =
     combine(presets, playbackController.getPlayerStates()) { presets, playerStates ->
       presets.find { p -> p.hasMatchingPlayerStates(playerStates) }?.id
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal val presetsWithAppShortcut = MutableStateFlow(emptySet<String>())
 
   val isEmptyIndicatorVisible: StateFlow<Boolean> = presets.transform { presets ->
     emit(presets.isEmpty())
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
   internal fun loadAppShortcuts(context: Context) {
     presetsWithAppShortcut.value = ShortcutManagerCompat.getDynamicShortcuts(context)

@@ -13,7 +13,13 @@
 
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
   <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
+  <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
+  <uses-permission android:name="android.permission.VIBRATE" />
 
   <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -42,6 +48,11 @@
 
       <intent-filter>
         <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+
+      <intent-filter>
+        <action android:name="android.intent.action.SHOW_ALARMS" />
         <category android:name="android.intent.category.DEFAULT" />
       </intent-filter>
 
@@ -92,7 +103,7 @@
       android:theme="@style/Theme.Material3.Dark.NoActionBar" />
 
     <activity
-      android:name=".activity.ShortcutHandlerActivity"
+      android:name=".activity.PresetShortcutHandlerActivity"
       android:excludeFromRecents="true"
       android:exported="true"
       android:theme="@style/Theme.App.Translucent" />
@@ -137,6 +148,20 @@
 
     </activity>
 
+    <activity
+      android:name=".activity.SetAlarmHandlerActivity"
+      android:excludeFromRecents="true"
+      android:exported="true"
+      android:permission="com.android.alarm.permission.SET_ALARM"
+      android:theme="@style/Theme.App.Translucent">
+
+      <intent-filter>
+        <action android:name="android.intent.action.SET_ALARM" />
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+
+    </activity>
+
     <service
       android:name=".engine.PlaybackService"
       android:foregroundServiceType="mediaPlayback" />
@@ -155,12 +180,18 @@
 
     <service android:name=".service.SubscriptionStatusPollService" />
 
+    <service android:name=".service.AlarmRingerService" />
+
     <receiver
-      android:name=".WakeUpTimerManager$BootReceiver"
+      android:name=".receiver.AlarmInitReceiver"
       android:exported="true">
 
       <intent-filter>
+        <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
         <action android:name="android.intent.action.BOOT_COMPLETED" />
+        <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+        <action android:name="android.intent.action.TIME_SET" />
+        <action android:name="android.intent.action.TIMEZONE_CHANGED" />
       </intent-filter>
 
     </receiver>

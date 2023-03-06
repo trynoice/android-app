@@ -18,8 +18,8 @@ android {
   defaultConfig {
     namespace 'com.github.ashutoshgngwr.noice'
     applicationId 'com.github.ashutoshgngwr.noice'
-    versionCode 60
-    versionName '2.2.4'
+    versionCode 64
+    versionName '2.4.2'
     testInstrumentationRunner 'com.github.ashutoshgngwr.noice.InstrumentedTestRunner'
     proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
   }
@@ -61,6 +61,10 @@ android {
       dimension 'tier'
       buildConfigField 'boolean', 'IS_FREE_BUILD', 'false'
     }
+  }
+
+  kotlinOptions {
+    freeCompilerArgs += ["-opt-in=androidx.paging.ExperimentalPagingApi"]
   }
 
   kapt {
@@ -145,21 +149,22 @@ project.afterEvaluate {
 
 dependencies {
   def androidXHiltVersion = '1.0.0'
-  def exoPlayerVersion = '2.18.1'
-  def fragmentVersion = '1.5.1'
-  def roomVersion = '2.4.3'
+  def exoPlayerVersion = '2.18.4'
+  def fragmentVersion = '1.5.5'
+  def roomVersion = '2.5.0'
+  def workManagerVersion = '2.8.0'
 
-  def espressoVersion = '3.4.0'
-  def mockkVersion = '1.13.2'
+  def espressoVersion = '3.5.1'
+  def mockkVersion = '1.13.3'
 
   kapt "com.google.dagger:hilt-compiler:$deps.hiltVersion"
   kapt "androidx.hilt:hilt-compiler:$androidXHiltVersion"
   kapt "androidx.room:room-compiler:$roomVersion"
 
-  implementation 'androidx.appcompat:appcompat:1.4.2'
-  implementation 'androidx.browser:browser:1.4.0'
+  implementation 'androidx.appcompat:appcompat:1.6.1'
+  implementation 'androidx.browser:browser:1.5.0'
   implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-  implementation 'androidx.core:core-ktx:1.8.0'
+  implementation "androidx.core:core-ktx:$deps.androidXCoreVersion"
   implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
   implementation "androidx.hilt:hilt-work:$androidXHiltVersion"
   implementation "androidx.lifecycle:lifecycle-common-java8:$deps.lifecycleVersion"
@@ -171,30 +176,30 @@ dependencies {
   implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
   implementation 'androidx.preference:preference-ktx:1.2.0'
   implementation 'androidx.recyclerview:recyclerview:1.2.1'
-  implementation "androidx.room:room-runtime:$roomVersion"
   implementation "androidx.room:room-ktx:$roomVersion"
+  implementation "androidx.room:room-paging:$roomVersion"
+  implementation "androidx.room:room-runtime:$roomVersion"
 
   implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-  implementation 'androidx.work:work-runtime-ktx:2.7.1'
+  implementation "androidx.work:work-runtime-ktx:$workManagerVersion"
   implementation 'com.caverock:androidsvg-aar:1.4'
   implementation 'com.github.AppIntro:AppIntro:6.2.0'
   implementation "com.google.android.exoplayer:exoplayer-core:$exoPlayerVersion"
   implementation "com.google.android.exoplayer:extension-workmanager:$exoPlayerVersion"
   implementation 'com.google.android.flexbox:flexbox:3.0.0'
-  implementation 'com.google.android.material:material:1.7.0-beta01'
-  implementation 'com.google.code.gson:gson:2.9.1'
+  implementation 'com.google.android.material:material:1.8.0'
+  implementation 'com.google.code.gson:gson:2.10.1'
   implementation "com.google.dagger:hilt-android:$deps.hiltVersion"
   implementation "com.mikepenz:aboutlibraries:${deps.aboutLibrariesVersion}"
-  implementation 'com.ncorti:slidetoact:0.10.0'
   implementation 'io.github.medyo:android-about-page:2.0.0'
   implementation 'io.noties.markwon:core:4.6.2'
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$deps.coroutinesVersion"
 
   implementation project(":api-client")
 
-  fullImplementation 'com.android.billingclient:billing-ktx:5.0.0'
-  fullImplementation 'com.google.android.gms:play-services-base:18.1.0'
-  fullImplementation 'com.google.android.gms:play-services-cast-framework:21.0.1'
+  fullImplementation 'com.android.billingclient:billing-ktx:5.1.0'
+  fullImplementation 'com.google.android.gms:play-services-base:18.2.0'
+  fullImplementation 'com.google.android.gms:play-services-cast-framework:21.2.0'
   fullImplementation 'com.google.android.play:core:1.10.3'
   fullImplementation platform('com.google.firebase:firebase-bom:29.1.0')
   fullImplementation 'com.google.firebase:firebase-analytics-ktx'
@@ -205,7 +210,7 @@ dependencies {
 
   testImplementation "androidx.test:core:$deps.testCoreVersion"
   testImplementation "com.google.dagger:hilt-android-testing:$deps.hiltVersion"
-  testImplementation "io.mockk:mockk:$mockkVersion"
+  testImplementation "io.mockk:mockk-jvm:$mockkVersion"
   testImplementation "junit:junit:$deps.junitVersion"
   testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$deps.coroutinesVersion"
   testImplementation "org.robolectric:robolectric:$deps.robolectricVersion"
@@ -215,13 +220,17 @@ dependencies {
   kaptAndroidTest "com.google.dagger:hilt-android-compiler:$deps.hiltVersion"
 
   androidTestImplementation "androidx.test:core:$deps.testCoreVersion"
-  androidTestImplementation "androidx.test:rules:1.4.0"
-  androidTestImplementation "androidx.test:runner:1.4.0"
+  androidTestImplementation "androidx.test:rules:1.5.0"
+  androidTestImplementation "androidx.test:runner:1.5.2"
   androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
   androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
   androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
-  androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+  androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+  androidTestImplementation "androidx.work:work-testing:$workManagerVersion"
   androidTestImplementation "com.google.dagger:hilt-android-testing:$deps.hiltVersion"
-  androidTestImplementation "io.mockk:mockk-android:$mockkVersion"
   androidTestImplementation "junit:junit:$deps.junitVersion"
+
+  androidTestImplementation("io.mockk:mockk-android:$mockkVersion") {
+    exclude group: 'org.junit.jupiter' // causes build errors due to duplicate files in META-INF
+  }
 }

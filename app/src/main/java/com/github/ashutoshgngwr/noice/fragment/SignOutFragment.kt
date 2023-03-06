@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignOutFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
@@ -18,14 +18,12 @@ import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -46,11 +44,11 @@ class SignOutFragment : BottomSheetDialogFragment() {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
     binding.cancel.setOnClickListener { dismiss() }
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.isSigningOut.collect { isCancelable = !it }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.signOutErrorStrRes
         .filterNotNull()
         .collect { causeStrRes ->
@@ -59,7 +57,7 @@ class SignOutFragment : BottomSheetDialogFragment() {
         }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.signOutResource
         .filterNot { it is Resource.Loading }
         .collect { dismiss() }
@@ -76,7 +74,7 @@ class SignOutViewModel @Inject constructor(
 
   val isSigningOut: StateFlow<Boolean> = signOutResource.transform { r ->
     emit(r is Resource.Loading)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   val signOutErrorStrRes: Flow<Int?> = signOutResource.transform { r ->
     emit(
@@ -89,8 +87,6 @@ class SignOutViewModel @Inject constructor(
   }
 
   fun signOut() = viewModelScope.launch {
-    accountRepository.signOut()
-      .flowOn(Dispatchers.IO)
-      .collect(signOutResource)
+    accountRepository.signOut().collect(signOutResource)
   }
 }

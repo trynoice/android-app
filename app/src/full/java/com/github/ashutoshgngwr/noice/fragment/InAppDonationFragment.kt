@@ -19,7 +19,6 @@ import com.github.ashutoshgngwr.noice.provider.InAppBillingProviderException
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -85,7 +84,7 @@ class InAppDonationViewModel @Inject constructor(
   val error = MutableStateFlow<Throwable?>(null)
 
   init {
-    viewModelScope.launch(Dispatchers.IO) {
+    viewModelScope.launch {
       try {
         val details = billingProvider.queryDetails(
           InAppBillingProvider.ProductType.INAPP,

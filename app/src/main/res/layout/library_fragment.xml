@@ -11,7 +11,7 @@
 
   </data>
 
-  <FrameLayout
+  <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true">
@@ -19,56 +19,54 @@
     <include
       android:id="@+id/error_container"
       layout="@layout/simple_error_layout"
-      app:isVisible="@{viewModel.persistentErrorStrRes != null}"
+      app:isVisible="@{viewModel.apiErrorStrRes != null &amp;&amp; viewModel.libraryItems.empty}"
       app:retryAction="@{() -> viewModel.loadLibrary()}"
       tools:visibility="gone" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.github.ashutoshgngwr.noice.widget.SwipeRefreshLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:animateLayoutChanges="true"
-      app:isVisible="@{viewModel.persistentErrorStrRes == null}">
+      app:isVisible="@{!viewModel.libraryItems.empty || viewModel.apiErrorStrRes == null}"
+      app:onRefreshListener="@{() -> viewModel.loadLibrary()}"
+      app:refreshing="@{viewModel.isLoading}">
 
-      <com.github.ashutoshgngwr.noice.widget.SwipeRefreshLayout
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sound_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:onRefreshListener="@{() -> viewModel.loadLibrary()}"
-        app:refreshing="@{viewModel.isLoading}">
+        android:clipToPadding="false"
+        android:paddingBottom="@{viewModel.isPlaying ? viewModel.isSavePresetButtonVisible ? @dimen/sound_list_padding_extra_extended : @dimen/sound_list_padding_extended : @dimen/sound_list_padding_normal}"
+        app:hasFixedSize="@{true}"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-        <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/sound_list"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          app:hasFixedSize="@{true}"
-          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    </com.github.ashutoshgngwr.noice.widget.SwipeRefreshLayout>
 
-      </com.github.ashutoshgngwr.noice.widget.SwipeRefreshLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/save_preset_button"
+      style="?attr/floatingActionButtonPrimaryStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="16dp"
+      android:layout_marginBottom="76dp"
+      android:contentDescription="@string/save_preset"
+      android:src="@drawable/ic_action_save"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
 
-      <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/save_preset_button"
-        style="?attr/floatingActionButtonPrimaryStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/save_preset"
-        android:src="@drawable/ic_action_save"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/random_preset_button"
+      style="?attr/floatingActionButtonSecondaryStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="16dp"
+      android:layout_marginBottom="@{viewModel.isPlaying ? viewModel.isSavePresetButtonVisible ? @dimen/random_preset_fab_margin_normal : @dimen/random_preset_fab_margin_extended : @dimen/random_preset_fab_margin_normal}"
+      android:contentDescription="@string/random_preset"
+      android:src="@drawable/ic_baseline_shuffle_24"
+      app:isVisible="@{!viewModel.libraryItems.empty || viewModel.apiErrorStrRes == null}"
+      app:layout_constraintBottom_toTopOf="@id/save_preset_button"
+      app:layout_constraintEnd_toEndOf="parent" />
 
-      <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/random_preset_button"
-        style="?attr/floatingActionButtonSecondaryStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/random_preset"
-        android:src="@drawable/ic_baseline_shuffle_24"
-        app:layout_constraintBottom_toTopOf="@id/save_preset_button"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-  </FrameLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

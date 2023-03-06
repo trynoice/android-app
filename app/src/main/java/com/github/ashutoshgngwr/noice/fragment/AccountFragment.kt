@@ -8,13 +8,13 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.AccountFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
@@ -27,14 +27,12 @@ import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.repository.errors.NotSignedInError
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -84,11 +82,11 @@ class AccountFragment : Fragment() {
       }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       requireContext().getInternetConnectivityFlow().collect { isConnectedToInternet = it }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.loadErrorStrRes
         .filterNotNull()
         .filter { isConnectedToInternet || viewModel.profile.value == null } // suppress errors when offline.
@@ -110,17 +108,17 @@ class AccountViewModel @Inject constructor(
 
   val isSignedIn = accountRepository.isSignedIn()
   val isSubscribed = subscriptionRepository.isSubscribed()
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    .stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
   private val profileResource = MutableSharedFlow<Resource<Profile>>()
 
   val profile: StateFlow<Profile?> = profileResource.transform { resource ->
     resource.data?.also { emit(it) }
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   val isLoading: StateFlow<Boolean> = profileResource.transform { r ->
     emit(r is Resource.Loading)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   internal val loadErrorStrRes: Flow<Int?> = profileResource.transform { resource ->
     emit(
@@ -139,9 +137,7 @@ class AccountViewModel @Inject constructor(
     }
 
     viewModelScope.launch {
-      accountRepository.getProfile()
-        .flowOn(Dispatchers.IO)
-        .collect(profileResource)
+      accountRepository.getProfile().collect(profileResource)
     }
   }
 }

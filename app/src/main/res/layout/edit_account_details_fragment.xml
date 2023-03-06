@@ -80,6 +80,7 @@
           android:layout_weight="1" />
 
         <Button
+          android:id="@+id/save"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:enabled="@{viewModel.isNameValid &amp;&amp; viewModel.isEmailValid}"

@@ -8,23 +8,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionBillingCallbackFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.retry
 import kotlinx.coroutines.flow.transform
@@ -56,7 +54,7 @@ class SubscriptionBillingCallbackFragment : BottomSheetDialogFragment() {
       }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.isLoading.collect { isCancelable = !it }
     }
   }
@@ -134,7 +132,6 @@ class SubscriptionBillingCallbackViewModel @Inject constructor(
           delay(2500)
           e is SubscriptionNotFoundError && System.currentTimeMillis() < endTimestamp
         }
-        .flowOn(Dispatchers.IO)
         .catch { error.emit(it) }
         .onCompletion { isLoading.emit(false) }
         .collect()

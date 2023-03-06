@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.EditAccountDetailsFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
@@ -22,7 +22,6 @@ import com.github.ashutoshgngwr.noice.repository.errors.DuplicateEmailError
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +29,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -52,7 +50,7 @@ class EditAccountDetailsFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.loadErrorStrRes
         .filterNotNull()
         .collect { causeStrRes ->
@@ -61,18 +59,18 @@ class EditAccountDetailsFragment : Fragment() {
         }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.updateResource
         .filter { it is Resource.Success }
-        .collect { showSuccessSnackBar(R.string.account_details_update_success) }
+        .collect { showSuccessSnackBar(R.string.account_details_update_success, binding.save) }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.updateErrorStrRes
         .filterNotNull()
         .collect { causeStrRes ->
           val msg = getString(R.string.account_details_update_error, getString(causeStrRes))
-          showErrorSnackBar(msg.normalizeSpace())
+          showErrorSnackBar(msg.normalizeSpace(), binding.save)
         }
     }
 
@@ -93,7 +91,7 @@ class EditAccountDetailsViewModel @Inject constructor(
 
   val isNameValid: StateFlow<Boolean> = name.transform { name ->
     emit(name.isNotBlank() && name.length <= 64)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   val isEmailValid: StateFlow<Boolean> = email.transform { email ->
     emit(
@@ -101,11 +99,11 @@ class EditAccountDetailsViewModel @Inject constructor(
         && email.length <= 64
         && Patterns.EMAIL_ADDRESS.matcher(email).matches()
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   val isLoading: StateFlow<Boolean> = merge(loadResource, updateResource.filterNotNull())
     .transform { emit(it is Resource.Loading) }
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    .stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
   val loadErrorStrRes: StateFlow<Int?> = loadResource.transform { r ->
     emit(r.error?.let {
@@ -114,7 +112,7 @@ class EditAccountDetailsViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     })
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   val updateErrorStrRes: Flow<Int?> = updateResource.transform { r ->
     emit(r.error?.let {
@@ -129,7 +127,6 @@ class EditAccountDetailsViewModel @Inject constructor(
   fun loadProfile() {
     viewModelScope.launch {
       accountRepository.getProfile()
-        .flowOn(Dispatchers.IO)
         .onEach { resource ->
           if (resource.data != null) {
             name.emit(resource.data.name)
@@ -146,10 +143,7 @@ class EditAccountDetailsViewModel @Inject constructor(
     }
 
     viewModelScope.launch {
-      accountRepository
-        .updateProfile(email.value, name.value)
-        .flowOn(Dispatchers.IO)
-        .collect(updateResource)
+      accountRepository.updateProfile(email.value, name.value).collect(updateResource)
     }
   }
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="icon"
+      type="android.graphics.drawable.Drawable" />
+
+    <variable
+      name="title"
+      type="String" />
+
+    <variable
+      name="description"
+      type="String" />
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="24dp">
+
+    <ImageView
+      android:id="@+id/icon_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:contentDescription="@null"
+      android:src="@{icon}"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:tint="?attr/colorPrimary"
+      tools:src="@drawable/ic_baseline_forest_24" />
+
+    <TextView
+      android:id="@+id/title_view"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:text="@{title}"
+      android:textAppearance="?attr/textAppearanceTitleMedium"
+      android:textColor="?attr/colorPrimary"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@id/icon_view"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:text="@string/natural_variations" />
+
+    <TextView
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="4dp"
+      android:text="@{description}"
+      android:textAppearance="?attr/textAppearanceBodyMedium"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@id/icon_view"
+      app:layout_constraintTop_toBottomOf="@id/title_view"
+      tools:text="@string/natural_variations_desc" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

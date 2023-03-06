@@ -1,7 +1,7 @@
 package com.trynoice.api.client.apis
 
-import com.trynoice.api.client.auth.annotations.NeedsAccessToken
-import com.trynoice.api.client.auth.annotations.NeedsRefreshToken
+import com.trynoice.api.client.annotations.InjectAccessToken
+import com.trynoice.api.client.annotations.InjectRefreshToken
 import com.trynoice.api.client.models.AuthCredentials
 import retrofit2.http.GET
 
@@ -25,7 +25,7 @@ internal interface InternalAccountApi {
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
-  @NeedsRefreshToken
+  @InjectRefreshToken
   @GET("/v1/accounts/credentials")
   suspend fun issueCredentials(): AuthCredentials
 
@@ -42,8 +42,8 @@ internal interface InternalAccountApi {
    * @throws retrofit2.HttpException on API error.
    * @throws java.io.IOException on network error.
    */
-  @NeedsRefreshToken
-  @NeedsAccessToken
+  @InjectRefreshToken
+  @InjectAccessToken
   @GET("/v1/accounts/signOut")
   suspend fun signOut()
 }

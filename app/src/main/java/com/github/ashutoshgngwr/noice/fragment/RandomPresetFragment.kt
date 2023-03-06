@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.core.view.forEach
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetTagChipBinding
 import com.github.ashutoshgngwr.noice.engine.PlaybackController
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.models.SoundTag
@@ -27,13 +27,11 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -63,7 +61,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.tags.collect { tags ->
         tags.forEach { tag ->
           val binding = RandomPresetTagChipBinding.inflate(layoutInflater, binding.tags, true)
@@ -73,7 +71,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
       }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.tagsLoadErrorStrRes
         .filterNotNull()
         .collect { causeStrRes ->
@@ -82,7 +80,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.generatedPreset
         .filterNotNull()
         .collect { preset ->
@@ -94,7 +92,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.generatePresetErrorStrRes
         .filterNotNull()
         .collect { causeStrRes ->
@@ -139,21 +137,21 @@ class RandomPresetViewModel @Inject constructor(
 
   val isLoading: StateFlow<Boolean> = combine(tagsResource, generatePresetResource) { t, p ->
     t is Resource.Loading || p is Resource.Loading
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   val tags: StateFlow<List<SoundTag>> = tagsResource.transform { r ->
     r.data?.also { emit(it.sortedBy { t -> t.name }) }
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
   val tagsLoadErrorStrRes: StateFlow<Int?> = tagsResource.transform { r ->
     emit(
       when {
-        r.error == null || r.data != null -> null // cached data is fine.
+        r.error == null || r.data?.isNotEmpty() == true -> null // cached data is fine.
         r.error is NetworkError -> R.string.network_error
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal val generatePresetErrorStrRes: StateFlow<Int?> = generatePresetResource.transform { r ->
     emit(
@@ -163,25 +161,21 @@ class RandomPresetViewModel @Inject constructor(
         else -> R.string.unknown_error
       }
     )
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal val generatedPreset: StateFlow<Preset?> = generatePresetResource.transform { r ->
     emit(r.data)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   init {
     viewModelScope.launch {
-      soundRepository.listTags()
-        .flowOn(Dispatchers.IO)
-        .collect(tagsResource)
+      soundRepository.listTags().collect(tagsResource)
     }
   }
 
   fun generatePreset(tags: Set<SoundTag>, soundCount: Int) {
     viewModelScope.launch {
-      presetRepository.generate(tags, soundCount)
-        .flowOn(Dispatchers.IO)
-        .collect(generatePresetResource)
+      presetRepository.generate(tags, soundCount).collect(generatePresetResource)
     }
   }
 }

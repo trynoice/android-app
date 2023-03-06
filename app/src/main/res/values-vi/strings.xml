@@ -53,25 +53,14 @@
     <string name="app_theme_system_default">Mặc định hệ thống</string>
     <string name="app_theme_dark">Tối</string>
     <string name="app_theme_light">Sáng</string>
-    <string name="wake_up_timer_description">Noice sẽ bắt đầu thiết lập trước đã chọn tại một thời điểm được chỉ định. Hãy sử dụng các điều khiển bên dưới để chọn một thiết lập trước và chọn thời gian mong muốn để lên lịch bộ hẹn giờ.</string>
-    <plurals name="time_minutes">
-        <item quantity="other">%1$d phút</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="other">%1$d tiếng</item>
-    </plurals>
-    <string name="time_bridge">và</string>
-    <string name="wake_up_timer_schedule_set">Báo thức sẽ kêu sau %1$s %2$s %3$s</string>
-    <string name="wake_up_timer_cancelled">Đã huỷ hẹn giờ thức dậy!</string>
     <string name="select_preset">Chọn thiết lập trước</string>
-    <string name="schedule">Lịch trình</string>
     <string name="sleep_timer_description">Noice sẽ tự tắt khi hẹn giờ kết thúc. Hãy sử dụng các nút ở dưới để thêm thời gian và bắt đầu hẹn giờ.</string>
     <string name="reset">Đặt lại</string>
     <string name="auto_sleep_schedule_cancelled">Đã huỷ hẹn giờ ngủ tự động!</string>
     <string name="presets_as_home_screen_summary">Hiện \"thiết lập trước\" khi khởi động ứng dụng (yêu cầu khởi động lại ứng dụng)</string>
     <string name="pinned_shortcuts_not_supported">Launcher mặc định của bạn không hỗ trợ việc thêm lối tắt.</string>
     <string name="rename">Đổi tên</string>
-    <string name="preset_info__description">Bạn chưa tạo thiết lập trước nào. Để tạo một thiết lập trước, hãy đi đến Thư viện và phát các âm thanh. Sau đó nhấn nút Lưu hiện ra ở góc dưới cùng của màn hình.</string>
+    <string name="preset_info__description">Tạo thiết lập mới bằng cách phát các đoạn âm thanh và sử dụng nút Lưu có trong thư viện nhé.</string>
     <string name="preset_does_not_exist">Thiết lập trước không tồn tại. Nó có thể đã bị xoá!</string>
     <string name="preset_deleted">Đã xoá thiết lập trước!</string>
     <string name="preset_delete_confirmation">Xác nhận xoá %s\?</string>
@@ -95,7 +84,6 @@
     <string name="okay">OK</string>
     <string name="intensity">Cường độ</string>
     <string name="submit_feedback">Gửi phản hồi</string>
-    <string name="wake_up_timer">Hẹn giờ đánh thức</string>
     <string name="support_development">Hỗ trợ sự phát triển</string>
     <string name="sleep_timer">Hẹn giờ ngủ</string>
     <string name="presets">Thiết lập trước</string>
@@ -119,7 +107,7 @@
 \n Bạn có thể thiết lập tự động chia sẻ dữ liệu tại bất cứ lúc nào ở trong ứng dụng bằng cách đi đến \"**Cài đặt** &gt; **Chia sẻ dữ liệu sử dụng và hành vi**\".</string>
     <string name="share_usage_data_consent_title">Cài đặt chia sẻ dữ liệu</string>
     <string name="created_by">Được tạo bởi</string>
-    <string name="sound_fade_in_duration_summary">Thời lượng để tăng âm lượng từ từ (tính bằng giây)</string>
+    <string name="sound_fade_in_duration_summary">Thời lượng tính bằng giây đối với âm thanh mờ nhạt dần</string>
     <string name="sound_fade_in_duration">Thời lượng tăng âm lượng từ từ</string>
     <string name="enable_media_buttons_summary">Sử dụng nút phương tiện ở phần cứng để điều khiển việc phát</string>
     <string name="enable_media_buttons">Bật nút phương tiện</string>
@@ -152,7 +140,6 @@
     <string name="sign_in_message">Vui lòng nhập email của bạn để đăng nhập.</string>
     <string name="sign_in_link_tip">Vui lòng mở liên kết đã nhận bằng Noice để hoàn thành quá trình đăng nhập.</string>
     <string name="signing_out">Đang đăng xuất</string>
-    <string name="benefit_1">Truyền âm thanh chất lượng cao</string>
     <string name="confirming_payment">Đang xác nhận thanh toán</string>
     <string name="subscription_payment_complete">Cảm ơn bạn vì đã đăng ký Noice Premium. Gói đăng ký của bạn đã hoạt động.</string>
     <string name="ended_on">Đã kết thúc vào %1$s</string>
@@ -178,7 +165,6 @@
     <string name="sign_out">Đăng xuất</string>
     <string name="cont">Tiếp tục</string>
     <string name="i_understand">Tôi hiểu.</string>
-    <string name="benefit_2">Phát ngoại tuyến</string>
     <string name="payment_processing_error">Chúng tôi không thể xử lý thanh toán. Số tiền sẽ được tự động hoàn lại nếu đã trừ. Nếu bạn không được hoàn tiền trong vòng một tuần, hãy báo cho chúng tôi.</string>
     <string name="sign_in_to_continue">Vui lòng đăng nhập hoặc đăng ký để tiếp tục.</string>
     <string name="made_in_india">Được tạo ra với ❤ ở Ấn Độ</string>
@@ -214,7 +200,6 @@
     <string name="subscription_payment_refunded">Chúng tôi đã huỷ việc mua này và khởi tạo việc hoàn tiền.</string>
     <string name="sign_in">Đăng nhập</string>
     <string name="retry">Thử lại</string>
-    <string name="benefit_0">Dao động tự nhiên tính theo giây</string>
     <string name="subscription_payment_confirmation_failed">Chúng tôi đã gặp vấn đề khi đợi xác nhận thanh toán. Việc này có thể do lỗi mạng hoặc độ trễ của nhà cung cấp thanh toán. Chúng tôi sẽ cập nhật trạng thái đăng ký của bạn ngay sau khi có thông tin từ nhà cung cấp. Vui lòng kiểm tra trạng thái đăng ký của bạn sau một thời gian.</string>
     <string name="sound_info">Về âm thanh này</string>
     <string name="library_load_error">Chúng tôi không thể lấy thư viện âm thanh. %1$s</string>
@@ -236,7 +221,7 @@
     <string name="audio_quality_ultra">Ultra (320 kbps)</string>
     <string name="playing">Đang phát</string>
     <string name="tags_load_error">Chúng tôi không thể tải từ khoá âm thanh. %1$s Vui lòng thử lại!</string>
-    <string name="sound_fade_out_duration_summary">Thời lượng để giảm âm lượng từ từ (tính theo giây)</string>
+    <string name="sound_fade_out_duration_summary">Thời lượng tính bằng giây để giảm âm lượng từ từ</string>
     <string name="random_preset_description">Thiết lập trước được tạo ra có khả năng cao là có chứa âm thanh với từ khóa được chọn. Thêm nữa, các thiết lập mạnh sẽ cố phát nhiều âm thanh hơn cùng lúc.</string>
     <string name="deleting_account">Đang xoá tài khoản</string>
     <string name="account">Tài khoản</string>
@@ -260,9 +245,7 @@
     <string name="gift_card_load_error">Chúng tôi không thể lấy thẻ quà. %1$s</string>
     <string name="gift_card_not_found">Mã đã nhập không tồn tại.</string>
     <string name="monthly_price">%1$s mỗi tháng</string>
-    <string name="showing_localised_prices">Giá đã chuyển từ [INR](https://en.wikipedia.org/wiki/Indian_rupee). Giá thực tế có thể dao động nhẹ.</string>
     <string name="cancel_subscription_confirmation">Bạn có chắc bạn muốn huỷ gói đăng ký Noice Premium không\? Khi huỷ, gói đăng ký của bạn sẽ tự động dừng tại điểm kết thúc của chu kỳ thanh toán hiện tại. Chu kỳ thanh toán hiện tại của bạn sẽ kết thúc vào %1$s.</string>
-    <string name="benefit_3">Âm thanh dài hơn với nhiều mẫu hơn</string>
     <string name="use_material_you_colors">Sử dụng màu sắc Material You</string>
     <string name="use_material_you_colors_summary">Kế thừa bảng màu Material You từ hệ thống Android</string>
     <string name="remove_all_sound_downloads_confirmation">Việc này sẽ xóa tất cả các bản âm thanh đã tải xuống để phát lại ngoại tuyến. Bạn có muốn tiến hành không\?</string>
@@ -282,9 +265,30 @@
     <string name="play_sound_before_adjusting_volume">Bạn cần phát âm thanh này trước khi có thể điều chỉnh âm lượng của nó.</string>
     <string name="stripe_customer_portal_error">Rất tiếc! Chúng tôi không thể mở cổng thông tin thanh toán. %1$s Vui lòng thử lại!</string>
     <string name="sound_downloads_scheduled_for_removal">Tất cả các bản tải xuống âm thanh đã được lên lịch để xóa.</string>
-    <string name="sound_library_updated">Đã cập nhật thư viện âm thanh</string>
-    <string name="sound_library_updated_message">Chúng tôi đã thay đổi thư viện âm thanh một chút. Bạn có muốn xem mô tả của chúng không\?</string>
-    <string name="review">Xem</string>
-    <string name="benefit_4">Thêm %1$d âm thanh</string>
     <string name="sound_is_premium">Âm thanh này chỉ có ở Noice Premium.</string>
+    <string name="alarms">Báo thức</string>
+    <string name="add_alarm">Thêm một báo thức</string>
+    <string name="no_alarms">Không báo thức</string>
+    <string name="alarm_permission_rationale_title">Cho phép Noice đặt báo thức</string>
+    <string name="post_notifications_permission_rationale_title">Cho phép Noice hiện các thông báo</string>
+    <string name="post_notifications_permission_rationale_description">Chúng tôi cần quyền truy cập bổ sung để hiển thị thông báo cho các báo thức được đặt. Nếu không có các thông báo, Noice không thể rung chuông báo thức vào thời điểm được cài đặt đâu.</string>
+    <string name="proceed">Tiến hành</string>
+    <string name="alarm_post_notifications_permission_denied">Noice không thể rung chuông báo thức mà không có quyền hiển thị thông báo!</string>
+    <string name="add_label">Thêm nhãn</string>
+    <string name="sunday_initial">S</string>
+    <string name="monday_initial">M</string>
+    <string name="tuesday_initial">T</string>
+    <string name="wednesday_initial">W</string>
+    <string name="thursday_initial">T</string>
+    <string name="friday_initial">F</string>
+    <string name="saturday_initial">S</string>
+    <string name="vibrate">Rung</string>
+    <string name="not_scheduled">Chưa được hẹn cài đặt</string>
+    <string name="edit_label">Sửa nhãn</string>
+    <string name="notification_channel_alarm_primary__name">Báo thức</string>
+    <string name="notification_channel_alarm_primary__description">Thông báo sẽ được hiển thị khi tới lúc báo thức được cài đặt vang lên.</string>
+    <string name="no_alarms_description">Thêm một báo thức mới bằng cách nhấp vào nút \"+\" nhé!</string>
+    <string name="alarm_permission_rationale_description">Chúng tôi cần quyền truy cập bổ sung để đặt báo thức trên thiết bị của bạn.
+\n
+\nXin hãy bật chế độ \"Báo thức &amp; nhắc nhở\" cho Noice từ các chi tiết ứng dụng trong mục điều chỉnh hệ thống thiết bị của bạn nhé.</string>
 </resources>

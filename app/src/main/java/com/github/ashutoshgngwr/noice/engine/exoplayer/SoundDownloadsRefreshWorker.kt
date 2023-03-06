@@ -18,6 +18,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import com.github.ashutoshgngwr.noice.AppDispatchers
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.ext.getMutableStringSet
 import com.github.ashutoshgngwr.noice.models.Sound
@@ -35,7 +36,6 @@ import com.google.android.exoplayer2.offline.DownloadService
 import com.google.gson.Gson
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -62,6 +62,7 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
   private val settingsRepository: SettingsRepository,
   private val downloadIndex: DownloadIndex,
   private val gson: Gson,
+  private val appDispatchers: AppDispatchers,
 ) : CoroutineWorker(context, params) {
 
   private val notification: Notification by lazy {
@@ -80,7 +81,7 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
   override suspend fun doWork(): Result {
     try {
       // ensure that user has an active subscription or return with success.
-      if (!withContext(Dispatchers.IO) { hasSubscription() }) {
+      if (!hasSubscription()) {
         Log.i(LOG_TAG, "doWork: user doesn't have an active subscription")
         return Result.success()
       }
@@ -104,8 +105,7 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
     val audioBitrate = settingsRepository.getAudioQuality().bitrate
     soundIds.forEach { soundId ->
       try {
-        withContext(Dispatchers.IO) { getSound(soundId) }
-          .segments
+        getSound(soundId).segments
           .forEach { segmentPathsToSoundIds[it.path(audioBitrate)] = soundId }
       } catch (e: Throwable) {
         Log.e(LOG_TAG, "doWork: failed to retrieve sound $soundId", e)
@@ -114,14 +114,14 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
     }
 
     val md5sums: Map<String, String> = try {
-      if (soundIds.isEmpty()) emptyMap() else withContext(Dispatchers.IO) { getMd5sums() }
+      if (soundIds.isEmpty()) emptyMap() else soundRepository.getMd5sums()
     } catch (e: Throwable) {
       Log.e(LOG_TAG, "doWork: failed to get md5sums for CDN resources", e)
       return Result.retry()
     }
 
     try {
-      val downloadCursor = withContext(Dispatchers.IO) { downloadIndex.getDownloads() }
+      val downloadCursor = withContext(appDispatchers.io) { downloadIndex.getDownloads() }
       while (downloadCursor.moveToNext()) {
         val request = downloadCursor.download.request
         // check if this item wasn't removed from the download list.
@@ -182,15 +182,6 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
 
   private suspend fun getSound(soundId: String): Sound {
     val resource = soundRepository.get(soundId).lastOrNull()
-    if (resource !is Resource.Success || resource.data == null) {
-      throw resource?.error ?: Exception("Resource is not Success and error was null")
-    }
-
-    return resource.data
-  }
-
-  private suspend fun getMd5sums(): Map<String, String> {
-    val resource = soundRepository.getMd5sums().lastOrNull()
     if (resource !is Resource.Success || resource.data == null) {
       throw resource?.error ?: Exception("Resource is not Success and error was null")
     }

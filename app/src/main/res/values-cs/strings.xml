@@ -8,7 +8,6 @@
     <string name="presets">Mixy</string>
     <string name="sleep_timer">Časovač vypnutí</string>
     <string name="support_development">Podpořit vývoj</string>
-    <string name="wake_up_timer">Časovač spuštění</string>
     <string name="submit_feedback">Odeslat zpětnou vazbu</string>
     <string name="intensity">Intenzita</string>
     <string name="okay">Budiž</string>
@@ -43,26 +42,7 @@
     <string name="sleep_timer_description">
     Noice se sám vypne po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
   </string>
-    <string name="schedule">Nastavit</string>
     <string name="select_preset">Zvolte mix</string>
-    <string name="wake_up_timer_cancelled">Časovač k probuzení zrušen!</string>
-    <string name="wake_up_timer_schedule_set">Alarm se spustí za %1$s %2$s %3$s</string>
-    <string name="time_bridge">a</string>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d hodinu</item>
-        <item quantity="few">%1$d hodiny</item>
-        <item quantity="many">%1$d hodin</item>
-        <item quantity="other">%1$d hodin</item>
-    </plurals>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d minutu</item>
-        <item quantity="few">%1$d minuty</item>
-        <item quantity="many">%1$d minut</item>
-        <item quantity="other">%1$d minut</item>
-    </plurals>
-    <string name="wake_up_timer_description">
-    Noice se sám spustí po uplynutí časovače. Pro nastavení a následné spuštění časovače použijte tlačítka níže.
-  </string>
     <string name="app_theme_light">Světlý</string>
     <string name="app_theme_dark">Tmavý</string>
     <string name="app_theme_system_default">Dle nastavení systému</string>
@@ -154,7 +134,6 @@
     <string name="import_presets_successful">Ze souboru byly úspěšně importovány vaše mixy!</string>
     <string name="export_presets_successful">Mixy byly úspěšně exportovány do zvoleného souboru!</string>
     <string name="sound_fade_in_duration_summary">Délka postupného náběhu dodatečných zvuků při přehrávání (v sekundách)</string>
-    <string name="benefit_3">Delší zvuky s více vzorky</string>
     <string name="manage_subscription">Spravovat předplatné</string>
     <string name="sign_up">Registrace</string>
     <string name="sign_in">Přihlásit se</string>
@@ -206,7 +185,6 @@
     <string name="sign_in_email_sent">Pokud tato adresa patří k registrovanému účtu, měl by vám přijít e-mail s přihlašovacím odkazem na \"%1$s\".</string>
     <string name="invalid_name">Zadané jméno je neplatné!</string>
     <string name="renews_on">Obnoví se dne %1$s</string>
-    <string name="benefit_1">Streamování zvuku ve vysoké kvalitě</string>
     <string name="total_price">Celkem %1$s</string>
     <string name="sign_up_email_sent">Poslali jsme vám e-mailem odkaz pro přihlášení na \"%1$s\".</string>
     <string name="sound_fade_out_duration">Délka doznívání zvuku</string>
@@ -220,7 +198,6 @@
     <string name="support">Podpora</string>
     <string name="select_a_plan">Vybrat plán</string>
     <string name="random_preset_description">Vygenerovaná předvolba bude pravděpodobně obsahovat zvuky s vybranými klíčovými slovy. Intenzivní předvolby se navíc pokusí přehrát více zvuků současně.</string>
-    <string name="benefit_2">Offline přehrávání</string>
     <string name="processing_payment">Zpracovávám platbu</string>
     <plurals name="n_months">
         <item quantity="one">%1$d měsíc</item>

@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
+import androidx.core.app.ServiceCompat
 import androidx.core.content.getSystemService
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
@@ -28,18 +29,15 @@ import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.google.android.exoplayer2.upstream.cache.Cache
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.lastOrNull
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.random.Random
+import kotlin.reflect.KClass
+import kotlin.reflect.cast
 
 @AndroidEntryPoint
 class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener,
@@ -71,12 +69,9 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener,
 
   private var presets = emptyList<Preset>()
   private val playerManagerState = MutableStateFlow(PlaybackState.STOPPED)
+  private val masterVolume = MutableStateFlow(0)
   private val playerStates = MutableStateFlow(emptyArray<PlayerState>())
-  private val serviceBinder = PlaybackServiceBinder(playerManagerState, playerStates)
-  private val isSubscribed: SharedFlow<Boolean> by lazy {
-    subscriptionRepository.isSubscribed()
-      .shareIn(lifecycleScope, SharingStarted.WhileSubscribed(), 0)
-  }
+  private val serviceBinder = PlaybackServiceBinder(playerManagerState, masterVolume, playerStates)
 
   private val mainActivityPi: PendingIntent by lazy {
     var piFlags = PendingIntent.FLAG_UPDATE_CURRENT
@@ -166,17 +161,15 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener,
 
     // watch preset repository
     lifecycleScope.launch {
-      presetRepository.listFlow()
-        .flowOn(Dispatchers.IO)
-        .collect { p ->
-          presets = p
-          // refresh currently playing preset and stuff.
-          onPlaybackUpdate(playerManagerState.value, playerStates.value)
-        }
+      presetRepository.listFlow().collect { p ->
+        presets = p
+        // refresh currently playing preset and stuff.
+        onPlaybackUpdate(playerManagerState.value, masterVolume.value, playerStates.value)
+      }
     }
 
     lifecycleScope.launch {
-      isSubscribed.collect { subscribed ->
+      subscriptionRepository.isSubscribed().collect { subscribed ->
         localDataSourceFactory.enableDownloadedSounds = subscribed
         playerManager.setPremiumSegmentsEnabled(subscribed)
       }
@@ -185,35 +178,31 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener,
     // watch and adapt user settings as they change.
     lifecycleScope.launch {
       settingsRepository.shouldIgnoreAudioFocusChangesAsFlow()
-        .flowOn(Dispatchers.IO)
         .collect { playerManager.setAudioFocusManagementEnabled(!it) }
     }
 
     lifecycleScope.launch {
-      settingsRepository.isMediaButtonsEnabledAsFlow()
-        .flowOn(Dispatchers.IO)
-        .collect { isEnabled ->
-          mediaSessionManager.setCallback(if (isEnabled) mediaSessionManagerCallback else null)
-        }
+      settingsRepository.isMediaButtonsEnabledAsFlow().collect { isEnabled ->
+        mediaSessionManager.setCallback(if (isEnabled) mediaSessionManagerCallback else null)
+      }
     }
 
     lifecycleScope.launch {
       settingsRepository.getSoundFadeInDurationAsFlow()
-        .flowOn(Dispatchers.IO)
         .collect { playerManager.setFadeInDuration(it) }
     }
 
     lifecycleScope.launch {
       settingsRepository.getSoundFadeOutDurationAsFlow()
-        .flowOn(Dispatchers.IO)
         .collect { playerManager.setFadeOutDuration(it) }
     }
 
     lifecycleScope.launch {
-      settingsRepository.getAudioQualityAsFlow()
-        .flowOn(Dispatchers.IO)
-        .combine(isSubscribed) { quality, subscribed -> if (subscribed) quality else SettingsRepository.FREE_AUDIO_QUALITY }
-        .collect { playerManager.setAudioBitrate(it.bitrate) }
+      val audioQualityFlow = settingsRepository.getAudioQualityAsFlow()
+      val isSubscribedFlow = subscriptionRepository.isSubscribed()
+      combine(audioQualityFlow, isSubscribedFlow) { quality, subscribed ->
+        if (subscribed) quality else SettingsRepository.FREE_AUDIO_QUALITY
+      }.collect { playerManager.setAudioBitrate(it.bitrate) }
     }
   }
 
@@ -227,17 +216,26 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener,
       )
       ACTION_STOP -> playerManager.stop(false)
 
+      ACTION_SET_MASTER_VOLUME -> {
+        val volume = intent.getIntExtra(INTENT_EXTRA_VOLUME, -1)
+        require(volume in 0..PlayerManager.MAX_VOLUME) {
+          "intent extra '${INTENT_EXTRA_VOLUME}=${volume}' must be in range [0, ${PlayerManager.MAX_VOLUME}]"
+        }
+
+        playerManager.setMasterVolume(volume)
+      }
+
       ACTION_SET_SOUND_VOLUME -> {
-        val volume = intent.getIntExtra(INTENT_EXTRA_SOUND_VOLUME, -1)
+        val volume = intent.getIntExtra(INTENT_EXTRA_VOLUME, -1)
         require(volume in 0..Player.MAX_VOLUME) {
-          "intent extra '${INTENT_EXTRA_SOUND_VOLUME}=${volume}' must be in range [0, ${Player.MAX_VOLUME}]"
+          "intent extra '${INTENT_EXTRA_VOLUME}=${volume}' must be in range [0, ${Player.MAX_VOLUME}]"
         }
 
         playerManager.setVolume(getSoundIdExtra(intent), volume)
       }
 
       ACTION_PLAY_PRESET -> playerManager.play(
-        requireNotNull(intent.getSerializableExtra(INTENT_EXTRA_PRESET) as? Preset) {
+        requireNotNull(intent.getSerializableExtraCompat(INTENT_EXTRA_PRESET, Preset::class)) {
           "intent extra '${INTENT_EXTRA_PRESET}' is required to send '${ACTION_PLAY_PRESET}' command"
         }
       )
@@ -284,7 +282,6 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener,
       ACTION_PLAY_RANDOM_PRESET -> {
         lifecycleScope.launch {
           presetRepository.generate(emptySet(), Random.nextInt(2, 6))
-            .flowOn(Dispatchers.IO)
             .lastOrNull()
             ?.data
             ?.also { playerManager.play(it) }
@@ -310,17 +307,19 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener,
 
   override fun onPlaybackUpdate(
     playerManagerState: PlaybackState,
-    playerStates: Array<PlayerState>
+    masterVolume: Int,
+    playerStates: Array<PlayerState>,
   ) {
     Log.i(LOG_TAG, "onPlaybackUpdate: managerState=$playerManagerState")
     val currentPreset = presets.find { it.hasMatchingPlayerStates(playerStates) }
     this.playerManagerState.value = playerManagerState
+    this.masterVolume.value = masterVolume
     this.playerStates.value = playerStates
     mediaSessionManager.setPresetTitle(currentPreset?.name)
     mediaSessionManager.setPlaybackState(playerManagerState)
     if (playerManagerState == PlaybackState.STOPPED) {
       Log.d(LOG_TAG, "onPlaybackUpdate: playback stopped, releasing resources")
-      stopForeground(true)
+      ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
       wakeLock.release()
     } else {
       Log.d(LOG_TAG, "onPlaybackUpdate: playback not stopped, ensuring resource acquisition")
@@ -380,6 +379,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener,
     internal const val ACTION_CLEAR_STOP_SCHEDULE = "clearStopSchedule"
     internal const val ACTION_SET_AUDIO_USAGE = "setAudioUsage"
     internal const val ACTION_SKIP_PRESET = "skipPreset"
+    internal const val ACTION_SET_MASTER_VOLUME = "setMasterVolume"
     internal const val ACTION_SET_SOUND_VOLUME = "setSoundVolume"
     internal const val ACTION_PLAY_RANDOM_PRESET = "playRandomPreset"
 
@@ -388,7 +388,7 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener,
     internal const val INTENT_EXTRA_SCHEDULED_STOP_AT_MILLIS = "scheduledStopAtMillis"
     internal const val INTENT_EXTRA_AUDIO_USAGE = "audioUsage"
     internal const val INTENT_EXTRA_PRESET_SKIP_DIRECTION = "presetSkipDirection"
-    internal const val INTENT_EXTRA_SOUND_VOLUME = "volume"
+    internal const val INTENT_EXTRA_VOLUME = "volume"
     internal const val INTENT_EXTRA_SKIP_FADE_TRANSITION = "skipFadeTransition"
 
     internal const val PRESET_SKIP_DIRECTION_NEXT = PlayerManager.PRESET_SKIP_DIRECTION_NEXT
@@ -398,5 +398,19 @@ class PlaybackService : LifecycleService(), PlayerManager.PlaybackListener,
 
 class PlaybackServiceBinder(
   val playerManagerState: Flow<PlaybackState>,
+  val masterVolume: Flow<Int>,
   val playerStates: Flow<Array<PlayerState>>,
 ) : Binder()
+
+// TODO: remove this extension when a replacement method is available the Androidx Compat libraries.
+private fun <T : java.io.Serializable> Intent.getSerializableExtraCompat(
+  key: String,
+  kClass: KClass<T>
+): T? {
+  return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    getSerializableExtra(key, kClass.java)
+  } else {
+    @Suppress("DEPRECATION")
+    getSerializableExtra(key)?.let { kClass.cast(it) }
+  }
+}

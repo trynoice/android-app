@@ -9,6 +9,14 @@
       name="plan"
       type="com.github.ashutoshgngwr.noice.models.SubscriptionPlan" />
 
+    <variable
+      name="isSelected"
+      type="boolean" />
+
+    <variable
+      name="preferLocalPricing"
+      type="boolean" />
+
   </data>
 
   <com.google.android.material.card.MaterialCardView
@@ -16,10 +24,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="8dp"
+    android:checkable="@{isSelected}"
+    android:checked="@{isSelected}"
     android:orientation="horizontal"
-    app:cardCornerRadius="24dp"
     app:cardElevation="0dp"
     app:contentPadding="16dp"
+    app:shapeAppearanceOverlay="?attr/shapeAppearanceCornerExtraLarge"
     app:strokeWidth="0dp">
 
     <!-- Padding bottom on the constraint layout offsets center imbalance due to line height of
@@ -27,47 +37,52 @@
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:paddingHorizontal="16dp"
+      android:paddingHorizontal="8dp"
       android:paddingBottom="6sp">
 
       <TextView
         android:id="@+id/billing_period"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
         android:paddingVertical="4dp"
         android:textAppearance="?attr/textAppearanceTitleLarge"
         app:billingPeriodMonths="@{plan.billingPeriodMonths}"
+        app:layout_constraintEnd_toStartOf="@id/monthly_price"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/quarterly" />
 
       <TextView
         android:id="@+id/trial_period"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
         android:paddingVertical="4dp"
         android:text="@{@string/trial_period(@plurals/n_days(plan.trialPeriodDays, plan.trialPeriodDays))}"
         android:textAppearance="?attr/textAppearanceBodyMedium"
+        app:layout_constraintEnd_toStartOf="@id/total_price"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/billing_period"
         tools:text="@string/trial_period" />
 
       <TextView
+        android:id="@+id/monthly_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="4dp"
-        android:text="@{@string/monthly_price(plan.monthlyPrice)}"
+        android:text="@{@string/monthly_price(plan.monthlyPrice(preferLocalPricing))}"
         android:textAppearance="?attr/textAppearanceTitleMedium"
         app:layout_constraintBottom_toBottomOf="@id/billing_period"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/billing_period"
         tools:text="@string/monthly_price" />
 
       <TextView
+        android:id="@+id/total_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="4dp"
-        android:text="@{@string/total_price(plan.totalPrice)}"
+        android:text="@{@string/total_price(plan.totalPrice(preferLocalPricing))}"
         android:textAppearance="?attr/textAppearanceBodyMedium"
         app:layout_constraintBottom_toBottomOf="@id/trial_period"
         app:layout_constraintEnd_toEndOf="parent"

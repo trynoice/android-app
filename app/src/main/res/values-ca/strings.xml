@@ -3,10 +3,10 @@
     <string name="help">Ayuda</string>
     <string name="presets">Predeterminados</string>
     <string name="support_development">Apoyar Desarrollo</string>
-    <string name="wake_up_timer">Despertador</string>
     <string name="about">Sobre</string>
     <string name="report_issue">Reportar fallos</string>
     <string name="app_theme">Tema</string>
     <string name="library">Librería</string>
     <string name="submit_feedback">Enviar Feedback</string>
+    <string name="email">Correu electrònic</string>
 </resources>

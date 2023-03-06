@@ -10,10 +10,10 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.CancelSubscriptionFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.models.Subscription
@@ -24,14 +24,12 @@ import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundErro
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -60,17 +58,17 @@ class CancelSubscriptionFragment : BottomSheetDialogFragment() {
     )
 
     binding.dismiss.setOnClickListener { dismissAndSetFragmentResult(true) }
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.isCancelling.collect { isCancelable = !it }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.cancelResource
         .filterNot { it is Resource.Loading }
         .collect { dismissAndSetFragmentResult(false) }
     }
 
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.errorStrRes
         .filterNotNull()
         .collect { causeStrRes ->
@@ -105,7 +103,7 @@ class CancelSubscriptionViewModel @Inject constructor(
 
   val isCancelling: StateFlow<Boolean> = cancelResource.transform { r ->
     emit(r is Resource.Loading)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   internal val errorStrRes: Flow<Int?> = cancelResource.transform { r ->
     emit(
@@ -120,9 +118,7 @@ class CancelSubscriptionViewModel @Inject constructor(
 
   fun cancel() {
     viewModelScope.launch {
-      subscriptionRepository.cancel(subscription)
-        .flowOn(Dispatchers.IO)
-        .collect(cancelResource)
+      subscriptionRepository.cancel(subscription).collect(cancelResource)
     }
   }
 }

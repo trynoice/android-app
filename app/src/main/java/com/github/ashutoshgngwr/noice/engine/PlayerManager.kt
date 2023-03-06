@@ -33,6 +33,7 @@ class PlayerManager(
   private var fadeInDuration = Duration.ZERO
   private var fadeOutDuration = Duration.ZERO
   private var isPremiumSegmentsEnabled = false
+  private var masterVolume = MAX_VOLUME
 
   private var audioFocusManager: AudioFocusManager =
     DefaultAudioFocusManager(context, audioAttributes, this)
@@ -45,31 +46,12 @@ class PlayerManager(
   private val players = ConcurrentHashMap<String, Player>()
   private val playerStates = ConcurrentHashMap<String, PlayerState>()
 
-  /**
-   * The aggregate [PlaybackState] of the [PlayerManager] depending on the individual playback
-   * states of the currently active sounds.
-   */
-  private val playbackState: PlaybackState
-    get() {
-      val playbackStates = this.playerStates.values.map { it.playbackState }
-      return when {
-        playbackStates.isEmpty() -> PlaybackState.STOPPED
-        playbackStates.all { it == PlaybackState.STOPPING } -> PlaybackState.STOPPING
-        playbackStates.all { it == PlaybackState.PAUSED } -> PlaybackState.PAUSED
-        playbackStates.all {
-          // some players may be stopping during a pause transition.
-          it.oneOf(PlaybackState.PAUSING, PlaybackState.STOPPING)
-        } -> PlaybackState.PAUSING
-        else -> PlaybackState.PLAYING
-      }
-    }
-
   override fun onAudioFocusGained() {
     resume()
   }
 
   override fun onAudioFocusLost(transient: Boolean) {
-    if (playbackState.oneOf(PlaybackState.PAUSED, PlaybackState.STOPPED)) {
+    if (aggregatePlaybackState().oneOf(PlaybackState.PAUSED, PlaybackState.STOPPED)) {
       return
     }
 
@@ -85,6 +67,7 @@ class PlayerManager(
    * Android system grants us the audio focus.
    */
   fun play(soundId: String) {
+    val wasPausing = aggregatePlaybackState() == PlaybackState.PAUSING
     val player = players.getOrPut(soundId) {
       playerStates.putIfAbsent(soundId, PlayerState(soundId, Player.DEFAULT_VOLUME))
       playerFactory.createPlayer(
@@ -95,6 +78,7 @@ class PlayerManager(
         defaultScope,
         buildPlayerPlaybackListener(soundId)
       ).apply {
+        setMasterVolume(masterVolume.toFloat() / MAX_VOLUME)
         setFadeInDuration(fadeInDuration)
         setFadeOutDuration(fadeOutDuration)
         setPremiumSegmentsEnabled(isPremiumSegmentsEnabled)
@@ -102,7 +86,7 @@ class PlayerManager(
     }
 
     if (audioFocusManager.hasFocus()) {
-      player.play()
+      if (wasPausing) player.pause(true) else player.play()
     } else {
       audioFocusManager.requestFocus()
     }
@@ -125,7 +109,7 @@ class PlayerManager(
         playerStates[soundId] = PlayerState(soundId, volume, playbackState)
       }
 
-      if (players.isEmpty()) { // playback has stopped
+      if (aggregatePlaybackState().oneOf(PlaybackState.PAUSED, PlaybackState.STOPPED)) {
         audioFocusManager.abandonFocus()
       }
 
@@ -175,9 +159,10 @@ class PlayerManager(
   fun resume() {
     stopOnIdleJob?.cancel()
     if (audioFocusManager.hasFocus()) {
+      val isManagerStopping = aggregatePlaybackState() == PlaybackState.STOPPING
       players.forEach { (id, player) ->
-        // do not resume 'STOPPING' players.
-        if (playerStates[id]?.playbackState != PlaybackState.STOPPING) {
+        // do not resume 'STOPPING' players if the manager is not stopping.
+        if (isManagerStopping || playerStates[id]?.playbackState != PlaybackState.STOPPING) {
           player.play()
         }
       }
@@ -192,6 +177,20 @@ class PlayerManager(
   fun stop(immediate: Boolean) {
     stopOnIdleJob?.cancel()
     players.values.forEach { it.stop(immediate) }
+  }
+
+  /**
+   * Sets a volume multiplier that scales volumes of all sounds.
+   */
+  fun setMasterVolume(volume: Int) {
+    if (masterVolume == volume) {
+      return
+    }
+
+    require(volume in 0..MAX_VOLUME) { "master volume must be in range [0, ${MAX_VOLUME}]" }
+    masterVolume = volume
+    players.values.forEach { it.setMasterVolume(volume.toFloat() / MAX_VOLUME) }
+    notifyPlaybackListener()
   }
 
   /**
@@ -250,9 +249,9 @@ class PlayerManager(
    */
   fun setAudioAttributes(audioAttributes: AudioAttributesCompat) {
     this.audioAttributes = audioAttributes
-    val wasPlaying = !playbackState.oneOf(PlaybackState.PAUSED, PlaybackState.STOPPED)
+    val wasPlaying = aggregatePlaybackState() == PlaybackState.PLAYING
     if (audioFocusManager.hasFocus()) {
-      pauseIndefinitely(true)
+      pause(true)
       audioFocusManager.abandonFocus()
     }
 
@@ -276,8 +275,8 @@ class PlayerManager(
     }
 
     if (oldManager != audioFocusManager) {
-      val wasPlaying = !playbackState.oneOf(PlaybackState.PAUSED, PlaybackState.STOPPED)
-      pauseIndefinitely(true)
+      val wasPlaying = aggregatePlaybackState() == PlaybackState.PLAYING
+      pause(true)
       oldManager.abandonFocus()
       if (wasPlaying) {
         audioFocusManager.requestFocus()
@@ -345,21 +344,43 @@ class PlayerManager(
       return
     }
 
-    val playerStates = if (playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED)) {
+    val managerState = aggregatePlaybackState()
+    val playerStates = if (managerState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED)) {
       // unless all players are either stopping or stopped, only consider not stopping or stopped
       // players for the notification event.
-      playerStates.values
+      this.playerStates.values
     } else {
-      playerStates.values
+      this.playerStates.values
         .filterNot { it.playbackState.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
     }.toTypedArray()
 
-    playbackListener.onPlaybackUpdate(playbackState, playerStates)
+    playbackListener.onPlaybackUpdate(managerState, masterVolume, playerStates)
+  }
+
+  /**
+   * @return the aggregate [PlaybackState] of the [PlayerManager] depending on the individual
+   * playback states of the currently active sounds. The returned [PlaybackState] is always one of
+   * [PlaybackState.PLAYING], [PlaybackState.PAUSING], [PlaybackState.PAUSED],
+   * [PlaybackState.STOPPING] or [PlaybackState.STOPPED].
+   */
+  private fun aggregatePlaybackState(): PlaybackState {
+    val playbackStates = playerStates.values.map { it.playbackState }
+    return when {
+      playbackStates.isEmpty() -> PlaybackState.STOPPED
+      playbackStates.all { it == PlaybackState.STOPPING } -> PlaybackState.STOPPING
+      playbackStates.all { it == PlaybackState.PAUSED } -> PlaybackState.PAUSED
+      playbackStates.all {
+        // some players may be stopping during a pause transition.
+        it.oneOf(PlaybackState.PAUSING, PlaybackState.STOPPING)
+      } -> PlaybackState.PAUSING
+      else -> PlaybackState.PLAYING
+    }
   }
 
   companion object {
     private const val LOG_TAG = "PlayerManager"
 
+    internal const val MAX_VOLUME = 25
     internal const val PRESET_SKIP_DIRECTION_NEXT = 1
     internal const val PRESET_SKIP_DIRECTION_PREV = -1
 
@@ -381,6 +402,10 @@ class PlayerManager(
   }
 
   fun interface PlaybackListener {
-    fun onPlaybackUpdate(playerManagerState: PlaybackState, playerStates: Array<PlayerState>)
+    fun onPlaybackUpdate(
+      playerManagerState: PlaybackState,
+      masterVolume: Int,
+      playerStates: Array<PlayerState>,
+    )
   }
 }

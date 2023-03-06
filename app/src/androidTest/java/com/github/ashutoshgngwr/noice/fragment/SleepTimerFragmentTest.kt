@@ -6,13 +6,12 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
 import com.github.ashutoshgngwr.noice.HiltFragmentScenario
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SleepTimerFragmentBinding
-import com.github.ashutoshgngwr.noice.playback.PlaybackController
+import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -24,11 +23,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import java.util.concurrent.TimeUnit
 
 @HiltAndroidTest
-@RunWith(AndroidJUnit4::class)
 class SleepTimerFragmentTest {
 
   @get:Rule
@@ -48,12 +44,12 @@ class SleepTimerFragmentTest {
   @Test
   fun testDurationPickerListener_onSleepPreScheduled() {
     val before = SystemClock.uptimeMillis()
-    every { mockPlaybackController.getScheduledAutoStopRemainingDurationMillis() } returns 60L * 1000
+    every { mockPlaybackController.getStopScheduleRemainingMillis() } returns 60L * 1000
     onView(withId(R.id.duration_picker)).perform(EspressoX.addDurationToPicker(60))
     verify(exactly = 1) {
-      mockPlaybackController.scheduleAutoStop(withArg {
+      mockPlaybackController.scheduleStop(withArg {
         val delta = SystemClock.uptimeMillis() - before
-        val duration = TimeUnit.SECONDS.toMillis(120)
+        val duration = 120L * 1000
         assertTrue(it in (duration - delta)..(duration))
       })
     }
@@ -64,9 +60,9 @@ class SleepTimerFragmentTest {
     val before = SystemClock.uptimeMillis()
     onView(withId(R.id.duration_picker)).perform(EspressoX.addDurationToPicker(300))
     verify(exactly = 1) {
-      mockPlaybackController.scheduleAutoStop(withArg {
+      mockPlaybackController.scheduleStop(withArg {
         val delta = SystemClock.uptimeMillis() - before
-        val duration = TimeUnit.SECONDS.toMillis(300)
+        val duration = 300L * 1000
         assertTrue(it in (duration - delta)..(duration))
       })
     }

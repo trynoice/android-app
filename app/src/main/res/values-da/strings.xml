@@ -17,7 +17,6 @@
     <string name="okay">Okay</string>
     <string name="intensity">Intensitivitet</string>
     <string name="submit_feedback">Indsend tilbagemelding</string>
-    <string name="wake_up_timer">Vågn-op Timer</string>
     <string name="support_development">Støt udvikling</string>
     <string name="sleep_timer">Sove Timer</string>
     <string name="presets">Gemte forudindstillinger</string>
@@ -32,21 +31,11 @@
     <string name="rename">Omdøb</string>
     <string name="pinned_shortcuts_not_supported">Din standard hjemmeskærm understøtter ikke tilføjning af genveje.</string>
     <string name="sleep_timer_description">Noice vil selv slukke når tiden går ud. Brug knapperne nedenunder for at tilføje tid og starte timere.</string>
-    <string name="schedule">Plan</string>
-    <string name="wake_up_timer_cancelled">Vågn op timer annuleret!</string>
-    <string name="time_bridge">og</string>
     <string name="app_theme_light">Lys</string>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d time</item>
-        <item quantity="other">%1$d timer</item>
-    </plurals>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d minut</item>
-        <item quantity="other">%1$d minutter</item>
-    </plurals>
     <string name="auto_sleep_schedule_cancelled">Automatisk søvntimer annulleret!</string>
     <string name="preset_deleted">Forudindstillet slettet!</string>
     <string name="preset_does_not_exist">Forindstilling findes ikke. Den er muligvis blevet slettet!</string>
     <string name="preset_info__description">Du har endnu ikke oprettet nogen forudindstillinger. Du kan oprette en forudindstilling ved at gå til biblioteket og afspille lyde. Klik derefter på knappen, der vises i nederste hjørne af skærmen.</string>
     <string name="presets_as_home_screen_summary">Vis \"presets\" ved appstart (kræver genstart af appen)</string>
+    <string name="email">E-mail</string>
 </resources>

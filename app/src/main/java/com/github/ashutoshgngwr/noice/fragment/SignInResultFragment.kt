@@ -12,10 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignInResultFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
@@ -24,12 +24,10 @@ import com.github.ashutoshgngwr.noice.repository.errors.AccountTemporarilyLocked
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
@@ -63,7 +61,7 @@ class SignInResultFragment : Fragment() {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
     binding.openMailbox.setOnClickListener { openMailbox() }
-    viewLifecycleOwner.lifecycleScope.launch {
+    viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.signInError
         .filterNotNull()
         .collect { cause ->
@@ -111,11 +109,11 @@ class SignInResultViewModel @Inject constructor(
 
   val isSigningIn: StateFlow<Boolean> = signInResource.transform { r ->
     emit(r is Resource.Loading)
-  }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
   val signInError: StateFlow<Throwable?> = signInResource
     .map { it.error }
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   init {
     val navArgs = SignInResultFragmentArgs.fromSavedStateHandle(savedStateHandle)
@@ -136,7 +134,7 @@ class SignInResultViewModel @Inject constructor(
         accountRepository.signUp(email, requireNotNull(name))
       }
 
-      flow.flowOn(Dispatchers.IO).collect(signInResource)
+      flow.collect(signInResource)
     }
   }
 }

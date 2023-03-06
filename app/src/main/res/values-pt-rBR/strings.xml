@@ -8,14 +8,13 @@
     <string name="presets">Predefinições</string>
     <string name="sleep_timer">Temporizador</string>
     <string name="support_development">Apoie o desenvolvimento</string>
-    <string name="wake_up_timer">Despertador</string>
     <string name="okay">OK</string>
     <string name="cancel">Cancelar</string>
     <string name="dismiss">Dispensar</string>
     <string name="name">Nome</string>
     <string name="pause">Pausar</string>
-    <string name="preset_already_exists">Já existe uma predefinição com o nome fornecido!</string>
-    <string name="preset_name_cannot_be_empty">Uma predefinição não pode ter seu nome vazio!</string>
+    <string name="preset_already_exists">Já existe uma predefinição com o nome fornecido. Tente outro!</string>
+    <string name="preset_name_cannot_be_empty">O nome da predefinição está em falta. Por favor, insira um nome único!</string>
     <string name="preset_saved">Predefinição salva!</string>
     <string name="save">Salvar</string>
     <string name="save_preset">Salvar predefinição</string>
@@ -26,7 +25,7 @@
     <string name="delete">Remover</string>
     <string name="open_context_menu">Abrir menu</string>
     <string name="preset_delete_confirmation">Deseja mesmo remover \"%s\"?</string>
-    <string name="preset_deleted">Ajuste removido!</string>
+    <string name="preset_deleted">Sua predefinição foi apagada com sucesso!</string>
     <string name="preset_info__description">
     Você ainda não criou nenhum ajuste. Para criar um ajuste, vá para a Biblioteca e reproduza sons.
     Em seguida, clique no botão Salvar que aparece no canto inferior da tela.
@@ -38,12 +37,7 @@
     Assim que o temporizador acabar, Noice irá parar de tocar qualquer som.
     Use os botões abaixo para acrescentar tempo e iniciar o temporizador.
   </string>
-    <string name="schedule">Agendar</string>
     <string name="select_preset">Selecionar predefinição</string>
-    <string name="wake_up_timer_description">
-    Noice irá iniciar o ajuste selecionado quando o tempo acabar. Use os botões abaixo para
-    selecionar um ajuste e definir a hora desejada para iniciar o despertador.
-  </string>
     <string name="app_theme_light">Claro</string>
     <string name="app_theme_dark">Escuro</string>
     <string name="app_theme_system_default">Padrão do sistema</string>
@@ -91,17 +85,6 @@
     <string name="notification_channel_default__description">Controles de áudio</string>
     <string name="notification_channel_default__name">Reprodução de áudio</string>
     <string name="submit_feedback">Enviar comentários</string>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d minuto</item>
-        <item quantity="other">%1$d minutos</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d hora</item>
-        <item quantity="other">%1$d horas</item>
-    </plurals>
-    <string name="time_bridge">e</string>
-    <string name="wake_up_timer_schedule_set">O alarme vai disparar em %1$s %2$s %3$s</string>
-    <string name="wake_up_timer_cancelled">Despertador cancelado!</string>
     <string name="presets_as_home_screen_summary">Mostrar \"predefinições\" na inicialização do aplicativo (requer reinício do aplicativo)</string>
     <string name="pinned_shortcuts_not_supported">Seu lançador padrão não suporta a adição de atalhos.</string>
     <string name="preset_does_not_exist">Predefinição não existe. Ela pode ter sido deletada!</string>
@@ -186,7 +169,6 @@
     <string name="sign_in_to_continue">Faça login ou cadastre-se para continuar.</string>
     <string name="manage_subscription">Administrar Subscrição</string>
     <string name="playing">Tocando</string>
-    <string name="benefit_0">Variações naturais nos sons</string>
     <string name="app">Aplicação</string>
     <string name="subscription_payment_cancelled">O pagamento da assinatura foi cancelado!</string>
     <string name="made_in_india">Feito com ❤ na Índia</string>
@@ -194,7 +176,7 @@
     <string name="sign_in">Entrar</string>
     <string name="benefits">Benefícios</string>
     <string name="paid_using">Pago usando %1$s</string>
-    <string name="has_premium_segments">Este som tem componentes premium.</string>
+    <string name="has_premium_segments">Este som oferece variantes adicionais com o Noice Premium.</string>
     <string name="subscription_purchases_load_error">Uh-oh! Não foi possível buscar seu histórico de compras de assinatura. %1$s</string>
     <string name="audio_quality_medium">Média (192 kbps)</string>
     <string name="sign_up_email_sent">Enviamos um link de login por e-mail para \"%1$s\".</string>
@@ -206,12 +188,11 @@
     <string name="quarterly">Trimestral</string>
     <string name="subscription_plans_load_error">Ops! Não foi possível buscar planos de assinatura. %1$s</string>
     <string name="open_mailbox">Abri Caixa de Correio</string>
-    <string name="benefit_2">Reprodução sem conexão</string>
     <string name="payment_processing_error">Uh-oh! Não foi possível processar seu pagamento. O valor deve ser reembolsado automaticamente se deduzido. Se você não receber seu reembolso dentro de uma semana, por favor, avise-nos.</string>
     <string name="subscription_payment_refunded">Cancelamos esta compra e iniciamos um reembolso para ela.</string>
     <string name="media_sources">Fontes de mídias</string>
     <string name="signing_out">Desconectando</string>
-    <string name="monthly_price">%1$s/mês</string>
+    <string name="monthly_price">%1$s por mês</string>
     <string name="user_already_subscribed">Você já é subscrito.</string>
     <string name="subscription_payment_complete">Obrigado por se inscrever no Noice Premium. Sua assinatura agora está ativa.</string>
     <string name="cancel_subscription">Cancelar subscrição</string>
@@ -231,7 +212,7 @@
     <string name="plans">Planos</string>
     <string name="looping_sound">Este som se repete sem interrupção.</string>
     <string name="library_load_error">Ops! Não foi possível buscar a biblioteca de sons. %1$s</string>
-    <string name="audio_quality_summary">A máxima qualidade de áudio para streaming. Médio, Alto e Ultra só funcionam quando você está inscrito.</string>
+    <string name="audio_quality_summary">A máxima qualidade de áudio para streaming. Médio, Alto e Ultra só funcionam se você tiver uma assinatura Noice Premium.</string>
     <string name="stopping">Parando</string>
     <string name="view_subscription_plans">Ver planos</string>
     <string name="welcome_back">Bem vindo de volta!</string>
@@ -251,7 +232,7 @@
     <string name="sign_in_token_error">O link de login parece ser inválido. Pode ter expirado. Por favor, tente novamente!</string>
     <string name="sign_in_sucessful">Conectado com sucesso!</string>
     <string name="cont">Continuar</string>
-    <string name="delete_account_confirmation">Ao excluir sua conta, você perderá imediatamente o acesso ao seu perfil. Se você tiver uma assinatura em andamento, ela será cancelada. Observe que pode demorar um pouco para apagar completamente seus dados de nossos servidores.</string>
+    <string name="delete_account_confirmation">Você perderá acesso imediatamente à sua conta ao deletá-la. Se você tiver uma assinatura do Noice Premium em andamento, ela será cancelada. Se você mudar de ideia, você pode restaurar sua conta fazendo login novamente em até 7 dias após a solicitação. Após este período nós removeremos todos os dados de sua conta de nossos servidores.</string>
     <string name="deleting_account">Excluindo conta</string>
     <string name="duplicate_email_error">O e-mail inserido está associado a outra conta.</string>
     <string name="yearly">Anual</string>
@@ -271,6 +252,7 @@
     <string name="privacy_policy">Política de Privacidade</string>
     <plurals name="n_months">
         <item quantity="one">%1$d mes</item>
+        <item quantity="many">%1$d meses</item>
         <item quantity="other">%1$d meses</item>
     </plurals>
     <string name="welcome">Seja Bem vindo!</string>
@@ -279,7 +261,6 @@
     <string name="delete_account">Apagar conta</string>
     <string name="support_development__donate_description">Se você ainda não adquiriu uma subscrição premium, poderá fazer um pagamento único. Isso nos ajudará a manter o desenvolvimento das funcionalidades gratuitas e mante-las livres de publicidade sempre.</string>
     <string name="random_preset_description">É provável que o pre-ajuste gerado pode conter sons das palavras selecionadas. Contudo, os ajustes intensos tentarão reproduzir mais sons simultaneamente.</string>
-    <string name="benefit_1">Transmissão de áudio de alta qualidade</string>
     <string name="subscription_payment_confirmation_failed">Uh-oh! Tivemos alguns problemas enquanto esperávamos a confirmação do pagamento. Pode ser devido a um erro de rede ou a um atraso do provedor de pagamento. Atualizaremos o status da sua assinatura assim que recebermos uma resposta do provedor. Por favor, verifique o status da sua assinatura depois de algum tempo.</string>
     <string name="monthly">Mensal</string>
     <string name="cancel_subscription_confirmation">Tem certeza de que deseja cancelar sua assinatura do Noice Premium\? Após o cancelamento, sua assinatura será encerrada automaticamente no final do ciclo de cobrança atual. Seu ciclo de cobrança atual termina em %1$s.</string>
@@ -292,4 +273,31 @@
     <string name="third_party_attributions">Atribuições de terceiros</string>
     <string name="tags_load_error">Oh não! Não foi possível carregar palavras-chave adequadas. %1$s Por favor, tente novamente!</string>
     <string name="oss_licenses">Licenças de software de código aberto</string>
+    <plurals name="n_days">
+        <item quantity="one">%1$d dia</item>
+        <item quantity="many">%1$d dias</item>
+        <item quantity="other">%1$d dias</item>
+    </plurals>
+    <string name="use_material_you_colors">Usar cores \"Material You\"</string>
+    <string name="download_sound">Baixar som</string>
+    <string name="notification_channel_sound_downloads__description">Notificações de progresso para download de sons.</string>
+    <string name="notification_channel_sound_downloads__name">Downloads de Sons</string>
+    <string name="play_sound_before_adjusting_volume">Você precisa tocar este som antes de ajustar seu volume.</string>
+    <string name="use_material_you_colors_summary">Usar a paleta de cores \"Material You\" do sistema Android</string>
+    <string name="stripe_customer_portal_error">Ops! Não pudemos abrir o portal de pagamento. %1$s Por favor, tente novamente!</string>
+    <string name="checking_sound_downloads">Verificando sons baixados</string>
+    <string name="remove_all_sound_downloads_confirmation">Isto removerá todos os sons baixados para uso offline. Deseja prosseguir\?</string>
+    <string name="remove_all_sound_downloads">Remover todos os sons baixados</string>
+    <string name="sound_scheduled_for_download">Preparando para baixar %1$s.</string>
+    <string name="sound_download_scheduled_for_removal">Preparando para remover %1$s dos seus sons baixados.</string>
+    <string name="sound_is_premium">Este som está disponível com o Noice Premium.</string>
+    <string name="trial_period">Período de teste: %1$s</string>
+    <string name="sound_downloads_scheduled_for_removal">Todos os sons baixados foram programados para remoção com sucesso.</string>
+    <string name="remove_sound_download">Remover %1$s</string>
+    <string name="remove_sound_download_confirmation">Tem certeza que deseja remover um som baixado para uso offline\?</string>
+    <string name="alarms">Alarmes</string>
+    <string name="add_alarm">Adicionar um Alarme</string>
+    <string name="no_alarms_description">Adicione um novo alarme apertando o botão \"+\"</string>
+    <string name="alarm_permission_rationale_title">Permita que Noice agende alarmes</string>
+    <string name="no_alarms">Nenhum Alarme</string>
 </resources>

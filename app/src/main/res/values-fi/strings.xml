@@ -8,7 +8,6 @@
     <string name="help">Ohje</string>
     <string name="app_theme">Teema</string>
     <string name="about">Tietoja</string>
-    <string name="wake_up_timer">Herätysajastin</string>
     <string name="presets">Esiasetukset</string>
     <string name="support_development__share_description">Noicen jakaminen ystäviesi kanssa on verrattavissa rahan lahjoittamiseen. Kun latauksia on enemmän, voimme vastaanottaa palautetta useista eri näkökulmista, joka auttaa meitä tekemään Noicesta entistäkin paremman.</string>
     <string name="support_development__share">Jaa ystäviesi kanssa</string>
@@ -30,20 +29,7 @@
     <string name="app_theme_system_default">Järjestelmän oletus</string>
     <string name="app_theme_dark">Tumma</string>
     <string name="app_theme_light">Vaalea</string>
-    <string name="wake_up_timer_description">Noice käynnistää valitun esiasetuksen, kun ajastin päättyy. Valitse esiasetus alla olevilla painikkeilla ja aseta haluamasi aika herätysajastimen käynnistymiselle.</string>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d minuutti</item>
-        <item quantity="other">%1$d minuutin</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d tunti</item>
-        <item quantity="other">%1$d tunnin</item>
-    </plurals>
-    <string name="time_bridge">ja</string>
-    <string name="wake_up_timer_schedule_set">Hälytys kytkeytyy pois: %1$s %2$s %3$s</string>
-    <string name="wake_up_timer_cancelled">Herätysajastin peruttu!</string>
     <string name="select_preset">Valitse esiasetukset</string>
-    <string name="schedule">Aikataulu</string>
     <string name="sleep_timer_description">Noice sovellus sammuttaa itsensä, kun ajastin päättyy. Käytä alla olevia painikkeita lisätäksesi aikaa ja käynnistääksesi ajastimen.</string>
     <string name="reset">Nollaa</string>
     <string name="auto_sleep_schedule_cancelled">Automaattinen uniajastin peruutettu!</string>
@@ -129,4 +115,6 @@
     <string name="enable_media_buttons">Käytä media painikkeita</string>
     <string name="support_development__donate_description">Ellet ole maksanut premium tilausta, voit tehdä sen kertamaksulla. Se tulee auttamaan meitä ylläpitämään ilmaisien ominaisuuksien kehitystä, ja pitämään ne mainoksettomina.</string>
     <string name="random_preset_description">On mahdollista, että luotu esiasetus sisältää ääniä valituilla avainsanoilla. Lisäksi, intensiiviset esiasetukset yrittävät toistaa useampia ääniä samanaikaisesti.</string>
+    <string name="invalid_name">Syötetty nimi on virheellinen!</string>
+    <string name="email">Sähköposti</string>
 </resources>

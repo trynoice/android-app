@@ -14,24 +14,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
+      android:id="@+id/empty_list_indicator"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:layout_margin="@dimen/root_layout_padding"
-      android:drawablePadding="16dp"
+      android:layout_height="match_parent"
       android:gravity="center"
-      android:text="@string/preset_info__description"
-      android:textAppearance="?attr/textAppearanceBodyMedium"
-      android:textColor="?android:attr/textColorSecondary"
-      app:drawableTint="?android:attr/textColorSecondary"
-      app:drawableTopCompat="@drawable/ic_info_48dp"
-      app:isVisible="@{viewModel.isEmptyIndicatorVisible}" />
+      android:orientation="vertical"
+      android:padding="@dimen/root_layout_padding"
+      app:isVisible="@{viewModel.isEmptyIndicatorVisible}">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="12dp"
+        android:gravity="center"
+        android:text="@string/no_presets"
+        android:textAppearance="?attr/textAppearanceHeadlineSmall"
+        android:textColor="?android:attr/textColorHint"
+        app:drawableTint="?android:attr/textColorHint"
+        app:drawableTopCompat="@drawable/ic_round_star_outline_72" />
+
+      <Space
+        android:layout_width="wrap_content"
+        android:layout_height="12dp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/preset_info__description"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        android:textColor="?android:attr/textColorHint" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/list"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:clipToPadding="false"
+      android:paddingBottom="76dp"
       app:hasFixedSize="@{true}"
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 

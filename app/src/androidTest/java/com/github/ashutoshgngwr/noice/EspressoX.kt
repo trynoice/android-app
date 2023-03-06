@@ -9,16 +9,14 @@ import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
-import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.MotionEvents
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
-import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.github.ashutoshgngwr.noice.widget.DurationPicker
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,8 +24,12 @@ import com.google.android.material.slider.Slider
 import com.google.android.material.textfield.TextInputLayout
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.instanceOf
 import org.hamcrest.TypeSafeMatcher
+import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
+import java.io.Closeable
 
 
 /**
@@ -122,24 +124,23 @@ object EspressoX {
     }
   }
 
-  /**
-   * Returns a matcher that matches the nested intent sent with an Intent chooser.
-   */
-  fun hasIntentChooser(matcher: Matcher<Intent>): Matcher<Intent> {
-    return allOf(
-      hasAction(Intent.ACTION_CHOOSER),
-      hasExtra(`is`(Intent.EXTRA_INTENT), matcher)
-    )
-  }
+  fun itemAtPosition(position: Int, @IdRes viewId: Int, assertion: ViewAssertion): ViewAssertion {
+    return ViewAssertion { view: View, noViewException: NoMatchingViewException? ->
+      if (noViewException != null) {
+        throw noViewException
+      }
 
-  /**
-   * [noop] returns a [ViewAction] that does nothing.
-   */
-  fun noop(): ViewAction {
-    return object : ViewAction {
-      override fun getDescription() = "no-op"
-      override fun getConstraints() = any(View::class.java)
-      override fun perform(uiController: UiController, view: View) = Unit
+      assertTrue(view is RecyclerView)
+      val targetView = (view as? RecyclerView)?.findViewHolderForAdapterPosition(position)
+        ?.itemView
+        ?.findViewById<View?>(viewId)
+
+      if (targetView == null) {
+        fail("position [$position] doesn't exist in Adapter")
+        return@ViewAssertion
+      }
+
+      assertion.check(targetView, null)
     }
   }
 
@@ -151,17 +152,10 @@ object EspressoX {
   }
 
   /**
-   * Matches [matchers] in a root that [isDialog].
-   */
-  fun onViewInDialog(vararg matchers: Matcher<View>): ViewInteraction {
-    return onView(allOf(*matchers)).inRoot(isDialog())
-  }
-
-  /**
    * https://github.com/android/architecture-samples/blob/2291fc6d2e17a37be584a89b80ee73c207c804c3/app/src/androidTest/java/com/example/android/architecture/blueprints/todoapp/HiltExt.kt#L28-L65
    */
   inline fun <reified F : Fragment> launchFragmentInHiltContainer(
-    fragmentArgs: Bundle? = null,
+    fragmentArgs: Bundle = Bundle(),
     @StyleRes themeResId: Int = R.style.Theme_App,
   ): HiltFragmentScenario<F> {
     val context = ApplicationProvider.getApplicationContext<Context>()
@@ -196,29 +190,14 @@ object EspressoX {
 class HiltFragmentScenario<F : Fragment>(
   private val activityScenario: ActivityScenario<HiltTestActivity>,
   private val fragment: F,
-) {
+) : Closeable {
 
   fun onFragment(action: (F) -> Unit): HiltFragmentScenario<F> {
     activityScenario.onActivity { action.invoke(fragment) }
     return this
   }
 
-  fun recreate(): HiltFragmentScenario<F> {
-    activityScenario.recreate()
-    return this
-  }
-
-  inline fun <T : Any> withFragment(crossinline block: F.() -> T): T {
-    lateinit var value: T
-    var err: Throwable? = null
-    onFragment { fragment ->
-      try {
-        value = block(fragment)
-      } catch (t: Throwable) {
-        err = t
-      }
-    }
-    err?.let { throw it }
-    return value
+  override fun close() {
+    activityScenario.close()
   }
 }

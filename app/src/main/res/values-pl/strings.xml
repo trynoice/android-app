@@ -7,7 +7,6 @@
     <string name="presets">Zapisane ustawienia</string>
     <string name="sleep_timer">Wyłącznik czasowy</string>
     <string name="support_development">Wesprzyj rozwój</string>
-    <string name="wake_up_timer">Zegar budzenia</string>
     <string name="cancel">Anuluj</string>
     <string name="dismiss">Odrzuć</string>
     <string name="name">Nazwa</string>
@@ -37,10 +36,6 @@
     Użyj poniższych przycisków, aby dodać czas i uruchomić czasomierz.
   </string>
     <string name="select_preset">Wybierz szablon</string>
-    <string name="wake_up_timer_description">
-    Noice rozpocznie wybrany szablon po upływie czasu. Użyj poniższych przycisków, aby wybrać
-    szablon i dodać żądany czas trwania, aby uruchomić budzik.
-  </string>
     <string name="app_theme_light">Jasny</string>
     <string name="app_theme_dark">Ciemny</string>
     <string name="app_theme_system_default">Domyślny systemowy</string>
@@ -51,11 +46,7 @@
     Z całego serca dziękujemy Ci za Twój hojny wkład w projekt Noice.
   </string>
     <string name="support_development__share">Podziel się z przyjaciółmi</string>
-    <string name="support_development__share_description">
-    Dzielenie się tą aplikacją z przyjaciółmi jest podobne do przekazywania pieniędzy. Z większą
-    liczbą pobrań, będziemy mogli uzyskać informacje zwrotne z wielu różnych perspektyw, które
-    pomogą nam w uczynieniu Noice lepszym niż kiedykolwiek wcześniej.
-  </string>
+    <string name="support_development__share_description">Możesz nam również pomóc, opowiadając o nas znajomym. Więcej użytkowników przekaże nam opinie z kilku różnych perspektyw i pomoże nam ulepszyć nasze usługi.</string>
     <string name="cast_media">Połącz z Chromecast</string>
     <string name="notification_channel_default__description">Elementy sterujące odtwarzaniem multimediów</string>
     <string name="notification_channel_default__name">Odtwarzanie multimediów</string>
@@ -68,12 +59,11 @@
     <string name="appintro__getting_started_desc_1">Zaczynajmy!</string>
     <string name="appintro__getting_started_desc_0">Przesuń w lewo aby poznać wszystkie funkcje!</string>
     <string name="appintro__chromecast_title">Chromecast aktywny</string>
-    <string name="schedule">Zaplanuj</string>
     <string name="pinned_shortcuts_not_supported">Twój domyślny ekran startowy nie wspiera dodawania skrótów.</string>
     <string name="add_to_home_screen">Dodaj do ekranu głównego</string>
-    <string name="okay">Okej</string>
+    <string name="okay">Ok</string>
     <string name="intensity">Intensywność</string>
-    <string name="submit_feedback">Wyślij Opinie</string>
+    <string name="submit_feedback">Wyślij opinię</string>
     <string name="help">Pomoc</string>
     <string name="pinned_shortcut_created">Skrót został dodany do ekranu głównego!</string>
     <string name="pinned_shortcut_creation_failed">Nie udało się dodać skrótu do ekranu głównego!</string>
@@ -111,22 +101,95 @@
     <string name="app_shortcut_created">Do skrótów aplikacji dodano ustawienie wstępne!</string>
     <string name="app_shortcut_removed">Ustawienie wstępne zostało usunięte ze skrótów do aplikacji!</string>
     <string name="remove_from_app_shortcuts">Usuń ze skrótów aplikacji</string>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d minuta</item>
-        <item quantity="few">%1$d minuty</item>
-        <item quantity="many">%1$d minut</item>
-        <item quantity="other">%1$d minut</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d godzina</item>
-        <item quantity="few">%1$d godziny</item>
-        <item quantity="many">%1$d godzin</item>
-        <item quantity="other">%1$d godzin</item>
-    </plurals>
-    <string name="time_bridge">i</string>
-    <string name="wake_up_timer_schedule_set">Alarm włączy się za %1$s %2$s %3$s</string>
-    <string name="wake_up_timer_cancelled">Anulowano Wake-up Timer!</string>
     <string name="should_display_sound_icons">Pokaż ikony dźwięku</string>
     <string name="sound_fade_in_duration_summary">Czas zaniku dźwięków (w sekundach)</string>
     <string name="sound_fade_in_duration">Czas zaniku dźwięku</string>
+    <plurals name="n_days">
+        <item quantity="one">%1$d dzień</item>
+        <item quantity="few">%1$d dni</item>
+        <item quantity="many">%1$d dni</item>
+        <item quantity="other">%1$d dni</item>
+    </plurals>
+    <string name="trial_period">Okres próbny: %1$s</string>
+    <string name="remove_sound_download">Usuń %1$s</string>
+    <string name="notification_channel_sound_downloads__description">Powiadomienia o postępie pobierania dźwięków.</string>
+    <string name="stripe_customer_portal_error">Ups! Nie mogliśmy otworzyć portalu rozliczeniowego. %1$s Proszę spróbować ponownie!</string>
+    <string name="use_material_you_colors_summary">Użyj palety kolorów Material You z systemu Android</string>
+    <string name="checking_sound_downloads">Sprawdzanie pobranych dźwięków</string>
+    <string name="remove_all_sound_downloads">Usuń wszystkie pobrane dźwięki</string>
+    <string name="remove_all_sound_downloads_confirmation">Spowoduje to usunięcie wszystkich dźwięków pobranych do odtwarzania w trybie offline. Czy chcesz kontynuować\?</string>
+    <string name="oss_licenses">Licencje oprogramowania otwarto źródłowego</string>
+    <string name="sound_is_premium">Ten dźwięk jest dostępny w Noice Premium.</string>
+    <string name="use_material_you_colors">Użyj kolorów Material You</string>
+    <string name="download_sound">Pobierz dźwięk</string>
+    <string name="notification_channel_sound_downloads__name">Pobieranie dźwięku</string>
+    <string name="select_a_plan">Wybierz plan</string>
+    <string name="plans">Plany</string>
+    <string name="confirming_payment">Potwierdzenie płatności</string>
+    <string name="failed_to_load_inapp_purchases">Nie udało się wczytać szczegółów zakupu w aplikacji. Spróbuj ponownie później!</string>
+    <string name="export_presets_successful">Pomyślnie wyeksportowano \"Zapisane ustawienia\" do pliku!</string>
+    <string name="delete_account_confirmation">Po usunięciu natychmiast utracisz dostęp do swojego konta. Jeśli masz trwającą subskrypcję Noice Premium, przestaniemy za nią pobierać opłaty. Jeśli zmienisz zdanie, możesz przywrócić swoje konto, logując się ponownie w dowolnym momencie przed upływem 7 dni od usunięcia. Po tym okresie trwale usuniemy dane Twojego konta z naszych serwerów.</string>
+    <string name="support_development__donate_description">Jeśli nie wykupiłeś subskrypcji premium, możesz dokonać jednorazowej płatności. Pomoże nam to w utrzymaniu rozwoju bezpłatnych funkcji i utrzymaniu ich bez reklam na zawsze.</string>
+    <string name="account">Konto</string>
+    <string name="deleting_account">Usuwanie konta</string>
+    <string name="signing_out">Wylogowywanie</string>
+    <string name="others">Inne</string>
+    <string name="sign_in_message">Proszę wprowadź swój email, aby się zalogować.</string>
+    <string name="sign_in_link_tip">Otwórz otrzymany link za pomocą Noice, aby zakończyć proces logowania.</string>
+    <string name="email">Email</string>
+    <string name="mailbox_app_not_found">Uh-oh! Nie mogliśmy znaleźć aplikacji skrzynki pocztowej na Twoim urządzeniu!</string>
+    <string name="accept">Akceptuj</string>
+    <string name="sign_out">Wyloguj się</string>
+    <string name="network_error">Sieć jest nieosiągalna.</string>
+    <string name="sign_in_sucessful">Zalogowano się pomyślnie!</string>
+    <string name="offline">Jesteś offline</string>
+    <string name="created_by">Stworzony przez</string>
+    <string name="enable_media_buttons">Włącz przyciski mediów</string>
+    <string name="yearly">Rocznie</string>
+    <string name="sign_in">Zaloguj się</string>
+    <string name="share_usage_data_consent_title">Preferencje udostępniania danych</string>
+    <string name="should_share_usage_data_summary">Automatycznie udostępniaj programistom dane o użytkowaniu i zachowaniu.</string>
+    <string name="sign_up_email_sent">Wysłaliśmy Ci link do logowania na \"%1$s\".</string>
+    <string name="sign_in_token_error">Wygląda na to, że link do logowania jest nieprawidłowy. Mógł wygasnąć. Proszę spróbuj ponownie!</string>
+    <string name="cont">Kontynuuj</string>
+    <string name="account_details_update_success">Dane Twojego konta zostały pomyślnie zaktualizowane.</string>
+    <string name="sign_in_email_sent">Wysłaliśmy ci link do logowania na \"%1$s\", jeśli ten adres należy do zarejestrowanego konta.</string>
+    <string name="update_details">Aktualizuj szczegóły</string>
+    <string name="monthly_price">%1$s na miesiąc</string>
+    <string name="support">Wsparcie</string>
+    <string name="unknown_error">Wystąpił nieznany błąd</string>
+    <string name="sign_up_message">Proszę wprowadź swoje imię i email, aby się zalogować.</string>
+    <string name="open_mailbox">Otwórz skrzynkę pocztową</string>
+    <string name="sound_fade_out_duration">Czas wyciszenia dzwięku</string>
+    <string name="monthly">Miesięcznie</string>
+    <string name="sound_fade_out_duration_summary">Czas trwania wyciszenia dzwięków (w sekundach)</string>
+    <string name="enable_media_buttons_summary">Użyj sprzętowych przycisków multimedialnych do sterowania odtwarzaniem</string>
+    <string name="view_subscription_plans">Pokaż plany</string>
+    <string name="sign_out_confirmation">Potwierdzić wylogowanie\?</string>
+    <string name="quarterly">Kwartalnie</string>
+    <string name="app">Aplikacja</string>
+    <string name="invalid_name">Wprowadzone imię jest nieprawidłowe!</string>
+    <string name="should_share_usage_data">Udostępnij dane o użytkowaniu i zachowaniach.</string>
+    <string name="delete_account">Usuń konto</string>
+    <string name="welcome_back">Witaj ponownie!</string>
+    <string name="welcome">WItaj!</string>
+    <string name="sign_in_to_continue">Zaloguj się lub zarejestruj, aby kontynuować.</string>
+    <string name="invalid_email">Wprowadzony email jest nieprawidłowy!</string>
+    <string name="benefits">Korzyści</string>
+    <string name="retry">Spróbuj ponownie</string>
+    <string name="premium">Premium</string>
+    <string name="duplicate_email_error">Wprowadzony adres e-mail jest powiązany z innym kontem.</string>
+    <string name="account_locked_error">Twój adres e-mail jest tymczasowo zablokowany przed próbami logowania do %1$s.</string>
+    <string name="processing_payment">Przetwarzanie płatności</string>
+    <string name="random_preset_description">Wygenerowany preset prawdopodobnie będzie zawierał dźwięki z wybranymi słowami kluczowymi. Co więcej, intensywne presety będą próbowały odtwarzać więcej dźwięków jednocześnie.</string>
+    <plurals name="n_months">
+        <item quantity="one">%1$d miesiąc</item>
+        <item quantity="few">%1$d miesięcy</item>
+        <item quantity="many">%1$d miesięcy</item>
+        <item quantity="other">%1$d miesięcy</item>
+    </plurals>
+    <string name="share_usage_data_consent_message">Zbieramy dane o użytkowaniu aplikacji aby poprawić wrażenia użytkownika. Zbieramy również dane o zachowaniu aplikacji, aby analizować i diagnozować błędy napotkane podczas używania aplikacji. Przeczytaj naszą [politykę prywatności](https://trynoice.com/privacy-policy) po więcej informacji.
+\n
+\nMożesz skonfigurować automatyczne udostępnianie danych w dowolnym momencie w aplikacji, przechodząc do \"**Ustawienia** &gt; **Udostępnij dane o użytkowaniu i zachowaniu**\".</string>
+    <string name="sign_up">Zarejestruj się</string>
 </resources>

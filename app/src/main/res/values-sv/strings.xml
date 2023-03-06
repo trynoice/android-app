@@ -78,27 +78,15 @@
     <string name="appintro__getting_started_desc_1">Låt oss börja!</string>
     <string name="appintro__getting_started_desc_0">Svep till vänster för att lära känna alla funktioner!</string>
     <string name="appintro__chromecast_title">Chromecast aktiverat</string>
-    <plurals name="time_minutes">
-        <item quantity="one">%1$d minut</item>
-        <item quantity="other">%1$d minuter</item>
-    </plurals>
-    <plurals name="time_hours">
-        <item quantity="one">%1$d timme</item>
-        <item quantity="other">%1$d timmar</item>
-    </plurals>
-    <string name="time_bridge">och</string>
-    <string name="wake_up_timer_cancelled">Timer för uppväckning avbröts!</string>
     <string name="select_preset">Välj förinställning</string>
-    <string name="schedule">Schema</string>
     <string name="presets_as_home_screen_summary">Visa sparade förinställningar när appen startar upp</string>
     <string name="preset_does_not_exist">Förinställningen existerar inte. Den kan ha blivit borttagen!</string>
     <string name="add_to_home_screen">Lägg till på hemskärmen</string>
     <string name="preset_already_exists">En förinställning med det angivna namnet existerar redan!</string>
     <string name="random_preset">Slumpmässig förinställning</string>
     <string name="intensity">Intensitet</string>
-    <string name="wake_up_timer">Timer för uppväckning</string>
     <string name="pinned_shortcuts_not_supported">Din förvalda applikationsstartare kan inte lägga till genvägar.</string>
     <string name="random_preset_description">Den skapade förinställningen kommer troliben innehålla ljud utifrån valda nyckelord. Dessutom kommer intensiva förinställningar att försöka spela flera ljud samtidigt.</string>
     <string name="preset_info__description">Du har inte skapat några förinställningar än. Gå till biblioteket och spela ljud för att skapa en förinställningar. Klicka därefter på Spara-knappen som visas i nedersta skärmhörnet.</string>
-    <string name="wake_up_timer_schedule_set">Larmet aktiveras om %1$s %2$s %3$s</string>
+    <string name="email">E-post</string>
 </resources>
