@@ -149,10 +149,10 @@ project.afterEvaluate {
 
 dependencies {
   def androidXHiltVersion = '1.0.0'
-  def exoPlayerVersion = '2.18.2'
+  def exoPlayerVersion = '2.18.4'
   def fragmentVersion = '1.5.5'
   def roomVersion = '2.5.0'
-  def workManagerVersion = '2.7.1'
+  def workManagerVersion = '2.8.0'
 
   def espressoVersion = '3.5.1'
   def mockkVersion = '1.13.3'
@@ -161,8 +161,8 @@ dependencies {
   kapt "androidx.hilt:hilt-compiler:$androidXHiltVersion"
   kapt "androidx.room:room-compiler:$roomVersion"
 
-  implementation 'androidx.appcompat:appcompat:1.6.0'
-  implementation 'androidx.browser:browser:1.4.0'
+  implementation 'androidx.appcompat:appcompat:1.6.1'
+  implementation 'androidx.browser:browser:1.5.0'
   implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
   implementation "androidx.core:core-ktx:$deps.androidXCoreVersion"
   implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
@@ -187,7 +187,7 @@ dependencies {
   implementation "com.google.android.exoplayer:exoplayer-core:$exoPlayerVersion"
   implementation "com.google.android.exoplayer:extension-workmanager:$exoPlayerVersion"
   implementation 'com.google.android.flexbox:flexbox:3.0.0'
-  implementation 'com.google.android.material:material:1.7.0'
+  implementation 'com.google.android.material:material:1.8.0'
   implementation 'com.google.code.gson:gson:2.10.1'
   implementation "com.google.dagger:hilt-android:$deps.hiltVersion"
   implementation "com.mikepenz:aboutlibraries:${deps.aboutLibrariesVersion}"
@@ -198,7 +198,7 @@ dependencies {
   implementation project(":api-client")
 
   fullImplementation 'com.android.billingclient:billing-ktx:5.1.0'
-  fullImplementation 'com.google.android.gms:play-services-base:18.1.0'
+  fullImplementation 'com.google.android.gms:play-services-base:18.2.0'
   fullImplementation 'com.google.android.gms:play-services-cast-framework:21.2.0'
   fullImplementation 'com.google.android.play:core:1.10.3'
   fullImplementation platform('com.google.firebase:firebase-bom:29.1.0')
