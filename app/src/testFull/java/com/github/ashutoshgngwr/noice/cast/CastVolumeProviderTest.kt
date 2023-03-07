@@ -1,10 +1,8 @@
-package com.github.ashutoshgngwr.noice.provider
+package com.github.ashutoshgngwr.noice.cast
 
 import com.google.android.gms.cast.framework.CastSession
-import io.mockk.MockKAnnotations
-import io.mockk.impl.annotations.InjectionLookupType
-import io.mockk.impl.annotations.OverrideMockKs
-import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.every
+import io.mockk.mockk
 import io.mockk.verify
 import io.mockk.verifyOrder
 import org.junit.Before
@@ -16,31 +14,33 @@ import kotlin.random.Random
 @RunWith(RobolectricTestRunner::class)
 class CastVolumeProviderTest {
 
-  @RelaxedMockK
-  private lateinit var session: CastSession
-
-  @OverrideMockKs(lookupType = InjectionLookupType.BY_NAME)
+  private lateinit var sessionMock: CastSession
   private lateinit var volumeProvider: CastVolumeProvider
 
   @Before
   fun setup() {
-    MockKAnnotations.init(this)
+    sessionMock = mockk(relaxed = true)
+    volumeProvider = CastVolumeProvider(mockk {
+      every { sessionManager } returns mockk {
+        every { currentCastSession } returns sessionMock
+      }
+    })
   }
 
   @Test
-  fun testOnSetVolumeTo() {
+  fun setVolumeTo() {
     val volume = Random.nextInt(0, 1 + CastVolumeProvider.MAX_VOLUME)
     volumeProvider.onSetVolumeTo(volume)
-    verify(exactly = 1) { session.volume = volume.toDouble() / CastVolumeProvider.MAX_VOLUME }
+    verify(exactly = 1) { sessionMock.volume = volume.toDouble() / CastVolumeProvider.MAX_VOLUME }
   }
 
   @Test
-  fun testOnAdjustVolume() {
+  fun onAdjustVolume() {
     volumeProvider.onAdjustVolume(1)
     volumeProvider.onAdjustVolume(-1)
     verifyOrder {
-      session.volume = 1.0 / CastVolumeProvider.MAX_VOLUME
-      session.volume = 0.0
+      sessionMock.volume = 1.0 / CastVolumeProvider.MAX_VOLUME
+      sessionMock.volume = 0.0
     }
   }
 }
