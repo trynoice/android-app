@@ -209,6 +209,8 @@ dependencies {
   kaptTest "com.google.dagger:hilt-android-compiler:$deps.hiltVersion"
 
   testImplementation "androidx.test:core:$deps.testCoreVersion"
+  testImplementation "com.google.android.exoplayer:exoplayer-robolectricutils:$exoPlayerVersion"
+  testImplementation "com.google.android.exoplayer:exoplayer-testutils:$exoPlayerVersion"
   testImplementation "com.google.dagger:hilt-android-testing:$deps.hiltVersion"
   testImplementation "io.mockk:mockk-jvm:$mockkVersion"
   testImplementation "junit:junit:$deps.junitVersion"
