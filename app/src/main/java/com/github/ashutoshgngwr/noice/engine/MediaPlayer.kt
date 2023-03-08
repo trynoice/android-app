@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice.engine
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -9,11 +10,19 @@ import androidx.core.os.HandlerCompat
 import androidx.core.os.postDelayed
 import androidx.media.AudioAttributesCompat
 import com.google.android.exoplayer2.C
+import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.RenderersFactory
 import com.google.android.exoplayer2.audio.AudioAttributes
+import com.google.android.exoplayer2.audio.MediaCodecAudioRenderer
+import com.google.android.exoplayer2.extractor.ExtractorsFactory
+import com.google.android.exoplayer2.extractor.mp3.Mp3Extractor
+import com.google.android.exoplayer2.mediacodec.MediaCodecSelector
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.upstream.DataSource
 import kotlin.math.abs
 import kotlin.properties.Delegates.observable
 import kotlin.time.Duration
@@ -302,5 +311,32 @@ class MediaPlayer @VisibleForTesting constructor(
      * playing the last media item in the playlist.
      */
     fun onMediaPlayerItemTransition()
+  }
+
+  class Factory(private val context: Context, exoPlayerDataSourceFactory: DataSource.Factory) {
+
+    private val mediaSourceFactory = ExtractorsFactory { arrayOf(Mp3Extractor()) }
+      .let { ProgressiveMediaSource.Factory(exoPlayerDataSourceFactory, it) }
+
+    private val renderersFactory = RenderersFactory { handler, _, audioListener, _, _ ->
+      arrayOf(MediaCodecAudioRenderer(context, MediaCodecSelector.DEFAULT, handler, audioListener))
+    }
+
+    fun buildPlayer(): MediaPlayer {
+      return MediaPlayer(
+        ExoPlayer.Builder(context, renderersFactory, mediaSourceFactory)
+          .setLoadControl(
+            DefaultLoadControl.Builder()
+              .setBufferDurationsMs(
+                10_000,
+                20_000,
+                DefaultLoadControl.DEFAULT_BUFFER_FOR_PLAYBACK_MS,
+                DefaultLoadControl.DEFAULT_BUFFER_FOR_PLAYBACK_AFTER_REBUFFER_MS,
+              )
+              .build()
+          )
+          .build()
+      )
+    }
   }
 }
