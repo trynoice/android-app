@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.engine
 
+import androidx.media.AudioAttributesCompat
 import kotlin.properties.Delegates.observable
 import kotlin.time.Duration
 
@@ -18,15 +19,16 @@ import kotlin.time.Duration
  */
 abstract class SoundPlayer {
 
-  private val stateChangeListeners = mutableSetOf<StateChangeListener>()
+  private var stateChangeListener: StateChangeListener? = null
 
   /**
-   * The current [SoundPlayer.State] of this [SoundPlayer]. Every change in its value invokes any
-   * registered [StateChangeListener]s.
+   * The current [SoundPlayer.State] of this [SoundPlayer]. Every change in its value invokes the
+   * registered [StateChangeListener].
    */
-  protected var state: State by observable(State.PAUSED) { _, oldValue, newValue ->
-    if (oldValue != newValue) stateChangeListeners.forEach { it.onSoundPlayerStateChanged(newValue) }
+  var state: State by observable(State.PAUSED) { _, oldValue, newValue ->
+    if (oldValue != newValue) stateChangeListener?.onSoundPlayerStateChanged(newValue)
   }
+    protected set
 
   /**
    * Sets the duration of the fade-in effect when starting playback.
@@ -50,6 +52,12 @@ abstract class SoundPlayer {
    * @param bitrate acceptable values are `128k`, `192k`, `256k` and `320k`.
    */
   abstract fun setAudioBitrate(bitrate: String)
+
+  /**
+   * Sets the attributes for audio playback using an [AudioAttributesCompat] instance, used by the
+   * underlying playback mechanism.
+   */
+  abstract fun setAudioAttributes(attrs: AudioAttributesCompat)
 
   /**
    * Sets the volume of the player.
@@ -92,15 +100,8 @@ abstract class SoundPlayer {
    * Registers a [StateChangeListener] that gets invoked every time the playback state of this sound
    * player changes.
    */
-  fun addStateChangeListener(listener: StateChangeListener) {
-    stateChangeListeners.add(listener)
-  }
-
-  /**
-   * Unregisters a previously registered [StateChangeListener].
-   */
-  fun removeStateChangeListener(listener: StateChangeListener) {
-    stateChangeListeners.remove(listener)
+  fun setStateChangeListener(listener: StateChangeListener?) {
+    stateChangeListener = listener
   }
 
   /**
@@ -144,7 +145,7 @@ abstract class SoundPlayer {
   /**
    * A listener interface for observing changes in the playback state of a [SoundPlayer] instance.
    */
-  interface StateChangeListener {
+  fun interface StateChangeListener {
 
     /**
      * Invoked when the playback state changes.
