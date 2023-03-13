@@ -23,6 +23,7 @@ import kotlin.time.Duration
 class SoundPlayerManager(
   private val context: Context,
   private var soundPlayerFactory: SoundPlayer.Factory,
+  private val listener: Listener,
 ) : AudioFocusManager.Listener {
 
   private var fadeInDuration = Duration.ZERO
@@ -32,7 +33,6 @@ class SoundPlayerManager(
   private var audioAttrs = DEFAULT_AUDIO_ATTRIBUTES
   private var volume = 1F
 
-  private var listener: Listener? = null
   private var focusManager: AudioFocusManager = DefaultAudioFocusManager(context, audioAttrs, this)
   private var shouldResumeOnFocusGain = false
 
@@ -40,7 +40,7 @@ class SoundPlayerManager(
   private val soundPlayerVolumes = ConcurrentHashMap<String, Float>()
 
   var state by observable(State.STOPPED) { _, oldValue, newValue ->
-    if (oldValue != newValue) listener?.onSoundPlayerManagerStateChange(newValue)
+    if (oldValue != newValue) listener.onSoundPlayerManagerStateChange(newValue)
   }
     private set
 
@@ -58,14 +58,6 @@ class SoundPlayerManager(
 
     pause(true)
     shouldResumeOnFocusGain = transient
-  }
-
-  /**
-   * Registers a [Listener] to listen for changes in states and volumes of [SoundPlayerManager] and
-   * its [SoundPlayer]s.
-   */
-  fun setListener(listener: Listener?) {
-    this.listener = listener
   }
 
   /**
@@ -171,7 +163,7 @@ class SoundPlayerManager(
     soundIds.forEach { soundId ->
       if (soundId in pausedSoundIds) {
         initPlayer(soundId)
-        listener?.onSoundStateChange(soundId, soundPlayers.getValue(soundId).state)
+        listener.onSoundStateChange(soundId, soundPlayers.getValue(soundId).state)
       } else {
         playSound(soundId)
       }
@@ -193,7 +185,7 @@ class SoundPlayerManager(
       player.setVolume(volume * (soundPlayerVolumes[soundId] ?: 1F))
     }
 
-    listener?.onSoundPlayerManagerVolumeChange(volume)
+    listener.onSoundPlayerManagerVolumeChange(volume)
   }
 
   /**
@@ -206,7 +198,7 @@ class SoundPlayerManager(
     require(volume in 0F..1F) { "volume must be in range [0, 1]" }
     soundPlayerVolumes[soundId] = volume
     soundPlayers[soundId]?.setVolume(this.volume * volume)
-    listener?.onSoundVolumeChange(soundId, volume)
+    listener.onSoundVolumeChange(soundId, volume)
   }
 
   /**
@@ -318,7 +310,7 @@ class SoundPlayerManager(
       focusManager.abandonFocus()
     }
 
-    listener?.onSoundStateChange(soundId, playerState)
+    listener.onSoundStateChange(soundId, playerState)
   }
 
   private fun reconcileState() {
