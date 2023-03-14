@@ -282,7 +282,6 @@
     <string name="download_sound">Baixar som</string>
     <string name="notification_channel_sound_downloads__description">Notificações de progresso para download de sons.</string>
     <string name="notification_channel_sound_downloads__name">Downloads de Sons</string>
-    <string name="play_sound_before_adjusting_volume">Você precisa tocar este som antes de ajustar seu volume.</string>
     <string name="use_material_you_colors_summary">Usar a paleta de cores \"Material You\" do sistema Android</string>
     <string name="stripe_customer_portal_error">Ops! Não pudemos abrir o portal de pagamento. %1$s Por favor, tente novamente!</string>
     <string name="checking_sound_downloads">Verificando sons baixados</string>

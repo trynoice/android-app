@@ -5,7 +5,6 @@ import android.net.Uri
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
-import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.ext.keyFlow
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
@@ -138,7 +137,7 @@ class PresetRepository @Inject constructor(
               .take(soundCount * 2)
               .shuffled()
               .take(soundCount)
-              .map { PlayerState(it.id, Random.nextInt(8, PlaybackController.MAX_SOUND_VOLUME)) }
+              .map { PlayerState(it.id, Random.nextInt(8, 25)) }
               .toTypedArray()
               .let { Preset("", it) }
               .let { Resource.Success(it) }

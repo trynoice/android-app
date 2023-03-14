@@ -7,9 +7,8 @@ import androidx.annotation.StringRes
 import androidx.core.view.MenuItemCompat
 import androidx.media.VolumeProviderCompat
 import androidx.mediarouter.app.MediaRouteActionProvider
-import com.github.ashutoshgngwr.noice.cast.CastPlayer
 import com.github.ashutoshgngwr.noice.cast.CastVolumeProvider
-import com.github.ashutoshgngwr.noice.engine.Player
+import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
 import com.google.android.gms.cast.framework.CastSession
@@ -36,10 +35,9 @@ class RealCastApiProvider(context: Context) : CastApiProvider, SessionManagerLis
   }
 
   /**
-   * Initializes a new [CastPlayer.Factory] instance and returns it as [Player.Factory].
+   * Initializes a new [CastPlayer.Factory] instance and returns it as [SoundPlayer.Factory].
    */
-  override fun buildPlayerFactory(context: Context): Player.Factory =
-    CastPlayer.Factory(castContext, "urn:x-cast:com.github.ashutoshgngwr.noice:Player")
+  override fun buildPlayerFactory(context: Context): SoundPlayer.Factory = TODO()
 
   /**
    * Creates a new [VolumeProviderCompat] instance that can be used with

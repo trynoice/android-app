@@ -222,7 +222,6 @@
     <string name="remove_sound_download">刪除 %1$s</string>
     <string name="sound_scheduled_for_download">正在安排 %1$s 下載。</string>
     <string name="sound_download_scheduled_for_removal">計劃從聲音下載中刪除 %1$s。</string>
-    <string name="play_sound_before_adjusting_volume">您需要先播放此聲音，然後才能調整其音量。</string>
     <string name="trial_period">試用期：%1$s</string>
     <string name="add_alarm">新增鬧鐘</string>
     <string name="post_notifications_permission_rationale_title">允許 Noice 顯示通知</string>
@@ -267,7 +266,7 @@
     <string name="notification_channel_alarm_priming__description">準備觸發預定鬧鐘時顯示的通知。</string>
     <string name="alarms_disabled_due_to_subscription_expiration">由於您的 Noice Premium 訂閱已過期，我們不得不停用一些鬧鐘！</string>
     <string name="alarm_snooze_length">貪睡時長</string>
-    <string name="master_volume">主音量</string>
+    <string name="main_volume">主音量</string>
     <string name="alarm_gradually_increase_volume">逐漸增加鬧鐘音量</string>
     <string name="alarm_gradually_increase_volume_summary">持續時間以分鐘為單位，以在鬧鐘啟動時逐漸增加音量</string>
     <string name="no_purchases">沒有購買</string>

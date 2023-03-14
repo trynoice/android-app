@@ -25,8 +25,8 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.LibraryFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.LibrarySoundGroupListItemBinding
 import com.github.ashutoshgngwr.noice.databinding.LibrarySoundListItemBinding
-import com.github.ashutoshgngwr.noice.engine.PlaybackController
-import com.github.ashutoshgngwr.noice.engine.PlaybackState
+import com.github.ashutoshgngwr.noice.engine.SoundPlayer
+import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
 import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadsRefreshWorker
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
@@ -34,7 +34,6 @@ import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showInfoSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
-import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.models.SoundDownloadState
 import com.github.ashutoshgngwr.noice.models.SoundGroup
@@ -47,6 +46,7 @@ import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
+import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -59,6 +59,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class LibraryFragment : Fragment(), LibraryListItemController {
@@ -72,7 +73,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
   internal lateinit var reviewFlowProvider: ReviewFlowProvider
 
   @set:Inject
-  internal lateinit var playbackController: PlaybackController
+  internal lateinit var playbackServiceController: SoundPlaybackService.Controller
 
   private var isConnectedToInternet = false
   private val viewModel: LibraryViewModel by viewModels()
@@ -106,7 +107,11 @@ class LibraryFragment : Fragment(), LibraryListItemController {
     }
 
     viewLifecycleOwner.launchAndRepeatOnStarted {
-      viewModel.playerStates.collect(adapter::setPlayerStates)
+      viewModel.soundStates.collect(adapter::setSoundStates)
+    }
+
+    viewLifecycleOwner.launchAndRepeatOnStarted {
+      viewModel.soundVolumes.collect(adapter::setSoundVolumes)
     }
 
     viewLifecycleOwner.launchAndRepeatOnStarted {
@@ -168,7 +173,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
         negativeButton(R.string.cancel)
         positiveButton(R.string.save) {
-          viewModel.saveCurrentPreset(nameGetter.invoke())
+          playbackServiceController.saveCurrentPreset(nameGetter.invoke())
           showSuccessSnackBar(R.string.preset_saved, snackBarAnchorView())
           // maybe show in-app review dialog to the user
           reviewFlowProvider.maybeAskForReview(requireActivity())
@@ -196,28 +201,24 @@ class LibraryFragment : Fragment(), LibraryListItemController {
       return
     }
 
-    playbackController.play(soundInfo.id)
+    playbackServiceController.playSound(soundInfo.id)
   }
 
   override fun onSoundStopClicked(soundInfo: SoundInfo) {
-    playbackController.stop(soundInfo.id)
+    playbackServiceController.stopSound(soundInfo.id)
   }
 
-  override fun onSoundVolumeClicked(soundInfo: SoundInfo, playerState: PlayerState?) {
-    if (playerState.isStopped) {
-      showInfoSnackBar(R.string.play_sound_before_adjusting_volume, snackBarAnchorView())
-      return
-    }
-
+  override fun onSoundVolumeClicked(soundInfo: SoundInfo, volume: Float) {
     DialogFragment.show(childFragmentManager) {
       title(soundInfo.name)
       message(R.string.volume, textAppearance = R.style.TextAppearance_Material3_TitleLarge)
       slider(
         viewID = R.id.volume_slider,
-        to = PlaybackController.MAX_SOUND_VOLUME.toFloat(),
-        value = (playerState?.volume ?: PlaybackController.DEFAULT_SOUND_VOLUME).toFloat(),
-        labelFormatter = { "${(it * 100).toInt() / PlaybackController.MAX_SOUND_VOLUME}%" },
-        changeListener = { playbackController.setVolume(soundInfo.id, it.toInt()) }
+        to = 1F,
+        step = 0.01F,
+        value = volume,
+        labelFormatter = { "${(it * 100).roundToInt()}%" },
+        changeListener = { playbackServiceController.setSoundVolume(soundInfo.id, it) }
       )
 
       positiveButton(R.string.okay)
@@ -270,20 +271,25 @@ class LibraryViewModel @Inject constructor(
   private val soundRepository: SoundRepository,
   private val presetRepository: PresetRepository,
   settingsRepository: SettingsRepository,
-  playbackController: PlaybackController,
+  playbackServiceController: SoundPlaybackService.Controller,
 ) : ViewModel() {
 
   private val soundInfosResource = MutableSharedFlow<Resource<List<SoundInfo>>>()
 
-  val isPlaying: StateFlow<Boolean> = playbackController.getPlayerManagerState()
-    .map { !it.oneOf(PlaybackState.STOPPING, PlaybackState.STOPPED) }
+  val isPlaying: StateFlow<Boolean> = playbackServiceController.getState()
+    .map { it != SoundPlayerManager.State.STOPPING && it != SoundPlayerManager.State.STOPPED }
     .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   internal val isSubscribed = subscriptionRepository.isSubscribed()
     .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
-  internal val playerStates: StateFlow<Array<PlayerState>> = playbackController.getPlayerStates()
-    .stateIn(viewModelScope, SharingStarted.Eagerly, emptyArray())
+  internal val soundStates: StateFlow<Map<String, SoundPlayer.State>> = playbackServiceController
+    .getSoundStates()
+    .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
+
+  internal val soundVolumes: StateFlow<Map<String, Float>> = playbackServiceController
+    .getSoundVolumes()
+    .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
 
   internal val downloadStates: StateFlow<Map<String, SoundDownloadState>> = soundRepository
     .getDownloadStates()
@@ -321,13 +327,9 @@ class LibraryViewModel @Inject constructor(
     }
   }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
-  val isSavePresetButtonVisible: StateFlow<Boolean> = combine(
-    isPlaying,
-    playerStates,
-    presetRepository.listFlow(),
-  ) { isPlaying, playerStates, presets ->
-    isPlaying && presets.none { p -> p.hasMatchingPlayerStates(playerStates) }
-  }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
+  val isSavePresetButtonVisible: StateFlow<Boolean> = playbackServiceController.getCurrentPreset()
+    .combine(isPlaying) { preset, isPlaying -> preset == null && isPlaying }
+    .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
   internal val isLibraryIconsEnabled: StateFlow<Boolean> = settingsRepository
     .shouldDisplaySoundIconsAsFlow()
@@ -337,10 +339,6 @@ class LibraryViewModel @Inject constructor(
     viewModelScope.launch {
       soundRepository.listInfo().collect(soundInfosResource)
     }
-  }
-
-  internal fun saveCurrentPreset(name: String) {
-    presetRepository.create(Preset(name, playerStates.value))
   }
 
   internal fun listPresets(): List<Preset> {
@@ -354,9 +352,10 @@ class LibraryListAdapter(
 ) : RecyclerView.Adapter<LibraryListItemViewHolder>() {
 
   private var libraryItems = emptyList<LibraryListItem>()
-  private var playerStates = emptyMap<String, PlayerState?>()
-  private var isIconsEnabled = false
+  private var soundStates = emptyMap<String, SoundPlayer.State>()
+  private var soundVolumes = emptyMap<String, Float>()
   private var downloadStates = emptyMap<String, SoundDownloadState>()
+  private var isIconsEnabled = false
   private var isSoundPremiumStatusEnabled = false
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryListItemViewHolder {
@@ -387,9 +386,10 @@ class LibraryListAdapter(
     val soundId = libraryItems[position].soundInfo?.id
     holder.bind(
       libraryItems[position],
-      playerStates[soundId],
-      isIconsEnabled,
+      soundStates[soundId] ?: SoundPlayer.State.STOPPED,
+      soundVolumes[soundId] ?: 1F,
       downloadStates[soundId] ?: SoundDownloadState.NOT_DOWNLOADED,
+      isIconsEnabled,
       isSoundPremiumStatusEnabled,
     )
   }
@@ -414,14 +414,27 @@ class LibraryListAdapter(
     notifyItemRangeInserted(0, items.size)
   }
 
-  fun setPlayerStates(states: Array<PlayerState>) {
-    val oldStates = playerStates
-    playerStates = states.associateBy { it.soundId }
+  fun setSoundStates(states: Map<String, SoundPlayer.State>) {
+    val oldStates = soundStates
+    soundStates = states
     for (i in libraryItems.indices) {
       val soundId = libraryItems[i].soundInfo?.id ?: continue
       val oldState = oldStates[soundId]
-      val newState = playerStates[soundId]
-      if (oldState != newState || oldState?.playbackState != newState?.playbackState) {
+      val newState = states[soundId]
+      if (oldState != newState) {
+        notifyItemChanged(i)
+      }
+    }
+  }
+
+  fun setSoundVolumes(volumes: Map<String, Float>) {
+    val oldVolumes = soundVolumes
+    soundVolumes = volumes
+    for (i in libraryItems.indices) {
+      val soundId = libraryItems[i].soundInfo?.id ?: continue
+      val oldVolume = oldVolumes[soundId]
+      val newVolume = volumes[soundId]
+      if (oldVolume != newVolume) {
         notifyItemChanged(i)
       }
     }
@@ -452,9 +465,10 @@ abstract class LibraryListItemViewHolder(view: View) : RecyclerView.ViewHolder(v
 
   fun bind(
     item: LibraryListItem,
-    playerState: PlayerState?,
-    isIconsEnabled: Boolean,
+    soundState: SoundPlayer.State,
+    soundVolume: Float,
     downloadState: SoundDownloadState,
+    isIconsEnabled: Boolean,
     isPremiumStatusEnabled: Boolean,
   ) {
     if (item.group != null) {
@@ -462,7 +476,14 @@ abstract class LibraryListItemViewHolder(view: View) : RecyclerView.ViewHolder(v
     }
 
     if (item.soundInfo != null) {
-      bind(item.soundInfo, playerState, isIconsEnabled, downloadState, isPremiumStatusEnabled)
+      bind(
+        item.soundInfo,
+        soundState,
+        soundVolume,
+        downloadState,
+        isIconsEnabled,
+        isPremiumStatusEnabled,
+      )
     }
   }
 
@@ -470,9 +491,10 @@ abstract class LibraryListItemViewHolder(view: View) : RecyclerView.ViewHolder(v
 
   abstract fun bind(
     soundInfo: SoundInfo,
-    playerState: PlayerState?,
-    isIconsEnabled: Boolean,
+    soundState: SoundPlayer.State,
+    soundVolume: Float,
     downloadState: SoundDownloadState,
+    isIconsEnabled: Boolean,
     isPremiumStatusEnabled: Boolean,
   )
 }
@@ -487,10 +509,11 @@ class SoundGroupViewHolder(
 
   override fun bind(
     soundInfo: SoundInfo,
-    playerState: PlayerState?,
-    isIconsEnabled: Boolean,
+    soundState: SoundPlayer.State,
+    soundVolume: Float,
     downloadState: SoundDownloadState,
-    isPremiumStatusEnabled: Boolean,
+    isIconsEnabled: Boolean,
+    isPremiumStatusEnabled: Boolean
   ) {
     throw UnsupportedOperationException()
   }
@@ -502,7 +525,8 @@ class SoundViewHolder(
 ) : LibraryListItemViewHolder(binding.root) {
 
   private lateinit var soundInfo: SoundInfo
-  private var playerState: PlayerState? = null
+  private var soundState = SoundPlayer.State.STOPPED
+  private var soundVolume = 1F
   private var downloadState = SoundDownloadState.NOT_DOWNLOADED
 
   init {
@@ -516,7 +540,7 @@ class SoundViewHolder(
     }
 
     binding.play.setOnClickListener {
-      if (playerState.isStopped) {
+      if (soundState == SoundPlayer.State.STOPPING || soundState == SoundPlayer.State.STOPPED) {
         controller.onSoundPlayClicked(soundInfo)
       } else {
         controller.onSoundStopClicked(soundInfo)
@@ -524,7 +548,7 @@ class SoundViewHolder(
     }
 
     binding.volume.setOnClickListener {
-      controller.onSoundVolumeClicked(soundInfo, playerState)
+      controller.onSoundVolumeClicked(soundInfo, soundVolume)
     }
   }
 
@@ -534,13 +558,15 @@ class SoundViewHolder(
 
   override fun bind(
     soundInfo: SoundInfo,
-    playerState: PlayerState?,
-    isIconsEnabled: Boolean,
+    soundState: SoundPlayer.State,
+    soundVolume: Float,
     downloadState: SoundDownloadState,
-    isPremiumStatusEnabled: Boolean,
+    isIconsEnabled: Boolean,
+    isPremiumStatusEnabled: Boolean
   ) {
     this.soundInfo = soundInfo
-    this.playerState = playerState
+    this.soundState = soundState
+    this.soundVolume = soundVolume
     this.downloadState = downloadState
 
     binding.premiumStatus.isVisible =
@@ -554,8 +580,8 @@ class SoundViewHolder(
       }
     )
 
-    binding.bufferingIndicator.isInvisible = playerState?.playbackState != PlaybackState.BUFFERING
-    binding.title.text = this.soundInfo.name
+    binding.bufferingIndicator.isInvisible = soundState != SoundPlayer.State.BUFFERING
+    binding.title.text = soundInfo.name
     binding.icon.isVisible = isIconsEnabled
     if (isIconsEnabled) {
       val iconColor = TypedValue()
@@ -581,18 +607,16 @@ class SoundViewHolder(
 
     (binding.download.icon as? AnimatedVectorDrawable)?.start()
 
-    val isStopped = playerState.isStopped
     binding.play.setIconResource(
-      if (isStopped) {
+      if (soundState == SoundPlayer.State.STOPPING || soundState == SoundPlayer.State.STOPPED) {
         R.drawable.ic_baseline_play_arrow_24
       } else {
         R.drawable.ic_baseline_stop_24
       }
     )
 
-    val volume = playerState?.volume ?: PlaybackController.DEFAULT_SOUND_VOLUME
     @SuppressLint("SetTextI18n")
-    binding.volume.text = "${(volume * 100) / PlaybackController.MAX_SOUND_VOLUME}%"
+    binding.volume.text = "${(soundVolume * 100).roundToInt()}%"
   }
 }
 
@@ -600,7 +624,7 @@ interface LibraryListItemController {
   fun onSoundInfoClicked(soundInfo: SoundInfo)
   fun onSoundPlayClicked(soundInfo: SoundInfo)
   fun onSoundStopClicked(soundInfo: SoundInfo)
-  fun onSoundVolumeClicked(soundInfo: SoundInfo, playerState: PlayerState?)
+  fun onSoundVolumeClicked(soundInfo: SoundInfo, volume: Float)
   fun onSoundDownloadClicked(soundInfo: SoundInfo)
   fun onRemoveSoundDownloadClicked(soundInfo: SoundInfo)
   fun onPremiumStatusClicked(soundInfo: SoundInfo)
@@ -611,10 +635,3 @@ data class LibraryListItem(
   val group: SoundGroup? = null,
   val soundInfo: SoundInfo? = null,
 )
-
-private val PlayerState?.isStopped: Boolean
-  get() = this?.playbackState?.oneOf(
-    PlaybackState.IDLE,
-    PlaybackState.STOPPING,
-    PlaybackState.STOPPED,
-  ) ?: true

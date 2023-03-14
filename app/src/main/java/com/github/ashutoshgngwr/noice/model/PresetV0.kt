@@ -1,6 +1,5 @@
 package com.github.ashutoshgngwr.noice.model
 
-import com.github.ashutoshgngwr.noice.engine.Player
 import com.google.gson.annotations.SerializedName
 import java.util.*
 import kotlin.math.roundToInt
@@ -34,7 +33,7 @@ data class PresetV0(
         .map {
           PresetV1.PlayerState(
             soundKey = it.soundKey,
-            volume = (it.volume * Player.MAX_VOLUME).roundToInt(),
+            volume = (it.volume * 25).roundToInt(),
             timePeriod = it.timePeriod + 30,
           )
         },

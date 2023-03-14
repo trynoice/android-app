@@ -261,7 +261,6 @@
     <string name="remove_all_sound_downloads">Вилучити всі завантажені звуки</string>
     <string name="sound_scheduled_for_download">Додавання %1$s до завантажень для офлайн-відтворення.</string>
     <string name="sound_download_scheduled_for_removal">Вилучення %1$s з офлайн-звуків.</string>
-    <string name="play_sound_before_adjusting_volume">Відрегулювати гучність для цього звуку\? Спершу вам потрібно його прослухати!</string>
     <string name="trial_period">Пробний період: %1$s</string>
     <plurals name="n_days">
         <item quantity="one">%1$d день</item>
@@ -307,7 +306,7 @@
     <string name="notification_channel_missed_alarms__name">Пропущені будильники</string>
     <string name="alarm_snooze_length">Тривалість відкладання</string>
     <string name="notification_channel_missed_alarms__description">Сповіщення про вимкнення запланованих будильників після закінчення часу нагадування.</string>
-    <string name="master_volume">Основна гучність</string>
+    <string name="main_volume">Основна гучність</string>
     <string name="alarm_gradually_increase_volume">Поступово збільшувати гучність будильника</string>
     <string name="alarm_gradually_increase_volume_summary">Тривалість у хвилинах поступового збільшення гучності під час спрацьовування будильника</string>
     <string name="no_purchases">Нічого не придбано</string>

@@ -13,11 +13,11 @@ import com.github.ashutoshgngwr.noice.R
 /**
  * A convenient wrapper around [MediaSessionCompat].
  */
-class MediaSessionManager(context: Context, sessionActivityPi: PendingIntent) {
+class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: PendingIntent) {
 
   private var callback: Callback? = null
-  private var audioStream: Int = AudioManager.STREAM_MUSIC
-  private var isPlaybackLocal: Boolean = false
+  private var audioStream = AudioManager.STREAM_MUSIC
+  private var isPlaybackLocal = false
   private val defaultTitle = context.getString(R.string.unsaved_preset)
   private val mediaSession = MediaSessionCompat(context, "${context.packageName}:mediaSession")
   private val playbackStateBuilder = PlaybackStateCompat.Builder()
@@ -30,9 +30,7 @@ class MediaSessionManager(context: Context, sessionActivityPi: PendingIntent) {
     )
 
   init {
-    mediaSession.isActive = true
     mediaSession.setSessionActivity(sessionActivityPi)
-    setPlaybackToLocal()
     mediaSession.setCallback(object : MediaSessionCompat.Callback() {
       override fun onPlay() {
         callback?.onPlay()
@@ -55,6 +53,8 @@ class MediaSessionManager(context: Context, sessionActivityPi: PendingIntent) {
       }
     })
 
+    setPlaybackToLocal()
+    mediaSession.isActive = true
     MediaRouter.getInstance(context).setMediaSessionCompat(mediaSession)
   }
 
@@ -96,15 +96,15 @@ class MediaSessionManager(context: Context, sessionActivityPi: PendingIntent) {
    * Translates the given [state] to the [PlaybackStateCompat] and sets it on the current media
    * session.
    */
-  fun setPlaybackState(state: PlaybackState) {
+  fun setState(state: SoundPlayerManager.State) {
     when (state) {
-      PlaybackState.STOPPED, PlaybackState.STOPPING -> playbackStateBuilder.setState(
+      SoundPlayerManager.State.STOPPED, SoundPlayerManager.State.STOPPING -> playbackStateBuilder.setState(
         PlaybackStateCompat.STATE_STOPPED,
         PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
         0f,
       )
 
-      PlaybackState.PAUSED, PlaybackState.PAUSING -> playbackStateBuilder.setState(
+      SoundPlayerManager.State.PAUSED, SoundPlayerManager.State.PAUSING -> playbackStateBuilder.setState(
         PlaybackStateCompat.STATE_PAUSED,
         PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
         0f,
@@ -121,13 +121,13 @@ class MediaSessionManager(context: Context, sessionActivityPi: PendingIntent) {
   }
 
   /**
-   * Adds the given [title] to the media session's metadata. If [title] is `null`, it uses
+   * Adds the given [name] to the media session's metadata. If [name] is `null`, it uses
    * [R.string.unsaved_preset] as fallback.
    */
-  fun setPresetTitle(title: String?) {
+  fun setCurrentPresetName(name: String?) {
     mediaSession.setMetadata(
       MediaMetadataCompat.Builder()
-        .putString(MediaMetadataCompat.METADATA_KEY_TITLE, title ?: defaultTitle)
+        .putString(MediaMetadataCompat.METADATA_KEY_TITLE, name ?: defaultTitle)
         .build()
     )
   }

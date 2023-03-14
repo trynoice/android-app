@@ -262,7 +262,6 @@
     <string name="remove_all_sound_downloads">Xóa tất cả các bản tải xuống âm thanh</string>
     <string name="checking_sound_downloads">Kiểm tra tải xuống âm thanh</string>
     <string name="trial_period">Thời gian dùng thử: %1$s</string>
-    <string name="play_sound_before_adjusting_volume">Bạn cần phát âm thanh này trước khi có thể điều chỉnh âm lượng của nó.</string>
     <string name="stripe_customer_portal_error">Rất tiếc! Chúng tôi không thể mở cổng thông tin thanh toán. %1$s Vui lòng thử lại!</string>
     <string name="sound_downloads_scheduled_for_removal">Tất cả các bản tải xuống âm thanh đã được lên lịch để xóa.</string>
     <string name="sound_is_premium">Âm thanh này chỉ có ở Noice Premium.</string>

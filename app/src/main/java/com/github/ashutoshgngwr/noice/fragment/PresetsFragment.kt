@@ -24,7 +24,6 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.activity.PresetShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.databinding.PresetsFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.PresetsListItemBinding
-import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
@@ -32,12 +31,13 @@ import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import java.util.*
@@ -54,7 +54,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
   internal lateinit var presetRepository: PresetRepository
 
   @set:Inject
-  internal lateinit var playbackController: PlaybackController
+  internal lateinit var playbackServiceController: SoundPlaybackService.Controller
 
   @set:Inject
   internal lateinit var analyticsProvider: AnalyticsProvider
@@ -85,17 +85,19 @@ class PresetsFragment : Fragment(), PresetListItemController {
     }
 
     viewLifecycleOwner.launchAndRepeatOnStarted {
-      viewModel.activePresetId.collect(adapter::setActivePresetId)
+      viewModel.activePreset
+        .map { it?.id }
+        .collect(adapter::setActivePresetId)
     }
 
     analyticsProvider.setCurrentScreen("presets", PresetsFragment::class)
   }
 
   override fun onPlaybackToggled(preset: Preset) {
-    if (viewModel.activePresetId.value == preset.id) {
-      playbackController.stop()
+    if (viewModel.activePreset.value?.id == preset.id) {
+      playbackServiceController.stop()
     } else {
-      playbackController.play(preset)
+      playbackServiceController.playPreset(preset)
     }
   }
 
@@ -119,8 +121,8 @@ class PresetsFragment : Fragment(), PresetListItemController {
       positiveButton(R.string.delete) {
         presetRepository.delete(preset.id)
         // then stop playback if recently deleted preset was playing
-        if (viewModel.activePresetId.value == preset.id) {
-          playbackController.stop()
+        if (viewModel.activePreset.value?.id == preset.id) {
+          playbackServiceController.stop()
         }
 
         ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
@@ -227,16 +229,14 @@ class PresetsFragment : Fragment(), PresetListItemController {
 @HiltViewModel
 class PresetsViewModel @Inject constructor(
   presetRepository: PresetRepository,
-  playbackController: PlaybackController,
+  playbackServiceController: SoundPlaybackService.Controller,
 ) : ViewModel() {
 
   internal val presets: StateFlow<List<Preset>> = presetRepository.listFlow()
     .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-  internal val activePresetId: StateFlow<String?> =
-    combine(presets, playbackController.getPlayerStates()) { presets, playerStates ->
-      presets.find { p -> p.hasMatchingPlayerStates(playerStates) }?.id
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
+  internal val activePreset: StateFlow<Preset?> = playbackServiceController.getCurrentPreset()
+    .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal val presetsWithAppShortcut = MutableStateFlow(emptySet<String>())
 

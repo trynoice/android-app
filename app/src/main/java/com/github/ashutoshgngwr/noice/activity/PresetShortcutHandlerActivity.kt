@@ -7,9 +7,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
+import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -33,7 +33,7 @@ class PresetShortcutHandlerActivity : AppCompatActivity() {
   internal lateinit var presetRepository: PresetRepository
 
   @set:Inject
-  internal lateinit var playbackController: PlaybackController
+  internal lateinit var playbackServiceController: SoundPlaybackService.Controller
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -49,7 +49,7 @@ class PresetShortcutHandlerActivity : AppCompatActivity() {
         Toast.makeText(this, R.string.preset_does_not_exist, Toast.LENGTH_LONG).show()
         params.putBoolean("success", false)
       } else {
-        playbackController.play(preset)
+        playbackServiceController.playPreset(preset)
         params.putBoolean("success", true)
       }
     }

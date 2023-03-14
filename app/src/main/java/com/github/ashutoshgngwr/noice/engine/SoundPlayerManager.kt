@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.engine
 
 import android.content.Context
 import android.media.AudioManager
+import android.util.Log
 import androidx.media.AudioAttributesCompat
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.properties.Delegates.observable
@@ -162,7 +163,7 @@ class SoundPlayerManager(
     soundPlayers.clear()
     soundIds.forEach { soundId ->
       if (soundId in pausedSoundIds) {
-        initPlayer(soundId)
+        initSoundPlayer(soundId)
         listener.onSoundStateChange(soundId, soundPlayers.getValue(soundId).state)
       } else {
         playSound(soundId)
@@ -206,7 +207,7 @@ class SoundPlayerManager(
    * [SoundPlayerManager] is in the [State.PAUSED].
    */
   fun playSound(soundId: String) {
-    initPlayer(soundId)
+    initSoundPlayer(soundId)
     val player = soundPlayers.getValue(soundId)
     if (!focusManager.hasFocus() || state == State.PAUSING || state == State.PAUSED) {
       resume()
@@ -239,6 +240,7 @@ class SoundPlayerManager(
    * fade-out effect before pausing.
    */
   fun pause(immediate: Boolean) {
+    shouldResumeOnFocusGain = false
     soundPlayers.values.forEach { it.pause(immediate) }
   }
 
@@ -266,9 +268,8 @@ class SoundPlayerManager(
       .forEach(this::stopSound)
 
     soundStates.forEach { (soundId, volume) ->
-      if (soundPlayers[soundId]?.state == SoundPlayer.State.PLAYING) {
-        setSoundVolume(soundId, volume)
-      } else {
+      setSoundVolume(soundId, volume)
+      if (soundPlayers[soundId]?.state != SoundPlayer.State.PLAYING) {
         playSound(soundId)
       }
     }
@@ -280,11 +281,11 @@ class SoundPlayerManager(
    */
   fun getCurrentPreset(): Map<String, Float> {
     return soundPlayers
-      .filterValues { it.state != SoundPlayer.State.STOPPING && it.state != SoundPlayer.State.STOPPED }
+      .filterValues { state == State.STOPPING || (it.state != SoundPlayer.State.STOPPING && it.state != SoundPlayer.State.STOPPED) }
       .mapValues { soundPlayerVolumes[it.key] ?: 1F }
   }
 
-  private fun initPlayer(soundId: String) {
+  private fun initSoundPlayer(soundId: String) {
     if (soundPlayers.containsKey(soundId) && soundPlayers[soundId]?.state != SoundPlayer.State.STOPPED) {
       return // a sound player already exists and is not in its terminal state.
     }
@@ -300,17 +301,18 @@ class SoundPlayerManager(
     }
   }
 
-  private fun onSoundPlayerStateChange(soundId: String, playerState: SoundPlayer.State) {
-    if (playerState == SoundPlayer.State.STOPPED) {
+  private fun onSoundPlayerStateChange(soundId: String, state: SoundPlayer.State) {
+    Log.d(LOG_TAG, "onSoundPlayerStateChange: $soundId=$state")
+    if (state == SoundPlayer.State.STOPPED) {
       soundPlayers.remove(soundId)
     }
 
-    reconcileState()
-    if (state == State.PAUSED || state == State.STOPPED) {
+    if (soundPlayers.isEmpty()) {
       focusManager.abandonFocus()
     }
 
-    listener.onSoundStateChange(soundId, playerState)
+    reconcileState()
+    listener.onSoundStateChange(soundId, state)
   }
 
   private fun reconcileState() {
@@ -320,17 +322,19 @@ class SoundPlayerManager(
       soundPlayerStates.all { it == SoundPlayer.State.STOPPING } -> State.STOPPING
       soundPlayerStates.all { it == SoundPlayer.State.PAUSED } -> State.PAUSED
       // some players may be stopping during when all sounds are paused.
-      soundPlayerStates.all { it == SoundPlayer.State.PAUSING || it == SoundPlayer.State.STOPPING } -> State.PAUSING
+      soundPlayerStates.all { it == SoundPlayer.State.PAUSING || it == SoundPlayer.State.PAUSED || it == SoundPlayer.State.STOPPING } -> State.PAUSING
       else -> State.PLAYING
     }
   }
 
   companion object {
+    private const val LOG_TAG = "SoundPlayerManager"
+
     /**
      * Audio attributes that the [SoundPlayerManager] should use to perform its playback on the
      * music audio stream.
      */
-    val DEFAULT_AUDIO_ATTRIBUTES = AudioAttributesCompat.Builder()
+    val DEFAULT_AUDIO_ATTRIBUTES: AudioAttributesCompat = AudioAttributesCompat.Builder()
       .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)
       .setLegacyStreamType(AudioManager.STREAM_MUSIC)
       .setUsage(AudioAttributesCompat.USAGE_MEDIA)
@@ -340,7 +344,7 @@ class SoundPlayerManager(
      * Audio attributes that the [SoundPlayerManager] should use to perform its playback on the
      * alarm audio stream.
      */
-    val ALARM_AUDIO_ATTRIBUTES = AudioAttributesCompat.Builder()
+    val ALARM_AUDIO_ATTRIBUTES: AudioAttributesCompat = AudioAttributesCompat.Builder()
       .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)
       .setLegacyStreamType(AudioManager.STREAM_ALARM)
       .setUsage(AudioAttributesCompat.USAGE_ALARM)

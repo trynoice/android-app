@@ -12,20 +12,23 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
-import androidx.core.app.ServiceCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import androidx.core.os.postDelayed
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import androidx.media.AudioAttributesCompat
+import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.engine.LocalSoundPlayer
 import com.github.ashutoshgngwr.noice.engine.MediaPlayer
-import com.github.ashutoshgngwr.noice.engine.MediaSessionManager
-import com.github.ashutoshgngwr.noice.engine.PlaybackNotificationManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
+import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerMediaSession
+import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerNotificationManager
 import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDataSourceFactory
+import com.github.ashutoshgngwr.noice.ext.bindServiceCallbackFlow
 import com.github.ashutoshgngwr.noice.model.PlayerState
 import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.provider.CastApiProvider
@@ -36,17 +39,20 @@ import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.google.android.exoplayer2.upstream.cache.Cache
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.channels.BufferOverflow
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Singleton
+import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.random.Random
 import kotlin.reflect.KClass
 import kotlin.reflect.cast
+import kotlin.time.Duration.Companion.minutes
 
 @AndroidEntryPoint
 class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
@@ -79,11 +85,11 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
   private val soundPlayerStates = mutableMapOf<String, SoundPlayer.State>()
   private val soundPlayerVolumes = mutableMapOf<String, Float>()
 
-  private val soundPlayerManagerStateFlow = buildMutableSharedFlow(SoundPlayerManager.State.STOPPED)
-  private val soundPlayerManagerVolumeFlow = buildMutableSharedFlow(1F)
-  private val soundPlayerStatesFlow = buildMutableSharedFlow(soundPlayerStates)
-  private val soundPlayerVolumesFlow = buildMutableSharedFlow(soundPlayerVolumes)
-  private val currentPresetFlow = buildMutableSharedFlow<Preset?>(null)
+  private val soundPlayerManagerStateFlow = MutableStateFlow(SoundPlayerManager.State.STOPPED)
+  private val soundPlayerManagerVolumeFlow = MutableStateFlow(1F)
+  private val soundPlayerStatesFlow = MutableStateFlow(soundPlayerStates.toMap())
+  private val soundPlayerVolumesFlow = MutableStateFlow(soundPlayerVolumes.toMap())
+  private val currentPresetFlow = MutableStateFlow<Preset?>(null)
 
   private val serviceBinder = Binder(
     soundPlayerManagerStateFlow = soundPlayerManagerStateFlow,
@@ -102,12 +108,22 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
     PendingIntent.getActivity(this, 0x28, Intent(this, MainActivity::class.java), piFlags)
   }
 
-  private val mediaSessionManager: MediaSessionManager by lazy {
-    MediaSessionManager(this, mainActivityPi)
+  private val mediaSession: SoundPlayerManagerMediaSession by lazy {
+    SoundPlayerManagerMediaSession(this, mainActivityPi)
   }
 
-  private val playbackNotificationManager: PlaybackNotificationManager by lazy {
-    PlaybackNotificationManager(this, mainActivityPi, mediaSessionManager.getSessionToken())
+  private val notificationManager: SoundPlayerManagerNotificationManager by lazy {
+    SoundPlayerManagerNotificationManager(
+      service = this,
+      mediaSessionToken = mediaSession.getSessionToken(),
+      contentPi = mainActivityPi,
+      resumePi = Controller.buildResumeActionPendingIntent(this),
+      pausePi = Controller.buildPauseActionPendingIntent(this),
+      stopPi = Controller.buildStopActionPendingIntent(this),
+      randomPresetPi = Controller.buildRandomPresetActionPendingIntent(this),
+      skipToNextPresetPi = Controller.buildSkipToNextPresetActionPendingIntent(this),
+      skipToPrevPresetPi = Controller.buildSkipToPrevPresetActionPendingIntent(this),
+    )
   }
 
   private val localDataSourceFactory: SoundDataSourceFactory by lazy {
@@ -132,31 +148,16 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
 
   private val wakeLock: PowerManager.WakeLock by lazy {
     requireNotNull(getSystemService<PowerManager>())
-      .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "noice:PlaybackService").apply {
-        setReferenceCounted(false)
-      }
+      .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "noice:PlaybackService")
+      .apply { setReferenceCounted(false) }
   }
 
-  private val mediaSessionManagerCallback = object : MediaSessionManager.Callback {
-    override fun onPlay() {
-      soundPlayerManager.resume()
-    }
-
-    override fun onStop() {
-      soundPlayerManager.stop(false)
-    }
-
-    override fun onPause() {
-      soundPlayerManager.pause(false)
-    }
-
-    override fun onSkipToPrevious() {
-      skipPreset(PRESET_SKIP_DIRECTION_PREV)
-    }
-
-    override fun onSkipToNext() {
-      skipPreset(PRESET_SKIP_DIRECTION_NEXT)
-    }
+  private val mediaSessionCallback = object : SoundPlayerManagerMediaSession.Callback {
+    override fun onPlay() = soundPlayerManager.resume()
+    override fun onStop() = soundPlayerManager.stop(false)
+    override fun onPause() = soundPlayerManager.pause(false)
+    override fun onSkipToPrevious() = skipPreset(PRESET_SKIP_DIRECTION_PREV)
+    override fun onSkipToNext() = skipPreset(PRESET_SKIP_DIRECTION_NEXT)
   }
 
   private val becomingNoisyReceiver = object : BroadcastReceiver() {
@@ -202,7 +203,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
 
     lifecycleScope.launch {
       settingsRepository.isMediaButtonsEnabledAsFlow().collect { isEnabled ->
-        mediaSessionManager.setCallback(if (isEnabled) mediaSessionManagerCallback else null)
+        mediaSession.setCallback(if (isEnabled) mediaSessionCallback else null)
       }
     }
 
@@ -233,6 +234,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
       ACTION_PAUSE -> soundPlayerManager.pause(
         intent.getBooleanExtra(INTENT_EXTRA_SKIP_FADE_TRANSITION, false)
       )
+
       ACTION_STOP -> soundPlayerManager.stop(false)
 
       ACTION_SET_VOLUME -> {
@@ -264,12 +266,14 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
       ACTION_SET_AUDIO_USAGE -> when (intent.getStringExtra(INTENT_EXTRA_AUDIO_USAGE)) {
         AUDIO_USAGE_MEDIA -> {
           soundPlayerManager.setAudioAttributes(SoundPlayerManager.DEFAULT_AUDIO_ATTRIBUTES)
-          mediaSessionManager.setAudioStream(AudioManager.STREAM_MUSIC)
+          mediaSession.setAudioStream(AudioManager.STREAM_MUSIC)
         }
+
         AUDIO_USAGE_ALARM -> {
           soundPlayerManager.setAudioAttributes(SoundPlayerManager.ALARM_AUDIO_ATTRIBUTES)
-          mediaSessionManager.setAudioStream(AudioManager.STREAM_ALARM)
+          mediaSession.setAudioStream(AudioManager.STREAM_ALARM)
         }
+
         else -> throw IllegalArgumentException(
           """
             intent extra '${INTENT_EXTRA_AUDIO_USAGE}' must be be one of
@@ -299,6 +303,18 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
             ?.also { soundPlayerManager.playPreset(it) }
         }
       }
+
+      ACTION_SAVE_CURRENT_PRESET -> {
+        val presetName = intent.getStringExtra(INTENT_EXTRA_PRESET_NAME)
+        require(presetName != null && presets.none { it.name == presetName }) {
+          "$INTENT_EXTRA_PRESET_NAME is either null or a preset with this name already exists"
+        }
+
+        soundPlayerManager.getCurrentPreset()
+          .map { PlayerState(it.key, (it.value * 25).roundToInt()) }
+          .let { Preset(presetName, it.toTypedArray()) }
+          .also { presetRepository.create(it) }
+      }
     }
 
     return super.onStartCommand(intent, flags, startId)
@@ -307,7 +323,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
   override fun onDestroy() {
     Log.d(LOG_TAG, "onDestroy: releasing acquired resources")
     soundPlayerManager.stop(true)
-    mediaSessionManager.release()
+    mediaSession.release()
     castApiProvider.unregisterSessionListener(this)
     unregisterReceiver(becomingNoisyReceiver)
     if (wakeLock.isHeld) {
@@ -319,44 +335,50 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
 
   override fun onCastSessionBegin() {
     Log.d(LOG_TAG, "onCastSessionBegin: switching playback to remote")
+    mediaSession.setPlaybackToRemote(castApiProvider.getVolumeProvider())
     soundPlayerManager.setSoundPlayerFactory(castApiProvider.buildPlayerFactory(this))
-    mediaSessionManager.setPlaybackToRemote(castApiProvider.getVolumeProvider())
   }
 
   override fun onCastSessionEnd() {
     Log.i(LOG_TAG, "onCastSessionEnd: switching playback to local")
+    mediaSession.setPlaybackToLocal()
     soundPlayerManager.setSoundPlayerFactory(localSoundPlayerFactory)
-    mediaSessionManager.setPlaybackToLocal()
   }
 
   override fun onSoundPlayerManagerStateChange(state: SoundPlayerManager.State) {
-    soundPlayerManagerStateFlow.tryEmit(state)
-    mediaSessionManager.setPlaybackState(state)
+    soundPlayerManagerStateFlow.value = state
+    mediaSession.setState(state)
+    notificationManager.setState(state)
+    if (state == SoundPlayerManager.State.PAUSED) {
+      handler.postDelayed(10.minutes.inWholeMilliseconds, IDLE_TIMEOUT_CALLBACK_TOKEN) {
+        soundPlayerManager.stop(true)
+      }
+    } else {
+      handler.removeCallbacksAndMessages(IDLE_TIMEOUT_CALLBACK_TOKEN)
+    }
+
     if (state == SoundPlayerManager.State.STOPPED) {
       Log.d(LOG_TAG, "onSoundPlayerManagerStateChange: playback stopped, releasing resources")
-      ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
       wakeLock.release()
     } else {
       Log.d(LOG_TAG, "onSoundPlayerManagerStateChange: playback ongoing, ensuring resources")
       wakeLock.acquire(WAKELOCK_TIMEOUT)
-      playbackNotificationManager.createNotification(state, currentPreset)
-        .also { startForeground(0x01, it) }
     }
   }
 
   override fun onSoundPlayerManagerVolumeChange(volume: Float) {
-    soundPlayerManagerVolumeFlow.tryEmit(volume)
+    soundPlayerManagerVolumeFlow.value = volume
   }
 
   override fun onSoundStateChange(soundId: String, state: SoundPlayer.State) {
     soundPlayerStates[soundId] = state
-    soundPlayerStatesFlow.tryEmit(soundPlayerStates)
+    soundPlayerStatesFlow.value = soundPlayerStates.toMap()
     onCurrentPresetChange()
   }
 
   override fun onSoundVolumeChange(soundId: String, volume: Float) {
     soundPlayerVolumes[soundId] = volume
-    soundPlayerVolumesFlow.tryEmit(soundPlayerVolumes)
+    soundPlayerVolumesFlow.value = soundPlayerVolumes.toMap()
     onCurrentPresetChange()
   }
 
@@ -366,14 +388,9 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
       .toTypedArray()
 
     currentPreset = presets.find { it.hasMatchingPlayerStates(currentStates) }
-    mediaSessionManager.setPresetTitle(currentPreset?.name)
-    playbackNotificationManager.createNotification(soundPlayerManager.state, currentPreset)
-      .also { startForeground(0x01, it) }
-  }
-
-  private fun <T> buildMutableSharedFlow(initialValue: T): MutableSharedFlow<T> {
-    return MutableSharedFlow<T>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
-      .also { it.tryEmit(initialValue) }
+    currentPresetFlow.value = currentPreset
+    mediaSession.setCurrentPresetName(currentPreset?.name)
+    notificationManager.setCurrentPresetName(currentPreset?.name)
   }
 
   private fun getSoundIdExtra(intent: Intent): String {
@@ -401,47 +418,321 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
   }
 
   companion object {
-    private const val LOG_TAG = "PlaybackService"
+    private const val LOG_TAG = "SoundPlaybackService"
     private const val WAKELOCK_TIMEOUT = 24 * 60 * 60 * 1000L
-
-    internal const val ACTION_PLAY_SOUND = "playSound"
-    internal const val ACTION_STOP_SOUND = "stopSound"
-    internal const val ACTION_PAUSE = "pause"
-    internal const val ACTION_RESUME = "resume"
-    internal const val ACTION_STOP = "stop"
-    internal const val ACTION_PLAY_PRESET = "playPreset"
-    internal const val ACTION_SCHEDULE_STOP = "scheduleStop"
-    internal const val ACTION_CLEAR_STOP_SCHEDULE = "clearStopSchedule"
-    internal const val ACTION_SET_AUDIO_USAGE = "setAudioUsage"
-    internal const val ACTION_SKIP_PRESET = "skipPreset"
-    internal const val ACTION_SET_VOLUME = "setVolume"
-    internal const val ACTION_SET_SOUND_VOLUME = "setSoundVolume"
-    internal const val ACTION_PLAY_RANDOM_PRESET = "playRandomPreset"
-
-    internal const val INTENT_EXTRA_SOUND_ID = "soundId"
-    internal const val INTENT_EXTRA_PRESET = "preset"
-    internal const val INTENT_EXTRA_SCHEDULED_STOP_AT_MILLIS = "scheduledStopAtMillis"
-    internal const val INTENT_EXTRA_AUDIO_USAGE = "audioUsage"
-    internal const val INTENT_EXTRA_PRESET_SKIP_DIRECTION = "presetSkipDirection"
-    internal const val INTENT_EXTRA_VOLUME = "volume"
-    internal const val INTENT_EXTRA_SKIP_FADE_TRANSITION = "skipFadeTransition"
-
-    internal const val AUDIO_USAGE_MEDIA = "media"
-    internal const val AUDIO_USAGE_ALARM = "alarm"
-
-    internal const val PRESET_SKIP_DIRECTION_NEXT = 1
-    internal const val PRESET_SKIP_DIRECTION_PREV = -1
-
     private const val STOP_CALLBACK_TOKEN = "stopCallback"
+    private const val IDLE_TIMEOUT_CALLBACK_TOKEN = "idleTimeoutCallback"
+
+    private const val ACTION_PLAY_SOUND = "playSound"
+    private const val ACTION_STOP_SOUND = "stopSound"
+    private const val ACTION_PAUSE = "pause"
+    private const val ACTION_RESUME = "resume"
+    private const val ACTION_STOP = "stop"
+    private const val ACTION_PLAY_PRESET = "playPreset"
+    private const val ACTION_SCHEDULE_STOP = "scheduleStop"
+    private const val ACTION_CLEAR_STOP_SCHEDULE = "clearStopSchedule"
+    private const val ACTION_SET_AUDIO_USAGE = "setAudioUsage"
+    private const val ACTION_SKIP_PRESET = "skipPreset"
+    private const val ACTION_SET_VOLUME = "setVolume"
+    private const val ACTION_SET_SOUND_VOLUME = "setSoundVolume"
+    private const val ACTION_PLAY_RANDOM_PRESET = "playRandomPreset"
+    private const val ACTION_SAVE_CURRENT_PRESET = "saveCurrentPreset"
+
+    private const val INTENT_EXTRA_SOUND_ID = "soundId"
+    private const val INTENT_EXTRA_PRESET = "preset"
+    private const val INTENT_EXTRA_SCHEDULED_STOP_AT_MILLIS = "scheduledStopAtMillis"
+    private const val INTENT_EXTRA_AUDIO_USAGE = "audioUsage"
+    private const val INTENT_EXTRA_PRESET_SKIP_DIRECTION = "presetSkipDirection"
+    private const val INTENT_EXTRA_VOLUME = "volume"
+    private const val INTENT_EXTRA_SKIP_FADE_TRANSITION = "skipFadeTransition"
+    private const val INTENT_EXTRA_PRESET_NAME = "presetName"
+
+    private const val PRESET_SKIP_DIRECTION_NEXT = 1
+    private const val PRESET_SKIP_DIRECTION_PREV = -1
+
+    private const val AUDIO_USAGE_MEDIA = "media"
+    private const val AUDIO_USAGE_ALARM = "alarm"
   }
 
-  class Binder(
+  private class Binder(
     val soundPlayerManagerStateFlow: Flow<SoundPlayerManager.State>,
     val soundPlayerManagerVolumeFlow: Flow<Float>,
     val soundPlayerStatesFlow: Flow<Map<String, SoundPlayer.State>>,
     val soundPlayerVolumesFlow: Flow<Map<String, Float>>,
     val currentPresetFlow: Flow<Preset?>,
   ) : android.os.Binder()
+
+  @Singleton
+  class Controller @Inject constructor(@ApplicationContext private val context: Context) {
+
+    private val prefs by lazy { PreferenceManager.getDefaultSharedPreferences(context) }
+
+    /**
+     * Sends the start command to the service with [ACTION_PLAY_SOUND].
+     */
+    fun playSound(soundId: String) {
+      commandSoundPlaybackService(true) {
+        action = ACTION_PLAY_SOUND
+        putExtra(INTENT_EXTRA_SOUND_ID, soundId)
+      }
+    }
+
+    /**
+     * Sends the start command to the service with [ACTION_STOP_SOUND].
+     */
+    fun stopSound(soundId: String) {
+      commandSoundPlaybackService(false) {
+        action = ACTION_STOP_SOUND
+        putExtra(INTENT_EXTRA_SOUND_ID, soundId)
+      }
+    }
+
+    /**
+     * Sends the start command to the service with [ACTION_SET_VOLUME].
+     */
+    fun setVolume(volume: Float) {
+      commandSoundPlaybackService(false) {
+        action = ACTION_SET_VOLUME
+        putExtra(INTENT_EXTRA_VOLUME, volume)
+      }
+    }
+
+    /**
+     * Sends the start command to the service with [ACTION_SET_SOUND_VOLUME].
+     */
+    fun setSoundVolume(soundId: String, volume: Float) {
+      commandSoundPlaybackService(false) {
+        action = ACTION_SET_SOUND_VOLUME
+        putExtra(INTENT_EXTRA_SOUND_ID, soundId)
+        putExtra(INTENT_EXTRA_VOLUME, volume)
+      }
+    }
+
+    /**
+     * Sends the start command to the service with [ACTION_PAUSE].
+     */
+    fun pause(skipFadeTransition: Boolean = false) {
+      commandSoundPlaybackService(false) {
+        action = ACTION_PAUSE
+        putExtra(INTENT_EXTRA_SKIP_FADE_TRANSITION, skipFadeTransition)
+      }
+    }
+
+    /**
+     * Sends the start command to the service with [ACTION_RESUME].
+     */
+    fun resume() {
+      commandSoundPlaybackService(true) { action = ACTION_RESUME }
+    }
+
+    /**
+     * Sends the start command to the service with [ACTION_STOP].
+     */
+    fun stop() {
+      commandSoundPlaybackService(false) { action = ACTION_STOP }
+    }
+
+    /**
+     * Sends the start command to the service with [ACTION_PLAY_PRESET].
+     */
+    fun playPreset(preset: Preset) {
+      commandSoundPlaybackService(true) {
+        action = ACTION_PLAY_PRESET
+        putExtra(INTENT_EXTRA_PRESET, preset)
+      }
+    }
+
+    /**
+     * Sends the start command to the service with [ACTION_SCHEDULE_STOP].
+     */
+    fun scheduleStop(afterDurationMillis: Long) {
+      val atMillis = System.currentTimeMillis() + afterDurationMillis
+      prefs.edit(commit = true) { putLong(PREF_SCHEDULED_STOP_MILLIS, atMillis) }
+      commandSoundPlaybackService(false) {
+        action = ACTION_SCHEDULE_STOP
+        putExtra(INTENT_EXTRA_SCHEDULED_STOP_AT_MILLIS, atMillis)
+      }
+    }
+
+    /**
+     * Sends the start command to the service with [ACTION_CLEAR_STOP_SCHEDULE].
+     */
+    fun clearStopSchedule() {
+      prefs.edit { remove(PREF_SCHEDULED_STOP_MILLIS) }
+      commandSoundPlaybackService(false) { action = ACTION_CLEAR_STOP_SCHEDULE }
+    }
+
+    /**
+     * Returns the remaining duration millis for the last automatic stop schedule for the sound
+     * playback service.
+     */
+    fun getStopScheduleRemainingMillis(): Long {
+      return max(prefs.getLong(PREF_SCHEDULED_STOP_MILLIS, 0) - System.currentTimeMillis(), 0)
+    }
+
+    /**
+     * Sends the start command to the service with [ACTION_SET_AUDIO_USAGE].
+     *
+     * @param usage must be one of [AUDIO_USAGE_MEDIA] or [AUDIO_USAGE_ALARM].
+     */
+    fun setAudioUsage(usage: String) {
+      commandSoundPlaybackService(false) {
+        action = ACTION_SET_AUDIO_USAGE
+        putExtra(INTENT_EXTRA_AUDIO_USAGE, usage)
+      }
+    }
+
+    /**
+     * Sends the start command to the service with [ACTION_SAVE_CURRENT_PRESET].
+     */
+    fun saveCurrentPreset(presetName: String) {
+      commandSoundPlaybackService(false) {
+        action = ACTION_SAVE_CURRENT_PRESET
+        putExtra(INTENT_EXTRA_PRESET_NAME, presetName)
+      }
+    }
+
+    /**
+     * @return a [Flow] that emits the current [SoundPlayerManager.State] of the
+     * [SoundPlayerManager] instance being used by the [SoundPlaybackService].
+     */
+    fun getState(): Flow<SoundPlayerManager.State> =
+      context.bindServiceCallbackFlow<SoundPlaybackService, Binder, SoundPlayerManager.State> { binder ->
+        binder.soundPlayerManagerStateFlow
+      }
+
+    /**
+     * @return a [Flow] that emits the current volume of the [SoundPlayerManager] instance being
+     * used by the [SoundPlaybackService].
+     */
+    fun getVolume(): Flow<Float> =
+      context.bindServiceCallbackFlow<SoundPlaybackService, Binder, Float> { binder ->
+        binder.soundPlayerManagerVolumeFlow
+      }
+
+    /**
+     * @return a [Flow] that emits a map of sound ids to their corresponding [SoundPlayer.State] for
+     * all sounds managed by the [SoundPlayerManager] instance being used by the
+     * [SoundPlaybackService]. If a sound is missing from the map, the callers must assume its state
+     * to be [SoundPlayer.State.STOPPED].
+     */
+    fun getSoundStates(): Flow<Map<String, SoundPlayer.State>> =
+      context.bindServiceCallbackFlow<SoundPlaybackService, Binder, Map<String, SoundPlayer.State>> { binder ->
+        binder.soundPlayerStatesFlow
+      }
+
+    /**
+     * @return a [Flow] that emits a map of sound ids to their corresponding volumes for all sounds
+     * managed by the [SoundPlayerManager] instance being used by the [SoundPlaybackService]. If a
+     * sound is missing from the map, the callers must assume its volume to be `1F`.
+     */
+    fun getSoundVolumes(): Flow<Map<String, Float>> =
+      context.bindServiceCallbackFlow<SoundPlaybackService, Binder, Map<String, Float>> { binder ->
+        binder.soundPlayerVolumesFlow
+      }
+
+    /**
+     * @return a [Flow] that emits the currently playing saved preset in the [SoundPlayerManager]
+     * instance being used by the [SoundPlaybackService]. If the currently playing preset is not
+     * saved, it emit `null`.
+     */
+    fun getCurrentPreset(): Flow<Preset?> =
+      context.bindServiceCallbackFlow<SoundPlaybackService, Binder, Preset?> { binder ->
+        binder.currentPresetFlow
+      }
+
+    private inline fun commandSoundPlaybackService(
+      foreground: Boolean,
+      intentBuilder: Intent.() -> Unit
+    ) {
+      val intent = Intent(context, SoundPlaybackService::class.java)
+      intentBuilder.invoke(intent)
+      if (foreground) {
+        ContextCompat.startForegroundService(context, intent)
+      } else {
+        context.startService(intent)
+      }
+    }
+
+    companion object {
+      private const val PREF_SCHEDULED_STOP_MILLIS = "scheduledStopMillis"
+
+      internal const val AUDIO_USAGE_MEDIA = SoundPlaybackService.AUDIO_USAGE_MEDIA
+      internal const val AUDIO_USAGE_ALARM = SoundPlaybackService.AUDIO_USAGE_ALARM
+
+      /**
+       * Returns a [PendingIntent] that sends [ACTION_RESUME] command to the [SoundPlaybackService].
+       */
+      fun buildResumeActionPendingIntent(context: Context): PendingIntent {
+        return buildPendingIntent(context, 0x3A, true) { action = ACTION_RESUME }
+      }
+
+      /**
+       * Returns a [PendingIntent] that sends [ACTION_PAUSE] command to the [SoundPlaybackService].
+       */
+      fun buildPauseActionPendingIntent(context: Context): PendingIntent {
+        return buildPendingIntent(context, 0x3B, false) { action = ACTION_PAUSE }
+      }
+
+      /**
+       * Returns a [PendingIntent] that sends [ACTION_STOP] command to the [SoundPlaybackService].
+       */
+      fun buildStopActionPendingIntent(context: Context): PendingIntent {
+        return buildPendingIntent(context, 0x3C, false) { action = ACTION_STOP }
+      }
+
+      /**
+       * Returns a [PendingIntent] that sends [ACTION_PLAY_RANDOM_PRESET] command to the
+       * [SoundPlaybackService].
+       */
+      fun buildRandomPresetActionPendingIntent(context: Context): PendingIntent {
+        return buildPendingIntent(context, 0x3D, true) { action = ACTION_PLAY_RANDOM_PRESET }
+      }
+
+      /**
+       * Returns a [PendingIntent] that sends [ACTION_SKIP_PRESET] command with
+       * [PRESET_SKIP_DIRECTION_PREV] to the [SoundPlaybackService].
+       */
+      fun buildSkipToPrevPresetActionPendingIntent(context: Context): PendingIntent {
+        return buildPendingIntent(context, 0x3E, true) {
+          action = ACTION_SKIP_PRESET
+          putExtra(INTENT_EXTRA_PRESET_SKIP_DIRECTION, PRESET_SKIP_DIRECTION_PREV)
+        }
+      }
+
+      /**
+       * Returns a [PendingIntent] that sends [ACTION_SKIP_PRESET] command with
+       * [PRESET_SKIP_DIRECTION_NEXT] to the [SoundPlaybackService].
+       */
+      fun buildSkipToNextPresetActionPendingIntent(context: Context): PendingIntent {
+        return buildPendingIntent(context, 0x3F, true) {
+          action = ACTION_SKIP_PRESET
+          putExtra(INTENT_EXTRA_PRESET_SKIP_DIRECTION, PRESET_SKIP_DIRECTION_NEXT)
+        }
+      }
+
+      private inline fun buildPendingIntent(
+        context: Context,
+        requestCode: Int,
+        foreground: Boolean,
+        intentBuilder: Intent.() -> Unit,
+      ): PendingIntent {
+        val piFlags = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+          PendingIntent.FLAG_UPDATE_CURRENT
+        } else {
+          PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        }
+
+        val intent = Intent(context, SoundPlaybackService::class.java)
+        intentBuilder.invoke(intent)
+        return if (foreground && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+          PendingIntent.getForegroundService(context, requestCode, intent, piFlags)
+        } else {
+          PendingIntent.getService(context, requestCode, intent, piFlags)
+        }
+      }
+    }
+  }
 }
 
 // TODO: remove this extension when a replacement method is available the Androidx Compat libraries.

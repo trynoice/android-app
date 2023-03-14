@@ -163,7 +163,7 @@
     </activity>
 
     <service
-      android:name=".engine.PlaybackService"
+      android:name=".service.SoundPlaybackService"
       android:foregroundServiceType="mediaPlayback" />
 
     <service

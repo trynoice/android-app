@@ -7,7 +7,7 @@
 
     <variable
       name="viewModel"
-      type="com.github.ashutoshgngwr.noice.fragment.PlaybackControllerViewModel" />
+      type="com.github.ashutoshgngwr.noice.fragment.SoundPlaybackControllerViewModel" />
 
   </data>
 
@@ -76,7 +76,7 @@
         style="@style/Widget.App.PlaybackController.IconButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/master_volume"
+        android:contentDescription="@string/main_volume"
         app:icon="@drawable/ic_action_volume" />
 
     </LinearLayout>

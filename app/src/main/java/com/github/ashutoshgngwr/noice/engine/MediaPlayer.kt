@@ -88,7 +88,10 @@ class MediaPlayer @VisibleForTesting constructor(
     // When ExoPlayer finishes playing the last media item, it doesn't emit a media item transition
     // event. So, handle clearing the playlist here.
     if (playbackState == Player.STATE_ENDED) {
+      val playWhenReady = exoPlayer.playWhenReady
+      exoPlayer.stop() // transition to idle state so that adding items to playlist works correctly.
       exoPlayer.clearMediaItems()
+      exoPlayer.playWhenReady = playWhenReady
     }
   }
 
@@ -174,13 +177,7 @@ class MediaPlayer @VisibleForTesting constructor(
    * player to [State.BUFFERING] or [State.PLAYING].
    */
   fun addToPlaylist(uri: String) {
-    // when the playlist ends, ExoPlayer enters the `ended` state. It doesn't play any media items
-    // queued in `ended` state. To correctly resume the playback, first transition ExoPlayer to idle
-    // state using `stop` and then queue the media item and resume playback.
-    val shouldResume = exoPlayer.playWhenReady
-    if (exoPlayer.playbackState == ExoPlayer.STATE_ENDED) exoPlayer.stop()
     exoPlayer.addMediaItem(MediaItem.fromUri(uri))
-    exoPlayer.playWhenReady = shouldResume
     exoPlayer.prepare()
   }
 
@@ -217,13 +214,14 @@ class MediaPlayer @VisibleForTesting constructor(
     }
 
     val startMillis = System.currentTimeMillis()
+    val durationMillis = duration.inWholeMilliseconds
     val fromVolume = exoPlayer.volume
     val deltaVolume = abs(fromVolume - toVolume)
     val sign = if (fromVolume > toVolume) -1 else 1
 
     val fadeCallback = object : Runnable {
       override fun run() {
-        val progress = (System.currentTimeMillis() - startMillis) / duration.inWholeMilliseconds
+        val progress = (System.currentTimeMillis() - startMillis).toFloat() / durationMillis
         val newVolume = fromVolume + (deltaVolume * progress * sign)
         if ((sign < 0 && newVolume <= toVolume) || (sign > 0 && newVolume >= toVolume)) {
           exoPlayer.volume = toVolume

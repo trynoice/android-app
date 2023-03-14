@@ -11,7 +11,6 @@ import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetTagChipBinding
-import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.model.Preset
@@ -22,6 +21,7 @@ import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
+import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -50,7 +50,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
   internal lateinit var reviewFlowProvider: ReviewFlowProvider
 
   @set:Inject
-  internal lateinit var playbackController: PlaybackController
+  internal lateinit var playbackServiceController: SoundPlaybackService.Controller
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = RandomPresetFragmentBinding.inflate(inflater, container, false)
@@ -84,7 +84,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
       viewModel.generatedPreset
         .filterNotNull()
         .collect { preset ->
-          playbackController.play(preset)
+          playbackServiceController.playPreset(preset)
           dismiss()
 
           // maybe show in-app review dialog to the user

@@ -244,7 +244,6 @@
     <string name="use_material_you_colors">Pakai warna Material You</string>
     <string name="sound_scheduled_for_download">Menjadwalkan %1$s untuk diunduh.</string>
     <string name="sound_download_scheduled_for_removal">Menjadwalkan %1$s untuk penghapusan dari unduhan suara.</string>
-    <string name="play_sound_before_adjusting_volume">Anda perlu memainkan suara ini terlebih dahulu sebelum Anda dapat mengatur volumenya.</string>
     <plurals name="n_days">
         <item quantity="other">%1$d hari</item>
     </plurals>

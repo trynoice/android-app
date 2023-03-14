@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.Menu
 import androidx.annotation.StringRes
 import androidx.media.VolumeProviderCompat
-import com.github.ashutoshgngwr.noice.engine.Player
+import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 
 /**
  * [CastApiProvider] is an abstract declaration of the non-free Google Cast APIs that are used in the app.
@@ -21,7 +21,7 @@ interface CastApiProvider {
   /**
    * Returns a [Player.Factory] that plays media on a cast device.
    */
-  fun buildPlayerFactory(context: Context): Player.Factory
+  fun buildPlayerFactory(context: Context): SoundPlayer.Factory
 
   /**
    * Returns a [VolumeProviderCompat] that controls volume of the cast device.
@@ -60,7 +60,7 @@ interface CastApiProvider {
  */
 object DummyCastApiProvider : CastApiProvider {
 
-  override fun buildPlayerFactory(context: Context): Player.Factory {
+  override fun buildPlayerFactory(context: Context): SoundPlayer.Factory {
     throw IllegalStateException("getPlayerFactory() must not be invoked on DummyCastApiProvider")
   }
 

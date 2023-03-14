@@ -259,7 +259,6 @@
     <string name="remove_all_sound_downloads">डाउनलोड की गई सभी ध्वनियां हटाएं</string>
     <string name="remove_sound_download_confirmation">क्या आप वाकई ऑफ़लाइन प्लेबैक के लिए डाउनलोड की गई इस ध्वनि को हटाना चाहते हैं\?</string>
     <string name="sound_scheduled_for_download">ऑफ़लाइन प्लेबैक के लिए %1$s को डाउनलोड में जोड़ा जा रहा है।</string>
-    <string name="play_sound_before_adjusting_volume">इस ध्वनि के लिए मात्रा समायोजित कर रहे हैं\? आपको इसे पहले सुनना होगा!</string>
     <plurals name="n_days">
         <item quantity="one">%1$d दिन</item>
         <item quantity="other">%1$d दिन</item>
@@ -303,7 +302,7 @@
     <string name="alarm_snooze_length">स्नूज़ लंबाई</string>
     <string name="notification_channel_missed_alarms__description">रिमाइंडर की अवधि बीत जाने के बाद शेड्यूल किए गए अलार्म को बंद करने पर दिखाई जाने वाली सूचनाएं।</string>
     <string name="no_presets">कोई प्रीसेट नहीं</string>
-    <string name="master_volume">मास्टर वॉल्यूम</string>
+    <string name="main_volume">मास्टर वॉल्यूम</string>
     <string name="alarm_gradually_increase_volume">अलार्म की मात्रा धीरे-धीरे बढ़े</string>
     <string name="alarm_gradually_increase_volume_summary">अलार्म बजने पर वॉल्यूम धीरे-धीरे बढ़ाने के लिए मिनटों में अवधि</string>
     <string name="no_purchases">कोई खरीद नहीं</string>

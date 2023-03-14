@@ -253,7 +253,6 @@
     <string name="download_sound">Descarregar som</string>
     <string name="sound_download_scheduled_for_removal">A agendar %1$s para a remoção das descargas de som.</string>
     <string name="no_alarms_description">Adicione um novo alarme a tocar no botão \"+\"!</string>
-    <string name="play_sound_before_adjusting_volume">Precisa reproduzir este som antes de ajustar seu volume.</string>
     <plurals name="n_days">
         <item quantity="one">%1$d dia</item>
         <item quantity="many">%1$d dias</item>
@@ -285,7 +284,7 @@
     <string name="notification_channel_missed_alarms__description">Notificações mostradas no silenciamento de alarmes agendados após a duração do lembrete ter decorrido.</string>
     <string name="alarm_missed">Alarme perdido</string>
     <string name="no_presets">Sem predefinições</string>
-    <string name="master_volume">Volume principal</string>
+    <string name="main_volume">Volume principal</string>
     <string name="no_purchases">Sem compras</string>
     <string name="cancellation_and_refunds_policy">Consulte [política de pagamentos, cancelamentos e reembolsos](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
     <string name="remove_all_sound_downloads">Remover todos os sons descarregados</string>
