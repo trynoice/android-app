@@ -13,7 +13,7 @@ import com.github.ashutoshgngwr.noice.databinding.RandomPresetFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetTagChipBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
-import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.models.SoundTag
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider

@@ -34,7 +34,7 @@ import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showInfoSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
-import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.models.SoundDownloadState
 import com.github.ashutoshgngwr.noice.models.SoundGroup
 import com.github.ashutoshgngwr.noice.models.SoundInfo

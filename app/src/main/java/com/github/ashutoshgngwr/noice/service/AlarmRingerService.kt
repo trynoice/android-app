@@ -31,8 +31,8 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.engine.AudioFocusManager
 import com.github.ashutoshgngwr.noice.engine.DefaultAudioFocusManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
-import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.models.Alarm
+import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository

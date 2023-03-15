@@ -4,6 +4,7 @@ import android.content.Context
 import android.media.AudioManager
 import android.util.Log
 import androidx.media.AudioAttributesCompat
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.properties.Delegates.observable
 import kotlin.time.Duration
@@ -262,7 +263,7 @@ class SoundPlayerManager(
    *
    * @param soundStates a map of sound ids to their desired volumes.
    */
-  fun playPreset(soundStates: Map<String, Float>) {
+  fun playPreset(soundStates: SortedMap<String, Float>) {
     soundPlayers.keys
       .subtract(soundStates.keys)
       .forEach(this::stopSound)
@@ -279,10 +280,11 @@ class SoundPlayerManager(
    * @return a map of ids of the currently active (buffering, playing, pausing or paused) sounds and
    * their corresponding volumes.
    */
-  fun getCurrentPreset(): Map<String, Float> {
+  fun getCurrentPreset(): SortedMap<String, Float> {
     return soundPlayers
       .filterValues { state == State.STOPPING || (it.state != SoundPlayer.State.STOPPING && it.state != SoundPlayer.State.STOPPED) }
       .mapValues { soundPlayerVolumes[it.key] ?: 1F }
+      .toSortedMap()
   }
 
   private fun initSoundPlayer(soundId: String) {

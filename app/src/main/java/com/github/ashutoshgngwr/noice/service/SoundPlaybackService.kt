@@ -29,8 +29,7 @@ import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerMediaSession
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerNotificationManager
 import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDataSourceFactory
 import com.github.ashutoshgngwr.noice.ext.bindServiceCallbackFlow
-import com.github.ashutoshgngwr.noice.model.PlayerState
-import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
@@ -48,7 +47,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.max
-import kotlin.math.roundToInt
 import kotlin.random.Random
 import kotlin.reflect.KClass
 import kotlin.reflect.cast
@@ -250,8 +248,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
       ACTION_PLAY_PRESET -> {
         val preset = intent.getSerializableExtraCompat(INTENT_EXTRA_PRESET, Preset::class)
         requireNotNull(preset) { "intent extra '${INTENT_EXTRA_PRESET}' is required to send '${ACTION_PLAY_PRESET}' command" }
-        val soundStates = preset.playerStates.associate { it.soundId to (it.volume / 25F) }
-        soundPlayerManager.playPreset(soundStates)
+        soundPlayerManager.playPreset(preset.soundStates)
       }
 
       ACTION_CLEAR_STOP_SCHEDULE -> handler.removeCallbacksAndMessages(STOP_CALLBACK_TOKEN)
@@ -299,8 +296,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
           presetRepository.generate(emptySet(), Random.nextInt(2, 6))
             .lastOrNull()
             ?.data
-            ?.let { p -> p.playerStates.associate { it.soundId to (it.volume / 25F) } }
-            ?.also { soundPlayerManager.playPreset(it) }
+            ?.also { soundPlayerManager.playPreset(it.soundStates) }
         }
       }
 
@@ -310,10 +306,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
           "$INTENT_EXTRA_PRESET_NAME is either null or a preset with this name already exists"
         }
 
-        soundPlayerManager.getCurrentPreset()
-          .map { PlayerState(it.key, (it.value * 25).roundToInt()) }
-          .let { Preset(presetName, it.toTypedArray()) }
-          .also { presetRepository.create(it) }
+        presetRepository.create(Preset(presetName, soundPlayerManager.getCurrentPreset()))
       }
     }
 
@@ -383,11 +376,8 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
   }
 
   private fun onCurrentPresetChange() {
-    val currentStates = soundPlayerManager.getCurrentPreset()
-      .map { PlayerState(it.key, (it.value * 25).roundToInt()) }
-      .toTypedArray()
-
-    currentPreset = presets.find { it.hasMatchingPlayerStates(currentStates) }
+    val currentSounds = soundPlayerManager.getCurrentPreset()
+    currentPreset = presets.find { it.soundStates == currentSounds }
     currentPresetFlow.value = currentPreset
     mediaSession.setCurrentPresetName(currentPreset?.name)
     notificationManager.setCurrentPresetName(currentPreset?.name)
@@ -414,7 +404,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
       presets[nextPos]
     }
 
-    soundPlayerManager.playPreset(nextPreset.playerStates.associate { it.soundId to (it.volume / 25F) })
+    soundPlayerManager.playPreset(nextPreset.soundStates)
   }
 
   companion object {

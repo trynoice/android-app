@@ -6,10 +6,10 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.ext.keyFlow
-import com.github.ashutoshgngwr.noice.model.PlayerState
-import com.github.ashutoshgngwr.noice.model.Preset
-import com.github.ashutoshgngwr.noice.model.PresetV0
-import com.github.ashutoshgngwr.noice.model.PresetV1
+import com.github.ashutoshgngwr.noice.models.Preset
+import com.github.ashutoshgngwr.noice.models.PresetV0
+import com.github.ashutoshgngwr.noice.models.PresetV1
+import com.github.ashutoshgngwr.noice.models.PresetV2
 import com.github.ashutoshgngwr.noice.models.SoundTag
 import com.github.ashutoshgngwr.noice.repository.errors.DuplicatePresetError
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
@@ -137,9 +137,8 @@ class PresetRepository @Inject constructor(
               .take(soundCount * 2)
               .shuffled()
               .take(soundCount)
-              .map { PlayerState(it.id, Random.nextInt(8, 25)) }
-              .toTypedArray()
-              .let { Preset("", it) }
+              .associate { it.id to (0.25F + Random.nextFloat() * 0.75F) }
+              .let { Preset("", it.toSortedMap()) }
               .let { Resource.Success(it) }
           }
           else -> Resource.Failure(r.error ?: Exception())
@@ -188,13 +187,30 @@ class PresetRepository @Inject constructor(
    */
   fun readFromUrl(url: String): Preset? {
     val uri = Uri.parse(url)
+    val version = uri.getQueryParameter(URI_PARAM_VERSION) ?: PRESETS_V2_KEY
     val name = uri.getQueryParameter(URI_PARAM_NAME) ?: ""
-    val playerStatesJSON = uri.getQueryParameter(URI_PARAM_PLAYER_STATES) ?: return null
-    return try {
-      val playerStates = gson.fromJson(playerStatesJSON, Array<PlayerState>::class.java)
-      Preset(name, playerStates)
-    } catch (e: JsonSyntaxException) {
-      null
+
+    when (version) {
+      PRESETS_V2_KEY -> {
+        val playerStatesJson = uri.getQueryParameter(URI_PARAM_PLAYER_STATES) ?: return null
+        return try {
+          PresetV2(name, gson.fromJson(playerStatesJson, PresetV2.GSON_TYPE_PLAYER_STATES))
+            .toPresetV3()
+        } catch (e: JsonSyntaxException) {
+          null
+        }
+      }
+
+      PRESETS_V3_KEY -> {
+        val soundStatesJson = uri.getQueryParameter(URI_PARAM_SOUND_STATES) ?: return null
+        return try {
+          Preset(name, gson.fromJson(soundStatesJson, Preset.GSON_TYPE_SOUND_STATES))
+        } catch (e: JsonSyntaxException) {
+          null
+        }
+      }
+
+      else -> return null
     }
   }
 
@@ -206,8 +222,9 @@ class PresetRepository @Inject constructor(
       .scheme("https")
       .authority("trynoice.com")
       .path("/preset")
+      .appendQueryParameter(URI_PARAM_VERSION, PRESETS_KEY)
       .appendQueryParameter(URI_PARAM_NAME, preset.name)
-      .appendQueryParameter(URI_PARAM_PLAYER_STATES, gson.toJson(preset.playerStates))
+      .appendQueryParameter(URI_PARAM_SOUND_STATES, gson.toJson(preset.soundStates))
       .build()
       .toString()
   }
@@ -230,6 +247,7 @@ class PresetRepository @Inject constructor(
   private fun migrate() {
     migrateToV1()
     migrateToV2()
+    migrateToV3()
   }
 
   /**
@@ -252,7 +270,7 @@ class PresetRepository @Inject constructor(
   internal fun migrateToV1() = synchronized(prefs) {
     val presetsV0 = prefs.getString(PRESETS_V0_KEY, "[]")
       .let { gson.fromJson<List<PresetV0>>(it, GSON_TYPE_V0) }
-    if (presetsV0.isNullOrEmpty()) {
+    if (presetsV0.isEmpty()) {
       return
     }
 
@@ -281,24 +299,41 @@ class PresetRepository @Inject constructor(
   internal fun migrateToV2() = synchronized(prefs) {
     val presetsV1 = prefs.getString(PRESETS_V1_KEY, "[]")
       .let { gson.fromJson<List<PresetV1>>(it, GSON_TYPE_V1) }
-    if (presetsV1.isNullOrEmpty()) {
+    if (presetsV1.isEmpty()) {
       return
     }
 
     val presetsV2 = prefs.getString(PRESETS_V2_KEY, "[]")
-      .let { gson.fromJson<MutableList<Preset>>(it, GSON_TYPE_V2) }
+      .let { gson.fromJson<MutableList<PresetV2>>(it, GSON_TYPE_V2) }
     presetsV1.forEach { presetV1 ->
       val presetV2 = presetV1.toPresetV2()
       // only append to existing presets if another preset with same player states doesn't exist.
-      if (presetsV2.none { it.playerStates.contentEquals(presetV2.playerStates) }) {
+      if (presetsV2.none { it.playerStates == presetV2.playerStates }) {
         presetsV2.add(presetV2.copy(name = "${presetV2.name} (v1)"))
       }
     }
 
-    prefs.edit { remove(PRESETS_V1_KEY) }
-    edit { presets ->
-      presets.clear()
-      presets.addAll(presetsV2)
+    prefs.edit {
+      remove(PRESETS_V1_KEY)
+      putString(PRESETS_V2_KEY, gson.toJson(presetsV2))
+    }
+  }
+
+  @VisibleForTesting
+  internal fun migrateToV3() = synchronized(prefs) {
+    val presetsV2 = prefs.getString(PRESETS_V2_KEY, "[]")
+      .let { gson.fromJson<List<PresetV2>>(it, GSON_TYPE_V2) }
+    if (presetsV2.isEmpty()) {
+      return
+    }
+
+    val presetsV3 = prefs.getString(PRESETS_V3_KEY, "[]")
+      .let { gson.fromJson<MutableList<Preset>>(it, GSON_TYPE_V3) }
+
+    presetsV2.forEach { presetsV3.add(it.toPresetV3()) }
+    prefs.edit {
+      remove(PRESETS_V2_KEY)
+      putString(PRESETS_V3_KEY, gson.toJson(presetsV3))
     }
   }
 
@@ -306,9 +341,11 @@ class PresetRepository @Inject constructor(
     private const val PRESETS_V0_KEY = "presets"
     private const val PRESETS_V1_KEY = "presets.v1"
     private const val PRESETS_V2_KEY = "presets.v2"
+    private const val PRESETS_V3_KEY = "presets.v3"
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val PRESETS_KEY = PRESETS_V2_KEY
+    const val PRESETS_KEY = PRESETS_V3_KEY
+
     private const val DEFAULT_PRESETS_SYNC_VERSION_KEY = "defaultPresetsSyncVersion"
 
     private val GSON_TYPE_V0 = TypeToken.getParameterized(List::class.java, PresetV0::class.java)
@@ -317,8 +354,13 @@ class PresetRepository @Inject constructor(
     private val GSON_TYPE_V1 = TypeToken.getParameterized(List::class.java, PresetV1::class.java)
       .type
 
-    private val GSON_TYPE_V2 = TypeToken.getParameterized(List::class.java, Preset::class.java).type
-    private val PRESET_LIST_TYPE = GSON_TYPE_V2
+    private val GSON_TYPE_V2 = TypeToken.getParameterized(List::class.java, PresetV2::class.java)
+      .type
+
+    private val GSON_TYPE_V3 = TypeToken.getParameterized(List::class.java, Preset::class.java)
+      .type
+
+    private val PRESET_LIST_TYPE = GSON_TYPE_V3
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     const val EXPORT_VERSION_KEY = "version"
@@ -326,8 +368,10 @@ class PresetRepository @Inject constructor(
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     const val EXPORT_DATA_KEY = "data"
 
+    private const val URI_PARAM_VERSION = "v"
     private const val URI_PARAM_NAME = "n"
     private const val URI_PARAM_PLAYER_STATES = "ps"
+    private const val URI_PARAM_SOUND_STATES = "s"
 
     /**
      * A versioned map of default presets such that presets added in later versions can be added to
@@ -338,104 +382,47 @@ class PresetRepository @Inject constructor(
         {
           "id": "808feaed-f4ce-4d1e-9179-ae7aec31180e",
           "name": "Thunderstorm by @markwmuller",
-          "playerStates": [
-            {
-              "soundId": "rain",
-              "volume": 20
-            },
-            {
-              "soundId": "thunder",
-              "volume": 20
-            }
-          ]
+          "soundStates": {
+            "rain": 0.8,
+            "thunder": 0.8
+          }
         },
         {
           "id": "13006e01-9413-45d7-bffc-dc577b077d67",
           "name": "Beach by @eMPee584",
-          "playerStates": [
-            {
-              "soundId": "crickets",
-              "volume": 6
-            },
-            {
-              "soundId": "seagulls",
-              "volume": 6
-            },
-            {
-              "soundId": "seashore",
-              "volume": 20
-            },
-            {
-              "soundId": "soft_wind",
-              "volume": 6
-            },
-            {
-              "soundId": "wind_through_palm_trees",
-              "volume": 15
-            }
-          ]
+          "soundStates": {
+            "crickets": 0.24,
+            "seagulls": 0.24,
+            "seashore": 0.8,
+            "soft_wind": 0.24,
+            "wind_through_palm_trees": 0.6
+          }
         },
         {
           "id": "b76ac285-1265-472c-bcdc-aecba3a28fa2",
           "name": "Camping by @ashutoshgngwr",
-          "playerStates": [
-            {
-              "soundId": "campfire",
-              "volume": 22
-            },
-            {
-              "soundId": "night",
-              "volume": 6
-            },
-            {
-              "soundId": "quiet_conversations",
-              "volume": 5
-            },
-            {
-              "soundId": "soft_wind",
-              "volume": 8
-            },
-            {
-              "soundId": "wolves",
-              "volume": 3
-            }
-          ]
+          "soundStates": {
+            "campfire": 0.88,
+            "night": 0.24,
+            "quiet_conversations": 0.2,
+            "soft_wind": 0.32,
+            "wolves": 0.12
+          }
         }
       ]""",
       """[
         {
           "id": "b6eb323d-e146-4690-a1a8-b8d6802001b3",
           "name": "Womb Simulator by @lrq3000",
-          "playerStates": [
-            {
-              "soundId": "brownian_noise",
-              "volume": 25
-            },
-            {
-              "soundId": "rain",
-              "volume": 25
-            },
-            {
-              "soundId": "seashore",
-              "volume": 12
-            },
-            {
-              "soundId": "soft_wind",
-              "volume": 25
-            },
-            {
-              "soundId": "train",
-              "volume": 18
-            },
-            {
-              "soundId": "water_stream",
-              "volume": 8
-            },
-            {
-              "soundId": "wind_through_palm_trees",
-              "volume": 13
-            }
-          ]
+          "soundStates": {
+            "brownian_noise": 1.0,
+            "rain": 1.0,
+            "seashore": 0.48,
+            "soft_wind": 1.0,
+            "train": 0.72,
+            "water_stream": 0.32,
+            "wind_through_palm_trees": 0.52
+          }
         }
       ]""",
     )

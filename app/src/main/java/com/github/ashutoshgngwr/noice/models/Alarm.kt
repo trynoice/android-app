@@ -2,7 +2,6 @@ package com.github.ashutoshgngwr.noice.models
 
 import androidx.annotation.VisibleForTesting
 import com.github.ashutoshgngwr.noice.data.models.AlarmDto
-import com.github.ashutoshgngwr.noice.model.Preset
 import java.util.*
 
 data class Alarm(
