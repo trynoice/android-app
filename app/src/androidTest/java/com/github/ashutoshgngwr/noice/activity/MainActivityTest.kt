@@ -22,14 +22,14 @@ import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.EspressoX.withBottomNavSelectedItem
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.di.InAppBillingProviderModule
-import com.github.ashutoshgngwr.noice.engine.PlaybackController
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
-import com.github.ashutoshgngwr.noice.model.Preset
+import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -58,7 +58,7 @@ class MainActivityTest {
   internal lateinit var mockSettingsRepository: SettingsRepository
 
   @BindValue
-  internal lateinit var mockPlaybackController: PlaybackController
+  internal lateinit var playbackServiceControllerMock: SoundPlaybackService.Controller
 
   @BindValue
   internal lateinit var mockBillingProvider: InAppBillingProvider
@@ -82,7 +82,7 @@ class MainActivityTest {
 
     mockPresetRepository = mockk(relaxed = true)
     mockSettingsRepository = mockk(relaxed = true)
-    mockPlaybackController = mockk(relaxed = true)
+    playbackServiceControllerMock = mockk(relaxed = true)
     mockBillingProvider = mockk(relaxed = true)
   }
 
@@ -165,7 +165,11 @@ class MainActivityTest {
         .setAction(Intent.ACTION_VIEW)
         .setData(Uri.parse(url))
         .let { launch<MainActivity>(it) }
-        .use { verify(exactly = 1, timeout = 5000L) { mockPlaybackController.play(mockPreset) } }
+        .use {
+          verify(exactly = 1, timeout = 5000L) {
+            playbackServiceControllerMock.playPreset(mockPreset)
+          }
+        }
     }
   }
 

@@ -19,8 +19,8 @@ import com.github.ashutoshgngwr.noice.EspressoX.itemAtPosition
 import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.di.AlarmRepositoryModule
-import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.models.Alarm
+import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import dagger.hilt.android.testing.BindValue
@@ -79,10 +79,10 @@ class AlarmsFragmentTest {
   @Test
   fun list() {
     val presets = listOf(
-      Preset("preset-1", arrayOf()),
-      Preset("preset-2", arrayOf()),
-      Preset("preset-3", arrayOf()),
-      Preset("preset-4", arrayOf()),
+      Preset("preset-1", sortedMapOf()),
+      Preset("preset-2", sortedMapOf()),
+      Preset("preset-3", sortedMapOf()),
+      Preset("preset-4", sortedMapOf()),
     )
 
     // keep `minuteOfDay` larger than 1 hour and smaller than 12 hours to avoid 24 hour date format issues.
@@ -447,9 +447,9 @@ class AlarmsFragmentTest {
   fun updatePreset() {
     val alarm = buildAlarm(id = 1, preset = null)
     val presets = listOf(
-      Preset("preset-1", arrayOf()),
-      Preset("preset-3", arrayOf()),
-      Preset("preset-2", arrayOf()),
+      Preset("preset-1", sortedMapOf()),
+      Preset("preset-3", sortedMapOf()),
+      Preset("preset-2", sortedMapOf()),
     )
 
     every { alarmRepositoryMock.pagingDataFlow() } returns flowOf(PagingData.from(listOf(alarm)))

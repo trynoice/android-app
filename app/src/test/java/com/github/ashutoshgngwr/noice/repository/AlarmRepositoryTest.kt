@@ -16,8 +16,8 @@ import com.github.ashutoshgngwr.noice.data.AlarmDao
 import com.github.ashutoshgngwr.noice.data.AppDatabase
 import com.github.ashutoshgngwr.noice.data.models.AlarmDto
 import com.github.ashutoshgngwr.noice.fragment.AlarmComparator
-import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.models.Alarm
+import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.models.toRoomDto
 import io.mockk.clearMocks
 import io.mockk.coEvery
@@ -154,7 +154,7 @@ class AlarmRepositoryTest {
 
   @Test
   fun pagingDataFlow() = runTest {
-    val presets = listOf(Preset("preset-1", emptyArray()), Preset("preset-2", emptyArray()))
+    val presets = listOf(Preset("preset-1", sortedMapOf()), Preset("preset-2", sortedMapOf()))
     val input = listOf(
       buildAlarmDto(id = 1, minuteOfDay = 1, presetId = presets[0].id),
       buildAlarmDto(id = 2, minuteOfDay = 2, presetId = presets[1].id),
