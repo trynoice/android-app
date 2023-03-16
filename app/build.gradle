@@ -69,7 +69,7 @@ android {
 
   kapt {
     arguments {
-      arg("room.schemaLocation", "$projectDir/build/generated/schemas")
+      arg("room.schemaLocation", "$projectDir/schemas")
     }
   }
 
