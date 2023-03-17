@@ -61,7 +61,7 @@ import javax.inject.Inject
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
-class LibraryFragment : Fragment(), LibraryListItemController {
+class LibraryFragment : Fragment(), SoundViewHolder.ViewController {
 
   private lateinit var binding: LibraryFragmentBinding
 
@@ -234,7 +234,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
       .also { showSuccessSnackBar(it, snackBarAnchorView()) }
   }
 
-  override fun onRemoveSoundDownloadClicked(soundInfo: SoundInfo) {
+  override fun onSoundRemoveDownloadClicked(soundInfo: SoundInfo) {
     DialogFragment.show(childFragmentManager) {
       title(getString(R.string.remove_sound_download, soundInfo.name))
       message(R.string.remove_sound_download_confirmation)
@@ -247,7 +247,7 @@ class LibraryFragment : Fragment(), LibraryListItemController {
     }
   }
 
-  override fun onPremiumStatusClicked(soundInfo: SoundInfo) {
+  override fun onSoundPremiumStatusClicked(soundInfo: SoundInfo) {
     when {
       soundInfo.isPremium -> R.string.sound_is_premium
       soundInfo.hasPremiumSegments -> R.string.has_more_clips_with_premium
@@ -346,7 +346,7 @@ class LibraryViewModel @Inject constructor(
 
 class LibraryListAdapter(
   private val layoutInflater: LayoutInflater,
-  private val itemController: LibraryListItemController,
+  private val viewController: SoundViewHolder.ViewController,
 ) : RecyclerView.Adapter<LibraryListItemViewHolder>() {
 
   private var libraryItems = emptyList<LibraryListItem>()
@@ -365,7 +365,7 @@ class LibraryListAdapter(
 
       R.layout.library_sound_list_item -> {
         val binding = LibrarySoundListItemBinding.inflate(layoutInflater, parent, false)
-        SoundViewHolder(binding, itemController)
+        SoundViewHolder(binding, viewController)
       }
 
       else -> throw IllegalArgumentException("unknown view type: $viewType")
@@ -519,7 +519,7 @@ class SoundGroupViewHolder(
 
 class SoundViewHolder(
   private val binding: LibrarySoundListItemBinding,
-  private val controller: LibraryListItemController,
+  private val controller: ViewController,
 ) : LibraryListItemViewHolder(binding.root) {
 
   private lateinit var soundInfo: SoundInfo
@@ -528,12 +528,12 @@ class SoundViewHolder(
   private var downloadState = SoundDownloadState.NOT_DOWNLOADED
 
   init {
-    binding.premiumStatus.setOnClickListener { controller.onPremiumStatusClicked(soundInfo) }
+    binding.premiumStatus.setOnClickListener { controller.onSoundPremiumStatusClicked(soundInfo) }
     binding.info.setOnClickListener { controller.onSoundInfoClicked(soundInfo) }
     binding.download.setOnClickListener {
       when (downloadState) {
         SoundDownloadState.NOT_DOWNLOADED -> controller.onSoundDownloadClicked(soundInfo)
-        else -> controller.onRemoveSoundDownloadClicked(soundInfo)
+        else -> controller.onSoundRemoveDownloadClicked(soundInfo)
       }
     }
 
@@ -616,16 +616,17 @@ class SoundViewHolder(
     @SuppressLint("SetTextI18n")
     binding.volume.text = "${(soundVolume * 100).roundToInt()}%"
   }
-}
 
-interface LibraryListItemController {
-  fun onSoundInfoClicked(soundInfo: SoundInfo)
-  fun onSoundPlayClicked(soundInfo: SoundInfo)
-  fun onSoundStopClicked(soundInfo: SoundInfo)
-  fun onSoundVolumeClicked(soundInfo: SoundInfo, volume: Float)
-  fun onSoundDownloadClicked(soundInfo: SoundInfo)
-  fun onRemoveSoundDownloadClicked(soundInfo: SoundInfo)
-  fun onPremiumStatusClicked(soundInfo: SoundInfo)
+
+  interface ViewController {
+    fun onSoundInfoClicked(soundInfo: SoundInfo)
+    fun onSoundPlayClicked(soundInfo: SoundInfo)
+    fun onSoundStopClicked(soundInfo: SoundInfo)
+    fun onSoundVolumeClicked(soundInfo: SoundInfo, volume: Float)
+    fun onSoundDownloadClicked(soundInfo: SoundInfo)
+    fun onSoundRemoveDownloadClicked(soundInfo: SoundInfo)
+    fun onSoundPremiumStatusClicked(soundInfo: SoundInfo)
+  }
 }
 
 data class LibraryListItem(

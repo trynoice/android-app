@@ -56,7 +56,7 @@ import javax.inject.Inject
 private const val FREE_ALARM_COUNT = 2
 
 @AndroidEntryPoint
-class AlarmsFragment : Fragment(), AlarmItemViewController {
+class AlarmsFragment : Fragment(), AlarmViewHolder.ViewController {
 
   private lateinit var binding: AlarmsFragmentBinding
 
@@ -336,14 +336,14 @@ class AlarmsViewModel @Inject constructor(
 
 class AlarmListAdapter(
   private val layoutInflater: LayoutInflater,
-  private val itemViewController: AlarmItemViewController,
-) : PagingDataAdapter<Alarm, AlarmViewHolder>(AlarmComparator) {
+  private val viewController: AlarmViewHolder.ViewController,
+) : PagingDataAdapter<Alarm, AlarmViewHolder>(diffCallback) {
 
   var expandedPosition = 0; private set
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
     val binding = AlarmItemBinding.inflate(layoutInflater, parent, false)
-    return AlarmViewHolder(binding, itemViewController)
+    return AlarmViewHolder(binding, viewController)
   }
 
   override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {
@@ -359,11 +359,23 @@ class AlarmListAdapter(
       if (position > -1) notifyItemChanged(position)
     }
   }
+
+  companion object {
+    private val diffCallback = object : DiffUtil.ItemCallback<Alarm>() {
+      override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
+        return oldItem.id == newItem.id
+      }
+
+      override fun areContentsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
+        return oldItem == newItem
+      }
+    }
+  }
 }
 
 class AlarmViewHolder(
   private val binding: AlarmItemBinding,
-  private val controller: AlarmItemViewController,
+  private val controller: ViewController,
 ) : ViewHolder(binding.root) {
 
   private lateinit var alarm: Alarm
@@ -498,27 +510,17 @@ class AlarmViewHolder(
     binding.preset.text = alarm.preset?.name ?: context.getString(R.string.random_preset)
     binding.vibrate.isChecked = alarm.vibrate
   }
-}
 
-object AlarmComparator : DiffUtil.ItemCallback<Alarm>() {
 
-  override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
-    return oldItem.id == newItem.id
+  interface ViewController {
+    fun onAlarmItemCollapsed(bindingAdapterPosition: Int)
+    fun onAlarmItemExpanded(bindingAdapterPosition: Int)
+    fun onAlarmLabelClicked(alarm: Alarm)
+    fun onAlarmTimeClicked(alarm: Alarm)
+    fun onAlarmToggled(alarm: Alarm, enabled: Boolean)
+    fun onAlarmWeeklyScheduleChanged(alarm: Alarm, newWeeklySchedule: Int)
+    fun onAlarmPresetClicked(alarm: Alarm)
+    fun onAlarmVibrationToggled(alarm: Alarm, vibrate: Boolean)
+    fun onAlarmDeleteClicked(alarm: Alarm)
   }
-
-  override fun areContentsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
-    return oldItem == newItem
-  }
-}
-
-interface AlarmItemViewController {
-  fun onAlarmItemCollapsed(bindingAdapterPosition: Int)
-  fun onAlarmItemExpanded(bindingAdapterPosition: Int)
-  fun onAlarmLabelClicked(alarm: Alarm)
-  fun onAlarmTimeClicked(alarm: Alarm)
-  fun onAlarmToggled(alarm: Alarm, enabled: Boolean)
-  fun onAlarmWeeklyScheduleChanged(alarm: Alarm, newWeeklySchedule: Int)
-  fun onAlarmPresetClicked(alarm: Alarm)
-  fun onAlarmVibrationToggled(alarm: Alarm, vibrate: Boolean)
-  fun onAlarmDeleteClicked(alarm: Alarm)
 }

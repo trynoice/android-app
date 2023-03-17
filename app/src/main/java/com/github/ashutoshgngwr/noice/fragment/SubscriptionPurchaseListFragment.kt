@@ -45,7 +45,7 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickListener {
+class SubscriptionPurchaseListFragment : Fragment(), SubscriptionPurchaseViewHolder.ViewController {
 
   private lateinit var binding: SubscriptionPurchaseListFragmentBinding
   private val viewModel: SubscriptionPurchaseListViewModel by viewModels()
@@ -119,16 +119,16 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionActionClickList
     viewModel.createPager(currencyCode)
   }
 
-  override fun onClickManage(subscription: Subscription) {
+  override fun onSubscriptionManageClicked(subscription: Subscription) {
     mainNavController.navigate(R.id.launch_stripe_customer_portal)
   }
 
-  override fun onClickUpgrade(subscription: Subscription) {
+  override fun onSubscriptionUpgradeClicked(subscription: Subscription) {
     val args = ViewSubscriptionPlansFragmentArgs(subscription).toBundle()
     mainNavController.navigate(R.id.view_subscription_plans, args)
   }
 
-  override fun onClickCancel(subscription: Subscription) {
+  override fun onSubscriptionCancelClicked(subscription: Subscription) {
     val args = CancelSubscriptionFragmentArgs(subscription).toBundle()
     mainNavController.navigate(R.id.cancel_subscription, args)
   }
@@ -164,9 +164,9 @@ class SubscriptionPurchaseListViewModel @Inject constructor(
 
 class SubscriptionPurchaseListAdapter(
   private val layoutInflater: LayoutInflater,
-  private val actionClickListener: SubscriptionActionClickListener,
+  private val viewController: SubscriptionPurchaseViewHolder.ViewController,
   private val subscriptionBillingProvider: SubscriptionBillingProvider,
-) : PagingDataAdapter<Subscription, SubscriptionPurchaseViewHolder>(SubscriptionComparator) {
+) : PagingDataAdapter<Subscription, SubscriptionPurchaseViewHolder>(diffCallback) {
 
   override fun onBindViewHolder(holder: SubscriptionPurchaseViewHolder, position: Int) {
     holder.bind(getItem(position))
@@ -174,13 +174,25 @@ class SubscriptionPurchaseListAdapter(
 
   override fun onCreateViewHolder(parent: ViewGroup, type: Int): SubscriptionPurchaseViewHolder {
     val binding = SubscriptionPurchaseItemBinding.inflate(layoutInflater, parent, false)
-    return SubscriptionPurchaseViewHolder(binding, actionClickListener, subscriptionBillingProvider)
+    return SubscriptionPurchaseViewHolder(binding, viewController, subscriptionBillingProvider)
+  }
+
+  companion object {
+    private val diffCallback = object : DiffUtil.ItemCallback<Subscription>() {
+      override fun areItemsTheSame(oldItem: Subscription, newItem: Subscription): Boolean {
+        return oldItem.id == newItem.id
+      }
+
+      override fun areContentsTheSame(oldItem: Subscription, newItem: Subscription): Boolean {
+        return oldItem == newItem
+      }
+    }
   }
 }
 
 class SubscriptionPurchaseViewHolder(
   private val binding: SubscriptionPurchaseItemBinding,
-  private val actionClickListener: SubscriptionActionClickListener,
+  private val viewController: ViewController,
   private val subscriptionBillingProvider: SubscriptionBillingProvider,
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -269,27 +281,23 @@ class SubscriptionPurchaseViewHolder(
     binding.actionButtonContainer.isVisible = s.isActive
     if (s.isActive) {
       binding.manage.isVisible = s.plan.provider == SubscriptionPlan.PROVIDER_STRIPE
-      binding.manage.setOnClickListener { actionClickListener.onClickManage(s) }
+      binding.manage.setOnClickListener { viewController.onSubscriptionManageClicked(s) }
       binding.changePlan.isVisible = subscriptionBillingProvider.canUpgrade(s)
-      binding.changePlan.setOnClickListener { actionClickListener.onClickUpgrade(s) }
+      binding.changePlan.setOnClickListener { viewController.onSubscriptionUpgradeClicked(s) }
       binding.cancel.isVisible = s.isAutoRenewing
-      binding.cancel.setOnClickListener { actionClickListener.onClickCancel(s) }
+      binding.cancel.setOnClickListener { viewController.onSubscriptionCancelClicked(s) }
     }
   }
 
   companion object {
     private const val DATE_FMT_FLAGS = DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME
   }
-}
 
-object SubscriptionComparator : DiffUtil.ItemCallback<Subscription>() {
 
-  override fun areItemsTheSame(oldItem: Subscription, newItem: Subscription): Boolean {
-    return oldItem.id == newItem.id
-  }
-
-  override fun areContentsTheSame(oldItem: Subscription, newItem: Subscription): Boolean {
-    return oldItem == newItem
+  interface ViewController {
+    fun onSubscriptionManageClicked(subscription: Subscription)
+    fun onSubscriptionUpgradeClicked(subscription: Subscription)
+    fun onSubscriptionCancelClicked(subscription: Subscription)
   }
 }
 
@@ -327,12 +335,6 @@ class SubscriptionPurchaseLoadingViewHolder(
       binding.errorMessage.text = buildLoadError(binding.root.context, loadState)
     }
   }
-}
-
-interface SubscriptionActionClickListener {
-  fun onClickManage(subscription: Subscription)
-  fun onClickUpgrade(subscription: Subscription)
-  fun onClickCancel(subscription: Subscription)
 }
 
 private fun buildLoadError(context: Context, loadState: LoadState): String {

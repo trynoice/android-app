@@ -50,7 +50,7 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PresetsFragment : Fragment(), PresetListItemController {
+class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
 
   private lateinit var binding: PresetsFragmentBinding
   private val viewModel: PresetsViewModel by viewModels()
@@ -101,7 +101,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
     analyticsProvider.setCurrentScreen("presets", PresetsFragment::class)
   }
 
-  override fun onPlaybackToggled(preset: Preset) {
+  override fun onPresetPlayToggleClicked(preset: Preset) {
     if (viewModel.activePreset.value?.id == preset.id) {
       playbackServiceController.stop()
     } else {
@@ -109,7 +109,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
     }
   }
 
-  override fun onShareClicked(preset: Preset) {
+  override fun onPresetShareClicked(preset: Preset) {
     val url = viewModel.getShareableUrl(preset)
     ShareCompat.IntentBuilder(binding.root.context)
       .setType("text/plain")
@@ -120,7 +120,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
     analyticsProvider.logEvent("share_preset_uri", bundleOf("item_length" to url.length))
   }
 
-  override fun onDeleteClicked(preset: Preset) {
+  override fun onPresetDeleteClicked(preset: Preset) {
     val params = bundleOf("success" to false)
     DialogFragment.show(childFragmentManager) {
       title(R.string.delete)
@@ -144,7 +144,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
     }
   }
 
-  override fun onRenameClicked(preset: Preset) {
+  override fun onPresetRenameClicked(preset: Preset) {
     DialogFragment.show(childFragmentManager) {
       title(R.string.rename)
       val nameGetter = input(
@@ -169,7 +169,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
     }
   }
 
-  override fun onCreatePinnedShortcutClicked(preset: Preset) {
+  override fun onPresetCreatePinnedShortcutClicked(preset: Preset) {
     if (!ShortcutManagerCompat.isRequestPinShortcutSupported(requireContext())) {
       showErrorSnackBar(R.string.pinned_shortcuts_not_supported, snackBarAnchorView())
       return
@@ -188,7 +188,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
     analyticsProvider.logEvent("preset_shortcut_create", params)
   }
 
-  override fun onCreateAppShortcutClicked(preset: Preset) {
+  override fun onPresetCreateAppShortcutClicked(preset: Preset) {
     val list = ShortcutManagerCompat.getDynamicShortcuts(requireContext())
     list.add(buildShortcutInfo(preset.id, "app", preset))
     val result = ShortcutManagerCompat.addDynamicShortcuts(requireContext(), list)
@@ -203,7 +203,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
     analyticsProvider.logEvent("preset_shortcut_create", params)
   }
 
-  override fun onRemoveAppShortcutClicked(preset: Preset) {
+  override fun onPresetRemoveAppShortcutClicked(preset: Preset) {
     ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
     showSuccessSnackBar(R.string.app_shortcut_removed, snackBarAnchorView())
     viewModel.loadAppShortcuts(requireContext())
@@ -272,15 +272,15 @@ class PresetsViewModel @Inject constructor(
 
 class PresetListAdapter(
   private val layoutInflater: LayoutInflater,
-  private val itemController: PresetListItemController,
-) : PagingDataAdapter<Preset, PresetViewHolder>(PresetComparator) {
+  private val viewController: PresetViewHolder.ViewController,
+) : PagingDataAdapter<Preset, PresetViewHolder>(diffCallback) {
 
   private var presetsWithAppShortcut = emptySet<String>()
   private var activePresetId: String? = null
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PresetViewHolder {
     val binding = PresetsListItemBinding.inflate(layoutInflater, parent, false)
-    return PresetViewHolder(binding, itemController)
+    return PresetViewHolder(binding, viewController)
   }
 
   override fun onBindViewHolder(holder: PresetViewHolder, position: Int) {
@@ -321,11 +321,23 @@ class PresetListAdapter(
       notifyItemChanged(newActivePos)
     }
   }
+
+  companion object {
+    private val diffCallback = object : DiffUtil.ItemCallback<Preset>() {
+      override fun areItemsTheSame(oldItem: Preset, newItem: Preset): Boolean {
+        return oldItem.id == newItem.id
+      }
+
+      override fun areContentsTheSame(oldItem: Preset, newItem: Preset): Boolean {
+        return oldItem == newItem
+      }
+    }
+  }
 }
 
 class PresetViewHolder(
   private val binding: PresetsListItemBinding,
-  private val controller: PresetListItemController,
+  private val controller: ViewController,
 ) : RecyclerView.ViewHolder(binding.root) {
 
   private lateinit var preset: Preset
@@ -333,17 +345,17 @@ class PresetViewHolder(
 
   init {
     binding.playButton.setOnClickListener {
-      controller.onPlaybackToggled(preset)
+      controller.onPresetPlayToggleClicked(preset)
     }
 
     val onMenuItemClickListener = PopupMenu.OnMenuItemClickListener {
       when (it.itemId) {
-        R.id.action_share -> controller.onShareClicked(preset)
-        R.id.action_delete -> controller.onDeleteClicked(preset)
-        R.id.action_rename -> controller.onRenameClicked(preset)
-        R.id.action_create_pinned_shortcut -> controller.onCreatePinnedShortcutClicked(preset)
-        R.id.action_create_app_shortcut -> controller.onCreateAppShortcutClicked(preset)
-        R.id.action_remove_app_shortcut -> controller.onRemoveAppShortcutClicked(preset)
+        R.id.action_share -> controller.onPresetShareClicked(preset)
+        R.id.action_delete -> controller.onPresetDeleteClicked(preset)
+        R.id.action_rename -> controller.onPresetRenameClicked(preset)
+        R.id.action_create_pinned_shortcut -> controller.onPresetCreatePinnedShortcutClicked(preset)
+        R.id.action_create_app_shortcut -> controller.onPresetCreateAppShortcutClicked(preset)
+        R.id.action_remove_app_shortcut -> controller.onPresetRemoveAppShortcutClicked(preset)
       }
 
       true
@@ -367,25 +379,15 @@ class PresetViewHolder(
     binding.title.isSelected = true
     binding.playButton.isChecked = isPlaying
   }
-}
 
-object PresetComparator : DiffUtil.ItemCallback<Preset>() {
 
-  override fun areItemsTheSame(oldItem: Preset, newItem: Preset): Boolean {
-    return oldItem.id == newItem.id
+  interface ViewController {
+    fun onPresetPlayToggleClicked(preset: Preset)
+    fun onPresetShareClicked(preset: Preset)
+    fun onPresetDeleteClicked(preset: Preset)
+    fun onPresetRenameClicked(preset: Preset)
+    fun onPresetCreatePinnedShortcutClicked(preset: Preset)
+    fun onPresetCreateAppShortcutClicked(preset: Preset)
+    fun onPresetRemoveAppShortcutClicked(preset: Preset)
   }
-
-  override fun areContentsTheSame(oldItem: Preset, newItem: Preset): Boolean {
-    return oldItem == newItem
-  }
-}
-
-interface PresetListItemController {
-  fun onPlaybackToggled(preset: Preset)
-  fun onShareClicked(preset: Preset)
-  fun onDeleteClicked(preset: Preset)
-  fun onRenameClicked(preset: Preset)
-  fun onCreatePinnedShortcutClicked(preset: Preset)
-  fun onCreateAppShortcutClicked(preset: Preset)
-  fun onRemoveAppShortcutClicked(preset: Preset)
 }
