@@ -136,7 +136,7 @@ class AlarmRepositoryTest {
     assertNull(repository.get(1))
 
     val mockPreset = mockk<Preset>()
-    every { presetRepositoryMock.get(any()) } returns mockPreset
+    coEvery { presetRepositoryMock.get(any()) } returns mockPreset
     coEvery { alarmDaoMock.getById(1) } returns buildAlarmDto(
       id = 1,
       minuteOfDay = 120,
@@ -170,7 +170,10 @@ class AlarmRepositoryTest {
       )
     }
 
-    every { presetRepositoryMock.list() } returns presets
+    coEvery { presetRepositoryMock.get(any()) } answers {
+      presets.find { it.id == firstArg() }
+    }
+
     every { alarmDaoMock.pagingSource() } returns object : PagingSource<Int, AlarmDto>() {
       override fun getRefreshKey(state: PagingState<Int, AlarmDto>): Int = 0
       override suspend fun load(params: LoadParams<Int>): LoadResult<Int, AlarmDto> {

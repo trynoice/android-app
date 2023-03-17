@@ -1,5 +1,7 @@
 package com.github.ashutoshgngwr.noice.models
 
+import com.github.ashutoshgngwr.noice.data.models.PresetDto
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 import java.io.Serializable
@@ -21,6 +23,22 @@ data class Preset(
       .getParameterized(SortedMap::class.java, String::class.java, Float::class.javaObjectType)
       .type
   }
+}
+
+fun PresetDto.toDomainEntity(gson: Gson): Preset {
+  return Preset(
+    id = id,
+    name = name,
+    soundStates = gson.fromJson(soundStatesJson, Preset.GSON_TYPE_SOUND_STATES),
+  )
+}
+
+fun Preset.toRoomDto(gson: Gson): PresetDto {
+  return PresetDto(
+    id = id,
+    name = name,
+    soundStatesJson = gson.toJson(soundStates),
+  )
 }
 
 /**

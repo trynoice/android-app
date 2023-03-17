@@ -99,7 +99,7 @@ class AlarmRingerServiceTest {
 
     data class TestCase(
       val alarm: Alarm,
-      val savedPresets: List<Preset>,
+      val getRandomPreset: Preset?,
       val expectedPresetType: Int,
       val expectVibrate: Boolean,
     )
@@ -107,19 +107,19 @@ class AlarmRingerServiceTest {
     val testCases = arrayOf(
       TestCase(
         alarm = buildAlarm(preset = null, false),
-        savedPresets = emptyList(),
+        getRandomPreset = null,
         expectedPresetType = presetTypeGenerated,
         expectVibrate = false,
       ),
       TestCase(
         alarm = buildAlarm(preset = null, true),
-        savedPresets = listOf(Preset("preset-1", sortedMapOf()), Preset("preset-2", sortedMapOf())),
+        getRandomPreset = Preset("preset-2", sortedMapOf()),
         expectedPresetType = presetTypeRandom,
         expectVibrate = true,
       ),
       TestCase(
         alarm = buildAlarm(preset = Preset("test-preset", sortedMapOf()), false),
-        savedPresets = listOf(Preset("preset-1", sortedMapOf()), Preset("preset-2", sortedMapOf())),
+        getRandomPreset = Preset("preset-1", sortedMapOf()),
         expectedPresetType = presetTypePredefined,
         expectVibrate = false,
       ),
@@ -135,7 +135,7 @@ class AlarmRingerServiceTest {
         presetRepositoryMock.generate(any(), any())
       } returns flowOf(Resource.Success(generatedPreset))
 
-      every { presetRepositoryMock.list() } returns testCase.savedPresets
+      coEvery { presetRepositoryMock.getRandom() } returns testCase.getRandomPreset
       coEvery { alarmRepositoryMock.get(testCase.alarm.id) } returns testCase.alarm
 
       val context = ApplicationProvider.getApplicationContext<Context>()
@@ -150,7 +150,7 @@ class AlarmRingerServiceTest {
         playbackServiceControllerMock.playPreset(withArg { preset: Preset ->
           when (testCase.expectedPresetType) {
             presetTypeGenerated -> assertEquals(generatedPreset, preset)
-            presetTypeRandom -> assertTrue(preset in testCase.savedPresets)
+            presetTypeRandom -> assertEquals(testCase.getRandomPreset, preset)
             presetTypePredefined -> assertEquals(preset, testCase.alarm.preset)
             else -> throw UnsupportedOperationException()
           }

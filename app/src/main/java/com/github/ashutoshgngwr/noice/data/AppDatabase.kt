@@ -1,11 +1,14 @@
 package com.github.ashutoshgngwr.noice.data
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.github.ashutoshgngwr.noice.data.models.AlarmDto
+import com.github.ashutoshgngwr.noice.data.models.DefaultPresetsSyncVersionDto
 import com.github.ashutoshgngwr.noice.data.models.LibraryUpdateTimeDto
+import com.github.ashutoshgngwr.noice.data.models.PresetDto
 import com.github.ashutoshgngwr.noice.data.models.ProfileDto
 import com.github.ashutoshgngwr.noice.data.models.SoundGroupDto
 import com.github.ashutoshgngwr.noice.data.models.SoundMetadataDto
@@ -30,8 +33,11 @@ import java.util.*
     SoundSourceDto::class,
     LibraryUpdateTimeDto::class,
     AlarmDto::class,
+    PresetDto::class,
+    DefaultPresetsSyncVersionDto::class,
   ],
-  version = 1,
+  version = 2,
+  autoMigrations = [AutoMigration(from = 1, to = 2)]
 )
 @TypeConverters(AppDatabaseTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -43,6 +49,8 @@ abstract class AppDatabase : RoomDatabase() {
   abstract fun sounds(): SoundDao
 
   abstract fun alarms(): AlarmDao
+
+  abstract fun presets(): PresetDao
 }
 
 class AppDatabaseTypeConverters {

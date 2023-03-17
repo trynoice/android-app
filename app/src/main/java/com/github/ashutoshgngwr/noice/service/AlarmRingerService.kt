@@ -180,7 +180,7 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
     startForeground(NOTIFICATION_ID_PRIMING, buildLoadingNotification(alarmTriggerTime))
 
     val preset: Preset? = alarm.preset // use the alarm's selected preset if it has one
-      ?: presetRepository.list().randomOrNull() // or pick one at random from the saved presets
+      ?: presetRepository.getRandom() // or pick one at random from the saved presets
       ?: presetRepository.generate(emptySet(), Random.nextInt(2, 6))
         .lastOrNull()?.data // or attempt to generate one
 

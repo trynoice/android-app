@@ -20,8 +20,7 @@
       android:layout_height="match_parent"
       android:gravity="center"
       android:orientation="vertical"
-      android:padding="@dimen/root_layout_padding"
-      app:isVisible="@{viewModel.isEmptyIndicatorVisible}">
+      android:padding="@dimen/root_layout_padding">
 
       <TextView
         android:layout_width="match_parent"

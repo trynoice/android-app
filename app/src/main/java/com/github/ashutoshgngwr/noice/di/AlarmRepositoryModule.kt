@@ -63,7 +63,7 @@ object AlarmRepositoryModule {
       presetRepository,
       settingsRepository,
       appDb,
-      piBuilder
+      piBuilder,
     )
   }
 }

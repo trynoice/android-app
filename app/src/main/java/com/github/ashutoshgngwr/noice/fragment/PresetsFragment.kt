@@ -18,6 +18,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.PagingDataAdapter
+import androidx.paging.cachedIn
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.R
@@ -34,24 +38,22 @@ import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
-import kotlin.math.min
 
 @AndroidEntryPoint
 class PresetsFragment : Fragment(), PresetListItemController {
 
   private lateinit var binding: PresetsFragmentBinding
   private val viewModel: PresetsViewModel by viewModels()
-
-  @set:Inject
-  internal lateinit var presetRepository: PresetRepository
 
   @set:Inject
   internal lateinit var playbackServiceController: SoundPlaybackService.Controller
@@ -76,8 +78,14 @@ class PresetsFragment : Fragment(), PresetListItemController {
     val itemDecor = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
     binding.list.addItemDecoration(itemDecor)
     viewModel.loadAppShortcuts(requireContext())
+
+    adapter.addLoadStateListener { loadStates ->
+      binding.emptyListIndicator.isVisible =
+        loadStates.append.endOfPaginationReached && adapter.itemCount < 1
+    }
+
     viewLifecycleOwner.launchAndRepeatOnStarted {
-      viewModel.presets.collect(adapter::setPresets)
+      viewModel.presetsPagingData.collectLatest(adapter::submitData)
     }
 
     viewLifecycleOwner.launchAndRepeatOnStarted {
@@ -102,7 +110,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
   }
 
   override fun onShareClicked(preset: Preset) {
-    val url = presetRepository.writeAsUrl(preset)
+    val url = viewModel.getShareableUrl(preset)
     ShareCompat.IntentBuilder(binding.root.context)
       .setType("text/plain")
       .setChooserTitle(R.string.share)
@@ -119,7 +127,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
       message(R.string.preset_delete_confirmation, preset.name)
       negativeButton(R.string.cancel)
       positiveButton(R.string.delete) {
-        presetRepository.delete(preset.id)
+        viewModel.delete(preset.id)
         // then stop playback if recently deleted preset was playing
         if (viewModel.activePreset.value?.id == preset.id) {
           playbackServiceController.stop()
@@ -138,7 +146,6 @@ class PresetsFragment : Fragment(), PresetListItemController {
 
   override fun onRenameClicked(preset: Preset) {
     DialogFragment.show(childFragmentManager) {
-      val presets = presetRepository.list()
       title(R.string.rename)
       val nameGetter = input(
         hintRes = R.string.name,
@@ -147,7 +154,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
           when {
             name.isBlank() -> R.string.preset_name_cannot_be_empty
             name == preset.name -> 0
-            presets.any { it.name == name } -> R.string.preset_already_exists
+            viewModel.doesPresetExistsByName(name) -> R.string.preset_already_exists
             else -> 0
           }
         }
@@ -155,7 +162,7 @@ class PresetsFragment : Fragment(), PresetListItemController {
 
       negativeButton(R.string.cancel)
       positiveButton(R.string.save) {
-        presetRepository.update(preset.copy(name = nameGetter.invoke()))
+        viewModel.save(preset.copy(name = nameGetter.invoke()))
         // maybe show in-app review dialog to the user
         reviewFlowProvider.maybeAskForReview(requireActivity())
       }
@@ -228,35 +235,46 @@ class PresetsFragment : Fragment(), PresetListItemController {
 
 @HiltViewModel
 class PresetsViewModel @Inject constructor(
-  presetRepository: PresetRepository,
+  private val presetRepository: PresetRepository,
   playbackServiceController: SoundPlaybackService.Controller,
 ) : ViewModel() {
 
-  internal val presets: StateFlow<List<Preset>> = presetRepository.listFlow()
-    .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+  internal val presetsPagingData: Flow<PagingData<Preset>> = presetRepository.pagingDataFlow()
+    .cachedIn(viewModelScope)
 
   internal val activePreset: StateFlow<Preset?> = playbackServiceController.getCurrentPreset()
     .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal val presetsWithAppShortcut = MutableStateFlow(emptySet<String>())
 
-  val isEmptyIndicatorVisible: StateFlow<Boolean> = presets.transform { presets ->
-    emit(presets.isEmpty())
-  }.stateIn(viewModelScope, SharingStarted.Eagerly, true)
-
   internal fun loadAppShortcuts(context: Context) {
     presetsWithAppShortcut.value = ShortcutManagerCompat.getDynamicShortcuts(context)
       .map { it.id }
       .toSet()
+  }
+
+  internal fun getShareableUrl(preset: Preset): String {
+    return presetRepository.writeAsUrl(preset)
+  }
+
+  internal suspend fun doesPresetExistsByName(name: String): Boolean {
+    return presetRepository.existsByName(name)
+  }
+
+  internal fun save(preset: Preset) {
+    viewModelScope.launch { presetRepository.save(preset) }
+  }
+
+  internal fun delete(presetId: String) {
+    viewModelScope.launch { presetRepository.delete(presetId) }
   }
 }
 
 class PresetListAdapter(
   private val layoutInflater: LayoutInflater,
   private val itemController: PresetListItemController,
-) : RecyclerView.Adapter<PresetViewHolder>() {
+) : PagingDataAdapter<Preset, PresetViewHolder>(PresetComparator) {
 
-  private var presets = emptyList<Preset>()
   private var presetsWithAppShortcut = emptySet<String>()
   private var activePresetId: String? = null
 
@@ -265,41 +283,35 @@ class PresetListAdapter(
     return PresetViewHolder(binding, itemController)
   }
 
-  override fun getItemCount(): Int {
-    return presets.size
-  }
-
   override fun onBindViewHolder(holder: PresetViewHolder, position: Int) {
-    val presetId = presets[position].id
-    holder.bind(presets[position], presetId in presetsWithAppShortcut, activePresetId == presetId)
-  }
-
-  fun setPresets(presets: List<Preset>) {
-    // since the dataset is homogeneous, we can update the recycler view items without removing all
-    // items and reinserting them.
-    val updated = this.presets.size
-    this.presets = presets
-    notifyItemRangeChanged(0, min(updated, presets.size))
-    if (updated > presets.size) {
-      notifyItemRangeRemoved(updated, updated - presets.size)
-    } else {
-      notifyItemRangeInserted(updated, presets.size - updated)
-    }
+    val preset = getItem(position) ?: return
+    holder.bind(preset, preset.id in presetsWithAppShortcut, activePresetId == preset.id)
   }
 
   fun setPresetsWithAppShortcut(presetIds: Set<String>) {
     val oldPresetIds = presetsWithAppShortcut
     presetsWithAppShortcut = presetIds
-    presets.forEachIndexed { i, preset ->
-      if ((preset.id in oldPresetIds) != (preset.id in presetIds)) {
+    repeat(itemCount) { i ->
+      val preset = getItem(i)
+      if ((preset?.id in oldPresetIds) != (preset?.id in presetIds)) {
         notifyItemChanged(i)
       }
     }
   }
 
   fun setActivePresetId(id: String?) {
-    val oldActivePos = presets.indexOfFirst { it.id == activePresetId }
-    val newActivePos = presets.indexOfFirst { it.id == id }
+    if (activePresetId == id) {
+      return
+    }
+
+    var oldActivePos = -1
+    var newActivePos = -1
+    repeat(itemCount) { i ->
+      val preset = getItem(i)
+      if (activePresetId == preset?.id) oldActivePos = i
+      if (id == preset?.id) newActivePos = i
+    }
+
     activePresetId = id
     if (oldActivePos > -1) {
       notifyItemChanged(oldActivePos)
@@ -354,6 +366,17 @@ class PresetViewHolder(
     binding.title.text = preset.name
     binding.title.isSelected = true
     binding.playButton.isChecked = isPlaying
+  }
+}
+
+object PresetComparator : DiffUtil.ItemCallback<Preset>() {
+
+  override fun areItemsTheSame(oldItem: Preset, newItem: Preset): Boolean {
+    return oldItem.id == newItem.id
+  }
+
+  override fun areContentsTheSame(oldItem: Preset, newItem: Preset): Boolean {
+    return oldItem == newItem
   }
 }
 

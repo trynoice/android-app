@@ -88,9 +88,8 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
         loadStates.append.endOfPaginationReached && adapter.itemCount < 1
 
       if (!hasHandledFocusedAlarmArg) {
-        if (args.focusedAlarmId < 0) {
-          hasHandledFocusedAlarmArg = true
-        } else {
+        hasHandledFocusedAlarmArg = true
+        if (args.focusedAlarmId >= 0) {
           // items may take a while to load, so wait for the item with requested id to appear.
           adapter.snapshot()
             .items
@@ -99,7 +98,6 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
             ?.also { pos ->
               onAlarmItemExpanded(pos)
               binding.list.scrollToPosition(pos)
-              hasHandledFocusedAlarmArg = true
             }
         }
       }

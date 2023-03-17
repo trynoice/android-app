@@ -9,6 +9,7 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
@@ -24,6 +25,7 @@ import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.google.gson.JsonIOException
 import com.google.gson.JsonSyntaxException
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -179,11 +181,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal fun onCreateDocumentResult(result: Uri?) {
+  internal fun onCreateDocumentResult(result: Uri?) = viewLifecycleOwner.lifecycleScope.launch {
     var success = false
     try {
       if (result == null) { // inside try to force run finally block.
-        return
+        return@launch
       }
 
       requireContext().contentResolver.openFileDescriptor(result, "w")?.use {
@@ -211,11 +213,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal fun onOpenDocumentResult(result: Uri?) {
+  internal fun onOpenDocumentResult(result: Uri?) = viewLifecycleOwner.lifecycleScope.launch {
     var success = false
     try {
       if (result == null) { // inside try to force run finally block.
-        return
+        return@launch
       }
 
       requireContext().contentResolver.openFileDescriptor(result, "r")?.use {

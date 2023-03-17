@@ -34,7 +34,6 @@ import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showInfoSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
-import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.models.SoundDownloadState
 import com.github.ashutoshgngwr.noice.models.SoundGroup
 import com.github.ashutoshgngwr.noice.models.SoundInfo
@@ -161,12 +160,11 @@ class LibraryFragment : Fragment(), LibraryListItemController {
 
     binding.savePresetButton.setOnClickListener {
       DialogFragment.show(childFragmentManager) {
-        val presets = viewModel.listPresets()
         title(R.string.save_preset)
-        val nameGetter = input(hintRes = R.string.name, validator = {
+        val nameGetter = input(hintRes = R.string.name, validator = { name ->
           when {
-            it.isBlank() -> R.string.preset_name_cannot_be_empty
-            presets.any { p -> it == p.name } -> R.string.preset_already_exists
+            name.isBlank() -> R.string.preset_name_cannot_be_empty
+            viewModel.doesPresetExistByName(name) -> R.string.preset_already_exists
             else -> 0
           }
         })
@@ -341,8 +339,8 @@ class LibraryViewModel @Inject constructor(
     }
   }
 
-  internal fun listPresets(): List<Preset> {
-    return presetRepository.list()
+  internal suspend fun doesPresetExistByName(name: String): Boolean {
+    return presetRepository.existsByName(name)
   }
 }
 

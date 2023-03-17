@@ -16,7 +16,7 @@ import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.verify
 import org.hamcrest.Matchers.allOf
@@ -50,7 +50,7 @@ class PresetShortcutHandlerActivityTest {
     val context = ApplicationProvider.getApplicationContext<Context>()
 
     for (i in presetIDExpectations.indices) {
-      every { mockPresetRepository.get(presetIDExpectations[i]) } returns presetFindByIdReturns[i]
+      coEvery { mockPresetRepository.get(presetIDExpectations[i]) } returns presetFindByIdReturns[i]
       Intents.init()
       Intents.intending(hasComponent(MainActivity::class.qualifiedName))
         .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, Intent()))

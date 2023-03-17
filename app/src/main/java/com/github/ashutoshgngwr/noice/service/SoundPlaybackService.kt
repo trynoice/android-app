@@ -41,8 +41,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -78,8 +81,6 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
   internal lateinit var castApiProvider: CastApiProvider
 
   private val handler = Handler(Looper.getMainLooper())
-  private var currentPreset: Preset? = null
-  private var presets: List<Preset> = emptyList()
   private val soundPlayerStates = mutableMapOf<String, SoundPlayer.State>()
   private val soundPlayerVolumes = mutableMapOf<String, Float>()
 
@@ -87,7 +88,10 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
   private val soundPlayerManagerVolumeFlow = MutableStateFlow(1F)
   private val soundPlayerStatesFlow = MutableStateFlow(soundPlayerStates.toMap())
   private val soundPlayerVolumesFlow = MutableStateFlow(soundPlayerVolumes.toMap())
-  private val currentPresetFlow = MutableStateFlow<Preset?>(null)
+  private val currentSoundStatesFlow = MutableStateFlow(sortedMapOf<String, Float>())
+  private val currentPresetFlow = currentSoundStatesFlow
+    .flatMapLatest { presetRepository.getBySoundStatesFlow(it) }
+    .stateIn(lifecycleScope, SharingStarted.WhileSubscribed(), null)
 
   private val serviceBinder = Binder(
     soundPlayerManagerStateFlow = soundPlayerManagerStateFlow,
@@ -177,12 +181,10 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
     registerReceiver(becomingNoisyReceiver, IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY))
     castApiProvider.registerSessionListener(this)
 
-    // watch preset repository
     lifecycleScope.launch {
-      presetRepository.listFlow().collect { p ->
-        presets = p
-        // refresh currently playing preset.
-        onCurrentPresetChange()
+      currentPresetFlow.collect { preset ->
+        notificationManager.setCurrentPresetName(preset?.name)
+        mediaSession.setCurrentPresetName(preset?.name)
       }
     }
 
@@ -302,11 +304,12 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
 
       ACTION_SAVE_CURRENT_PRESET -> {
         val presetName = intent.getStringExtra(INTENT_EXTRA_PRESET_NAME)
-        require(presetName != null && presets.none { it.name == presetName }) {
-          "$INTENT_EXTRA_PRESET_NAME is either null or a preset with this name already exists"
+        require(presetName != null) { "$INTENT_EXTRA_PRESET_NAME must not be null" }
+        val preset = Preset(presetName, soundPlayerManager.getCurrentPreset())
+        lifecycleScope.launch {
+          require(!presetRepository.existsByName(preset.name)) { "preset with this name already exists" }
+          presetRepository.save(preset)
         }
-
-        presetRepository.create(Preset(presetName, soundPlayerManager.getCurrentPreset()))
       }
     }
 
@@ -376,11 +379,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
   }
 
   private fun onCurrentPresetChange() {
-    val currentSounds = soundPlayerManager.getCurrentPreset()
-    currentPreset = presets.find { it.soundStates == currentSounds }
-    currentPresetFlow.value = currentPreset
-    mediaSession.setCurrentPresetName(currentPreset?.name)
-    notificationManager.setCurrentPresetName(currentPreset?.name)
+    currentSoundStatesFlow.value = soundPlayerManager.getCurrentPreset()
   }
 
   private fun getSoundIdExtra(intent: Intent): String {
@@ -390,21 +389,20 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
   }
 
   private fun skipPreset(direction: Int) {
-    val currentPos = presets.indexOf(currentPreset)
-    if (currentPos < 0) { // not playing a saved preset.
-      return
-    }
+    val current = currentPresetFlow.value ?: return
+    lifecycleScope.launch {
+      val nextPreset = if (direction < 0) {
+        presetRepository.getPreviousPreset(current)
+      } else {
+        presetRepository.getNextPreset(current)
+      }
 
-    val nextPos = currentPos + direction
-    val nextPreset = if (nextPos < 0) {
-      presets.last()
-    } else if (nextPos >= presets.size) {
-      presets.first()
-    } else {
-      presets[nextPos]
-    }
+      if (nextPreset == null) {
+        return@launch
+      }
 
-    soundPlayerManager.playPreset(nextPreset.soundStates)
+      soundPlayerManager.playPreset(nextPreset.soundStates)
+    }
   }
 
   companion object {
