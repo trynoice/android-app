@@ -72,8 +72,6 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    binding.lifecycleOwner = viewLifecycleOwner
-    binding.viewModel = viewModel
     binding.list.adapter = adapter
     val itemDecor = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
     binding.list.addItemDecoration(itemDecor)

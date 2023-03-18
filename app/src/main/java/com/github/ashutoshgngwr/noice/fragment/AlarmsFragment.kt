@@ -79,7 +79,6 @@ class AlarmsFragment : Fragment(), AlarmViewHolder.ViewController {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    binding.lifecycleOwner = viewLifecycleOwner
     binding.addAlarmButton.setOnClickListener { startAddAlarmFlow() }
     (binding.list.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
     binding.list.adapter = adapter
