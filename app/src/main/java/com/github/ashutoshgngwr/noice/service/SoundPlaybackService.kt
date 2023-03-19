@@ -29,6 +29,7 @@ import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerMediaSession
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerNotificationManager
 import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDataSourceFactory
 import com.github.ashutoshgngwr.noice.ext.bindServiceCallbackFlow
+import com.github.ashutoshgngwr.noice.ext.getSerializableCompat
 import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
@@ -51,8 +52,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.max
 import kotlin.random.Random
-import kotlin.reflect.KClass
-import kotlin.reflect.cast
 import kotlin.time.Duration.Companion.minutes
 
 @AndroidEntryPoint
@@ -248,7 +247,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
       }
 
       ACTION_PLAY_PRESET -> {
-        val preset = intent.getSerializableExtraCompat(INTENT_EXTRA_PRESET, Preset::class)
+        val preset = intent.extras?.getSerializableCompat(INTENT_EXTRA_PRESET, Preset::class)
         requireNotNull(preset) { "intent extra '${INTENT_EXTRA_PRESET}' is required to send '${ACTION_PLAY_PRESET}' command" }
         soundPlayerManager.playPreset(preset.soundStates)
       }
@@ -720,18 +719,5 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
         }
       }
     }
-  }
-}
-
-// TODO: remove this extension when a replacement method is available the Androidx Compat libraries.
-private fun <T : java.io.Serializable> Intent.getSerializableExtraCompat(
-  key: String,
-  kClass: KClass<T>
-): T? {
-  return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-    getSerializableExtra(key, kClass.java)
-  } else {
-    @Suppress("DEPRECATION")
-    getSerializableExtra(key)?.let { kClass.cast(it) }
   }
 }

@@ -13,6 +13,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.core.view.postDelayed
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.clearFragmentResultListener
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,6 +31,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.AlarmItemBinding
 import com.github.ashutoshgngwr.noice.databinding.AlarmsFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.getSerializableCompat
 import com.github.ashutoshgngwr.noice.ext.hasSelfPermission
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
@@ -37,7 +40,6 @@ import com.github.ashutoshgngwr.noice.ext.startAppDetailsSettingsActivity
 import com.github.ashutoshgngwr.noice.models.Alarm
 import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
-import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -66,6 +68,10 @@ class AlarmsFragment : Fragment(), AlarmViewHolder.ViewController {
   private val adapter: AlarmListAdapter by lazy { AlarmListAdapter(layoutInflater, this) }
   private val mainNavController: NavController by lazy {
     Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
+  }
+
+  private val homeNavController: NavController by lazy {
+    Navigation.findNavController(requireActivity(), R.id.home_nav_host_fragment)
   }
 
   private val requestPermissionsLauncher = registerForActivityResult(
@@ -235,28 +241,16 @@ class AlarmsFragment : Fragment(), AlarmViewHolder.ViewController {
   }
 
   override fun onAlarmPresetClicked(alarm: Alarm) {
-    DialogFragment.show(childFragmentManager) {
-      title(R.string.select_preset)
-      singleChoiceItems(
-        items = mutableListOf(getString(R.string.random_preset))
-          .apply {
-            addAll(
-              viewModel.presets
-                .value
-                .map { it.name }
-            )
-          }.toTypedArray(),
-        currentChoice = 1 + viewModel.presets
-          .value
-          .indexOfFirst { it.id == alarm.preset?.id },
-        onItemSelected = { choice ->
-          val preset = if (choice == 0) null else viewModel.presets.value[choice - 1]
-          viewModel.save(alarm.copy(preset = preset))
-        },
-      )
-
-      negativeButton(R.string.cancel)
+    val resultKey = "PresetPickerResult.alarm-${alarm.id}"
+    clearFragmentResultListener(resultKey) // clear previous listener
+    setFragmentResultListener(resultKey) { _, result ->
+      result.getSerializableCompat(PresetPickerFragment.EXTRA_SELECTED_PRESET, Preset::class)
+        .also { viewModel.save(alarm.copy(preset = it)) }
     }
+
+    PresetPickerFragmentArgs(fragmentResultKey = resultKey, selectedPreset = alarm.preset)
+      .toBundle()
+      .also { homeNavController.navigate(R.id.preset_picker, it) }
   }
 
   override fun onAlarmVibrationToggled(alarm: Alarm, vibrate: Boolean) {
@@ -278,15 +272,11 @@ class AlarmsFragment : Fragment(), AlarmViewHolder.ViewController {
 @HiltViewModel
 class AlarmsViewModel @Inject constructor(
   private val alarmRepository: AlarmRepository,
-  presetRepository: PresetRepository,
   subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
   internal val alarmsPagingData: Flow<PagingData<Alarm>> = alarmRepository.pagingDataFlow()
     .cachedIn(viewModelScope)
-
-  internal val presets: StateFlow<List<Preset>> = presetRepository.listFlow()
-    .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
   internal val isSubscribed: StateFlow<Boolean> = subscriptionRepository.isSubscribed()
     .stateIn(viewModelScope, SharingStarted.Eagerly, true)

@@ -22,7 +22,6 @@ import com.github.ashutoshgngwr.noice.di.AlarmRepositoryModule
 import com.github.ashutoshgngwr.noice.models.Alarm
 import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
-import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -49,13 +48,9 @@ class AlarmsFragmentTest {
   @BindValue
   internal lateinit var alarmRepositoryMock: AlarmRepository
 
-  @BindValue
-  internal lateinit var presetRepositoryMock: PresetRepository
-
   @Before
   fun setUp() {
     alarmRepositoryMock = mockk(relaxed = true)
-    presetRepositoryMock = mockk(relaxed = true)
   }
 
   @Test
@@ -94,7 +89,6 @@ class AlarmsFragmentTest {
     )
 
     every { alarmRepositoryMock.pagingDataFlow() } returns flowOf(PagingData.from(alarms))
-    every { presetRepositoryMock.listFlow() } returns flowOf(presets)
     launchFragmentInHiltContainer<AlarmsFragment>()
 
 
@@ -446,29 +440,26 @@ class AlarmsFragmentTest {
   @Test
   fun updatePreset() {
     val alarm = buildAlarm(id = 1, preset = null)
-    val presets = listOf(
-      Preset("preset-1", sortedMapOf()),
-      Preset("preset-3", sortedMapOf()),
-      Preset("preset-2", sortedMapOf()),
-    )
-
     every { alarmRepositoryMock.pagingDataFlow() } returns flowOf(PagingData.from(listOf(alarm)))
-    every { presetRepositoryMock.listFlow() } returns flowOf(presets)
-    launchFragmentInHiltContainer<AlarmsFragment>()
+    // since code under test needs access to home nav controller, launch home fragment.
+    launchFragmentInHiltContainer<HomeFragment>()
+
+    onView(withId(R.id.alarms))
+      .check(matches(isDisplayed()))
+      .perform(click())
 
     onView(withText(R.string.random_preset))
       .check(matches(isDisplayed()))
       .perform(click())
 
-    val chosen = presets.random()
-    onView(withText(chosen.name))
+    onView(withId(R.id.list))
       .inRoot(isDialog())
       .check(matches(isDisplayed()))
-      .perform(click())
+      .perform(actionOnItemAtPosition<PresetPickerItemViewHolder>(0, click()))
 
     coVerify(exactly = 1, timeout = 5000) {
       alarmRepositoryMock.save(withArg { actual ->
-        assertEquals(chosen, actual.preset)
+        assertNotNull(actual.preset)
       })
     }
   }

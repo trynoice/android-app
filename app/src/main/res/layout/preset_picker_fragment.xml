@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="viewModel"
+      type="com.github.ashutoshgngwr.noice.fragment.PresetPickerViewModel" />
+
+  </data>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/modal_layout_padding"
+    tools:theme="@style/ThemeOverlay.App.BottomSheetDialog">
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/select_preset"
+      android:textAppearance="?attr/textAppearanceHeadlineMedium" />
+
+    <Space
+      android:layout_width="match_parent"
+      android:layout_height="24dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+      style="@style/Widget.App.PresetPicker.SearchField"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:endIconMode="clear_text"
+      app:hintEnabled="false"
+      app:startIconDrawable="@drawable/round_search_24">
+
+      <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/search_preset"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLines="1"
+        android:text="@={viewModel.searchQuery}" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Space
+      android:layout_width="match_parent"
+      android:layout_height="16dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/list"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <Space
+      android:layout_width="match_parent"
+      android:layout_height="24dp" />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="end|center_vertical"
+      android:orientation="horizontal">
+
+      <Button
+        android:id="@+id/cancel"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel" />
+
+      <Button
+        android:id="@+id/random"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/random_preset" />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</layout>

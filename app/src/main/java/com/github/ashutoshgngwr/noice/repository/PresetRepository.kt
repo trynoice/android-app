@@ -84,18 +84,10 @@ class PresetRepository @Inject constructor(
   /**
    * @returns a paging data flow to page all saved presets.
    */
-  fun pagingDataFlow(): Flow<PagingData<Preset>> {
-    return Pager(PagingConfig(pageSize = 20)) { appDb.presets().pagingSource() }
+  fun pagingDataFlow(nameFilter: String = ""): Flow<PagingData<Preset>> {
+    return Pager(PagingConfig(pageSize = 20)) { appDb.presets().pagingSource("%${nameFilter}%") }
       .flow
       .map { pagingData -> pagingData.map { it.toDomainEntity(gson) } }
-  }
-
-  // TODO: Remove this as loading all presets in the memory will have a negative performance impact
-  //  if the user has a large number of saved presets.
-  fun listFlow(): Flow<List<Preset>> {
-    return appDb.presets()
-      .listFlow()
-      .map { list -> list.map { it.toDomainEntity(gson) } }
   }
 
   /**

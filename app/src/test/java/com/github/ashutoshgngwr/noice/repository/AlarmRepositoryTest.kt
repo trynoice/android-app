@@ -9,13 +9,13 @@ import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.paging.cachedIn
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListUpdateCallback
 import androidx.room.withTransaction
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.data.AlarmDao
 import com.github.ashutoshgngwr.noice.data.AppDatabase
 import com.github.ashutoshgngwr.noice.data.models.AlarmDto
-import com.github.ashutoshgngwr.noice.fragment.AlarmComparator
 import com.github.ashutoshgngwr.noice.models.Alarm
 import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.models.toRoomDto
@@ -183,7 +183,15 @@ class AlarmRepositoryTest {
 
     val testDispatcher = StandardTestDispatcher(testScheduler)
     val differ = AsyncPagingDataDiffer(
-      diffCallback = AlarmComparator,
+      diffCallback = object : DiffUtil.ItemCallback<Alarm>() {
+        override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
+          return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
+          return oldItem == newItem
+        }
+      },
       updateCallback = object : ListUpdateCallback {
         override fun onChanged(position: Int, count: Int, payload: Any?) {}
         override fun onMoved(fromPosition: Int, toPosition: Int) {}

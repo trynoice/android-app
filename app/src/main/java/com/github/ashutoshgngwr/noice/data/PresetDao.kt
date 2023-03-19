@@ -42,8 +42,8 @@ abstract class PresetDao {
   @Query("SELECT * FROM preset ORDER BY name DESC LIMIT 1")
   abstract suspend fun getLastOrderedByName(): PresetDto?
 
-  @Query("SELECT * FROM preset ORDER BY name ASC")
-  abstract fun pagingSource(): PagingSource<Int, PresetDto>
+  @Query("SELECT * FROM preset WHERE name LIKE :nameLike ORDER BY name ASC")
+  abstract fun pagingSource(nameLike: String): PagingSource<Int, PresetDto>
 
   @Query("SELECT * FROM preset ORDER BY name ASC")
   abstract suspend fun list(): List<PresetDto>

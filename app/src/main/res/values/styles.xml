@@ -159,4 +159,16 @@
     <item name="iconTint">?attr/colorOnSurface</item>
   </style>
 
+  <!-- Inheriting filled box style shifts the hint to bottom. Hence, use outlined box with filled box background mode. -->
+  <style name="Widget.App.PresetPicker.SearchField" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+    <!-- Theme overlay is needed to override default theme colors as boxBackgroundColor doesn't support transparency. -->
+    <!-- https://github.com/material-components/material-components-android/issues/1899 -->
+    <item name="android:theme">@style/ThemeOverlay.App.PresetPicker.SearchField</item>
+    <item name="boxBackgroundMode">filled</item>
+  </style>
+
+  <style name="ThemeOverlay.App.PresetPicker.SearchField" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox.Dense">
+    <item name="colorSurface">@android:color/transparent</item>
+  </style>
+
 </resources>

@@ -324,4 +324,5 @@
     <string name="offline_playback_desc">Enjoy soothing sounds anytime, anywhere, with Noice\'s offline sound downloads - no internet connection is required.</string>
     <string name="unlimited_alarms">Unlimited Alarms</string>
     <string name="unlimited_alarms_desc">Elevate your morning routine with Noice Premium - schedule an unlimited number of alarms for a personalised and peaceful start to your day.</string>
+    <string name="search_preset">Search presets</string>
 </resources>
