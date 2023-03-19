@@ -22,6 +22,7 @@ import com.github.ashutoshgngwr.noice.di.AlarmRepositoryModule
 import com.github.ashutoshgngwr.noice.models.Alarm
 import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
+import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -46,10 +47,15 @@ class AlarmsFragmentTest {
   val hiltRule = HiltAndroidRule(this)
 
   @BindValue
+  internal lateinit var playbackServiceControllerMock: SoundPlaybackService.Controller
+
+  @BindValue
   internal lateinit var alarmRepositoryMock: AlarmRepository
 
   @Before
   fun setUp() {
+    // prevents sound playback service from being created. it's causing issues!
+    playbackServiceControllerMock = mockk(relaxed = true)
     alarmRepositoryMock = mockk(relaxed = true)
   }
 
