@@ -21,8 +21,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.media.AudioAttributesCompat
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.activity.MainActivity
+import com.github.ashutoshgngwr.noice.engine.DefaultMediaPlayer
 import com.github.ashutoshgngwr.noice.engine.LocalSoundPlayer
-import com.github.ashutoshgngwr.noice.engine.MediaPlayer
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerMediaSession
@@ -134,7 +134,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
   private val localSoundPlayerFactory: SoundPlayer.Factory by lazy {
     LocalSoundPlayer.Factory(
       soundRepository = soundRepository,
-      mediaPlayerFactory = MediaPlayer.Factory(this, localDataSourceFactory),
+      mediaPlayerFactory = DefaultMediaPlayer.Factory(this, localDataSourceFactory),
       defaultScope = lifecycleScope,
     )
   }

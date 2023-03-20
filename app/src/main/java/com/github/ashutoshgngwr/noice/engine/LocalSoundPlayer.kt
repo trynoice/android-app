@@ -43,7 +43,7 @@ class LocalSoundPlayer @VisibleForTesting constructor(
   private val loadSoundMetadataJob = defaultScope.launch { loadSoundMetadata(soundMetadataSource) }
 
   init {
-    mediaPlayer.addListener(this)
+    mediaPlayer.setListener(this)
   }
 
   override fun onMediaPlayerStateChanged(state: MediaPlayer.State) {
@@ -57,7 +57,7 @@ class LocalSoundPlayer @VisibleForTesting constructor(
       MediaPlayer.State.BUFFERING -> this.state = State.BUFFERING
       MediaPlayer.State.PAUSED -> this.state = State.PAUSED
       MediaPlayer.State.STOPPED -> {
-        mediaPlayer.removeListener(this)
+        mediaPlayer.setListener(null)
         this.state = State.STOPPED
       }
       else -> {
@@ -70,7 +70,7 @@ class LocalSoundPlayer @VisibleForTesting constructor(
   }
 
   override fun onMediaPlayerItemTransition() {
-    if (state == State.STOPPED) {
+    if (state == State.STOPPED || !hasLoadedMetadata) {
       return
     }
 
@@ -205,7 +205,7 @@ class LocalSoundPlayer @VisibleForTesting constructor(
         shouldPlayOnLoadingMetadata = false
         play()
       }
-    } catch (e: IllegalArgumentException) {
+    } catch (e: SoundMetadataSource.LoadException) {
       Log.w(LOG_TAG, "loadSoundMetadata: failed to load sound metadata", e)
       Log.i(LOG_TAG, "loadSoundMetadata: retrying in $retryDelay")
       delay(retryDelay)
@@ -223,7 +223,7 @@ class LocalSoundPlayer @VisibleForTesting constructor(
       }
       maxSilenceSeconds == 0 && currentSegment != null -> {
         val from = requireNotNull(currentSegment)
-        validSegments.filter { it.isBridgeSegment && it.name.startsWith(from.name) }.random(RANDOM)
+        validSegments.filter { it.isBridgeSegment && it.from == from.name }.random(RANDOM)
       }
       else -> validSegments.random(RANDOM)
     } ?: throw IllegalStateException("couldn't find a segment to queue next")
@@ -258,8 +258,12 @@ class LocalSoundPlayer @VisibleForTesting constructor(
 
     /**
      * Loads sound metadata.
+     *
+     * @throws LoadException on failing to load the metadata.
      */
     suspend fun load(): Sound
+
+    class LoadException(message: String, cause: Throwable?) : Exception(message, cause)
   }
 
   /**
@@ -276,7 +280,10 @@ class LocalSoundPlayer @VisibleForTesting constructor(
         soundMetadataSource = {
           val resource = soundRepository.get(soundId).lastOrNull()
           if (resource?.data == null) {
-            throw IllegalArgumentException("couldn't load sound with id $soundId", resource?.error)
+            throw SoundMetadataSource.LoadException(
+              "couldn't load sound with id $soundId",
+              resource?.error,
+            )
           }
 
           resource.data

@@ -16,10 +16,10 @@ import org.robolectric.RobolectricTestRunner
 import kotlin.time.Duration.Companion.milliseconds
 
 @RunWith(RobolectricTestRunner::class)
-class MediaPlayerTest {
+class DefaultMediaPlayerTest {
 
   private lateinit var exoPlayer: ExoPlayer
-  private lateinit var mediaPlayer: MediaPlayer
+  private lateinit var mediaPlayer: DefaultMediaPlayer
 
   @Before
   fun setUp() {
@@ -27,7 +27,7 @@ class MediaPlayerTest {
       .setMediaSourceFactory(FakeMediaSourceFactory())
       .build()
 
-    mediaPlayer = MediaPlayer(exoPlayer)
+    mediaPlayer = DefaultMediaPlayer(exoPlayer)
   }
 
   @Test
@@ -59,7 +59,7 @@ class MediaPlayerTest {
   }
 
   @Test
-  fun addToPlaylist_Play_Pause_Play_AndStop() {
+  fun addToPlaylist_Play_Pause_Play_Stop() {
     mediaPlayer.addToPlaylist("https://cdn.test/uri")
     RobolectricUtil.runMainLooperUntil { mediaPlayer.state == MediaPlayer.State.PAUSED }
 
@@ -83,9 +83,9 @@ class MediaPlayerTest {
   }
 
   @Test
-  fun addListenerAndRemoveListener() {
+  fun setListener() {
     val mockListener = mockk<MediaPlayer.Listener>(relaxed = true)
-    mediaPlayer.addListener(mockListener)
+    mediaPlayer.setListener(mockListener)
 
     mediaPlayer.play()
     RobolectricUtil.runMainLooperUntil { mediaPlayer.state == MediaPlayer.State.IDLE }
@@ -96,7 +96,7 @@ class MediaPlayerTest {
     verify(exactly = 1) { mockListener.onMediaPlayerItemTransition() }
 
     clearMocks(mockListener)
-    mediaPlayer.removeListener(mockListener)
+    mediaPlayer.setListener(mockk(relaxed = true))
     mediaPlayer.pause()
     RobolectricUtil.runMainLooperUntil { mediaPlayer.state == MediaPlayer.State.PAUSED }
     verify(exactly = 0) { mockListener.onMediaPlayerStateChanged(MediaPlayer.State.PAUSED) }
