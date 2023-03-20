@@ -3,40 +3,185 @@ package com.github.ashutoshgngwr.noice.engine
 import android.content.Context
 import android.media.AudioManager
 import android.util.Log
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.getSystemService
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
 
 /**
- * Interface definition for managing audio focus.
+ * A convenient wrapper to manage audio focus using the [AudioManager] system service.
  */
-interface AudioFocusManager {
+class AudioFocusManager @VisibleForTesting constructor(
+  private val audioManager: AudioManager,
+) : AudioManager.OnAudioFocusChangeListener {
 
-  val listener: Listener
+  constructor(context: Context) : this(requireNotNull(context.getSystemService<AudioManager>()))
 
   /**
-   * Returns whether the manager currently holds the audio focus.
+   * Indicates if the [AudioFocusManager] instance currently possesses audio focus.
    */
-  fun hasFocus(): Boolean
+  var hasFocus = false; private set
+
+  private var playbackDelayed = false
+  private var resumeOnFocusGain = false
+  private var isDisabled = false
+  private var listener: Listener? = null
+  private var focusRequest: AudioFocusRequestCompat? = null
+
+  override fun onAudioFocusChange(focusChange: Int) {
+    when (focusChange) {
+      AudioManager.AUDIOFOCUS_GAIN -> {
+        Log.i(LOG_TAG, "onAudioFocusChange: gained audio focus")
+        hasFocus = true
+        if (playbackDelayed || resumeOnFocusGain) {
+          Log.i(LOG_TAG, "onAudioFocusChange: resuming delayed playback")
+          playbackDelayed = false
+          resumeOnFocusGain = false
+          listener?.onAudioFocusGained()
+        }
+      }
+
+      AudioManager.AUDIOFOCUS_LOSS -> {
+        Log.i(LOG_TAG, "onAudioFocusChange: permanently lost audio focus")
+        hasFocus = false
+        resumeOnFocusGain = true
+        playbackDelayed = false
+        listener?.onAudioFocusLost(false)
+      }
+
+      AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
+        Log.i(LOG_TAG, "onAudioFocusChange: temporarily lost audio focus")
+        hasFocus = false
+        resumeOnFocusGain = true
+        playbackDelayed = false
+        listener?.onAudioFocusLost(true)
+      }
+    }
+  }
 
   /**
-   * Requests to acquire the audio focus from the system. On gaining audio focus, it triggers the
+   * Registers a [Listener] instance to listen for audio focus changes.
+   */
+  fun setListener(listener: Listener?) {
+    this.listener = listener
+  }
+
+  /**
+   * Requests to acquire the audio focus from the system. On gaining audio focus, it invokes
    * [Listener.onAudioFocusGained] callback.
    */
-  fun requestFocus()
+  fun requestFocus() {
+    if (isDisabled) {
+      hasFocus = true
+      listener?.onAudioFocusGained()
+      return
+    }
+
+    if (hasFocus || playbackDelayed) {
+      return
+    }
+
+    when (AudioManagerCompat.requestAudioFocus(audioManager, requireFocusRequest())) {
+      AudioManager.AUDIOFOCUS_REQUEST_DELAYED -> {
+        Log.i(LOG_TAG, "requestFocus: audio focus request is delayed")
+        playbackDelayed = true
+        hasFocus = false
+        resumeOnFocusGain = false
+        listener?.onAudioFocusLost(true)
+      }
+      AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
+        Log.w(LOG_TAG, "requestFocus: audio focus request failed")
+        hasFocus = false
+        playbackDelayed = false
+        resumeOnFocusGain = false
+        listener?.onAudioFocusLost(false)
+      }
+      AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
+        Log.i(LOG_TAG, "requestFocus: audio focus request granted")
+        hasFocus = true
+        playbackDelayed = false
+        resumeOnFocusGain = false
+        listener?.onAudioFocusGained()
+      }
+    }
+  }
 
   /**
-   * Requests to abandon the audio focus. The [Listener] stops receiving notifications after this
-   * request, therefore, clients should stop their media playback before making an abandon request.
+   * Requests to abandon the audio focus. The [Listener] doesn't receive notifications after this
+   * request. Therefore, clients should stop their media playback before making an abandon request.
    */
-  fun abandonFocus()
+  fun abandonFocus() {
+    if (isDisabled) {
+      hasFocus = false
+      return
+    }
+
+    when (AudioManagerCompat.abandonAudioFocusRequest(audioManager, requireFocusRequest())) {
+      AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
+        Log.w(LOG_TAG, "abandonFocus: audio focus request failed")
+      }
+      AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
+        Log.i(LOG_TAG, "abandonFocus: audio focus request granted")
+        hasFocus = false
+        playbackDelayed = false
+        resumeOnFocusGain = false
+      }
+    }
+  }
 
   /**
-   * Updates the audio attributes used for requesting the audio focus. If the manager currently
-   * holds the audio focus, clients must abandon it before changing audio attributes.
+   * Updates the audio attributes used for requesting the audio focus. The manager will abandon
+   * existing focus request and request it again using the updated [audioAttributes].
    */
-  fun setAttributes(audioAttributes: AudioAttributesCompat)
+  fun setAudioAttributes(audioAttributes: AudioAttributesCompat) {
+    val shouldRequest = hasFocus || playbackDelayed || resumeOnFocusGain
+    if (focusRequest != null) { // can't abandon if being set for the first time
+      abandonFocus()
+      listener?.onAudioFocusLost(true)
+    }
+
+    focusRequest = buildFocusRequest(audioAttributes)
+    if (shouldRequest) {
+      requestFocus()
+    }
+  }
+
+  /**
+   * Disables or enables audio focus management in this manager instance. The manager will abandon
+   * existing focus request and request it again if necessary.
+   */
+  fun setDisabled(disabled: Boolean) {
+    if (focusRequest == null) { // audio attributes have not been set yet.
+      isDisabled = disabled
+      return
+    }
+
+    val shouldRequest = hasFocus || playbackDelayed || resumeOnFocusGain
+    abandonFocus()
+    listener?.onAudioFocusLost(true)
+    isDisabled = disabled
+    if (shouldRequest) {
+      requestFocus()
+    }
+  }
+
+  private fun buildFocusRequest(audioAttributes: AudioAttributesCompat): AudioFocusRequestCompat {
+    return AudioFocusRequestCompat
+      .Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+      .setAudioAttributes(audioAttributes)
+      .setOnAudioFocusChangeListener(this)
+      .setWillPauseWhenDucked(false)
+      .build()
+  }
+
+  private fun requireFocusRequest(): AudioFocusRequestCompat {
+    return requireNotNull(focusRequest) { "must set audio attributes before requesting or abandoning focus" }
+  }
+
+  companion object {
+    private const val LOG_TAG = "AudioFocusManager"
+  }
 
   /**
    * Listener for listening to audio focus changes.
@@ -52,146 +197,5 @@ interface AudioFocusManager {
      * Invoked when the audio focus is lost.
      */
     fun onAudioFocusLost(transient: Boolean)
-  }
-}
-
-/**
- * An [AudioFocusManager] implementation that doesn't do anything.
- */
-class NoopAudioFocusManager(override val listener: AudioFocusManager.Listener) : AudioFocusManager {
-
-  private var hasFocus = false
-
-  override fun hasFocus(): Boolean {
-    return hasFocus
-  }
-
-  override fun requestFocus() {
-    hasFocus = true
-    Log.i(LOG_TAG, "requestFocus: audio focus request granted")
-    listener.onAudioFocusGained()
-  }
-
-  override fun abandonFocus() {
-    Log.i(LOG_TAG, "abandonFocus: audio focus request granted")
-    hasFocus = false
-  }
-
-  override fun setAttributes(audioAttributes: AudioAttributesCompat) = Unit
-
-  companion object {
-    private const val LOG_TAG = "NoopAFocusManager"
-  }
-}
-
-/**
- * An [AudioFocusManager] implementation that uses [AudioManager] to manage audio focus.
- */
-class DefaultAudioFocusManager(
-  context: Context,
-  audioAttributes: AudioAttributesCompat,
-  override val listener: AudioFocusManager.Listener,
-) : AudioFocusManager, AudioManager.OnAudioFocusChangeListener {
-
-  private val audioManager: AudioManager = requireNotNull(context.getSystemService())
-  private var hasFocus = false
-  private var playbackDelayed = false
-  private var resumeOnFocusGain = false
-  private var focusRequest = buildFocusRequest(audioAttributes)
-
-  override fun onAudioFocusChange(focusChange: Int) {
-    when (focusChange) {
-      AudioManager.AUDIOFOCUS_GAIN -> {
-        Log.i(LOG_TAG, "onAudioFocusChange: gained audio focus")
-        hasFocus = true
-        if (playbackDelayed || resumeOnFocusGain) {
-          Log.i(LOG_TAG, "onAudioFocusChange: resuming delayed playback")
-          playbackDelayed = false
-          resumeOnFocusGain = false
-          listener.onAudioFocusGained()
-        }
-      }
-
-      AudioManager.AUDIOFOCUS_LOSS -> {
-        Log.i(LOG_TAG, "onAudioFocusChange: permanently lost audio focus")
-        hasFocus = false
-        resumeOnFocusGain = true
-        playbackDelayed = false
-        listener.onAudioFocusLost(false)
-      }
-
-      AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
-        Log.i(LOG_TAG, "onAudioFocusChange: temporarily lost audio focus")
-        hasFocus = false
-        resumeOnFocusGain = true
-        playbackDelayed = false
-        listener.onAudioFocusLost(true)
-      }
-    }
-  }
-
-  override fun hasFocus(): Boolean {
-    return hasFocus
-  }
-
-  override fun requestFocus() {
-    if (hasFocus || playbackDelayed) {
-      return
-    }
-
-    when (AudioManagerCompat.requestAudioFocus(audioManager, focusRequest)) {
-      AudioManager.AUDIOFOCUS_REQUEST_DELAYED -> {
-        Log.i(LOG_TAG, "requestFocus: audio focus request is delayed")
-        playbackDelayed = true
-        hasFocus = false
-        resumeOnFocusGain = false
-        listener.onAudioFocusLost(true)
-      }
-      AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
-        Log.w(LOG_TAG, "requestFocus: audio focus request failed")
-        hasFocus = false
-        playbackDelayed = false
-        resumeOnFocusGain = false
-        listener.onAudioFocusLost(false)
-      }
-      AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
-        Log.i(LOG_TAG, "requestFocus: audio focus request granted")
-        hasFocus = true
-        playbackDelayed = false
-        resumeOnFocusGain = false
-        listener.onAudioFocusGained()
-      }
-    }
-  }
-
-  override fun abandonFocus() {
-    when (AudioManagerCompat.abandonAudioFocusRequest(audioManager, focusRequest)) {
-      AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
-        Log.w(LOG_TAG, "abandonFocus: audio focus request failed")
-      }
-      AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
-        Log.i(LOG_TAG, "abandonFocus: audio focus request granted")
-        hasFocus = false
-        playbackDelayed = false
-        resumeOnFocusGain = false
-      }
-    }
-  }
-
-  override fun setAttributes(audioAttributes: AudioAttributesCompat) {
-    focusRequest = buildFocusRequest(audioAttributes)
-  }
-
-  private fun buildFocusRequest(audioAttributes: AudioAttributesCompat): AudioFocusRequestCompat {
-    return AudioFocusRequestCompat
-      .Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
-      .setAudioAttributes(audioAttributes)
-      .setOnAudioFocusChangeListener(this)
-      .setWillPauseWhenDucked(false)
-      .build()
-  }
-
-  companion object {
-    private const val LOG_TAG = "DefaultAFocusManager"
   }
 }

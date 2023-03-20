@@ -29,7 +29,6 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.engine.AudioFocusManager
-import com.github.ashutoshgngwr.noice.engine.DefaultAudioFocusManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
 import com.github.ashutoshgngwr.noice.models.Alarm
 import com.github.ashutoshgngwr.noice.models.Preset
@@ -87,7 +86,10 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
   }
 
   private val audioFocusManager: AudioFocusManager by lazy {
-    DefaultAudioFocusManager(this, SoundPlayerManager.ALARM_AUDIO_ATTRIBUTES, this)
+    AudioFocusManager(this).also {
+      it.setAudioAttributes(SoundPlayerManager.ALARM_AUDIO_ATTRIBUTES)
+      it.setListener(this)
+    }
   }
 
   override fun onCreate() {

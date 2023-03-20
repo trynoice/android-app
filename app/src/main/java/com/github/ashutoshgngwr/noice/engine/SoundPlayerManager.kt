@@ -1,6 +1,5 @@
 package com.github.ashutoshgngwr.noice.engine
 
-import android.content.Context
 import android.media.AudioManager
 import android.util.Log
 import androidx.media.AudioAttributesCompat
@@ -23,8 +22,8 @@ import kotlin.time.Duration
  * pausing or in stopping states.
  */
 class SoundPlayerManager(
-  private val context: Context,
   private var soundPlayerFactory: SoundPlayer.Factory,
+  private val audioFocusManager: AudioFocusManager,
   private val listener: Listener,
 ) : AudioFocusManager.Listener {
 
@@ -34,8 +33,6 @@ class SoundPlayerManager(
   private var audioBitrate = "128k"
   private var audioAttrs = DEFAULT_AUDIO_ATTRIBUTES
   private var volume = 1F
-
-  private var focusManager: AudioFocusManager = DefaultAudioFocusManager(context, audioAttrs, this)
   private var shouldResumeOnFocusGain = false
 
   private val soundPlayers = ConcurrentHashMap<String, SoundPlayer>()
@@ -45,6 +42,11 @@ class SoundPlayerManager(
     if (oldValue != newValue) listener.onSoundPlayerManagerStateChange(newValue)
   }
     private set
+
+  init {
+    audioFocusManager.setAudioAttributes(audioAttrs)
+    audioFocusManager.setListener(this)
+  }
 
   override fun onAudioFocusGained() {
     if (shouldResumeOnFocusGain) {
@@ -114,30 +116,8 @@ class SoundPlayerManager(
     }
 
     audioAttrs = attrs
+    audioFocusManager.setAudioAttributes(attrs)
     soundPlayers.values.forEach { it.setAudioAttributes(attrs) }
-  }
-
-  fun setAudioFocusManagementEnabled(enabled: Boolean) {
-    if (
-      (enabled && focusManager is DefaultAudioFocusManager)
-      || (!enabled && focusManager is NoopAudioFocusManager)
-    ) {
-      return
-    }
-
-    val wasPlaying = state == State.PLAYING
-    pause(true)
-    focusManager.abandonFocus()
-
-    focusManager = if (enabled) {
-      DefaultAudioFocusManager(context, audioAttrs, this)
-    } else {
-      NoopAudioFocusManager(this)
-    }
-
-    if (wasPlaying) {
-      resume()
-    }
   }
 
   /**
@@ -210,7 +190,7 @@ class SoundPlayerManager(
   fun playSound(soundId: String) {
     initSoundPlayer(soundId)
     val player = soundPlayers.getValue(soundId)
-    if (!focusManager.hasFocus() || state == State.PAUSING || state == State.PAUSED) {
+    if (!audioFocusManager.hasFocus || state == State.PAUSING || state == State.PAUSED) {
       resume()
     } else {
       player.play()
@@ -249,11 +229,11 @@ class SoundPlayerManager(
    * Resumes all sounds that are in [SoundPlayer.State.PAUSED].
    */
   fun resume() {
-    if (focusManager.hasFocus()) {
+    if (audioFocusManager.hasFocus) {
       soundPlayers.values.forEach { it.play() }
     } else {
       shouldResumeOnFocusGain = true
-      focusManager.requestFocus()
+      audioFocusManager.requestFocus()
     }
   }
 
@@ -310,7 +290,7 @@ class SoundPlayerManager(
     }
 
     if (soundPlayers.isEmpty()) {
-      focusManager.abandonFocus()
+      audioFocusManager.abandonFocus()
     }
 
     reconcileState()

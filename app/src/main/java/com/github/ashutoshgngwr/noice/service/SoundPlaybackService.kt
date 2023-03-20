@@ -21,6 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.media.AudioAttributesCompat
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.activity.MainActivity
+import com.github.ashutoshgngwr.noice.engine.AudioFocusManager
 import com.github.ashutoshgngwr.noice.engine.DefaultMediaPlayer
 import com.github.ashutoshgngwr.noice.engine.LocalSoundPlayer
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
@@ -139,10 +140,11 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
     )
   }
 
+  private val audioFocusManager: AudioFocusManager by lazy { AudioFocusManager(this) }
   private val soundPlayerManager: SoundPlayerManager by lazy {
     SoundPlayerManager(
-      context = this,
       soundPlayerFactory = localSoundPlayerFactory,
+      audioFocusManager = audioFocusManager,
       listener = this,
     )
   }
@@ -197,7 +199,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
     // watch and adapt user settings as they change.
     lifecycleScope.launch {
       settingsRepository.shouldIgnoreAudioFocusChangesAsFlow()
-        .collect { soundPlayerManager.setAudioFocusManagementEnabled(!it) }
+        .collect { audioFocusManager.setDisabled(it) }
     }
 
     lifecycleScope.launch {
