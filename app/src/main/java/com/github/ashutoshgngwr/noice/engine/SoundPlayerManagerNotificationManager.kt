@@ -8,6 +8,7 @@ import android.app.Service
 import android.content.Context
 import android.os.Build
 import android.support.v4.media.session.MediaSessionCompat
+import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
@@ -145,7 +146,7 @@ class SoundPlayerManagerNotificationManager(
       style.setShowActionsInCompactView(0, 1)
     }
 
-    service.startForeground(0x01, builder.build())
+    service.startForeground(NOTIFICATION_ID, builder.build())
   }
 
   private fun initChannel(context: Context) {
@@ -165,5 +166,8 @@ class SoundPlayerManagerNotificationManager(
 
   companion object {
     private const val CHANNEL_ID = "com.github.ashutoshgngwr.noice.default"
+
+    @VisibleForTesting
+    const val NOTIFICATION_ID = 0x01
   }
 }
