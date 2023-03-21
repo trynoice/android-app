@@ -3,7 +3,6 @@ package com.github.ashutoshgngwr.noice.engine
 import android.content.Context
 import android.media.AudioManager
 import android.util.Log
-import androidx.annotation.VisibleForTesting
 import androidx.core.content.getSystemService
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
@@ -12,11 +11,9 @@ import androidx.media.AudioManagerCompat
 /**
  * A convenient wrapper to manage audio focus using the [AudioManager] system service.
  */
-class AudioFocusManager @VisibleForTesting constructor(
-  private val audioManager: AudioManager,
-) : AudioManager.OnAudioFocusChangeListener {
+class AudioFocusManager(context: Context) : AudioManager.OnAudioFocusChangeListener {
 
-  constructor(context: Context) : this(requireNotNull(context.getSystemService<AudioManager>()))
+  private val audioManager: AudioManager = requireNotNull(context.getSystemService())
 
   /**
    * Indicates if the [AudioFocusManager] instance currently possesses audio focus.
@@ -88,14 +85,12 @@ class AudioFocusManager @VisibleForTesting constructor(
         playbackDelayed = true
         hasFocus = false
         resumeOnFocusGain = false
-        listener?.onAudioFocusLost(true)
       }
       AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
         Log.w(LOG_TAG, "requestFocus: audio focus request failed")
         hasFocus = false
         playbackDelayed = false
         resumeOnFocusGain = false
-        listener?.onAudioFocusLost(false)
       }
       AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
         Log.i(LOG_TAG, "requestFocus: audio focus request granted")
@@ -118,15 +113,13 @@ class AudioFocusManager @VisibleForTesting constructor(
     }
 
     when (AudioManagerCompat.abandonAudioFocusRequest(audioManager, requireFocusRequest())) {
-      AudioManager.AUDIOFOCUS_REQUEST_FAILED -> {
-        Log.w(LOG_TAG, "abandonFocus: audio focus request failed")
-      }
       AudioManager.AUDIOFOCUS_REQUEST_GRANTED -> {
         Log.i(LOG_TAG, "abandonFocus: audio focus request granted")
         hasFocus = false
         playbackDelayed = false
         resumeOnFocusGain = false
       }
+      else -> Log.w(LOG_TAG, "abandonFocus: audio focus request failed")
     }
   }
 
@@ -152,6 +145,10 @@ class AudioFocusManager @VisibleForTesting constructor(
    * existing focus request and request it again if necessary.
    */
   fun setDisabled(disabled: Boolean) {
+    if (disabled == isDisabled) {
+      return
+    }
+
     if (focusRequest == null) { // audio attributes have not been set yet.
       isDisabled = disabled
       return
