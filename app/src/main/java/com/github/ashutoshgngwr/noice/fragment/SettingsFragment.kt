@@ -15,13 +15,13 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadsRefreshWorker
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import com.github.ashutoshgngwr.noice.worker.SoundDownloadsRefreshWorker
 import com.google.gson.JsonIOException
 import com.google.gson.JsonSyntaxException
 import dagger.hilt.android.AndroidEntryPoint

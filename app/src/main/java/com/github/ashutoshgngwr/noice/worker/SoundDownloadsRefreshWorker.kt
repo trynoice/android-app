@@ -1,9 +1,7 @@
-package com.github.ashutoshgngwr.noice.engine.exoplayer
+package com.github.ashutoshgngwr.noice.worker
 
-import android.app.Notification
 import android.content.Context
 import android.util.Log
-import androidx.core.app.NotificationCompat
 import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.hilt.work.HiltWorker
@@ -19,7 +17,7 @@ import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.github.ashutoshgngwr.noice.AppDispatchers
-import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadNotificationManager
 import com.github.ashutoshgngwr.noice.ext.getMutableStringSet
 import com.github.ashutoshgngwr.noice.models.Sound
 import com.github.ashutoshgngwr.noice.models.SoundDownloadMetadata
@@ -28,6 +26,7 @@ import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundError
+import com.github.ashutoshgngwr.noice.service.SoundDownloadService
 import com.google.android.exoplayer2.database.DatabaseIOException
 import com.google.android.exoplayer2.offline.Download
 import com.google.android.exoplayer2.offline.DownloadIndex
@@ -63,20 +62,8 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
   private val downloadIndex: DownloadIndex,
   private val gson: Gson,
   private val appDispatchers: AppDispatchers,
+  private val notificationManager: SoundDownloadNotificationManager,
 ) : CoroutineWorker(context, params) {
-
-  private val notification: Notification by lazy {
-    SoundDownloadsNotificationChannelHelper.initChannel(context)
-    NotificationCompat.Builder(context, SoundDownloadsNotificationChannelHelper.CHANNEL_ID)
-      .setContentTitle(context.getString(R.string.checking_sound_downloads))
-      .setTicker(context.getString(R.string.checking_sound_downloads))
-      .setProgress(0, 0, true)
-      .setSmallIcon(R.drawable.ic_launcher_24dp)
-      .setOngoing(true)
-      .setShowWhen(false)
-      .setSilent(true)
-      .build()
-  }
 
   override suspend fun doWork(): Result {
     try {
@@ -167,7 +154,7 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
   }
 
   override suspend fun getForegroundInfo(): ForegroundInfo {
-    return ForegroundInfo(0x03, notification)
+    return ForegroundInfo(0x03, notificationManager.refreshWorkerNotification)
   }
 
   private suspend fun hasSubscription(): Boolean {

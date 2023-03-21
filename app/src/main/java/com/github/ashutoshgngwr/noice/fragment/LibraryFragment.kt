@@ -27,7 +27,6 @@ import com.github.ashutoshgngwr.noice.databinding.LibrarySoundGroupListItemBindi
 import com.github.ashutoshgngwr.noice.databinding.LibrarySoundListItemBinding
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
-import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadsRefreshWorker
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
@@ -46,6 +45,7 @@ import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
+import com.github.ashutoshgngwr.noice.worker.SoundDownloadsRefreshWorker
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
