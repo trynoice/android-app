@@ -98,13 +98,13 @@ class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: Pendin
    */
   fun setState(state: SoundPlayerManager.State) {
     when (state) {
-      SoundPlayerManager.State.STOPPED, SoundPlayerManager.State.STOPPING -> playbackStateBuilder.setState(
+      SoundPlayerManager.State.STOPPED -> playbackStateBuilder.setState(
         PlaybackStateCompat.STATE_STOPPED,
         PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
         0f,
       )
 
-      SoundPlayerManager.State.PAUSED, SoundPlayerManager.State.PAUSING -> playbackStateBuilder.setState(
+      SoundPlayerManager.State.PAUSED -> playbackStateBuilder.setState(
         PlaybackStateCompat.STATE_PAUSED,
         PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
         0f,
