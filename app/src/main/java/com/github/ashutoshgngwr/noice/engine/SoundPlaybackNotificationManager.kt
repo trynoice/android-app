@@ -20,7 +20,7 @@ import com.github.ashutoshgngwr.noice.R
  * Manages a media-styled notification displayed by the playback service when it runs in the
  * foreground.
  */
-class SoundPlayerManagerNotificationManager(
+class SoundPlaybackNotificationManager(
   private val service: Service,
   mediaSessionToken: MediaSessionCompat.Token,
   contentPi: PendingIntent,

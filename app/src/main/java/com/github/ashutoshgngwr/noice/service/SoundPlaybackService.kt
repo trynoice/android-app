@@ -24,10 +24,10 @@ import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.engine.AudioFocusManager
 import com.github.ashutoshgngwr.noice.engine.DefaultMediaPlayer
 import com.github.ashutoshgngwr.noice.engine.LocalSoundPlayer
+import com.github.ashutoshgngwr.noice.engine.SoundPlaybackNotificationManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerMediaSession
-import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerNotificationManager
 import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDataSourceFactory
 import com.github.ashutoshgngwr.noice.ext.bindServiceCallbackFlow
 import com.github.ashutoshgngwr.noice.ext.getSerializableCompat
@@ -114,8 +114,8 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
     SoundPlayerManagerMediaSession(this, mainActivityPi)
   }
 
-  private val notificationManager: SoundPlayerManagerNotificationManager by lazy {
-    SoundPlayerManagerNotificationManager(
+  private val notificationManager: SoundPlaybackNotificationManager by lazy {
+    SoundPlaybackNotificationManager(
       service = this,
       mediaSessionToken = mediaSession.getSessionToken(),
       contentPi = mainActivityPi,

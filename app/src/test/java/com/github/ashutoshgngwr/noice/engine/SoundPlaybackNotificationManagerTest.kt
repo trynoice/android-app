@@ -19,7 +19,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowNotificationManager
 
 @RunWith(RobolectricTestRunner::class)
-class SoundPlayerManagerNotificationManagerTest {
+class SoundPlaybackNotificationManagerTest {
 
   private lateinit var mediaSessionToken: MediaSessionCompat.Token
   private lateinit var contentPiMock: PendingIntent
@@ -29,7 +29,7 @@ class SoundPlayerManagerNotificationManagerTest {
   private lateinit var randomPresetPiMock: PendingIntent
   private lateinit var skipToNextPresetPiMock: PendingIntent
   private lateinit var skipToPrevPresetPiMock: PendingIntent
-  private lateinit var manager: SoundPlayerManagerNotificationManager
+  private lateinit var manager: SoundPlaybackNotificationManager
   private lateinit var notificationManagerShadow: ShadowNotificationManager
 
   @Before
@@ -44,7 +44,7 @@ class SoundPlayerManagerNotificationManagerTest {
     randomPresetPiMock = mockk(relaxed = true)
     skipToNextPresetPiMock = mockk(relaxed = true)
     skipToPrevPresetPiMock = mockk(relaxed = true)
-    manager = SoundPlayerManagerNotificationManager(
+    manager = SoundPlaybackNotificationManager(
       service = service,
       mediaSessionToken = mediaSessionToken,
       contentPi = contentPiMock,
@@ -99,7 +99,7 @@ class SoundPlayerManagerNotificationManagerTest {
     ).forEach { testCase ->
       manager.setState(testCase.managerState)
       val notification = notificationManagerShadow
-        .getNotification(SoundPlayerManagerNotificationManager.NOTIFICATION_ID)
+        .getNotification(SoundPlaybackNotificationManager.NOTIFICATION_ID)
 
       if (testCase.expectedContentText == null || testCase.expectedActionPis == null) {
         assertNull(notification)
@@ -143,7 +143,7 @@ class SoundPlayerManagerNotificationManagerTest {
       manager.setState(SoundPlayerManager.State.PLAYING)
       manager.setCurrentPresetName(testCase.presetName)
       val notification = notificationManagerShadow
-        .getNotification(SoundPlayerManagerNotificationManager.NOTIFICATION_ID)
+        .getNotification(SoundPlaybackNotificationManager.NOTIFICATION_ID)
 
       assertNotNull(notification)
       assertEquals(testCase.expectedContentTitle, shadowOf(notification).contentTitle)
