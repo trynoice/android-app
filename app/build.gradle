@@ -119,16 +119,13 @@ project.afterEvaluate {
                  '**/Manifest*.*']
     )
 
-    def execFile = fileTree(project.buildDir).matching {
-      include "**/*/${testTask}.exec"
-    }
-
+    def execFile = "${project.buildDir}/outputs/unit_test_code_coverage/${variant.name}UnitTest/${testTask}.exec"
     tasks.create(name: taskName, type: JacocoReport, dependsOn: testTask) {
       group = 'Reporting'
       description = "Generate Jacoco coverage reports for the ${variant.name} build variant."
       sourceDirectories.setFrom(files(srcDirs))
       classDirectories.setFrom(classFiles)
-      executionData.setFrom(execFile)
+      executionData.setFrom(files(execFile))
 
       reports {
         xml.required = true
