@@ -61,7 +61,7 @@ class PresetRepository @Inject constructor(
   private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
   init {
-    appScope.launch { migrate() }
+    appScope.launch(appDispatchers.io) { migrate() }
   }
 
   /**
@@ -149,12 +149,12 @@ class PresetRepository @Inject constructor(
   }
 
   /**
-   * Returns a [Flow] that emits a generated preset based on given [tags] and [soundCount].
+   * Returns a [Flow] that emits a generated preset as a [Resource] based on given [tags] and
+   * [soundCount].
    *
    * On failures, the flow emits [Resource.Failure] with:
    * - [NetworkError] on network errors.
    *
-   * @see fetchNetworkBoundResource
    * @see Resource
    */
   fun generate(tags: Set<SoundTag>, soundCount: Int): Flow<Resource<Preset>> {

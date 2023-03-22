@@ -176,7 +176,6 @@ dependencies {
   implementation "androidx.room:room-ktx:$roomVersion"
   implementation "androidx.room:room-paging:$roomVersion"
   implementation "androidx.room:room-runtime:$roomVersion"
-
   implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
   implementation "androidx.work:work-runtime-ktx:$workManagerVersion"
   implementation 'com.caverock:androidsvg-aar:1.4'
@@ -213,7 +212,6 @@ dependencies {
   testImplementation "junit:junit:$deps.junitVersion"
   testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$deps.coroutinesVersion"
   testImplementation "org.robolectric:robolectric:$deps.robolectricVersion"
-  testImplementation 'org.skyscreamer:jsonassert:1.5.1'
 
 
   kaptAndroidTest "com.google.dagger:hilt-android-compiler:$deps.hiltVersion"

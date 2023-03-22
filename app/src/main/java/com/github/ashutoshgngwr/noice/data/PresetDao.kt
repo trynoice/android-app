@@ -48,9 +48,6 @@ abstract class PresetDao {
   @Query("SELECT * FROM preset ORDER BY name ASC")
   abstract suspend fun list(): List<PresetDto>
 
-  @Query("SELECT * FROM preset ORDER BY name ASC")
-  abstract fun listFlow(): Flow<List<PresetDto>>
-
   @Query("SELECT COUNT(*) FROM preset WHERE name = :name")
   abstract suspend fun countByName(name: String): Int
 

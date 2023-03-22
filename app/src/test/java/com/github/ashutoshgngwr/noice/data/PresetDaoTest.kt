@@ -102,7 +102,6 @@ class PresetDaoTest {
   fun saveThenList() = runTest {
     presets.forEach { presetDao.save(it) }
     assertEquals(presets, presetDao.list())
-    assertEquals(presets, presetDao.listFlow().firstOrNull())
   }
 
   @Test
