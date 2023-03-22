@@ -190,6 +190,7 @@ class SoundPlayerManager(
   fun playSound(soundId: String) {
     initSoundPlayer(soundId)
     val player = soundPlayers.getValue(soundId)
+    listener.onSoundStateChange(soundId, player.state)
     if (!audioFocusManager.hasFocus || state == State.PAUSING || state == State.PAUSED) {
       resume()
     } else {
@@ -211,6 +212,7 @@ class SoundPlayerManager(
    * fade-out effect before stopping.
    */
   fun stop(immediate: Boolean) {
+    shouldResumeOnFocusGain = false
     soundPlayers.values.forEach { it.stop(immediate) }
   }
 
@@ -234,6 +236,7 @@ class SoundPlayerManager(
     } else {
       shouldResumeOnFocusGain = true
       audioFocusManager.requestFocus()
+      reconcileState()
     }
   }
 
