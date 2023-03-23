@@ -14,10 +14,10 @@
 ## Download
 
 <a href="https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice">
-  <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="100" />
+  <img src="https://raw.githubusercontent.com/trynoice/.github/main/graphics/get-it-on-google-play-badge.png" alt="Get it on Google Play" />
 </a>
 <a href="https://f-droid.org/app/com.github.ashutoshgngwr.noice">
-  <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="100" />
+  <img src="https://raw.githubusercontent.com/trynoice/.github/main/graphics/get-it-on-f-droid-badge.png" alt="Get it on F-Droid" />
 </a>
 
 ### APKs
