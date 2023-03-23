@@ -23,8 +23,6 @@ import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
-import com.github.ashutoshgngwr.noice.engine.PlaybackController
-import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadsRefreshWorker
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
@@ -39,7 +37,9 @@ import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import com.github.ashutoshgngwr.noice.widget.SnackBar
+import com.github.ashutoshgngwr.noice.worker.SoundDownloadsRefreshWorker
 import com.google.android.material.elevation.SurfaceColors
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
   internal lateinit var analyticsProvider: AnalyticsProvider
 
   @set:Inject
-  internal lateinit var playbackController: PlaybackController
+  internal lateinit var playbackServiceController: SoundPlaybackService.Controller
 
   @set:Inject
   internal lateinit var presetRepository: PresetRepository
@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
   private var hasNewIntent = false
   private val handler = Handler(Looper.getMainLooper())
   private val settingsRepository by lazy {
-    EntryPointAccessors.fromApplication(application, MainActivityEntryPoint::class.java)
+    EntryPointAccessors.fromApplication(application, HiltEntryPoint::class.java)
       .settingsRepository()
   }
 
@@ -225,7 +225,7 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
         val preset = presetRepository.readFromUrl(dataString)
         if (preset != null) {
-          playbackController.play(preset)
+          playbackServiceController.playPreset(preset)
         } else {
           SnackBar.error(binding.mainNavHostFragment, R.string.preset_url_invalid)
             .setAnchorView(findSnackBarAnchorView())
@@ -288,7 +288,7 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   @EntryPoint
   @InstallIn(SingletonComponent::class)
-  interface MainActivityEntryPoint {
+  interface HiltEntryPoint {
     fun settingsRepository(): SettingsRepository
   }
 }

@@ -268,7 +268,6 @@
     <string name="checking_sound_downloads">Проверка загрузки звука</string>
     <string name="sound_scheduled_for_download">Добавление %1$s в загрузки для воспроизведения без сети.</string>
     <string name="sound_download_scheduled_for_removal">Удаление %1$s из ваших звуков для работы без сети.</string>
-    <string name="play_sound_before_adjusting_volume">Регулировка громкости этого звука\? Сначала вам нужно его послушать!</string>
     <string name="use_material_you_colors_summary">Использовать ту же цветовую схему, что и в настройках вашего устройства</string>
     <string name="trial_period">Пробный период: %1$s</string>
     <plurals name="n_days">
@@ -315,7 +314,7 @@
     <string name="alarm_ringer_max_duration_summary">Продолжительность времени в минутах, по истечении которого автоматически отключается будильник</string>
     <string name="notification_channel_missed_alarms__name">Пропущенные будильники</string>
     <string name="alarm_missed">Будильник пропущен</string>
-    <string name="master_volume">Основная громкость</string>
+    <string name="main_volume">Основная громкость</string>
     <string name="alarm_gradually_increase_volume">Постепенно увеличивайте громкость будильника</string>
     <string name="alarm_gradually_increase_volume_summary">Продолжительность в минутах для постепенного увеличения громкости при срабатывании будильника</string>
     <string name="no_purchases">Нет покупок</string>

@@ -258,7 +258,6 @@
     <string name="gift_card_redeem_error">噢不！我们无法兑换您的礼品卡。%1$s</string>
     <string name="notification_channel_sound_downloads__description">与音频下载相关的进度通知。</string>
     <string name="use_material_you_colors_summary">使用与设备设置相同的配色方案</string>
-    <string name="play_sound_before_adjusting_volume">要调整这个声音的音量？你需要先听一听！</string>
     <string name="remove_all_sound_downloads_confirmation">您确定要删除所有的已下载声音吗？</string>
     <string name="sound_downloads_scheduled_for_removal">已经计划好删除所有的离线声音。坐好放松，剩下的我们来处理。</string>
     <string name="remove_sound_download_confirmation">您确定要删除已下载的用于离线播放的声音吗？</string>
@@ -301,7 +300,7 @@
     <string name="notification_channel_alarm_primary__name">闹钟</string>
     <string name="alarm_ringer_max_duration">提醒持续时长</string>
     <string name="no_presets">没有预设</string>
-    <string name="master_volume">主音量</string>
+    <string name="main_volume">主音量</string>
     <string name="no_purchases">没有订阅</string>
     <string name="alarm_gradually_increase_volume">闹钟音量渐响</string>
     <string name="alarm_gradually_increase_volume_summary">闹钟触发时音量逐渐增加的分钟时长</string>

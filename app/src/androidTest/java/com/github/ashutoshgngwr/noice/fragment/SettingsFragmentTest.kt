@@ -19,7 +19,8 @@ import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import io.mockk.every
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
@@ -64,7 +65,7 @@ class SettingsFragmentTest {
   @Test
   fun testExportPresets() {
     val exportData = "test-preset-data"
-    every { mockPresetRepository.exportTo(any()) } answers {
+    coEvery { mockPresetRepository.exportTo(any()) } answers {
       firstArg<OutputStream>().write(exportData.toByteArray())
     }
 
@@ -86,7 +87,7 @@ class SettingsFragmentTest {
   @Test
   fun testImportPresets() {
     val importData = "test-preset-data"
-    every { mockPresetRepository.importFrom(any()) } answers {
+    coEvery { mockPresetRepository.importFrom(any()) } answers {
       assertEquals(importData, firstArg<InputStream>().readBytes().decodeToString())
     }
 
@@ -99,7 +100,7 @@ class SettingsFragmentTest {
     try {
       file.writeText(importData)
       fragmentScenario.onFragment { it.onOpenDocumentResult(Uri.fromFile(file)) }
-      verify(exactly = 1) { mockPresetRepository.importFrom(any()) }
+      coVerify(exactly = 1, timeout = 5000L) { mockPresetRepository.importFrom(any()) }
     } finally {
       file.delete()
     }

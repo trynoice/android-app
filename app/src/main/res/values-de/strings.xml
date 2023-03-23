@@ -279,7 +279,6 @@
     <string name="remove_all_sound_downloads">Alle Sound-Downloads entfernen</string>
     <string name="sound_downloads_scheduled_for_removal">Alle Sound-Downloads wurden erfolgreich für die Entfernung geplant.</string>
     <string name="use_material_you_colors_summary">Vererbung der Material You-Farbpalette aus dem Android-System</string>
-    <string name="play_sound_before_adjusting_volume">Sie müssen diesen Ton abspielen, bevor Sie seine Lautstärke einstellen können.</string>
     <string name="trial_period">Probezeit: %1$s</string>
     <plurals name="n_days">
         <item quantity="one">%1$d Tag</item>
@@ -296,7 +295,7 @@
     <string name="alarm_missed">Alarm verpasst</string>
     <string name="no_purchases">Keine Käufe</string>
     <string name="no_presets">Keine Voreinstellungen</string>
-    <string name="master_volume">Hauptlautstärke</string>
+    <string name="main_volume">Hauptlautstärke</string>
     <string name="alarm_gradually_increase_volume">Alarmlautstärke schrittweise erhöhen</string>
     <string name="post_notifications_permission_rationale_title">Erlaube Noice Benachrichtigungen anzuzeigen</string>
     <string name="vibrate">Vibrieren</string>

@@ -2,130 +2,159 @@ package com.github.ashutoshgngwr.noice.repository
 
 import android.content.Context
 import android.net.Uri
-import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
 import androidx.preference.PreferenceManager
-import com.github.ashutoshgngwr.noice.engine.PlaybackController
-import com.github.ashutoshgngwr.noice.ext.keyFlow
-import com.github.ashutoshgngwr.noice.model.PlayerState
-import com.github.ashutoshgngwr.noice.model.Preset
-import com.github.ashutoshgngwr.noice.model.PresetV0
-import com.github.ashutoshgngwr.noice.model.PresetV1
+import androidx.room.withTransaction
+import com.github.ashutoshgngwr.noice.AppDispatchers
+import com.github.ashutoshgngwr.noice.data.AppDatabase
+import com.github.ashutoshgngwr.noice.data.models.DefaultPresetsSyncVersionDto
+import com.github.ashutoshgngwr.noice.di.AppCoroutineScope
+import com.github.ashutoshgngwr.noice.models.Preset
+import com.github.ashutoshgngwr.noice.models.PresetV0
+import com.github.ashutoshgngwr.noice.models.PresetV1
+import com.github.ashutoshgngwr.noice.models.PresetV2
+import com.github.ashutoshgngwr.noice.models.PresetsExport
+import com.github.ashutoshgngwr.noice.models.PresetsExportV0
+import com.github.ashutoshgngwr.noice.models.PresetsExportV1
 import com.github.ashutoshgngwr.noice.models.SoundTag
-import com.github.ashutoshgngwr.noice.repository.errors.DuplicatePresetError
+import com.github.ashutoshgngwr.noice.models.toDomainEntity
+import com.github.ashutoshgngwr.noice.models.toRoomDto
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
-import com.github.ashutoshgngwr.noice.repository.errors.PresetNotFoundError
 import com.google.gson.Gson
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
 import com.google.gson.JsonIOException
+import com.google.gson.JsonParseException
 import com.google.gson.JsonSyntaxException
-import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.OutputStream
 import java.io.OutputStreamWriter
+import java.lang.reflect.Type
+import java.text.DateFormat
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.random.Random
 
-/**
- * [PresetRepository] implements the data access layer for [Preset]. It stores all its data in a
- * shared preference with [PresetRepository.PRESETS_KEY].
- */
 @Singleton
 class PresetRepository @Inject constructor(
-  @ApplicationContext context: Context,
+  @ApplicationContext private val context: Context,
+  private val appDb: AppDatabase,
   private val soundRepository: SoundRepository,
   private val gson: Gson,
+  @AppCoroutineScope appScope: CoroutineScope,
+  private val appDispatchers: AppDispatchers,
 ) {
 
   private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
   init {
-    val syncFrom = 1 + prefs.getInt(
-      DEFAULT_PRESETS_SYNC_VERSION_KEY,
-      if (prefs.contains(PRESETS_KEY)) 0 else -1,
-    )
-
-    DEFAULT_PRESETS.subList(syncFrom, DEFAULT_PRESETS.size).forEach { defaultPresets ->
-      edit { presets ->
-        gson.fromJson<List<Preset>>(defaultPresets, PRESET_LIST_TYPE)
-          .also { presets.addAll(it) }
-      }
-    }
-
-    prefs.edit { putInt(DEFAULT_PRESETS_SYNC_VERSION_KEY, DEFAULT_PRESETS.size - 1) }
-    migrate()
+    appScope.launch(appDispatchers.io) { migrate() }
   }
 
   /**
-   * Adds the given preset to persistent storage.
+   * Saves the given preset. It overwrites the existing preset with the same id if it exists.
    *
    * @throws IllegalArgumentException if [Preset.id] is missing.
-   * @throws DuplicatePresetError if a preset with given id already exists.
    */
-  fun create(preset: Preset) = edit { presets ->
+  suspend fun save(preset: Preset) {
     require(preset.id.isNotBlank()) { "preset must contain a valid ID" }
-    if (presets.any { it.id == preset.id }) {
-      throw DuplicatePresetError
-    }
-
-    presets.add(preset)
+    appDb.presets().save(preset.toRoomDto(gson))
   }
 
   /**
-   * Updates the given [preset].
-   *
-   * @throws PresetNotFoundError if [preset] id is not present in the persistent storage.
+   * Deletes the preset with given id. No-op if such a preset doesn't exist.
    */
-  fun update(preset: Preset) = edit { presets ->
-    val index = presets.indexOfFirst { it.id == preset.id }
-    if (index < 0) {
-      throw PresetNotFoundError
-    }
-
-    presets[index] = preset
+  suspend fun delete(id: String) {
+    appDb.presets().deleteById(id)
   }
 
   /**
-   * Deletes the preset with given id from the storage. No-op if such a preset doesn't exist.
+   * @returns a paging data flow to page all saved presets.
    */
-  fun delete(id: String) = edit { presets ->
-    presets.removeAll { it.id == id }
+  fun pagingDataFlow(nameFilter: String = ""): Flow<PagingData<Preset>> {
+    return Pager(PagingConfig(pageSize = 20)) { appDb.presets().pagingSource("%${nameFilter}%") }
+      .flow
+      .map { pagingData -> pagingData.map { it.toDomainEntity(gson) } }
   }
 
   /**
-   * Lists all [Preset]s present in the persistent storage.
+   * @return the preset with given id. Returns `null` if the [Preset] with given id doesn't exist.
    */
-  fun list(): List<Preset> {
-    return gson.fromJson(prefs.getString(PRESETS_KEY, "[]"), PRESET_LIST_TYPE)
+  suspend fun get(id: String): Preset? {
+    return appDb.presets()
+      .getById(id)
+      ?.toDomainEntity(gson)
   }
 
   /**
-   * Returns a [Flow] that emits an [Array] of all [Preset] whenever the list of saved presets is
-   * updated.
+   * @return a [Flow] that emits the first preset that only contains the given [soundStates].
    */
-  fun listFlow(): Flow<List<Preset>> {
-    return prefs.keyFlow(PRESETS_KEY).map { list() }
+  fun getBySoundStatesFlow(soundStates: SortedMap<String, Float>): Flow<Preset?> {
+    return appDb.presets()
+      .getBySoundStatesJsonFlow(gson.toJson(soundStates))
+      .map { it?.toDomainEntity(gson) }
   }
 
   /**
-   * Returns the preset with given id. Returns `null` if the [Preset] with given id doesn't exist.
+   * @return a [Preset] randomly picked from the saved presets or `null` if there are no saved
+   * presets.
    */
-  fun get(id: String?): Preset? {
-    return id?.let { list().firstOrNull { p -> p.id == id } }
+  suspend fun getRandom(): Preset? {
+    return appDb.presets()
+      .getRandom()
+      ?.toDomainEntity(gson)
   }
 
   /**
-   * Returns a [Flow] that emits a generated preset based on given [tags] and [soundCount].
+   * @return the preset that falls next to the [currentPreset] when all saved presets are ordered by
+   * their name. If the [currentPreset] is the last one in succession, it returns the first preset.
+   */
+  suspend fun getNextPreset(currentPreset: Preset): Preset? {
+    return (appDb.presets()
+      .getNextOrderedByName(currentPreset.name)
+      ?: appDb.presets().getFirstOrderedByName())
+      ?.toDomainEntity(gson)
+  }
+
+  /**
+   * @return the preset that falls just before the [currentPreset] when all saved presets are
+   * ordered by their name. If the [currentPreset] is the first one in succession, it returns the
+   * last preset.
+   */
+  suspend fun getPreviousPreset(currentPreset: Preset): Preset? {
+    return (appDb.presets()
+      .getPreviousOrderedByName(currentPreset.name)
+      ?: appDb.presets().getLastOrderedByName())
+      ?.toDomainEntity(gson)
+  }
+
+  /**
+   * @return `true` if a preset with the given [name] already exists.
+   */
+  suspend fun existsByName(name: String): Boolean {
+    return appDb.presets().countByName(name) > 0
+  }
+
+  /**
+   * Returns a [Flow] that emits a generated preset as a [Resource] based on given [tags] and
+   * [soundCount].
    *
    * On failures, the flow emits [Resource.Failure] with:
    * - [NetworkError] on network errors.
    *
-   * @see fetchNetworkBoundResource
    * @see Resource
    */
   fun generate(tags: Set<SoundTag>, soundCount: Int): Flow<Resource<Preset>> {
@@ -138,9 +167,8 @@ class PresetRepository @Inject constructor(
               .take(soundCount * 2)
               .shuffled()
               .take(soundCount)
-              .map { PlayerState(it.id, Random.nextInt(8, PlaybackController.MAX_SOUND_VOLUME)) }
-              .toTypedArray()
-              .let { Preset("", it) }
+              .associate { it.id to (0.25F + Random.nextFloat() * 0.75F) }
+              .let { Preset("", it.toSortedMap()) }
               .let { Resource.Success(it) }
           }
           else -> Resource.Failure(r.error ?: Exception())
@@ -153,13 +181,19 @@ class PresetRepository @Inject constructor(
    * is JSON.
    */
   @Throws(JsonIOException::class)
-  fun exportTo(stream: OutputStream) {
-    val data = mapOf(
-      EXPORT_VERSION_KEY to PRESETS_KEY,
-      EXPORT_DATA_KEY to prefs.getString(PRESETS_KEY, "[]")
-    )
+  suspend fun exportTo(stream: OutputStream): Unit = withContext(appDispatchers.io) {
+    val export = appDb.presets()
+      .list()
+      .map { it.toDomainEntity(gson) }
+      .let { presets ->
+        PresetsExportV1(
+          presets = presets,
+          exportedAt = DateFormat.getDateTimeInstance().format(Date()),
+        )
+      }
 
-    OutputStreamWriter(stream).use { gson.toJson(data, it) }
+    val gson = gson.newBuilder().setPrettyPrinting().create()
+    OutputStreamWriter(stream).use { gson.toJson(export, it) }
   }
 
   /**
@@ -167,19 +201,31 @@ class PresetRepository @Inject constructor(
    * [exportTo]. It overwrites any existing presets in the storage.
    */
   @Throws(JsonIOException::class, JsonSyntaxException::class, IllegalArgumentException::class)
-  fun importFrom(stream: InputStream) {
-    val data = InputStreamReader(stream).use {
-      gson.fromJson(it, hashMapOf<String, String?>()::class.java)
+  suspend fun importFrom(stream: InputStream): Unit = withContext(appDispatchers.io) {
+    val export = InputStreamReader(stream).use {
+      gson.newBuilder()
+        .registerTypeAdapter(PresetsExport::class.java, PresetsExportDeserializer())
+        .create()
+        .fromJson(it, PresetsExport::class.java)
     }
 
-    val version = data?.get(EXPORT_VERSION_KEY)
-    version ?: throw IllegalArgumentException("'version' is missing")
-    prefs.edit {
-      clear()
-      putString(version, data[EXPORT_DATA_KEY])
-    }
+    appDb.withTransaction {
+      appDb.presets().deleteAll()
+      when (export) {
+        is PresetsExportV0 -> {
+          prefs.edit {
+            clear()
+            putString(export.version, export.data)
+          }
 
-    migrate()
+          migrate()
+        }
+
+        is PresetsExportV1 -> appDb.withTransaction {
+          export.presets.forEach { save(it) }
+        }
+      }
+    }
   }
 
   /**
@@ -189,13 +235,30 @@ class PresetRepository @Inject constructor(
    */
   fun readFromUrl(url: String): Preset? {
     val uri = Uri.parse(url)
+    val version = uri.getQueryParameter(URI_PARAM_VERSION) ?: URI_VERSION_0
     val name = uri.getQueryParameter(URI_PARAM_NAME) ?: ""
-    val playerStatesJSON = uri.getQueryParameter(URI_PARAM_PLAYER_STATES) ?: return null
-    return try {
-      val playerStates = gson.fromJson(playerStatesJSON, Array<PlayerState>::class.java)
-      Preset(name, playerStates)
-    } catch (e: JsonSyntaxException) {
-      null
+
+    when (version) {
+      URI_VERSION_0 -> {
+        val playerStatesJson = uri.getQueryParameter(URI_PARAM_PLAYER_STATES) ?: return null
+        return try {
+          PresetV2(name, gson.fromJson(playerStatesJson, PresetV2.GSON_TYPE_PLAYER_STATES))
+            .toPresetV3()
+        } catch (e: JsonSyntaxException) {
+          null
+        }
+      }
+
+      URI_VERSION_1 -> {
+        val soundStatesJson = uri.getQueryParameter(URI_PARAM_SOUND_STATES) ?: return null
+        return try {
+          Preset(name, gson.fromJson(soundStatesJson, Preset.GSON_TYPE_SOUND_STATES))
+        } catch (e: JsonSyntaxException) {
+          null
+        }
+      }
+
+      else -> return null
     }
   }
 
@@ -207,30 +270,18 @@ class PresetRepository @Inject constructor(
       .scheme("https")
       .authority("trynoice.com")
       .path("/preset")
+      .appendQueryParameter(URI_PARAM_VERSION, URI_VERSION_1)
       .appendQueryParameter(URI_PARAM_NAME, preset.name)
-      .appendQueryParameter(URI_PARAM_PLAYER_STATES, gson.toJson(preset.playerStates))
+      .appendQueryParameter(URI_PARAM_SOUND_STATES, gson.toJson(preset.soundStates))
       .build()
       .toString()
   }
 
-  private fun commit(presets: List<Preset>) {
-    prefs.edit { putString(PRESETS_KEY, gson.toJson(presets)) }
-  }
-
-  private inline fun edit(block: (MutableList<Preset>) -> Unit) {
-    synchronized(prefs) {
-      val presets: MutableList<Preset> = prefs.getString(PRESETS_KEY, "[]")
-        .let { gson.fromJson(it, PRESET_LIST_TYPE) }
-
-      block.invoke(presets)
-      presets.sortBy { it.name.lowercase() }
-      commit(presets)
-    }
-  }
-
-  private fun migrate() {
+  private suspend fun migrate() {
     migrateToV1()
     migrateToV2()
+    migrateToV3()
+    migrateDefaultPresets()
   }
 
   /**
@@ -249,22 +300,20 @@ class PresetRepository @Inject constructor(
    *    - https://github.com/ashutoshgngwr/noice/commit/8ef502debd84aeadadaa665acd37c3cee592f521
    *    - https://github.com/ashutoshgngwr/noice/commit/11eb63ee22f3a03eca982cbd308f06ec164ab300#diff-db23b0e75244cdeb8ead7184bb06cb7cR15-R71
    */
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal fun migrateToV1() = synchronized(prefs) {
+  private fun migrateToV1() {
     val presetsV0 = prefs.getString(PRESETS_V0_KEY, "[]")
-      .let { gson.fromJson<List<PresetV0>>(it, GSON_TYPE_V0) }
-    if (presetsV0.isNullOrEmpty()) {
+      .let { gson.fromJson(it, Array<PresetV0>::class.java) }
+
+    if (presetsV0.isEmpty()) {
       return
     }
 
     val presetsV1 = prefs.getString(PRESETS_V1_KEY, "[]")
-      .let { gson.fromJson<MutableList<PresetV1>>(it, GSON_TYPE_V1) }
+      .let { gson.fromJson(it, Array<PresetV1>::class.java) }
+      .toMutableList()
+
     presetsV0.forEach { presetV0 ->
-      val presetV1 = presetV0.toPresetV1()
-      // only append to existing presets if another preset with same player states doesn't exist.
-      if (presetsV1.none { it.playerStates == presetV1.playerStates }) {
-        presetsV1.add(presetV1.copy(name = "${presetV1.name} (v0)"))
-      }
+      presetsV1.add(presetV0.toPresetV1())
     }
 
     prefs.edit {
@@ -278,29 +327,69 @@ class PresetRepository @Inject constructor(
    *  - V2 Presets don't understand `timePeriod` field from [PresetV1.PlayerState].
    *  - V2 sound library use `soundId` field instead of `soundKey`.
    */
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  internal fun migrateToV2() = synchronized(prefs) {
+  private fun migrateToV2() {
     val presetsV1 = prefs.getString(PRESETS_V1_KEY, "[]")
-      .let { gson.fromJson<List<PresetV1>>(it, GSON_TYPE_V1) }
-    if (presetsV1.isNullOrEmpty()) {
+      .let { gson.fromJson(it, Array<PresetV1>::class.java) }
+
+    if (presetsV1.isEmpty()) {
       return
     }
 
     val presetsV2 = prefs.getString(PRESETS_V2_KEY, "[]")
-      .let { gson.fromJson<MutableList<Preset>>(it, GSON_TYPE_V2) }
+      .let { gson.fromJson(it, Array<PresetV2>::class.java) }
+      .toMutableList()
+
     presetsV1.forEach { presetV1 ->
       val presetV2 = presetV1.toPresetV2()
       // only append to existing presets if another preset with same player states doesn't exist.
-      if (presetsV2.none { it.playerStates.contentEquals(presetV2.playerStates) }) {
-        presetsV2.add(presetV2.copy(name = "${presetV2.name} (v1)"))
+      if (presetsV2.none { it.playerStates == presetV2.playerStates }) {
+        presetsV2.add(presetV2)
       }
     }
 
-    prefs.edit { remove(PRESETS_V1_KEY) }
-    edit { presets ->
-      presets.clear()
-      presets.addAll(presetsV2)
+    prefs.edit {
+      remove(PRESETS_V1_KEY)
+      putString(PRESETS_V2_KEY, gson.toJson(presetsV2))
     }
+  }
+
+  /**
+   * Migrates V2 presets to V3 presets to adapt for the following changes:
+   *  - V3 Presets have a simpler model. They use a map of sound ids to their volumes to represent
+   *    sounds states.
+   *  - V2 presets are stored in the default shared preferences. V3 presets use Room.
+   */
+  private suspend fun migrateToV3() = appDb.withTransaction {
+    appDb.presets()
+      .saveDefaultPresetsSyncVersion(
+        DefaultPresetsSyncVersionDto(
+          prefs.getInt(
+            "defaultPresetsSyncVersion",
+            if (prefs.contains(PRESETS_V2_KEY)) 0 else -1,
+          )
+        )
+      )
+
+    prefs.getString(PRESETS_V2_KEY, "[]")
+      .let { gson.fromJson(it, Array<PresetV2>::class.java) }
+      .map { it.toPresetV3() }
+      .forEach { appDb.presets().save(it.toRoomDto(gson)) }
+
+    prefs.edit {
+      remove("defaultPresetsSyncVersion")
+      remove(PRESETS_V2_KEY)
+    }
+  }
+
+  private suspend fun migrateDefaultPresets() = appDb.withTransaction {
+    val syncFrom = 1 + (appDb.presets().getDefaultPresetsSyncedVersion() ?: -1)
+
+    DEFAULT_PRESETS.subList(syncFrom, DEFAULT_PRESETS.size)
+      .flatMap { gson.fromJson(it, Array<Preset>::class.java).toList() }
+      .forEach { save(it) }
+
+    appDb.presets()
+      .saveDefaultPresetsSyncVersion(DefaultPresetsSyncVersionDto(DEFAULT_PRESETS.size - 1))
   }
 
   companion object {
@@ -308,27 +397,13 @@ class PresetRepository @Inject constructor(
     private const val PRESETS_V1_KEY = "presets.v1"
     private const val PRESETS_V2_KEY = "presets.v2"
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val PRESETS_KEY = PRESETS_V2_KEY
-    private const val DEFAULT_PRESETS_SYNC_VERSION_KEY = "defaultPresetsSyncVersion"
-
-    private val GSON_TYPE_V0 = TypeToken.getParameterized(List::class.java, PresetV0::class.java)
-      .type
-
-    private val GSON_TYPE_V1 = TypeToken.getParameterized(List::class.java, PresetV1::class.java)
-      .type
-
-    private val GSON_TYPE_V2 = TypeToken.getParameterized(List::class.java, Preset::class.java).type
-    private val PRESET_LIST_TYPE = GSON_TYPE_V2
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val EXPORT_VERSION_KEY = "version"
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    const val EXPORT_DATA_KEY = "data"
-
+    private const val URI_PARAM_VERSION = "v"
     private const val URI_PARAM_NAME = "n"
     private const val URI_PARAM_PLAYER_STATES = "ps"
+    private const val URI_PARAM_SOUND_STATES = "s"
+
+    private const val URI_VERSION_0 = "0"
+    private const val URI_VERSION_1 = "1"
 
     /**
      * A versioned map of default presets such that presets added in later versions can be added to
@@ -339,106 +414,66 @@ class PresetRepository @Inject constructor(
         {
           "id": "808feaed-f4ce-4d1e-9179-ae7aec31180e",
           "name": "Thunderstorm by @markwmuller",
-          "playerStates": [
-            {
-              "soundId": "rain",
-              "volume": 20
-            },
-            {
-              "soundId": "thunder",
-              "volume": 20
-            }
-          ]
+          "soundStates": {
+            "rain": 0.8,
+            "thunder": 0.8
+          }
         },
         {
           "id": "13006e01-9413-45d7-bffc-dc577b077d67",
           "name": "Beach by @eMPee584",
-          "playerStates": [
-            {
-              "soundId": "crickets",
-              "volume": 6
-            },
-            {
-              "soundId": "seagulls",
-              "volume": 6
-            },
-            {
-              "soundId": "seashore",
-              "volume": 20
-            },
-            {
-              "soundId": "soft_wind",
-              "volume": 6
-            },
-            {
-              "soundId": "wind_through_palm_trees",
-              "volume": 15
-            }
-          ]
+          "soundStates": {
+            "crickets": 0.24,
+            "seagulls": 0.24,
+            "seashore": 0.8,
+            "soft_wind": 0.24,
+            "wind_through_palm_trees": 0.6
+          }
         },
         {
           "id": "b76ac285-1265-472c-bcdc-aecba3a28fa2",
           "name": "Camping by @ashutoshgngwr",
-          "playerStates": [
-            {
-              "soundId": "campfire",
-              "volume": 22
-            },
-            {
-              "soundId": "night",
-              "volume": 6
-            },
-            {
-              "soundId": "quiet_conversations",
-              "volume": 5
-            },
-            {
-              "soundId": "soft_wind",
-              "volume": 8
-            },
-            {
-              "soundId": "wolves",
-              "volume": 3
-            }
-          ]
+          "soundStates": {
+            "campfire": 0.88,
+            "night": 0.24,
+            "quiet_conversations": 0.2,
+            "soft_wind": 0.32,
+            "wolves": 0.12
+          }
         }
       ]""",
       """[
         {
           "id": "b6eb323d-e146-4690-a1a8-b8d6802001b3",
           "name": "Womb Simulator by @lrq3000",
-          "playerStates": [
-            {
-              "soundId": "brownian_noise",
-              "volume": 25
-            },
-            {
-              "soundId": "rain",
-              "volume": 25
-            },
-            {
-              "soundId": "seashore",
-              "volume": 12
-            },
-            {
-              "soundId": "soft_wind",
-              "volume": 25
-            },
-            {
-              "soundId": "train",
-              "volume": 18
-            },
-            {
-              "soundId": "water_stream",
-              "volume": 8
-            },
-            {
-              "soundId": "wind_through_palm_trees",
-              "volume": 13
-            }
-          ]
+          "soundStates": {
+            "brownian_noise": 1.0,
+            "rain": 1.0,
+            "seashore": 0.48,
+            "soft_wind": 1.0,
+            "train": 0.72,
+            "water_stream": 0.32,
+            "wind_through_palm_trees": 0.52
+          }
         }
       ]""",
     )
+  }
+
+  private class PresetsExportDeserializer : JsonDeserializer<PresetsExport> {
+
+    override fun deserialize(
+      json: JsonElement,
+      typeOfT: Type?,
+      context: JsonDeserializationContext
+    ): PresetsExport {
+      return when (json.asJsonObject?.get("version")?.asString) {
+        PresetsExportV1.VERSION_STRING -> context.deserialize(json, PresetsExportV1::class.java)
+        PRESETS_V0_KEY,
+        PRESETS_V1_KEY,
+        PRESETS_V2_KEY -> context.deserialize(json, PresetsExportV0::class.java)
+        else -> throw JsonParseException("preset export version is either null or not recognised")
+      }
+    }
   }
 }

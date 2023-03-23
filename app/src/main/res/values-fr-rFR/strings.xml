@@ -273,7 +273,6 @@
     <string name="checking_sound_downloads">Vérification des sons téléchargés</string>
     <string name="sound_scheduled_for_download">Planification de %1$s pour le téléchargement.</string>
     <string name="sound_download_scheduled_for_removal">Planification %1$s pour la suppression de téléchargements son.</string>
-    <string name="play_sound_before_adjusting_volume">Vous devez jouer ce son avant de pouvoir régler son volume.</string>
     <plurals name="n_days">
         <item quantity="one">%1$d jour</item>
         <item quantity="many">%1$d jours</item>
@@ -320,7 +319,7 @@
     <string name="alarm_ringer_max_duration_summary">Durée en minutes, après laquelle le rappel de l\'alarme doit être automatiquement désactivé</string>
     <string name="alarm_snooze_length">Durée de la répétition du réveil</string>
     <string name="notification_channel_alarm_priming__description">Notifications affichées lors de la préparation du déclenchement d\'une alarme programmée.</string>
-    <string name="master_volume">Volume principal</string>
+    <string name="main_volume">Volume principal</string>
     <string name="alarm_gradually_increase_volume">Augmenter progressivement le volume de l\'alarme</string>
     <string name="alarm_gradually_increase_volume_summary">Durée en minutes pour l\'augmentation progressive du volume lors d\'un déclenchement d\'alarme</string>
     <string name="no_purchases">Aucun achat</string>

@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.Menu
 import androidx.annotation.StringRes
 import androidx.media.VolumeProviderCompat
+import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 
 /**
  * [CastApiProvider] is an abstract declaration of the non-free Google Cast APIs that are used in the app.
@@ -18,10 +19,9 @@ interface CastApiProvider {
   fun addMenuItem(context: Context, menu: Menu, @StringRes titleResId: Int)
 
   /**
-   * Returns a [PlaybackStrategyFactory] that plays media on a cast device.
+   * Returns a [Player.Factory] that plays media on a cast device.
    */
-  // TODO:
-//  fun getPlaybackStrategyFactory(context: Context): PlaybackStrategyFactory
+  fun buildPlayerFactory(context: Context): SoundPlayer.Factory
 
   /**
    * Returns a [VolumeProviderCompat] that controls volume of the cast device.
@@ -46,12 +46,12 @@ interface CastApiProvider {
     /**
      * Invoked when cast session begins.
      */
-    fun onSessionBegin()
+    fun onCastSessionBegin()
 
     /**
      * Invoked when cast session ends.
      */
-    fun onSessionEnd()
+    fun onCastSessionEnd()
   }
 }
 
@@ -60,9 +60,9 @@ interface CastApiProvider {
  */
 object DummyCastApiProvider : CastApiProvider {
 
-//  override fun getPlaybackStrategyFactory(context: Context): PlaybackStrategyFactory {
-//    throw IllegalStateException("getPlaybackStrategyFactory() must not be invoked on DummyCastApiProvider")
-//  }
+  override fun buildPlayerFactory(context: Context): SoundPlayer.Factory {
+    throw IllegalStateException("getPlayerFactory() must not be invoked on DummyCastApiProvider")
+  }
 
   override fun getVolumeProvider(): VolumeProviderCompat {
     throw IllegalStateException("getVolumeProvider() must not be invoked on DummyCastApiProvider")

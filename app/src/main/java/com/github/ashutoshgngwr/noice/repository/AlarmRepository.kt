@@ -41,9 +41,9 @@ class AlarmRepository(
   }
 
   suspend fun get(alarmId: Int): Alarm? {
-    return appDb.alarms()
-      .getById(alarmId)
-      ?.let { it.toDomainEntity(presetRepository.get(it.presetId)) }
+    val alarmDto = appDb.alarms().getById(alarmId)
+    val preset = alarmDto?.presetId?.let { presetRepository.get(it) }
+    return alarmDto?.toDomainEntity(preset)
   }
 
   fun countEnabled(): Flow<Int> {
@@ -51,10 +51,14 @@ class AlarmRepository(
   }
 
   fun pagingDataFlow(): Flow<PagingData<Alarm>> {
-    val presets = presetRepository.list().associateBy { it.id }
     return Pager(PagingConfig(pageSize = 20)) { appDb.alarms().pagingSource() }
       .flow
-      .map { pagingData -> pagingData.map { it.toDomainEntity(presets[it.presetId]) } }
+      .map { pagingData ->
+        pagingData.map { alarmDto ->
+          val preset = alarmDto.presetId?.let { presetRepository.get(it) }
+          alarmDto.toDomainEntity(preset)
+        }
+      }
   }
 
   fun canScheduleAlarms(): Boolean {
@@ -97,7 +101,7 @@ class AlarmRepository(
         .listEnabled()
         .forEachIndexed { index, alarmDto ->
           if (index < offset) return@forEachIndexed
-          alarmManager.cancel(alarmDto.toDomainEntity(null))
+          alarmManager.cancel(alarmDto.toDomainEntity(null)) // preset association is not needed here
           appDb.alarms().save(alarmDto.copy(isEnabled = false))
           disabledCount++
         }

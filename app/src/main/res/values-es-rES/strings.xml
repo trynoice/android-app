@@ -263,7 +263,6 @@
     <string name="privacy_policy">Política de Privacidad</string>
     <string name="subscription_purchases_load_error">¡Oh, vaya! No pudimos recuperar tu historial de compras. %1$s</string>
     <string name="audio_quality_summary">Calidad de audio máxima para streaming. Medio, Alto y Ultra sólo funcionarán si está suscrito a Noice Premium.</string>
-    <string name="play_sound_before_adjusting_volume">¿Estás ajustando el volumen de este sonido\? ¡Tendrás que escucharlo primero!</string>
     <string name="remove_sound_download">Eliminar %1$s</string>
     <string name="sound_scheduled_for_download">Añadiendo %1$s a las descargas para reproducirlas sin conexión.</string>
     <string name="sound_download_scheduled_for_removal">Eliminando %1$s de tus sonidos sin conexión.</string>
@@ -305,7 +304,7 @@
     <string name="alarm_ringer_max_duration">Duración de los recordatorios</string>
     <string name="alarm_missed">Alarma perdida</string>
     <string name="no_presets">Sin ajustes preestablecidos</string>
-    <string name="master_volume">Volumen principal</string>
+    <string name="main_volume">Volumen principal</string>
     <string name="alarm_gradually_increase_volume">Aumentar gradualmente el volumen de la alarma</string>
     <string name="alarm_gradually_increase_volume_summary">Duración en minutos para aumentar gradualmente el volumen cuando se dispara una alarma</string>
     <string name="no_purchases">Sin compras</string>

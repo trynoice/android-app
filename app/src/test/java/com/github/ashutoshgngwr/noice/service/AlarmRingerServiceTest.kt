@@ -5,15 +5,13 @@ import android.content.Context
 import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.core.content.getSystemService
-import androidx.media.AudioAttributesCompat
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.TestDispatcherRule
 import com.github.ashutoshgngwr.noice.activity.AlarmRingerActivity
 import com.github.ashutoshgngwr.noice.di.AlarmRepositoryModule
 import com.github.ashutoshgngwr.noice.di.AlarmRingerModule
-import com.github.ashutoshgngwr.noice.engine.PlaybackController
-import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.models.Alarm
+import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
@@ -64,7 +62,7 @@ class AlarmRingerServiceTest {
   internal lateinit var settingsRepositoryMock: SettingsRepository
 
   @BindValue
-  internal lateinit var playbackControllerMock: PlaybackController
+  internal lateinit var playbackServiceControllerMock: SoundPlaybackService.Controller
 
   @BindValue
   internal lateinit var uiControllerMock: AlarmRingerService.UiController
@@ -84,7 +82,7 @@ class AlarmRingerServiceTest {
       every { getAlarmVolumeRampDuration() } returns 1.minutes
     }
 
-    playbackControllerMock = mockk(relaxed = true)
+    playbackServiceControllerMock = mockk(relaxed = true)
     uiControllerMock = mockk(relaxed = true)
     serviceControllerMock = mockk(relaxed = true)
 
@@ -101,7 +99,7 @@ class AlarmRingerServiceTest {
 
     data class TestCase(
       val alarm: Alarm,
-      val savedPresets: List<Preset>,
+      val getRandomPreset: Preset?,
       val expectedPresetType: Int,
       val expectVibrate: Boolean,
     )
@@ -109,35 +107,35 @@ class AlarmRingerServiceTest {
     val testCases = arrayOf(
       TestCase(
         alarm = buildAlarm(preset = null, false),
-        savedPresets = emptyList(),
+        getRandomPreset = null,
         expectedPresetType = presetTypeGenerated,
         expectVibrate = false,
       ),
       TestCase(
         alarm = buildAlarm(preset = null, true),
-        savedPresets = listOf(Preset("preset-1", emptyArray()), Preset("preset-2", emptyArray())),
+        getRandomPreset = Preset("preset-2", sortedMapOf()),
         expectedPresetType = presetTypeRandom,
         expectVibrate = true,
       ),
       TestCase(
-        alarm = buildAlarm(preset = Preset("test-preset", emptyArray()), false),
-        savedPresets = listOf(Preset("preset-1", emptyArray()), Preset("preset-2", emptyArray())),
+        alarm = buildAlarm(preset = Preset("test-preset", sortedMapOf()), false),
+        getRandomPreset = Preset("preset-1", sortedMapOf()),
         expectedPresetType = presetTypePredefined,
         expectVibrate = false,
       ),
     )
 
     for (testCase in testCases) {
-      clearMocks(alarmRepositoryMock, presetRepositoryMock, playbackControllerMock)
+      clearMocks(alarmRepositoryMock, presetRepositoryMock, playbackServiceControllerMock)
       vibrator.cancel() // ShadowVibrator doesn't have an API to reset its state.
       advanceUntilIdle()
 
-      val generatedPreset = Preset("preset-3", emptyArray())
+      val generatedPreset = Preset("preset-3", sortedMapOf())
       every {
         presetRepositoryMock.generate(any(), any())
       } returns flowOf(Resource.Success(generatedPreset))
 
-      every { presetRepositoryMock.list() } returns testCase.savedPresets
+      coEvery { presetRepositoryMock.getRandom() } returns testCase.getRandomPreset
       coEvery { alarmRepositoryMock.get(testCase.alarm.id) } returns testCase.alarm
 
       val context = ApplicationProvider.getApplicationContext<Context>()
@@ -148,11 +146,11 @@ class AlarmRingerServiceTest {
 
       serviceController.startCommand(0, 0)
       verify(exactly = 1) {
-        playbackControllerMock.setAudioUsage(AudioAttributesCompat.USAGE_ALARM)
-        playbackControllerMock.play(withArg { preset: Preset ->
+        playbackServiceControllerMock.setAudioUsage(SoundPlaybackService.Controller.AUDIO_USAGE_ALARM)
+        playbackServiceControllerMock.playPreset(withArg { preset: Preset ->
           when (testCase.expectedPresetType) {
             presetTypeGenerated -> assertEquals(generatedPreset, preset)
-            presetTypeRandom -> assertTrue(preset in testCase.savedPresets)
+            presetTypeRandom -> assertEquals(testCase.getRandomPreset, preset)
             presetTypePredefined -> assertEquals(preset, testCase.alarm.preset)
             else -> throw UnsupportedOperationException()
           }
@@ -167,7 +165,7 @@ class AlarmRingerServiceTest {
 
       // assert master volume fade
       advanceUntilIdle()
-      verify(atLeast = 20) { playbackControllerMock.setMasterVolume(any()) }
+      verify(atLeast = 20) { playbackServiceControllerMock.setVolume(any()) }
     }
   }
 
@@ -189,8 +187,8 @@ class AlarmRingerServiceTest {
     for (i in advanceTimeBy.indices) {
       this.advanceTimeBy(advanceTimeBy[i].inWholeMilliseconds)
       verify(exactly = if (expectDismissed[i]) 1 else 0) {
-        playbackControllerMock.pause(any())
-        playbackControllerMock.setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
+        playbackServiceControllerMock.pause(any())
+        playbackServiceControllerMock.setAudioUsage(SoundPlaybackService.Controller.AUDIO_USAGE_MEDIA)
         uiControllerMock.dismiss()
       }
 
@@ -214,8 +212,8 @@ class AlarmRingerServiceTest {
 
     serviceController.startCommand(0, 0)
     coVerify(exactly = 1, timeout = 5000) {
-      playbackControllerMock.pause(any())
-      playbackControllerMock.setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
+      playbackServiceControllerMock.pause(any())
+      playbackServiceControllerMock.setAudioUsage(SoundPlaybackService.Controller.AUDIO_USAGE_MEDIA)
       uiControllerMock.dismiss()
       alarmRepositoryMock.reportTrigger(1, true)
     }
@@ -236,8 +234,8 @@ class AlarmRingerServiceTest {
 
     serviceController.startCommand(0, 0)
     coVerify(exactly = 1, timeout = 5000) {
-      playbackControllerMock.pause(any())
-      playbackControllerMock.setAudioUsage(AudioAttributesCompat.USAGE_MEDIA)
+      playbackServiceControllerMock.pause(any())
+      playbackServiceControllerMock.setAudioUsage(SoundPlaybackService.Controller.AUDIO_USAGE_MEDIA)
       uiControllerMock.dismiss()
       alarmRepositoryMock.reportTrigger(1, false)
     }

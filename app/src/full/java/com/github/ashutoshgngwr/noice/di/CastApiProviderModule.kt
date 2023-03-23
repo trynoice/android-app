@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.di
 import android.content.Context
 import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.provider.DummyCastApiProvider
+import com.github.ashutoshgngwr.noice.provider.RealCastApiProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,10 +18,9 @@ object CastApiProviderModule {
   @Provides
   @Singleton
   fun castApiProvider(@ApplicationContext context: Context): CastApiProvider {
-    // TODO: implement cast
-//    if (isGoogleMobileServiceAvailable(context)) {
-//      return RealCastApiProvider(context)
-//    }
+    if (isGoogleMobileServiceAvailable(context)) {
+      return RealCastApiProvider(context)
+    }
 
     return DummyCastApiProvider
   }

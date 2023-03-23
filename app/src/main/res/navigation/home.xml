@@ -56,6 +56,10 @@
       android:defaultValue="-1"
       app:argType="integer" />
 
+    <action
+      android:id="@id/preset_picker"
+      app:destination="@id/preset_picker" />
+
   </fragment>
 
   <fragment
@@ -69,5 +73,24 @@
     android:name="com.github.ashutoshgngwr.noice.fragment.RandomPresetFragment"
     android:label="@string/random_preset"
     tools:layout="@layout/random_preset_fragment" />
+
+  <dialog
+    android:id="@+id/preset_picker"
+    android:name="com.github.ashutoshgngwr.noice.fragment.PresetPickerFragment"
+    android:label="@string/select_preset"
+    tools:layout="@layout/preset_picker_fragment">
+
+    <argument
+      android:name="fragment_result_key"
+      app:argType="string"
+      app:nullable="false" />
+
+    <argument
+      android:name="selected_preset"
+      android:defaultValue="@null"
+      app:argType="com.github.ashutoshgngwr.noice.models.Preset"
+      app:nullable="true" />
+
+  </dialog>
 
 </navigation>

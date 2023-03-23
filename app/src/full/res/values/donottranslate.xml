@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="cast_app_id__debug" tools:ignore="UnusedResources">EB68E994</string>
-  <string name="cast_app_id__release" tools:ignore="UnusedResources">E421E43B</string>
-  <string name="cast_namespace__default">urn:x-cast:com.github.ashutoshgngwr.noice</string>
-</resources>

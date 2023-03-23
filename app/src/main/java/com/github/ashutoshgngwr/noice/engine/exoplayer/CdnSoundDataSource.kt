@@ -15,6 +15,7 @@ import okhttp3.internal.closeQuietly
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
+import kotlin.math.min
 
 /**
  * An ExoPlayer [DataSource] that fetches sound data from the [CDN][NoiceApiClient.cdn]. Although it
@@ -29,6 +30,8 @@ class CdnSoundDataSource private constructor(
   private var opened = false
   private var response: Response<ResponseBody>? = null
   private lateinit var dataSpec: DataSpec
+  private var bytesToRead = LENGTH_UNSET
+  private var bytesRead = 0
 
   override fun open(dataSpec: DataSpec): Long {
     // mostly copied from the okhttp data source from the okhttp extension for ExoPlayer.
@@ -65,7 +68,7 @@ class CdnSoundDataSource private constructor(
     }
 
     // Determine the length of the data to be read, after skipping.
-    val toRead = if (dataSpec.length != LENGTH_UNSET) {
+    bytesToRead = if (dataSpec.length != LENGTH_UNSET) {
       dataSpec.length
     } else {
       val contentLength = response?.body()?.contentLength() ?: -1L
@@ -94,7 +97,8 @@ class CdnSoundDataSource private constructor(
       )
     }
 
-    return toRead
+    bytesTransferred(skipped.toInt())
+    return bytesToRead
   }
 
   override fun read(buffer: ByteArray, offset: Int, length: Int): Int {
@@ -102,15 +106,25 @@ class CdnSoundDataSource private constructor(
       return 0
     }
 
+    val readLength = if (bytesToRead == LENGTH_UNSET) length else {
+      val bytesRemaining = (bytesToRead - bytesRead).toInt()
+      if (bytesRemaining == 0) {
+        return C.RESULT_END_OF_INPUT
+      }
+
+      min(length, bytesRemaining)
+    }
+
     try {
       val read = requireNotNull(response?.body())
         .byteStream()
-        .read(buffer, offset, length)
+        .read(buffer, offset, readLength)
 
       if (read == -1) {
         return C.RESULT_END_OF_INPUT
       }
 
+      bytesRead += read
       bytesTransferred(read)
       return read
     } catch (e: IOException) {

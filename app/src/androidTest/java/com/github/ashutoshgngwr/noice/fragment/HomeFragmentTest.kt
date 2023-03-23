@@ -10,9 +10,9 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.github.ashutoshgngwr.noice.EspressoX
 import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.engine.PlaybackController
-import com.github.ashutoshgngwr.noice.engine.PlaybackState
+import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
+import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -33,14 +33,14 @@ class HomeFragmentTest {
   val hiltRule = HiltAndroidRule(this)
 
   @BindValue
-  internal lateinit var playbackControllerMock: PlaybackController
+  internal lateinit var playbackServiceControllerMock: SoundPlaybackService.Controller
 
   @BindValue
   internal lateinit var settingsRepositoryMock: SettingsRepository
 
   @Before
   fun setUp() {
-    playbackControllerMock = mockk(relaxed = true)
+    playbackServiceControllerMock = mockk(relaxed = true)
     settingsRepositoryMock = mockk(relaxed = true)
   }
 
@@ -73,50 +73,50 @@ class HomeFragmentTest {
   @Test
   fun playbackController() {
     data class TestCase(
-      val playerManagerState: PlaybackState,
+      val playerManagerState: SoundPlayerManager.State,
       @IdRes val currentDestinationId: Int,
       val expectVisible: Boolean,
     )
 
     listOf(
       TestCase(
-        playerManagerState = PlaybackState.PLAYING,
+        playerManagerState = SoundPlayerManager.State.PLAYING,
         currentDestinationId = R.id.library,
         expectVisible = true,
       ),
       TestCase(
-        playerManagerState = PlaybackState.PLAYING,
+        playerManagerState = SoundPlayerManager.State.PLAYING,
         currentDestinationId = R.id.alarms,
         expectVisible = false,
       ),
       TestCase(
-        playerManagerState = PlaybackState.PLAYING,
+        playerManagerState = SoundPlayerManager.State.PLAYING,
         currentDestinationId = R.id.account,
         expectVisible = false,
       ),
       TestCase(
-        playerManagerState = PlaybackState.PAUSING,
+        playerManagerState = SoundPlayerManager.State.PAUSING,
         currentDestinationId = R.id.presets,
         expectVisible = true,
       ),
       TestCase(
-        playerManagerState = PlaybackState.PAUSED,
+        playerManagerState = SoundPlayerManager.State.PAUSED,
         currentDestinationId = R.id.sleep_timer,
         expectVisible = true,
       ),
       TestCase(
-        playerManagerState = PlaybackState.STOPPING,
+        playerManagerState = SoundPlayerManager.State.STOPPING,
         currentDestinationId = R.id.library,
         expectVisible = false,
       ),
       TestCase(
-        playerManagerState = PlaybackState.STOPPED,
+        playerManagerState = SoundPlayerManager.State.STOPPED,
         currentDestinationId = R.id.library,
         expectVisible = false,
       ),
     ).forEach { testCase ->
-      clearMocks(playbackControllerMock)
-      every { playbackControllerMock.getPlayerManagerState() } returns flowOf(testCase.playerManagerState)
+      clearMocks(playbackServiceControllerMock)
+      every { playbackServiceControllerMock.getState() } returns flowOf(testCase.playerManagerState)
 
       launchFragmentInHiltContainer<HomeFragment>().use {
         onView(withId(testCase.currentDestinationId))

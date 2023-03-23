@@ -9,15 +9,15 @@ import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.paging.cachedIn
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListUpdateCallback
 import androidx.room.withTransaction
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.data.AlarmDao
 import com.github.ashutoshgngwr.noice.data.AppDatabase
 import com.github.ashutoshgngwr.noice.data.models.AlarmDto
-import com.github.ashutoshgngwr.noice.fragment.AlarmComparator
-import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.models.Alarm
+import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.models.toRoomDto
 import io.mockk.clearMocks
 import io.mockk.coEvery
@@ -136,7 +136,7 @@ class AlarmRepositoryTest {
     assertNull(repository.get(1))
 
     val mockPreset = mockk<Preset>()
-    every { presetRepositoryMock.get(any()) } returns mockPreset
+    coEvery { presetRepositoryMock.get(any()) } returns mockPreset
     coEvery { alarmDaoMock.getById(1) } returns buildAlarmDto(
       id = 1,
       minuteOfDay = 120,
@@ -154,7 +154,7 @@ class AlarmRepositoryTest {
 
   @Test
   fun pagingDataFlow() = runTest {
-    val presets = listOf(Preset("preset-1", emptyArray()), Preset("preset-2", emptyArray()))
+    val presets = listOf(Preset("preset-1", sortedMapOf()), Preset("preset-2", sortedMapOf()))
     val input = listOf(
       buildAlarmDto(id = 1, minuteOfDay = 1, presetId = presets[0].id),
       buildAlarmDto(id = 2, minuteOfDay = 2, presetId = presets[1].id),
@@ -170,7 +170,10 @@ class AlarmRepositoryTest {
       )
     }
 
-    every { presetRepositoryMock.list() } returns presets
+    coEvery { presetRepositoryMock.get(any()) } answers {
+      presets.find { it.id == firstArg() }
+    }
+
     every { alarmDaoMock.pagingSource() } returns object : PagingSource<Int, AlarmDto>() {
       override fun getRefreshKey(state: PagingState<Int, AlarmDto>): Int = 0
       override suspend fun load(params: LoadParams<Int>): LoadResult<Int, AlarmDto> {
@@ -180,7 +183,15 @@ class AlarmRepositoryTest {
 
     val testDispatcher = StandardTestDispatcher(testScheduler)
     val differ = AsyncPagingDataDiffer(
-      diffCallback = AlarmComparator,
+      diffCallback = object : DiffUtil.ItemCallback<Alarm>() {
+        override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
+          return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
+          return oldItem == newItem
+        }
+      },
       updateCallback = object : ListUpdateCallback {
         override fun onChanged(position: Int, count: Int, payload: Any?) {}
         override fun onMoved(fromPosition: Int, toPosition: Int) {}

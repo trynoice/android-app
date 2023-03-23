@@ -20,12 +20,14 @@ import androidx.core.widget.TextViewCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.DialogFragmentBaseBinding
 import com.github.ashutoshgngwr.noice.databinding.DialogFragmentTextInputBinding
 import com.github.ashutoshgngwr.noice.widget.MarkdownTextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.slider.Slider
+import kotlinx.coroutines.launch
 
 
 /**
@@ -186,7 +188,7 @@ class DialogFragment : BottomSheetDialogFragment() {
     preFillValue: CharSequence = "",
     type: Int = InputType.TYPE_CLASS_TEXT,
     singleLine: Boolean = true,
-    validator: (String) -> Int = { 0 }
+    validator: suspend (String) -> Int = { 0 }
   ): InputTextGetter {
     val textInputBinding = DialogFragmentTextInputBinding
       .inflate(layoutInflater, baseBinding.content, false)
@@ -198,13 +200,15 @@ class DialogFragment : BottomSheetDialogFragment() {
     textInputBinding.editText.isSingleLine = singleLine
     textInputBinding.editText.setText(preFillValue)
     textInputBinding.editText.addTextChangedListener {
-      val errResID = validator(it.toString())
-      if (errResID == 0) {
-        baseBinding.positive.isEnabled = true
-        textInputBinding.textInputLayout.error = ""
-      } else {
-        baseBinding.positive.isEnabled = false
-        textInputBinding.textInputLayout.error = getString(errResID)
+      viewLifecycleOwner.lifecycleScope.launch {
+        val errResID = validator(it.toString())
+        if (errResID == 0) {
+          baseBinding.positive.isEnabled = true
+          textInputBinding.textInputLayout.error = ""
+        } else {
+          baseBinding.positive.isEnabled = false
+          textInputBinding.textInputLayout.error = getString(errResID)
+        }
       }
     }
 

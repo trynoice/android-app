@@ -4,6 +4,8 @@
 
     <activity android:name="com.github.ashutoshgngwr.noice.HiltTestActivity" />
 
+    <service android:name="com.github.ashutoshgngwr.noice.StubService" />
+
   </application>
 
 </manifest>

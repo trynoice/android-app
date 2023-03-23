@@ -70,8 +70,8 @@
     <string name="in_app_feedback__title">Submit a review</string>
     <string name="later">Later</string>
     <string name="never">Never</string>
-    <string name="notification_channel_default__description">Media playback controls</string>
-    <string name="notification_channel_default__name">Media Playback</string>
+    <string name="notification_channel_default__description">Sound playback controls</string>
+    <string name="notification_channel_default__name">Sound Playback</string>
     <string name="add_to_app_shortcuts">Add to app shortcuts</string>
     <string name="remove_from_app_shortcuts">Remove from app shortcuts</string>
     <string name="app_shortcut_removed">Preset has been removed from app shortcuts!</string>
@@ -263,7 +263,6 @@
     <string name="remove_sound_download_confirmation">Are you sure you want to delete the sound you downloaded for offline playback?</string>
     <string name="sound_scheduled_for_download">Adding %1$s to downloads for offline playback.</string>
     <string name="sound_download_scheduled_for_removal">Removing %1$s from your offline sounds.</string>
-    <string name="play_sound_before_adjusting_volume">Adjusting volume for this sound? You\'ll need to give it a listen first!</string>
     <string name="trial_period">Trial Period: %1$s</string>
     <plurals name="n_days">
         <item quantity="one">%1$d day</item>
@@ -307,7 +306,7 @@
     <string name="notification_channel_missed_alarms__description">Notifications shown on silencing scheduled alarms after the reminder duration has elapsed.</string>
     <string name="alarm_missed">Alarm missed</string>
     <string name="no_presets">No Presets</string>
-    <string name="master_volume">Master Volume</string>
+    <string name="main_volume">Main Volume</string>
     <string name="alarm_gradually_increase_volume">Gradually increase alarm volume</string>
     <string name="alarm_gradually_increase_volume_summary">Duration in minutes for gradually increasing the volume when an alarm fires</string>
     <string name="no_purchases">No Purchases</string>
@@ -325,4 +324,5 @@
     <string name="offline_playback_desc">Enjoy soothing sounds anytime, anywhere, with Noice\'s offline sound downloads - no internet connection is required.</string>
     <string name="unlimited_alarms">Unlimited Alarms</string>
     <string name="unlimited_alarms_desc">Elevate your morning routine with Noice Premium - schedule an unlimited number of alarms for a personalised and peaceful start to your day.</string>
+    <string name="search_preset">Search presets</string>
 </resources>

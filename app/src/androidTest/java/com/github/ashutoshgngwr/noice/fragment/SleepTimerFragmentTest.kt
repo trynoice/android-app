@@ -11,7 +11,7 @@ import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
 import com.github.ashutoshgngwr.noice.HiltFragmentScenario
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SleepTimerFragmentBinding
-import com.github.ashutoshgngwr.noice.engine.PlaybackController
+import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -33,21 +33,21 @@ class SleepTimerFragmentTest {
   private lateinit var fragmentScenario: HiltFragmentScenario<SleepTimerFragment>
 
   @BindValue
-  internal lateinit var mockPlaybackController: PlaybackController
+  internal lateinit var playbackServiceControllerMock: SoundPlaybackService.Controller
 
   @Before
   fun setup() {
-    mockPlaybackController = mockk(relaxed = true)
+    playbackServiceControllerMock = mockk(relaxed = true)
     fragmentScenario = launchFragmentInHiltContainer()
   }
 
   @Test
   fun testDurationPickerListener_onSleepPreScheduled() {
     val before = SystemClock.uptimeMillis()
-    every { mockPlaybackController.getStopScheduleRemainingMillis() } returns 60L * 1000
+    every { playbackServiceControllerMock.getStopScheduleRemainingMillis() } returns 60L * 1000
     onView(withId(R.id.duration_picker)).perform(EspressoX.addDurationToPicker(60))
     verify(exactly = 1) {
-      mockPlaybackController.scheduleStop(withArg {
+      playbackServiceControllerMock.scheduleStop(withArg {
         val delta = SystemClock.uptimeMillis() - before
         val duration = 120L * 1000
         assertTrue(it in (duration - delta)..(duration))
@@ -60,7 +60,7 @@ class SleepTimerFragmentTest {
     val before = SystemClock.uptimeMillis()
     onView(withId(R.id.duration_picker)).perform(EspressoX.addDurationToPicker(300))
     verify(exactly = 1) {
-      mockPlaybackController.scheduleStop(withArg {
+      playbackServiceControllerMock.scheduleStop(withArg {
         val delta = SystemClock.uptimeMillis() - before
         val duration = 300L * 1000
         assertTrue(it in (duration - delta)..(duration))
@@ -86,6 +86,6 @@ class SleepTimerFragmentTest {
       .perform(scrollTo(), click())
 
     onView(withText(R.string.auto_sleep_schedule_cancelled)).check(matches(isDisplayed()))
-    verify(exactly = 1) { mockPlaybackController.clearScheduledAutoStop() }
+    verify(exactly = 1) { playbackServiceControllerMock.clearStopSchedule() }
   }
 }

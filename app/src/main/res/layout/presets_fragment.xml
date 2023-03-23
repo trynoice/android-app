@@ -1,62 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
 
-  <data>
-
-    <variable
-      name="viewModel"
-      type="com.github.ashutoshgngwr.noice.fragment.PresetsViewModel" />
-
-  </data>
-
-  <FrameLayout
+  <LinearLayout
+    android:id="@+id/empty_list_indicator"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/root_layout_padding">
 
-    <LinearLayout
-      android:id="@+id/empty_list_indicator"
+    <TextView
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="wrap_content"
+      android:drawablePadding="12dp"
       android:gravity="center"
-      android:orientation="vertical"
-      android:padding="@dimen/root_layout_padding"
-      app:isVisible="@{viewModel.isEmptyIndicatorVisible}">
+      android:text="@string/no_presets"
+      android:textAppearance="?attr/textAppearanceHeadlineSmall"
+      android:textColor="?android:attr/textColorHint"
+      app:drawableTint="?android:attr/textColorHint"
+      app:drawableTopCompat="@drawable/ic_round_star_outline_72" />
 
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawablePadding="12dp"
-        android:gravity="center"
-        android:text="@string/no_presets"
-        android:textAppearance="?attr/textAppearanceHeadlineSmall"
-        android:textColor="?android:attr/textColorHint"
-        app:drawableTint="?android:attr/textColorHint"
-        app:drawableTopCompat="@drawable/ic_round_star_outline_72" />
+    <Space
+      android:layout_width="wrap_content"
+      android:layout_height="12dp" />
 
-      <Space
-        android:layout_width="wrap_content"
-        android:layout_height="12dp" />
-
-      <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/preset_info__description"
-        android:textAppearance="?attr/textAppearanceBodyMedium"
-        android:textColor="?android:attr/textColorHint" />
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/list"
+    <TextView
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:clipToPadding="false"
-      android:paddingBottom="76dp"
-      app:hasFixedSize="@{true}"
-      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:text="@string/preset_info__description"
+      android:textAppearance="?attr/textAppearanceBodyMedium"
+      android:textColor="?android:attr/textColorHint" />
 
-  </FrameLayout>
+  </LinearLayout>
 
-</layout>
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingBottom="76dp"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+</FrameLayout>

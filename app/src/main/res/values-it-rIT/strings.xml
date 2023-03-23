@@ -260,7 +260,6 @@
     <string name="sound_download_scheduled_for_removal">Rimozione di %1$s dai suoni offline.</string>
     <string name="remove_sound_download_confirmation">Sei sicuro di voler eliminare il suono scaricato per la riproduzione offline\?</string>
     <string name="sound_scheduled_for_download">Aggiunta di %1$s ai download per la riproduzione offline.</string>
-    <string name="play_sound_before_adjusting_volume">Regolare il volume per questo suono\? Avrete bisogno di dare un ascolto prima!</string>
     <string name="sound_is_premium">Passa a Noice Premium per accedere a questo suono..</string>
     <string name="trial_period">Periodo di Prova: %1$s</string>
     <plurals name="n_days">
@@ -305,7 +304,7 @@
     <string name="alarm_snooze_length_summary">Durata in minuti di snoozing delle sveglie</string>
     <string name="notification_channel_missed_alarms__name">Sveglie mancate</string>
     <string name="notification_channel_missed_alarms__description">Notifiche visualizzate quando si silenziano le sveglie programmate dopo la durata del promemoria.</string>
-    <string name="master_volume">Volume principale</string>
+    <string name="main_volume">Volume principale</string>
     <string name="alarm_gradually_increase_volume">Aumenta gradualmente il volume della sveglia</string>
     <string name="alarm_gradually_increase_volume_summary">Durata in minuti per aumentare gradualmente il volume quando la sveglia parte</string>
     <string name="no_purchases">Nessun acquisto</string>

@@ -69,7 +69,7 @@ android {
 
   kapt {
     arguments {
-      arg("room.schemaLocation", "$projectDir/build/generated/schemas")
+      arg("room.schemaLocation", "$projectDir/schemas")
     }
   }
 
@@ -119,16 +119,13 @@ project.afterEvaluate {
                  '**/Manifest*.*']
     )
 
-    def execFile = fileTree(project.buildDir).matching {
-      include "**/*/${testTask}.exec"
-    }
-
+    def execFile = "${project.buildDir}/outputs/unit_test_code_coverage/${variant.name}UnitTest/${testTask}.exec"
     tasks.create(name: taskName, type: JacocoReport, dependsOn: testTask) {
       group = 'Reporting'
       description = "Generate Jacoco coverage reports for the ${variant.name} build variant."
       sourceDirectories.setFrom(files(srcDirs))
       classDirectories.setFrom(classFiles)
-      executionData.setFrom(execFile)
+      executionData.setFrom(files(execFile))
 
       reports {
         xml.required = true
@@ -179,7 +176,6 @@ dependencies {
   implementation "androidx.room:room-ktx:$roomVersion"
   implementation "androidx.room:room-paging:$roomVersion"
   implementation "androidx.room:room-runtime:$roomVersion"
-
   implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
   implementation "androidx.work:work-runtime-ktx:$workManagerVersion"
   implementation 'com.caverock:androidsvg-aar:1.4'
@@ -209,12 +205,13 @@ dependencies {
   kaptTest "com.google.dagger:hilt-android-compiler:$deps.hiltVersion"
 
   testImplementation "androidx.test:core:$deps.testCoreVersion"
+  testImplementation "com.google.android.exoplayer:exoplayer-robolectricutils:$exoPlayerVersion"
+  testImplementation "com.google.android.exoplayer:exoplayer-testutils:$exoPlayerVersion"
   testImplementation "com.google.dagger:hilt-android-testing:$deps.hiltVersion"
   testImplementation "io.mockk:mockk-jvm:$mockkVersion"
   testImplementation "junit:junit:$deps.junitVersion"
   testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$deps.coroutinesVersion"
   testImplementation "org.robolectric:robolectric:$deps.robolectricVersion"
-  testImplementation 'org.skyscreamer:jsonassert:1.5.1'
 
 
   kaptAndroidTest "com.google.dagger:hilt-android-compiler:$deps.hiltVersion"

@@ -77,7 +77,6 @@
     </plurals>
     <string name="sound_is_premium">Actualiza a Noice Premium para acceder a este son.</string>
     <string name="alarms">Alarmas</string>
-    <string name="play_sound_before_adjusting_volume">Queres axustalo volume para este son\? Primeiro terás que escoitalo!</string>
     <string name="trial_period">Período de proba: %1$s</string>
     <string name="add_alarm">Engade unha alarma</string>
     <string name="no_alarms">Sen alarmas</string>
@@ -236,7 +235,7 @@
     <string name="alarm_ringer_max_duration">Duración do recordatorio</string>
     <string name="alarm_missed">Alarma perdida</string>
     <string name="no_presets">Sen predefinidas</string>
-    <string name="master_volume">Volume principal</string>
+    <string name="main_volume">Volume principal</string>
     <string name="alarm_gradually_increase_volume_summary">Duración en minutos para aumentar gradualmente o volume cando se dispara unha alarma</string>
     <string name="failed_to_read_file">Sentímolo, non puidemos ler o ficheiro seleccionado!</string>
     <string name="random_preset_description">O preaxuste terá sons baseados nas palabras clave que elixas, e o preaxuste intenso reproducirá máis sons xuntos.</string>

@@ -163,11 +163,11 @@
     </activity>
 
     <service
-      android:name=".engine.PlaybackService"
+      android:name=".service.SoundPlaybackService"
       android:foregroundServiceType="mediaPlayback" />
 
     <service
-      android:name=".engine.exoplayer.SoundDownloadService"
+      android:name=".service.SoundDownloadService"
       android:exported="false"
       android:foregroundServiceType="dataSync">
 

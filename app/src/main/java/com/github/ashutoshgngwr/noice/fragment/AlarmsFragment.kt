@@ -13,6 +13,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.core.view.postDelayed
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.clearFragmentResultListener
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,15 +31,15 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.AlarmItemBinding
 import com.github.ashutoshgngwr.noice.databinding.AlarmsFragmentBinding
+import com.github.ashutoshgngwr.noice.ext.getSerializableCompat
 import com.github.ashutoshgngwr.noice.ext.hasSelfPermission
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showTimePicker
 import com.github.ashutoshgngwr.noice.ext.startAppDetailsSettingsActivity
-import com.github.ashutoshgngwr.noice.model.Preset
 import com.github.ashutoshgngwr.noice.models.Alarm
+import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
-import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -56,7 +58,7 @@ import javax.inject.Inject
 private const val FREE_ALARM_COUNT = 2
 
 @AndroidEntryPoint
-class AlarmsFragment : Fragment(), AlarmItemViewController {
+class AlarmsFragment : Fragment(), AlarmViewHolder.ViewController {
 
   private lateinit var binding: AlarmsFragmentBinding
 
@@ -66,6 +68,10 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
   private val adapter: AlarmListAdapter by lazy { AlarmListAdapter(layoutInflater, this) }
   private val mainNavController: NavController by lazy {
     Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
+  }
+
+  private val homeNavController: NavController by lazy {
+    Navigation.findNavController(requireActivity(), R.id.home_nav_host_fragment)
   }
 
   private val requestPermissionsLauncher = registerForActivityResult(
@@ -79,7 +85,6 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    binding.lifecycleOwner = viewLifecycleOwner
     binding.addAlarmButton.setOnClickListener { startAddAlarmFlow() }
     (binding.list.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
     binding.list.adapter = adapter
@@ -88,9 +93,8 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
         loadStates.append.endOfPaginationReached && adapter.itemCount < 1
 
       if (!hasHandledFocusedAlarmArg) {
-        if (args.focusedAlarmId < 0) {
-          hasHandledFocusedAlarmArg = true
-        } else {
+        hasHandledFocusedAlarmArg = true
+        if (args.focusedAlarmId >= 0) {
           // items may take a while to load, so wait for the item with requested id to appear.
           adapter.snapshot()
             .items
@@ -99,7 +103,6 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
             ?.also { pos ->
               onAlarmItemExpanded(pos)
               binding.list.scrollToPosition(pos)
-              hasHandledFocusedAlarmArg = true
             }
         }
       }
@@ -238,28 +241,16 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
   }
 
   override fun onAlarmPresetClicked(alarm: Alarm) {
-    DialogFragment.show(childFragmentManager) {
-      title(R.string.select_preset)
-      singleChoiceItems(
-        items = mutableListOf(getString(R.string.random_preset))
-          .apply {
-            addAll(
-              viewModel.presets
-                .value
-                .map { it.name }
-            )
-          }.toTypedArray(),
-        currentChoice = 1 + viewModel.presets
-          .value
-          .indexOfFirst { it.id == alarm.preset?.id },
-        onItemSelected = { choice ->
-          val preset = if (choice == 0) null else viewModel.presets.value[choice - 1]
-          viewModel.save(alarm.copy(preset = preset))
-        },
-      )
-
-      negativeButton(R.string.cancel)
+    val resultKey = "PresetPickerResult.alarm-${alarm.id}"
+    clearFragmentResultListener(resultKey) // clear previous listener
+    setFragmentResultListener(resultKey) { _, result ->
+      result.getSerializableCompat(PresetPickerFragment.EXTRA_SELECTED_PRESET, Preset::class)
+        .also { viewModel.save(alarm.copy(preset = it)) }
     }
+
+    PresetPickerFragmentArgs(fragmentResultKey = resultKey, selectedPreset = alarm.preset)
+      .toBundle()
+      .also { homeNavController.navigate(R.id.preset_picker, it) }
   }
 
   override fun onAlarmVibrationToggled(alarm: Alarm, vibrate: Boolean) {
@@ -281,15 +272,11 @@ class AlarmsFragment : Fragment(), AlarmItemViewController {
 @HiltViewModel
 class AlarmsViewModel @Inject constructor(
   private val alarmRepository: AlarmRepository,
-  presetRepository: PresetRepository,
   subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 
   internal val alarmsPagingData: Flow<PagingData<Alarm>> = alarmRepository.pagingDataFlow()
     .cachedIn(viewModelScope)
-
-  internal val presets: StateFlow<List<Preset>> = presetRepository.listFlow()
-    .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
   internal val isSubscribed: StateFlow<Boolean> = subscriptionRepository.isSubscribed()
     .stateIn(viewModelScope, SharingStarted.Eagerly, true)
@@ -338,14 +325,14 @@ class AlarmsViewModel @Inject constructor(
 
 class AlarmListAdapter(
   private val layoutInflater: LayoutInflater,
-  private val itemViewController: AlarmItemViewController,
-) : PagingDataAdapter<Alarm, AlarmViewHolder>(AlarmComparator) {
+  private val viewController: AlarmViewHolder.ViewController,
+) : PagingDataAdapter<Alarm, AlarmViewHolder>(diffCallback) {
 
   var expandedPosition = 0; private set
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
     val binding = AlarmItemBinding.inflate(layoutInflater, parent, false)
-    return AlarmViewHolder(binding, itemViewController)
+    return AlarmViewHolder(binding, viewController)
   }
 
   override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {
@@ -361,11 +348,23 @@ class AlarmListAdapter(
       if (position > -1) notifyItemChanged(position)
     }
   }
+
+  companion object {
+    private val diffCallback = object : DiffUtil.ItemCallback<Alarm>() {
+      override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
+        return oldItem.id == newItem.id
+      }
+
+      override fun areContentsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
+        return oldItem == newItem
+      }
+    }
+  }
 }
 
 class AlarmViewHolder(
   private val binding: AlarmItemBinding,
-  private val controller: AlarmItemViewController,
+  private val controller: ViewController,
 ) : ViewHolder(binding.root) {
 
   private lateinit var alarm: Alarm
@@ -500,27 +499,17 @@ class AlarmViewHolder(
     binding.preset.text = alarm.preset?.name ?: context.getString(R.string.random_preset)
     binding.vibrate.isChecked = alarm.vibrate
   }
-}
 
-object AlarmComparator : DiffUtil.ItemCallback<Alarm>() {
 
-  override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
-    return oldItem.id == newItem.id
+  interface ViewController {
+    fun onAlarmItemCollapsed(bindingAdapterPosition: Int)
+    fun onAlarmItemExpanded(bindingAdapterPosition: Int)
+    fun onAlarmLabelClicked(alarm: Alarm)
+    fun onAlarmTimeClicked(alarm: Alarm)
+    fun onAlarmToggled(alarm: Alarm, enabled: Boolean)
+    fun onAlarmWeeklyScheduleChanged(alarm: Alarm, newWeeklySchedule: Int)
+    fun onAlarmPresetClicked(alarm: Alarm)
+    fun onAlarmVibrationToggled(alarm: Alarm, vibrate: Boolean)
+    fun onAlarmDeleteClicked(alarm: Alarm)
   }
-
-  override fun areContentsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
-    return oldItem == newItem
-  }
-}
-
-interface AlarmItemViewController {
-  fun onAlarmItemCollapsed(bindingAdapterPosition: Int)
-  fun onAlarmItemExpanded(bindingAdapterPosition: Int)
-  fun onAlarmLabelClicked(alarm: Alarm)
-  fun onAlarmTimeClicked(alarm: Alarm)
-  fun onAlarmToggled(alarm: Alarm, enabled: Boolean)
-  fun onAlarmWeeklyScheduleChanged(alarm: Alarm, newWeeklySchedule: Int)
-  fun onAlarmPresetClicked(alarm: Alarm)
-  fun onAlarmVibrationToggled(alarm: Alarm, vibrate: Boolean)
-  fun onAlarmDeleteClicked(alarm: Alarm)
 }

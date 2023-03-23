@@ -16,9 +16,6 @@
 # Application classes that will be serialized/deserialized over Gson
 -keep class com.github.ashutoshgngwr.noice.models.** { <fields>; }
 
-# TODO: remove this post migration to models directory.
--keep class com.github.ashutoshgngwr.noice.model.** { <fields>; }
-
 # Prevent proguard from stripping interface information from TypeAdapter, TypeAdapterFactory,
 # JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
 -keep class * extends com.google.gson.TypeAdapter
