@@ -52,8 +52,8 @@
     <string name="support_development__share">दोस्तों के साथ शेयर करें</string>
     <string name="support_development__share_description">आपका समर्थन दान पर ही नहीं रुकना चाहिए । आप अपने दोस्तों को नॉइस के बारे में बताकर भी हमारी मदद कर सकते हैं। हमारे पास जितने अधिक उपयोगकर्ता होंगे, हमें उतनी ही अधिक प्रतिक्रिया प्राप्त होगी और हम अपनी सेवा को सभी के लिए बेहतर बना सकेंगे।</string>
     <string name="cast_media">क्रोमकास्ट से कनेक्ट करें</string>
-    <string name="notification_channel_default__description">मीडिया प्लेबैक नियंत्रण</string>
-    <string name="notification_channel_default__name">मीडिया प्लेबैक</string>
+    <string name="notification_channel_default__description">ध्वनि प्लेबैक नियंत्रण</string>
+    <string name="notification_channel_default__name">ध्वनि प्लेबैक</string>
     <string name="pinned_shortcuts_not_supported">क्षमा करें, ऐसा लगता है कि आपका होम स्क्रीन ऐप शॉर्टकट का समर्थन नहीं करता।</string>
     <string name="never">कभी नहीं</string>
     <string name="later">बाद में</string>
@@ -302,7 +302,7 @@
     <string name="alarm_snooze_length">स्नूज़ लंबाई</string>
     <string name="notification_channel_missed_alarms__description">रिमाइंडर की अवधि बीत जाने के बाद शेड्यूल किए गए अलार्म को बंद करने पर दिखाई जाने वाली सूचनाएं।</string>
     <string name="no_presets">कोई प्रीसेट नहीं</string>
-    <string name="main_volume">मास्टर वॉल्यूम</string>
+    <string name="main_volume">मुख्य वॉल्यूम</string>
     <string name="alarm_gradually_increase_volume">अलार्म की मात्रा धीरे-धीरे बढ़े</string>
     <string name="alarm_gradually_increase_volume_summary">अलार्म बजने पर वॉल्यूम धीरे-धीरे बढ़ाने के लिए मिनटों में अवधि</string>
     <string name="no_purchases">कोई खरीद नहीं</string>
@@ -320,4 +320,5 @@
     <string name="more_sounds_desc">नाइस प्रीमियम के साथ अपने विश्राम और ध्यान केंद्रित करने के अनुभव की पूरी क्षमता को उजागर करें - %1$s अतिरिक्त ध्वनियों के साथ।</string>
     <string name="hd_audio_desc">320 केबीपीएस तक अपनी ध्वनि की गुणवत्ता को समायोजित करने की क्षमता के साथ पहले से अलग शोर का अनुभव करें, जिसके परिणामस्वरूप क्रिस्टल-स्पष्ट, उच्च-निष्ठा ध्वनि होती है।</string>
     <string name="offline_playback_desc">ऑफ़लाइन प्लेबैक किसी भी समय, कहीं भी सुखदायक ध्वनियों का आनंद लें, नोइस के ऑफ़लाइन ध्वनि डाउनलोड के साथ - कोई इंटरनेट कनेक्शन की आवश्यकता नहीं है।</string>
+    <string name="search_preset">प्रीसेट खोजें</string>
 </resources>
