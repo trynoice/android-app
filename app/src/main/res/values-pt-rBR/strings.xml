@@ -15,7 +15,7 @@
     <string name="pause">Pausar</string>
     <string name="preset_already_exists">Já existe uma predefinição com o nome fornecido. Tente outro!</string>
     <string name="preset_name_cannot_be_empty">O nome da predefinição está em falta. Por favor, insira um nome único!</string>
-    <string name="preset_saved">Predefinição salva!</string>
+    <string name="preset_saved">Incrível! Sua predefinição foi salva.</string>
     <string name="save">Salvar</string>
     <string name="save_preset">Salvar predefinição</string>
     <string name="play">Tocar</string>
@@ -66,10 +66,8 @@
   </string>
     <string name="appintro__timer_title">Problemas para adormecer ou acordar?</string>
     <string name="support_development__donate">Doar</string>
-    <string name="support_development__donate_google_play_description">Seu pagamento será administrado com segurança pelo Google Play. Dependendo de sua localização, impostos adicionais _podem_ ser adicionados ao valor final.</string>
-    <string name="support_development__donate_thank_you_description">
-    Agradecemos de todo o coração por sua generosa contribuição para o projeto Noice.
-  </string>
+    <string name="support_development__donate_google_play_description">Seu pagamento será processado com segurança pelo Google Play. Note que dependendo de sua localização, impostos adicionais _podem_ ser adicionados ao valor final.</string>
+    <string name="support_development__donate_thank_you_description">Sua generosa contribuição para o projeto Noice é muito apreciada e nos ajudará a continuar melhorando o aplicativo para você.</string>
     <string name="support_development__share">Compartilhe com amigos</string>
     <string name="support_development__share_description">Você também pode nos ajudar contando a seus amigos sobre nós. Mais usuários nos fornecerão feedback de várias perspectivas diferentes e nos ajudarão a melhorar nossos serviços.</string>
     <string name="cast_media">Conectar ao Chromecast</string>
@@ -123,7 +121,7 @@
     <string name="sound_fade_in_duration_summary">Duração de tempo para sons com fade-in (em segundos)</string>
     <string name="sound_fade_in_duration">Duração do fade-in sonoro</string>
     <string name="appearance">Aparência</string>
-    <string name="presets_as_home_screen">\"Predefinições\" como tela inicial</string>
+    <string name="presets_as_home_screen">Predefinições como tela inicial</string>
     <string name="settings">Configurações</string>
     <string name="app_shortcut_creation_failed">Não foi possível adicionar a predefinição aos atalhos da aplicação!</string>
     <string name="app_shortcut_created">A predefinição foi adicionada aos atalhos da aplicação!</string>
