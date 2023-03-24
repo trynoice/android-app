@@ -241,7 +241,7 @@ class SoundPlayerManagerTest {
   }
 
   @Test
-  fun stop() {
+  fun stop_resume() {
     manager.playSound("test-sound-id-1")
     manager.playSound("test-sound-id-2")
     fakeSoundPlayerFactory.builtInstances.values.forEach { it.setStateTo(SoundPlayer.State.PLAYING) }
@@ -257,6 +257,21 @@ class SoundPlayerManagerTest {
     manager.playSound("test-sound-id-1")
     manager.playSound("test-sound-id-2")
     fakeSoundPlayerFactory.builtInstances.values.forEach { it.setStateTo(SoundPlayer.State.PLAYING) }
+
+    manager.stop(false)
+    verify(exactly = 1) {
+      listenerMock.onSoundPlayerManagerStateChange(SoundPlayerManager.State.STOPPING)
+      listenerMock.onSoundStateChange("test-sound-id-1", SoundPlayer.State.STOPPING)
+      listenerMock.onSoundStateChange("test-sound-id-2", SoundPlayer.State.STOPPING)
+    }
+
+    clearMocks(listenerMock)
+    manager.resume()
+    verify(exactly = 1) {
+      listenerMock.onSoundPlayerManagerStateChange(SoundPlayerManager.State.PLAYING)
+      listenerMock.onSoundStateChange("test-sound-id-1", SoundPlayer.State.BUFFERING)
+      listenerMock.onSoundStateChange("test-sound-id-2", SoundPlayer.State.BUFFERING)
+    }
 
     manager.stop(false)
     verify(exactly = 1) {
@@ -332,6 +347,40 @@ class SoundPlayerManagerTest {
       listenerMock.onSoundStateChange("test-sound-id-1", SoundPlayer.State.BUFFERING)
       listenerMock.onSoundStateChange("test-sound-id-2", SoundPlayer.State.BUFFERING)
     }
+  }
+
+  @Test
+  fun stopSound_pause() {
+    manager.playSound("test-sound-id-1")
+    manager.playSound("test-sound-id-2")
+    manager.stopSound("test-sound-id-2")
+
+    val soundPlayer1 = fakeSoundPlayerFactory.builtInstances.getValue("test-sound-id-1")
+    val soundPlayer2 = fakeSoundPlayerFactory.builtInstances.getValue("test-sound-id-2")
+    assertEquals(SoundPlayer.State.BUFFERING, soundPlayer1.state)
+    assertEquals(SoundPlayer.State.STOPPING, soundPlayer2.state)
+
+    manager.pause(false)
+    assertEquals(SoundPlayer.State.PAUSING, soundPlayer1.state)
+    assertEquals(SoundPlayer.State.STOPPING, soundPlayer2.state)
+  }
+
+  @Test
+  fun stop_pause() {
+    manager.playSound("test-sound-id-1")
+    manager.playSound("test-sound-id-2")
+    manager.stop(false)
+
+    val soundPlayer1 = fakeSoundPlayerFactory.builtInstances.getValue("test-sound-id-1")
+    val soundPlayer2 = fakeSoundPlayerFactory.builtInstances.getValue("test-sound-id-2")
+    assertEquals(SoundPlayerManager.State.STOPPING, manager.state)
+    assertEquals(SoundPlayer.State.STOPPING, soundPlayer1.state)
+    assertEquals(SoundPlayer.State.STOPPING, soundPlayer2.state)
+
+    manager.pause(false)
+    assertEquals(SoundPlayerManager.State.PAUSING, manager.state)
+    assertEquals(SoundPlayer.State.PAUSING, soundPlayer1.state)
+    assertEquals(SoundPlayer.State.PAUSING, soundPlayer2.state)
   }
 
   @Test

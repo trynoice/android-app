@@ -12,7 +12,7 @@ import kotlin.time.Duration
  * [SoundPlayerManager] is responsible for managing the state and lifecycle of [SoundPlayer]
  * instances for each and every sound. The class provides methods to set fade-in and fade-out
  * durations, enable/disable premium segments, set the audio bitrate, and adjust the volumes of all
- * sound players. It also provides methods to play, stop and set volumes individual sounds, play
+ * sound players. It also provides methods to play, stop and set volumes of individual sounds, play
  * presets, and pause, resume and stop all sounds.
  *
  * [SoundPlayerManager.State] enum represents playback states of the sound player manager. The
@@ -206,7 +206,7 @@ class SoundPlayerManager(
   }
 
   /**
-   * Stops all sounds immediately or with a fade-out effect
+   * Stops all sounds immediately or with a fade-out effect.
    *
    * @param immediate whether the stop should be immediate or if the sounds should perform a
    * fade-out effect before stopping.
@@ -217,14 +217,21 @@ class SoundPlayerManager(
   }
 
   /**
-   * Pauses all sounds immediately or with a fade-out effect
+   * Pauses all sounds immediately or with a fade-out effect.
    *
    * @param immediate whether the pause should be immediate or if the sounds should perform a
    * fade-out effect before pausing.
    */
   fun pause(immediate: Boolean) {
     shouldResumeOnFocusGain = false
-    soundPlayers.values.forEach { it.pause(immediate) }
+    val isManagerStopping = this.state == State.STOPPING
+    soundPlayers.values.forEach { player ->
+      // If all sounds are stopping, we should transition to pausing state. If only some sounds are
+      // stopping, we should exempt them from pausing.
+      if (player.state != SoundPlayer.State.STOPPING || isManagerStopping) {
+        player.pause(immediate)
+      }
+    }
   }
 
   /**
