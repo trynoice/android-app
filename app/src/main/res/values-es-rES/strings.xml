@@ -52,8 +52,8 @@
     <string name="support_development__share">Compartir con amigos</string>
     <string name="support_development__share_description">Tu apoyo no tiene por qué limitarse a un donativo. También puedes ayudarnos haciendo correr la voz sobre Noice entre tus amigos. Cuantos más usuarios tengamos, más comentarios recibiremos y mejor podremos mejorar nuestro servicio para todos.</string>
     <string name="cast_media">Conectar a Chromecast</string>
-    <string name="notification_channel_default__description">Controles de reproducción de medios</string>
-    <string name="notification_channel_default__name">Reproducción de medios</string>
+    <string name="notification_channel_default__description">Controles de reproducción del sonido</string>
+    <string name="notification_channel_default__name">Reproducción del sonido</string>
     <string name="submit_feedback">Enviar comentarios</string>
     <string name="intensity">Intensidad</string>
     <string name="random_preset">Preajuste aleatorio</string>
@@ -304,7 +304,7 @@
     <string name="alarm_ringer_max_duration">Duración de los recordatorios</string>
     <string name="alarm_missed">Alarma perdida</string>
     <string name="no_presets">Sin ajustes preestablecidos</string>
-    <string name="main_volume">Volumen principal</string>
+    <string name="main_volume">Volumen Principal</string>
     <string name="alarm_gradually_increase_volume">Aumentar gradualmente el volumen de la alarma</string>
     <string name="alarm_gradually_increase_volume_summary">Duración en minutos para aumentar gradualmente el volumen cuando se dispara una alarma</string>
     <string name="no_purchases">Sin compras</string>
@@ -322,4 +322,5 @@
     <string name="unlimited_alarms_desc">Eleva tu rutina matutina con Noice Premium: programa un número ilimitado de alarmas para empezar el día de forma personalizada y tranquila.</string>
     <string name="natural_variations_desc">Dé vida a sus paisajes sonoros con variaciones de sonido reales y naturales generadas a la carta con nuestra tecnología de sonido de vanguardia.</string>
     <string name="offline_playback_desc">Disfruta de sonidos relajantes en cualquier momento y lugar con las descargas de sonidos sin conexión de Noice, sin necesidad de conexión a Internet.</string>
+    <string name="search_preset">Buscar ajustes preestablecidos</string>
 </resources>
