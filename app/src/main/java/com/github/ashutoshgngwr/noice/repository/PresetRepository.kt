@@ -467,12 +467,12 @@ class PresetRepository @Inject constructor(
       typeOfT: Type?,
       context: JsonDeserializationContext
     ): PresetsExport {
-      return when (json.asJsonObject?.get("version")?.asString) {
+      return when (val version = json.asJsonObject?.get("version")?.asString) {
         PresetsExportV1.VERSION_STRING -> context.deserialize(json, PresetsExportV1::class.java)
         PRESETS_V0_KEY,
         PRESETS_V1_KEY,
         PRESETS_V2_KEY -> context.deserialize(json, PresetsExportV0::class.java)
-        else -> throw JsonParseException("preset export version is either null or not recognised")
+        else -> throw JsonParseException("unknown preset export version: $version")
       }
     }
   }

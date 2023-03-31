@@ -195,7 +195,7 @@ dependencies {
 
   fullImplementation 'com.android.billingclient:billing-ktx:5.1.0'
   fullImplementation 'com.google.android.gms:play-services-base:18.2.0'
-  fullImplementation 'com.google.android.gms:play-services-cast-framework:21.2.0'
+  fullImplementation 'com.google.android.gms:play-services-cast-framework:21.3.0'
   fullImplementation 'com.google.android.play:core:1.10.3'
   fullImplementation platform('com.google.firebase:firebase-bom:29.1.0')
   fullImplementation 'com.google.firebase:firebase-analytics-ktx'
