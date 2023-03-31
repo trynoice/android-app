@@ -15,6 +15,9 @@ import com.github.ashutoshgngwr.noice.cast.CastSoundPlayer
 import com.github.ashutoshgngwr.noice.cast.CastUiManager
 import com.github.ashutoshgngwr.noice.cast.CastVolumeProvider
 import com.github.ashutoshgngwr.noice.cast.DefaultCastUiManager
+import com.github.ashutoshgngwr.noice.cast.Event
+import com.github.ashutoshgngwr.noice.cast.GetAccessTokenEvent
+import com.github.ashutoshgngwr.noice.cast.GetAccessTokenResponseEvent
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
@@ -29,12 +32,14 @@ import java.util.concurrent.Executors
  */
 class RealCastApiProvider(
   context: Context,
+  private val accessTokenGetter: AccessTokenGetter,
   private val gson: Gson,
-) : CastApiProvider, SessionManagerListener<CastSession> {
+) : CastApiProvider, CastMessagingChannel.EventListener, SessionManagerListener<CastSession> {
 
   private val handler = Handler(Looper.getMainLooper())
   private val sessionListeners = mutableSetOf<CastApiProvider.SessionListener>()
   private var castContext: CastContext? = null
+  private var authMessagingChannel: CastMessagingChannel? = null
 
   init {
     CastContext.getSharedInstance(context, Executors.newSingleThreadExecutor())
@@ -95,19 +100,39 @@ class RealCastApiProvider(
     }
   }
 
-  override fun onSessionStarted(session: CastSession, sessionId: String) {
-    sessionListeners.forEach { listener ->
-      handler.post { listener.onCastSessionBegin() }
+  override fun onEventReceived(event: Event) {
+    if (event !is GetAccessTokenEvent) {
+      return
     }
+
+    accessTokenGetter.get { authMessagingChannel?.send(GetAccessTokenResponseEvent(it)) }
+  }
+
+  override fun onSessionStarted(session: CastSession, sessionId: String) {
+    onSessionStarted()
   }
 
   override fun onSessionResumed(session: CastSession, wasSuspended: Boolean) {
+    onSessionStarted()
+  }
+
+  private fun onSessionStarted() {
+    authMessagingChannel = CastMessagingChannel(
+      castContext = requireNotNull(castContext),
+      namespace = "urn:x-cast:com.github.ashutoshgngwr.noice:auth",
+      gson = gson,
+      handler = handler,
+    )
+
+    authMessagingChannel?.addEventListener(this)
     sessionListeners.forEach { listener ->
       handler.post { listener.onCastSessionBegin() }
     }
   }
 
   override fun onSessionEnded(session: CastSession, error: Int) {
+    authMessagingChannel?.removeEventListener(this)
+    authMessagingChannel = null
     sessionListeners.forEach { listener ->
       handler.post { listener.onCastSessionEnd() }
     }
@@ -122,5 +147,9 @@ class RealCastApiProvider(
 
   companion object {
     private const val LOG_TAG = "RealCastApiProvider"
+  }
+
+  fun interface AccessTokenGetter {
+    fun get(callback: (token: String?) -> Unit)
   }
 }

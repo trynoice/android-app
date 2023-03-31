@@ -158,6 +158,16 @@ class NoiceApiClient(
     signedInState.emit(false)
   }
 
+  /**
+   * @return an access token if the user is currently signed in, `null` otherwise.
+   */
+  suspend fun getAccessToken(): String? {
+    // always return a fresh access token since we can't be sure if existing access token hasn't
+    // expired yet.
+    refreshCredentials()
+    return credentialRepository.getAccessToken()
+  }
+
   private suspend fun refreshCredentials() {
     val oldRefreshToken = credentialRepository.getRefreshToken() ?: return
     refreshCredentialsMutex.withLock {
