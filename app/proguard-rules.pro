@@ -13,8 +13,11 @@
 -dontwarn sun.misc.**
 #-keep class com.google.gson.stream.** { *; }
 
-# Application classes that will be serialized/deserialized over Gson
+# Application classes that will be serialized/deserialized with Gson.
 -keep class com.github.ashutoshgngwr.noice.models.** { <fields>; }
+
+# Cast models that are serialized/deserialized with Gson for network communication.
+-keep class com.github.ashutoshgngwr.noice.cast.models.** { <fields>; }
 
 # Prevent proguard from stripping interface information from TypeAdapter, TypeAdapterFactory,
 # JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)

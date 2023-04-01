@@ -1,6 +1,7 @@
 package com.github.ashutoshgngwr.noice.cast
 
 import android.os.Handler
+import com.github.ashutoshgngwr.noice.cast.models.Event
 import com.google.android.gms.cast.Cast.MessageReceivedCallback
 import com.google.android.gms.cast.CastDevice
 import com.google.android.gms.cast.framework.CastContext

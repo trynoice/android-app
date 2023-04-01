@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.cast
+package com.github.ashutoshgngwr.noice.cast.models
 
 abstract class Event {
   abstract val kind: String

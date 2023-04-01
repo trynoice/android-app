@@ -1,5 +1,8 @@
 package com.github.ashutoshgngwr.noice.cast
 
+import com.github.ashutoshgngwr.noice.cast.models.Event
+import com.github.ashutoshgngwr.noice.cast.models.GetAccessTokenEvent
+import com.github.ashutoshgngwr.noice.cast.models.SoundStateChangedEvent
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement

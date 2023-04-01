@@ -25,6 +25,6 @@ class CastOptionsProvider : OptionsProvider {
   override fun getAdditionalSessionProviders(context: Context): MutableList<SessionProvider>? = null
 
   companion object {
-    private val RECEIVER_APP_ID = if (BuildConfig.DEBUG) "E9762721" else "" // TODO:
+    private val RECEIVER_APP_ID = if (BuildConfig.DEBUG) "E9762721" else "41C8B649"
   }
 }
