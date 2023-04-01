@@ -21,6 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.media.AudioAttributesCompat
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.activity.MainActivity
+import com.github.ashutoshgngwr.noice.cast.CastUiManager
 import com.github.ashutoshgngwr.noice.engine.AudioFocusManager
 import com.github.ashutoshgngwr.noice.engine.DefaultMediaPlayer
 import com.github.ashutoshgngwr.noice.engine.LocalSoundPlayer
@@ -80,6 +81,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
   @set:Inject
   internal lateinit var castApiProvider: CastApiProvider
 
+  private var castUiManager: CastUiManager? = null
   private val handler = Handler(Looper.getMainLooper())
   private val soundPlayerStates = mutableMapOf<String, SoundPlayer.State>()
   private val soundPlayerVolumes = mutableMapOf<String, Float>()
@@ -186,6 +188,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
       currentPresetFlow.collect { preset ->
         notificationManager.setCurrentPresetName(preset?.name)
         mediaSession.setCurrentPresetName(preset?.name)
+        castUiManager?.setPresetName(preset?.name)
       }
     }
 
@@ -332,12 +335,18 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
 
   override fun onCastSessionBegin() {
     Log.d(LOG_TAG, "onCastSessionBegin: switching playback to remote")
+    castUiManager = castApiProvider.getUiManager()
+    // only need to set the preset name here as changing the sound player factory will refresh the
+    // other ui state implicitly.
+    castUiManager?.setPresetName(currentPresetFlow.value?.name)
+
     mediaSession.setPlaybackToRemote(castApiProvider.getVolumeProvider())
-    soundPlayerManager.setSoundPlayerFactory(castApiProvider.buildPlayerFactory(this))
+    soundPlayerManager.setSoundPlayerFactory(castApiProvider.getSoundPlayerFactory())
   }
 
   override fun onCastSessionEnd() {
     Log.i(LOG_TAG, "onCastSessionEnd: switching playback to local")
+    castUiManager = null
     mediaSession.setPlaybackToLocal()
     soundPlayerManager.setSoundPlayerFactory(localSoundPlayerFactory)
   }
@@ -346,6 +355,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
     soundPlayerManagerStateFlow.value = state
     mediaSession.setState(state)
     notificationManager.setState(state)
+    castUiManager?.setSoundPlayerManagerState(state, soundPlayerManagerVolumeFlow.value)
     if (state == SoundPlayerManager.State.PAUSED) {
       handler.postDelayed(10.minutes.inWholeMilliseconds, IDLE_TIMEOUT_CALLBACK_TOKEN) {
         soundPlayerManager.stop(true)
@@ -365,17 +375,25 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
 
   override fun onSoundPlayerManagerVolumeChange(volume: Float) {
     soundPlayerManagerVolumeFlow.value = volume
+    castUiManager?.setSoundPlayerManagerState(soundPlayerManagerStateFlow.value, volume)
   }
 
   override fun onSoundStateChange(soundId: String, state: SoundPlayer.State) {
     soundPlayerStates[soundId] = state
     soundPlayerStatesFlow.value = soundPlayerStates.toMap()
+    castUiManager?.setSoundPlayerState(soundId, state, soundPlayerVolumes[soundId] ?: 1F)
     onCurrentPresetChange()
   }
 
   override fun onSoundVolumeChange(soundId: String, volume: Float) {
     soundPlayerVolumes[soundId] = volume
     soundPlayerVolumesFlow.value = soundPlayerVolumes.toMap()
+    castUiManager?.setSoundPlayerState(
+      soundId,
+      soundPlayerStates[soundId] ?: SoundPlayer.State.STOPPED,
+      volume,
+    )
+
     onCurrentPresetChange()
   }
 

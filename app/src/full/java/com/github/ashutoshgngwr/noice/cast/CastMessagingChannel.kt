@@ -1,62 +1,68 @@
 package com.github.ashutoshgngwr.noice.cast
 
+import android.os.Handler
+import com.github.ashutoshgngwr.noice.cast.models.Event
 import com.google.android.gms.cast.Cast.MessageReceivedCallback
 import com.google.android.gms.cast.CastDevice
 import com.google.android.gms.cast.framework.CastContext
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 /**
  * A bi-directional messaging channel for the connected device on the current session in the given
- * [castContext]. Both [OutgoingMessage]s and [IncomingMessage]s are sent and received as JSON
- * strings. The channel internally encodes/decodes these messages using the given [Gson] instance.
+ * [castContext].
  */
-class CastMessagingChannel<OutgoingMessage : Any, IncomingMessage : Any>(
+class CastMessagingChannel(
   private val castContext: CastContext,
   private val namespace: String,
-  private val gson: Gson,
+  gson: Gson,
+  private val handler: Handler,
 ) : MessageReceivedCallback {
 
-  private val messageListeners = mutableSetOf<MessageListener<IncomingMessage>>()
-  private val incomingMessageType = object : TypeToken<IncomingMessage>() {}.type
+  private val gson = gson.newBuilder()
+    .registerTypeAdapter(Event::class.java, EventDeserializer())
+    .create()
+
+  private val eventListeners = mutableSetOf<EventListener>()
 
   /**
    * Sends an outgoing message.
    */
-  fun send(message: OutgoingMessage) {
-    castContext.sessionManager.currentCastSession?.sendMessage(namespace, gson.toJson(message))
+  fun send(event: Event) {
+    castContext.sessionManager.currentCastSession?.sendMessage(namespace, gson.toJson(event))
   }
 
   /**
    * Adds a listener to receive messages.
    */
-  fun addListener(listener: MessageListener<IncomingMessage>) {
-    if (messageListeners.isEmpty()) {
+  fun addEventListener(listener: EventListener) {
+    if (eventListeners.isEmpty()) {
       castContext.sessionManager.currentCastSession?.setMessageReceivedCallbacks(namespace, this)
     }
 
-    messageListeners.add(listener)
+    eventListeners.add(listener)
   }
 
   /**
-   * Removes a listener registered using [addListener].
+   * Removes a previously registered [EventListener].
    */
-  fun removeListener(listener: MessageListener<IncomingMessage>) {
-    messageListeners.remove(listener)
-    if (messageListeners.isEmpty()) {
+  fun removeEventListener(listener: EventListener) {
+    eventListeners.remove(listener)
+    if (eventListeners.isEmpty()) {
       castContext.sessionManager.currentCastSession?.removeMessageReceivedCallbacks(namespace)
     }
   }
 
   override fun onMessageReceived(device: CastDevice, namespace: String, message: String) {
-    val m = gson.fromJson<IncomingMessage>(message, incomingMessageType)
-    messageListeners.forEach { it.onMessageReceived(m) }
+    val event = gson.fromJson(message, Event::class.java)
+    eventListeners.forEach { listener ->
+      handler.post { listener.onEventReceived(event) }
+    }
   }
 
   /**
-   * A listener interface to receive messages from a [CastMessagingChannel].
+   * A listener interface to receive events from a [CastMessagingChannel].
    */
-  interface MessageListener<T : Any> {
-    fun onMessageReceived(message: T)
+  interface EventListener {
+    fun onEventReceived(event: Event)
   }
 }

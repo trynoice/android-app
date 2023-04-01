@@ -4,12 +4,13 @@ import android.content.Context
 import android.view.Menu
 import androidx.annotation.StringRes
 import androidx.media.VolumeProviderCompat
+import com.github.ashutoshgngwr.noice.cast.CastUiManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 
 /**
- * [CastApiProvider] is an abstract declaration of the non-free Google Cast APIs that are used in the app.
- * It effectively hides upstream classes from its callers. This is ensure that free variant
- * remains free of non-free Google Cast API dependency.
+ * [CastApiProvider] is an abstract declaration of the non-free Google Cast APIs that are used in
+ * the app. It effectively hides upstream classes from its callers. This is ensure that the free
+ * variant remains free of non-free Google Cast API dependency.
  */
 interface CastApiProvider {
 
@@ -19,14 +20,19 @@ interface CastApiProvider {
   fun addMenuItem(context: Context, menu: Menu, @StringRes titleResId: Int)
 
   /**
-   * Returns a [Player.Factory] that plays media on a cast device.
+   * @return a [SoundPlayer.Factory] that builds [SoundPlayer] instances to play sounds on a cast
+   * device.
+   * @throws IllegalArgumentException if the Cast SDK fails to load on the device.
    */
-  fun buildPlayerFactory(context: Context): SoundPlayer.Factory
+  fun getSoundPlayerFactory(): SoundPlayer.Factory
 
   /**
-   * Returns a [VolumeProviderCompat] that controls volume of the cast device.
+   * @return a [VolumeProviderCompat] that controls volume of the cast device.
+   * @throws IllegalArgumentException if the Cast SDK fails to load on the device.
    */
   fun getVolumeProvider(): VolumeProviderCompat
+
+  fun getUiManager(): CastUiManager
 
   /**
    * Registers a new [SessionListener]. It is a no-op if [SessionListener] was already registered.
@@ -56,16 +62,20 @@ interface CastApiProvider {
 }
 
 /**
- * A no-op cast api provider for clients that don't have Google Mobile Services installed.
+ * A no-op cast API provider for clients that don't have Google Mobile Services installed.
  */
 object DummyCastApiProvider : CastApiProvider {
 
-  override fun buildPlayerFactory(context: Context): SoundPlayer.Factory {
-    throw IllegalStateException("getPlayerFactory() must not be invoked on DummyCastApiProvider")
+  override fun getSoundPlayerFactory(): SoundPlayer.Factory {
+    throw IllegalStateException("getSoundPlayerFactory() must not be invoked on DummyCastApiProvider")
   }
 
   override fun getVolumeProvider(): VolumeProviderCompat {
     throw IllegalStateException("getVolumeProvider() must not be invoked on DummyCastApiProvider")
+  }
+
+  override fun getUiManager(): CastUiManager {
+    throw IllegalStateException("getUiManager() must not be invoked on DummyCastApiProvider")
   }
 
   override fun addMenuItem(context: Context, menu: Menu, titleResId: Int) = Unit
