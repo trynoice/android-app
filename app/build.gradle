@@ -146,10 +146,10 @@ project.afterEvaluate {
 
 dependencies {
   def androidXHiltVersion = '1.0.0'
-  def exoPlayerVersion = '2.18.4'
-  def fragmentVersion = '1.5.5'
-  def roomVersion = '2.5.0'
-  def workManagerVersion = '2.8.0'
+  def exoPlayerVersion = '2.18.5'
+  def fragmentVersion = '1.5.6'
+  def roomVersion = '2.5.1'
+  def workManagerVersion = '2.8.1'
 
   def espressoVersion = '3.5.1'
   def mockkVersion = '1.13.3'
@@ -172,7 +172,7 @@ dependencies {
   implementation "androidx.navigation:navigation-ui-ktx:$deps.navVersion"
   implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
   implementation 'androidx.preference:preference-ktx:1.2.0'
-  implementation 'androidx.recyclerview:recyclerview:1.2.1'
+  implementation 'androidx.recyclerview:recyclerview:1.3.0'
   implementation "androidx.room:room-ktx:$roomVersion"
   implementation "androidx.room:room-paging:$roomVersion"
   implementation "androidx.room:room-runtime:$roomVersion"
