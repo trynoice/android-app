@@ -56,10 +56,10 @@ fun Preset.toRoomDto(gson: Gson): PresetDto {
 data class PresetV2(
   val id: String,
   val name: String,
-  val playerStates: List<PlayerState>,
-) : Serializable {
+  val playerStates: Array<PlayerState>,
+) {
 
-  constructor(name: String, playerStates: List<PlayerState>)
+  constructor(name: String, playerStates: Array<PlayerState>)
     : this(UUID.randomUUID().toString(), name, playerStates)
 
   /**
@@ -70,13 +70,27 @@ data class PresetV2(
     return Preset(id = id, name = name, soundStates = soundsV3)
   }
 
-  companion object {
-    val GSON_TYPE_PLAYER_STATES: Type = TypeToken
-      .getParameterized(List::class.java, PlayerState::class.java)
-      .type
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as PresetV2
+
+    if (id != other.id) return false
+    if (name != other.name) return false
+    if (!playerStates.contentEquals(other.playerStates)) return false
+
+    return true
   }
 
-  data class PlayerState(val soundId: String, val volume: Int) : Serializable
+  override fun hashCode(): Int {
+    var result = id.hashCode()
+    result = 31 * result + name.hashCode()
+    result = 31 * result + playerStates.contentHashCode()
+    return result
+  }
+
+  data class PlayerState(val soundId: String, val volume: Int)
 }
 
 /**
@@ -95,7 +109,7 @@ data class PresetV2(
 data class PresetV1(
   val id: String,
   val name: String,
-  val playerStates: List<PlayerState>,
+  val playerStates: Array<PlayerState>,
 ) {
 
   /**
@@ -113,7 +127,27 @@ data class PresetV1(
     }
 
     playerStatesV2.sortBy { it.soundId }
-    return PresetV2(id = id, name = name, playerStates = playerStatesV2)
+    return PresetV2(id = id, name = name, playerStates = playerStatesV2.toTypedArray())
+  }
+
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as PresetV1
+
+    if (id != other.id) return false
+    if (name != other.name) return false
+    if (!playerStates.contentEquals(other.playerStates)) return false
+
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result = id.hashCode()
+    result = 31 * result + name.hashCode()
+    result = 31 * result + playerStates.contentHashCode()
+    return result
   }
 
   companion object {
@@ -176,7 +210,7 @@ data class PresetV1(
  */
 data class PresetV0(
   @SerializedName("a") val name: String,
-  @SerializedName("b") val playerStates: List<PlayerState>,
+  @SerializedName("b") val playerStates: Array<PlayerState>,
 ) {
 
   /**
@@ -194,8 +228,27 @@ data class PresetV0(
             volume = (it.volume * 25).roundToInt(),
             timePeriod = it.timePeriod + 30,
           )
-        },
+        }
+        .toTypedArray(),
     )
+  }
+
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as PresetV0
+
+    if (name != other.name) return false
+    if (!playerStates.contentEquals(other.playerStates)) return false
+
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result = name.hashCode()
+    result = 31 * result + playerStates.contentHashCode()
+    return result
   }
 
   data class PlayerState(

@@ -242,7 +242,7 @@ class PresetRepository @Inject constructor(
       URI_VERSION_0 -> {
         val playerStatesJson = uri.getQueryParameter(URI_PARAM_PLAYER_STATES) ?: return null
         return try {
-          PresetV2(name, gson.fromJson(playerStatesJson, PresetV2.GSON_TYPE_PLAYER_STATES))
+          PresetV2(name, gson.fromJson(playerStatesJson, Array<PresetV2.PlayerState>::class.java))
             .toPresetV3()
         } catch (e: JsonSyntaxException) {
           null
