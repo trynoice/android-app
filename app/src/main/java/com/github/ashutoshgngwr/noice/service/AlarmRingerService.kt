@@ -208,14 +208,14 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
       lifecycleScope.launch {
         val startTime = System.currentTimeMillis()
         while (isActive) {
-          val volume = (System.currentTimeMillis() - startTime).toFloat() / fadeDurationMillis
-          playbackServiceController.setVolume(volume)
-          defaultRingtonePlayer?.setVolume(volume, volume)
-          if (volume >= 1F) {
+          val v = min(1F, (System.currentTimeMillis() - startTime).toFloat() / fadeDurationMillis)
+          playbackServiceController.setVolume(v)
+          defaultRingtonePlayer?.setVolume(v, v)
+          if (v == 1F) {
             break
           }
 
-          delay(500)
+          delay(250)
         }
       }
     } else {
