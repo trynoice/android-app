@@ -255,7 +255,7 @@
     <string name="appintro__library_desc">Usalo control deslizante do volume para axustalo volume de cada son. Algúns sons repetiranse sen problemas, mentres que outros repetiranse cun atraso aleatorio.</string>
     <string name="appintro__getting_started_desc_0">Explora todalas funcións pasando o dedo cara á esquerda!</string>
     <string name="preset_info__description">Podes crear facilmente os teus propios axustes preestablecidos reproducindo sons e gardalos desde a biblioteca de sons. Só ten que premelo botón gardar e darlle un nome único.</string>
-    <string name="notification_channel_default__name">Reprodución multimedia</string>
+    <string name="notification_channel_default__name">Reprodución de son</string>
     <string name="preset_delete_confirmation">Estás seguro de que queres eliminar %1$s\? Non podes desfacer esta acción.</string>
     <string name="preset_deleted">Eliminouse con éxito a túa lista!</string>
     <string name="sleep_timer_description">Noice apagarase automaticamente cando remate o temporizador. Uselos botóns seguintes para configuralo temporizador e engadir máis tempo.</string>
@@ -272,7 +272,7 @@
     <string name="appintro__presets_desc">Garda a túa mestura de son facendo clic no botón Gardar na esquina inferior da biblioteca. Busca mesturas gardadas na pestana \"Preaxustes\" da barra inferior.</string>
     <string name="appintro__presets_title">Gardalas túas mesturas favoritas</string>
     <string name="appintro__timer_desc">Durme sen esforzo co temporizador do son de Noice e esperta nun ambiente sereno coas súas alarmas.</string>
-    <string name="notification_channel_default__description">Controis da reprodución multimedia</string>
+    <string name="notification_channel_default__description">Controis da reproducions dos sons</string>
     <string name="support_development__share_description">O teu apoio non ten que parar nunha doazón. Tamén podes axudarnos facendo correla voz sobre Noice aos teus amigos. Cantos máis usuarios teñamos, máis comentarios recibiremos e mellor poderemos ofrecelo noso servizo para todos.</string>
     <string name="in_app_feedback__description">Encantaríanos saber de ti sobre a aplicación. Tómate un momento para visitalo noso repositorio de GitHub. Se non che gustou a aplicación, considera abrir un problema explicando as túas preocupacións. En caso contrario, inicialo proxecto para mostrar che gusta e apoio.</string>
     <string name="later">Máis tarde</string>
@@ -320,4 +320,5 @@
     <string name="offline_playback">Reprodución sen conexión</string>
     <string name="unlimited_alarms">Alarmas ilimitadas</string>
     <string name="unlimited_alarms_desc">Aumenta a túa rutina matinal con Noice Premium: programa un número ilimitado de alarmas para comezar o día de xeito personalizado e tranquilo.</string>
+    <string name="search_preset">Buscalos axustes iniciais</string>
 </resources>

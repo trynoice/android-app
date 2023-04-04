@@ -57,7 +57,7 @@
     <string name="in_app_feedback__title">Відправити рецензію</string>
     <string name="later">Пізніше</string>
     <string name="never">Ніколи</string>
-    <string name="notification_channel_default__description">Регулювання відтворення звуків</string>
+    <string name="notification_channel_default__description">Керування відтворенням звуків</string>
     <string name="notification_channel_default__name">Відтворення звуків</string>
     <string name="pinned_shortcuts_not_supported">Вибачте, схоже, ваш застосунок головного екрана не підтримує ярлики.</string>
     <string name="add_to_home_screen">Додати на головний екран</string>
@@ -324,4 +324,5 @@
     <string name="offline_playback_desc">Насолоджуйтесь заспокійливими звуками в будь-який час і в будь-якому місці, завантажуючи офлайн-звуки Noice - для відтворення з\'єднання з інтернетом не потрібне.</string>
     <string name="unlimited_alarms">Необмежена кількість будильників</string>
     <string name="hd_audio_desc">Відчуйте шум, як ніколи раніше, з можливістю прослуховування звуків у форматі MP3 з бітрейтом до 320 кбіт/с, що забезпечує кришталево чистий, високоточний звук.</string>
+    <string name="search_preset">Пошук поєднань</string>
 </resources>

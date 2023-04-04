@@ -24,14 +24,11 @@
     <string name="volume">Volume do som</string>
     <string name="delete">Remover</string>
     <string name="open_context_menu">Abrir menu</string>
-    <string name="preset_delete_confirmation">Deseja mesmo remover \"%s\"?</string>
+    <string name="preset_delete_confirmation">Deseja mesmo remover \"%1$s\"\? Essa ação é irreversível.</string>
     <string name="preset_deleted">Sua predefinição foi apagada com sucesso!</string>
-    <string name="preset_info__description">
-    Você ainda não criou nenhum ajuste. Para criar um ajuste, vá para a Biblioteca e reproduza sons.
-    Em seguida, clique no botão Salvar que aparece no canto inferior da tela.
-  </string>
+    <string name="preset_info__description">Você pode facilmente criar suas próprias predefinições reproduzindo e salvando sons a partir da biblioteca de sons. Apenas toque no botão Salvar e de um nome único para ela.</string>
     <string name="rename">Renomear</string>
-    <string name="auto_sleep_schedule_cancelled">Temporizador cancelado!</string>
+    <string name="auto_sleep_schedule_cancelled">Temporizador cancelado! O aplicativo continuará ativo.</string>
     <string name="reset">Parar</string>
     <string name="sleep_timer_description">
     Assim que o temporizador acabar, Noice irá parar de tocar qualquer som.
@@ -41,7 +38,7 @@
     <string name="app_theme_light">Claro</string>
     <string name="app_theme_dark">Escuro</string>
     <string name="app_theme_system_default">Padrão do sistema</string>
-    <string name="app_description">Relaxe, melhore a concentração e aumente a produtividade com sons da natureza que acalmam.</string>
+    <string name="app_description">Foque, medite e relaxe com sons naturais que acalmam.</string>
     <string name="appintro__chromecast_desc">
     Use o Noice para transmitir seu ambiente a outros dispositivos compatíveis com Chromecast,
     como alto-falantes, TVs, etc.
@@ -83,9 +80,9 @@
     <string name="notification_channel_default__description">Controles de áudio</string>
     <string name="notification_channel_default__name">Reprodução de áudio</string>
     <string name="submit_feedback">Enviar comentários</string>
-    <string name="presets_as_home_screen_summary">Mostrar \"predefinições\" na inicialização do aplicativo (requer reinício do aplicativo)</string>
-    <string name="pinned_shortcuts_not_supported">Seu lançador padrão não suporta a adição de atalhos.</string>
-    <string name="preset_does_not_exist">Predefinição não existe. Ela pode ter sido deletada!</string>
+    <string name="presets_as_home_screen_summary">Torne visíveis suas predefinições quando você abrir o aplicativo habilitando essa opção. Você vai precisar reiniciar o aplicativo para que as mudanças tenham efeito.</string>
+    <string name="pinned_shortcuts_not_supported">Desculpe, parece que a tela inicial do seu app não suporta atalhos.</string>
+    <string name="preset_does_not_exist">Predefinição não existe. Ela pode ter sido deletada.</string>
     <string name="add_to_home_screen">Adicionar à tela inicial</string>
     <string name="random_preset">Predefinição aleatória</string>
     <string name="intensity">Intensidade</string>
@@ -258,7 +255,7 @@
     <string name="sign_out">Sair</string>
     <string name="delete_account">Apagar conta</string>
     <string name="support_development__donate_description">Se você ainda não adquiriu uma subscrição premium, poderá fazer um pagamento único. Isso nos ajudará a manter o desenvolvimento das funcionalidades gratuitas e mante-las livres de publicidade sempre.</string>
-    <string name="random_preset_description">É provável que o pre-ajuste gerado pode conter sons das palavras selecionadas. Contudo, os ajustes intensos tentarão reproduzir mais sons simultaneamente.</string>
+    <string name="random_preset_description">O pré-ajuste terá sons baseados nas palavras que você escolher, e a o ajuste intenso irá reproduzir mais sons simultaneamente.</string>
     <string name="subscription_payment_confirmation_failed">Uh-oh! Tivemos alguns problemas enquanto esperávamos a confirmação do pagamento. Pode ser devido a um erro de rede ou a um atraso do provedor de pagamento. Atualizaremos o status da sua assinatura assim que recebermos uma resposta do provedor. Por favor, verifique o status da sua assinatura depois de algum tempo.</string>
     <string name="monthly">Mensal</string>
     <string name="cancel_subscription_confirmation">Tem certeza de que deseja cancelar sua assinatura do Noice Premium\? Após o cancelamento, sua assinatura será encerrada automaticamente no final do ciclo de cobrança atual. Seu ciclo de cobrança atual termina em %1$s.</string>
@@ -297,4 +294,35 @@
     <string name="no_alarms_description">Adicione um novo alarme apertando o botão \"+\"</string>
     <string name="alarm_permission_rationale_title">Permita que Noice agende alarmes</string>
     <string name="no_alarms">Nenhum Alarme</string>
+    <string name="alarm_post_notifications_permission_denied">Noice não pode tocar alarmes sem a permissão para mostrar notificações!</string>
+    <string name="add_label">Adicionar rótulo</string>
+    <string name="sunday_initial">S</string>
+    <string name="post_notifications_permission_rationale_description">Por favor, permita que o Noice mostre notificações para que os alarmes toquem no horário programado.</string>
+    <string name="post_notifications_permission_rationale_title">Permitir que o Noice mostre notificações</string>
+    <string name="wednesday_initial">W</string>
+    <string name="thursday_initial">T</string>
+    <string name="friday_initial">F</string>
+    <string name="saturday_initial">S</string>
+    <string name="vibrate">Vibrar</string>
+    <string name="not_scheduled">Não agendado</string>
+    <string name="edit_label">Editar rótulo</string>
+    <string name="notification_channel_alarm_primary__name">Alarmes</string>
+    <string name="notification_channel_alarm_primary__description">Notificações exibidas quando toca um alarme programado.</string>
+    <string name="notification_channel_alarm_priming__name">Ativação de alarme</string>
+    <string name="notification_channel_alarm_priming__description">Notificações exibidas ao se preparar para tocar um alarme programado.</string>
+    <string name="alarm">Alarme</string>
+    <string name="snooze">Soneca</string>
+    <string name="alarm_snooze_length_summary">Tempo de duração em minutos para adiar alarms</string>
+    <string name="alarm_ringer_max_duration">Duração do lembrete</string>
+    <string name="notification_channel_missed_alarms__name">Alarmes perdidos</string>
+    <string name="search_preset">Predefinições de pesquisa</string>
+    <string name="alarm_permission_rationale_description">Nós precisamos ter acesso a programação de alarmes do seu dispositivo. Por favor, habilite a permissão **Alarmes e lembretes** para o Noice na página de informações do app nas configurações do seu dispositivo.</string>
+    <string name="alarm_ringer_max_duration_summary">Tempo de duração em minutos, após silenciar automaticamente o lembrete de alarme</string>
+    <string name="alarms_disabled_due_to_subscription_expiration">Nós tivemos que desabilitar alguns alarmes porque sua assinatura Noice Premium expirou!</string>
+    <string name="alarm_ringer_preset_load_error">Nós não conseguimos carregar a predefinição que você selecionou para esse alarme.</string>
+    <string name="alarm_snooze_length">Duração da soneca</string>
+    <string name="proceed">Prossiga</string>
+    <string name="monday_initial">M</string>
+    <string name="tuesday_initial">T</string>
+    <string name="unlimited_alarms_desc">Eleve sua rotina matinal com Noice Premium - programe um número ilimitado de alarmes para um personalizado e tranquilo começo do seu dia.</string>
 </resources>
