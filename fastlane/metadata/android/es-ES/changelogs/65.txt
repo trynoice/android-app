@@ -1,2 +1,0 @@
-Trabajamos continuamente para mejorar Noice. ¡Activa las actualizaciones automáticas para no perderte nada!
-Para ver las novedades de esta versión, visita: https://github.com/trynoice/android-app/releases/tag/2.5.0
