@@ -59,7 +59,7 @@ class SoundPlaybackControllerFragment : Fragment() {
           viewID = R.id.volume_slider,
           to = 1F,
           step = 0.01F,
-          value = viewModel.volume.value,
+          value = (viewModel.volume.value * 100).roundToInt() / 100F, // must be a multiplier of step size.
           labelFormatter = { "${(it * 100).roundToInt()}%" },
           changeListener = { viewModel.setVolume(it) }
         )

@@ -214,7 +214,7 @@ class LibraryFragment : Fragment(), SoundViewHolder.ViewController {
         viewID = R.id.volume_slider,
         to = 1F,
         step = 0.01F,
-        value = volume,
+        value = (volume * 100).roundToInt() / 100F,  // must be a multiplier of step size.
         labelFormatter = { "${(it * 100).roundToInt()}%" },
         changeListener = { playbackServiceController.setSoundVolume(soundInfo.id, it) }
       )
