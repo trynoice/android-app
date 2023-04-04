@@ -107,7 +107,7 @@ class HomeFragmentTest {
       TestCase(
         playerManagerState = SoundPlayerManager.State.STOPPING,
         currentDestinationId = R.id.library,
-        expectVisible = false,
+        expectVisible = true,
       ),
       TestCase(
         playerManagerState = SoundPlayerManager.State.STOPPED,

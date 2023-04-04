@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import androidx.annotation.StringRes
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -76,36 +77,69 @@ class SoundPlaybackControllerFragmentTest {
   }
 
   @Test
+  fun playbackState() {
+    data class TestCase(
+      val soundPlayerManagerState: SoundPlayerManager.State,
+      @StringRes val expectedPlaybackStateResId: Int,
+    )
+    listOf(
+      TestCase(
+        soundPlayerManagerState = SoundPlayerManager.State.PLAYING,
+        expectedPlaybackStateResId = R.string.playing,
+      ),
+      TestCase(
+        soundPlayerManagerState = SoundPlayerManager.State.PAUSING,
+        expectedPlaybackStateResId = R.string.pausing,
+      ),
+      TestCase(
+        soundPlayerManagerState = SoundPlayerManager.State.PAUSED,
+        expectedPlaybackStateResId = R.string.paused,
+      ),
+      TestCase(
+        soundPlayerManagerState = SoundPlayerManager.State.STOPPING,
+        expectedPlaybackStateResId = R.string.stopping,
+      ),
+    ).forEach { testCase ->
+      clearMocks(playbackServiceControllerMock)
+      every { playbackServiceControllerMock.getState() } returns flowOf(testCase.soundPlayerManagerState)
+      launchFragmentInHiltContainer<SoundPlaybackControllerFragment>().use {
+        onView(withId(R.id.playback_state))
+          .check(matches(withText(testCase.expectedPlaybackStateResId)))
+      }
+    }
+  }
+
+  @Test
   fun playToggleButton() {
     data class TestCase(
-      val inputPlayerManagerState: SoundPlayerManager.State,
+      val playbackState: SoundPlayerManager.State,
       val expectPlaying: Boolean,
     )
 
     listOf(
       TestCase(
-        inputPlayerManagerState = SoundPlayerManager.State.PLAYING,
+        playbackState = SoundPlayerManager.State.PLAYING,
         expectPlaying = true,
       ),
       TestCase(
-        inputPlayerManagerState = SoundPlayerManager.State.PAUSING,
+        playbackState = SoundPlayerManager.State.PAUSING,
         expectPlaying = false,
       ),
       TestCase(
-        inputPlayerManagerState = SoundPlayerManager.State.PAUSED,
+        playbackState = SoundPlayerManager.State.PAUSED,
         expectPlaying = false,
       ),
       TestCase(
-        inputPlayerManagerState = SoundPlayerManager.State.STOPPING,
+        playbackState = SoundPlayerManager.State.STOPPING,
         expectPlaying = false,
       ),
       TestCase(
-        inputPlayerManagerState = SoundPlayerManager.State.STOPPED,
+        playbackState = SoundPlayerManager.State.STOPPED,
         expectPlaying = false,
       ),
     ).forEach { testCase ->
       clearMocks(playbackServiceControllerMock)
-      every { playbackServiceControllerMock.getState() } returns flowOf(testCase.inputPlayerManagerState)
+      every { playbackServiceControllerMock.getState() } returns flowOf(testCase.playbackState)
       launchFragmentInHiltContainer<SoundPlaybackControllerFragment>().use {
         onView(withId(R.id.play_toggle))
           .check(matches(isDisplayed()))

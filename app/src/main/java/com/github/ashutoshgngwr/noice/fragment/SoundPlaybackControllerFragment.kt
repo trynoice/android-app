@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SoundPlaybackControllerFragmentBinding
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
+import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -66,6 +67,19 @@ class SoundPlaybackControllerFragment : Fragment() {
         positiveButton(R.string.okay)
       }
     }
+
+    launchAndRepeatOnStarted {
+      viewModel.playbackState.collect { state ->
+        binding.playbackState.setText(
+          when (state) {
+            SoundPlayerManager.State.PLAYING -> R.string.playing
+            SoundPlayerManager.State.PAUSING -> R.string.pausing
+            SoundPlayerManager.State.PAUSED -> R.string.paused
+            else -> R.string.stopping
+          }
+        )
+      }
+    }
   }
 }
 
@@ -74,7 +88,11 @@ class SoundPlaybackControllerViewModel @Inject constructor(
   private val playbackServiceController: SoundPlaybackService.Controller,
 ) : ViewModel() {
 
-  val isPlaying: StateFlow<Boolean> = playbackServiceController.getState()
+  internal val playbackState: StateFlow<SoundPlayerManager.State> = playbackServiceController
+    .getState()
+    .stateIn(viewModelScope, SharingStarted.Eagerly, SoundPlayerManager.State.STOPPED)
+
+  val isPlaying: StateFlow<Boolean> = playbackState
     .map { it == SoundPlayerManager.State.PLAYING }
     .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 

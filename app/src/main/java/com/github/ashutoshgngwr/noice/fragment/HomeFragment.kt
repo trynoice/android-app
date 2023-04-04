@@ -110,8 +110,7 @@ class HomeFragment : Fragment(), MenuProvider, NavController.OnDestinationChange
 
   private fun invalidatePlaybackControllerView() {
     binding.playbackController.isVisible =
-      soundPlayerManagerState != SoundPlayerManager.State.STOPPING
-        && soundPlayerManagerState != SoundPlayerManager.State.STOPPED
+      soundPlayerManagerState != SoundPlayerManager.State.STOPPED
         && homeNavController.currentDestination?.id != R.id.alarms
         && homeNavController.currentDestination?.id != R.id.account
   }

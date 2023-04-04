@@ -27,18 +27,38 @@
       android:paddingStart="16dp"
       android:paddingEnd="8dp">
 
-      <TextView
+      <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:ellipsize="marquee"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:singleLine="true"
-        android:text="@{viewModel.activePresetName ?? @string/unsaved_preset}"
-        android:textAppearance="?attr/textAppearanceTitleMedium"
-        android:textColor="?attr/colorOnSurface"
-        app:selected="@{true}"
-        tools:text="@string/unsaved_preset" />
+        android:orientation="vertical">
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ellipsize="marquee"
+          android:marqueeRepeatLimit="marquee_forever"
+          android:singleLine="true"
+          android:text="@{viewModel.activePresetName ?? @string/unsaved_preset}"
+          android:textAppearance="?attr/textAppearanceTitleMedium"
+          android:textColor="?attr/colorOnSurface"
+          app:selected="@{true}"
+          tools:text="@string/unsaved_preset" />
+
+        <Space
+          android:layout_width="match_parent"
+          android:layout_height="2dp" />
+
+        <TextView
+          android:id="@+id/playback_state"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:singleLine="true"
+          android:textAppearance="?attr/textAppearanceBodySmall"
+          android:textColor="?attr/colorOnSurface"
+          tools:text="@string/stopping" />
+
+      </LinearLayout>
 
       <Space
         android:layout_width="4dp"
