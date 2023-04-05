@@ -498,6 +498,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
      * Sends the start command to the service with [ACTION_SET_VOLUME].
      */
     fun setVolume(volume: Float) {
+      require(volume in 0F..1F) { "volume must be in range [0, 1], got: ${volume}" }
       commandSoundPlaybackService(false) {
         action = ACTION_SET_VOLUME
         putExtra(INTENT_EXTRA_VOLUME, volume)
@@ -508,6 +509,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
      * Sends the start command to the service with [ACTION_SET_SOUND_VOLUME].
      */
     fun setSoundVolume(soundId: String, volume: Float) {
+      require(volume in 0F..1F) { "volume must be in range [0, 1], got: ${volume}" }
       commandSoundPlaybackService(false) {
         action = ACTION_SET_SOUND_VOLUME
         putExtra(INTENT_EXTRA_SOUND_ID, soundId)
