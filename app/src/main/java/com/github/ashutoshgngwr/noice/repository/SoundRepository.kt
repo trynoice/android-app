@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.room.withTransaction
 import com.github.ashutoshgngwr.noice.AppDispatchers
 import com.github.ashutoshgngwr.noice.data.AppDatabase
+import com.github.ashutoshgngwr.noice.data.models.LibraryUpdateTimeDto
 import com.github.ashutoshgngwr.noice.data.models.SoundMetadataDto
 import com.github.ashutoshgngwr.noice.data.models.SoundSegmentDto
 import com.github.ashutoshgngwr.noice.data.models.SoundSourceDto
@@ -189,10 +190,15 @@ class SoundRepository @Inject constructor(
 
   private suspend fun loadLibraryManifestInCacheStore() {
     val manifest = apiClient.cdn().libraryManifest()
+    val cacheUpdatedAt = appDb.sounds().getLibraryUpdateTime()
+    if (manifest.updatedAt == cacheUpdatedAt) {
+      return
+    }
+
     val groups = manifest.groups.associate { it.id to it.toRoomDto() }
     val tags = manifest.tags.toRoomDto()
-
     appDb.withTransaction {
+      appDb.sounds().saveLibraryUpdateTime(LibraryUpdateTimeDto(manifest.updatedAt))
       appDb.sounds().saveGroups(groups.values.toList())
       appDb.sounds().saveTags(tags)
 
