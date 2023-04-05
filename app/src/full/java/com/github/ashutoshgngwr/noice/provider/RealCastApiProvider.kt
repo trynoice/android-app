@@ -11,10 +11,10 @@ import androidx.core.view.MenuItemCompat
 import androidx.media.VolumeProviderCompat
 import androidx.mediarouter.app.MediaRouteActionProvider
 import com.github.ashutoshgngwr.noice.cast.CastMessagingChannel
+import com.github.ashutoshgngwr.noice.cast.CastReceiverUiManager
 import com.github.ashutoshgngwr.noice.cast.CastSoundPlayer
-import com.github.ashutoshgngwr.noice.cast.CastUiManager
 import com.github.ashutoshgngwr.noice.cast.CastVolumeProvider
-import com.github.ashutoshgngwr.noice.cast.DefaultCastUiManager
+import com.github.ashutoshgngwr.noice.cast.DefaultCastReceiverUiManager
 import com.github.ashutoshgngwr.noice.cast.models.Event
 import com.github.ashutoshgngwr.noice.cast.models.GetAccessTokenEvent
 import com.github.ashutoshgngwr.noice.cast.models.GetAccessTokenResponseEvent
@@ -69,7 +69,7 @@ class RealCastApiProvider(
   override fun getVolumeProvider(): VolumeProviderCompat =
     CastVolumeProvider(requireNotNull(castContext))
 
-  override fun getUiManager(): CastUiManager {
+  override fun getReceiverUiManager(): CastReceiverUiManager {
     val messagingChannel = CastMessagingChannel(
       castContext = requireNotNull(castContext),
       namespace = "urn:x-cast:com.github.ashutoshgngwr.noice:ui-updates",
@@ -77,7 +77,7 @@ class RealCastApiProvider(
       handler = handler,
     )
 
-    return DefaultCastUiManager(messagingChannel)
+    return DefaultCastReceiverUiManager(messagingChannel)
   }
 
   override fun registerSessionListener(listener: CastApiProvider.SessionListener) {

@@ -9,6 +9,10 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import java.lang.reflect.Type
 
+/**
+ * A conditional deserializer for [Event] sub-classes. It checks the `kind` property of the event
+ * and deserializes the input json to its corresponding sub-class type.
+ */
 class EventDeserializer : JsonDeserializer<Event> {
 
   override fun deserialize(

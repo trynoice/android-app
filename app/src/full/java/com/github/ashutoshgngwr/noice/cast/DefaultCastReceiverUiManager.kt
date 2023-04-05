@@ -6,7 +6,8 @@ import com.github.ashutoshgngwr.noice.cast.models.SoundUiUpdatedEvent
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
 
-class DefaultCastUiManager(private val messagingChannel: CastMessagingChannel) : CastUiManager {
+class DefaultCastReceiverUiManager(private val messagingChannel: CastMessagingChannel) :
+  CastReceiverUiManager {
 
   override fun setSoundPlayerManagerState(state: SoundPlayerManager.State, volume: Float) {
     val stateStr = when (state) {

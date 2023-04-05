@@ -8,8 +8,8 @@ import com.google.android.gms.cast.framework.CastContext
 import com.google.gson.Gson
 
 /**
- * A bi-directional messaging channel for the connected device on the current session in the given
- * [castContext].
+ * A bi-directional messaging channel for messages with [Event] as the base class. It facilitates
+ * communication among the connected device on the current cast session in the given [castContext].
  */
 class CastMessagingChannel(
   private val castContext: CastContext,
@@ -25,14 +25,14 @@ class CastMessagingChannel(
   private val eventListeners = mutableSetOf<EventListener>()
 
   /**
-   * Sends an outgoing message.
+   * Sends an outgoing event.
    */
   fun send(event: Event) {
     castContext.sessionManager.currentCastSession?.sendMessage(namespace, gson.toJson(event))
   }
 
   /**
-   * Adds a listener to receive messages.
+   * Adds a listener to receive events.
    */
   fun addEventListener(listener: EventListener) {
     if (eventListeners.isEmpty()) {

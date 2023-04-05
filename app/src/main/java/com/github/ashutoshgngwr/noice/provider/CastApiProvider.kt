@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.Menu
 import androidx.annotation.StringRes
 import androidx.media.VolumeProviderCompat
-import com.github.ashutoshgngwr.noice.cast.CastUiManager
+import com.github.ashutoshgngwr.noice.cast.CastReceiverUiManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 
 /**
@@ -32,7 +32,7 @@ interface CastApiProvider {
    */
   fun getVolumeProvider(): VolumeProviderCompat
 
-  fun getUiManager(): CastUiManager
+  fun getReceiverUiManager(): CastReceiverUiManager
 
   /**
    * Registers a new [SessionListener]. It is a no-op if [SessionListener] was already registered.
@@ -74,7 +74,7 @@ object DummyCastApiProvider : CastApiProvider {
     throw IllegalStateException("getVolumeProvider() must not be invoked on DummyCastApiProvider")
   }
 
-  override fun getUiManager(): CastUiManager {
+  override fun getReceiverUiManager(): CastReceiverUiManager {
     throw IllegalStateException("getUiManager() must not be invoked on DummyCastApiProvider")
   }
 
