@@ -63,6 +63,7 @@ class SoundPlaybackControllerFragmentTest {
 
     testCases.forEach { (inputPreset, expectedPresetName) ->
       clearMocks(playbackServiceControllerMock)
+      every { playbackServiceControllerMock.getState() } returns flowOf(SoundPlayerManager.State.PLAYING)
       every { playbackServiceControllerMock.getCurrentPreset() } returns flowOf(inputPreset)
 
       launchFragmentInHiltContainer<SoundPlaybackControllerFragment>().use {
@@ -80,31 +81,44 @@ class SoundPlaybackControllerFragmentTest {
   fun playbackState() {
     data class TestCase(
       val soundPlayerManagerState: SoundPlayerManager.State,
-      @StringRes val expectedPlaybackStateResId: Int,
+      @StringRes val expectPlaybackStateResId: Int,
+      val expectVisibility: Visibility,
     )
     listOf(
       TestCase(
         soundPlayerManagerState = SoundPlayerManager.State.PLAYING,
-        expectedPlaybackStateResId = R.string.playing,
+        expectPlaybackStateResId = R.string.playing,
+        expectVisibility = Visibility.VISIBLE,
       ),
       TestCase(
         soundPlayerManagerState = SoundPlayerManager.State.PAUSING,
-        expectedPlaybackStateResId = R.string.pausing,
+        expectPlaybackStateResId = R.string.pausing,
+        expectVisibility = Visibility.VISIBLE,
       ),
       TestCase(
         soundPlayerManagerState = SoundPlayerManager.State.PAUSED,
-        expectedPlaybackStateResId = R.string.paused,
+        expectPlaybackStateResId = R.string.paused,
+        expectVisibility = Visibility.VISIBLE,
       ),
       TestCase(
         soundPlayerManagerState = SoundPlayerManager.State.STOPPING,
-        expectedPlaybackStateResId = R.string.stopping,
+        expectPlaybackStateResId = R.string.stopping,
+        expectVisibility = Visibility.VISIBLE,
+      ),
+      TestCase(
+        soundPlayerManagerState = SoundPlayerManager.State.STOPPED,
+        expectPlaybackStateResId = R.string.stopping,
+        expectVisibility = Visibility.GONE,
       ),
     ).forEach { testCase ->
       clearMocks(playbackServiceControllerMock)
       every { playbackServiceControllerMock.getState() } returns flowOf(testCase.soundPlayerManagerState)
       launchFragmentInHiltContainer<SoundPlaybackControllerFragment>().use {
         onView(withId(R.id.playback_state))
-          .check(matches(withText(testCase.expectedPlaybackStateResId)))
+          .check(matches(withText(testCase.expectPlaybackStateResId)))
+
+        onView(withId(R.id.root))
+          .check(matches(withEffectiveVisibility(testCase.expectVisibility)))
       }
     }
   }
@@ -133,10 +147,6 @@ class SoundPlaybackControllerFragmentTest {
         playbackState = SoundPlayerManager.State.STOPPING,
         expectPlaying = false,
       ),
-      TestCase(
-        playbackState = SoundPlayerManager.State.STOPPED,
-        expectPlaying = false,
-      ),
     ).forEach { testCase ->
       clearMocks(playbackServiceControllerMock)
       every { playbackServiceControllerMock.getState() } returns flowOf(testCase.playbackState)
@@ -158,6 +168,7 @@ class SoundPlaybackControllerFragmentTest {
 
   @Test
   fun stopButton() {
+    every { playbackServiceControllerMock.getState() } returns flowOf(SoundPlayerManager.State.PLAYING)
     launchFragmentInHiltContainer<SoundPlaybackControllerFragment>()
     onView(withId(R.id.stop))
       .check(matches(isDisplayed()))
@@ -168,6 +179,7 @@ class SoundPlaybackControllerFragmentTest {
 
   @Test
   fun volumeControl() {
+    every { playbackServiceControllerMock.getState() } returns flowOf(SoundPlayerManager.State.PLAYING)
     launchFragmentInHiltContainer<SoundPlaybackControllerFragment>()
     onView(withId(R.id.volume))
       .check(matches(isDisplayed()))

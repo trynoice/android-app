@@ -16,7 +16,6 @@ import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
@@ -73,51 +72,33 @@ class HomeFragmentTest {
   @Test
   fun playbackController() {
     data class TestCase(
-      val playerManagerState: SoundPlayerManager.State,
       @IdRes val currentDestinationId: Int,
       val expectVisible: Boolean,
     )
 
     listOf(
       TestCase(
-        playerManagerState = SoundPlayerManager.State.PLAYING,
         currentDestinationId = R.id.library,
         expectVisible = true,
       ),
       TestCase(
-        playerManagerState = SoundPlayerManager.State.PLAYING,
         currentDestinationId = R.id.alarms,
         expectVisible = false,
       ),
       TestCase(
-        playerManagerState = SoundPlayerManager.State.PLAYING,
         currentDestinationId = R.id.account,
         expectVisible = false,
       ),
       TestCase(
-        playerManagerState = SoundPlayerManager.State.PAUSING,
         currentDestinationId = R.id.presets,
         expectVisible = true,
       ),
       TestCase(
-        playerManagerState = SoundPlayerManager.State.PAUSED,
         currentDestinationId = R.id.sleep_timer,
         expectVisible = true,
       ),
-      TestCase(
-        playerManagerState = SoundPlayerManager.State.STOPPING,
-        currentDestinationId = R.id.library,
-        expectVisible = true,
-      ),
-      TestCase(
-        playerManagerState = SoundPlayerManager.State.STOPPED,
-        currentDestinationId = R.id.library,
-        expectVisible = false,
-      ),
     ).forEach { testCase ->
-      clearMocks(playbackServiceControllerMock)
-      every { playbackServiceControllerMock.getState() } returns flowOf(testCase.playerManagerState)
-
+      every { playbackServiceControllerMock.getState() } returns flowOf(SoundPlayerManager.State.PLAYING)
       launchFragmentInHiltContainer<HomeFragment>().use {
         onView(withId(testCase.currentDestinationId))
           .check(matches(isDisplayed()))

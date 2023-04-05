@@ -20,12 +20,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.HomeFragmentBinding
-import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
-import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
-import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -34,7 +30,6 @@ import javax.inject.Inject
 class HomeFragment : Fragment(), MenuProvider, NavController.OnDestinationChangedListener {
 
   private lateinit var binding: HomeFragmentBinding
-  private var soundPlayerManagerState = SoundPlayerManager.State.STOPPED
 
   private val navArgs: HomeFragmentArgs by navArgs()
   private val homeNavController: NavController by lazy {
@@ -50,12 +45,6 @@ class HomeFragment : Fragment(), MenuProvider, NavController.OnDestinationChange
 
   @set:Inject
   internal lateinit var castApiProvider: CastApiProvider
-
-  @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
-
-  @set:Inject
-  internal lateinit var playbackServiceController: SoundPlaybackService.Controller
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = HomeFragmentBinding.inflate(inflater, container, false)
@@ -73,14 +62,6 @@ class HomeFragment : Fragment(), MenuProvider, NavController.OnDestinationChange
     binding.bottomNav.setupWithNavController(homeNavController)
     if (navArgs.navDestination != ResourcesCompat.ID_NULL) {
       homeNavController.navigate(navArgs.navDestination, navArgs.navDestinationArgs)
-    }
-
-    viewLifecycleOwner.launchAndRepeatOnStarted {
-      playbackServiceController.getState()
-        .collect { state ->
-          soundPlayerManagerState = state
-          invalidatePlaybackControllerView()
-        }
     }
   }
 
@@ -102,16 +83,12 @@ class HomeFragment : Fragment(), MenuProvider, NavController.OnDestinationChange
     destination: NavDestination,
     arguments: Bundle?,
   ) {
-    invalidatePlaybackControllerView()
     destination.label?.also { label ->
       (activity as? AppCompatActivity)?.supportActionBar?.title = label
     }
-  }
 
-  private fun invalidatePlaybackControllerView() {
     binding.playbackController.isVisible =
-      soundPlayerManagerState != SoundPlayerManager.State.STOPPED
-        && homeNavController.currentDestination?.id != R.id.alarms
+      homeNavController.currentDestination?.id != R.id.alarms
         && homeNavController.currentDestination?.id != R.id.account
   }
 }

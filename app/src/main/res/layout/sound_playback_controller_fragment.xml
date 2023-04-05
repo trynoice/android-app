@@ -12,6 +12,7 @@
   </data>
 
   <com.google.android.material.card.MaterialCardView
+    android:id="@+id/root"
     style="?attr/materialCardViewElevatedStyle"
     android:layout_width="match_parent"
     android:layout_height="52dp"
