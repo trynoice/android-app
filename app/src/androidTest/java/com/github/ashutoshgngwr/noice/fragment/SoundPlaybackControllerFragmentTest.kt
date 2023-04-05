@@ -180,9 +180,11 @@ class SoundPlaybackControllerFragmentTest {
   @Test
   fun volumeControl() {
     every { playbackServiceControllerMock.getState() } returns flowOf(SoundPlayerManager.State.PLAYING)
+    every { playbackServiceControllerMock.getVolume() } returns flowOf(0.5F)
     launchFragmentInHiltContainer<SoundPlaybackControllerFragment>()
     onView(withId(R.id.volume))
       .check(matches(isDisplayed()))
+      .check(matches(withText("50%")))
       .perform(click())
 
     onView(withId(R.id.volume_slider))

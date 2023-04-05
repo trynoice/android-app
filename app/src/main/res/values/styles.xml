@@ -159,6 +159,11 @@
     <item name="iconTint">?attr/colorOnSurface</item>
   </style>
 
+  <style name="Widget.App.PlaybackController.IconButton.WithText">
+    <item name="iconPadding">8dp</item>
+    <item name="android:textColor">?attr/colorOnSurface</item>
+  </style>
+
   <!-- Inheriting filled box style shifts the hint to bottom. Hence, use outlined box with filled box background mode. -->
   <style name="Widget.App.PresetPicker.SearchField" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
     <!-- Theme overlay is needed to override default theme colors as boxBackgroundColor doesn't support transparency. -->

@@ -104,7 +104,10 @@ class SoundPlaybackControllerViewModel @Inject constructor(
     .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
   internal val volume: StateFlow<Float> = playbackServiceController.getVolume()
-    .stateIn(viewModelScope, SharingStarted.Eagerly, 0F)
+    .stateIn(viewModelScope, SharingStarted.Eagerly, 1F)
+
+  val volumePercentage: StateFlow<String> = volume.map { "${(it * 100).roundToInt()}%" }
+    .stateIn(viewModelScope, SharingStarted.Eagerly, "")
 
   fun togglePlayback() {
     if (isPlaying.value) {

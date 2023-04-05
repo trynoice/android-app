@@ -94,11 +94,13 @@
 
       <com.google.android.material.button.MaterialButton
         android:id="@+id/volume"
-        style="@style/Widget.App.PlaybackController.IconButton"
+        style="@style/Widget.App.PlaybackController.IconButton.WithText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/main_volume"
-        app:icon="@drawable/ic_action_volume" />
+        android:text="@{viewModel.volumePercentage}"
+        app:icon="@drawable/ic_action_volume"
+        tools:text="100%" />
 
     </LinearLayout>
 
