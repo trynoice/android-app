@@ -158,7 +158,7 @@
     <string name="i_understand">Eu compreendo.</string>
     <string name="sign_up_message">Por favor, digite seu nome e e-mail para se inscrever.</string>
     <string name="initialising_subscription">Inicializando assinatura</string>
-    <string name="invalid_email">O email informado não é válido!</string>
+    <string name="invalid_email">O e-mail que você inseriu é inválido!</string>
     <string name="sound_info">Sobre este som</string>
     <string name="offline">Você está desconectado</string>
     <string name="sign_in_to_continue">Faça login ou cadastre-se para continuar.</string>
