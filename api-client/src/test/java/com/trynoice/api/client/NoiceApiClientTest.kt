@@ -159,4 +159,19 @@ class NoiceApiClientTest {
     runCatching { mockServer.takeRequest() }
       .onSuccess { assertFalse(it.getHeader("Accept-Language").isNullOrBlank()) }
   }
+
+  @Test
+  fun getAccessToken() = runTest {
+    assertNull(apiClient.getAccessToken())
+
+    val expected = AuthCredentials("test-rt-2", "test-at-2")
+    mockServer.enqueue(
+      MockResponse()
+        .setResponseCode(200)
+        .setBody(gson.toJson(expected))
+    )
+
+    credentialRepository.setCredentials(AuthCredentials("test-rt-1", "test-at-1"))
+    assertEquals(expected.accessToken, apiClient.getAccessToken())
+  }
 }

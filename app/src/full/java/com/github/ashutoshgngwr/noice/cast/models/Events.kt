@@ -1,7 +1,30 @@
 package com.github.ashutoshgngwr.noice.cast.models
 
+import androidx.annotation.VisibleForTesting
+
 abstract class Event {
   abstract val kind: String
+}
+
+object EventDeserializationRegistry {
+
+  private val registry: MutableMap<String, Class<out Event>> = mutableMapOf(
+    "GetAccessToken" to GetAccessTokenEvent::class.java,
+    "SoundStateChanged" to SoundStateChangedEvent::class.java,
+  )
+
+  @VisibleForTesting
+  fun registerType(kind: String, clazz: Class<out Event>) {
+    registry[kind] = clazz
+  }
+
+  /**
+   * @return the Java class of the model corresponding to the given [kind].
+   * @throws IllegalArgumentException
+   */
+  fun getTypeForKind(kind: String): Class<out Event> {
+    return registry[kind] ?: throw IllegalArgumentException("unknown event kind: $kind")
+  }
 }
 
 data class GetAccessTokenEvent(override val kind: String = "GetAccessToken") : Event()
