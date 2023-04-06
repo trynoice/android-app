@@ -12,6 +12,7 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
@@ -121,12 +122,12 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
       service = this,
       mediaSessionToken = mediaSession.getSessionToken(),
       contentPi = mainActivityPi,
-      resumePi = Controller.buildResumeActionPendingIntent(this),
-      pausePi = Controller.buildPauseActionPendingIntent(this),
-      stopPi = Controller.buildStopActionPendingIntent(this),
-      randomPresetPi = Controller.buildRandomPresetActionPendingIntent(this),
-      skipToNextPresetPi = Controller.buildSkipToNextPresetActionPendingIntent(this),
-      skipToPrevPresetPi = Controller.buildSkipToPrevPresetActionPendingIntent(this),
+      resumePi = buildResumeActionPendingIntent(this),
+      pausePi = buildPauseActionPendingIntent(this),
+      stopPi = buildStopActionPendingIntent(this),
+      randomPresetPi = buildRandomPresetActionPendingIntent(this),
+      skipToNextPresetPi = buildSkipToNextPresetActionPendingIntent(this),
+      skipToPrevPresetPi = buildSkipToPrevPresetActionPendingIntent(this),
     )
   }
 
@@ -397,7 +398,8 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
     onCurrentPresetChange()
   }
 
-  private fun onCurrentPresetChange() {
+  @VisibleForTesting
+  fun onCurrentPresetChange() {
     currentSoundStatesFlow.value = soundPlayerManager.getCurrentPreset()
   }
 
@@ -459,6 +461,78 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
 
     private const val AUDIO_USAGE_MEDIA = "media"
     private const val AUDIO_USAGE_ALARM = "alarm"
+
+    /**
+     * Returns a [PendingIntent] that sends [ACTION_RESUME] command to the [SoundPlaybackService].
+     */
+    private fun buildResumeActionPendingIntent(context: Context): PendingIntent {
+      return buildPendingIntent(context, 0x3A, true) { action = ACTION_RESUME }
+    }
+
+    /**
+     * Returns a [PendingIntent] that sends [ACTION_PAUSE] command to the [SoundPlaybackService].
+     */
+    private fun buildPauseActionPendingIntent(context: Context): PendingIntent {
+      return buildPendingIntent(context, 0x3B, false) { action = ACTION_PAUSE }
+    }
+
+    /**
+     * Returns a [PendingIntent] that sends [ACTION_STOP] command to the [SoundPlaybackService].
+     */
+    private fun buildStopActionPendingIntent(context: Context): PendingIntent {
+      return buildPendingIntent(context, 0x3C, false) { action = ACTION_STOP }
+    }
+
+    /**
+     * Returns a [PendingIntent] that sends [ACTION_PLAY_RANDOM_PRESET] command to the
+     * [SoundPlaybackService].
+     */
+    private fun buildRandomPresetActionPendingIntent(context: Context): PendingIntent {
+      return buildPendingIntent(context, 0x3D, true) { action = ACTION_PLAY_RANDOM_PRESET }
+    }
+
+    /**
+     * Returns a [PendingIntent] that sends [ACTION_SKIP_PRESET] command with
+     * [PRESET_SKIP_DIRECTION_PREV] to the [SoundPlaybackService].
+     */
+    private fun buildSkipToPrevPresetActionPendingIntent(context: Context): PendingIntent {
+      return buildPendingIntent(context, 0x3E, true) {
+        action = ACTION_SKIP_PRESET
+        putExtra(INTENT_EXTRA_PRESET_SKIP_DIRECTION, PRESET_SKIP_DIRECTION_PREV)
+      }
+    }
+
+    /**
+     * Returns a [PendingIntent] that sends [ACTION_SKIP_PRESET] command with
+     * [PRESET_SKIP_DIRECTION_NEXT] to the [SoundPlaybackService].
+     */
+    private fun buildSkipToNextPresetActionPendingIntent(context: Context): PendingIntent {
+      return buildPendingIntent(context, 0x3F, true) {
+        action = ACTION_SKIP_PRESET
+        putExtra(INTENT_EXTRA_PRESET_SKIP_DIRECTION, PRESET_SKIP_DIRECTION_NEXT)
+      }
+    }
+
+    private inline fun buildPendingIntent(
+      context: Context,
+      requestCode: Int,
+      foreground: Boolean,
+      intentBuilder: Intent.() -> Unit,
+    ): PendingIntent {
+      val piFlags = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+        PendingIntent.FLAG_UPDATE_CURRENT
+      } else {
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+      }
+
+      val intent = Intent(context, SoundPlaybackService::class.java)
+      intentBuilder.invoke(intent)
+      return if (foreground && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        PendingIntent.getForegroundService(context, requestCode, intent, piFlags)
+      } else {
+        PendingIntent.getService(context, requestCode, intent, piFlags)
+      }
+    }
   }
 
   private class Binder(
@@ -498,7 +572,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
      * Sends the start command to the service with [ACTION_SET_VOLUME].
      */
     fun setVolume(volume: Float) {
-      require(volume in 0F..1F) { "volume must be in range [0, 1], got: ${volume}" }
+      require(volume in 0F..1F) { "volume must be in range [0, 1], got: $volume" }
       commandSoundPlaybackService(false) {
         action = ACTION_SET_VOLUME
         putExtra(INTENT_EXTRA_VOLUME, volume)
@@ -509,7 +583,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
      * Sends the start command to the service with [ACTION_SET_SOUND_VOLUME].
      */
     fun setSoundVolume(soundId: String, volume: Float) {
-      require(volume in 0F..1F) { "volume must be in range [0, 1], got: ${volume}" }
+      require(volume in 0F..1F) { "volume must be in range [0, 1], got: $volume" }
       commandSoundPlaybackService(false) {
         action = ACTION_SET_SOUND_VOLUME
         putExtra(INTENT_EXTRA_SOUND_ID, soundId)
@@ -668,78 +742,6 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
 
       internal const val AUDIO_USAGE_MEDIA = SoundPlaybackService.AUDIO_USAGE_MEDIA
       internal const val AUDIO_USAGE_ALARM = SoundPlaybackService.AUDIO_USAGE_ALARM
-
-      /**
-       * Returns a [PendingIntent] that sends [ACTION_RESUME] command to the [SoundPlaybackService].
-       */
-      fun buildResumeActionPendingIntent(context: Context): PendingIntent {
-        return buildPendingIntent(context, 0x3A, true) { action = ACTION_RESUME }
-      }
-
-      /**
-       * Returns a [PendingIntent] that sends [ACTION_PAUSE] command to the [SoundPlaybackService].
-       */
-      fun buildPauseActionPendingIntent(context: Context): PendingIntent {
-        return buildPendingIntent(context, 0x3B, false) { action = ACTION_PAUSE }
-      }
-
-      /**
-       * Returns a [PendingIntent] that sends [ACTION_STOP] command to the [SoundPlaybackService].
-       */
-      fun buildStopActionPendingIntent(context: Context): PendingIntent {
-        return buildPendingIntent(context, 0x3C, false) { action = ACTION_STOP }
-      }
-
-      /**
-       * Returns a [PendingIntent] that sends [ACTION_PLAY_RANDOM_PRESET] command to the
-       * [SoundPlaybackService].
-       */
-      fun buildRandomPresetActionPendingIntent(context: Context): PendingIntent {
-        return buildPendingIntent(context, 0x3D, true) { action = ACTION_PLAY_RANDOM_PRESET }
-      }
-
-      /**
-       * Returns a [PendingIntent] that sends [ACTION_SKIP_PRESET] command with
-       * [PRESET_SKIP_DIRECTION_PREV] to the [SoundPlaybackService].
-       */
-      fun buildSkipToPrevPresetActionPendingIntent(context: Context): PendingIntent {
-        return buildPendingIntent(context, 0x3E, true) {
-          action = ACTION_SKIP_PRESET
-          putExtra(INTENT_EXTRA_PRESET_SKIP_DIRECTION, PRESET_SKIP_DIRECTION_PREV)
-        }
-      }
-
-      /**
-       * Returns a [PendingIntent] that sends [ACTION_SKIP_PRESET] command with
-       * [PRESET_SKIP_DIRECTION_NEXT] to the [SoundPlaybackService].
-       */
-      fun buildSkipToNextPresetActionPendingIntent(context: Context): PendingIntent {
-        return buildPendingIntent(context, 0x3F, true) {
-          action = ACTION_SKIP_PRESET
-          putExtra(INTENT_EXTRA_PRESET_SKIP_DIRECTION, PRESET_SKIP_DIRECTION_NEXT)
-        }
-      }
-
-      private inline fun buildPendingIntent(
-        context: Context,
-        requestCode: Int,
-        foreground: Boolean,
-        intentBuilder: Intent.() -> Unit,
-      ): PendingIntent {
-        val piFlags = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-          PendingIntent.FLAG_UPDATE_CURRENT
-        } else {
-          PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        }
-
-        val intent = Intent(context, SoundPlaybackService::class.java)
-        intentBuilder.invoke(intent)
-        return if (foreground && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-          PendingIntent.getForegroundService(context, requestCode, intent, piFlags)
-        } else {
-          PendingIntent.getService(context, requestCode, intent, piFlags)
-        }
-      }
     }
   }
 }
