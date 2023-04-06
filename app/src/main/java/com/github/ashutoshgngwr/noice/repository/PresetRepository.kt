@@ -360,15 +360,17 @@ class PresetRepository @Inject constructor(
    *  - V2 presets are stored in the default shared preferences. V3 presets use Room.
    */
   private suspend fun migrateToV3() = appDb.withTransaction {
-    appDb.presets()
-      .saveDefaultPresetsSyncVersion(
-        DefaultPresetsSyncVersionDto(
-          prefs.getInt(
-            "defaultPresetsSyncVersion",
-            if (prefs.contains(PRESETS_V2_KEY)) 0 else -1,
+    if (appDb.presets().getDefaultPresetsSyncedVersion() == null) {
+      appDb.presets()
+        .saveDefaultPresetsSyncVersion(
+          DefaultPresetsSyncVersionDto(
+            prefs.getInt(
+              "defaultPresetsSyncVersion",
+              if (prefs.contains(PRESETS_V2_KEY)) 0 else -1,
+            )
           )
         )
-      )
+    }
 
     prefs.getString(PRESETS_V2_KEY, "[]")
       .let { gson.fromJson(it, Array<PresetV2>::class.java) }
