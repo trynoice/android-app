@@ -11,6 +11,7 @@ import androidx.room.withTransaction
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.AppDispatchers
 import com.github.ashutoshgngwr.noice.data.PresetDao
+import com.github.ashutoshgngwr.noice.data.models.DefaultPresetsSyncVersionDto
 import com.github.ashutoshgngwr.noice.data.models.PresetDto
 import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.models.PresetV2
@@ -511,6 +512,28 @@ class PresetRepositoryTest {
       "13006e01-9413-45d7-bffc-dc577b077d67" to 0,
       "b76ac285-1265-472c-bcdc-aecba3a28fa2" to 0,
       "b6eb323d-e146-4690-a1a8-b8d6802001b3" to 1,
+    ).forEach { (presetId, callCount) ->
+      coVerify(exactly = callCount) {
+        presetDaoMock.save(withArg { assertEquals(presetId, it.id) })
+      }
+    }
+  }
+
+  @Test
+  fun defaultPresetMigration_onRepeatedLaunch() = runTest {
+    var presetsSyncVersion: Int? = 1
+    coEvery { presetDaoMock.getDefaultPresetsSyncedVersion() } answers { presetsSyncVersion }
+    // migration procedures update the default preset sync version.
+    coEvery { presetDaoMock.saveDefaultPresetsSyncVersion(any()) } answers {
+      presetsSyncVersion = firstArg<DefaultPresetsSyncVersionDto>().version
+    }
+
+    presetRepository(this) // creating the instance will do the migration
+    mapOf(
+      "808feaed-f4ce-4d1e-9179-ae7aec31180e" to 0,
+      "13006e01-9413-45d7-bffc-dc577b077d67" to 0,
+      "b76ac285-1265-472c-bcdc-aecba3a28fa2" to 0,
+      "b6eb323d-e146-4690-a1a8-b8d6802001b3" to 0,
     ).forEach { (presetId, callCount) ->
       coVerify(exactly = callCount) {
         presetDaoMock.save(withArg { assertEquals(presetId, it.id) })
