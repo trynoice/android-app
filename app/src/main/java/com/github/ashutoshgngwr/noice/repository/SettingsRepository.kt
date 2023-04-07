@@ -7,6 +7,7 @@ import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.ext.keyFlow
+import com.github.ashutoshgngwr.noice.models.AudioQuality
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -222,25 +223,4 @@ class SettingsRepository @Inject constructor(
     val FREE_AUDIO_QUALITY = AudioQuality.fromBitrate(null)
   }
 
-  /**
-   * Represents audio quality bit-rates supported by the CDN server.
-   */
-  enum class AudioQuality(val bitrate: String) {
-    LOW("128k"), MEDIUM("192k"), HIGH("256k"), ULTRA_HIGH("320k");
-
-    companion object {
-      /**
-       * Returns an [AudioQuality] corresponding to the given [bitrate]. If the [bitrate] is `null`,
-       * it returns the default audio bitrate.
-       */
-      fun fromBitrate(bitrate: String?): AudioQuality {
-        return when (bitrate) {
-          "192k" -> MEDIUM
-          "256k" -> HIGH
-          "320k" -> ULTRA_HIGH
-          else -> LOW
-        }
-      }
-    }
-  }
 }

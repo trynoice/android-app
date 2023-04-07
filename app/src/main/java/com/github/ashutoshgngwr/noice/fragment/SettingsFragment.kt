@@ -17,6 +17,7 @@ import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
+import com.github.ashutoshgngwr.noice.models.AudioQuality
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
@@ -72,10 +73,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
       )
 
       val values = arrayOf(
-        SettingsRepository.AudioQuality.LOW,
-        SettingsRepository.AudioQuality.MEDIUM,
-        SettingsRepository.AudioQuality.HIGH,
-        SettingsRepository.AudioQuality.ULTRA_HIGH,
+        AudioQuality.LOW,
+        AudioQuality.MEDIUM,
+        AudioQuality.HIGH,
+        AudioQuality.ULTRA_HIGH,
       )
 
       summary = entries[values.indexOf(settingsRepository.getAudioQuality())]

@@ -24,6 +24,7 @@ import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.di.InAppBillingProviderModule
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
+import com.github.ashutoshgngwr.noice.models.AudioQuality
 import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
@@ -128,7 +129,7 @@ class MainActivityTest {
   @Test
   fun applicationPreferencesIntent() {
     // prevent crash in SettingsFragment.
-    every { mockSettingsRepository.getAudioQuality() } returns SettingsRepository.AudioQuality.LOW
+    every { mockSettingsRepository.getAudioQuality() } returns AudioQuality.LOW
 
     Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
       .setAction(Intent.ACTION_APPLICATION_PREFERENCES)

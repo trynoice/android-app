@@ -15,6 +15,7 @@ import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerMediaSession
 import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDataSourceFactory
+import com.github.ashutoshgngwr.noice.models.AudioQuality
 import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
@@ -125,7 +126,7 @@ class SoundPlaybackServiceTest {
   fun service_premiumStatusChange() {
     val isSubscribedStateFlow = MutableStateFlow(false)
     every { subscriptionRepositoryMock.isSubscribed() } returns isSubscribedStateFlow
-    every { settingsRepositoryMock.getAudioQualityAsFlow() } returns flowOf(SettingsRepository.AudioQuality.HIGH)
+    every { settingsRepositoryMock.getAudioQualityAsFlow() } returns flowOf(AudioQuality.HIGH)
     every { anyConstructed<SoundPlayerManager>().setPremiumSegmentsEnabled(any()) } returns Unit
     every { anyConstructed<SoundDataSourceFactory>() setProperty "enableDownloadedSounds" value any<Boolean>() } returns Unit
     every { anyConstructed<SoundPlayerManager>().setAudioBitrate(any()) } returns Unit
@@ -140,7 +141,7 @@ class SoundPlaybackServiceTest {
     verify(exactly = 1) {
       anyConstructed<SoundPlayerManager>().setPremiumSegmentsEnabled(true)
       anyConstructed<SoundDataSourceFactory>() setProperty "enableDownloadedSounds" value true
-      anyConstructed<SoundPlayerManager>().setAudioBitrate(SettingsRepository.AudioQuality.HIGH.bitrate)
+      anyConstructed<SoundPlayerManager>().setAudioBitrate(AudioQuality.HIGH.bitrate)
     }
   }
 
@@ -227,7 +228,7 @@ class SoundPlaybackServiceTest {
 
   @Test
   fun service_audioQuality() {
-    val audioQualityStateFlow = MutableStateFlow(SettingsRepository.AudioQuality.LOW)
+    val audioQualityStateFlow = MutableStateFlow(AudioQuality.LOW)
     every { settingsRepositoryMock.getAudioQualityAsFlow() } returns audioQualityStateFlow
     every { subscriptionRepositoryMock.isSubscribed() } returns flowOf(true)
     every { anyConstructed<SoundPlayerManager>().setAudioBitrate(any()) } returns Unit
@@ -235,10 +236,10 @@ class SoundPlaybackServiceTest {
     val (_) = buildServiceAndController()
 
     listOf(
-      SettingsRepository.AudioQuality.LOW,
-      SettingsRepository.AudioQuality.MEDIUM,
-      SettingsRepository.AudioQuality.HIGH,
-      SettingsRepository.AudioQuality.ULTRA_HIGH,
+      AudioQuality.LOW,
+      AudioQuality.MEDIUM,
+      AudioQuality.HIGH,
+      AudioQuality.ULTRA_HIGH,
     ).forEach { audioQuality ->
       audioQualityStateFlow.value = audioQuality
       ShadowLooper.idleMainLooper()

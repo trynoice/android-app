@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.models.AudioQuality
 import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import io.mockk.MockKAnnotations
@@ -212,7 +213,7 @@ class SettingsRepositoryTest {
 
   @Test
   fun setAudioQuality() {
-    val inputs = arrayOf(SettingsRepository.AudioQuality.LOW, SettingsRepository.AudioQuality.HIGH)
+    val inputs = arrayOf(AudioQuality.LOW, AudioQuality.HIGH)
     every { prefsEditor.putString(any(), any()) } returns prefsEditor
     for (input in inputs) {
       settingsRepository.setAudioQuality(input)
@@ -226,14 +227,14 @@ class SettingsRepositoryTest {
   fun getAudioQualityAsFlow() = runTest {
     val inputs = arrayOf(
       null,
-      SettingsRepository.AudioQuality.LOW.bitrate,
-      SettingsRepository.AudioQuality.HIGH.bitrate,
+      AudioQuality.LOW.bitrate,
+      AudioQuality.HIGH.bitrate,
     )
 
     val outputs = arrayOf(
-      SettingsRepository.AudioQuality.MEDIUM,
-      SettingsRepository.AudioQuality.LOW,
-      SettingsRepository.AudioQuality.HIGH,
+      AudioQuality.MEDIUM,
+      AudioQuality.LOW,
+      AudioQuality.HIGH,
     )
 
     for (i in inputs.indices) {
