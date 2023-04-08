@@ -203,6 +203,7 @@
     <plurals name="n_days">
         <item quantity="one">%1$d den</item>
         <item quantity="few">%1$d dny</item>
+        <item quantity="many">%1$d dnů</item>
         <item quantity="other">%1$d dnů</item>
     </plurals>
     <string name="redeem_gift_card">Uplatnit dárkovou kartu</string>
