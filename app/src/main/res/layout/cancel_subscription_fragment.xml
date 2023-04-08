@@ -14,7 +14,7 @@
   <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/modal_layout_padding"
+    android:padding="@dimen/modal_root_layout_padding"
     tools:theme="?attr/bottomSheetDialogTheme">
 
     <LinearLayout

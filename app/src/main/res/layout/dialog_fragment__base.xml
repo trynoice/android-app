@@ -4,7 +4,7 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:orientation="vertical"
-  android:padding="@dimen/modal_layout_padding">
+  android:padding="@dimen/modal_root_layout_padding">
 
   <TextView
     android:id="@+id/title"
