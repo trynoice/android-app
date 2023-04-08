@@ -17,6 +17,8 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navOptions
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.HomeFragmentBinding
@@ -61,7 +63,17 @@ class HomeFragment : Fragment(), MenuProvider, NavController.OnDestinationChange
     homeNavController.graph = homeNavGraph
     binding.bottomNav.setupWithNavController(homeNavController)
     if (navArgs.navDestination != ResourcesCompat.ID_NULL) {
-      homeNavController.navigate(navArgs.navDestination, navArgs.navDestinationArgs)
+      // navigating between bottom navigation view items using NavController directly is causing the
+      // bottom navigation view to misbehave. Essentially, if fragment A is at the top and you
+      // navigate to B directly using the nav controller, you can go back to A by pressing the back
+      // button but not by selecting A from the bottom navigation view.
+      binding.bottomNav.menu.findItem(navArgs.navDestination)?.let { item ->
+        NavigationUI.onNavDestinationSelected(item, homeNavController)
+      }
+
+      homeNavController.navigate(navArgs.navDestination, navArgs.navDestinationArgs, navOptions {
+        popUpTo(navArgs.navDestination) { inclusive = true }
+      })
     }
   }
 

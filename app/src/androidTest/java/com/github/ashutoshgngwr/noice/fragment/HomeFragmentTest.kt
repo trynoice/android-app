@@ -8,6 +8,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.github.ashutoshgngwr.noice.EspressoX
+import com.github.ashutoshgngwr.noice.EspressoX.clickOn
 import com.github.ashutoshgngwr.noice.EspressoX.launchFragmentInHiltContainer
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
@@ -107,6 +108,33 @@ class HomeFragmentTest {
         onView(withId(R.id.playback_controller))
           .check(matches(if (testCase.expectVisible) isDisplayed() else not(isDisplayed())))
       }
+    }
+  }
+
+  @Test
+  fun navDestination() {
+    val args = HomeFragmentArgs(
+      navDestination = R.id.alarms,
+      navDestinationArgs = AlarmsFragmentArgs().toBundle(),
+    )
+
+    val scenario = launchFragmentInHiltContainer<HomeFragment>(args.toBundle())
+    onView(withId(R.id.bottom_nav))
+      .check(matches(isDisplayed()))
+      .check(matches(EspressoX.withBottomNavSelectedItem(R.id.alarms)))
+
+    scenario.onFragment { f ->
+      val c = Navigation.findNavController(f.requireActivity(), R.id.home_nav_host_fragment)
+      assertEquals(R.id.alarms, c.currentDestination?.id)
+    }
+
+    onView(withId(R.id.bottom_nav))
+      .perform(clickOn(R.id.library))
+      .check(matches(EspressoX.withBottomNavSelectedItem(R.id.library)))
+
+    scenario.onFragment { f ->
+      val c = Navigation.findNavController(f.requireActivity(), R.id.home_nav_host_fragment)
+      assertEquals(R.id.library, c.currentDestination?.id)
     }
   }
 }
