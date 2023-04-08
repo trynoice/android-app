@@ -1,35 +1,57 @@
-Mnoha lidem pomáhá slabý podkresový zvukový šum se uklidnit a soustředit. V některých případech i dokáže nakopnout produktivitu o mnoho procent. Šum (ambientní zvuk) může navíc i minimalizovat projevy stresu.
+Mnoha lidem dokáže jednotný šum na pozadí pomoct zůstat v klidu a soustředit se. V některých případech dokonce dokáže zlepšit produktivitu a snížit efekty stresu a úzkosti. Šum na pozadí také překrývá tinnitus, uklidňuje rozrušené děti a zlepšuje zážitek při čtení či meditaci.
 
-Noice je aplikace, která vám umožní si vytvořit vlastní zvuková prostředí za pomoci smyček nahrávek klidných lokací. Vytvořte si vlastní dokonalou klidovou zónu kombinací různých šumů, abyste se odprostili od stimulů okolí a mohli se znovu soustředit na práci. Případně si vygenerovat prostředí, které vás ukolébá ke spánku.
+Noice je aplikace, která vám umožňuje vytvořit si vlastní zvukové prostředí. Můžete s ní kombinovat zvuky o různé hlasitosti pro vytvoření perfektní uklidňující nálady. Tato umělá zvuková kulisa vám pomůže přehlušit rušivé elementy a pomůže vám se soustředit. Také vám umožňuje vytvořit si klidné, mírumilovné prostředí, které vám pomůže s relaxací a usínáním.
 
-<b>Funkce</b>
-- 35 zvukových smyček
-- Google Cast/Chromecast (jen na Google Play)
-- Automatický časovač vypnutí pro spáče
-- Funkce budíku
-- Automatické mixování
-- Vytvořte si vlastní mix
-- Uložte si vlastní mixy
-- Možnost přehrávat i při spuštěné hudbě z jiného přehrávače
-- Samostatné ovládání hlasitosti pro každý šum zvlášť
-- Přehrávání je plně offline
-- Světlý i tmavý motiv aplikace
+<b>VÝHODY</b>
+• Zbavte se stresu a úzkosti díky individuálním atmosférám
+• Uklidněte se a odpočívejte v uspávajících prostředích dle vaší volby
+• Zvedněte svou produktivitu nahrazením vyrušujícího hluku
+• Zlepšete své soustředění tím, že budete v konzistentním prostředí
+• Pozvedněte svůj čtecí či meditační zážítek s přírodními zvukovými kulisami
+• Zklidněte své dítě uklidňujícími zvuky
+• Přehlušte svůj tinnitus zmírňujícím hlukem
+• Usínejte bez rušivých elementů
+• Začněte svůj den s jemnými zvuky přírody díky dbalým budíkům
+• Utište migrénu a bolesti hlavy
 
-<b>Knihovna zvuků</b>
-- Zvuky života (ptáci, cvrčci, vlci, tep lidského srdce, atd.)
-- Zvuky lesa (táborák, noc, vítr, palmy, atd.)
-- Zvuky monzunu (déšť, bouřky)
-- Změna prostředí (kavárna, knihovna, kancelář, pobřeží, řeka, atd.)
-- Zvuky dopravních prostředků (jedoucí vlak, v letadle, vrzající loď, elektromobil, atd.)
-- Čistý šum (bílý, růžový, hnědý)
+<b>BEZPLATNÉ FUNKCE</b>
+• Bohatá zvuková knihovna
+• Kompatibilní s Google Cast či Chromecast*
+• Časovač vypnutí
+• Budík s až 2 aktivními alarmy
+• Možnost tvorby a ukládání vlastních mixů
+• Generátor náhodných mixů pro každou vaši náladu
+• Individuální ovládání hlasitosti zvlášť pro každý zvuk
+• Hraní současně s puštěným hudebním přehrávačem
+• Dynamické barvy na zařízeních s Android 12L a výše
+• Žádné reklamy jakéhokoliv druhu
 
-<b>Vyžadovaná oprávnění</b>
-- <b>bránění přechodu telefonu do režimu spánku</b>: k udržení procesoru vzhůru při přehrávání
-- <b>spouštění služeb na popředí</b>: potřebné pro proces přehrávače (jiný než UI)
-- <b>spouštění při startu</b>: potřebné pro udržení časovače vypnutí/spuštění i po restartu zařízení
-- <b>úplný přístup k síti</b>: potřebné pro podporu Chromecastu a možnosti finanční podpory
-- <b>zobrazování síťových připojení</b>: přidáno jednou z použitých knihoven, nijak zatím není využité
-- <b>Fakturační služba Google Play</b>: potřebné pro možnost finanční podpory vývoje
+<i>* Chromecast je dostupný pouze při stažení Noice z obchodu Google Play.</i>
 
-Noice je nejen zdarma, ale je i open-source.
+<b>PRÉMIOVÉ FUNKCE</b>
+• Audio klipy navíc
+• Skutečné přírodní variace tvořené na požádání
+• Přehrávání kompletně offline
+• Vysoce kvalitní zvuk ke stažení nebo streamování (až 320 kb/s)
+• Neomezené aktivní budíky
+
+<b>ZVUKOVÁ KNIHOVNA</b>
+• Ze života (ptáci, cvrčci, vlci, srdce, předení kočky)
+• Počasí (ráno či úsvit, noc, děšť, hromy)
+• Místa (táborák, kavárna, knihovna, kancelář, pobřeží, břeh řeky, potápění)
+• Cestování (vlak, letadlo, vrzající člun, elektromobil)
+• Věci (větrák, nástěnné hodiny, zvonkohra)
+• Čistý šum (bílý, růžový, hnědý)
+
+<b>OPRÁVNĚNÍ APLIKACE</b>
+• <b>zobrazování síťových připojeni</b>: pro stahování a streamování zvuků
+• <b>úplný přístup k síti</b>: pro komunikaci se servery Noice, streamování a stahování zvuků
+• <b>spuštění při startu</b>: pro zajištění spuštění budíků po restartování zařízení
+• <b>bránění přechodu telefonu do režimu spánku</b>: pro zabránění uspání CPU kvůli nerušenému přehrávání s vypnutou obrazovkou
+• <b>instalace zástupců</b>: pro přidávání zástupců mixů
+• <b>spouštění služeb na popředí</b>: pro nerušené přehrávání na pozadí
+• <b>zobrazovat oznámení na celé obrazovce zamčeného zařízení</b>: pro zobrazení oznámení při spuštění alarmu
+• <b>ovládání vibrací</b>: pro vibrování u budíků s povoleným vibrováním
+
+Noice je open-source software
 https://github.com/trynoice/android-app

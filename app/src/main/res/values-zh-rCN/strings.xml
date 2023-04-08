@@ -311,4 +311,12 @@
     <string name="more_sound_clips_desc">通过额外声音片段增加新聆听维度使它们更加独特和不那么单调。</string>
     <string name="has_more_clips_with_premium">此声音在 Noice 高级版中提供更多更多音频片段。</string>
     <string name="more_sounds">更多声音</string>
+    <string name="unlimited_alarms_desc">使用Noice Premium提升您的早晨例行公事-安排无限数量的闹钟，让您的一天有一个个性化、平和的开始。</string>
+    <string name="offline_playback_desc">通过Noice的离线声音下载，随时随地享受舒缓的声音-无需网络连接。</string>
+    <string name="search_preset">搜索预设</string>
+    <string name="unlimited_alarms">无限制的闹钟</string>
+    <string name="natural_variations">自然变体</string>
+    <string name="hd_audio">高音质</string>
+    <string name="offline_playback">离线回放</string>
+    <string name="more_sounds_desc">使用Noice Premium释放您的放松和专注体验的全部潜力-带有%1$s的额外声音。</string>
 </resources>
