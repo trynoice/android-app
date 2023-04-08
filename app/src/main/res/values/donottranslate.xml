@@ -9,7 +9,6 @@
   <string name="app_instagram_url">https://www.instagram.com/trynoice/</string>
   <string name="app_twitter_url">https://twitter.com/trynoice</string>
   <string name="app_github_url">https://github.com/trynoice/android-app</string>
-  <string name="app_issues_github_url">https://github.com/trynoice/android-app/issues</string>
   <string name="app_faqs_url">https://trynoice.com/faqs</string>
   <string name="app_privacy_policy_url">https://trynoice.com/privacy-policy</string>
   <string name="app_tos_url">https://trynoice.com/terms-of-service</string>

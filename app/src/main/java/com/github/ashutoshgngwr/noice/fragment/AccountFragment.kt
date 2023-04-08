@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
-import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.AccountFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
@@ -63,13 +62,7 @@ class AccountFragment : Fragment() {
       when (item.id) {
         R.id.faqs -> item.context.startCustomTab(R.string.app_faqs_url)
         R.id.report_issues -> {
-          val url = if (BuildConfig.IS_FREE_BUILD) {
-            R.string.app_issues_github_url
-          } else {
-            R.string.app_issues_form_url
-          }
-
-          item.context.startCustomTab(url)
+          item.context.startCustomTab(R.string.app_issues_form_url)
           analyticsProvider.logEvent("issue_tracker_open", bundleOf())
         }
 
