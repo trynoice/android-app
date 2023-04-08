@@ -18,7 +18,7 @@ plugins {
 project.ext {
   deps = [
     aboutLibrariesVersion: "${aboutLibrariesVersion}",
-    androidXCoreVersion  : '1.9.0',
+    androidXCoreVersion  : '1.10.0',
     coroutinesVersion    : '1.6.4',
     hiltVersion          : "${hiltVersion}",
     kotlinVersion        : "${kotlinVersion}",
