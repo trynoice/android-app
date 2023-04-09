@@ -254,16 +254,18 @@ class SoundPlayerManager(
    * @param soundStates a map of sound ids to their desired volumes.
    */
   fun playPreset(soundStates: SortedMap<String, Float>) {
-    soundPlayers.keys
-      .subtract(soundStates.keys)
-      .forEach(this::stopSound)
-
+    // start needed sounds before stopping the not-needed ones. Because it is possible that all
+    // sounds need to be stopped before any sound in preset is started. It will cause manager to go
+    // into stopping state unnecessarily.
+    val soundsToStop = soundPlayers.keys.subtract(soundStates.keys)
     soundStates.forEach { (soundId, volume) ->
       setSoundVolume(soundId, volume)
       if (soundPlayers[soundId]?.state != SoundPlayer.State.PLAYING) {
         playSound(soundId)
       }
     }
+
+    soundsToStop.forEach(this::stopSound)
   }
 
   /**

@@ -13,6 +13,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
 import androidx.media.app.NotificationCompat.MediaStyle
 import com.github.ashutoshgngwr.noice.R
 
@@ -32,7 +33,9 @@ class SoundPlaybackNotificationManager(
   skipToPrevPresetPi: PendingIntent,
 ) {
 
+  private var isServiceInForeground = false
   private val defaultTitle = service.getString(R.string.unsaved_preset)
+  private val notificationManager: NotificationManager = requireNotNull(service.getSystemService())
   private val stateTexts = mapOf(
     SoundPlayerManager.State.PLAYING to service.getString(R.string.playing),
     SoundPlayerManager.State.PAUSING to service.getString(R.string.pausing),
@@ -112,7 +115,10 @@ class SoundPlaybackNotificationManager(
 
   private fun updateForegroundNotification() {
     if (soundPlayerManagerState == SoundPlayerManager.State.STOPPED) {
-      ServiceCompat.stopForeground(service, ServiceCompat.STOP_FOREGROUND_REMOVE)
+      if (isServiceInForeground) {
+        isServiceInForeground = false
+        ServiceCompat.stopForeground(service, ServiceCompat.STOP_FOREGROUND_REMOVE)
+      }
       return
     }
 
@@ -146,7 +152,12 @@ class SoundPlaybackNotificationManager(
       style.setShowActionsInCompactView(0, 1)
     }
 
-    service.startForeground(NOTIFICATION_ID, builder.build())
+    if (isServiceInForeground) {
+      notificationManager.notify(NOTIFICATION_ID, builder.build())
+    } else {
+      isServiceInForeground = true
+      service.startForeground(NOTIFICATION_ID, builder.build())
+    }
   }
 
   private fun initChannel(context: Context) {
