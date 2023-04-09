@@ -179,7 +179,7 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
     val alarmTriggerTime = DateUtils.formatDateTime(this, System.currentTimeMillis(), timeFmtFlags)
 
     // since loading the preset may take some time, show a notification.
-    startForeground(NOTIFICATION_ID_PRIMING, buildLoadingNotification(alarmTriggerTime))
+    startForeground(NOTIFICATION_ID_ALARM, buildLoadingNotification(alarmTriggerTime))
 
     val preset: Preset? = alarm.preset // use the alarm's selected preset if it has one
       ?: presetRepository.getRandom() // or pick one at random from the saved presets
@@ -200,7 +200,7 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
       Log.d(LOG_TAG, "startRinger: starting default ringtone")
       playDefaultRingtone(if (fadeDurationMillis > 0) 0.2f else 1f)
       buildPresetLoadFailedNotification(alarmTriggerTime)
-        .also { notificationManager.notify(NOTIFICATION_ID_PRIMING, it) }
+        .also { notificationManager.notify(NOTIFICATION_ID_ALARM, it) }
     }
 
     volumeFadeJob?.cancelAndJoin()
@@ -226,8 +226,8 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
       startVibrating()
     }
 
-    ServiceCompat.stopForeground(this@AlarmRingerService, ServiceCompat.STOP_FOREGROUND_REMOVE)
-    startForeground(NOTIFICATION_ID_ALARM, buildRingerNotification(alarm, alarmTriggerTime))
+    buildRingerNotification(alarm, alarmTriggerTime)
+      .also { notificationManager.notify(NOTIFICATION_ID_ALARM, it) }
 
     autoDismissJob?.cancel()
     autoDismissJob = lifecycleScope.launch {
@@ -387,7 +387,6 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
     private const val CHANNEL_ID_RINGER = "com.github.ashutoshgngwr.noice.alarms"
     private const val CHANNEL_ID_PRIMING = "com.github.ashutoshgngwr.noice.alarmPriming"
     private const val CHANNEL_ID_MISSED = "com.github.ashutoshgngwr.noice.missedAlarms"
-    private const val NOTIFICATION_ID_PRIMING = 0x3
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal const val NOTIFICATION_ID_ALARM = 0x4
