@@ -24,6 +24,7 @@ import androidx.paging.cachedIn
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import com.github.ashutoshgngwr.noice.AppDispatchers
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.activity.PresetShortcutHandlerActivity
 import com.github.ashutoshgngwr.noice.databinding.PresetsFragmentBinding
@@ -75,7 +76,7 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
     binding.list.adapter = adapter
     val itemDecor = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
     binding.list.addItemDecoration(itemDecor)
-    viewModel.loadAppShortcuts(requireContext())
+    viewModel.refreshAppShortcuts(requireContext())
 
     adapter.addLoadStateListener { loadStates ->
       binding.emptyListIndicator.isVisible =
@@ -196,7 +197,7 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
       showErrorSnackBar(R.string.app_shortcut_creation_failed, snackBarAnchorView())
     }
 
-    viewModel.loadAppShortcuts(requireContext())
+    viewModel.refreshAppShortcuts(requireContext())
     val params = bundleOf("success" to result, "shortcut_type" to "app")
     analyticsProvider.logEvent("preset_shortcut_create", params)
   }
@@ -204,7 +205,7 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
   override fun onPresetRemoveAppShortcutClicked(preset: Preset) {
     ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
     showSuccessSnackBar(R.string.app_shortcut_removed, snackBarAnchorView())
-    viewModel.loadAppShortcuts(requireContext())
+    viewModel.refreshAppShortcuts(requireContext())
     analyticsProvider.logEvent("preset_shortcut_remove", bundleOf("shortcut_type" to "app"))
   }
 
@@ -235,6 +236,7 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
 class PresetsViewModel @Inject constructor(
   private val presetRepository: PresetRepository,
   playbackServiceController: SoundPlaybackService.Controller,
+  private val appDispatchers: AppDispatchers,
 ) : ViewModel() {
 
   internal val presetsPagingData: Flow<PagingData<Preset>> = presetRepository.pagingDataFlow()
@@ -245,10 +247,13 @@ class PresetsViewModel @Inject constructor(
 
   internal val presetsWithAppShortcut = MutableStateFlow(emptySet<String>())
 
-  internal fun loadAppShortcuts(context: Context) {
-    presetsWithAppShortcut.value = ShortcutManagerCompat.getDynamicShortcuts(context)
+  // loading dynamic shortcuts on the IO thread because laoding them on the main thread sometimes
+  // causes an ANR.
+  internal fun refreshAppShortcuts(context: Context) = viewModelScope.launch(appDispatchers.io) {
+    ShortcutManagerCompat.getDynamicShortcuts(context)
       .map { it.id }
       .toSet()
+      .also { presetsWithAppShortcut.emit(it) }
   }
 
   internal fun getShareableUrl(preset: Preset): String {
