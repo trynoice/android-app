@@ -21,7 +21,7 @@ class SoundDownloadNotificationManager @Inject constructor(@ApplicationContext c
     .setContentTitle(context.getString(R.string.checking_sound_downloads))
     .setTicker(context.getString(R.string.checking_sound_downloads))
     .setProgress(0, 0, true)
-    .setSmallIcon(R.drawable.ic_launcher_24dp)
+    .setSmallIcon(R.drawable.launcher_24)
     .setOngoing(true)
     .setShowWhen(false)
     .setSilent(true)

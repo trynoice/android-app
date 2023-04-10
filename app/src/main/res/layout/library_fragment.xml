@@ -49,7 +49,7 @@
       android:layout_marginEnd="16dp"
       android:layout_marginBottom="76dp"
       android:contentDescription="@string/save_preset"
-      android:src="@drawable/ic_action_save"
+      android:src="@drawable/round_save_24"
       android:visibility="gone"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent" />
@@ -62,7 +62,7 @@
       android:layout_marginEnd="16dp"
       android:layout_marginBottom="@{viewModel.isPlaying ? viewModel.isSavePresetButtonVisible ? @dimen/random_preset_fab_margin_normal : @dimen/random_preset_fab_margin_extended : @dimen/random_preset_fab_margin_normal}"
       android:contentDescription="@string/random_preset"
-      android:src="@drawable/ic_baseline_shuffle_24"
+      android:src="@drawable/round_shuffle_24"
       app:isVisible="@{!viewModel.libraryItems.empty || viewModel.apiErrorStrRes == null}"
       app:layout_constraintBottom_toTopOf="@id/save_preset_button"
       app:layout_constraintEnd_toEndOf="parent" />

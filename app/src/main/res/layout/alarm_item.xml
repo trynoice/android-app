@@ -24,7 +24,7 @@
       android:layout_marginStart="8dp"
       android:minHeight="0dp"
       android:padding="4dp"
-      app:icon="@drawable/ic_round_keyboard_arrow_down_24"
+      app:icon="@drawable/round_keyboard_arrow_down_24"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       tools:rotation="180" />
@@ -37,7 +37,7 @@
       android:layout_marginEnd="8dp"
       android:hint="@string/add_label"
       android:textColor="@drawable/alarm_item_activable_text_color"
-      app:drawableStartCompat="@drawable/ic_outline_label_24"
+      app:drawableStartCompat="@drawable/round_label_outline_24"
       app:drawableTint="@drawable/alarm_item_activable_text_color"
       app:layout_constraintEnd_toStartOf="@id/expand_toggle"
       app:layout_constraintStart_toStartOf="parent"
@@ -148,7 +148,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginVertical="12dp"
-      app:drawableStartCompat="@drawable/ic_round_notifications_active_24"
+      app:drawableStartCompat="@drawable/round_notifications_active_24"
       app:layout_constraintTop_toBottomOf="@id/schedule_toggle_container"
       tools:text="@string/random_preset" />
 
@@ -159,7 +159,7 @@
       android:layout_height="wrap_content"
       android:text="@string/vibrate"
       app:drawableEndCompat="@drawable/checked_text_view_indicator"
-      app:drawableStartCompat="@drawable/ic_round_vibration_24"
+      app:drawableStartCompat="@drawable/round_vibration_24"
       app:layout_constraintTop_toBottomOf="@id/preset" />
 
     <TextView
@@ -168,7 +168,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/delete"
-      app:drawableStartCompat="@drawable/ic_round_delete_forever_24"
+      app:drawableStartCompat="@drawable/round_delete_forever_24"
       app:layout_constraintTop_toBottomOf="@id/vibrate" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>

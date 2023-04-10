@@ -91,7 +91,7 @@
       android:text="@string/app_name"
       android:textAppearance="?attr/textAppearanceBodyMedium"
       android:textColor="?android:attr/textColorSecondary"
-      app:drawableStartCompat="@drawable/ic_launcher_24dp"
+      app:drawableStartCompat="@drawable/launcher_24"
       app:drawableTint="?android:attr/textColorSecondary" />
 
   </LinearLayout>

@@ -3,27 +3,27 @@
 
   <item
     android:id="@+id/library"
-    android:icon="@drawable/ic_action_library"
+    android:icon="@drawable/round_library_music_outline_24"
     android:title="@string/library" />
 
   <item
     android:id="@+id/presets"
-    android:icon="@drawable/ic_action_presets"
+    android:icon="@drawable/round_stars_outline_24"
     android:title="@string/presets" />
 
   <item
     android:id="@+id/sleep_timer"
-    android:icon="@drawable/ic_baseline_hourglass_bottom_24"
+    android:icon="@drawable/round_hourglass_empty_24"
     android:title="@string/sleep_timer" />
 
   <item
     android:id="@+id/alarms"
-    android:icon="@drawable/ic_baseline_alarm_24"
+    android:icon="@drawable/round_alarm_24"
     android:title="@string/alarms" />
 
   <item
     android:id="@+id/account"
-    android:icon="@drawable/ic_action_account"
+    android:icon="@drawable/round_person_outline_24"
     android:title="@string/account" />
 
 </menu>

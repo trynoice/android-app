@@ -572,8 +572,8 @@ class SoundViewHolder(
 
     binding.premiumStatus.setImageResource(
       when {
-        this.soundInfo.isPremium -> R.drawable.ic_baseline_star_rate_24
-        this.soundInfo.hasPremiumSegments -> R.drawable.ic_baseline_star_half_24
+        this.soundInfo.isPremium -> R.drawable.round_star_24
+        this.soundInfo.hasPremiumSegments -> R.drawable.round_star_half_24
         else -> ResourcesCompat.ID_NULL
       }
     )
@@ -596,20 +596,26 @@ class SoundViewHolder(
     }
 
     binding.download.setIconResource(
-      when (downloadState) {
-        SoundDownloadState.NOT_DOWNLOADED -> R.drawable.ic_outline_download_for_offline_24
-        SoundDownloadState.DOWNLOADING -> R.drawable.ic_baseline_downloading_24
-        SoundDownloadState.DOWNLOADED -> R.drawable.ic_baseline_offline_pin_24
+      if (downloadState == SoundDownloadState.DOWNLOADED) {
+        R.drawable.round_download_done_24
+      } else {
+        R.drawable.round_download_24
       }
     )
 
-    (binding.download.icon as? AnimatedVectorDrawable)?.start()
+    (binding.download.icon as? AnimatedVectorDrawable)?.also { anim ->
+      if (downloadState == SoundDownloadState.DOWNLOADING) {
+        anim.start()
+      } else {
+        anim.stop()
+      }
+    }
 
     binding.play.setIconResource(
       if (soundState == SoundPlayer.State.STOPPING || soundState == SoundPlayer.State.STOPPED) {
-        R.drawable.ic_baseline_play_arrow_24
+        R.drawable.round_play_arrow_24
       } else {
-        R.drawable.ic_baseline_stop_24
+        R.drawable.round_stop_24
       }
     )
 

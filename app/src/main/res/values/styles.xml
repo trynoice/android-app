@@ -19,7 +19,7 @@
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_margin">8dp</item>
     <item name="android:textAppearance">?attr/textAppearanceTitleLarge</item>
-    <item name="icon">@drawable/ic_baseline_add_24</item>
+    <item name="icon">@drawable/round_add_24</item>
   </style>
 
   <style name="Widget.App.Account.Category.Header" parent="android:Widget.TextView">
@@ -35,39 +35,43 @@
   <style name="Widget.App.Account.Category.Item" parent="android:Widget.TextView">
     <item name="android:background">?attr/selectableItemBackground</item>
     <item name="android:clickable">true</item>
-    <item name="android:drawablePadding">16dp</item>
+    <item name="android:drawablePadding">@dimen/root_layout_padding</item>
     <item name="android:gravity">center_vertical</item>
-    <item name="android:padding">@dimen/root_layout_padding</item>
+    <item name="android:paddingBottom">16dp</item>
+    <item name="android:paddingEnd">@dimen/root_layout_padding</item>
+    <item name="android:paddingStart">@dimen/root_layout_padding</item>
+    <item name="android:paddingTop">16dp</item>
     <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
-    <item name="drawableEndCompat">@drawable/ic_round_navigate_next_24</item>
+    <item name="drawableEndCompat">@drawable/round_navigate_next_24</item>
+    <item name="drawableTint">?attr/colorControlNormal</item>
   </style>
 
   <style name="Widget.App.TextView.Message.Success" parent="android:Widget.TextView">
     <item name="android:drawablePadding">16dp</item>
     <item name="android:gravity">center_vertical</item>
     <item name="android:textAppearance">?attr/textAppearanceBodyMedium</item>
-    <item name="drawableStartCompat">@drawable/ic_baseline_check_circle_36</item>
+    <item name="drawableStartCompat">@drawable/round_check_circle_36</item>
     <item name="drawableTint">@color/green_500</item>
   </style>
 
   <style name="Widget.App.TextView.Message.Success.Centered">
     <item name="android:gravity">center</item>
     <item name="drawableStartCompat">@null</item>
-    <item name="drawableTopCompat">@drawable/ic_baseline_check_circle_36</item>
+    <item name="drawableTopCompat">@drawable/round_check_circle_36</item>
   </style>
 
   <style name="Widget.App.TextView.Message.Error" parent="android:Widget.TextView">
     <item name="android:drawablePadding">16dp</item>
     <item name="android:gravity">center_vertical</item>
     <item name="android:textAppearance">?attr/textAppearanceBodyMedium</item>
-    <item name="drawableStartCompat">@drawable/ic_baseline_error_36</item>
+    <item name="drawableStartCompat">@drawable/round_error_36</item>
     <item name="drawableTint">?attr/colorError</item>
   </style>
 
   <style name="Widget.App.TextView.Message.Error.Centered">
     <item name="android:gravity">center</item>
     <item name="drawableStartCompat">@null</item>
-    <item name="drawableTopCompat">@drawable/ic_baseline_error_36</item>
+    <item name="drawableTopCompat">@drawable/round_error_36</item>
   </style>
 
   <style name="Widget.App.SubscriptionPurchase.LineItem" parent="android:Widget.TextView">
@@ -76,6 +80,7 @@
     <item name="android:paddingBottom">4dp</item>
     <item name="android:paddingTop">4dp</item>
     <item name="android:textAppearance">?attr/textAppearanceBodyMedium</item>
+    <item name="drawableTint">?attr/colorControlNormal</item>
   </style>
 
   <style name="Widget.App.LibrarySoundInfo.LineItem" parent="android:Widget.TextView">

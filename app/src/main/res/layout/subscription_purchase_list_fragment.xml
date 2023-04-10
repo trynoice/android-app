@@ -23,7 +23,7 @@
       android:textAppearance="?attr/textAppearanceHeadlineSmall"
       android:textColor="?android:attr/textColorHint"
       app:drawableTint="?android:attr/textColorHint"
-      app:drawableTopCompat="@drawable/ic_round_money_off_72" />
+      app:drawableTopCompat="@drawable/round_money_off_72" />
 
     <Space
       android:layout_width="wrap_content"

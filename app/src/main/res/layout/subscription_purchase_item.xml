@@ -55,7 +55,7 @@
       style="@style/Widget.App.SubscriptionPurchase.LineItem"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      app:drawableStartCompat="@drawable/ic_baseline_access_time_24"
+      app:drawableStartCompat="@drawable/round_access_time_24"
       tools:text="@string/started_on" />
 
     <TextView
@@ -63,7 +63,7 @@
       style="@style/Widget.App.SubscriptionPurchase.LineItem"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      app:drawableStartCompat="@drawable/ic_baseline_access_time_filled_24"
+      app:drawableStartCompat="@drawable/round_access_time_filled_24"
       tools:text="@string/ended_on" />
 
     <TextView
@@ -71,7 +71,7 @@
       style="@style/Widget.App.SubscriptionPurchase.LineItem"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      app:drawableStartCompat="@drawable/ic_baseline_payment_24"
+      app:drawableStartCompat="@drawable/round_payment_24"
       tools:text="@string/renews_on" />
 
     <TextView
@@ -79,7 +79,7 @@
       style="@style/Widget.App.SubscriptionPurchase.LineItem"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      app:drawableStartCompat="@drawable/ic_baseline_paid_24"
+      app:drawableStartCompat="@drawable/round_paid_24"
       tools:text="@string/paid_using" />
 
     <TextView
@@ -87,7 +87,7 @@
       style="@style/Widget.App.SubscriptionPurchase.LineItem"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      app:drawableStartCompat="@drawable/ic_baseline_redeem_24"
+      app:drawableStartCompat="@drawable/round_redeem_24"
       tools:text="@string/redeemed_using_code" />
 
     <TextView
@@ -96,7 +96,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/subscription_payment_pending"
-      app:drawableStartCompat="@drawable/ic_baseline_pending_24"
+      app:drawableStartCompat="@drawable/round_pending_24"
       app:drawableTint="?attr/colorError" />
 
     <TextView
@@ -105,7 +105,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/subscription_payment_refunded"
-      app:drawableStartCompat="@drawable/ic_baseline_pending_24"
+      app:drawableStartCompat="@drawable/round_pending_24"
       app:drawableTint="?attr/colorError" />
 
     <LinearLayout

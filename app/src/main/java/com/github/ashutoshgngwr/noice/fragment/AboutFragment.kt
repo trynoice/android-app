@@ -39,7 +39,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
       setDescription(getString(R.string.app_description))
       addItem(
         buildElement(
-          R.drawable.ic_about_version,
+          R.drawable.round_code_24,
           "v${BuildConfig.VERSION_NAME}",
           getString(R.string.app_changelog_url),
         )
@@ -47,7 +47,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
 
       addItem(
         buildElement(
-          R.drawable.ic_about_copyright,
+          R.drawable.round_copyright_24,
           getString(R.string.app_copyright, Calendar.getInstance().get(Calendar.YEAR)),
           getString(R.string.app_authors_url),
         )
@@ -55,7 +55,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
 
       addItem(
         buildElement(
-          R.drawable.ic_baseline_shield_24,
+          R.drawable.round_shield_outline_24,
           R.string.app_license,
           R.string.app_license_url,
         )
@@ -63,7 +63,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
 
       addItem(
         buildElement(
-          R.drawable.ic_baseline_privacy_tip_24,
+          R.drawable.round_privacy_tip_outline_24,
           R.string.privacy_policy,
           R.string.app_privacy_policy_url,
         )
@@ -71,7 +71,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
 
       addItem(
         buildElement(
-          R.drawable.ic_baseline_policy_24,
+          R.drawable.round_policy_outline_24,
           R.string.terms_of_service,
           R.string.app_tos_url,
         )
@@ -82,7 +82,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
       if (!BuildConfig.IS_FREE_BUILD) {
         addItem(
           buildElement(
-            R.drawable.about_icon_google_play,
+            R.drawable.google_play_24,
             R.string.write_review_play_store,
             R.string.play_store_url,
           )
@@ -91,7 +91,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
 
       addItem(
         buildElement(
-          R.drawable.about_icon_email,
+          R.drawable.round_alternate_email_24,
           getString(R.string.connect_through_email),
           "mailto:trynoiceapp@gmail.com"
         )
@@ -99,7 +99,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
 
       addItem(
         buildElement(
-          R.drawable.about_icon_link,
+          R.drawable.round_link_24,
           R.string.about_website,
           R.string.app_website_url
         )
@@ -107,7 +107,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
 
       addItem(
         buildElement(
-          R.drawable.about_icon_twitter,
+          R.drawable.twitter_24,
           R.string.about_twitter,
           R.string.app_twitter_url
         )
@@ -115,7 +115,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
 
       addItem(
         buildElement(
-          R.drawable.about_icon_instagram,
+          R.drawable.instagram_24,
           R.string.about_instagram,
           R.string.app_instagram_url
         )
@@ -123,18 +123,24 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
 
       addItem(
         buildElement(
-          R.drawable.about_icon_github,
+          R.drawable.github_24,
           R.string.about_github,
           R.string.app_github_url
         )
       )
 
       addGroup(getString(R.string.created_by))
-      addTwitter("ashutoshgngwr", "Ashutosh Gangwar")
+      addItem(
+        buildElement(
+          R.drawable.twitter_24,
+          "Ashutosh Gangwar",
+          "https://twitter.com/ashutoshgngwr",
+        )
+      )
 
       addGroup(getString(R.string.third_party_attributions))
       addItem(
-        buildElement(R.drawable.ic_baseline_shield_24, getString(R.string.oss_licenses)) {
+        buildElement(R.drawable.round_shield_outline_24, getString(R.string.oss_licenses)) {
           val data = LibsBuilder().withListener(this@AboutFragment)
           mainNavController.navigate(R.id.oss_licenses, bundleOf("data" to data))
         }
@@ -142,17 +148,9 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
 
       addItem(
         buildElement(
-          R.drawable.ic_launcher_24dp,
+          R.drawable.launcher_24,
           "white noise icon by Juraj Sedlák",
           "https://thenounproject.com/term/white-noise/1287855/"
-        )
-      )
-
-      addItem(
-        buildElement(
-          R.drawable.ic_appintro_chromecast,
-          "Chromecast icon by Oliver Silvérus, SE",
-          "https://thenounproject.com/term/chromecast/2135765"
         )
       )
 
@@ -169,14 +167,6 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
           R.drawable.ic_appintro_presets,
           "Equalizer icon by Souvik Bhattacharjee",
           "https://thenounproject.com/term/equalizer/1596234"
-        )
-      )
-
-      addItem(
-        buildElement(
-          R.drawable.ic_settings_audio_focus,
-          "Listen icon by snide",
-          "https://thenounproject.com/term/listen/317779/"
         )
       )
 

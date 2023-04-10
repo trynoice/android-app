@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{listItemClickListener}"
             android:text="@string/sign_up"
-            app:drawableStartCompat="@drawable/ic_baseline_person_add_alt_1_32" />
+            app:drawableStartCompat="@drawable/round_app_registration_28" />
 
           <TextView
             android:id="@+id/sign_in_form"
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{listItemClickListener}"
             android:text="@string/sign_in"
-            app:drawableStartCompat="@drawable/ic_baseline_login_32" />
+            app:drawableStartCompat="@drawable/round_login_28" />
 
           <TextView
             android:id="@+id/view_subscription_plans"
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{listItemClickListener}"
             android:text="@string/view_subscription_plans"
-            app:drawableStartCompat="@drawable/ic_baseline_attach_money_32" />
+            app:drawableStartCompat="@drawable/round_attach_money_28" />
 
         </LinearLayout>
 
@@ -120,7 +120,7 @@
             android:onClick="@{listItemClickListener}"
             android:text="@string/get_premium"
             android:visibility="gone"
-            app:drawableStartCompat="@drawable/ic_baseline_shopping_cart_32"
+            app:drawableStartCompat="@drawable/round_shopping_cart_28"
             app:isVisible="@{!viewModel.isSubscribed}"
             tools:visibility="visible" />
 
@@ -132,7 +132,7 @@
             android:onClick="@{listItemClickListener}"
             android:text="@string/redeem_gift_card"
             android:visibility="gone"
-            app:drawableStartCompat="@drawable/ic_baseline_redeem_32"
+            app:drawableStartCompat="@drawable/round_redeem_28"
             app:isVisible="@{!viewModel.isSubscribed}"
             tools:visibility="visible" />
 
@@ -143,7 +143,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{listItemClickListener}"
             android:text="@string/subscription_purchases"
-            app:drawableStartCompat="@drawable/ic_baseline_attach_money_32" />
+            app:drawableStartCompat="@drawable/round_attach_money_28" />
 
           <TextView
             android:id="@+id/update_account_details"
@@ -152,7 +152,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{listItemClickListener}"
             android:text="@string/update_details"
-            app:drawableStartCompat="@drawable/ic_baseline_manage_accounts_32" />
+            app:drawableStartCompat="@drawable/round_manage_accounts_28" />
 
           <TextView
             android:id="@+id/sign_out"
@@ -161,7 +161,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{listItemClickListener}"
             android:text="@string/sign_out"
-            app:drawableStartCompat="@drawable/ic_baseline_logout_32" />
+            app:drawableStartCompat="@drawable/round_logout_28" />
 
           <TextView
             android:id="@+id/delete_account"
@@ -170,7 +170,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{listItemClickListener}"
             android:text="@string/delete_account"
-            app:drawableStartCompat="@drawable/ic_baseline_no_accounts_32" />
+            app:drawableStartCompat="@drawable/round_person_off_28" />
 
         </LinearLayout>
 
@@ -187,7 +187,7 @@
           android:layout_height="wrap_content"
           android:onClick="@{listItemClickListener}"
           android:text="@string/settings"
-          app:drawableStartCompat="@drawable/ic_baseline_settings_32" />
+          app:drawableStartCompat="@drawable/round_settings_28" />
 
         <TextView
           android:id="@+id/support_development"
@@ -196,7 +196,7 @@
           android:layout_height="wrap_content"
           android:onClick="@{listItemClickListener}"
           android:text="@string/support_development"
-          app:drawableStartCompat="@drawable/ic_baseline_support_32" />
+          app:drawableStartCompat="@drawable/round_support_28" />
 
         <TextView
           android:id="@+id/about"
@@ -205,7 +205,7 @@
           android:layout_height="wrap_content"
           android:onClick="@{listItemClickListener}"
           android:text="@string/about"
-          app:drawableStartCompat="@drawable/ic_baseline_info_32" />
+          app:drawableStartCompat="@drawable/round_info_28" />
 
 
         <TextView
@@ -221,7 +221,7 @@
           android:layout_height="wrap_content"
           android:onClick="@{listItemClickListener}"
           android:text="@string/faqs"
-          app:drawableStartCompat="@drawable/ic_baseline_question_answer_32" />
+          app:drawableStartCompat="@drawable/round_question_answer_28" />
 
         <TextView
           android:id="@+id/help"
@@ -230,7 +230,7 @@
           android:layout_height="wrap_content"
           android:onClick="@{listItemClickListener}"
           android:text="@string/help"
-          app:drawableStartCompat="@drawable/ic_baseline_help_32" />
+          app:drawableStartCompat="@drawable/round_help_28" />
 
         <TextView
           android:id="@+id/report_issues"
@@ -239,7 +239,7 @@
           android:layout_height="wrap_content"
           android:onClick="@{listItemClickListener}"
           android:text="@string/report_issue"
-          app:drawableStartCompat="@drawable/ic_baseline_bug_report_32" />
+          app:drawableStartCompat="@drawable/round_bug_report_28" />
 
         <TextView
           android:id="@+id/submit_feedback"
@@ -248,7 +248,7 @@
           android:layout_height="wrap_content"
           android:onClick="@{listItemClickListener}"
           android:text="@string/submit_feedback"
-          app:drawableStartCompat="@drawable/ic_baseline_feedback_32" />
+          app:drawableStartCompat="@drawable/round_feedback_28" />
 
         <TextView
           android:layout_width="match_parent"

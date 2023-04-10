@@ -33,7 +33,7 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       app:tint="?attr/colorPrimary"
-      tools:src="@drawable/ic_baseline_forest_24" />
+      tools:src="@drawable/round_nature_24" />
 
     <TextView
       android:id="@+id/title_view"

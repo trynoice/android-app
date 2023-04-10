@@ -28,7 +28,7 @@
       android:layout_weight="1"
       android:drawablePadding="12dp"
       android:textColor="?attr/colorError"
-      app:drawableStartCompat="@drawable/ic_baseline_error_24"
+      app:drawableStartCompat="@drawable/round_error_24"
       tools:text="@string/network_error" />
 
     <Space

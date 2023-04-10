@@ -72,8 +72,8 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/play_pause"
         android:onClick="@{() -> viewModel.togglePlayback()}"
-        app:icon="@{viewModel.isPlaying ? @drawable/ic_baseline_pause_24 : @drawable/ic_baseline_play_arrow_24}"
-        tools:icon="@drawable/ic_baseline_pause_24" />
+        app:icon="@{viewModel.isPlaying ? @drawable/round_pause_24 : @drawable/round_play_arrow_24}"
+        tools:icon="@drawable/round_pause_24" />
 
       <Space
         android:layout_width="4dp"
@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/stop"
         android:onClick="@{() -> viewModel.stopPlayback()}"
-        app:icon="@drawable/ic_baseline_stop_24" />
+        app:icon="@drawable/round_stop_24" />
 
       <Space
         android:layout_width="4dp"
@@ -99,7 +99,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/main_volume"
         android:text="@{viewModel.volumePercentage}"
-        app:icon="@drawable/ic_action_volume"
+        app:icon="@drawable/round_volume_up_24"
         tools:text="100%" />
 
     </LinearLayout>

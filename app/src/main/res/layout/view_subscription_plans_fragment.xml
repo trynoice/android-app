@@ -64,38 +64,38 @@
           <include
             layout="@layout/subscription_benefit_item"
             app:description="@{@string/more_sounds_desc(viewModel.premiumSoundsCount)}"
-            app:icon="@{@drawable/ic_baseline_star_rate_24}"
+            app:icon="@{@drawable/round_star_outline_24}"
             app:isVisible="@{viewModel.premiumSoundsCount > 0}"
             app:title="@{@string/more_sounds}" />
 
           <include
             layout="@layout/subscription_benefit_item"
             app:description="@{@string/more_sound_clips_desc}"
-            app:icon="@{@drawable/ic_baseline_self_improvement_24}"
+            app:icon="@{@drawable/round_segment_24}"
             app:title="@{@string/more_sound_clips}" />
 
           <include
             layout="@layout/subscription_benefit_item"
             app:description="@{@string/natural_variations_desc}"
-            app:icon="@{@drawable/ic_baseline_forest_24}"
+            app:icon="@{@drawable/round_nature_24}"
             app:title="@{@string/natural_variations}" />
 
           <include
             layout="@layout/subscription_benefit_item"
             app:description="@{@string/hd_audio_desc}"
-            app:icon="@{@drawable/ic_baseline_high_quality_24}"
+            app:icon="@{@drawable/round_high_quality_24}"
             app:title="@{@string/hd_audio}" />
 
           <include
             layout="@layout/subscription_benefit_item"
             app:description="@{@string/offline_playback_desc}"
-            app:icon="@{@drawable/ic_baseline_download_for_offline_24}"
+            app:icon="@{@drawable/round_download_24}"
             app:title="@{@string/offline_playback}" />
 
           <include
             layout="@layout/subscription_benefit_item"
             app:description="@{@string/unlimited_alarms_desc}"
-            app:icon="@{@drawable/ic_baseline_alarm_24}"
+            app:icon="@{@drawable/round_alarm_24}"
             app:title="@{@string/unlimited_alarms}" />
 
         </LinearLayout>
@@ -162,7 +162,7 @@
           android:gravity="center_vertical"
           android:text="@string/cancellation_and_refunds_policy"
           android:textAppearance="?attr/textAppearanceBodyMedium"
-          app:drawableStartCompat="@drawable/ic_outline_info_24" />
+          app:drawableStartCompat="@drawable/round_info_outline_24" />
 
         <Space
           android:layout_width="wrap_content"

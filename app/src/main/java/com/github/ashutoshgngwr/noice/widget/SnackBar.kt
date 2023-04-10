@@ -39,7 +39,7 @@ object SnackBar {
       msg,
       length,
       R.style.Widget_App_Snackbar,
-      R.drawable.ic_outline_info_24,
+      R.drawable.round_info_outline_24,
     )
   }
 
@@ -69,7 +69,7 @@ object SnackBar {
       msg,
       length,
       R.style.Widget_App_Snackbar_Success,
-      R.drawable.ic_baseline_check_circle_24,
+      R.drawable.round_check_circle_24,
     )
   }
 
@@ -99,7 +99,7 @@ object SnackBar {
       msg,
       length,
       R.style.Widget_App_Snackbar_Error,
-      R.drawable.ic_baseline_error_24,
+      R.drawable.round_error_24,
     )
   }
 

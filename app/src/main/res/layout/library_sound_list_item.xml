@@ -74,7 +74,7 @@
       android:layout_height="wrap_content"
       android:layout_margin="6dp"
       android:contentDescription="@string/sound_info"
-      app:icon="@drawable/ic_outline_info_24" />
+      app:icon="@drawable/round_info_outline_24" />
 
     <com.google.android.material.button.MaterialButton
       android:id="@+id/download"
@@ -83,7 +83,7 @@
       android:layout_height="wrap_content"
       android:layout_margin="6dp"
       android:contentDescription="@string/download_sound"
-      app:icon="@drawable/ic_outline_download_for_offline_24" />
+      app:icon="@drawable/round_download_24" />
 
     <com.google.android.material.button.MaterialButton
       android:id="@+id/play"
@@ -92,7 +92,7 @@
       android:layout_height="wrap_content"
       android:layout_margin="6dp"
       android:contentDescription="@string/play_pause"
-      app:icon="@drawable/ic_baseline_play_arrow_24" />
+      app:icon="@drawable/round_play_arrow_24" />
 
     <Button
       android:id="@+id/volume"
@@ -101,7 +101,7 @@
       android:layout_height="wrap_content"
       android:layout_margin="6dp"
       android:contentDescription="@string/volume"
-      app:icon="@drawable/ic_action_volume"
+      app:icon="@drawable/round_volume_up_24"
       tools:text="25%" />
 
   </com.google.android.flexbox.FlexboxLayout>

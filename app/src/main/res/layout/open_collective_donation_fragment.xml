@@ -6,4 +6,4 @@
   android:background="?attr/selectableItemBackground"
   android:contentDescription="@string/support_development__donate"
   android:paddingVertical="8dp"
-  android:src="@drawable/ic_donate_opencollective" />
+  android:src="@drawable/open_collective_donate_248" />

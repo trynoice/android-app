@@ -242,7 +242,7 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
 
   private fun buildLoadingNotification(contentText: String): Notification {
     return NotificationCompat.Builder(this, CHANNEL_ID_PRIMING)
-      .setSmallIcon(R.drawable.ic_baseline_alarm_24)
+      .setSmallIcon(R.drawable.round_alarm_24)
       .setContentTitle(getString(R.string.alarm))
       .setContentText(contentText)
       .setProgress(0, 0, true)
@@ -275,16 +275,16 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
 
   private fun buildRingerNotification(alarm: Alarm, alarmTriggerTime: String): Notification {
     return NotificationCompat.Builder(this, CHANNEL_ID_RINGER)
-      .setSmallIcon(R.drawable.ic_baseline_alarm_24)
+      .setSmallIcon(R.drawable.round_alarm_24)
       .setContentTitle(getString(R.string.alarm))
       .setContentText(alarmTriggerTime)
       .addAction(
-        R.drawable.ic_round_snooze_24,
+        R.drawable.round_snooze_24,
         getString(R.string.snooze),
         buildPendingServiceIntent(buildSnoozeIntent(this, alarm.id), 0x61),
       )
       .addAction(
-        R.drawable.ic_round_close_24,
+        R.drawable.round_close_24,
         getString(R.string.dismiss),
         buildPendingServiceIntent(buildDismissIntent(this, alarm.id), 0x62),
       )
@@ -312,7 +312,7 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
 
   private fun buildPresetLoadFailedNotification(alarmTriggerTime: String): Notification {
     return NotificationCompat.Builder(this, CHANNEL_ID_PRIMING)
-      .setSmallIcon(R.drawable.ic_baseline_alarm_24)
+      .setSmallIcon(R.drawable.round_alarm_24)
       .setContentTitle(getString(R.string.alarm))
       .setContentText(getString(R.string.alarm_ringer_preset_load_error))
       .setSubText(alarmTriggerTime)
@@ -339,7 +339,7 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
 
   private fun buildMissedAlarmNotification(alarmTriggerTime: String): Notification {
     return NotificationCompat.Builder(this, CHANNEL_ID_MISSED)
-      .setSmallIcon(R.drawable.ic_baseline_alarm_24)
+      .setSmallIcon(R.drawable.round_alarm_24)
       .setContentTitle(getString(R.string.alarm_missed))
       .setContentText(alarmTriggerTime)
       .setShowWhen(true)

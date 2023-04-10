@@ -53,43 +53,43 @@ class SoundPlaybackNotificationManager(
     setOngoing(true)
     setShowWhen(false)
     setSilent(true)
-    setSmallIcon(R.drawable.ic_launcher_24dp)
+    setSmallIcon(R.drawable.launcher_24)
     setStyle(style)
     setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
   }
 
   private val randomPresetAction = NotificationCompat.Action(
-    R.drawable.ic_baseline_shuffle_32,
+    R.drawable.round_shuffle_32,
     service.getString(R.string.random_preset),
     randomPresetPi,
   )
 
   private val skipPrevAction = NotificationCompat.Action(
-    R.drawable.ic_baseline_skip_previous_32,
+    R.drawable.round_skip_previous_32,
     service.getString(R.string.skip_to_prev),
     skipToPrevPresetPi,
   )
 
   private val skipNextAction = NotificationCompat.Action(
-    R.drawable.ic_baseline_skip_next_32,
+    R.drawable.round_skip_next_32,
     service.getString(R.string.skip_to_next),
     skipToNextPresetPi,
   )
 
   private val pauseAction = NotificationCompat.Action(
-    R.drawable.ic_baseline_pause_32,
+    R.drawable.round_pause_32,
     service.getString(R.string.pause),
     pausePi,
   )
 
   private val playAction = NotificationCompat.Action(
-    R.drawable.ic_baseline_play_arrow_32,
+    R.drawable.round_play_arrow_32,
     service.getString(R.string.play),
     resumePi,
   )
 
   private val closeAction = NotificationCompat.Action(
-    R.drawable.ic_baseline_close_32,
+    R.drawable.round_close_32,
     service.getString(R.string.stop),
     stopPi,
   )

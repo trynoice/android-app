@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/sound_is_premium"
-        app:drawableStartCompat="@drawable/ic_baseline_star_rate_24"
+        app:drawableStartCompat="@drawable/round_star_24"
         app:isVisible="@{info.isPremium}" />
 
       <TextView
@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/has_premium_segments"
-        app:drawableStartCompat="@drawable/ic_baseline_star_half_24"
+        app:drawableStartCompat="@drawable/round_star_half_24"
         app:isVisible="@{!info.isPremium &amp;&amp; info.hasPremiumSegments}" />
 
       <TextView
@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/looping_sound"
-        app:drawableStartCompat="@drawable/ic_baseline_repeat_24"
+        app:drawableStartCompat="@drawable/round_repeat_24"
         app:isVisible="@{info.contiguous}" />
 
       <TextView
@@ -62,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/non_looping_sound"
-        app:drawableStartCompat="@drawable/ic_baseline_shuffle_24"
+        app:drawableStartCompat="@drawable/round_shuffle_24"
         app:isVisible="@{!info.contiguous}" />
 
       <Space

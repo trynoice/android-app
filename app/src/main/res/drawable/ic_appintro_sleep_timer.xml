@@ -2,7 +2,6 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:width="200dp"
   android:height="200dp"
-  android:alpha="0.87"
   android:viewportWidth="100"
   android:viewportHeight="100">
   <path

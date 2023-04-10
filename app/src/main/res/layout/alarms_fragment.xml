@@ -25,7 +25,7 @@
       android:textAppearance="?attr/textAppearanceHeadlineSmall"
       android:textColor="?android:attr/textColorHint"
       app:drawableTint="?android:attr/textColorHint"
-      app:drawableTopCompat="@drawable/ic_baseline_alarm_cross_72" />
+      app:drawableTopCompat="@drawable/round_alarm_cross_72" />
 
     <Space
       android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/root_layout_padding"
     android:contentDescription="@string/add_alarm"
-    android:src="@drawable/ic_baseline_add_24"
+    android:src="@drawable/round_add_24"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent" />
 

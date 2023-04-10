@@ -97,7 +97,7 @@ class AppIntroActivity : AppIntro() {
       AppIntroFragment.newInstance(
         title = getString(R.string.appintro__chromecast_title),
         description = getString(R.string.appintro__chromecast_desc),
-        imageDrawable = R.drawable.ic_appintro_chromecast,
+        imageDrawable = R.drawable.round_cast_128,
         titleColor = ActivityCompat.getColor(this, R.color.appintro__text_color),
         descriptionColor = ActivityCompat.getColor(this, R.color.appintro__text_color),
         backgroundColor = ActivityCompat.getColor(this, R.color.appintro_slide_4__background)
