@@ -57,8 +57,8 @@
     <string name="in_app_feedback__title">Отправить отзыв</string>
     <string name="later">Позже</string>
     <string name="never">Никогда</string>
-    <string name="notification_channel_default__description">Регуляторы воспроизведения</string>
-    <string name="notification_channel_default__name">Воспроизведение звуков</string>
+    <string name="notification_channel_default__description">Регуляторы вопроизведения звука</string>
+    <string name="notification_channel_default__name">Воспроизведение звука</string>
     <string name="submit_feedback">Отправить отзыв</string>
     <string name="add_to_home_screen">Добавить на главный экран</string>
     <string name="intensity">Интенсивность</string>
@@ -324,4 +324,5 @@
     <string name="more_sounds_desc">Раскройте весь потенциал вашей релаксации и сосредоточенности с премиум-подпиской Noice - с %1$s дополнительными звуками.</string>
     <string name="more_sound_clips_desc">Добавьте новое измерение к прослушиванию с помощью дополнительных аудиоклипов в звуках, чтобы сделать их более уникальными и менее однообразными.</string>
     <string name="natural_variations_desc">Оживите свои звуковые ландшафты с помощью реальных и естественных звуковых вариаций, создаваемых по запросу с помощью нашей передовой звуковой технологии.</string>
+    <string name="search_preset">Поисковой пресет</string>
 </resources>
