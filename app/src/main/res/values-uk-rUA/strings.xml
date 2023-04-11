@@ -325,4 +325,7 @@
     <string name="unlimited_alarms">Необмежена кількість будильників</string>
     <string name="hd_audio_desc">Відчуйте шум, як ніколи раніше, з можливістю прослуховування звуків у форматі MP3 з бітрейтом до 320 кбіт/с, що забезпечує кришталево чистий, високоточний звук.</string>
     <string name="search_preset">Пошук поєднань</string>
+    <string name="blog">Блог</string>
+    <string name="whats_new">Що нового</string>
+    <string name="resources">Ресурси</string>
 </resources>
