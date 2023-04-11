@@ -162,7 +162,8 @@
           android:gravity="center_vertical"
           android:text="@string/cancellation_and_refunds_policy"
           android:textAppearance="?attr/textAppearanceBodyMedium"
-          app:drawableStartCompat="@drawable/round_info_outline_24" />
+          app:drawableStartCompat="@drawable/round_info_outline_24"
+          app:drawableTint="?attr/colorOnSurface" />
 
         <Space
           android:layout_width="wrap_content"

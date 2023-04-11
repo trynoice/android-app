@@ -156,7 +156,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
 
       addItem(
         buildElement(
-          R.drawable.ic_appintro_library,
+          R.drawable.ecosystem_200,
           "Ecosystem icon by Made x Made",
           "https://thenounproject.com/term/ecosystem/2318259"
         )
@@ -164,7 +164,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
 
       addItem(
         buildElement(
-          R.drawable.ic_appintro_presets,
+          R.drawable.equalizer_200,
           "Equalizer icon by Souvik Bhattacharjee",
           "https://thenounproject.com/term/equalizer/1596234"
         )
@@ -172,7 +172,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
 
       addItem(
         buildElement(
-          R.drawable.ic_appintro_sleep_timer,
+          R.drawable.sleeping_200,
           "Sleeping icon by Koson Rattanaphan, TH",
           "https://thenounproject.com/term/sleeping/3434765"
         )
