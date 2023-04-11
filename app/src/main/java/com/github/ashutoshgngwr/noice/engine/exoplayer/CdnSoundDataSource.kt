@@ -102,13 +102,13 @@ class CdnSoundDataSource private constructor(
   }
 
   override fun read(buffer: ByteArray, offset: Int, length: Int): Int {
-    if (length == 0) {
+    if (length < 1) {
       return 0
     }
 
     val readLength = if (bytesToRead == LENGTH_UNSET) length else {
       val bytesRemaining = (bytesToRead - bytesRead).toInt()
-      if (bytesRemaining == 0) {
+      if (bytesRemaining < 1) {
         return C.RESULT_END_OF_INPUT
       }
 
@@ -120,7 +120,7 @@ class CdnSoundDataSource private constructor(
         .byteStream()
         .read(buffer, offset, readLength)
 
-      if (read == -1) {
+      if (read < 0) {
         return C.RESULT_END_OF_INPUT
       }
 
