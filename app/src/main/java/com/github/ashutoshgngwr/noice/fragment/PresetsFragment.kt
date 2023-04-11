@@ -22,7 +22,6 @@ import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.paging.cachedIn
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.AppDispatchers
 import com.github.ashutoshgngwr.noice.R
@@ -37,6 +36,7 @@ import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
+import com.google.android.material.divider.MaterialDividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -74,10 +74,10 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.list.adapter = adapter
-    val itemDecor = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-    binding.list.addItemDecoration(itemDecor)
-    viewModel.refreshAppShortcuts(requireContext())
+    MaterialDividerItemDecoration(requireContext(), MaterialDividerItemDecoration.VERTICAL)
+      .also { binding.list.addItemDecoration(it) }
 
+    viewModel.refreshAppShortcuts(requireContext())
     adapter.addLoadStateListener { loadStates ->
       binding.emptyListIndicator.isVisible =
         loadStates.append.endOfPaginationReached && adapter.itemCount < 1

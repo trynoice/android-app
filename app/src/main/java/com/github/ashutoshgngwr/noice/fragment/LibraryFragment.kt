@@ -17,7 +17,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.caverock.androidsvg.PreserveAspectRatio
 import com.caverock.androidsvg.SVG
@@ -46,6 +45,7 @@ import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import com.github.ashutoshgngwr.noice.worker.SoundDownloadsRefreshWorker
+import com.google.android.material.divider.MaterialDividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -93,9 +93,9 @@ class LibraryFragment : Fragment(), SoundViewHolder.ViewController {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    val itemDecor = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-    binding.soundList.addItemDecoration(itemDecor)
     binding.soundList.adapter = adapter
+    MaterialDividerItemDecoration(requireContext(), MaterialDividerItemDecoration.VERTICAL)
+      .also { binding.soundList.addItemDecoration(it) }
 
     viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.isLibraryIconsEnabled.collect(adapter::setIconsEnabled)

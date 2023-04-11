@@ -23,13 +23,13 @@
   </style>
 
   <style name="Widget.App.Account.Category.Header" parent="android:Widget.TextView">
+    <item name="android:layout_marginStart">44dp</item>
     <item name="android:paddingBottom">8dp</item>
     <item name="android:paddingEnd">@dimen/root_layout_padding</item>
     <item name="android:paddingStart">@dimen/root_layout_padding</item>
-    <item name="android:paddingTop">24dp</item>
-    <item name="android:textAllCaps">true</item>
-    <item name="android:textAppearance">?attr/textAppearanceLabelMedium</item>
-    <item name="android:textColor">?android:attr/textColorSecondary</item>
+    <item name="android:paddingTop">28dp</item>
+    <item name="android:textAppearance">?attr/textAppearanceTitleSmall</item>
+    <item name="android:textColor">?attr/colorPrimary</item>
   </style>
 
   <style name="Widget.App.Account.Category.Item" parent="android:Widget.TextView">
