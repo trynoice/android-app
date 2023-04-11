@@ -91,7 +91,7 @@ class SignInResultFragment : Fragment() {
           .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
       )
     } catch (e: ActivityNotFoundException) {
-      showErrorSnackBar(R.string.mailbox_app_not_found)
+      showErrorSnackBar(R.string.email_app_not_found)
     }
   }
 }

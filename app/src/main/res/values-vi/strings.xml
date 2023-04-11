@@ -145,7 +145,7 @@
     <string name="ended_on">Đã kết thúc vào %1$s</string>
     <string name="change_plan">Đổi kế hoạch</string>
     <string name="gift_card">Thẻ quà</string>
-    <string name="mailbox_app_not_found">Chúng tôi không tìm thấy ứng dụng hộp thư nào trên thiết bị!</string>
+    <string name="email_app_not_found">Chúng tôi không tìm thấy ứng dụng hộp thư nào trên thiết bị!</string>
     <string name="delete_account">Xóa tài khoản</string>
     <string name="sign_out_confirmation">Xác nhận đăng xuất\?</string>
     <string name="offline">Bạn đang ngoại tuyến</string>

@@ -138,7 +138,7 @@
     <string name="invalid_email">輸入的電子郵件無效！</string>
     <string name="sign_up_email_sent">我們已在\"%1$s\"通過電子郵件向您發送了一個登入鏈接。</string>
     <string name="sign_in_link_tip">請使用 Noice 打開收到的連結以完成登入程序。</string>
-    <string name="mailbox_app_not_found">Uh-oh！我們在您的裝置上找不到郵箱應用程式！</string>
+    <string name="email_app_not_found">Uh-oh！我們在您的裝置上找不到郵箱應用程式！</string>
     <string name="cont">繼續</string>
     <string name="delete_account_confirmation">刪除後您將立即失去對您帳戶的訪問權限。 如果您持續訂閱 Noice Premium，我們將停止向您收費。 如果您改變主意，可以在刪除後 7 天內隨時通過重新登錄來恢復您的帳戶。 在此期間之後，我們將從我們的服務器中永久刪除您的帳戶數據。</string>
     <string name="account_details_update_success">您的帳戶詳細資訊已成功更新。</string>

@@ -223,7 +223,7 @@
     <string name="account">Conta</string>
     <string name="sign_in_email_sent">Enviamos um link de login por e-mail para \"%1$s\" se este endereço pertencer a uma conta registrada.</string>
     <string name="sign_in_link_tip">Abra o link recebido usando o Noice para concluir o processo de login.</string>
-    <string name="mailbox_app_not_found">Uh-oh! Não foi possível encontrar um aplicativo de caixa de correio no seu dispositivo!</string>
+    <string name="email_app_not_found">Uh-oh! Não foi possível encontrar um aplicativo de caixa de correio no seu dispositivo!</string>
     <string name="sign_in_token_error">O link de login parece ser inválido. Pode ter expirado. Por favor, tente novamente!</string>
     <string name="sign_in_sucessful">Conectado com sucesso!</string>
     <string name="cont">Continuar</string>

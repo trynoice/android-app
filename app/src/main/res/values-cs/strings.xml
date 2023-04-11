@@ -153,7 +153,7 @@
     <string name="back_online">Zpět online</string>
     <string name="signing_in">Přihlašování</string>
     <string name="sign_in_to_continue">Pro pokračování se prosím přihlaste nebo zaregistrujte.</string>
-    <string name="mailbox_app_not_found">Ajaj! Vypadá to, že na vašem zařízení nemáte poštovní aplikaci.</string>
+    <string name="email_app_not_found">Ajaj! Vypadá to, že na vašem zařízení nemáte poštovní aplikaci.</string>
     <string name="open_mailbox">Otevřít poštovní schránku</string>
     <string name="sign_in_link_tip">Pro dokončení přihlášení otevřte obdržený odkaz pomocí aplikace Noice.</string>
     <string name="account">Účet</string>

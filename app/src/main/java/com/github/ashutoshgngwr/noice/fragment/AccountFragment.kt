@@ -1,5 +1,9 @@
 package com.github.ashutoshgngwr.noice.fragment
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
+import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.AccountFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
@@ -60,17 +65,58 @@ class AccountFragment : Fragment() {
     binding.viewModel = viewModel
     binding.listItemClickListener = View.OnClickListener { item ->
       when (item.id) {
+        R.id.blog -> item.context.startCustomTab(R.string.app_blog_url)
+        R.id.whats_new -> item.context.startCustomTab(R.string.app_changelog_url)
         R.id.faqs -> item.context.startCustomTab(R.string.app_faqs_url)
+        R.id.email_us -> {
+          val intent = Intent(Intent.ACTION_SENDTO)
+            .setData(Uri.parse("mailto:"))
+            .putExtra(Intent.EXTRA_EMAIL, arrayOf("trynoiceapp@gmail.com"))
+
+          try {
+            startActivity(intent)
+          } catch (e: ActivityNotFoundException) {
+            showErrorSnackBar(R.string.email_app_not_found)
+          }
+        }
+
         R.id.report_issues -> {
-          item.context.startCustomTab(R.string.app_issues_form_url)
+          Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSdYhyYjxhJ7IKyiqdc3AE3uINSoRWBw8ROB003gkZ47KeSjWw/viewform")
+            .buildUpon()
+            .also { b ->
+              val email = viewModel.profile.value?.email
+              if (email != null) b.appendQueryParameter("entry.1204080881", email)
+            }
+            .appendQueryParameter("entry.486797125", "Android")
+            .appendQueryParameter(
+              "entry.997774143",
+              "v${BuildConfig.VERSION_NAME} (${if (BuildConfig.IS_FREE_BUILD) "Free" else "Full"})",
+            )
+            .appendQueryParameter(
+              "entry.1513858713",
+              "${Build.MANUFACTURER} ${Build.MODEL}, Android ${Build.VERSION.RELEASE}",
+            )
+            .toString()
+            .also { item.context.startCustomTab(it) }
+
           analyticsProvider.logEvent("issue_tracker_open", bundleOf())
         }
 
         R.id.submit_feedback -> {
-          item.context.startCustomTab(R.string.feedback_form_url)
+          Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSdEfOCyWfQ4QFMnLqlLj3BF27VKS1C-CQIokbmkXFchf6QZ6g/viewform")
+            .buildUpon()
+            .also { b ->
+              val email = viewModel.profile.value?.email
+              if (email != null) b.appendQueryParameter("entry.417281718", email)
+            }
+            .toString()
+            .also { item.context.startCustomTab(it) }
+
           analyticsProvider.logEvent("feedback_form_open", bundleOf())
         }
 
+        R.id.privacy_policy -> item.context.startCustomTab(R.string.app_privacy_policy_url)
+        R.id.terms_of_service -> item.context.startCustomTab(R.string.app_tos_url)
         else -> mainNavController.navigate(item.id)
       }
     }

@@ -143,7 +143,7 @@
     <string name="sign_in_link_tip">Complete the sign-in process by clicking the link sent to your email and opening it with Noice.</string>
     <string name="retry">Retry</string>
     <string name="open_mailbox">Open Mailbox</string>
-    <string name="mailbox_app_not_found">Uh-oh! It looks like you don\'t have an email app on your device.</string>
+    <string name="email_app_not_found">Uh-oh! It looks like you don\'t have an email app on your device.</string>
     <string name="signing_in">Signing in</string>
     <string name="sign_in_token_error">Oops! The sign-in link seems to be invalid or expired. Please request a new one and try again.</string>
     <string name="sign_in_sucessful">Welcome aboard! You\'re now successfully signed in.</string>
@@ -325,4 +325,7 @@
     <string name="unlimited_alarms">Unlimited Alarms</string>
     <string name="unlimited_alarms_desc">Elevate your morning routine with Noice Premium - schedule an unlimited number of alarms for a personalised and peaceful start to your day.</string>
     <string name="search_preset">Search presets</string>
+    <string name="whats_new">What\'s New</string>
+    <string name="blog">Blog</string>
+    <string name="resources">Resources</string>
 </resources>

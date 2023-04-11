@@ -194,13 +194,13 @@
           app:drawableStartCompat="@drawable/round_settings_28" />
 
         <TextView
-          android:id="@+id/support_development"
-          style="@style/Widget.App.Account.Category.Item"
+          android:id="@+id/blog"
+          style="@style/Widget.App.Account.Category.Item.ExternalLink"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:onClick="@{listItemClickListener}"
-          android:text="@string/support_development"
-          app:drawableStartCompat="@drawable/round_support_28" />
+          android:text="@string/blog"
+          app:drawableStartCompat="@drawable/round_article_28" />
 
         <TextView
           android:id="@+id/about"
@@ -210,6 +210,15 @@
           android:onClick="@{listItemClickListener}"
           android:text="@string/about"
           app:drawableStartCompat="@drawable/round_info_28" />
+
+        <TextView
+          android:id="@+id/whats_new"
+          style="@style/Widget.App.Account.Category.Item.ExternalLink"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{listItemClickListener}"
+          android:text="@string/whats_new"
+          app:drawableStartCompat="@drawable/round_new_releases_28" />
 
         <com.google.android.material.divider.MaterialDivider
           android:layout_width="match_parent"
@@ -223,12 +232,49 @@
 
         <TextView
           android:id="@+id/faqs"
-          style="@style/Widget.App.Account.Category.Item"
+          style="@style/Widget.App.Account.Category.Item.ExternalLink"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:onClick="@{listItemClickListener}"
           android:text="@string/faqs"
           app:drawableStartCompat="@drawable/round_question_answer_28" />
+
+        <TextView
+          android:id="@+id/email_us"
+          style="@style/Widget.App.Account.Category.Item.ExternalLink"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{listItemClickListener}"
+          android:text="@string/connect_through_email"
+          app:drawableStartCompat="@drawable/round_email_28" />
+
+        <TextView
+          android:id="@+id/report_issues"
+          style="@style/Widget.App.Account.Category.Item.ExternalLink"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{listItemClickListener}"
+          android:text="@string/report_issue"
+          app:drawableStartCompat="@drawable/round_bug_report_28" />
+
+        <TextView
+          android:id="@+id/submit_feedback"
+          style="@style/Widget.App.Account.Category.Item.ExternalLink"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{listItemClickListener}"
+          android:text="@string/submit_feedback"
+          app:drawableStartCompat="@drawable/round_feedback_28" />
+
+        <com.google.android.material.divider.MaterialDivider
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
+
+        <TextView
+          style="@style/Widget.App.Account.Category.Header"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/resources" />
 
         <TextView
           android:id="@+id/help"
@@ -240,22 +286,31 @@
           app:drawableStartCompat="@drawable/round_help_28" />
 
         <TextView
-          android:id="@+id/report_issues"
+          android:id="@+id/support_development"
           style="@style/Widget.App.Account.Category.Item"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:onClick="@{listItemClickListener}"
-          android:text="@string/report_issue"
-          app:drawableStartCompat="@drawable/round_bug_report_28" />
+          android:text="@string/support_development"
+          app:drawableStartCompat="@drawable/round_support_28" />
 
         <TextView
-          android:id="@+id/submit_feedback"
-          style="@style/Widget.App.Account.Category.Item"
+          android:id="@+id/privacy_policy"
+          style="@style/Widget.App.Account.Category.Item.ExternalLink"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:onClick="@{listItemClickListener}"
-          android:text="@string/submit_feedback"
-          app:drawableStartCompat="@drawable/round_feedback_28" />
+          android:text="@string/privacy_policy"
+          app:drawableStartCompat="@drawable/round_privacy_tip_24" />
+
+        <TextView
+          android:id="@+id/terms_of_service"
+          style="@style/Widget.App.Account.Category.Item.ExternalLink"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{listItemClickListener}"
+          android:text="@string/terms_of_service"
+          app:drawableStartCompat="@drawable/round_policy_28" />
 
         <TextView
           android:layout_width="match_parent"

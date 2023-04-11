@@ -147,7 +147,7 @@
     <string name="sign_in_email_error">糟糕！我们无法通过电子邮件向您发送登录链接。%1$s后重试！</string>
     <string name="quarterly">按季</string>
     <string name="welcome">欢迎您！</string>
-    <string name="mailbox_app_not_found">糟糕！您的设备上似乎未安装电子邮箱应用。</string>
+    <string name="email_app_not_found">糟糕！您的设备上似乎未安装电子邮箱应用。</string>
     <string name="cont">继续</string>
     <string name="duplicate_email_error">该邮箱已被注册。</string>
     <plurals name="n_months">

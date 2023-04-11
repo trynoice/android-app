@@ -130,7 +130,7 @@
     <string name="sign_up_email_sent">हमने आपको %1$s पर एक साइन-इन लिंक भेजा है। कृपया अपना इनबॉक्स देखें!</string>
     <string name="retry">पुन: प्रयास करें</string>
     <string name="open_mailbox">मेलबॉक्स खोलें</string>
-    <string name="mailbox_app_not_found">उह ओह! ऐसा लगता है कि आपके डिवाइस पर कोई ईमेल ऐप नहीं है।</string>
+    <string name="email_app_not_found">उह ओह! ऐसा लगता है कि आपके डिवाइस पर कोई ईमेल ऐप नहीं है।</string>
     <string name="signing_in">हम आपको साइन इन कर रहे हैं</string>
     <string name="sign_in_sucessful">सवार स्वागत है! अब आप सफलतापूर्वक साइन इन हो गए हैं।</string>
     <string name="cont">आगे बढें</string>

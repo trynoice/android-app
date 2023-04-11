@@ -155,7 +155,7 @@
     <string name="sign_up_email_sent">Ti abbiamo inviato un link di accesso all\'e-mail %1$s.Controlla la tua casella di posta!</string>
     <string name="sign_in_email_sent">Ti abbiamo inviato un link di accesso a %1$s se questa email appartiene a un account registrato. Controlla la tua casella di posta!</string>
     <string name="sign_in_link_tip">Completa il processo di accesso facendo clic sul link inviato alla tua email e aprendolo con Noice.</string>
-    <string name="mailbox_app_not_found">Uh-oh! Sembra che tu non abbia un app di e-mail sul dispositivo.</string>
+    <string name="email_app_not_found">Uh-oh! Sembra che tu non abbia un app di e-mail sul dispositivo.</string>
     <string name="signing_in">Accedendo</string>
     <string name="sign_in_token_error">Oops! Il link di accesso sembra non valido o scaduto. Richiedi un nuovo link e riprova.</string>
     <string name="sign_in_sucessful">Benvenuto a bordo! Ora hai eseguito l\'accesso con successo.</string>

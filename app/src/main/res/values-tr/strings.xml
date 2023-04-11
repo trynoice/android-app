@@ -166,7 +166,7 @@
     <string name="back_online">Çevrimiçi oldunuz</string>
     <string name="cont">Devam et</string>
     <string name="quarterly">3 Aylık</string>
-    <string name="mailbox_app_not_found">Amanın! Cihazınızda bir e-posta uygulaması bulamadık!</string>
+    <string name="email_app_not_found">Amanın! Cihazınızda bir e-posta uygulaması bulamadık!</string>
     <string name="sign_out_confirmation">Oturumu kapatmayı onaylıyor musunuz\?</string>
     <string name="offline">Çevrimdışısınız</string>
     <string name="bi_yearly">İki yıllık</string>

@@ -169,7 +169,7 @@
     <string name="sign_in_link_tip">Заверште процес реєстрації, перейшовши за посиланням, надісланим на вашу електронну пошту, і відкривши його за допомогою Noice.</string>
     <string name="retry">Повторить спробу</string>
     <string name="open_mailbox">Відкрити поштову скриньку</string>
-    <string name="mailbox_app_not_found">Йой! Схоже, на вашому пристрої не встановлено застосунок електронної пошти.</string>
+    <string name="email_app_not_found">Йой! Схоже, на вашому пристрої не встановлено застосунок електронної пошти.</string>
     <string name="sign_in_sucessful">Ласкаво просимо на борт! Ви успішно ввійшли в систему.</string>
     <string name="cont">Продовжити</string>
     <string name="sign_out_confirmation">Ви впевнені, що хочете вийти\? Не хвилюйтеся, ви завжди можете повернутися!</string>

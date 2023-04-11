@@ -40,7 +40,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
       addItem(
         buildElement(
           R.drawable.round_code_24,
-          "v${BuildConfig.VERSION_NAME}",
+          "v${BuildConfig.VERSION_NAME} (${if (BuildConfig.IS_FREE_BUILD) "Free" else "Full"})",
           getString(R.string.app_changelog_url),
         )
       )
@@ -93,7 +93,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
         buildElement(
           R.drawable.round_alternate_email_24,
           getString(R.string.connect_through_email),
-          "mailto:trynoiceapp@gmail.com"
+          "mailto:trynoiceapp@gmail.com",
         )
       )
 
@@ -101,7 +101,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
         buildElement(
           R.drawable.round_link_24,
           R.string.about_website,
-          R.string.app_website_url
+          R.string.app_website_url,
         )
       )
 
@@ -109,7 +109,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
         buildElement(
           R.drawable.twitter_24,
           R.string.about_twitter,
-          R.string.app_twitter_url
+          R.string.app_twitter_url,
         )
       )
 
@@ -117,7 +117,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
         buildElement(
           R.drawable.instagram_24,
           R.string.about_instagram,
-          R.string.app_instagram_url
+          R.string.app_instagram_url,
         )
       )
 
@@ -125,7 +125,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
         buildElement(
           R.drawable.github_24,
           R.string.about_github,
-          R.string.app_github_url
+          R.string.app_github_url,
         )
       )
 

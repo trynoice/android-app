@@ -174,7 +174,7 @@
     <string name="confirming_payment">Confirmado el pago</string>
     <string name="monthly_price">%1$s/ por mes</string>
     <string name="sound_fade_out_duration_summary">Tiempo de duración en segundos para los sonidos de desvanecimiento</string>
-    <string name="mailbox_app_not_found">¡Oh-oh! Parece que no tienes una aplicación de correo electrónico en tu dispositivo.</string>
+    <string name="email_app_not_found">¡Oh-oh! Parece que no tienes una aplicación de correo electrónico en tu dispositivo.</string>
     <string name="subscription_payment_confirmation_failed">¡Vaya! Nos encontramos con un inconveniente al confirmar su pago. Podría ser una falla en la red o un retraso del proveedor de pagos. Tenga la seguridad de que actualizaremos el estado de su suscripción tan pronto como tengamos noticias sobre el pago. ¡Vuelve a consultar más tarde!</string>
     <string name="delete_account_confirmation">Despídete de tu cuenta con un adiós elegante, sabiendo que tu suscripción a Noice Premium se cancelará y tus datos se borrarán permanentemente de nuestros servidores en 7 días. Pero, si cambias de opinión, puedes restaurar fácilmente tu cuenta antes de que pasen los 7 días.</string>
     <string name="account">Cuenta</string>

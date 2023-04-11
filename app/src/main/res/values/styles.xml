@@ -42,8 +42,12 @@
     <item name="android:paddingStart">@dimen/root_layout_padding</item>
     <item name="android:paddingTop">16dp</item>
     <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
-    <item name="drawableEndCompat">@drawable/round_navigate_next_24</item>
+    <item name="drawableEndCompat">@drawable/round_navigate_next_16</item>
     <item name="drawableTint">?attr/colorControlNormal</item>
+  </style>
+
+  <style name="Widget.App.Account.Category.Item.ExternalLink">
+    <item name="drawableEndCompat">@drawable/round_open_in_new_16</item>
   </style>
 
   <style name="Widget.App.TextView.Message.Success" parent="android:Widget.TextView">

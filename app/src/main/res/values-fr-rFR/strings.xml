@@ -147,7 +147,7 @@
     <string name="monthly">Tous les mois</string>
     <string name="quarterly">Tous les trimestres</string>
     <string name="back_online">De retour en ligne</string>
-    <string name="mailbox_app_not_found">Oh oh ! Nous n\'avons pas trouvé d\'application de messagerie sur votre appareil !</string>
+    <string name="email_app_not_found">Oh oh ! Nous n\'avons pas trouvé d\'application de messagerie sur votre appareil !</string>
     <string name="playing">Lecture en cours</string>
     <string name="audio_quality_ultra">Ultra (320 kb/s)</string>
     <string name="sign_up">S\'inscrire</string>

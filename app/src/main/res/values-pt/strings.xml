@@ -132,7 +132,7 @@
     <string name="sign_up_email_sent">Enviamos-lhe uma ligação de autenticação por e-mail a \"%1$s\".</string>
     <string name="sign_in_email_sent">Enviamos-lhe uma ligação de autenticação por e-mail a \"%1$s\" se este endereço pertencer a uma conta registada.</string>
     <string name="sign_in_link_tip">Abra a ligação recebida a usar o Noice para concluir o processo de autenticação.</string>
-    <string name="mailbox_app_not_found">Epá! Não foi possível encontrar uma app de caixa de correio no seu aparelho!</string>
+    <string name="email_app_not_found">Epá! Não foi possível encontrar uma app de caixa de correio no seu aparelho!</string>
     <string name="signing_in">A autenticar</string>
     <string name="sign_in_token_error">A ligação de autenticação parece ser inválida. Pode ter expirado. Por favor, tente novamente!</string>
     <string name="sign_in_sucessful">Conectado com sucesso!</string>

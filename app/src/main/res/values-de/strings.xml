@@ -163,7 +163,7 @@
     <string name="sign_in_message">Bitte geben Sie Ihre E-Mail-Adresse ein, um sich anzumelden.</string>
     <string name="account">Konto</string>
     <string name="retry">Erneut versuchen</string>
-    <string name="mailbox_app_not_found">Oh, oh! Wir konnten keine Mailbox-App auf Ihrem Gerät finden!</string>
+    <string name="email_app_not_found">Oh, oh! Wir konnten keine Mailbox-App auf Ihrem Gerät finden!</string>
     <string name="invalid_email">Die eingegebene E-Mail ist ungültig!</string>
     <string name="view_subscription_plans">Pläne ansehen</string>
     <string name="app">Anwendung</string>

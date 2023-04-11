@@ -137,7 +137,7 @@
     <string name="sign_in_message">Proszę wprowadź swój email, aby się zalogować.</string>
     <string name="sign_in_link_tip">Otwórz otrzymany link za pomocą Noice, aby zakończyć proces logowania.</string>
     <string name="email">Email</string>
-    <string name="mailbox_app_not_found">Uh-oh! Nie mogliśmy znaleźć aplikacji skrzynki pocztowej na Twoim urządzeniu!</string>
+    <string name="email_app_not_found">Uh-oh! Nie mogliśmy znaleźć aplikacji skrzynki pocztowej na Twoim urządzeniu!</string>
     <string name="accept">Akceptuj</string>
     <string name="sign_out">Wyloguj się</string>
     <string name="network_error">Sieć jest nieosiągalna.</string>

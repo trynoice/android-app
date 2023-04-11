@@ -184,7 +184,7 @@
     <string name="sign_in_link_tip">Completalo proceso de inicio de sesión facendo clic na ligazón enviada ao teu correo electrónico e abríndoa con Noice.</string>
     <string name="retry">Téntao de novo</string>
     <string name="open_mailbox">Abrila caixa do correo</string>
-    <string name="mailbox_app_not_found">Vaia! Parece que non tes unha aplicación de correo electrónico no teu dispositivo.</string>
+    <string name="email_app_not_found">Vaia! Parece que non tes unha aplicación de correo electrónico no teu dispositivo.</string>
     <string name="signing_in">Iniciando sesión</string>
     <string name="sign_in_sucessful">Benvido a bordo! Agora iniciaches sesión correctamente.</string>
     <string name="cont">Continuar</string>
