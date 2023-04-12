@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <style name="Widget.App.Button.IconButton.Outlined" parent="Widget.Material3.Button.IconButton">
-    <item name="strokeColor">@color/m3_button_outline_color_selector</item>
-    <item name="strokeWidth">@dimen/m3_btn_stroke_size</item>
-  </style>
-
   <style name="TextAppearance.App.CountdownTextView" parent="TextAppearance.Material3.DisplayMedium">
     <item name="android:textColor">?attr/colorPrimary</item>
   </style>
@@ -48,6 +43,12 @@
 
   <style name="Widget.App.Account.Category.Item.ExternalLink">
     <item name="drawableEndCompat">@drawable/round_open_in_new_16</item>
+  </style>
+
+  <style name="Widget.App.Account.SocialMediaButton" parent="Widget.Material3.Button.IconButton">
+    <item name="android:layout_marginEnd">2dp</item>
+    <item name="android:layout_marginStart">2dp</item>
+    <item name="iconTint">@null</item>
   </style>
 
   <style name="Widget.App.TextView.Message.Success" parent="android:Widget.TextView">

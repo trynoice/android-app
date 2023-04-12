@@ -312,10 +312,67 @@
           android:text="@string/terms_of_service"
           app:drawableStartCompat="@drawable/round_policy_28" />
 
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="48dp"
+          android:gravity="center"
+          android:orientation="horizontal">
+
+          <Button
+            android:id="@+id/twitter"
+            style="@style/Widget.App.Account.SocialMediaButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{listItemClickListener}"
+            app:icon="@drawable/twitter_24" />
+
+          <Button
+            android:id="@+id/instagram"
+            style="@style/Widget.App.Account.SocialMediaButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/about_instagram"
+            android:onClick="@{listItemClickListener}"
+            app:icon="@drawable/instagram_24" />
+
+          <Button
+            android:id="@+id/linkedin"
+            style="@style/Widget.App.Account.SocialMediaButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/about_linkedin"
+            android:onClick="@{listItemClickListener}"
+            app:icon="@drawable/linkedin_24" />
+
+          <Button
+            android:id="@+id/facebook"
+            style="@style/Widget.App.Account.SocialMediaButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/about_facebook"
+            android:onClick="@{listItemClickListener}"
+            app:icon="@drawable/facebook_24" />
+
+          <Button
+            android:id="@+id/github"
+            style="@style/Widget.App.Account.SocialMediaButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/about_github"
+            android:onClick="@{listItemClickListener}"
+            app:icon="@drawable/github_24" />
+
+        </LinearLayout>
+
+        <Space
+          android:layout_width="wrap_content"
+          android:layout_height="16dp" />
+
         <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginVertical="48dp"
+          android:layout_marginBottom="48dp"
           android:gravity="center"
           android:text="@string/made_in_india"
           android:textAppearance="?attr/textAppearanceLabelMedium"

@@ -85,7 +85,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
             R.drawable.google_play_24,
             R.string.write_review_play_store,
             R.string.play_store_url,
-          )
+          ).setAutoApplyIconTint(false)
         )
       }
 
@@ -110,7 +110,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
           R.drawable.twitter_24,
           R.string.about_twitter,
           R.string.app_twitter_url,
-        )
+        ).setAutoApplyIconTint(false)
       )
 
       addItem(
@@ -118,7 +118,23 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
           R.drawable.instagram_24,
           R.string.about_instagram,
           R.string.app_instagram_url,
-        )
+        ).setAutoApplyIconTint(false)
+      )
+
+      addItem(
+        buildElement(
+          R.drawable.linkedin_24,
+          R.string.about_linkedin,
+          R.string.app_linkedin_url,
+        ).setAutoApplyIconTint(false)
+      )
+
+      addItem(
+        buildElement(
+          R.drawable.facebook_24,
+          R.string.about_facebook,
+          R.string.app_facebook_url,
+        ).setAutoApplyIconTint(false)
       )
 
       addItem(
@@ -126,7 +142,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
           R.drawable.github_24,
           R.string.about_github,
           R.string.app_github_url,
-        )
+        ).setAutoApplyIconTint(false)
       )
 
       addGroup(getString(R.string.created_by))
@@ -135,7 +151,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
           R.drawable.twitter_24,
           "Ashutosh Gangwar",
           "https://twitter.com/ashutoshgngwr",
-        )
+        ).setAutoApplyIconTint(false)
       )
 
       addGroup(getString(R.string.third_party_attributions))

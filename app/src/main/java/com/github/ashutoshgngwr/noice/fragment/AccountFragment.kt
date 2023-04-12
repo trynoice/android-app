@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -117,6 +118,11 @@ class AccountFragment : Fragment() {
 
         R.id.privacy_policy -> item.context.startCustomTab(R.string.app_privacy_policy_url)
         R.id.terms_of_service -> item.context.startCustomTab(R.string.app_tos_url)
+        R.id.twitter -> launchActivityForUrl(R.string.app_twitter_url)
+        R.id.instagram -> launchActivityForUrl(R.string.app_instagram_url)
+        R.id.linkedin -> launchActivityForUrl(R.string.app_linkedin_url)
+        R.id.facebook -> launchActivityForUrl(R.string.app_facebook_url)
+        R.id.github -> launchActivityForUrl(R.string.app_github_url)
         else -> mainNavController.navigate(item.id)
       }
     }
@@ -136,6 +142,13 @@ class AccountFragment : Fragment() {
     }
 
     viewModel.loadData()
+  }
+
+  private fun launchActivityForUrl(@StringRes resId: Int) {
+    Intent(Intent.ACTION_VIEW)
+      .setData(Uri.parse(getString(resId)))
+      .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+      .also { startActivity(it) }
   }
 }
 
