@@ -24,6 +24,7 @@ import com.github.ashutoshgngwr.noice.AppDispatchers
 import com.github.ashutoshgngwr.noice.ext.getMutableStringSet
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.security.KeyFactory
@@ -49,6 +50,7 @@ class RealInAppBillingProvider(
 
   private var purchaseListener: InAppBillingProvider.PurchaseListener? = null
   private var reconnectDelayMillis = RECONNECT_DELAY_START_MILLIS
+  private var reconnectJob: Job? = null
 
   private val securityKey: PublicKey
   private val client: BillingClient
@@ -263,14 +265,17 @@ class RealInAppBillingProvider(
   }
 
   private fun retryServiceConnectionWithExponentialBackoff() {
-    this.also { listener ->
-      defaultScope.launch(appDispatchers.main) {
-        delay(reconnectDelayMillis)
-        client.startConnection(listener)
+    reconnectJob?.cancel()
+    reconnectJob = defaultScope.launch(appDispatchers.main) {
+      delay(reconnectDelayMillis)
+      reconnectDelayMillis = min(2 * reconnectDelayMillis, RECONNECT_DELAY_MAX_MILLIS)
+      try {
+        // throws `java.lang.IllegalStateException: Too many bind requests(999+) for service Intent`.
+        client.startConnection(this@RealInAppBillingProvider)
+      } catch (e: IllegalStateException) {
+        Log.w(LOG_TAG, "retryServiceConnectionWithExponentialBackoff: request failed", e)
       }
     }
-
-    reconnectDelayMillis = min(2 * reconnectDelayMillis, RECONNECT_DELAY_MAX_MILLIS)
   }
 
   private suspend fun queryPurchases(type: InAppBillingProvider.ProductType): List<Purchase> {
