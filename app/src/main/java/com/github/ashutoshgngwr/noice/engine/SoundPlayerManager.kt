@@ -315,7 +315,7 @@ class SoundPlayerManager(
       soundPlayerStates.isEmpty() -> State.STOPPED
       soundPlayerStates.all { it == SoundPlayer.State.STOPPING } -> State.STOPPING
       soundPlayerStates.all { it == SoundPlayer.State.PAUSED } -> State.PAUSED
-      // some players may be stopping during when all sounds are paused.
+      // some players may be stopping during the pause transition.
       soundPlayerStates.all { it == SoundPlayer.State.PAUSING || it == SoundPlayer.State.PAUSED || it == SoundPlayer.State.STOPPING } -> State.PAUSING
       else -> State.PLAYING
     }
