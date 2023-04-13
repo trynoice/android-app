@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.engine
+package com.github.ashutoshgngwr.noice.engine.media
 
 import android.content.Context
 import android.os.Handler

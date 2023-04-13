@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.engine.exoplayer
+package com.github.ashutoshgngwr.noice.engine.media
 
 import androidx.media3.datasource.DataSource
 import androidx.media3.datasource.cache.Cache

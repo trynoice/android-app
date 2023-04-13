@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.engine.exoplayer
+package com.github.ashutoshgngwr.noice.engine.media
 
 import android.net.Uri
 import androidx.media3.common.C

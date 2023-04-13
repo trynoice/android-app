@@ -14,8 +14,8 @@ import androidx.media3.exoplayer.offline.WritableDownloadIndex
 import androidx.media3.exoplayer.scheduler.Scheduler
 import androidx.media3.exoplayer.workmanager.WorkManagerScheduler
 import com.github.ashutoshgngwr.noice.activity.MainActivity
-import com.github.ashutoshgngwr.noice.engine.exoplayer.CdnSoundDataSource
-import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadNotificationManager
+import com.github.ashutoshgngwr.noice.engine.media.CdnSoundDataSource
+import com.github.ashutoshgngwr.noice.engine.media.SoundDownloadNotificationManager
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executors

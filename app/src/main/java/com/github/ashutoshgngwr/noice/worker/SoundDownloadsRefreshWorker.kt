@@ -22,7 +22,7 @@ import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.github.ashutoshgngwr.noice.AppDispatchers
-import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadNotificationManager
+import com.github.ashutoshgngwr.noice.engine.media.SoundDownloadNotificationManager
 import com.github.ashutoshgngwr.noice.ext.getMutableStringSet
 import com.github.ashutoshgngwr.noice.models.Sound
 import com.github.ashutoshgngwr.noice.models.SoundDownloadMetadata

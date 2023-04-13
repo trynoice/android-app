@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.engine
+package com.github.ashutoshgngwr.noice.engine.media
 
 import androidx.media3.common.AudioAttributes
 import kotlin.properties.Delegates.observable

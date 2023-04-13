@@ -14,7 +14,7 @@ import com.github.ashutoshgngwr.noice.engine.SoundPlaybackNotificationManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerMediaSession
-import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDataSourceFactory
+import com.github.ashutoshgngwr.noice.engine.media.SoundDataSourceFactory
 import com.github.ashutoshgngwr.noice.models.AudioQuality
 import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.provider.CastApiProvider

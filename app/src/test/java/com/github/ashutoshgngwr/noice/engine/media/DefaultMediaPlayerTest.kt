@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.engine
+package com.github.ashutoshgngwr.noice.engine.media
 
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.test.utils.FakeMediaSourceFactory

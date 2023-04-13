@@ -2,6 +2,8 @@ package com.github.ashutoshgngwr.noice.engine
 
 import androidx.media3.common.AudioAttributes
 import com.github.ashutoshgngwr.noice.TestDispatcherRule
+import com.github.ashutoshgngwr.noice.engine.media.FakeMediaPlayer
+import com.github.ashutoshgngwr.noice.engine.media.MediaPlayer
 import com.github.ashutoshgngwr.noice.models.Sound
 import com.github.ashutoshgngwr.noice.models.SoundInfo
 import com.github.ashutoshgngwr.noice.models.SoundSegment

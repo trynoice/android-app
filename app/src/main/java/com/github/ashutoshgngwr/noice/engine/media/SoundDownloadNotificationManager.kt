@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.engine.exoplayer
+package com.github.ashutoshgngwr.noice.engine.media
 
 import android.app.Notification
 import android.app.NotificationChannel

@@ -25,13 +25,13 @@ import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.cast.CastReceiverUiManager
 import com.github.ashutoshgngwr.noice.engine.AudioFocusManager
-import com.github.ashutoshgngwr.noice.engine.DefaultMediaPlayer
 import com.github.ashutoshgngwr.noice.engine.LocalSoundPlayer
 import com.github.ashutoshgngwr.noice.engine.SoundPlaybackNotificationManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerMediaSession
-import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDataSourceFactory
+import com.github.ashutoshgngwr.noice.engine.media.DefaultMediaPlayer
+import com.github.ashutoshgngwr.noice.engine.media.SoundDataSourceFactory
 import com.github.ashutoshgngwr.noice.ext.bindServiceCallbackFlow
 import com.github.ashutoshgngwr.noice.ext.getSerializableCompat
 import com.github.ashutoshgngwr.noice.models.Preset
