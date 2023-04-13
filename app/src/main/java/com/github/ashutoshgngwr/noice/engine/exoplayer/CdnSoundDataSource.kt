@@ -1,10 +1,8 @@
 package com.github.ashutoshgngwr.noice.engine.exoplayer
 
 import android.net.Uri
-import androidx.annotation.OptIn
 import androidx.media3.common.C
 import androidx.media3.common.PlaybackException
-import androidx.media3.common.util.UnstableApi
 import androidx.media3.common.util.Util
 import androidx.media3.datasource.BaseDataSource
 import androidx.media3.datasource.DataSource
@@ -23,7 +21,6 @@ import kotlin.math.min
  * doesn't implement [HttpDataSource], it throws relevant [HttpDataSource.HttpDataSourceException]
  * and [HttpDataSource.InvalidResponseCodeException] instances to exhibit a similar behaviour.
  */
-@OptIn(UnstableApi::class)
 class CdnSoundDataSource private constructor(
   private val apiClient: NoiceApiClient,
 ) : BaseDataSource(true) {

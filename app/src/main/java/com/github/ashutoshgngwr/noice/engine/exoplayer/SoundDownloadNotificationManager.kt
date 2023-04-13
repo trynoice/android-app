@@ -5,17 +5,14 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
-import androidx.annotation.OptIn
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.offline.DownloadNotificationHelper
 import com.github.ashutoshgngwr.noice.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@OptIn(UnstableApi::class)
 @Singleton
 class SoundDownloadNotificationManager @Inject constructor(@ApplicationContext context: Context) {
 

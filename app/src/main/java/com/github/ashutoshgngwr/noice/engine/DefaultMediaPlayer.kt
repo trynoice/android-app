@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import androidx.annotation.OptIn
 import androidx.annotation.VisibleForTesting
 import androidx.core.os.HandlerCompat
 import androidx.core.os.postDelayed
@@ -12,7 +11,6 @@ import androidx.media3.common.AudioAttributes
 import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
-import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSource
 import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
@@ -177,8 +175,6 @@ class DefaultMediaPlayer @VisibleForTesting constructor(
     private val MAX_RETRY_DELAY = 30.seconds
   }
 
-
-  @OptIn(UnstableApi::class)
   class Factory(
     private val context: Context,
     mediaDataSourceFactory: DataSource.Factory,

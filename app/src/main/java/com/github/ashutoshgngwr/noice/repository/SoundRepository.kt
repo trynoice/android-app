@@ -2,8 +2,6 @@ package com.github.ashutoshgngwr.noice.repository
 
 import android.net.Uri
 import android.util.Log
-import androidx.annotation.OptIn
-import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.offline.Download
 import androidx.media3.exoplayer.offline.DownloadIndex
 import androidx.room.withTransaction
@@ -166,7 +164,6 @@ class SoundRepository @Inject constructor(
    * Returns a flow that actively polls ExoPlayer's [DownloadIndex] and emits a map of sound ids
    * (that are currently downloading or have finished downloading) to their [SoundDownloadState].
    */
-  @OptIn(UnstableApi::class)
   fun getDownloadStates(): Flow<Map<String, SoundDownloadState>> = flow {
     while (true) {
       val downloads = downloadIndex.getDownloads()

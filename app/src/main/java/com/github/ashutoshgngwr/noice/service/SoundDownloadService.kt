@@ -4,8 +4,6 @@ import android.app.Notification
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
-import androidx.annotation.OptIn
-import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.cache.Cache
 import androidx.media3.datasource.cache.CacheDataSource
 import androidx.media3.exoplayer.offline.DefaultDownloaderFactory
@@ -23,7 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
-@OptIn(UnstableApi::class)
 @AndroidEntryPoint
 class SoundDownloadService : DownloadService(0x2, DEFAULT_FOREGROUND_NOTIFICATION_UPDATE_INTERVAL) {
 

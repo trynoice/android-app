@@ -1,8 +1,6 @@
 package com.github.ashutoshgngwr.noice.di
 
 import android.content.Context
-import androidx.annotation.OptIn
-import androidx.media3.common.util.UnstableApi
 import androidx.media3.database.DatabaseProvider
 import androidx.media3.database.StandaloneDatabaseProvider
 import androidx.media3.datasource.cache.Cache
@@ -19,7 +17,6 @@ import dagger.hilt.components.SingletonComponent
 import java.io.File
 import javax.inject.Singleton
 
-@OptIn(UnstableApi::class)
 @Module
 @InstallIn(SingletonComponent::class)
 object ExoPlayerOfflineModule {
