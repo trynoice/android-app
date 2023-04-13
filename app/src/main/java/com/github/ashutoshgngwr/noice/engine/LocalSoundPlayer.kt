@@ -2,7 +2,7 @@ package com.github.ashutoshgngwr.noice.engine
 
 import android.util.Log
 import androidx.annotation.VisibleForTesting
-import androidx.media.AudioAttributesCompat
+import androidx.media3.common.AudioAttributes
 import com.github.ashutoshgngwr.noice.models.Sound
 import com.github.ashutoshgngwr.noice.models.SoundSegment
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
@@ -119,7 +119,7 @@ class LocalSoundPlayer @VisibleForTesting constructor(
     mediaPlayer.clearPlaylist()
   }
 
-  override fun setAudioAttributes(attrs: AudioAttributesCompat) {
+  override fun setAudioAttributes(attrs: AudioAttributes) {
     mediaPlayer.setAudioAttributes(attrs)
   }
 

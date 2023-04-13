@@ -1,8 +1,10 @@
 package com.github.ashutoshgngwr.noice.engine.exoplayer
 
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.cache.Cache
-import com.google.android.exoplayer2.upstream.cache.CacheDataSource
+import androidx.annotation.OptIn
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.DataSource
+import androidx.media3.datasource.cache.Cache
+import androidx.media3.datasource.cache.CacheDataSource
 import com.trynoice.api.client.NoiceApiClient
 
 /**
@@ -10,8 +12,8 @@ import com.trynoice.api.client.NoiceApiClient
  * `false`. It uses a [CacheDataSource.Factory] with [CdnSoundDataSource.Factory] upstream
  * otherwise.
  */
-class SoundDataSourceFactory(apiClient: NoiceApiClient, downloadCache: Cache) :
-  DataSource.Factory {
+@OptIn(UnstableApi::class)
+class SoundDataSourceFactory(apiClient: NoiceApiClient, downloadCache: Cache) : DataSource.Factory {
 
   var enableDownloadedSounds: Boolean = false
 

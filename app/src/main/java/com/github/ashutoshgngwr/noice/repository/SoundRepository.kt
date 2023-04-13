@@ -2,6 +2,10 @@ package com.github.ashutoshgngwr.noice.repository
 
 import android.net.Uri
 import android.util.Log
+import androidx.annotation.OptIn
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.offline.Download
+import androidx.media3.exoplayer.offline.DownloadIndex
 import androidx.room.withTransaction
 import com.github.ashutoshgngwr.noice.AppDispatchers
 import com.github.ashutoshgngwr.noice.data.AppDatabase
@@ -19,8 +23,6 @@ import com.github.ashutoshgngwr.noice.models.toDomainEntity
 import com.github.ashutoshgngwr.noice.models.toRoomDto
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.github.ashutoshgngwr.noice.repository.errors.SoundNotFoundError
-import com.google.android.exoplayer2.offline.Download
-import com.google.android.exoplayer2.offline.DownloadIndex
 import com.google.gson.Gson
 import com.trynoice.api.client.NoiceApiClient
 import kotlinx.coroutines.delay
@@ -164,6 +166,7 @@ class SoundRepository @Inject constructor(
    * Returns a flow that actively polls ExoPlayer's [DownloadIndex] and emits a map of sound ids
    * (that are currently downloading or have finished downloading) to their [SoundDownloadState].
    */
+  @OptIn(UnstableApi::class)
   fun getDownloadStates(): Flow<Map<String, SoundDownloadState>> = flow {
     while (true) {
       val downloads = downloadIndex.getDownloads()

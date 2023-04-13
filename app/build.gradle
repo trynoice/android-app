@@ -146,8 +146,8 @@ project.afterEvaluate {
 
 dependencies {
   def androidXHiltVersion = '1.0.0'
-  def exoPlayerVersion = '2.18.5'
   def fragmentVersion = '1.5.6'
+  def media3Version = '1.0.0'
   def roomVersion = '2.5.1'
   def workManagerVersion = '2.8.1'
 
@@ -166,7 +166,9 @@ dependencies {
   implementation "androidx.hilt:hilt-work:$androidXHiltVersion"
   implementation "androidx.lifecycle:lifecycle-common-java8:$deps.lifecycleVersion"
   implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$deps.lifecycleVersion"
-  implementation 'androidx.media:media:1.6.0'
+  implementation "androidx.media3:media3-common:$media3Version"
+  implementation "androidx.media3:media3-exoplayer:$media3Version"
+  implementation "androidx.media3:media3-exoplayer-workmanager:$media3Version"
   implementation 'androidx.mediarouter:mediarouter:1.3.1'
   implementation "androidx.navigation:navigation-fragment-ktx:$deps.navVersion"
   implementation "androidx.navigation:navigation-ui-ktx:$deps.navVersion"
@@ -180,8 +182,6 @@ dependencies {
   implementation "androidx.work:work-runtime-ktx:$workManagerVersion"
   implementation 'com.caverock:androidsvg-aar:1.4'
   implementation 'com.github.AppIntro:AppIntro:6.2.0'
-  implementation "com.google.android.exoplayer:exoplayer-core:$exoPlayerVersion"
-  implementation "com.google.android.exoplayer:extension-workmanager:$exoPlayerVersion"
   implementation 'com.google.android.flexbox:flexbox:3.0.0'
   implementation 'com.google.android.material:material:1.8.0'
   implementation 'com.google.code.gson:gson:2.10.1'
@@ -204,9 +204,9 @@ dependencies {
 
   kaptTest "com.google.dagger:hilt-android-compiler:$deps.hiltVersion"
 
+  testImplementation "androidx.media3:media3-test-utils:$media3Version"
+  testImplementation "androidx.media3:media3-test-utils-robolectric:$media3Version"
   testImplementation "androidx.test:core:$deps.testCoreVersion"
-  testImplementation "com.google.android.exoplayer:exoplayer-robolectricutils:$exoPlayerVersion"
-  testImplementation "com.google.android.exoplayer:exoplayer-testutils:$exoPlayerVersion"
   testImplementation "com.google.dagger:hilt-android-testing:$deps.hiltVersion"
   testImplementation "io.mockk:mockk-jvm:$mockkVersion"
   testImplementation "junit:junit:$deps.junitVersion"

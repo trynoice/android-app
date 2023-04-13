@@ -1,7 +1,7 @@
 package com.github.ashutoshgngwr.noice.engine
 
-import android.media.AudioManager
-import androidx.media.AudioAttributesCompat
+import androidx.media3.common.AudioAttributes
+import androidx.media3.common.C
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -41,10 +41,9 @@ class SoundPlayerManagerTest {
     val fadeOutDuration = 29.seconds
     val premiumSegmentsEnabled = true
     val audioBitrate = "320k"
-    val audioAttrs = AudioAttributesCompat.Builder()
-      .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)
-      .setUsage(AudioAttributesCompat.USAGE_ALARM)
-      .setLegacyStreamType(AudioManager.STREAM_ALARM)
+    val audioAttrs = AudioAttributes.Builder()
+      .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
+      .setUsage(C.USAGE_ALARM)
       .build()
 
     manager.setFadeInDuration(fadeInDuration)

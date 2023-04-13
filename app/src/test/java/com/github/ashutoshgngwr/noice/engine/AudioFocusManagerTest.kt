@@ -4,6 +4,8 @@ import android.media.AudioManager
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
+import androidx.media3.common.AudioAttributes
+import androidx.media3.common.C
 import androidx.test.core.app.ApplicationProvider
 import io.mockk.called
 import io.mockk.clearMocks
@@ -27,10 +29,9 @@ class AudioFocusManagerTest {
   private lateinit var listenerMock: AudioFocusManager.Listener
   private lateinit var focusManager: AudioFocusManager
 
-  private val audioAttributes = AudioAttributesCompat.Builder()
-    .setContentType(AudioAttributesCompat.CONTENT_TYPE_MUSIC)
-    .setUsage(AudioAttributesCompat.USAGE_ALARM)
-    .setLegacyStreamType(AudioManager.STREAM_ALARM)
+  private val audioAttributes = AudioAttributes.Builder()
+    .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
+    .setUsage(C.USAGE_ALARM)
     .build()
 
   @Before
@@ -58,7 +59,7 @@ class AudioFocusManagerTest {
     verify(exactly = 1) { listenerMock.onAudioFocusGained() }
     verify(exactly = 1) {
       AudioManagerCompat.requestAudioFocus(any(), withArg { request ->
-        assertEquals(audioAttributes, request.audioAttributesCompat)
+        assertEquals(AudioAttributesCompat.USAGE_ALARM, request.audioAttributesCompat.usage)
       })
     }
   }
@@ -184,9 +185,8 @@ class AudioFocusManagerTest {
 
   @Test
   fun setAudioAttributes() {
-    val focusRequestSlot = slot<AudioFocusRequestCompat>()
     every {
-      AudioManagerCompat.requestAudioFocus(any(), capture(focusRequestSlot))
+      AudioManagerCompat.requestAudioFocus(any(), any())
     } returns AudioManager.AUDIOFOCUS_REQUEST_GRANTED
 
     every {
@@ -195,21 +195,27 @@ class AudioFocusManagerTest {
 
     focusManager.requestFocus()
     assertTrue(focusManager.hasFocus)
-    assertEquals(audioAttributes, focusRequestSlot.captured.audioAttributesCompat)
+    verify(exactly = 1) {
+      AudioManagerCompat.requestAudioFocus(any(), withArg { request ->
+        assertEquals(AudioAttributesCompat.USAGE_ALARM, request.audioAttributesCompat.usage)
+      })
+    }
 
-    val newAudioAttributes = AudioAttributesCompat.Builder()
-      .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)
-      .setUsage(AudioAttributesCompat.USAGE_MEDIA)
-      .setLegacyStreamType(AudioManager.STREAM_MUSIC)
+    val newAudioAttributes = AudioAttributes.Builder()
+      .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
+      .setUsage(C.USAGE_MEDIA)
       .build()
 
     focusManager.setAudioAttributes(newAudioAttributes)
     assertEquals(true, focusManager.hasFocus)
-    assertEquals(newAudioAttributes, focusRequestSlot.captured.audioAttributesCompat)
 
     verify(exactly = 1) {
       AudioManagerCompat.abandonAudioFocusRequest(any(), withArg { request ->
-        assertEquals(audioAttributes, request.audioAttributesCompat)
+        assertEquals(AudioAttributesCompat.USAGE_ALARM, request.audioAttributesCompat.usage)
+      })
+
+      AudioManagerCompat.requestAudioFocus(any(), withArg { request ->
+        assertEquals(AudioAttributesCompat.USAGE_MEDIA, request.audioAttributesCompat.usage)
       })
     }
   }

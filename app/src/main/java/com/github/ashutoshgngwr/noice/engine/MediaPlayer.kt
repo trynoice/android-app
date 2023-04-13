@@ -1,7 +1,6 @@
 package com.github.ashutoshgngwr.noice.engine
 
-import androidx.media.AudioAttributesCompat
-import com.google.android.exoplayer2.ExoPlayer
+import androidx.media3.common.AudioAttributes
 import kotlin.properties.Delegates.observable
 import kotlin.time.Duration
 
@@ -34,10 +33,10 @@ abstract class MediaPlayer {
   }
 
   /**
-   * Sets the attributes for audio playback using an [AudioAttributesCompat] instance, used by the
-   * underlying [ExoPlayer] instance.
+   * Sets the attributes for audio playback using an [AudioAttributes] instance, used by the
+   * underlying local audio sink.
    */
-  abstract fun setAudioAttributes(attrs: AudioAttributesCompat)
+  abstract fun setAudioAttributes(attrs: AudioAttributes)
 
   /**
    * Sets the audio volume.

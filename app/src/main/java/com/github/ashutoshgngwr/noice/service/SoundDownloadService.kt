@@ -4,23 +4,26 @@ import android.app.Notification
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
+import androidx.annotation.OptIn
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.cache.Cache
+import androidx.media3.datasource.cache.CacheDataSource
+import androidx.media3.exoplayer.offline.DefaultDownloaderFactory
+import androidx.media3.exoplayer.offline.Download
+import androidx.media3.exoplayer.offline.DownloadManager
+import androidx.media3.exoplayer.offline.DownloadService
+import androidx.media3.exoplayer.offline.WritableDownloadIndex
+import androidx.media3.exoplayer.scheduler.Scheduler
+import androidx.media3.exoplayer.workmanager.WorkManagerScheduler
 import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.engine.exoplayer.CdnSoundDataSource
 import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDownloadNotificationManager
-import com.google.android.exoplayer2.ext.workmanager.WorkManagerScheduler
-import com.google.android.exoplayer2.offline.DefaultDownloaderFactory
-import com.google.android.exoplayer2.offline.Download
-import com.google.android.exoplayer2.offline.DownloadManager
-import com.google.android.exoplayer2.offline.DownloadService
-import com.google.android.exoplayer2.offline.WritableDownloadIndex
-import com.google.android.exoplayer2.scheduler.Scheduler
-import com.google.android.exoplayer2.upstream.cache.Cache
-import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
+@OptIn(UnstableApi::class)
 @AndroidEntryPoint
 class SoundDownloadService : DownloadService(0x2, DEFAULT_FOREGROUND_NOTIFICATION_UPDATE_INTERVAL) {
 

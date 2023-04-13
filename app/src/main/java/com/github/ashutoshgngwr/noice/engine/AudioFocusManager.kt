@@ -7,6 +7,8 @@ import androidx.core.content.getSystemService
 import androidx.media.AudioAttributesCompat
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
+import androidx.media3.common.AudioAttributes
+import androidx.media3.common.C
 
 /**
  * A convenient wrapper to manage audio focus using the [AudioManager] system service.
@@ -127,7 +129,7 @@ class AudioFocusManager(context: Context) : AudioManager.OnAudioFocusChangeListe
    * Updates the audio attributes used for requesting the audio focus. The manager will abandon
    * existing focus request and request it again using the updated [audioAttributes].
    */
-  fun setAudioAttributes(audioAttributes: AudioAttributesCompat) {
+  fun setAudioAttributes(audioAttributes: AudioAttributes) {
     val shouldRequest = hasFocus || playbackDelayed || resumeOnFocusGain
     if (focusRequest != null) { // can't abandon if being set for the first time
       abandonFocus()
@@ -163,10 +165,16 @@ class AudioFocusManager(context: Context) : AudioManager.OnAudioFocusChangeListe
     }
   }
 
-  private fun buildFocusRequest(audioAttributes: AudioAttributesCompat): AudioFocusRequestCompat {
-    return AudioFocusRequestCompat
-      .Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
-      .setAudioAttributes(audioAttributes)
+  private fun buildFocusRequest(audioAttributes: AudioAttributes): AudioFocusRequestCompat {
+    val audioAttributesCompat = AudioAttributesCompat.Builder()
+      .setContentType(audioAttributes.contentType)
+      .setFlags(audioAttributes.flags)
+      .setLegacyStreamType(if (audioAttributes.usage == C.USAGE_ALARM) AudioManager.STREAM_ALARM else AudioManager.STREAM_MUSIC)
+      .setUsage(audioAttributes.usage)
+      .build()
+
+    return AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+      .setAudioAttributes(audioAttributesCompat)
       .setOnAudioFocusChangeListener(this)
       .setWillPauseWhenDucked(false)
       .build()

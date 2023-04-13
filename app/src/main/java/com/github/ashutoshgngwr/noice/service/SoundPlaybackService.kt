@@ -20,6 +20,7 @@ import androidx.core.os.postDelayed
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import androidx.media.AudioAttributesCompat
+import androidx.media3.datasource.cache.Cache
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.cast.CastReceiverUiManager
@@ -39,7 +40,6 @@ import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
-import com.google.android.exoplayer2.upstream.cache.Cache
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -131,14 +131,14 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
     )
   }
 
-  private val localDataSourceFactory: SoundDataSourceFactory by lazy {
+  private val soundDataSourceFactory: SoundDataSourceFactory by lazy {
     SoundDataSourceFactory(apiClient, soundDownloadCache)
   }
 
   private val localSoundPlayerFactory: SoundPlayer.Factory by lazy {
     LocalSoundPlayer.Factory(
       soundRepository = soundRepository,
-      mediaPlayerFactory = DefaultMediaPlayer.Factory(this, localDataSourceFactory),
+      mediaPlayerFactory = DefaultMediaPlayer.Factory(this, soundDataSourceFactory),
       defaultScope = lifecycleScope,
     )
   }
@@ -195,7 +195,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
 
     lifecycleScope.launch {
       subscriptionRepository.isSubscribed().collect { subscribed ->
-        localDataSourceFactory.enableDownloadedSounds = subscribed
+        soundDataSourceFactory.enableDownloadedSounds = subscribed
         soundPlayerManager.setPremiumSegmentsEnabled(subscribed)
       }
     }

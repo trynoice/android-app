@@ -1,6 +1,6 @@
 package com.github.ashutoshgngwr.noice.engine
 
-import androidx.media.AudioAttributesCompat
+import androidx.media3.common.AudioAttributes
 import kotlin.time.Duration
 
 class FakeSoundPlayer private constructor() : SoundPlayer() {
@@ -9,7 +9,7 @@ class FakeSoundPlayer private constructor() : SoundPlayer() {
   var fadeOutDuration = Duration.ZERO; private set
   var isPremiumSegmentsEnabled = false; private set
   var audioBitrate: String = "128k"; private set
-  var audioAttributes: AudioAttributesCompat? = null; private set
+  var audioAttributes: AudioAttributes? = null; private set
   var volume = 1F; private set
 
   override fun setFadeInDuration(duration: Duration) {
@@ -28,7 +28,7 @@ class FakeSoundPlayer private constructor() : SoundPlayer() {
     audioBitrate = bitrate
   }
 
-  override fun setAudioAttributes(attrs: AudioAttributesCompat) {
+  override fun setAudioAttributes(attrs: AudioAttributes) {
     audioAttributes = attrs
   }
 

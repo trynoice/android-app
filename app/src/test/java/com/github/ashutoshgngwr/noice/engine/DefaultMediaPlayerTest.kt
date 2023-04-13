@@ -1,10 +1,10 @@
 package com.github.ashutoshgngwr.noice.engine
 
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.test.utils.FakeMediaSourceFactory
+import androidx.media3.test.utils.TestExoPlayerBuilder
+import androidx.media3.test.utils.robolectric.RobolectricUtil
 import androidx.test.core.app.ApplicationProvider
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.robolectric.RobolectricUtil
-import com.google.android.exoplayer2.testutil.FakeMediaSourceFactory
-import com.google.android.exoplayer2.testutil.TestExoPlayerBuilder
 import io.mockk.clearMocks
 import io.mockk.mockk
 import io.mockk.verify

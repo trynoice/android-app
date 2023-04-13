@@ -526,14 +526,22 @@ class SoundPlaybackServiceTest {
     every { anyConstructed<SoundPlayerManager>().setAudioAttributes(any()) } returns Unit
     every { anyConstructed<SoundPlayerManagerMediaSession>().setAudioStream(any()) } returns Unit
     val (_, controller) = buildServiceAndController()
-    mapOf(
-      SoundPlaybackService.Controller.AUDIO_USAGE_ALARM to SoundPlayerManager.ALARM_AUDIO_ATTRIBUTES,
-      SoundPlaybackService.Controller.AUDIO_USAGE_MEDIA to SoundPlayerManager.DEFAULT_AUDIO_ATTRIBUTES,
-    ).forEach { (usage, attrs) ->
+    listOf(
+      Triple(
+        SoundPlaybackService.Controller.AUDIO_USAGE_ALARM,
+        SoundPlayerManager.ALARM_AUDIO_ATTRIBUTES,
+        AudioManager.STREAM_ALARM,
+      ),
+      Triple(
+        SoundPlaybackService.Controller.AUDIO_USAGE_MEDIA,
+        SoundPlayerManager.DEFAULT_AUDIO_ATTRIBUTES,
+        AudioManager.STREAM_MUSIC,
+      ),
+    ).forEach { (usage, attrs, audioStream) ->
       controller.setAudioUsage(usage)
       verify(exactly = 1) {
         anyConstructed<SoundPlayerManager>().setAudioAttributes(attrs)
-        anyConstructed<SoundPlayerManagerMediaSession>().setAudioStream(attrs.legacyStreamType)
+        anyConstructed<SoundPlayerManagerMediaSession>().setAudioStream(audioStream)
       }
     }
   }

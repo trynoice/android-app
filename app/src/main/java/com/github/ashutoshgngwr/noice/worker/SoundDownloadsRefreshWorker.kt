@@ -2,9 +2,16 @@ package com.github.ashutoshgngwr.noice.worker
 
 import android.content.Context
 import android.util.Log
+import androidx.annotation.OptIn
 import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.hilt.work.HiltWorker
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.database.DatabaseIOException
+import androidx.media3.exoplayer.offline.Download
+import androidx.media3.exoplayer.offline.DownloadIndex
+import androidx.media3.exoplayer.offline.DownloadRequest
+import androidx.media3.exoplayer.offline.DownloadService
 import androidx.preference.PreferenceManager
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
@@ -27,11 +34,6 @@ import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundError
 import com.github.ashutoshgngwr.noice.service.SoundDownloadService
-import com.google.android.exoplayer2.database.DatabaseIOException
-import com.google.android.exoplayer2.offline.Download
-import com.google.android.exoplayer2.offline.DownloadIndex
-import com.google.android.exoplayer2.offline.DownloadRequest
-import com.google.android.exoplayer2.offline.DownloadService
 import com.google.gson.Gson
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -52,6 +54,7 @@ import java.util.concurrent.TimeUnit
  * performs a check on ExoPlayer downloads ensuring that ExoPlayer download list are in sync with
  * its own list.
  */
+@OptIn(UnstableApi::class)
 @HiltWorker
 class SoundDownloadsRefreshWorker @AssistedInject constructor(
   @Assisted private val context: Context,

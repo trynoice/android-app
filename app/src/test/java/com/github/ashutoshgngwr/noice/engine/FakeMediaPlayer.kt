@@ -1,17 +1,17 @@
 package com.github.ashutoshgngwr.noice.engine
 
-import androidx.media.AudioAttributesCompat
+import androidx.media3.common.AudioAttributes
 import kotlin.time.Duration
 
 class FakeMediaPlayer : MediaPlayer() {
 
-  var audioAttributes: AudioAttributesCompat? = null; private set
+  var audioAttributes: AudioAttributes? = null; private set
   var volume = 1F; private set
   var pendingFadeTransition: FadeTransition? = null; private set
 
   private val playlist = mutableListOf<String>()
 
-  override fun setAudioAttributes(attrs: AudioAttributesCompat) {
+  override fun setAudioAttributes(attrs: AudioAttributes) {
     audioAttributes = attrs
   }
 

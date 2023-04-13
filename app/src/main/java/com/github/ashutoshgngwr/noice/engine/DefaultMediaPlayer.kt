@@ -1,28 +1,27 @@
 package com.github.ashutoshgngwr.noice.engine
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import androidx.annotation.OptIn
 import androidx.annotation.VisibleForTesting
 import androidx.core.os.HandlerCompat
 import androidx.core.os.postDelayed
-import androidx.media.AudioAttributesCompat
-import com.google.android.exoplayer2.C
-import com.google.android.exoplayer2.DefaultLoadControl
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.PlaybackException
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.RenderersFactory
-import com.google.android.exoplayer2.audio.AudioAttributes
-import com.google.android.exoplayer2.audio.MediaCodecAudioRenderer
-import com.google.android.exoplayer2.extractor.ExtractorsFactory
-import com.google.android.exoplayer2.extractor.mp3.Mp3Extractor
-import com.google.android.exoplayer2.mediacodec.MediaCodecSelector
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.upstream.DataSource
+import androidx.media3.common.AudioAttributes
+import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.DataSource
+import androidx.media3.exoplayer.DefaultLoadControl
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.RenderersFactory
+import androidx.media3.exoplayer.audio.MediaCodecAudioRenderer
+import androidx.media3.exoplayer.mediacodec.MediaCodecSelector
+import androidx.media3.exoplayer.source.ProgressiveMediaSource
+import androidx.media3.extractor.ExtractorsFactory
+import androidx.media3.extractor.mp3.Mp3Extractor
 import kotlin.math.abs
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -91,15 +90,8 @@ class DefaultMediaPlayer @VisibleForTesting constructor(
     retryDelay = minOf(retryDelay * 2, MAX_RETRY_DELAY)
   }
 
-  @SuppressLint("WrongConstant")
-  override fun setAudioAttributes(attrs: AudioAttributesCompat) {
-    AudioAttributes.Builder()
-      .setContentType(attrs.contentType)
-      .setFlags(attrs.flags)
-      .setUsage(attrs.usage)
-      .setAllowedCapturePolicy(C.ALLOW_CAPTURE_BY_NONE)
-      .build()
-      .also { exoPlayer.setAudioAttributes(it, false) }
+  override fun setAudioAttributes(attrs: AudioAttributes) {
+    exoPlayer.setAudioAttributes(attrs, false)
   }
 
   override fun setVolume(volume: Float) {
@@ -186,13 +178,14 @@ class DefaultMediaPlayer @VisibleForTesting constructor(
   }
 
 
+  @OptIn(UnstableApi::class)
   class Factory(
     private val context: Context,
-    exoPlayerDataSourceFactory: DataSource.Factory,
+    mediaDataSourceFactory: DataSource.Factory,
   ) : MediaPlayer.Factory {
 
     private val mediaSourceFactory = ExtractorsFactory { arrayOf(Mp3Extractor()) }
-      .let { ProgressiveMediaSource.Factory(exoPlayerDataSourceFactory, it) }
+      .let { ProgressiveMediaSource.Factory(mediaDataSourceFactory, it) }
 
     private val renderersFactory = RenderersFactory { handler, _, audioListener, _, _ ->
       arrayOf(MediaCodecAudioRenderer(context, MediaCodecSelector.DEFAULT, handler, audioListener))
