@@ -30,7 +30,7 @@ on:
       - "gradlew.bat"
 
 env:
-  JAVA_VERSION: 11
+  JAVA_VERSION: 17
 
 jobs:
   validate-gradle-wrapper:

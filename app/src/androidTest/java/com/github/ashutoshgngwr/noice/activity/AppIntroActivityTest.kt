@@ -16,7 +16,6 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.github.ashutoshgngwr.noice.HiltTestActivity
-import com.github.ashutoshgngwr.noice.R
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.After
@@ -40,7 +39,7 @@ class AppIntroActivityTest {
   @Test
   fun onSkipPressed() {
     val scenario = launchActivityForResult(AppIntroActivity::class.java)
-    onView(withId(R.id.skip))
+    onView(withId(com.github.appintro.R.id.skip))
       .check(matches(isDisplayed()))
       .perform(click())
 
@@ -59,13 +58,13 @@ class AppIntroActivityTest {
     val scenario = launchActivityForResult(AppIntroActivity::class.java)
     while (true) {
       try {
-        onView(withId(R.id.done))
+        onView(withId(com.github.appintro.R.id.done))
           .check(matches(isDisplayed()))
           .perform(click())
 
         break
       } catch (e: AssertionError) {
-        onView(withId(R.id.view_pager))
+        onView(withId(com.github.appintro.R.id.view_pager))
           .check(matches(isDisplayed()))
           .perform(swipeLeft())
       }

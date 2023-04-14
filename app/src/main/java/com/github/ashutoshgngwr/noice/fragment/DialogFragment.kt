@@ -162,7 +162,7 @@ class DialogFragment : BottomSheetDialogFragment() {
   fun message(
     @StringRes resId: Int,
     vararg formatArgs: Any,
-    @StyleRes textAppearance: Int = R.attr.textAppearanceBodyMedium.resolveAttributeValue(),
+    @StyleRes textAppearance: Int = com.google.android.material.R.attr.textAppearanceBodyMedium.resolveAttributeValue(),
   ) {
     addView(
       MarkdownTextView(requireContext()).apply {

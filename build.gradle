@@ -8,8 +8,8 @@ plugins {
   id 'com.google.dagger.hilt.android' version "${hiltVersion}" apply false
   id 'com.mikepenz.aboutlibraries.plugin' version "${aboutLibrariesVersion}" apply false
 
-  id 'com.google.gms.google-services' version '4.3.10' apply false // sed:free-build:remove
-  id 'com.google.firebase.crashlytics' version '2.8.1' apply false // sed:free-build:remove
+  id 'com.google.gms.google-services' version '4.3.15' apply false // sed:free-build:remove
+  id 'com.google.firebase.crashlytics' version '2.9.5' apply false // sed:free-build:remove
 
   id 'com.adarshr.test-logger' version '3.2.0' apply false
 }
@@ -46,12 +46,15 @@ subprojects {
       }
 
       compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+      }
+
+      kotlin {
+        jvmToolchain 11
       }
 
       kotlinOptions {
-        jvmTarget = '1.8'
         freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
       }
     }

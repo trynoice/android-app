@@ -67,7 +67,11 @@ fun setDonationProductDetailsList(
   container.tag = sorted
   container.removeAllViews()
   sorted.forEach { productDetails ->
-    val b = MaterialButton(container.context, null, R.attr.materialButtonOutlinedStyle)
+    val b = MaterialButton(
+      container.context,
+      null,
+      com.google.android.material.R.attr.materialButtonOutlinedStyle,
+    )
     b.text = productDetails.oneTimeOfferDetails?.price
     b.setOnClickListener { selectedListener.onProductSelected(productDetails) }
     container.addView(b)

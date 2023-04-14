@@ -209,7 +209,10 @@ class LibraryFragment : Fragment(), SoundViewHolder.ViewController {
   override fun onSoundVolumeClicked(soundInfo: SoundInfo, volume: Float) {
     DialogFragment.show(childFragmentManager) {
       title(soundInfo.name)
-      message(R.string.volume, textAppearance = R.style.TextAppearance_Material3_TitleLarge)
+      message(
+        resId = R.string.volume,
+        textAppearance = com.google.android.material.R.style.TextAppearance_Material3_TitleLarge,
+      )
       slider(
         viewID = R.id.volume_slider,
         to = 1F,
@@ -583,7 +586,13 @@ class SoundViewHolder(
     binding.icon.isVisible = isIconsEnabled
     if (isIconsEnabled) {
       val iconColor = TypedValue()
-        .also { binding.icon.context.theme.resolveAttribute(R.attr.colorSurfaceVariant, it, true) }
+        .also { v ->
+          binding.icon.context.theme.resolveAttribute(
+            com.google.android.material.R.attr.colorSurfaceVariant,
+            v,
+            true,
+          )
+        }
         .data
 
       binding.icon.post {

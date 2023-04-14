@@ -20,7 +20,7 @@ import com.mikepenz.aboutlibraries.util.SpecialButton
 import dagger.hilt.android.AndroidEntryPoint
 import mehdi.sakout.aboutpage.AboutPage
 import mehdi.sakout.aboutpage.Element
-import java.util.*
+import java.util.Calendar
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -100,7 +100,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
       addItem(
         buildElement(
           R.drawable.round_link_24,
-          R.string.about_website,
+          mehdi.sakout.aboutpage.R.string.about_website,
           R.string.app_website_url,
         )
       )
@@ -108,7 +108,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
       addItem(
         buildElement(
           R.drawable.twitter_24,
-          R.string.about_twitter,
+          mehdi.sakout.aboutpage.R.string.about_twitter,
           R.string.app_twitter_url,
         ).setAutoApplyIconTint(false)
       )
@@ -116,7 +116,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
       addItem(
         buildElement(
           R.drawable.instagram_24,
-          R.string.about_instagram,
+          mehdi.sakout.aboutpage.R.string.about_instagram,
           R.string.app_instagram_url,
         ).setAutoApplyIconTint(false)
       )
@@ -132,7 +132,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
       addItem(
         buildElement(
           R.drawable.facebook_24,
-          R.string.about_facebook,
+          mehdi.sakout.aboutpage.R.string.about_facebook,
           R.string.app_facebook_url,
         ).setAutoApplyIconTint(false)
       )
@@ -140,7 +140,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
       addItem(
         buildElement(
           R.drawable.github_24,
-          R.string.about_github,
+          mehdi.sakout.aboutpage.R.string.about_github,
           R.string.app_github_url,
         ).setAutoApplyIconTint(false)
       )
