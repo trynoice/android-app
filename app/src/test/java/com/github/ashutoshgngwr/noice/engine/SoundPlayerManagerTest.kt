@@ -42,7 +42,7 @@ class SoundPlayerManagerTest {
     val premiumSegmentsEnabled = true
     val audioBitrate = "320k"
     val audioAttrs = AudioAttributes.Builder()
-      .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
+      .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
       .setUsage(C.USAGE_ALARM)
       .build()
 

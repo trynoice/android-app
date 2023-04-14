@@ -46,7 +46,7 @@ class SoundPlaybackNotificationManagerTest {
     skipToPrevPresetPiMock = mockk(relaxed = true)
     manager = SoundPlaybackNotificationManager(
       service = service,
-      mediaSessionToken = mediaSessionToken,
+      mediaSession = mediaSessionToken,
       contentPi = contentPiMock,
       resumePi = resumePiMock,
       pausePi = pausePiMock,

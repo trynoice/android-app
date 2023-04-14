@@ -329,7 +329,7 @@ class SoundPlayerManager(
      * music audio stream.
      */
     val DEFAULT_AUDIO_ATTRIBUTES: AudioAttributes = AudioAttributes.Builder()
-      .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
+      .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
       .setUsage(C.USAGE_MEDIA)
       .setAllowedCapturePolicy(C.ALLOW_CAPTURE_BY_SYSTEM)
       .build()
@@ -339,7 +339,7 @@ class SoundPlayerManager(
      * alarm audio stream.
      */
     val ALARM_AUDIO_ATTRIBUTES: AudioAttributes = AudioAttributes.Builder()
-      .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
+      .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
       .setUsage(C.USAGE_ALARM)
       .setAllowedCapturePolicy(C.ALLOW_CAPTURE_BY_SYSTEM)
       .build()

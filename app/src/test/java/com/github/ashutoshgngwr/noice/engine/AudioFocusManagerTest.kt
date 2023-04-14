@@ -30,7 +30,7 @@ class AudioFocusManagerTest {
   private lateinit var focusManager: AudioFocusManager
 
   private val audioAttributes = AudioAttributes.Builder()
-    .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
+    .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
     .setUsage(C.USAGE_ALARM)
     .build()
 
@@ -202,7 +202,7 @@ class AudioFocusManagerTest {
     }
 
     val newAudioAttributes = AudioAttributes.Builder()
-      .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
+      .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
       .setUsage(C.USAGE_MEDIA)
       .build()
 
