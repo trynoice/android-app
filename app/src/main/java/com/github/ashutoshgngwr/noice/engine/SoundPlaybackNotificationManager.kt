@@ -7,14 +7,14 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.os.Build
-import android.support.v4.media.session.MediaSessionCompat
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
-import androidx.media.app.NotificationCompat.MediaStyle
+import androidx.media3.session.MediaSession
+import androidx.media3.session.MediaStyleNotificationHelper
 import com.github.ashutoshgngwr.noice.R
 
 /**
@@ -23,7 +23,7 @@ import com.github.ashutoshgngwr.noice.R
  */
 class SoundPlaybackNotificationManager(
   private val service: Service,
-  mediaSessionToken: MediaSessionCompat.Token,
+  mediaSession: MediaSession,
   contentPi: PendingIntent,
   resumePi: PendingIntent,
   pausePi: PendingIntent,
@@ -43,9 +43,7 @@ class SoundPlaybackNotificationManager(
     SoundPlayerManager.State.STOPPING to service.getString(R.string.stopping),
   )
 
-  private val style = MediaStyle()
-    .setMediaSession(mediaSessionToken)
-
+  private val style = MediaStyleNotificationHelper.MediaStyle(mediaSession)
   private val builder = NotificationCompat.Builder(service, CHANNEL_ID).apply {
     color = ContextCompat.getColor(service, R.color.md_theme_primary)
     setContentIntent(contentPi)
@@ -107,7 +105,7 @@ class SoundPlaybackNotificationManager(
     updateForegroundNotification()
   }
 
-  fun setCurrentPresetName(name: String?) {
+  fun setPresetName(name: String?) {
     currentPresetName = name ?: defaultTitle
     builder.setContentTitle(currentPresetName)
     updateForegroundNotification()

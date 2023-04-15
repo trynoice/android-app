@@ -120,7 +120,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
   private val notificationManager: SoundPlaybackNotificationManager by lazy {
     SoundPlaybackNotificationManager(
       service = this,
-      mediaSessionToken = mediaSession.getSessionToken(),
+      mediaSession = mediaSession.session,
       contentPi = mainActivityPi,
       resumePi = buildResumeActionPendingIntent(this),
       pausePi = buildPauseActionPendingIntent(this),
@@ -164,6 +164,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
     override fun onPause() = soundPlayerManager.pause(false)
     override fun onSkipToPrevious() = skipPreset(PRESET_SKIP_DIRECTION_PREV)
     override fun onSkipToNext() = skipPreset(PRESET_SKIP_DIRECTION_NEXT)
+    override fun onSetVolume(volume: Float) = soundPlayerManager.setVolume(volume)
   }
 
   private val becomingNoisyReceiver = object : BroadcastReceiver() {
@@ -187,8 +188,8 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
 
     lifecycleScope.launch {
       currentPresetFlow.collect { preset ->
-        notificationManager.setCurrentPresetName(preset?.name)
-        mediaSession.setCurrentPresetName(preset?.name)
+        notificationManager.setPresetName(preset?.name)
+        mediaSession.setPresetName(preset?.name)
         castReceiverUiManager?.setPresetName(preset?.name)
       }
     }
@@ -270,12 +271,12 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
       ACTION_SET_AUDIO_USAGE -> when (intent.getStringExtra(INTENT_EXTRA_AUDIO_USAGE)) {
         AUDIO_USAGE_MEDIA -> {
           soundPlayerManager.setAudioAttributes(SoundPlayerManager.DEFAULT_AUDIO_ATTRIBUTES)
-          mediaSession.setAudioStream(AudioManager.STREAM_MUSIC)
+          mediaSession.setAudioAttributes(SoundPlayerManager.DEFAULT_AUDIO_ATTRIBUTES)
         }
 
         AUDIO_USAGE_ALARM -> {
           soundPlayerManager.setAudioAttributes(SoundPlayerManager.ALARM_AUDIO_ATTRIBUTES)
-          mediaSession.setAudioStream(AudioManager.STREAM_ALARM)
+          mediaSession.setAudioAttributes(SoundPlayerManager.ALARM_AUDIO_ATTRIBUTES)
         }
 
         else -> throw IllegalArgumentException(
@@ -376,6 +377,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
 
   override fun onSoundPlayerManagerVolumeChange(volume: Float) {
     soundPlayerManagerVolumeFlow.value = volume
+    mediaSession.setVolume(volume)
     castReceiverUiManager?.setSoundPlayerManagerState(soundPlayerManagerStateFlow.value, volume)
   }
 

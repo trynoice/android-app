@@ -2,156 +2,217 @@ package com.github.ashutoshgngwr.noice.engine
 
 import android.app.PendingIntent
 import android.content.Context
-import android.media.AudioManager
-import android.support.v4.media.MediaMetadataCompat
-import android.support.v4.media.session.MediaSessionCompat
-import android.support.v4.media.session.PlaybackStateCompat
+import android.os.Looper
 import androidx.media.VolumeProviderCompat
-import androidx.mediarouter.media.MediaRouter
+import androidx.media3.common.AudioAttributes
+import androidx.media3.common.MediaMetadata
+import androidx.media3.common.Player
+import androidx.media3.common.SimpleBasePlayer
+import androidx.media3.session.MediaSession
 import com.github.ashutoshgngwr.noice.R
+import com.google.common.util.concurrent.Futures
+import com.google.common.util.concurrent.ListenableFuture
 
 /**
- * A convenient wrapper around [MediaSessionCompat].
+ * A convenient wrapper containing all Media 3 [MediaSession] API interactions.
  */
 class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: PendingIntent) {
 
-  private var callback: Callback? = null
-  private var audioStream = AudioManager.STREAM_MUSIC
   private var isPlaybackLocal = false
-  private val defaultTitle = context.getString(R.string.unsaved_preset)
-  private val mediaSession = MediaSessionCompat(context, "${context.packageName}:mediaSession")
-  private val playbackStateBuilder = PlaybackStateCompat.Builder()
-    .setActions(
-      PlaybackStateCompat.ACTION_PLAY_PAUSE
-        or PlaybackStateCompat.ACTION_PAUSE
-        or PlaybackStateCompat.ACTION_STOP
-        or PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
-        or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
-    )
-
-  init {
-    mediaSession.setSessionActivity(sessionActivityPi)
-    mediaSession.setCallback(object : MediaSessionCompat.Callback() {
-      override fun onPlay() {
-        callback?.onPlay()
-      }
-
-      override fun onStop() {
-        callback?.onStop()
-      }
-
-      override fun onPause() {
-        callback?.onPause()
-      }
-
-      override fun onSkipToPrevious() {
-        callback?.onSkipToPrevious()
-      }
-
-      override fun onSkipToNext() {
-        callback?.onSkipToNext()
-      }
-    })
-
-    setPlaybackToLocal()
-    mediaSession.isActive = true
-    MediaRouter.getInstance(context).setMediaSessionCompat(mediaSession)
-  }
+  private val defaultPresetName = context.getString(R.string.unsaved_preset)
+  private val sessionPlayer = MediaSessionPlayer(context.getString(R.string.now_playing))
 
   /**
-   * Returns the media session token ([MediaSessionCompat.getSessionToken]).
+   * The underlying Media 3 [MediaSession] used by this instance.
    */
-  fun getSessionToken(): MediaSessionCompat.Token {
-    return mediaSession.sessionToken
-  }
+  val session = MediaSession.Builder(context, sessionPlayer)
+    .setId("SoundPlayback")
+    .setSessionActivity(sessionActivityPi)
+    .build()
 
-  /**
-   * Sets the audio stream for this media session to update the volume handling.
-   */
-  fun setAudioStream(stream: Int) {
-    audioStream = stream
-    if (isPlaybackLocal) {
-      mediaSession.setPlaybackToLocal(stream)
-    }
-  }
-
-  /**
-   * Configures this session to use local volume handling based on the last audio stream configured
-   * using [setAudioStream].
-   */
   fun setPlaybackToLocal() {
     isPlaybackLocal = true
-    mediaSession.setPlaybackToLocal(audioStream)
+    // TODO: mediaSession.setPlaybackToLocal(audioStream)
   }
 
-  /**
-   * Configures this session to use remote volume handling.
-   */
   fun setPlaybackToRemote(volumeProvider: VolumeProviderCompat) {
     isPlaybackLocal = false
-    mediaSession.setPlaybackToRemote(volumeProvider)
+    // TODO: mediaSession.setPlaybackToRemote(volumeProvider)
   }
 
   /**
-   * Translates the given [state] to the [PlaybackStateCompat] and sets it on the current media
-   * session.
+   * Translates the given [state] to its corresponding [Player] state and sets it on the current
+   * media session.
    */
   fun setState(state: SoundPlayerManager.State) {
     when (state) {
-      SoundPlayerManager.State.STOPPED -> playbackStateBuilder.setState(
-        PlaybackStateCompat.STATE_STOPPED,
-        PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
-        0f,
+      SoundPlayerManager.State.STOPPED -> sessionPlayer.updatePlaybackState(
+        playbackState = Player.STATE_ENDED,
+        playWhenReady = false,
       )
 
-      SoundPlayerManager.State.PAUSED -> playbackStateBuilder.setState(
-        PlaybackStateCompat.STATE_PAUSED,
-        PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
-        0f,
+      SoundPlayerManager.State.PAUSED -> sessionPlayer.updatePlaybackState(
+        playbackState = Player.STATE_READY,
+        playWhenReady = false,
       )
 
-      else -> playbackStateBuilder.setState(
-        PlaybackStateCompat.STATE_PLAYING,
-        PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN,
-        1f,
+      else -> sessionPlayer.updatePlaybackState(
+        playbackState = Player.STATE_READY,
+        playWhenReady = true,
       )
     }
-
-    mediaSession.setPlaybackState(playbackStateBuilder.build())
   }
 
   /**
-   * Adds the given [name] to the media session's metadata. If [name] is `null`, it uses
-   * [R.string.unsaved_preset] as fallback.
+   * Sets the given volume on the current media session.
    */
-  fun setCurrentPresetName(name: String?) {
-    mediaSession.setMetadata(
-      MediaMetadataCompat.Builder()
-        .putString(MediaMetadataCompat.METADATA_KEY_TITLE, name ?: defaultTitle)
-        .build()
+  fun setVolume(volume: Float) {
+    sessionPlayer.updateVolumeState(volume)
+  }
+
+  /**
+   * Sets the given audio attributes on the current media session.
+   */
+  fun setAudioAttributes(attributes: AudioAttributes) {
+    sessionPlayer.updateAudioAttributesState(attributes)
+  }
+
+  /**
+   * Sets the given [presetName] as the title for the currently playing media item on the current
+   * media session. If the [presetName] is `null`, it uses [R.string.unsaved_preset] as title.
+   */
+  fun setPresetName(presetName: String?) {
+    sessionPlayer.updateCurrentPreset(
+      id = presetName ?: defaultPresetName,
+      name = presetName ?: defaultPresetName,
     )
   }
 
   /**
-   * Adds a callback to receive updates on for the MediaSession.
-   *
-   * @see MediaSessionCompat.setCallback
+   * Sets a callback to receive transport controls, media buttons and commands from controllers and
+   * the system.
    */
   fun setCallback(callback: Callback?) {
-    this.callback = callback
+    sessionPlayer.callback = callback
   }
 
   /**
    * Releases the underlying media session.
    */
   fun release() {
-    mediaSession.release()
+    sessionPlayer.release()
+    session.release()
+  }
+
+  private class MediaSessionPlayer(
+    playlistName: String,
+  ) : SimpleBasePlayer(Looper.getMainLooper()) {
+
+    var callback: Callback? = null
+    private var state = State.Builder()
+      .setAvailableCommands(
+        Player.Commands.Builder()
+          .addAll(
+            Player.COMMAND_PLAY_PAUSE,
+            Player.COMMAND_STOP,
+            Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM,
+            Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM,
+            Player.COMMAND_GET_VOLUME,
+            Player.COMMAND_SET_VOLUME,
+            Player.COMMAND_GET_AUDIO_ATTRIBUTES,
+            Player.COMMAND_GET_CURRENT_MEDIA_ITEM,
+            Player.COMMAND_GET_MEDIA_ITEMS_METADATA,
+          )
+          .build()
+      )
+      .setAudioAttributes(SoundPlayerManager.DEFAULT_AUDIO_ATTRIBUTES)
+      .setPlaylistMetadata(
+        MediaMetadata.Builder()
+          .setMediaType(MediaMetadata.MEDIA_TYPE_PLAYLIST)
+          .setTitle(playlistName)
+          .build()
+      )
+      .build()
+
+    fun updateVolumeState(volume: Float) {
+      state = state.buildUpon()
+        .setVolume(volume)
+        .build()
+      invalidateState()
+    }
+
+    fun updateAudioAttributesState(attributes: AudioAttributes) {
+      state = state.buildUpon()
+        .setAudioAttributes(attributes)
+        .build()
+      invalidateState()
+    }
+
+    fun updatePlaybackState(@Player.State playbackState: Int, playWhenReady: Boolean) {
+      state = state.buildUpon()
+        .setPlaybackState(playbackState)
+        .setPlayWhenReady(playWhenReady, Player.PLAY_WHEN_READY_CHANGE_REASON_USER_REQUEST)
+        .build()
+      invalidateState()
+    }
+
+    fun updateCurrentPreset(id: String, name: String) {
+      state = state.buildUpon()
+        .setPlaylist(
+          listOf(
+            MediaItemData.Builder(id)
+              .setMediaMetadata(
+                MediaMetadata.Builder()
+                  .setMediaType(MediaMetadata.MEDIA_TYPE_MUSIC)
+                  .setTitle(name)
+                  .build()
+              )
+              .build()
+          )
+        )
+        .build()
+      invalidateState()
+    }
+
+    override fun getState(): State {
+      return state
+    }
+
+    override fun handleSetPlayWhenReady(playWhenReady: Boolean): ListenableFuture<*> {
+      if (playWhenReady) {
+        callback?.onPlay()
+      } else {
+        callback?.onPause()
+      }
+      return Futures.immediateVoidFuture()
+    }
+
+    override fun handleStop(): ListenableFuture<*> {
+      callback?.onStop()
+      return Futures.immediateVoidFuture()
+    }
+
+    override fun handleSeek(
+      mediaItemIndex: Int,
+      positionMs: Long,
+      @Player.Command seekCommand: Int,
+    ): ListenableFuture<*> {
+      when (seekCommand) {
+        Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM -> callback?.onSkipToPrevious()
+        Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM -> callback?.onSkipToNext()
+        else -> throw IllegalArgumentException("unsupported seek command: $seekCommand")
+      }
+      return Futures.immediateVoidFuture()
+    }
+
+    override fun handleSetVolume(volume: Float): ListenableFuture<*> {
+      callback?.onSetVolume(volume)
+      return Futures.immediateVoidFuture()
+    }
   }
 
   /**
-   * Receives transport controls, media buttons, and commands from controllers and the system. The
-   * callback may be set using setCallback. It is wrapped in a [MediaSessionCompat.Callback] under
-   * the hood.
+   * Receives transport controls, media buttons and commands from controllers and the system.
    */
   interface Callback {
     fun onPlay()
@@ -159,5 +220,6 @@ class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: Pendin
     fun onPause()
     fun onSkipToPrevious()
     fun onSkipToNext()
+    fun onSetVolume(volume: Float)
   }
 }
