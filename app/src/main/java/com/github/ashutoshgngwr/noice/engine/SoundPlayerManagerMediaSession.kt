@@ -100,7 +100,6 @@ class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: Pendin
    * Releases the underlying media session.
    */
   fun release() {
-    sessionPlayer.release()
     session.release()
   }
 
