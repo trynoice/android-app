@@ -19,7 +19,6 @@ import androidx.core.content.getSystemService
 import androidx.core.os.postDelayed
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
-import androidx.media.AudioAttributesCompat
 import androidx.media3.datasource.cache.Cache
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.activity.MainActivity
@@ -280,20 +279,14 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
         }
 
         else -> throw IllegalArgumentException(
-          """
-            intent extra '${INTENT_EXTRA_AUDIO_USAGE}' must be be one of
-            '${AudioAttributesCompat.USAGE_MEDIA}' or '${AudioAttributesCompat.USAGE_ALARM}'"
-          """.trimIndent()
+          "intent extra '${INTENT_EXTRA_AUDIO_USAGE}' must be be one of '${AUDIO_USAGE_ALARM}' or '${AUDIO_USAGE_MEDIA}'"
         )
       }
 
       ACTION_SKIP_PRESET -> {
         val skipDir = intent.getIntExtra(INTENT_EXTRA_PRESET_SKIP_DIRECTION, 0)
         require(skipDir == PRESET_SKIP_DIRECTION_PREV || skipDir == PRESET_SKIP_DIRECTION_NEXT) {
-          """
-            intent extra '${INTENT_EXTRA_PRESET_SKIP_DIRECTION}=${skipDir}' must be be one of
-            '${PRESET_SKIP_DIRECTION_PREV}' or '${PRESET_SKIP_DIRECTION_NEXT}'"
-          """.trimIndent()
+          "intent extra '${INTENT_EXTRA_PRESET_SKIP_DIRECTION}=${skipDir}' must be be one of '${PRESET_SKIP_DIRECTION_PREV}' or '${PRESET_SKIP_DIRECTION_NEXT}'"
         }
 
         skipPreset(skipDir)

@@ -1,39 +1,44 @@
 package com.github.ashutoshgngwr.noice.cast
 
-import androidx.annotation.VisibleForTesting
-import androidx.media.VolumeProviderCompat
+import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerMediaSession
 import com.google.android.gms.cast.framework.CastContext
-import kotlin.math.round
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.roundToInt
 
-/**
- * A [VolumeProviderCompat] implementation for adjusting cast device volume using active
- * [MediaSession][android.support.v4.media.session.MediaSessionCompat]'s remote playback
- * control.
- */
 class CastVolumeProvider(
-  private val castContext: CastContext,
-) : VolumeProviderCompat(
-  VOLUME_CONTROL_ABSOLUTE,
-  MAX_VOLUME,
-  multiply(castContext.sessionManager.currentCastSession?.volume ?: 0.0)
-) {
+  private val context: CastContext,
+) : SoundPlayerManagerMediaSession.RemoteDeviceVolumeProvider {
 
-  override fun onSetVolumeTo(volume: Int) {
-    val session = castContext.sessionManager.currentCastSession ?: return
-    session.volume = volume.toDouble() / MAX_VOLUME
-    this.currentVolume = volume
+  override fun getMaxVolume(): Int {
+    return MAX_VOLUME
   }
 
-  override fun onAdjustVolume(direction: Int) {
-    onSetVolumeTo(this.currentVolume + direction)
+  override fun getVolume(): Int {
+    return ((context.sessionManager.currentCastSession?.volume ?: 1.0) * MAX_VOLUME).roundToInt()
+  }
+
+  override fun setVolume(volume: Int) {
+    context.sessionManager.currentCastSession?.volume = volume.toDouble() / MAX_VOLUME
+  }
+
+  override fun increaseVolume() {
+    setVolume(min(MAX_VOLUME, getVolume() + 1))
+  }
+
+  override fun decreaseVolume() {
+    setVolume(max(0, getVolume() - 1))
+  }
+
+  override fun isMuted(): Boolean {
+    return context.sessionManager.currentCastSession?.isMute ?: false
+  }
+
+  override fun setMuted(muted: Boolean) {
+    context.sessionManager.currentCastSession?.isMute = muted
   }
 
   companion object {
-    @VisibleForTesting
-    const val MAX_VOLUME = 15
-
-    private fun multiply(volume: Double): Int {
-      return round(volume * MAX_VOLUME).toInt()
-    }
+    private const val MAX_VOLUME = 20
   }
 }

@@ -3,8 +3,8 @@ package com.github.ashutoshgngwr.noice.engine
 import android.app.PendingIntent
 import android.content.Context
 import android.os.Looper
-import androidx.media.VolumeProviderCompat
 import androidx.media3.common.AudioAttributes
+import androidx.media3.common.DeviceInfo
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.common.SimpleBasePlayer
@@ -18,7 +18,6 @@ import com.google.common.util.concurrent.ListenableFuture
  */
 class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: PendingIntent) {
 
-  private var isPlaybackLocal = false
   private val defaultPresetName = context.getString(R.string.unsaved_preset)
   private val sessionPlayer = MediaSessionPlayer(context.getString(R.string.now_playing))
 
@@ -31,13 +30,11 @@ class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: Pendin
     .build()
 
   fun setPlaybackToLocal() {
-    isPlaybackLocal = true
-    // TODO: mediaSession.setPlaybackToLocal(audioStream)
+    sessionPlayer.setPlaybackToLocal()
   }
 
-  fun setPlaybackToRemote(volumeProvider: VolumeProviderCompat) {
-    isPlaybackLocal = false
-    // TODO: mediaSession.setPlaybackToRemote(volumeProvider)
+  fun setPlaybackToRemote(volumeProvider: RemoteDeviceVolumeProvider) {
+    sessionPlayer.setPlaybackToRemote(volumeProvider)
   }
 
   /**
@@ -108,22 +105,9 @@ class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: Pendin
   ) : SimpleBasePlayer(Looper.getMainLooper()) {
 
     var callback: Callback? = null
+    private var volumeProvider: RemoteDeviceVolumeProvider? = null
     private var state = State.Builder()
-      .setAvailableCommands(
-        Player.Commands.Builder()
-          .addAll(
-            Player.COMMAND_PLAY_PAUSE,
-            Player.COMMAND_STOP,
-            Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM,
-            Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM,
-            Player.COMMAND_GET_VOLUME,
-            Player.COMMAND_SET_VOLUME,
-            Player.COMMAND_GET_AUDIO_ATTRIBUTES,
-            Player.COMMAND_GET_CURRENT_MEDIA_ITEM,
-            Player.COMMAND_GET_MEDIA_ITEMS_METADATA,
-          )
-          .build()
-      )
+      .setAvailableCommands(ALWAYS_AVAILABLE_PLAYER_COMMANDS)
       .setAudioAttributes(SoundPlayerManager.DEFAULT_AUDIO_ATTRIBUTES)
       .setPlaylistMetadata(
         MediaMetadata.Builder()
@@ -132,6 +116,8 @@ class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: Pendin
           .build()
       )
       .build()
+
+    private val localDeviceInfo = state.deviceInfo
 
     fun updateVolumeState(volume: Float) {
       state = state.buildUpon()
@@ -173,6 +159,37 @@ class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: Pendin
       invalidateState()
     }
 
+    fun setPlaybackToLocal() {
+      volumeProvider = null
+      state = state.buildUpon()
+        .setAvailableCommands(ALWAYS_AVAILABLE_PLAYER_COMMANDS)
+        .setDeviceInfo(localDeviceInfo)
+        .build()
+      invalidateState()
+    }
+
+    fun setPlaybackToRemote(volumeProvider: RemoteDeviceVolumeProvider) {
+      this.volumeProvider = volumeProvider
+      state = state.buildUpon()
+        .setAvailableCommands(
+          Player.Commands.Builder()
+            .addAll(ALWAYS_AVAILABLE_PLAYER_COMMANDS)
+            .addAll(
+              Player.COMMAND_GET_DEVICE_VOLUME,
+              Player.COMMAND_SET_DEVICE_VOLUME,
+              Player.COMMAND_ADJUST_DEVICE_VOLUME,
+            )
+            .build()
+        )
+        .setDeviceInfo(
+          DeviceInfo(DeviceInfo.PLAYBACK_TYPE_REMOTE, 0, volumeProvider.getMaxVolume())
+        )
+        .setDeviceVolume(volumeProvider.getVolume())
+        .setIsDeviceMuted(volumeProvider.isMuted())
+        .build()
+      invalidateState()
+    }
+
     override fun getState(): State {
       return state
     }
@@ -208,6 +225,56 @@ class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: Pendin
       callback?.onSetVolume(volume)
       return Futures.immediateVoidFuture()
     }
+
+    override fun handleSetDeviceVolume(deviceVolume: Int): ListenableFuture<*> {
+      volumeProvider?.setVolume(deviceVolume)
+      updateDeviceVolumeState()
+      return Futures.immediateVoidFuture()
+    }
+
+    override fun handleSetDeviceMuted(muted: Boolean): ListenableFuture<*> {
+      volumeProvider?.setMuted(muted)
+      updateDeviceVolumeState()
+      return Futures.immediateVoidFuture()
+    }
+
+    override fun handleIncreaseDeviceVolume(): ListenableFuture<*> {
+      volumeProvider?.increaseVolume()
+      updateDeviceVolumeState()
+      return Futures.immediateVoidFuture()
+    }
+
+    override fun handleDecreaseDeviceVolume(): ListenableFuture<*> {
+      volumeProvider?.decreaseVolume()
+      updateDeviceVolumeState()
+      return Futures.immediateVoidFuture()
+    }
+
+    private fun updateDeviceVolumeState() {
+      volumeProvider?.also { volumeProvider ->
+        state = state.buildUpon()
+          .setDeviceVolume(volumeProvider.getVolume())
+          .setIsDeviceMuted(volumeProvider.isMuted())
+          .build()
+        invalidateState()
+      }
+    }
+
+    companion object {
+      private val ALWAYS_AVAILABLE_PLAYER_COMMANDS = Player.Commands.Builder()
+        .addAll(
+          Player.COMMAND_PLAY_PAUSE,
+          Player.COMMAND_STOP,
+          Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM,
+          Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM,
+          Player.COMMAND_GET_VOLUME,
+          Player.COMMAND_SET_VOLUME,
+          Player.COMMAND_GET_AUDIO_ATTRIBUTES,
+          Player.COMMAND_GET_CURRENT_MEDIA_ITEM,
+          Player.COMMAND_GET_MEDIA_ITEMS_METADATA,
+        )
+        .build()
+    }
   }
 
   /**
@@ -220,5 +287,15 @@ class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: Pendin
     fun onSkipToPrevious()
     fun onSkipToNext()
     fun onSetVolume(volume: Float)
+  }
+
+  interface RemoteDeviceVolumeProvider {
+    fun getMaxVolume(): Int
+    fun getVolume(): Int
+    fun setVolume(volume: Int)
+    fun increaseVolume()
+    fun decreaseVolume()
+    fun isMuted(): Boolean
+    fun setMuted(muted: Boolean)
   }
 }
