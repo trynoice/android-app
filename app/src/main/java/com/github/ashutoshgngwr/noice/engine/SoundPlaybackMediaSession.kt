@@ -29,10 +29,16 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
     .setSessionActivity(sessionActivityPi)
     .build()
 
+  /**
+   * Sets the device controls to manage volume of the local playback stream.
+   */
   fun setPlaybackToLocal() {
     sessionPlayer.setPlaybackToLocal()
   }
 
+  /**
+   * Sets the device controls to manage volume of a remote device using the given [volumeProvider].
+   */
   fun setPlaybackToRemote(volumeProvider: RemoteDeviceVolumeProvider) {
     sessionPlayer.setPlaybackToRemote(volumeProvider)
   }
@@ -101,20 +107,30 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
     session.release()
   }
 
-  private class MediaSessionPlayer(
-    playlistName: String,
-  ) : SimpleBasePlayer(Looper.getMainLooper()) {
+  private class MediaSessionPlayer(queueTitle: String) : SimpleBasePlayer(Looper.getMainLooper()) {
 
     var callback: Callback? = null
     private var volumeProvider: RemoteDeviceVolumeProvider? = null
     private var state = State.Builder()
-      .setAvailableCommands(ALWAYS_AVAILABLE_PLAYER_COMMANDS)
+      .setAvailableCommands(
+        Player.Commands.Builder()
+          .addAll(
+            Player.COMMAND_PLAY_PAUSE,
+            Player.COMMAND_STOP,
+            Player.COMMAND_GET_VOLUME,
+            Player.COMMAND_SET_VOLUME,
+            Player.COMMAND_GET_AUDIO_ATTRIBUTES,
+            Player.COMMAND_GET_CURRENT_MEDIA_ITEM,
+            Player.COMMAND_GET_MEDIA_ITEMS_METADATA,
+          )
+          .build()
+      )
       .setAudioAttributes(SoundPlayerManager.DEFAULT_AUDIO_ATTRIBUTES)
       .setPlaylist(listOf(MediaItemData.Builder("placeholder").build()))
       .setPlaylistMetadata(
         MediaMetadata.Builder()
           .setMediaType(MediaMetadata.MEDIA_TYPE_PLAYLIST)
-          .setTitle(playlistName)
+          .setTitle(queueTitle)
           .build()
       )
       .setCurrentMediaItemIndex(0)
@@ -146,6 +162,25 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
 
     fun updateCurrentPreset(id: String, name: String, enableSkipCommands: Boolean) {
       state = state.buildUpon()
+        .setAvailableCommands(
+          if (enableSkipCommands) {
+            state.availableCommands
+              .buildUpon()
+              .addAll(
+                Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM,
+                Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM,
+              )
+              .build()
+          } else {
+            state.availableCommands
+              .buildUpon()
+              .removeAll(
+                Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM,
+                Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM,
+              )
+              .build()
+          }
+        )
         .setPlaylist(
           // both previous and next placeholders are needed for `Player.skipToPreviousMediaItem()`
           // and `Player.skipToNextMediaItem()` to work.
@@ -176,7 +211,16 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
     fun setPlaybackToLocal() {
       volumeProvider = null
       state = state.buildUpon()
-        .setAvailableCommands(ALWAYS_AVAILABLE_PLAYER_COMMANDS)
+        .setAvailableCommands(
+          state.availableCommands
+            .buildUpon()
+            .removeAll(
+              Player.COMMAND_GET_DEVICE_VOLUME,
+              Player.COMMAND_SET_DEVICE_VOLUME,
+              Player.COMMAND_ADJUST_DEVICE_VOLUME,
+            )
+            .build()
+        )
         .setDeviceInfo(localDeviceInfo)
         .build()
       invalidateState()
@@ -186,8 +230,8 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
       this.volumeProvider = volumeProvider
       state = state.buildUpon()
         .setAvailableCommands(
-          Player.Commands.Builder()
-            .addAll(ALWAYS_AVAILABLE_PLAYER_COMMANDS)
+          state.availableCommands
+            .buildUpon()
             .addAll(
               Player.COMMAND_GET_DEVICE_VOLUME,
               Player.COMMAND_SET_DEVICE_VOLUME,
@@ -273,22 +317,6 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
         invalidateState()
       }
     }
-
-    companion object {
-      private val ALWAYS_AVAILABLE_PLAYER_COMMANDS = Player.Commands.Builder()
-        .addAll(
-          Player.COMMAND_PLAY_PAUSE,
-          Player.COMMAND_STOP,
-          Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM,
-          Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM,
-          Player.COMMAND_GET_VOLUME,
-          Player.COMMAND_SET_VOLUME,
-          Player.COMMAND_GET_AUDIO_ATTRIBUTES,
-          Player.COMMAND_GET_CURRENT_MEDIA_ITEM,
-          Player.COMMAND_GET_MEDIA_ITEMS_METADATA,
-        )
-        .build()
-    }
   }
 
   /**
@@ -303,6 +331,9 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
     fun onSetVolume(volume: Float)
   }
 
+  /**
+   * Receives device volume controls from the controllers and the system.
+   */
   interface RemoteDeviceVolumeProvider {
     fun getMaxVolume(): Int
     fun getVolume(): Int

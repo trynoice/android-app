@@ -7,6 +7,10 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
+/**
+ * A [remote volume provider][SoundPlaybackMediaSession.RemoteDeviceVolumeProvider] for managing
+ * volume of the connected Google Cast device.
+ */
 class CastVolumeProvider(
   private val context: CastContext,
 ) : SoundPlaybackMediaSession.RemoteDeviceVolumeProvider {
