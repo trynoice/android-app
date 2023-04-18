@@ -19,18 +19,18 @@ import androidx.core.content.getSystemService
 import androidx.core.os.postDelayed
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
-import androidx.media.AudioAttributesCompat
+import androidx.media3.datasource.cache.Cache
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.cast.CastReceiverUiManager
 import com.github.ashutoshgngwr.noice.engine.AudioFocusManager
-import com.github.ashutoshgngwr.noice.engine.DefaultMediaPlayer
 import com.github.ashutoshgngwr.noice.engine.LocalSoundPlayer
+import com.github.ashutoshgngwr.noice.engine.SoundPlaybackMediaSession
 import com.github.ashutoshgngwr.noice.engine.SoundPlaybackNotificationManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
-import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerMediaSession
-import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDataSourceFactory
+import com.github.ashutoshgngwr.noice.engine.media.DefaultMediaPlayer
+import com.github.ashutoshgngwr.noice.engine.media.SoundDataSourceFactory
 import com.github.ashutoshgngwr.noice.ext.bindServiceCallbackFlow
 import com.github.ashutoshgngwr.noice.ext.getSerializableCompat
 import com.github.ashutoshgngwr.noice.models.Preset
@@ -39,7 +39,6 @@ import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
-import com.google.android.exoplayer2.upstream.cache.Cache
 import com.trynoice.api.client.NoiceApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -113,14 +112,14 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
     PendingIntent.getActivity(this, 0x28, Intent(this, MainActivity::class.java), piFlags)
   }
 
-  private val mediaSession: SoundPlayerManagerMediaSession by lazy {
-    SoundPlayerManagerMediaSession(this, mainActivityPi)
+  private val mediaSession: SoundPlaybackMediaSession by lazy {
+    SoundPlaybackMediaSession(this, mainActivityPi)
   }
 
   private val notificationManager: SoundPlaybackNotificationManager by lazy {
     SoundPlaybackNotificationManager(
       service = this,
-      mediaSessionToken = mediaSession.getSessionToken(),
+      mediaSession = mediaSession.session,
       contentPi = mainActivityPi,
       resumePi = buildResumeActionPendingIntent(this),
       pausePi = buildPauseActionPendingIntent(this),
@@ -131,14 +130,14 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
     )
   }
 
-  private val localDataSourceFactory: SoundDataSourceFactory by lazy {
+  private val soundDataSourceFactory: SoundDataSourceFactory by lazy {
     SoundDataSourceFactory(apiClient, soundDownloadCache)
   }
 
   private val localSoundPlayerFactory: SoundPlayer.Factory by lazy {
     LocalSoundPlayer.Factory(
       soundRepository = soundRepository,
-      mediaPlayerFactory = DefaultMediaPlayer.Factory(this, localDataSourceFactory),
+      mediaPlayerFactory = DefaultMediaPlayer.Factory(this, soundDataSourceFactory),
       defaultScope = lifecycleScope,
     )
   }
@@ -158,12 +157,13 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
       .apply { setReferenceCounted(false) }
   }
 
-  private val mediaSessionCallback = object : SoundPlayerManagerMediaSession.Callback {
+  private val mediaSessionCallback = object : SoundPlaybackMediaSession.Callback {
     override fun onPlay() = soundPlayerManager.resume()
     override fun onStop() = soundPlayerManager.stop(false)
     override fun onPause() = soundPlayerManager.pause(false)
     override fun onSkipToPrevious() = skipPreset(PRESET_SKIP_DIRECTION_PREV)
     override fun onSkipToNext() = skipPreset(PRESET_SKIP_DIRECTION_NEXT)
+    override fun onSetVolume(volume: Float) = soundPlayerManager.setVolume(volume)
   }
 
   private val becomingNoisyReceiver = object : BroadcastReceiver() {
@@ -187,15 +187,15 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
 
     lifecycleScope.launch {
       currentPresetFlow.collect { preset ->
-        notificationManager.setCurrentPresetName(preset?.name)
-        mediaSession.setCurrentPresetName(preset?.name)
+        notificationManager.setPresetName(preset?.name)
+        mediaSession.setPresetName(preset?.name)
         castReceiverUiManager?.setPresetName(preset?.name)
       }
     }
 
     lifecycleScope.launch {
       subscriptionRepository.isSubscribed().collect { subscribed ->
-        localDataSourceFactory.enableDownloadedSounds = subscribed
+        soundDataSourceFactory.enableDownloadedSounds = subscribed
         soundPlayerManager.setPremiumSegmentsEnabled(subscribed)
       }
     }
@@ -270,29 +270,23 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
       ACTION_SET_AUDIO_USAGE -> when (intent.getStringExtra(INTENT_EXTRA_AUDIO_USAGE)) {
         AUDIO_USAGE_MEDIA -> {
           soundPlayerManager.setAudioAttributes(SoundPlayerManager.DEFAULT_AUDIO_ATTRIBUTES)
-          mediaSession.setAudioStream(AudioManager.STREAM_MUSIC)
+          mediaSession.setAudioAttributes(SoundPlayerManager.DEFAULT_AUDIO_ATTRIBUTES)
         }
 
         AUDIO_USAGE_ALARM -> {
           soundPlayerManager.setAudioAttributes(SoundPlayerManager.ALARM_AUDIO_ATTRIBUTES)
-          mediaSession.setAudioStream(AudioManager.STREAM_ALARM)
+          mediaSession.setAudioAttributes(SoundPlayerManager.ALARM_AUDIO_ATTRIBUTES)
         }
 
         else -> throw IllegalArgumentException(
-          """
-            intent extra '${INTENT_EXTRA_AUDIO_USAGE}' must be be one of
-            '${AudioAttributesCompat.USAGE_MEDIA}' or '${AudioAttributesCompat.USAGE_ALARM}'"
-          """.trimIndent()
+          "intent extra '${INTENT_EXTRA_AUDIO_USAGE}' must be be one of '${AUDIO_USAGE_ALARM}' or '${AUDIO_USAGE_MEDIA}'"
         )
       }
 
       ACTION_SKIP_PRESET -> {
         val skipDir = intent.getIntExtra(INTENT_EXTRA_PRESET_SKIP_DIRECTION, 0)
         require(skipDir == PRESET_SKIP_DIRECTION_PREV || skipDir == PRESET_SKIP_DIRECTION_NEXT) {
-          """
-            intent extra '${INTENT_EXTRA_PRESET_SKIP_DIRECTION}=${skipDir}' must be be one of
-            '${PRESET_SKIP_DIRECTION_PREV}' or '${PRESET_SKIP_DIRECTION_NEXT}'"
-          """.trimIndent()
+          "intent extra '${INTENT_EXTRA_PRESET_SKIP_DIRECTION}=${skipDir}' must be be one of '${PRESET_SKIP_DIRECTION_PREV}' or '${PRESET_SKIP_DIRECTION_NEXT}'"
         }
 
         skipPreset(skipDir)
@@ -376,6 +370,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
 
   override fun onSoundPlayerManagerVolumeChange(volume: Float) {
     soundPlayerManagerVolumeFlow.value = volume
+    mediaSession.setVolume(volume)
     castReceiverUiManager?.setSoundPlayerManagerState(soundPlayerManagerStateFlow.value, volume)
   }
 

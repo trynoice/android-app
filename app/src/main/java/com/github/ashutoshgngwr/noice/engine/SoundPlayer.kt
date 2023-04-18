@@ -1,6 +1,6 @@
 package com.github.ashutoshgngwr.noice.engine
 
-import androidx.media.AudioAttributesCompat
+import androidx.media3.common.AudioAttributes
 import kotlin.properties.Delegates.observable
 import kotlin.time.Duration
 
@@ -54,10 +54,10 @@ abstract class SoundPlayer {
   abstract fun setAudioBitrate(bitrate: String)
 
   /**
-   * Sets the attributes for audio playback using an [AudioAttributesCompat] instance, used by the
+   * Sets the attributes for audio playback using an [AudioAttributes] instance, used by the
    * underlying playback mechanism.
    */
-  abstract fun setAudioAttributes(attrs: AudioAttributesCompat)
+  abstract fun setAudioAttributes(attrs: AudioAttributes)
 
   /**
    * Sets the volume of the player.

@@ -1,7 +1,9 @@
 package com.github.ashutoshgngwr.noice.engine
 
-import androidx.media.AudioAttributesCompat
+import androidx.media3.common.AudioAttributes
 import com.github.ashutoshgngwr.noice.TestDispatcherRule
+import com.github.ashutoshgngwr.noice.engine.media.FakeMediaPlayer
+import com.github.ashutoshgngwr.noice.engine.media.MediaPlayer
 import com.github.ashutoshgngwr.noice.models.Sound
 import com.github.ashutoshgngwr.noice.models.SoundInfo
 import com.github.ashutoshgngwr.noice.models.SoundSegment
@@ -217,7 +219,7 @@ class LocalSoundPlayerTest {
   fun setAudioAttributes() = runTest {
     val fakeMediaPlayer = FakeMediaPlayer()
     val soundPlayer = LocalSoundPlayer(metadataSourceMock, fakeMediaPlayer, this)
-    val attrs = mockk<AudioAttributesCompat>()
+    val attrs = mockk<AudioAttributes>()
     soundPlayer.setAudioAttributes(attrs)
     assertEquals(attrs, fakeMediaPlayer.audioAttributes)
   }

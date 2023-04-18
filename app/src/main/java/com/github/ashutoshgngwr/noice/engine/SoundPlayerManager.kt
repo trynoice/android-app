@@ -1,8 +1,8 @@
 package com.github.ashutoshgngwr.noice.engine
 
-import android.media.AudioManager
 import android.util.Log
-import androidx.media.AudioAttributesCompat
+import androidx.media3.common.AudioAttributes
+import androidx.media3.common.C
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.properties.Delegates.observable
@@ -108,9 +108,9 @@ class SoundPlayerManager(
   }
 
   /**
-   * Updates the [AudioAttributesCompat] that the sounds use for playback.
+   * Updates the [AudioAttributes] that the sounds use for playback.
    */
-  fun setAudioAttributes(attrs: AudioAttributesCompat) {
+  fun setAudioAttributes(attrs: AudioAttributes) {
     if (attrs == audioAttrs) {
       return
     }
@@ -328,20 +328,20 @@ class SoundPlayerManager(
      * Audio attributes that the [SoundPlayerManager] should use to perform its playback on the
      * music audio stream.
      */
-    val DEFAULT_AUDIO_ATTRIBUTES: AudioAttributesCompat = AudioAttributesCompat.Builder()
-      .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)
-      .setLegacyStreamType(AudioManager.STREAM_MUSIC)
-      .setUsage(AudioAttributesCompat.USAGE_MEDIA)
+    val DEFAULT_AUDIO_ATTRIBUTES: AudioAttributes = AudioAttributes.Builder()
+      .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
+      .setUsage(C.USAGE_MEDIA)
+      .setAllowedCapturePolicy(C.ALLOW_CAPTURE_BY_SYSTEM)
       .build()
 
     /**
      * Audio attributes that the [SoundPlayerManager] should use to perform its playback on the
      * alarm audio stream.
      */
-    val ALARM_AUDIO_ATTRIBUTES: AudioAttributesCompat = AudioAttributesCompat.Builder()
-      .setContentType(AudioAttributesCompat.CONTENT_TYPE_MOVIE)
-      .setLegacyStreamType(AudioManager.STREAM_ALARM)
-      .setUsage(AudioAttributesCompat.USAGE_ALARM)
+    val ALARM_AUDIO_ATTRIBUTES: AudioAttributes = AudioAttributes.Builder()
+      .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
+      .setUsage(C.USAGE_ALARM)
+      .setAllowedCapturePolicy(C.ALLOW_CAPTURE_BY_SYSTEM)
       .build()
   }
 

@@ -1,14 +1,13 @@
-package com.github.ashutoshgngwr.noice.engine.exoplayer
+package com.github.ashutoshgngwr.noice.engine.media
 
 import android.net.Uri
-import com.google.android.exoplayer2.C
-import com.google.android.exoplayer2.PlaybackException
-import com.google.android.exoplayer2.upstream.BaseDataSource
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DataSpec
-import com.google.android.exoplayer2.upstream.HttpDataSource.HttpDataSourceException
-import com.google.android.exoplayer2.upstream.HttpDataSource.InvalidResponseCodeException
-import com.google.android.exoplayer2.util.Util
+import androidx.media3.common.C
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.util.Util
+import androidx.media3.datasource.BaseDataSource
+import androidx.media3.datasource.DataSource
+import androidx.media3.datasource.DataSpec
+import androidx.media3.datasource.HttpDataSource
 import com.trynoice.api.client.NoiceApiClient
 import okhttp3.ResponseBody
 import okhttp3.internal.closeQuietly
@@ -19,9 +18,8 @@ import kotlin.math.min
 
 /**
  * An ExoPlayer [DataSource] that fetches sound data from the [CDN][NoiceApiClient.cdn]. Although it
- * doesn't implement [HttpDataSource][com.google.android.exoplayer2.upstream.HttpDataSource], it
- * throws relevant [HttpDataSourceException] and [InvalidResponseCodeException] instances to exhibit
- * a similar behaviour.
+ * doesn't implement [HttpDataSource], it throws relevant [HttpDataSource.HttpDataSourceException]
+ * and [HttpDataSource.InvalidResponseCodeException] instances to exhibit a similar behaviour.
  */
 class CdnSoundDataSource private constructor(
   private val apiClient: NoiceApiClient,
@@ -49,15 +47,15 @@ class CdnSoundDataSource private constructor(
         .resource(requireNotNull(dataSpec.uri.path))
         .execute()
     } catch (e: IOException) {
-      throw HttpDataSourceException.createForIOException(
-        e, dataSpec, HttpDataSourceException.TYPE_OPEN
+      throw HttpDataSource.HttpDataSourceException.createForIOException(
+        e, dataSpec, HttpDataSource.HttpDataSourceException.TYPE_OPEN
       )
     }
 
     this.response = response
     if (!response.isSuccessful) { // handle unsuccessful response
       closeQuietly()
-      throw InvalidResponseCodeException(
+      throw HttpDataSource.InvalidResponseCodeException(
         response.code(),
         response.message(),
         IOException(HttpException(response)),
@@ -83,17 +81,17 @@ class CdnSoundDataSource private constructor(
         .skip(dataSpec.position)
     } catch (e: IOException) {
       closeQuietly()
-      throw HttpDataSourceException.createForIOException(
-        e, dataSpec, HttpDataSourceException.TYPE_OPEN
+      throw HttpDataSource.HttpDataSourceException.createForIOException(
+        e, dataSpec, HttpDataSource.HttpDataSourceException.TYPE_OPEN
       )
     }
 
     if (skipped != dataSpec.position) {
       closeQuietly()
-      throw HttpDataSourceException(
+      throw HttpDataSource.HttpDataSourceException(
         dataSpec,
         PlaybackException.ERROR_CODE_IO_READ_POSITION_OUT_OF_RANGE,
-        HttpDataSourceException.TYPE_OPEN,
+        HttpDataSource.HttpDataSourceException.TYPE_OPEN,
       )
     }
 
@@ -128,8 +126,8 @@ class CdnSoundDataSource private constructor(
       bytesTransferred(read)
       return read
     } catch (e: IOException) {
-      throw HttpDataSourceException.createForIOException(
-        e, dataSpec, HttpDataSourceException.TYPE_READ
+      throw HttpDataSource.HttpDataSourceException.createForIOException(
+        e, dataSpec, HttpDataSource.HttpDataSourceException.TYPE_READ
       )
     }
   }

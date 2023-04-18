@@ -8,7 +8,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.StringRes
 import androidx.core.view.MenuItemCompat
-import androidx.media.VolumeProviderCompat
 import androidx.mediarouter.app.MediaRouteActionProvider
 import com.github.ashutoshgngwr.noice.cast.CastMessagingChannel
 import com.github.ashutoshgngwr.noice.cast.CastReceiverUiManager
@@ -19,6 +18,7 @@ import com.github.ashutoshgngwr.noice.cast.models.Event
 import com.github.ashutoshgngwr.noice.cast.models.GetAccessTokenEvent
 import com.github.ashutoshgngwr.noice.cast.models.GetAccessTokenResponseEvent
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
+import com.github.ashutoshgngwr.noice.engine.SoundPlaybackMediaSession
 import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
 import com.google.android.gms.cast.framework.CastSession
@@ -66,8 +66,9 @@ class RealCastApiProvider(
     return CastSoundPlayer.Factory(messagingChannel)
   }
 
-  override fun getVolumeProvider(): VolumeProviderCompat =
-    CastVolumeProvider(requireNotNull(castContext))
+  override fun getVolumeProvider(): SoundPlaybackMediaSession.RemoteDeviceVolumeProvider {
+    return CastVolumeProvider(requireNotNull(castContext))
+  }
 
   override fun getReceiverUiManager(): CastReceiverUiManager {
     val messagingChannel = CastMessagingChannel(

@@ -1,11 +1,10 @@
-package com.github.ashutoshgngwr.noice.engine.exoplayer
+package com.github.ashutoshgngwr.noice.engine.media
 
 import android.net.Uri
-import com.google.android.exoplayer2.C
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DataSpec
-import com.google.android.exoplayer2.upstream.HttpDataSource.HttpDataSourceException
-import com.google.android.exoplayer2.upstream.HttpDataSource.InvalidResponseCodeException
+import androidx.media3.common.C
+import androidx.media3.datasource.DataSource
+import androidx.media3.datasource.DataSpec
+import androidx.media3.datasource.HttpDataSource
 import com.trynoice.api.client.apis.CdnApi
 import io.mockk.every
 import io.mockk.mockk
@@ -42,7 +41,7 @@ class CdnSoundDataSourceTest {
       every { execute() } throws IOException("test-network error")
     }
 
-    assertThrows(HttpDataSourceException::class.java) {
+    assertThrows(HttpDataSource.HttpDataSourceException::class.java) {
       dataSource.open(DataSpec(testUri))
     }
   }
@@ -53,7 +52,7 @@ class CdnSoundDataSourceTest {
       every { execute() } returns Response.error(404, "".toResponseBody(null))
     }
 
-    assertThrows(InvalidResponseCodeException::class.java) {
+    assertThrows(HttpDataSource.InvalidResponseCodeException::class.java) {
       dataSource.open(DataSpec(testUri))
     }
   }
@@ -64,7 +63,7 @@ class CdnSoundDataSourceTest {
       every { execute() } returns Response.success(ByteArray(256).toResponseBody("audio/mpeg".toMediaType()))
     }
 
-    assertThrows(HttpDataSourceException::class.java) {
+    assertThrows(HttpDataSource.HttpDataSourceException::class.java) {
       dataSource.open(DataSpec(testUri, 300, C.LENGTH_UNSET.toLong()))
     }
   }

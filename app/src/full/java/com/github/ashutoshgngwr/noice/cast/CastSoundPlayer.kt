@@ -1,7 +1,7 @@
 package com.github.ashutoshgngwr.noice.cast
 
 import androidx.annotation.VisibleForTesting
-import androidx.media.AudioAttributesCompat
+import androidx.media3.common.AudioAttributes
 import com.github.ashutoshgngwr.noice.cast.models.EnableSoundPremiumSegmentsEvent
 import com.github.ashutoshgngwr.noice.cast.models.Event
 import com.github.ashutoshgngwr.noice.cast.models.PauseSoundEvent
@@ -40,7 +40,7 @@ class CastSoundPlayer @VisibleForTesting constructor(
     messagingChannel.send(SetSoundAudioBitrateEvent(soundId, bitrate))
   }
 
-  override fun setAudioAttributes(attrs: AudioAttributesCompat) {
+  override fun setAudioAttributes(attrs: AudioAttributes) {
     // no-op
   }
 

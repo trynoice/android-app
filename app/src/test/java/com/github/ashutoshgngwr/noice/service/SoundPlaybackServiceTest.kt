@@ -3,18 +3,16 @@ package com.github.ashutoshgngwr.noice.service
 import android.content.Intent
 import android.content.ServiceConnection
 import android.media.AudioManager
-import android.media.VolumeProvider
-import androidx.media.VolumeProviderCompat
 import com.github.ashutoshgngwr.noice.cast.CastReceiverUiManager
 import com.github.ashutoshgngwr.noice.di.ApiClientModule
 import com.github.ashutoshgngwr.noice.di.CastApiProviderModule
 import com.github.ashutoshgngwr.noice.engine.AudioFocusManager
 import com.github.ashutoshgngwr.noice.engine.LocalSoundPlayer
+import com.github.ashutoshgngwr.noice.engine.SoundPlaybackMediaSession
 import com.github.ashutoshgngwr.noice.engine.SoundPlaybackNotificationManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
-import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerMediaSession
-import com.github.ashutoshgngwr.noice.engine.exoplayer.SoundDataSourceFactory
+import com.github.ashutoshgngwr.noice.engine.media.SoundDataSourceFactory
 import com.github.ashutoshgngwr.noice.models.AudioQuality
 import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.provider.CastApiProvider
@@ -49,6 +47,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.android.controller.ServiceController
 import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowPowerManager
 import java.util.*
@@ -85,14 +84,18 @@ class SoundPlaybackServiceTest {
   @BindValue
   internal lateinit var castApiProviderMock: CastApiProvider
 
+  private lateinit var robolectricServiceController: ServiceController<SoundPlaybackService>
+  private lateinit var service: SoundPlaybackService
+  private lateinit var controller: SoundPlaybackService.Controller
+
   @Before
   fun setUp() {
     mockkConstructor(
       AudioFocusManager::class,
       SoundDataSourceFactory::class,
+      SoundPlaybackMediaSession::class,
       SoundPlaybackNotificationManager::class,
       SoundPlayerManager::class,
-      SoundPlayerManagerMediaSession::class,
     )
 
     presetRepositoryMock = mockk(relaxed = true)
@@ -100,23 +103,19 @@ class SoundPlaybackServiceTest {
     subscriptionRepositoryMock = mockk(relaxed = true)
     settingsRepositoryMock = mockk(relaxed = true)
     apiClientMock = mockk(relaxed = true)
-    castApiProviderMock = mockk(relaxed = true) {
-      // default mocks for the compat implementation doesn't work
-      every { getVolumeProvider() } returns mockk(relaxed = true) {
-        every { volumeProvider } returns mockk<VolumeProvider>(relaxed = true)
-      }
-    }
+    castApiProviderMock = mockk(relaxed = true)
   }
 
   @After
   fun tearDown() {
+    robolectricServiceController.destroy()
     unmockkAll()
   }
 
   @Test
   fun service_becomingNoisyReceiver() {
     every { anyConstructed<SoundPlayerManager>().pause(any()) } returns Unit
-    val (service) = buildServiceAndController()
+    setUpServiceAndController()
     service.sendBroadcast(Intent(AudioManager.ACTION_AUDIO_BECOMING_NOISY))
     ShadowLooper.idleMainLooper()
     verify(exactly = 1) { anyConstructed<SoundPlayerManager>().pause(any()) }
@@ -130,7 +129,7 @@ class SoundPlaybackServiceTest {
     every { anyConstructed<SoundPlayerManager>().setPremiumSegmentsEnabled(any()) } returns Unit
     every { anyConstructed<SoundDataSourceFactory>() setProperty "enableDownloadedSounds" value any<Boolean>() } returns Unit
     every { anyConstructed<SoundPlayerManager>().setAudioBitrate(any()) } returns Unit
-    val (_) = buildServiceAndController()
+    setUpServiceAndController()
     verify(exactly = 1) {
       anyConstructed<SoundPlayerManager>().setPremiumSegmentsEnabled(false)
       anyConstructed<SoundDataSourceFactory>() setProperty "enableDownloadedSounds" value false
@@ -151,7 +150,7 @@ class SoundPlaybackServiceTest {
     every { settingsRepositoryMock.shouldIgnoreAudioFocusChangesAsFlow() } returns ignoreAudioFocusStateFlow
     every { anyConstructed<AudioFocusManager>().setDisabled(any()) } returns Unit
 
-    val (_) = buildServiceAndController()
+    setUpServiceAndController()
     verify(exactly = 1) { anyConstructed<AudioFocusManager>().setDisabled(false) }
 
     ignoreAudioFocusStateFlow.value = true
@@ -167,12 +166,12 @@ class SoundPlaybackServiceTest {
     every { anyConstructed<SoundPlayerManager>().resume() } returns Unit
     every { anyConstructed<SoundPlayerManager>().playPreset(any()) } returns Unit
 
-    var sessionCallback: SoundPlayerManagerMediaSession.Callback? = null
-    every { anyConstructed<SoundPlayerManagerMediaSession>().setCallback(any()) } answers {
+    var sessionCallback: SoundPlaybackMediaSession.Callback? = null
+    every { anyConstructed<SoundPlaybackMediaSession>().setCallback(any()) } answers {
       sessionCallback = firstArg()
     }
 
-    val (service) = buildServiceAndController()
+    setUpServiceAndController()
     assertNull(sessionCallback)
 
     enableMediaButtonsStateFlow.value = true
@@ -212,7 +211,7 @@ class SoundPlaybackServiceTest {
     every { anyConstructed<SoundPlayerManager>().setFadeInDuration(any()) } returns Unit
     every { anyConstructed<SoundPlayerManager>().setFadeOutDuration(any()) } returns Unit
 
-    val (_) = buildServiceAndController()
+    setUpServiceAndController()
     verify(exactly = 1) {
       anyConstructed<SoundPlayerManager>().setFadeInDuration(Duration.ZERO)
       anyConstructed<SoundPlayerManager>().setFadeOutDuration(Duration.ZERO)
@@ -233,8 +232,7 @@ class SoundPlaybackServiceTest {
     every { subscriptionRepositoryMock.isSubscribed() } returns flowOf(true)
     every { anyConstructed<SoundPlayerManager>().setAudioBitrate(any()) } returns Unit
 
-    val (_) = buildServiceAndController()
-
+    setUpServiceAndController()
     listOf(
       AudioQuality.LOW,
       AudioQuality.MEDIUM,
@@ -261,7 +259,7 @@ class SoundPlaybackServiceTest {
       castSessionListener = firstArg()
     }
 
-    val (service) = buildServiceAndController()
+    setUpServiceAndController()
     every { anyConstructed<SoundPlayerManager>().setSoundPlayerFactory(any()) } returns Unit
     castSessionListener.onCastSessionBegin()
     verify(exactly = 1) {
@@ -327,8 +325,8 @@ class SoundPlaybackServiceTest {
       castSessionListener = firstArg()
     }
 
-    every { anyConstructed<SoundPlayerManagerMediaSession>().setCurrentPresetName(any()) } returns Unit
-    val (service) = buildServiceAndController()
+    every { anyConstructed<SoundPlaybackMediaSession>().setPresetName(any()) } returns Unit
+    setUpServiceAndController()
     listOf(
       Pair(Preset("test-preset-1", sortedMapOf("sound-1" to 1F, "sound-2" to 0.8F)), true),
       Pair(Preset("test-preset-2", sortedMapOf("sound-3" to 0.6F, "sound-4" to 0.4F)), false),
@@ -341,30 +339,29 @@ class SoundPlaybackServiceTest {
 
       service.onCurrentPresetChange()
       verify(atLeast = 1) {
-        anyConstructed<SoundPlayerManagerMediaSession>()
-          .setCurrentPresetName(if (isSaved) preset.name else null)
+        anyConstructed<SoundPlaybackMediaSession>()
+          .setPresetName(if (isSaved) preset.name else null)
       }
     }
 
-    val castVolumeProviderMock = mockk<VolumeProviderCompat>(relaxed = true) {
-      every { volumeProvider } returns mockk<VolumeProvider>(relaxed = true)
-    }
+    val castVolumeProviderMock =
+      mockk<SoundPlaybackMediaSession.RemoteDeviceVolumeProvider>(relaxed = true)
 
     every { castApiProviderMock.getVolumeProvider() } returns castVolumeProviderMock
-    every { anyConstructed<SoundPlayerManagerMediaSession>().setPlaybackToRemote(any()) } returns Unit
-    every { anyConstructed<SoundPlayerManagerMediaSession>().setPlaybackToLocal() } returns Unit
+    every { anyConstructed<SoundPlaybackMediaSession>().setPlaybackToRemote(any()) } returns Unit
+    every { anyConstructed<SoundPlaybackMediaSession>().setPlaybackToLocal() } returns Unit
     castSessionListener.onCastSessionBegin()
     castSessionListener.onCastSessionEnd()
     verifyOrder {
-      anyConstructed<SoundPlayerManagerMediaSession>().setPlaybackToRemote(castVolumeProviderMock)
-      anyConstructed<SoundPlayerManagerMediaSession>().setPlaybackToLocal()
+      anyConstructed<SoundPlaybackMediaSession>().setPlaybackToRemote(castVolumeProviderMock)
+      anyConstructed<SoundPlaybackMediaSession>().setPlaybackToLocal()
     }
   }
 
   @Test
   fun service_notification() {
-    every { anyConstructed<SoundPlaybackNotificationManager>().setCurrentPresetName(any()) } returns Unit
-    val (service) = buildServiceAndController()
+    every { anyConstructed<SoundPlaybackNotificationManager>().setPresetName(any()) } returns Unit
+    setUpServiceAndController()
     listOf(
       Pair(Preset("test-preset-1", sortedMapOf("sound-1" to 1F, "sound-2" to 0.8F)), true),
       Pair(Preset("test-preset-2", sortedMapOf("sound-3" to 0.6F, "sound-4" to 0.4F)), false),
@@ -377,15 +374,14 @@ class SoundPlaybackServiceTest {
 
       service.onCurrentPresetChange()
       verify(atLeast = 1) {
-        anyConstructed<SoundPlaybackNotificationManager>()
-          .setCurrentPresetName(if (isSaved) preset.name else null)
+        anyConstructed<SoundPlaybackNotificationManager>().setPresetName(if (isSaved) preset.name else null)
       }
     }
   }
 
   @Test
   fun service_wakeLock() {
-    val (service) = buildServiceAndController()
+    setUpServiceAndController()
     service.onSoundPlayerManagerStateChange(SoundPlayerManager.State.PLAYING)
     val wakeLock = ShadowPowerManager.getLatestWakeLock()
     assertTrue(wakeLock.isHeld)
@@ -397,7 +393,7 @@ class SoundPlaybackServiceTest {
   @Test
   fun service_idleTimeout() {
     every { anyConstructed<SoundPlayerManager>().stop(any()) } returns Unit
-    val (service) = buildServiceAndController()
+    setUpServiceAndController()
 
     service.onSoundPlayerManagerStateChange(SoundPlayerManager.State.PAUSED)
     ShadowLooper.idleMainLooper(5, TimeUnit.MINUTES)
@@ -418,7 +414,7 @@ class SoundPlaybackServiceTest {
   @Test
   fun controller_playSound() {
     every { anyConstructed<SoundPlayerManager>().playSound(any()) } returns Unit
-    val (_, controller) = buildServiceAndController()
+    setUpServiceAndController()
     controller.playSound("test-sound-id")
     verify(exactly = 1) { anyConstructed<SoundPlayerManager>().playSound("test-sound-id") }
   }
@@ -426,7 +422,7 @@ class SoundPlaybackServiceTest {
   @Test
   fun controller_stopSound() {
     every { anyConstructed<SoundPlayerManager>().stopSound(any()) } returns Unit
-    val (_, controller) = buildServiceAndController()
+    setUpServiceAndController()
     controller.stopSound("test-sound-id")
     verify(exactly = 1) { anyConstructed<SoundPlayerManager>().stopSound("test-sound-id") }
   }
@@ -434,7 +430,7 @@ class SoundPlaybackServiceTest {
   @Test
   fun controller_setVolume() {
     every { anyConstructed<SoundPlayerManager>().setVolume(any()) } returns Unit
-    val (_, controller) = buildServiceAndController()
+    setUpServiceAndController()
     controller.setVolume(0.4F)
     verify(exactly = 1) { anyConstructed<SoundPlayerManager>().setVolume(0.4F) }
   }
@@ -442,7 +438,7 @@ class SoundPlaybackServiceTest {
   @Test
   fun controller_setSoundVolume() {
     every { anyConstructed<SoundPlayerManager>().setSoundVolume(any(), any()) } returns Unit
-    val (_, controller) = buildServiceAndController()
+    setUpServiceAndController()
     controller.setSoundVolume("test-sound-id", 0.3F)
     verify(exactly = 1) {
       anyConstructed<SoundPlayerManager>().setSoundVolume("test-sound-id", 0.3F)
@@ -452,7 +448,7 @@ class SoundPlaybackServiceTest {
   @Test
   fun controller_pause() {
     every { anyConstructed<SoundPlayerManager>().pause(any()) } returns Unit
-    val (_, controller) = buildServiceAndController()
+    setUpServiceAndController()
     listOf(true, false).forEach { immediate ->
       controller.pause(immediate)
       verify(exactly = 1) { anyConstructed<SoundPlayerManager>().pause(immediate) }
@@ -462,7 +458,7 @@ class SoundPlaybackServiceTest {
   @Test
   fun controller_resume() {
     every { anyConstructed<SoundPlayerManager>().resume() } returns Unit
-    val (_, controller) = buildServiceAndController()
+    setUpServiceAndController()
     controller.resume()
     verify(exactly = 1) { anyConstructed<SoundPlayerManager>().resume() }
   }
@@ -470,7 +466,7 @@ class SoundPlaybackServiceTest {
   @Test
   fun controller_stop() {
     every { anyConstructed<SoundPlayerManager>().stop(any()) } returns Unit
-    val (_, controller) = buildServiceAndController()
+    setUpServiceAndController()
     controller.stop()
     verify(exactly = 1) { anyConstructed<SoundPlayerManager>().stop(any()) }
   }
@@ -478,7 +474,7 @@ class SoundPlaybackServiceTest {
   @Test
   fun controller_playPreset() {
     every { anyConstructed<SoundPlayerManager>().playPreset(any()) } returns Unit
-    val (_, controller) = buildServiceAndController()
+    setUpServiceAndController()
     val testPreset = Preset("test-preset", sortedMapOf("sound-1" to 1F, "sound-2" to 0.8F))
     controller.playPreset(testPreset)
     verify(exactly = 1) { anyConstructed<SoundPlayerManager>().playPreset(testPreset.soundStates) }
@@ -488,7 +484,7 @@ class SoundPlaybackServiceTest {
   fun controller_scheduleStop_getStopScheduleRemainingMillis() {
     every { anyConstructed<SoundPlayerManager>().pause(any()) } returns Unit
 
-    val (_, controller) = buildServiceAndController()
+    setUpServiceAndController()
     controller.scheduleStop(30000L)
     verify(exactly = 0) { anyConstructed<SoundPlayerManager>().pause(any()) }
 
@@ -509,7 +505,7 @@ class SoundPlaybackServiceTest {
   fun controller_clearStopSchedule_getStopScheduleRemainingMillis() {
     every { anyConstructed<SoundPlayerManager>().pause(any()) } returns Unit
 
-    val (_, controller) = buildServiceAndController()
+    setUpServiceAndController()
     controller.scheduleStop(60000L)
     ShadowLooper.idleMainLooper(50, TimeUnit.SECONDS)
 
@@ -524,16 +520,22 @@ class SoundPlaybackServiceTest {
   @Test
   fun controller_setAudioUsage() {
     every { anyConstructed<SoundPlayerManager>().setAudioAttributes(any()) } returns Unit
-    every { anyConstructed<SoundPlayerManagerMediaSession>().setAudioStream(any()) } returns Unit
-    val (_, controller) = buildServiceAndController()
-    mapOf(
-      SoundPlaybackService.Controller.AUDIO_USAGE_ALARM to SoundPlayerManager.ALARM_AUDIO_ATTRIBUTES,
-      SoundPlaybackService.Controller.AUDIO_USAGE_MEDIA to SoundPlayerManager.DEFAULT_AUDIO_ATTRIBUTES,
+    every { anyConstructed<SoundPlaybackMediaSession>().setAudioAttributes(any()) } returns Unit
+    setUpServiceAndController()
+    listOf(
+      Pair(
+        SoundPlaybackService.Controller.AUDIO_USAGE_ALARM,
+        SoundPlayerManager.ALARM_AUDIO_ATTRIBUTES,
+      ),
+      Pair(
+        SoundPlaybackService.Controller.AUDIO_USAGE_MEDIA,
+        SoundPlayerManager.DEFAULT_AUDIO_ATTRIBUTES,
+      ),
     ).forEach { (usage, attrs) ->
       controller.setAudioUsage(usage)
       verify(exactly = 1) {
         anyConstructed<SoundPlayerManager>().setAudioAttributes(attrs)
-        anyConstructed<SoundPlayerManagerMediaSession>().setAudioStream(attrs.legacyStreamType)
+        anyConstructed<SoundPlaybackMediaSession>().setAudioAttributes(attrs)
       }
     }
   }
@@ -547,7 +549,7 @@ class SoundPlaybackServiceTest {
     )
 
     every { anyConstructed<SoundPlayerManager>().getCurrentPreset() } returns soundStates
-    val (_, controller) = buildServiceAndController()
+    setUpServiceAndController()
     controller.saveCurrentPreset("test-preset-name")
     coVerify(exactly = 1) {
       presetRepositoryMock.save(withArg { preset ->
@@ -558,7 +560,7 @@ class SoundPlaybackServiceTest {
 
   @Test
   fun controller_getState() = runTest {
-    val (service, controller) = buildServiceAndController()
+    setUpServiceAndController()
     listOf(
       SoundPlayerManager.State.PLAYING,
       SoundPlayerManager.State.PAUSING,
@@ -573,7 +575,7 @@ class SoundPlaybackServiceTest {
 
   @Test
   fun controller_getVolume() = runTest {
-    val (service, controller) = buildServiceAndController()
+    setUpServiceAndController()
     listOf(0.2F, 0.4F, 0.6F, 0.8F, 1F).forEach { volume ->
       service.onSoundPlayerManagerVolumeChange(volume)
       assertEquals(volume, controller.getVolume().firstOrNull())
@@ -591,7 +593,7 @@ class SoundPlaybackServiceTest {
       "sound-6" to SoundPlayer.State.STOPPED,
     )
 
-    val (service, controller) = buildServiceAndController()
+    setUpServiceAndController()
     states.forEach { (soundId, state) ->
       service.onSoundStateChange(soundId, state)
     }
@@ -612,7 +614,7 @@ class SoundPlaybackServiceTest {
       "sound-6" to 0F,
     )
 
-    val (service, controller) = buildServiceAndController()
+    setUpServiceAndController()
     volumes.forEach { (soundId, volume) ->
       service.onSoundVolumeChange(soundId, volume)
     }
@@ -624,7 +626,7 @@ class SoundPlaybackServiceTest {
 
   @Test
   fun controller_getCurrentPreset() = runTest {
-    val (service, controller) = buildServiceAndController()
+    setUpServiceAndController()
     listOf(
       Pair(Preset("test-preset-1", sortedMapOf("sound-1" to 1F, "sound-2" to 0.8F)), false),
       Pair(Preset("test-preset-2", sortedMapOf("sound-3" to 0.6F, "sound-4" to 0.4F)), true),
@@ -640,10 +642,11 @@ class SoundPlaybackServiceTest {
     }
   }
 
-  private fun buildServiceAndController(): Pair<SoundPlaybackService, SoundPlaybackService.Controller> {
+  private fun setUpServiceAndController() {
     val serviceName = SoundPlaybackService::class.qualifiedName
-    val service = Robolectric.buildService(SoundPlaybackService::class.java).create().bind().get()
-    val controller = SoundPlaybackService.Controller(spyk(service) {
+    robolectricServiceController = Robolectric.buildService(SoundPlaybackService::class.java)
+    service = robolectricServiceController.create().bind().get()
+    controller = SoundPlaybackService.Controller(spyk(service) {
       every { startService(match { it.component?.className == serviceName }) } answers {
         onStartCommand(firstArg(), 0, 0)
         firstArg<Intent>().component
@@ -662,7 +665,5 @@ class SoundPlaybackServiceTest {
         true
       }
     })
-
-    return Pair(service, controller)
   }
 }

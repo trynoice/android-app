@@ -3,12 +3,14 @@ package com.github.ashutoshgngwr.noice.engine
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.content.getSystemService
+import androidx.media3.session.MediaSession
+import androidx.media3.test.utils.TestExoPlayerBuilder
 import androidx.test.core.app.ApplicationProvider
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.StubService
 import io.mockk.mockk
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -21,7 +23,7 @@ import org.robolectric.shadows.ShadowNotificationManager
 @RunWith(RobolectricTestRunner::class)
 class SoundPlaybackNotificationManagerTest {
 
-  private lateinit var mediaSessionToken: MediaSessionCompat.Token
+  private lateinit var mediaSession: MediaSession
   private lateinit var contentPiMock: PendingIntent
   private lateinit var resumePiMock: PendingIntent
   private lateinit var pausePiMock: PendingIntent
@@ -35,8 +37,10 @@ class SoundPlaybackNotificationManagerTest {
   @Before
   fun setUp() {
     val service = Robolectric.buildService(StubService::class.java).get()
-    val mediaSession = MediaSessionCompat(service, "test-media-session") // mockk fails
-    mediaSessionToken = mediaSession.sessionToken
+    mediaSession = TestExoPlayerBuilder(ApplicationProvider.getApplicationContext())
+      .build()
+      .let { MediaSession.Builder(service, it) }
+      .build()
     contentPiMock = mockk(relaxed = true)
     resumePiMock = mockk(relaxed = true)
     pausePiMock = mockk(relaxed = true)
@@ -46,7 +50,7 @@ class SoundPlaybackNotificationManagerTest {
     skipToPrevPresetPiMock = mockk(relaxed = true)
     manager = SoundPlaybackNotificationManager(
       service = service,
-      mediaSessionToken = mediaSessionToken,
+      mediaSession = mediaSession,
       contentPi = contentPiMock,
       resumePi = resumePiMock,
       pausePi = pausePiMock,
@@ -59,6 +63,11 @@ class SoundPlaybackNotificationManagerTest {
     notificationManagerShadow = service.getSystemService<NotificationManager>()
       .also { requireNotNull(it) }
       .let { shadowOf(it) }
+  }
+
+  @After
+  fun tearDown() {
+    mediaSession.release()
   }
 
   @Test
@@ -115,7 +124,7 @@ class SoundPlaybackNotificationManagerTest {
   }
 
   @Test
-  fun setCurrentPresetName() {
+  fun setPresetName() {
     data class TestCase(
       val presetName: String?,
       val expectedContentTitle: String,
@@ -141,7 +150,7 @@ class SoundPlaybackNotificationManagerTest {
       )
     ).forEach { testCase ->
       manager.setState(SoundPlayerManager.State.PLAYING)
-      manager.setCurrentPresetName(testCase.presetName)
+      manager.setPresetName(testCase.presetName)
       val notification = notificationManagerShadow
         .getNotification(SoundPlaybackNotificationManager.NOTIFICATION_ID)
 
