@@ -25,10 +25,10 @@ import com.github.ashutoshgngwr.noice.activity.MainActivity
 import com.github.ashutoshgngwr.noice.cast.CastReceiverUiManager
 import com.github.ashutoshgngwr.noice.engine.AudioFocusManager
 import com.github.ashutoshgngwr.noice.engine.LocalSoundPlayer
+import com.github.ashutoshgngwr.noice.engine.SoundPlaybackMediaSession
 import com.github.ashutoshgngwr.noice.engine.SoundPlaybackNotificationManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
-import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerMediaSession
 import com.github.ashutoshgngwr.noice.engine.media.DefaultMediaPlayer
 import com.github.ashutoshgngwr.noice.engine.media.SoundDataSourceFactory
 import com.github.ashutoshgngwr.noice.ext.bindServiceCallbackFlow
@@ -112,8 +112,8 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
     PendingIntent.getActivity(this, 0x28, Intent(this, MainActivity::class.java), piFlags)
   }
 
-  private val mediaSession: SoundPlayerManagerMediaSession by lazy {
-    SoundPlayerManagerMediaSession(this, mainActivityPi)
+  private val mediaSession: SoundPlaybackMediaSession by lazy {
+    SoundPlaybackMediaSession(this, mainActivityPi)
   }
 
   private val notificationManager: SoundPlaybackNotificationManager by lazy {
@@ -157,7 +157,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
       .apply { setReferenceCounted(false) }
   }
 
-  private val mediaSessionCallback = object : SoundPlayerManagerMediaSession.Callback {
+  private val mediaSessionCallback = object : SoundPlaybackMediaSession.Callback {
     override fun onPlay() = soundPlayerManager.resume()
     override fun onStop() = soundPlayerManager.stop(false)
     override fun onPause() = soundPlayerManager.pause(false)

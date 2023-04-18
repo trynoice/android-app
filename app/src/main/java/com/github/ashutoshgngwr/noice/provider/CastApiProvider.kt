@@ -5,7 +5,7 @@ import android.view.Menu
 import androidx.annotation.StringRes
 import com.github.ashutoshgngwr.noice.cast.CastReceiverUiManager
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
-import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerMediaSession
+import com.github.ashutoshgngwr.noice.engine.SoundPlaybackMediaSession
 
 /**
  * [CastApiProvider] is an abstract declaration of the non-free Google Cast APIs that are used in
@@ -30,7 +30,7 @@ interface CastApiProvider {
    * @return a volume provider that controls volume of the cast device.
    * @throws IllegalArgumentException if the Cast SDK fails to load on the device.
    */
-  fun getVolumeProvider(): SoundPlayerManagerMediaSession.RemoteDeviceVolumeProvider
+  fun getVolumeProvider(): SoundPlaybackMediaSession.RemoteDeviceVolumeProvider
 
   fun getReceiverUiManager(): CastReceiverUiManager
 
@@ -70,7 +70,7 @@ object DummyCastApiProvider : CastApiProvider {
     throw IllegalStateException("getSoundPlayerFactory() must not be invoked on DummyCastApiProvider")
   }
 
-  override fun getVolumeProvider(): SoundPlayerManagerMediaSession.RemoteDeviceVolumeProvider {
+  override fun getVolumeProvider(): SoundPlaybackMediaSession.RemoteDeviceVolumeProvider {
     throw IllegalStateException("getVolumeProvider() must not be invoked on DummyCastApiProvider")
   }
 

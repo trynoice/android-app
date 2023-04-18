@@ -18,7 +18,7 @@ import com.github.ashutoshgngwr.noice.cast.models.Event
 import com.github.ashutoshgngwr.noice.cast.models.GetAccessTokenEvent
 import com.github.ashutoshgngwr.noice.cast.models.GetAccessTokenResponseEvent
 import com.github.ashutoshgngwr.noice.engine.SoundPlayer
-import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerMediaSession
+import com.github.ashutoshgngwr.noice.engine.SoundPlaybackMediaSession
 import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
 import com.google.android.gms.cast.framework.CastSession
@@ -66,7 +66,7 @@ class RealCastApiProvider(
     return CastSoundPlayer.Factory(messagingChannel)
   }
 
-  override fun getVolumeProvider(): SoundPlayerManagerMediaSession.RemoteDeviceVolumeProvider {
+  override fun getVolumeProvider(): SoundPlaybackMediaSession.RemoteDeviceVolumeProvider {
     return CastVolumeProvider(requireNotNull(castContext))
   }
 

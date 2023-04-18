@@ -16,7 +16,7 @@ import com.google.common.util.concurrent.ListenableFuture
 /**
  * A convenient wrapper containing all Media 3 [MediaSession] API interactions.
  */
-class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: PendingIntent) {
+class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingIntent) {
 
   private val defaultPresetName = context.getString(R.string.unsaved_preset)
   private val sessionPlayer = MediaSessionPlayer(context.getString(R.string.now_playing))

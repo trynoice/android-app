@@ -1,6 +1,6 @@
 package com.github.ashutoshgngwr.noice.cast
 
-import com.github.ashutoshgngwr.noice.engine.SoundPlayerManagerMediaSession
+import com.github.ashutoshgngwr.noice.engine.SoundPlaybackMediaSession
 import com.google.android.gms.cast.framework.CastContext
 import kotlin.math.max
 import kotlin.math.min
@@ -8,7 +8,7 @@ import kotlin.math.roundToInt
 
 class CastVolumeProvider(
   private val context: CastContext,
-) : SoundPlayerManagerMediaSession.RemoteDeviceVolumeProvider {
+) : SoundPlaybackMediaSession.RemoteDeviceVolumeProvider {
 
   private var isMute: Boolean = context.sessionManager.currentCastSession?.isMute ?: false
   private var currentVolume: Int =
