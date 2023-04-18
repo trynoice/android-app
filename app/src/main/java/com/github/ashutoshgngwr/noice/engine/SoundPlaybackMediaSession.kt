@@ -82,6 +82,7 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
     sessionPlayer.updateCurrentPreset(
       id = presetName ?: defaultPresetName,
       name = presetName ?: defaultPresetName,
+      enableSkipCommands = presetName != null,
     )
   }
 
@@ -109,12 +110,14 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
     private var state = State.Builder()
       .setAvailableCommands(ALWAYS_AVAILABLE_PLAYER_COMMANDS)
       .setAudioAttributes(SoundPlayerManager.DEFAULT_AUDIO_ATTRIBUTES)
+      .setPlaylist(listOf(MediaItemData.Builder("placeholder").build()))
       .setPlaylistMetadata(
         MediaMetadata.Builder()
           .setMediaType(MediaMetadata.MEDIA_TYPE_PLAYLIST)
           .setTitle(playlistName)
           .build()
       )
+      .setCurrentMediaItemIndex(0)
       .build()
 
     private val localDeviceInfo = state.deviceInfo
@@ -141,10 +144,16 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
       invalidateState()
     }
 
-    fun updateCurrentPreset(id: String, name: String) {
+    fun updateCurrentPreset(id: String, name: String, enableSkipCommands: Boolean) {
       state = state.buildUpon()
         .setPlaylist(
-          listOf(
+          // both previous and next placeholders are needed for `Player.skipToPreviousMediaItem()`
+          // and `Player.skipToNextMediaItem()` to work.
+          listOfNotNull(
+            if (enableSkipCommands)
+              MediaItemData.Builder("placeholder-previous")
+                .build()
+            else null,
             MediaItemData.Builder(id)
               .setMediaMetadata(
                 MediaMetadata.Builder()
@@ -152,9 +161,14 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
                   .setTitle(name)
                   .build()
               )
-              .build()
+              .build(),
+            if (enableSkipCommands)
+              MediaItemData.Builder("placeholder-next")
+                .build()
+            else null,
           )
         )
+        .setCurrentMediaItemIndex(if (enableSkipCommands) 1 else 0)
         .build()
       invalidateState()
     }

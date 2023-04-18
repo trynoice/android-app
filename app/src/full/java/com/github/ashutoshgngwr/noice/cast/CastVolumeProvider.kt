@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.cast
 
+import androidx.annotation.VisibleForTesting
 import com.github.ashutoshgngwr.noice.engine.SoundPlaybackMediaSession
 import com.google.android.gms.cast.framework.CastContext
 import kotlin.math.max
@@ -45,6 +46,7 @@ class CastVolumeProvider(
   }
 
   companion object {
-    private const val MAX_VOLUME = 20
+    @VisibleForTesting
+    const val MAX_VOLUME = 20
   }
 }
