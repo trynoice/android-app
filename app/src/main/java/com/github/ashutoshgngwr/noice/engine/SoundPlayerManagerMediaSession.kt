@@ -185,7 +185,7 @@ class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: Pendin
           DeviceInfo(DeviceInfo.PLAYBACK_TYPE_REMOTE, 0, volumeProvider.getMaxVolume())
         )
         .setDeviceVolume(volumeProvider.getVolume())
-        .setIsDeviceMuted(volumeProvider.isMuted())
+        .setIsDeviceMuted(volumeProvider.isMute())
         .build()
       invalidateState()
     }
@@ -233,7 +233,7 @@ class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: Pendin
     }
 
     override fun handleSetDeviceMuted(muted: Boolean): ListenableFuture<*> {
-      volumeProvider?.setMuted(muted)
+      volumeProvider?.setMute(muted)
       updateDeviceVolumeState()
       return Futures.immediateVoidFuture()
     }
@@ -254,7 +254,7 @@ class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: Pendin
       volumeProvider?.also { volumeProvider ->
         state = state.buildUpon()
           .setDeviceVolume(volumeProvider.getVolume())
-          .setIsDeviceMuted(volumeProvider.isMuted())
+          .setIsDeviceMuted(volumeProvider.isMute())
           .build()
         invalidateState()
       }
@@ -295,7 +295,7 @@ class SoundPlayerManagerMediaSession(context: Context, sessionActivityPi: Pendin
     fun setVolume(volume: Int)
     fun increaseVolume()
     fun decreaseVolume()
-    fun isMuted(): Boolean
-    fun setMuted(muted: Boolean)
+    fun isMute(): Boolean
+    fun setMute(enabled: Boolean)
   }
 }

@@ -10,15 +10,20 @@ class CastVolumeProvider(
   private val context: CastContext,
 ) : SoundPlayerManagerMediaSession.RemoteDeviceVolumeProvider {
 
+  private var isMute: Boolean = context.sessionManager.currentCastSession?.isMute ?: false
+  private var currentVolume: Int =
+    ((context.sessionManager.currentCastSession?.volume ?: 1.0) * MAX_VOLUME).roundToInt()
+
   override fun getMaxVolume(): Int {
     return MAX_VOLUME
   }
 
   override fun getVolume(): Int {
-    return ((context.sessionManager.currentCastSession?.volume ?: 1.0) * MAX_VOLUME).roundToInt()
+    return currentVolume
   }
 
   override fun setVolume(volume: Int) {
+    currentVolume = volume
     context.sessionManager.currentCastSession?.volume = volume.toDouble() / MAX_VOLUME
   }
 
@@ -30,12 +35,13 @@ class CastVolumeProvider(
     setVolume(max(0, getVolume() - 1))
   }
 
-  override fun isMuted(): Boolean {
-    return context.sessionManager.currentCastSession?.isMute ?: false
+  override fun isMute(): Boolean {
+    return isMute
   }
 
-  override fun setMuted(muted: Boolean) {
-    context.sessionManager.currentCastSession?.isMute = muted
+  override fun setMute(enabled: Boolean) {
+    isMute = enabled
+    context.sessionManager.currentCastSession?.isMute = enabled
   }
 
   companion object {
