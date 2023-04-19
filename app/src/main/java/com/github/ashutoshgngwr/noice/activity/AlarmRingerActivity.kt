@@ -65,6 +65,7 @@ class AlarmRingerActivity : AppCompatActivity() {
     setContentView(binding.root)
     showWhenLocked()
     onBackPressedDispatcher.addCallback(this) { } // no-op
+    analyticsProvider.setCurrentScreen(this::class)
   }
 
   override fun onStart() {

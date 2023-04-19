@@ -21,6 +21,7 @@ import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
@@ -43,6 +44,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ViewSubscriptionPlansFragment : Fragment() {
+
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
 
   private lateinit var binding: ViewSubscriptionPlansFragmentBinding
   private val viewModel: ViewSubscriptionPlansViewModel by viewModels()
@@ -91,6 +95,7 @@ class ViewSubscriptionPlansFragment : Fragment() {
     }
 
     viewModel.loadPlans(currency.currencyCode)
+    analyticsProvider.setCurrentScreen(this::class)
   }
 }
 

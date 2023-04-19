@@ -47,14 +47,11 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
-
-  private lateinit var binding: PresetsFragmentBinding
-  private val viewModel: PresetsViewModel by viewModels()
 
   @set:Inject
   internal lateinit var playbackServiceController: SoundPlaybackService.Controller
@@ -65,6 +62,8 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
   @set:Inject
   internal lateinit var reviewFlowProvider: ReviewFlowProvider
 
+  private lateinit var binding: PresetsFragmentBinding
+  private val viewModel: PresetsViewModel by viewModels()
   private val adapter by lazy { PresetListAdapter(layoutInflater, this) }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
@@ -97,7 +96,7 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
         .collect(adapter::setActivePresetId)
     }
 
-    analyticsProvider.setCurrentScreen("presets", PresetsFragment::class)
+    analyticsProvider.setCurrentScreen(this::class)
   }
 
   override fun onPresetPlayToggleClicked(preset: Preset) {
@@ -115,8 +114,6 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
       .setChooserTitle(R.string.share)
       .setText(url)
       .startChooser()
-
-    analyticsProvider.logEvent("share_preset_uri", bundleOf("item_length" to url.length))
   }
 
   override fun onPresetDeleteClicked(preset: Preset) {
@@ -138,8 +135,6 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
         params.putBoolean("success", true)
         reviewFlowProvider.maybeAskForReview(requireActivity()) // maybe show in-app review dialog to the user
       }
-
-      onDismiss { analyticsProvider.logEvent("preset_delete", params) }
     }
   }
 
@@ -182,9 +177,6 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
     } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
       showSuccessSnackBar(R.string.pinned_shortcut_created, snackBarAnchorView())
     }
-
-    val params = bundleOf("success" to result, "shortcut_type" to "pinned")
-    analyticsProvider.logEvent("preset_shortcut_create", params)
   }
 
   override fun onPresetCreateAppShortcutClicked(preset: Preset) {
@@ -198,15 +190,12 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
     }
 
     viewModel.refreshAppShortcuts(requireContext())
-    val params = bundleOf("success" to result, "shortcut_type" to "app")
-    analyticsProvider.logEvent("preset_shortcut_create", params)
   }
 
   override fun onPresetRemoveAppShortcutClicked(preset: Preset) {
     ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
     showSuccessSnackBar(R.string.app_shortcut_removed, snackBarAnchorView())
     viewModel.refreshAppShortcuts(requireContext())
-    analyticsProvider.logEvent("preset_shortcut_remove", bundleOf("shortcut_type" to "app"))
   }
 
   private fun buildShortcutInfo(id: String, type: String, preset: Preset): ShortcutInfoCompat {

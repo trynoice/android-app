@@ -39,6 +39,7 @@ import com.github.ashutoshgngwr.noice.ext.showTimePicker
 import com.github.ashutoshgngwr.noice.ext.startAppDetailsSettingsActivity
 import com.github.ashutoshgngwr.noice.models.Alarm
 import com.github.ashutoshgngwr.noice.models.Preset
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,13 +53,16 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Calendar
 import javax.inject.Inject
 
 private const val FREE_ALARM_COUNT = 2
 
 @AndroidEntryPoint
 class AlarmsFragment : Fragment(), AlarmViewHolder.ViewController {
+
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
 
   private lateinit var binding: AlarmsFragmentBinding
 
@@ -119,6 +123,8 @@ class AlarmsFragment : Fragment(), AlarmViewHolder.ViewController {
         .filter { it > 0 }
         .collect { showErrorSnackBar(R.string.alarms_disabled_due_to_subscription_expiration) }
     }
+
+    analyticsProvider.setCurrentScreen(this::class)
   }
 
   private fun startAddAlarmFlow() {

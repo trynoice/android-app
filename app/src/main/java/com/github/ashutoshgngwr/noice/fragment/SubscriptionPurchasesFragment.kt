@@ -25,13 +25,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseItemBinding
-import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseListFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseLoadingItemBinding
+import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchasesFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
@@ -41,14 +42,17 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Currency
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SubscriptionPurchaseListFragment : Fragment(), SubscriptionPurchaseViewHolder.ViewController {
+class SubscriptionPurchasesFragment : Fragment(), SubscriptionPurchaseViewHolder.ViewController {
 
-  private lateinit var binding: SubscriptionPurchaseListFragmentBinding
-  private val viewModel: SubscriptionPurchaseListViewModel by viewModels()
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
+
+  private lateinit var binding: SubscriptionPurchasesFragmentBinding
+  private val viewModel: SubscriptionPurchasesViewModel by viewModels()
   private val mainNavController: NavController by lazy {
     Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
   }
@@ -57,7 +61,7 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionPurchaseViewHol
   internal lateinit var subscriptionBillingProvider: SubscriptionBillingProvider
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
-    binding = SubscriptionPurchaseListFragmentBinding.inflate(inflater, container, false)
+    binding = SubscriptionPurchasesFragmentBinding.inflate(inflater, container, false)
     return binding.root
   }
 
@@ -117,6 +121,7 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionPurchaseViewHol
     }
 
     viewModel.createPager(currencyCode)
+    analyticsProvider.setCurrentScreen(this::class)
   }
 
   override fun onSubscriptionManageClicked(subscription: Subscription) {
@@ -139,7 +144,7 @@ class SubscriptionPurchaseListFragment : Fragment(), SubscriptionPurchaseViewHol
 }
 
 @HiltViewModel
-class SubscriptionPurchaseListViewModel @Inject constructor(
+class SubscriptionPurchasesViewModel @Inject constructor(
   private val subscriptionRepository: SubscriptionRepository,
 ) : ViewModel() {
 

@@ -6,9 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.github.ashutoshgngwr.noice.databinding.LibrarySoundInfoFragmentBinding
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import javax.inject.Inject
 
 class LibrarySoundInfoFragment : BottomSheetDialogFragment() {
+
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
 
   private lateinit var binding: LibrarySoundInfoFragmentBinding
   private val args: LibrarySoundInfoFragmentArgs by navArgs()
@@ -22,5 +27,6 @@ class LibrarySoundInfoFragment : BottomSheetDialogFragment() {
     binding.lifecycleOwner = viewLifecycleOwner
     binding.info = args.info
     binding.dismiss.setOnClickListener { dismiss() }
+    analyticsProvider.setCurrentScreen(this::class)
   }
 }

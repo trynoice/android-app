@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,9 +26,6 @@ class PresetShortcutHandlerActivity : AppCompatActivity() {
      */
     const val EXTRA_SHORTCUT_TYPE = "shortcut_type"
   }
-
-  @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
 
   @set:Inject
   internal lateinit var presetRepository: PresetRepository
@@ -69,7 +65,6 @@ class PresetShortcutHandlerActivity : AppCompatActivity() {
       }
 
       finish()
-      analyticsProvider.logEvent("preset_shortcut_open", params)
     }
   }
 

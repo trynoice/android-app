@@ -12,6 +12,7 @@ import com.github.ashutoshgngwr.noice.databinding.SignOutFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
@@ -31,6 +32,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignOutFragment : BottomSheetDialogFragment() {
+
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
 
   private lateinit var binding: SignOutFragmentBinding
   private val viewModel: SignOutViewModel by viewModels()
@@ -62,6 +66,8 @@ class SignOutFragment : BottomSheetDialogFragment() {
         .filterNot { it is Resource.Loading }
         .collect { dismiss() }
     }
+
+    analyticsProvider.setCurrentScreen(this::class)
   }
 }
 

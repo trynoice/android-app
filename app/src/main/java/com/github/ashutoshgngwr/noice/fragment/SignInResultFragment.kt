@@ -18,6 +18,7 @@ import com.github.ashutoshgngwr.noice.databinding.SignInResultFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.errors.AccountTemporarilyLockedError
@@ -36,6 +37,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignInResultFragment : Fragment() {
+
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
 
   private lateinit var binding: SignInResultFragmentBinding
   private val viewModel: SignInResultViewModel by viewModels()
@@ -71,6 +75,7 @@ class SignInResultFragment : Fragment() {
               val lockedUntilStr = DateUtils.getRelativeTimeSpanString(context, lockedUntil)
               getString(R.string.account_locked_error, lockedUntilStr)
             }
+
             is NetworkError -> getString(R.string.network_error)
             else -> getString(R.string.unknown_error)
           }
@@ -81,6 +86,7 @@ class SignInResultFragment : Fragment() {
     }
 
     viewModel.signIn()
+    analyticsProvider.setCurrentScreen(this::class)
   }
 
   private fun openMailbox() {

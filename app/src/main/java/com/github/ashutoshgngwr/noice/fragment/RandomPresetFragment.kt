@@ -111,7 +111,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
     }
 
     binding.cancelButton.setOnClickListener { dismiss() }
-    analyticsProvider.setCurrentScreen("random_preset", RandomPresetFragment::class)
+    analyticsProvider.setCurrentScreen(this::class)
   }
 
   private fun ChipGroup.getSelectedChips(): List<Chip> {

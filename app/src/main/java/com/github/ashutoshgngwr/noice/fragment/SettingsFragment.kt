@@ -8,7 +8,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.pm.ShortcutManagerCompat
-import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -102,13 +101,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     findPreference<Preference>(R.string.export_presets_key).setOnPreferenceClickListener {
       createDocumentActivityLauncher.launch("noice-saved-presets.json")
-      analyticsProvider.logEvent("presets_export_begin", bundleOf())
       true
     }
 
     findPreference<Preference>(R.string.import_presets_key).setOnPreferenceClickListener {
       openDocumentActivityLauncher.launch(arrayOf("application/json"))
-      analyticsProvider.logEvent("presets_import_begin", bundleOf())
       true
     }
 
@@ -120,7 +117,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         positiveButton(R.string.delete) {
           ShortcutManagerCompat.removeAllDynamicShortcuts(requireContext())
           showSuccessSnackBar(R.string.all_app_shortcuts_removed)
-          analyticsProvider.logEvent("preset_shortcut_remove_all", bundleOf())
         }
       }
 
@@ -139,7 +135,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
               settingsRepository.setAppTheme(theme)
               summary = getAppThemeString()
               requireActivity().recreate()
-              analyticsProvider.logEvent("theme_set", bundleOf("theme" to theme))
             }
           )
           negativeButton(R.string.cancel)
@@ -178,12 +173,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         true
       }
 
-    analyticsProvider.setCurrentScreen("settings", SettingsFragment::class)
+    analyticsProvider.setCurrentScreen(this::class)
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun onCreateDocumentResult(result: Uri?) = viewLifecycleOwner.lifecycleScope.launch {
-    var success = false
     try {
       if (result == null) { // inside try to force run finally block.
         return@launch
@@ -196,7 +190,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         os.close()
       }
 
-      success = true
       showSuccessSnackBar(R.string.export_presets_successful)
     } catch (e: Throwable) {
       Log.w(TAG, "failed to export saved presets", e)
@@ -206,16 +199,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
         is FileNotFoundException,
         is IOException,
         is JsonIOException -> showErrorSnackBar(R.string.failed_to_write_file)
+
         else -> throw e
       }
-    } finally {
-      analyticsProvider.logEvent("presets_export_complete", bundleOf("success" to success))
     }
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
   internal fun onOpenDocumentResult(result: Uri?) = viewLifecycleOwner.lifecycleScope.launch {
-    var success = false
     try {
       if (result == null) { // inside try to force run finally block.
         return@launch
@@ -225,7 +216,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         presetRepository.importFrom(FileInputStream(it.fileDescriptor))
       }
 
-      success = true
       showSuccessSnackBar(R.string.import_presets_successful)
     } catch (e: Throwable) {
       Log.w(TAG, "failed to import saved presets", e)
@@ -237,16 +227,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
           crashlyticsProvider.log("failed to import saved presets")
           crashlyticsProvider.recordException(e)
         }
+
         is JsonSyntaxException,
         is IllegalArgumentException -> showErrorSnackBar(R.string.invalid_import_file_format)
+
         else -> {
           crashlyticsProvider.log("failed to import saved presets")
           crashlyticsProvider.recordException(e)
           throw e
         }
       }
-    } finally {
-      analyticsProvider.logEvent("presets_import_complete", bundleOf("success" to success))
     }
   }
 

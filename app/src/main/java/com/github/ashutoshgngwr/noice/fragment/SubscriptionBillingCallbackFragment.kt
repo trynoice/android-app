@@ -14,6 +14,7 @@ import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionBillingCallbackFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -33,6 +34,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SubscriptionBillingCallbackFragment : BottomSheetDialogFragment() {
 
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
+
   private lateinit var binding: SubscriptionBillingCallbackFragmentBinding
   private val viewModel: SubscriptionBillingCallbackViewModel by viewModels()
   private val mainNavController: NavController by lazy {
@@ -50,13 +54,15 @@ class SubscriptionBillingCallbackFragment : BottomSheetDialogFragment() {
     binding.okay.setOnClickListener {
       dismiss()
       if (!viewModel.wasCancelled) {
-        mainNavController.navigate(R.id.subscription_purchase_list)
+        mainNavController.navigate(R.id.subscription_purchases)
       }
     }
 
     viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.isLoading.collect { isCancelable = !it }
     }
+
+    analyticsProvider.setCurrentScreen(this::class)
   }
 
   companion object {

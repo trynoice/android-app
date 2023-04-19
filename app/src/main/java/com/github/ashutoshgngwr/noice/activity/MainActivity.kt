@@ -11,7 +11,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
-import androidx.core.os.bundleOf
 import androidx.core.os.postDelayed
 import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
@@ -30,8 +29,7 @@ import com.github.ashutoshgngwr.noice.fragment.DonationPurchasedCallbackFragment
 import com.github.ashutoshgngwr.noice.fragment.HomeFragmentArgs
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragmentArgs
-import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchasesFragment
 import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
@@ -78,9 +76,6 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
   internal lateinit var billingProvider: InAppBillingProvider
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
-
-  @set:Inject
   internal lateinit var playbackServiceController: SoundPlaybackService.Controller
 
   @set:Inject
@@ -118,7 +113,6 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
     SoundDownloadsRefreshWorker.refreshDownloads(this)
     reviewFlowProvider.init(this)
-    analyticsProvider.logEvent("ui_open", bundleOf("theme" to settingsRepository.getAppTheme()))
     hasNewIntent = true
     initOfflineIndicator()
   }
@@ -241,8 +235,8 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
           ?.also { navController.navigate(R.id.subscription_billing_callback, it) }
       }
 
-      Intent.ACTION_VIEW == intent.action && SubscriptionPurchaseListFragment.URI == dataString -> {
-        navController.navigate(R.id.subscription_purchase_list)
+      Intent.ACTION_VIEW == intent.action && SubscriptionPurchasesFragment.URI == dataString -> {
+        navController.navigate(R.id.subscription_purchases)
       }
     }
   }
@@ -257,14 +251,12 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
   }
 
   override fun onPending(purchase: InAppBillingProvider.Purchase) {
-    analyticsProvider.logEvent("purchase_pending", bundleOf())
     SnackBar.info(binding.mainNavHostFragment, R.string.payment_pending)
       .setAnchorView(findSnackBarAnchorView())
       .show()
   }
 
   override fun onComplete(purchase: InAppBillingProvider.Purchase) {
-    analyticsProvider.logEvent("purchase_complete", bundleOf())
     if (DonationFragmentProvider.IN_APP_DONATION_PRODUCTS.containsAll(purchase.productIds)) {
       navController.navigate(
         R.id.donation_purchased_callback,

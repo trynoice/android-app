@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignInLinkHandlerFragmentBinding
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
@@ -49,6 +50,9 @@ class SignInLinkHandlerActivity : AppCompatActivity() {
 @AndroidEntryPoint
 class SignInLinkHandlerFragment : BottomSheetDialogFragment() {
 
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
+
   private lateinit var binding: SignInLinkHandlerFragmentBinding
   private val viewModel: SignInLinkHandlerViewModel by viewModels()
 
@@ -76,6 +80,7 @@ class SignInLinkHandlerFragment : BottomSheetDialogFragment() {
     }
 
     viewModel.signInWithToken(signInToken)
+    analyticsProvider.setCurrentScreen(this::class)
   }
 
   companion object {

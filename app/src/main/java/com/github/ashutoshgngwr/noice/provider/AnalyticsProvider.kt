@@ -25,7 +25,7 @@ interface AnalyticsProvider {
   /**
    * Logs a screen view event.
    */
-  fun setCurrentScreen(name: String, clazz: KClass<out Any>, params: Bundle = bundleOf())
+  fun setCurrentScreen(clazz: KClass<out Any>, params: Bundle = bundleOf())
 
   /**
    * Logs a player stop event.
@@ -55,7 +55,7 @@ interface AnalyticsProvider {
 object DummyAnalyticsProvider : AnalyticsProvider {
   override fun setCollectionEnabled(e: Boolean) = Unit
   override fun logEvent(name: String, params: Bundle) = Unit
-  override fun setCurrentScreen(name: String, clazz: KClass<out Any>, params: Bundle) = Unit
+  override fun setCurrentScreen(clazz: KClass<out Any>, params: Bundle) = Unit
   override fun logPlayerStartEvent(key: String) = Unit
   override fun logPlayerStopEvent(key: String) = Unit
   override fun logCastSessionStartEvent() = Unit

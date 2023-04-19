@@ -7,7 +7,6 @@ import android.os.Bundle
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.github.appintro.AppIntro
@@ -114,23 +113,22 @@ class AppIntroActivity : AppIntro() {
       )
     )
 
-    analyticsProvider.setCurrentScreen("app_intro", AppIntroActivity::class)
+    analyticsProvider.setCurrentScreen(this::class)
   }
 
   override fun onSkipPressed(currentFragment: Fragment?) {
-    markSeenInPrefsAndFinish(true)
+    markSeenInPrefsAndFinish()
   }
 
   override fun onDonePressed(currentFragment: Fragment?) {
-    markSeenInPrefsAndFinish(false)
+    markSeenInPrefsAndFinish()
   }
 
-  private fun markSeenInPrefsAndFinish(isSkipped: Boolean) {
+  private fun markSeenInPrefsAndFinish() {
     PreferenceManager.getDefaultSharedPreferences(this).edit {
       putBoolean(PREF_HAS_USER_SEEN_APP_INTRO, true)
     }
 
     finish()
-    analyticsProvider.logEvent("app_intro_complete", bundleOf("success" to !isSkipped))
   }
 }

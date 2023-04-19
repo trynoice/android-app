@@ -16,6 +16,7 @@ import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.AlreadySubscribedError
@@ -34,6 +35,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LaunchSubscriptionFlowFragment : BottomSheetDialogFragment() {
+
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
 
   private lateinit var binding: LaunchSubscriptionFlowFragmentBinding
   private val viewModel: LaunchSubscriptionFlowViewModel by viewModels()
@@ -62,6 +66,7 @@ class LaunchSubscriptionFlowFragment : BottomSheetDialogFragment() {
     }
 
     viewModel.launchBillingFlow(requireActivity(), args.plan, args.activeSubscription)
+    analyticsProvider.setCurrentScreen(this::class)
   }
 }
 

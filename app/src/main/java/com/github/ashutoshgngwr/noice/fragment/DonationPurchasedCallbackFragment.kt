@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.databinding.DonationPurchasedCallbackFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.provider.InAppBillingProviderException
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -21,6 +22,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class DonationPurchasedCallbackFragment : BottomSheetDialogFragment() {
+
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
 
   private lateinit var binding: DonationPurchasedCallbackFragmentBinding
   private val viewModel: DonationPurchaseCallbackViewModel by viewModels()
@@ -37,6 +41,8 @@ class DonationPurchasedCallbackFragment : BottomSheetDialogFragment() {
     viewLifecycleOwner.launchAndRepeatOnStarted {
       viewModel.isLoading.collect { isCancelable = !it }
     }
+
+    analyticsProvider.setCurrentScreen(this::class)
   }
 }
 

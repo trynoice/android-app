@@ -14,6 +14,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SignInFormFragmentBinding
+import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +26,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignInFormFragment : Fragment() {
+
+  @set:Inject
+  internal lateinit var analyticsProvider: AnalyticsProvider
 
   private lateinit var binding: SignInFormFragmentBinding
   private val viewModel: SignInFormViewModel by viewModels()
@@ -62,6 +66,8 @@ class SignInFormFragment : Fragment() {
         ).toBundle()
       )
     }
+
+    analyticsProvider.setCurrentScreen(this::class)
   }
 }
 

@@ -23,7 +23,7 @@ import com.github.ashutoshgngwr.noice.EspressoX.withBottomNavSelectedItem
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.di.InAppBillingProviderModule
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
-import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
+import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchasesFragment
 import com.github.ashutoshgngwr.noice.models.AudioQuality
 import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
@@ -190,11 +190,11 @@ class MainActivityTest {
   fun subscriptionPurchaseListIntent() {
     Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
       .setAction(Intent.ACTION_VIEW)
-      .setData(Uri.parse(SubscriptionPurchaseListFragment.URI))
+      .setData(Uri.parse(SubscriptionPurchasesFragment.URI))
       .let { launch<MainActivity>(it) }
       .onActivity { activity ->
         val navController = activity.findNavController(R.id.main_nav_host_fragment)
-        assertEquals(R.id.subscription_purchase_list, navController.currentDestination?.id)
+        assertEquals(R.id.subscription_purchases, navController.currentDestination?.id)
       }
   }
 

@@ -2,6 +2,7 @@ package com.github.ashutoshgngwr.noice.provider
 
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import com.github.ashutoshgngwr.noice.BuildConfig
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.setConsent
@@ -24,18 +25,22 @@ object RealAnalyticsProvider : AnalyticsProvider {
       adStorage = FirebaseAnalytics.ConsentStatus.DENIED
       analyticsStorage = FirebaseAnalytics.ConsentStatus.GRANTED
     }
+
+    fa.setDefaultEventParameters(
+      bundleOf("app_version_code" to BuildConfig.VERSION_CODE)
+    )
   }
 
   override fun setCollectionEnabled(e: Boolean) {
     fa.setAnalyticsCollectionEnabled(e)
   }
 
-  override fun setCurrentScreen(name: String, clazz: KClass<out Any>, params: Bundle) {
-    params.putString(FirebaseAnalytics.Param.SCREEN_NAME, name)
-    clazz.simpleName?.also {
-      params.putString(FirebaseAnalytics.Param.SCREEN_CLASS, it)
-    }
-
+  override fun setCurrentScreen(clazz: KClass<out Any>, params: Bundle) {
+    val screenName = clazz.simpleName
+      ?.removeSuffix("Activity")
+      ?.removeSuffix("Fragment")
+    params.putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
+    params.putString(FirebaseAnalytics.Param.SCREEN_CLASS, clazz.simpleName)
     fa.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, params)
   }
 

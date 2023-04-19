@@ -137,7 +137,7 @@
             tools:visibility="visible" />
 
           <TextView
-            android:id="@+id/subscription_purchase_list"
+            android:id="@+id/subscription_purchases"
             style="@style/Widget.App.Account.Category.Item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

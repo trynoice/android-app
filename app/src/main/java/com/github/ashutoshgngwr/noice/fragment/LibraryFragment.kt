@@ -185,7 +185,7 @@ class LibraryFragment : Fragment(), SoundViewHolder.ViewController {
     }
 
     viewModel.loadLibrary()
-    analyticsProvider.setCurrentScreen("library", LibraryFragment::class)
+    analyticsProvider.setCurrentScreen(this::class)
   }
 
   override fun onSoundInfoClicked(soundInfo: SoundInfo) {
