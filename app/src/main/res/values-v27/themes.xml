@@ -6,6 +6,6 @@
     <item name="android:windowLightNavigationBar">?isLightTheme</item>
   </style>
 
-  <style name="Base.Theme.App" parent="Base.V27.Theme.App" />
+  <style name="Base.Compat.Theme.App" parent="Base.V27.Theme.App" />
 
 </resources>

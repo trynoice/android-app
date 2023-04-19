@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="Base.Theme.App.Full" parent="Base.Compat.Theme.App">
+    <item name="mediaRouteTheme">@style/Theme.App.MediaRouter</item>
+  </style>
+
+  <style name="Base.Theme.App" parent="Base.Theme.App.Full" />
+
+  <style name="Theme.App.MediaRouter" parent="Base.Theme.App.MediaRouter">
+    <item name="android:windowBackground">@color/md_theme_surface</item>
+    <item name="colorPrimary">@color/md_theme_inversePrimary</item>
+    <item name="colorAccent">@color/md_theme_primary</item>
+    <item name="colorBackgroundFloating">@color/md_theme_surfaceVariant</item>
+  </style>
+
+  <style name="Base.Theme.App.MediaRouter" parent="Theme.MediaRouter.Light">
+    <item name="mediaRouteControlPanelThemeOverlay">@style/ThemeOverlay.MediaRouter.Light</item>
+  </style>
+
+</resources>

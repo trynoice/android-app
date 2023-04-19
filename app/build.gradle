@@ -166,11 +166,11 @@ dependencies {
   implementation "androidx.hilt:hilt-work:$androidXHiltVersion"
   implementation "androidx.lifecycle:lifecycle-common-java8:$deps.lifecycleVersion"
   implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$deps.lifecycleVersion"
+  implementation 'androidx.media:media:1.6.0' // needed for audio focus management.
   implementation "androidx.media3:media3-common:$media3Version"
   implementation "androidx.media3:media3-exoplayer:$media3Version"
   implementation "androidx.media3:media3-exoplayer-workmanager:$media3Version"
   implementation "androidx.media3:media3-session:$media3Version"
-  implementation 'androidx.mediarouter:mediarouter:1.3.1'
   implementation "androidx.navigation:navigation-fragment-ktx:$deps.navVersion"
   implementation "androidx.navigation:navigation-ui-ktx:$deps.navVersion"
   implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
@@ -191,9 +191,9 @@ dependencies {
   implementation 'io.github.medyo:android-about-page:2.0.0'
   implementation 'io.noties.markwon:core:4.6.2'
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$deps.coroutinesVersion"
-
   implementation project(":api-client")
 
+  fullImplementation 'androidx.mediarouter:mediarouter:1.3.1'
   fullImplementation 'com.android.billingclient:billing-ktx:5.2.0'
   fullImplementation 'com.google.android.gms:play-services-base:18.2.0'
   fullImplementation 'com.google.android.gms:play-services-cast-framework:21.3.0'
