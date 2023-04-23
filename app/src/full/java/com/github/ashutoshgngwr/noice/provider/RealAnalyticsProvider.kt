@@ -15,10 +15,6 @@ import kotlin.reflect.KClass
 object RealAnalyticsProvider : AnalyticsProvider {
 
   private val fa = Firebase.analytics
-  private val playerStartTimes = mutableMapOf<String, Long>()
-
-  private var playbackStartTime = -1L
-  private var castSessionStartTime = -1L
 
   init {
     fa.setConsent {
@@ -35,54 +31,19 @@ object RealAnalyticsProvider : AnalyticsProvider {
     fa.setAnalyticsCollectionEnabled(e)
   }
 
-  override fun setCurrentScreen(clazz: KClass<out Any>, params: Bundle) {
-    val screenName = clazz.simpleName
-      ?.removeSuffix("Activity")
-      ?.removeSuffix("Fragment")
-    params.putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
-    params.putString(FirebaseAnalytics.Param.SCREEN_CLASS, clazz.simpleName)
-    fa.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, params)
-  }
-
-
   override fun logEvent(name: String, params: Bundle) {
     fa.logEvent(name, params)
   }
 
-  override fun logPlayerStartEvent(key: String) {
-    if (key !in playerStartTimes) {
-      playerStartTimes[key] = System.currentTimeMillis()
-    }
-
-    if (playbackStartTime <= 0) {
-      playbackStartTime = System.currentTimeMillis()
-    }
-  }
-
-  override fun logPlayerStopEvent(key: String) {
-    playerStartTimes.remove(key)?.also {
-      val params = bundleOf("sound_key" to key, "duration_ms" to System.currentTimeMillis() - it)
-      fa.logEvent("sound_session", params)
-    }
-
-    if (playerStartTimes.isEmpty() && playbackStartTime > 0) {
-      val duration = System.currentTimeMillis() - playbackStartTime
-      fa.logEvent("playback_session", bundleOf("duration_ms" to duration))
-      playbackStartTime = -1L
-    }
-  }
-
-  override fun logCastSessionStartEvent() {
-    castSessionStartTime = System.currentTimeMillis()
-  }
-
-  override fun logCastSessionEndEvent() {
-    if (castSessionStartTime <= 0) {
-      return
-    }
-
-    val params = bundleOf("duration_ms" to System.currentTimeMillis() - castSessionStartTime)
-    fa.logEvent("cast_session", params)
-    castSessionStartTime = -1
+  override fun setCurrentScreen(clazz: KClass<out Any>) {
+    val screenName = clazz.simpleName
+      ?.removeSuffix("Activity")
+      ?.removeSuffix("Fragment")
+    fa.logEvent(
+      FirebaseAnalytics.Event.SCREEN_VIEW, bundleOf(
+        FirebaseAnalytics.Param.SCREEN_NAME to screenName,
+        FirebaseAnalytics.Param.SCREEN_CLASS to clazz.simpleName,
+      )
+    )
   }
 }
