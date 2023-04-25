@@ -31,9 +31,9 @@ import com.github.ashutoshgngwr.noice.databinding.PresetsListItemBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.models.Preset
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import com.google.android.material.divider.MaterialDividerItemDecoration
@@ -47,7 +47,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 
 @AndroidEntryPoint

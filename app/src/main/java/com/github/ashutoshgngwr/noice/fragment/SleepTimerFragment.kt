@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SleepTimerFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.showInfoSnackBar
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

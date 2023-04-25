@@ -1,11 +1,10 @@
-package com.github.ashutoshgngwr.noice.provider
+package com.github.ashutoshgngwr.noice.cast
 
 import android.content.Context
 import android.view.Menu
 import androidx.annotation.StringRes
-import com.github.ashutoshgngwr.noice.cast.CastReceiverUiManager
-import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 import com.github.ashutoshgngwr.noice.engine.SoundPlaybackMediaSession
+import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 
 /**
  * [CastApiProvider] is an abstract declaration of the non-free Google Cast APIs that are used in

@@ -8,9 +8,9 @@ import androidx.core.app.ShareCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.billing.DonationFragmentProvider
 import com.github.ashutoshgngwr.noice.databinding.SupportDevelopmentFragmentBinding
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

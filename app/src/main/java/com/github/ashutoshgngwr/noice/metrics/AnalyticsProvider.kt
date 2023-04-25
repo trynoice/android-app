@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.provider
+package com.github.ashutoshgngwr.noice.metrics
 
 import android.os.Bundle
 import androidx.core.os.bundleOf

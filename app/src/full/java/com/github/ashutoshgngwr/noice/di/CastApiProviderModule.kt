@@ -2,9 +2,9 @@ package com.github.ashutoshgngwr.noice.di
 
 import android.content.Context
 import com.github.ashutoshgngwr.noice.AppDispatchers
-import com.github.ashutoshgngwr.noice.provider.CastApiProvider
-import com.github.ashutoshgngwr.noice.provider.DummyCastApiProvider
-import com.github.ashutoshgngwr.noice.provider.RealCastApiProvider
+import com.github.ashutoshgngwr.noice.cast.CastApiProvider
+import com.github.ashutoshgngwr.noice.cast.DummyCastApiProvider
+import com.github.ashutoshgngwr.noice.cast.RealCastApiProvider
 import com.google.gson.Gson
 import com.trynoice.api.client.NoiceApiClient
 import dagger.Module

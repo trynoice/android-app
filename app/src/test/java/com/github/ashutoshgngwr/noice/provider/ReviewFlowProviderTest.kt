@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
+import com.github.ashutoshgngwr.noice.metrics.GitHubReviewFlowProvider
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject

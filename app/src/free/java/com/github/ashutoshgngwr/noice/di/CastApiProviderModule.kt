@@ -1,7 +1,7 @@
 package com.github.ashutoshgngwr.noice.di
 
-import com.github.ashutoshgngwr.noice.provider.CastApiProvider
-import com.github.ashutoshgngwr.noice.provider.DummyCastApiProvider
+import com.github.ashutoshgngwr.noice.cast.CastApiProvider
+import com.github.ashutoshgngwr.noice.cast.DummyCastApiProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import com.github.ashutoshgngwr.noice.databinding.AlarmRingerActivityBinding
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn

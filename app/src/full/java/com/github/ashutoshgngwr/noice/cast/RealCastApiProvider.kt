@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.provider
+package com.github.ashutoshgngwr.noice.cast
 
 import android.content.Context
 import android.os.Handler
@@ -9,16 +9,11 @@ import android.view.MenuItem
 import androidx.annotation.StringRes
 import androidx.core.view.MenuItemCompat
 import androidx.mediarouter.app.MediaRouteActionProvider
-import com.github.ashutoshgngwr.noice.cast.CastMessagingChannel
-import com.github.ashutoshgngwr.noice.cast.CastReceiverUiManager
-import com.github.ashutoshgngwr.noice.cast.CastSoundPlayer
-import com.github.ashutoshgngwr.noice.cast.CastVolumeProvider
-import com.github.ashutoshgngwr.noice.cast.DefaultCastReceiverUiManager
 import com.github.ashutoshgngwr.noice.cast.models.Event
 import com.github.ashutoshgngwr.noice.cast.models.GetAccessTokenEvent
 import com.github.ashutoshgngwr.noice.cast.models.GetAccessTokenResponseEvent
-import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 import com.github.ashutoshgngwr.noice.engine.SoundPlaybackMediaSession
+import com.github.ashutoshgngwr.noice.engine.SoundPlayer
 import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
 import com.google.android.gms.cast.framework.CastSession

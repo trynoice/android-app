@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.service
 import android.content.Intent
 import android.content.ServiceConnection
 import android.media.AudioManager
+import com.github.ashutoshgngwr.noice.cast.CastApiProvider
 import com.github.ashutoshgngwr.noice.cast.CastReceiverUiManager
 import com.github.ashutoshgngwr.noice.di.ApiClientModule
 import com.github.ashutoshgngwr.noice.di.CastApiProviderModule
@@ -15,7 +16,6 @@ import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
 import com.github.ashutoshgngwr.noice.engine.media.SoundDataSourceFactory
 import com.github.ashutoshgngwr.noice.models.AudioQuality
 import com.github.ashutoshgngwr.noice.models.Preset
-import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository

@@ -8,10 +8,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.ashutoshgngwr.noice.billing.InAppBillingProvider
+import com.github.ashutoshgngwr.noice.billing.InAppBillingProviderException
 import com.github.ashutoshgngwr.noice.databinding.DonationPurchasedCallbackFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
-import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
-import com.github.ashutoshgngwr.noice.provider.InAppBillingProviderException
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel

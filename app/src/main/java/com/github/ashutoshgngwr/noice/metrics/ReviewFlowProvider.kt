@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.provider
+package com.github.ashutoshgngwr.noice.metrics
 
 import android.content.Context
 import android.content.Intent

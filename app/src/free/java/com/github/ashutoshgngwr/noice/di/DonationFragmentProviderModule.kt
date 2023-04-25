@@ -1,7 +1,7 @@
 package com.github.ashutoshgngwr.noice.di
 
-import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
-import com.github.ashutoshgngwr.noice.provider.OpenCollectiveDonationFragmentProvider
+import com.github.ashutoshgngwr.noice.billing.DonationFragmentProvider
+import com.github.ashutoshgngwr.noice.billing.OpenCollectiveDonationFragmentProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

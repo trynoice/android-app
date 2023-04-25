@@ -22,6 +22,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.billing.DonationFragmentProvider
+import com.github.ashutoshgngwr.noice.billing.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
@@ -31,10 +33,8 @@ import com.github.ashutoshgngwr.noice.fragment.HomeFragmentArgs
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragmentArgs
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
-import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
-import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.service.SoundPlaybackService

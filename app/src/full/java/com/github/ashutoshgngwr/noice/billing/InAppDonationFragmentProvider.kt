@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.provider
+package com.github.ashutoshgngwr.noice.billing
 
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.fragment.InAppDonationFragment

@@ -2,9 +2,9 @@ package com.github.ashutoshgngwr.noice.di
 
 import android.content.Context
 import com.github.ashutoshgngwr.noice.AppDispatchers
-import com.github.ashutoshgngwr.noice.provider.DummyInAppBillingProvider
-import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
-import com.github.ashutoshgngwr.noice.provider.RealInAppBillingProvider
+import com.github.ashutoshgngwr.noice.billing.DummyInAppBillingProvider
+import com.github.ashutoshgngwr.noice.billing.InAppBillingProvider
+import com.github.ashutoshgngwr.noice.billing.RealInAppBillingProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

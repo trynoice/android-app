@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.provider
+package com.github.ashutoshgngwr.noice.billing
 
 import android.app.Activity
 import com.github.ashutoshgngwr.noice.models.Subscription

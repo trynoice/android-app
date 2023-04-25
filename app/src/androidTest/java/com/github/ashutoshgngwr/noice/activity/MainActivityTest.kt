@@ -21,13 +21,13 @@ import androidx.work.testing.WorkManagerTestInitHelper
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.EspressoX.withBottomNavSelectedItem
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.billing.DonationFragmentProvider
+import com.github.ashutoshgngwr.noice.billing.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.di.InAppBillingProviderModule
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
 import com.github.ashutoshgngwr.noice.models.AudioQuality
 import com.github.ashutoshgngwr.noice.models.Preset
-import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
-import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.service.SoundPlaybackService

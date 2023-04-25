@@ -1,7 +1,7 @@
 package com.github.ashutoshgngwr.noice.di
 
-import com.github.ashutoshgngwr.noice.provider.DummyInAppBillingProvider
-import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
+import com.github.ashutoshgngwr.noice.billing.DummyInAppBillingProvider
+import com.github.ashutoshgngwr.noice.billing.InAppBillingProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

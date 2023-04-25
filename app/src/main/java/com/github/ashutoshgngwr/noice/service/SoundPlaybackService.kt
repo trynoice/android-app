@@ -22,6 +22,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.media3.datasource.cache.Cache
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.activity.MainActivity
+import com.github.ashutoshgngwr.noice.cast.CastApiProvider
 import com.github.ashutoshgngwr.noice.cast.CastReceiverUiManager
 import com.github.ashutoshgngwr.noice.engine.AudioFocusManager
 import com.github.ashutoshgngwr.noice.engine.LocalSoundPlayer
@@ -34,7 +35,6 @@ import com.github.ashutoshgngwr.noice.engine.media.SoundDataSourceFactory
 import com.github.ashutoshgngwr.noice.ext.bindServiceCallbackFlow
 import com.github.ashutoshgngwr.noice.ext.getSerializableCompat
 import com.github.ashutoshgngwr.noice.models.Preset
-import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.repository.SoundRepository

@@ -340,7 +340,7 @@
 
     <argument
       android:name="purchase"
-      app:argType="com.github.ashutoshgngwr.noice.provider.InAppBillingProvider$Purchase"
+      app:argType="com.github.ashutoshgngwr.noice.billing.InAppBillingProvider$Purchase"
       app:nullable="false" />
 
   </dialog>

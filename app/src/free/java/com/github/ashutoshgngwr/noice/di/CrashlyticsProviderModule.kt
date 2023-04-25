@@ -1,7 +1,7 @@
 package com.github.ashutoshgngwr.noice.di
 
-import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
-import com.github.ashutoshgngwr.noice.provider.DummyCrashlyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.CrashlyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.DummyCrashlyticsProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

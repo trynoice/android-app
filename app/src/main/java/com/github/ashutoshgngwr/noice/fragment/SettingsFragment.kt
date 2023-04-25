@@ -17,9 +17,9 @@ import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.models.AudioQuality
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.worker.SoundDownloadsRefreshWorker
@@ -206,6 +206,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         is FileNotFoundException,
         is IOException,
         is JsonIOException -> showErrorSnackBar(R.string.failed_to_write_file)
+
         else -> throw e
       }
     } finally {
@@ -237,8 +238,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
           crashlyticsProvider.log("failed to import saved presets")
           crashlyticsProvider.recordException(e)
         }
+
         is JsonSyntaxException,
         is IllegalArgumentException -> showErrorSnackBar(R.string.invalid_import_file_format)
+
         else -> {
           crashlyticsProvider.log("failed to import saved presets")
           crashlyticsProvider.recordException(e)

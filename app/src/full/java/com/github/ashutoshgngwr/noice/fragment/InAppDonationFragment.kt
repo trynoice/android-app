@@ -11,11 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.billing.DonationFragmentProvider
+import com.github.ashutoshgngwr.noice.billing.InAppBillingProvider
+import com.github.ashutoshgngwr.noice.billing.InAppBillingProviderException
 import com.github.ashutoshgngwr.noice.databinding.InAppDonationFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
-import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
-import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
-import com.github.ashutoshgngwr.noice.provider.InAppBillingProviderException
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel

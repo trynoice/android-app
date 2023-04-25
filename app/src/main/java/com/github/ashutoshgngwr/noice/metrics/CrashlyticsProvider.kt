@@ -1,4 +1,4 @@
-package com.github.ashutoshgngwr.noice.provider
+package com.github.ashutoshgngwr.noice.metrics
 
 /**
  * [CrashlyticsProvider] is an abstract declaration of Firebase Crashlytics APIs used by the app.

@@ -32,11 +32,11 @@ import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showInfoSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.models.SoundDownloadState
 import com.github.ashutoshgngwr.noice.models.SoundGroup
 import com.github.ashutoshgngwr.noice.models.SoundInfo
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository

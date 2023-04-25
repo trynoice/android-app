@@ -1,8 +1,8 @@
 package com.github.ashutoshgngwr.noice.di
 
 import com.github.ashutoshgngwr.noice.AppDispatchers
-import com.github.ashutoshgngwr.noice.provider.StripeSubscriptionBillingProvider
-import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
+import com.github.ashutoshgngwr.noice.billing.StripeSubscriptionBillingProvider
+import com.github.ashutoshgngwr.noice.billing.SubscriptionBillingProvider
 import com.trynoice.api.client.NoiceApiClient
 import dagger.Module
 import dagger.Provides

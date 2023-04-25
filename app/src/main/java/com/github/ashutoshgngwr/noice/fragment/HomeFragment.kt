@@ -21,8 +21,8 @@ import androidx.navigation.navOptions
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.cast.CastApiProvider
 import com.github.ashutoshgngwr.noice.databinding.HomeFragmentBinding
-import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

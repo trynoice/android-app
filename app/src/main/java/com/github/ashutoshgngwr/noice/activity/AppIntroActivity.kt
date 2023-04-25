@@ -14,7 +14,7 @@ import com.github.appintro.AppIntro
 import com.github.appintro.AppIntroPageTransformerType
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.fragment.AppIntroFragment
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
