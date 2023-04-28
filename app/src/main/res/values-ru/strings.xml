@@ -191,10 +191,10 @@
     <string name="processing_payment">Обработка платежа</string>
     <string name="monthly">Ежемесячно</string>
     <plurals name="n_months">
-        <item quantity="one">%1$d мес.</item>
-        <item quantity="few">%1$d мес.</item>
-        <item quantity="many">%1$d мес.</item>
-        <item quantity="other">%1$d мес.</item>
+        <item quantity="one">%1$d месяц</item>
+        <item quantity="few">%1$d месяца</item>
+        <item quantity="many">%1$d месяцев</item>
+        <item quantity="other">%1$d месяцев</item>
     </plurals>
     <string name="select_a_plan">Выберете тарифный план</string>
     <string name="tags_load_error">О нет! Нам не удалось загрузить ключевые слова звука. %1$s Пожалуйста, повторите попытку!</string>
@@ -263,10 +263,10 @@
     <string name="use_material_you_colors_summary">Использовать ту же цветовую схему, что и в настройках вашего устройства</string>
     <string name="trial_period">Пробный период: %1$s</string>
     <plurals name="n_days">
-        <item quantity="one">%1$d д.</item>
-        <item quantity="few">%1$d дн.</item>
-        <item quantity="many">%1$d дн.</item>
-        <item quantity="other">%1$d дн.</item>
+        <item quantity="one">%1$d день</item>
+        <item quantity="few">%1$d дня</item>
+        <item quantity="many">%1$d дней</item>
+        <item quantity="other">%1$d дней</item>
     </plurals>
     <string name="sound_is_premium">Обновитесь до премиум-подписки Noice, чтобы получить доступ к этому звуку.</string>
     <string name="no_alarms_description">Добавьте новый будильник, нажав кнопку «+»!</string>
@@ -325,4 +325,10 @@
     <string name="more_sound_clips_desc">Добавьте новое измерение к прослушиванию с помощью дополнительных аудиоклипов в звуках, чтобы сделать их более уникальными и менее однообразными.</string>
     <string name="natural_variations_desc">Оживите свои звуковые ландшафты с помощью реальных и естественных звуковых вариаций, создаваемых по запросу с помощью нашей передовой звуковой технологии.</string>
     <string name="search_preset">Поисковой пресет</string>
+    <string name="whats_new">Что нового</string>
+    <string name="blog">Блог</string>
+    <string name="resources">Ресурсы</string>
+    <string name="about_linkedin">Подпишитесь на нас в LinkedIn</string>
+    <string name="about_github">Поставьте нам звезду на GitHub</string>
+    <string name="now_playing">Сейчас играет</string>
 </resources>
