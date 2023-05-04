@@ -12,9 +12,9 @@
     <string name="dismiss">Rejeter</string>
     <string name="name">Nom</string>
     <string name="pause">Pause</string>
-    <string name="preset_already_exists">Un réglage avec ce nom existe déjà !</string>
-    <string name="preset_name_cannot_be_empty">Le nom du réglage ne peut pas être vide !</string>
-    <string name="preset_saved">Réglage sauvegardé !</string>
+    <string name="preset_already_exists">Un réglage avec ce nom existe déjà. Essayez-en un autre !</string>
+    <string name="preset_name_cannot_be_empty">Le nom du préréglage est manquant. Veuillez en saisir un unique !</string>
+    <string name="preset_saved">Génial! Votre préréglage a été enregistré.</string>
     <string name="save">Sauvegarder</string>
     <string name="save_preset">Sauvegarder le réglage</string>
     <string name="play">Lecture</string>
@@ -23,9 +23,9 @@
     <string name="volume">Volume</string>
     <string name="delete">Supprimer</string>
     <string name="open_context_menu">Menu contextuel</string>
-    <string name="preset_delete_confirmation">Confirmer la suppression de %s ?</string>
-    <string name="preset_deleted">Réglage supprimé !</string>
-    <string name="preset_info__description">Créez de nouveaux préréglages en jouant des sons et en utilisant le bouton Enregistrer dans la bibliothèque.</string>
+    <string name="preset_delete_confirmation">Etes-vous sûr que vous voulez supprimer %1$s\? Vous ne pouvez pas annuler cette action.</string>
+    <string name="preset_deleted">Votre préréglage a été supprimé avec succès !</string>
+    <string name="preset_info__description">Vous pouvez facilement créer vos propres préréglages en jouant des sons puis en les enregistrant dans la bibliothèque de sons. Il vous suffit d\'appuyer sur le bouton Enregistrer et de lui donner un nom unique.</string>
     <string name="rename">Renommer</string>
     <string name="auto_sleep_schedule_cancelled">Minuterie annulée !</string>
     <string name="reset">Réinitialiser</string>
@@ -65,7 +65,7 @@
     <string name="cast_media">Se connecter à Chromecast</string>
     <string name="notification_channel_default__description">Contrôles de lecture</string>
     <string name="notification_channel_default__name">Lecture audio</string>
-    <string name="preset_does_not_exist">Ce préréglage n\'existe pas. Il a peut-être été effacé !</string>
+    <string name="preset_does_not_exist">Il semble que ce préréglage ne soit plus disponible. Il a peut-être été supprimé.</string>
     <string name="add_to_home_screen">Ajouter à l\'écran d\'accueil</string>
     <string name="random_preset">Préréglage aléatoire</string>
     <string name="okay">D\'accord</string>
@@ -73,7 +73,7 @@
     <string name="submit_feedback">Soumettre une évaluation</string>
     <string name="in_app_feedback__description">Nous aimerions connaître votre avis sur l\'application. Nous vous prions de consulter notre GitHub. Si vous n\'aimez pas l\'application, nous vous prions d\'ouvrir un billet « issue » afin de nous expliquer vos critiques. Autrement, nous vous prions de noter le projet pour nous montrer votre reconnaissance.</string>
     <string name="presets_as_home_screen_summary">Afficher « Préréglages » au démarrage de l\'application (nécessite un redémarrage de l\'application)</string>
-    <string name="pinned_shortcuts_not_supported">Votre lanceur par défaut ne supporte pas l\'ajout de raccourcis.</string>
+    <string name="pinned_shortcuts_not_supported">Désolé, il semble que votre application d\'écran d\'accueil ne prenne pas en charge les raccourcis.</string>
     <string name="never">Jamais</string>
     <string name="later">Plus tard</string>
     <string name="in_app_feedback__title">Soumettre une évaluation</string>

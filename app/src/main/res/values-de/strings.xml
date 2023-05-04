@@ -329,4 +329,10 @@
     <string name="alarm_snooze_length_summary">Zeitdauer in Minuten für Schlummeralarme</string>
     <string name="notification_channel_missed_alarms__description">Benachrichtigungen, die angezeigt werden, wenn geplante Alarme nach Ablauf der Erinnerungsdauer gestummt werden.</string>
     <string name="alarm_gradually_increase_volume_summary">Dauer in Minuten für die schrittweise Erhöhung der Lautstärke bei Auslösung eines Alarms</string>
+    <string name="more_sounds">Mehr Sounds</string>
+    <string name="more_sounds_desc">Setze das volle Potenzial deiner Entspannung &amp; Fokuserlebnis frei mit Noice Premium - mit %1$s weiteren Sounds.</string>
+    <string name="more_sound_clips">Mehr Audioclips</string>
+    <string name="natural_variations">Natürliche Variationen</string>
+    <string name="has_more_clips_with_premium">Dieser Sound bietet mehr Audio-Clips mit Noice Premium.</string>
+    <string name="more_sound_clips_desc">Verleihen Sie Ihrem Hören eine neue Dimension mit zusätzlichen Audioclips in Sounds, um sie einzigartiger und weniger eintönig zu machen.</string>
 </resources>

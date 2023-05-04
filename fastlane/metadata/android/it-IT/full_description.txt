@@ -35,6 +35,13 @@ Noice è un'app che permette di creare ambienti sonori personalizzati. Consente 
 
 <i>* Chromecast è disponibile solo quando scarichi Noice da Google Play</i>
 
+<b>FUNZIONALITÀ PREMIUM</b>
+• Sblocca ulteriori clip audio tra i suoni
+• Variazioni sonore reali e naturali generate su richiesta
+• Riproduzione completamente offline
+• Audio ultra hi-fi per streaming e download (fino a 320 kbps)
+• Sveglie attive illimitate
+
 <b>LIBRERIA AUDIO</b>
 • Vita (uccelli, grilli, lupi, battito cardiaco, gattoche fa le fusa)
 • Tempo (mattina o alba, notte, pioggia, tuono)

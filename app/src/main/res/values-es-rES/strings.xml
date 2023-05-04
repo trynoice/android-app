@@ -323,4 +323,10 @@
     <string name="natural_variations_desc">Dé vida a sus paisajes sonoros con variaciones de sonido reales y naturales generadas a la carta con nuestra tecnología de sonido de vanguardia.</string>
     <string name="offline_playback_desc">Disfruta de sonidos relajantes en cualquier momento y lugar con las descargas de sonidos sin conexión de Noice, sin necesidad de conexión a Internet.</string>
     <string name="search_preset">Buscar ajustes preestablecidos</string>
+    <string name="whats_new">Novedades</string>
+    <string name="blog">Blog</string>
+    <string name="resources">Recursos</string>
+    <string name="about_linkedin">Siguenos en LinkedIn</string>
+    <string name="now_playing">Reproduciendo</string>
+    <string name="about_github">Haznos destacar en Github</string>
 </resources>
