@@ -7,6 +7,7 @@ import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.github.ashutoshgngwr.noice.data.models.AlarmDto
 import com.github.ashutoshgngwr.noice.data.models.DefaultPresetsSyncVersionDto
+import com.github.ashutoshgngwr.noice.data.models.GooglePlayInAppPurchaseDto
 import com.github.ashutoshgngwr.noice.data.models.LibraryUpdateTimeDto
 import com.github.ashutoshgngwr.noice.data.models.PresetDto
 import com.github.ashutoshgngwr.noice.data.models.ProfileDto
@@ -18,6 +19,7 @@ import com.github.ashutoshgngwr.noice.data.models.SoundTagCrossRef
 import com.github.ashutoshgngwr.noice.data.models.SoundTagDto
 import com.github.ashutoshgngwr.noice.data.models.SubscriptionDto
 import com.github.ashutoshgngwr.noice.data.models.SubscriptionPlanDto
+import com.github.ashutoshgngwr.noice.data.models.SubscriptionPurchaseNotificationDto
 import java.util.*
 
 @Database(
@@ -35,9 +37,11 @@ import java.util.*
     AlarmDto::class,
     PresetDto::class,
     DefaultPresetsSyncVersionDto::class,
+    GooglePlayInAppPurchaseDto::class,
+    SubscriptionPurchaseNotificationDto::class,
   ],
-  version = 2,
-  autoMigrations = [AutoMigration(from = 1, to = 2)]
+  version = 3,
+  autoMigrations = [AutoMigration(from = 1, to = 2), AutoMigration(from = 2, to = 3)]
 )
 @TypeConverters(AppDatabaseTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -51,6 +55,10 @@ abstract class AppDatabase : RoomDatabase() {
   abstract fun alarms(): AlarmDao
 
   abstract fun presets(): PresetDao
+
+  abstract fun googlePlayInAppPurchases(): GooglePlayInAppPurchaseDao
+
+  abstract fun subscriptionPurchaseNotifications(): SubscriptionPurchaseNotificationDao
 }
 
 class AppDatabaseTypeConverters {

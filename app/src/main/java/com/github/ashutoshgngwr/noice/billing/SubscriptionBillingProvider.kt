@@ -1,26 +1,32 @@
 package com.github.ashutoshgngwr.noice.billing
 
 import android.app.Activity
-import android.net.Uri
+import androidx.room.withTransaction
 import com.github.ashutoshgngwr.noice.AppDispatchers
-import com.github.ashutoshgngwr.noice.ext.startCustomTab
-import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
+import com.github.ashutoshgngwr.noice.data.AppDatabase
+import com.github.ashutoshgngwr.noice.data.models.SubscriptionPurchaseNotificationDto
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
-import com.trynoice.api.client.NoiceApiClient
-import com.trynoice.api.client.models.SubscriptionFlowParams
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
  * An abstraction layer to allow application to select from Stripe and Google Play subscription
  * providers based on the build variant and Google Play billing service availability.
  */
-interface SubscriptionBillingProvider {
+abstract class SubscriptionBillingProvider(
+  private val appDb: AppDatabase,
+  private val defaultScope: CoroutineScope,
+  private val appDispatchers: AppDispatchers,
+) {
+
+  private var listener: Listener? = null
 
   /**
    * @return the identifier used in [SubscriptionPlan.provider].
    */
-  fun getId(): String
+  abstract fun getId(): String
 
   /**
    * Initiates the subscription billing flow by requesting the API to create a new subscription
@@ -33,12 +39,11 @@ interface SubscriptionBillingProvider {
    * @throws retrofit2.HttpException on API error. For details about HTTP error codes, refer
    * [create-subscription operation][com.trynoice.api.client.apis.SubscriptionApi.create].
    * @throws java.io.IOException on network error.
-   * @throws InAppBillingProviderException on in-app billing errors when using google play
-   * subscription provider implementation.
+   * @throws SubscriptionBillingProviderException on failure to launch billing flow.
    *
    * @see com.trynoice.api.client.apis.SubscriptionApi.create
    */
-  suspend fun launchBillingFlow(
+  abstract suspend fun launchBillingFlow(
     activity: Activity,
     plan: SubscriptionPlan,
     activeSubscription: Subscription?,
@@ -48,63 +53,74 @@ interface SubscriptionBillingProvider {
    * Returns whether [s] can be upgraded using in-app flows offered by the current billing provider
    * implementation.
    */
-  fun canUpgrade(s: Subscription): Boolean
-}
+  abstract fun isUpgradeable(s: Subscription): Boolean
 
-/**
- * [SubscriptionBillingProvider] implementation that provides subscriptions using Stripe as the
- * billing provider.
- */
-class StripeSubscriptionBillingProvider(
-  private val apiClient: NoiceApiClient,
-  private val appDispatchers: AppDispatchers,
-) : SubscriptionBillingProvider {
+  /**
+   * Registers a subscription purchase listener.
+   */
+  fun setListener(listener: Listener) {
+    this.listener = listener
+    notifyListener()
+  }
 
-  override fun getId(): String = SubscriptionPlan.PROVIDER_STRIPE
+  /**
+   * Removes any registered subscription purchase listener.
+   */
+  fun removeListener() {
+    this.listener = null
+  }
 
-  override suspend fun launchBillingFlow(
-    activity: Activity,
-    plan: SubscriptionPlan,
-    activeSubscription: Subscription?,
-  ) {
-    require(plan.provider == SubscriptionPlan.PROVIDER_STRIPE) {
-      "stripe provider launched subscription flow for non-stripe plan"
-    }
+  protected fun notifyPurchase(subscriptionId: Long, isPending: Boolean) {
+    defaultScope.launch(appDispatchers.io) {
+      appDb.subscriptionPurchaseNotifications()
+        .save(SubscriptionPurchaseNotificationDto(subscriptionId, isPending, false))
 
-    require(activeSubscription == null) {
-      "stripe provider doesn't support upgrading subscription plans"
-    }
-
-    val result = apiClient.subscriptions().create(
-      SubscriptionFlowParams(
-        planId = plan.id,
-        successUrl = SUCCESS_REDIRECT_URL,
-        cancelUrl = CANCEL_REDIRECT_URL,
-      )
-    )
-
-    val checkoutSessionUrl = requireNotNull(result.stripeCheckoutSessionUrl) {
-      "stripeCheckoutSessionUrl must not be null for stripe subscription flow result."
-    }
-
-    withContext(appDispatchers.main) {
-      activity.startCustomTab(checkoutSessionUrl)
+      notifyListener()
     }
   }
 
-  override fun canUpgrade(s: Subscription): Boolean {
-    return false
+  private fun notifyListener() {
+    if (listener == null) {
+      return
+    }
+
+    defaultScope.launch(appDispatchers.io) {
+      appDb.withTransaction {
+        appDb.subscriptionPurchaseNotifications()
+          .listUnconsumed()
+          .forEach { n ->
+            withContext(appDispatchers.main) {
+              if (n.isPurchasePending) {
+                listener?.onSubscriptionPurchasePending(n.subscriptionId)
+              } else {
+                listener?.onSubscriptionPurchaseComplete(n.subscriptionId)
+              }
+            }
+
+            appDb.subscriptionPurchaseNotifications()
+              .save(n.copy(isConsumed = listener != null))
+          }
+
+        appDb.subscriptionPurchaseNotifications()
+          .removeConsumed()
+      }
+    }
   }
 
-  companion object {
-    private val SUCCESS_REDIRECT_URL = Uri.parse("https://trynoice.com/redirect")
-      .buildUpon()
-      .appendQueryParameter("uri", SubscriptionBillingCallbackFragment.SUCCESS_URI)
-      .toString()
+  interface Listener {
 
-    private val CANCEL_REDIRECT_URL = Uri.parse("https://trynoice.com/redirect")
-      .buildUpon()
-      .appendQueryParameter("uri", SubscriptionBillingCallbackFragment.CANCEL_URI)
-      .toString()
+    /**
+     * Invoked when a new subscription purchase is made but its payment is delayed.
+     *
+     * @param subscriptionId id of the subscription as identified by the API Server.
+     */
+    fun onSubscriptionPurchasePending(subscriptionId: Long)
+
+    /**
+     * Invoked when a (old or new) subscription purchase's payment is processed.
+     *
+     * @param subscriptionId id of the subscription as identified by the API Server.
+     */
+    fun onSubscriptionPurchaseComplete(subscriptionId: Long)
   }
 }

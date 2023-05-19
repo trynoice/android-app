@@ -171,7 +171,6 @@
     <string name="sign_in_to_continue">आगे बढ़ने के लिए कृपया लॉग इन करें या खाता बनाएं।</string>
     <string name="confirming_payment">हम आपके भुगतान की पुष्टि कर रहे हैं</string>
     <string name="subscription_payment_complete">बधाई हो! आपका नॉइस प्रीमियम सब्सक्रिप्शन अब लाइव है और आपके सुनने के अनुभव को बेहतर बनाने के लिए तैयार है।</string>
-    <string name="subscription_payment_cancelled">सदस्यता भुगतान रद्द कर दिया गया था!</string>
     <string name="subscription_purchases">सदस्यता खरीद की सूची</string>
     <string name="renews_on">%1$s को नवीकृत होगा</string>
     <string name="ends_on">%1$s को समाप्त होगा</string>

@@ -179,7 +179,6 @@
     <string name="processing_payment">Bearbeite Zahlung</string>
     <string name="total_price">Insgesamt %1$s</string>
     <string name="confirming_payment">Bestätige Zahlung</string>
-    <string name="subscription_payment_cancelled">Die Zahlung des Abonnements wurde storniert!</string>
     <string name="quarterly">Vierteljährlich</string>
     <string name="offline">Du bist offline</string>
     <string name="premium">Premium</string>

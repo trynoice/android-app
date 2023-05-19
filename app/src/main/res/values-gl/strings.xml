@@ -244,7 +244,6 @@
     <string name="back_online">De volta en liña</string>
     <string name="premium">Premium</string>
     <string name="app">Aplicación</string>
-    <string name="subscription_payment_cancelled">Cancelouse o pago da subscrición!</string>
     <string name="payment_processing_error">Vaia! Produciuse un erro no pago. Non te preocupes! O teu reembolso está en camiño. Se non o ves dentro dunha semana, avísanos.</string>
     <string name="user_already_subscribed">Xa te atopas subscrito.</string>
     <string name="confirming_payment">Pago confirmado</string>

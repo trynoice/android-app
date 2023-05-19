@@ -190,7 +190,6 @@
     <string name="user_already_subscribed">你已經訂閱了。</string>
     <string name="confirming_payment">確認付款</string>
     <string name="subscription_payment_confirmation_failed">Uh-oh！ 我們在等待付款確認時遇到了一些麻煩。 這可能是由於網絡錯誤或支付提供商的延遲造成的。 我們會在收到提供商的消息後立即更新您的訂閱狀態。 請稍後檢查您的訂閱狀態。</string>
-    <string name="subscription_payment_cancelled">訂閱付款已取消！</string>
     <string name="subscription_purchases">訂閱購買</string>
     <string name="ends_on">結束於 %1$s</string>
     <string name="started_on">開始於 %1$s</string>

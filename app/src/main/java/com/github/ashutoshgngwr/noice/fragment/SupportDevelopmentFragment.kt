@@ -8,7 +8,7 @@ import androidx.core.app.ShareCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.billing.DonationFragmentProvider
+import com.github.ashutoshgngwr.noice.billing.DonationFlowProvider
 import com.github.ashutoshgngwr.noice.databinding.SupportDevelopmentFragmentBinding
 import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +20,7 @@ class SupportDevelopmentFragment : Fragment() {
   private lateinit var binding: SupportDevelopmentFragmentBinding
 
   @set:Inject
-  internal lateinit var donationFragmentProvider: DonationFragmentProvider
+  internal lateinit var donationFlowProvider: DonationFlowProvider
 
   @set:Inject
   internal lateinit var analyticsProvider: AnalyticsProvider
@@ -35,10 +35,7 @@ class SupportDevelopmentFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    childFragmentManager.beginTransaction()
-      .add(R.id.donate_view_container, donationFragmentProvider.get())
-      .commit()
-
+    donationFlowProvider.addButtons(childFragmentManager, R.id.donate_view_container)
     binding.shareButton.setOnClickListener {
       val text = getString(R.string.app_description)
       val playStoreURL = getString(R.string.play_store_url)

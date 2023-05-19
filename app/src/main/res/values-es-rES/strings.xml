@@ -119,7 +119,6 @@
     <string name="processing_payment">Procesando el pago</string>
     <string name="sign_out">Cerrar sesión</string>
     <string name="sign_in_to_continue">Inicie sesión o cree una cuenta para continuar.</string>
-    <string name="subscription_payment_cancelled">¡El pago de la suscripción fue cancelado!</string>
     <string name="cancel_subscription_confirmation">¿Estás seguro de que quieres cancelar tu suscripción a Noice Premium\? Tu suscripción terminará al final de tu periodo de facturación actual, que finaliza el %1$s.</string>
     <string name="has_premium_segments">Ofrece más clips de audio con Noice Premium</string>
     <string name="select_a_plan">Seleccionar un plan</string>

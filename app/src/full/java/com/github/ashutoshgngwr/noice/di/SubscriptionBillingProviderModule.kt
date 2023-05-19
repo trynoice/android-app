@@ -1,17 +1,17 @@
 package com.github.ashutoshgngwr.noice.di
 
-import android.content.Context
 import com.github.ashutoshgngwr.noice.AppDispatchers
+import com.github.ashutoshgngwr.noice.billing.GooglePlayBillingProvider
 import com.github.ashutoshgngwr.noice.billing.GooglePlaySubscriptionBillingProvider
-import com.github.ashutoshgngwr.noice.billing.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.billing.StripeSubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.billing.SubscriptionBillingProvider
+import com.github.ashutoshgngwr.noice.data.AppDatabase
 import com.trynoice.api.client.NoiceApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
 import javax.inject.Singleton
 
 @Module
@@ -21,15 +21,23 @@ object SubscriptionBillingProviderModule {
   @Provides
   @Singleton
   fun subscriptionBillingProvider(
-    @ApplicationContext context: Context,
     apiClient: NoiceApiClient,
-    billingProvider: InAppBillingProvider,
+    billingProvider: GooglePlayBillingProvider?,
+    appDb: AppDatabase,
+    @AppCoroutineScope appScope: CoroutineScope,
     appDispatchers: AppDispatchers,
+    stripeSubscriptionBillingProvider: StripeSubscriptionBillingProvider,
   ): SubscriptionBillingProvider {
-    if (isGoogleMobileServiceAvailable(context)) {
-      return GooglePlaySubscriptionBillingProvider(apiClient, billingProvider)
+    if (billingProvider != null) {
+      return GooglePlaySubscriptionBillingProvider(
+        apiClient = apiClient,
+        billingProvider = billingProvider,
+        appDb = appDb,
+        defaultScope = appScope,
+        appDispatchers = appDispatchers,
+      )
     }
 
-    return StripeSubscriptionBillingProvider(apiClient, appDispatchers)
+    return stripeSubscriptionBillingProvider
   }
 }

@@ -282,7 +282,7 @@ class SubscriptionPurchaseViewHolder(
     if (s.isActive) {
       binding.manage.isVisible = s.plan.provider == SubscriptionPlan.PROVIDER_STRIPE
       binding.manage.setOnClickListener { viewController.onSubscriptionManageClicked(s) }
-      binding.changePlan.isVisible = subscriptionBillingProvider.canUpgrade(s)
+      binding.changePlan.isVisible = subscriptionBillingProvider.isUpgradeable(s)
       binding.changePlan.setOnClickListener { viewController.onSubscriptionUpgradeClicked(s) }
       binding.cancel.isVisible = s.isAutoRenewing
       binding.cancel.setOnClickListener { viewController.onSubscriptionCancelClicked(s) }

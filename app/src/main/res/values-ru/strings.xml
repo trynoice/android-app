@@ -181,7 +181,6 @@
     <string name="manage_subscription">Управление подпиской</string>
     <string name="sign_up_tos">Продолжая, вы соглашаетесь с нашими [Условиями обслуживания](https://trynoice.com/terms-of-service) и [Политикой конфиденциальности](https://trynoice.com/privacy-policy).</string>
     <string name="yearly">Ежегодно</string>
-    <string name="subscription_payment_cancelled">Плата за подписку отменена!</string>
     <string name="sign_out_error">О нет! Не удалось выйти. %1$s Пожалуйста, повторите попытку!</string>
     <string name="initialising_subscription">Активация подписки</string>
     <string name="audio_quality">Качество звука</string>

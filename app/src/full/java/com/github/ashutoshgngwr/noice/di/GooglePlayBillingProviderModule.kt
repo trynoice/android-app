@@ -2,9 +2,8 @@ package com.github.ashutoshgngwr.noice.di
 
 import android.content.Context
 import com.github.ashutoshgngwr.noice.AppDispatchers
-import com.github.ashutoshgngwr.noice.billing.DummyInAppBillingProvider
-import com.github.ashutoshgngwr.noice.billing.InAppBillingProvider
-import com.github.ashutoshgngwr.noice.billing.RealInAppBillingProvider
+import com.github.ashutoshgngwr.noice.billing.GooglePlayBillingProvider
+import com.github.ashutoshgngwr.noice.data.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,23 +16,26 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object InAppBillingProviderModule {
+object GooglePlayBillingProviderModule {
 
   @Provides
   @Singleton
-  fun inAppBillingProvider(
+  fun googlePlayBillingProvider(
     @ApplicationContext context: Context,
+    appDb: AppDatabase,
     @AppCoroutineScope appScope: CoroutineScope,
     appDispatchers: AppDispatchers,
-  ): InAppBillingProvider {
-    if (isGoogleMobileServiceAvailable(context)) {
-      return RealInAppBillingProvider(
-        context,
-        appScope + CoroutineName("InAppBillingProvider"),
-        appDispatchers,
+  ): GooglePlayBillingProvider? {
+    val installer = getInstallingPackageName(context)
+    if (installer == "com.android.vending" && isGoogleMobileServiceAvailable(context)) {
+      return GooglePlayBillingProvider(
+        context = context,
+        appDb = appDb,
+        defaultScope = appScope + CoroutineName("GooglePlayBillingProvider"),
+        appDispatchers = appDispatchers,
       )
     }
 
-    return DummyInAppBillingProvider
+    return null
   }
 }

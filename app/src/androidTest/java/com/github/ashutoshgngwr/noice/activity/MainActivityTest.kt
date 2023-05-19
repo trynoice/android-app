@@ -21,11 +21,9 @@ import androidx.work.testing.WorkManagerTestInitHelper
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.EspressoX.withBottomNavSelectedItem
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.billing.DonationFragmentProvider
-import com.github.ashutoshgngwr.noice.billing.InAppBillingProvider
-import com.github.ashutoshgngwr.noice.di.InAppBillingProviderModule
-import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
+import com.github.ashutoshgngwr.noice.di.GooglePlayBillingProviderModule
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
+import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchasedFragment
 import com.github.ashutoshgngwr.noice.models.AudioQuality
 import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
@@ -46,7 +44,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
-@UninstallModules(InAppBillingProviderModule::class)
+@UninstallModules(GooglePlayBillingProviderModule::class)
 class MainActivityTest {
 
   @get:Rule
@@ -178,7 +176,7 @@ class MainActivityTest {
   fun subscriptionBillingCallbackIntent() {
     Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
       .setAction(Intent.ACTION_VIEW)
-      .setData(Uri.parse(SubscriptionBillingCallbackFragment.CANCEL_URI))
+      .setData(Uri.parse(SubscriptionPurchasedFragment.CANCEL_URI))
       .let { launch<MainActivity>(it) }
       .onActivity { activity ->
         val navController = activity.findNavController(R.id.main_nav_host_fragment)

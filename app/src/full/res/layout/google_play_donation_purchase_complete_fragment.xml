@@ -7,7 +7,7 @@
 
     <variable
       name="viewModel"
-      type="com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackViewModel" />
+      type="com.github.ashutoshgngwr.noice.billing.GooglePlayDonationPurchaseCompleteViewModel" />
 
   </data>
 
@@ -20,7 +20,7 @@
     <include
       layout="@layout/simple_progress_layout"
       app:isVisible="@{viewModel.isLoading}"
-      app:message="@{@string/confirming_payment}"
+      app:message="@{@string/processing_payment}"
       tools:visibility="gone" />
 
     <LinearLayout
@@ -29,34 +29,20 @@
       android:orientation="vertical"
       app:isVisible="@{!viewModel.isLoading}">
 
-      <FrameLayout
+      <TextView
+        style="@style/Widget.App.TextView.Message.Success"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:isVisible="@{!viewModel.wasCancelled}">
-
-        <TextView
-          style="@style/Widget.App.TextView.Message.Success"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="@string/subscription_payment_complete"
-          app:isVisible="@{viewModel.error == null}" />
-
-        <TextView
-          style="@style/Widget.App.TextView.Message.Error"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="@string/subscription_payment_confirmation_failed"
-          app:isVisible="@{viewModel.error != null}"
-          tools:visibility="gone" />
-
-      </FrameLayout>
+        android:text="@string/support_development__donate_thank_you_description"
+        app:isVisible="@{viewModel.error == null}"
+        tools:visibility="visible" />
 
       <TextView
+        style="@style/Widget.App.TextView.Message.Error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/subscription_payment_cancelled"
-        android:textAppearance="?attr/textAppearanceBodyMedium"
-        app:isVisible="@{viewModel.wasCancelled}"
+        android:text="@string/payment_processing_error"
+        app:isVisible="@{viewModel.error != null}"
         tools:visibility="gone" />
 
       <Space
@@ -64,7 +50,7 @@
         android:layout_height="16dp" />
 
       <Button
-        android:id="@+id/okay"
+        android:id="@+id/dismiss"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"

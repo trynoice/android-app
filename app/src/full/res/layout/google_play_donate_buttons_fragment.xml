@@ -7,11 +7,11 @@
 
     <variable
       name="viewModel"
-      type="com.github.ashutoshgngwr.noice.fragment.InAppDonationViewModel" />
+      type="com.github.ashutoshgngwr.noice.billing.GooglePlayDonateButtonsViewModel" />
 
     <variable
-      name="productSelectedListener"
-      type="com.github.ashutoshgngwr.noice.fragment.OnProductSelectedListener" />
+      name="donateButtonClickListener"
+      type="com.github.ashutoshgngwr.noice.billing.GooglePlayDonateButtonClickListener" />
 
   </data>
 
@@ -65,7 +65,7 @@
         app:flexWrap="wrap"
         app:isVisible="@{viewModel.error == null}"
         app:justifyContent="space_evenly"
-        app:onProductSelected="@{productSelectedListener}" />
+        app:donateButtonClickListener="@{donateButtonClickListener}" />
 
     </LinearLayout>
 

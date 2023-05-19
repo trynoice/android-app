@@ -148,7 +148,6 @@
     <string name="cancel_subscription">Zrušit předplatné</string>
     <string name="ended_on">Skončil dne %1$s</string>
     <string name="update_details">Aktualizovat podrobnosti</string>
-    <string name="subscription_payment_cancelled">Platba předplatného byla zrušena!</string>
     <string name="monthly_price">%1$s měsíčně</string>
     <string name="back_online">Zpět online</string>
     <string name="signing_in">Přihlašování</string>

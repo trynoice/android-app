@@ -7,7 +7,7 @@
 
     <variable
       name="viewModel"
-      type="com.github.ashutoshgngwr.noice.fragment.DonationPurchaseCallbackViewModel" />
+      type="com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackViewModel" />
 
   </data>
 
@@ -20,7 +20,7 @@
     <include
       layout="@layout/simple_progress_layout"
       app:isVisible="@{viewModel.isLoading}"
-      app:message="@{@string/processing_payment}"
+      app:message="@{@string/confirming_payment}"
       tools:visibility="gone" />
 
     <LinearLayout
@@ -33,15 +33,14 @@
         style="@style/Widget.App.TextView.Message.Success"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/support_development__donate_thank_you_description"
-        app:isVisible="@{viewModel.error == null}"
-        tools:visibility="visible" />
+        android:text="@string/subscription_payment_complete"
+        app:isVisible="@{viewModel.error == null}" />
 
       <TextView
         style="@style/Widget.App.TextView.Message.Error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/payment_processing_error"
+        android:text="@string/subscription_payment_confirmation_failed"
         app:isVisible="@{viewModel.error != null}"
         tools:visibility="gone" />
 
@@ -50,7 +49,8 @@
         android:layout_height="16dp" />
 
       <Button
-        android:id="@+id/dismiss"
+        android:id="@+id/okay"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"

@@ -188,7 +188,6 @@
     <string name="user_already_subscribed">Sei già abbonato.</string>
     <string name="initialising_subscription">Inizializzando abbonamento</string>
     <string name="subscription_payment_complete">Congratulazioni! Il tuo abbonamento Noice Premium è ora attivo e pronto per migliorare la tua esperienza di ascolto.</string>
-    <string name="subscription_payment_cancelled">Il pagamento dell\'abbonamento è stato annullato!</string>
     <string name="subscription_purchases">Acquisti di abbonamenti</string>
     <string name="renews_on">Rinnova il %1$s</string>
     <string name="ends_on">Termina il %1$s</string>

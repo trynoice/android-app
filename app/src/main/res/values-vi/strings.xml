@@ -208,7 +208,6 @@
     <string name="bi_yearly">Mỗi hai năm</string>
     <string name="email">Email</string>
     <string name="sign_in_email_sent">Chúng tôi đã gửi liên kết đăng nhập qua mail \"%1$s\" nếu địa chỉ này thuộc về tài khoản đã dăng ký.</string>
-    <string name="subscription_payment_cancelled">Đã huỷ thanh toán cho gói đăng ký!</string>
     <string name="cancel_subscription_error">Chúng tôi không thể huỷ gói đăng ký của bạn. %1$s Hãy thử lại!</string>
     <string name="duplicate_email_error">Email đã nhập đang được sử dụng cho một tài khoản khác.</string>
     <string name="account_details_update_success">Cập nhật chi tiết tài khoản thành công.</string>
