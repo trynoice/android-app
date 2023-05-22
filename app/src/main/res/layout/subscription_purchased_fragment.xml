@@ -7,7 +7,7 @@
 
     <variable
       name="viewModel"
-      type="com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackViewModel" />
+      type="com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchasedViewModel" />
 
   </data>
 

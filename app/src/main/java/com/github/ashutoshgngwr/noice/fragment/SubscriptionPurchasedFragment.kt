@@ -32,7 +32,7 @@ import javax.inject.Inject
 class SubscriptionPurchasedFragment : BottomSheetDialogFragment() {
 
   private lateinit var binding: SubscriptionPurchasedFragmentBinding
-  private val viewModel: SubscriptionBillingCallbackViewModel by viewModels()
+  private val viewModel: SubscriptionPurchasedViewModel by viewModels()
   private val mainNavController: NavController by lazy {
     Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
   }
@@ -54,7 +54,7 @@ class SubscriptionPurchasedFragment : BottomSheetDialogFragment() {
 }
 
 @HiltViewModel
-class SubscriptionBillingCallbackViewModel @Inject constructor(
+class SubscriptionPurchasedViewModel @Inject constructor(
   private val subscriptionRepository: SubscriptionRepository,
   savedStateHandle: SavedStateHandle,
 ) : ViewModel() {

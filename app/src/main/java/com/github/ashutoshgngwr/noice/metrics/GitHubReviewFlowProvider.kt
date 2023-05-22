@@ -46,12 +46,7 @@ class GitHubReviewFlowProvider : ReviewFlowProvider {
       neutralButton(R.string.never) { markReviewFlowCompleted(activity) }
       positiveButton(R.string.okay) {
         markReviewFlowCompleted(activity)
-        startActivity(
-          Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(getString(R.string.app_github_url))
-          )
-        )
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.app_github_url))))
       }
     }
   }
