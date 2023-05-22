@@ -28,18 +28,20 @@ class PlayStoreReviewFlowProviderTest {
   private lateinit var fragmentActivity: FragmentActivity
   private lateinit var fakeReviewManager: ReviewManager
   private lateinit var mockPrefs: SharedPreferences
+  private lateinit var provider: PlayStoreReviewFlowProvider
 
   @Before
   fun setup() {
-    fragmentActivity = Robolectric.buildActivity(FragmentActivity::class.java).setup().get()
-    fakeReviewManager = FakeReviewManager(fragmentActivity)
-    mockPrefs = mockk(relaxed = true)
-
     mockkStatic(PreferenceManager::class)
     mockkStatic(ReviewManagerFactory::class)
+
+    fragmentActivity = Robolectric.buildActivity(FragmentActivity::class.java).setup().get()
+    fakeReviewManager = FakeReviewManager(fragmentActivity)
+    provider = PlayStoreReviewFlowProvider()
+    mockPrefs = mockk(relaxed = true)
     every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
     every { ReviewManagerFactory.create(any()) } returns fakeReviewManager
-    PlayStoreReviewFlowProvider.init(fragmentActivity)
+    provider.init(fragmentActivity)
     ShadowLooper.idleMainLooper() // to let the fake review manager return its ReviewInfo object
   }
 
@@ -56,7 +58,7 @@ class PlayStoreReviewFlowProviderTest {
     }
 
     // try to show review flow for the first time, should work
-    PlayStoreReviewFlowProvider.maybeAskForReview(fragmentActivity)
+    provider.maybeAskForReview(fragmentActivity)
     ShadowLooper.idleMainLooper()
 
     // should update the last shown timestamp in shared preferences
@@ -78,7 +80,7 @@ class PlayStoreReviewFlowProviderTest {
     } returns System.currentTimeMillis()
 
     // try to show review flow again, should not work since it was shown less than a week ago
-    PlayStoreReviewFlowProvider.maybeAskForReview(fragmentActivity)
+    provider.maybeAskForReview(fragmentActivity)
 
     // should call launchReviewFlow on reviewManager. since FakeReviewManager is supposed to invoke
     // success listener if launchReviewFlow was invoked, the timestamp will change

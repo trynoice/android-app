@@ -251,9 +251,11 @@ class MainActivity : AppCompatActivity(), SubscriptionBillingProvider.Listener {
   }
 
   override fun onSubscriptionPurchasePending(subscriptionId: Long) {
-    SnackBar.info(binding.mainNavHostFragment, R.string.payment_pending)
-      .setAnchorView(findSnackBarAnchorView())
-      .show()
+    DialogFragment.show(supportFragmentManager) {
+      title(R.string.processing_payment)
+      message(R.string.payment_pending)
+      positiveButton(R.string.okay)
+    }
   }
 
   override fun onSubscriptionPurchaseComplete(subscriptionId: Long) {

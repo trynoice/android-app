@@ -25,14 +25,16 @@ class GitHubReviewFlowProviderTest {
 
   private lateinit var fragmentActivity: FragmentActivity
   private lateinit var mockPrefs: SharedPreferences
+  private lateinit var provider: GitHubReviewFlowProvider
 
   @Before
   fun setup() {
-    fragmentActivity = Robolectric.buildActivity(FragmentActivity::class.java).setup().get()
-    mockPrefs = mockk(relaxed = true)
-
     mockkObject(Random.Default)
     mockkStatic(PreferenceManager::class)
+
+    fragmentActivity = Robolectric.buildActivity(FragmentActivity::class.java).setup().get()
+    provider = GitHubReviewFlowProvider()
+    mockPrefs = mockk(relaxed = true)
     every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
   }
 
@@ -48,7 +50,7 @@ class GitHubReviewFlowProviderTest {
       mockPrefs.getBoolean(GitHubReviewFlowProvider.PREF_FLOW_SUCCESSFULLY_COMPLETED, any())
     } returns false
 
-    GitHubReviewFlowProvider.maybeAskForReview(fragmentActivity)
+    provider.maybeAskForReview(fragmentActivity)
 
     // dialog fragment should not be shown
     assertEquals(0, fragmentActivity.supportFragmentManager.fragments.size)
@@ -61,7 +63,7 @@ class GitHubReviewFlowProviderTest {
       mockPrefs.getBoolean(GitHubReviewFlowProvider.PREF_FLOW_SUCCESSFULLY_COMPLETED, any())
     } returns false
 
-    GitHubReviewFlowProvider.maybeAskForReview(fragmentActivity)
+    provider.maybeAskForReview(fragmentActivity)
     ShadowLooper.idleMainLooper()
 
     // dialog fragment should be shown
@@ -79,7 +81,7 @@ class GitHubReviewFlowProviderTest {
       putBoolean(GitHubReviewFlowProvider.PREF_FLOW_SUCCESSFULLY_COMPLETED, true)
     }
 
-    GitHubReviewFlowProvider.maybeAskForReview(fragmentActivity)
+    provider.maybeAskForReview(fragmentActivity)
 
     // dialog fragment should not be shown
     assertEquals(0, fragmentActivity.supportFragmentManager.fragments.size)
