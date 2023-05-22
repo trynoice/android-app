@@ -21,4 +21,5 @@
     <string name="in_app_feedback__title">ଏକ ସମୀକ୍ଷା ଦାଖଲ କରନ୍ତୁ</string>
     <string name="later">ପରେ</string>
     <string name="settings">ସେଟିଂ</string>
+    <string name="preset_delete_confirmation">ଆପଣ %1$s ଵିଲୋପ କରିବାକୁ ନିଶ୍ଚିତ ଅଛନ୍ତି ତ\? ଆପଣ ଏହି କୃତ୍ୟଟି ପୂର୍ଵଵତ୍ କରିପାରିବେ ନାହିଁ।</string>
 </resources>
