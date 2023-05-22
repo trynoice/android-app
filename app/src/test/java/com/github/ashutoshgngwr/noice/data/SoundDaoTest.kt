@@ -94,7 +94,7 @@ class SoundDaoTest {
   }
 
   @Test
-  fun saveAndListSound() = runTest {
+  fun saveThenGetSoundAndRemoveAll() = runTest {
     assertNull(soundDao.get("test-2"))
 
     val group = SoundGroupDto("test-group-1", "Test Group 1")
@@ -114,6 +114,11 @@ class SoundDaoTest {
     assertNotNull(sound)
     assertEquals(metadata1, sound?.info?.metadata)
     assertEquals(segments, sound?.segments)
+
+    soundDao.removeAll()
+    assertNull(soundDao.get(metadata1.id))
+    assertEquals(0, soundDao.listInfo().size)
+    assertEquals(0, soundDao.listTags().size)
   }
 
   @Test

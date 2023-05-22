@@ -56,4 +56,32 @@ abstract class SoundDao {
 
   @Query("SELECT COUNT(*) FROM sound_metadata WHERE isPremium = 1")
   abstract suspend fun countPremium(): Int
+
+  @Transaction
+  open suspend fun removeAll() {
+    removeTagMappings()
+    removeTags()
+    removeSources()
+    removeSegments()
+    removeMetadata()
+    removeGroups()
+  }
+
+  @Query("DELETE FROM sounds_tags")
+  protected abstract suspend fun removeTagMappings()
+
+  @Query("DELETE FROM sound_tag")
+  protected abstract suspend fun removeTags()
+
+  @Query("DELETE FROM sound_source")
+  protected abstract suspend fun removeSources()
+
+  @Query("DELETE FROM sound_segment")
+  protected abstract suspend fun removeSegments()
+
+  @Query("DELETE FROM sound_metadata")
+  protected abstract suspend fun removeMetadata()
+
+  @Query("DELETE FROM sound_group")
+  protected abstract suspend fun removeGroups()
 }
