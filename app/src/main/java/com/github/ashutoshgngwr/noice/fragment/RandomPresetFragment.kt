@@ -44,7 +44,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
   private val viewModel: RandomPresetViewModel by viewModels()
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   @set:Inject
   internal lateinit var reviewFlowProvider: ReviewFlowProvider
@@ -111,7 +111,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
     }
 
     binding.cancelButton.setOnClickListener { dismiss() }
-    analyticsProvider.setCurrentScreen("random_preset", RandomPresetFragment::class)
+    analyticsProvider?.setCurrentScreen("random_preset", RandomPresetFragment::class)
   }
 
   private fun ChipGroup.getSelectedChips(): List<Chip> {

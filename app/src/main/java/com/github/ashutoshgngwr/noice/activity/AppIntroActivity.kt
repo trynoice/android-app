@@ -38,7 +38,7 @@ class AppIntroActivity : AppIntro() {
   }
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -114,7 +114,7 @@ class AppIntroActivity : AppIntro() {
       )
     )
 
-    analyticsProvider.setCurrentScreen("app_intro", AppIntroActivity::class)
+    analyticsProvider?.setCurrentScreen("app_intro", AppIntroActivity::class)
   }
 
   override fun onSkipPressed(currentFragment: Fragment?) {
@@ -131,6 +131,6 @@ class AppIntroActivity : AppIntro() {
     }
 
     finish()
-    analyticsProvider.logEvent("app_intro_complete", bundleOf("success" to !isSkipped))
+    analyticsProvider?.logEvent("app_intro_complete", bundleOf("success" to !isSkipped))
   }
 }

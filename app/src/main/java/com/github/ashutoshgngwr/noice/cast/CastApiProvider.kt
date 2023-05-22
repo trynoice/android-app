@@ -36,13 +36,13 @@ interface CastApiProvider {
   /**
    * Registers a new [SessionListener]. It is a no-op if [SessionListener] was already registered.
    */
-  fun registerSessionListener(listener: SessionListener)
+  fun addSessionListener(listener: SessionListener)
 
   /**
    * Unregisters a registered [SessionListener]. It is a no-op if [SessionListener] wasn't
    * registered.
    */
-  fun unregisterSessionListener(listener: SessionListener)
+  fun removeSessionListener(listener: SessionListener)
 
   /**
    * Declares a listener interface to listen for cast session callbacks.
@@ -58,26 +58,4 @@ interface CastApiProvider {
      */
     fun onCastSessionEnd()
   }
-}
-
-/**
- * A no-op cast API provider for clients that don't have Google Mobile Services installed.
- */
-object DummyCastApiProvider : CastApiProvider {
-
-  override fun getSoundPlayerFactory(): SoundPlayer.Factory {
-    throw IllegalStateException("getSoundPlayerFactory() must not be invoked on DummyCastApiProvider")
-  }
-
-  override fun getVolumeProvider(): SoundPlaybackMediaSession.RemoteDeviceVolumeProvider {
-    throw IllegalStateException("getVolumeProvider() must not be invoked on DummyCastApiProvider")
-  }
-
-  override fun getReceiverUiManager(): CastReceiverUiManager {
-    throw IllegalStateException("getUiManager() must not be invoked on DummyCastApiProvider")
-  }
-
-  override fun addMenuItem(context: Context, menu: Menu, titleResId: Int) = Unit
-  override fun registerSessionListener(listener: CastApiProvider.SessionListener) = Unit
-  override fun unregisterSessionListener(listener: CastApiProvider.SessionListener) = Unit
 }

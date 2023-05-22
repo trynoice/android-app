@@ -79,7 +79,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
   internal lateinit var soundDownloadCache: Cache
 
   @set:Inject
-  internal lateinit var castApiProvider: CastApiProvider
+  internal var castApiProvider: CastApiProvider? = null
 
   private var castReceiverUiManager: CastReceiverUiManager? = null
   private val handler = Handler(Looper.getMainLooper())
@@ -183,7 +183,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
   override fun onCreate() {
     super.onCreate()
     registerReceiver(becomingNoisyReceiver, IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY))
-    castApiProvider.registerSessionListener(this)
+    castApiProvider?.addSessionListener(this)
 
     lifecycleScope.launch {
       currentPresetFlow.collect { preset ->
@@ -319,7 +319,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
     Log.d(LOG_TAG, "onDestroy: releasing acquired resources")
     soundPlayerManager.stop(true)
     mediaSession.release()
-    castApiProvider.unregisterSessionListener(this)
+    castApiProvider?.removeSessionListener(this)
     unregisterReceiver(becomingNoisyReceiver)
     if (wakeLock.isHeld) {
       wakeLock.release()
@@ -330,6 +330,7 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
 
   override fun onCastSessionBegin() {
     Log.d(LOG_TAG, "onCastSessionBegin: switching playback to remote")
+    val castApiProvider = requireNotNull(castApiProvider)
     castReceiverUiManager = castApiProvider.getReceiverUiManager()
     // only need to set the preset name here as changing the sound player factory will refresh the
     // other ui state implicitly.

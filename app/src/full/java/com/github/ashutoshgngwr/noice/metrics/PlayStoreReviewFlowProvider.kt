@@ -12,16 +12,12 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import java.util.concurrent.TimeUnit
 
 /**
- * [PlaystoreReviewFlowProvider] provides the Google Play Store In-App review flow. The review flow
+ * [PlayStoreReviewFlowProvider] provides the Google Play Store In-App review flow. The review flow
  * will not always be shown. All original quota restrictions apply from the API. Additionally
- * [PlaystoreReviewFlowProvider] drops all request to display review flow within a week of a
+ * [PlayStoreReviewFlowProvider] drops all request to display review flow within a week of a
  * successful launch review flow API call (without guarantees that the flow was shown).
  */
-object PlaystoreReviewFlowProvider : ReviewFlowProvider {
-  private val TAG = this::class.simpleName
-
-  @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-  const val PREF_LAST_SHOWN_ON = "last_shown_on"
+class PlayStoreReviewFlowProvider : ReviewFlowProvider {
 
   private lateinit var reviewManager: ReviewManager
   private lateinit var reviewInfo: ReviewInfo
@@ -33,9 +29,9 @@ object PlaystoreReviewFlowProvider : ReviewFlowProvider {
     reviewManager = ReviewManagerFactory.create(context)
     reviewManager.requestReviewFlow()
       .addOnFailureListener {
-        Log.w(TAG, "review flow request failed!", it)
+        Log.w(LOG_TAG, "review flow request failed!", it)
       }.addOnSuccessListener {
-        Log.d(TAG, "review flow request successful!")
+        Log.d(LOG_TAG, "review flow request successful!")
         reviewInfo = it
       }
   }
@@ -47,21 +43,21 @@ object PlaystoreReviewFlowProvider : ReviewFlowProvider {
    */
   override fun maybeAskForReview(activity: FragmentActivity) {
     if (!this::reviewInfo.isInitialized) {
-      Log.d(TAG, "review info isn't initialized. can not launch review flow!")
+      Log.d(LOG_TAG, "review info isn't initialized. can not launch review flow!")
       return
     }
 
     if (isShownWithinLastWeek(activity)) {
-      Log.d(TAG, "review flow was shown within last week. abandoning request!")
+      Log.d(LOG_TAG, "review flow was shown within last week. abandoning request!")
       return
     }
 
     reviewManager.launchReviewFlow(activity, reviewInfo)
       .addOnFailureListener {
-        Log.w(TAG, "failed to complete review flow!", it)
+        Log.w(LOG_TAG, "failed to complete review flow!", it)
       }
       .addOnSuccessListener {
-        Log.d(TAG, "review flow successfully completed!")
+        Log.d(LOG_TAG, "review flow successfully completed!")
         updateLastSeenTimestamp(activity)
       }
   }
@@ -77,5 +73,12 @@ object PlaystoreReviewFlowProvider : ReviewFlowProvider {
       .getLong(PREF_LAST_SHOWN_ON, 0)
 
     return TimeUnit.DAYS.toMillis(7L) + timestamp > System.currentTimeMillis()
+  }
+
+  companion object {
+    private const val LOG_TAG = "PlayStoreReviewFlowProv"
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    const val PREF_LAST_SHOWN_ON = "last_shown_on"
   }
 }

@@ -3,8 +3,7 @@ package com.github.ashutoshgngwr.noice.di
 import android.content.Context
 import com.github.ashutoshgngwr.noice.AppDispatchers
 import com.github.ashutoshgngwr.noice.cast.CastApiProvider
-import com.github.ashutoshgngwr.noice.cast.DummyCastApiProvider
-import com.github.ashutoshgngwr.noice.cast.RealCastApiProvider
+import com.github.ashutoshgngwr.noice.cast.GmsCastApiProvider
 import com.google.gson.Gson
 import com.trynoice.api.client.NoiceApiClient
 import dagger.Module
@@ -28,20 +27,19 @@ object CastApiProviderModule {
     appDispatchers: AppDispatchers,
     apiClient: NoiceApiClient,
     gson: Gson,
-  ): CastApiProvider {
-    if (isGoogleMobileServiceAvailable(context)) {
-      return RealCastApiProvider(
-        context = context,
-        accessTokenGetter = { callback ->
-          appScope.launch(appDispatchers.main) {
-            val token = apiClient.getAccessToken()
-            callback.invoke(token)
-          }
-        },
-        gson = gson,
-      )
+  ): CastApiProvider? {
+    if (!isGoogleMobileServiceAvailable(context)) {
+      return null
     }
-
-    return DummyCastApiProvider
+    return GmsCastApiProvider(
+      context = context,
+      accessTokenGetter = { callback ->
+        appScope.launch(appDispatchers.main) {
+          val token = apiClient.getAccessToken()
+          callback.invoke(token)
+        }
+      },
+      gson = gson,
+    )
   }
 }

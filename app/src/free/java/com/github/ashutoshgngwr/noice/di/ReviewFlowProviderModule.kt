@@ -14,5 +14,7 @@ object ReviewFlowProviderModule {
 
   @Provides
   @Singleton
-  fun reviewFlowProvider(): ReviewFlowProvider = GitHubReviewFlowProvider
+  fun reviewFlowProvider(): ReviewFlowProvider {
+    return GitHubReviewFlowProvider()
+  }
 }

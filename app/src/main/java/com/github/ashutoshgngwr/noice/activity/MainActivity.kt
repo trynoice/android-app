@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity(), SubscriptionBillingProvider.Listener {
   internal lateinit var reviewFlowProvider: ReviewFlowProvider
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   /**
    * indicates whether the activity was delivered a new intent since it was last resumed.
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity(), SubscriptionBillingProvider.Listener {
 
     SoundDownloadsRefreshWorker.refreshDownloads(this)
     reviewFlowProvider.init(this)
-    analyticsProvider.logEvent("ui_open", bundleOf("theme" to settingsRepository.getAppTheme()))
+    analyticsProvider?.logEvent("ui_open", bundleOf("theme" to settingsRepository.getAppTheme()))
     hasNewIntent = true
     initOfflineIndicator()
     donationFlowProvider.setCallbackFragmentHost(this)

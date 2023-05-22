@@ -22,13 +22,3 @@ interface CrashlyticsProvider {
    */
   fun log(m: String)
 }
-
-/**
- * A no-op crashlytics provider for free (libre) build variant where non-free dependencies are not
- * allowed.
- */
-object DummyCrashlyticsProvider : CrashlyticsProvider {
-  override fun recordException(e: Throwable) = Unit
-  override fun setCollectionEnabled(e: Boolean) = Unit
-  override fun log(m: String) = Unit
-}

@@ -23,7 +23,7 @@ class SupportDevelopmentFragment : Fragment() {
   internal lateinit var donationFlowProvider: DonationFlowProvider
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -46,9 +46,9 @@ class SupportDevelopmentFragment : Fragment() {
         .setText("$text\n\n$playStoreURL\n$fdroidURL")
         .startChooser()
 
-      analyticsProvider.logEvent("share_app_with_friends", bundleOf())
+      analyticsProvider?.logEvent("share_app_with_friends", bundleOf())
     }
 
-    analyticsProvider.setCurrentScreen("support_development", SupportDevelopmentFragment::class)
+    analyticsProvider?.setCurrentScreen("support_development", SupportDevelopmentFragment::class)
   }
 }

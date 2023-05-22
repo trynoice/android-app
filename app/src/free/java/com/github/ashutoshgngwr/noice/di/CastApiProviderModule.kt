@@ -1,7 +1,6 @@
 package com.github.ashutoshgngwr.noice.di
 
 import com.github.ashutoshgngwr.noice.cast.CastApiProvider
-import com.github.ashutoshgngwr.noice.cast.DummyCastApiProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,5 +13,7 @@ object CastApiProviderModule {
 
   @Provides
   @Singleton
-  fun castApiProvider(): CastApiProvider = DummyCastApiProvider
+  fun castApiProvider(): CastApiProvider? {
+    return null
+  }
 }

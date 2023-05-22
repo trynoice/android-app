@@ -66,7 +66,7 @@ class LibraryFragment : Fragment(), SoundViewHolder.ViewController {
   private lateinit var binding: LibraryFragmentBinding
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   @set:Inject
   internal lateinit var reviewFlowProvider: ReviewFlowProvider
@@ -185,7 +185,7 @@ class LibraryFragment : Fragment(), SoundViewHolder.ViewController {
     }
 
     viewModel.loadLibrary()
-    analyticsProvider.setCurrentScreen("library", LibraryFragment::class)
+    analyticsProvider?.setCurrentScreen("library", LibraryFragment::class)
   }
 
   override fun onSoundInfoClicked(soundInfo: SoundInfo) {

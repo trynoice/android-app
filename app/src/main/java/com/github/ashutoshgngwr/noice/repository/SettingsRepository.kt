@@ -25,8 +25,8 @@ import kotlin.time.toDuration
 @Singleton
 class SettingsRepository @Inject constructor(
   @ApplicationContext private val context: Context,
-  private val crashlyticsProvider: CrashlyticsProvider,
-  private val analyticsProvider: AnalyticsProvider,
+  private val crashlyticsProvider: CrashlyticsProvider?,
+  private val analyticsProvider: AnalyticsProvider?,
 ) {
 
   private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -144,8 +144,8 @@ class SettingsRepository @Inject constructor(
    * need to handle their persistence.
    */
   fun setShouldShareUsageData(enabled: Boolean) {
-    crashlyticsProvider.setCollectionEnabled(enabled)
-    analyticsProvider.setCollectionEnabled(enabled)
+    crashlyticsProvider?.setCollectionEnabled(enabled)
+    analyticsProvider?.setCollectionEnabled(enabled)
   }
 
   /**

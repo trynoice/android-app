@@ -255,7 +255,7 @@ class SoundPlaybackServiceTest {
     every { castApiProviderMock.getSoundPlayerFactory() } returns castSoundPlayerFactoryMock
 
     lateinit var castSessionListener: CastApiProvider.SessionListener
-    every { castApiProviderMock.registerSessionListener(any()) } answers {
+    every { castApiProviderMock.addSessionListener(any()) } answers {
       castSessionListener = firstArg()
     }
 
@@ -321,7 +321,7 @@ class SoundPlaybackServiceTest {
   @Test
   fun service_mediaSession() {
     lateinit var castSessionListener: CastApiProvider.SessionListener
-    every { castApiProviderMock.registerSessionListener(any()) } answers {
+    every { castApiProviderMock.addSessionListener(any()) } answers {
       castSessionListener = firstArg()
     }
 

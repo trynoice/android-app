@@ -27,7 +27,7 @@ import javax.inject.Inject
 class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private val mainNavController by lazy {
     Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
@@ -199,7 +199,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    analyticsProvider.setCurrentScreen("about", AboutFragment::class)
+    analyticsProvider?.setCurrentScreen("about", AboutFragment::class)
   }
 
   private fun buildElement(

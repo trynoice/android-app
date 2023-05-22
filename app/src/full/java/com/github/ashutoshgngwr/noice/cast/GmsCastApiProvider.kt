@@ -22,10 +22,10 @@ import com.google.gson.Gson
 import java.util.concurrent.Executors
 
 /**
- * [RealCastApiProvider] wraps all the Google Cast API functionality used by the application
- * for the full build variant.
+ * [GmsCastApiProvider] wraps all the Google Cast API functionality used by the application for the
+ * full build variant.
  */
-class RealCastApiProvider(
+class GmsCastApiProvider(
   context: Context,
   private val accessTokenGetter: AccessTokenGetter,
   private val gson: Gson,
@@ -76,7 +76,7 @@ class RealCastApiProvider(
     return DefaultCastReceiverUiManager(messagingChannel)
   }
 
-  override fun registerSessionListener(listener: CastApiProvider.SessionListener) {
+  override fun addSessionListener(listener: CastApiProvider.SessionListener) {
     // add `castSessionManagerListener` only when the first `CastApiProvider.SessionListener` is
     // registered.
     if (sessionListeners.isEmpty()) {
@@ -86,7 +86,7 @@ class RealCastApiProvider(
     sessionListeners.add(listener)
   }
 
-  override fun unregisterSessionListener(listener: CastApiProvider.SessionListener) {
+  override fun removeSessionListener(listener: CastApiProvider.SessionListener) {
     sessionListeners.remove(listener)
 
     // remove `castSessionManagerListener` when the last `CastApiProvider.SessionListener` is
@@ -143,7 +143,7 @@ class RealCastApiProvider(
   override fun onSessionStartFailed(session: CastSession, error: Int) = Unit
 
   companion object {
-    private const val LOG_TAG = "RealCastApiProvider"
+    private const val LOG_TAG = "GmsCastApiProvider"
   }
 
   fun interface AccessTokenGetter {

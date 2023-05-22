@@ -3,7 +3,7 @@ package com.github.ashutoshgngwr.noice.provider
 import android.content.SharedPreferences
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
-import com.github.ashutoshgngwr.noice.metrics.PlaystoreReviewFlowProvider
+import com.github.ashutoshgngwr.noice.metrics.PlayStoreReviewFlowProvider
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.android.play.core.review.testing.FakeReviewManager
@@ -23,7 +23,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLooper
 
 @RunWith(RobolectricTestRunner::class)
-class PlaystoreReviewFlowProviderTest {
+class PlayStoreReviewFlowProviderTest {
 
   private lateinit var fragmentActivity: FragmentActivity
   private lateinit var fakeReviewManager: ReviewManager
@@ -39,7 +39,7 @@ class PlaystoreReviewFlowProviderTest {
     mockkStatic(ReviewManagerFactory::class)
     every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
     every { ReviewManagerFactory.create(any()) } returns fakeReviewManager
-    PlaystoreReviewFlowProvider.init(fragmentActivity)
+    PlayStoreReviewFlowProvider.init(fragmentActivity)
     ShadowLooper.idleMainLooper() // to let the fake review manager return its ReviewInfo object
   }
 
@@ -56,14 +56,14 @@ class PlaystoreReviewFlowProviderTest {
     }
 
     // try to show review flow for the first time, should work
-    PlaystoreReviewFlowProvider.maybeAskForReview(fragmentActivity)
+    PlayStoreReviewFlowProvider.maybeAskForReview(fragmentActivity)
     ShadowLooper.idleMainLooper()
 
     // should update the last shown timestamp in shared preferences
     val timestampSlot = slot<Long>()
     verify(exactly = 1) {
       mockPrefsEditor.putLong(
-        PlaystoreReviewFlowProvider.PREF_LAST_SHOWN_ON,
+        PlayStoreReviewFlowProvider.PREF_LAST_SHOWN_ON,
         capture(timestampSlot)
       )
     }
@@ -74,11 +74,11 @@ class PlaystoreReviewFlowProviderTest {
   @Test
   fun testMaybeAskForReview_whenShownWithinLastWeek() {
     every {
-      mockPrefs.getLong(PlaystoreReviewFlowProvider.PREF_LAST_SHOWN_ON, any())
+      mockPrefs.getLong(PlayStoreReviewFlowProvider.PREF_LAST_SHOWN_ON, any())
     } returns System.currentTimeMillis()
 
     // try to show review flow again, should not work since it was shown less than a week ago
-    PlaystoreReviewFlowProvider.maybeAskForReview(fragmentActivity)
+    PlayStoreReviewFlowProvider.maybeAskForReview(fragmentActivity)
 
     // should call launchReviewFlow on reviewManager. since FakeReviewManager is supposed to invoke
     // success listener if launchReviewFlow was invoked, the timestamp will change

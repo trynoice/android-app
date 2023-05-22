@@ -19,16 +19,16 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SleepTimerFragment : Fragment() {
 
-  private lateinit var binding: SleepTimerFragmentBinding
-
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   @set:Inject
   internal lateinit var reviewFlowProvider: ReviewFlowProvider
 
   @set:Inject
   internal lateinit var playbackServiceController: SoundPlaybackService.Controller
+
+  private lateinit var binding: SleepTimerFragmentBinding
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = SleepTimerFragmentBinding.inflate(inflater, container, false)
@@ -45,13 +45,13 @@ class SleepTimerFragment : Fragment() {
       binding.durationPicker.setResetButtonEnabled(true)
     }
 
-    analyticsProvider.setCurrentScreen("sleep_timer", SleepTimerFragment::class)
+    analyticsProvider?.setCurrentScreen("sleep_timer", SleepTimerFragment::class)
   }
 
   override fun onDestroyView() {
     val duration = playbackServiceController.getStopScheduleRemainingMillis()
     if (duration > 0) {
-      analyticsProvider.logEvent("sleep_timer_set", bundleOf("duration_ms" to duration))
+      analyticsProvider?.logEvent("sleep_timer_set", bundleOf("duration_ms" to duration))
     }
 
     super.onDestroyView()
@@ -62,14 +62,14 @@ class SleepTimerFragment : Fragment() {
     var enableResetButton = false
     if (duration < 0) { // duration picker reset
       playbackServiceController.clearStopSchedule()
-      analyticsProvider.logEvent("sleep_timer_cancel", bundleOf())
+      analyticsProvider?.logEvent("sleep_timer_cancel", bundleOf())
       showInfoSnackBar(R.string.auto_sleep_schedule_cancelled, snackBarAnchorView())
     } else {
       remaining = playbackServiceController.getStopScheduleRemainingMillis()
       remaining += duration
       playbackServiceController.scheduleStop(remaining)
       enableResetButton = true
-      analyticsProvider.logEvent("sleep_timer_add_duration", bundleOf("duration_ms" to duration))
+      analyticsProvider?.logEvent("sleep_timer_add_duration", bundleOf("duration_ms" to duration))
     }
 
     binding.durationPicker.setResetButtonEnabled(enableResetButton)

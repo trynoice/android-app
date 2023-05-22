@@ -47,10 +47,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
   internal lateinit var presetRepository: PresetRepository
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   @set:Inject
-  internal lateinit var crashlyticsProvider: CrashlyticsProvider
+  internal var crashlyticsProvider: CrashlyticsProvider? = null
 
   private val createDocumentActivityLauncher = registerForActivityResult(
     ActivityResultContracts.CreateDocument("application/json"),
@@ -102,13 +102,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     findPreference<Preference>(R.string.export_presets_key).setOnPreferenceClickListener {
       createDocumentActivityLauncher.launch("noice-saved-presets.json")
-      analyticsProvider.logEvent("presets_export_begin", bundleOf())
+      analyticsProvider?.logEvent("presets_export_begin", bundleOf())
       true
     }
 
     findPreference<Preference>(R.string.import_presets_key).setOnPreferenceClickListener {
       openDocumentActivityLauncher.launch(arrayOf("application/json"))
-      analyticsProvider.logEvent("presets_import_begin", bundleOf())
+      analyticsProvider?.logEvent("presets_import_begin", bundleOf())
       true
     }
 
@@ -120,7 +120,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         positiveButton(R.string.delete) {
           ShortcutManagerCompat.removeAllDynamicShortcuts(requireContext())
           showSuccessSnackBar(R.string.all_app_shortcuts_removed)
-          analyticsProvider.logEvent("preset_shortcut_remove_all", bundleOf())
+          analyticsProvider?.logEvent("preset_shortcut_remove_all", bundleOf())
         }
       }
 
@@ -139,7 +139,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
               settingsRepository.setAppTheme(theme)
               summary = getAppThemeString()
               requireActivity().recreate()
-              analyticsProvider.logEvent("theme_set", bundleOf("theme" to theme))
+              analyticsProvider?.logEvent("theme_set", bundleOf("theme" to theme))
             }
           )
           negativeButton(R.string.cancel)
@@ -178,7 +178,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         true
       }
 
-    analyticsProvider.setCurrentScreen("settings", SettingsFragment::class)
+    analyticsProvider?.setCurrentScreen("settings", SettingsFragment::class)
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -200,8 +200,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
       showSuccessSnackBar(R.string.export_presets_successful)
     } catch (e: Throwable) {
       Log.w(TAG, "failed to export saved presets", e)
-      crashlyticsProvider.log("failed to export saved presets")
-      crashlyticsProvider.recordException(e)
+      crashlyticsProvider?.log("failed to export saved presets")
+      crashlyticsProvider?.recordException(e)
       when (e) {
         is FileNotFoundException,
         is IOException,
@@ -210,7 +210,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         else -> throw e
       }
     } finally {
-      analyticsProvider.logEvent("presets_export_complete", bundleOf("success" to success))
+      analyticsProvider?.logEvent("presets_export_complete", bundleOf("success" to success))
     }
   }
 
@@ -235,21 +235,21 @@ class SettingsFragment : PreferenceFragmentCompat() {
         is IOException,
         is JsonIOException -> {
           showErrorSnackBar(R.string.failed_to_read_file)
-          crashlyticsProvider.log("failed to import saved presets")
-          crashlyticsProvider.recordException(e)
+          crashlyticsProvider?.log("failed to import saved presets")
+          crashlyticsProvider?.recordException(e)
         }
 
         is JsonSyntaxException,
         is IllegalArgumentException -> showErrorSnackBar(R.string.invalid_import_file_format)
 
         else -> {
-          crashlyticsProvider.log("failed to import saved presets")
-          crashlyticsProvider.recordException(e)
+          crashlyticsProvider?.log("failed to import saved presets")
+          crashlyticsProvider?.recordException(e)
           throw e
         }
       }
     } finally {
-      analyticsProvider.logEvent("presets_import_complete", bundleOf("success" to success))
+      analyticsProvider?.logEvent("presets_import_complete", bundleOf("success" to success))
     }
   }
 

@@ -60,7 +60,7 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
   internal lateinit var playbackServiceController: SoundPlaybackService.Controller
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   @set:Inject
   internal lateinit var reviewFlowProvider: ReviewFlowProvider
@@ -97,7 +97,7 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
         .collect(adapter::setActivePresetId)
     }
 
-    analyticsProvider.setCurrentScreen("presets", PresetsFragment::class)
+    analyticsProvider?.setCurrentScreen("presets", PresetsFragment::class)
   }
 
   override fun onPresetPlayToggleClicked(preset: Preset) {
@@ -116,7 +116,7 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
       .setText(url)
       .startChooser()
 
-    analyticsProvider.logEvent("share_preset_uri", bundleOf("item_length" to url.length))
+    analyticsProvider?.logEvent("share_preset_uri", bundleOf("item_length" to url.length))
   }
 
   override fun onPresetDeleteClicked(preset: Preset) {
@@ -139,7 +139,7 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
         reviewFlowProvider.maybeAskForReview(requireActivity()) // maybe show in-app review dialog to the user
       }
 
-      onDismiss { analyticsProvider.logEvent("preset_delete", params) }
+      onDismiss { analyticsProvider?.logEvent("preset_delete", params) }
     }
   }
 
@@ -184,7 +184,7 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
     }
 
     val params = bundleOf("success" to result, "shortcut_type" to "pinned")
-    analyticsProvider.logEvent("preset_shortcut_create", params)
+    analyticsProvider?.logEvent("preset_shortcut_create", params)
   }
 
   override fun onPresetCreateAppShortcutClicked(preset: Preset) {
@@ -199,14 +199,14 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
 
     viewModel.refreshAppShortcuts(requireContext())
     val params = bundleOf("success" to result, "shortcut_type" to "app")
-    analyticsProvider.logEvent("preset_shortcut_create", params)
+    analyticsProvider?.logEvent("preset_shortcut_create", params)
   }
 
   override fun onPresetRemoveAppShortcutClicked(preset: Preset) {
     ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
     showSuccessSnackBar(R.string.app_shortcut_removed, snackBarAnchorView())
     viewModel.refreshAppShortcuts(requireContext())
-    analyticsProvider.logEvent("preset_shortcut_remove", bundleOf("shortcut_type" to "app"))
+    analyticsProvider?.logEvent("preset_shortcut_remove", bundleOf("shortcut_type" to "app"))
   }
 
   private fun buildShortcutInfo(id: String, type: String, preset: Preset): ShortcutInfoCompat {

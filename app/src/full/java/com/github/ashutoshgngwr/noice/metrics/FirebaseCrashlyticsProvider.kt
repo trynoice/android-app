@@ -4,9 +4,9 @@ import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 
 /**
- * [RealCrashlyticsProvider] provides a real concrete implementation of Crashlytics API.
+ * [FirebaseCrashlyticsProvider] provides a real concrete implementation of Crashlytics API.
  */
-object RealCrashlyticsProvider : CrashlyticsProvider {
+class FirebaseCrashlyticsProvider : CrashlyticsProvider {
 
   private val fc = Firebase.crashlytics
 

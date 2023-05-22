@@ -29,7 +29,7 @@ class PresetShortcutHandlerActivity : AppCompatActivity() {
   }
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   @set:Inject
   internal lateinit var presetRepository: PresetRepository
@@ -69,7 +69,7 @@ class PresetShortcutHandlerActivity : AppCompatActivity() {
       }
 
       finish()
-      analyticsProvider.logEvent("preset_shortcut_open", params)
+      analyticsProvider?.logEvent("preset_shortcut_open", params)
     }
   }
 

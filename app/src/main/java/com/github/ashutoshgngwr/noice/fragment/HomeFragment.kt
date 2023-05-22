@@ -46,7 +46,7 @@ class HomeFragment : Fragment(), MenuProvider, NavController.OnDestinationChange
   internal lateinit var settingsRepository: SettingsRepository
 
   @set:Inject
-  internal lateinit var castApiProvider: CastApiProvider
+  internal var castApiProvider: CastApiProvider? = null
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = HomeFragmentBinding.inflate(inflater, container, false)
@@ -83,7 +83,7 @@ class HomeFragment : Fragment(), MenuProvider, NavController.OnDestinationChange
   }
 
   override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-    castApiProvider.addMenuItem(requireContext(), menu, R.string.cast_media)
+    castApiProvider?.addMenuItem(requireContext(), menu, R.string.cast_media)
   }
 
   override fun onMenuItemSelected(menuItem: MenuItem): Boolean {

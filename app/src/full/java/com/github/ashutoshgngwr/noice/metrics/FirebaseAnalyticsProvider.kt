@@ -9,9 +9,9 @@ import com.google.firebase.ktx.Firebase
 import kotlin.reflect.KClass
 
 /**
- * [RealAnalyticsProvider] provides a real concrete implementation of the Firebase Analytics API.
+ * [FirebaseAnalyticsProvider] provides a real concrete implementation of the Firebase Analytics API.
  */
-object RealAnalyticsProvider : AnalyticsProvider {
+class FirebaseAnalyticsProvider : AnalyticsProvider {
 
   private val fa = Firebase.analytics
   private val playerStartTimes = mutableMapOf<String, Long>()

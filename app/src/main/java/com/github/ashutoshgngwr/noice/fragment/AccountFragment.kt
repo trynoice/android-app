@@ -47,7 +47,7 @@ import javax.inject.Inject
 class AccountFragment : Fragment() {
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private lateinit var binding: AccountFragmentBinding
   private val viewModel: AccountViewModel by viewModels()
@@ -100,7 +100,7 @@ class AccountFragment : Fragment() {
             .toString()
             .also { item.context.startCustomTab(it) }
 
-          analyticsProvider.logEvent("issue_tracker_open", bundleOf())
+          analyticsProvider?.logEvent("issue_tracker_open", bundleOf())
         }
 
         R.id.submit_feedback -> {
@@ -113,7 +113,7 @@ class AccountFragment : Fragment() {
             .toString()
             .also { item.context.startCustomTab(it) }
 
-          analyticsProvider.logEvent("feedback_form_open", bundleOf())
+          analyticsProvider?.logEvent("feedback_form_open", bundleOf())
         }
 
         R.id.privacy_policy -> item.context.startCustomTab(R.string.app_privacy_policy_url)
