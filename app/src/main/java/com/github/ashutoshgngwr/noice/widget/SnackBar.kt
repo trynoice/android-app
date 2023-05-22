@@ -16,7 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 object SnackBar {
 
   /**
-   * Builds a [Snackbar] with [R.drawable.ic_outline_info_24] icon and default [Snackbar] style.
+   * Builds a [Snackbar] with [R.drawable.round_info_outline_24] icon and default [Snackbar] style.
    */
   fun info(
     view: View,
@@ -27,7 +27,7 @@ object SnackBar {
   }
 
   /**
-   * Builds a [Snackbar] with [R.drawable.ic_outline_info_24] icon and default [Snackbar] style.
+   * Builds a [Snackbar] with [R.drawable.round_info_outline_24] icon and default [Snackbar] style.
    */
   fun info(
     view: View,
@@ -44,7 +44,7 @@ object SnackBar {
   }
 
   /**
-   * Builds a [Snackbar] with [R.drawable.ic_baseline_check_circle_24] icon and
+   * Builds a [Snackbar] with [R.drawable.round_check_circle_24] icon and
    * [R.style.Widget_App_Snackbar_Success] style.
    */
   fun success(
@@ -56,7 +56,7 @@ object SnackBar {
   }
 
   /**
-   * Builds a [Snackbar] with [R.drawable.ic_baseline_check_circle_24] icon and
+   * Builds a [Snackbar] with [R.drawable.round_check_circle_24] icon and
    * [R.style.Widget_App_Snackbar_Success] style.
    */
   fun success(
@@ -74,7 +74,7 @@ object SnackBar {
   }
 
   /**
-   * Builds a [Snackbar] with [R.drawable.ic_baseline_error_24] icon and
+   * Builds a [Snackbar] with [R.drawable.round_error_24] icon and
    * [R.style.Widget_App_Snackbar_Error] style.
    */
   fun error(
@@ -86,7 +86,7 @@ object SnackBar {
   }
 
   /**
-   * Builds a [Snackbar] with [R.drawable.ic_baseline_error_24] icon and
+   * Builds a [Snackbar] with [R.drawable.round_error_24] icon and
    * [R.style.Widget_App_Snackbar_Error] style.
    */
   fun error(

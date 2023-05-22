@@ -1,7 +1,7 @@
 package com.github.ashutoshgngwr.noice.di
 
-import com.github.ashutoshgngwr.noice.provider.GitHubReviewFlowProvider
-import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
+import com.github.ashutoshgngwr.noice.metrics.GitHubReviewFlowProvider
+import com.github.ashutoshgngwr.noice.metrics.ReviewFlowProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,5 +14,7 @@ object ReviewFlowProviderModule {
 
   @Provides
   @Singleton
-  fun reviewFlowProvider(): ReviewFlowProvider = GitHubReviewFlowProvider
+  fun reviewFlowProvider(): ReviewFlowProvider {
+    return GitHubReviewFlowProvider()
+  }
 }

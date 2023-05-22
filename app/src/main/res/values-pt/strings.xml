@@ -158,7 +158,6 @@
     <string name="confirming_payment">Confirmando pagamento</string>
     <string name="subscription_payment_confirmation_failed">Uh-oh! Tivemos alguns problemas enquanto esperávamos a confirmação do pagamento. Pode ser devido a um erro de rede ou a um atraso do provedor de pagamento. Atualizaremos o status da sua assinatura assim que recebermos uma resposta do provedor. Por favor, verifique o status da sua assinatura depois de algum tempo.</string>
     <string name="subscription_payment_complete">Obrigado por se inscrever no Noice Premium. A sua assinatura agora está ativa.</string>
-    <string name="subscription_payment_cancelled">O pagamento da assinatura foi cancelado!</string>
     <string name="renews_on">Renova em %1$s</string>
     <string name="subscription_purchases">Compras de assinatura</string>
     <string name="started_on">Iniciado em %1$s</string>

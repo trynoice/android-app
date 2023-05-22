@@ -13,10 +13,10 @@ import com.github.ashutoshgngwr.noice.databinding.RandomPresetFragmentBinding
 import com.github.ashutoshgngwr.noice.databinding.RandomPresetTagChipBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.models.SoundTag
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SoundRepository
@@ -44,7 +44,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
   private val viewModel: RandomPresetViewModel by viewModels()
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   @set:Inject
   internal lateinit var reviewFlowProvider: ReviewFlowProvider
@@ -111,7 +111,7 @@ class RandomPresetFragment : BottomSheetDialogFragment() {
     }
 
     binding.cancelButton.setOnClickListener { dismiss() }
-    analyticsProvider.setCurrentScreen("random_preset", RandomPresetFragment::class)
+    analyticsProvider?.setCurrentScreen("random_preset", RandomPresetFragment::class)
   }
 
   private fun ChipGroup.getSelectedChips(): List<Chip> {

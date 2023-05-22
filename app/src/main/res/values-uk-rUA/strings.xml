@@ -189,7 +189,6 @@
     <string name="get_premium">Отримати преміум</string>
     <string name="initialising_subscription">Ініціалізація передплати</string>
     <string name="subscription_payment_complete">Вітаємо! Ваша передплата Noice Premium вже активна і готова поліпшити ваші відчуття від прослуховування.</string>
-    <string name="subscription_payment_cancelled">Оплату передплати скасовано!</string>
     <string name="subscription_purchases">Покупки за передплатою</string>
     <string name="renews_on">Поновлюється %1$s</string>
     <string name="ends_on">Закінчується %1$s</string>

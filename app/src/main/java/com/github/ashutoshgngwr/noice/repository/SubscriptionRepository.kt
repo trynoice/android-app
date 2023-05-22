@@ -12,6 +12,7 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.paging.map
 import androidx.room.withTransaction
+import com.github.ashutoshgngwr.noice.billing.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.data.AppDatabase
 import com.github.ashutoshgngwr.noice.data.models.SubscriptionWithPlanDto
 import com.github.ashutoshgngwr.noice.ext.bindServiceCallbackFlow
@@ -21,7 +22,6 @@ import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
 import com.github.ashutoshgngwr.noice.models.toDomainEntity
 import com.github.ashutoshgngwr.noice.models.toRoomDto
-import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.repository.errors.AlreadySubscribedError
 import com.github.ashutoshgngwr.noice.repository.errors.GiftCardExpiredError
 import com.github.ashutoshgngwr.noice.repository.errors.GiftCardNotFoundError

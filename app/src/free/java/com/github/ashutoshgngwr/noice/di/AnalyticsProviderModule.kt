@@ -1,7 +1,6 @@
 package com.github.ashutoshgngwr.noice.di
 
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.DummyAnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,5 +13,7 @@ object AnalyticsProviderModule {
 
   @Provides
   @Singleton
-  fun analyticsProvider(): AnalyticsProvider = DummyAnalyticsProvider
+  fun analyticsProvider(): AnalyticsProvider? {
+    return null
+  }
 }

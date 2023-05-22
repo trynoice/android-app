@@ -230,7 +230,6 @@
     <string name="notification_channel_missed_alarms__name">アラームの見逃し</string>
     <string name="notification_channel_missed_alarms__description">リマインダーの継続時間が経過した後、スケジュールされたアラームを消音するときに表示される通知です。</string>
     <string name="alarm_missed">アラームが届きませんでした</string>
-    <string name="subscription_payment_cancelled">サブスクリプションの支払いがキャンセルされました!</string>
     <string name="faqs">よくある質問</string>
     <string name="has_premium_segments">Noice Premiumでより多くのオーディオクリップを提供</string>
     <string name="media_sources">メディアソース</string>

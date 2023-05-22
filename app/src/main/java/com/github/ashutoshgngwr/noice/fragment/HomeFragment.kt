@@ -21,8 +21,8 @@ import androidx.navigation.navOptions
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.cast.CastApiProvider
 import com.github.ashutoshgngwr.noice.databinding.HomeFragmentBinding
-import com.github.ashutoshgngwr.noice.provider.CastApiProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -46,7 +46,7 @@ class HomeFragment : Fragment(), MenuProvider, NavController.OnDestinationChange
   internal lateinit var settingsRepository: SettingsRepository
 
   @set:Inject
-  internal lateinit var castApiProvider: CastApiProvider
+  internal var castApiProvider: CastApiProvider? = null
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View {
     binding = HomeFragmentBinding.inflate(inflater, container, false)
@@ -83,7 +83,7 @@ class HomeFragment : Fragment(), MenuProvider, NavController.OnDestinationChange
   }
 
   override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-    castApiProvider.addMenuItem(requireContext(), menu, R.string.cast_media)
+    castApiProvider?.addMenuItem(requireContext(), menu, R.string.cast_media)
   }
 
   override fun onMenuItemSelected(menuItem: MenuItem): Boolean {

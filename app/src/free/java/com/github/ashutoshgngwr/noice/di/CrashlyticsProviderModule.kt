@@ -1,7 +1,6 @@
 package com.github.ashutoshgngwr.noice.di
 
-import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
-import com.github.ashutoshgngwr.noice.provider.DummyCrashlyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.CrashlyticsProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,5 +13,7 @@ object CrashlyticsProviderModule {
 
   @Provides
   @Singleton
-  fun crashlyticsProvider(): CrashlyticsProvider = DummyCrashlyticsProvider
+  fun crashlyticsProvider(): CrashlyticsProvider? {
+    return null
+  }
 }

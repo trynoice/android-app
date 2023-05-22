@@ -205,7 +205,6 @@
     <string name="subscription_initialisation_error">Ups! Kami tidak dapat memulai proses pembayaran. %1$s Silakan coba lagi!</string>
     <string name="processing_payment">Memproses pembayaran</string>
     <string name="sign_in_to_continue">Silakan masuk atau buat akun untuk melanjutkan.</string>
-    <string name="subscription_payment_cancelled">Pembayaran berlangganan dibatalkan!</string>
     <string name="renews_on">Diperbarui pada %1$s</string>
     <string name="started_on">Dimulai pada %1$s</string>
     <string name="ended_on">Berakhir pada %1$s</string>

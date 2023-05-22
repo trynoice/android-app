@@ -14,7 +14,7 @@ import com.github.appintro.AppIntro
 import com.github.appintro.AppIntroPageTransformerType
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.fragment.AppIntroFragment
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -38,7 +38,7 @@ class AppIntroActivity : AppIntro() {
   }
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -114,7 +114,7 @@ class AppIntroActivity : AppIntro() {
       )
     )
 
-    analyticsProvider.setCurrentScreen("app_intro", AppIntroActivity::class)
+    analyticsProvider?.setCurrentScreen("app_intro", AppIntroActivity::class)
   }
 
   override fun onSkipPressed(currentFragment: Fragment?) {
@@ -131,6 +131,6 @@ class AppIntroActivity : AppIntro() {
     }
 
     finish()
-    analyticsProvider.logEvent("app_intro_complete", bundleOf("success" to !isSkipped))
+    analyticsProvider?.logEvent("app_intro_complete", bundleOf("success" to !isSkipped))
   }
 }

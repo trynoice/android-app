@@ -232,7 +232,6 @@
     <string name="gift_card_details">En échangeant cette carte cadeau, vous bénéficierez d\'un abonnement premium jusqu\'à %1$s.</string>
     <string name="third_party_attributions">Attributions à des tiers</string>
     <string name="gift_card_redeem_error">Oh non ! Nous n\'avons pas pu échanger votre carte cadeau. %1$s</string>
-    <string name="subscription_payment_cancelled">Le paiement de l\'abonnement a été annulé !</string>
     <string name="use_material_you_colors_summary">Hériter de la palette de couleurs Material You du système Android</string>
     <string name="gift_card_load_error">Oups ! Nous n\'avons pas pu récupérer la carte cadeau. %1$s</string>
     <string name="redeemed_using_code">Remboursé en utilisant « %1$s »</string>

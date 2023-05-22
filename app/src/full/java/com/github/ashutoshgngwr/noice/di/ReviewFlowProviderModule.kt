@@ -1,9 +1,9 @@
 package com.github.ashutoshgngwr.noice.di
 
 import android.content.Context
-import com.github.ashutoshgngwr.noice.provider.GitHubReviewFlowProvider
-import com.github.ashutoshgngwr.noice.provider.PlaystoreReviewFlowProvider
-import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
+import com.github.ashutoshgngwr.noice.metrics.GitHubReviewFlowProvider
+import com.github.ashutoshgngwr.noice.metrics.PlayStoreReviewFlowProvider
+import com.github.ashutoshgngwr.noice.metrics.ReviewFlowProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,9 +19,8 @@ object ReviewFlowProviderModule {
   @Singleton
   fun reviewFlowProvider(@ApplicationContext context: Context): ReviewFlowProvider {
     if (isGoogleMobileServiceAvailable(context)) {
-      return PlaystoreReviewFlowProvider
+      return PlayStoreReviewFlowProvider()
     }
-
-    return GitHubReviewFlowProvider
+    return GitHubReviewFlowProvider()
   }
 }

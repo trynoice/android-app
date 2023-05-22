@@ -195,15 +195,10 @@
   </dialog>
 
   <dialog
-    android:id="@+id/subscription_billing_callback"
-    android:name="com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment"
+    android:id="@+id/subscription_purchased"
+    android:name="com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchasedFragment"
     android:label="@string/confirming_payment"
-    tools:layout="@layout/subscription_billing_callback_fragment">
-
-    <argument
-      android:name="action"
-      app:argType="string"
-      app:nullable="false" />
+    tools:layout="@layout/subscription_purchased_fragment">
 
     <argument
       android:name="subscriptionId"
@@ -331,19 +326,6 @@
     android:name="com.github.ashutoshgngwr.noice.fragment.SupportDevelopmentFragment"
     android:label="@string/support_development"
     tools:layout="@layout/support_development_fragment" />
-
-  <dialog
-    android:id="@+id/donation_purchased_callback"
-    android:name="com.github.ashutoshgngwr.noice.fragment.DonationPurchasedCallbackFragment"
-    android:label="@string/processing_payment"
-    tools:layout="@layout/donation_purchased_callback_fragment">
-
-    <argument
-      android:name="purchase"
-      app:argType="com.github.ashutoshgngwr.noice.provider.InAppBillingProvider$Purchase"
-      app:nullable="false" />
-
-  </dialog>
 
   <activity
     android:id="@+id/help"
