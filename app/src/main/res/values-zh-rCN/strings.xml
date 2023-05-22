@@ -318,4 +318,10 @@
     <string name="hd_audio">高音质</string>
     <string name="offline_playback">离线回放</string>
     <string name="more_sounds_desc">使用Noice Premium释放您的放松和专注体验的全部潜力-带有%1$s的额外声音。</string>
+    <string name="whats_new">新版特性</string>
+    <string name="blog">博客</string>
+    <string name="resources">资源</string>
+    <string name="about_linkedin">在领英上关注我们</string>
+    <string name="now_playing">正在播放</string>
+    <string name="about_github">在GitHub加星</string>
 </resources>

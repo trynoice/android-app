@@ -28,7 +28,7 @@
     <string name="app_theme_system_default">Predefinito del sistema</string>
     <string name="app_description">Concentrati, medita e rilassati con un rumore calmante naturale.</string>
     <string name="notification_channel_default__description">Controlli di riproduzione</string>
-    <string name="notification_channel_default__name">Riproduzione dei media</string>
+    <string name="notification_channel_default__name">Riproduzione dei suoni</string>
     <string name="okay">Va bene</string>
     <string name="intensity">Intensità</string>
     <string name="submit_feedback">Invia feedback</string>
@@ -321,4 +321,11 @@
     <string name="offline_playback_desc">Goditi suoni rilassanti sempre e ovunque, con i download audio offline di Noice - non è richiesta alcuna connessione internet.</string>
     <string name="unlimited_alarms">Sveglie infinite</string>
     <string name="unlimited_alarms_desc">Migliora la tua routine mattutina con Noice Premium - pianifica un numero illimitato di svelgie per un inizio di giornata personalizzato e tranquillo.</string>
+    <string name="whats_new">Novità</string>
+    <string name="blog">Blog</string>
+    <string name="resources">Risorse</string>
+    <string name="about_linkedin">Seguici su LinkedIn</string>
+    <string name="search_preset">Cerca preimpostazioni</string>
+    <string name="about_github">Mettici una stella su GitHub</string>
+    <string name="now_playing">In riproduzione</string>
 </resources>

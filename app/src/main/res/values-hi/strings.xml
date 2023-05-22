@@ -320,4 +320,10 @@
     <string name="hd_audio_desc">320 केबीपीएस तक अपनी ध्वनि की गुणवत्ता को समायोजित करने की क्षमता के साथ पहले से अलग शोर का अनुभव करें, जिसके परिणामस्वरूप क्रिस्टल-स्पष्ट, उच्च-निष्ठा ध्वनि होती है।</string>
     <string name="offline_playback_desc">ऑफ़लाइन प्लेबैक किसी भी समय, कहीं भी सुखदायक ध्वनियों का आनंद लें, नोइस के ऑफ़लाइन ध्वनि डाउनलोड के साथ - कोई इंटरनेट कनेक्शन की आवश्यकता नहीं है।</string>
     <string name="search_preset">प्रीसेट खोजें</string>
+    <string name="whats_new">नया क्या है</string>
+    <string name="blog">ब्लॉग</string>
+    <string name="resources">संसाधन</string>
+    <string name="about_linkedin">लिंक्डइन पर हमें फॉलो करें</string>
+    <string name="now_playing">अभी चल रहा है</string>
+    <string name="about_github">हमें गिटहब पर स्टार करें</string>
 </resources>

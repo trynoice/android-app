@@ -1,34 +1,57 @@
-Bagi banyak orang, sedikit kebisingan latar belakang berguna untuk menenangkan diri dan fokus. Kebisingan latar belakang dapat membantu meminimalkan efek stres. Dalam beberapa kasus, ini juga meningkatkan produktivitas. Ini juga membantu orang dalam menutupi tinnitus mereka.
+Bagi banyak orang, sedikit kebisingan latar belakang yang seragam sangat membantu untuk tetap tenang dan fokus. Dalam beberapa kasus, hal ini juga meningkatkan produktivitas dan menurunkan efek stres dan kecemasan. Kebisingan latar belakang juga menutupi tinitus, menenangkan bayi yang gelisah, dan meningkatkan pengalaman membaca dan meditasi.
 
-Noice adalah aplikasi yang memungkinkan Anda membuat suasana yang disesuaikan menggunakan klip dari sumber kebisingan lingkungan. Ciptakan lingkungan yang sempurna dengan menggabungkan suara yang berbeda untuk menghilangkan gangguan sehingga Anda dapat fokus pada pekerjaan Anda atau menghasilkan lingkungan yang damai untuk relaksasi.
+Noice adalah aplikasi yang memungkinkan Anda menciptakan lingkungan suara yang dipersonalisasi. Aplikasi ini memungkinkan Anda untuk menggabungkan suara yang berbeda pada tingkat volume yang berbeda untuk menciptakan suasana sekitar yang sempurna. Lingkungan suara khusus ini memungkinkan Anda menenggelamkan gangguan dan memungkinkan Anda untuk berkonsentrasi. Anda juga dapat menggunakannya untuk menghasilkan aura yang tenang dan damai yang mendorong Anda untuk rileks dan tertidur.
 
-<b>Fitur</b> 
-- 35 suara yang direkam 
-- Google Cast (Chromecast) diaktifkan (hanya di Play Store) 
-- Pengatur waktu tidur otomatis 
-- Jam Alarm 
-- Hasilkan campuran acak 
-- Buat campuran yang disesuaikan 
-- Simpan campuran favorit Anda 
-- Mainkan bersama pemutar musik lainnya 
-- Kontrol volume individu untuk setiap sumber kebisingan 
-- Pemutaran offline 
-- Varian tema aplikasi terang dan gelap 
+<b>MANFAAT</b>
+- Mengurangi stres dan kecemasan Anda dengan menggunakan suasana yang dipersonalisasi
+- Bersantai dan melepas lelah di lingkungan yang menenangkan pilihan Anda
+- Meningkatkan produktivitas Anda dengan mengganti suara bising yang mengganggu
+- Meningkatkan konsentrasi dengan berada dalam suasana yang konsisten
+- Membantu pengalaman membaca dan meditasi Anda dengan suara-suara alami
+- Tenangkan bayi Anda menggunakan suara yang menenangkan
+- Menutupi tinitus Anda dengan suara yang meredakan kebisingan
+- Memblokir gangguan untuk berbaring dan tertidur
+- Mulailah hari-hari Anda dengan suara alam yang lebih lembut dengan alarm yang penuh perhatian
+- Meredakan migrain dan sakit kepala Anda
 
-<b>Perpustakaan Noice</b> 
-- Set kehidupan (burung, jangkrik, serigala, detak jantung manusia, dll.) 
-- Set hutan (api unggun, malam, angin, pohon palem, dll.) 
-- Set monsun (hujan, guntur) 
-- Set Teleportasi (kedai kopi, perpustakaan, kantor, tepi laut, tepi sungai, dll.) 
-- Set kendaraan (kereta bergerak, dalam penerbangan, kapal berderit, mobil listrik, dll.) 
-- Mentahan noice (putih, merah muda, kecoklatan) 
+<b>FITUR GRATIS</b>
+- Perpustakaan suara yang kaya
+- Google Cast atau Chromecast diaktifkan*.
+- Pengatur waktu tidur otomatis
+- Jam Alarm dengan hingga 2 alarm aktif
+- Buat dan simpan campuran pribadi Anda
+- Generator campuran acak yang sesuai dengan setiap suasana hati Anda
+- Kontrol volume individual untuk setiap suara
+- Bermain bersamaan dengan musik yang sedang diputar
+- Gunakan warna bawaan pada Android 12 atau lebih tinggi
+- Tidak ada iklan dalam bentuk apa pun
 
-<b>Izin</b> 
-- <b>mencegah perangkat dari tidur</b>: untuk menjaga CPU perangkat tetap terjaga selama pemutaran 
-- <b>jalankan layanan latar depan</b>: untuk menjalankan proses pemutar (berbeda dari UI) 
-- <b>jalankan saat startup</b>: untuk memastikan timer bangun tetap ada selama reboot 
-- <b>akses jaringan penuh</b>: untuk mengaktifkan Chromecast dan kontribusi keuangan 
-- <b>melihat koneksi jaringan</b>: ditambahkan oleh ketergantungan, saat ini tidak digunakan 
-- <b>Layanan penagihan Google Play</b>: untuk mengaktifkan kontribusi keuangan guna mendukung pengembangan 
+<i>* Chromecast hanya tersedia jika Anda mengunduh Noice dari Google Play.</i>
 
-Noice adalah perangkat lunak sumber terbuka dan gratis. https://github.com/trynoice/android-app
+<b>FITUR PREMIUM</b>
+- Membuka klip audio tambahan dalam suara
+- Variasi suara yang nyata dan alami yang dihasilkan sesuai permintaan
+- Pemutaran offline
+- Audio berkualitas sangat tinggi untuk streaming dan mengunduh (hingga 320 kbps)
+- Alarm aktif tanpa batas
+
+<b>PUSTAKA SUARA</b>
+- Kehidupan (burung, jangkrik, serigala, detak jantung, dengkuran kucing)
+- Cuaca (pagi atau fajar, malam, hujan, guntur)
+- Tempat (api unggun, kedai kopi, perpustakaan, kantor, tepi pantai, tepi sungai, scuba diving)
+- Perjalanan (kereta api, penerbangan, kapal berderit, mobil listrik)
+- Benda-benda (kipas angin, jam dinding, lonceng angin)
+- Kebisingan (putih, merah muda, cokelat)
+
+<b>IZIN APLIKASI</b>
+- <b>melihat koneksi jaringan</b>: untuk streaming dan mengunduh suara
+- <b>akses jaringan penuh</b>: untuk berkomunikasi dengan server Noice, streaming suara dan mengunduh
+- <b>dijalankan saat pengaktifan</b>: untuk memastikan bahwa Alarm tetap ada saat perangkat dinyalakan ulang
+- <b>mencegah perangkat dalam keadaan tidur</b>: untuk menjaga CPU perangkat tetap aktif agar pemutaran tidak terganggu saat layar mati
+- <b>memasang pintasan</b>: untuk menambahkan Pintasan yang telah ditetapkan ke layar beranda
+- <b>menjalankan layanan latar depan</b>: untuk pemutaran terus menerus saat aplikasi berada di latar belakang
+- <b>menampilkan notifikasi layar penuh pada perangkat yang terkunci</b>: untuk menampilkan peringatan saat alarm berbunyi
+- <b>mengontrol getaran</b>: untuk menggetarkan perangkat saat alarm diaktifkan dengan getaran menyala
+
+Noice adalah perangkat lunak sumber terbuka.
+https://github.com/trynoice/android-app

@@ -60,7 +60,7 @@ project.afterEvaluate {
 dependencies {
   // TODO: pin okhttp to a stable version. 5.x is needed for this fix:
   //  https://github.com/square/okhttp/issues/6258
-  def okhttpVersion = '5.0.0-alpha.10'
+  def okhttpVersion = '5.0.0-alpha.11'
   def retrofitVersion = '2.9.0'
 
   api "com.squareup.okhttp3:okhttp:$okhttpVersion"

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="help">ସହାୟତା</string>
+    <string name="volume">ଧ୍ୱନି ଵଲ୍ୟୁମ୍</string>
+    <string name="rename">ନାମ ବଦଳାନ୍ତୁ</string>
+    <string name="app_theme_light">ହାଲୁକା</string>
+    <string name="app_theme_system_default">ସିଷ୍ଟମ୍ ଡିଫଲ୍ଟ</string>
+    <string name="about">ଵିଷୟରେ</string>
+    <string name="app_theme">ଥିମ୍</string>
+    <string name="library">ଲାଇବ୍ରେରୀ</string>
+    <string name="sleep_timer">ଶୟନ ସମୟ-ନିୟାମକ</string>
+    <string name="okay">ଠିକ୍ ଅଛି</string>
+    <string name="name">ନାମ</string>
+    <string name="app_theme_dark">ଗାଢ଼</string>
+    <string name="appintro__getting_started_desc_1">ଆସନ୍ତୁ ଆରମ୍ଭ କରିବା!</string>
+    <string name="appintro__getting_started_title">ସ୍ୱାଗତ</string>
+    <string name="support_development__donate">ଦାନ କରନ୍ତୁ</string>
+    <string name="appearance">ରୂପ</string>
+    <string name="share">ଅଂଶୀଦାର କରିବା</string>
+    <string name="export_presets">ଏକ ଫାଇଲରେ ରପ୍ତାନି କରିବା</string>
+    <string name="in_app_feedback__title">ଏକ ସମୀକ୍ଷା ଦାଖଲ କରନ୍ତୁ</string>
+    <string name="later">ପରେ</string>
+    <string name="settings">ସେଟିଂ</string>
+    <string name="preset_delete_confirmation">ଆପଣ %1$s ଵିଲୋପ କରିବାକୁ ନିଶ୍ଚିତ ଅଛନ୍ତି ତ\? ଆପଣ ଏହି କୃତ୍ୟଟି ପୂର୍ଵଵତ୍ କରିପାରିବେ ନାହିଁ।</string>
+</resources>
