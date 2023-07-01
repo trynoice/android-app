@@ -27,30 +27,25 @@
     <string name="preset_deleted">Votre préréglage a été supprimé avec succès !</string>
     <string name="preset_info__description">Vous pouvez facilement créer vos propres préréglages en jouant des sons puis en les enregistrant dans la bibliothèque de sons. Il vous suffit d\'appuyer sur le bouton Enregistrer et de lui donner un nom unique.</string>
     <string name="rename">Renommer</string>
-    <string name="auto_sleep_schedule_cancelled">Minuterie annulée !</string>
+    <string name="auto_sleep_schedule_cancelled">Minuterie annulée ! L\'application va rester active</string>
     <string name="reset">Réinitialiser</string>
-    <string name="sleep_timer_description">
-    Noice s\'éteindra tout seul à la fin de la minuterie. Utilisez les boutons ci-dessous pour ajouter du temps et démarrer
-    la minuterie.
-  </string>
+    <string name="sleep_timer_description">Noice s\'éteindra tout seul à la fin de la minuterie. Utilisez les boutons ci-dessous pour définir la minuterie et ajouter plus de temps.</string>
     <string name="select_preset">Sélectionner le réglage</string>
     <string name="app_theme_light">Clair</string>
     <string name="app_theme_dark">Sombre</string>
     <string name="app_theme_system_default">Système</string>
     <string name="app_description">Concentrez-vous, méditez et détendez-vous grâce à des bruits naturels apaisants.</string>
-    <string name="appintro__chromecast_desc">
-    Utilisez Noice pour envoyer l\'ambiance créée vers un appareil équipé de Chromecast comme des enceintes, une télé, etc.
-  </string>
+    <string name="appintro__chromecast_desc">Partagez simplement l\'ambiance réconfortante de Notice sur un autre appareil disposant de Chromecast, comme des enceintes, ou des téléviseurs.</string>
     <string name="appintro__chromecast_title">Chromecast activé</string>
-    <string name="appintro__getting_started_desc_0">Glissez vers la gauche pour connaître toutes les fonctionnalités !</string>
+    <string name="appintro__getting_started_desc_0">Explorez toutes les fonctionnalités en glissant à gauche !</string>
     <string name="appintro__getting_started_desc_1">C\'est parti !</string>
     <string name="appintro__getting_started_title">Bienvenue</string>
-    <string name="appintro__presets_desc">Après avoir joué quelques sons, vous pouvez utiliser le bouton en bas à droite pour sauvegarder le mix. Pour réutiliser un mix sauvegardé, allez dans la liste des réglages depuis le menu de l\'application.</string>
+    <string name="appintro__presets_desc">Sauvegardez votre mix de son en cliquant sur le coin du bas de la bibliothèque. Trouvez vos mixes sauvegardé dans l\'onglet \'Presets\' de la barre du bas.</string>
     <string name="appintro__presets_title">Sauvegardez vos mix préférés</string>
     <string name="appintro__library_desc">Utilisez les boutons de volume pour régler le volume des sons. À chaque répétition d\'un son sans-boucle, un délai aléatoire sera généré dans la plage établie par le curseur de temps.</string>
-    <string name="appintro__library_title">Créez votre environnement idéal</string>
+    <string name="appintro__library_title">Designez votre environnement idéal</string>
     <string name="appintro__timer_desc">Une ambiance légère peut vous aider à vous endormir plus facilement. Utilisez la minuterie pour laisser Noice s\'éteindre tout seul. De la même manière, pour se réveiller au calme, utilisez le réveil pour régler l\'alarme.</string>
-    <string name="appintro__timer_title">Des difficultés à s\'endormir ou à se réveiller ?</string>
+    <string name="appintro__timer_title">Transformez votre sommeil avec Noice</string>
     <string name="support_development__donate">Donner</string>
     <string name="support_development__donate_google_play_description">Votre paiement sera traité de manière sécurisée par Google Play. En fonction de votre localisation, des taxes supplémentaires _peuvent être_ ajoutées au montant final.</string>
     <string name="support_development__donate_thank_you_description">
