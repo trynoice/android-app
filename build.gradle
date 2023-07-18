@@ -19,7 +19,7 @@ project.ext {
   deps = [
     aboutLibrariesVersion: "${aboutLibrariesVersion}",
     androidXCoreVersion  : '1.10.0',
-    coroutinesVersion    : '1.7.1',
+    coroutinesVersion    : '1.7.2',
     hiltVersion          : "${hiltVersion}",
     kotlinVersion        : "${kotlinVersion}",
     lifecycleVersion     : '2.6.1',
