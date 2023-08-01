@@ -7,7 +7,6 @@ import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
@@ -46,18 +45,6 @@ class SignInResultFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    // TODO: workaround until the upstream issue resolved!
-    //  https://issuetracker.google.com/issues/167959935
-    (activity as? AppCompatActivity)
-      ?.supportActionBar
-      ?.setTitle(
-        if (viewModel.isReturningUser) {
-          R.string.sign_in
-        } else {
-          R.string.sign_up
-        }
-      )
-
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
     binding.openMailbox.setOnClickListener { openMailbox() }
@@ -71,6 +58,7 @@ class SignInResultFragment : Fragment() {
               val lockedUntilStr = DateUtils.getRelativeTimeSpanString(context, lockedUntil)
               getString(R.string.account_locked_error, lockedUntilStr)
             }
+
             is NetworkError -> getString(R.string.network_error)
             else -> getString(R.string.unknown_error)
           }

@@ -2,6 +2,8 @@ package com.github.ashutoshgngwr.noice.fragment
 
 import android.provider.Settings
 import android.widget.EditText
+import androidx.paging.LoadState
+import androidx.paging.LoadStates
 import androidx.paging.PagingData
 import androidx.test.espresso.AmbiguousViewMatcherException
 import androidx.test.espresso.Espresso.onView
@@ -31,6 +33,8 @@ import io.mockk.clearMocks
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import org.hamcrest.Matchers.*
 import org.hamcrest.core.AllOf.allOf
@@ -69,7 +73,7 @@ class AlarmsFragmentTest {
 
     every {
       alarmRepositoryMock.pagingDataFlow()
-    } returns flowOf(PagingData.from(listOf(buildAlarm(id = 1))))
+    } returns buildPagingDataFlow(listOf(buildAlarm(id = 1)))
 
     launchFragmentInHiltContainer<AlarmsFragment>().use {
       onView(withId(R.id.empty_list_indicator))
@@ -94,14 +98,8 @@ class AlarmsFragmentTest {
       buildAlarm(id = 4, minuteOfDay = 240, weeklySchedule = 0b1010101, preset = presets.random()),
     )
 
-    every { alarmRepositoryMock.pagingDataFlow() } returns flowOf(PagingData.from(alarms))
+    every { alarmRepositoryMock.pagingDataFlow() } returns buildPagingDataFlow(alarms)
     launchFragmentInHiltContainer<AlarmsFragment>()
-
-
-    onView(withId(R.id.list))
-      .check(matches(isDisplayed()))
-      // collapse the item expanded by default
-      .perform(actionOnItemAtPosition<AlarmViewHolder>(0, clickOn(R.id.expand_toggle)))
 
     alarms.forEachIndexed { index, alarm ->
       val labelMatcher = allOf(isDisplayed(), withText(alarm.label ?: ""))
@@ -184,14 +182,8 @@ class AlarmsFragmentTest {
             assertion = matches(not(isDisplayed())),
           )
         )
-
-      // expand this item and perform more checks.
-      onView(withId(R.id.list))
         .perform(actionOnItemAtPosition<AlarmViewHolder>(index, clickOn(R.id.expand_toggle)))
-
-      // add an explicit break in the view interaction chain due to intermittent
-      // NoMatchingViewExceptions on performing the last action.
-      onView(withId(R.id.list))
+        .perform(scrollToPosition<AlarmViewHolder>(index)) // expansion may lead to view overflowing the viewport
         .check(
           itemAtPosition(
             position = index,
@@ -263,7 +255,7 @@ class AlarmsFragmentTest {
       buildAlarm(id = 3, minuteOfDay = 240),
     )
 
-    every { alarmRepositoryMock.pagingDataFlow() } returns flowOf(PagingData.from(alarms))
+    every { alarmRepositoryMock.pagingDataFlow() } returns buildPagingDataFlow(alarms)
     launchFragmentInHiltContainer<AlarmsFragment>(
       fragmentArgs = AlarmsFragmentArgs(3).toBundle(),
     )
@@ -319,8 +311,12 @@ class AlarmsFragmentTest {
   @Test
   fun updateLabel() {
     val alarm = buildAlarm(id = 1, label = "test-label")
-    every { alarmRepositoryMock.pagingDataFlow() } returns flowOf(PagingData.from(listOf(alarm)))
+    every { alarmRepositoryMock.pagingDataFlow() } returns buildPagingDataFlow(listOf(alarm))
     launchFragmentInHiltContainer<AlarmsFragment>()
+    onView(withId(R.id.expand_toggle))
+      .check(matches(isDisplayed()))
+      .perform(click())
+
     onView(withText(alarm.label))
       .check(matches(isDisplayed()))
       .perform(click())
@@ -345,10 +341,15 @@ class AlarmsFragmentTest {
   @Test
   fun updateTime() {
     val alarm = buildAlarm(id = 1)
-    every { alarmRepositoryMock.pagingDataFlow() } returns flowOf(PagingData.from(listOf(alarm)))
+    every { alarmRepositoryMock.pagingDataFlow() } returns buildPagingDataFlow(listOf(alarm))
     launchFragmentInHiltContainer<AlarmsFragment>()
 
     every { alarmRepositoryMock.canScheduleAlarms() } returns true
+
+    onView(withId(R.id.expand_toggle))
+      .check(matches(isDisplayed()))
+      .perform(click())
+
     onView(withId(R.id.time))
       .check(matches(isDisplayed()))
       .perform(click())
@@ -379,7 +380,7 @@ class AlarmsFragmentTest {
   fun enableToggle() {
     every { alarmRepositoryMock.canScheduleAlarms() } returns true
     val alarm = buildAlarm(id = 1, isEnabled = false)
-    every { alarmRepositoryMock.pagingDataFlow() } returns flowOf(PagingData.from(listOf(alarm)))
+    every { alarmRepositoryMock.pagingDataFlow() } returns buildPagingDataFlow(listOf(alarm))
     launchFragmentInHiltContainer<AlarmsFragment>()
 
     onView(withId(R.id.enable_switch))
@@ -407,8 +408,11 @@ class AlarmsFragmentTest {
   @Test
   fun updateWeeklySchedule() {
     val alarm = buildAlarm(id = 1, isEnabled = true)
-    every { alarmRepositoryMock.pagingDataFlow() } returns flowOf(PagingData.from(listOf(alarm)))
+    every { alarmRepositoryMock.pagingDataFlow() } returns buildPagingDataFlow(listOf(alarm))
     launchFragmentInHiltContainer<AlarmsFragment>()
+    onView(withId(R.id.expand_toggle))
+      .check(matches(isDisplayed()))
+      .perform(click())
 
     mapOf(
       R.id.sunday_toggle to (1 shl 0),
@@ -446,11 +450,15 @@ class AlarmsFragmentTest {
   @Test
   fun updatePreset() {
     val alarm = buildAlarm(id = 1, preset = null)
-    every { alarmRepositoryMock.pagingDataFlow() } returns flowOf(PagingData.from(listOf(alarm)))
+    every { alarmRepositoryMock.pagingDataFlow() } returns buildPagingDataFlow(listOf(alarm))
     // since code under test needs access to home nav controller, launch home fragment.
     launchFragmentInHiltContainer<HomeFragment>()
 
     onView(withId(R.id.alarms))
+      .check(matches(isDisplayed()))
+      .perform(click())
+
+    onView(withId(R.id.expand_toggle))
       .check(matches(isDisplayed()))
       .perform(click())
 
@@ -473,8 +481,12 @@ class AlarmsFragmentTest {
   @Test
   fun vibrateToggle() {
     val alarm = buildAlarm(id = 1, preset = null)
-    every { alarmRepositoryMock.pagingDataFlow() } returns flowOf(PagingData.from(listOf(alarm)))
+    every { alarmRepositoryMock.pagingDataFlow() } returns buildPagingDataFlow(listOf(alarm))
     launchFragmentInHiltContainer<AlarmsFragment>()
+
+    onView(withId(R.id.expand_toggle))
+      .check(matches(isDisplayed()))
+      .perform(click())
 
     onView(withId(R.id.vibrate))
       .check(matches(isDisplayed()))
@@ -501,8 +513,12 @@ class AlarmsFragmentTest {
   @Test
   fun delete() {
     val alarm = buildAlarm(id = 1, preset = null)
-    every { alarmRepositoryMock.pagingDataFlow() } returns flowOf(PagingData.from(listOf(alarm)))
+    every { alarmRepositoryMock.pagingDataFlow() } returns buildPagingDataFlow(listOf(alarm))
     launchFragmentInHiltContainer<AlarmsFragment>()
+
+    onView(withId(R.id.expand_toggle))
+      .check(matches(isDisplayed()))
+      .perform(click())
 
     onView(withId(R.id.delete))
       .check(matches(isDisplayed()))
@@ -554,6 +570,16 @@ class AlarmsFragmentTest {
     onView(withId(com.google.android.material.R.id.material_timepicker_ok_button))
       .inRoot(isDialog())
       .perform(click())
+  }
+
+  private fun buildPagingDataFlow(alarms: List<Alarm>): Flow<PagingData<Alarm>> {
+    val loadState = LoadState.NotLoading(endOfPaginationReached = true)
+    return MutableStateFlow(
+      PagingData.from(
+        data = alarms,
+        sourceLoadStates = LoadStates(refresh = loadState, prepend = loadState, append = loadState)
+      )
+    )
   }
 
   private fun buildAlarm(

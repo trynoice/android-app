@@ -37,11 +37,11 @@ import java.security.spec.X509EncodedKeySpec
 import kotlin.math.min
 
 /**
- * [GooglePlayBillingProvider] implements a thin wrapper around Google Play Billing v4 client
- * library. It ensures that purchase notifications are delivered at-least once by ensuring that at
- * least one [GooglePlayPurchaseListener] consumes a notification. If no listeners consume a
- * notification, it is delivered for all newly registered listeners until one of them consumes it.
- * The clients receive all listener callbacks on the main thread.
+ * [GooglePlayBillingProvider] implements a thin wrapper around Google Play Billing client library.
+ * It ensures that purchase notifications are delivered at-least once by ensuring that at least one
+ * [GooglePlayPurchaseListener] consumes a notification. If no listeners consume a notification, it
+ * is delivered for all newly registered listeners until one of them consumes it. The clients
+ * receive all listener callbacks on the main thread.
  */
 class GooglePlayBillingProvider(
   @ApplicationContext context: Context,
@@ -170,7 +170,7 @@ class GooglePlayBillingProvider(
           b.setSubscriptionUpdateParams(
             BillingFlowParams.SubscriptionUpdateParams.newBuilder()
               .setOldPurchaseToken(token)
-              .setReplaceProrationMode(BillingFlowParams.ProrationMode.IMMEDIATE_WITH_TIME_PRORATION)
+              .setSubscriptionReplacementMode(BillingFlowParams.SubscriptionUpdateParams.ReplacementMode.WITH_TIME_PRORATION)
               .build()
           )
         }

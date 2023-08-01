@@ -4,8 +4,6 @@ import android.Manifest
 import android.os.Build
 import android.os.Bundle
 import android.text.format.DateUtils
-import android.transition.ChangeBounds
-import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,18 +14,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.clearFragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
 import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.paging.cachedIn
+import androidx.paging.map
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.AlarmItemBinding
 import com.github.ashutoshgngwr.noice.databinding.AlarmsFragmentBinding
@@ -44,15 +41,17 @@ import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Calendar
 import javax.inject.Inject
 
 private const val FREE_ALARM_COUNT = 2
@@ -62,9 +61,7 @@ class AlarmsFragment : Fragment(), AlarmViewHolder.ViewController {
 
   private lateinit var binding: AlarmsFragmentBinding
 
-  private var hasHandledFocusedAlarmArg = false
   private val viewModel: AlarmsViewModel by viewModels()
-  private val args: AlarmsFragmentArgs by navArgs()
   private val adapter: AlarmListAdapter by lazy { AlarmListAdapter(layoutInflater, this) }
   private val mainNavController: NavController by lazy {
     Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
@@ -86,26 +83,19 @@ class AlarmsFragment : Fragment(), AlarmViewHolder.ViewController {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.addAlarmButton.setOnClickListener { startAddAlarmFlow() }
-    (binding.list.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
     binding.list.adapter = adapter
+
+    var lastAutoScrollPosition = -1
     adapter.addLoadStateListener { loadStates ->
       binding.emptyListIndicator.isVisible =
         loadStates.append.endOfPaginationReached && adapter.itemCount < 1
 
-      if (!hasHandledFocusedAlarmArg) {
-        hasHandledFocusedAlarmArg = true
-        if (args.focusedAlarmId >= 0) {
-          // items may take a while to load, so wait for the item with requested id to appear.
-          adapter.snapshot()
-            .items
-            .indexOfFirst { it.id == args.focusedAlarmId }
-            .takeIf { it > -1 }
-            ?.also { pos ->
-              onAlarmItemExpanded(pos)
-              binding.list.scrollToPosition(pos)
-            }
-        }
-      }
+      adapter.snapshot()
+        .items
+        .indexOfFirst { it.isExpanded }
+        .takeIf { it > -1 && it != lastAutoScrollPosition }
+        ?.also { lastAutoScrollPosition = it }
+        ?.also { binding.list.scrollToPosition(it) }
     }
 
     viewLifecycleOwner.launchAndRepeatOnStarted {
@@ -181,18 +171,12 @@ class AlarmsFragment : Fragment(), AlarmViewHolder.ViewController {
       .setAction(R.string.settings) { requireContext().startAppDetailsSettingsActivity() }
   }
 
-  override fun onAlarmItemCollapsed(bindingAdapterPosition: Int) {
-    binding.list.beginDelayedLayoutBoundsChangeTransition(bindingAdapterPosition)
-    adapter.setExpandedItemPosition(-1, true)
+  override fun onAlarmItemCollapsed(alarm: Alarm) {
+    viewModel.setExpandedAlarmId(null)
   }
 
-  override fun onAlarmItemExpanded(bindingAdapterPosition: Int) {
-    if (adapter.expandedPosition > -1) {
-      binding.list.beginDelayedLayoutBoundsChangeTransition(adapter.expandedPosition)
-    }
-
-    binding.list.beginDelayedLayoutBoundsChangeTransition(bindingAdapterPosition)
-    adapter.setExpandedItemPosition(bindingAdapterPosition, true)
+  override fun onAlarmItemExpanded(alarm: Alarm) {
+    viewModel.setExpandedAlarmId(alarm.id)
   }
 
   override fun onAlarmLabelClicked(alarm: Alarm) {
@@ -258,14 +242,8 @@ class AlarmsFragment : Fragment(), AlarmViewHolder.ViewController {
   }
 
   override fun onAlarmDeleteClicked(alarm: Alarm) {
-    adapter.setExpandedItemPosition(-1, false)
+    viewModel.setExpandedAlarmId(null)
     viewModel.delete(alarm)
-  }
-
-  private fun RecyclerView.beginDelayedLayoutBoundsChangeTransition(position: Int) {
-    findViewHolderForAdapterPosition(position)
-      .let { it?.itemView as? ViewGroup }
-      ?.also { TransitionManager.beginDelayedTransition(it, ChangeBounds()) }
   }
 }
 
@@ -273,10 +251,20 @@ class AlarmsFragment : Fragment(), AlarmViewHolder.ViewController {
 class AlarmsViewModel @Inject constructor(
   private val alarmRepository: AlarmRepository,
   subscriptionRepository: SubscriptionRepository,
+  savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-  internal val alarmsPagingData: Flow<PagingData<Alarm>> = alarmRepository.pagingDataFlow()
+  private val expandedAlarmId = MutableStateFlow(
+    AlarmsFragmentArgs.fromSavedStateHandle(savedStateHandle)
+      .focusedAlarmId
+      .takeIf { it != -1 }
+  )
+
+  internal val alarmsPagingData: Flow<PagingData<AlarmItem>> = alarmRepository.pagingDataFlow()
     .cachedIn(viewModelScope)
+    .combine(expandedAlarmId) { pagingData, expandedAlarmId ->
+      pagingData.map { AlarmItem(it, it.id == expandedAlarmId) }
+    }
 
   internal val isSubscribed: StateFlow<Boolean> = subscriptionRepository.isSubscribed()
     .stateIn(viewModelScope, SharingStarted.Eagerly, true)
@@ -321,14 +309,16 @@ class AlarmsViewModel @Inject constructor(
   internal fun canEnableMoreAlarms(): Boolean {
     return hasScheduleAlarmsPermission() && (isSubscribed.value || enabledCount.value < FREE_ALARM_COUNT)
   }
+
+  internal fun setExpandedAlarmId(id: Int?) {
+    expandedAlarmId.value = id
+  }
 }
 
 class AlarmListAdapter(
   private val layoutInflater: LayoutInflater,
   private val viewController: AlarmViewHolder.ViewController,
-) : PagingDataAdapter<Alarm, AlarmViewHolder>(diffCallback) {
-
-  var expandedPosition = 0; private set
+) : PagingDataAdapter<AlarmItem, AlarmViewHolder>(diffCallback) {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
     val binding = AlarmItemBinding.inflate(layoutInflater, parent, false)
@@ -336,26 +326,17 @@ class AlarmListAdapter(
   }
 
   override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {
-    val alarm = getItem(position) ?: return
-    holder.bind(alarm, expandedPosition == position)
-  }
-
-  fun setExpandedItemPosition(position: Int, notifyChanges: Boolean) {
-    val previousExpandedPosition = expandedPosition
-    expandedPosition = position
-    if (notifyChanges) {
-      if (previousExpandedPosition > -1) notifyItemChanged(previousExpandedPosition)
-      if (position > -1) notifyItemChanged(position)
-    }
+    val item = getItem(position) ?: return
+    holder.bind(item)
   }
 
   companion object {
-    private val diffCallback = object : DiffUtil.ItemCallback<Alarm>() {
-      override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
-        return oldItem.id == newItem.id
+    private val diffCallback = object : DiffUtil.ItemCallback<AlarmItem>() {
+      override fun areItemsTheSame(oldItem: AlarmItem, newItem: AlarmItem): Boolean {
+        return oldItem.alarm.id == newItem.alarm.id
       }
 
-      override fun areContentsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
+      override fun areContentsTheSame(oldItem: AlarmItem, newItem: AlarmItem): Boolean {
         return oldItem == newItem
       }
     }
@@ -373,9 +354,9 @@ class AlarmViewHolder(
   init {
     val expandToggleClickListener = View.OnClickListener {
       if (isExpanded) {
-        controller.onAlarmItemCollapsed(bindingAdapterPosition)
+        controller.onAlarmItemCollapsed(alarm)
       } else {
-        controller.onAlarmItemExpanded(bindingAdapterPosition)
+        controller.onAlarmItemExpanded(alarm)
       }
     }
 
@@ -430,9 +411,9 @@ class AlarmViewHolder(
     controller.onAlarmWeeklyScheduleChanged(alarm, new)
   }
 
-  fun bind(alarm: Alarm, isExpanded: Boolean) {
-    this.alarm = alarm
-    this.isExpanded = isExpanded
+  fun bind(item: AlarmItem) {
+    this.alarm = item.alarm
+    this.isExpanded = item.isExpanded
     val context = binding.root.context
 
     binding.expandToggle.animate()
@@ -502,8 +483,8 @@ class AlarmViewHolder(
 
 
   interface ViewController {
-    fun onAlarmItemCollapsed(bindingAdapterPosition: Int)
-    fun onAlarmItemExpanded(bindingAdapterPosition: Int)
+    fun onAlarmItemCollapsed(alarm: Alarm)
+    fun onAlarmItemExpanded(alarm: Alarm)
     fun onAlarmLabelClicked(alarm: Alarm)
     fun onAlarmTimeClicked(alarm: Alarm)
     fun onAlarmToggled(alarm: Alarm, enabled: Boolean)
@@ -513,3 +494,5 @@ class AlarmViewHolder(
     fun onAlarmDeleteClicked(alarm: Alarm)
   }
 }
+
+data class AlarmItem(val alarm: Alarm, val isExpanded: Boolean)

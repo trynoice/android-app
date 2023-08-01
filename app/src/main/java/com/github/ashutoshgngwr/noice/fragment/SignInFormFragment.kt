@@ -5,7 +5,6 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
@@ -38,24 +37,13 @@ class SignInFormFragment : Fragment() {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    // TODO: workaround until the upstream issue resolved!
-    //  https://issuetracker.google.com/issues/167959935
-    (activity as? AppCompatActivity)
-      ?.supportActionBar
-      ?.setTitle(
-        if (viewModel.isReturningUser) {
-          R.string.sign_in
-        } else {
-          R.string.sign_up
-        }
-      )
-
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
     binding.signIn.setOnClickListener {
       mainNavController.navigate(
         R.id.sign_in_result,
         SignInResultFragmentArgs(
+          fragmentTitle = if (viewModel.isReturningUser) R.string.sign_in else R.string.sign_up,
           isReturningUser = viewModel.isReturningUser,
           name = viewModel.name.value,
           email = requireNotNull(viewModel.email.value),

@@ -31,6 +31,11 @@
       app:destination="@id/sign_in_sign_up_form">
 
       <argument
+        android:name="fragmentTitle"
+        android:defaultValue="@string/sign_up"
+        app:argType="reference" />
+
+      <argument
         android:name="isReturningUser"
         android:defaultValue="false" />
 
@@ -85,8 +90,13 @@
   <fragment
     android:id="@+id/sign_in_sign_up_form"
     android:name="com.github.ashutoshgngwr.noice.fragment.SignInFormFragment"
-    android:label="@string/sign_in"
+    android:label="{fragmentTitle}"
     tools:layout="@layout/sign_in_form_fragment">
+
+    <argument
+      android:name="fragmentTitle"
+      android:defaultValue="@string/sign_in"
+      app:argType="reference" />
 
     <argument
       android:name="isReturningUser"
@@ -103,8 +113,12 @@
   <fragment
     android:id="@+id/sign_in_result"
     android:name="com.github.ashutoshgngwr.noice.fragment.SignInResultFragment"
-    android:label="@string/sign_in"
+    android:label="{fragmentTitle}"
     tools:layout="@layout/sign_in_result_fragment">
+
+    <argument
+      android:name="fragmentTitle"
+      app:argType="reference" />
 
     <argument
       android:name="isReturningUser"

@@ -3,7 +3,6 @@ package com.github.ashutoshgngwr.noice.repository
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import androidx.core.content.getSystemService
 import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingSource
@@ -27,6 +26,7 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkAll
+import io.mockk.verify
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
@@ -53,6 +53,7 @@ class AlarmRepositoryTest {
 
   private lateinit var presetRepositoryMock: PresetRepository
   private lateinit var settingsRepositoryMock: SettingsRepository
+  private lateinit var pendingIntentBuilderMock: AlarmRepository.PendingIntentBuilder
   private lateinit var alarmDaoMock: AlarmDao
   private lateinit var shadowAlarmManager: ShadowAlarmManager
   private lateinit var repository: AlarmRepository
@@ -64,6 +65,7 @@ class AlarmRepositoryTest {
     val context = ApplicationProvider.getApplicationContext<Context>()
     presetRepositoryMock = mockk(relaxed = true)
     settingsRepositoryMock = mockk(relaxed = true)
+    pendingIntentBuilderMock = mockk(relaxed = true)
     alarmDaoMock = mockk(relaxed = true)
     val appDb = mockk<AppDatabase> {
       every { alarms() } returns alarmDaoMock
@@ -78,15 +80,7 @@ class AlarmRepositoryTest {
       presetRepository = presetRepositoryMock,
       settingsRepository = settingsRepositoryMock,
       appDb = appDb,
-      pendingIntentBuilder = object : AlarmRepository.PendingIntentBuilder {
-        override fun buildShowIntent(alarm: Alarm): PendingIntent {
-          return buildDummyPendingIntent(context, alarm)
-        }
-
-        override fun buildTriggerIntent(alarm: Alarm): PendingIntent {
-          return buildDummyPendingIntent(context, alarm)
-        }
-      },
+      pendingIntentBuilder = pendingIntentBuilderMock,
     )
   }
 
@@ -99,19 +93,28 @@ class AlarmRepositoryTest {
   fun saveAndDelete() = runTest {
     assertNull(shadowAlarmManager.peekNextScheduledAlarm())
 
+    val triggerPendingIntent = mockk<PendingIntent>(relaxed = true)
+    val showPendingIntent = mockk<PendingIntent>(relaxed = true)
+    every { pendingIntentBuilderMock.buildTriggerIntent(match { it.id == 1 }) } returns triggerPendingIntent
+    every { pendingIntentBuilderMock.buildShowIntent(match { it.id == 1 }) } returns showPendingIntent
     coEvery { alarmDaoMock.save(any()) } returns 1
+
     val savedId = repository.save(buildAlarm(id = 0, minuteOfDay = 120))
     assertEquals(1, savedId)
     coVerify(exactly = 1, timeout = 5000L) {
       alarmDaoMock.save(buildAlarmDto(id = 0, minuteOfDay = 120))
     }
 
+    verify(atLeast = 1) {
+      pendingIntentBuilderMock.buildTriggerIntent(withArg { assertEquals(savedId, it.id) })
+      pendingIntentBuilderMock.buildShowIntent(withArg { assertEquals(savedId, it.id) })
+    }
+
     var nextAlarm = shadowAlarmManager.peekNextScheduledAlarm()
     assertNotNull(nextAlarm)
     val calendar = Calendar.getInstance()
-    calendar.timeInMillis = nextAlarm.triggerAtTime
+    calendar.timeInMillis = requireNotNull(nextAlarm).triggerAtMs
     assertEquals(2, calendar.get(Calendar.HOUR_OF_DAY))
-    assertEquals(1, shadowOf(nextAlarm.operation).requestCode)
 
     // should cancel and update the registered system alarm
     repository.save(buildAlarm(id = 1, minuteOfDay = 240))
@@ -122,7 +125,7 @@ class AlarmRepositoryTest {
     assertEquals(1, shadowAlarmManager.scheduledAlarms.size)
     nextAlarm = shadowAlarmManager.peekNextScheduledAlarm()
     assertNotNull(nextAlarm)
-    calendar.timeInMillis = nextAlarm.triggerAtTime
+    calendar.timeInMillis = requireNotNull(nextAlarm).triggerAtMs
     assertEquals(4, calendar.get(Calendar.HOUR_OF_DAY))
 
     repository.delete(buildAlarm(id = 1, minuteOfDay = 360))
@@ -254,7 +257,7 @@ class AlarmRepositoryTest {
         expectDisabled = false,
         nextTriggerAfterMinutes = Calendar.getInstance()
           .apply {
-            if (get(Calendar.HOUR_OF_DAY) * 60 + get(Calendar.HOUR_OF_DAY) > 360) {
+            if (get(Calendar.HOUR_OF_DAY) * 60 + get(Calendar.MINUTE) >= 360) {
               add(Calendar.DAY_OF_MONTH, 1)
             }
           }
@@ -277,14 +280,16 @@ class AlarmRepositoryTest {
     every { settingsRepositoryMock.getAlarmSnoozeDuration() } returns snoozeLengthMinutes.minutes
 
     testCases.forEachIndexed { index, testCase ->
-      shadowAlarmManager.scheduledAlarms.clear()
       clearMocks(alarmDaoMock)
 
       coEvery { alarmDaoMock.getById(testCase.alarm.id) } returns testCase.alarm.toRoomDto()
       repository.reportTrigger(testCase.alarm.id, testCase.isSnoozed)
 
       coVerify(exactly = if (testCase.expectDisabled) 1 else 0, timeout = 5000L) {
-        alarmDaoMock.save(withArg { it.id == testCase.alarm.id && !it.isEnabled })
+        alarmDaoMock.save(withArg { actual ->
+          assertEquals(testCase.alarm.id, actual.id)
+          assertFalse(actual.isEnabled)
+        })
       }
 
       val nextAlarm = shadowAlarmManager.peekNextScheduledAlarm()
@@ -292,13 +297,14 @@ class AlarmRepositoryTest {
         assertNull("Testcase #$index failed", nextAlarm)
       } else {
         assertNotNull("Testcase #$index failed", nextAlarm)
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = nextAlarm.triggerAtTime
         assertEquals(
           "Testcase #$index failed",
           testCase.nextTriggerAfterMinutes,
-          ceil((nextAlarm.triggerAtTime - System.currentTimeMillis()) / 60000.0).roundToInt(),
+          ceil((requireNotNull(nextAlarm).triggerAtMs - System.currentTimeMillis()) / 60000.0).roundToInt()
         )
+
+        // consume the scheduled alarm
+        shadowAlarmManager.fireAlarm(nextAlarm)
       }
     }
   }
@@ -320,7 +326,7 @@ class AlarmRepositoryTest {
       alarms.map { it.minuteOfDay }.toSortedSet(),
       shadowAlarmManager.scheduledAlarms
         .map { alarm ->
-          calendar.timeInMillis = alarm.triggerAtTime
+          calendar.timeInMillis = alarm.triggerAtMs
           calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE)
         }
         .toSortedSet()
@@ -334,15 +340,6 @@ class AlarmRepositoryTest {
         alarmDaoMock.save(alarm.copy(isEnabled = false))
       }
     }
-  }
-
-  private fun buildDummyPendingIntent(context: Context, alarm: Alarm? = null): PendingIntent {
-    return PendingIntent.getBroadcast(
-      context,
-      alarm?.id ?: 0x1f,
-      Intent("dummyAction"),
-      PendingIntent.FLAG_UPDATE_CURRENT,
-    )
   }
 
   private fun buildAlarm(
