@@ -251,7 +251,7 @@
     <string name="preset_url_invalid">URL tidak valid!</string>
     <string name="keywords">Kata kunci</string>
     <string name="tags_load_error">Oh tidak! Kami tidak dapat membuka musik tersebut. %1$s Coba lagi!</string>
-    <string name="bi_yearly">Dua tahunan</string>
+    <string name="bi_yearly">Setengah tahunan</string>
     <string name="gift_card_details">Anda siap untuk membuka potensi penuh Noice dengan kartu hadiah ini! Dengan menukarkannya, Anda akan mendapatkan akses Noice Premium hingga %1$s.</string>
     <string name="use_material_you_colors_summary">Gunakan skema warna yang sama dengan pengaturan perangkat Anda</string>
     <string name="remove_sound_download_confirmation">Apakah Anda yakin ingin menghapus suara yang Anda unduh untuk pemutaran offline\?</string>

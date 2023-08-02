@@ -209,7 +209,7 @@
     <string name="get_premium">Получить премиум</string>
     <string name="subscription_initialisation_error">Ой! Мы не смогли запустить процесс оплаты. %1$s Пожалуйста, повторите попытку!</string>
     <string name="back_online">Войти в сеть</string>
-    <string name="bi_yearly">Раз в два года</string>
+    <string name="bi_yearly">Раз в полгода</string>
     <string name="plans">Тарифные планы</string>
     <string name="user_already_subscribed">Вы уже подписаны.</string>
     <string name="subscription_payment_pending">Ожидание платежа</string>

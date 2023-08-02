@@ -160,7 +160,7 @@
     <string name="premium">Premium</string>
     <string name="monthly">Monthly</string>
     <string name="quarterly">Quarterly</string>
-    <string name="bi_yearly">Bi-yearly</string>
+    <string name="bi_yearly">Half-yearly</string>
     <string name="yearly">Yearly</string>
     <plurals name="n_months">
         <item quantity="one">%1$d month</item>

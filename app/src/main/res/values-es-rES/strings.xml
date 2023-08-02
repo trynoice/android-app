@@ -9,7 +9,7 @@
     <string name="sleep_timer">Temporizador</string>
     <string name="support_development">Apoyar al desarrollador</string>
     <string name="cancel">Cancelar</string>
-    <string name="dismiss">Descartar</string>
+    <string name="dismiss">Desestimar</string>
     <string name="name">Nombre</string>
     <string name="pause">Pausar</string>
     <string name="preset_already_exists">Ya existe un ajuste preestablecido con ese nombre. ¡Prueba uno diferente!</string>
@@ -99,7 +99,7 @@
     <string name="should_share_usage_data">Compartir datos de uso</string>
     <string name="others">Otros</string>
     <string name="accept">Aceptar</string>
-    <string name="decline">Descartar</string>
+    <string name="decline">Rechazar</string>
     <string name="created_by">Creado por</string>
     <string name="payment_pending">Su pago está siendo procesado. Le notificaremos una vez que esté completo.</string>
     <string name="should_display_sound_icons">Mostrar iconos de sonido</string>
@@ -250,11 +250,11 @@
     <string name="audio_quality_medium">Medio (192Kbps)</string>
     <string name="audio_quality_ultra">Ultra (320 kbit/s)</string>
     <string name="library_load_error">¡Oh, vaya! No pudimos acceder y recuperar la libraría de sonidos. %1$s</string>
-    <string name="pausing">En pausa</string>
+    <string name="pausing">Pausa</string>
     <string name="keywords">Palabras clave</string>
     <string name="terms_of_service">Términos de Servicio</string>
     <string name="subscription_plans_load_error">¡Oh, vaya! No pudimos recuperar y mostrar los planes de suscripción. %1$s</string>
-    <string name="paused">En pausa</string>
+    <string name="paused">Pausado</string>
     <string name="stopping">Parando</string>
     <string name="preset_url_invalid">¡La URL pre-definida es inválida!</string>
     <string name="audio_quality">Calidad del audio</string>

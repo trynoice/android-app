@@ -60,12 +60,8 @@
     <string name="support_development__share">Mit Freunden teilen</string>
     <string name="support_development__share_description">Ihre Unterstützung muss nicht bei einer Spende enden. Du kannst uns auch helfen, indem du Noice an deine Freunde weitergibst. Je mehr Nutzer wir haben, desto mehr Feedback erhalten wir und desto besser können wir unseren Service für alle machen.</string>
     <string name="cast_media">Mit Chromecast verbinden</string>
-    <string name="in_app_feedback__description">
-    Wir würden uns freuen von Ihnen über die App zu hören. Bitte nehmen Sie sich einen Moment um das Github Repositorie zu besuchen.
-    Wenn Sie die App nicht mögen, bitte erwägen Sie ein Issue aufzumachen um Ihre Bedenken zu erklären.
-    Andererseits, bitte makieren Sie das Projekt um Ihre Liebe und Unterstützung zu zeigen.
-  </string>
-    <string name="in_app_feedback__title">Senden Sie eine Bewertung</string>
+    <string name="in_app_feedback__description">Wir würden uns sehr über Dein Feedback freuen. Bitte nimm dir einen Moment, um unser Github-Repository zu besuchen. Wenn die App Dir nicht gefällt, kannst du ein Issue eröffnen und deine Kritik erläutern. Ansonsten unterstütze uns gerne, indem Du uns einen Stern gibst.</string>
+    <string name="in_app_feedback__title">Bewertung schreiben</string>
     <string name="later">Später</string>
     <string name="never">Nie</string>
     <string name="notification_channel_default__description">Steuerung der Medienwiedergabe</string>
@@ -73,10 +69,10 @@
     <string name="app_shortcut_creation_failed">Das Hinzufügen der Voreinstellung zu Anwendungsverknüpfungen ist fehlgeschlagen!</string>
     <string name="remove_from_app_shortcuts">Aus Anwendungsverknüpfungen entfernen</string>
     <string name="add_to_app_shortcuts">Zu Anwendungsverknüpfungen hinzufügen</string>
-    <string name="pinned_shortcut_created">Dem Startbildschirm wurde eine Verknüpfung hinzugefügt!</string>
+    <string name="pinned_shortcut_created">Verknüpfung zum Startbildschirm hinzugefügt!</string>
     <string name="pinned_shortcut_creation_failed">Fehler beim Hinzufügen der Verknüpfung zum Startbildschirm!</string>
-    <string name="appearance">Aussehen</string>
-    <string name="presets_as_home_screen">„Voreinstellungen“ als Startbildschirm</string>
+    <string name="appearance">Design</string>
+    <string name="presets_as_home_screen">Voreinstellungen als Startbildschirm</string>
     <string name="settings">Einstellungen</string>
     <string name="app_shortcut_created">Voreinstellung wurde zu den Anwendungsverknüpfungen hinzugefügt!</string>
     <string name="app_shortcut_removed">Die Voreinstellung wurde aus den Anwendungsverknüpfungen entfernt!</string>
@@ -85,18 +81,18 @@
     <string name="skip_to_prev">Vorherige Voreinstellung</string>
     <string name="invalid_import_file_format">Das Format der Importdatei ist ungültig!</string>
     <string name="failed_to_read_file">Fehler beim Lesen der ausgewählten Datei!</string>
-    <string name="failed_to_write_file">Fehler beim Schreiben in die ausgewählte Datei!</string>
+    <string name="failed_to_write_file">Entschuldigung, wir konnten nicht in die ausgewählte Datei schreiben!</string>
     <string name="remove_all_app_shortcuts">Alle Anwendungsverknüpfungen entfernen</string>
-    <string name="import_presets_summary">Das Importieren von gespeicherten Voreinstellungen aus einer externen Datei überschreibt vorhandene Voreinstellungen, falls vorhanden</string>
+    <string name="import_presets_summary">Das Importieren gespeicherter Voreinstellungen aus einer externen Datei überschreibt die akutellen Voreinstellungen</string>
     <string name="import_presets">Aus einer Datei importieren</string>
-    <string name="export_presets_summary">Aktuelle Schnappschusse der gespeicherten Voreinstellungen in eine externe Datei exportieren</string>
+    <string name="export_presets_summary">Aktuelle Voreinstellungen in eine externe Datei exportieren</string>
     <string name="export_presets">In eine Datei exportieren</string>
     <string name="share">Teilen</string>
-    <string name="ignore_audio_focus_changes_summary_on">Nicht reagieren, wenn andere Anwendungen Audio abspielen</string>
-    <string name="ignore_audio_focus_changes_summary_off">Pausieren, wenn andere Anwendungen Audio abspielen</string>
+    <string name="ignore_audio_focus_changes_summary_on">Noice laufen lassen, wenn andere Anwendungen Audio abspielen</string>
+    <string name="ignore_audio_focus_changes_summary_off">Noice pausieren, wenn andere Anwendungen Audio abspielen</string>
     <string name="ignore_audio_focus_changes">Änderungen des Audiofokus ignorieren</string>
-    <string name="all_app_shortcuts_removed">Alle Anwendungsverknüpfungen wurden entfernt!</string>
-    <string name="remove_all_app_shortcuts_confirmation">Es werden alle voreingestellten Verknüpfungen aus dem Anwendungsverknüpfungsmenü entfernt. Möchten Sie fortfahren\?</string>
+    <string name="all_app_shortcuts_removed">Alle Verknüpfungen wurden entfernt!</string>
+    <string name="remove_all_app_shortcuts_confirmation">Bist Du sicher, dass alle Voreinstellungs-Verknüpfungen entfernt werden sollen\? Dies kann nicht rückgängig gemacht werden.</string>
     <string name="should_display_sound_icons">Tonsymbole anzeigen</string>
     <string name="decline">Ablehnen</string>
     <string name="accept">Akzeptieren</string>
@@ -114,8 +110,8 @@
     <string name="share_usage_data_consent_title">Präferenzen beim Teilen von Daten</string>
     <string name="import_presets_successful">Gespeicherte Voreinstellungen wurden erfolgreich aus der Datei geladen!</string>
     <string name="export_presets_successful">Gespeicherte Voreinstellungen wurden erfolgreich exportiert!</string>
-    <string name="sound_fade_in_duration_summary">Dauer fürs Überblenden (in Sekunden)</string>
-    <string name="sound_fade_in_duration">Fade-In-Dauer des Geräuschs</string>
+    <string name="sound_fade_in_duration_summary">Dauer für das Überblenden in Sekunden</string>
+    <string name="sound_fade_in_duration">Dauer des Einblendens</string>
     <string name="created_by">Erstellt von</string>
     <string name="support_development__donate_description">Unterstützen Sie die Entwicklung von Noice und halten Sie die App mit einer einmaligen Spende werbefrei. Ihr Beitrag wird uns helfen, die App für Sie zu verbessern.</string>
     <string name="sign_up_message">Bitte geben Sie Ihren Namen und Ihre E-Mail-Adresse ein, um sich anzumelden.</string>
@@ -127,8 +123,8 @@
     <string name="sign_in_token_error">Der Anmeldelink scheint ungültig zu sein. Möglicherweise ist er abgelaufen. Bitte versuchen Sie es erneut!</string>
     <string name="sign_up">Registrieren</string>
     <string name="update_details">Details aktualisieren</string>
-    <string name="sound_fade_out_duration_summary">Dauer der Tonausblendung (in Sekunden)</string>
-    <string name="sound_fade_out_duration">Dauer der Tonausblendung</string>
+    <string name="sound_fade_out_duration_summary">Dauer des Ausblendens in Sekunden</string>
+    <string name="sound_fade_out_duration">Dauer des Ausblendens</string>
     <string name="unknown_error">Ein unbekannter Fehler ist aufgetreten.</string>
     <string name="cont">Fortfahren</string>
     <string name="welcome">Willkommen!</string>
@@ -222,7 +218,7 @@
     <string name="stopping">Stoppe</string>
     <string name="cancelling_subscription">Abonnement kündigen</string>
     <string name="subscription_payment_pending">Die Zahlung für diesen Kauf steht noch aus.</string>
-    <string name="bi_yearly">Alle zwei Jahre</string>
+    <string name="bi_yearly">Halbjährlich</string>
     <string name="audio_quality">Audio Qualität</string>
     <string name="audio_quality_low">Niedrig (128 kbps)</string>
     <string name="account_details_update_error">Oh nein! Wir konnten Ihre Daten nicht aktualisieren. %1$s Bitte versuchen Sie es erneut!</string>
@@ -320,4 +316,7 @@
     <string name="natural_variations">Natürliche Variationen</string>
     <string name="has_more_clips_with_premium">Dieser Sound bietet mehr Audio-Clips mit Noice Premium.</string>
     <string name="more_sound_clips_desc">Verleihen Sie Ihrem Hören eine neue Dimension mit zusätzlichen Audioclips in Sounds, um sie einzigartiger und weniger eintönig zu machen.</string>
+    <string name="blog">Blog</string>
+    <string name="offline_playback">Offline-Wiedergabe</string>
+    <string name="search_preset">Voreinstellungen durchsuchen</string>
 </resources>
