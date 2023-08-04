@@ -188,7 +188,6 @@
     <string name="initialising_subscription">初始化订阅</string>
     <string name="confirming_payment">确认付款</string>
     <string name="subscription_payment_complete">恭喜你！您的 Noice 高级订阅现已上线，准备提升您的收听体验。</string>
-    <string name="subscription_payment_cancelled">订阅支付已取消！</string>
     <string name="subscription_purchases">订阅购买</string>
     <string name="renews_on">%1$s续订</string>
     <string name="ended_on">于%1$s结束</string>
@@ -319,4 +318,10 @@
     <string name="hd_audio">高音质</string>
     <string name="offline_playback">离线回放</string>
     <string name="more_sounds_desc">使用Noice Premium释放您的放松和专注体验的全部潜力-带有%1$s的额外声音。</string>
+    <string name="whats_new">新版特性</string>
+    <string name="blog">博客</string>
+    <string name="resources">资源</string>
+    <string name="about_linkedin">在领英上关注我们</string>
+    <string name="now_playing">正在播放</string>
+    <string name="about_github">在GitHub加星</string>
 </resources>

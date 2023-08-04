@@ -13,7 +13,7 @@ import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -32,7 +32,7 @@ import javax.inject.Inject
 class LaunchStripeCustomerPortalFragment : BottomSheetDialogFragment() {
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private lateinit var binding: LaunchStripeCustomerPortalFragmentBinding
   private val viewModel: LaunchStripeCustomerPortalViewModel by viewModels()
@@ -64,7 +64,7 @@ class LaunchStripeCustomerPortalFragment : BottomSheetDialogFragment() {
         }
     }
 
-    analyticsProvider.setCurrentScreen(this::class)
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 }
 

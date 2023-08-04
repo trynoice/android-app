@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import com.github.ashutoshgngwr.noice.databinding.AlarmRingerActivityBinding
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -34,7 +34,7 @@ class AlarmRingerActivity : AppCompatActivity() {
   internal lateinit var serviceController: ServiceController
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private val settingsRepository by lazy {
     EntryPointAccessors.fromApplication(application, AlarmRingerActivityEntryPoint::class.java)
@@ -65,7 +65,7 @@ class AlarmRingerActivity : AppCompatActivity() {
     setContentView(binding.root)
     showWhenLocked()
     onBackPressedDispatcher.addCallback(this) { } // no-op
-    analyticsProvider.setCurrentScreen(this::class)
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 
   override fun onStart() {

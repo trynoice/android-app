@@ -7,9 +7,9 @@ import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.ext.keyFlow
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.models.AudioQuality
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -25,8 +25,8 @@ import kotlin.time.toDuration
 @Singleton
 class SettingsRepository @Inject constructor(
   @ApplicationContext private val context: Context,
-  private val crashlyticsProvider: CrashlyticsProvider,
-  private val analyticsProvider: AnalyticsProvider,
+  private val crashlyticsProvider: CrashlyticsProvider?,
+  private val analyticsProvider: AnalyticsProvider?,
 ) {
 
   private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -144,8 +144,8 @@ class SettingsRepository @Inject constructor(
    * need to handle their persistence.
    */
   fun setShouldShareUsageData(enabled: Boolean) {
-    crashlyticsProvider.setCollectionEnabled(enabled)
-    analyticsProvider.setCollectionEnabled(enabled)
+    crashlyticsProvider?.setCollectionEnabled(enabled)
+    analyticsProvider?.setCollectionEnabled(enabled)
   }
 
   /**

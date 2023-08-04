@@ -11,56 +11,12 @@ android {
     namespace 'com.trynoice.api.client'
     consumerProguardFiles 'retrofit2.pro', 'gson.pro'
   }
-
-  testOptions {
-    unitTests {
-      includeAndroidResources = true
-      all {
-        testlogger.theme 'mocha'
-        jacoco {
-          includeNoLocationClasses = true
-          excludes = ['jdk.internal.*']
-        }
-      }
-    }
-  }
-}
-
-project.afterEvaluate {
-  android.libraryVariants.all { variant ->
-    def taskName = "test${variant.name.capitalize()}Coverage"
-    def testTask = "test${variant.name.capitalize()}UnitTest"
-    def srcDirs = ["src/main/java", "src/${variant.name}/java"]
-    def classFiles = fileTree(
-      dir: "${project.buildDir}/tmp/kotlin-classes/${variant.name}",
-      excludes: ['**/R.class',
-                 '**/R$*.class',
-                 '**/*$ViewInjector*.*',
-                 '**/*$ViewBinder*.*',
-                 '**/BuildConfig.*',
-                 '**/Manifest*.*']
-    )
-
-    def execFile = "${project.buildDir}/jacoco/${testTask}.exec"
-    tasks.create(name: taskName, type: JacocoReport, dependsOn: testTask) {
-      group = 'Reporting'
-      description = "Generate Jacoco coverage reports for the ${variant.name} build variant."
-      sourceDirectories.setFrom(files(srcDirs))
-      classDirectories.setFrom(classFiles)
-      executionData.setFrom(files(execFile))
-
-      reports {
-        xml.required = true
-        html.required = true
-      }
-    }
-  }
 }
 
 dependencies {
   // TODO: pin okhttp to a stable version. 5.x is needed for this fix:
   //  https://github.com/square/okhttp/issues/6258
-  def okhttpVersion = '5.0.0-alpha.10'
+  def okhttpVersion = '5.0.0-alpha.11'
   def retrofitVersion = '2.9.0'
 
   api "com.squareup.okhttp3:okhttp:$okhttpVersion"

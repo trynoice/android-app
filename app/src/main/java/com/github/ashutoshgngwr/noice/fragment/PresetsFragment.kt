@@ -12,7 +12,6 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -31,9 +30,9 @@ import com.github.ashutoshgngwr.noice.databinding.PresetsListItemBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.models.Preset
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import com.google.android.material.divider.MaterialDividerItemDecoration
@@ -57,7 +56,7 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
   internal lateinit var playbackServiceController: SoundPlaybackService.Controller
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   @set:Inject
   internal lateinit var reviewFlowProvider: ReviewFlowProvider
@@ -96,7 +95,7 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
         .collect(adapter::setActivePresetId)
     }
 
-    analyticsProvider.setCurrentScreen(this::class)
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 
   override fun onPresetPlayToggleClicked(preset: Preset) {
@@ -117,7 +116,6 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
   }
 
   override fun onPresetDeleteClicked(preset: Preset) {
-    val params = bundleOf("success" to false)
     DialogFragment.show(childFragmentManager) {
       title(R.string.delete)
       message(R.string.preset_delete_confirmation, preset.name)
@@ -131,8 +129,6 @@ class PresetsFragment : Fragment(), PresetViewHolder.ViewController {
 
         ShortcutManagerCompat.removeDynamicShortcuts(requireContext(), listOf(preset.id))
         showSuccessSnackBar(R.string.preset_deleted, snackBarAnchorView())
-
-        params.putBoolean("success", true)
         reviewFlowProvider.maybeAskForReview(requireActivity()) // maybe show in-app review dialog to the user
       }
     }

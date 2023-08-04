@@ -15,19 +15,22 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.RootMatchers.isDialog
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.work.Configuration
 import androidx.work.testing.WorkManagerTestInitHelper
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.EspressoX.withBottomNavSelectedItem
 import com.github.ashutoshgngwr.noice.R
-import com.github.ashutoshgngwr.noice.di.InAppBillingProviderModule
-import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
+import com.github.ashutoshgngwr.noice.billing.DonationFlowProvider
+import com.github.ashutoshgngwr.noice.billing.SubscriptionBillingProvider
+import com.github.ashutoshgngwr.noice.di.DonationFlowProviderModule
+import com.github.ashutoshgngwr.noice.di.SubscriptionBillingProviderModule
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchasesFragment
 import com.github.ashutoshgngwr.noice.models.AudioQuality
 import com.github.ashutoshgngwr.noice.models.Preset
-import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
-import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
@@ -46,7 +49,10 @@ import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
-@UninstallModules(InAppBillingProviderModule::class)
+@UninstallModules(
+  DonationFlowProviderModule::class,
+  SubscriptionBillingProviderModule::class,
+)
 class MainActivityTest {
 
   @get:Rule
@@ -62,7 +68,10 @@ class MainActivityTest {
   internal lateinit var playbackServiceControllerMock: SoundPlaybackService.Controller
 
   @BindValue
-  internal lateinit var mockBillingProvider: InAppBillingProvider
+  internal lateinit var donationFlowProviderMock: DonationFlowProvider
+
+  @BindValue
+  internal lateinit var subscriptionBillingProviderMock: SubscriptionBillingProvider
 
   @Before
   fun setUp() {
@@ -84,7 +93,8 @@ class MainActivityTest {
     mockPresetRepository = mockk(relaxed = true)
     mockSettingsRepository = mockk(relaxed = true)
     playbackServiceControllerMock = mockk(relaxed = true)
-    mockBillingProvider = mockk(relaxed = true)
+    donationFlowProviderMock = mockk(relaxed = true)
+    subscriptionBillingProviderMock = mockk(relaxed = true)
   }
 
   @After
@@ -175,18 +185,6 @@ class MainActivityTest {
   }
 
   @Test
-  fun subscriptionBillingCallbackIntent() {
-    Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
-      .setAction(Intent.ACTION_VIEW)
-      .setData(Uri.parse(SubscriptionBillingCallbackFragment.CANCEL_URI))
-      .let { launch<MainActivity>(it) }
-      .onActivity { activity ->
-        val navController = activity.findNavController(R.id.main_nav_host_fragment)
-        assertEquals(R.id.subscription_billing_callback, navController.currentDestination?.id)
-      }
-  }
-
-  @Test
   fun subscriptionPurchaseListIntent() {
     Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
       .setAction(Intent.ACTION_VIEW)
@@ -217,42 +215,22 @@ class MainActivityTest {
   }
 
   @Test
-  fun billingProviderListener() {
-    if (BuildConfig.IS_FREE_BUILD) { // free flavor doesn't have billing provider scenarios
-      return
-    }
-
-    val slot = slot<InAppBillingProvider.PurchaseListener>()
-    every { mockBillingProvider.setPurchaseListener(capture(slot)) } returns Unit
+  fun subscriptionBillingProviderListener() {
+    val slot = slot<SubscriptionBillingProvider.Listener>()
+    every { subscriptionBillingProviderMock.setListener(capture(slot)) } returns Unit
 
     launch(MainActivity::class.java).use { scenario ->
-      scenario.onActivity { slot.captured.onPending(mockk()) }
+      scenario.onActivity { slot.captured.onSubscriptionPurchasePending(1) }
       onView(withText(R.string.payment_pending))
+        .inRoot(isDialog())
         .check(matches(isDisplayed()))
     }
 
     launch(MainActivity::class.java).use { scenario ->
       scenario.onActivity {
-        val purchase = mockk<InAppBillingProvider.Purchase>(relaxed = true) {
-          every { productIds } returns listOf(DonationFragmentProvider.IN_APP_DONATION_PRODUCTS.random())
-        }
-
-        slot.captured.onComplete(purchase)
-        val navController = it.findNavController(R.id.main_nav_host_fragment)
-        assertEquals(R.id.donation_purchased_callback, navController.currentDestination?.id)
-      }
-    }
-
-    launch(MainActivity::class.java).use { scenario ->
-      val purchase = mockk<InAppBillingProvider.Purchase>(relaxed = true) {
-        every { productIds } returns listOf("subscription-product-1")
-        every { obfuscatedAccountId } returns "1"
-      }
-
-      scenario.onActivity {
-        slot.captured.onComplete(purchase)
+        slot.captured.onSubscriptionPurchaseComplete(1)
         val mainNavController = it.findNavController(R.id.main_nav_host_fragment)
-        assertEquals(R.id.subscription_billing_callback, mainNavController.currentDestination?.id)
+        assertEquals(R.id.subscription_purchased, mainNavController.currentDestination?.id)
       }
     }
   }

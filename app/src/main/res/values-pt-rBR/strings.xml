@@ -165,7 +165,6 @@
     <string name="manage_subscription">Administrar Subscrição</string>
     <string name="playing">Tocando</string>
     <string name="app">Aplicação</string>
-    <string name="subscription_payment_cancelled">O pagamento da assinatura foi cancelado!</string>
     <string name="made_in_india">Feito com ❤ na Índia</string>
     <string name="profile_load_error">Ops! Não foi possível buscar os detalhes da sua conta. %1$s</string>
     <string name="sign_in">Entrar</string>

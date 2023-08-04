@@ -16,9 +16,9 @@
     <string name="dismiss">Ausblenden</string>
     <string name="name">Name</string>
     <string name="pause">Pause</string>
-    <string name="preset_already_exists">Eine Voreinstellung mit diesem Namen existiert bereits!</string>
-    <string name="preset_name_cannot_be_empty">Der Voreinstellungsname darf nicht leer sein!</string>
-    <string name="preset_saved">Voreinstellung gespeichert!</string>
+    <string name="preset_already_exists">Eine Voreinstellung mit diesem Namen existiert bereits. Versuchen Sie es mit etwas anderem.</string>
+    <string name="preset_name_cannot_be_empty">Der Voreinstellungsname ist leer. Bitte wählen Sie einen Namen!</string>
+    <string name="preset_saved">Prima! Ihre Voreinstellung wurde gespeichert.</string>
     <string name="save">Speichern</string>
     <string name="save_preset">Voreinstellung speichern</string>
     <string name="play">Abspielen</string>
@@ -28,58 +28,40 @@
     <string name="add_to_home_screen">zum Startbildschirm hinzufügen</string>
     <string name="delete">Löschen</string>
     <string name="open_context_menu">Öffne das Kontext-Menü</string>
-    <string name="preset_delete_confirmation">%s löschen?</string>
-    <string name="preset_deleted">Voreinstellung gelöscht!</string>
-    <string name="preset_does_not_exist">Einstellung existiert nicht. Sie wurde vielleicht gelöscht!</string>
-    <string name="preset_info__description">
-    Du hast bisher keine Voreinstellungen erstellt. Um eine Voreinstellung zu erstellen, gehe zur
-    Bibliothek und starte eine Audioausgabe. Im Anschluss kannst du den Speichern-Knopf in der
-    unteren Ecke des Bildschirms anklicken.
-  </string>
+    <string name="preset_delete_confirmation">Sind Sie sicher, dass Sie %1$s löschen möchten\? Sie können diese Aktion nicht rückgängig machen.</string>
+    <string name="preset_deleted">Ihre Voreinstellung wurde erfolgreich gelöscht!</string>
+    <string name="preset_does_not_exist">Es sieht so aus, als ob diese Voreinstellung nicht mehr verfügbar ist. Sie wurde möglicherweise gelöscht.</string>
+    <string name="preset_info__description">Sie können ganz einfach Ihre eigenen Voreinstellungen erstellen, indem Sie Sounds abspielen und dann in der Soundbibliothek speichern. Klicken Sie einfach auf die Schaltfläche \"Speichern\" und geben Sie dem Sound einen eindeutigen Namen.</string>
     <string name="rename">Umbenennen</string>
-    <string name="pinned_shortcuts_not_supported">Ihr Standard-Launcher unterstützt das Hinzufügen von Verknüpfungen nicht.</string>
-    <string name="presets_as_home_screen_summary">„Voreinstellungen“ beim Start der Anwendung anzeigen (erfordert einen Neustart)</string>
-    <string name="auto_sleep_schedule_cancelled">Automatischer Schlaftimer abgebrochen!</string>
+    <string name="pinned_shortcuts_not_supported">Es tut mir leid, aber es sieht so aus, als ob Ihre Startbildschirm-App keine Verknüpfungen unterstützt.</string>
+    <string name="presets_as_home_screen_summary">Aktivieren Sie diese Option, damit Ihre Voreinstellungen beim Öffnen der App sichtbar sind. Sie müssen die App neu starten, damit die Änderungen wirksam werden.</string>
+    <string name="auto_sleep_schedule_cancelled">Sleep-Timer abgebrochen! Die App bleibt aktiv.</string>
     <string name="reset">Zurücksetzen</string>
-    <string name="sleep_timer_description">Noice schaltet sich automatisch nach Ablauf des Timers aus. Nutze die Knöpfe weiter unten, um dem Timer Zeit hinzuzufügen oder abzuziehen.</string>
+    <string name="sleep_timer_description">Das Geräusch schaltet sich automatisch aus, wenn der Timer abgelaufen ist. Verwenden Sie die Schaltflächen unten, um den Timer einzustellen und mehr Zeit hinzuzufügen.</string>
     <string name="select_preset">Wähle eine Voreinstellung aus</string>
     <string name="app_theme_light">Hell</string>
     <string name="app_theme_dark">Dunkel</string>
     <string name="app_theme_system_default">Systemstandard</string>
-    <string name="app_description">Entspannen Sie sich und verbessern Sie Ihre Konzentration mit natürlichen beruhigenden Geräuschen.</string>
-    <string name="appintro__chromecast_desc">
-    Benutze Noice um die Stimmung zu anderen Chromecast aktivierten Geräten wie Lautsprechern, TVs, etc zu übertragen.
-  </string>
+    <string name="app_description">Konzentrieren, meditieren und entspannen Sie sich mit natürlichen, beruhigenden Geräuschen.</string>
+    <string name="appintro__chromecast_desc">Teilen Sie die beruhigende Atmosphäre von Noice ganz einfach mit anderen Chromecast-fähigen Geräten, wie Lautsprechern oder Fernsehern.</string>
     <string name="appintro__chromecast_title">Chromecast aktiviert</string>
-    <string name="appintro__getting_started_desc_0">Wischen Sie nach links um alle Funktionen kennenzulernen!</string>
+    <string name="appintro__getting_started_desc_0">Erkunden Sie alle Funktionen, indem Sie nach links streichen!</string>
     <string name="appintro__getting_started_desc_1">Lass uns anfangen!</string>
     <string name="appintro__getting_started_title">Willkommen</string>
-    <string name="appintro__presets_desc">Nach ein paar gespielten Tönen können Sie den Knopf in der unteren Ecke benutzen um Ihren Mix zu speichern. Um Ihren gespeicherten Mix wiederzuverwenden, können Sie Ihre voreingestellte Liste vom App Menu besuchen.</string>
+    <string name="appintro__presets_desc">Speichern Sie Ihren Soundmix, indem Sie auf die Schaltfläche \"Speichern\" in der unteren Ecke der Bibliothek klicken. Gespeicherte Mischungen finden Sie auf der Registerkarte \"Voreinstellungen\" in der unteren Leiste.</string>
     <string name="appintro__presets_title">Speichern Sie Ihre Lieblingsmischungen</string>
-    <string name="appintro__library_desc">
-    Benutzen Sie die Lautstärken Taste um die Lautstärke einzustellen. Bei jeder Wiederholung von sich nicht wiederholenden Geräuschen, ist eine Verspätungs
-    Periode per Zufall ausgewählt, in dem vom Zeitschieber eingestellten Bereich.
-  </string>
-    <string name="appintro__library_title">Erstellen Sie Ihre perfekten Umgebungen</string>
-    <string name="appintro__timer_desc">
-    Ein bisschen Stimmung kann helfen um sofort einzuschlafen. Benutze den Einschlaf timer um Noice
-    von selbst auszuschalten. Auf die gleiche Weise benutze den Aufwach timer um den Alarm zu setzen, um in einer angenehmen Stimmung aufzuwachen.
-  </string>
-    <string name="appintro__timer_title">Schwierigkeiten einzuschlafen oder aufzuwachen?</string>
+    <string name="appintro__library_desc">Mit dem Lautstärkeregler können Sie die Lautstärke der einzelnen Töne einstellen. Einige Töne werden nahtlos wiederholt, während andere mit einer zufälligen Verzögerung wiederholt werden.</string>
+    <string name="appintro__library_title">Gestalten Sie Ihre ideale Umgebung</string>
+    <string name="appintro__timer_desc">Mit dem Sleep Timer von Noice schlafen Sie mühelos ein und wachen mit den achtsamen Alarmen in einer ruhigen Umgebung auf.</string>
+    <string name="appintro__timer_title">Verändern Sie Ihren Schlaf mit Noice</string>
     <string name="support_development__donate">Spenden</string>
-    <string name="support_development__donate_google_play_description">Deine Spende wird sicher über Google Play abgewickelt. Je nach Land _können_ weitere Steuern zum Endbetrag hinzukommen.</string>
-    <string name="support_development__donate_thank_you_description">
-    Wir danken dir von ganzem Herzen für deine großzügige Spende an das Noice-Projekt.
-  </string>
+    <string name="support_development__donate_google_play_description">Ihre Zahlung wird sicher von Google Play verarbeitet. Bitte beachten Sie, dass je nach Standort zusätzliche Steuern auf den Endbetrag aufgeschlagen werden _können_.</string>
+    <string name="support_development__donate_thank_you_description">Ihr großzügiger Beitrag zum Noice-Projekt wird sehr geschätzt und wird uns helfen, die App für Sie weiter zu verbessern.</string>
     <string name="support_development__share">Mit Freunden teilen</string>
-    <string name="support_development__share_description">Noice mit Freunden zu teilen ist fast genau so wichtig wie Geld zu spenden. Erzähle auch gerne deinen Freunden von uns. Mit mehr Nutzern können wir Feedback aus vielen unterschiedlichen Perspektiven erhalten, welches uns dabei hilft unsere Dienste noch besser zu machen.</string>
+    <string name="support_development__share_description">Ihre Unterstützung muss nicht bei einer Spende enden. Du kannst uns auch helfen, indem du Noice an deine Freunde weitergibst. Je mehr Nutzer wir haben, desto mehr Feedback erhalten wir und desto besser können wir unseren Service für alle machen.</string>
     <string name="cast_media">Mit Chromecast verbinden</string>
-    <string name="in_app_feedback__description">
-    Wir würden uns freuen von Ihnen über die App zu hören. Bitte nehmen Sie sich einen Moment um das Github Repositorie zu besuchen.
-    Wenn Sie die App nicht mögen, bitte erwägen Sie ein Issue aufzumachen um Ihre Bedenken zu erklären.
-    Andererseits, bitte makieren Sie das Projekt um Ihre Liebe und Unterstützung zu zeigen.
-  </string>
-    <string name="in_app_feedback__title">Senden Sie eine Bewertung</string>
+    <string name="in_app_feedback__description">Wir würden uns sehr über Dein Feedback freuen. Bitte nimm dir einen Moment, um unser Github-Repository zu besuchen. Wenn die App Dir nicht gefällt, kannst du ein Issue eröffnen und deine Kritik erläutern. Ansonsten unterstütze uns gerne, indem Du uns einen Stern gibst.</string>
+    <string name="in_app_feedback__title">Bewertung schreiben</string>
     <string name="later">Später</string>
     <string name="never">Nie</string>
     <string name="notification_channel_default__description">Steuerung der Medienwiedergabe</string>
@@ -87,10 +69,10 @@
     <string name="app_shortcut_creation_failed">Das Hinzufügen der Voreinstellung zu Anwendungsverknüpfungen ist fehlgeschlagen!</string>
     <string name="remove_from_app_shortcuts">Aus Anwendungsverknüpfungen entfernen</string>
     <string name="add_to_app_shortcuts">Zu Anwendungsverknüpfungen hinzufügen</string>
-    <string name="pinned_shortcut_created">Dem Startbildschirm wurde eine Verknüpfung hinzugefügt!</string>
+    <string name="pinned_shortcut_created">Verknüpfung zum Startbildschirm hinzugefügt!</string>
     <string name="pinned_shortcut_creation_failed">Fehler beim Hinzufügen der Verknüpfung zum Startbildschirm!</string>
-    <string name="appearance">Aussehen</string>
-    <string name="presets_as_home_screen">„Voreinstellungen“ als Startbildschirm</string>
+    <string name="appearance">Design</string>
+    <string name="presets_as_home_screen">Voreinstellungen als Startbildschirm</string>
     <string name="settings">Einstellungen</string>
     <string name="app_shortcut_created">Voreinstellung wurde zu den Anwendungsverknüpfungen hinzugefügt!</string>
     <string name="app_shortcut_removed">Die Voreinstellung wurde aus den Anwendungsverknüpfungen entfernt!</string>
@@ -99,18 +81,18 @@
     <string name="skip_to_prev">Vorherige Voreinstellung</string>
     <string name="invalid_import_file_format">Das Format der Importdatei ist ungültig!</string>
     <string name="failed_to_read_file">Fehler beim Lesen der ausgewählten Datei!</string>
-    <string name="failed_to_write_file">Fehler beim Schreiben in die ausgewählte Datei!</string>
+    <string name="failed_to_write_file">Entschuldigung, wir konnten nicht in die ausgewählte Datei schreiben!</string>
     <string name="remove_all_app_shortcuts">Alle Anwendungsverknüpfungen entfernen</string>
-    <string name="import_presets_summary">Das Importieren von gespeicherten Voreinstellungen aus einer externen Datei überschreibt vorhandene Voreinstellungen, falls vorhanden</string>
+    <string name="import_presets_summary">Das Importieren gespeicherter Voreinstellungen aus einer externen Datei überschreibt die akutellen Voreinstellungen</string>
     <string name="import_presets">Aus einer Datei importieren</string>
-    <string name="export_presets_summary">Aktuelle Schnappschusse der gespeicherten Voreinstellungen in eine externe Datei exportieren</string>
+    <string name="export_presets_summary">Aktuelle Voreinstellungen in eine externe Datei exportieren</string>
     <string name="export_presets">In eine Datei exportieren</string>
     <string name="share">Teilen</string>
-    <string name="ignore_audio_focus_changes_summary_on">Nicht reagieren, wenn andere Anwendungen Audio abspielen</string>
-    <string name="ignore_audio_focus_changes_summary_off">Pausieren, wenn andere Anwendungen Audio abspielen</string>
+    <string name="ignore_audio_focus_changes_summary_on">Noice laufen lassen, wenn andere Anwendungen Audio abspielen</string>
+    <string name="ignore_audio_focus_changes_summary_off">Noice pausieren, wenn andere Anwendungen Audio abspielen</string>
     <string name="ignore_audio_focus_changes">Änderungen des Audiofokus ignorieren</string>
-    <string name="all_app_shortcuts_removed">Alle Anwendungsverknüpfungen wurden entfernt!</string>
-    <string name="remove_all_app_shortcuts_confirmation">Es werden alle voreingestellten Verknüpfungen aus dem Anwendungsverknüpfungsmenü entfernt. Möchten Sie fortfahren\?</string>
+    <string name="all_app_shortcuts_removed">Alle Verknüpfungen wurden entfernt!</string>
+    <string name="remove_all_app_shortcuts_confirmation">Bist Du sicher, dass alle Voreinstellungs-Verknüpfungen entfernt werden sollen\? Dies kann nicht rückgängig gemacht werden.</string>
     <string name="should_display_sound_icons">Tonsymbole anzeigen</string>
     <string name="decline">Ablehnen</string>
     <string name="accept">Akzeptieren</string>
@@ -128,10 +110,10 @@
     <string name="share_usage_data_consent_title">Präferenzen beim Teilen von Daten</string>
     <string name="import_presets_successful">Gespeicherte Voreinstellungen wurden erfolgreich aus der Datei geladen!</string>
     <string name="export_presets_successful">Gespeicherte Voreinstellungen wurden erfolgreich exportiert!</string>
-    <string name="sound_fade_in_duration_summary">Dauer fürs Überblenden (in Sekunden)</string>
-    <string name="sound_fade_in_duration">Fade-In-Dauer des Geräuschs</string>
+    <string name="sound_fade_in_duration_summary">Dauer für das Überblenden in Sekunden</string>
+    <string name="sound_fade_in_duration">Dauer des Einblendens</string>
     <string name="created_by">Erstellt von</string>
-    <string name="support_development__donate_description">Wenn Sie das Premium-Abonnement nicht erworben haben, können Sie eine einmalige Zahlung leisten. Sie hilft uns, die Entwicklung der kostenlosen Funktionen aufrechtzuerhalten und sie für immer werbefrei zu halten.</string>
+    <string name="support_development__donate_description">Unterstützen Sie die Entwicklung von Noice und halten Sie die App mit einer einmaligen Spende werbefrei. Ihr Beitrag wird uns helfen, die App für Sie zu verbessern.</string>
     <string name="sign_up_message">Bitte geben Sie Ihren Namen und Ihre E-Mail-Adresse ein, um sich anzumelden.</string>
     <string name="sign_in_link_tip">Bitte öffnen Sie den erhaltenen Link mit Noice, um den Anmeldevorgang abzuschließen.</string>
     <string name="account_locked_error">Ihre E-Mail ist vorübergehend für Anmeldeversuche bis %1$s gesperrt.</string>
@@ -141,8 +123,8 @@
     <string name="sign_in_token_error">Der Anmeldelink scheint ungültig zu sein. Möglicherweise ist er abgelaufen. Bitte versuchen Sie es erneut!</string>
     <string name="sign_up">Registrieren</string>
     <string name="update_details">Details aktualisieren</string>
-    <string name="sound_fade_out_duration_summary">Dauer der Tonausblendung (in Sekunden)</string>
-    <string name="sound_fade_out_duration">Dauer der Tonausblendung</string>
+    <string name="sound_fade_out_duration_summary">Dauer des Ausblendens in Sekunden</string>
+    <string name="sound_fade_out_duration">Dauer des Ausblendens</string>
     <string name="unknown_error">Ein unbekannter Fehler ist aufgetreten.</string>
     <string name="cont">Fortfahren</string>
     <string name="welcome">Willkommen!</string>
@@ -179,11 +161,10 @@
     <string name="processing_payment">Bearbeite Zahlung</string>
     <string name="total_price">Insgesamt %1$s</string>
     <string name="confirming_payment">Bestätige Zahlung</string>
-    <string name="subscription_payment_cancelled">Die Zahlung des Abonnements wurde storniert!</string>
     <string name="quarterly">Vierteljährlich</string>
     <string name="offline">Du bist offline</string>
     <string name="premium">Premium</string>
-    <string name="random_preset_description">Die erzeugte Voreinstellung enthält wahrscheinlich Klänge mit den gewählten Schlüsselwörtern. Außerdem wird bei intensiven Voreinstellungen versucht, mehrere Sounds gleichzeitig abzuspielen.</string>
+    <string name="random_preset_description">Die Voreinstellung enthält Klänge mit den von ihnen gewählten Schlüsselwörtern und bei intensiven Voreinstellungen werden mehrere Sounds gleichzeitig abgespielt.</string>
     <string name="sign_in_to_continue">Bitte logge dich ein oder erstelle ein Konto um fortzufahren.</string>
     <string name="duplicate_email_error">Die eingegebene E-Mail ist bereits mit einem anderen Konto verknüpft.</string>
     <string name="remove_sound_download_confirmation">Bestätigen Sie das Entfernen eines für die Offline-Wiedergabe heruntergeladenen Tons\?</string>
@@ -237,7 +218,7 @@
     <string name="stopping">Stoppe</string>
     <string name="cancelling_subscription">Abonnement kündigen</string>
     <string name="subscription_payment_pending">Die Zahlung für diesen Kauf steht noch aus.</string>
-    <string name="bi_yearly">Alle zwei Jahre</string>
+    <string name="bi_yearly">Halbjährlich</string>
     <string name="audio_quality">Audio Qualität</string>
     <string name="audio_quality_low">Niedrig (128 kbps)</string>
     <string name="account_details_update_error">Oh nein! Wir konnten Ihre Daten nicht aktualisieren. %1$s Bitte versuchen Sie es erneut!</string>
@@ -329,4 +310,13 @@
     <string name="alarm_snooze_length_summary">Zeitdauer in Minuten für Schlummeralarme</string>
     <string name="notification_channel_missed_alarms__description">Benachrichtigungen, die angezeigt werden, wenn geplante Alarme nach Ablauf der Erinnerungsdauer gestummt werden.</string>
     <string name="alarm_gradually_increase_volume_summary">Dauer in Minuten für die schrittweise Erhöhung der Lautstärke bei Auslösung eines Alarms</string>
+    <string name="more_sounds">Mehr Sounds</string>
+    <string name="more_sounds_desc">Setze das volle Potenzial deiner Entspannung &amp; Fokuserlebnis frei mit Noice Premium - mit %1$s weiteren Sounds.</string>
+    <string name="more_sound_clips">Mehr Audioclips</string>
+    <string name="natural_variations">Natürliche Variationen</string>
+    <string name="has_more_clips_with_premium">Dieser Sound bietet mehr Audio-Clips mit Noice Premium.</string>
+    <string name="more_sound_clips_desc">Verleihen Sie Ihrem Hören eine neue Dimension mit zusätzlichen Audioclips in Sounds, um sie einzigartiger und weniger eintönig zu machen.</string>
+    <string name="blog">Blog</string>
+    <string name="offline_playback">Offline-Wiedergabe</string>
+    <string name="search_preset">Voreinstellungen durchsuchen</string>
 </resources>

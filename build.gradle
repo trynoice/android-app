@@ -18,15 +18,15 @@ plugins {
 project.ext {
   deps = [
     aboutLibrariesVersion: "${aboutLibrariesVersion}",
-    androidXCoreVersion  : '1.10.0',
-    coroutinesVersion    : '1.6.4',
+    androidXCoreVersion  : '1.10.1',
+    coroutinesVersion    : '1.7.3',
     hiltVersion          : "${hiltVersion}",
     kotlinVersion        : "${kotlinVersion}",
     lifecycleVersion     : '2.6.1',
     navVersion           : "${navVersion}",
 
     junitVersion         : '4.13.2',
-    robolectricVersion   : '4.9.2',
+    robolectricVersion   : '4.10.3',
     testCoreVersion      : '1.5.0',
   ]
 }
@@ -46,21 +46,95 @@ subprojects {
       }
 
       compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
       }
 
       kotlin {
-        jvmToolchain 11
+        jvmToolchain 17
       }
 
       kotlinOptions {
         freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
       }
+
+      testOptions {
+        unitTests {
+          includeAndroidResources = true
+        }
+      }
+    }
+
+    jacoco {
+      toolVersion = '0.8.8'
+    }
+
+    subproject.tasks.withType(Test).configureEach {
+      testlogger.theme 'mocha'
+      jacoco {
+        includeNoLocationClasses = true
+        excludes = ['jdk.internal.*']
+      }
+    }
+
+    subproject.afterEvaluate {
+      def variants = []
+      if (subproject.plugins.hasPlugin("com.android.application")) {
+        variants += subproject.android.applicationVariants
+      } else if (subproject.plugins.hasPlugin("com.android.library")) {
+        variants += subproject.android.libraryVariants
+      }
+
+      variants.forEach { variant ->
+        def taskName = "test${variant.name.capitalize()}Coverage"
+        def testTask = "test${variant.name.capitalize()}UnitTest"
+        def srcDirs = ["src/main/java"]
+        if (variant.buildType != null) {
+          srcDirs += "src/${variant.buildType.name}/java" // e.g. debug
+        }
+
+        if (variant.flavorName != null) {
+          srcDirs += "src/${variant.flavorName}/java" // e.g. free
+        }
+
+        if (variant.buildType != null && variant.flavorName != null) {
+          srcDirs += "src/${variant.name}/java" // e.g. freeDebug
+        }
+
+        subproject.tasks.register(taskName, JacocoReport) {
+          group = 'Reporting'
+          description = "Generate Jacoco coverage reports for the ${variant.name} build variant."
+          dependsOn += testTask
+          sourceDirectories.setFrom(files(srcDirs))
+          classDirectories.setFrom(files(
+            fileTree(
+              dir: "${project.buildDir}/tmp/kotlin-classes/${variant.name}",
+              excludes: ['**/R.class',
+                         '**/R$*.class',
+                         '**/*$ViewInjector*.*',
+                         '**/*$ViewBinder*.*',
+                         '**/BuildConfig.*',
+                         '**/Manifest*.*']
+            ))
+          )
+
+          executionData.setFrom(files(
+            fileTree(subproject.buildDir)
+              .include("jacoco/**/${testTask}.exec") // for api-client..?
+              .include("outputs/unit_test_code_coverage/**/${testTask}.exec") // for app..?
+            // and idk why they differ
+          ))
+
+          reports {
+            xml.required = true
+            html.required = true
+          }
+        }
+      }
     }
   }
 }
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
   delete rootProject.buildDir
 }

@@ -19,7 +19,7 @@
     <string name="volume">音量</string>
     <string name="sleep_timer">睡眠倒數</string>
     <string name="cancel">取消</string>
-    <string name="preset_saved">預設音組已儲存！</string>
+    <string name="preset_saved">太棒了！你的預設音組已儲存！</string>
     <string name="pause">暫停</string>
     <string name="save_preset">儲存預設音組</string>
     <string name="save">儲存</string>
@@ -41,10 +41,10 @@
     <string name="ignore_audio_focus_changes">忽略音訊焦點變化</string>
     <string name="share_usage_data_consent_title">資料共享偏好設定</string>
     <string name="others">其他</string>
-    <string name="preset_deleted">預設音組已刪除！</string>
+    <string name="preset_deleted">你的預設音組已成功刪除！</string>
     <string name="appearance">外觀</string>
     <string name="open_context_menu">打開環境選單</string>
-    <string name="preset_delete_confirmation">確認刪除 %s\?</string>
+    <string name="preset_delete_confirmation">確認要刪除 %1$s？刪除後將不能復原。</string>
     <string name="reset">重置</string>
     <string name="select_preset">選擇預設音組</string>
     <string name="app_theme_system_default">系統預設</string>
@@ -70,7 +70,7 @@
     <string name="export_presets">匯出成檔案</string>
     <string name="should_display_sound_icons">顯示聲音圖標</string>
     <string name="accept">同意</string>
-    <string name="preset_already_exists">已存在具有指定名稱的預設音組！</string>
+    <string name="preset_already_exists">已存在該名稱的預設音組，請試另一個！</string>
     <string name="preset_info__description">播放聲音並使用庫中的“保存”按鈕來創建新的預設音組。</string>
     <string name="pinned_shortcuts_not_supported">您的默認啓動器不支援新增捷徑。</string>
     <string name="presets_as_home_screen_summary">在應用程序啓動時顯示\"預設音組\"（需要重新啓動應用程序）</string>
@@ -154,8 +154,8 @@
     <string name="sign_out">登出</string>
     <string name="welcome_back">歡迎回來！</string>
     <string name="offline">您已離線</string>
-    <string name="preset_name_cannot_be_empty">預設音組名稱不能爲空！</string>
-    <string name="preset_does_not_exist">預設音組不存在。 它可能已經被刪除了！</string>
+    <string name="preset_name_cannot_be_empty">預設音組名稱不能爲空，請輸入一個名稱！</string>
+    <string name="preset_does_not_exist">看來你的預設音組已不存在，它可能已經被刪除了。</string>
     <string name="sleep_timer_description">當計時器結束時，Noice將自動關閉， 使用下面的按鈕來新增時間並啓動計時器。</string>
     <string name="appintro__presets_desc">播放一些聲音後，您可以使用底部角落的保存按鈕來保存您的混音。 要重複使用存儲的混音，請從底部欄中轉到預設音組列表。</string>
     <string name="appintro__timer_desc">一點氛圍可以幫助您輕鬆入眠，使用睡眠定時器讓 Noice 自行關閉。 同樣的，想要在平靜的環境中醒來，請設置喚醒鬧鐘。</string>
@@ -171,7 +171,7 @@
     <string name="sign_in">登入</string>
     <string name="retry">重試</string>
     <string name="sign_in_email_sent">如果此電子郵件屬於已註冊帳戶，我們已通過電子郵件將登入連結發送至\"%1$s\"。</string>
-    <string name="random_preset_description">生成的預設音組可能包含有所選關鍵字的聲音。 此外，強烈的預設音組將試圖同時播放更多的聲音。</string>
+    <string name="random_preset_description">預設音組會有所選關鍵字的聲音。 此外，強烈的預設音組將試圖同時播放更多的聲音。</string>
     <string name="library_load_error">Oops！ 我們無法獲取聲音庫。 %1$s</string>
     <string name="preset_url_invalid">預設網址似乎無效！</string>
     <string name="playing">播放中</string>
@@ -190,7 +190,6 @@
     <string name="user_already_subscribed">你已經訂閱了。</string>
     <string name="confirming_payment">確認付款</string>
     <string name="subscription_payment_confirmation_failed">Uh-oh！ 我們在等待付款確認時遇到了一些麻煩。 這可能是由於網絡錯誤或支付提供商的延遲造成的。 我們會在收到提供商的消息後立即更新您的訂閱狀態。 請稍後檢查您的訂閱狀態。</string>
-    <string name="subscription_payment_cancelled">訂閱付款已取消！</string>
     <string name="subscription_purchases">訂閱購買</string>
     <string name="ends_on">結束於 %1$s</string>
     <string name="started_on">開始於 %1$s</string>

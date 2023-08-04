@@ -24,16 +24,16 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.billing.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseItemBinding
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchaseLoadingItemBinding
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchasesFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,7 +49,7 @@ import javax.inject.Inject
 class SubscriptionPurchasesFragment : Fragment(), SubscriptionPurchaseViewHolder.ViewController {
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private lateinit var binding: SubscriptionPurchasesFragmentBinding
   private val viewModel: SubscriptionPurchasesViewModel by viewModels()
@@ -121,7 +121,7 @@ class SubscriptionPurchasesFragment : Fragment(), SubscriptionPurchaseViewHolder
     }
 
     viewModel.createPager(currencyCode)
-    analyticsProvider.setCurrentScreen(this::class)
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 
   override fun onSubscriptionManageClicked(subscription: Subscription) {
@@ -287,7 +287,7 @@ class SubscriptionPurchaseViewHolder(
     if (s.isActive) {
       binding.manage.isVisible = s.plan.provider == SubscriptionPlan.PROVIDER_STRIPE
       binding.manage.setOnClickListener { viewController.onSubscriptionManageClicked(s) }
-      binding.changePlan.isVisible = subscriptionBillingProvider.canUpgrade(s)
+      binding.changePlan.isVisible = subscriptionBillingProvider.isUpgradeable(s)
       binding.changePlan.setOnClickListener { viewController.onSubscriptionUpgradeClicked(s) }
       binding.cancel.isVisible = s.isAutoRenewing
       binding.cancel.setOnClickListener { viewController.onSubscriptionCancelClicked(s) }

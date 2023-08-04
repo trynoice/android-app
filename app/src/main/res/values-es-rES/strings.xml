@@ -9,7 +9,7 @@
     <string name="sleep_timer">Temporizador</string>
     <string name="support_development">Apoyar al desarrollador</string>
     <string name="cancel">Cancelar</string>
-    <string name="dismiss">Descartar</string>
+    <string name="dismiss">Desestimar</string>
     <string name="name">Nombre</string>
     <string name="pause">Pausar</string>
     <string name="preset_already_exists">Ya existe un ajuste preestablecido con ese nombre. ¡Prueba uno diferente!</string>
@@ -99,7 +99,7 @@
     <string name="should_share_usage_data">Compartir datos de uso</string>
     <string name="others">Otros</string>
     <string name="accept">Aceptar</string>
-    <string name="decline">Descartar</string>
+    <string name="decline">Rechazar</string>
     <string name="created_by">Creado por</string>
     <string name="payment_pending">Su pago está siendo procesado. Le notificaremos una vez que esté completo.</string>
     <string name="should_display_sound_icons">Mostrar iconos de sonido</string>
@@ -119,7 +119,6 @@
     <string name="processing_payment">Procesando el pago</string>
     <string name="sign_out">Cerrar sesión</string>
     <string name="sign_in_to_continue">Inicie sesión o cree una cuenta para continuar.</string>
-    <string name="subscription_payment_cancelled">¡El pago de la suscripción fue cancelado!</string>
     <string name="cancel_subscription_confirmation">¿Estás seguro de que quieres cancelar tu suscripción a Noice Premium\? Tu suscripción terminará al final de tu periodo de facturación actual, que finaliza el %1$s.</string>
     <string name="has_premium_segments">Ofrece más clips de audio con Noice Premium</string>
     <string name="select_a_plan">Seleccionar un plan</string>
@@ -251,11 +250,11 @@
     <string name="audio_quality_medium">Medio (192Kbps)</string>
     <string name="audio_quality_ultra">Ultra (320 kbit/s)</string>
     <string name="library_load_error">¡Oh, vaya! No pudimos acceder y recuperar la libraría de sonidos. %1$s</string>
-    <string name="pausing">En pausa</string>
+    <string name="pausing">Pausa</string>
     <string name="keywords">Palabras clave</string>
     <string name="terms_of_service">Términos de Servicio</string>
     <string name="subscription_plans_load_error">¡Oh, vaya! No pudimos recuperar y mostrar los planes de suscripción. %1$s</string>
-    <string name="paused">En pausa</string>
+    <string name="paused">Pausado</string>
     <string name="stopping">Parando</string>
     <string name="preset_url_invalid">¡La URL pre-definida es inválida!</string>
     <string name="audio_quality">Calidad del audio</string>
@@ -323,4 +322,10 @@
     <string name="natural_variations_desc">Dé vida a sus paisajes sonoros con variaciones de sonido reales y naturales generadas a la carta con nuestra tecnología de sonido de vanguardia.</string>
     <string name="offline_playback_desc">Disfruta de sonidos relajantes en cualquier momento y lugar con las descargas de sonidos sin conexión de Noice, sin necesidad de conexión a Internet.</string>
     <string name="search_preset">Buscar ajustes preestablecidos</string>
+    <string name="whats_new">Novedades</string>
+    <string name="blog">Blog</string>
+    <string name="resources">Recursos</string>
+    <string name="about_linkedin">Siguenos en LinkedIn</string>
+    <string name="now_playing">Reproduciendo</string>
+    <string name="about_github">Haznos destacar en Github</string>
 </resources>

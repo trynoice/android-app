@@ -50,7 +50,7 @@ android {
     }
   }
 
-  flavorDimensions 'tier'
+  flavorDimensions += 'tier'
   productFlavors {
     free {
       dimension 'tier'
@@ -73,19 +73,6 @@ android {
     }
   }
 
-  testOptions {
-    unitTests {
-      includeAndroidResources = true
-      all {
-        testlogger.theme 'mocha'
-        jacoco {
-          includeNoLocationClasses = true
-          excludes = ['jdk.internal.*']
-        }
-      }
-    }
-  }
-
   packagingOptions {
     // https://github.com/Kotlin/kotlinx.coroutines#avoiding-including-the-debug-infrastructure-in-the-resulting-apk
     resources.excludes += "DebugProbesKt.bin"
@@ -93,48 +80,7 @@ android {
 }
 
 project.afterEvaluate {
-  android.applicationVariants.all { variant ->
-    def taskName = "test${variant.name.capitalize()}Coverage"
-    def testTask = "test${variant.name.capitalize()}UnitTest"
-    def srcDirs = ["src/main/java"]
-    if (variant.buildType != null) {
-      srcDirs += "src/${variant.buildType.name}/java" // e.g. debug
-    }
-
-    if (variant.flavorName != null) {
-      srcDirs += "src/${variant.flavorName}/java" // e.g. free
-    }
-
-    if (variant.buildType != null && variant.flavorName != null) {
-      srcDirs += "src/${variant.name}/java" // e.g. freeDebug
-    }
-
-    def classFiles = fileTree(
-      dir: "${project.buildDir}/tmp/kotlin-classes/${variant.name}",
-      excludes: ['**/R.class',
-                 '**/R$*.class',
-                 '**/*$ViewInjector*.*',
-                 '**/*$ViewBinder*.*',
-                 '**/BuildConfig.*',
-                 '**/Manifest*.*']
-    )
-
-    def execFile = "${project.buildDir}/outputs/unit_test_code_coverage/${variant.name}UnitTest/${testTask}.exec"
-    tasks.create(name: taskName, type: JacocoReport, dependsOn: testTask) {
-      group = 'Reporting'
-      description = "Generate Jacoco coverage reports for the ${variant.name} build variant."
-      sourceDirectories.setFrom(files(srcDirs))
-      classDirectories.setFrom(classFiles)
-      executionData.setFrom(files(execFile))
-
-      reports {
-        xml.required = true
-        html.required = true
-      }
-    }
-  }
-
-  tasks.create(name: 'testDebugCoverage', type: JacocoReport) {
+  tasks.register('testDebugCoverage', JacocoReport) {
     group = 'Reporting'
     description = 'Generate Jacoco coverage reports for the all debug build variants.'
 
@@ -146,9 +92,9 @@ project.afterEvaluate {
 
 dependencies {
   def androidXHiltVersion = '1.0.0'
-  def fragmentVersion = '1.5.6'
-  def media3Version = '1.0.0'
-  def roomVersion = '2.5.1'
+  def fragmentVersion = '1.6.1'
+  def media3Version = '1.1.0'
+  def roomVersion = '2.5.2'
   def workManagerVersion = '2.8.1'
 
   def espressoVersion = '3.5.1'
@@ -173,9 +119,9 @@ dependencies {
   implementation "androidx.media3:media3-session:$media3Version"
   implementation "androidx.navigation:navigation-fragment-ktx:$deps.navVersion"
   implementation "androidx.navigation:navigation-ui-ktx:$deps.navVersion"
-  implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
+  implementation 'androidx.paging:paging-runtime-ktx:3.2.0'
   implementation 'androidx.preference:preference-ktx:1.2.0'
-  implementation 'androidx.recyclerview:recyclerview:1.3.0'
+  implementation 'androidx.recyclerview:recyclerview:1.3.1'
   implementation "androidx.room:room-ktx:$roomVersion"
   implementation "androidx.room:room-paging:$roomVersion"
   implementation "androidx.room:room-runtime:$roomVersion"
@@ -184,7 +130,7 @@ dependencies {
   implementation 'com.caverock:androidsvg-aar:1.4'
   implementation 'com.github.AppIntro:AppIntro:6.2.0'
   implementation 'com.google.android.flexbox:flexbox:3.0.0'
-  implementation 'com.google.android.material:material:1.8.0'
+  implementation 'com.google.android.material:material:1.9.0'
   implementation 'com.google.code.gson:gson:2.10.1'
   implementation "com.google.dagger:hilt-android:$deps.hiltVersion"
   implementation "com.mikepenz:aboutlibraries:${deps.aboutLibrariesVersion}"
@@ -193,8 +139,8 @@ dependencies {
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$deps.coroutinesVersion"
   implementation project(":api-client")
 
-  fullImplementation 'androidx.mediarouter:mediarouter:1.3.1'
-  fullImplementation 'com.android.billingclient:billing-ktx:5.2.0'
+  fullImplementation 'androidx.mediarouter:mediarouter:1.4.0'
+  fullImplementation 'com.android.billingclient:billing-ktx:6.0.1'
   fullImplementation 'com.google.android.gms:play-services-base:18.2.0'
   fullImplementation 'com.google.android.gms:play-services-cast-framework:21.3.0'
   fullImplementation 'com.google.android.play:core:1.10.3'

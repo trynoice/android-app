@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.engine.media
 
+import androidx.media3.common.util.Clock
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.test.utils.FakeMediaSourceFactory
 import androidx.media3.test.utils.TestExoPlayerBuilder
@@ -13,6 +14,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import java.util.concurrent.TimeUnit
 import kotlin.time.Duration.Companion.milliseconds
 
 @RunWith(RobolectricTestRunner::class)
@@ -46,7 +48,11 @@ class DefaultMediaPlayerTest {
     assertEquals(1, mediaPlayer.getRemainingItemCount())
 
     RobolectricUtil.runMainLooperUntil { mediaPlayer.state == MediaPlayer.State.PLAYING }
-    RobolectricUtil.runMainLooperUntil { mediaPlayer.state == MediaPlayer.State.IDLE }
+    RobolectricUtil.runMainLooperUntil(
+      { mediaPlayer.state == MediaPlayer.State.IDLE },
+      TimeUnit.SECONDS.toMillis(30),
+      Clock.DEFAULT
+    )
     assertEquals(0, mediaPlayer.getRemainingItemCount())
 
     mediaPlayer.addToPlaylist("https://cdn.test/uri")

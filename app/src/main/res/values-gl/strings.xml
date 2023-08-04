@@ -244,7 +244,6 @@
     <string name="back_online">De volta en liña</string>
     <string name="premium">Premium</string>
     <string name="app">Aplicación</string>
-    <string name="subscription_payment_cancelled">Cancelouse o pago da subscrición!</string>
     <string name="payment_processing_error">Vaia! Produciuse un erro no pago. Non te preocupes! O teu reembolso está en camiño. Se non o ves dentro dunha semana, avísanos.</string>
     <string name="user_already_subscribed">Xa te atopas subscrito.</string>
     <string name="confirming_payment">Pago confirmado</string>
@@ -321,4 +320,8 @@
     <string name="unlimited_alarms">Alarmas ilimitadas</string>
     <string name="unlimited_alarms_desc">Aumenta a túa rutina matinal con Noice Premium: programa un número ilimitado de alarmas para comezar o día de xeito personalizado e tranquilo.</string>
     <string name="search_preset">Buscalos axustes iniciais</string>
+    <string name="whats_new">Novas</string>
+    <string name="blog">Bitácora</string>
+    <string name="resources">Recursos</string>
+    <string name="about_linkedin">Síguenos en LinkedIn</string>
 </resources>

@@ -65,7 +65,7 @@ class SoundRepository @Inject constructor(
         else -> e
       }
     },
-  )
+  ).flowOn(appDispatchers.io)
 
   /**
    * Returns a [Flow] that emits the [Sound] with the given [soundId] as a [Resource].
@@ -93,7 +93,7 @@ class SoundRepository @Inject constructor(
         else -> e
       }
     },
-  )
+  ).flowOn(appDispatchers.io)
 
   /**
    * Returns a [Flow] that emits the count of premium [Sound]s in the current library.
@@ -117,7 +117,7 @@ class SoundRepository @Inject constructor(
         else -> e
       }
     },
-  )
+  ).flowOn(appDispatchers.io)
 
   /**
    * Returns a [Flow] that emits a list of all [SoundTag]s as a [Resource].
@@ -141,7 +141,7 @@ class SoundRepository @Inject constructor(
         else -> e
       }
     },
-  )
+  ).flowOn(appDispatchers.io)
 
   /**
    * @return a map of CDN paths (relative to `library-manifest.json`) to their md5sums.
@@ -190,15 +190,17 @@ class SoundRepository @Inject constructor(
 
   private suspend fun loadLibraryManifestInCacheStore() {
     val manifest = apiClient.cdn().libraryManifest()
-    val cacheUpdatedAt = appDb.sounds().getLibraryUpdateTime()
-    if (manifest.updatedAt == cacheUpdatedAt) {
-      return
-    }
-
-    val groups = manifest.groups.associate { it.id to it.toRoomDto() }
-    val tags = manifest.tags.toRoomDto()
     appDb.withTransaction {
+      val cacheUpdatedAt = appDb.sounds().getLibraryUpdateTime()
+      if (manifest.updatedAt == cacheUpdatedAt) {
+        return@withTransaction
+      }
+
+      appDb.sounds().removeAll()
       appDb.sounds().saveLibraryUpdateTime(LibraryUpdateTimeDto(manifest.updatedAt))
+
+      val groups = manifest.groups.associate { it.id to it.toRoomDto() }
+      val tags = manifest.tags.toRoomDto()
       appDb.sounds().saveGroups(groups.values.toList())
       appDb.sounds().saveTags(tags)
 

@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.RedeemGiftCardFormFragmentBinding
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -22,7 +22,7 @@ import javax.inject.Inject
 class RedeemGiftCardFormFragment : BottomSheetDialogFragment() {
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private lateinit var binding: RedeemGiftCardFormFragmentBinding
   private val viewModel: RedeemGiftCardFormViewModel by viewModels()
@@ -44,7 +44,7 @@ class RedeemGiftCardFormFragment : BottomSheetDialogFragment() {
       mainNavHost.navigate(R.id.gift_card_details, args.toBundle())
     }
 
-    analyticsProvider.setCurrentScreen(this::class)
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 }
 

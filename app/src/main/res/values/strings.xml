@@ -160,7 +160,7 @@
     <string name="premium">Premium</string>
     <string name="monthly">Monthly</string>
     <string name="quarterly">Quarterly</string>
-    <string name="bi_yearly">Bi-yearly</string>
+    <string name="bi_yearly">Half-yearly</string>
     <string name="yearly">Yearly</string>
     <plurals name="n_months">
         <item quantity="one">%1$d month</item>
@@ -180,7 +180,6 @@
     <string name="confirming_payment">Confirming payment</string>
     <string name="subscription_payment_confirmation_failed">Uh-oh! We hit a snag while confirming your payment. It could be a network glitch or a delay from the payment provider. Rest assured that we\'ll update your subscription status as soon as we hear back about the payment. Please check again later!</string>
     <string name="subscription_payment_complete">Congratulations! Your Noice Premium subscription is now live and ready to elevate your listening experience.</string>
-    <string name="subscription_payment_cancelled">The subscription payment was cancelled!</string>
     <string name="subscription_purchases">Subscription purchases</string>
     <string name="renews_on">Renews on %1$s</string>
     <string name="ends_on">Ends on %1$s</string>

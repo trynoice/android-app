@@ -21,18 +21,16 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
+import com.github.ashutoshgngwr.noice.billing.DonationFlowProvider
+import com.github.ashutoshgngwr.noice.billing.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.databinding.MainActivityBinding
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
-import com.github.ashutoshgngwr.noice.fragment.DonationPurchasedCallbackFragmentArgs
 import com.github.ashutoshgngwr.noice.fragment.HomeFragmentArgs
-import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragment
-import com.github.ashutoshgngwr.noice.fragment.SubscriptionBillingCallbackFragmentArgs
+import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchasedFragmentArgs
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchasesFragment
-import com.github.ashutoshgngwr.noice.provider.DonationFragmentProvider
-import com.github.ashutoshgngwr.noice.provider.InAppBillingProvider
-import com.github.ashutoshgngwr.noice.provider.ReviewFlowProvider
+import com.github.ashutoshgngwr.noice.metrics.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
@@ -47,7 +45,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener {
+class MainActivity : AppCompatActivity(), SubscriptionBillingProvider.Listener {
 
   companion object {
     /**
@@ -70,16 +68,19 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
   private lateinit var navController: NavController
 
   @set:Inject
-  internal lateinit var reviewFlowProvider: ReviewFlowProvider
+  internal lateinit var donationFlowProvider: DonationFlowProvider
 
   @set:Inject
-  internal lateinit var billingProvider: InAppBillingProvider
+  internal lateinit var subscriptionBillingProvider: SubscriptionBillingProvider
 
   @set:Inject
   internal lateinit var playbackServiceController: SoundPlaybackService.Controller
 
   @set:Inject
   internal lateinit var presetRepository: PresetRepository
+
+  @set:Inject
+  internal lateinit var reviewFlowProvider: ReviewFlowProvider
 
   /**
    * indicates whether the activity was delivered a new intent since it was last resumed.
@@ -115,6 +116,7 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
     reviewFlowProvider.init(this)
     hasNewIntent = true
     initOfflineIndicator()
+    donationFlowProvider.setCallbackFragmentHost(this)
   }
 
   private fun maybeShowDataCollectionConsent() {
@@ -185,7 +187,7 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
 
   override fun onResume() {
     super.onResume()
-    billingProvider.setPurchaseListener(this)
+    subscriptionBillingProvider.setListener(this)
 
     // handle the new intent here since onResume() is guaranteed to be called after onNewIntent().
     // https://developer.android.com/reference/android/app/Activity#onNewIntent(android.content.Intent)
@@ -227,14 +229,6 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
         }
       }
 
-      Intent.ACTION_VIEW == intent.action &&
-        SubscriptionBillingCallbackFragment.canHandleUri(dataString) -> {
-
-        intent.data
-          ?.let { SubscriptionBillingCallbackFragment.args(it) }
-          ?.also { navController.navigate(R.id.subscription_billing_callback, it) }
-      }
-
       Intent.ACTION_VIEW == intent.action && SubscriptionPurchasesFragment.URI == dataString -> {
         navController.navigate(R.id.subscription_purchases)
       }
@@ -242,7 +236,7 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
   }
 
   override fun onPause() {
-    billingProvider.setPurchaseListener(null)
+    subscriptionBillingProvider.removeListener()
     super.onPause()
   }
 
@@ -250,27 +244,18 @@ class MainActivity : AppCompatActivity(), InAppBillingProvider.PurchaseListener 
     return navController.navigateUp() || super.onSupportNavigateUp()
   }
 
-  override fun onPending(purchase: InAppBillingProvider.Purchase) {
-    SnackBar.info(binding.mainNavHostFragment, R.string.payment_pending)
-      .setAnchorView(findSnackBarAnchorView())
-      .show()
+  override fun onSubscriptionPurchasePending(subscriptionId: Long) {
+    DialogFragment.show(supportFragmentManager) {
+      title(R.string.processing_payment)
+      message(R.string.payment_pending)
+      positiveButton(R.string.okay)
+    }
   }
 
-  override fun onComplete(purchase: InAppBillingProvider.Purchase) {
-    if (DonationFragmentProvider.IN_APP_DONATION_PRODUCTS.containsAll(purchase.productIds)) {
-      navController.navigate(
-        R.id.donation_purchased_callback,
-        DonationPurchasedCallbackFragmentArgs(purchase).toBundle()
-      )
-    } else if (purchase.obfuscatedAccountId?.toLongOrNull() != null) {
-      navController.navigate(
-        R.id.subscription_billing_callback,
-        SubscriptionBillingCallbackFragmentArgs(
-          SubscriptionBillingCallbackFragment.ACTION_SUCCESS,
-          purchase.obfuscatedAccountId.toLong(),
-        ).toBundle(),
-      )
-    }
+  override fun onSubscriptionPurchaseComplete(subscriptionId: Long) {
+    SubscriptionPurchasedFragmentArgs(subscriptionId)
+      .toBundle()
+      .also { navController.navigate(R.id.subscription_purchased, it) }
   }
 
   fun findSnackBarAnchorView(): View? {

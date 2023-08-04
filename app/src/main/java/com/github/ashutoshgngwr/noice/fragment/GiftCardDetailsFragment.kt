@@ -15,8 +15,8 @@ import com.github.ashutoshgngwr.noice.databinding.GiftCardDetailsFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.models.GiftCard
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.GiftCardNotFoundError
@@ -38,7 +38,7 @@ import javax.inject.Inject
 class GiftCardDetailsFragment : BottomSheetDialogFragment() {
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private lateinit var binding: GiftCardDetailsFragmentBinding
   private val viewModel: GiftCardDetailsViewModel by viewModels()
@@ -84,7 +84,7 @@ class GiftCardDetailsFragment : BottomSheetDialogFragment() {
         }
     }
 
-    analyticsProvider.setCurrentScreen(this::class)
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 }
 

@@ -180,7 +180,7 @@
     <string name="back_online">Повернутися в онлайн-режим</string>
     <string name="total_price">Усього %1$s</string>
     <string name="quarterly">Щоквартально</string>
-    <string name="bi_yearly">Раз на два роки</string>
+    <string name="bi_yearly">Раз на півроку</string>
     <string name="yearly">Щорічно</string>
     <string name="monthly_price">%1$s на місяць</string>
     <string name="benefits">Переваги</string>
@@ -189,7 +189,6 @@
     <string name="get_premium">Отримати преміум</string>
     <string name="initialising_subscription">Ініціалізація передплати</string>
     <string name="subscription_payment_complete">Вітаємо! Ваша передплата Noice Premium вже активна і готова поліпшити ваші відчуття від прослуховування.</string>
-    <string name="subscription_payment_cancelled">Оплату передплати скасовано!</string>
     <string name="subscription_purchases">Покупки за передплатою</string>
     <string name="renews_on">Поновлюється %1$s</string>
     <string name="ends_on">Закінчується %1$s</string>
@@ -325,4 +324,10 @@
     <string name="unlimited_alarms">Необмежена кількість будильників</string>
     <string name="hd_audio_desc">Відчуйте шум, як ніколи раніше, з можливістю прослуховування звуків у форматі MP3 з бітрейтом до 320 кбіт/с, що забезпечує кришталево чистий, високоточний звук.</string>
     <string name="search_preset">Пошук поєднань</string>
+    <string name="blog">Блог</string>
+    <string name="whats_new">Що нового</string>
+    <string name="resources">Ресурси</string>
+    <string name="about_linkedin">Слідкуйте за нами на LinkedIn</string>
+    <string name="now_playing">Зараз відтворюється</string>
+    <string name="about_github">Додайте нам зірку на GitHub</string>
 </resources>

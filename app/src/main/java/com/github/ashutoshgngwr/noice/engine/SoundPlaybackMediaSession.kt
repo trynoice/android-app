@@ -121,7 +121,7 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
             Player.COMMAND_SET_VOLUME,
             Player.COMMAND_GET_AUDIO_ATTRIBUTES,
             Player.COMMAND_GET_CURRENT_MEDIA_ITEM,
-            Player.COMMAND_GET_MEDIA_ITEMS_METADATA,
+            Player.COMMAND_GET_METADATA,
           )
           .build()
       )
@@ -216,8 +216,12 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
             .buildUpon()
             .removeAll(
               Player.COMMAND_GET_DEVICE_VOLUME,
+              // TODO: Continue using deprecated commands until clarification.
+              //  https://github.com/androidx/media/issues/554
               Player.COMMAND_SET_DEVICE_VOLUME,
               Player.COMMAND_ADJUST_DEVICE_VOLUME,
+              Player.COMMAND_SET_DEVICE_VOLUME_WITH_FLAGS,
+              Player.COMMAND_ADJUST_DEVICE_VOLUME_WITH_FLAGS,
             )
             .build()
         )
@@ -234,13 +238,20 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
             .buildUpon()
             .addAll(
               Player.COMMAND_GET_DEVICE_VOLUME,
+              // TODO: Continue using deprecated commands until clarification.
+              //  https://github.com/androidx/media/issues/554
               Player.COMMAND_SET_DEVICE_VOLUME,
               Player.COMMAND_ADJUST_DEVICE_VOLUME,
+              Player.COMMAND_SET_DEVICE_VOLUME_WITH_FLAGS,
+              Player.COMMAND_ADJUST_DEVICE_VOLUME_WITH_FLAGS,
             )
             .build()
         )
         .setDeviceInfo(
-          DeviceInfo(DeviceInfo.PLAYBACK_TYPE_REMOTE, 0, volumeProvider.getMaxVolume())
+          DeviceInfo.Builder(DeviceInfo.PLAYBACK_TYPE_REMOTE)
+            .setMinVolume(0)
+            .setMaxVolume(volumeProvider.getMaxVolume())
+            .build()
         )
         .setDeviceVolume(volumeProvider.getVolume())
         .setIsDeviceMuted(volumeProvider.isMute())
@@ -284,25 +295,25 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
       return Futures.immediateVoidFuture()
     }
 
-    override fun handleSetDeviceVolume(deviceVolume: Int): ListenableFuture<*> {
+    override fun handleSetDeviceVolume(deviceVolume: Int, flags: Int): ListenableFuture<*> {
       volumeProvider?.setVolume(deviceVolume)
       updateDeviceVolumeState()
       return Futures.immediateVoidFuture()
     }
 
-    override fun handleSetDeviceMuted(muted: Boolean): ListenableFuture<*> {
+    override fun handleSetDeviceMuted(muted: Boolean, flags: Int): ListenableFuture<*> {
       volumeProvider?.setMute(muted)
       updateDeviceVolumeState()
       return Futures.immediateVoidFuture()
     }
 
-    override fun handleIncreaseDeviceVolume(): ListenableFuture<*> {
+    override fun handleIncreaseDeviceVolume(flags: Int): ListenableFuture<*> {
       volumeProvider?.increaseVolume()
       updateDeviceVolumeState()
       return Futures.immediateVoidFuture()
     }
 
-    override fun handleDecreaseDeviceVolume(): ListenableFuture<*> {
+    override fun handleDecreaseDeviceVolume(flags: Int): ListenableFuture<*> {
       volumeProvider?.decreaseVolume()
       updateDeviceVolumeState()
       return Futures.immediateVoidFuture()

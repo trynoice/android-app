@@ -8,7 +8,7 @@ import kotlin.time.Duration
  * [MediaPlayer] declares a simple interface for playing media files using a local audio sink.
  *
  * [MediaPlayer.State] enum represents playback states of the media player. The player initialises
- * in [MediaPlayer.State.PAUSED] state. [SoundPlayer.State.STOPPED] is a terminal state in a media
+ * in [MediaPlayer.State.PAUSED] state. [MediaPlayer.State.STOPPED] is a terminal state in a media
  * player's lifecycle. Once the media player reaches this state, it must not be used any further.
  */
 abstract class MediaPlayer {

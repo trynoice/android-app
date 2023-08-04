@@ -16,8 +16,8 @@ import com.github.ashutoshgngwr.noice.databinding.CancelSubscriptionFragmentBind
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.models.Subscription
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.NetworkError
@@ -40,7 +40,7 @@ import javax.inject.Inject
 class CancelSubscriptionFragment : BottomSheetDialogFragment() {
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private lateinit var binding: CancelSubscriptionFragmentBinding
   private val viewModel: CancelSubscriptionViewModel by viewModels()
@@ -81,7 +81,7 @@ class CancelSubscriptionFragment : BottomSheetDialogFragment() {
         }
     }
 
-    analyticsProvider.setCurrentScreen(this::class)
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 
   private fun dismissAndSetFragmentResult(wasAborted: Boolean) {

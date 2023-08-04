@@ -12,7 +12,7 @@ import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.ext.startCustomTab
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mikepenz.aboutlibraries.LibsConfiguration
 import com.mikepenz.aboutlibraries.entity.Library
@@ -27,7 +27,7 @@ import javax.inject.Inject
 class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private val mainNavController by lazy {
     Navigation.findNavController(requireActivity(), R.id.main_nav_host_fragment)
@@ -199,7 +199,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    analyticsProvider.setCurrentScreen(this::class)
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 
   private fun buildElement(

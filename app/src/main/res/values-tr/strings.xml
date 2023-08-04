@@ -184,7 +184,6 @@
     <string name="total_price">toplam %1$s</string>
     <string name="deleting_account">Hesap siliniyor</string>
     <string name="benefits">Faydalar</string>
-    <string name="subscription_payment_cancelled">Abonelik ödemesi iptal edildi!</string>
     <string name="update_details">Ayrıntıları güncelle</string>
     <string name="plans">Planlar</string>
     <string name="select_a_plan">Bir plan seçin</string>

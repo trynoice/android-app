@@ -1,23 +1,57 @@
-Pour beaucoup de personnes, utiliser une ambiance légère permet de rester calme et se concentrer, parfois cela augmente aussi la productivité ou diminue le stress.
+Pour beaucoup de gens, un petit bruit de fond uniforme est utile pour rester calme et concentré. Dans certains cas, cela augmente également la productivité et réduit les effets du stress et de l'anxiété. Le bruit de fond masque également les acouphènes, calme les nourrissons agités et améliore les expériences de lecture et de méditation.
 
-Noice est une application qui permet de créer des ambiances personnalisées à partir de plusieurs sons pré-enregistrés. Créez un environnement parfait en les combinant pour vous concentrer sur votre travail ou vous relaxer avant de dormir.
+Noice est une application qui vous permet de créer des environnements sonores personnalisés. Il vous permet de combiner différents sons à différents niveaux de volume pour créer des atmosphères ambiantes parfaites. Ces environnements sonores personnalisés vous permettent d'étouffer les distractions et de vous concentrer. Vous pouvez également l'utiliser pour générer une aura sereine et paisible qui vous encourage à vous détendre et à vous endormir.
 
-<b>Fonctionnalités</b>
-- 35 ambiances sonores
-- Google Cast (Chromecast) activé [version Play Store uniquement]
-- Créez et sauvegardez vos mixes personnalisés
-- Minuterie de réveil
-- Minuteur pour accompagner le sommeil
-- Peut accompagner d'autres pistes sonores
-- Volume indépendant pour chaque son
-- Écoute hors connexion
-- Thèmes clair et sombre
+<b>AVANTAGES</b>
+• Réduisez votre stress et votre anxiété grâce à une ambiance personnalisée
+• Détendez-vous et détendez-vous dans un environnement apaisant de votre choix
+• Augmentez votre productivité en remplaçant les bruits gênants
+• Améliorer la concentration en étant dans une atmosphère constante
+• Améliorez votre expérience de lecture et de méditation avec des paysages sonores naturels
+• Calmez vos bébés en utilisant des sons relaxants
+• Masquez vos acouphènes en atténuant le bruit
+• Bloquez les distractions pour vous allonger et vous endormir
+• Commencez vos journées aux sons plus doux de la nature avec des alarmes conscientes
+• Apaiser vos migraines et maux de tête
 
-<b>Bibliothèque d'ambiances</b>
-- Nature (oiseaux, feu, nuit, bord de mer, palmiers, etc.)
-- Météo (pluie, orage, vent, etc.)
-- Urbain (café, bureau, train, avion, etc.)
-- Bruits colorés (blanc, rose, rouge)
+<b>FONCTIONNALITÉS GRATUITES</b>
+• Bibliothèque de sons riche
+• Google Cast ou Chromecast activé*
+• Minuterie de mise en veille automatique
+• Réveil avec jusqu'à 2 alarmes actives
+• Créez et enregistrez vos mix personnalisés
+• Générateur de mélange aléatoire pour s'adapter à toutes vos humeurs
+• Contrôle de volume individuel pour chaque son
+• Jouez à côté d'un lecteur de musique en cours de lecture
+• Utilisez les couleurs Material You Dynamic sur Android 12L ou supérieur
+• Aucune publicité d'aucune sorte
 
-Noice est une application gratuite et open source.
+<i>* Chromecast n'est disponible que lorsque vous téléchargez Noice depuis Google Play.</i>
+
+<b>FONCTIONNALITÉS PREMIUM</b>
+• Débloquez des clips audio supplémentaires dans les sons
+• Variations sonores réelles et naturelles générées à la demande
+• Lecture hors ligne complète
+• Audio de très haute qualité pour le streaming et le téléchargement (jusqu'à 320 kbit/s)
+• Alarmes actives illimitées
+
+<b>BIBLIOTHÈQUE SONORE</b>
+• La vie (oiseaux, grillons, loups, rythme cardiaque, chat ronronnant)
+• Météo (matin ou aube, nuit, pluie, tonnerre)
+• Lieux (feu de joie ou feu de camp, café, bibliothèque, bureau, bord de mer, berge, plongée sous-marine)
+• Voyage (train, avion, bateau grinçant, voiture électrique)
+• Choses (ventilateur, horloge murale, carillons éoliens)
+• Bruit brut (blanc, rose, brownien)
+
+<b>AUTORISATIONS D'APPLICATION</b>
+• <b>afficher les connexions réseau</b> : pour la diffusion et le téléchargement de sons
+• <b>accès complet au réseau</b> : pour communiquer avec les serveurs Noice, diffuser du son et télécharger
+• <b>exécuter au démarrage</b> : pour garantir que les alarmes persistent lors des redémarrages de l'appareil
+• <b>empêcher l'appareil de dormir</b> : pour garder le processeur de l'appareil éveillé afin de fournir une lecture ininterrompue lorsque l'écran s'éteint
+• <b>installer des raccourcis</b> : pour ajouter des raccourcis prédéfinis à l'écran d'accueil
+• <b>exécuter le service de premier plan</b> : pour une lecture continue lorsque l'application est en arrière-plan
+• <b>afficher les notifications en plein écran sur un appareil verrouillé</b> : pour afficher l'alerte lorsqu'une alarme se déclenche
+• <b>contrôler les vibrations</b> : pour faire vibrer l'appareil lorsqu'une alarme activée par les vibrations se déclenche
+
+Noice est un logiciel open-source.
 https://github.com/trynoice/android-app

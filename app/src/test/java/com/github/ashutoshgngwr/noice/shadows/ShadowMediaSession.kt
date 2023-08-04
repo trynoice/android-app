@@ -7,7 +7,7 @@ import androidx.media3.common.AudioAttributes
 import androidx.media3.common.DeviceInfo
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
-import androidx.media3.session.BitmapLoader
+import androidx.media3.common.util.BitmapLoader
 import androidx.media3.session.MediaSession
 import org.robolectric.annotation.Implementation
 import org.robolectric.annotation.Implements
@@ -72,19 +72,19 @@ class ShadowMediaSession : Player.Listener {
   }
 
   fun sendSetDeviceVolumeCommand(volume: Int) {
-    player.deviceVolume = volume
+    player.setDeviceVolume(volume, 0)
   }
 
   fun sendSetDeviceMuteCommand(isMuted: Boolean) {
-    player.isDeviceMuted = isMuted
+    player.setDeviceMuted(isMuted, 0)
   }
 
   fun sendIncreaseDeviceVolumeCommand() {
-    player.increaseDeviceVolume()
+    player.increaseDeviceVolume(0)
   }
 
   fun sendDecreaseDeviceVolumeCommand() {
-    player.decreaseDeviceVolume()
+    player.decreaseDeviceVolume(0)
   }
 
   fun sendSetPlayWhenReadyCommand(playWhenReady: Boolean) {

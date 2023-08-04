@@ -16,9 +16,9 @@ import com.github.ashutoshgngwr.noice.BuildConfig
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.metrics.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.models.AudioQuality
-import com.github.ashutoshgngwr.noice.provider.AnalyticsProvider
-import com.github.ashutoshgngwr.noice.provider.CrashlyticsProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.worker.SoundDownloadsRefreshWorker
@@ -46,10 +46,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
   internal lateinit var presetRepository: PresetRepository
 
   @set:Inject
-  internal lateinit var analyticsProvider: AnalyticsProvider
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   @set:Inject
-  internal lateinit var crashlyticsProvider: CrashlyticsProvider
+  internal var crashlyticsProvider: CrashlyticsProvider? = null
 
   private val createDocumentActivityLauncher = registerForActivityResult(
     ActivityResultContracts.CreateDocument("application/json"),
@@ -173,7 +173,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         true
       }
 
-    analyticsProvider.setCurrentScreen(this::class)
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -193,8 +193,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
       showSuccessSnackBar(R.string.export_presets_successful)
     } catch (e: Throwable) {
       Log.w(TAG, "failed to export saved presets", e)
-      crashlyticsProvider.log("failed to export saved presets")
-      crashlyticsProvider.recordException(e)
+      crashlyticsProvider?.log("failed to export saved presets")
+      crashlyticsProvider?.recordException(e)
       when (e) {
         is FileNotFoundException,
         is IOException,
@@ -224,16 +224,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
         is IOException,
         is JsonIOException -> {
           showErrorSnackBar(R.string.failed_to_read_file)
-          crashlyticsProvider.log("failed to import saved presets")
-          crashlyticsProvider.recordException(e)
+          crashlyticsProvider?.log("failed to import saved presets")
+          crashlyticsProvider?.recordException(e)
         }
 
         is JsonSyntaxException,
         is IllegalArgumentException -> showErrorSnackBar(R.string.invalid_import_file_format)
 
         else -> {
-          crashlyticsProvider.log("failed to import saved presets")
-          crashlyticsProvider.recordException(e)
+          crashlyticsProvider?.log("failed to import saved presets")
+          crashlyticsProvider?.recordException(e)
           throw e
         }
       }

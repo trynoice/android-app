@@ -171,7 +171,6 @@
     <string name="sign_in_to_continue">आगे बढ़ने के लिए कृपया लॉग इन करें या खाता बनाएं।</string>
     <string name="confirming_payment">हम आपके भुगतान की पुष्टि कर रहे हैं</string>
     <string name="subscription_payment_complete">बधाई हो! आपका नॉइस प्रीमियम सब्सक्रिप्शन अब लाइव है और आपके सुनने के अनुभव को बेहतर बनाने के लिए तैयार है।</string>
-    <string name="subscription_payment_cancelled">सदस्यता भुगतान रद्द कर दिया गया था!</string>
     <string name="subscription_purchases">सदस्यता खरीद की सूची</string>
     <string name="renews_on">%1$s को नवीकृत होगा</string>
     <string name="ends_on">%1$s को समाप्त होगा</string>
@@ -321,4 +320,10 @@
     <string name="hd_audio_desc">320 केबीपीएस तक अपनी ध्वनि की गुणवत्ता को समायोजित करने की क्षमता के साथ पहले से अलग शोर का अनुभव करें, जिसके परिणामस्वरूप क्रिस्टल-स्पष्ट, उच्च-निष्ठा ध्वनि होती है।</string>
     <string name="offline_playback_desc">ऑफ़लाइन प्लेबैक किसी भी समय, कहीं भी सुखदायक ध्वनियों का आनंद लें, नोइस के ऑफ़लाइन ध्वनि डाउनलोड के साथ - कोई इंटरनेट कनेक्शन की आवश्यकता नहीं है।</string>
     <string name="search_preset">प्रीसेट खोजें</string>
+    <string name="whats_new">नया क्या है</string>
+    <string name="blog">ब्लॉग</string>
+    <string name="resources">संसाधन</string>
+    <string name="about_linkedin">लिंक्डइन पर हमें फॉलो करें</string>
+    <string name="now_playing">अभी चल रहा है</string>
+    <string name="about_github">हमें गिटहब पर स्टार करें</string>
 </resources>
