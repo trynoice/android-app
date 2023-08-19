@@ -117,7 +117,7 @@
     <string name="delete_account_confirmation">优雅地告别您的账户，知晓您的 Noice 高级订阅将被取消，您的数据将在 7 天内从我们的服务器上永久删除。但是，如果您改变主意，可以很容易地在 7 天结束前恢复账户。</string>
     <string name="payment_processing_error">糟糕！别担心！退款马上就到。如果你在一周内没有收到，请告诉我们。</string>
     <string name="sign_in_message">请输入您的email以登录。</string>
-    <string name="bi_yearly">每两年</string>
+    <string name="bi_yearly">每半年</string>
     <string name="subscription_initialisation_error">糟糕！我们无法启动付款流程。%1$s后重试！</string>
     <string name="no_subscription_purchases_found">通过高级订阅体验 Noice 的全部潜力。现在升级，发现将提升您收听体验的独家功能。</string>
     <string name="back_online">重新联网</string>
