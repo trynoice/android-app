@@ -192,4 +192,6 @@
 \n
 \nMożesz skonfigurować automatyczne udostępnianie danych w dowolnym momencie w aplikacji, przechodząc do \"**Ustawienia** &gt; **Udostępnij dane o użytkowaniu i zachowaniu**\".</string>
     <string name="sign_up">Zarejestruj się</string>
+    <string name="decline">Odmów</string>
+    <string name="bi_yearly">Co pół roku</string>
 </resources>
