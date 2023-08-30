@@ -145,7 +145,7 @@
     <string name="ended_on">Đã kết thúc vào %1$s</string>
     <string name="change_plan">Đổi kế hoạch</string>
     <string name="gift_card">Thẻ quà</string>
-    <string name="email_app_not_found">Chúng tôi không tìm thấy ứng dụng hộp thư nào trên thiết bị!</string>
+    <string name="email_app_not_found">Chúng tôi không tìm thấy ứng dụng hộp thư nào trên thiết bị.</string>
     <string name="delete_account">Xóa tài khoản</string>
     <string name="sign_out_confirmation">Xác nhận đăng xuất\?</string>
     <string name="offline">Bạn đang ngoại tuyến</string>
@@ -289,4 +289,8 @@
     <string name="alarm_permission_rationale_description">Chúng tôi cần quyền truy cập bổ sung để đặt báo thức trên thiết bị của bạn.
 \n
 \nXin hãy bật chế độ \"Báo thức &amp; nhắc nhở\" cho Noice từ các chi tiết ứng dụng trong mục điều chỉnh hệ thống thiết bị của bạn nhé.</string>
+    <string name="notification_channel_alarm_priming__name">Chuông báo khẩn cấp</string>
+    <string name="snooze">Tạm ẩn</string>
+    <string name="alarm">Chuông báo</string>
+    <string name="alarm_snooze_length">Thời lượng tạm ẩn</string>
 </resources>
