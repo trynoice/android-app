@@ -135,4 +135,6 @@
     <string name="network_error">لا يمكن الوصول إلى الشبكة.</string>
     <string name="invalid_email">البريد الإلكتروني المدخل غير صالح!</string>
     <string name="welcome_back">مرحبًا بعودتك!</string>
+    <string name="account_locked_error">ستتمكن من طلب روابط تسجيل الدخول لهذا البريد بعد %1$s.</string>
+    <string name="sign_up_email_sent">لقد أرسلنا لك رابط تسجيل الدخول على %1$s. رجاءًا قم بتفقد صندوق الوارد خاصتك!</string>
 </resources>
