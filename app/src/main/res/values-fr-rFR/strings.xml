@@ -42,7 +42,7 @@
     <string name="appintro__getting_started_title">Bienvenue</string>
     <string name="appintro__presets_desc">Sauvegardez votre mix de son en cliquant sur le coin du bas de la bibliothèque. Trouvez vos mixes sauvegardé dans l\'onglet \'Presets\' de la barre du bas.</string>
     <string name="appintro__presets_title">Sauvegardez vos mix préférés</string>
-    <string name="appintro__library_desc">Utilisez les boutons de volume pour régler le volume des sons. À chaque répétition d\'un son sans-boucle, un délai aléatoire sera généré dans la plage établie par le curseur de temps.</string>
+    <string name="appintro__library_desc">Utilisez le curseur de volume pour régler le volume de chaque son. Certains sons se répètent sans interruption, tandis que d\'autres se répètent avec un délai aléatoire.</string>
     <string name="appintro__library_title">Designez votre environnement idéal</string>
     <string name="appintro__timer_desc">Une ambiance légère peut vous aider à vous endormir plus facilement. Utilisez la minuterie pour laisser Noice s\'éteindre tout seul. De la même manière, pour se réveiller au calme, utilisez le réveil pour régler l\'alarme.</string>
     <string name="appintro__timer_title">Transformez votre sommeil avec Noice</string>

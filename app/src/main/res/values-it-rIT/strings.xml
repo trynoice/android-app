@@ -7,7 +7,7 @@
     <string name="presets">Preimpostazioni</string>
     <string name="sleep_timer">Timer di spegnimento </string>
     <string name="cancel">Annulla</string>
-    <string name="dismiss">Annulla</string>
+    <string name="dismiss">Abbandona</string>
     <string name="name">Nome</string>
     <string name="pause">Pausa</string>
     <string name="preset_name_cannot_be_empty">Il nome della preimpostazione è mancante. Inserisci un nome unico!</string>
@@ -274,7 +274,7 @@
     <string name="add_label">Aggiungi etichetta</string>
     <string name="sunday_initial">D</string>
     <string name="monday_initial">L</string>
-    <string name="tuesday_initial">M</string>
+    <string name="tuesday_initial">Mar</string>
     <string name="wednesday_initial">M</string>
     <string name="thursday_initial">G</string>
     <string name="friday_initial">V</string>

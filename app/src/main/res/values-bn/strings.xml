@@ -25,7 +25,7 @@
     <string name="play">বাজান</string>
     <string name="preset_name_cannot_be_empty">প্রিসেট নামটি খালি। অনুগ্রহ করে, একটি অনন্য লিখুন!</string>
     <string name="random_preset">এলোমেলো প্রিসেট</string>
-    <string name="random_preset_description">জেনারেট করা প্রিসেটে নির্বাচিত কীওয়ার্ড সহ শব্দ থাকতে পারে। অধিকন্তু, তীব্র প্রিসেটগুলি একই সাথে আরও শব্দ বাজানোর চেষ্টা করবে।</string>
+    <string name="random_preset_description">’জেনারেট করা প্রিসেটে নির্বাচিত কীওয়ার্ড সহ শব্দ থাকতে পারে। অধিকন্তু, তীব্র প্রিসেটগুলি একই সাথে আরও শব্দ বাজানোর চেষ্টা করবে।</string>
     <string name="preset_does_not_exist">পূর্বনির্ধারিতির অস্তিত্ব নেই। এটি বোধহয় অপসারিত হয়েছে!</string>
     <string name="preset_delete_confirmation">%s এর অপসারণ নিশ্চিত করুন\?</string>
     <string name="open_context_menu">প্রসঙ্গ মেনু খুলুন</string>

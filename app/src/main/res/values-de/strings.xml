@@ -319,4 +319,7 @@
     <string name="blog">Blog</string>
     <string name="offline_playback">Offline-Wiedergabe</string>
     <string name="search_preset">Voreinstellungen durchsuchen</string>
+    <string name="whats_new">Neuigkeiten</string>
+    <string name="about_linkedin">Auf LinkedIn folgen</string>
+    <string name="hd_audio">HD-Audioqualität</string>
 </resources>
