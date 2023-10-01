@@ -216,10 +216,6 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
             .buildUpon()
             .removeAll(
               Player.COMMAND_GET_DEVICE_VOLUME,
-              // TODO: Continue using deprecated commands until clarification.
-              //  https://github.com/androidx/media/issues/554
-              Player.COMMAND_SET_DEVICE_VOLUME,
-              Player.COMMAND_ADJUST_DEVICE_VOLUME,
               Player.COMMAND_SET_DEVICE_VOLUME_WITH_FLAGS,
               Player.COMMAND_ADJUST_DEVICE_VOLUME_WITH_FLAGS,
             )
@@ -238,10 +234,6 @@ class SoundPlaybackMediaSession(context: Context, sessionActivityPi: PendingInte
             .buildUpon()
             .addAll(
               Player.COMMAND_GET_DEVICE_VOLUME,
-              // TODO: Continue using deprecated commands until clarification.
-              //  https://github.com/androidx/media/issues/554
-              Player.COMMAND_SET_DEVICE_VOLUME,
-              Player.COMMAND_ADJUST_DEVICE_VOLUME,
               Player.COMMAND_SET_DEVICE_VOLUME_WITH_FLAGS,
               Player.COMMAND_ADJUST_DEVICE_VOLUME_WITH_FLAGS,
             )
