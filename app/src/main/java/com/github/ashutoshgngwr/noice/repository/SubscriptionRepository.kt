@@ -16,7 +16,7 @@ import com.github.ashutoshgngwr.noice.billing.SubscriptionBillingProvider
 import com.github.ashutoshgngwr.noice.data.AppDatabase
 import com.github.ashutoshgngwr.noice.data.models.SubscriptionWithPlanDto
 import com.github.ashutoshgngwr.noice.ext.bindServiceCallbackFlow
-import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
+import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchasesFragment
 import com.github.ashutoshgngwr.noice.models.GiftCard
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
@@ -331,7 +331,7 @@ class SubscriptionRepository @Inject constructor(
 
     private val STRIPE_RETURN_URL = Uri.parse("https://trynoice.com/redirect")
       .buildUpon()
-      .appendQueryParameter("uri", SubscriptionPurchaseListFragment.URI)
+      .appendQueryParameter("uri", SubscriptionPurchasesFragment.URI)
       .toString()
   }
 }

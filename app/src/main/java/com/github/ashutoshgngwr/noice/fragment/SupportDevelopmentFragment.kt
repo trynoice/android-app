@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ShareCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.billing.DonationFlowProvider
@@ -45,10 +44,8 @@ class SupportDevelopmentFragment : Fragment() {
         .setType("text/plain")
         .setText("$text\n\n$playStoreURL\n$fdroidURL")
         .startChooser()
-
-      analyticsProvider?.logEvent("share_app_with_friends", bundleOf())
     }
 
-    analyticsProvider?.setCurrentScreen("support_development", SupportDevelopmentFragment::class)
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 }

@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -99,8 +98,6 @@ class AccountFragment : Fragment() {
             )
             .toString()
             .also { item.context.startCustomTab(it) }
-
-          analyticsProvider?.logEvent("issue_tracker_open", bundleOf())
         }
 
         R.id.submit_feedback -> {
@@ -112,8 +109,6 @@ class AccountFragment : Fragment() {
             }
             .toString()
             .also { item.context.startCustomTab(it) }
-
-          analyticsProvider?.logEvent("feedback_form_open", bundleOf())
         }
 
         R.id.privacy_policy -> item.context.startCustomTab(R.string.app_privacy_policy_url)
@@ -142,6 +137,7 @@ class AccountFragment : Fragment() {
     }
 
     viewModel.loadData()
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 
   private fun launchActivityForUrl(@StringRes resId: Int) {

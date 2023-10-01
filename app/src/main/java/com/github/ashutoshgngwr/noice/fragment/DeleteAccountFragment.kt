@@ -12,6 +12,7 @@ import com.github.ashutoshgngwr.noice.databinding.DeleteAccountFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.models.Profile
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
@@ -36,6 +37,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class DeleteAccountFragment : BottomSheetDialogFragment() {
+
+  @set:Inject
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private lateinit var binding: DeleteAccountFragmentBinding
   private val viewModel: DeleteAccountViewModel by viewModels()
@@ -68,6 +72,8 @@ class DeleteAccountFragment : BottomSheetDialogFragment() {
           showErrorSnackBar(msg.normalizeSpace())
         }
     }
+
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 }
 

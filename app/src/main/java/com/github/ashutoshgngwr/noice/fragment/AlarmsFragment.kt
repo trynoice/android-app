@@ -34,6 +34,7 @@ import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showTimePicker
 import com.github.ashutoshgngwr.noice.ext.startAppDetailsSettingsActivity
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.models.Alarm
 import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.repository.AlarmRepository
@@ -58,6 +59,9 @@ private const val FREE_ALARM_COUNT = 2
 
 @AndroidEntryPoint
 class AlarmsFragment : Fragment(), AlarmViewHolder.ViewController {
+
+  @set:Inject
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private lateinit var binding: AlarmsFragmentBinding
 
@@ -109,6 +113,8 @@ class AlarmsFragment : Fragment(), AlarmViewHolder.ViewController {
         .filter { it > 0 }
         .collect { showErrorSnackBar(R.string.alarms_disabled_due_to_subscription_expiration) }
     }
+
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 
   private fun startAddAlarmFlow() {

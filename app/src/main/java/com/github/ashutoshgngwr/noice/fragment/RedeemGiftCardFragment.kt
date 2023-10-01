@@ -14,6 +14,7 @@ import com.github.ashutoshgngwr.noice.databinding.RedeemGiftCardFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.AlreadySubscribedError
@@ -32,6 +33,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class RedeemGiftCardFragment : BottomSheetDialogFragment() {
+
+  @set:Inject
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private lateinit var binding: RedeemGiftCardFragmentBinding
   private val viewModel: RedeemGiftCardViewModel by viewModels()
@@ -54,9 +58,9 @@ class RedeemGiftCardFragment : BottomSheetDialogFragment() {
     }
 
     viewLifecycleOwner.launchAndRepeatOnStarted {
-      viewModel.shouldShowPurchaseList
+      viewModel.shouldShowPurchases
         .filter { it }
-        .collect { mainNavController.navigate(R.id.subscription_purchase_list) }
+        .collect { mainNavController.navigate(R.id.subscription_purchases) }
     }
 
     viewLifecycleOwner.launchAndRepeatOnStarted {
@@ -66,6 +70,8 @@ class RedeemGiftCardFragment : BottomSheetDialogFragment() {
         .map { getString(R.string.gift_card_redeem_error, it).normalizeSpace() }
         .collect { showErrorSnackBar(it) }
     }
+
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 }
 
@@ -79,7 +85,7 @@ class RedeemGiftCardViewModel @Inject constructor(
     .let { subscriptionRepository.redeemGiftCard(it.giftCard) }
     .stateIn(viewModelScope, SharingStarted.Eagerly, Resource.Loading())
 
-  internal val shouldShowPurchaseList: StateFlow<Boolean> = redeemResource.transform { r ->
+  internal val shouldShowPurchases: StateFlow<Boolean> = redeemResource.transform { r ->
     emit(r is Resource.Success)
   }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 

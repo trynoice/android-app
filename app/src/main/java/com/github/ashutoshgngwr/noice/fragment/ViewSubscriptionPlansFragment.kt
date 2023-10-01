@@ -19,6 +19,7 @@ import com.github.ashutoshgngwr.noice.databinding.SubscriptionPlanItemBinding
 import com.github.ashutoshgngwr.noice.databinding.ViewSubscriptionPlansFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.models.Subscription
 import com.github.ashutoshgngwr.noice.models.SubscriptionPlan
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
@@ -43,6 +44,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ViewSubscriptionPlansFragment : Fragment() {
+
+  @set:Inject
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private lateinit var binding: ViewSubscriptionPlansFragmentBinding
   private val viewModel: ViewSubscriptionPlansViewModel by viewModels()
@@ -91,6 +95,7 @@ class ViewSubscriptionPlansFragment : Fragment() {
     }
 
     viewModel.loadPlans(currency.currencyCode)
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 }
 

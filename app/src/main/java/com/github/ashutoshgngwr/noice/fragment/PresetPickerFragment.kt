@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.github.ashutoshgngwr.noice.databinding.PresetPickerFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.models.Preset
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -30,6 +31,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class PresetPickerFragment : BottomSheetDialogFragment(),
   PresetPickerItemViewHolder.ViewController {
+
+  @set:Inject
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private lateinit var binding: PresetPickerFragmentBinding
   private val viewModel: PresetPickerViewModel by viewModels()
@@ -50,6 +54,7 @@ class PresetPickerFragment : BottomSheetDialogFragment(),
 
     binding.cancel.setOnClickListener { dismiss() }
     binding.random.setOnClickListener { setFragmentResultAndDismiss(null) }
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 
   override fun onPresetSelected(preset: Preset) {

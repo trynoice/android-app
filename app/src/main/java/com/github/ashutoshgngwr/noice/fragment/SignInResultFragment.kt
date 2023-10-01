@@ -17,6 +17,7 @@ import com.github.ashutoshgngwr.noice.databinding.SignInResultFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.AccountRepository
 import com.github.ashutoshgngwr.noice.repository.Resource
 import com.github.ashutoshgngwr.noice.repository.errors.AccountTemporarilyLockedError
@@ -35,6 +36,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignInResultFragment : Fragment() {
+
+  @set:Inject
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private lateinit var binding: SignInResultFragmentBinding
   private val viewModel: SignInResultViewModel by viewModels()
@@ -69,6 +73,7 @@ class SignInResultFragment : Fragment() {
     }
 
     viewModel.signIn()
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 
   private fun openMailbox() {

@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.databinding.SubscriptionPurchasedFragmentBinding
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.github.ashutoshgngwr.noice.repository.SubscriptionRepository
 import com.github.ashutoshgngwr.noice.repository.errors.SubscriptionNotFoundError
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -31,6 +32,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SubscriptionPurchasedFragment : BottomSheetDialogFragment() {
 
+  @set:Inject
+  internal var analyticsProvider: AnalyticsProvider? = null
+
   private lateinit var binding: SubscriptionPurchasedFragmentBinding
   private val viewModel: SubscriptionPurchasedViewModel by viewModels()
   private val mainNavController: NavController by lazy {
@@ -48,8 +52,10 @@ class SubscriptionPurchasedFragment : BottomSheetDialogFragment() {
     binding.viewModel = viewModel
     binding.okay.setOnClickListener {
       dismiss()
-      mainNavController.navigate(R.id.subscription_purchase_list)
+      mainNavController.navigate(R.id.subscription_purchases)
     }
+
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 }
 

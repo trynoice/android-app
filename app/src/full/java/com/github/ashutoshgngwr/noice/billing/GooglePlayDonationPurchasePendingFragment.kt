@@ -5,9 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.ashutoshgngwr.noice.databinding.GooglePlayDonationPurchasePendingFragmentBinding
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class GooglePlayDonationPurchasePendingFragment : BottomSheetDialogFragment() {
+
+  @set:Inject
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private lateinit var binding: GooglePlayDonationPurchasePendingFragmentBinding
 
@@ -18,5 +25,6 @@ class GooglePlayDonationPurchasePendingFragment : BottomSheetDialogFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.okay.setOnClickListener { dismiss() }
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 }

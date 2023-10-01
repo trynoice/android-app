@@ -11,7 +11,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
-import androidx.core.os.bundleOf
 import androidx.core.os.postDelayed
 import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
@@ -29,9 +28,8 @@ import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
 import com.github.ashutoshgngwr.noice.fragment.HomeFragmentArgs
-import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchaseListFragment
 import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchasedFragmentArgs
-import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
+import com.github.ashutoshgngwr.noice.fragment.SubscriptionPurchasesFragment
 import com.github.ashutoshgngwr.noice.metrics.ReviewFlowProvider
 import com.github.ashutoshgngwr.noice.repository.PresetRepository
 import com.github.ashutoshgngwr.noice.repository.SettingsRepository
@@ -84,9 +82,6 @@ class MainActivity : AppCompatActivity(), SubscriptionBillingProvider.Listener {
   @set:Inject
   internal lateinit var reviewFlowProvider: ReviewFlowProvider
 
-  @set:Inject
-  internal var analyticsProvider: AnalyticsProvider? = null
-
   /**
    * indicates whether the activity was delivered a new intent since it was last resumed.
    */
@@ -119,7 +114,6 @@ class MainActivity : AppCompatActivity(), SubscriptionBillingProvider.Listener {
 
     SoundDownloadsRefreshWorker.refreshDownloads(this)
     reviewFlowProvider.init(this)
-    analyticsProvider?.logEvent("ui_open", bundleOf("theme" to settingsRepository.getAppTheme()))
     hasNewIntent = true
     initOfflineIndicator()
     donationFlowProvider.setCallbackFragmentHost(this)
@@ -235,8 +229,8 @@ class MainActivity : AppCompatActivity(), SubscriptionBillingProvider.Listener {
         }
       }
 
-      Intent.ACTION_VIEW == intent.action && SubscriptionPurchaseListFragment.URI == dataString -> {
-        navController.navigate(R.id.subscription_purchase_list)
+      Intent.ACTION_VIEW == intent.action && SubscriptionPurchasesFragment.URI == dataString -> {
+        navController.navigate(R.id.subscription_purchases)
       }
     }
   }

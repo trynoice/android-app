@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.github.ashutoshgngwr.noice.R
@@ -45,16 +44,7 @@ class SleepTimerFragment : Fragment() {
       binding.durationPicker.setResetButtonEnabled(true)
     }
 
-    analyticsProvider?.setCurrentScreen("sleep_timer", SleepTimerFragment::class)
-  }
-
-  override fun onDestroyView() {
-    val duration = playbackServiceController.getStopScheduleRemainingMillis()
-    if (duration > 0) {
-      analyticsProvider?.logEvent("sleep_timer_set", bundleOf("duration_ms" to duration))
-    }
-
-    super.onDestroyView()
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 
   private fun onDurationAdded(duration: Long) {
@@ -62,14 +52,12 @@ class SleepTimerFragment : Fragment() {
     var enableResetButton = false
     if (duration < 0) { // duration picker reset
       playbackServiceController.clearStopSchedule()
-      analyticsProvider?.logEvent("sleep_timer_cancel", bundleOf())
       showInfoSnackBar(R.string.auto_sleep_schedule_cancelled, snackBarAnchorView())
     } else {
       remaining = playbackServiceController.getStopScheduleRemainingMillis()
       remaining += duration
       playbackServiceController.scheduleStop(remaining)
       enableResetButton = true
-      analyticsProvider?.logEvent("sleep_timer_add_duration", bundleOf("duration_ms" to duration))
     }
 
     binding.durationPicker.setResetButtonEnabled(enableResetButton)

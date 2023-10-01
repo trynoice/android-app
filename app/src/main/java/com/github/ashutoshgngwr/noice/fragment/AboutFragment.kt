@@ -199,7 +199,7 @@ class AboutFragment : Fragment(), LibsConfiguration.LibsListener {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    analyticsProvider?.setCurrentScreen("about", AboutFragment::class)
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 
   private fun buildElement(

@@ -13,6 +13,7 @@ import com.android.billingclient.api.Purchase
 import com.github.ashutoshgngwr.noice.AppDispatchers
 import com.github.ashutoshgngwr.noice.databinding.GooglePlayDonationPurchaseCompleteFragmentBinding
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
+import com.github.ashutoshgngwr.noice.metrics.AnalyticsProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,6 +23,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GooglePlayDonationPurchaseCompleteFragment : BottomSheetDialogFragment() {
+
+  @set:Inject
+  internal var analyticsProvider: AnalyticsProvider? = null
 
   private lateinit var binding: GooglePlayDonationPurchaseCompleteFragmentBinding
   private val viewModel: GooglePlayDonationPurchaseCompleteViewModel by viewModels()
@@ -42,6 +46,7 @@ class GooglePlayDonationPurchaseCompleteFragment : BottomSheetDialogFragment() {
     val purchaseInfoJson = requireNotNull(arguments?.getString(PURCHASE_INFO_JSON))
     val purchaseSignature = requireNotNull(arguments?.getString(PURCHASE_SIGNATURE))
     viewModel.consumePurchase(Purchase(purchaseInfoJson, purchaseSignature))
+    analyticsProvider?.setCurrentScreen(this::class)
   }
 
   companion object {
