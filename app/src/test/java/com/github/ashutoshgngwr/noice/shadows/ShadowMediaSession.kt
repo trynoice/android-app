@@ -8,7 +8,9 @@ import androidx.media3.common.DeviceInfo
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.common.util.BitmapLoader
+import androidx.media3.session.CommandButton
 import androidx.media3.session.MediaSession
+import com.google.common.collect.ImmutableList
 import org.robolectric.annotation.Implementation
 import org.robolectric.annotation.Implements
 import org.robolectric.annotation.RealObject
@@ -44,6 +46,7 @@ class ShadowMediaSession : Player.Listener {
     id: String,
     player: Player,
     sessionActivity: PendingIntent?,
+    customLayout: ImmutableList<CommandButton>,
     callback: MediaSession.Callback,
     tokenExtras: Bundle,
     bitmapLoader: BitmapLoader,
@@ -55,6 +58,7 @@ class ShadowMediaSession : Player.Listener {
       ReflectionHelpers.ClassParameter.from(String::class.java, id),
       ReflectionHelpers.ClassParameter.from(Player::class.java, player),
       ReflectionHelpers.ClassParameter.from(PendingIntent::class.java, sessionActivity),
+      ReflectionHelpers.ClassParameter.from(ImmutableList::class.java, customLayout),
       ReflectionHelpers.ClassParameter.from(MediaSession.Callback::class.java, callback),
       ReflectionHelpers.ClassParameter.from(Bundle::class.java, tokenExtras),
       ReflectionHelpers.ClassParameter.from(BitmapLoader::class.java, bitmapLoader),

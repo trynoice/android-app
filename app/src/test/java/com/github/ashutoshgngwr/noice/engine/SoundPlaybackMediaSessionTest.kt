@@ -55,7 +55,7 @@ class SoundPlaybackMediaSessionTest {
     mediaSessionShadow.sendSetDeviceMuteCommand(false)
     assertEquals(15, fakeVolumeProvider.getVolume())
     assertEquals(false, fakeVolumeProvider.isMute())
-    // also check if changes propogate back to the media session.
+    // also check if changes propagate back to the media session.
     assertEquals(15, mediaSessionShadow.deviceVolume)
     assertEquals(false, mediaSessionShadow.isDeviceMute)
 

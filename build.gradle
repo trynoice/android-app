@@ -19,7 +19,7 @@ plugins {
 project.ext {
   deps = [
     aboutLibrariesVersion: "${aboutLibrariesVersion}",
-    androidXCoreVersion  : '1.12.0',
+    androidXCoreVersion  : '1.10.1',
     coroutinesVersion    : '1.7.3',
     hiltVersion          : "${hiltVersion}",
     kotlinVersion        : "${kotlinVersion}",
@@ -39,11 +39,11 @@ subprojects {
     }
 
     android {
-      compileSdk 34
+      compileSdk 33
 
       defaultConfig {
         minSdk 21
-        targetSdk 34
+        targetSdk 33
       }
 
       compileOptions {
@@ -109,7 +109,7 @@ subprojects {
           sourceDirectories.setFrom(files(srcDirs))
           classDirectories.setFrom(files(
             fileTree(
-              dir: "${project.buildDir}/tmp/kotlin-classes/${variant.name}",
+              dir: "${project.layout.buildDir}/tmp/kotlin-classes/${variant.name}",
               excludes: ['**/R.class',
                          '**/R$*.class',
                          '**/*$ViewInjector*.*',
@@ -137,5 +137,5 @@ subprojects {
 }
 
 tasks.register('clean', Delete) {
-  delete rootProject.buildDir
+  delete rootProject.layout.buildDir
 }
