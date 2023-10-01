@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ashutoshgngwr/validate-fastlane-supply-metadata@v2
         with:
           usePlayStoreLocales: true
@@ -36,7 +36,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: bundle install
       - run: echo "$SERVICE_ACCOUNT_KEY" > service-account-key.json
         env:
