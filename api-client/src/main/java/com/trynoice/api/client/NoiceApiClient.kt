@@ -10,8 +10,8 @@ import com.trynoice.api.client.interceptors.AcceptLanguageHeaderInjector
 import com.trynoice.api.client.interceptors.AccessTokenInjector
 import com.trynoice.api.client.interceptors.RefreshTokenInjector
 import com.trynoice.api.client.models.AuthCredentials
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -24,7 +24,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import java.io.File
-import java.util.*
+import java.util.Date
 
 
 /**
@@ -71,7 +71,7 @@ class NoiceApiClient(
     .addInterceptor(AcceptLanguageHeaderInjector())
     .addInterceptor(
       AccessTokenInjector { refresh ->
-        if (refresh) refreshCredentialsSync()
+        if (refresh) runBlocking { refreshCredentials() }
         credentialRepository.getAccessToken()
       }
     )
@@ -108,12 +108,12 @@ class NoiceApiClient(
   }
 
   /**
-   * Subscription management related APIs.
+   * Account and user management related APIs.
    */
   fun accounts() = accountApi
 
   /**
-   * Account and user management related APIs.
+   * Subscription management related APIs.
    */
   fun subscriptions() = subscriptionApi
 
@@ -135,7 +135,7 @@ class NoiceApiClient(
 
   fun isSignedIn(): Boolean = signedInState.value
 
-  fun getSignedInState(): StateFlow<Boolean> = signedInState
+  fun isSignedInFlow(): Flow<Boolean> = signedInState
 
   /**
    * Signs out the currently logged in user.
@@ -187,9 +187,5 @@ class NoiceApiClient(
           }
         }
     }
-  }
-
-  private fun refreshCredentialsSync() {
-    runBlocking { refreshCredentials() }
   }
 }

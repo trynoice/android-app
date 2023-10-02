@@ -150,11 +150,13 @@ class ViewSubscriptionPlansViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-  val isSignedIn = accountRepository.isSignedIn()
   val activeSubscription: Subscription?
 
   private val plansResource = MutableSharedFlow<Resource<List<SubscriptionPlan>>>()
   private val premiumCountResource = MutableSharedFlow<Resource<Int>>()
+
+  val isSignedIn = accountRepository.isSignedIn()
+    .stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
   val isLoading: StateFlow<Boolean> = combine(plansResource, premiumCountResource) { p, c ->
     p is Resource.Loading || c is Resource.Loading

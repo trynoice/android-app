@@ -15,7 +15,6 @@ import com.trynoice.api.client.models.SignInParams
 import com.trynoice.api.client.models.SignUpParams
 import com.trynoice.api.client.models.UpdateProfileParams
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
@@ -32,9 +31,9 @@ class AccountRepository @Inject constructor(
 ) {
 
   /**
-   * @return a [StateFlow] that notifies changes to the current signed-in state of the api client.
+   * @return a [Flow] that notifies changes to the current signed-in state of the api client.
    */
-  fun isSignedIn(): StateFlow<Boolean> = apiClient.getSignedInState()
+  fun isSignedIn(): Flow<Boolean> = apiClient.isSignedInFlow()
 
   /**
    * Returns a [Flow] that emits the profile [Resource] of the authenticated user.

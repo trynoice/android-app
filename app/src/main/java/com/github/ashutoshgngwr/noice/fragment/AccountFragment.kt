@@ -155,6 +155,8 @@ class AccountViewModel @Inject constructor(
 ) : ViewModel() {
 
   val isSignedIn = accountRepository.isSignedIn()
+    .stateIn(viewModelScope, SharingStarted.Eagerly, true)
+
   val isSubscribed = subscriptionRepository.isSubscribed()
     .stateIn(viewModelScope, SharingStarted.Eagerly, true)
 

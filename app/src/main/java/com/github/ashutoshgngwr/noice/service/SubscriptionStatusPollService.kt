@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 import kotlin.math.min
 import kotlin.time.Duration
@@ -56,7 +56,7 @@ class SubscriptionStatusPollService : LifecycleService() {
         Log.d(LOG_TAG, "scheduling poll after $pollDelay or sooner if sign-in state changes")
         // wait until timeout or signed-in state change
         withTimeoutOrNull(pollDelay) {
-          apiClient.getSignedInState()
+          apiClient.isSignedInFlow()
             .takeWhile { it == isSignedIn }
             .collect()
         }
