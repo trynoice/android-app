@@ -12,9 +12,17 @@ abstract class SubscriptionPurchaseNotificationDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   abstract suspend fun save(purchase: SubscriptionPurchaseNotificationDto)
 
-  @Query("SELECT * FROM subscription_purchase_notification WHERE isConsumed = false")
-  abstract suspend fun listUnconsumed(): List<SubscriptionPurchaseNotificationDto>
+  suspend fun listUnconsumed(): List<SubscriptionPurchaseNotificationDto> {
+    return list(false)
+  }
 
-  @Query("DELETE FROM subscription_purchase_notification WHERE isConsumed = true")
-  abstract suspend fun removeConsumed()
+  @Query("SELECT * FROM subscription_purchase_notification WHERE isConsumed = :isConsumed")
+  protected abstract suspend fun list(isConsumed: Boolean): List<SubscriptionPurchaseNotificationDto>
+
+  suspend fun removeConsumed() {
+    remove(true)
+  }
+
+  @Query("DELETE FROM subscription_purchase_notification WHERE isConsumed = :isConsumed")
+  protected abstract suspend fun remove(isConsumed: Boolean)
 }

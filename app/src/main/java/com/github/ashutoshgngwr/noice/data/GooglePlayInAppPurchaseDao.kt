@@ -15,11 +15,19 @@ abstract class GooglePlayInAppPurchaseDao {
   @Query("SELECT * FROM google_play_in_app_purchase WHERE purchaseToken = :token")
   abstract suspend fun getByPurchaseToken(token: String): GooglePlayInAppPurchaseDto?
 
-  @Query("SELECT * FROM google_play_in_app_purchase WHERE isNotificationConsumed = false")
-  abstract suspend fun listWithUnconsumedNotifications(): List<GooglePlayInAppPurchaseDto>
+  suspend fun listWithUnconsumedNotifications(): List<GooglePlayInAppPurchaseDto> {
+    return list(false)
+  }
 
-  @Query("SELECT purchaseToken FROM google_play_in_app_purchase WHERE isNotificationConsumed = true")
-  abstract suspend fun listPurchaseTokensWithConsumedNotifications(): List<String>
+  @Query("SELECT * FROM google_play_in_app_purchase WHERE isNotificationConsumed = :isNotificationConsumed")
+  protected abstract suspend fun list(isNotificationConsumed: Boolean): List<GooglePlayInAppPurchaseDto>
+
+  suspend fun listPurchaseTokensWithConsumedNotifications(): List<String> {
+    return listPurchaseTokens(true)
+  }
+
+  @Query("SELECT purchaseToken FROM google_play_in_app_purchase WHERE isNotificationConsumed = :isNotificationConsumed")
+  protected abstract suspend fun listPurchaseTokens(isNotificationConsumed: Boolean): List<String>
 
   @Query("DELETE FROM google_play_in_app_purchase WHERE purchaseToken = :token")
   abstract suspend fun deleteByPurchaseToken(token: String)
