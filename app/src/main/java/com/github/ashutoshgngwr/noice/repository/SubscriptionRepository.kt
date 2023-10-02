@@ -90,8 +90,8 @@ class SubscriptionRepository @Inject constructor(
    *  - [AlreadySubscribedError] when the current user already owns an active subscription.
    *  - [NetworkError] on network errors.
    *  - [HttpException] on api errors.
-   *  - [com.github.ashutoshgngwr.noice.provider.InAppBillingProviderException] on in-app billing
-   *    errors when using Google Play implementation of the [SubscriptionProvider].
+   *  - [com.github.ashutoshgngwr.noice.billing.SubscriptionBillingProviderException] on in-app
+   *  billing errors when using Google Play implementation of the [SubscriptionBillingProvider].
    *
    *  @see fetchNetworkBoundResource
    *  @see Resource

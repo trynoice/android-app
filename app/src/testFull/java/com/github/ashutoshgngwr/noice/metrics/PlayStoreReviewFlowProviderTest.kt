@@ -1,9 +1,8 @@
-package com.github.ashutoshgngwr.noice.provider
+package com.github.ashutoshgngwr.noice.metrics
 
 import android.content.SharedPreferences
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
-import com.github.ashutoshgngwr.noice.metrics.PlayStoreReviewFlowProvider
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.android.play.core.review.testing.FakeReviewManager
