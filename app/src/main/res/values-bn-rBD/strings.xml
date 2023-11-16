@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="report_issue">সমস্যা রিপোর্ট করুন</string>
+    <string name="intensity">প্রবলতা</string>
+    <string name="help">সাহায্য</string>
+    <string name="support_development">উন্নয়ন সমর্থন করুন</string>
+    <string name="submit_feedback">আপনার প্রতিক্রিয়া জমা দিন</string>
+    <string name="library">লাইব্রেরী</string>
+    <string name="okay">থিক আছে</string>
+</resources>
