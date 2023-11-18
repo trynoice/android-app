@@ -11,6 +11,8 @@
 [![Android][gw-android-badge]][gw-android]
 [![codecov][codecov-badge]][codecov]
 
+Noice for Android is a high-quality customizable white noise machine.
+
 ## Download
 
 <a href="https://play.google.com/store/apps/details?id=com.github.ashutoshgngwr.noice">
