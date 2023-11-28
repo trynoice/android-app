@@ -1,2 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="dismiss">Dimitter</string>
+    <string name="save">Salvar</string>
+    <string name="play_pause">Reproducer o pausar</string>
+    <string name="pause">Pausa</string>
+    <string name="rename">Renominar</string>
+    <string name="report_issue">Signalar un defecto</string>
+    <string name="name">Nomine</string>
+    <string name="help">Adjuta</string>
+    <string name="delete">Deler</string>
+    <string name="stop">Stoppar</string>
+    <string name="add_to_home_screen">Adder al schermo de initio</string>
+    <string name="sleep_timer">Temporisator de somno</string>
+    <string name="library">Bibliotheca</string>
+    <string name="about">A proposito de</string>
+    <string name="cancel">Cancellar</string>
+    <string name="play">Reproducer</string>
+    <string name="app_theme">Thema</string>
+</resources>
