@@ -79,8 +79,8 @@
     <string name="unsaved_preset">Nicht gespeicherte Voreinstellung</string>
     <string name="skip_to_next">Nächste Voreinstellung</string>
     <string name="skip_to_prev">Vorherige Voreinstellung</string>
-    <string name="invalid_import_file_format">Das Format der Importdatei ist ungültig!</string>
-    <string name="failed_to_read_file">Fehler beim Lesen der ausgewählten Datei!</string>
+    <string name="invalid_import_file_format">Ungültiges Dateiformat! Bitte überprüfe die importierte Datei.</string>
+    <string name="failed_to_read_file">Sorry, wir konnten die ausgewählte Datei nicht lesen!</string>
     <string name="failed_to_write_file">Entschuldigung, wir konnten nicht in die ausgewählte Datei schreiben!</string>
     <string name="remove_all_app_shortcuts">Alle Anwendungsverknüpfungen entfernen</string>
     <string name="import_presets_summary">Das Importieren gespeicherter Voreinstellungen aus einer externen Datei überschreibt die akutellen Voreinstellungen</string>
@@ -98,17 +98,17 @@
     <string name="accept">Akzeptieren</string>
     <string name="enable_media_buttons_summary">Hardware-Medientasten zur Wiedergabesteuerung verwenden</string>
     <string name="enable_media_buttons">Medienknöpfe aktivieren</string>
-    <string name="payment_pending">Wir benachrichtigen Dich, sobald wir deine Zahlung verarbeitet haben.</string>
-    <string name="failed_to_purchase">Der Zahlungsfluss konnte nicht gestartet werden. Bitte versuche es später noch einmal!</string>
-    <string name="failed_to_load_inapp_purchases">Fehler beim Laden der In-App-Käufe. Bitte versuche es später noch einmal!</string>
-    <string name="should_share_usage_data_summary">Automatisch Nutzungs- und Verhaltensdaten mit den Entwicklern teilen</string>
+    <string name="payment_pending">Deine Zahlung wird verarbeitet. Wir benachrichtigen dich, sobald sie vollständig ist.</string>
+    <string name="failed_to_purchase">Sorry, es gab einen Fehler beim Starten des Kaufs. Bitte versuche es später noch einmal!</string>
+    <string name="failed_to_load_inapp_purchases">Sorry, wir konnten die In-App-Produkte nicht laden. Bitte versuche es später noch einmal!</string>
+    <string name="should_share_usage_data_summary">Hilf uns, Noice durch Teilen von Nutzungs- und Verhaltensdaten mit den Entwicklern zu verbessern</string>
     <string name="should_share_usage_data">Nutzungs- und Verhaltensdaten teilen</string>
     <string name="others">Andere</string>
     <string name="share_usage_data_consent_message">Wir sammeln Nutzungsdaten der App um die Benutzererfahrung zu verbessern. Wir sammeln außerdem Verhaltensdaten der App um auftretende Fehler während der Verwendung zu analysieren und diagnostizieren. Lies unsere [Datenschutzbestimmungen](https://trynoice.com/privacy-policy) für weitere Informationen.
 \n
 \nDu kannst das automatische Teilen von Daten jederzeit unter \"**Einstellungen** &gt; **Nutzungs- und Verhaltensdaten teilen**\" verwalten.</string>
     <string name="share_usage_data_consent_title">Präferenzen beim Teilen von Daten</string>
-    <string name="import_presets_successful">Gespeicherte Voreinstellungen wurden erfolgreich aus der Datei geladen!</string>
+    <string name="import_presets_successful">Voreinstellungen wurden erfolgreich geladen, bereit, um erkundet zu werden!</string>
     <string name="export_presets_successful">Gespeicherte Voreinstellungen wurden erfolgreich exportiert!</string>
     <string name="sound_fade_in_duration_summary">Dauer für das Überblenden in Sekunden</string>
     <string name="sound_fade_in_duration">Dauer des Einblendens</string>
