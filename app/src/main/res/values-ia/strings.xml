@@ -17,4 +17,14 @@
     <string name="cancel">Cancellar</string>
     <string name="play">Reproducer</string>
     <string name="app_theme">Thema</string>
+    <string name="unlimited_alarms">Alarmas illimitate</string>
+    <string name="resources">Ressources</string>
+    <string name="more_sound_clips">Plus de files de audio</string>
+    <string name="offline_playback">Reproduction foras de linea</string>
+    <string name="about_linkedin">Seque nos sur LinkedIn</string>
+    <string name="whats_new">Novitates</string>
+    <string name="hd_audio">Audio in alte definition</string>
+    <string name="blog">Blog</string>
+    <string name="now_playing">Reproduction in curso</string>
+    <string name="more_sounds">Plus de sonos</string>
 </resources>
