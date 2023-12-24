@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import org.junit.After
@@ -17,24 +16,24 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLooper
-import kotlin.random.Random
+import java.util.Random
 
 @RunWith(RobolectricTestRunner::class)
 class GitHubReviewFlowProviderTest {
 
   private lateinit var fragmentActivity: FragmentActivity
+  private lateinit var mockRandom: Random
   private lateinit var mockPrefs: SharedPreferences
   private lateinit var provider: GitHubReviewFlowProvider
 
   @Before
   fun setup() {
-    mockkObject(Random.Default)
     mockkStatic(PreferenceManager::class)
-
-    fragmentActivity = Robolectric.buildActivity(FragmentActivity::class.java).setup().get()
-    provider = GitHubReviewFlowProvider()
+    mockRandom = mockk(relaxed = true)
     mockPrefs = mockk(relaxed = true)
     every { PreferenceManager.getDefaultSharedPreferences(any()) } returns mockPrefs
+    fragmentActivity = Robolectric.buildActivity(FragmentActivity::class.java).setup().get()
+    provider = GitHubReviewFlowProvider(mockRandom)
   }
 
   @After
@@ -44,7 +43,7 @@ class GitHubReviewFlowProviderTest {
 
   @Test
   fun testMaybeAskForReview_whenUnlucky() {
-    every { Random.Default.nextInt(any()) } returns 1 // expecting 0 but return something else
+    every { mockRandom.nextInt(any()) } returns 1 // expecting 0 but return something else
     every {
       mockPrefs.getBoolean(GitHubReviewFlowProvider.PREF_FLOW_SUCCESSFULLY_COMPLETED, any())
     } returns false
@@ -57,7 +56,7 @@ class GitHubReviewFlowProviderTest {
 
   @Test
   fun testMaybeAskForReview_whenLucky() {
-    every { Random.Default.nextInt(any()) } returns 0 // returns the expected value
+    every { mockRandom.nextInt(any()) } returns 0 // returns the expected value
     every {
       mockPrefs.getBoolean(GitHubReviewFlowProvider.PREF_FLOW_SUCCESSFULLY_COMPLETED, any())
     } returns false
@@ -71,7 +70,7 @@ class GitHubReviewFlowProviderTest {
 
   @Test
   fun testMaybeAskForReview_whenUserHasCompletedReviewFlow() {
-    every { Random.Default.nextInt(any()) } returns 0 // returns the expected value
+    every { mockRandom.nextInt(any()) } returns 0 // returns the expected value
     every {
       mockPrefs.getBoolean(GitHubReviewFlowProvider.PREF_FLOW_SUCCESSFULLY_COMPLETED, any())
     } returns true

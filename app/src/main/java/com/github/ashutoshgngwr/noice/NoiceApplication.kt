@@ -20,6 +20,11 @@ class NoiceApplication : Application(), Configuration.Provider {
   @set:Inject
   internal lateinit var workerFactory: HiltWorkerFactory
 
+  override val workManagerConfiguration: Configuration
+    get() = Configuration.Builder()
+      .setWorkerFactory(workerFactory)
+      .build()
+
   override fun onCreate() {
     super.onCreate()
     DynamicColorsOptions.Builder()
@@ -30,11 +35,5 @@ class NoiceApplication : Application(), Configuration.Provider {
     Intent(this, AlarmInitReceiver::class.java)
       .setAction(AlarmInitReceiver.ACTION_INIT)
       .also { sendBroadcast(it) }
-  }
-
-  override fun getWorkManagerConfiguration(): Configuration {
-    return Configuration.Builder()
-      .setWorkerFactory(workerFactory)
-      .build()
   }
 }

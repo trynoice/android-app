@@ -50,6 +50,8 @@ class ShadowMediaSession : Player.Listener {
     callback: MediaSession.Callback,
     tokenExtras: Bundle,
     bitmapLoader: BitmapLoader,
+    playIfSuppressed: Boolean,
+    isPeriodicPositionUpdateEnabled: Boolean,
   ) {
     invokeConstructor(
       MediaSession::class.java,
@@ -62,6 +64,11 @@ class ShadowMediaSession : Player.Listener {
       ReflectionHelpers.ClassParameter.from(MediaSession.Callback::class.java, callback),
       ReflectionHelpers.ClassParameter.from(Bundle::class.java, tokenExtras),
       ReflectionHelpers.ClassParameter.from(BitmapLoader::class.java, bitmapLoader),
+      ReflectionHelpers.ClassParameter.from(Boolean::class.javaPrimitiveType, playIfSuppressed),
+      ReflectionHelpers.ClassParameter.from(
+        Boolean::class.javaPrimitiveType,
+        isPeriodicPositionUpdateEnabled,
+      ),
     )
 
     this.player = player

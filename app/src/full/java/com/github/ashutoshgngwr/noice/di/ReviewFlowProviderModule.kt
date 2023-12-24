@@ -9,6 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import java.util.Random
 import javax.inject.Singleton
 
 @Module
@@ -21,6 +22,6 @@ object ReviewFlowProviderModule {
     if (isGoogleMobileServiceAvailable(context)) {
       return PlayStoreReviewFlowProvider()
     }
-    return GitHubReviewFlowProvider()
+    return GitHubReviewFlowProvider(Random())
   }
 }

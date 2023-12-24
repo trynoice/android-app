@@ -658,7 +658,7 @@ class SoundPlaybackServiceTest {
       }
 
       every {
-        bindService(match { it.component?.className == serviceName }, any(), any())
+        bindService(match { it.component?.className == serviceName }, any(), any<Int>())
       } answers {
         val intent = firstArg<Intent>()
         secondArg<ServiceConnection>().onServiceConnected(intent.component, onBind(intent))

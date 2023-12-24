@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
 import com.github.ashutoshgngwr.noice.R
 import com.github.ashutoshgngwr.noice.fragment.DialogFragment
-import kotlin.random.Random
+import java.util.Random
 
 /**
  * [GitHubReviewFlowProvider] provides a simple review flow that prompts user for feedback through
@@ -19,7 +19,7 @@ import kotlin.random.Random
  * If the user has opted for 'don't show again', the flow will never be shown again. Otherwise,
  * it'll be shown every 1/20 calls to [GitHubReviewFlowProvider.maybeAskForReview].
  */
-class GitHubReviewFlowProvider : ReviewFlowProvider {
+class GitHubReviewFlowProvider(private val random: Random) : ReviewFlowProvider {
 
   override fun init(context: Context) = Unit
 
@@ -34,7 +34,7 @@ class GitHubReviewFlowProvider : ReviewFlowProvider {
       return
     }
 
-    if (Random.nextInt(20) != 0) {
+    if (random.nextInt(20) != 0) {
       Log.d(LOG_TAG, "abandoning request due to bad luck!")
       return
     }

@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.service
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -134,6 +135,7 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
         wakeLock.acquire(wakeLockTimeout.inWholeMilliseconds)
         lifecycleScope.launch { startRinger(alarmId) }
       }
+
       ACTION_SNOOZE -> lifecycleScope.launch { dismiss(alarmId, isSnoozed = true) }
       ACTION_DISMISS -> lifecycleScope.launch { dismiss(alarmId, isSnoozed = false) }
     }
@@ -167,6 +169,7 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
       .also { notificationManager.createNotificationChannel(it) }
   }
 
+  @SuppressLint("ForegroundServiceType") // TODO: lint error even when foregroundServiceType is present in the manifest.
   private suspend fun startRinger(alarmId: Int) {
     val alarm = alarmRepository.get(alarmId)
     if (alarm == null) {

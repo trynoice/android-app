@@ -1,5 +1,6 @@
 package com.github.ashutoshgngwr.noice.engine
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -111,6 +112,7 @@ class SoundPlaybackNotificationManager(
     updateForegroundNotification()
   }
 
+  @SuppressLint("ForegroundServiceType") // TODO: lint error even when foregroundServiceType is present in the manifest.
   private fun updateForegroundNotification() {
     if (soundPlayerManagerState == SoundPlayerManager.State.STOPPED) {
       if (isServiceInForeground) {
