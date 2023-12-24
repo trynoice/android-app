@@ -5,7 +5,7 @@ import androidx.core.os.bundleOf
 import com.github.ashutoshgngwr.noice.BuildConfig
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.analytics.ktx.setConsent
+import com.google.firebase.analytics.setConsent
 import com.google.firebase.ktx.Firebase
 import kotlin.reflect.KClass
 

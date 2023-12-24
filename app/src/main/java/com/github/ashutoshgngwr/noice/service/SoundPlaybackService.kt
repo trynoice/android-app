@@ -182,7 +182,12 @@ class SoundPlaybackService : LifecycleService(), SoundPlayerManager.Listener,
 
   override fun onCreate() {
     super.onCreate()
-    registerReceiver(becomingNoisyReceiver, IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY))
+    ContextCompat.registerReceiver(
+      this,
+      becomingNoisyReceiver,
+      IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY),
+      ContextCompat.RECEIVER_EXPORTED,
+    )
     castApiProvider?.addSessionListener(this)
 
     lifecycleScope.launch {

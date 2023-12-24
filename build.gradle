@@ -3,14 +3,14 @@ plugins {
   id 'com.android.library' version "${agpVersion}" apply false
   id 'org.jetbrains.kotlin.android' version "${kotlinVersion}" apply false
   id 'org.jetbrains.kotlin.kapt' version "${kotlinVersion}" apply false
-  id 'com.google.devtools.ksp' version "1.9.21-1.0.15" apply false
+  id 'com.google.devtools.ksp' version "1.9.21-1.0.16" apply false
 
   id 'androidx.navigation.safeargs.kotlin' version "${navVersion}" apply false
   id 'com.google.dagger.hilt.android' version "${hiltVersion}" apply false
   id 'com.mikepenz.aboutlibraries.plugin' version "${aboutLibrariesVersion}" apply false
 
-  id 'com.google.gms.google-services' version '4.3.15' apply false // sed:free-build:remove
-  id 'com.google.firebase.crashlytics' version '2.9.5' apply false // sed:free-build:remove
+  id 'com.google.gms.google-services' version '4.4.0' apply false // sed:free-build:remove
+  id 'com.google.firebase.crashlytics' version '2.9.9' apply false // sed:free-build:remove
 
   id 'com.adarshr.test-logger' version '4.0.0' apply false
 }
@@ -19,7 +19,7 @@ plugins {
 project.ext {
   deps = [
     aboutLibrariesVersion: "${aboutLibrariesVersion}",
-    androidXCoreVersion  : '1.10.1',
+    androidXCoreVersion  : '1.12.0',
     coroutinesVersion    : '1.7.3',
     hiltVersion          : "${hiltVersion}",
     kotlinVersion        : "${kotlinVersion}",
@@ -27,7 +27,7 @@ project.ext {
     navVersion           : "${navVersion}",
 
     junitVersion         : '4.13.2',
-    robolectricVersion   : '4.10.3',
+    robolectricVersion   : '4.11.1',
     testCoreVersion      : '1.5.0',
   ]
 }
@@ -39,11 +39,11 @@ subprojects {
     }
 
     android {
-      compileSdk 33
+      compileSdk 34
 
       defaultConfig {
         minSdk 21
-        targetSdk 33
+        targetSdk 34
       }
 
       compileOptions {

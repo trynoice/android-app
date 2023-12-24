@@ -11,6 +11,7 @@ import android.view.WindowManager
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -70,7 +71,12 @@ class AlarmRingerActivity : AppCompatActivity() {
 
   override fun onStart() {
     super.onStart()
-    registerReceiver(dismissBroadcastReceiver, IntentFilter(ACTION_DISMISS))
+    ContextCompat.registerReceiver(
+      this,
+      dismissBroadcastReceiver,
+      IntentFilter(ACTION_DISMISS),
+      ContextCompat.RECEIVER_NOT_EXPORTED,
+    )
   }
 
   override fun onStop() {
@@ -137,7 +143,9 @@ class AlarmRingerActivity : AppCompatActivity() {
     }
 
     fun dismiss(context: Context) {
-      context.sendBroadcast(Intent(ACTION_DISMISS))
+      Intent(ACTION_DISMISS)
+        .setPackage(context.packageName)
+        .also { context.sendBroadcast(it) }
     }
   }
 

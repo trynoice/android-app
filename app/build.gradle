@@ -35,8 +35,9 @@ android {
   }
 
   buildFeatures {
-    viewBinding true
+    buildConfig true
     dataBinding true
+    viewBinding true
   }
 
   buildTypes {
@@ -90,11 +91,11 @@ project.afterEvaluate {
 }
 
 dependencies {
-  def androidXHiltVersion = '1.0.0'
+  def androidXHiltVersion = '1.1.0'
   def fragmentVersion = '1.6.1'
-  def media3Version = '1.1.1'
-  def roomVersion = '2.5.2'
-  def workManagerVersion = '2.8.1'
+  def media3Version = '1.2.0'
+  def roomVersion = '2.6.1'
+  def workManagerVersion = '2.9.0'
 
   def espressoVersion = '3.5.1'
   def mockkVersion = '1.13.8'
@@ -104,14 +105,14 @@ dependencies {
   ksp "androidx.room:room-compiler:$roomVersion"
 
   implementation 'androidx.appcompat:appcompat:1.6.1'
-  implementation 'androidx.browser:browser:1.5.0'
+  implementation 'androidx.browser:browser:1.7.0'
   implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
   implementation "androidx.core:core-ktx:$deps.androidXCoreVersion"
   implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
   implementation "androidx.hilt:hilt-work:$androidXHiltVersion"
   implementation "androidx.lifecycle:lifecycle-common-java8:$deps.lifecycleVersion"
   implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$deps.lifecycleVersion"
-  implementation 'androidx.media:media:1.6.0' // needed for audio focus management.
+  implementation 'androidx.media:media:1.7.0' // needed for audio focus management.
   implementation "androidx.media3:media3-common:$media3Version"
   implementation "androidx.media3:media3-exoplayer:$media3Version"
   implementation "androidx.media3:media3-exoplayer-workmanager:$media3Version"
@@ -120,7 +121,7 @@ dependencies {
   implementation "androidx.navigation:navigation-ui-ktx:$deps.navVersion"
   implementation 'androidx.paging:paging-runtime-ktx:3.2.1'
   implementation 'androidx.preference:preference-ktx:1.2.1'
-  implementation 'androidx.recyclerview:recyclerview:1.3.1'
+  implementation 'androidx.recyclerview:recyclerview:1.3.2'
   implementation "androidx.room:room-ktx:$roomVersion"
   implementation "androidx.room:room-paging:$roomVersion"
   implementation "androidx.room:room-runtime:$roomVersion"
@@ -138,12 +139,12 @@ dependencies {
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$deps.coroutinesVersion"
   implementation project(":api-client")
 
-  fullImplementation 'androidx.mediarouter:mediarouter:1.4.0'
-  fullImplementation 'com.android.billingclient:billing-ktx:6.0.1'
+  fullImplementation 'androidx.mediarouter:mediarouter:1.6.0'
+  fullImplementation 'com.android.billingclient:billing-ktx:6.1.0'
   fullImplementation 'com.google.android.gms:play-services-base:18.2.0'
-  fullImplementation 'com.google.android.gms:play-services-cast-framework:21.3.0'
+  fullImplementation 'com.google.android.gms:play-services-cast-framework:21.4.0'
   fullImplementation 'com.google.android.play:core:1.10.3'
-  fullImplementation platform('com.google.firebase:firebase-bom:31.5.0')
+  fullImplementation platform('com.google.firebase:firebase-bom:32.7.0')
   fullImplementation 'com.google.firebase:firebase-analytics-ktx'
   fullImplementation 'com.google.firebase:firebase-crashlytics-ktx'
 
