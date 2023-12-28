@@ -157,9 +157,9 @@
     <string name="sign_in_link_tip">Completa il processo di accesso facendo clic sul link inviato alla tua email e aprendolo con Noice.</string>
     <string name="email_app_not_found">Uh-oh! Sembra che tu non abbia un app di e-mail sul dispositivo.</string>
     <string name="signing_in">Accedendo</string>
-    <string name="sign_in_token_error">Oops! Il link di accesso sembra non valido o scaduto. Richiedi un nuovo link e riprova.</string>
+    <string name="sign_in_token_error">Ops! Il collegamento di accesso sembra non valido o scaduto. Richiedi un nuovo collegamento e riprova.</string>
     <string name="sign_in_sucessful">Benvenuto a bordo! Ora hai eseguito l\'accesso con successo.</string>
-    <string name="sign_out_confirmation">Sei sicuro di voler disconnetterti\? Non preoccuparti, puoi sempre tornare!</string>
+    <string name="sign_out_confirmation">Sei sicuro/sicura di voler disconnetterti? Non preoccuparti, puoi sempre tornare!</string>
     <string name="signing_out">Disconnettendo</string>
     <string name="i_understand">Ho capito.</string>
     <string name="deleting_account">Cancellando l\'account</string>
