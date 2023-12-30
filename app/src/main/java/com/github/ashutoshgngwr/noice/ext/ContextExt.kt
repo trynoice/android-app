@@ -16,13 +16,15 @@ import android.os.Build
 import android.os.IBinder
 import android.provider.Settings
 import android.util.Log
+import android.util.TypedValue
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import com.github.ashutoshgngwr.noice.R
-import com.google.android.material.elevation.SurfaceColors
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -30,11 +32,21 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
 
 /**
+ * An extension to resolve colour attribute values as declared by the current Context theme.
+ */
+@ColorInt
+fun Context.resolveColorAttributeValue(@AttrRes resId: Int): Int {
+  return TypedValue()
+    .also { theme.resolveAttribute(resId, it, true) }
+    .data
+}
+
+/**
  * Launches a [CustomTabsIntent] with default application theme ([R.style.Theme_App]) for the given
  * [uri].
  */
 fun Context.startCustomTab(uri: String) {
-  val tbColor = SurfaceColors.SURFACE_2.getColor(this)
+  val tbColor = resolveColorAttributeValue(com.google.android.material.R.attr.colorSurfaceContainer)
   val colorParams = CustomTabColorSchemeParams.Builder()
     .setToolbarColor(tbColor)
     .setNavigationBarColor(tbColor)

@@ -1,7 +1,6 @@
 package com.github.ashutoshgngwr.noice.activity
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -36,7 +35,6 @@ import com.github.ashutoshgngwr.noice.repository.SettingsRepository
 import com.github.ashutoshgngwr.noice.service.SoundPlaybackService
 import com.github.ashutoshgngwr.noice.widget.SnackBar
 import com.github.ashutoshgngwr.noice.worker.SoundDownloadsRefreshWorker
-import com.google.android.material.elevation.SurfaceColors
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
@@ -95,14 +93,8 @@ class MainActivity : AppCompatActivity(), SubscriptionBillingProvider.Listener {
   override fun onCreate(savedInstanceState: Bundle?) {
     AppCompatDelegate.setDefaultNightMode(settingsRepository.getAppThemeAsNightMode())
     super.onCreate(savedInstanceState)
-    val surface2Color = SurfaceColors.SURFACE_2.getColor(this)
-    // only use material 3's surface colors when it's possible to have light system bars.
-    if (Build.VERSION.SDK_INT >= 23) window.statusBarColor = surface2Color
-    if (Build.VERSION.SDK_INT >= 27) window.navigationBarColor = surface2Color
-
     binding = MainActivityBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    binding.networkIndicator.setBackgroundColor(surface2Color)
 
     val navHostFragment = requireNotNull(binding.mainNavHostFragment.getFragment<NavHostFragment>())
     navController = navHostFragment.navController
