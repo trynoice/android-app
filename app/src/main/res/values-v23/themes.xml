@@ -2,8 +2,8 @@
 <resources>
 
   <style name="Base.V23.Theme.App" parent="Base.V21.Theme.App">
-    <item name="android:statusBarColor">@android:color/transparent</item>
-    <item name="android:windowLightStatusBar">?isLightTheme</item>
+    <item name="android:statusBarColor">?attr/colorSurfaceContainer</item>
+    <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
   </style>
 
   <style name="Base.Compat.Theme.App" parent="Base.V23.Theme.App" />

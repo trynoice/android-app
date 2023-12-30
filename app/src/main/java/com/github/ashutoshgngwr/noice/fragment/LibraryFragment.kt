@@ -3,7 +3,6 @@ package com.github.ashutoshgngwr.noice.fragment
 import android.annotation.SuppressLint
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +28,7 @@ import com.github.ashutoshgngwr.noice.engine.SoundPlayerManager
 import com.github.ashutoshgngwr.noice.ext.getInternetConnectivityFlow
 import com.github.ashutoshgngwr.noice.ext.launchAndRepeatOnStarted
 import com.github.ashutoshgngwr.noice.ext.normalizeSpace
+import com.github.ashutoshgngwr.noice.ext.resolveColorAttributeValue
 import com.github.ashutoshgngwr.noice.ext.showErrorSnackBar
 import com.github.ashutoshgngwr.noice.ext.showInfoSnackBar
 import com.github.ashutoshgngwr.noice.ext.showSuccessSnackBar
@@ -585,15 +585,9 @@ class SoundViewHolder(
     binding.title.text = soundInfo.name
     binding.icon.isVisible = isIconsEnabled
     if (isIconsEnabled) {
-      val iconColor = TypedValue()
-        .also { v ->
-          binding.icon.context.theme.resolveAttribute(
-            com.google.android.material.R.attr.colorSurfaceVariant,
-            v,
-            true,
-          )
-        }
-        .data
+      val iconColor = binding.icon.context.resolveColorAttributeValue(
+        com.google.android.material.R.attr.colorSurfaceContainerHigh
+      )
 
       binding.icon.post {
         val icon = SVG.getFromString(this.soundInfo.iconSvg)
