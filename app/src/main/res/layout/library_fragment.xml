@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingBottom="@{viewModel.isPlaying ? viewModel.isSavePresetButtonVisible ? @dimen/sound_list_padding_extra_extended : @dimen/sound_list_padding_extended : @dimen/sound_list_padding_normal}"
+        android:paddingBottom="@{viewModel.isSavePresetButtonVisible ? @dimen/sound_list_padding_extended : @dimen/sound_list_padding_normal}"
         app:hasFixedSize="@{true}"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
@@ -46,8 +46,7 @@
       style="?attr/floatingActionButtonPrimaryStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="16dp"
-      android:layout_marginBottom="76dp"
+      android:layout_margin="16dp"
       android:contentDescription="@string/save_preset"
       android:src="@drawable/round_save_24"
       android:visibility="gone"
@@ -59,8 +58,7 @@
       style="?attr/floatingActionButtonSecondaryStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="16dp"
-      android:layout_marginBottom="@{viewModel.isPlaying ? viewModel.isSavePresetButtonVisible ? @dimen/random_preset_fab_margin_normal : @dimen/random_preset_fab_margin_extended : @dimen/random_preset_fab_margin_normal}"
+      android:layout_margin="16dp"
       android:contentDescription="@string/random_preset"
       android:src="@drawable/round_shuffle_24"
       app:isVisible="@{!viewModel.libraryItems.empty || viewModel.apiErrorStrRes == null}"
