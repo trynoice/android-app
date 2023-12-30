@@ -11,99 +11,90 @@
 
   </data>
 
-  <com.google.android.material.card.MaterialCardView
+  <LinearLayout
     android:id="@+id/root"
-    style="?attr/materialCardViewElevatedStyle"
     android:layout_width="match_parent"
     android:layout_height="52dp"
-    app:cardElevation="4dp"
-    app:shapeAppearanceOverlay="?attr/shapeAppearanceCornerExtraSmall"
-    tools:layout_margin="16dp">
+    android:background="?attr/colorSurfaceContainer"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingEnd="8dp">
 
     <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:gravity="center_vertical"
-      android:orientation="horizontal"
-      android:paddingStart="16dp"
-      android:paddingEnd="8dp">
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:orientation="vertical">
 
-      <LinearLayout
-        android:layout_width="0dp"
+      <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:ellipsize="marquee"
-          android:marqueeRepeatLimit="marquee_forever"
-          android:singleLine="true"
-          android:text="@{viewModel.activePresetName ?? @string/unsaved_preset}"
-          android:textAppearance="?attr/textAppearanceTitleMedium"
-          android:textColor="?attr/colorOnSurface"
-          app:selected="@{true}"
-          tools:text="@string/unsaved_preset" />
-
-        <Space
-          android:layout_width="match_parent"
-          android:layout_height="2dp" />
-
-        <TextView
-          android:id="@+id/playback_state"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:singleLine="true"
-          android:textAppearance="?attr/textAppearanceBodySmall"
-          android:textColor="?attr/colorOnSurface"
-          tools:text="@string/stopping" />
-
-      </LinearLayout>
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:text="@{viewModel.activePresetName ?? @string/unsaved_preset}"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textColor="?attr/colorOnSurface"
+        app:selected="@{true}"
+        tools:text="@string/unsaved_preset" />
 
       <Space
-        android:layout_width="4dp"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="2dp" />
 
-      <com.google.android.material.button.MaterialButton
-        android:id="@+id/play_toggle"
-        style="@style/Widget.App.PlaybackController.IconButton"
-        android:layout_width="wrap_content"
+      <TextView
+        android:id="@+id/playback_state"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/play_pause"
-        android:onClick="@{() -> viewModel.togglePlayback()}"
-        app:icon="@{viewModel.isPlaying ? @drawable/round_pause_24 : @drawable/round_play_arrow_24}"
-        tools:icon="@drawable/round_pause_24" />
-
-      <Space
-        android:layout_width="4dp"
-        android:layout_height="wrap_content" />
-
-      <com.google.android.material.button.MaterialButton
-        android:id="@+id/stop"
-        style="@style/Widget.App.PlaybackController.IconButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/stop"
-        android:onClick="@{() -> viewModel.stopPlayback()}"
-        app:icon="@drawable/round_stop_24" />
-
-      <Space
-        android:layout_width="4dp"
-        android:layout_height="wrap_content" />
-
-      <com.google.android.material.button.MaterialButton
-        android:id="@+id/volume"
-        style="@style/Widget.App.PlaybackController.IconButton.WithText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/main_volume"
-        android:text="@{viewModel.volumePercentage}"
-        app:icon="@drawable/round_volume_up_24"
-        tools:text="100%" />
+        android:singleLine="true"
+        android:textAppearance="?attr/textAppearanceBodySmall"
+        android:textColor="?attr/colorOnSurface"
+        tools:text="@string/stopping" />
 
     </LinearLayout>
 
-  </com.google.android.material.card.MaterialCardView>
+    <Space
+      android:layout_width="4dp"
+      android:layout_height="wrap_content" />
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/play_toggle"
+      style="@style/Widget.App.PlaybackController.IconButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:contentDescription="@string/play_pause"
+      android:onClick="@{() -> viewModel.togglePlayback()}"
+      app:icon="@{viewModel.isPlaying ? @drawable/round_pause_24 : @drawable/round_play_arrow_24}"
+      tools:icon="@drawable/round_pause_24" />
+
+    <Space
+      android:layout_width="4dp"
+      android:layout_height="wrap_content" />
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/stop"
+      style="@style/Widget.App.PlaybackController.IconButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:contentDescription="@string/stop"
+      android:onClick="@{() -> viewModel.stopPlayback()}"
+      app:icon="@drawable/round_stop_24" />
+
+    <Space
+      android:layout_width="4dp"
+      android:layout_height="wrap_content" />
+
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/volume"
+      style="@style/Widget.App.PlaybackController.IconButton.WithText"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:contentDescription="@string/main_volume"
+      android:text="@{viewModel.volumePercentage}"
+      app:icon="@drawable/round_volume_up_24"
+      tools:text="100%" />
+
+  </LinearLayout>
 
 </layout>
