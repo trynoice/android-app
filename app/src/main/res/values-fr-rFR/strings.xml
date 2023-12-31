@@ -14,7 +14,7 @@
     <string name="pause">Pause</string>
     <string name="preset_already_exists">Un réglage avec ce nom existe déjà. Essayez-en un autre !</string>
     <string name="preset_name_cannot_be_empty">Le nom du préréglage est manquant. Veuillez en saisir un unique !</string>
-    <string name="preset_saved">Génial! Votre préréglage a été enregistré.</string>
+    <string name="preset_saved">Génial ! Votre préréglage a été enregistré.</string>
     <string name="save">Sauvegarder</string>
     <string name="save_preset">Sauvegarder le réglage</string>
     <string name="play">Lecture</string>
@@ -23,11 +23,11 @@
     <string name="volume">Volume</string>
     <string name="delete">Supprimer</string>
     <string name="open_context_menu">Menu contextuel</string>
-    <string name="preset_delete_confirmation">Etes-vous sûr que vous voulez supprimer %1$s\? Vous ne pouvez pas annuler cette action.</string>
+    <string name="preset_delete_confirmation">Êtes-vous sûr·e que vous voulez supprimer %1$s ? Vous ne pouvez pas annuler cette action.</string>
     <string name="preset_deleted">Votre préréglage a été supprimé avec succès !</string>
     <string name="preset_info__description">Vous pouvez facilement créer vos propres préréglages en jouant des sons puis en les enregistrant dans la bibliothèque de sons. Il vous suffit d\'appuyer sur le bouton Enregistrer et de lui donner un nom unique.</string>
     <string name="rename">Renommer</string>
-    <string name="auto_sleep_schedule_cancelled">Minuterie annulée ! L\'application va rester active</string>
+    <string name="auto_sleep_schedule_cancelled">Minuterie annulée ! L\'application va rester active.</string>
     <string name="reset">Réinitialiser</string>
     <string name="sleep_timer_description">Noice s\'éteindra tout seul à la fin de la minuterie. Utilisez les boutons ci-dessous pour définir la minuterie et ajouter plus de temps.</string>
     <string name="select_preset">Sélectionner le réglage</string>
@@ -65,9 +65,9 @@
     <string name="random_preset">Préréglage aléatoire</string>
     <string name="okay">D\'accord</string>
     <string name="intensity">Intensité</string>
-    <string name="submit_feedback">Soumettre une évaluation</string>
+    <string name="submit_feedback">Soumettre une remarque</string>
     <string name="in_app_feedback__description">Nous aimerions connaître votre avis sur l\'application. Nous vous prions de consulter notre GitHub. Si vous n\'aimez pas l\'application, nous vous prions d\'ouvrir un billet « issue » afin de nous expliquer vos critiques. Autrement, nous vous prions de noter le projet pour nous montrer votre reconnaissance.</string>
-    <string name="presets_as_home_screen_summary">Afficher « Préréglages » au démarrage de l\'application (nécessite un redémarrage de l\'application)</string>
+    <string name="presets_as_home_screen_summary">Afficher « Préréglages » au démarrage de l\'application (nécessite un redémarrage de l\'application).</string>
     <string name="pinned_shortcuts_not_supported">Désolé, il semble que votre application d\'écran d\'accueil ne prenne pas en charge les raccourcis.</string>
     <string name="never">Jamais</string>
     <string name="later">Plus tard</string>
@@ -93,11 +93,11 @@
     <string name="export_presets_summary">Exporter l\'instantané actuel des préréglages sauvegardés vers un fichier externe</string>
     <string name="export_presets">Exporter dans un fichier</string>
     <string name="share">Partager</string>
-    <string name="invalid_import_file_format">Le format du fichier d\'importation n\'est pas valide !</string>
+    <string name="invalid_import_file_format">Format de fichier invalide ! Veuillez vérifier le fichier d\'importation.</string>
     <string name="failed_to_read_file">Échec de la lecture du fichier sélectionné !</string>
     <string name="failed_to_write_file">Échec de l\'écriture dans le fichier sélectionné !</string>
     <string name="all_app_shortcuts_removed">Tous les raccourcis d\'applications ont été supprimés !</string>
-    <string name="remove_all_app_shortcuts_confirmation">Ça supprimera tous les raccourcis prédéfinis du menu des raccourcis de l\'application. Voulez-vous continuer \?</string>
+    <string name="remove_all_app_shortcuts_confirmation">Êtes-vous sûr·e de vouloir supprimer tous les raccourcis prédéfinis dans le menu raccourci de l\'application ? Cette action ne peut être annulée.</string>
     <string name="remove_all_app_shortcuts">Retirer tous les raccourcis de l\'appli</string>
     <string name="should_display_sound_icons">Afficher les icônes de son</string>
     <string name="should_share_usage_data_summary">Partager automatiquement les données d\'utilisation et de comportement avec les développeurs</string>
@@ -105,9 +105,7 @@
     <string name="others">Autres</string>
     <string name="decline">Refuser</string>
     <string name="accept">Accepter</string>
-    <string name="share_usage_data_consent_message">Nous recueillons des données sur l\'utilisation des applications afin d\'améliorer l\'expérience des utilisateurs. Nous recueillons également des données sur le comportement de l\'application pour analyser et diagnostiquer les erreurs rencontrées lors de son utilisation. Lisez notre [politique de confidentialité](https://trynoice.com/privacy-policy) pour plus d\'informations.
-\n
-\n Vous pouvez configurer le partage automatique des données à tout moment dans l\'application en allant dans « **Paramètres** &gt; **Partager les données d\'utilisation et de comportement** ».</string>
+    <string name="share_usage_data_consent_message">Nous voulons rendre votre expérience avec Noice aussi lisse que possible. Pour ce faire, nous recueillons des données sur la façon dont vous utilisez l\'application et les erreurs qui peuvent survenir. Il nous aide à identifier les problèmes et à améliorer l\'application. Vous pouvez en savoir plus dans notre [politique de confidentialité](https://trynoice.com/privacy-policy#software-usage-performance-and-behaviour-data). Vous pouvez contrôler vos préférences de partage de données à tout moment dans les paramètres de l\'application.</string>
     <string name="share_usage_data_consent_title">Préférences de partage des données</string>
     <string name="payment_pending">Nous vous informerons dès que nous aurons fini de traiter votre paiement.</string>
     <string name="failed_to_purchase">Échec du lancement du flux de paiement. Veuillez réessayer plus tard !</string>
@@ -142,7 +140,7 @@
     <string name="monthly">Tous les mois</string>
     <string name="quarterly">Tous les trimestres</string>
     <string name="back_online">De retour en ligne</string>
-    <string name="email_app_not_found">Oh oh ! Nous n\'avons pas trouvé d\'application de messagerie sur votre appareil !</string>
+    <string name="email_app_not_found">Oh oh ! Nous n\'avons pas trouvé d\'application de messagerie sur votre appareil.</string>
     <string name="playing">Lecture en cours</string>
     <string name="audio_quality_ultra">Ultra (320 kb/s)</string>
     <string name="sign_up">S\'inscrire</string>
@@ -151,7 +149,7 @@
     <string name="started_on">Démarré le %1$s</string>
     <string name="privacy_policy">Politique de confidentialité</string>
     <string name="user_already_subscribed">Vous avez déjà souscrit.</string>
-    <string name="sign_out_confirmation">Confirmer la déconnexion \?</string>
+    <string name="sign_out_confirmation">Êtes-vous sûr·e de vouloir vous déconnecter ? Ne vous inquiétez pas, vous pouvez toujours revenir !</string>
     <string name="i_understand">J\'ai compris.</string>
     <string name="renews_on">Renouvellement le %1$s</string>
     <string name="invalid_name">Le nom saisi est invalide !</string>
@@ -164,7 +162,7 @@
     <string name="playback">Lecture</string>
     <string name="account_details_update_error">Oh non ! Nous n\'avons pas pu mettre à jour vos informations. %1$s Veuillez réessayer !</string>
     <string name="total_price">%1$s au total</string>
-    <string name="sign_in_sucessful">Connexion avec succès !</string>
+    <string name="sign_in_sucessful">Bienvenue à bord ! Vous êtes maintenant connecté·e.</string>
     <string name="email">Courriel</string>
     <string name="audio_quality_low">Basse (128 kb/s)</string>
     <string name="confirming_payment">Confirmation du paiement</string>
@@ -219,7 +217,7 @@
     <string name="terms_of_service">Conditions d\'utilisation</string>
     <string name="sign_up_message">Veuillez entrer votre nom et votre courriel pour vous inscrire.</string>
     <string name="sign_in_message">Veuillez entrer votre courriel pour vous connecter.</string>
-    <string name="subscription_payment_pending">Le paiement est en attente pour cet achat.</string>
+    <string name="subscription_payment_pending">Paiement en attente</string>
     <string name="sound_fade_out_duration">Durée du fondu sonore</string>
     <string name="stripe_customer_portal_error">Oups ! Nous n\'avons pas pu ouvrir le portail de facturation. %1$s Veuillez réessayer !</string>
     <string name="redeem_gift_card">Échanger la carte cadeau</string>
@@ -234,27 +232,27 @@
     <string name="subscription_initialisation_error">Oups ! Nous n\'avons pas pu lancer le flux de facturation. %1$s Veuillez réessayer !</string>
     <string name="delete_account_confirmation">Vous perdrez immédiatement l\'accès à votre compte en cas de suppression. Si vous avez un abonnement en cours à Noice Premium, nous cesserons de vous le facturer. Si vous changez d\'avis, vous pouvez restaurer votre compte en vous reconnectant à tout moment dans les 7 jours suivant la suppression. Après cette période, nous effacerons définitivement les données de votre compte de nos serveurs.</string>
     <string name="cancel_subscription_confirmation">Êtes-vous sûr·e de vouloir annuler votre abonnement à Noice Premium \? En cas d\'annulation, votre abonnement sera automatiquement résilié à la fin du cycle de facturation actuel. Votre cycle de facturation actuel se termine le %1$s.</string>
-    <string name="sign_in_token_error">Le lien de connexion semble être invalide. Il a peut-être expiré. Veuillez réessayer !</string>
+    <string name="sign_in_token_error">Oups ! Le lien d\'inscription semble invalide ou expiré. Veuillez en demander un nouveau et réessayer.</string>
     <string name="subscription_plans_load_error">Oups ! Nous n\'avons pas pu récupérer les plans d\'abonnement. %1$s</string>
     <string name="sound_fade_out_duration_summary">Durée en secondes de l\'atténuation des sons</string>
     <string name="open_mailbox">Ouvrir la messagerie</string>
     <string name="subscription_purchases">Achats d\'abonnements</string>
-    <string name="looping_sound">Ce son passe en boucle sans interruption.</string>
+    <string name="looping_sound">Se répète sans interruption</string>
     <string name="subscription_purchases_load_error">Oh oh ! Nous n\'avons pas pu récupérer l\'historique des achats de votre abonnement. %1$s</string>
     <string name="library_load_error">Oups ! Nous n\'avons pas pu récupérer la bibliothèque de sons. %1$s</string>
-    <string name="subscription_payment_refunded">Nous avons annulé cet achat et demandé un remboursement.</string>
+    <string name="subscription_payment_refunded">Achat annulé et remboursement commencé</string>
     <string name="preset_url_invalid">L\'URL prédéfinie semble être invalide !</string>
     <string name="audio_quality_summary">La qualité audio maximale pour le streaming. Moyenne, Élevée et Ultra ne fonctionnent que si vous êtes abonné·e à Noice Premium.</string>
     <string name="profile_load_error">Oups ! Nous n\'avons pas pu récupérer les détails de votre compte. %1$s</string>
-    <string name="non_looping_sound">Ce son contient des pauses entre les deux.</string>
+    <string name="non_looping_sound">Se répète avec un retard aléatoire</string>
     <string name="payment_processing_error">Oh oh ! Nous n\'avons pas été en mesure de traiter votre paiement. Le montant devrait être automatiquement remboursé s\'il a été déduit. Si vous ne recevez pas votre remboursement dans la semaine, veuillez nous en informer.</string>
-    <string name="sign_up_email_sent">Nous vous avons envoyé un lien pour vous connecter par courriel à l\'adresse « %1$s ».</string>
-    <string name="has_premium_segments">Ce son offre des variantes supplémentaires avec Noice Premium.</string>
-    <string name="sign_in_email_sent">Nous vous avons envoyé un lien de connexion par courriel sur « %1$s » si cette adresse appartient à un compte enregistré.</string>
+    <string name="sign_up_email_sent">Nous vous avons envoyé un lien de connexion à %1$s. Veuillez vérifier votre boîte de réception !</string>
+    <string name="has_premium_segments">Offre plus d\'extraits audio avec Noice Premium</string>
+    <string name="sign_in_email_sent">Nous vous avons envoyé un lien d\'inscription à %1$s si ce courriel appartient à un compte enregistré. Veuillez vérifier votre boîte de réception !</string>
     <string name="no_subscription_purchases_found">Nous ne pensons pas que vous ayez déjà essayé Noice Premium. Vos abonnements précédents apparaîtront ici une fois que vous aurez utilisé Noice Premium au moins une fois.</string>
     <string name="media_sources">Sources multimédias</string>
     <string name="sign_in_link_tip">Veuillez ouvrir le lien reçu en utilisant Noice pour compléter le processus de connexion.</string>
-    <string name="subscription_payment_confirmation_failed">Oh oh ! Nous avons eu des problèmes lors de l\'attente de la confirmation du paiement. Cela peut être dû à une erreur de réseau ou à un retard du fournisseur de paiement. Nous mettrons à jour l\'état de votre abonnement dès que nous aurons des nouvelles du fournisseur. Veuillez vérifier l\'état de votre abonnement après un certain temps.</string>
+    <string name="subscription_payment_confirmation_failed">Oh oh ! Nous avons heurté un snag tout en confirmant votre paiement. Il pourrait s\'agir d\'un problème de réseau ou d\'un retard du fournisseur de paiement. Rassurez-vous, nous mettrons à jour votre statut d\'abonnement dès que nous en entendons parler du paiement. Veuillez vérifier à nouveau plus tard !</string>
     <string name="use_material_you_colors">Utiliser des couleurs Material You</string>
     <string name="remove_all_sound_downloads_confirmation">Cela va supprimer tous les sons téléchargés pour une lecture hors-ligne. Voulez-vous continuer \?</string>
     <string name="sound_downloads_scheduled_for_removal">La suppression de tous les sons téléchargés est planifiée.</string>
@@ -295,9 +293,7 @@
     <string name="proceed">Poursuivre</string>
     <string name="add_label">Ajouter un label</string>
     <string name="notification_channel_alarm_primary__description">Notifications affichées lorsqu\'une alarme programmée se déclenche.</string>
-    <string name="alarm_permission_rationale_description">Nous avons besoin d\'un accès supplémentaire pour programmer des alarmes sur votre appareil.
-\n
-\nVeuillez activer **Alarmes et rappels** pour Noice à partir des détails de son application dans les paramètres système de votre appareil.</string>
+    <string name="alarm_permission_rationale_description">Nous avons besoin d\'un accès supplémentaire aux alarmes horaires sur votre appareil. Veuillez activer l\'autorisation **Alarmes et rappels** pour Noice dans sa page d\'information d\'application dans les réglages système de votre appareil.</string>
     <string name="post_notifications_permission_rationale_description">Nous avons besoin d\'une autorisation supplémentaire pour afficher des notifications pour les alarmes programmées. Sans notifications, Noice ne peut pas faire sonner les alarmes à l\'heure prévue.</string>
     <string name="alarm_post_notifications_permission_denied">Noice ne peut pas faire sonner les alarmes sans l\'autorisation d\'afficher les notifications !</string>
     <string name="notification_channel_alarm_priming__name">Amorçage d\'alarme</string>
@@ -317,5 +313,5 @@
     <string name="alarm_gradually_increase_volume">Augmenter progressivement le volume de l\'alarme</string>
     <string name="alarm_gradually_increase_volume_summary">Durée en minutes pour l\'augmentation progressive du volume lors d\'un déclenchement d\'alarme</string>
     <string name="no_purchases">Aucun achat</string>
-    <string name="cancellation_and_refunds_policy">Voir [politique en matière de paiements, d\'annulations et de remboursements] (https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
+    <string name="cancellation_and_refunds_policy">Voir [politique en matière de paiements, d\'annulations et de remboursements](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium).</string>
 </resources>

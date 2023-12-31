@@ -107,7 +107,7 @@
     <string name="import_presets_successful">Presets imported successfully, ready to be explored!</string>
     <string name="should_display_sound_icons">Display sound icons</string>
     <string name="share_usage_data_consent_title">Data Sharing Preferences</string>
-    <string name="share_usage_data_consent_message">We want to make your experience with Noice as smooth as possible. To do that, we collect data on how you use the app and any errors that may occur. It helps us identify issues and improve the app. You can read more about this in our [privacy policy](https://trynoice.com/privacy-policy#android-app-performance-data). You can control your data-sharing preferences at any time in the app settings.</string>
+    <string name="share_usage_data_consent_message">We want to make your experience with Noice as smooth as possible. To do that, we collect data on how you use the app and any errors that may occur. It helps us identify issues and improve the app. You can read more about this in our [privacy policy](https://trynoice.com/privacy-policy#software-usage-performance-and-behaviour-data). You can control your data-sharing preferences at any time in the app settings.</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
     <string name="others">Others</string>

@@ -111,7 +111,7 @@
     <string name="payment_pending">Pembayaran Anda sedang diproses. Kami akan memberi tahu Anda setelah selesai.</string>
     <string name="export_presets_successful">Prasetel berhasil diekspor, selamat menikmati!</string>
     <string name="import_presets_successful">Prasetel berhasil diimpor, siap untuk dieksplorasi!</string>
-    <string name="share_usage_data_consent_message">Kami ingin membuat pengalaman Anda dengan Noice semulus mungkin. Untuk itu, kami mengumpulkan data tentang cara Anda menggunakan aplikasi dan kesalahan yang mungkin terjadi. Hal ini membantu kami mengidentifikasi masalah dan meningkatkan aplikasi. Anda dapat membaca lebih lanjut tentang hal ini di [kebijakan privasi] (https://trynoice.com/privacy-policy#android-app-performance-data). Anda dapat mengontrol preferensi pembagian data Anda kapan saja di pengaturan aplikasi.</string>
+    <string name="share_usage_data_consent_message">Kami ingin membuat pengalaman Anda dengan Noice semulus mungkin. Untuk itu, kami mengumpulkan data tentang cara Anda menggunakan aplikasi dan kesalahan yang mungkin terjadi. Hal ini membantu kami mengidentifikasi masalah dan meningkatkan aplikasi. Anda dapat membaca lebih lanjut tentang hal ini di [kebijakan privasi] (https://trynoice.com/privacy-policy#software-usage-performance-and-behaviour-data). Anda dapat mengontrol preferensi pembagian data Anda kapan saja di pengaturan aplikasi.</string>
     <string name="failed_to_load_inapp_purchases">Maaf, kami tidak dapat memuat detail produk dalam aplikasi. Silakan coba lagi nanti!</string>
     <string name="created_by">Dibuat oleh</string>
     <string name="enable_media_buttons_summary">Gunakan tombol media perangkat keras untuk mengontrol pemutaran</string>

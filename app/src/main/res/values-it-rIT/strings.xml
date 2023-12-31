@@ -102,7 +102,7 @@
     <string name="others">Altri</string>
     <string name="decline">Rifiuta</string>
     <string name="accept">Accetta</string>
-    <string name="share_usage_data_consent_message">Vogliamo rendere la tua esperienza con Noice il più agevole possibile. Per farlo, raccogliamo dati su come utilizzi l\'app e su eventuali errori che potrebbero verificarsi. Ci aiuta a identificare i problemi e migliorare l\'app. Puoi leggere di più su questo nella nostra [privacy policy](https://trynoice.com/privacy-policy#android-app-performance-data). È possibile controllare le preferenze di condivisione dei dati in qualsiasi momento nelle impostazioni dell\'app.</string>
+    <string name="share_usage_data_consent_message">Vogliamo rendere la tua esperienza con Noice il più agevole possibile. Per farlo, raccogliamo dati su come utilizzi l\'app e su eventuali errori che potrebbero verificarsi. Ci aiuta a identificare i problemi e migliorare l\'app. Puoi leggere di più su questo nella nostra [privacy policy](https://trynoice.com/privacy-policy#software-usage-performance-and-behaviour-data). È possibile controllare le preferenze di condivisione dei dati in qualsiasi momento nelle impostazioni dell\'app.</string>
     <string name="share_usage_data_consent_title">Preferenze di condivisione dei dati</string>
     <string name="should_display_sound_icons">Visualizza le icone di suono</string>
     <string name="enable_media_buttons">Abilita i pulsanti dei media</string>
@@ -157,9 +157,9 @@
     <string name="sign_in_link_tip">Completa il processo di accesso facendo clic sul link inviato alla tua email e aprendolo con Noice.</string>
     <string name="email_app_not_found">Uh-oh! Sembra che tu non abbia un app di e-mail sul dispositivo.</string>
     <string name="signing_in">Accedendo</string>
-    <string name="sign_in_token_error">Oops! Il link di accesso sembra non valido o scaduto. Richiedi un nuovo link e riprova.</string>
+    <string name="sign_in_token_error">Ops! Il collegamento di accesso sembra non valido o scaduto. Richiedi un nuovo collegamento e riprova.</string>
     <string name="sign_in_sucessful">Benvenuto a bordo! Ora hai eseguito l\'accesso con successo.</string>
-    <string name="sign_out_confirmation">Sei sicuro di voler disconnetterti\? Non preoccuparti, puoi sempre tornare!</string>
+    <string name="sign_out_confirmation">Sei sicuro/sicura di voler disconnetterti? Non preoccuparti, puoi sempre tornare!</string>
     <string name="signing_out">Disconnettendo</string>
     <string name="i_understand">Ho capito.</string>
     <string name="deleting_account">Cancellando l\'account</string>

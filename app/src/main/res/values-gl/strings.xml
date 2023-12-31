@@ -298,7 +298,7 @@
     <string name="unknown_error">Produciuse un erro descoñecido.</string>
     <string name="skip_to_prev">Preselección anterior</string>
     <string name="share">Compartir</string>
-    <string name="share_usage_data_consent_message">Queremos que a túa experiencia con Noice sexa o máis fluida posible. Para iso, recompilamos datos sobre como usala aplicación e os erros que se poidan producir. Axúdanos a identificar problemas e mellorala aplicación. Podes ler máis sobre isto na nosa [política de privacidade](https://trynoice.com/privacy-policy#android-app-performance-data). Podes controlalas túas preferencias para compartir datos en calquera momento na configuración da aplicación.</string>
+    <string name="share_usage_data_consent_message">Queremos que a túa experiencia con Noice sexa o máis fluida posible. Para iso, recompilamos datos sobre como usala aplicación e os erros que se poidan producir. Axúdanos a identificar problemas e mellorala aplicación. Podes ler máis sobre isto na nosa [política de privacidade](https://trynoice.com/privacy-policy#software-usage-performance-and-behaviour-data). Podes controlalas túas preferencias para compartir datos en calquera momento na configuración da aplicación.</string>
     <string name="accept">Aceptar</string>
     <string name="account_locked_error">Poderás volver solicitar ligazóns de inicio de sesión para este correo electrónico despois de %1$s.</string>
     <string name="enable_media_buttons_summary">Uselos botóns multimedia do hardware para controlala reprodución</string>

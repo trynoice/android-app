@@ -99,7 +99,7 @@
     <string name="invalid_import_file_format">无效的文件格式！请检查导入文件。</string>
     <string name="failed_to_purchase">抱歉，启动你的购买碰到一个问题。请稍后再试！</string>
     <string name="export_presets_summary">保存一份你当前预设的拷贝到外部文件</string>
-    <string name="share_usage_data_consent_message">我们希望让您的 Noice 体验尽可能平滑。为此，我们会收集有关您使用应用的方式以及可能发生的任何错误的数据。它可以帮助我们查明问题并改进应用。更多有关信息请查看我们的 [隐私政策](https://trynoice.com/privacy-policy#android-app-performance-data)。您可随时在应用设置中控制数据分享选项。</string>
+    <string name="share_usage_data_consent_message">我们希望让您的 Noice 体验尽可能平滑。为此，我们会收集有关您使用应用的方式以及可能发生的任何错误的数据。它可以帮助我们查明问题并改进应用。更多有关信息请查看我们的 [隐私政策](https://trynoice.com/privacy-policy#software-usage-performance-and-behaviour-data)。您可随时在应用设置中控制数据分享选项。</string>
     <string name="failed_to_load_inapp_purchases">抱歉，我们无法加载应用内产品详细信息。请稍后再试！</string>
     <string name="export_presets_successful">成功导出了预设，享受吧！</string>
     <string name="import_presets_successful">预设导入成功，准备好迎接探索！</string>
