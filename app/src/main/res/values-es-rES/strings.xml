@@ -105,7 +105,7 @@
     <string name="should_display_sound_icons">Mostrar iconos de sonido</string>
     <string name="export_presets_successful">Presets exportados con éxito, ¡disfrútalos!</string>
     <string name="import_presets_successful">¡Preajustes importados con éxito, listos para ser explorados!</string>
-    <string name="share_usage_data_consent_message">Queremos que tu experiencia con Noice sea lo más fluida posible. Para ello, recopilamos datos sobre cómo utilizas la aplicación y los errores que puedan producirse. Esto nos ayuda a identificar problemas y mejorar la aplicación. Puede obtener más información al respecto en nuestra [política de privacidad](https://trynoice.com/privacy-policy#android-app-performance-data). Puede controlar sus preferencias de intercambio de datos en cualquier momento en los ajustes de la aplicación.</string>
+    <string name="share_usage_data_consent_message">Queremos que tu experiencia con Noice sea lo más fluida posible. Para ello, recopilamos datos sobre cómo utilizas la aplicación y los errores que puedan producirse. Esto nos ayuda a identificar problemas y mejorar la aplicación. Puede obtener más información al respecto en nuestra [política de privacidad](https://trynoice.com/privacy-policy#software-usage-performance-and-behaviour-data). Puede controlar sus preferencias de intercambio de datos en cualquier momento en los ajustes de la aplicación.</string>
     <string name="share_usage_data_consent_title">Preferencias para Compartir Datos</string>
     <string name="enable_media_buttons">Activar botones multimedia</string>
     <string name="enable_media_buttons_summary">Utilice botones de medios de hardware para controlar la reproducción</string>

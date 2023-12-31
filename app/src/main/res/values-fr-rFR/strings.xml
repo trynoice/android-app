@@ -105,7 +105,7 @@
     <string name="others">Autres</string>
     <string name="decline">Refuser</string>
     <string name="accept">Accepter</string>
-    <string name="share_usage_data_consent_message">Nous voulons rendre votre expérience avec Noice aussi lisse que possible. Pour ce faire, nous recueillons des données sur la façon dont vous utilisez l\'application et les erreurs qui peuvent survenir. Il nous aide à identifier les problèmes et à améliorer l\'application. Vous pouvez en savoir plus dans notre [politique de confidentialité](https://trynoice.com/privacy-policy#android-app-performance-data). Vous pouvez contrôler vos préférences de partage de données à tout moment dans les paramètres de l\'application.</string>
+    <string name="share_usage_data_consent_message">Nous voulons rendre votre expérience avec Noice aussi lisse que possible. Pour ce faire, nous recueillons des données sur la façon dont vous utilisez l\'application et les erreurs qui peuvent survenir. Il nous aide à identifier les problèmes et à améliorer l\'application. Vous pouvez en savoir plus dans notre [politique de confidentialité](https://trynoice.com/privacy-policy#software-usage-performance-and-behaviour-data). Vous pouvez contrôler vos préférences de partage de données à tout moment dans les paramètres de l\'application.</string>
     <string name="share_usage_data_consent_title">Préférences de partage des données</string>
     <string name="payment_pending">Nous vous informerons dès que nous aurons fini de traiter votre paiement.</string>
     <string name="failed_to_purchase">Échec du lancement du flux de paiement. Veuillez réessayer plus tard !</string>

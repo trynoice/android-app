@@ -102,7 +102,7 @@
     <string name="others">अन्य</string>
     <string name="decline">अस्वीकार करें</string>
     <string name="accept">स्वीकार करें</string>
-    <string name="share_usage_data_consent_message">हम नॉइस के साथ आपके अनुभव को यथासंभव आसान बनाना चाहते हैं। ऐसा करने के लिए, हम डेटा एकत्र करते हैं कि आप ऐप का उपयोग कैसे करते हैं और होने वाली किसी भी त्रुटि पर। यह मुद्दों की पहचान करने और ऐप को बेहतर बनाने में हमारी मदद करता है। आप इसके बारे में हमारी [गोपनीयता नीति](https://trynoice.com/privacy-policy#android-app-performance-data) में अधिक पढ़ सकते हैं। आप ऐप सेटिंग में किसी भी समय अपनी डेटा-साझाकरण प्राथमिकताओं को नियंत्रित कर सकते हैं।</string>
+    <string name="share_usage_data_consent_message">हम नॉइस के साथ आपके अनुभव को यथासंभव आसान बनाना चाहते हैं। ऐसा करने के लिए, हम डेटा एकत्र करते हैं कि आप ऐप का उपयोग कैसे करते हैं और होने वाली किसी भी त्रुटि पर। यह मुद्दों की पहचान करने और ऐप को बेहतर बनाने में हमारी मदद करता है। आप इसके बारे में हमारी [गोपनीयता नीति](https://trynoice.com/privacy-policy#software-usage-performance-and-behaviour-data) में अधिक पढ़ सकते हैं। आप ऐप सेटिंग में किसी भी समय अपनी डेटा-साझाकरण प्राथमिकताओं को नियंत्रित कर सकते हैं।</string>
     <string name="share_usage_data_consent_title">डेटा साझाकरण प्राथमिकताएं</string>
     <string name="sound_fade_in_duration_summary">ध्वनि फ़ेड-इन के लिए सेकंड में समय अवधि</string>
     <string name="sound_fade_in_duration">ध्वनि क्षीणन अवधि</string>

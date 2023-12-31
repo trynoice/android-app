@@ -102,7 +102,7 @@
     <string name="others">Altri</string>
     <string name="decline">Rifiuta</string>
     <string name="accept">Accetta</string>
-    <string name="share_usage_data_consent_message">Vogliamo rendere la tua esperienza con Noice il più agevole possibile. Per farlo, raccogliamo dati su come utilizzi l\'app e su eventuali errori che potrebbero verificarsi. Ci aiuta a identificare i problemi e migliorare l\'app. Puoi leggere di più su questo nella nostra [privacy policy](https://trynoice.com/privacy-policy#android-app-performance-data). È possibile controllare le preferenze di condivisione dei dati in qualsiasi momento nelle impostazioni dell\'app.</string>
+    <string name="share_usage_data_consent_message">Vogliamo rendere la tua esperienza con Noice il più agevole possibile. Per farlo, raccogliamo dati su come utilizzi l\'app e su eventuali errori che potrebbero verificarsi. Ci aiuta a identificare i problemi e migliorare l\'app. Puoi leggere di più su questo nella nostra [privacy policy](https://trynoice.com/privacy-policy#software-usage-performance-and-behaviour-data). È possibile controllare le preferenze di condivisione dei dati in qualsiasi momento nelle impostazioni dell\'app.</string>
     <string name="share_usage_data_consent_title">Preferenze di condivisione dei dati</string>
     <string name="should_display_sound_icons">Visualizza le icone di suono</string>
     <string name="enable_media_buttons">Abilita i pulsanti dei media</string>

@@ -56,7 +56,7 @@
     <string name="others">الاخرين</string>
     <string name="decline">رفض</string>
     <string name="accept">قبول</string>
-    <string name="share_usage_data_consent_message">نرغب في جعل تجربتك مع Noice سلسة قدر الإمكان. لذلك، نقوم بجمع بيانات حول كيفية استخدامك للتطبيق وأي أخطاء قد تحدث. تساعدنا هذه البيانات في تحديد المشكلات وتحسين التطبيق. يمكنك قراءة المزيد حول هذا في [سياسة الخصوصية](https://trynoice.com/privacy-policy#android-app-performance-data). يمكنك التحكم في تفضيلات مشاركة بياناتك في أي وقت من إعدادات التطبيق.</string>
+    <string name="share_usage_data_consent_message">نرغب في جعل تجربتك مع Noice سلسة قدر الإمكان. لذلك، نقوم بجمع بيانات حول كيفية استخدامك للتطبيق وأي أخطاء قد تحدث. تساعدنا هذه البيانات في تحديد المشكلات وتحسين التطبيق. يمكنك قراءة المزيد حول هذا في [سياسة الخصوصية](https://trynoice.com/privacy-policy#software-usage-performance-and-behaviour-data). يمكنك التحكم في تفضيلات مشاركة بياناتك في أي وقت من إعدادات التطبيق.</string>
     <string name="share_usage_data_consent_title">تفضيلات مشاركة البيانات</string>
     <string name="should_display_sound_icons">عرض رموز الصوت</string>
     <string name="invalid_import_file_format">تنسيق الملف غير صالح! يرجى التحقق من ملف الاستيراد.</string>

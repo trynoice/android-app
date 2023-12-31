@@ -97,7 +97,7 @@
     <string name="invalid_import_file_format">Neplatný formát souboru! Prosím zkontrolujte importovaný soubor.</string>
     <string name="should_display_sound_icons">Zobrazovat ikony zvuku</string>
     <string name="share_usage_data_consent_title">Nastavení sdílení dat</string>
-    <string name="share_usage_data_consent_message">Chceme, aby váš zážitek s Noice byl co nejpohodlnější. Abychom toho dosáhli, sbíráme data o tom, jak aplikaci používáte a jakékoliv chyby, které by nastaly. Tato hlášení nám pomáhají identifikovat problémy a vylepšit aplikaci. Více se dočtete v našich [zásadách ochrany soukromí](https://trynoice.com/privacy-policy#android-app-performance-data). Své preference ohledně sdílení dat můžete kdykoliv měnit v nastavení aplikace.</string>
+    <string name="share_usage_data_consent_message">Chceme, aby váš zážitek s Noice byl co nejpohodlnější. Abychom toho dosáhli, sbíráme data o tom, jak aplikaci používáte a jakékoliv chyby, které by nastaly. Tato hlášení nám pomáhají identifikovat problémy a vylepšit aplikaci. Více se dočtete v našich [zásadách ochrany soukromí](https://trynoice.com/privacy-policy#software-usage-performance-and-behaviour-data). Své preference ohledně sdílení dat můžete kdykoliv měnit v nastavení aplikace.</string>
     <string name="accept">Přijmout</string>
     <string name="decline">Odmítnout</string>
     <string name="others">Ostatní</string>

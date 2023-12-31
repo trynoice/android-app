@@ -102,7 +102,7 @@
     <string name="failed_to_load_inapp_purchases">Извините, мы не смогли загрузить информацию о продукте в приложении. Пожалуйста, повторите попытку позже!</string>
     <string name="should_share_usage_data_summary">Помогите нам улучшить Noice, поделившись данными об использовании и поведении с разработчиками</string>
     <string name="should_share_usage_data">Передача данных об использовании и поведении</string>
-    <string name="share_usage_data_consent_message">Мы хотим сделать ваш опыт работы с Noice максимально комфортным. Для этого мы собираем данные о том, как вы используете приложение, и о возможных ошибках. Это помогает нам выявлять проблемы и улучшать приложение. Подробнее об этом вы можете прочитать в нашей [политике конфиденциальности](https://trynoice.com/privacy-policy#android-app-performance-data). Вы можете управлять параметрами обмена данными в любое время в настройках приложения.</string>
+    <string name="share_usage_data_consent_message">Мы хотим сделать ваш опыт работы с Noice максимально комфортным. Для этого мы собираем данные о том, как вы используете приложение, и о возможных ошибках. Это помогает нам выявлять проблемы и улучшать приложение. Подробнее об этом вы можете прочитать в нашей [политике конфиденциальности](https://trynoice.com/privacy-policy#software-usage-performance-and-behaviour-data). Вы можете управлять параметрами обмена данными в любое время в настройках приложения.</string>
     <string name="share_usage_data_consent_title">Параметры доступа к данным</string>
     <string name="sound_fade_in_duration_summary">Продолжительность времени в секундах для затухающих звуков</string>
     <string name="sound_fade_in_duration">Продолжительность затухания звука</string>
