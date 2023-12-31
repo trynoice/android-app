@@ -290,7 +290,7 @@ class LocalSoundPlayerTest {
       TestCase(
         mediaPlayerState = MediaPlayer.State.BUFFERING,
         pauseImmediate = false,
-        isExpectingFadeTransition = false,
+        isExpectingFadeTransition = true,
       ),
       TestCase(
         mediaPlayerState = MediaPlayer.State.BUFFERING,
@@ -319,7 +319,6 @@ class LocalSoundPlayerTest {
       soundPlayer.pause(testCase.pauseImmediate)
       if (testCase.isExpectingFadeTransition) {
         assertEquals(SoundPlayer.State.PAUSING, soundPlayer.state)
-        assertEquals(1F, fakeMediaPlayer.pendingFadeTransition?.fromVolume)
         assertEquals(0F, fakeMediaPlayer.pendingFadeTransition?.toVolume)
         fakeMediaPlayer.consumePendingFadeTransition()
       }
@@ -340,7 +339,7 @@ class LocalSoundPlayerTest {
       TestCase(
         mediaPlayerState = MediaPlayer.State.BUFFERING,
         stopImmediate = false,
-        isExpectingFadeTransition = false,
+        isExpectingFadeTransition = true,
       ),
       TestCase(
         mediaPlayerState = MediaPlayer.State.BUFFERING,
@@ -369,7 +368,6 @@ class LocalSoundPlayerTest {
       soundPlayer.stop(testCase.stopImmediate)
       if (testCase.isExpectingFadeTransition) {
         assertEquals(SoundPlayer.State.STOPPING, soundPlayer.state)
-        assertEquals(1F, fakeMediaPlayer.pendingFadeTransition?.fromVolume)
         assertEquals(0F, fakeMediaPlayer.pendingFadeTransition?.toVolume)
         fakeMediaPlayer.consumePendingFadeTransition()
       }

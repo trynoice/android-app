@@ -12,7 +12,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Random
 import kotlin.math.pow
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -49,24 +49,24 @@ class LocalSoundPlayer @VisibleForTesting constructor(
 
   override fun onMediaPlayerStateChanged(state: MediaPlayer.State) {
     Log.d(LOG_TAG, "onMediaPlayerStateChanged: state=${state}")
+    val isPausingOrStopping = this.state == State.PAUSING || this.state == State.STOPPING
     if (shouldFadeIn && state == MediaPlayer.State.PLAYING) {
-      mediaPlayer.fadeTo(getScaledVolume(), fadeInDuration)
       shouldFadeIn = false
+      if (!isPausingOrStopping) {
+        mediaPlayer.fadeTo(getScaledVolume(), fadeInDuration)
+      }
     }
 
-    when (state) {
-      MediaPlayer.State.BUFFERING -> this.state = State.BUFFERING
-      MediaPlayer.State.PAUSED -> this.state = State.PAUSED
-      MediaPlayer.State.STOPPED -> {
+    when {
+      state == MediaPlayer.State.PAUSED -> this.state = State.PAUSED
+      state == MediaPlayer.State.STOPPED -> {
         mediaPlayer.setListener(null)
         this.state = State.STOPPED
       }
-      else -> {
-        // do not overwrite pausing and stopping state.
-        if (this.state != State.PAUSING && this.state != State.STOPPING) {
-          this.state = State.PLAYING
-        }
-      }
+
+      isPausingOrStopping -> Unit // do not overwrite pausing and stopping state.
+      state == MediaPlayer.State.BUFFERING -> this.state = State.BUFFERING
+      else -> this.state = State.PLAYING
     }
   }
 
@@ -160,14 +160,9 @@ class LocalSoundPlayer @VisibleForTesting constructor(
   }
 
   override fun pause(immediate: Boolean) {
-    if (shouldPlayOnLoadingMetadata) {
-      shouldPlayOnLoadingMetadata = false
-      state = State.PAUSED
-      return
-    }
-
+    shouldPlayOnLoadingMetadata = false
     queueNextSegmentJob?.cancel()
-    if (immediate || mediaPlayer.state != MediaPlayer.State.PLAYING) {
+    if (immediate) {
       mediaPlayer.pause()
       return
     }
@@ -177,9 +172,10 @@ class LocalSoundPlayer @VisibleForTesting constructor(
   }
 
   override fun stop(immediate: Boolean) {
+    shouldPlayOnLoadingMetadata = false
     loadSoundMetadataJob.cancel()
     queueNextSegmentJob?.cancel()
-    if (immediate || mediaPlayer.state != MediaPlayer.State.PLAYING) {
+    if (immediate) {
       mediaPlayer.stop()
       return
     }
@@ -222,10 +218,12 @@ class LocalSoundPlayer @VisibleForTesting constructor(
       currentSegment?.isBridgeSegment == true -> {
         validSegments.find { it.name == currentSegment?.to }
       }
+
       maxSilenceSeconds == 0 && currentSegment != null -> {
         val from = requireNotNull(currentSegment)
         validSegments.filter { it.isBridgeSegment && it.from == from.name }.random(RANDOM)
       }
+
       else -> validSegments.random(RANDOM)
     } ?: throw IllegalStateException("couldn't find a segment to queue next")
 
