@@ -21,6 +21,8 @@ import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import androidx.media3.extractor.ExtractorsFactory
 import androidx.media3.extractor.mp3.Mp3Extractor
 import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -137,7 +139,7 @@ class DefaultMediaPlayer @VisibleForTesting constructor(
     require(toVolume in 0F..1F) { "toVolume must be in range [0, 1]" }
     handler.removeCallbacksAndMessages(FADE_CALLBACK_TOKEN)
 
-    if (duration == Duration.ZERO || !exoPlayer.isPlaying) {
+    if (duration == Duration.ZERO) {
       setVolume(toVolume)
       callback.invoke()
       return
@@ -153,11 +155,10 @@ class DefaultMediaPlayer @VisibleForTesting constructor(
       override fun run() {
         val progress = (System.currentTimeMillis() - startMillis).toFloat() / durationMillis
         val newVolume = fromVolume + (deltaVolume * progress * sign)
-        if ((sign < 0 && newVolume <= toVolume) || (sign > 0 && newVolume >= toVolume)) {
-          exoPlayer.volume = toVolume
+        exoPlayer.volume = if (sign < 0) max(toVolume, newVolume) else min(toVolume, newVolume)
+        if (progress >= 1) {
           callback.invoke()
         } else {
-          exoPlayer.volume = newVolume
           HandlerCompat.postDelayed(handler, this, FADE_CALLBACK_TOKEN, 50)
         }
       }
