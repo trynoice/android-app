@@ -11,7 +11,16 @@
 [![Android][gw-android-badge]][gw-android]
 [![codecov][codecov-badge]][codecov]
 
-Noice for Android is a high-quality customizable white noise machine.
+For a lot of people, a little uniform background noise is helpful to remain calm
+and focused. In some cases, it also boosts productivity and lowers the effects
+of stress and anxiety. Background noise also masks tinnitus, calms agitated
+infants and improves reading and meditation experiences.
+
+Noice for Android allows you to create personalised sound environments. It
+enables you to combine different sounds at different volume levels to create
+perfect ambient atmospheres. These custom sound surroundings let you drown out
+distractions and allow you to concentrate. You can also use it to generate a
+serene, peaceful aura that encourages you to relax and fall asleep.
 
 ## Download
 
