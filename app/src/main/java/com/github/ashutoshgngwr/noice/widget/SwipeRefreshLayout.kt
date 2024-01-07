@@ -3,6 +3,7 @@ package com.github.ashutoshgngwr.noice.widget
 import android.content.Context
 import android.content.res.Resources
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
@@ -58,22 +59,30 @@ class SwipeRefreshLayout @JvmOverloads constructor(
 
   @ColorInt
   private fun resolveColorValue(value: TypedValue): Int? {
-    return when {
-      value.type == TypedValue.TYPE_NULL -> null
+    when {
+      value.type == TypedValue.TYPE_NULL -> return null
       value.isColorTypeX -> return value.data
-      value.type == TypedValue.TYPE_REFERENCE -> ContextCompat.getColor(context, value.data)
+      value.type == TypedValue.TYPE_REFERENCE -> return ContextCompat.getColor(context, value.data)
       value.type == TypedValue.TYPE_ATTRIBUTE -> {
         val attr = value.data
         if (!context.theme.resolveAttribute(attr, value, true)) {
           throw Resources.NotFoundException("'${context.resources.getResourceName(attr)}' is not set")
         }
 
-        value.data
+        return value.data
       }
-      else -> throw Resources.NotFoundException("color value must be a hex string, a reference or a theme attribute")
+
+      else -> {
+        Log.e(LOG_TAG, "resolveColorValue: unknown type=${value.type} of resolved value}")
+        return null
+      }
     }
   }
 
   private val TypedValue.isColorTypeX: Boolean
     get() = type >= TypedValue.TYPE_FIRST_COLOR_INT && type <= TypedValue.TYPE_LAST_COLOR_INT
+
+  companion object {
+    private const val LOG_TAG = "SwipeRefreshLayout"
+  }
 }
