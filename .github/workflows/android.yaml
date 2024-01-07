@@ -99,10 +99,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - android: 32
+          - android: 30
             target: aosp_atd
             appVariant: FreeDebug
-          - android: 32
+          - android: 30
             target: google_atd
             appVariant: FullDebug
       fail-fast: false
