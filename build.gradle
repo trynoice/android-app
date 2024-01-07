@@ -3,7 +3,7 @@ plugins {
   id 'com.android.library' version "${agpVersion}" apply false
   id 'org.jetbrains.kotlin.android' version "${kotlinVersion}" apply false
   id 'org.jetbrains.kotlin.kapt' version "${kotlinVersion}" apply false
-  id 'com.google.devtools.ksp' version "1.9.21-1.0.16" apply false
+  id 'com.google.devtools.ksp' version "1.9.22-1.0.16" apply false
 
   id 'androidx.navigation.safeargs.kotlin' version "${navVersion}" apply false
   id 'com.google.dagger.hilt.android' version "${hiltVersion}" apply false
