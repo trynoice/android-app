@@ -1,35 +1,57 @@
-Dla wielu osób niewielki hałas w tle pomaga się wyciszyć i skupić. W niektórych przypadkach pomaga również na wzrost produktywności. Hałas w tle (atmosfera) może również pomóc zminimalizować skutki stresu.
+Wielu osobom niewielki, jednolity hałas w tle pomaga zachować spokój i koncentrację. W niektórych przypadkach zwiększa także produktywność i zmniejsza skutki stresu i niepokoju. Hałas w tle maskuje również szumy uszne, uspokaja pobudzone niemowlęta i poprawia wrażenia podczas czytania i medytacji.
 
-Noice to aplikacja, która umożliwia tworzenie spersonalizowanej atmosfery za pomocą klipów ze źródeł hałasu otoczenia. Stwórz idealne otoczenie, łącząc różne dźwięki, aby zagłuszyć czynniki rozpraszające, dzięki czemu możesz skupić się na pracy lub stworzyć spokojne otoczenie, które zachęci Cię do zasypiania.
+Noice to aplikacja, która pozwala tworzyć spersonalizowane środowiska dźwiękowe. Umożliwia łączenie różnych dźwięków na różnych poziomach głośności w celu stworzenia doskonałej atmosfery otoczenia. Te niestandardowe otoczenie dźwiękowe pozwalają zagłuszyć zakłócenia i pozwalają się skoncentrować. Możesz go również użyć do wytworzenia pogodnej, spokojnej aury, która zachęca do relaksu i zasypiania.
 
-<b> Funkcje </b>
-- 35 zarejestrowanych odgłosów
-- Wsparcie Google Cast (Chromecast) [tylko w Sklepie Play]
-- Automatyczny wyłącznik czasowy
-- Budzik
-- Generuj losowe miksy
-- Stwórz własną mieszankę
-- Zapisz swoje ulubione miksy
-- Graj obok innych odtwarzaczy muzycznych
-- Indywidualna regulacja głośności dla każdego źródła hałasu
-- Odtwarzanie offline
-- Jasne i ciemne warianty motywów aplikacji
+<b>KORZYŚCI</b>
+• Zmniejsz stres i niepokój, korzystając ze spersonalizowanej atmosfery
+• Zrelaksuj się i odpręż w wybranym przez siebie uspokajającym otoczeniu
+• Zwiększ swoją produktywność, zastępując rozpraszający hałas
+• Popraw koncentrację poprzez przebywanie w spójnej atmosferze
+• Wspomagaj czytanie i medytację naturalnymi krajobrazami dźwiękowymi
+• Uspokój swoje dziecko za pomocą relaksujących dźwięków
+• Zamaskuj szumy uszne łagodzącym hałasem
+• Blokuj czynniki rozpraszające, aby położyć się i zasnąć
+• Rozpocznij dzień od delikatniejszych dźwięków natury dzięki uważnym alarmom
+• Uśmierz swoje migreny i bóle głowy
 
-<b> Biblioteka szumów </b>
-- Zestaw życia (ptaki, świerszcze, wilk, bicie ludzkiego serca itp.)
-- Zestaw leśny (ognisko, noc, wiatr, palmy itp.)
-- zestaw monsunowy (deszcz, grzmoty)
-- Zestaw teleportacyjny (kawiarnia, biblioteka, biuro, morze, brzeg rzeki itp.)
-- Zestaw pojazdów (jadący pociąg, w locie, skrzypiący statek, samochód elektryczny itp.)
-- Surowy szum (biały, różowy, browna)
+<b>DARMOWE FUNKCJE</b>
+• Bogata biblioteka dźwięków
+• Włączono Google Cast lub Chromecast*
+• Automatyczny wyłącznik czasowy
+• Budzik z maksymalnie 2 aktywnymi alarmami
+• Twórz i zapisuj swoje spersonalizowane miksy
+• Generator losowych miksów dostosowany do każdego nastroju
+• Indywidualna regulacja głośności każdego dźwięku
+• Używaj Noice wraz z własnym odtwarzaczem audio
+• Używaj dynamicznych kolorów Material You na Androidzie 12L lub nowszym
+• Brak jakichkolwiek reklam
 
-<b> Uprawnienia </b>
-- <b>prevent device from sleeping</b>: aby procesor urządzenia był aktywny podczas odtwarzania
-- <b>run foreground service</b>: aby uruchomić proces odtwarzacza (inny niż UI)
-- <b>run at startup</b>: aby zapewnić, że liczniki czasu wybudzania będą się utrzymywać po ponownym uruchomieniu
-- <b>full network access</b>: aby włączyć Chromecasta i datki finansowe
-- <b>view network connections</b>: dodane przez zależność, obecnie nieużywane
-- <b>Google Play billing service</b>: aby umożliwić datki finansowe na wspieranie rozwoju
+<i>* Chromecast jest dostępny tylko po pobraniu Noice z Google Play.</i>
 
-Noice jest darmowym oprogramowaniem o otwartym kodzie źródłowym.
+<b>FUNKCJE PREMIUM</b>
+• Odblokuj dodatkowe klipy audio w dźwiękach
+• Prawdziwe i naturalne wariacje dźwięku generowane na żądanie
+• Pełne odtwarzanie w trybie offline
+• Ultrawysokiej jakości dźwięk do przesyłania strumieniowego i pobierania (do 320 kb/s)
+• Nieograniczona liczba aktywnych alarmów
+
+<b>BIBLIOTEKA DŹWIĘKÓW</b>
+• Życie (ptaki, świerszcze, wilki, bicie serca, mruczący kot)
+• Pogoda (rano lub świt, noc, deszcz, grzmot)
+• Miejsca (ognisko lub ognisko obozowe, kawiarnia, biblioteka, biuro, morze, brzeg rzeki, nurkowanie)
+• Podróże (pociąg, samolot, skrzypiący statek, samochód elektryczny)
+• Rzeczy (wentylator, zegar ścienny, dzwonki wietrzne)
+• Surowy szum (biały, różowy, brązowy)
+
+<b>UPRAWNIENIA APLIKACJI</b>
+• <b>wyświetl połączenia sieciowe</b>: do strumieniowego przesyłania i pobierania dźwięku
+• <b>pełny dostęp do sieci</b>: do komunikacji z serwerami Noice, przesyłania strumieniowego i pobierania dźwięku
+• <b>uruchamiaj przy uruchomieniu</b>: aby mieć pewność, że alarmy będą się utrzymywać po ponownym uruchomieniu urządzenia
+• <b>zapobiegaj uśpieniu urządzenia</b>: aby utrzymać procesor urządzenia w stanie uśpienia, aby zapewnić nieprzerwane odtwarzanie po wyłączeniu ekranu
+• <b>zainstaluj skróty</b>: do dodawania gotowych skrótów do ekranu głównego
+• <b>uruchom usługę pierwszego planu</b>: ciągłe odtwarzanie, gdy aplikacja działa w tle
+• <b>wyświetl powiadomienia na pełnym ekranie na zablokowanym urządzeniu</b>: do wyświetlania alertu w przypadku uruchomienia alarmu
+• <b>kontrola wibracji</b>: do wibrowania urządzenia po uruchomieniu alarmu z włączoną wibracją
+
+Noice jest oprogramowaniem napisanym otwartym kodem źródłowym.
 https://github.com/trynoice/android-app
