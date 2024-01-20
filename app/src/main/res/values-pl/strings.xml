@@ -119,7 +119,7 @@
     <string name="plans">Plany</string>
     <string name="confirming_payment">Potwierdzenie płatności</string>
     <string name="failed_to_load_inapp_purchases">Przepraszamy, nie mogliśmy załadować szczegółów produktu w aplikacji. Spróbuj ponownie później!</string>
-    <string name="export_presets_successful">Zapisane ustawienia pomyślnie wyeksportowano.</string>
+    <string name="export_presets_successful">Zapisane ustawienia pomyślnie wyeksportowano!</string>
     <string name="delete_account_confirmation">Pożegnaj się ze swoim kontem z wdziękiem, wiedząc, że Twoja subskrypcja Noice Premium zostanie anulowana, a Twoje dane zostaną trwale usunięte z naszych serwerów w ciągu 7 dni. Jeśli jednak zmienisz zdanie, możesz łatwo przywrócić konto przed upływem 7 dni.</string>
     <string name="support_development__donate_description">Wesprzyj rozwój Noice i spraw, aby aplikacja była wolna od reklam, przekazując jednorazową darowiznę. Twój wkład pomoże nam ulepszyć aplikację dla Ciebie.</string>
     <string name="account">Konto</string>
@@ -129,7 +129,7 @@
     <string name="sign_in_message">Proszę wprowadź swój email, aby się zalogować.</string>
     <string name="sign_in_link_tip">Zakończ proces logowania, klikając link przesłany na Twój adres e-mail i otwierając go poprzez aplikację Noice.</string>
     <string name="email">Email</string>
-    <string name="email_app_not_found">Uh-oh! Nie mogliśmy znaleźć aplikacji skrzynki pocztowej na Twoim urządzeniu!</string>
+    <string name="email_app_not_found">Ojej! Wygląda na to, że nie masz aplikacji e-mail na swoim urządzeniu.</string>
     <string name="accept">Akceptuj</string>
     <string name="sign_out">Wyloguj się</string>
     <string name="network_error">Sieć jest nieosiągalna.</string>
@@ -149,7 +149,7 @@
     <string name="update_details">Aktualizuj szczegóły</string>
     <string name="monthly_price">%1$s na miesiąc</string>
     <string name="support">Wsparcie</string>
-    <string name="unknown_error">Wystąpił nieznany błąd</string>
+    <string name="unknown_error">Wystąpił nieznany błąd.</string>
     <string name="sign_up_message">Proszę wprowadź swoje imię i email, aby się zalogować.</string>
     <string name="open_mailbox">Otwórz skrzynkę pocztową</string>
     <string name="sound_fade_out_duration">Czas wyciszenia dzwięku</string>
