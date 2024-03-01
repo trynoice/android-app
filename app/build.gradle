@@ -128,7 +128,7 @@ dependencies {
   implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
   implementation "androidx.work:work-runtime-ktx:$workManagerVersion"
   implementation 'com.caverock:androidsvg-aar:1.4'
-  implementation 'com.github.AppIntro:AppIntro:6.2.0'
+  implementation 'com.github.AppIntro:AppIntro:6.3.1'
   implementation 'com.google.android.flexbox:flexbox:3.0.0'
   implementation 'com.google.android.material:material:1.11.0'
   implementation 'com.google.code.gson:gson:2.10.1'
