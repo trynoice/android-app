@@ -92,7 +92,7 @@ project.afterEvaluate {
 
 dependencies {
   def androidXHiltVersion = '1.1.0'
-  def fragmentVersion = '1.6.1'
+  def fragmentVersion = '1.6.2'
   def media3Version = '1.2.0'
   def roomVersion = '2.6.1'
   def workManagerVersion = '2.9.0'
