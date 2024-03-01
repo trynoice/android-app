@@ -141,7 +141,7 @@ dependencies {
 
   fullImplementation 'androidx.mediarouter:mediarouter:1.6.0'
   fullImplementation 'com.android.billingclient:billing-ktx:6.1.0'
-  fullImplementation 'com.google.android.gms:play-services-base:18.2.0'
+  fullImplementation 'com.google.android.gms:play-services-base:18.3.0'
   fullImplementation 'com.google.android.gms:play-services-cast-framework:21.4.0'
   fullImplementation 'com.google.android.play:core:1.10.3'
   fullImplementation platform('com.google.firebase:firebase-bom:32.7.0')
