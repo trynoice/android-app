@@ -23,7 +23,7 @@ project.ext {
     coroutinesVersion    : '1.7.3',
     hiltVersion          : "${hiltVersion}",
     kotlinVersion        : "${kotlinVersion}",
-    lifecycleVersion     : '2.6.2',
+    lifecycleVersion     : '2.7.0',
     navVersion           : "${navVersion}",
 
     junitVersion         : '4.13.2',
