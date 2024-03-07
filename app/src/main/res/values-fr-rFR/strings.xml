@@ -44,19 +44,13 @@
     <string name="appintro__presets_title">Sauvegardez vos mix préférés</string>
     <string name="appintro__library_desc">Utilisez le curseur de volume pour régler le volume de chaque son. Certains sons se répètent sans interruption, tandis que d\'autres se répètent avec un délai aléatoire.</string>
     <string name="appintro__library_title">Designez votre environnement idéal</string>
-    <string name="appintro__timer_desc">Une ambiance légère peut vous aider à vous endormir plus facilement. Utilisez la minuterie pour laisser Noice s\'éteindre tout seul. De la même manière, pour se réveiller au calme, utilisez le réveil pour régler l\'alarme.</string>
+    <string name="appintro__timer_desc">Endormez-vous sans effort avec la minuterie de sommeil de Noice et réveillez-vous dans un environnement calme avec ses alarmes sensibles.</string>
     <string name="appintro__timer_title">Transformez votre sommeil avec Noice</string>
     <string name="support_development__donate">Donner</string>
-    <string name="support_development__donate_google_play_description">Votre paiement sera traité de manière sécurisée par Google Play. En fonction de votre localisation, des taxes supplémentaires _peuvent être_ ajoutées au montant final.</string>
-    <string name="support_development__donate_thank_you_description">
-    Nous vous remercions de tout cœur pour votre généreuse contribution au projet Noice.
-  </string>
+    <string name="support_development__donate_google_play_description">Votre paiement sera traité de manière sécurisée par Google Play. Veuillez noter qu\'en fonction de votre localisation, des taxes supplémentaires _peuvent être_ ajoutées au montant final.</string>
+    <string name="support_development__donate_thank_you_description">Votre généreuse contribution au projet Noice est très apréciée et va nous aider à continuer à l\'améliorer pour vous.</string>
     <string name="support_development__share">Partager avec vos amis</string>
-    <string name="support_development__share_description">
-    Partager avec vos amis revient à faire un don. Avec l\'augmentation du nombre de téléchargement,
-    nous pourrons avoir plus de retour d\'utilisateurs et ces derniers nous permettons d\'améliorer
-    Noice.
-  </string>
+    <string name="support_development__share_description">Il n\'y a pas qu\'en faisant un don que vous pouvez nous soutenir. Vous pouvez également nous aider en parlant de Noice autour de vous, avec vos amis. Plus nous avons d\'utilisateurs et plus nous avons de retours ce qui permet d\'améliorer Noice pour tout le monde.</string>
     <string name="cast_media">Se connecter à Chromecast</string>
     <string name="notification_channel_default__description">Contrôles du son</string>
     <string name="notification_channel_default__name">Lecture audio</string>
@@ -83,7 +77,7 @@
     <string name="settings">Paramètres</string>
     <string name="app_shortcut_created">Le préréglage a été ajouté aux raccourcis de l\'application !</string>
     <string name="ignore_audio_focus_changes_summary_on">Continuez à lire depuis Noice même lorsque d\'autres applications lisent de l\'audio</string>
-    <string name="ignore_audio_focus_changes_summary_off">Mettre en pause lorsque d\'autres applications diffusent de l\'audio</string>
+    <string name="ignore_audio_focus_changes_summary_off">Mettre en pause Noice lorsque d\'autres applications diffusent de l\'audio</string>
     <string name="ignore_audio_focus_changes">Ignorer les changements de focus audio</string>
     <string name="unsaved_preset">Réglage non-enregistré</string>
     <string name="skip_to_next">Réglage suivant</string>
@@ -119,7 +113,7 @@
     <string name="enable_media_buttons">Activer les boutons multimédias</string>
     <string name="random_preset_description">Le préréglage généré est susceptible de contenir des sons avec les mots-clés choisis. De plus, les préréglages intenses tenteront de jouer davantage de sons simultanément.</string>
     <string name="account">Compte</string>
-    <string name="support_development__donate_description">Si vous n\'avez pas souscrit à l\'abonnement premium, vous pouvez effectuer un paiement unique. Cela nous aidera à poursuivre le développement de fonctionnalités gratuites et à les garder sans publicité pour toujours.</string>
+    <string name="support_development__donate_description">Soutenez le développement de Noice et aidez-nous à le garder sans publicité avec un don en une seule fois. Votre contribution nous aidera à améliorer l\'application pour vous.</string>
     <string name="app">Application</string>
     <string name="gift_card_code">Code d\'une carte cadeau</string>
     <string name="reach_us">Nous contacter</string>
