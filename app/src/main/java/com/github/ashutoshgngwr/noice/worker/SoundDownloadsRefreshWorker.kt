@@ -1,6 +1,8 @@
 package com.github.ashutoshgngwr.noice.worker
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.pm.ServiceInfo
 import android.util.Log
 import androidx.core.content.edit
 import androidx.core.net.toUri
@@ -153,8 +155,13 @@ class SoundDownloadsRefreshWorker @AssistedInject constructor(
     return Result.success()
   }
 
+  @SuppressLint("InlinedApi") // foreground service type constant
   override suspend fun getForegroundInfo(): ForegroundInfo {
-    return ForegroundInfo(0x03, notificationManager.refreshWorkerNotification)
+    return ForegroundInfo(
+      0x03,
+      notificationManager.refreshWorkerNotification,
+      ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC,
+    )
   }
 
   private suspend fun hasSubscription(): Boolean {
