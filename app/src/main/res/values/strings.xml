@@ -330,4 +330,5 @@
     <string name="about_linkedin">Follow us on LinkedIn</string>
     <string name="about_github">Star us on GitHub</string>
     <string name="now_playing">Now Playing</string>
+    <string name="browser_app_not_found">Uh-oh! It looks like you don\'t have a browser app on your device.</string>
 </resources>

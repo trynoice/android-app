@@ -17,6 +17,7 @@ import android.os.IBinder
 import android.provider.Settings
 import android.util.Log
 import android.util.TypedValue
+import android.widget.Toast
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
@@ -56,7 +57,13 @@ fun Context.startCustomTab(uri: String) {
     .setDefaultColorSchemeParams(colorParams)
     .build()
 
-  customTabsIntent.launchUrl(this, Uri.parse(uri))
+  try {
+    customTabsIntent.launchUrl(this, Uri.parse(uri))
+  } catch (e: ActivityNotFoundException) {
+    Toast
+      .makeText(this, R.string.browser_app_not_found, Toast.LENGTH_LONG)
+      .show()
+  }
 }
 
 /**
