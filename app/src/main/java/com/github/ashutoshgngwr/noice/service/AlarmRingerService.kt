@@ -306,11 +306,7 @@ class AlarmRingerService : LifecycleService(), AudioFocusManager.Listener {
   }
 
   private fun buildPendingServiceIntent(intent: Intent, requestCode: Int): PendingIntent {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      PendingIntent.getForegroundService(this, requestCode, intent, PI_FLAGS)
-    } else {
-      PendingIntent.getService(this, requestCode, intent, PI_FLAGS)
-    }
+    return PendingIntent.getService(this, requestCode, intent, PI_FLAGS)
   }
 
   private fun buildPresetLoadFailedNotification(alarmTriggerTime: String): Notification {
