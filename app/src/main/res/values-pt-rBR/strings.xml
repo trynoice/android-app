@@ -149,7 +149,7 @@
     <string name="benefits">Benefícios</string>
     <string name="paid_using">Pago usando %1$s</string>
     <string name="has_premium_segments">Oferecemos mais clipes de áudio com Noice Premium</string>
-    <string name="subscription_purchases_load_error">Uh-oh! Não foi possível buscar seu histórico de compras de assinatura. %1$s</string>
+    <string name="subscription_purchases_load_error">Ops! Não foi possível buscar seu histórico de compras de assinatura. %1$s</string>
     <string name="audio_quality_medium">Média (192 kbps)</string>
     <string name="sign_up_email_sent">Enviamos a você um link de login em %1$s. Por favor, verifique sua caixa de entrada!</string>
     <string name="subscription_purchases">Compras de assinatura</string>
@@ -160,7 +160,7 @@
     <string name="quarterly">Trimestral</string>
     <string name="subscription_plans_load_error">Ops! Não foi possível buscar planos de assinatura. %1$s</string>
     <string name="open_mailbox">Abrir caixa de correio</string>
-    <string name="payment_processing_error">Uh-oh! Pagamento falhou. Não se preocupe! Seu reembolso está a caminho. Se você não o vir dentro de uma semana, avise-nos.</string>
+    <string name="payment_processing_error">Ops! Pagamento falhou. Não se preocupe! Seu reembolso está a caminho. Se você não o vir dentro de uma semana, avise-nos.</string>
     <string name="subscription_payment_refunded">Compra cancelada e reembolso iniciado</string>
     <string name="media_sources">Fontes de mídias</string>
     <string name="signing_out">Saindo</string>
@@ -200,7 +200,7 @@
     <string name="account">Conta</string>
     <string name="sign_in_email_sent">Enviamos a você um link de login em %1$s se este e-mail pertencer a uma conta registrada. Por favor, verifique sua caixa de entrada!</string>
     <string name="sign_in_link_tip">Conclua o processo de login clicando no link enviado para seu e-mail e abrindo-o com Noice.</string>
-    <string name="email_app_not_found">Uh-oh! Não foi possível encontrar um aplicativo de caixa de correio no seu dispositivo.</string>
+    <string name="email_app_not_found">Ops! Não foi possível encontrar um aplicativo de caixa de correio no seu dispositivo.</string>
     <string name="sign_in_token_error">Ops! O link de login parece ser inválido ou expirou. Solicite um novo e tente novamente.</string>
     <string name="sign_in_sucessful">Bem vindo a bordo! Agora você fez login com sucesso.</string>
     <string name="cont">Continuar</string>
@@ -217,7 +217,7 @@
     <string name="pausing">Pausando</string>
     <string name="paused">Pausado</string>
     <string name="keywords">Palavras-chaves</string>
-    <string name="generate_preset_error">Uh-oh! Não conseguimos gerar uma predefinição. %1$s Por favor, tente novamente!</string>
+    <string name="generate_preset_error">Ops! Não conseguimos gerar uma predefinição. %1$s Por favor, tente novamente!</string>
     <string name="subscription_payment_pending">Pagamento pendente</string>
     <string name="audio_quality_ultra">Ultra (320 kbps)</string>
     <string name="sign_up_tos">Ao continuar, você concorda com nossos [Termos de Serviço](https://trynoice.com/terms-of-service) e [Política de Privacidade](https://trynoice.com/privacy-policy).</string>
@@ -233,13 +233,13 @@
     <string name="delete_account">Exluir conta</string>
     <string name="support_development__donate_description">Apoie o desenvolvimento do Noice e mantenha o aplicativo livre de anúncios com uma doação única. Sua contribuição nos ajudará a melhorar o aplicativo para você.</string>
     <string name="random_preset_description">O pré-ajuste terá sons baseados nas palavras que você escolher, e a o ajuste intenso irá reproduzir mais sons simultaneamente.</string>
-    <string name="subscription_payment_confirmation_failed">Uh-oh! Encontramos um obstáculo ao confirmar seu pagamento. Pode ser uma falha na rede ou um atraso do provedor de pagamento. Tenha certeza de que atualizaremos o status da sua assinatura assim que recebermos uma resposta sobre o pagamento. Verifique novamente mais tarde!</string>
+    <string name="subscription_payment_confirmation_failed">Ops! Encontramos um obstáculo ao confirmar seu pagamento. Pode ser uma falha na rede ou um atraso do provedor de pagamento. Tenha certeza de que atualizaremos o status da sua assinatura assim que recebermos uma resposta sobre o pagamento. Verifique novamente mais tarde!</string>
     <string name="monthly">Mensal</string>
     <string name="cancel_subscription_confirmation">Tem certeza de que deseja cancelar sua assinatura do Noice Premium? Sua assinatura terminará no final do período de faturamento atual, que termina em %1$s.</string>
     <string name="back_online">Você está online</string>
     <string name="bi_yearly">Semestralmente</string>
     <string name="no_subscription_purchases_found">Experimente todo o potencial do Noice com uma assinatura Premium. Atualize agora e descubra recursos exclusivos que irão elevar sua experiência auditiva.</string>
-    <string name="sign_in_email_error">Uh-oh! Não foi possível enviar um link de login por e-mail. %1$s Tente novamente mais tarde!</string>
+    <string name="sign_in_email_error">Ops! Não foi possível enviar um link de login por e-mail. %1$s Tente novamente mais tarde!</string>
     <string name="preset_url_invalid">O URL predefinido parece ser inválido!</string>
     <string name="loading">Carregando</string>
     <string name="third_party_attributions">Atribuições de terceiros</string>
@@ -328,4 +328,5 @@
     <string name="more_sound_clips">Mais Clipes de Áudio</string>
     <string name="more_sound_clips_desc">Adicione uma nova dimensão à sua audição com clipes de áudio adicionais em sons para torná-los mais exclusivos e menos monótonos.</string>
     <string name="hd_audio_desc">Experimente sons como nunca antes, com a capacidade de ouvir sons em MP3 de até 320 kbps, reproduzindo áudio cristalino e de alta fidelidade.</string>
+    <string name="browser_app_not_found">Ops! Parece que você não tem um navegador de Internet no seu dispositivo.</string>
 </resources>
