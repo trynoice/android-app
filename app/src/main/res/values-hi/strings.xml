@@ -326,4 +326,5 @@
     <string name="about_linkedin">लिंक्डइन पर हमें फॉलो करें</string>
     <string name="now_playing">अभी चल रहा है</string>
     <string name="about_github">हमें गिटहब पर स्टार करें</string>
+    <string name="browser_app_not_found">उह ओह! ऐसा लगता है कि आपके डिवाइस पर कोई ब्राउज़र ऐप नहीं है।</string>
 </resources>
