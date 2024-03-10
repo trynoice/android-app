@@ -118,7 +118,7 @@ jobs:
         with:
           api-level: ${{ matrix.android }}
           target: ${{ matrix.target }}
-          arch: x86
+          arch: x86_64
           script: ./scripts/run-ui-tests.sh :app:create${{ matrix.appVariant }}CoverageReport
           emulator-options: >-
             -camera-back none -camera-front none -gpu swiftshader_indirect
