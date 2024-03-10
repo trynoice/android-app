@@ -49,6 +49,7 @@ class ShadowMediaSession : Player.Listener {
     customLayout: ImmutableList<CommandButton>,
     callback: MediaSession.Callback,
     tokenExtras: Bundle,
+    sessionExtras: Bundle,
     bitmapLoader: BitmapLoader,
     playIfSuppressed: Boolean,
     isPeriodicPositionUpdateEnabled: Boolean,
@@ -63,6 +64,7 @@ class ShadowMediaSession : Player.Listener {
       ReflectionHelpers.ClassParameter.from(ImmutableList::class.java, customLayout),
       ReflectionHelpers.ClassParameter.from(MediaSession.Callback::class.java, callback),
       ReflectionHelpers.ClassParameter.from(Bundle::class.java, tokenExtras),
+      ReflectionHelpers.ClassParameter.from(Bundle::class.java, sessionExtras),
       ReflectionHelpers.ClassParameter.from(BitmapLoader::class.java, bitmapLoader),
       ReflectionHelpers.ClassParameter.from(Boolean::class.javaPrimitiveType, playIfSuppressed),
       ReflectionHelpers.ClassParameter.from(

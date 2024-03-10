@@ -91,21 +91,21 @@ project.afterEvaluate {
 }
 
 dependencies {
-  def androidXHiltVersion = '1.1.0'
-  def fragmentVersion = '1.6.1'
-  def media3Version = '1.2.0'
+  def androidXHiltVersion = '1.2.0'
+  def fragmentVersion = '1.6.2'
+  def media3Version = '1.3.0'
   def roomVersion = '2.6.1'
   def workManagerVersion = '2.9.0'
 
   def espressoVersion = '3.5.1'
-  def mockkVersion = '1.13.9'
+  def mockkVersion = '1.13.10'
 
   kapt "com.google.dagger:hilt-compiler:$deps.hiltVersion"
   kapt "androidx.hilt:hilt-compiler:$androidXHiltVersion"
   ksp "androidx.room:room-compiler:$roomVersion"
 
   implementation 'androidx.appcompat:appcompat:1.6.1'
-  implementation 'androidx.browser:browser:1.7.0'
+  implementation 'androidx.browser:browser:1.8.0'
   implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
   implementation "androidx.core:core-ktx:$deps.androidXCoreVersion"
   implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
@@ -140,11 +140,11 @@ dependencies {
   implementation project(":api-client")
 
   fullImplementation 'androidx.mediarouter:mediarouter:1.6.0'
-  fullImplementation 'com.android.billingclient:billing-ktx:6.1.0'
-  fullImplementation 'com.google.android.gms:play-services-base:18.2.0'
+  fullImplementation 'com.android.billingclient:billing-ktx:6.2.0'
+  fullImplementation 'com.google.android.gms:play-services-base:18.3.0'
   fullImplementation 'com.google.android.gms:play-services-cast-framework:21.4.0'
   fullImplementation 'com.google.android.play:core:1.10.3'
-  fullImplementation platform('com.google.firebase:firebase-bom:32.7.0')
+  fullImplementation platform('com.google.firebase:firebase-bom:32.7.4')
   fullImplementation 'com.google.firebase:firebase-analytics-ktx'
   fullImplementation 'com.google.firebase:firebase-crashlytics-ktx'
 
