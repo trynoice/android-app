@@ -13,8 +13,8 @@
     <string name="dismiss">Dispensar</string>
     <string name="name">Nome</string>
     <string name="pause">Pausar</string>
-    <string name="preset_already_exists">Já existe uma predefinição com o nome fornecido. Tente outro!</string>
-    <string name="preset_name_cannot_be_empty">O nome predefinido está faltando. Por favor, insira um exclusivo!</string>
+    <string name="preset_already_exists">Já existe uma predefinição com esse nome. Experimente uma diferente!</string>
+    <string name="preset_name_cannot_be_empty">O nome da predefinição está em falta. Por favor, insira um nome exclusivo!</string>
     <string name="preset_saved">Incrível! Sua predefinição foi salva.</string>
     <string name="save">Salvar</string>
     <string name="save_preset">Salvar predefinição</string>
@@ -26,7 +26,7 @@
     <string name="open_context_menu">Abrir menu de contexto</string>
     <string name="preset_delete_confirmation">Tem certeza de que deseja excluir %1$s? Você não pode desfazer esta ação.</string>
     <string name="preset_deleted">Sua predefinição foi excluída com sucesso!</string>
-    <string name="preset_info__description">Você pode criar facilmente suas próprias predefinições reproduzindo sons e salvando-os na biblioteca de sons. Basta clicar no botão \"Salvar\" e dar um nome exclusivo.</string>
+    <string name="preset_info__description">Você pode criar facilmente suas próprias predefinições reproduzindo sons e salvando-os na biblioteca de sons. Basta clicar no botão \"Salvar\" e inserir um nome exclusivo.</string>
     <string name="rename">Renomear</string>
     <string name="auto_sleep_schedule_cancelled">Temporizador cancelado! O aplicativo permanecerá ativo.</string>
     <string name="reset">Reiniciar</string>
@@ -42,7 +42,7 @@
     <string name="appintro__getting_started_desc_1">Vamos começar!</string>
     <string name="appintro__getting_started_title">Bem-vindo</string>
     <string name="appintro__presets_desc">Salve sua mixagem de som clicando no botão \"Salvar\" no canto inferior da biblioteca. Encontre mixagens salvas na guia \"Predefinições\" da barra inferior.</string>
-    <string name="appintro__presets_title">Salve suas mixagens favoritas</string>
+    <string name="appintro__presets_title">Salvar suas mixagens favoritas</string>
     <string name="appintro__library_desc">Use o controle deslizante de volume para ajustar o volume de cada som. Alguns sons serão repetidos continuamente, enquanto outros serão repetidos com atraso aleatório.</string>
     <string name="appintro__library_title">Projete seu ambiente ideal</string>
     <string name="appintro__timer_desc">Adormeça sem esforço com o temporizador do Noice e acorde em um ambiente sereno com seus alarmes conscientes.</string>
@@ -62,7 +62,7 @@
     <string name="submit_feedback">Enviar comentários</string>
     <string name="presets_as_home_screen_summary">Torne suas predefinições visíveis ao abrir o aplicativo ativando esta opção. Você precisará reiniciar o aplicativo para que as alterações tenham efeito.</string>
     <string name="pinned_shortcuts_not_supported">Parece que seu aplicativo da tela inicial não oferece suporte a atalhos.</string>
-    <string name="preset_does_not_exist">Parece que esta predefinição não está mais disponível. Pode ter sido excluído.</string>
+    <string name="preset_does_not_exist">Parece que esta predefinição não está mais disponível. Pode ter sido excluída.</string>
     <string name="add_to_home_screen">Adicionar à tela inicial</string>
     <string name="random_preset">Predefinição aleatória</string>
     <string name="intensity">Intensidade</string>
@@ -232,7 +232,7 @@
     <string name="sign_out">Sair</string>
     <string name="delete_account">Exluir conta</string>
     <string name="support_development__donate_description">Apoie o desenvolvimento do Noice e mantenha o aplicativo livre de anúncios com uma doação única. Sua contribuição nos ajudará a melhorar o aplicativo para você.</string>
-    <string name="random_preset_description">O pré-ajuste terá sons baseados nas palavras que você escolher, e a o ajuste intenso irá reproduzir mais sons simultaneamente.</string>
+    <string name="random_preset_description">A predefinição terá sons baseados nas palavras-chave que escolher, e a predefinição intensa reproduzirá mais sons em conjunto.</string>
     <string name="subscription_payment_confirmation_failed">Ops! Encontramos um obstáculo ao confirmar seu pagamento. Pode ser uma falha na rede ou um atraso do provedor de pagamento. Tenha certeza de que atualizaremos o status da sua assinatura assim que recebermos uma resposta sobre o pagamento. Verifique novamente mais tarde!</string>
     <string name="monthly">Mensal</string>
     <string name="cancel_subscription_confirmation">Tem certeza de que deseja cancelar sua assinatura do Noice Premium? Sua assinatura terminará no final do período de faturamento atual, que termina em %1$s.</string>
@@ -296,7 +296,7 @@
     <string name="alarm_permission_rationale_description">Nós precisamos ter acesso a programação de alarmes do seu dispositivo. Por favor, habilite a permissão **Alarmes e lembretes** para o Noice na página de informações do app nas configurações do seu dispositivo.</string>
     <string name="alarm_ringer_max_duration_summary">Tempo de duração em minutos, após silenciar automaticamente o lembrete de alarme</string>
     <string name="alarms_disabled_due_to_subscription_expiration">Nós tivemos que desabilitar alguns alarmes porque sua assinatura Noice Premium expirou!</string>
-    <string name="alarm_ringer_preset_load_error">Nós não conseguimos carregar a predefinição que você selecionou para esse alarme.</string>
+    <string name="alarm_ringer_preset_load_error">Não foi possível carregar a predefinição selecionada para este alarme.</string>
     <string name="alarm_snooze_length">Duração da soneca</string>
     <string name="proceed">Continuar</string>
     <string name="monday_initial">S</string>
