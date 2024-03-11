@@ -98,7 +98,7 @@ dependencies {
   def workManagerVersion = '2.9.0'
 
   def espressoVersion = '3.5.1'
-  def mockkVersion = '1.13.9'
+  def mockkVersion = '1.13.10'
 
   kapt "com.google.dagger:hilt-compiler:$deps.hiltVersion"
   kapt "androidx.hilt:hilt-compiler:$androidXHiltVersion"
