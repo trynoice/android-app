@@ -328,4 +328,5 @@
     <string name="tuesday_initial">S</string>
     <string name="thursday_initial">K</string>
     <string name="edit_label">Edit Label</string>
+    <string name="browser_app_not_found">Wah! Kelihatannya Anda tidak memiliki aplikasi browser pada perangkat Anda.</string>
 </resources>
