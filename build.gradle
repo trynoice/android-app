@@ -9,7 +9,7 @@ plugins {
   id 'com.google.dagger.hilt.android' version "${hiltVersion}" apply false
   id 'com.mikepenz.aboutlibraries.plugin' version "${aboutLibrariesVersion}" apply false
 
-  id 'com.google.gms.google-services' version '4.4.0' apply false // sed:free-build:remove
+  id 'com.google.gms.google-services' version '4.4.1' apply false // sed:free-build:remove
   id 'com.google.firebase.crashlytics' version '2.9.9' apply false // sed:free-build:remove
 
   id 'com.adarshr.test-logger' version '4.0.0' apply false
