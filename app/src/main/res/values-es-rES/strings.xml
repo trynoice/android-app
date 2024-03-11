@@ -328,4 +328,5 @@
     <string name="about_linkedin">Siguenos en LinkedIn</string>
     <string name="now_playing">Reproduciendo</string>
     <string name="about_github">Haznos destacar en Github</string>
+    <string name="browser_app_not_found">¡Ups! Parece que no tienes un navegador en tu dispositivo.</string>
 </resources>
