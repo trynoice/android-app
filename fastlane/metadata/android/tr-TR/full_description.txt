@@ -1,35 +1,57 @@
-Pek çok insan için, ufak bir arka plan sesi sakinleşmeye ve odaklanmaya yardımcı oluyor. Arka plan gürültüsü, stresin etkilerini azaltmaya yardımcı olabilir. Bazı durumlarda üretkenliği de artırır. Ayrıca insanların kulak çınlamasını maskelemelerine yardımcı olur.
+Pek çok insan için, biraz tekdüze bir arka plan gürültüsü sakin kalma ve odaklanma konusunda yardımcı olur.  Bazı durumlarda verimliliği artırır ve stres ile kaygının etkilerini azaltır.  Arka plandaki gürültü aynı zamanda kulak çınlamasını da maskeler, tedirgin bebekleri sakinleştirir ve okuma ve meditasyon deneyimlerini geliştirir.
 
-Noice çevresel sesleri kullanarak kendi ambiyansınızı oluşturmanızı sağlayan bir uygulamadır. Dikkatinizi dağıtan şeyleri bastırmak için farklı sesleri birleştirerek mükemmel ortamınızı yaratın, böylece işinize odaklanabilir veya rahatlamak için huzurlu ortamlar oluşturabilirsiniz.
+ Noice, kişiselleştirilmiş ses ortamları oluşturmanıza olanak tanıyan bir uygulamadır.  Mükemmel ortam atmosferleri yaratmak için farklı ses seviyelerindeki farklı sesleri birleştirmenize olanak tanır.  Bu özel ses ortamları dikkatinizi dağıtan unsurları ortadan kaldırmanıza ve konsantre olmanıza olanak tanır.  Ayrıca sizi rahatlamaya ve uykuya dalmaya teşvik eden sakin, huzurlu bir aura oluşturmak için de kullanabilirsiniz.
 
-<b>Özellikler</b>
-- 35 kaydedilmiş ses
-- Google Cast (Chromecast) kullanılabilir [yalnızca Play Store için]
-- Otomatik uyku zamanlayıcısı
-- Alarm saati
-- Rastgele karışımlar oluşturma
-- İstediğiniz türden karışımlar oluşturma
-- En sevdiğiniz karışımları kaydetme
-- Diğer müzik oynatıcılarında oynatabilme
-- Her ses için ayrı ses seviyesi
-- Çevrim dışı oynatma
-- Açık ve koyu uygulama teması çeşitleri
+ <b>FAYDALARI</b>
+ • Kişiselleştirilmiş bir ortam kullanarak stresinizi ve endişenizi azaltın
+ • Seçtiğiniz sakinleştirici bir ortamda rahatlayın ve gevşeyin
+ • Dikkat dağıtıcı gürültüyü değiştirerek üretkenliğinizi artırın
+ • Tutarlı bir atmosferde kalarak konsantrasyonu artırın
+ • Doğal ses manzaralarıyla okuma ve meditasyon deneyiminize yardımcı olun
+ • Rahatlatıcı sesler kullanarak bebeklerinizi sakinleştirin
+ • Rahatlatıcı gürültüyle kulak çınlamanızı maskeleyin
+ • Arkanıza yaslanıp uykuya dalmak için dikkatinizi dağıtacak şeyleri engelleyin
+ • Dikkatli alarmlarla günlerinize doğanın yumuşak sesleriyle başlayın
+ • Migreninizi ve baş ağrılarınızı hafifletir
 
-<b>Ses Kütüphanesi</b>
-- Yaşam (kuşlar, cırcır böcekleri, kurt, insan kalp atışı vb.)
-- Orman (kamp ateşi, gece, rüzgar, palmiye vb.)
-- Muson (yağmur, gök gürültüsü)
-- Ortam (kahve dükkanı, kütüphane, ofis, sahil, ırmak kıyısı vb.)
-- Araç (tren, uçuş, gemi, elektrikli araba vb.)
-- Kuru gürültü (beyaz, pembe, kayverengi)
+ <b>ÜCRETSİZ ÖZELLİKLER</b>
+ • Zengin ses kütüphanesi
+ • Google Cast veya Chromecast etkin*
+ • Otomatik uyku zamanlayıcısı
+ • En fazla 2 aktif alarma sahip Çalar Saat
+ • Kişiselleştirilmiş karışımlarınızı oluşturun ve kaydedin
+ • Her ruh halinize uyacak rastgele karışım oluşturucu
+ • Her ses için ayrı ses seviyesi kontrolü
+ • Çalmakta olan bir müzik çaların yanında çalın
+ • Android 12L veya üzeri sürümlerde Material You Dynamic renklerini kullanın
+ • Hiçbir tür reklam yok
 
-<b>İzinler</b>
-- <b>aygıtın uyumasını önle</b>: oynatıcı için aygıtı açık tutmak için
-- <b>ön plan işlemlerini yürüt</b>: oynatıcıyı çalıştırmak için (arayüzden farklı)
-- <b>açılışta başlat</b>: yeniden başlatmalarda alarmın çalıştığından emin olmak için
-- <b>tam ağ erişimi</b>: Chromecast ve maddi olarak katkıda bulunmayı etkinleştirmek için
-- <b>ağ bağlantılarını gör</b>: bir bağımlılık tarafından eklendi, şu anda kullanılmıyor
-- <b>Google Play ödeme hizmeti</b>: geliştirilmesini desteklemek üzere maddi olarak katkıda bulunmayı etkinleştirmek için
+ <i>* Chromecast yalnızca Noice'i Google Play'den indirdiğinizde kullanılabilir.</i>
 
-Noice özgür ve açık kaynaklı bir yazılımdır.
-https://github.com/trynoice/android-app
+ <b>PREMİYUM ÖZELLİKLER</b>
+ • Seslerdeki ek ses kliplerinin kilidini açın
+ • Talep üzerine oluşturulan gerçek ve doğal ses çeşitleri
+ • Tam çevrimdışı oynatma
+ • Akış ve indirme için ultra yüksek kaliteli ses (320 kbps'ye kadar)
+ • Sınırsız aktif alarm
+
+ <b>SES KÜTÜPHANESİ</b>
+ • Yaşam (kuşlar, cırcır böcekleri, kurtlar, kalp atışı, mırlayan kedi)
+ • Hava durumu (sabah veya şafak, gece, yağmur, gök gürültüsü)
+ • Yerler (şenlik ateşi veya kamp ateşi, kahve dükkanı, kütüphane, ofis, deniz kenarı, nehir kıyısı, tüplü dalış)
+ • Seyahat (tren, uçak, gıcırdayan gemi, elektrikli araba)
+ • Nesneler (vantilatör, duvar saati, rüzgar çanları)
+ • Ham gürültü (beyaz, pembe, kahverengi)
+
+ <b>UYGULAMA İZİNLERİ</b>
+ • <b>ağ bağlantılarını görüntüleme</b>: ses akışı ve indirme için
+ • <b>tam ağ erişimi</b>: Noice sunucularıyla iletişim kurmak, ses akışı yapmak ve indirmek için
+ • <b>başlangıçta çalıştır</b>: Cihaz yeniden başlatıldığında Alarmların devam etmesini sağlamak için
+ • <b>cihazın uyku moduna geçmesini önleme</b>: ekran kapatıldığında kesintisiz oynatma sağlamak amacıyla cihazın CPU'sunu uyanık tutmak için
+ • <b>kısayolları yükleyin</b>: Ana ekrana Önceden Ayarlanmış Kısayollar eklemek için
+ • <b>ön plan hizmetini çalıştır</b>: uygulama arka plandayken sürekli oynatma için
+ • <b>kilitli bir cihazda tam ekran bildirimleri görüntüle</b>: bir alarm çaldığında uyarıyı görüntülemek için
+ • <b>titreşimi kontrol et</b>: titreşimin etkin olduğu bir alarm çaldığında cihazın titreşmesi için
+
+ Noice açık kaynaklı bir yazılımdır.
+ https://github.com/trynoice/android-app
