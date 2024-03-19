@@ -328,4 +328,5 @@
     <string name="offline_playback">Reprodução offline</string>
     <string name="unlimited_alarms">Alarmes ilimitados</string>
     <string name="whats_new">Novidades</string>
+    <string name="browser_app_not_found">Uh-oh! Parece que você não tem um aplicativo de navegador no seu dispositivo.</string>
 </resources>
