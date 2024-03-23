@@ -240,7 +240,7 @@
     <string name="bi_yearly">Semestralmente</string>
     <string name="sign_in">Entrar</string>
     <string name="sign_out">Sair</string>
-    <string name="sound_scheduled_for_download">Adicionar %1$s às transferências para reprodução offline.</string>
+    <string name="sound_scheduled_for_download">Adicionar %1$s às descargas para a reprodução offline.</string>
     <plurals name="n_months">
         <item quantity="one">%1$d mes</item>
         <item quantity="many">%1$d meses</item>
@@ -304,7 +304,7 @@
     <string name="alarm_gradually_increase_volume_summary">Duração em minutos para aumentar gradualmente o volume quando um alarme é acionado</string>
     <string name="more_sound_clips_desc">Dê uma nova dimensão à sua audição com clips de áudio adicionais em sons para os tornar mais únicos e menos monótonos.</string>
     <string name="alarm_snooze_length_summary">Duração em minutos dos alarmes de soneca</string>
-    <string name="offline_playback_desc">Desfrute de sons relaxantes a qualquer hora, em qualquer lugar, com os downloads de sons offline do Noice - não é necessária uma ligação à Internet.</string>
+    <string name="offline_playback_desc">Desfrute de sons relaxantes a qualquer hora, em qualquer lugar, com as descargas de sons offline do Noice - não é necessária uma ligação à Internet.</string>
     <string name="search_preset">Pesquisar predefinições</string>
     <string name="resources">Recursos</string>
     <string name="blog">Blogue</string>
