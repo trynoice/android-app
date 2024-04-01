@@ -334,4 +334,5 @@
     <string name="alarm_permission_rationale_description">نحتاج إلى إذن إضافي لجدولة المنبهات على جهازك. يرجى تمكين إذن \"المنبهات والتذكيرات\" لتطبيق Noice في صفحة معلومات التطبيق داخل إعدادات نظام جهازك.</string>
     <string name="has_more_clips_with_premium">هذا الصوت يقدم المزيد من المقاطع مع Noice Premium.</string>
     <string name="natural_variations_desc">قدّم حياةً للصوتيات مع تغييرات صوتية حقيقية وطبيعية تُولد حسب الطلب باستخدام تقنيات الصوت الحديثة لدينا.</string>
+    <string name="browser_app_not_found">استمتع بأصوات مريحة في أي وقت وفي أي مكان مع تنزيلات الصوت غير المتصلة بالإنترنت في Noice - لا يلزم اتصال بالإنترنت.</string>
 </resources>
