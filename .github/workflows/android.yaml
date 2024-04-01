@@ -202,7 +202,7 @@ jobs:
             git tag  --list --format='%(contents:body)' $TAG_NAME;
             echo "EOF";
           } >> "$GITHUB_OUTPUT"
-      - uses: softprops/action-gh-release@v1
+      - uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.BOT_PAT }}
           name: v${{ steps.tag_info.outputs.name }}
