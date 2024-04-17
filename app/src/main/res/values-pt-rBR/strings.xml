@@ -10,7 +10,7 @@
     <string name="support_development">Apoiar o desenvolvimento</string>
     <string name="okay">OK</string>
     <string name="cancel">Cancelar</string>
-    <string name="dismiss">Dispensar</string>
+    <string name="dismiss">Descartar</string>
     <string name="name">Nome</string>
     <string name="pause">Pausar</string>
     <string name="preset_already_exists">Já existe uma predefinição com esse nome. Experimente uma diferente!</string>
