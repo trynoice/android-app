@@ -140,7 +140,7 @@ dependencies {
   implementation project(":api-client")
 
   fullImplementation 'androidx.mediarouter:mediarouter:1.6.0'
-  fullImplementation 'com.android.billingclient:billing-ktx:6.1.0'
+  fullImplementation 'com.android.billingclient:billing-ktx:6.2.1'
   fullImplementation 'com.google.android.gms:play-services-base:18.2.0'
   fullImplementation 'com.google.android.gms:play-services-cast-framework:21.4.0'
   fullImplementation 'com.google.android.play:core:1.10.3'
