@@ -54,7 +54,7 @@ jobs:
           cache: gradle
       - run: ./gradlew :api-client:lintDebug :app:lintFreeDebug :app:lintFullDebug --no-daemon
       - if: ${{ always() }}
-        uses: yutailang0119/action-android-lint@v3
+        uses: yutailang0119/action-android-lint@v4
         with:
           report-path: "**/build/reports/*.xml"
 
