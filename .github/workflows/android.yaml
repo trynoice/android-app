@@ -94,7 +94,7 @@ jobs:
 
   app-ui-tests:
     name: App UI tests
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
       matrix:
@@ -107,13 +107,36 @@ jobs:
             appVariant: FullDebug
       fail-fast: false
     steps:
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: ${{ env.JAVA_VERSION }}
           cache: gradle
-      - run: ./gradlew :app:assemble${{ matrix.appVariant }}AndroidTest # build before starting the emulator.
+      - uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.target }}-${{ matrix.android }}
+      - name: Generate AVD Snapshot Cache
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.android }}
+          target: ${{ matrix.target }}
+          arch: x86_64
+          emulator-options: >-
+            -camera-back none -camera-front none -gpu swiftshader_indirect
+            -memory 3000 -no-audio -no-boot-anim -no-window
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
       - uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.android }}
@@ -122,7 +145,7 @@ jobs:
           script: ./scripts/run-ui-tests.sh :app:create${{ matrix.appVariant }}CoverageReport
           emulator-options: >-
             -camera-back none -camera-front none -gpu swiftshader_indirect
-            -memory 3000 -no-audio -no-boot-anim -no-snapshot -no-window
+            -memory 3000 -no-audio -no-boot-anim -no-window -no-snapshot-save
       - uses: codecov/codecov-action@v4
         with:
           flags: app
