@@ -324,4 +324,5 @@
     <string name="about_linkedin">在领英上关注我们</string>
     <string name="now_playing">正在播放</string>
     <string name="about_github">在GitHub加星</string>
+    <string name="browser_app_not_found">啊哦！看起来你的设备上没有浏览器应用。</string>
 </resources>

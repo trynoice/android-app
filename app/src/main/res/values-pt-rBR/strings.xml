@@ -10,11 +10,11 @@
     <string name="support_development">Apoiar o desenvolvimento</string>
     <string name="okay">OK</string>
     <string name="cancel">Cancelar</string>
-    <string name="dismiss">Dispensar</string>
+    <string name="dismiss">Descartar</string>
     <string name="name">Nome</string>
     <string name="pause">Pausar</string>
-    <string name="preset_already_exists">Já existe uma predefinição com o nome fornecido. Tente outro!</string>
-    <string name="preset_name_cannot_be_empty">O nome predefinido está faltando. Por favor, insira um exclusivo!</string>
+    <string name="preset_already_exists">Já existe uma predefinição com esse nome. Experimente uma diferente!</string>
+    <string name="preset_name_cannot_be_empty">O nome da predefinição está em falta. Por favor, insira um nome exclusivo!</string>
     <string name="preset_saved">Incrível! Sua predefinição foi salva.</string>
     <string name="save">Salvar</string>
     <string name="save_preset">Salvar predefinição</string>
@@ -26,7 +26,7 @@
     <string name="open_context_menu">Abrir menu de contexto</string>
     <string name="preset_delete_confirmation">Tem certeza de que deseja excluir %1$s? Você não pode desfazer esta ação.</string>
     <string name="preset_deleted">Sua predefinição foi excluída com sucesso!</string>
-    <string name="preset_info__description">Você pode criar facilmente suas próprias predefinições reproduzindo sons e salvando-os na biblioteca de sons. Basta clicar no botão \"Salvar\" e dar um nome exclusivo.</string>
+    <string name="preset_info__description">Você pode criar facilmente suas próprias predefinições reproduzindo sons e salvando-os na biblioteca de sons. Basta clicar no botão \"Salvar\" e inserir um nome exclusivo.</string>
     <string name="rename">Renomear</string>
     <string name="auto_sleep_schedule_cancelled">Temporizador cancelado! O aplicativo permanecerá ativo.</string>
     <string name="reset">Reiniciar</string>
@@ -42,7 +42,7 @@
     <string name="appintro__getting_started_desc_1">Vamos começar!</string>
     <string name="appintro__getting_started_title">Bem-vindo</string>
     <string name="appintro__presets_desc">Salve sua mixagem de som clicando no botão \"Salvar\" no canto inferior da biblioteca. Encontre mixagens salvas na guia \"Predefinições\" da barra inferior.</string>
-    <string name="appintro__presets_title">Salve suas mixagens favoritas</string>
+    <string name="appintro__presets_title">Salvar suas mixagens favoritas</string>
     <string name="appintro__library_desc">Use o controle deslizante de volume para ajustar o volume de cada som. Alguns sons serão repetidos continuamente, enquanto outros serão repetidos com atraso aleatório.</string>
     <string name="appintro__library_title">Projete seu ambiente ideal</string>
     <string name="appintro__timer_desc">Adormeça sem esforço com o temporizador do Noice e acorde em um ambiente sereno com seus alarmes conscientes.</string>
@@ -62,7 +62,7 @@
     <string name="submit_feedback">Enviar comentários</string>
     <string name="presets_as_home_screen_summary">Torne suas predefinições visíveis ao abrir o aplicativo ativando esta opção. Você precisará reiniciar o aplicativo para que as alterações tenham efeito.</string>
     <string name="pinned_shortcuts_not_supported">Parece que seu aplicativo da tela inicial não oferece suporte a atalhos.</string>
-    <string name="preset_does_not_exist">Parece que esta predefinição não está mais disponível. Pode ter sido excluído.</string>
+    <string name="preset_does_not_exist">Parece que esta predefinição não está mais disponível. Pode ter sido excluída.</string>
     <string name="add_to_home_screen">Adicionar à tela inicial</string>
     <string name="random_preset">Predefinição aleatória</string>
     <string name="intensity">Intensidade</string>
@@ -149,7 +149,7 @@
     <string name="benefits">Benefícios</string>
     <string name="paid_using">Pago usando %1$s</string>
     <string name="has_premium_segments">Oferecemos mais clipes de áudio com Noice Premium</string>
-    <string name="subscription_purchases_load_error">Uh-oh! Não foi possível buscar seu histórico de compras de assinatura. %1$s</string>
+    <string name="subscription_purchases_load_error">Ops! Não foi possível buscar seu histórico de compras de assinatura. %1$s</string>
     <string name="audio_quality_medium">Média (192 kbps)</string>
     <string name="sign_up_email_sent">Enviamos a você um link de login em %1$s. Por favor, verifique sua caixa de entrada!</string>
     <string name="subscription_purchases">Compras de assinatura</string>
@@ -160,7 +160,7 @@
     <string name="quarterly">Trimestral</string>
     <string name="subscription_plans_load_error">Ops! Não foi possível buscar planos de assinatura. %1$s</string>
     <string name="open_mailbox">Abrir caixa de correio</string>
-    <string name="payment_processing_error">Uh-oh! Pagamento falhou. Não se preocupe! Seu reembolso está a caminho. Se você não o vir dentro de uma semana, avise-nos.</string>
+    <string name="payment_processing_error">Ops! Pagamento falhou. Não se preocupe! Seu reembolso está a caminho. Se você não o vir dentro de uma semana, avise-nos.</string>
     <string name="subscription_payment_refunded">Compra cancelada e reembolso iniciado</string>
     <string name="media_sources">Fontes de mídias</string>
     <string name="signing_out">Saindo</string>
@@ -200,7 +200,7 @@
     <string name="account">Conta</string>
     <string name="sign_in_email_sent">Enviamos a você um link de login em %1$s se este e-mail pertencer a uma conta registrada. Por favor, verifique sua caixa de entrada!</string>
     <string name="sign_in_link_tip">Conclua o processo de login clicando no link enviado para seu e-mail e abrindo-o com Noice.</string>
-    <string name="email_app_not_found">Uh-oh! Não foi possível encontrar um aplicativo de caixa de correio no seu dispositivo.</string>
+    <string name="email_app_not_found">Ops! Não foi possível encontrar um aplicativo de caixa de correio no seu dispositivo.</string>
     <string name="sign_in_token_error">Ops! O link de login parece ser inválido ou expirou. Solicite um novo e tente novamente.</string>
     <string name="sign_in_sucessful">Bem vindo a bordo! Agora você fez login com sucesso.</string>
     <string name="cont">Continuar</string>
@@ -217,7 +217,7 @@
     <string name="pausing">Pausando</string>
     <string name="paused">Pausado</string>
     <string name="keywords">Palavras-chaves</string>
-    <string name="generate_preset_error">Uh-oh! Não conseguimos gerar uma predefinição. %1$s Por favor, tente novamente!</string>
+    <string name="generate_preset_error">Ops! Não conseguimos gerar uma predefinição. %1$s Por favor, tente novamente!</string>
     <string name="subscription_payment_pending">Pagamento pendente</string>
     <string name="audio_quality_ultra">Ultra (320 kbps)</string>
     <string name="sign_up_tos">Ao continuar, você concorda com nossos [Termos de Serviço](https://trynoice.com/terms-of-service) e [Política de Privacidade](https://trynoice.com/privacy-policy).</string>
@@ -232,14 +232,14 @@
     <string name="sign_out">Sair</string>
     <string name="delete_account">Exluir conta</string>
     <string name="support_development__donate_description">Apoie o desenvolvimento do Noice e mantenha o aplicativo livre de anúncios com uma doação única. Sua contribuição nos ajudará a melhorar o aplicativo para você.</string>
-    <string name="random_preset_description">O pré-ajuste terá sons baseados nas palavras que você escolher, e a o ajuste intenso irá reproduzir mais sons simultaneamente.</string>
-    <string name="subscription_payment_confirmation_failed">Uh-oh! Encontramos um obstáculo ao confirmar seu pagamento. Pode ser uma falha na rede ou um atraso do provedor de pagamento. Tenha certeza de que atualizaremos o status da sua assinatura assim que recebermos uma resposta sobre o pagamento. Verifique novamente mais tarde!</string>
+    <string name="random_preset_description">A predefinição terá sons baseados nas palavras-chave que escolher, e a predefinição intensa reproduzirá mais sons em conjunto.</string>
+    <string name="subscription_payment_confirmation_failed">Ops! Encontramos um obstáculo ao confirmar seu pagamento. Pode ser uma falha na rede ou um atraso do provedor de pagamento. Tenha certeza de que atualizaremos o status da sua assinatura assim que recebermos uma resposta sobre o pagamento. Verifique novamente mais tarde!</string>
     <string name="monthly">Mensal</string>
     <string name="cancel_subscription_confirmation">Tem certeza de que deseja cancelar sua assinatura do Noice Premium? Sua assinatura terminará no final do período de faturamento atual, que termina em %1$s.</string>
     <string name="back_online">Você está online</string>
     <string name="bi_yearly">Semestralmente</string>
     <string name="no_subscription_purchases_found">Experimente todo o potencial do Noice com uma assinatura Premium. Atualize agora e descubra recursos exclusivos que irão elevar sua experiência auditiva.</string>
-    <string name="sign_in_email_error">Uh-oh! Não foi possível enviar um link de login por e-mail. %1$s Tente novamente mais tarde!</string>
+    <string name="sign_in_email_error">Ops! Não foi possível enviar um link de login por e-mail. %1$s Tente novamente mais tarde!</string>
     <string name="preset_url_invalid">O URL predefinido parece ser inválido!</string>
     <string name="loading">Carregando</string>
     <string name="third_party_attributions">Atribuições de terceiros</string>
@@ -296,7 +296,7 @@
     <string name="alarm_permission_rationale_description">Nós precisamos ter acesso a programação de alarmes do seu dispositivo. Por favor, habilite a permissão **Alarmes e lembretes** para o Noice na página de informações do app nas configurações do seu dispositivo.</string>
     <string name="alarm_ringer_max_duration_summary">Tempo de duração em minutos, após silenciar automaticamente o lembrete de alarme</string>
     <string name="alarms_disabled_due_to_subscription_expiration">Nós tivemos que desabilitar alguns alarmes porque sua assinatura Noice Premium expirou!</string>
-    <string name="alarm_ringer_preset_load_error">Nós não conseguimos carregar a predefinição que você selecionou para esse alarme.</string>
+    <string name="alarm_ringer_preset_load_error">Não foi possível carregar a predefinição selecionada para este alarme.</string>
     <string name="alarm_snooze_length">Duração da soneca</string>
     <string name="proceed">Continuar</string>
     <string name="monday_initial">S</string>
@@ -328,4 +328,5 @@
     <string name="more_sound_clips">Mais Clipes de Áudio</string>
     <string name="more_sound_clips_desc">Adicione uma nova dimensão à sua audição com clipes de áudio adicionais em sons para torná-los mais exclusivos e menos monótonos.</string>
     <string name="hd_audio_desc">Experimente sons como nunca antes, com a capacidade de ouvir sons em MP3 de até 320 kbps, reproduzindo áudio cristalino e de alta fidelidade.</string>
+    <string name="browser_app_not_found">Ops! Parece que você não tem um navegador de Internet no seu dispositivo.</string>
 </resources>

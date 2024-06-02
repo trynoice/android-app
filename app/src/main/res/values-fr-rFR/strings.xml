@@ -328,4 +328,5 @@
     <string name="has_more_clips_with_premium">Ce son offre plus de clips audio avec Noise Premium.</string>
     <string name="more_sound_clips">Plus de clips audio</string>
     <string name="about_github">Mettez-nous en vedette sur GitHub</string>
+    <string name="browser_app_not_found">Houlà ! Il semble que vous n\'avez pas de navigateur installé sur votre périphérique.</string>
 </resources>

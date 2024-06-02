@@ -330,4 +330,5 @@
     <string name="gift_card_expired">Karta podarunkowa z podanym kodem straciła ważność.</string>
     <string name="sign_up_tos">Kontynuując, wyrażasz zgodę na nasze [Warunki świadczenia usług](https://trynoice.com/terms-of-service) i [Politykę prywatności](https://trynoice.com/privacy-policy).</string>
     <string name="gift_card_code">Kod karty podarunkowej</string>
+    <string name="browser_app_not_found">Ups! Wygląda na to, że nie masz przeglądarki na swoim urządzeniu.</string>
 </resources>

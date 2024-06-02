@@ -35,7 +35,7 @@
     <string name="appintro__timer_title">入睡、醒來有障礙？</string>
     <string name="later">晚點吧</string>
     <string name="never">不了</string>
-    <string name="notification_channel_default__name">媒體播放</string>
+    <string name="notification_channel_default__name">聲音回放</string>
     <string name="remove_from_app_shortcuts">從應用捷徑移除</string>
     <string name="skip_to_next">下一個預設音組</string>
     <string name="ignore_audio_focus_changes">忽略音訊焦點變化</string>
@@ -124,7 +124,7 @@
     <string name="view_subscription_plans">查看方案</string>
     <string name="welcome">歡迎！</string>
     <string name="back_online">重新上線</string>
-    <string name="bi_yearly">每兩年</string>
+    <string name="bi_yearly">每半年</string>
     <string name="support_development__donate_thank_you_description">我們衷心感謝您對 Noice 項目的慷慨貢獻。</string>
     <string name="ignore_audio_focus_changes_summary_on">其他應用程式播放音訊時不做出反應</string>
     <string name="all_app_shortcuts_removed">所有應用程式捷徑均已被刪除！</string>
@@ -279,7 +279,7 @@
     <string name="non_looping_sound">之間包含中斷</string>
     <string name="sound_info">關於這個聲音</string>
     <string name="has_premium_segments">訂閱 Noice Premium 得到更多聲音片段</string>
-    <string name="looping_sound">無縫循環</string>
+    <string name="looping_sound">無縫重複</string>
     <string name="media_sources">媒體資源</string>
     <string name="profile_load_error">Oops！ 我們無法獲取您的帳戶詳細信息。 %1$s</string>
     <string name="keywords">關鍵字</string>
@@ -321,4 +321,8 @@
     <string name="more_sounds_desc">使用 Noice Premium 釋放您放鬆和專注體驗的全部潛力 - 有 %1$s 種額外的聲音。</string>
     <string name="more_sound_clips">更多聲音片段</string>
     <string name="more_sound_clips_desc">使用我們獨有的額外聲音片段開啟新的聲音世界，將您的聆聽體驗提升到一個新的豐富層次。</string>
+    <string name="search_preset">搜尋預設音組</string>
+    <string name="now_playing">正在播放</string>
+    <string name="blog">部落格</string>
+    <string name="resources">資源</string>
 </resources>
