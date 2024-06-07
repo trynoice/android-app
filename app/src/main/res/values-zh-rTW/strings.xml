@@ -211,7 +211,7 @@
     <string name="sign_up_tos">如果繼續，即表示您同意我們的[服務條款](https://trynoice.com/terms-of-service) 和[隱私政策](https://trynoice.com/privacy-policy)。</string>
     <string name="privacy_policy">隱私政策</string>
     <string name="terms_of_service">服務條款</string>
-    <string name="app_license">根據 GNU GPL-3.0 許可證許可</string>
+    <string name="app_license">根據 GNU GPL-3.0 許可證授權</string>
     <string name="gift_card_not_found">提供的代碼不存在。</string>
     <string name="gift_card_already_redeemed">所提供代碼的禮品卡已被兌換。</string>
     <string name="gift_card_expired">所提供代碼的禮品卡已過期。</string>
