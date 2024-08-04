@@ -328,4 +328,5 @@
     <string name="search_preset">Cerca preimpostazioni</string>
     <string name="about_github">Mettici una stella su GitHub</string>
     <string name="now_playing">In riproduzione</string>
+    <string name="browser_app_not_found">Ops! A quanto pare, non è disponibile alcun browser su questo dispositivo.</string>
 </resources>

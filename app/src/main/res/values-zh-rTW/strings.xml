@@ -19,7 +19,7 @@
     <string name="volume">音量</string>
     <string name="sleep_timer">睡眠倒數</string>
     <string name="cancel">取消</string>
-    <string name="preset_saved">太棒了！你的預設音組已儲存！</string>
+    <string name="preset_saved">太棒了！你的預設音組已儲存。</string>
     <string name="pause">暫停</string>
     <string name="save_preset">儲存預設音組</string>
     <string name="save">儲存</string>
@@ -32,7 +32,7 @@
     <string name="appintro__getting_started_desc_0">向左滑來了解所有功能！</string>
     <string name="appintro__getting_started_desc_1">讓我們開始吧！</string>
     <string name="appintro__getting_started_title">歡迎</string>
-    <string name="appintro__timer_title">入睡、醒來有障礙？</string>
+    <string name="appintro__timer_title">用 Noice 改變你的睡眠</string>
     <string name="later">晚點吧</string>
     <string name="never">不了</string>
     <string name="notification_channel_default__name">聲音回放</string>
@@ -79,8 +79,8 @@
     <string name="export_presets_summary">將已保存之預設音組的當前快照導出到外部文件</string>
     <string name="failed_to_purchase">無法啟動支付流程。請稍後再試！</string>
     <string name="sound_fade_out_duration_summary">聲音淡出的持續時間（秒）</string>
-    <string name="signing_in">登錄中</string>
-    <string name="created_by">Created by</string>
+    <string name="signing_in">登入中</string>
+    <string name="created_by">開發者</string>
     <string name="appintro__library_desc">使用音量滑桿來調整音量。在每次重複非循環聲音時，都會從時間滑塊設置的範圍中隨機選擇一個延遲週期。</string>
     <string name="support_development__donate_google_play_description">您的付款將由 Google Play 安全的處理，而根據您所在的位置，最終金額_可能_會包含額外稅費。</string>
     <string name="app_shortcut_removed">預設音組已從應用捷徑中刪除！</string>
@@ -91,9 +91,9 @@
     </plurals>
     <string name="processing_payment">處理付款</string>
     <string name="pinned_shortcut_created">捷徑已添加到主螢幕！</string>
-    <string name="remove_all_app_shortcuts_confirmation">將從應用程式捷徑選單中刪除所有預設音組捷徑。確定要繼續嗎？</string>
+    <string name="remove_all_app_shortcuts_confirmation">你確定你要從應用程式捷徑選單中刪除所有預設音組捷徑嗎？此操作無法還原。</string>
     <string name="failed_to_load_inapp_purchases">無法載入應用內購買詳情。請稍後再試！</string>
-    <string name="sign_in_token_error">登入連結似乎無效，它可能已過期了，請再試一次！</string>
+    <string name="sign_in_token_error">哎呀！登入連結似乎已無效或已過期。請請求一個新的登入連結，然後再試一次。</string>
     <string name="i_understand">我明白。</string>
     <string name="deleting_account">帳戶刪除中</string>
     <string name="monthly_price">每月 %1$s</string>
@@ -110,8 +110,8 @@
     <string name="sign_in_message">請輸入您的電子郵件以登入。</string>
     <string name="account_locked_error">您的電子郵件被暫時鎖定，直到 %1$s 後才可進行登入嘗試。</string>
     <string name="open_mailbox">打開郵箱</string>
-    <string name="sign_in_sucessful">登入成功！</string>
-    <string name="sign_out_confirmation">確認登出？</string>
+    <string name="sign_in_sucessful">歡迎！你現在已成功登入。</string>
+    <string name="sign_out_confirmation">你確定要登出嗎？別擔心，你隨時可以回來！</string>
     <string name="signing_out">登出中</string>
     <string name="duplicate_email_error">輸入的電子郵件已與另一個帳戶有連結。</string>
     <string name="monthly">每月</string>
@@ -136,9 +136,9 @@
     <string name="email">電子郵件</string>
     <string name="invalid_name">輸入的名稱不合格！</string>
     <string name="invalid_email">輸入的電子郵件無效！</string>
-    <string name="sign_up_email_sent">我們已在\"%1$s\"通過電子郵件向您發送了一個登入鏈接。</string>
+    <string name="sign_up_email_sent">我們已向你的 %1$s 傳送登入連結。請檢查你的收件匣！</string>
     <string name="sign_in_link_tip">請使用 Noice 打開收到的連結以完成登入程序。</string>
-    <string name="email_app_not_found">Uh-oh！我們在您的裝置上找不到郵箱應用程式！</string>
+    <string name="email_app_not_found">呃哦！似乎你的裝置上沒有電子郵件應用程式。</string>
     <string name="cont">繼續</string>
     <string name="delete_account_confirmation">刪除後您將立即失去對您帳戶的訪問權限。 如果您持續訂閱 Noice Premium，我們將停止向您收費。 如果您改變主意，可以在刪除後 7 天內隨時通過重新登錄來恢復您的帳戶。 在此期間之後，我們將從我們的服務器中永久刪除您的帳戶數據。</string>
     <string name="account_details_update_success">您的帳戶詳細資訊已成功更新。</string>
@@ -146,7 +146,7 @@
     <string name="yearly">每年</string>
     <string name="total_price">總共 %1$s</string>
     <string name="select_a_plan">選擇方案</string>
-    <string name="auto_sleep_schedule_cancelled">自動睡眠計時器已取消！</string>
+    <string name="auto_sleep_schedule_cancelled">睡眠計時器已取消！ 應用程式將保持活動狀態。</string>
     <string name="appintro__chromecast_desc">使用 Noice 將其氛圍投射到其他支持 Chromecast 的設備，例如揚聲器、電視等。</string>
     <string name="quarterly">每季</string>
     <string name="failed_to_write_file">寫入所選文件失敗！</string>
@@ -162,7 +162,7 @@
     <string name="support_development__donate_description">如果您尚未購買 premium ，您可以進行一次性付款，它將幫助我們維持免費功能的開發並使其永遠無廣告干擾。</string>
     <string name="in_app_feedback__description">我們很想聽聽你關於這個應用程序的消息。請花點時間訪問我們的 GitHub 存儲庫，如果您不喜歡這個應用程式，請考慮開一個 issue 來解釋您關心的事，不然也請為這個項目按個星星以表達愛意和支持。</string>
     <string name="export_presets_successful">已成功將預設音組導出到文件中！</string>
-    <string name="invalid_import_file_format">導入文件格式無效！</string>
+    <string name="invalid_import_file_format">無效檔案格式！ 請檢查匯入檔案。</string>
     <string name="share_usage_data_consent_message">我們收集應用使用數據以改善用戶體驗，我們還收集應用行為數據以分析和診斷應用使用過程中遇到的錯誤。閱讀我們的 [隱私政策](https://trynoice.com/privacy-policy) 了解更多訊息。
 \n
 \n您可以隨時在應用程式內設定自動數據共享，方法是轉到\"**設定** &gt; **共享使用和行為數據**\"。</string>
@@ -170,7 +170,7 @@
     <string name="support">支持</string>
     <string name="sign_in">登入</string>
     <string name="retry">重試</string>
-    <string name="sign_in_email_sent">如果此電子郵件屬於已註冊帳戶，我們已通過電子郵件將登入連結發送至\"%1$s\"。</string>
+    <string name="sign_in_email_sent">如果 %1$s 是屬於一個已註冊的帳戶，我們已透過此電子郵件向你發送了登入連結。請檢查你的收件匣！</string>
     <string name="random_preset_description">預設音組會有所選關鍵字的聲音。 此外，強烈的預設音組將試圖同時播放更多的聲音。</string>
     <string name="library_load_error">Oops！ 我們無法獲取聲音庫。 %1$s</string>
     <string name="preset_url_invalid">預設網址似乎無效！</string>
@@ -204,14 +204,14 @@
     <string name="audio_quality_low">Low (128 kbps)</string>
     <string name="audio_quality_medium">Medium (192 kbps)</string>
     <string name="audio_quality_high">High (256 kbps)</string>
-    <string name="audio_quality_ultra">Ultra (320 kbps)</string>
+    <string name="audio_quality_ultra">極致（320 kbps）</string>
     <string name="loading">載入中</string>
     <string name="tags_load_error">Oh no！ 我們無法加載聲音關鍵字。 %1$s 請重試！</string>
     <string name="generate_preset_error">Uh-oh！ 我們未能生成預設。 %1$s 請重試！</string>
     <string name="sign_up_tos">如果繼續，即表示您同意我們的[服務條款](https://trynoice.com/terms-of-service) 和[隱私政策](https://trynoice.com/privacy-policy)。</string>
     <string name="privacy_policy">隱私政策</string>
     <string name="terms_of_service">服務條款</string>
-    <string name="app_license">Licensed under GNU GPL-3.0</string>
+    <string name="app_license">根據 GNU GPL-3.0 許可證授權</string>
     <string name="gift_card_not_found">提供的代碼不存在。</string>
     <string name="gift_card_already_redeemed">所提供代碼的禮品卡已被兌換。</string>
     <string name="gift_card_expired">所提供代碼的禮品卡已過期。</string>
@@ -231,7 +231,7 @@
     <string name="manage_subscription">管理訂閱</string>
     <string name="renews_on">續訂於 %1$s</string>
     <string name="ended_on">結束於 %1$s</string>
-    <string name="subscription_payment_pending">此次購買正在等待付款。</string>
+    <string name="subscription_payment_pending">付款等待中</string>
     <string name="cancel_subscription_confirmation">您確定要取消訂閱 Noice Premium 嗎？ 取消後，您的訂閱將在當前結算週期結束時自動終止。 您當前的結算週期結束於 %1$s。</string>
     <string name="notification_channel_sound_downloads__description">與聲音下載相關的進度通知。</string>
     <string name="notification_channel_sound_downloads__name">聲音下載</string>
@@ -246,9 +246,7 @@
     <string name="no_alarms">沒有鬧鐘</string>
     <string name="no_alarms_description">點擊「+」按鈕新增新鬧鐘！</string>
     <string name="alarm_permission_rationale_title">允許 Noice 安排鬧鐘</string>
-    <string name="alarm_permission_rationale_description">我們需要額外的權限才能在您的設備上安排鬧鐘。
-\n
-\n請從設備系統設置中的應用程式詳細資訊中為 Noice 啟用**Alarms &amp; reminders**權限。</string>
+    <string name="alarm_permission_rationale_description">我們需要額外的權限才能在你的裝置上安排鬧鐘。請從裝置系統設定中的應用程式資訊中為 Noice 啟用**鬧鐘和提醒**權限。</string>
     <string name="post_notifications_permission_rationale_description">我們需要額外的權限才能顯示已排定鬧鐘的通知。 如沒有通知，Noice 無法在預定時間響鈴。</string>
     <string name="alarm_post_notifications_permission_denied">未允許顯示通知，Noice 無法響鈴！</string>
     <string name="add_label">添加標籤</string>
@@ -272,10 +270,10 @@
     <string name="download_sound">下載聲音</string>
     <string name="sound_downloads_scheduled_for_removal">所有聲音下載皆已成功安排刪除。</string>
     <string name="subscription_payment_complete">感謝您訂閱 Noice Premium。 您的訂閱現已生效。</string>
-    <string name="subscription_payment_refunded">我們取消了此次購買並準備退款。</string>
+    <string name="subscription_payment_refunded">購買已取消並準備退款</string>
     <string name="change_plan">改變方案</string>
     <string name="cancel_subscription">取消訂閱</string>
-    <string name="made_in_india">Made with ❤ in India</string>
+    <string name="made_in_india">用 ❤ 在印度製造</string>
     <string name="non_looping_sound">之間包含中斷</string>
     <string name="sound_info">關於這個聲音</string>
     <string name="has_premium_segments">訂閱 Noice Premium 得到更多聲音片段</string>
@@ -288,7 +286,7 @@
     <string name="notification_channel_alarm_primary__description">預定鬧鐘觸發時顯示的通知。</string>
     <string name="alarm_ringer_max_duration_summary">以分鐘為單位的持續時間，之後自動靜音警報提醒</string>
     <string name="cancellation_and_refunds_policy">請參閱[付款、取消和退款政策](https://trynoice.com/terms-of-service#terms-of-service-for-noice-premium)。</string>
-    <string name="natural_variations">Natural Variations</string>
+    <string name="natural_variations">自然變化</string>
     <string name="hd_audio">HD 音訊</string>
     <string name="offline_playback_desc">通過 Noice 的離線聲音下載，隨時隨地享受舒緩的聲音 - 無需網路連線。</string>
     <string name="unlimited_alarms">無限鬧鐘</string>
@@ -325,4 +323,7 @@
     <string name="now_playing">正在播放</string>
     <string name="blog">部落格</string>
     <string name="resources">資源</string>
+    <string name="about_linkedin">在 LinkedIn 上關注我們</string>
+    <string name="whats_new">有甚麼新的</string>
+    <string name="about_github">在 GitHub 上為我們加入最愛</string>
 </resources>
